@@ -18,7 +18,9 @@ import org.eclipse.net4j.util.ImplementationError;
 
 import org.eclipse.emf.cdo.core.CdoProtocol;
 import org.eclipse.emf.cdo.core.OidEncoder;
+import org.eclipse.emf.cdo.core.protocol.ResourceChangeInfo;
 import org.eclipse.emf.cdo.server.AttributeInfo;
+import org.eclipse.emf.cdo.server.CdoResServerProtocol;
 import org.eclipse.emf.cdo.server.CdoServerProtocol;
 import org.eclipse.emf.cdo.server.ClassInfo;
 import org.eclipse.emf.cdo.server.ColumnConverter;
@@ -54,6 +56,8 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
   private Mapper mapper;
 
+  private List<ResourceChangeInfo> newResources = new ArrayList();
+
   public short getSignalId()
   {
     return CdoProtocol.COMMIT_TRANSACTION;
@@ -73,7 +77,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
           receiveObjectsToAttach();
           receiveObjectChanges();
 
-          announcedNewResources();
+          receiveNewResources();
         }
       });
     }
@@ -83,6 +87,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     }
 
     transmitInvalidations();
+    transmitRescourceChanges();
   }
 
   public void respond()
@@ -117,13 +122,14 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     }
   }
 
-  private void announcedNewResources()
+  private void receiveNewResources()
   {
     int rid;
     while ((rid = receiveInt()) != 0)
     {
       String path = receiveString();
       getMapper().insertResource(rid, path);
+      newResources.add(new ResourceChangeInfo(ResourceChangeInfo.ADDED, rid, path));
     }
   }
 
@@ -572,9 +578,6 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     }
   }
 
-  /**
-   * 
-   */
   private void transmitInvalidations()
   {
     if (!changedObjectIds.isEmpty())
@@ -602,6 +605,37 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
             {
               error("Error while requesting signal " + signal, ex);
             }
+          }
+        }
+      }
+    }
+  }
+
+  private void transmitRescourceChanges()
+  {
+    if (!newResources.isEmpty())
+    {
+      Channel me = getChannel();
+      int myType = me.getConnector().getType();
+      CdoServerProtocol cdo = (CdoServerProtocol) me.getProtocol();
+      CdoResServerProtocol cdores = cdo.getCdoResServerProtocol();
+
+      Channel[] channels = cdores.getChannels();
+      for (int i = 0; i < channels.length; i++)
+      {
+        Channel channel = channels[i];
+        int type = channel.getConnector().getType();
+        if (type == myType) // Important to exclude embedded peers (clients)
+        {
+          ResourcesChangedRequest signal = new ResourcesChangedRequest(newResources);
+
+          try
+          {
+            channel.transmit(signal);
+          }
+          catch (Exception ex)
+          {
+            error("Error while requesting signal " + signal, ex);
           }
         }
       }

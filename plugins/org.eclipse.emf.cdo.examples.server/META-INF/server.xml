@@ -64,6 +64,9 @@
 		<property name="mapper">
 			<ref local="mapper"/>
 		</property>
+		<property name="cdoResServerProtocol">
+			<ref local="cdoResServerProtocol"/>
+		</property>
 	</bean>
 
 	<!-- ######################################################## -->

@@ -14,11 +14,10 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.net4j.core.Channel;
 import org.eclipse.net4j.spring.Service;
 
-import org.eclipse.emf.cdo.core.CdoProtocol;
 import org.eclipse.emf.cdo.core.OidEncoder;
 
 
-public interface Mapper extends Service, CdoProtocol
+public interface Mapper extends Service
 {
   public int getNextPid();
 

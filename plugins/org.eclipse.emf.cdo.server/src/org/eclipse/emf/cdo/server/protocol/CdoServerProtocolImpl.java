@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.ImplementationError;
 
 import org.eclipse.emf.cdo.core.CdoProtocol;
 import org.eclipse.emf.cdo.core.protocol.AbstractCdoProtocol;
+import org.eclipse.emf.cdo.server.CdoResServerProtocol;
 import org.eclipse.emf.cdo.server.CdoServerProtocol;
 import org.eclipse.emf.cdo.server.Mapper;
 
@@ -28,6 +29,8 @@ public class CdoServerProtocolImpl extends AbstractCdoProtocol implements CdoSer
   protected Mapper mapper;
 
   protected TransactionTemplate transactionTemplate;
+
+  protected CdoResServerProtocol cdoResServerProtocol;
 
   public CdoServerProtocolImpl()
   {
@@ -87,6 +90,16 @@ public class CdoServerProtocolImpl extends AbstractCdoProtocol implements CdoSer
   public void setTransactionTemplate(TransactionTemplate transactionTemplate)
   {
     doSet("transactionTemplate", transactionTemplate);
+  }
+
+  public CdoResServerProtocol getCdoResServerProtocol()
+  {
+    return cdoResServerProtocol;
+  }
+
+  public void setCdoResServerProtocol(CdoResServerProtocol cdoResServerProtocol)
+  {
+    doSet("cdoResServerProtocol", cdoResServerProtocol);
   }
 
   protected void validate() throws ValidationException

@@ -13,12 +13,16 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.net4j.spring.Service;
 
+import org.eclipse.emf.cdo.core.CdoProtocol;
+
 import org.springframework.transaction.support.TransactionTemplate;
 
 
-public interface CdoServerProtocol extends Service
+public interface CdoServerProtocol extends CdoProtocol
 {
   public Mapper getMapper();
 
   public TransactionTemplate getTransactionTemplate();
+
+  public CdoResServerProtocol getCdoResServerProtocol();
 }

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- ######################################################## -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>plugin:/META-INF/common.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!--
+							Net4j Common Part 
+	-->
+
+	<!-- ######################################################## -->
+	<bean id="randomizer" class="org.eclipse.net4j.core.impl.RandomizerImpl">
+		<property name="algorithmName">
+			<value>${randomizer.algorithm}</value>
+		</property>
+	</bean>
+
+	<!-- ######################################################## -->
+	<bean id="bufferPool" class="org.eclipse.net4j.core.impl.BufferPoolImpl">
+		<property name="bufferSize">
+			<value>${bufferPool.bufferSize}</value>
+		</property>
+	</bean>
+
+	<!-- ######################################################## -->
+	<bean id="protocolManager" class="org.eclipse.net4j.core.impl.ProtocolManagerImpl"/>
+
+	<!-- ######################################################## -->
+	<bean id="basicServerProtocol" class="org.eclipse.net4j.core.protocol.BasicServerProtocol">
+		<property name="protocolManager">
+			<ref local="protocolManager"/>
+		</property>
+	</bean>
+
+	<!-- ######################################################## -->
+	<bean id="basicClientProtocol" class="org.eclipse.net4j.core.protocol.BasicClientProtocol">
+		<property name="protocolManager">
+			<ref local="protocolManager"/>
+		</property>
+	</bean>
+
+	<!-- ######################################################## -->
+	<bean id="multiplexer" class="org.eclipse.net4j.core.impl.MultiplexerImpl"/>
+
+	<!-- ######################################################## -->
+	<bean id="channel" singleton="false" class="org.eclipse.net4j.core.impl.ChannelImpl">
+		<property name="multiplexer">
+			<ref local="multiplexer"/>
+		</property>
+		<property name="responseTimeoutMillis">
+			<value>${channel.responseTimeoutMillis}</value>
+		</property>
+	</bean>
+
+	<!-- ######################################################## -->
+	<bean id="connectionManager" class="org.eclipse.net4j.core.impl.ConnectionManagerImpl">
+		<property name="maxConnections">
+			<value>${connectionManager.maxConnections}</value>
+		</property>
+	</bean>
+
+	<!-- ######################################################## -->
+	<bean id="selectorManager" class="org.eclipse.net4j.socket.impl.SelectorManagerImpl"/>
+	
+	<!-- 
+							CDO Common Part
+	-->
+
+	<!-- ######################################################## -->
+	<bean id="oidEncoder" class="org.eclipse.emf.cdo.core.impl.OidEncoderImpl">
+		<property name="fragmentBits">
+			<value>48</value>
+		</property>
+	</bean>
+
+</beans>

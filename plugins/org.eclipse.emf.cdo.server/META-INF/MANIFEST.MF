@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.emf.cdo.server
+Bundle-Version: 1.0.0
+Bundle-ClassPath: net4j.cdo.server.jar
+Bundle-Activator: org.eclipse.emf.cdo.server.CdoServerPlugin
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.emf.cdo.core;visibility:=reexport,
+ org.eclipse.emf.dbgen;visibility:=reexport,
+ org.eclipse.emf.jdbc;visibility:=reexport
+Eclipse-LazyStart: true
+Export-Package: org.eclipse.emf.cdo.server,
+ org.eclipse.emf.cdo.server.impl,
+ org.eclipse.emf.cdo.server.protocol

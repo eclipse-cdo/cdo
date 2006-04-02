@@ -8,8 +8,8 @@ Bundle-Activator: org.eclipse.emf.cdo.server.CdoServerPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.emf.cdo.core;visibility:=reexport,
- org.eclipse.emf.dbgen;visibility:=reexport,
- org.eclipse.emf.jdbc;visibility:=reexport
+ org.eclipse.emf.cdo.dbgen;visibility:=reexport,
+ org.eclipse.emf.cdo.jdbc;visibility:=reexport
 Eclipse-LazyStart: true
 Export-Package: org.eclipse.emf.cdo.server,
  org.eclipse.emf.cdo.server.impl,

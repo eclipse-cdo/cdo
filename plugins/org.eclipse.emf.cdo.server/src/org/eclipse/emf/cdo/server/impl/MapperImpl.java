@@ -19,6 +19,13 @@ import org.eclipse.net4j.util.StringHelper;
 
 import org.eclipse.emf.cdo.core.CdoResProtocol;
 import org.eclipse.emf.cdo.core.OidEncoder;
+import org.eclipse.emf.cdo.dbgen.ColumnType;
+import org.eclipse.emf.cdo.dbgen.Database;
+import org.eclipse.emf.cdo.dbgen.DbgenFactory;
+import org.eclipse.emf.cdo.dbgen.IndexType;
+import org.eclipse.emf.cdo.dbgen.SqlDialect;
+import org.eclipse.emf.cdo.dbgen.Table;
+import org.eclipse.emf.cdo.dbgen.internal.DbgenActivator;
 import org.eclipse.emf.cdo.server.AttributeInfo;
 import org.eclipse.emf.cdo.server.ClassInfo;
 import org.eclipse.emf.cdo.server.ColumnConverter;
@@ -29,13 +36,6 @@ import org.eclipse.emf.cdo.server.PackageManager;
 import org.eclipse.emf.cdo.server.ResourceInfo;
 import org.eclipse.emf.cdo.server.ResourceManager;
 import org.eclipse.emf.cdo.server.ResourceNotFoundException;
-import org.eclipse.emf.dbgen.ColumnType;
-import org.eclipse.emf.dbgen.Database;
-import org.eclipse.emf.dbgen.DbgenFactory;
-import org.eclipse.emf.dbgen.IndexType;
-import org.eclipse.emf.dbgen.SqlDialect;
-import org.eclipse.emf.dbgen.Table;
-import org.eclipse.emf.dbgen.internal.DbgenActivator;
 
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

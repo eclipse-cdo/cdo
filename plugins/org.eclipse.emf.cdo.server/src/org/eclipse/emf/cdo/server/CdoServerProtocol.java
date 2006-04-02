@@ -11,8 +11,6 @@
 package org.eclipse.emf.cdo.server;
 
 
-import org.eclipse.net4j.spring.Service;
-
 import org.eclipse.emf.cdo.core.CdoProtocol;
 
 import org.springframework.transaction.support.TransactionTemplate;

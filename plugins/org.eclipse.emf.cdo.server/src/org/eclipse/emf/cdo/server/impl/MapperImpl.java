@@ -21,11 +21,11 @@ import org.eclipse.emf.cdo.core.CdoResProtocol;
 import org.eclipse.emf.cdo.core.OidEncoder;
 import org.eclipse.emf.cdo.dbgen.ColumnType;
 import org.eclipse.emf.cdo.dbgen.Database;
-import org.eclipse.emf.cdo.dbgen.DbgenFactory;
+import org.eclipse.emf.cdo.dbgen.DBGenFactory;
 import org.eclipse.emf.cdo.dbgen.IndexType;
-import org.eclipse.emf.cdo.dbgen.SqlDialect;
+import org.eclipse.emf.cdo.dbgen.SQLDialect;
 import org.eclipse.emf.cdo.dbgen.Table;
-import org.eclipse.emf.cdo.dbgen.internal.DbgenActivator;
+import org.eclipse.emf.cdo.dbgen.internal.DBGenActivator;
 import org.eclipse.emf.cdo.server.AttributeInfo;
 import org.eclipse.emf.cdo.server.ClassInfo;
 import org.eclipse.emf.cdo.server.ColumnConverter;
@@ -77,7 +77,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
 
   private int nextCid;
 
-  private transient SqlDialect cachedSqlDialect;
+  private transient SQLDialect cachedSqlDialect;
 
   /**
    * @return Returns the packageManager.
@@ -140,11 +140,11 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
   /**
    * @return Returns the sqlDialect.
    */
-  public SqlDialect getSqlDialect()
+  public SQLDialect getSqlDialect()
   {
     if (cachedSqlDialect == null)
     {
-      cachedSqlDialect = DbgenActivator.INSTANCE.createDialect(sqlDialectName);
+      cachedSqlDialect = DBGenActivator.INSTANCE.createDialect(sqlDialectName);
     }
     return cachedSqlDialect;
   }
@@ -238,7 +238,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
 
   protected void initTables()
   {
-    Database database = DbgenFactory.eINSTANCE.createDatabase();
+    Database database = DBGenFactory.eINSTANCE.createDatabase();
 
     //    Table systemTable = database.addTable(SYSTEM_TABLE);
     //    systemTable.addColumn(SYSTEM_SID_COLUMN, ColumnType.VARCHAR_LITERAL, 63);
@@ -844,7 +844,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
   {
     if (isDebugEnabled()) debug("Creating attribute tables");
 
-    Database database = DbgenFactory.eINSTANCE.createDatabase();
+    Database database = DBGenFactory.eINSTANCE.createDatabase();
     ClassInfo[] classes = packageInfo.getClasses();
 
     for (int i = 0; i < classes.length; i++)

@@ -17,11 +17,11 @@ import org.eclipse.net4j.spring.impl.ServiceImpl;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringHelper;
 
-import org.eclipse.emf.cdo.core.CdoResProtocol;
-import org.eclipse.emf.cdo.core.OidEncoder;
+import org.eclipse.emf.cdo.core.CDOResProtocol;
+import org.eclipse.emf.cdo.core.OIDEncoder;
 import org.eclipse.emf.cdo.dbgen.ColumnType;
-import org.eclipse.emf.cdo.dbgen.Database;
 import org.eclipse.emf.cdo.dbgen.DBGenFactory;
+import org.eclipse.emf.cdo.dbgen.Database;
 import org.eclipse.emf.cdo.dbgen.IndexType;
 import org.eclipse.emf.cdo.dbgen.SQLDialect;
 import org.eclipse.emf.cdo.dbgen.Table;
@@ -51,7 +51,7 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 
-public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
+public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 {
   protected static final int OBJECT_NOT_FOUND_IN_DB = 0;
 
@@ -69,7 +69,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
 
   protected String sqlDialectName;
 
-  protected OidEncoder oidEncoder;
+  protected OIDEncoder oIDEncoder;
 
   private int nextPid;
 
@@ -163,19 +163,19 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
   }
 
   /**
-   * @return Returns the oidEncoder.
+   * @return Returns the oIDEncoder.
    */
-  public OidEncoder getOidEncoder()
+  public OIDEncoder getOidEncoder()
   {
-    return oidEncoder;
+    return oIDEncoder;
   }
 
   /**
-   * @param oidEncoder The oidEncoder to set.
+   * @param oIDEncoder The oIDEncoder to set.
    */
-  public void setOidEncoder(OidEncoder oidEncoder)
+  public void setOidEncoder(OIDEncoder oIDEncoder)
   {
-    doSet("oidEncoder", oidEncoder);
+    doSet("oIDEncoder", oIDEncoder);
   }
 
   /**
@@ -215,7 +215,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
     if (resourceInfo == null) throw new ResourceNotFoundException("Unknown RID: " + rid);
 
     long nextOidFragment = resourceInfo.getNextOIDFragment();
-    return oidEncoder.getOID(rid, nextOidFragment);
+    return oIDEncoder.getOID(rid, nextOidFragment);
   }
 
   protected void validate() throws ValidationException
@@ -225,7 +225,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
     assertNotNull("packageManager");
     assertNotNull("resourceManager");
     assertNotNull("dataSource");
-    assertNotNull("oidEncoder");
+    assertNotNull("oIDEncoder");
     assertNotNull("jdbcTemplate");
 
     initTables();
@@ -469,13 +469,13 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
     Object[] args = ridBounds(rid);
     if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_MAX_OID_FRAGMENT, "?", args));
     long oid = jdbcTemplate.queryForLong(SELECT_MAX_OID_FRAGMENT, args);
-    return (int) (oid & 0xFFFFFFFFL); // TODO Without OidEncoder???
+    return (int) (oid & 0xFFFFFFFFL); // TODO Without OIDEncoder???
   }
 
   private Object[] ridBounds(int rid)
   {
-    long lowerBound = oidEncoder.getOID(rid, 1);
-    long upperBound = oidEncoder.getOID(rid + 1, 1) - 1;
+    long lowerBound = oIDEncoder.getOID(rid, 1);
+    long upperBound = oIDEncoder.getOID(rid + 1, 1) - 1;
     return new Object[] { new Long(lowerBound), new Long(upperBound)};
   }
 
@@ -660,7 +660,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
           int cid = resultSet.getInt(3);
 
           if (isDebugEnabled())
-            debug("Object: oid=" + oidEncoder.toString(oid) + ", oca=" + oca + ", cid=" + cid);
+            debug("Object: oid=" + oIDEncoder.toString(oid) + ", oca=" + oca + ", cid=" + cid);
 
           channel.transmitLong(oid);
           channel.transmitInt(oca);
@@ -691,7 +691,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
         int cid = resultSet.getInt(2);
 
         if (isDebugEnabled())
-          debug("Object: oid=" + oidEncoder.toString(oid) + ", oca=" + oca + ", cid=" + cid);
+          debug("Object: oid=" + oIDEncoder.toString(oid) + ", oca=" + oca + ", cid=" + cid);
 
         channel.transmitLong(oid);
         channel.transmitInt(oca);
@@ -753,7 +753,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
     {
       Container container = (Container) it.next();
       if (isDebugEnabled())
-        debug("Container: oid=" + oidEncoder.toString(container.oid) + ", cid=" + container.cid);
+        debug("Container: oid=" + oIDEncoder.toString(container.oid) + ", cid=" + container.cid);
 
       channel.transmitLong(container.oid);
       channel.transmitInt(container.cid);
@@ -773,7 +773,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
         int cid = resultSet.getInt(3);
 
         if (isDebugEnabled())
-          debug("Reference: feature=" + feature + ", target=" + oidEncoder.toString(target)
+          debug("Reference: feature=" + feature + ", target=" + oIDEncoder.toString(target)
               + ", cid=" + cid);
 
         channel.transmitInt(feature);
@@ -837,7 +837,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SqlConstants
       }
     });
 
-    channel.transmitInt(CdoResProtocol.NO_MORE_RESOURCES);
+    channel.transmitInt(CDOResProtocol.NO_MORE_RESOURCES);
   }
 
   public void createAttributeTables(PackageInfo packageInfo)

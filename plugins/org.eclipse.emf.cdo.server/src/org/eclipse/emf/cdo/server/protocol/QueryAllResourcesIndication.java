@@ -4,13 +4,13 @@ package org.eclipse.emf.cdo.server.protocol;
 import org.eclipse.net4j.core.Protocol;
 import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
 
-import org.eclipse.emf.cdo.core.CdoResSignals;
-import org.eclipse.emf.cdo.server.CdoResServerProtocol;
+import org.eclipse.emf.cdo.core.CDOResSignals;
 import org.eclipse.emf.cdo.server.Mapper;
+import org.eclipse.emf.cdo.server.ServerCDOResProtocol;
 
 
 public class QueryAllResourcesIndication extends AbstractIndicationWithResponse implements
-    CdoResSignals
+    CDOResSignals
 {
   public QueryAllResourcesIndication()
   {
@@ -28,7 +28,7 @@ public class QueryAllResourcesIndication extends AbstractIndicationWithResponse 
   public void respond()
   {
     Protocol protocol = getProtocol();
-    Mapper mapper = ((CdoResServerProtocol) protocol).getMapper();
+    Mapper mapper = ((ServerCDOResProtocol) protocol).getMapper();
     mapper.transmitAllResources(channel);
   }
 }

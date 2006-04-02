@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.server.impl;
 
 
-public interface SqlConstants
+public interface SQLConstants
 {
   //--------------------------------------------------------------------
   public static final String SYSTEM_TABLE = "CDO_SYSTEM";

@@ -13,11 +13,11 @@ package org.eclipse.emf.cdo.server.protocol;
 
 import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
 
-import org.eclipse.emf.cdo.core.CdoProtocol;
-import org.eclipse.emf.cdo.server.CdoServerProtocol;
+import org.eclipse.emf.cdo.core.CDOProtocol;
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.ResourceInfo;
 import org.eclipse.emf.cdo.server.ResourceManager;
+import org.eclipse.emf.cdo.server.ServerCDOProtocol;
 
 
 public class ResourcePathIndication extends AbstractIndicationWithResponse
@@ -26,7 +26,7 @@ public class ResourcePathIndication extends AbstractIndicationWithResponse
 
   public short getSignalId()
   {
-    return CdoProtocol.RESOURCE_PATH;
+    return CDOProtocol.RESOURCE_PATH;
   }
 
   public void indicate()
@@ -37,7 +37,7 @@ public class ResourcePathIndication extends AbstractIndicationWithResponse
 
   public void respond()
   {
-    Mapper mapper = ((CdoServerProtocol) getProtocol()).getMapper();
+    Mapper mapper = ((ServerCDOProtocol) getProtocol()).getMapper();
     ResourceManager resourceManager = mapper.getResourceManager();
     ResourceInfo info = resourceManager.getResourceInfo(path, mapper);
 

@@ -80,7 +80,7 @@ public class BeanHelper
 
     try
     {
-      return (Object[]) getter.invoke(object, (Object[])null);
+      return (Object[]) getter.invoke(object, (Object[]) null);
     }
     catch (Throwable t)
     {
@@ -138,7 +138,7 @@ public class BeanHelper
 
     try
     {
-      Object returnValue = getter.invoke(object, (Object[])null);
+      Object returnValue = getter.invoke(object, (Object[]) null);
       if (returnValue == null) return null;
       if (returnValue instanceof String) return (String) returnValue;
 
@@ -161,7 +161,7 @@ public class BeanHelper
 
     try
     {
-      return (Boolean) getter.invoke(object, (Object[])null);
+      return (Boolean) getter.invoke(object, (Object[]) null);
     }
     catch (Throwable t)
     {

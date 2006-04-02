@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *******************************************************************************/
-package org.eclipse.emf.cdo.server;
+package org.eclipse.emf.cdo.server.internal;
 
 
 import org.eclipse.net4j.util.eclipse.AbstractPlugin;
@@ -21,15 +21,15 @@ import java.util.List;
 /**
  * The main plugin class to be used in the desktop.
  */
-public class CdoServerPlugin extends AbstractPlugin
+public class ServerPlugin extends AbstractPlugin
 {
   //The shared instance.
-  private static CdoServerPlugin plugin;
+  private static ServerPlugin plugin;
 
   /**
    * The constructor.
    */
-  public CdoServerPlugin()
+  public ServerPlugin()
   {
     if (plugin == null) plugin = this;
   }
@@ -46,7 +46,7 @@ public class CdoServerPlugin extends AbstractPlugin
   /**
    * Returns the shared instance.
    */
-  public static CdoServerPlugin getDefault()
+  public static ServerPlugin getDefault()
   {
     return plugin;
   }

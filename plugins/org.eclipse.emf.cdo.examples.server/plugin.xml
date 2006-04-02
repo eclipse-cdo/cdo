@@ -4,10 +4,10 @@
 <plugin>
    <extension
          id="application"
-         name="CDO Test Server Application"
+         name="CDO Example Server Application"
          point="org.eclipse.core.runtime.applications">
       <application>
-         <run class="org.eclipse.emf.cdo.example.server.CdoTestServerApplication"/>
+         <run class="org.eclipse.emf.cdo.example.server.internal.ExampleServerApplication"/>
       </application>
    </extension>
 

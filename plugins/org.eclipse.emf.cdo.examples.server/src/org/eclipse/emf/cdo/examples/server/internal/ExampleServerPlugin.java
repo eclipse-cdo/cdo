@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *******************************************************************************/
-package org.eclipse.emf.cdo.example.server;
+package org.eclipse.emf.cdo.example.server.internal;
 
 
 import org.eclipse.net4j.spring.Container;
@@ -22,12 +22,12 @@ import java.io.IOException;
 /**
  * The main plugin class to be used in the desktop.
  */
-public class CdoTestServerPlugin extends AbstractPlugin
+public class ExampleServerPlugin extends AbstractPlugin
 {
   public static final String CONTEXT_PATH = "META-INF/";
 
   //The shared instance.
-  private static CdoTestServerPlugin plugin;
+  private static ExampleServerPlugin plugin;
 
   private static Container container;
 
@@ -36,7 +36,7 @@ public class CdoTestServerPlugin extends AbstractPlugin
   /**
    * The constructor.
    */
-  public CdoTestServerPlugin()
+  public ExampleServerPlugin()
   {
     if (plugin == null) plugin = this;
   }
@@ -44,7 +44,7 @@ public class CdoTestServerPlugin extends AbstractPlugin
   /**
    * Returns the shared instance.
    */
-  public static CdoTestServerPlugin getDefault()
+  public static ExampleServerPlugin getDefault()
   {
     return plugin;
   }

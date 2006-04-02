@@ -13,12 +13,12 @@ package org.eclipse.emf.cdo.server.protocol;
 
 import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
 
-import org.eclipse.emf.cdo.core.CdoProtocol;
+import org.eclipse.emf.cdo.core.CDOProtocol;
 import org.eclipse.emf.cdo.server.AttributeInfo;
-import org.eclipse.emf.cdo.server.CdoServerProtocol;
 import org.eclipse.emf.cdo.server.ClassInfo;
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.PackageInfo;
+import org.eclipse.emf.cdo.server.ServerCDOProtocol;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,7 +31,7 @@ public class DescribePackageIndication extends AbstractIndicationWithResponse
 
   public short getSignalId()
   {
-    return CdoProtocol.DESCRIBE_PACKAGE;
+    return CDOProtocol.DESCRIBE_PACKAGE;
   }
 
   public void indicate()
@@ -105,6 +105,6 @@ public class DescribePackageIndication extends AbstractIndicationWithResponse
 
   private Mapper getMapper()
   {
-    return ((CdoServerProtocol) getProtocol()).getMapper();
+    return ((ServerCDOProtocol) getProtocol()).getMapper();
   }
 }

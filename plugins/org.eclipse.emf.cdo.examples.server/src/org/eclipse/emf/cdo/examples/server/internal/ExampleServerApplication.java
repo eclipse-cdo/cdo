@@ -1,12 +1,12 @@
-package org.eclipse.emf.cdo.example.server;
+package org.eclipse.emf.cdo.example.server.internal;
 
 
 import org.eclipse.core.runtime.IPlatformRunnable;
 
 
-public class CdoTestServerApplication implements IPlatformRunnable
+public class ExampleServerApplication implements IPlatformRunnable
 {
-  public CdoTestServerApplication()
+  public ExampleServerApplication()
   {
   }
 

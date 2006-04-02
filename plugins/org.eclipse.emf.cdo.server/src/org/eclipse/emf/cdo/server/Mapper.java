@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.net4j.core.Channel;
 import org.eclipse.net4j.spring.Service;
 
-import org.eclipse.emf.cdo.core.OidEncoder;
+import org.eclipse.emf.cdo.core.OIDEncoder;
 
 
 public interface Mapper extends Service
@@ -77,7 +77,7 @@ public interface Mapper extends Service
 
   public void insertResource(int rid, String path);
 
-  public OidEncoder getOidEncoder();
+  public OIDEncoder getOidEncoder();
 
   public PackageManager getPackageManager();
 

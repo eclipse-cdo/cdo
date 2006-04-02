@@ -11,16 +11,16 @@
 package org.eclipse.emf.cdo.server;
 
 
-import org.eclipse.emf.cdo.core.CdoProtocol;
+import org.eclipse.emf.cdo.core.CDOProtocol;
 
 import org.springframework.transaction.support.TransactionTemplate;
 
 
-public interface CdoServerProtocol extends CdoProtocol
+public interface ServerCDOProtocol extends CDOProtocol
 {
   public Mapper getMapper();
 
   public TransactionTemplate getTransactionTemplate();
 
-  public CdoResServerProtocol getCdoResServerProtocol();
+  public ServerCDOResProtocol getCdoResServerProtocol();
 }

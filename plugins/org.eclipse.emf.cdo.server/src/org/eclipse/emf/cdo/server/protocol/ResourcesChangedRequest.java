@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.protocol;
 
 import org.eclipse.net4j.core.impl.AbstractRequest;
 
-import org.eclipse.emf.cdo.core.CdoResSignals;
+import org.eclipse.emf.cdo.core.CDOResSignals;
 import org.eclipse.emf.cdo.core.protocol.ResourceChangeInfo;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class ResourcesChangedRequest extends AbstractRequest
 
   public short getSignalId()
   {
-    return CdoResSignals.RESOURCES_CHANGED;
+    return CDOResSignals.RESOURCES_CHANGED;
   }
 
   public void request()

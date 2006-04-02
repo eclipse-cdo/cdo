@@ -76,7 +76,7 @@
 	-->
 
 	<!-- ######################################################## -->
-	<bean id="oidEncoder" class="org.eclipse.emf.cdo.core.impl.OidEncoderImpl">
+	<bean id="oidEncoder" class="org.eclipse.emf.cdo.core.impl.OIDEncoderImpl">
 		<property name="fragmentBits">
 			<value>48</value>
 		</property>

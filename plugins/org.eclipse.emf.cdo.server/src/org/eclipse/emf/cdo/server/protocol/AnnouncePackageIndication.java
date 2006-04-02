@@ -13,11 +13,11 @@ package org.eclipse.emf.cdo.server.protocol;
 
 import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
 
-import org.eclipse.emf.cdo.core.CdoProtocol;
-import org.eclipse.emf.cdo.server.CdoServerProtocol;
+import org.eclipse.emf.cdo.core.CDOProtocol;
 import org.eclipse.emf.cdo.server.ClassInfo;
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.PackageInfo;
+import org.eclipse.emf.cdo.server.ServerCDOProtocol;
 
 
 public class AnnouncePackageIndication extends AbstractIndicationWithResponse
@@ -26,7 +26,7 @@ public class AnnouncePackageIndication extends AbstractIndicationWithResponse
 
   public short getSignalId()
   {
-    return CdoProtocol.ANNOUNCE_PACKAGE;
+    return CDOProtocol.ANNOUNCE_PACKAGE;
   }
 
   public void indicate()
@@ -37,7 +37,7 @@ public class AnnouncePackageIndication extends AbstractIndicationWithResponse
 
   public void respond()
   {
-    Mapper mapper = ((CdoServerProtocol) getProtocol()).getMapper();
+    Mapper mapper = ((ServerCDOProtocol) getProtocol()).getMapper();
     PackageInfo packageInfo = mapper.getPackageManager().getPackageInfo(packageName);
 
     if (packageInfo == null)

@@ -54,7 +54,7 @@
 	<bean id="columnConverter" class="org.eclipse.emf.cdo.server.impl.ColumnConverterImpl"/>
 
 	<!-- ######################################################## -->
-	<bean id="cdoServerProtocol" class="org.eclipse.emf.cdo.server.protocol.CdoServerProtocolImpl">
+	<bean id="cdoServerProtocol" class="org.eclipse.emf.cdo.server.protocol.ServerCDOProtocolImpl">
 		<property name="protocolManager">
 			<ref bean="protocolManager"/>
 		</property>
@@ -71,7 +71,7 @@
 
 	<!-- ######################################################## -->
 	<bean id="cdoResServerProtocol"
-		class="org.eclipse.emf.cdo.server.protocol.CdoResServerProtocolImpl">
+		class="org.eclipse.emf.cdo.server.protocol.ServerCDOResProtocolImpl">
 		<property name="protocolManager">
 			<ref bean="protocolManager"/>
 		</property>

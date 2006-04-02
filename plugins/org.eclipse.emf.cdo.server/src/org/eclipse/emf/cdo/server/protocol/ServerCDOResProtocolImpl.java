@@ -15,24 +15,21 @@ import org.eclipse.net4j.core.Indication;
 import org.eclipse.net4j.spring.ValidationException;
 import org.eclipse.net4j.util.ImplementationError;
 
-import org.eclipse.emf.cdo.core.CdoProtocol;
-import org.eclipse.emf.cdo.core.protocol.AbstractCdoProtocol;
-import org.eclipse.emf.cdo.server.CdoResServerProtocol;
-import org.eclipse.emf.cdo.server.CdoServerProtocol;
+import org.eclipse.emf.cdo.core.protocol.AbstractCDOResProtocol;
 import org.eclipse.emf.cdo.server.Mapper;
+import org.eclipse.emf.cdo.server.ServerCDOResProtocol;
 
 import org.springframework.transaction.support.TransactionTemplate;
 
 
-public class CdoServerProtocolImpl extends AbstractCdoProtocol implements CdoServerProtocol
+public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
+    ServerCDOResProtocol
 {
   protected Mapper mapper;
 
   protected TransactionTemplate transactionTemplate;
 
-  protected CdoResServerProtocol cdoResServerProtocol;
-
-  public CdoServerProtocolImpl()
+  public ServerCDOResProtocolImpl()
   {
   }
 
@@ -45,30 +42,11 @@ public class CdoServerProtocolImpl extends AbstractCdoProtocol implements CdoSer
   {
     switch (signalId)
     {
-      case ANNOUNCE_PACKAGE:
-        return new AnnouncePackageIndication();
-
-      case DESCRIBE_PACKAGE:
-        return new DescribePackageIndication();
-
-      case RESOURCE_RID:
-        return new ResourceRidIndication();
-
-      case RESOURCE_PATH:
-        return new ResourcePathIndication();
-
-      case LOAD_RESOURCE:
-        return new LoadResourceIndication();
-
-      case LOAD_OBJECT:
-        return new LoadObjectIndication();
-
-      case COMMIT_TRANSACTION:
-        return new CommitTransactionIndication();
+      case QUERY_ALL_RESOURCES:
+        return new QueryAllResourcesIndication();
 
       default:
-        throw new ImplementationError("Invalid " + CdoProtocol.PROTOCOL_NAME + " signalId: "
-            + signalId);
+        throw new ImplementationError("Invalid " + PROTOCOL_NAME + " signalId: " + signalId);
     }
   }
 
@@ -90,16 +68,6 @@ public class CdoServerProtocolImpl extends AbstractCdoProtocol implements CdoSer
   public void setTransactionTemplate(TransactionTemplate transactionTemplate)
   {
     doSet("transactionTemplate", transactionTemplate);
-  }
-
-  public CdoResServerProtocol getCdoResServerProtocol()
-  {
-    return cdoResServerProtocol;
-  }
-
-  public void setCdoResServerProtocol(CdoResServerProtocol cdoResServerProtocol)
-  {
-    doSet("cdoResServerProtocol", cdoResServerProtocol);
   }
 
   protected void validate() throws ValidationException

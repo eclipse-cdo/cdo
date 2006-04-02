@@ -13,9 +13,9 @@ package org.eclipse.emf.cdo.server.protocol;
 
 import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
 
-import org.eclipse.emf.cdo.core.CdoProtocol;
-import org.eclipse.emf.cdo.server.CdoServerProtocol;
+import org.eclipse.emf.cdo.core.CDOProtocol;
 import org.eclipse.emf.cdo.server.Mapper;
+import org.eclipse.emf.cdo.server.ServerCDOProtocol;
 
 
 public class LoadObjectIndication extends AbstractIndicationWithResponse
@@ -24,7 +24,7 @@ public class LoadObjectIndication extends AbstractIndicationWithResponse
 
   public short getSignalId()
   {
-    return CdoProtocol.LOAD_OBJECT;
+    return CDOProtocol.LOAD_OBJECT;
   }
 
   public void indicate()
@@ -34,7 +34,7 @@ public class LoadObjectIndication extends AbstractIndicationWithResponse
 
   public void respond()
   {
-    Mapper mapper = ((CdoServerProtocol) getProtocol()).getMapper();
+    Mapper mapper = ((ServerCDOProtocol) getProtocol()).getMapper();
     mapper.transmitObject(getChannel(), oid);
   }
 }

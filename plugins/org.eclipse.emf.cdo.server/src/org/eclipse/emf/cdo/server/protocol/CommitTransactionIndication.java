@@ -16,17 +16,17 @@ import org.eclipse.net4j.core.Protocol;
 import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
 import org.eclipse.net4j.util.ImplementationError;
 
-import org.eclipse.emf.cdo.core.CdoProtocol;
-import org.eclipse.emf.cdo.core.OidEncoder;
+import org.eclipse.emf.cdo.core.CDOProtocol;
+import org.eclipse.emf.cdo.core.OIDEncoder;
 import org.eclipse.emf.cdo.core.protocol.ResourceChangeInfo;
 import org.eclipse.emf.cdo.server.AttributeInfo;
-import org.eclipse.emf.cdo.server.CdoResServerProtocol;
-import org.eclipse.emf.cdo.server.CdoServerProtocol;
 import org.eclipse.emf.cdo.server.ClassInfo;
 import org.eclipse.emf.cdo.server.ColumnConverter;
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.ResourceInfo;
-import org.eclipse.emf.cdo.server.impl.SqlConstants;
+import org.eclipse.emf.cdo.server.ServerCDOProtocol;
+import org.eclipse.emf.cdo.server.ServerCDOResProtocol;
+import org.eclipse.emf.cdo.server.impl.SQLConstants;
 
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.TransactionStatus;
@@ -60,14 +60,14 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
   public short getSignalId()
   {
-    return CdoProtocol.COMMIT_TRANSACTION;
+    return CDOProtocol.COMMIT_TRANSACTION;
   }
 
   public void indicate()
   {
     try
     {
-      TransactionTemplate transactionTemplate = ((CdoServerProtocol) getProtocol())
+      TransactionTemplate transactionTemplate = ((ServerCDOProtocol) getProtocol())
           .getTransactionTemplate();
       transactionTemplate.execute(new TransactionCallbackWithoutResult()
       {
@@ -224,20 +224,20 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
    */
   private long registerTempOID(long tempOID)
   {
-    OidEncoder oidEncoder = getMapper().getOidEncoder();
-    int rid = oidEncoder.getRID(-tempOID);
+    OIDEncoder oIDEncoder = getMapper().getOidEncoder();
+    int rid = oIDEncoder.getRID(-tempOID);
     ResourceInfo resourceInfo = getMapper().getResourceManager().getResourceInfo(rid, getMapper());
     long oidFragment = resourceInfo.getNextOIDFragment();
 
     Long key = new Long(tempOID);
-    long oid = oidEncoder.getOID(rid, oidFragment);
+    long oid = oIDEncoder.getOID(rid, oidFragment);
     Long val = new Long(oid);
 
     tempOIDs.put(key, val);
     oidList.add(val);
 
     if (isDebugEnabled())
-      debug("Mapping oid " + oidEncoder.toString(key) + " --> " + oidEncoder.toString(val));
+      debug("Mapping oid " + oIDEncoder.toString(key) + " --> " + oIDEncoder.toString(val));
     return oid;
   }
 
@@ -251,8 +251,8 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     if (sourceVal == null)
     {
-      OidEncoder oidEncoder = getMapper().getOidEncoder();
-      throw new ImplementationError("no mapping for temporary oid " + oidEncoder.toString(tempOID));
+      OIDEncoder oIDEncoder = getMapper().getOidEncoder();
+      throw new ImplementationError("no mapping for temporary oid " + oIDEncoder.toString(tempOID));
     }
 
     return sourceVal.longValue();
@@ -265,7 +265,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     for (;;)
     {
       long oid = receiveLong();
-      if (oid == CdoProtocol.NO_MORE_OBJECT_CHANGES)
+      if (oid == CDOProtocol.NO_MORE_OBJECT_CHANGES)
       {
         break;
       }
@@ -284,30 +284,30 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     for (;;)
     {
       byte changeKind = receiveByte();
-      if (changeKind == CdoProtocol.NO_MORE_REFERENCE_CHANGES)
+      if (changeKind == CDOProtocol.NO_MORE_REFERENCE_CHANGES)
       {
         break;
       }
 
       switch (changeKind)
       {
-        case CdoProtocol.FEATURE_SET:
+        case CDOProtocol.FEATURE_SET:
           receiveReferenceSet();
           break;
 
-        case CdoProtocol.FEATURE_UNSET:
+        case CDOProtocol.FEATURE_UNSET:
           receiveReferenceUnset();
           break;
 
-        case CdoProtocol.LIST_ADD:
+        case CDOProtocol.LIST_ADD:
           receiveReferenceAdd();
           break;
 
-        case CdoProtocol.LIST_REMOVE:
+        case CDOProtocol.LIST_REMOVE:
           receiveReferenceRemove();
           break;
 
-        case CdoProtocol.LIST_MOVE:
+        case CDOProtocol.LIST_MOVE:
           receiveReferenceMove();
           break;
 
@@ -336,9 +336,9 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     if (isDebugEnabled())
     {
-      OidEncoder oidEncoder = getMapper().getOidEncoder();
-      debug("received reference set: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
-          + ", target=" + oidEncoder.toString(target) + ", content=" + content);
+      OIDEncoder oIDEncoder = getMapper().getOidEncoder();
+      debug("received reference set: oid=" + oIDEncoder.toString(oid) + ", feature=" + feature
+          + ", target=" + oIDEncoder.toString(target) + ", content=" + content);
     }
 
     getMapper().insertReference(oid, feature, 0, target, content);
@@ -355,8 +355,8 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     if (isDebugEnabled())
     {
-      OidEncoder oidEncoder = getMapper().getOidEncoder();
-      debug("received reference unset: oid=" + oidEncoder.toString(oid) + ", feature=" + feature);
+      OIDEncoder oIDEncoder = getMapper().getOidEncoder();
+      debug("received reference unset: oid=" + oIDEncoder.toString(oid) + ", feature=" + feature);
     }
 
     getMapper().removeReference(oid, feature, 0);
@@ -381,9 +381,9 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     if (isDebugEnabled())
     {
-      OidEncoder oidEncoder = getMapper().getOidEncoder();
-      debug("received reference add: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
-          + ", ordinal=" + ordinal + ", target=" + oidEncoder.toString(target) + ", content="
+      OIDEncoder oIDEncoder = getMapper().getOidEncoder();
+      debug("received reference add: oid=" + oIDEncoder.toString(oid) + ", feature=" + feature
+          + ", ordinal=" + ordinal + ", target=" + oIDEncoder.toString(target) + ", content="
           + content);
     }
 
@@ -408,8 +408,8 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     if (isDebugEnabled())
     {
-      OidEncoder oidEncoder = getMapper().getOidEncoder();
-      debug("receiveObjectChangesReferences(REMOVE, sourceId=" + oidEncoder.toString(oid)
+      OIDEncoder oIDEncoder = getMapper().getOidEncoder();
+      debug("receiveObjectChangesReferences(REMOVE, sourceId=" + oIDEncoder.toString(oid)
           + ", featureId=" + feature + ", sourceOrdinal=" + ordinal + ")");
     }
 
@@ -430,8 +430,8 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     if (isDebugEnabled())
     {
-      OidEncoder oidEncoder = getMapper().getOidEncoder();
-      debug("received reference move: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
+      OIDEncoder oIDEncoder = getMapper().getOidEncoder();
+      debug("received reference move: oid=" + oIDEncoder.toString(oid) + ", feature=" + feature
           + ", ordinal=" + ordinal + ", moveToIndex=" + moveToIndex);
     }
 
@@ -502,7 +502,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     for (;;)
     {
       int cid = receiveInt();
-      if (cid == CdoProtocol.NO_MORE_SEGMENTS)
+      if (cid == CDOProtocol.NO_MORE_SEGMENTS)
       {
         break;
       }
@@ -538,7 +538,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     }
 
     sql.append(" WHERE ");
-    sql.append(SqlConstants.OBJECT_OID_COLUMN);
+    sql.append(SQLConstants.OBJECT_OID_COLUMN);
     sql.append("=?");
 
     getMapper().sql(sql.toString(), args);
@@ -617,8 +617,8 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     {
       Channel me = getChannel();
       int myType = me.getConnector().getType();
-      CdoServerProtocol cdo = (CdoServerProtocol) me.getProtocol();
-      CdoResServerProtocol cdores = cdo.getCdoResServerProtocol();
+      ServerCDOProtocol cdo = (ServerCDOProtocol) me.getProtocol();
+      ServerCDOResProtocol cdores = cdo.getCdoResServerProtocol();
 
       Channel[] channels = cdores.getChannels();
       for (int i = 0; i < channels.length; i++)
@@ -646,7 +646,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
   {
     if (mapper == null)
     {
-      mapper = ((CdoServerProtocol) getProtocol()).getMapper();
+      mapper = ((ServerCDOProtocol) getProtocol()).getMapper();
     }
 
     return mapper;

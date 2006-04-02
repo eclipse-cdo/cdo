@@ -11,7 +11,10 @@
 package org.eclipse.emf.cdo.server;
 
 
-public class ResourceNotFoundException extends CdoServerException
+import org.eclipse.emf.cdo.core.CDOException;
+
+
+public class ResourceNotFoundException extends CDOException
 {
   /**
    * 

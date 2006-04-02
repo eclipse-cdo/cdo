@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.protocol;
 
 import org.eclipse.net4j.core.impl.AbstractRequest;
 
-import org.eclipse.emf.cdo.core.CdoProtocol;
+import org.eclipse.emf.cdo.core.CDOProtocol;
 
 import java.util.Iterator;
 import java.util.List;
@@ -30,7 +30,7 @@ public class InvalidateObjectRequest extends AbstractRequest
 
   public short getSignalId()
   {
-    return CdoProtocol.INVALIDATE_OBJECT;
+    return CDOProtocol.INVALIDATE_OBJECT;
   }
 
   public void request()

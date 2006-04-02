@@ -21,11 +21,11 @@ public interface Mapper extends Service
 {
   public int getNextPid();
 
-  public int getNextCid();
+  public int getNextCID();
 
-  public int getNextRid();
+  public int getNextRID();
 
-  public long getNextOid(int rid);
+  public long getNextOID(int rid);
 
   public void sql(String sql);
 
@@ -77,7 +77,7 @@ public interface Mapper extends Service
 
   public void insertResource(int rid, String path);
 
-  public OIDEncoder getOidEncoder();
+  public OIDEncoder getOidEncoder(); // Don't change case! Spring will be irritated
 
   public PackageManager getPackageManager();
 

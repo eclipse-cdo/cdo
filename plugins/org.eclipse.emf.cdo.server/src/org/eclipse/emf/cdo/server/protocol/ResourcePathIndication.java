@@ -43,7 +43,7 @@ public class ResourcePathIndication extends AbstractIndicationWithResponse
 
     if (info == null)
     {
-      int rid = mapper.getNextRid();
+      int rid = mapper.getNextRID();
       resourceManager.registerResourceInfo(path, rid, 1);
 
       if (isDebugEnabled()) debug("No resource with path " + path);
@@ -52,8 +52,8 @@ public class ResourcePathIndication extends AbstractIndicationWithResponse
     }
     else
     {
-      if (isDebugEnabled()) debug("Responding rid " + info.getRid());
-      transmitInt(info.getRid());
+      if (isDebugEnabled()) debug("Responding rid " + info.getRID());
+      transmitInt(info.getRID());
     }
   }
 }

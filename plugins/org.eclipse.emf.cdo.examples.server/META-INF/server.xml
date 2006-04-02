@@ -54,7 +54,7 @@
 	<bean id="columnConverter" class="org.eclipse.emf.cdo.server.impl.ColumnConverterImpl"/>
 
 	<!-- ######################################################## -->
-	<bean id="cdoServerProtocol" class="org.eclipse.emf.cdo.server.protocol.ServerCDOProtocolImpl">
+	<bean id="serverCDOProtocol" class="org.eclipse.emf.cdo.server.protocol.ServerCDOProtocolImpl">
 		<property name="protocolManager">
 			<ref bean="protocolManager"/>
 		</property>
@@ -64,13 +64,13 @@
 		<property name="mapper">
 			<ref local="mapper"/>
 		</property>
-		<property name="cdoResServerProtocol">
-			<ref local="cdoResServerProtocol"/>
+		<property name="serverCDOResProtocol">
+			<ref local="serverCDOResProtocol"/>
 		</property>
 	</bean>
 
 	<!-- ######################################################## -->
-	<bean id="cdoResServerProtocol"
+	<bean id="serverCDOResProtocol"
 		class="org.eclipse.emf.cdo.server.protocol.ServerCDOResProtocolImpl">
 		<property name="protocolManager">
 			<ref bean="protocolManager"/>
@@ -139,7 +139,7 @@
 		<property name="jdbcTemplate">
 			<ref local="jdbcTemplate"/>
 		</property>
-		<property name="oidEncoder">
+		<property name="oidEncoder" >
 			<ref bean="oidEncoder"/>
 		</property>
 		<property name="sqlDialectName">

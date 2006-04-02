@@ -92,12 +92,12 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
     doSet("transactionTemplate", transactionTemplate);
   }
 
-  public ServerCDOResProtocol getCdoResServerProtocol()
+  public ServerCDOResProtocol getServerCDOResProtocol()
   {
     return serverCDOResProtocol;
   }
 
-  public void setCdoResServerProtocol(ServerCDOResProtocol serverCDOResProtocol)
+  public void setServerCDOResProtocol(ServerCDOResProtocol serverCDOResProtocol)
   {
     doSet("serverCDOResProtocol", serverCDOResProtocol);
   }

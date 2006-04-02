@@ -69,13 +69,13 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   protected String sqlDialectName;
 
-  protected OIDEncoder oIDEncoder;
+  protected OIDEncoder oidEncoder;
 
   private int nextPid;
 
-  private int nextRid;
+  private int nextRID;
 
-  private int nextCid;
+  private int nextCID;
 
   private transient SQLDialect cachedSqlDialect;
 
@@ -163,19 +163,19 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
   }
 
   /**
-   * @return Returns the oIDEncoder.
+   * @return Returns the oidEncoder.
    */
-  public OIDEncoder getOidEncoder()
+  public OIDEncoder getOidEncoder() // Don't change case! Spring will be irritated
   {
-    return oIDEncoder;
+    return oidEncoder;
   }
 
   /**
-   * @param oIDEncoder The oIDEncoder to set.
+   * @param oidEncoder The oidEncoder to set.
    */
-  public void setOidEncoder(OIDEncoder oIDEncoder)
+  public void setOidEncoder(OIDEncoder oidEncoder) // Don't change case! Spring will be irritated
   {
-    doSet("oIDEncoder", oIDEncoder);
+    doSet("oidEncoder", oidEncoder);
   }
 
   /**
@@ -199,23 +199,23 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     return nextPid++;
   }
 
-  public int getNextCid()
+  public int getNextCID()
   {
-    return nextCid++;
+    return nextCID++;
   }
 
-  public int getNextRid()
+  public int getNextRID()
   {
-    return nextRid++;
+    return nextRID++;
   }
 
-  public long getNextOid(int rid)
+  public long getNextOID(int rid)
   {
     ResourceInfo resourceInfo = resourceManager.getResourceInfo(rid, this);
     if (resourceInfo == null) throw new ResourceNotFoundException("Unknown RID: " + rid);
 
-    long nextOidFragment = resourceInfo.getNextOIDFragment();
-    return oIDEncoder.getOID(rid, nextOidFragment);
+    long nextOIDFragment = resourceInfo.getNextOIDFragment();
+    return oidEncoder.getOID(rid, nextOIDFragment);
   }
 
   protected void validate() throws ValidationException
@@ -225,15 +225,15 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     assertNotNull("packageManager");
     assertNotNull("resourceManager");
     assertNotNull("dataSource");
-    assertNotNull("oIDEncoder");
+    assertNotNull("oidEncoder");
     assertNotNull("jdbcTemplate");
 
     initTables();
     initPackages();
 
     nextPid = selectMaxPid() + 1;
-    nextCid = selectMaxCid() + 1;
-    nextRid = selectMaxRid() + 1;
+    nextCID = selectMaxCID() + 1;
+    nextRID = selectMaxRID() + 1;
   }
 
   protected void initTables()
@@ -348,14 +348,14 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
         ClassInfo classInfo = packageInfo.addClass(cid, name, parentName, tableName);
         initAttributes(classInfo);
 
-        if (cid > nextCid)
+        if (cid > nextCID)
         {
-          nextCid = cid;
+          nextCID = cid;
         }
       }
     });
 
-    ++nextCid;
+    ++nextCID;
   }
 
   protected void initAttributes(final ClassInfo classInfo)
@@ -363,7 +363,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     // Important to create a new template instance to handle nested select
     JdbcTemplate nestedTemplate = new JdbcTemplate(dataSource);
 
-    Object[] args = { new Integer(classInfo.getCid())};
+    Object[] args = { new Integer(classInfo.getCID())};
     if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_ATTRIBUTES, "?", args));
 
     nestedTemplate.query(SELECT_ATTRIBUTES, args, new RowCallbackHandler()
@@ -391,7 +391,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   public void insertClass(final ClassInfo classInfo)
   {
-    sql(INSERT_CLASS, new Object[] { new Integer(classInfo.getCid()), classInfo.getName(),
+    sql(INSERT_CLASS, new Object[] { new Integer(classInfo.getCID()), classInfo.getName(),
         classInfo.getParentName(), classInfo.getTableName(),
         new Integer(classInfo.getPackageInfo().getPid())});
   }
@@ -417,7 +417,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     {
       public void processRow(ResultSet resultSet) throws SQLException
       {
-        result.setRid(resultSet.getInt(1));
+        result.setRID(resultSet.getInt(1));
         ++rows[0];
       }
     });
@@ -427,8 +427,8 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
       return null;
     }
 
-    long nextOidFragment = selectMaxOidFragment(result.getRid()) + 1;
-    result.setNextOIDFragment(nextOidFragment);
+    long nextOIDFragment = selectMaxOIDFragment(result.getRID()) + 1;
+    result.setNextOIDFragment(nextOIDFragment);
 
     if (isDebugEnabled()) debug("Selected " + result);
     return result;
@@ -441,7 +441,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
     final int[] rows = new int[1];
     final ResourceInfoImpl result = new ResourceInfoImpl();
-    result.setRid(rid);
+    result.setRID(rid);
 
     jdbcTemplate.query(SELECT_PATH_OF_RESOURCE, args, new RowCallbackHandler()
     {
@@ -457,14 +457,14 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
       return null;
     }
 
-    long nextOidFragment = selectMaxOidFragment(result.getRid()) + 1;
-    result.setNextOIDFragment(nextOidFragment);
+    long nextOIDFragment = selectMaxOIDFragment(result.getRID()) + 1;
+    result.setNextOIDFragment(nextOIDFragment);
 
     if (isDebugEnabled()) debug("Selected " + result);
     return result;
   }
 
-  protected int selectMaxOidFragment(int rid)
+  protected int selectMaxOIDFragment(int rid)
   {
     Object[] args = ridBounds(rid);
     if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_MAX_OID_FRAGMENT, "?", args));
@@ -474,8 +474,8 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   private Object[] ridBounds(int rid)
   {
-    long lowerBound = oIDEncoder.getOID(rid, 1);
-    long upperBound = oIDEncoder.getOID(rid + 1, 1) - 1;
+    long lowerBound = oidEncoder.getOID(rid, 1);
+    long upperBound = oidEncoder.getOID(rid + 1, 1) - 1;
     return new Object[] { new Long(lowerBound), new Long(upperBound)};
   }
 
@@ -485,13 +485,13 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     return jdbcTemplate.queryForInt(SELECT_MAX_PID);
   }
 
-  private int selectMaxCid()
+  private int selectMaxCID()
   {
     if (isDebugEnabled()) debug(SELECT_MAX_CID);
     return jdbcTemplate.queryForInt(SELECT_MAX_CID);
   }
 
-  private int selectMaxRid()
+  private int selectMaxRID()
   {
     if (isDebugEnabled()) debug(SELECT_MAX_RID);
     return jdbcTemplate.queryForInt(SELECT_MAX_RID);
@@ -499,7 +499,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   public ResourceInfo createResource(String resourcePath)
   {
-    int rid = getNextRid();
+    int rid = getNextRID();
     sql(INSERT_RESOURCE, new Object[] { new Integer(rid), resourcePath});
     return resourceManager.registerResourceInfo(resourcePath, rid, 1);
   }
@@ -571,7 +571,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
   {
     removeReferences(oid); // TODO optimize for objects with no refs
 
-    int cid = selectCidOfObject(oid);
+    int cid = selectCIDOfObject(oid);
     ClassInfo classInfo = packageManager.getClassInfo(cid);
 
     while (classInfo != null)
@@ -583,7 +583,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     removeSegment(oid, OBJECT_TABLE);
   }
 
-  protected int selectCidOfObject(long oid)
+  protected int selectCIDOfObject(long oid)
   {
     Object[] args = { new Long(oid)};
     if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_CID_OF_OBJECT, "?", args));
@@ -648,7 +648,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
   {
     if (resourceInfo != null)
     {
-      Object[] args = ridBounds(resourceInfo.getRid());
+      Object[] args = ridBounds(resourceInfo.getRID());
       if (isDebugEnabled()) debug(StringHelper.replaceWildcards(TRANSMIT_CONTENT, "?", args));
 
       jdbcTemplate.query(TRANSMIT_CONTENT, args, new RowCallbackHandler()
@@ -660,7 +660,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
           int cid = resultSet.getInt(3);
 
           if (isDebugEnabled())
-            debug("Object: oid=" + oIDEncoder.toString(oid) + ", oca=" + oca + ", cid=" + cid);
+            debug("Object: oid=" + oidEncoder.toString(oid) + ", oca=" + oca + ", cid=" + cid);
 
           channel.transmitLong(oid);
           channel.transmitInt(oca);
@@ -691,7 +691,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
         int cid = resultSet.getInt(2);
 
         if (isDebugEnabled())
-          debug("Object: oid=" + oIDEncoder.toString(oid) + ", oca=" + oca + ", cid=" + cid);
+          debug("Object: oid=" + oidEncoder.toString(oid) + ", oca=" + oca + ", cid=" + cid);
 
         channel.transmitLong(oid);
         channel.transmitInt(oca);
@@ -753,7 +753,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     {
       Container container = (Container) it.next();
       if (isDebugEnabled())
-        debug("Container: oid=" + oIDEncoder.toString(container.oid) + ", cid=" + container.cid);
+        debug("Container: oid=" + oidEncoder.toString(container.oid) + ", cid=" + container.cid);
 
       channel.transmitLong(container.oid);
       channel.transmitInt(container.cid);
@@ -773,7 +773,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
         int cid = resultSet.getInt(3);
 
         if (isDebugEnabled())
-          debug("Reference: feature=" + feature + ", target=" + oIDEncoder.toString(target)
+          debug("Reference: feature=" + feature + ", target=" + oidEncoder.toString(target)
               + ", cid=" + cid);
 
         channel.transmitInt(feature);

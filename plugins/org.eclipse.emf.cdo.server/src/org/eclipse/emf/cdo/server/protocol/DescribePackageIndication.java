@@ -55,9 +55,9 @@ public class DescribePackageIndication extends AbstractIndicationWithResponse
     {
       ClassInfo classInfo = (ClassInfo) iter.next();
       if (isDebugEnabled())
-        debug("Responding class " + classInfo.getName() + " = " + classInfo.getCid());
+        debug("Responding class " + classInfo.getName() + " = " + classInfo.getCID());
 
-      transmitInt(classInfo.getCid());
+      transmitInt(classInfo.getCID());
       transmitString(classInfo.getName());
     }
   }
@@ -69,7 +69,7 @@ public class DescribePackageIndication extends AbstractIndicationWithResponse
 
     for (int i = 0; i < count; i++)
     {
-      int cid = getMapper().getNextCid();
+      int cid = getMapper().getNextCID();
       String name = receiveString();
       String parentName = receiveString();
       String tableName = receiveString();
@@ -99,7 +99,7 @@ public class DescribePackageIndication extends AbstractIndicationWithResponse
 
       AttributeInfo attributeInfo = classInfo.addAttribute(name, featureId, dataType, columnName,
           columnType);
-      getMapper().insertAttribute(attributeInfo, classInfo.getCid());
+      getMapper().insertAttribute(attributeInfo, classInfo.getCID());
     }
   }
 

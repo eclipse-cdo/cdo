@@ -43,12 +43,12 @@ public class ResourceInfoImpl implements ResourceInfo
     this.path = path;
   }
 
-  public int getRid()
+  public int getRID()
   {
     return rid;
   }
 
-  public void setRid(int rid)
+  public void setRID(int rid)
   {
     this.rid = rid;
   }
@@ -66,7 +66,7 @@ public class ResourceInfoImpl implements ResourceInfo
   @Override
   public String toString()
   {
-    return "ResourceInfo(rid=" + rid + ", path=" + path + ", nextOidFragment=" + nextOIDFragment
+    return "ResourceInfo(rid=" + rid + ", path=" + path + ", nextOIDFragment=" + nextOIDFragment
         + ")";
   }
 }

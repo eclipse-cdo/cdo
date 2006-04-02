@@ -22,5 +22,5 @@ public interface ServerCDOProtocol extends CDOProtocol
 
   public TransactionTemplate getTransactionTemplate();
 
-  public ServerCDOResProtocol getCdoResServerProtocol();
+  public ServerCDOResProtocol getServerCDOResProtocol();
 }

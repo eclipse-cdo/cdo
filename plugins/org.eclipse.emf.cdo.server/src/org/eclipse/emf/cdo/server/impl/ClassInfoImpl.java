@@ -49,7 +49,7 @@ public class ClassInfoImpl implements ClassInfo
     this.packageInfo = packageInfo;
   }
 
-  public int getCid()
+  public int getCID()
   {
     return cid;
   }

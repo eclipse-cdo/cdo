@@ -60,7 +60,7 @@ public class PackageManagerImpl extends ServiceImpl implements PackageManager
 
   public void registerClassInfo(ClassInfo classInfo)
   {
-    cidToClassInfoMap.put(new Integer(classInfo.getCid()), classInfo);
+    cidToClassInfoMap.put(new Integer(classInfo.getCID()), classInfo);
     nameToClassInfoMap.put(classInfo.getName(), classInfo);
   }
 

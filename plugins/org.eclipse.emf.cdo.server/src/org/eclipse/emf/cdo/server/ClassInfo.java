@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server;
 
 public interface ClassInfo
 {
-  public int getCid();
+  public int getCID();
 
   public String getName();
 

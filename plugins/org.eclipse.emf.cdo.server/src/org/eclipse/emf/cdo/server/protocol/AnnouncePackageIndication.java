@@ -54,9 +54,9 @@ public class AnnouncePackageIndication extends AbstractIndicationWithResponse
       {
         ClassInfo classInfo = classInfos[i];
         if (isDebugEnabled())
-          debug("Responding class " + classInfo.getName() + " = " + classInfo.getCid());
+          debug("Responding class " + classInfo.getName() + " = " + classInfo.getCID());
 
-        transmitInt(classInfo.getCid());
+        transmitInt(classInfo.getCID());
         transmitString(classInfo.getName());
       }
     }

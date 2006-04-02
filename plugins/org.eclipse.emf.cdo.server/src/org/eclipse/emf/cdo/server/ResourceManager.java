@@ -18,7 +18,7 @@ public interface ResourceManager extends Service
 {
   public void registerResourceInfo(ResourceInfo resourceInfo);
 
-  public ResourceInfo registerResourceInfo(String resourcePath, int rid, long nextOidFragment);
+  public ResourceInfo registerResourceInfo(String resourcePath, int rid, long nextOIDFragment);
 
   public ResourceInfo getResourceInfo(int rid, Mapper mapper);
 

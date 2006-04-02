@@ -30,13 +30,13 @@ public class ResourceManagerImpl extends ServiceImpl implements ResourceManager
   public void registerResourceInfo(ResourceInfo resourceInfo)
   {
     if (isDebugEnabled()) debug("Registering " + resourceInfo);
-    ridToResourceMap.put(resourceInfo.getRid(), resourceInfo);
+    ridToResourceMap.put(resourceInfo.getRID(), resourceInfo);
     pathToResourceMap.put(resourceInfo.getPath(), resourceInfo);
   }
 
-  public ResourceInfo registerResourceInfo(String resourcePath, int rid, long nextOidFragment)
+  public ResourceInfo registerResourceInfo(String resourcePath, int rid, long nextOIDFragment)
   {
-    ResourceInfo resourceInfo = new ResourceInfoImpl(resourcePath, rid, nextOidFragment);
+    ResourceInfo resourceInfo = new ResourceInfoImpl(resourcePath, rid, nextOIDFragment);
     registerResourceInfo(resourceInfo);
     return resourceInfo;
   }

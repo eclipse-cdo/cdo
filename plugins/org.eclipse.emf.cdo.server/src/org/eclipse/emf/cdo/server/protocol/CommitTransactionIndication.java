@@ -48,7 +48,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
   private List changedObjectIds = new ArrayList();
 
-  private Map changedObjectOidOca = new HashMap();
+  private Map changedObjectOIDOCA = new HashMap();
 
   private List oidList = new ArrayList();
 
@@ -117,7 +117,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
       Long id = (Long) iter.next();
       transmitLong(id.longValue());
 
-      Integer oca = (Integer) changedObjectOidOca.get(id);
+      Integer oca = (Integer) changedObjectOIDOCA.get(id);
       transmitInt(oca.intValue());
     }
   }
@@ -165,7 +165,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
       }
 
       ClassInfo info = receiveClassInfo();
-      getMapper().insertObject(oid, info.getCid());
+      getMapper().insertObject(oid, info.getCID());
 
       boolean isContent = receiveBoolean();
       if (isContent)
@@ -224,20 +224,20 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
    */
   private long registerTempOID(long tempOID)
   {
-    OIDEncoder oIDEncoder = getMapper().getOidEncoder();
-    int rid = oIDEncoder.getRID(-tempOID);
+    OIDEncoder oidEncoder = getMapper().getOidEncoder();
+    int rid = oidEncoder.getRID(-tempOID);
     ResourceInfo resourceInfo = getMapper().getResourceManager().getResourceInfo(rid, getMapper());
     long oidFragment = resourceInfo.getNextOIDFragment();
 
     Long key = new Long(tempOID);
-    long oid = oIDEncoder.getOID(rid, oidFragment);
+    long oid = oidEncoder.getOID(rid, oidFragment);
     Long val = new Long(oid);
 
     tempOIDs.put(key, val);
     oidList.add(val);
 
     if (isDebugEnabled())
-      debug("Mapping oid " + oIDEncoder.toString(key) + " --> " + oIDEncoder.toString(val));
+      debug("Mapping oid " + oidEncoder.toString(key) + " --> " + oidEncoder.toString(val));
     return oid;
   }
 
@@ -251,8 +251,8 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     if (sourceVal == null)
     {
-      OIDEncoder oIDEncoder = getMapper().getOidEncoder();
-      throw new ImplementationError("no mapping for temporary oid " + oIDEncoder.toString(tempOID));
+      OIDEncoder oidEncoder = getMapper().getOidEncoder();
+      throw new ImplementationError("no mapping for temporary oid " + oidEncoder.toString(tempOID));
     }
 
     return sourceVal.longValue();
@@ -336,9 +336,9 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     if (isDebugEnabled())
     {
-      OIDEncoder oIDEncoder = getMapper().getOidEncoder();
-      debug("received reference set: oid=" + oIDEncoder.toString(oid) + ", feature=" + feature
-          + ", target=" + oIDEncoder.toString(target) + ", content=" + content);
+      OIDEncoder oidEncoder = getMapper().getOidEncoder();
+      debug("received reference set: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
+          + ", target=" + oidEncoder.toString(target) + ", content=" + content);
     }
 
     getMapper().insertReference(oid, feature, 0, target, content);
@@ -355,8 +355,8 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     if (isDebugEnabled())
     {
-      OIDEncoder oIDEncoder = getMapper().getOidEncoder();
-      debug("received reference unset: oid=" + oIDEncoder.toString(oid) + ", feature=" + feature);
+      OIDEncoder oidEncoder = getMapper().getOidEncoder();
+      debug("received reference unset: oid=" + oidEncoder.toString(oid) + ", feature=" + feature);
     }
 
     getMapper().removeReference(oid, feature, 0);
@@ -381,9 +381,9 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     if (isDebugEnabled())
     {
-      OIDEncoder oIDEncoder = getMapper().getOidEncoder();
-      debug("received reference add: oid=" + oIDEncoder.toString(oid) + ", feature=" + feature
-          + ", ordinal=" + ordinal + ", target=" + oIDEncoder.toString(target) + ", content="
+      OIDEncoder oidEncoder = getMapper().getOidEncoder();
+      debug("received reference add: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
+          + ", ordinal=" + ordinal + ", target=" + oidEncoder.toString(target) + ", content="
           + content);
     }
 
@@ -408,8 +408,8 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     if (isDebugEnabled())
     {
-      OIDEncoder oIDEncoder = getMapper().getOidEncoder();
-      debug("receiveObjectChangesReferences(REMOVE, sourceId=" + oIDEncoder.toString(oid)
+      OIDEncoder oidEncoder = getMapper().getOidEncoder();
+      debug("receiveObjectChangesReferences(REMOVE, sourceId=" + oidEncoder.toString(oid)
           + ", featureId=" + feature + ", sourceOrdinal=" + ordinal + ")");
     }
 
@@ -430,8 +430,8 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     if (isDebugEnabled())
     {
-      OIDEncoder oIDEncoder = getMapper().getOidEncoder();
-      debug("received reference move: oid=" + oIDEncoder.toString(oid) + ", feature=" + feature
+      OIDEncoder oidEncoder = getMapper().getOidEncoder();
+      debug("received reference move: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
           + ", ordinal=" + ordinal + ", moveToIndex=" + moveToIndex);
     }
 
@@ -487,7 +487,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
   {
     Long key = new Long(oid);
     changedObjectIds.add(key);
-    changedObjectOidOca.put(key, new Integer(oca));
+    changedObjectOIDOCA.put(key, new Integer(oca));
   }
 
   /**
@@ -618,7 +618,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
       Channel me = getChannel();
       int myType = me.getConnector().getType();
       ServerCDOProtocol cdo = (ServerCDOProtocol) me.getProtocol();
-      ServerCDOResProtocol cdores = cdo.getCdoResServerProtocol();
+      ServerCDOResProtocol cdores = cdo.getServerCDOResProtocol();
 
       Channel[] channels = cdores.getChannels();
       for (int i = 0; i < channels.length; i++)

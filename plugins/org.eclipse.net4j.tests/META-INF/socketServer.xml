@@ -34,7 +34,7 @@
 	<bean id="multiplexer" class="org.eclipse.net4j.core.impl.MultiplexerImpl"/>
 
 	<!-- ######################################################## -->
-	<bean id="basicServerProtocol" class="org.eclipse.net4j.core.protocol.BasicServerProtocol">
+	<bean id="serverControlProtocol" class="org.eclipse.net4j.core.protocol.ServerControlProtocol">
 		<property name="protocolManager">
 			<ref local="protocolManager"/>
 		</property>

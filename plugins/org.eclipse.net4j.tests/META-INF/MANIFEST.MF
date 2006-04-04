@@ -6,7 +6,10 @@ Bundle-Version: 1.0.0
 Bundle-ClassPath: library.jar
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.core.runtime
+Require-Bundle: org.eclipse.core.runtime,
+ org.junit,
+ org.eclipse.net4j,
+ org.eclipse.net4j.spring.tests
 Eclipse-LazyStart: false
 Export-Package: org.eclipse.net4j.tests,
  org.eclipse.net4j.tests.protocol,

@@ -8,14 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.test;
+package org.eclipse.net4j.tests;
 
 
 import org.eclipse.net4j.core.Channel;
 import org.eclipse.net4j.core.Connector;
 import org.eclipse.net4j.core.Request;
-import org.eclipse.net4j.test.protocol.Net4jTestProtocol;
-import org.eclipse.net4j.test.protocol.TestRequest;
+import org.eclipse.net4j.tests.protocol.Net4jTestProtocol;
+import org.eclipse.net4j.tests.protocol.TestRequest;
 import org.eclipse.net4j.util.thread.DeadlockDetector;
 
 import junit.framework.TestCase;

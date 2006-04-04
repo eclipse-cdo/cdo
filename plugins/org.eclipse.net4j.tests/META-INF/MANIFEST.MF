@@ -1,13 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: org.eclipse.net4j.test;singleton:=true
+Bundle-SymbolicName: org.eclipse.net4j.tests;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-ClassPath: library.jar
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime
 Eclipse-LazyStart: false
-Export-Package: org.eclipse.net4j.test,
- org.eclipse.net4j.test.protocol,
- org.eclipse.net4j.test.util
+Export-Package: org.eclipse.net4j.tests,
+ org.eclipse.net4j.tests.protocol,
+ org.eclipse.net4j.tests.util

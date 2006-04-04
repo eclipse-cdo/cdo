@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.test.util;
+package org.eclipse.net4j.tests.util;
 
 
 import org.eclipse.net4j.spring.InactiveException;

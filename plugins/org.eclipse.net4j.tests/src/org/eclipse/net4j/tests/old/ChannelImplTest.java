@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.test;
+package org.eclipse.net4j.tests;
 
 
 import org.eclipse.net4j.core.Connector;
@@ -21,9 +21,9 @@ import org.eclipse.net4j.spring.Container;
 import org.eclipse.net4j.spring.Service;
 import org.eclipse.net4j.spring.ValidationException;
 import org.eclipse.net4j.spring.impl.ContainerImpl;
-import org.eclipse.net4j.test.util.BlockingDetector;
-import org.eclipse.net4j.test.util.ServiceInvoker;
-import org.eclipse.net4j.test.util.TestUtils;
+import org.eclipse.net4j.tests.util.BlockingDetector;
+import org.eclipse.net4j.tests.util.ServiceInvoker;
+import org.eclipse.net4j.tests.util.TestUtils;
 import org.eclipse.net4j.util.ImplementationError;
 
 import org.easymock.MockControl;

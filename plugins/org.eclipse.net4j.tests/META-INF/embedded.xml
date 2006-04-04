@@ -58,7 +58,7 @@
 	</bean>
 
 	<!-- ######################################################## -->
-	<bean id="protocol" class="org.eclipse.net4j.test.protocol.Net4jTestProtocol">
+	<bean id="protocol" class="org.eclipse.net4j.tests.protocol.Net4jTestProtocol">
 		<property name="protocolManager">
 			<ref local="protocolManager"/>
 		</property>

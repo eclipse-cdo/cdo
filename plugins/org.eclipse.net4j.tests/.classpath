@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="org/eclipse/net4j/test/ChannelImplTest.java|org/eclipse/net4j/test/PoolTest.java|org/eclipse/net4j/test/SelectorTest.java|org/eclipse/net4j/test/SocketConnectorTest.java|org/eclipse/net4j/test/old/ChannelImplTest.java|org/eclipse/net4j/test/old/PoolTest.java|org/eclipse/net4j/test/old/SelectorTest.java|org/eclipse/net4j/test/old/SocketConnectorTest.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="/org.eclipse.net4j.core"/>
-	<classpathentry kind="src" path="/org.eclipse.net4j.embedded"/>
-	<classpathentry kind="src" path="/org.eclipse.net4j.socket"/>
-	<classpathentry kind="src" path="/org.eclipse.net4j.spring"/>
-	<classpathentry kind="src" path="/org.eclipse.net4j.util"/>
-	<classpathentry sourcepath="/ECLIPSE_HOME/plugins/org.eclipse.jdt.source_3.2.0.v20060215-1200-0cq-cuim1y/src/org.junit_3.8.1/junitsrc.zip" kind="var" path="JUNIT_HOME/junit.jar"/>
 	<classpathentry kind="lib" path="lib/easymock.jar"/>
 	<classpathentry kind="lib" path="lib/easymockclassextension.jar"/>
 	<classpathentry kind="output" path="bin"/>

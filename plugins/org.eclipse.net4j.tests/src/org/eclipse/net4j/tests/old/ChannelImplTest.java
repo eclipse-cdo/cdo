@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.tests;
+package org.eclipse.net4j.tests.old;
 
 
 import org.eclipse.net4j.core.Connector;
@@ -19,9 +19,9 @@ import org.eclipse.net4j.core.impl.BufferImpl;
 import org.eclipse.net4j.core.impl.ChannelImpl;
 import org.eclipse.net4j.spring.Container;
 import org.eclipse.net4j.spring.Service;
-import org.eclipse.net4j.spring.ValidationException;
+//import org.eclipse.net4j.spring.ValidationException;
 import org.eclipse.net4j.spring.impl.ContainerImpl;
-import org.eclipse.net4j.tests.util.BlockingDetector;
+//import org.eclipse.net4j.tests.util.BlockingDetector;
 import org.eclipse.net4j.tests.util.ServiceInvoker;
 import org.eclipse.net4j.tests.util.TestUtils;
 import org.eclipse.net4j.util.ImplementationError;
@@ -170,16 +170,16 @@ public class ChannelImplTest extends TestCase
     assertNull("getConnector returns null", result);
   }
 
-  public final void testSetGetDispatcher()
-  {
-    channel.setDispatcher(dispatcherMock);
-    Executor result = channel.getDispatcher();
-    assertEquals("getDispatcher returns the value of setDispatcher", dispatcherMock, result);
-
-    channel.setDispatcher(null);
-    result = channel.getDispatcher();
-    assertNull("getDispatcher returns null", result);
-  }
+//  public final void testSetGetDispatcher()
+//  {
+//    channel.setDispatcher(dispatcherMock);
+//    Executor result = channel.getDispatcher();
+//    assertEquals("getDispatcher returns the value of setDispatcher", dispatcherMock, result);
+//
+//    channel.setDispatcher(null);
+//    result = channel.getDispatcher();
+//    assertNull("getDispatcher returns null", result);
+//  }
 
   public final void testSetGetMultiplexer()
   {
@@ -203,19 +203,19 @@ public class ChannelImplTest extends TestCase
     assertNull("getProtocol returns null", result);
   }
 
-  public final void testSetGetInternalReturnValue()
-  {
-    Object returnValue = new Object();
-
-    channel.internalSetReturnValue(returnValue);
-    Object result = channel.testGetReturnValue();
-    assertEquals("testGetReturnValue returns the value of internalSetReturnValue", returnValue,
-        result);
-
-    channel.internalSetReturnValue(null);
-    result = channel.testGetReturnValue();
-    assertNull("testGetReturnValue returns null", result);
-  }
+//  public final void testSetGetInternalReturnValue()
+//  {
+//    Object returnValue = new Object();
+//
+//    channel.internalSetReturnValue(returnValue);
+//    Object result = channel.testGetReturnValue();
+//    assertEquals("testGetReturnValue returns the value of internalSetReturnValue", returnValue,
+//        result);
+//
+//    channel.internalSetReturnValue(null);
+//    result = channel.testGetReturnValue();
+//    assertNull("testGetReturnValue returns null", result);
+//  }
 
   public final void testSetGetProtocolData()
   {
@@ -257,36 +257,36 @@ public class ChannelImplTest extends TestCase
     };
   }
 
-  public final void testValidate()
-  {
-    channel.setDispatcher(dispatcherMock);
-    channel.setMultiplexer(multiplexerMock);
-    channel.testValidate();
-
-    try
-    {
-      channel.setDispatcher(null);
-      channel.setMultiplexer(multiplexerMock);
-      channel.testValidate();
-      fail("expected ValidationException");
-    }
-    catch (ValidationException expected)
-    {
-      TestUtils.assertContains(expected, "dispatcher");
-    }
-
-    try
-    {
-      channel.setDispatcher(dispatcherMock);
-      channel.setMultiplexer(null);
-      channel.testValidate();
-      fail("expected ValidationException");
-    }
-    catch (ValidationException expected)
-    {
-      TestUtils.assertContains(expected, "multiplexer");
-    }
-  }
+//  public final void testValidate()
+//  {
+//    channel.setDispatcher(dispatcherMock);
+//    channel.setMultiplexer(multiplexerMock);
+//    channel.testValidate();
+//
+//    try
+//    {
+//      channel.setDispatcher(null);
+//      channel.setMultiplexer(multiplexerMock);
+//      channel.testValidate();
+//      fail("expected ValidationException");
+//    }
+//    catch (ValidationException expected)
+//    {
+//      TestUtils.assertContains(expected, "dispatcher");
+//    }
+//
+//    try
+//    {
+//      channel.setDispatcher(dispatcherMock);
+//      channel.setMultiplexer(null);
+//      channel.testValidate();
+//      fail("expected ValidationException");
+//    }
+//    catch (ValidationException expected)
+//    {
+//      TestUtils.assertContains(expected, "multiplexer");
+//    }
+//  }
 
   /**
    * PRECONDITION: 	dataSize == 0
@@ -294,29 +294,29 @@ public class ChannelImplTest extends TestCase
    * EXPECTATION: 	doesn't block; 
    * 				throws IllegalArgumentException
    */
-  public final void testEnsureReceiverBuffer1() throws Throwable
-  {
-    BlockingQueue<BufferImpl> receiverQueue = new LinkedBlockingQueue();
-    channel.testSetReceiverQueue(receiverQueue);
-
-    start();
-    try
-    {
-      new BlockingDetector(channel, receiverQueue, false)
-      {
-        protected void blockableOperation(Object target) throws Exception
-        {
-          ((ChannelImpl) target).testEnsureReceiverBufferData(0);
-        }
-      };
-      fail("IllegalArgumentException expected");
-    }
-    catch (IllegalArgumentException expected)
-    {
-      TestUtils.assertContains(expected, "dataSize");
-    }
-    verify();
-  }
+//  public final void testEnsureReceiverBuffer1() throws Throwable
+//  {
+//    BlockingQueue<BufferImpl> receiverQueue = new LinkedBlockingQueue();
+//    channel.testSetReceiverQueue(receiverQueue);
+//
+//    start();
+//    try
+//    {
+//      new BlockingDetector(channel, receiverQueue, false)
+//      {
+//        protected void blockableOperation(Object target) throws Exception
+//        {
+//          ((ChannelImpl) target).testEnsureReceiverBufferData(0);
+//        }
+//      };
+//      fail("IllegalArgumentException expected");
+//    }
+//    catch (IllegalArgumentException expected)
+//    {
+//      TestUtils.assertContains(expected, "dataSize");
+//    }
+//    verify();
+//  }
 
   /**
    * PRECONDITION: 	dataSize < 0
@@ -324,29 +324,29 @@ public class ChannelImplTest extends TestCase
    * EXPECTATION: 	doesn't block; 
    * 				throws IllegalArgumentException
    */
-  public final void testEnsureReceiverBuffer2() throws Throwable
-  {
-    BlockingQueue<BufferImpl> receiverQueue = new LinkedBlockingQueue();
-    channel.testSetReceiverQueue(receiverQueue);
-
-    start();
-    try
-    {
-      new BlockingDetector(channel, receiverQueue, false)
-      {
-        protected void blockableOperation(Object target) throws Exception
-        {
-          ((ChannelImpl) target).testEnsureReceiverBufferData(-1);
-        }
-      };
-      fail("IllegalArgumentException expected");
-    }
-    catch (IllegalArgumentException expected)
-    {
-      TestUtils.assertContains(expected, "dataSize");
-    }
-    verify();
-  }
+//  public final void testEnsureReceiverBuffer2() throws Throwable
+//  {
+//    BlockingQueue<BufferImpl> receiverQueue = new LinkedBlockingQueue();
+//    channel.testSetReceiverQueue(receiverQueue);
+//
+//    start();
+//    try
+//    {
+//      new BlockingDetector(channel, receiverQueue, false)
+//      {
+//        protected void blockableOperation(Object target) throws Exception
+//        {
+//          ((ChannelImpl) target).testEnsureReceiverBufferData(-1);
+//        }
+//      };
+//      fail("IllegalArgumentException expected");
+//    }
+//    catch (IllegalArgumentException expected)
+//    {
+//      TestUtils.assertContains(expected, "dataSize");
+//    }
+//    verify();
+//  }
 
   /**
    * PRECONDITION: 	receiverBuffer exists; 
@@ -355,32 +355,32 @@ public class ChannelImplTest extends TestCase
    * EXPECTATION: 	doesn't block; 
    * 				throws ImplementationError
    */
-  public final void testEnsureReceiverBuffer3() throws Throwable
-  {
-    BufferImpl receiverBuffer = createBuffer(20, 3, true);
-    channel.testSetReceiverBuffer(receiverBuffer);
-
-    BlockingQueue<BufferImpl> receiverQueue = new LinkedBlockingQueue();
-    channel.testSetReceiverQueue(receiverQueue);
-
-    start();
-    try
-    {
-      new BlockingDetector(channel, receiverQueue, false)
-      {
-        protected void blockableOperation(Object target) throws Exception
-        {
-          ((ChannelImpl) target).testEnsureReceiverBufferData(7);
-        }
-      };
-      fail("ImplementationError expected");
-    }
-    catch (ImplementationError expected)
-    {
-      TestUtils.assertContains(expected, "receiverBuffer level too low");
-    }
-    verify();
-  }
+//  public final void testEnsureReceiverBuffer3() throws Throwable
+//  {
+//    BufferImpl receiverBuffer = createBuffer(20, 3, true);
+//    channel.testSetReceiverBuffer(receiverBuffer);
+//
+//    BlockingQueue<BufferImpl> receiverQueue = new LinkedBlockingQueue();
+//    channel.testSetReceiverQueue(receiverQueue);
+//
+//    start();
+//    try
+//    {
+//      new BlockingDetector(channel, receiverQueue, false)
+//      {
+//        protected void blockableOperation(Object target) throws Exception
+//        {
+//          ((ChannelImpl) target).testEnsureReceiverBufferData(7);
+//        }
+//      };
+//      fail("ImplementationError expected");
+//    }
+//    catch (ImplementationError expected)
+//    {
+//      TestUtils.assertContains(expected, "receiverBuffer level too low");
+//    }
+//    verify();
+//  }
 
   /**
    * PRECONDITION: 	receiverBuffer exists; 
@@ -389,24 +389,24 @@ public class ChannelImplTest extends TestCase
    * EXPECTATION: 	doesn't block; 
    * 				receiverBuffer not returned to bufferPool
    */
-  public final void testEnsureReceiverBuffer4() throws Throwable
-  {
-    BufferImpl receiverBuffer = createBuffer(20, 12, true);
-    channel.testSetReceiverBuffer(receiverBuffer);
-
-    BlockingQueue<BufferImpl> receiverQueue = new LinkedBlockingQueue();
-    channel.testSetReceiverQueue(receiverQueue);
-
-    start();
-    new BlockingDetector(channel, receiverQueue, false)
-    {
-      protected void blockableOperation(Object target) throws Exception
-      {
-        ((ChannelImpl) target).testEnsureReceiverBufferData(7);
-      }
-    };
-    verify();
-  }
+//  public final void testEnsureReceiverBuffer4() throws Throwable
+//  {
+//    BufferImpl receiverBuffer = createBuffer(20, 12, true);
+//    channel.testSetReceiverBuffer(receiverBuffer);
+//
+//    BlockingQueue<BufferImpl> receiverQueue = new LinkedBlockingQueue();
+//    channel.testSetReceiverQueue(receiverQueue);
+//
+//    start();
+//    new BlockingDetector(channel, receiverQueue, false)
+//    {
+//      protected void blockableOperation(Object target) throws Exception
+//      {
+//        ((ChannelImpl) target).testEnsureReceiverBufferData(7);
+//      }
+//    };
+//    verify();
+//  }
 
   /**
    * PRECONDITION: 	receiverBuffer exists; 
@@ -415,24 +415,24 @@ public class ChannelImplTest extends TestCase
    * EXPECTATION: 	doesn't block; 
    * 				receiverBuffer not returned to bufferPool
    */
-  public final void testEnsureReceiverBuffer5() throws Throwable
-  {
-    BufferImpl receiverBuffer = createBuffer(20, 12, true);
-    channel.testSetReceiverBuffer(receiverBuffer);
-
-    BlockingQueue<BufferImpl> receiverQueue = new LinkedBlockingQueue();
-    channel.testSetReceiverQueue(receiverQueue);
-
-    start();
-    new BlockingDetector(channel, receiverQueue, false)
-    {
-      protected void blockableOperation(Object target) throws Exception
-      {
-        ((ChannelImpl) target).testEnsureReceiverBufferData(12);
-      }
-    };
-    verify();
-  }
+//  public final void testEnsureReceiverBuffer5() throws Throwable
+//  {
+//    BufferImpl receiverBuffer = createBuffer(20, 12, true);
+//    channel.testSetReceiverBuffer(receiverBuffer);
+//
+//    BlockingQueue<BufferImpl> receiverQueue = new LinkedBlockingQueue();
+//    channel.testSetReceiverQueue(receiverQueue);
+//
+//    start();
+//    new BlockingDetector(channel, receiverQueue, false)
+//    {
+//      protected void blockableOperation(Object target) throws Exception
+//      {
+//        ((ChannelImpl) target).testEnsureReceiverBufferData(12);
+//      }
+//    };
+//    verify();
+//  }
 
   /**
    * PRECONDITION: 	receiverBuffer exists; 
@@ -442,27 +442,27 @@ public class ChannelImplTest extends TestCase
    * EXPECTATION: 	receiverBuffer returned to bufferPool; 
    * 				blocks
    */
-  public final void testEnsureReceiverBuffer6() throws Throwable
-  {
-    BufferImpl receiverBuffer = createBuffer(20, 0, true);
-    channel.testSetReceiverBuffer(receiverBuffer);
-
-    BlockingQueue<BufferImpl> receiverQueue = new LinkedBlockingQueue();
-    channel.testSetReceiverQueue(receiverQueue);
-
-    connectorMock.releaseBuffer(receiverBuffer);
-    channel.setConnector(connectorMock);
-
-    start();
-    new BlockingDetector(channel, receiverQueue, true)
-    {
-      protected void blockableOperation(Object target) throws Exception
-      {
-        ((ChannelImpl) target).testEnsureReceiverBufferData(7);
-      }
-    };
-    verify();
-  }
+//  public final void testEnsureReceiverBuffer6() throws Throwable
+//  {
+//    BufferImpl receiverBuffer = createBuffer(20, 0, true);
+//    channel.testSetReceiverBuffer(receiverBuffer);
+//
+//    BlockingQueue<BufferImpl> receiverQueue = new LinkedBlockingQueue();
+//    channel.testSetReceiverQueue(receiverQueue);
+//
+//    connectorMock.releaseBuffer(receiverBuffer);
+//    channel.setConnector(connectorMock);
+//
+//    start();
+//    new BlockingDetector(channel, receiverQueue, true)
+//    {
+//      protected void blockableOperation(Object target) throws Exception
+//      {
+//        ((ChannelImpl) target).testEnsureReceiverBufferData(7);
+//      }
+//    };
+//    verify();
+//  }
 
   /**
    * PRECONDITION: 	receiverBuffer exists; 
@@ -473,35 +473,35 @@ public class ChannelImplTest extends TestCase
    * 				receiverBuffer returned to bufferPool
    * 				throws ImplementationError
    */
-  public final void testEnsureReceiverBuffer7() throws Throwable
-  {
-    BufferImpl receiverBuffer = createBuffer(20, 0, true);
-    channel.testSetReceiverBuffer(receiverBuffer);
-
-    BlockingQueue<BufferImpl> receiverQueue = createBufferQueue(20, 5, true);
-    channel.testSetReceiverQueue(receiverQueue);
-
-    connectorMock.releaseBuffer(receiverBuffer);
-    channel.setConnector(connectorMock);
-
-    start();
-    try
-    {
-      new BlockingDetector(channel, receiverQueue, false)
-      {
-        protected void blockableOperation(Object target) throws Exception
-        {
-          ((ChannelImpl) target).testEnsureReceiverBufferData(7);
-        }
-      };
-      fail("ImplementationError expected");
-    }
-    catch (ImplementationError expected)
-    {
-      TestUtils.assertContains(expected, "receiverBuffer level too low");
-    }
-    verify();
-  }
+//  public final void testEnsureReceiverBuffer7() throws Throwable
+//  {
+//    BufferImpl receiverBuffer = createBuffer(20, 0, true);
+//    channel.testSetReceiverBuffer(receiverBuffer);
+//
+//    BlockingQueue<BufferImpl> receiverQueue = createBufferQueue(20, 5, true);
+//    channel.testSetReceiverQueue(receiverQueue);
+//
+//    connectorMock.releaseBuffer(receiverBuffer);
+//    channel.setConnector(connectorMock);
+//
+//    start();
+//    try
+//    {
+//      new BlockingDetector(channel, receiverQueue, false)
+//      {
+//        protected void blockableOperation(Object target) throws Exception
+//        {
+//          ((ChannelImpl) target).testEnsureReceiverBufferData(7);
+//        }
+//      };
+//      fail("ImplementationError expected");
+//    }
+//    catch (ImplementationError expected)
+//    {
+//      TestUtils.assertContains(expected, "receiverBuffer level too low");
+//    }
+//    verify();
+//  }
 
   /**
    * PRECONDITION: 	receiverBuffer exists; 
@@ -511,27 +511,27 @@ public class ChannelImplTest extends TestCase
    * EXPECTATION: 	doesn't block; 
    * 				receiverBuffer returned to bufferPool
    */
-  public final void testEnsureReceiverBuffer8() throws Throwable
-  {
-    BufferImpl receiverBuffer = createBuffer(20, 0, true);
-    channel.testSetReceiverBuffer(receiverBuffer);
-
-    BlockingQueue<BufferImpl> receiverQueue = createBufferQueue(20, 7, true);
-    channel.testSetReceiverQueue(receiverQueue);
-
-    connectorMock.releaseBuffer(receiverBuffer);
-    channel.setConnector(connectorMock);
-
-    start();
-    new BlockingDetector(channel, receiverQueue, false)
-    {
-      protected void blockableOperation(Object target) throws Exception
-      {
-        ((ChannelImpl) target).testEnsureReceiverBufferData(7);
-      }
-    };
-    verify();
-  }
+//  public final void testEnsureReceiverBuffer8() throws Throwable
+//  {
+//    BufferImpl receiverBuffer = createBuffer(20, 0, true);
+//    channel.testSetReceiverBuffer(receiverBuffer);
+//
+//    BlockingQueue<BufferImpl> receiverQueue = createBufferQueue(20, 7, true);
+//    channel.testSetReceiverQueue(receiverQueue);
+//
+//    connectorMock.releaseBuffer(receiverBuffer);
+//    channel.setConnector(connectorMock);
+//
+//    start();
+//    new BlockingDetector(channel, receiverQueue, false)
+//    {
+//      protected void blockableOperation(Object target) throws Exception
+//      {
+//        ((ChannelImpl) target).testEnsureReceiverBufferData(7);
+//      }
+//    };
+//    verify();
+//  }
 
   /**
    * PRECONDITION: 	receiverBuffer exists; 
@@ -541,27 +541,27 @@ public class ChannelImplTest extends TestCase
    * EXPECTATION: 	doesn't block; 
    * 				receiverBuffer returned to bufferPool
    */
-  public final void testEnsureReceiverBuffer9() throws Throwable
-  {
-    BufferImpl receiverBuffer = createBuffer(20, 0, true);
-    channel.testSetReceiverBuffer(receiverBuffer);
-
-    BlockingQueue<BufferImpl> receiverQueue = createBufferQueue(20, 12, true);
-    channel.testSetReceiverQueue(receiverQueue);
-
-    connectorMock.releaseBuffer(receiverBuffer);
-    channel.setConnector(connectorMock);
-
-    start();
-    new BlockingDetector(channel, receiverQueue, false)
-    {
-      protected void blockableOperation(Object target) throws Exception
-      {
-        ((ChannelImpl) target).testEnsureReceiverBufferData(7);
-      }
-    };
-    verify();
-  }
+//  public final void testEnsureReceiverBuffer9() throws Throwable
+//  {
+//    BufferImpl receiverBuffer = createBuffer(20, 0, true);
+//    channel.testSetReceiverBuffer(receiverBuffer);
+//
+//    BlockingQueue<BufferImpl> receiverQueue = createBufferQueue(20, 12, true);
+//    channel.testSetReceiverQueue(receiverQueue);
+//
+//    connectorMock.releaseBuffer(receiverBuffer);
+//    channel.setConnector(connectorMock);
+//
+//    start();
+//    new BlockingDetector(channel, receiverQueue, false)
+//    {
+//      protected void blockableOperation(Object target) throws Exception
+//      {
+//        ((ChannelImpl) target).testEnsureReceiverBufferData(7);
+//      }
+//    };
+//    verify();
+//  }
 
   /**
    * PRECONDITION: 	transmitterBuffer doesn't exists
@@ -589,15 +589,15 @@ public class ChannelImplTest extends TestCase
    * 
    * EXPECTATION: 	immediately returns
    */
-  public final void testFlush2()
-  {
-    BufferImpl transmitterBuffer = createBuffer(20, 0, false);
-    channel.testSetTransmitterBuffer(transmitterBuffer);
-
-    start();
-    channel.flush();
-    verify();
-  }
+//  public final void testFlush2()
+//  {
+//    BufferImpl transmitterBuffer = createBuffer(20, 0, false);
+//    channel.testSetTransmitterBuffer(transmitterBuffer);
+//
+//    start();
+//    channel.flush();
+//    verify();
+//  }
 
   /**
    * PRECONDITION: 	transmitterBuffer exists;
@@ -609,32 +609,32 @@ public class ChannelImplTest extends TestCase
    * 				a new transmitterBuffer is fetched from the bufferPool;
    * 				the new transmitterBuffer is empty
    */
-  public final void testFlush3()
-  {
-    BufferImpl transmitterBuffer = createBuffer(20, 7, false);
-    channel.testSetTransmitterBuffer(transmitterBuffer);
-
-    BlockingQueue<BufferImpl> transmitterQueue = new LinkedBlockingQueue();
-    channel.testSetTransmitterQueue(transmitterQueue);
-
-    multiplexerMock.schedule(channel);
-    channel.setMultiplexer(multiplexerMock);
-
-    connectorMockControl.expectAndReturn(connectorMock.provideBuffer(), createBuffer(10, 10, true));
-    channel.setConnector(connectorMock);
-
-    start();
-    channel.flush();
-    verify();
-
-    assertTrue("transmitterBuffer is flipped", transmitterBuffer.position() == 0);
-    assertTrue("transmitterBuffer is in transmitterQueue",
-        transmitterQueue.peek() == transmitterBuffer);
-    assertNotSame("a new transmitterBuffer is expected", transmitterBuffer, channel
-        .testGetTransmitterBuffer());
-    assertTrue("the new transmitterBuffer must be empty", channel.testGetTransmitterBuffer()
-        .position() < channel.testGetTransmitterBuffer().limit()); // TODO test emptyness
-  }
+//  public final void testFlush3()
+//  {
+//    BufferImpl transmitterBuffer = createBuffer(20, 7, false);
+//    channel.testSetTransmitterBuffer(transmitterBuffer);
+//
+//    BlockingQueue<BufferImpl> transmitterQueue = new LinkedBlockingQueue();
+//    channel.testSetTransmitterQueue(transmitterQueue);
+//
+//    multiplexerMock.schedule(channel);
+//    channel.setMultiplexer(multiplexerMock);
+//
+//    connectorMockControl.expectAndReturn(connectorMock.provideBuffer(), createBuffer(10, 10, true));
+//    channel.setConnector(connectorMock);
+//
+//    start();
+//    channel.flush();
+//    verify();
+//
+//    assertTrue("transmitterBuffer is flipped", transmitterBuffer.position() == 0);
+//    assertTrue("transmitterBuffer is in transmitterQueue",
+//        transmitterQueue.peek() == transmitterBuffer);
+//    assertNotSame("a new transmitterBuffer is expected", transmitterBuffer, channel
+//        .testGetTransmitterBuffer());
+//    assertTrue("the new transmitterBuffer must be empty", channel.testGetTransmitterBuffer()
+//        .position() < channel.testGetTransmitterBuffer().limit()); // TODO test emptyness
+//  }
 
   //  public final void testReceiveBoolean()
   //  {

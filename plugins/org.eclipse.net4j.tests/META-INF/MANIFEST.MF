@@ -6,7 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: library.jar
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Eclipse-LazyStart: true
+Eclipse-LazyStart: false
 Export-Package: org.eclipse.net4j.tests,
  org.eclipse.net4j.tests.protocol,
  org.eclipse.net4j.tests.util

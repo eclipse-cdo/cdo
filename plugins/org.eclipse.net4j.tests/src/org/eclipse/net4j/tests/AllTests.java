@@ -8,8 +8,8 @@ public class AllTests {
 
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Test for org.eclipse.net4j.tests");
-//      TODO: connect JUnit tests here.
-        
+//       TODO: add real JUnit tests here
+		suite.addTestSuite(SampleTest.class);
 		return suite;
 	}
 

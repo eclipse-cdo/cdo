@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.tests;
+package org.eclipse.net4j.tests.old;
 
 
 import org.eclipse.net4j.core.Connector;
@@ -19,7 +19,7 @@ import org.eclipse.net4j.socket.impl.PassiveSocketConnectorImpl;
 import org.eclipse.net4j.socket.impl.SocketAcceptorImpl;
 import org.eclipse.net4j.spring.Container;
 import org.eclipse.net4j.spring.impl.ContainerImpl;
-import org.eclipse.net4j.tests.SocketConnectorTest.TestAcceptor.PassiveTestConnector;
+import org.eclipse.net4j.tests.old.SocketConnectorTest.TestAcceptor.PassiveTestConnector;
 
 import java.nio.channels.SocketChannel;
 

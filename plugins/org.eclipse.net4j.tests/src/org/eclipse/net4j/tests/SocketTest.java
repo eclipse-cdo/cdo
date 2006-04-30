@@ -265,22 +265,22 @@ public class SocketTest extends TestCase
 
   public final void testEmbedded() throws Exception
   {
-    serverContainer = new TestContainer.Embedded();
-    Connector connector = serverContainer.getConnector();
-    Channel channel = connector.addChannel(Net4jTestProtocol.PROTOCOL_NAME);
-
-    double total = 0.0;
-    for (int i = 1; i <= 1000; i++)
-    {
-      long t0 = System.nanoTime();
-      echo(channel, VALUES);
-      long t1 = System.nanoTime();
-
-      double duration = t1 - t0;
-      total += duration;
-      System.out.println("Run " + i + ": " + (duration / 1000000d));
-    }
-
-    System.out.println("Average: " + (total / 1000000000d) + " millisec");
+    //    serverContainer = new TestContainer.Embedded();
+    //    Connector connector = serverContainer.getConnector();
+    //    Channel channel = connector.addChannel(Net4jTestProtocol.PROTOCOL_NAME);
+    //
+    //    double total = 0.0;
+    //    for (int i = 1; i <= 1000; i++)
+    //    {
+    //      long t0 = System.nanoTime();
+    //      echo(channel, VALUES);
+    //      long t1 = System.nanoTime();
+    //
+    //      double duration = t1 - t0;
+    //      total += duration;
+    //      System.out.println("Run " + i + ": " + (duration / 1000000d));
+    //    }
+    //
+    //    System.out.println("Average: " + (total / 1000000000d) + " millisec");
   }
 }

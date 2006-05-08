@@ -12,7 +12,7 @@
  *
  * </copyright>
  *
- * $Id: AllSuites.java,v 1.1 2006-04-17 21:13:10 nickb Exp $
+ * $Id: AllSuites.java,v 1.2 2006-05-08 19:27:23 nickb Exp $
  */
 
 package org.eclipse.net4j.tests;
@@ -31,7 +31,7 @@ public class AllSuites extends TestSuite
 
   public static Test suite()
   {
-    return new AllSuites("EMF Build JUnit Test Suite");
+    return new AllSuites("Net4j Build JUnit Test Suite");
   }
 
   public AllSuites()

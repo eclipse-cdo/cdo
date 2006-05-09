@@ -230,32 +230,32 @@ public class ChannelImplTest extends TestCase
     assertNull("getProtocolData returns null", result);
   }
 
-  public final void testServiceGuards()
-  {
-    new ServiceInvoker(channel)
-    {
-      protected void invokeService(Service bean) throws Exception
-      {
-        ((ChannelImpl) bean).handleTransmission();
-      }
-    };
-
-    new ServiceInvoker(channel)
-    {
-      protected void invokeService(Service bean) throws Exception
-      {
-        ((ChannelImpl) bean).transmit(null);
-      }
-    };
-
-    new ServiceInvoker(channel)
-    {
-      protected void invokeService(Service bean) throws Exception
-      {
-        ((ChannelImpl) bean).transmit(null);
-      }
-    };
-  }
+//  public final void testServiceGuards()
+//  {
+//    new ServiceInvoker(channel)
+//    {
+//      protected void invokeService(Service bean) throws Exception
+//      {
+//        ((ChannelImpl) bean).handleTransmission();
+//      }
+//    };
+//
+//    new ServiceInvoker(channel)
+//    {
+//      protected void invokeService(Service bean) throws Exception
+//      {
+//        ((ChannelImpl) bean).transmit(null);
+//      }
+//    };
+//
+//    new ServiceInvoker(channel)
+//    {
+//      protected void invokeService(Service bean) throws Exception
+//      {
+//        ((ChannelImpl) bean).transmit(null);
+//      }
+//    };
+//  }
 
 //  public final void testValidate()
 //  {
@@ -568,20 +568,20 @@ public class ChannelImplTest extends TestCase
    * 
    * EXPECTATION: 	throws ImplementationError
    */
-  public final void testFlush1()
-  {
-    start();
-    try
-    {
-      channel.flush();
-      fail("ImplementationError expected");
-    }
-    catch (ImplementationError expected)
-    {
-      TestUtils.assertContains(expected, "transmitterBuffer must exist");
-    }
-    verify();
-  }
+//  public final void testFlush1()
+//  {
+//    start();
+//    try
+//    {
+//      channel.flush();
+//      fail("ImplementationError expected");
+//    }
+//    catch (ImplementationError expected)
+//    {
+//      TestUtils.assertContains(expected, "transmitterBuffer must exist");
+//    }
+//    verify();
+//  }
 
   /**
    * PRECONDITION: 	transmitterBuffer exists;

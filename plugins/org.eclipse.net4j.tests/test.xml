@@ -41,7 +41,11 @@
   <target name="suite">
     <property name="emft-folder" value="${eclipse-home}/emf_folder"/>
     <delete dir="${emft-folder}" quiet="true"/>
-    <ant target="core-test" antfile="${library-file}" dir="${eclipse-home}">
+  	<echo message="About to run core-test from ${library-file} in ${eclipse-home}"/>
+  	<echo message="data-dir = ${emft-folder}"/>
+  	<echo message="plugin-name = ${plugin-name}"/>
+  	<echo message="classname = org.eclipse.net4j.tests.AllSuites"/>
+    <ant target="core-test" antfile="${library-file}" dir="${eclipse-home}" >
       <property name="data-dir" value="${emft-folder}"/>
       <property name="plugin-name" value="${plugin-name}"/>
       <property name="classname" value="org.eclipse.net4j.tests.AllSuites"/>

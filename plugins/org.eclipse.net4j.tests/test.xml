@@ -87,10 +87,10 @@
   <!-- This target runs the test suite. Any actions that need to happen -->
   <!-- after all the tests have been run should go here. -->
   <target name="run" depends="init,suite,cleanup">
-  	<antcall target="doCollect" if="xml.exists"/>
+  	<antcall target="doCollect"/>
   </target>
 
-  <target name="doCollect">
+  <target name="doCollect" if="xml.exists">
 	<ant target="collect" antfile="${library-file}" dir="${eclipse-home}">
 	  <property name="includes" value="org*.xml"/>
 	  <property name="output-file" value="${plugin-name}.xml"/>

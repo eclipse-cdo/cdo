@@ -39,16 +39,37 @@
 
   <!-- This target defines the tests that need to be run. -->
   <target name="suite">
+	<echo message="Set javacSource and javacTarget = 1.5"/>
+	<property name="javacSource" value="1.5" />
+	<property name="javacTarget" value="1.5" />
+	
+	<path id="bc">
+		<fileset dir="${java.home}/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	<property name="bootclasspath" refid="bc" />
+
+	<!-- new 060508 to make build work when using JDK1.5 source/target -->
+	<echo message="Set J2SE-1.5 = ${bootclasspath}"/>
+	<property name="J2SE-1.5" value="${bootclasspath}"/>
+	<condition property="bundleBootClasspath" value="${J2SE-1.5}"><isset property="J2SE-1.5"/></condition>
+	<condition property="bundleJavacSource" value="1.5"><isset property="J2SE-1.5"/></condition>
+	<condition property="bundleJavacTarget" value="1.5"><isset property="J2SE-1.5"/></condition>
     <property name="emft-folder" value="${eclipse-home}/emf_folder"/>
     <delete dir="${emft-folder}" quiet="true"/>
+  	<property name="core.test.vmargs" value="-DJ2SE-1.5=${bootclasspath} -Djava15-home=${java.home}"/>
+
   	<echo message="About to run core-test from ${library-file} in ${eclipse-home}"/>
   	<echo message="data-dir = ${emft-folder}"/>
   	<echo message="plugin-name = ${plugin-name}"/>
   	<echo message="classname = org.eclipse.net4j.tests.AllSuites"/>
+  	<echo message="vmargs = ${core.test.vmargs}"/>
     <ant target="core-test" antfile="${library-file}" dir="${eclipse-home}" >
       <property name="data-dir" value="${emft-folder}"/>
       <property name="plugin-name" value="${plugin-name}"/>
       <property name="classname" value="org.eclipse.net4j.tests.AllSuites"/>
+      <property name="vmargs" value="${core.test.vmargs}"/>
     </ant>
   </target>
 

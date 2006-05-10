@@ -60,7 +60,6 @@
     <delete dir="${emft-folder}" quiet="true"/>
   	<property name="core.test.vmargs" value="-DJ2SE-1.5=${bootclasspath} -Djava15-home=${java.home}"/>
 
-  	<!--
   	<echo message="About to run core-test:"/>
   	<echo message="library-file = ${library-file}"/>
   	<echo message="eclipse-home = ${eclipse-home}"/>
@@ -68,14 +67,15 @@
   	<echo message="plugin-name = ${plugin-name}"/>
   	<echo message="classname = org.eclipse.net4j.tests.AllSuites"/>
   	<echo message="vmargs = ${core.test.vmargs}"/> 
-	-->
+	
     <ant target="core-test" antfile="${library-file}" dir="${eclipse-home}" >
       <property name="data-dir" value="${emft-folder}"/>
       <property name="plugin-name" value="${plugin-name}"/>
       <property name="classname" value="org.eclipse.net4j.tests.AllSuites"/>
       <property name="vmargs" value="${core.test.vmargs}"/>
     </ant>
-  	<available property="xml.exists" file="${eclipse-home}/${plugin-name}.xml"/>
+  	<available property="xml.exists" type="file" file="${eclipse-home}/${plugin-name}.xml"/>
+  	<echo message="xml.exists = ${xml.exists}"/>
   </target>
 
   <!-- This target holds code to cleanup the testing environment after -->

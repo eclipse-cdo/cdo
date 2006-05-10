@@ -74,8 +74,6 @@
       <property name="classname" value="org.eclipse.net4j.tests.AllSuites"/>
       <property name="vmargs" value="${core.test.vmargs}"/>
     </ant>
-  	<available property="xml.exists" type="file" file="${eclipse-home}/${plugin-name}.xml"/>
-  	<echo message="xml.exists = ${xml.exists}"/>
   </target>
 
   <!-- This target holds code to cleanup the testing environment after -->
@@ -87,6 +85,8 @@
   <!-- This target runs the test suite. Any actions that need to happen -->
   <!-- after all the tests have been run should go here. -->
   <target name="run" depends="init,suite,cleanup">
+  	<available property="xml.exists" type="file" file="${eclipse-home}/${plugin-name}.xml"/>
+  	<echo message="xml.exists = ${xml.exists}"/>
   	<antcall target="doCollect"/>
   </target>
 

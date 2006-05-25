@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.example.server.internal;
 
 
+import org.eclipse.net4j.util.thread.DeadlockDetector;
+
 import org.eclipse.core.runtime.IPlatformRunnable;
 
 
@@ -22,9 +24,13 @@ public class ExampleServerApplication implements IPlatformRunnable
 
   public Object run(Object args) throws Exception
   {
-    for (;;)
+    System.out.println("HIT ANY KEY FOR SHUTDOWN!!!");
+
+    while (System.in.available() == 0)
     {
-      // Graceful shutdown?
+      DeadlockDetector.sleep(100);
     }
+
+    return null;
   }
 }

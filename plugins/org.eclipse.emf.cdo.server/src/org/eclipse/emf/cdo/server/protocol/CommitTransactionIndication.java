@@ -538,7 +538,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     }
 
     sql.append(" WHERE ");
-    sql.append(SQLConstants.OBJECT_OID_COLUMN);
+    sql.append(SQLConstants.USER_OID_COLUMN);
     sql.append("=?");
 
     getMapper().sql(sql.toString(), args);

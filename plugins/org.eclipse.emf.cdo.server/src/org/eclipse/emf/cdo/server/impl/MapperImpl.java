@@ -603,7 +603,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     StringBuffer query = new StringBuffer("DELETE FROM ");
     query.append(tableName);
     query.append(" WHERE ");
-    query.append(OBJECT_OID_COLUMN);
+    query.append(USER_OID_COLUMN);
     query.append("=");
     query.append(oid);
 
@@ -795,7 +795,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
       {
         final ClassInfo finalClassInfo = classInfo;
         String sql = "SELECT " + columnNames + " FROM " + classInfo.getTableName() + " WHERE "
-            + OBJECT_OID_COLUMN + "=?";
+            + USER_OID_COLUMN + "=?";
 
         Object[] args = { new Long(oid)};
         if (isDebugEnabled()) debug(StringHelper.replaceWildcards(sql, "?", args));
@@ -859,7 +859,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
   private void createAttributeTable(ClassInfo classInfo, Database database)
   {
     Table segmentTable = database.addTable(classInfo.getTableName());
-    segmentTable.addColumn(OBJECT_OID_COLUMN, ColumnType.BIGINT_LITERAL, "NOT NULL");
+    segmentTable.addColumn(USER_OID_COLUMN, ColumnType.BIGINT_LITERAL, "NOT NULL");
 
     AttributeInfo[] attributeInfos = classInfo.getAttributeInfos();
     for (int i = 0; i < attributeInfos.length; i++)
@@ -871,6 +871,6 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
       segmentTable.addColumn(columnName, columnType);
     }
 
-    segmentTable.addSimpleIndex(OBJECT_OID_COLUMN, IndexType.PRIMARY_LITERAL);
+    segmentTable.addSimpleIndex(USER_OID_COLUMN, IndexType.PRIMARY_LITERAL);
   }
 }

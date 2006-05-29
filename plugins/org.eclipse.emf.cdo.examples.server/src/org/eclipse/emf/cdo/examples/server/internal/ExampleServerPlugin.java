@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.example.server.internal;
+package org.eclipse.emf.cdo.examples.server.internal;
 
 
 import org.eclipse.net4j.spring.Container;

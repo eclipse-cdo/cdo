@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: org.eclipse.emf.cdo.example.server;singleton:=true
+Bundle-SymbolicName: org.eclipse.emf.cdo.examples.server;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-ClassPath: net4j.cdo.test.serverapp.jar
 Bundle-Vendor: %providerName
@@ -9,5 +9,5 @@ Bundle-Localization: plugin
 Eclipse-LazyStart: true
 Require-Bundle: org.eclipse.emf.cdo.server,
  org.eclipse.net4j.socket
-Export-Package: org.eclipse.emf.cdo.example.server.internal
-Bundle-Activator: org.eclipse.emf.cdo.example.server.internal.ExampleServerPlugin
+Export-Package: org.eclipse.emf.cdo.examples.server.internal
+Bundle-Activator: org.eclipse.emf.cdo.examples.server.internal.ExampleServerPlugin

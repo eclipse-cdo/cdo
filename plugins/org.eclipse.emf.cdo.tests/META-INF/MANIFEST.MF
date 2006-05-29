@@ -11,5 +11,5 @@ Eclipse-LazyStart: false
 Export-Package: org.eclipse.emf.cdo.tests
 Require-Bundle: org.eclipse.core.runtime,
  org.junit,
- org.eclipse.emf.cdo
- org.eclipse.net4j
+ org.eclipse.emf.cdo.core,
+ org.eclipse.net4j.core

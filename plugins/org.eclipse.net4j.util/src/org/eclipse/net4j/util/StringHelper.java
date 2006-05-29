@@ -115,7 +115,7 @@ public class StringHelper
     return str;
   }
 
-  public static String getSimpleClassName(Class aClass)
+  public static String getSimpleClassName(Class<?> aClass)
   {
     return getSimpleClassName(aClass.getName());
   }
@@ -175,7 +175,7 @@ public class StringHelper
   /**
    * Replace string
    */
-  public static String replaceString(String source, Map args)
+  public static String replaceString(String source, Map<?, ?> args)
   {
     int startIndex = 0;
     int openIndex = source.indexOf('{', startIndex);
@@ -427,12 +427,12 @@ public class StringHelper
     throw new NumberFormatException("'" + str + "' is neither 'true' nor 'false'");
   }
 
-  public static String implode(Collection collection, String separator)
+  public static String implode(Collection<?> collection, String separator)
   {
     if (collection == null) return null;
     if (collection.size() == 0) return "";
 
-    Iterator iter = collection.iterator();
+    Iterator<?> iter = collection.iterator();
     StringBuffer result = new StringBuffer(iter.next().toString());
 
     while (iter.hasNext())
@@ -475,9 +475,9 @@ public class StringHelper
     return -1;
   }
 
-  public static List parseName(String name, char separator)
+  public static List<String> parseName(String name, char separator)
   {
-    List result = new ArrayList();
+    List<String> result = new ArrayList<String>();
     StringBuffer currentWord = new StringBuffer();
 
     int length = name.length();

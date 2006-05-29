@@ -44,19 +44,19 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 {
   public static final int CAPACITY_tempIdtoPersistentIdMap = 499;
 
-  private Map tempOIDs = new HashMap(CAPACITY_tempIdtoPersistentIdMap);
+  private Map<Long, Long> tempOIDs = new HashMap<Long, Long>(CAPACITY_tempIdtoPersistentIdMap);
 
-  private List changedObjectIds = new ArrayList();
+  private List<Long> changedObjectIds = new ArrayList<Long>();
 
-  private Map changedObjectOIDOCA = new HashMap();
+  private Map<Long, Integer> changedObjectOIDOCA = new HashMap<Long, Integer>();
 
-  private List oidList = new ArrayList();
+  private List<Long> oidList = new ArrayList<Long>();
 
   private boolean optimisticControlException = false;
 
   private Mapper mapper;
 
-  private List<ResourceChangeInfo> newResources = new ArrayList();
+  private List<ResourceChangeInfo> newResources = new ArrayList<ResourceChangeInfo>();
 
   public short getSignalId()
   {
@@ -104,20 +104,20 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     transmitInt(oidList.size());
 
-    for (Iterator iter = oidList.iterator(); iter.hasNext();)
+    for (Iterator<Long> iter = oidList.iterator(); iter.hasNext();)
     {
-      Long id = (Long) iter.next();
+      Long id = iter.next();
       transmitLong(id.longValue());
     }
 
     transmitInt(changedObjectIds.size());
 
-    for (Iterator iter = changedObjectIds.iterator(); iter.hasNext();)
+    for (Iterator<Long> iter = changedObjectIds.iterator(); iter.hasNext();)
     {
-      Long id = (Long) iter.next();
+      Long id = iter.next();
       transmitLong(id.longValue());
 
-      Integer oca = (Integer) changedObjectOIDOCA.get(id);
+      Integer oca = changedObjectOIDOCA.get(id);
       transmitInt(oca.intValue());
     }
   }
@@ -247,7 +247,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
    */
   private long resolveTempOID(long tempOID)
   {
-    Long sourceVal = (Long) tempOIDs.get(new Long(tempOID));
+    Long sourceVal = tempOIDs.get(new Long(tempOID));
 
     if (sourceVal == null)
     {

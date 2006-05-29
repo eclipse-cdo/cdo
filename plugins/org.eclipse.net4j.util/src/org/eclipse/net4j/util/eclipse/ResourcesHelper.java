@@ -120,7 +120,7 @@ public class ResourcesHelper
   public static String[] readFileIntoStringArray(InputStream stream) throws IOException
   {
     BufferedReader br = new BufferedReader(new InputStreamReader(stream));
-    List result = new ArrayList();
+    List<String> result = new ArrayList<String>();
     String line;
 
     while ((line = br.readLine()) != null)
@@ -128,7 +128,7 @@ public class ResourcesHelper
       result.add(line);
     }
 
-    return (String[]) result.toArray(new String[result.size()]);
+    return result.toArray(new String[result.size()]);
   }
 
   public static IProject ensureProject(String name) throws CoreException

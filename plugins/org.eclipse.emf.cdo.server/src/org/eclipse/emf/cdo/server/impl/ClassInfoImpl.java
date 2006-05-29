@@ -32,7 +32,7 @@ public class ClassInfoImpl implements ClassInfo
 
   protected PackageInfo packageInfo;
 
-  protected List attributeInfos = new ArrayList();
+  protected List<AttributeInfo> attributeInfos = new ArrayList<AttributeInfo>();
 
   private ClassInfo cachedParent;
 
@@ -85,9 +85,9 @@ public class ClassInfoImpl implements ClassInfo
 
   public AttributeInfo getAttributeInfo(int feature)
   {
-    for (Iterator iter = attributeInfos.iterator(); iter.hasNext();)
+    for (Iterator<AttributeInfo> iter = attributeInfos.iterator(); iter.hasNext();)
     {
-      AttributeInfo attributeInfo = (AttributeInfo) iter.next();
+      AttributeInfo attributeInfo = iter.next();
 
       if (attributeInfo.getFeatureID() == feature)
       {
@@ -106,7 +106,7 @@ public class ClassInfoImpl implements ClassInfo
 
   public AttributeInfo[] getAttributeInfos()
   {
-    return (AttributeInfo[]) attributeInfos.toArray(new AttributeInfo[attributeInfos.size()]);
+    return attributeInfos.toArray(new AttributeInfo[attributeInfos.size()]);
   }
 
   public ClassInfo getParent()
@@ -126,9 +126,9 @@ public class ClassInfoImpl implements ClassInfo
       StringBuffer buffer = new StringBuffer();
       boolean first = true;
 
-      for (Iterator iter = attributeInfos.iterator(); iter.hasNext();)
+      for (Iterator<AttributeInfo> iter = attributeInfos.iterator(); iter.hasNext();)
       {
-        AttributeInfo attributeInfo = (AttributeInfo) iter.next();
+        AttributeInfo attributeInfo = iter.next();
 
         if (first)
         {

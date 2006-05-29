@@ -100,6 +100,7 @@ public class ValueHelper
     channel.transmitByte(END_OF_TRANSMISSION);
   }
 
+  @SuppressWarnings("unchecked")
   public static Object[] receiveValues(Channel channel)
   {
     List list = new ArrayList();

@@ -31,9 +31,9 @@ public abstract class Worker extends Thread
    */
   private static final Logger logger = Logger.getLogger(Worker.class);
 
-  private List progressListeners;
+  private List<ProgressListener> progressListeners;
 
-  private List shutdownListeners;
+  private List<ShutdownListener> shutdownListeners;
 
   private int progress;
 
@@ -278,8 +278,9 @@ public abstract class Worker extends Thread
   {
     if (progressListeners == null)
     {
-      progressListeners = new ArrayList();
+      progressListeners = new ArrayList<ProgressListener>();
     }
+    
     progressListeners.add(listener);
   }
 
@@ -295,7 +296,7 @@ public abstract class Worker extends Thread
   {
     if (shutdownListeners == null)
     {
-      shutdownListeners = new ArrayList();
+      shutdownListeners = new ArrayList<ShutdownListener>();
     }
     shutdownListeners.add(listener);
   }
@@ -312,9 +313,9 @@ public abstract class Worker extends Thread
   {
     if (progressListeners != null)
     {
-      for (Iterator it = progressListeners.iterator(); it.hasNext();)
+      for (Iterator<ProgressListener> it = progressListeners.iterator(); it.hasNext();)
       {
-        ProgressListener listener = (ProgressListener) it.next();
+        ProgressListener listener = it.next();
         listener.notifyProgress(this, progress);
       }
     }
@@ -324,9 +325,9 @@ public abstract class Worker extends Thread
   {
     if (shutdownListeners != null)
     {
-      for (Iterator it = shutdownListeners.iterator(); it.hasNext();)
+      for (Iterator<ShutdownListener> it = shutdownListeners.iterator(); it.hasNext();)
       {
-        ShutdownListener listener = (ShutdownListener) it.next();
+        ShutdownListener listener = it.next();
         listener.notifyShutdown(this);
       }
     }

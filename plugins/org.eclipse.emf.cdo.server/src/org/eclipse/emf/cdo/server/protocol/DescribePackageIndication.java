@@ -27,7 +27,7 @@ import java.util.List;
 
 public class DescribePackageIndication extends AbstractIndicationWithResponse
 {
-  private List infos;
+  private List<ClassInfo> infos;
 
   public short getSignalId()
   {
@@ -51,9 +51,9 @@ public class DescribePackageIndication extends AbstractIndicationWithResponse
   {
     transmitInt(infos.size());
 
-    for (Iterator iter = infos.iterator(); iter.hasNext();)
+    for (Iterator<ClassInfo> iter = infos.iterator(); iter.hasNext();)
     {
-      ClassInfo classInfo = (ClassInfo) iter.next();
+      ClassInfo classInfo = iter.next();
       if (isDebugEnabled())
         debug("Responding class " + classInfo.getName() + " = " + classInfo.getCID());
 
@@ -62,9 +62,9 @@ public class DescribePackageIndication extends AbstractIndicationWithResponse
     }
   }
 
-  private List receiveClasses(PackageInfo packageInfo)
+  private List<ClassInfo> receiveClasses(PackageInfo packageInfo)
   {
-    List result = new ArrayList();
+    List<ClassInfo> result = new ArrayList<ClassInfo>();
     int count = receiveInt();
 
     for (int i = 0; i < count; i++)

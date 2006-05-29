@@ -25,7 +25,6 @@ import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -34,9 +33,9 @@ import java.util.regex.Pattern;
 
 public class ExtensionParser
 {
-  protected Map elementDataFactoryRegistry = new HashMap();
+  protected Map<Pattern, Factory> elementDataFactoryRegistry = new HashMap<Pattern, Factory>();
 
-  protected List contextStack = new ArrayList();
+  protected List<String> contextStack = new ArrayList<String>();
 
   private static final Logger logger = Logger.getLogger(ExtensionParser.class.getName());
 
@@ -146,16 +145,16 @@ public class ExtensionParser
 
   public Factory findFactory(String context)
   {
-    for (Iterator it = elementDataFactoryRegistry.entrySet().iterator(); it.hasNext();)
+    for (Map.Entry<Pattern, Factory> entry : elementDataFactoryRegistry.entrySet())
     {
-      Map.Entry entry = (Map.Entry) it.next();
-      Pattern pattern = (Pattern) entry.getKey();
+      Pattern pattern = entry.getKey();
       Matcher matcher = pattern.matcher(context);
       if (matcher.matches())
       {
-        return (Factory) entry.getValue();
+        return entry.getValue();
       }
     }
+
     return null;
   }
 
@@ -167,7 +166,7 @@ public class ExtensionParser
   protected String popContext()
   {
     if (contextStack.isEmpty()) throw new ImplementationError("contextStack is empty");
-    return (String) contextStack.remove(contextStack.size() - 1);
+    return contextStack.remove(contextStack.size() - 1);
   }
 
   protected String getContextString()

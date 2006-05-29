@@ -12,7 +12,7 @@
  *
  * </copyright>
  *
- * $Id: AllSuites.java,v 1.2 2006-05-08 19:27:23 nickb Exp $
+ * $Id: AllSuites.java,v 1.3 2006-05-29 17:18:19 estepper Exp $
  */
 
 package org.eclipse.net4j.tests;
@@ -40,7 +40,7 @@ public class AllSuites extends TestSuite
     populateSuite();
   }
 
-  public AllSuites(Class theClass)
+  public AllSuites(Class<?> theClass)
   {
     super(theClass);
     populateSuite();

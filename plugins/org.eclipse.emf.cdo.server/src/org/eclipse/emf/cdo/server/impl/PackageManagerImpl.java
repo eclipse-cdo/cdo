@@ -27,17 +27,17 @@ import java.util.Map;
 
 public class PackageManagerImpl extends ServiceImpl implements PackageManager
 {
-  protected Map cidToClassInfoMap = new HashMap(2111);
+  protected Map<Integer, ClassInfo> cidToClassInfoMap = new HashMap<Integer, ClassInfo>(2111);
 
-  protected Map nameToClassInfoMap = new HashMap(2111);
+  protected Map<String, ClassInfo> nameToClassInfoMap = new HashMap<String, ClassInfo>(2111);
 
-  protected Map packages = new HashMap();
+  protected Map<String, PackageInfo> packages = new HashMap<String, PackageInfo>();
 
-  protected List listeners = new ArrayList();
+  protected List<PackageListener> listeners = new ArrayList<PackageListener>();
 
   public PackageInfo getPackageInfo(String name)
   {
-    return (PackageInfo) packages.get(name);
+    return packages.get(name);
   }
 
   public PackageInfo addPackage(int pid, String name)
@@ -66,19 +66,19 @@ public class PackageManagerImpl extends ServiceImpl implements PackageManager
 
   public ClassInfo getClassInfo(int cid)
   {
-    return (ClassInfo) cidToClassInfoMap.get(new Integer(cid));
+    return cidToClassInfoMap.get(new Integer(cid));
   }
 
   public ClassInfo getClassInfo(String name)
   {
-    return (ClassInfo) nameToClassInfoMap.get(name);
+    return nameToClassInfoMap.get(name);
   }
 
   protected void notifyPackageListeners()
   {
-    for (Iterator iter = listeners.iterator(); iter.hasNext();)
+    for (Iterator<PackageListener> iter = listeners.iterator(); iter.hasNext();)
     {
-      PackageListener listener = (PackageListener) iter.next();
+      PackageListener listener = iter.next();
       listener.notifyAddedPackage();
     }
   }

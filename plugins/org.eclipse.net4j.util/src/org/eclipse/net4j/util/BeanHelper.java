@@ -16,17 +16,17 @@ import java.lang.reflect.Method;
 
 public class BeanHelper
 {
-  public static Class mostSpecificClass(Class[] classes)
+  public static Class<?> mostSpecificClass(Class[] classes)
   {
     int size = classes.length;
 
     for (int i = 0; i < size; i++)
     {
-      Class iClass = classes[i];
+      Class<?> iClass = classes[i];
 
       for (int k = i + 1; k < size; k++)
       {
-        Class kClass = classes[k];
+        Class<?> kClass = classes[k];
 
         if (iClass.isAssignableFrom(kClass))
         {
@@ -95,7 +95,7 @@ public class BeanHelper
 
     try
     {
-      Class type = setter.getParameterTypes()[0];
+      Class<?> type = setter.getParameterTypes()[0];
 
       if (type == Boolean.class)
       {
@@ -169,7 +169,7 @@ public class BeanHelper
     }
   }
 
-  public static Method findGetter(Class clazz, String name)
+  public static Method findGetter(Class<? extends Object> clazz, String name)
   {
     String accessor = "is" + capitalize(name);
     Method method = findMethod(clazz, accessor);
@@ -182,7 +182,7 @@ public class BeanHelper
     return null;
   }
 
-  public static Method findChildGetter(Class clazz, String name)
+  public static Method findChildGetter(Class<? extends Object> clazz, String name)
   {
     String accessor = "get" + capitalize(name) + "s";
     Method method = findMethod(clazz, accessor);
@@ -191,21 +191,21 @@ public class BeanHelper
     return null;
   }
 
-  public static Method findSetter(Class clazz, String name)
+  public static Method findSetter(Class<? extends Object> clazz, String name)
   {
     String accessor = "set" + capitalize(name);
     Method method = findMethod(clazz, accessor);
     return validSetter(method) ? method : null;
   }
 
-  public static Method findAdder(Class clazz, String name)
+  public static Method findAdder(Class<? extends Object> clazz, String name)
   {
     String accessor = "add" + capitalize(name);
     Method method = findMethod(clazz, accessor);
     return validAdder(method) ? method : null;
   }
 
-  public static Method findMethod(Class clazz, String name)
+  public static Method findMethod(Class<? extends Object> clazz, String name)
   {
     Method[] methods = clazz.getMethods();
     for (int i = 0; i < methods.length; i++)
@@ -223,7 +223,7 @@ public class BeanHelper
     Class[] paramTypes = method.getParameterTypes();
     if (paramTypes != null || paramTypes.length != 0) return false;
 
-    Class returnType = method.getReturnType();
+    Class<?> returnType = method.getReturnType();
     if (returnType == null || !validAttributeType(returnType)) return false;
 
     return true;
@@ -237,7 +237,7 @@ public class BeanHelper
     if (paramTypes == null || paramTypes.length != 1 || !validAttributeType(paramTypes[0]))
       return false;
 
-    Class returnType = method.getReturnType();
+    Class<?> returnType = method.getReturnType();
     if (returnType != null && returnType != void.class) return false;
 
     return true;
@@ -250,7 +250,7 @@ public class BeanHelper
     Class[] paramTypes = method.getParameterTypes();
     if (paramTypes == null || paramTypes.length != 1) return false;
 
-    Class returnType = method.getReturnType();
+    Class<?> returnType = method.getReturnType();
     if (returnType != null && returnType != void.class) return false;
 
     return true;
@@ -263,18 +263,18 @@ public class BeanHelper
     Class[] paramTypes = method.getParameterTypes();
     if (paramTypes != null || paramTypes.length != 0) return false;
 
-    Class returnType = method.getReturnType();
+    Class<?> returnType = method.getReturnType();
     if (returnType == null || !validChildType(returnType)) return false;
 
     return true;
   }
 
-  private static boolean validAttributeType(Class type)
+  private static boolean validAttributeType(Class<?> type)
   {
     return type == String.class || type == Boolean.class;
   }
 
-  private static boolean validChildType(Class type)
+  private static boolean validChildType(Class<?> type)
   {
     return type.isArray();
   }

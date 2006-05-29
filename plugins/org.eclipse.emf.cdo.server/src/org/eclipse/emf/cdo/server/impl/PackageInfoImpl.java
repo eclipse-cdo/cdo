@@ -27,7 +27,7 @@ public class PackageInfoImpl implements PackageInfo
 
   protected PackageManager packageManager;
 
-  protected List classes = new ArrayList();
+  protected List<ClassInfo> classes = new ArrayList<ClassInfo>();
 
   public PackageInfoImpl(int pid, String name, PackageManager packageManager)
   {
@@ -61,6 +61,6 @@ public class PackageInfoImpl implements PackageInfo
 
   public ClassInfo[] getClasses()
   {
-    return (ClassInfo[]) classes.toArray(new ClassInfo[classes.size()]);
+    return classes.toArray(new ClassInfo[classes.size()]);
   }
 }

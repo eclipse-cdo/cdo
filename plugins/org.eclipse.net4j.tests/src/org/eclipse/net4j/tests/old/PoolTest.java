@@ -38,7 +38,7 @@ public class PoolTest extends TestCase
 
   protected class TestPool extends AbstractPool
   {
-    protected Class doGetPooledClass(Object key)
+    protected Class<TestPooled> doGetPooledClass(Object key)
     {
       return TestPooled.class;
     }

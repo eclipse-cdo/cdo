@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Plugin.name
+Bundle-SymbolicName: org.eclipse.emf.cdo.doc; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: %Provider.name
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.help
+Eclipse-LazyStart: true

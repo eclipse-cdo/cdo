@@ -576,11 +576,11 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
     while (classInfo != null)
     {
-      removeSegment(oid, classInfo.getTableName());
+      removeUserSegment(oid, classInfo.getTableName());
       classInfo = classInfo.getParent();
     }
 
-    removeSegment(oid, OBJECT_TABLE);
+    removeSegment(oid);
   }
 
   protected int selectCIDOfObject(long oid)
@@ -598,7 +598,19 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     }
   }
 
-  protected void removeSegment(long oid, String tableName)
+  protected void removeSegment(long oid)
+  {
+    StringBuffer query = new StringBuffer("DELETE FROM ");
+    query.append(OBJECT_TABLE);
+    query.append(" WHERE ");
+    query.append(OBJECT_OID_COLUMN);
+    query.append("=");
+    query.append(oid);
+
+    sql(query.toString());
+  }
+
+  protected void removeUserSegment(long oid, String tableName)
   {
     StringBuffer query = new StringBuffer("DELETE FROM ");
     query.append(tableName);

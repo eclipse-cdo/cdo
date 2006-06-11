@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.examples.server;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-ClassPath: net4j.cdo.test.serverapp.jar
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Eclipse-LazyStart: true

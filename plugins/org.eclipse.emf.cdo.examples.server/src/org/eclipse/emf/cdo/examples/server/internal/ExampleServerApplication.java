@@ -11,20 +11,27 @@
 package org.eclipse.emf.cdo.examples.server.internal;
 
 
+import org.eclipse.net4j.spring.Container;
+import org.eclipse.net4j.spring.ValidationException;
 import org.eclipse.net4j.util.thread.DeadlockDetector;
+
+import org.eclipse.emf.cdo.server.Mapper;
 
 import org.eclipse.core.runtime.IPlatformRunnable;
 
 
 public class ExampleServerApplication implements IPlatformRunnable
 {
+  private static final String ACTIVE_MSG = "Mapper is not active";
+
   public ExampleServerApplication()
   {
   }
 
   public Object run(Object args) throws Exception
   {
-    System.out.println("HIT ANY KEY FOR SHUTDOWN!!!");
+    validateContainer();
+    System.out.println("HIT ENTER FOR SHUTDOWN!!!");
 
     while (System.in.available() == 0)
     {
@@ -32,5 +39,32 @@ public class ExampleServerApplication implements IPlatformRunnable
     }
 
     return null;
+  }
+
+  private void validateContainer()
+  {
+    Mapper mapper = getMapper();
+    assertTrue(mapper.isActive(), ACTIVE_MSG);
+  }
+
+  private Mapper getMapper()
+  {
+    try
+    {
+      Container container = ExampleServerPlugin.getContainer();
+      return (Mapper) container.getBean("mapper", Mapper.class);
+    }
+    catch (Exception ex)
+    {
+      throw new ValidationException(ACTIVE_MSG, ex);
+    }
+  }
+
+  private void assertTrue(boolean condition, String msg)
+  {
+    if (!condition)
+    {
+      throw new ValidationException(msg);
+    }
   }
 }

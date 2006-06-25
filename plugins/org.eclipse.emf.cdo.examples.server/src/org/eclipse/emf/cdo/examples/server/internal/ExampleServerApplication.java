@@ -51,7 +51,7 @@ public class ExampleServerApplication implements IPlatformRunnable
   {
     try
     {
-      Container container = ExampleServerPlugin.getContainer();
+      Container container = ExampleServerPlugin.getServerContainer();
       return (Mapper) container.getBean("mapper", Mapper.class);
     }
     catch (Exception ex)

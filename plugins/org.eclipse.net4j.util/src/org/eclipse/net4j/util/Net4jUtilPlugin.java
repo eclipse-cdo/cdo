@@ -15,9 +15,8 @@ import org.eclipse.net4j.util.eclipse.AbstractPlugin;
 
 import org.eclipse.core.runtime.FileLocator;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
-
-import org.osgi.framework.BundleContext;
 
 import java.net.URL;
 
@@ -35,9 +34,8 @@ public class Net4jUtilPlugin extends AbstractPlugin
     if (plugin == null) plugin = this;
   }
 
-  public void start(BundleContext context) throws Exception
+  public void doStart() throws Exception
   {
-    super.start(context);
     initializeLogger();
   }
 
@@ -56,8 +54,6 @@ public class Net4jUtilPlugin extends AbstractPlugin
 
   private void initializeLogger()
   {
-    //    IOHelper.log("Initializing Log4j...");
-
     try
     {
       URL pluginURL = getBundle().getEntry("/config/log4j.xml");
@@ -68,6 +64,12 @@ public class Net4jUtilPlugin extends AbstractPlugin
     catch (Exception ex)
     {
       IOHelper.log("Warning: Initialization of Log4j failed", ex);
+    }
+
+    Logger logger = Logger.getLogger(Net4jUtilPlugin.class);
+    if (logger.isDebugEnabled())
+    {
+      logger.debug("Log4j initialized");
     }
   }
 }

@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Fuggerstr. 39, 10777 Berlin, Germany.
+ * Copyright (c) 2004-2006 Eike Stepper, Fuggerstr. 39, 10777 Berlin, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,6 +14,7 @@ package org.eclipse.net4j.util.thread;
 import org.eclipse.net4j.util.ImplementationError;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.spi.ThrowableInformation;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -174,11 +175,19 @@ public abstract class Worker extends Thread
     {
       try
       {
-        logger.error("Error in worker " + getLabel(), t);
+        Class test = ThrowableInformation.class; //Check if Log4j is still loaded
+        if (test != null)
+        {
+          logger.error("Error in worker " + getLabel(), t);
+        }
+      }
+      catch (Error ignore)
+      {
+        ; // Can happen due to already unloaded plugins (logging)!
       }
       catch (Exception ignore)
       {
-        // Can happen due to already unloaded plugins (logging)!
+        ; // Can happen due to already unloaded plugins (logging)!
       }
     }
 
@@ -280,7 +289,7 @@ public abstract class Worker extends Thread
     {
       progressListeners = new ArrayList<ProgressListener>();
     }
-    
+
     progressListeners.add(listener);
   }
 

@@ -13,38 +13,18 @@
 		</property>
 	</bean>
 
-	<!-- ######################################################## -->
-	<bean id="acceptor" class="org.eclipse.net4j.socket.impl.SocketAcceptorImpl">
-		<property name="listenAddr">
-			<value>${acceptor.listenAddr}</value>
-		</property>
-		<property name="listenPort">
-			<value>${acceptor.listenPort}</value>
-		</property>
-	</bean>
-
-	<!-- ######################################################## -->
-	<bean id="slave" singleton="false"
-		class="org.eclipse.net4j.socket.impl.PassiveSocketConnectorImpl">
-		<property name="bufferPool">
-			<ref bean="bufferPool"/>
-		</property>
-		<property name="connectionManager">
-			<ref bean="connectionManager"/>
-		</property>
-		<property name="protocolManager">
-			<ref bean="protocolManager"/>
-		</property>
-		<property name="selectorManager">
-			<ref bean="selectorManager"/>
-		</property>
-	</bean>
-
 	<!--
 		CDO Server Part 
 	-->
 
 	<!-- ######################################################## -->
+	<bean id="oidEncoder" class="org.eclipse.emf.cdo.core.impl.OIDEncoderImpl">
+		<property name="fragmentBits">
+			<value>48</value>
+		</property>
+	</bean>
+
+		<!-- ######################################################## -->
 	<bean id="packageManager" class="org.eclipse.emf.cdo.server.impl.PackageManagerImpl"/>
 
 	<!-- ######################################################## -->

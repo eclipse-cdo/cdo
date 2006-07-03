@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.examples.server.internal;
 
 
+import org.eclipse.net4j.examples.server.internal.ExampleServerPlugin;
 import org.eclipse.net4j.spring.Container;
 import org.eclipse.net4j.spring.ContainerCreationException;
 import org.eclipse.net4j.spring.impl.ContainerImpl;
@@ -22,12 +23,12 @@ import java.io.IOException;
 /**
  * The main plugin class to be used in the desktop.
  */
-public class ExampleServerPlugin extends AbstractPlugin
+public class CDOServerPlugin extends AbstractPlugin
 {
   public static final String CONTEXT_PATH = "META-INF/";
 
   //The shared instance.
-  private static ExampleServerPlugin plugin;
+  private static CDOServerPlugin plugin;
 
   private static Container container;
 
@@ -36,7 +37,7 @@ public class ExampleServerPlugin extends AbstractPlugin
   /**
    * The constructor.
    */
-  public ExampleServerPlugin()
+  public CDOServerPlugin()
   {
     if (plugin == null) plugin = this;
   }
@@ -44,7 +45,7 @@ public class ExampleServerPlugin extends AbstractPlugin
   /**
    * Returns the shared instance.
    */
-  public static ExampleServerPlugin getDefault()
+  public static CDOServerPlugin getDefault()
   {
     return plugin;
   }
@@ -71,32 +72,6 @@ public class ExampleServerPlugin extends AbstractPlugin
     plugin = null;
   }
 
-  public static Container getContainer()
-  {
-    if (container == null)
-    {
-      String baseResourcePath;
-
-      try
-      {
-        baseResourcePath = getBundleLocation(getDefault().getBundle());
-      }
-      catch (IOException ex)
-      {
-        throw new ContainerCreationException("Error while computing location of bundle "
-            + getDefault().getBundle(), ex);
-      }
-
-      String location = CONTEXT_PATH + "common.xml";
-      String name = "common";
-      Container parent = null;
-      ClassLoader classLoader = getDefault().getClassLoader();
-      container = new ContainerImpl(baseResourcePath, location, name, parent, classLoader);
-    }
-
-    return container;
-  }
-
   public static Container getServerContainer()
   {
     if (serverContainer == null)
@@ -115,7 +90,7 @@ public class ExampleServerPlugin extends AbstractPlugin
 
       String location = CONTEXT_PATH + "server.xml";
       String name = "server";
-      Container parent = getContainer();
+      Container parent = ExampleServerPlugin.getNet4jContainer();
       ClassLoader classLoader = getDefault().getClassLoader();
       serverContainer = new ContainerImpl(baseResourcePath, location, name, parent, classLoader);
     }

@@ -90,7 +90,7 @@ public interface SQLConstants
   public static final String REFERENCE_TARGET_COLUMN = "TARGET" + OBJECT_OID_COLUMN;
 
   //--------------------------------------------------------------------
-  public static final String USER_OID_COLUMN = "___" + OBJECT_OID_COLUMN + "___";
+  public static final String USER_OID_COLUMN = "CDO_" + OBJECT_OID_COLUMN;
 
   //--------------------------------------------------------------------
   public static final String SELECT_PACKAGES = "SELECT " + PACKAGE_PID_COLUMN + ", "

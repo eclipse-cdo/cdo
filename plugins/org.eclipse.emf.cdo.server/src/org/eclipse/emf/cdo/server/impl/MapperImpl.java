@@ -342,6 +342,11 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
         String parentName = resultSet.getString(3);
         String tableName = resultSet.getString(4);
 
+        if (parentName != null && parentName.length() == 0)
+        {
+          parentName = null;
+        }
+
         if (isDebugEnabled())
           debug("Initializing class: cid=" + cid + ", name=" + name + ", parentName=" + parentName
               + ", tableName=" + tableName);
@@ -391,9 +396,9 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   public void insertClass(final ClassInfo classInfo)
   {
+    String parentName = classInfo.getParentName() == null ? "" : classInfo.getParentName();
     sql(INSERT_CLASS, new Object[] { new Integer(classInfo.getCID()), classInfo.getName(),
-        classInfo.getParentName(), classInfo.getTableName(),
-        new Integer(classInfo.getPackageInfo().getPid())});
+        parentName, classInfo.getTableName(), new Integer(classInfo.getPackageInfo().getPid())});
   }
 
   public void insertAttribute(final AttributeInfo attributeInfo, final int cid)

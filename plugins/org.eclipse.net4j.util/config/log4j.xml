@@ -50,24 +50,8 @@
 		<priority value="error"/>
 	</category>
 
-	<category name="density.bufferPool">
-		<priority value="warn"/>
-	</category>
-
-	<category name="density.connectionManager">
-		<priority value="debug"/>
-	</category>
-
-	<category name="density.executorPool">
-		<priority value="warn"/>
-	</category>
-
-	<category name="density.multiplexer">
-		<priority value="warn"/>
-	</category>
-
 	<root>
-		<priority value="debug"/>
+		<priority value="info"/>
 		<!--
 		<appender-ref ref="LOGFACTOR" />
 		<appender-ref ref="FILE"/>

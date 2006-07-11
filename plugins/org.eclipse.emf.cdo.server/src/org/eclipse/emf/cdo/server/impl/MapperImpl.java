@@ -391,22 +391,21 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   public void insertPackage(final PackageInfo packageInfo)
   {
-    sql(INSERT_PACKAGE, new Object[] { new Integer(packageInfo.getPid()), packageInfo.getName()});
+    sql(INSERT_PACKAGE, new Object[] { packageInfo.getPid(), packageInfo.getName()});
   }
 
   public void insertClass(final ClassInfo classInfo)
   {
     String parentName = classInfo.getParentName() == null ? "" : classInfo.getParentName();
-    sql(INSERT_CLASS, new Object[] { new Integer(classInfo.getCID()), classInfo.getName(),
-        parentName, classInfo.getTableName(), new Integer(classInfo.getPackageInfo().getPid())});
+    sql(INSERT_CLASS, new Object[] { classInfo.getCID(), classInfo.getName(), parentName,
+        classInfo.getTableName(), classInfo.getPackageInfo().getPid()});
   }
 
   public void insertAttribute(final AttributeInfo attributeInfo, final int cid)
   {
-    sql(INSERT_ATTRIBUTE,
-        new Object[] { attributeInfo.getName(), new Integer(attributeInfo.getFeatureID()),
-            new Integer(attributeInfo.getDataType()), attributeInfo.getColumnName(),
-            new Integer(attributeInfo.getColumnType()), new Integer(cid)});
+    sql(INSERT_ATTRIBUTE, new Object[] { attributeInfo.getName(), attributeInfo.getFeatureID(),
+        attributeInfo.getDataType(), attributeInfo.getColumnName(), attributeInfo.getColumnType(),
+        cid});
   }
 
   public ResourceInfo selectResourceInfo(String path)
@@ -505,7 +504,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
   public ResourceInfo createResource(String resourcePath)
   {
     int rid = getNextRID();
-    sql(INSERT_RESOURCE, new Object[] { new Integer(rid), resourcePath});
+    sql(INSERT_RESOURCE, new Object[] { rid, resourcePath});
     return resourceManager.registerResourceInfo(resourcePath, rid, 1);
   }
 
@@ -528,24 +527,22 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   public void insertResource(int rid, String path)
   {
-    sql(INSERT_RESOURCE, new Object[] { new Integer(rid), path});
+    sql(INSERT_RESOURCE, new Object[] { rid, path});
   }
 
   public void insertReference(long oid, int feature, int ordinal, long target, boolean content)
   {
-    sql(INSERT_REFERENCE, new Object[] { new Long(oid), new Integer(feature), new Integer(ordinal),
-        new Long(target), new Boolean(content)});
+    sql(INSERT_REFERENCE, new Object[] { oid, feature, ordinal, target, content});
   }
 
   public void removeReference(long oid, int feature, int ordinal)
   {
-    sql(REMOVE_REFERENCE, new Object[] { new Long(oid), new Integer(feature), new Integer(ordinal)});
+    sql(REMOVE_REFERENCE, new Object[] { oid, feature, ordinal});
   }
 
   public void moveReferenceAbsolute(long oid, int feature, int toIndex, int fromIndex)
   {
-    sql(MOVE_REFERENCE_ABSOLUTE, new Object[] { new Integer(toIndex), new Long(oid),
-        new Integer(feature), new Integer(fromIndex)});
+    sql(MOVE_REFERENCE_ABSOLUTE, new Object[] { toIndex, oid, feature, fromIndex});
   }
 
   public void moveReferencesRelative(long oid, int feature, int startIndex, int endIndex, int offset)
@@ -566,7 +563,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   protected void removeReferences(long oid)
   {
-    Object[] args = { new Long(oid)};
+    Object[] args = { oid};
     if (isDebugEnabled()) debug(StringHelper.replaceWildcards(REMOVE_REFERENCES, "?", args));
 
     jdbcTemplate.update(REMOVE_REFERENCES, args);
@@ -629,12 +626,12 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   public void insertContent(long oid)
   {
-    sql(INSERT_CONTENT, new Object[] { new Long(oid)});
+    sql(INSERT_CONTENT, new Object[] { oid});
   }
 
   public void removeContent(long oid)
   {
-    sql(REMOVE_CONTENT, new Object[] { new Long(oid)});
+    sql(REMOVE_CONTENT, new Object[] { oid});
   }
 
   public void sql(String sql)
@@ -654,6 +651,18 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     if (isDebugEnabled()) debug(StringHelper.replaceWildcards(sql, "?", args));
 
     int rows = jdbcTemplate.update(sql, args);
+
+    if (rows != 1)
+    {
+      throw new DatabaseInconsistencyException(sql);
+    }
+  }
+
+  public void sql(String sql, Object[] args, int[] types)
+  {
+    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(sql, "?", args));
+
+    int rows = jdbcTemplate.update(sql, args, types);
 
     if (rows != 1)
     {

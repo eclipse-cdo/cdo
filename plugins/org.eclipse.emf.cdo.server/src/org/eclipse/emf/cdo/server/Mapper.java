@@ -31,6 +31,8 @@ public interface Mapper extends Service
 
   public void sql(String sql, Object[] args);
 
+  public void sql(String sql, Object[] args, int[] types);
+
   public int getCollectionCount(long oid, int feature);
 
   public boolean lock(long oid, int oca);

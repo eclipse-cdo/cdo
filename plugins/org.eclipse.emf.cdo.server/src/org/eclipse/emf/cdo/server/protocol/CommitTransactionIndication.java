@@ -39,6 +39,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import java.sql.Types;
+
 
 public class CommitTransactionIndication extends AbstractIndicationWithResponse
 {
@@ -519,7 +521,9 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
   {
     int count = receiveInt();
     Object[] args = new Object[count + 1]; // last element is the oid
-    args[count] = new Long(oid);
+    args[count] = oid;
+    int[] types = new int[count + 1];
+    types[count] = Types.BIGINT;
 
     StringBuffer sql = new StringBuffer("UPDATE ");
     sql.append(classInfo.getTableName());
@@ -530,7 +534,9 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
       int feature = receiveInt();
       AttributeInfo attributeInfo = classInfo.getAttributeInfo(feature);
       ColumnConverter converter = getMapper().getColumnConverter();
+
       args[i] = converter.fromChannel(getChannel(), attributeInfo.getDataType());
+      types[i] = attributeInfo.getColumnType();
 
       if (i > 0) sql.append(", ");
       sql.append(attributeInfo.getColumnName());
@@ -541,7 +547,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     sql.append(SQLConstants.USER_OID_COLUMN);
     sql.append("=?");
 
-    getMapper().sql(sql.toString(), args);
+    getMapper().sql(sql.toString(), args, types);
 
   }
 
@@ -554,7 +560,10 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
       AttributeInfo[] attributeInfos = classInfo.getAttributeInfos();
 
       Object[] args = new Object[attributeInfos.length + 1]; // the first element is the oid
-      args[0] = new Long(oid);
+      args[0] = oid;
+
+      int[] types = new int[attributeInfos.length + 1];
+      types[0] = Types.BIGINT;
 
       StringBuffer sql = new StringBuffer("INSERT INTO ");
       sql.append(classInfo.getTableName());
@@ -567,12 +576,13 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
         ColumnConverter converter = getMapper().getColumnConverter();
         args[i + 1] = converter.fromChannel(getChannel(), attributeInfo.getDataType());
+        types[i + 1] = attributeInfo.getColumnType();
 
         sql.append(", ?");
       }
 
       sql.append(")");
-      getMapper().sql(sql.toString(), args);
+      getMapper().sql(sql.toString(), args, types);
 
       classInfo = classInfo.getParent();
     }

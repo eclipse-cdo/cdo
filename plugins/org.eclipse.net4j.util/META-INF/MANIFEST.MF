@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.eclipse.net4j.util
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: org.eclipse.net4j.util.jar,
  lib/commons-logging.jar,
- lib/log4j-1.2.9.jar
+ lib/log4j-1.2.13.jar
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Export-Package: META-INF,

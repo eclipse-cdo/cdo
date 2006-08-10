@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 
+import org.eclipse.emf.common.util.EList;
 
 import testmodel1.TestModel1Factory;
 import testmodel1.TreeNode;
@@ -18,17 +19,27 @@ import testmodel1.TreeNode;
 import java.util.Arrays;
 
 
-
 public class Model1Test extends AbstractTopologyTest
 {
+  protected static final String PATH1 = "/test/res1";
+
   public void testSimple() throws Exception
   {
     TreeNode root = createNode("root", null);
     createNode("node1", root);
     createNode("node2", root);
     createNode("node3", root);
+    saveRoot(root, PATH1);
 
-    saveResource("/test/res1", root);
+    TreeNode n0 = (TreeNode) loadRoot(PATH1);
+    assertNotNull(n0);
+    assertEquals("root", n0.getStringFeature());
+
+    EList children = n0.getChildren();
+    assertEquals(3, children.size());
+    assertEquals("node1", ((TreeNode) children.get(0)).getStringFeature());
+    assertEquals("node2", ((TreeNode) children.get(1)).getStringFeature());
+    assertEquals("node3", ((TreeNode) children.get(2)).getStringFeature());
   }
 
   protected TreeNode createNode(String name, TreeNode parent)

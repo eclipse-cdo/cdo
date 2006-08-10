@@ -38,16 +38,16 @@ public class ClientSeparatedServerTopology extends AbstractTopology
     super.start();
 
     // Start server
-    serverNet4j = createContainer("net4j", NET4J_LOCATION, null);
-    net4jServer = createContainer("server", NET4J_SERVER_LOCATION, serverNet4j);
+    serverNet4j = createContainer("server", NET4J_LOCATION, null);
+    net4jServer = createContainer("socket", NET4J_SERVER_LOCATION, serverNet4j);
     cdoServer = createContainer("cdo", CDO_SERVER_LOCATION, net4jServer);
 
     acceptor = (Acceptor) cdoServer.getBean("acceptor", Acceptor.class);
     acceptor.start();
 
     // Start client
-    clientNet4j = createContainer("net4j", NET4J_LOCATION, null);
-    net4jClient = createContainer("client", NET4J_CLIENT_LOCATION, clientNet4j);
+    clientNet4j = createContainer("client", NET4J_LOCATION, null);
+    net4jClient = createContainer("socket", NET4J_CLIENT_LOCATION, clientNet4j);
     createCDOClient("cdo", net4jClient);
   }
 

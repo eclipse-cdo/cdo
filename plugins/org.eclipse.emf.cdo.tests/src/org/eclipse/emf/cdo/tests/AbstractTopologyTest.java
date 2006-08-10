@@ -13,12 +13,12 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.client.CDOResource;
 import org.eclipse.emf.cdo.client.ResourceManager;
+import org.eclipse.emf.cdo.client.impl.CDOResourceFactoryImpl;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-
-import testmodel1.TreeNode;
 
 import java.io.IOException;
 
@@ -68,11 +68,24 @@ public abstract class AbstractTopologyTest extends TestCase
   protected CDOResource createResource(String path)
   {
     ResourceManager resourceManager = createResourceManager();
-    URI uri = URI.createURI("cdo://" + path);
+    URI uri = CDOResourceFactoryImpl.formatURI(path);
     return (CDOResource) resourceManager.createResource(uri);
   }
 
-  protected CDOResource saveResource(String path, TreeNode root) throws IOException
+  protected CDOResource getResource(String path)
+  {
+    ResourceManager resourceManager = createResourceManager();
+    URI uri = CDOResourceFactoryImpl.formatURI(path);
+    return (CDOResource) resourceManager.getResource(uri, true);
+  }
+
+  protected EObject loadRoot(String path) throws IOException
+  {
+    CDOResource resource = getResource(path);
+    return (EObject) resource.getContents().get(0);
+  }
+
+  protected CDOResource saveRoot(EObject root, String path) throws IOException
   {
     CDOResource resource = createResource(path);
     resource.getContents().add(root);

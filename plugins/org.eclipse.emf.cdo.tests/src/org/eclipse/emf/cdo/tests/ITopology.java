@@ -11,16 +11,16 @@
 package org.eclipse.emf.cdo.tests;
 
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.eclipse.emf.cdo.client.ResourceManager;
 
-public class AllTests {
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite("Test for org.eclipse.emf.cdo.tests");
-//       TODO: add real JUnit tests here
-		suite.addTestSuite(SampleTest.class);
-		return suite;
-	}
 
+public interface ITopology
+{
+  public void start() throws Exception;
+
+  public void stop() throws Exception;
+
+  public ResourceManager createResourceManager(ResourceSet resourceSet);
 }

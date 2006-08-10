@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	
+	<!-- ######################################################## -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value> plugin:/META-INF/net4j/embedded/net4j-embedded.properties </value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ######################################################## -->
+	<bean id="serverControlProtocol"
+		class="org.eclipse.net4j.core.protocol.ServerControlProtocol">
+		<property name="protocolManager">
+			<ref bean="protocolManager"/>
+		</property>
+	</bean>
+	
+	<!-- ######################################################## -->
+	<bean id="clientControlProtocol"
+		class="org.eclipse.net4j.core.protocol.ClientControlProtocol">
+		<property name="protocolManager">
+			<ref bean="protocolManager"/>
+		</property>
+	</bean>
+	
+	<!-- ######################################################## -->
+	<bean id="connectionManager"
+		class="org.eclipse.net4j.core.impl.ConnectionManagerImpl">
+		<property name="maxConnections">
+			<value>${connectionManager.maxConnections}</value>
+		</property>
+	</bean>
+	
+	<!-- ######################################################## -->
+	<bean id="connector" class="org.eclipse.net4j.embedded.impl.ActiveEmbeddedConnectorImpl">
+		<property name="autoStart">
+			<value>false</value>
+		</property>
+	</bean>
+	
+</beans>

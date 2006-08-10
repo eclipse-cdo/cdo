@@ -1,15 +1,16 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: org.eclipse.emf.cdo.tests;singleton:=true
+Bundle-SymbolicName: org.eclipse.emf.cdo.tests; singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.cdo.tests.CDOTestPlugin
 Bundle-ClassPath: cdo.tests.jar
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Eclipse-LazyStart: false
-Export-Package: org.eclipse.emf.cdo.tests
+Eclipse-LazyStart: true
 Require-Bundle: org.eclipse.core.runtime,
  org.junit,
- org.eclipse.emf.cdo.core,
- org.eclipse.net4j.core
+ org.eclipse.emf.cdo.client,
+ org.eclipse.emf.cdo.server,
+ org.eclipse.net4j.embedded,
+ org.eclipse.net4j.socket

@@ -1,0 +1,281 @@
+/**
+ * <copyright>
+ * </copyright>
+ *
+ * $Id$
+ */
+package testmodel1.impl;
+
+
+import org.eclipse.emf.cdo.client.CDOPackage;
+
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+
+import testmodel1.TestModel1Factory;
+import testmodel1.TestModel1Package;
+import testmodel1.TreeNode;
+
+
+/**
+ * <!-- begin-user-doc -->
+ * An implementation of the model <b>Package</b>.
+ * <!-- end-user-doc -->
+ * @generated
+ */
+public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Package
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass treeNodeEClass = null;
+
+  /**
+   * Creates an instance of the model <b>Package</b>, registered with
+   * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
+   * package URI value.
+   * <p>Note: the correct way to create the package is via the static
+   * factory method {@link #init init()}, which also performs
+   * initialization of the package, or returns the registered package,
+   * if one already exists.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.ecore.EPackage.Registry
+   * @see testmodel1.TestModel1Package#eNS_URI
+   * @see #init()
+   * @generated
+   */
+  private TestModel1PackageImpl()
+  {
+    super(eNS_URI, TestModel1Factory.eINSTANCE);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private static boolean isInited = false;
+
+  /**
+   * Creates, registers, and initializes the <b>Package</b> for this
+   * model, and for any others upon which it depends.  Simple
+   * dependencies are satisfied by calling this method on all
+   * dependent packages before doing anything else.  This method drives
+   * initialization for interdependent packages directly, in parallel
+   * with this package, itself.
+   * <p>Of this package and its interdependencies, all packages which
+   * have not yet been registered by their URI values are first created
+   * and registered.  The packages are then initialized in two steps:
+   * meta-model objects for all of the packages are created before any
+   * are initialized, since one package's meta-model objects may refer to
+   * those of another.
+   * <p>Invocation of this method will not affect any packages that have
+   * already been initialized.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #eNS_URI
+   * @see #createPackageContents()
+   * @see #initializePackageContents()
+   * @generated
+   */
+  public static TestModel1Package init()
+  {
+    if (isInited)
+      return (TestModel1Package) EPackage.Registry.INSTANCE.getEPackage(TestModel1Package.eNS_URI);
+
+    // Obtain or create and register package
+    TestModel1PackageImpl theTestModel1Package = (TestModel1PackageImpl) (EPackage.Registry.INSTANCE
+        .getEPackage(eNS_URI) instanceof TestModel1PackageImpl ? EPackage.Registry.INSTANCE
+        .getEPackage(eNS_URI) : new TestModel1PackageImpl());
+
+    isInited = true;
+
+    // Initialize simple dependencies
+    CDOPackage.eINSTANCE.eClass();
+
+    // Create package meta-data objects
+    theTestModel1Package.createPackageContents();
+
+    // Initialize created meta-data
+    theTestModel1Package.initializePackageContents();
+
+    // Mark meta-data to indicate it can't be changed
+    theTestModel1Package.freeze();
+
+    return theTestModel1Package;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTreeNode()
+  {
+    return treeNodeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTreeNode_Parent()
+  {
+    return (EReference) treeNodeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTreeNode_Children()
+  {
+    return (EReference) treeNodeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTreeNode_References()
+  {
+    return (EReference) treeNodeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTreeNode_BooleanFeature()
+  {
+    return (EAttribute) treeNodeEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTreeNode_IntFeature()
+  {
+    return (EAttribute) treeNodeEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTreeNode_StringFeature()
+  {
+    return (EAttribute) treeNodeEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TestModel1Factory getTestModel1Factory()
+  {
+    return (TestModel1Factory) getEFactoryInstance();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private boolean isCreated = false;
+
+  /**
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void createPackageContents()
+  {
+    if (isCreated) return;
+    isCreated = true;
+
+    // Create classes and their features
+    treeNodeEClass = createEClass(TREE_NODE);
+    createEReference(treeNodeEClass, TREE_NODE__PARENT);
+    createEReference(treeNodeEClass, TREE_NODE__CHILDREN);
+    createEReference(treeNodeEClass, TREE_NODE__REFERENCES);
+    createEAttribute(treeNodeEClass, TREE_NODE__BOOLEAN_FEATURE);
+    createEAttribute(treeNodeEClass, TREE_NODE__INT_FEATURE);
+    createEAttribute(treeNodeEClass, TREE_NODE__STRING_FEATURE);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private boolean isInitialized = false;
+
+  /**
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void initializePackageContents()
+  {
+    if (isInitialized) return;
+    isInitialized = true;
+
+    // Initialize package
+    setName(eNAME);
+    setNsPrefix(eNS_PREFIX);
+    setNsURI(eNS_URI);
+
+    // Obtain other dependent packages
+    CDOPackage theCDOPackage = (CDOPackage) EPackage.Registry.INSTANCE
+        .getEPackage(CDOPackage.eNS_URI);
+
+    // Add supertypes to classes
+    treeNodeEClass.getESuperTypes().add(theCDOPackage.getCDOPersistent());
+
+    // Initialize classes and features; add operations and parameters
+    initEClass(treeNodeEClass, TreeNode.class, "TreeNode", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTreeNode_Parent(), this.getTreeNode(), this.getTreeNode_Children(), "parent",
+        null, 0, 1, TreeNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTreeNode_Children(), this.getTreeNode(), this.getTreeNode_Parent(),
+        "children", null, 0, -1, TreeNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTreeNode_References(), this.getTreeNode(), null, "references", null, 0, -1,
+        TreeNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTreeNode_BooleanFeature(), ecorePackage.getEBoolean(), "booleanFeature",
+        null, 0, 1, TreeNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTreeNode_IntFeature(), ecorePackage.getEInt(), "intFeature", null, 0, 1,
+        TreeNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTreeNode_StringFeature(), ecorePackage.getEString(), "stringFeature", null,
+        0, 1, TreeNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    // Create resource
+    createResource(eNS_URI);
+  }
+
+} //TestModel1PackageImpl

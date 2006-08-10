@@ -25,17 +25,17 @@ public class Model1Test extends AbstractTopologyTest
 
   public void testSimple() throws Exception
   {
-    TreeNode root = createNode("root", null);
-    createNode("node1", root);
-    createNode("node2", root);
-    createNode("node3", root);
-    saveRoot(root, PATH1);
+    TreeNode node = createNode("root", null);
+    createNode("node1", node);
+    createNode("node2", node);
+    createNode("node3", node);
+    saveRoot(node, PATH1);
 
-    TreeNode n0 = (TreeNode) loadRoot(PATH1);
-    assertNotNull(n0);
-    assertEquals("root", n0.getStringFeature());
+    TreeNode root = (TreeNode) loadRoot(PATH1);
+    assertNotNull(root);
+    assertEquals("root", root.getStringFeature());
 
-    EList children = n0.getChildren();
+    EList children = root.getChildren();
     assertEquals(3, children.size());
     assertEquals("node1", ((TreeNode) children.get(0)).getStringFeature());
     assertEquals("node2", ((TreeNode) children.get(1)).getStringFeature());

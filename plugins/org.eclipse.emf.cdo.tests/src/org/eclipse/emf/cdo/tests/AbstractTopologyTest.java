@@ -42,6 +42,10 @@ public abstract class AbstractTopologyTest extends TestCase
   @Override
   protected void setUp() throws Exception
   {
+    System.out.println("=========================================================================");
+    System.out.println("TC_START " + getName());
+    System.out.println("=========================================================================");
+
     super.setUp();
     topology = createTopology();
     topology.start();
@@ -52,6 +56,11 @@ public abstract class AbstractTopologyTest extends TestCase
   {
     topology.stop();
     super.tearDown();
+
+    System.out.println("=========================================================================");
+    System.out.println("TC_END " + getName());
+    System.out.println("=========================================================================");
+    System.out.println();
   }
 
   protected ResourceManager createResourceManager(ResourceSet resourceSet)

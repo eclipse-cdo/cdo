@@ -11,12 +11,6 @@
 package org.eclipse.emf.cdo.tests;
 
 
-import org.eclipse.emf.cdo.client.CDOResource;
-import org.eclipse.emf.cdo.client.ResourceManager;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import testmodel1.TestModel1Factory;
 import testmodel1.TreeNode;
@@ -24,25 +18,17 @@ import testmodel1.TreeNode;
 import java.util.Arrays;
 
 
-public class IntegrationTest extends AbstractIntegrationTest
+
+public class Model1Test extends AbstractTopologyTest
 {
   public void testSimple() throws Exception
   {
-    ResourceSet resourceSet = new ResourceSetImpl();
-    ResourceManager resourceManager = createResourceManager(resourceSet);
+    TreeNode root = createNode("root", null);
+    createNode("node1", root);
+    createNode("node2", root);
+    createNode("node3", root);
 
-    CDOResource resource = (CDOResource) resourceSet.createResource(URI
-        .createURI("cdo:///test/res1"));
-
-    TreeNode node0 = createNode("node0", null);
-    TreeNode node1 = createNode("node1", node0);
-    TreeNode node2 = createNode("node2", node0);
-    TreeNode node3 = createNode("node3", node0);
-
-    resource.getContents().add(node0);
-    resourceManager.commit();
-    resourceManager.stop();
-
+    saveResource("/test/res1", root);
   }
 
   protected TreeNode createNode(String name, TreeNode parent)

@@ -11,15 +11,24 @@
 package org.eclipse.emf.cdo.tests;
 
 
+import org.eclipse.emf.cdo.client.CDOResource;
 import org.eclipse.emf.cdo.client.ResourceManager;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+
+import testmodel1.TreeNode;
+
+import java.io.IOException;
 
 import junit.framework.TestCase;
 
 
-public class AbstractIntegrationTest extends TestCase
+public abstract class AbstractTopologyTest extends TestCase
 {
+  public static final String CDO_TEST_MODE_KEY = "cdo.test.mode";
+
   public static final String CLIENT_SEPARATED_SERVER_MODE = "client-separated-server";
 
   public static final String CLIENT_SERVER_MODE = "client-server";
@@ -50,6 +59,27 @@ public class AbstractIntegrationTest extends TestCase
     return topology.createResourceManager(resourceSet);
   }
 
+  protected ResourceManager createResourceManager()
+  {
+    ResourceSet resourceSet = new ResourceSetImpl();
+    return topology.createResourceManager(resourceSet);
+  }
+
+  protected CDOResource createResource(String path)
+  {
+    ResourceManager resourceManager = createResourceManager();
+    URI uri = URI.createURI("cdo://" + path);
+    return (CDOResource) resourceManager.createResource(uri);
+  }
+
+  protected CDOResource saveResource(String path, TreeNode root) throws IOException
+  {
+    CDOResource resource = createResource(path);
+    resource.getContents().add(root);
+    resource.save(null);
+    return resource;
+  }
+
   protected ITopology createTopology()
   {
     String mode = getMode();
@@ -78,6 +108,6 @@ public class AbstractIntegrationTest extends TestCase
 
   protected String getMode()
   {
-    return System.getProperty("cdo.test.mode", EMBEDDED_MODE).toLowerCase();
+    return System.getProperty(CDO_TEST_MODE_KEY, EMBEDDED_MODE).toLowerCase();
   }
 }

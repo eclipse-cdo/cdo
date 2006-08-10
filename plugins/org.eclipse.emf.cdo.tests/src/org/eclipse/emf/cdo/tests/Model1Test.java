@@ -25,7 +25,7 @@ public class Model1Test extends AbstractTopologyTest
 
   public void testSimple() throws Exception
   {
-    TreeNode node = createNode("root", null);
+    TreeNode node = createNode("root");
     createNode("node1", node);
     createNode("node2", node);
     createNode("node3", node);
@@ -40,6 +40,11 @@ public class Model1Test extends AbstractTopologyTest
     assertEquals("node1", ((TreeNode) children.get(0)).getStringFeature());
     assertEquals("node2", ((TreeNode) children.get(1)).getStringFeature());
     assertEquals("node3", ((TreeNode) children.get(2)).getStringFeature());
+  }
+
+  protected TreeNode createNode(String name)
+  {
+    return createNode(name, null);
   }
 
   protected TreeNode createNode(String name, TreeNode parent)

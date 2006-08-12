@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 
-public class AbstractModel1Test extends AbstractTopologyTest
+public abstract class AbstractModel1Test extends AbstractTopologyTest
 {
   @Override
   protected void wipeDatabase(JdbcTemplate jdbc)

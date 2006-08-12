@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo.tests;
 
 
+import javax.sql.DataSource;
+
+
 public class ClientTopology extends AbstractTopology
 {
   public ClientTopology()
@@ -23,5 +26,10 @@ public class ClientTopology extends AbstractTopology
 
   public void stop() throws Exception
   {
+  }
+
+  public DataSource getDataSource()
+  {
+    return null;
   }
 }

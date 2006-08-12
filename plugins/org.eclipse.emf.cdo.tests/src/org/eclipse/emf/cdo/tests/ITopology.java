@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.client.ResourceManager;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import javax.sql.DataSource;
+
 
 public interface ITopology
 {
@@ -23,4 +25,6 @@ public interface ITopology
   public void stop() throws Exception;
 
   public ResourceManager createResourceManager(ResourceSet resourceSet);
+
+  public DataSource getDataSource();
 }

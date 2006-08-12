@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.net4j.core.Acceptor;
 import org.eclipse.net4j.spring.Container;
 
+import javax.sql.DataSource;
+
 
 public class ClientSeparatedServerTopology extends AbstractTopology
 {
@@ -66,5 +68,10 @@ public class ClientSeparatedServerTopology extends AbstractTopology
     cdoServer.stop();
     net4jServer.stop();
     serverNet4j.stop();
+  }
+
+  public DataSource getDataSource()
+  {
+    return (DataSource) cdoServer.getBean("dataSource");
   }
 }

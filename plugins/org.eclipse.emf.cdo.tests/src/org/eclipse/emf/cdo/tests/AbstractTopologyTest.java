@@ -20,7 +20,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.io.IOException;
+
+import javax.sql.DataSource;
 
 import junit.framework.TestCase;
 
@@ -54,6 +58,9 @@ public abstract class AbstractTopologyTest extends TestCase
   @Override
   protected void tearDown() throws Exception
   {
+    JdbcTemplate jdbc = getJdbcTemplate();
+    wipeDatabase(jdbc);
+
     topology.stop();
     super.tearDown();
 
@@ -61,6 +68,32 @@ public abstract class AbstractTopologyTest extends TestCase
     System.out.println("TC_END " + getName());
     System.out.println("=========================================================================");
     System.out.println();
+  }
+
+  protected void wipeDatabase(JdbcTemplate jdbc)
+  {
+    jdbc.execute("DROP TABLE CDO_ATTRIBUTE");
+    jdbc.execute("DROP TABLE CDO_CLASS");
+    jdbc.execute("DROP TABLE CDO_CONTENT");
+    jdbc.execute("DROP TABLE CDO_OBJECT");
+    jdbc.execute("DROP TABLE CDO_PACKAGE");
+    jdbc.execute("DROP TABLE CDO_REFERENCE");
+    jdbc.execute("DROP TABLE CDO_RESOURCE");
+  }
+
+  protected ITopology getTopology()
+  {
+    return topology;
+  }
+
+  protected DataSource getDataSource()
+  {
+    return topology.getDataSource();
+  }
+
+  protected JdbcTemplate getJdbcTemplate()
+  {
+    return new JdbcTemplate(getDataSource());
   }
 
   protected ResourceManager createResourceManager(ResourceSet resourceSet)

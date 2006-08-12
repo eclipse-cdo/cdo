@@ -8,8 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.tests.testmodel1;
 
+
+import org.eclipse.emf.cdo.tests.topology.AbstractTopologyTest;
 
 import org.eclipse.emf.common.util.EList;
 

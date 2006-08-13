@@ -48,18 +48,19 @@ public class BasicTest extends AbstractModel1Test
   {
     final String RESOURCE = "/test/res";
     final String ROOT = "root";
-    final String[] CHILDREN_A = { "a1", "a2", "a3", "a4"};
-    final String[] CHILDREN_B = { "b1", "b2", "b3", "b4"};
+    final String[] PATH_A = { "a1", "a2", "a3", "a4"};
+    final String[] PATH_B = { "b1", "b2", "b3", "b4"};
 
     // Execution
     {
       TreeNode root = createNode(ROOT);
+
       TreeNode a = root;
-      for (String name : CHILDREN_A)
+      for (String name : PATH_A)
         a = createNode(name, a);
 
       TreeNode b = root;
-      for (String name : CHILDREN_B)
+      for (String name : PATH_B)
         b = createNode(name, b);
 
       saveRoot(root, RESOURCE);
@@ -69,8 +70,8 @@ public class BasicTest extends AbstractModel1Test
     {
       TreeNode root = (TreeNode) loadRoot(RESOURCE);
       assertNode(ROOT, root);
-      assertPath(CHILDREN_A, root);
-      assertPath(CHILDREN_B, root);
+      assertPath(PATH_A, root);
+      assertPath(PATH_B, root);
     }
   }
 
@@ -78,18 +79,19 @@ public class BasicTest extends AbstractModel1Test
   {
     final String RESOURCE = "/test/res";
     final String ROOT = "root";
-    final String[] CHILDREN_A = { "a1", "a2", "a3", "a4"};
-    final String[] CHILDREN_B = { "b1", "b2", "b3", "b4"};
+    final String[] PATH_A = { "a1", "a2", "a3", "a4"};
+    final String[] PATH_B = { "b1", "b2", "b3", "b4"};
 
     // Execution
     {
       TreeNode root = createNode(ROOT);
+
       TreeNode a = root;
-      for (String name : CHILDREN_A)
+      for (String name : PATH_A)
         a = createNode(name, a);
 
       TreeNode b = root;
-      for (String name : CHILDREN_B)
+      for (String name : PATH_B)
         b = createNode(name, b);
 
       a.getReferences().add(b);
@@ -101,9 +103,9 @@ public class BasicTest extends AbstractModel1Test
       TreeNode root = (TreeNode) loadRoot(RESOURCE);
       assertNode(ROOT, root);
 
-      TreeNode a = findPath(CHILDREN_A, root);
-      TreeNode b = findPath(CHILDREN_B, root); // PRE-LOAD
-      assertNode(CHILDREN_B[3], (TreeNode) a.getReferences().get(0));
+      TreeNode a = findPath(PATH_A, root);
+      TreeNode b = findPath(PATH_B, root);
+      assertNode(PATH_B[3], (TreeNode) a.getReferences().get(0));
     }
   }
 
@@ -111,18 +113,19 @@ public class BasicTest extends AbstractModel1Test
   {
     final String RESOURCE = "/test/res";
     final String ROOT = "root";
-    final String[] CHILDREN_A = { "a1", "a2", "a3", "a4"};
-    final String[] CHILDREN_B = { "b1", "b2", "b3", "b4"};
+    final String[] PATH_A = { "a1", "a2", "a3", "a4"};
+    final String[] PATH_B = { "b1", "b2", "b3", "b4"};
 
     // Execution
     {
       TreeNode root = createNode(ROOT);
+
       TreeNode a = root;
-      for (String name : CHILDREN_A)
+      for (String name : PATH_A)
         a = createNode(name, a);
 
       TreeNode b = root;
-      for (String name : CHILDREN_B)
+      for (String name : PATH_B)
         b = createNode(name, b);
 
       a.getReferences().add(b);
@@ -134,11 +137,9 @@ public class BasicTest extends AbstractModel1Test
       TreeNode root = (TreeNode) loadRoot(RESOURCE);
       assertNode(ROOT, root);
 
-      TreeNode a = findPath(CHILDREN_A, root);
-      // DO NOT LOAD BY CONTAINMENT: 
-      // TreeNode b = findPath(CHILDREN_B, root);
+      TreeNode a = findPath(PATH_A, root);
       TreeNode b = (TreeNode) a.getReferences().get(0);
-      assertNode(CHILDREN_B[3], b);
+      assertNode(PATH_B[3], b);
     }
   }
 }

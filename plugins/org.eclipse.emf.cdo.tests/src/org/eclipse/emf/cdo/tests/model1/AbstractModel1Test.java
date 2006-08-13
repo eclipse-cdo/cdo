@@ -30,7 +30,7 @@ public abstract class AbstractModel1Test extends AbstractTopologyTest
   protected void wipeDatabase(JdbcTemplate jdbc)
   {
     super.wipeDatabase(jdbc);
-    jdbc.execute("DROP TABLE TREE_NODE");
+    dropTable(jdbc, "TREE_NODE");
   }
 
   protected TreeNode createNode(String name)

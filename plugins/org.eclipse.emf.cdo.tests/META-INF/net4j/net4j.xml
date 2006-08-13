@@ -53,11 +53,4 @@
 	<bean id="releaseExecutor"
 		class="org.eclipse.net4j.core.impl.QueueingExecutorImpl"/>
 	
-	<!-- ######################################################## -->
-	<bean id="tempManager" class="org.eclipse.net4j.core.impl.TempManager">
-		<property name="releaseExecutor">
-			<ref local="releaseExecutor"/>
-		</property>
-	</bean>
-	
 </beans>

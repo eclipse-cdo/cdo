@@ -72,13 +72,25 @@ public abstract class AbstractTopologyTest extends TestCase
 
   protected void wipeDatabase(JdbcTemplate jdbc)
   {
-    jdbc.execute("DROP TABLE CDO_ATTRIBUTE");
-    jdbc.execute("DROP TABLE CDO_CLASS");
-    jdbc.execute("DROP TABLE CDO_CONTENT");
-    jdbc.execute("DROP TABLE CDO_OBJECT");
-    jdbc.execute("DROP TABLE CDO_PACKAGE");
-    jdbc.execute("DROP TABLE CDO_REFERENCE");
-    jdbc.execute("DROP TABLE CDO_RESOURCE");
+    dropTable(jdbc, "CDO_ATTRIBUTE");
+    dropTable(jdbc, "CDO_CLASS");
+    dropTable(jdbc, "CDO_CONTENT");
+    dropTable(jdbc, "CDO_OBJECT");
+    dropTable(jdbc, "CDO_PACKAGE");
+    dropTable(jdbc, "CDO_REFERENCE");
+    dropTable(jdbc, "CDO_RESOURCE");
+  }
+
+  protected void dropTable(JdbcTemplate jdbc, String tableName)
+  {
+    try
+    {
+      jdbc.execute("DROP TABLE " + tableName);
+    }
+    catch (Exception ignore)
+    {
+      ; // Intentionally left empty
+    }
   }
 
   protected ITopology getTopology()

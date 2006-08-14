@@ -158,7 +158,7 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public TreeNode getParent()
   {
-
+    cdoLoad();
     if (eContainerFeatureID != TestModel1Package.TREE_NODE__PARENT) return null;
     return (TreeNode) eContainer();
   }
@@ -209,7 +209,6 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public EList getChildren()
   {
-
     cdoLoad();
     if (children == null)
     {
@@ -226,7 +225,6 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public EList getReferences()
   {
-
     cdoLoad();
     if (references == null)
     {
@@ -243,7 +241,6 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public boolean isBooleanFeature()
   {
-
     cdoLoad();
     return booleanFeature;
   }
@@ -255,7 +252,6 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public void setBooleanFeature(boolean newBooleanFeature)
   {
-
     cdoLoad();
     boolean oldBooleanFeature = booleanFeature;
     booleanFeature = newBooleanFeature;
@@ -271,7 +267,6 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public int getIntFeature()
   {
-
     cdoLoad();
     return intFeature;
   }
@@ -283,7 +278,6 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public void setIntFeature(int newIntFeature)
   {
-
     cdoLoad();
     int oldIntFeature = intFeature;
     intFeature = newIntFeature;
@@ -299,7 +293,6 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public String getStringFeature()
   {
-
     cdoLoad();
     return stringFeature;
   }
@@ -311,7 +304,6 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public void setStringFeature(String newStringFeature)
   {
-
     cdoLoad();
     String oldStringFeature = stringFeature;
     stringFeature = newStringFeature;

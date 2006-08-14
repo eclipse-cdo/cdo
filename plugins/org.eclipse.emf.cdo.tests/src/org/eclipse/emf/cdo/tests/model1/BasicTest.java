@@ -226,6 +226,39 @@ public class BasicTest extends AbstractModel1Test
     }
   }
 
+  public void testInterResourceXRef3() throws Exception
+  {
+    final String RESOURCE1 = "/test/res1";
+    final String RESOURCE2 = "/test/res2";
+    final String ROOT1 = "root1";
+    final String ROOT2 = "root2";
+    final String CHILD2 = "child2";
+
+    { // Execution
+      TreeNode root1 = createNode(ROOT1);
+      saveRoot(root1, RESOURCE1);
+
+      TreeNode root2 = createNode(ROOT2);
+      TreeNode child2 = createNode(CHILD2, root2);
+      child2.getReferences().add(root1);
+      saveRoot(root2, RESOURCE2);
+    }
+
+    { // Verification
+      TreeNode root2 = (TreeNode) loadRoot(RESOURCE2);
+      assertNode(ROOT2, root2);
+      assertResource(RESOURCE2, root2);
+
+      TreeNode child2 = (TreeNode) root2.getChildren().get(0);
+      assertNode(CHILD2, child2);
+      assertResource(RESOURCE2, child2);
+
+      TreeNode root1 = (TreeNode) child2.getReferences().get(0);
+      assertNode(ROOT1, root1);
+      assertResource(RESOURCE1, root1);
+    }
+  }
+
   public void testGetContainer() throws Exception
   {
     final String RESOURCE = "/test/res";

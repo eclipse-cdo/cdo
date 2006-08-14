@@ -20,17 +20,56 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import testmodel1.TestModel1Factory;
 import testmodel1.TreeNode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 
 public abstract class AbstractModel1Test extends AbstractTopologyTest
 {
-  @Override
-  protected void wipeDatabase(JdbcTemplate jdbc)
+  protected void assertChild(String name, EList nodes)
   {
-    super.wipeDatabase(jdbc);
-    dropTable(jdbc, "TREE_NODE");
+    assertNotNull(nodes);
+    assertNotNull(name);
+    assertEquals(1, nodes.size());
+    assertEquals(name, ((TreeNode) nodes.get(0)).getStringFeature());
+  }
+
+  protected void assertChildren(String[] names, EList nodes)
+  {
+    assertNotNull(nodes);
+    assertNotNull(names);
+    assertEquals(names.length, nodes.size());
+    for (int i = 0; i < names.length; i++)
+    {
+      assertEquals(names[i], ((TreeNode) nodes.get(i)).getStringFeature());
+    }
+  }
+
+  protected void assertNode(String name, TreeNode node)
+  {
+    assertNotNull(node);
+    assertNotNull(name);
+    assertEquals(name, node.getStringFeature());
+  }
+
+  protected void assertPath(String[] names, TreeNode node)
+  {
+    TreeNode result = findPath(names, node);
+    assertNotNull(result);
+  }
+
+  protected TreeNode[] createChildren(String[] names, TreeNode parent)
+  {
+    List<TreeNode> result = new ArrayList<TreeNode>();
+    for (String name : names)
+    {
+      TreeNode node = createNode(name, parent);
+      result.add(node);
+    }
+
+    return result.toArray(new TreeNode[result.size()]);
   }
 
   protected TreeNode createNode(String name)
@@ -53,50 +92,32 @@ public abstract class AbstractModel1Test extends AbstractTopologyTest
     return node;
   }
 
-  protected void assertNode(String name, TreeNode node)
+  protected TreeNode createPath(String[] names, TreeNode parent, boolean reuseNodes)
   {
-    assertNotNull(node);
-    assertNotNull(name);
-    assertEquals(name, node.getStringFeature());
-  }
-
-  protected void assertChildren(String[] names, EList nodes)
-  {
-    assertNotNull(nodes);
-    assertNotNull(names);
-    assertEquals(names.length, nodes.size());
-    for (int i = 0; i < names.length; i++)
+    for (String name : names)
     {
-      assertEquals(names[i], ((TreeNode) nodes.get(i)).getStringFeature());
-    }
-  }
+      TreeNode node = null;
+      if (reuseNodes)
+      {
+        node = findNode(name, parent.getChildren());
+      }
 
-  protected void assertChild(String name, EList nodes)
-  {
-    assertNotNull(nodes);
-    assertNotNull(name);
-    assertEquals(1, nodes.size());
-    assertEquals(name, ((TreeNode) nodes.get(0)).getStringFeature());
-  }
+      if (node == null)
+      {
+        node = TestModel1Factory.eINSTANCE.createTreeNode();
+        node.setStringFeature(name);
+        node.setParent(parent);
+      }
 
-  protected void assertPath(String[] names, TreeNode node)
-  {
-    TreeNode result = findPath(names, node);
-    assertNotNull(result);
-  }
-
-  protected TreeNode findPath(String[] names, TreeNode node)
-  {
-    assertNotNull(names);
-    for (int i = 0; i < names.length; i++)
-    {
-      String name = names[i];
-      TreeNode child = findNode(name, node.getChildren());
-      if (child == null) return null;
-      node = child;
+      parent = node;
     }
 
-    return node;
+    return parent;
+  }
+
+  protected TreeNode findChild(String name, TreeNode parent)
+  {
+    return findNode(name, parent.getChildren());
   }
 
   protected TreeNode findNode(String name, EList nodes)
@@ -112,5 +133,26 @@ public abstract class AbstractModel1Test extends AbstractTopologyTest
     }
 
     return null;
+  }
+
+  protected TreeNode findPath(String[] names, TreeNode node)
+  {
+    assertNotNull(names);
+    for (int i = 0; i < names.length; i++)
+    {
+      String name = names[i];
+      TreeNode child = findChild(name, node);
+      if (child == null) return null;
+      node = child;
+    }
+
+    return node;
+  }
+
+  @Override
+  protected void wipeDatabase(JdbcTemplate jdbc)
+  {
+    super.wipeDatabase(jdbc);
+    dropTable(jdbc, "TREE_NODE");
   }
 }

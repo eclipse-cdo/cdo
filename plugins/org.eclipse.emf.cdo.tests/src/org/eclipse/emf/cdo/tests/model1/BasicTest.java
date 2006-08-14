@@ -11,7 +11,11 @@
 package org.eclipse.emf.cdo.tests.model1;
 
 
+import org.eclipse.emf.cdo.client.CDOResource;
+import org.eclipse.emf.cdo.client.impl.CDOPersistentImpl;
+
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.resource.Resource;
 
 import testmodel1.TreeNode;
 
@@ -28,9 +32,7 @@ public class BasicTest extends AbstractModel1Test
     // Execution
     {
       TreeNode root = createNode(ROOT);
-      for (String name : CHILDREN)
-        createNode(name, root);
-
+      createChildren(CHILDREN, root);
       saveRoot(root, RESOURCE);
     }
 
@@ -54,15 +56,8 @@ public class BasicTest extends AbstractModel1Test
     // Execution
     {
       TreeNode root = createNode(ROOT);
-
-      TreeNode a = root;
-      for (String name : PATH_A)
-        a = createNode(name, a);
-
-      TreeNode b = root;
-      for (String name : PATH_B)
-        b = createNode(name, b);
-
+      createPath(PATH_A, root, false);
+      createPath(PATH_B, root, false);
       saveRoot(root, RESOURCE);
     }
 
@@ -85,15 +80,8 @@ public class BasicTest extends AbstractModel1Test
     // Execution
     {
       TreeNode root = createNode(ROOT);
-
-      TreeNode a = root;
-      for (String name : PATH_A)
-        a = createNode(name, a);
-
-      TreeNode b = root;
-      for (String name : PATH_B)
-        b = createNode(name, b);
-
+      TreeNode a = createPath(PATH_A, root, false);
+      TreeNode b = createPath(PATH_B, root, false);
       a.getReferences().add(b);
       saveRoot(root, RESOURCE);
     }
@@ -119,15 +107,8 @@ public class BasicTest extends AbstractModel1Test
     // Execution
     {
       TreeNode root = createNode(ROOT);
-
-      TreeNode a = root;
-      for (String name : PATH_A)
-        a = createNode(name, a);
-
-      TreeNode b = root;
-      for (String name : PATH_B)
-        b = createNode(name, b);
-
+      TreeNode a = createPath(PATH_A, root, false);
+      TreeNode b = createPath(PATH_B, root, false);
       a.getReferences().add(b);
       saveRoot(root, RESOURCE);
     }
@@ -140,6 +121,40 @@ public class BasicTest extends AbstractModel1Test
       TreeNode a = findPath(PATH_A, root);
       TreeNode b = (TreeNode) a.getReferences().get(0);
       assertNode(PATH_B[3], b);
+    }
+  }
+
+  public void testGetResource() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final String[] PATH = { "a1", "a2", "a3", "a4"};
+
+    // Execution
+    {
+      TreeNode root = createNode(ROOT);
+      createPath(PATH, root, false);
+      saveRoot(root, RESOURCE);
+    }
+
+    // Verification
+    {
+      TreeNode node = (TreeNode) loadRoot(RESOURCE);
+      CDOResource cdoResource = ((CDOPersistentImpl) node).cdoGetResource();
+      while (node != null)
+      {
+        Resource resource = node.eResource();
+        assertEquals(cdoResource, resource);
+
+        if (node.getChildren().isEmpty())
+        {
+          node = null;
+        }
+        else
+        {
+          node = (TreeNode) node.getChildren().get(0);
+        }
+      }
     }
   }
 }

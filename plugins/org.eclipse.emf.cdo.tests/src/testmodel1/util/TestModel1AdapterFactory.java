@@ -86,6 +86,11 @@ public class TestModel1AdapterFactory extends AdapterFactoryImpl
       return createTreeNodeAdapter();
     }
 
+    public Object caseExtendedNode(ExtendedNode object)
+    {
+      return createExtendedNodeAdapter();
+    }
+
     public Object caseCDOPersistable(CDOPersistable object)
     {
       return createCDOPersistableAdapter();
@@ -126,6 +131,21 @@ public class TestModel1AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTreeNodeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link testmodel1.ExtendedNode <em>Extended Node</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see testmodel1.ExtendedNode
+   * @generated
+   */
+  public Adapter createExtendedNodeAdapter()
   {
     return null;
   }

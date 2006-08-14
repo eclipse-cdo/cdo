@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import testmodel1.ExtendedNode;
 import testmodel1.TestModel1Factory;
 import testmodel1.TestModel1Package;
 import testmodel1.TreeNode;
@@ -35,6 +36,13 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
    * @generated
    */
   private EClass treeNodeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass extendedNodeEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -187,6 +195,46 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getExtendedNode()
+  {
+    return extendedNodeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExtendedNode_BidiSource()
+  {
+    return (EReference) extendedNodeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExtendedNode_BidiTarget()
+  {
+    return (EReference) extendedNodeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getExtendedNode_StringFeature2()
+  {
+    return (EAttribute) extendedNodeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public TestModel1Factory getTestModel1Factory()
   {
     return (TestModel1Factory) getEFactoryInstance();
@@ -219,6 +267,11 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
     createEAttribute(treeNodeEClass, TREE_NODE__BOOLEAN_FEATURE);
     createEAttribute(treeNodeEClass, TREE_NODE__INT_FEATURE);
     createEAttribute(treeNodeEClass, TREE_NODE__STRING_FEATURE);
+
+    extendedNodeEClass = createEClass(EXTENDED_NODE);
+    createEReference(extendedNodeEClass, EXTENDED_NODE__BIDI_SOURCE);
+    createEReference(extendedNodeEClass, EXTENDED_NODE__BIDI_TARGET);
+    createEAttribute(extendedNodeEClass, EXTENDED_NODE__STRING_FEATURE2);
   }
 
   /**
@@ -251,6 +304,7 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
 
     // Add supertypes to classes
     treeNodeEClass.getESuperTypes().add(theCDOPackage.getCDOPersistent());
+    extendedNodeEClass.getESuperTypes().add(this.getTreeNode());
 
     // Initialize classes and features; add operations and parameters
     initEClass(treeNodeEClass, TreeNode.class, "TreeNode", !IS_ABSTRACT, !IS_INTERFACE,
@@ -273,6 +327,20 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
     initEAttribute(getTreeNode_StringFeature(), ecorePackage.getEString(), "stringFeature", null,
         0, 1, TreeNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(extendedNodeEClass, ExtendedNode.class, "ExtendedNode", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExtendedNode_BidiSource(), this.getExtendedNode(), this
+        .getExtendedNode_BidiTarget(), "bidiSource", null, 0, -1, ExtendedNode.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExtendedNode_BidiTarget(), this.getExtendedNode(), this
+        .getExtendedNode_BidiSource(), "bidiTarget", null, 0, -1, ExtendedNode.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getExtendedNode_StringFeature2(), ecorePackage.getEString(), "stringFeature2",
+        null, 0, 1, ExtendedNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

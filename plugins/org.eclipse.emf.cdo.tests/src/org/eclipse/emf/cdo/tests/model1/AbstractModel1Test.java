@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import testmodel1.ExtendedNode;
 import testmodel1.TestModel1Factory;
 import testmodel1.TreeNode;
 
@@ -66,7 +67,7 @@ public abstract class AbstractModel1Test extends AbstractTopologyTest
   {
     Resource resource = node.eResource();
     assertTrue(resource instanceof CDOResource);
-  
+
     CDOResource cdoResource = (CDOResource) resource;
     assertEquals(path, cdoResource.getPath());
   }
@@ -126,6 +127,19 @@ public abstract class AbstractModel1Test extends AbstractTopologyTest
     return parent;
   }
 
+  protected ExtendedNode createExtended(String name)
+  {
+    return createExtended(name, null);
+  }
+
+  protected ExtendedNode createExtended(String name, TreeNode parent)
+  {
+    ExtendedNode node = TestModel1Factory.eINSTANCE.createExtendedNode();
+    node.setStringFeature(name);
+    node.setParent(parent);
+    return node;
+  }
+
   protected TreeNode findChild(String name, TreeNode parent)
   {
     return findNode(name, parent.getChildren());
@@ -165,5 +179,6 @@ public abstract class AbstractModel1Test extends AbstractTopologyTest
   {
     super.wipeDatabase(jdbc);
     dropTable(jdbc, "TREE_NODE");
+    dropTable(jdbc, "EXTENDED_NODE");
   }
 }

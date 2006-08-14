@@ -14,4 +14,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="intFeature" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringFeature" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExtendedNode" eSuperTypes="#//TreeNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bidiSource" upperBound="-1"
+        eType="#//ExtendedNode" eOpposite="#//ExtendedNode/bidiTarget"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bidiTarget" upperBound="-1"
+        eType="#//ExtendedNode" eOpposite="#//ExtendedNode/bidiSource"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringFeature2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

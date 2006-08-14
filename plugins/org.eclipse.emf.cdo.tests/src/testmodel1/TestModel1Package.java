@@ -138,6 +138,106 @@ public interface TestModel1Package extends EPackage
   int TREE_NODE_FEATURE_COUNT = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 6;
 
   /**
+   * The meta object id for the '{@link testmodel1.impl.ExtendedNodeImpl <em>Extended Node</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see testmodel1.impl.ExtendedNodeImpl
+   * @see testmodel1.impl.TestModel1PackageImpl#getExtendedNode()
+   * @generated
+   */
+  int EXTENDED_NODE = 1;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__PARENT = TREE_NODE__PARENT;
+
+  /**
+   * The feature id for the '<em><b>Children</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__CHILDREN = TREE_NODE__CHILDREN;
+
+  /**
+   * The feature id for the '<em><b>References</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__REFERENCES = TREE_NODE__REFERENCES;
+
+  /**
+   * The feature id for the '<em><b>Boolean Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__BOOLEAN_FEATURE = TREE_NODE__BOOLEAN_FEATURE;
+
+  /**
+   * The feature id for the '<em><b>Int Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__INT_FEATURE = TREE_NODE__INT_FEATURE;
+
+  /**
+   * The feature id for the '<em><b>String Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__STRING_FEATURE = TREE_NODE__STRING_FEATURE;
+
+  /**
+   * The feature id for the '<em><b>Bidi Source</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__BIDI_SOURCE = TREE_NODE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Bidi Target</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__BIDI_TARGET = TREE_NODE_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>String Feature2</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__STRING_FEATURE2 = TREE_NODE_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Extended Node</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE_FEATURE_COUNT = TREE_NODE_FEATURE_COUNT + 3;
+
+  /**
    * Returns the meta object for class '{@link testmodel1.TreeNode <em>Tree Node</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -212,6 +312,49 @@ public interface TestModel1Package extends EPackage
    * @generated
    */
   EAttribute getTreeNode_StringFeature();
+
+  /**
+   * Returns the meta object for class '{@link testmodel1.ExtendedNode <em>Extended Node</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Extended Node</em>'.
+   * @see testmodel1.ExtendedNode
+   * @generated
+   */
+  EClass getExtendedNode();
+
+  /**
+   * Returns the meta object for the reference list '{@link testmodel1.ExtendedNode#getBidiSource <em>Bidi Source</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Bidi Source</em>'.
+   * @see testmodel1.ExtendedNode#getBidiSource()
+   * @see #getExtendedNode()
+   * @generated
+   */
+  EReference getExtendedNode_BidiSource();
+
+  /**
+   * Returns the meta object for the reference list '{@link testmodel1.ExtendedNode#getBidiTarget <em>Bidi Target</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Bidi Target</em>'.
+   * @see testmodel1.ExtendedNode#getBidiTarget()
+   * @see #getExtendedNode()
+   * @generated
+   */
+  EReference getExtendedNode_BidiTarget();
+
+  /**
+   * Returns the meta object for the attribute '{@link testmodel1.ExtendedNode#getStringFeature2 <em>String Feature2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>String Feature2</em>'.
+   * @see testmodel1.ExtendedNode#getStringFeature2()
+   * @see #getExtendedNode()
+   * @generated
+   */
+  EAttribute getExtendedNode_StringFeature2();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -294,6 +437,40 @@ public interface TestModel1Package extends EPackage
      * @generated
      */
     EAttribute TREE_NODE__STRING_FEATURE = eINSTANCE.getTreeNode_StringFeature();
+
+    /**
+     * The meta object literal for the '{@link testmodel1.impl.ExtendedNodeImpl <em>Extended Node</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see testmodel1.impl.ExtendedNodeImpl
+     * @see testmodel1.impl.TestModel1PackageImpl#getExtendedNode()
+     * @generated
+     */
+    EClass EXTENDED_NODE = eINSTANCE.getExtendedNode();
+
+    /**
+     * The meta object literal for the '<em><b>Bidi Source</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EXTENDED_NODE__BIDI_SOURCE = eINSTANCE.getExtendedNode_BidiSource();
+
+    /**
+     * The meta object literal for the '<em><b>Bidi Target</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EXTENDED_NODE__BIDI_TARGET = eINSTANCE.getExtendedNode_BidiTarget();
+
+    /**
+     * The meta object literal for the '<em><b>String Feature2</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EXTENDED_NODE__STRING_FEATURE2 = eINSTANCE.getExtendedNode_StringFeature2();
 
   }
 

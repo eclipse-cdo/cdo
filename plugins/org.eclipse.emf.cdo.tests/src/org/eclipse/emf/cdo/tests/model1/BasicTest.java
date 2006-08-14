@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.client.impl.CDOPersistentImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
 
+import testmodel1.ExtendedNode;
 import testmodel1.TreeNode;
 
 
@@ -339,6 +340,72 @@ public class BasicTest extends AbstractModel1Test
       assertResource(RESOURCE, a2);
       assertResource(RESOURCE, a3);
       assertResource(RESOURCE, a4);
+    }
+  }
+
+  public void testUpdate() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final String NEW_NAME = "XXX";
+
+    { // Execution
+      TreeNode root = createNode(ROOT);
+      CDOResource resource = saveRoot(root, RESOURCE);
+
+      root.setStringFeature(NEW_NAME);
+      resource.save(null);
+    }
+
+    { // Verification
+      TreeNode root = (TreeNode) loadRoot(RESOURCE);
+      assertNode(NEW_NAME, root);
+    }
+  }
+
+  public void testUpdateWithInheritance() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final String NEW_NAME = "XXX";
+
+    { // Execution
+      ExtendedNode root = createExtended(ROOT);
+      CDOResource resource = saveRoot(root, RESOURCE);
+
+      root.setStringFeature(NEW_NAME);
+      root.setStringFeature2(NEW_NAME);
+      resource.save(null);
+    }
+
+    { // Verification
+      ExtendedNode root = (ExtendedNode) loadRoot(RESOURCE);
+      assertNode(NEW_NAME, root);
+      assertEquals(NEW_NAME, root.getStringFeature2());
+    }
+  }
+
+  public void testAttachWithInheritance() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final boolean BOOLEAN_VALUE = true;
+    final int INT_VALUE = 12345;
+
+    { // Execution
+      ExtendedNode root = createExtended(ROOT);
+      root.setBooleanFeature(BOOLEAN_VALUE);
+      root.setIntFeature(INT_VALUE);
+      root.setStringFeature2(ROOT);
+      saveRoot(root, RESOURCE);
+    }
+
+    { // Verification
+      ExtendedNode root = (ExtendedNode) loadRoot(RESOURCE);
+      assertNode(ROOT, root);
+      assertEquals(BOOLEAN_VALUE, root.isBooleanFeature());
+      assertEquals(INT_VALUE, root.getIntFeature());
+      assertEquals(ROOT, root.getStringFeature2());
     }
   }
 }

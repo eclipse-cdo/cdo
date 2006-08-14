@@ -108,6 +108,16 @@ public class TestModel1Switch
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case TestModel1Package.EXTENDED_NODE:
+      {
+        ExtendedNode extendedNode = (ExtendedNode) theEObject;
+        Object result = caseExtendedNode(extendedNode);
+        if (result == null) result = caseTreeNode(extendedNode);
+        if (result == null) result = caseCDOPersistent(extendedNode);
+        if (result == null) result = caseCDOPersistable(extendedNode);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default:
         return defaultCase(theEObject);
     }
@@ -125,6 +135,22 @@ public class TestModel1Switch
    * @generated
    */
   public Object caseTreeNode(TreeNode object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpretting the object as an instance of '<em>Extended Node</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpretting the object as an instance of '<em>Extended Node</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public Object caseExtendedNode(ExtendedNode object)
   {
     return null;
   }

@@ -72,6 +72,8 @@ public class TestModel1FactoryImpl extends EFactoryImpl implements TestModel1Fac
     {
       case TestModel1Package.TREE_NODE:
         return createTreeNode();
+      case TestModel1Package.EXTENDED_NODE:
+        return createExtendedNode();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName()
             + "' is not a valid classifier");
@@ -87,6 +89,17 @@ public class TestModel1FactoryImpl extends EFactoryImpl implements TestModel1Fac
   {
     TreeNodeImpl treeNode = new TreeNodeImpl();
     return treeNode;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ExtendedNode createExtendedNode()
+  {
+    ExtendedNodeImpl extendedNode = new ExtendedNodeImpl();
+    return extendedNode;
   }
 
   /**

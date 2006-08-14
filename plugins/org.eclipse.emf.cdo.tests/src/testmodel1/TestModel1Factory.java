@@ -38,6 +38,15 @@ public interface TestModel1Factory extends EFactory
   TreeNode createTreeNode();
 
   /**
+   * Returns a new object of class '<em>Extended Node</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Extended Node</em>'.
+   * @generated
+   */
+  ExtendedNode createExtendedNode();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

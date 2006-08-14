@@ -11,9 +11,11 @@
 package org.eclipse.emf.cdo.tests.model1;
 
 
+import org.eclipse.emf.cdo.client.CDOResource;
 import org.eclipse.emf.cdo.tests.topology.AbstractTopologyTest;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.resource.Resource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -58,6 +60,15 @@ public abstract class AbstractModel1Test extends AbstractTopologyTest
   {
     TreeNode result = findPath(names, node);
     assertNotNull(result);
+  }
+
+  protected void assertResource(String path, TreeNode node)
+  {
+    Resource resource = node.eResource();
+    assertTrue(resource instanceof CDOResource);
+  
+    CDOResource cdoResource = (CDOResource) resource;
+    assertEquals(path, cdoResource.getPath());
   }
 
   protected TreeNode[] createChildren(String[] names, TreeNode parent)

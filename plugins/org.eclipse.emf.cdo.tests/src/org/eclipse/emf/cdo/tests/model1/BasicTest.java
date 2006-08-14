@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import testmodel1.TreeNode;
 
 
-@SuppressWarnings("unused")
 public class BasicTest extends AbstractModel1Test
 {
   public void testSimple() throws Exception
@@ -86,7 +85,7 @@ public class BasicTest extends AbstractModel1Test
       assertNode(ROOT, root);
 
       TreeNode a = findPath(PATH_A, root);
-      TreeNode b = findPath(PATH_B, root);
+      findPath(PATH_B, root);
       assertNode(PATH_B[3], (TreeNode) a.getReferences().get(0));
     }
   }
@@ -165,12 +164,148 @@ public class BasicTest extends AbstractModel1Test
 
     { // Verification
       TreeNode root = (TreeNode) loadRoot(RESOURCE);
-      CDOResource cdoResource = ((CDOPersistentImpl) root).cdoGetResource();
-
       TreeNode a = findPath(PATH_A, root);
       TreeNode b = (TreeNode) a.getReferences().get(0);
-      Resource resource = b.eResource();
-      assertEquals(cdoResource, resource);
+      assertResource(RESOURCE, b);
+    }
+  }
+
+  public void testInterResourceXRef1() throws Exception
+  {
+    final String RESOURCE1 = "/test/res1";
+    final String RESOURCE2 = "/test/res2";
+    final String ROOT1 = "root1";
+    final String ROOT2 = "root2";
+
+    { // Execution
+      TreeNode root1 = createNode(ROOT1);
+      saveRoot(root1, RESOURCE1);
+
+      TreeNode root2 = createNode(ROOT2);
+      root2.getReferences().add(root1);
+      saveRoot(root2, RESOURCE2);
+    }
+
+    { // Verification
+      TreeNode root2 = (TreeNode) loadRoot(RESOURCE2);
+      assertNode(ROOT2, root2);
+      assertResource(RESOURCE2, root2);
+
+      TreeNode root1 = (TreeNode) root2.getReferences().get(0);
+      assertNode(ROOT1, root1);
+      assertResource(RESOURCE1, root1);
+    }
+  }
+
+  public void testInterResourceXRef2() throws Exception
+  {
+    final String RESOURCE1 = "/test/res1";
+    final String RESOURCE2 = "/test/res2";
+    final String ROOT1 = "root1";
+    final String ROOT2 = "root2";
+    final String CHILD1 = "child1";
+
+    { // Execution
+      TreeNode root1 = createNode(ROOT1);
+      TreeNode child1 = createNode(CHILD1, root1);
+      saveRoot(root1, RESOURCE1);
+
+      TreeNode root2 = createNode(ROOT2);
+      root2.getReferences().add(child1);
+      saveRoot(root2, RESOURCE2);
+    }
+
+    { // Verification
+      TreeNode root2 = (TreeNode) loadRoot(RESOURCE2);
+      assertNode(ROOT2, root2);
+      assertResource(RESOURCE2, root2);
+
+      TreeNode child1 = (TreeNode) root2.getReferences().get(0);
+      assertNode(CHILD1, child1);
+      assertResource(RESOURCE1, child1);
+    }
+  }
+
+  public void testGetContainer() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final String[] PATH = { "a1", "a2", "a3", "a4"};
+
+    { // Execution
+      TreeNode root = createNode(ROOT);
+      createPath(PATH, root, false);
+      saveRoot(root, RESOURCE);
+    }
+
+    { // Verification
+      TreeNode root = (TreeNode) loadRoot(RESOURCE);
+      TreeNode a4 = findPath(PATH, root);
+
+      TreeNode a3 = a4.getParent();
+      assertNode(PATH[2], a3);
+      assertEquals(a3, a4.eContainer());
+
+      TreeNode a2 = a3.getParent();
+      assertNode(PATH[1], a2);
+      assertEquals(a2, a3.eContainer());
+
+      TreeNode a1 = a2.getParent();
+      assertNode(PATH[0], a1);
+      assertEquals(a1, a2.eContainer());
+
+      TreeNode a0 = a1.getParent();
+      assertNode(ROOT, a0);
+      assertEquals(a0, a1.eContainer());
+      assertEquals(a0, root);
+
+      assertResource(RESOURCE, a0);
+      assertResource(RESOURCE, a1);
+      assertResource(RESOURCE, a2);
+      assertResource(RESOURCE, a3);
+      assertResource(RESOURCE, a4);
+    }
+  }
+
+  public void testGetContainerWithXRef() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final String[] PATH = { "a1", "a2", "a3", "a4"};
+
+    { // Execution
+      TreeNode root = createNode(ROOT);
+      TreeNode a4 = createPath(PATH, root, false);
+      root.getReferences().add(a4);
+      saveRoot(root, RESOURCE);
+    }
+
+    { // Verification
+      TreeNode root = (TreeNode) loadRoot(RESOURCE);
+      TreeNode a4 = (TreeNode) root.getReferences().get(0);
+
+      TreeNode a3 = a4.getParent();
+      assertNode(PATH[2], a3);
+      assertEquals(a3, a4.eContainer());
+
+      TreeNode a2 = a3.getParent();
+      assertNode(PATH[1], a2);
+      assertEquals(a2, a3.eContainer());
+
+      TreeNode a1 = a2.getParent();
+      assertNode(PATH[0], a1);
+      assertEquals(a1, a2.eContainer());
+
+      TreeNode a0 = a1.getParent();
+      assertNode(ROOT, a0);
+      assertEquals(a0, a1.eContainer());
+      assertEquals(a0, root);
+
+      assertResource(RESOURCE, a0);
+      assertResource(RESOURCE, a1);
+      assertResource(RESOURCE, a2);
+      assertResource(RESOURCE, a3);
+      assertResource(RESOURCE, a4);
     }
   }
 }

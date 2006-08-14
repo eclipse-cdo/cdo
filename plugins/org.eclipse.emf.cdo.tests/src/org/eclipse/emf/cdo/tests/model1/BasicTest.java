@@ -29,15 +29,13 @@ public class BasicTest extends AbstractModel1Test
     final String ROOT = "root";
     final String[] CHILDREN = { "a", "b", "c"};
 
-    // Execution
-    {
+    { // Execution
       TreeNode root = createNode(ROOT);
       createChildren(CHILDREN, root);
       saveRoot(root, RESOURCE);
     }
 
-    // Verification
-    {
+    { // Verification
       TreeNode root = (TreeNode) loadRoot(RESOURCE);
       assertNode(ROOT, root);
 
@@ -53,16 +51,14 @@ public class BasicTest extends AbstractModel1Test
     final String[] PATH_A = { "a1", "a2", "a3", "a4"};
     final String[] PATH_B = { "b1", "b2", "b3", "b4"};
 
-    // Execution
-    {
+    { // Execution
       TreeNode root = createNode(ROOT);
       createPath(PATH_A, root, false);
       createPath(PATH_B, root, false);
       saveRoot(root, RESOURCE);
     }
 
-    // Verification
-    {
+    { // Verification
       TreeNode root = (TreeNode) loadRoot(RESOURCE);
       assertNode(ROOT, root);
       assertPath(PATH_A, root);
@@ -77,8 +73,7 @@ public class BasicTest extends AbstractModel1Test
     final String[] PATH_A = { "a1", "a2", "a3", "a4"};
     final String[] PATH_B = { "b1", "b2", "b3", "b4"};
 
-    // Execution
-    {
+    { // Execution
       TreeNode root = createNode(ROOT);
       TreeNode a = createPath(PATH_A, root, false);
       TreeNode b = createPath(PATH_B, root, false);
@@ -86,8 +81,7 @@ public class BasicTest extends AbstractModel1Test
       saveRoot(root, RESOURCE);
     }
 
-    // Verification
-    {
+    { // Verification
       TreeNode root = (TreeNode) loadRoot(RESOURCE);
       assertNode(ROOT, root);
 
@@ -104,8 +98,7 @@ public class BasicTest extends AbstractModel1Test
     final String[] PATH_A = { "a1", "a2", "a3", "a4"};
     final String[] PATH_B = { "b1", "b2", "b3", "b4"};
 
-    // Execution
-    {
+    { // Execution
       TreeNode root = createNode(ROOT);
       TreeNode a = createPath(PATH_A, root, false);
       TreeNode b = createPath(PATH_B, root, false);
@@ -113,8 +106,7 @@ public class BasicTest extends AbstractModel1Test
       saveRoot(root, RESOURCE);
     }
 
-    // Verification
-    {
+    { // Verification
       TreeNode root = (TreeNode) loadRoot(RESOURCE);
       assertNode(ROOT, root);
 
@@ -130,15 +122,13 @@ public class BasicTest extends AbstractModel1Test
     final String ROOT = "root";
     final String[] PATH = { "a1", "a2", "a3", "a4"};
 
-    // Execution
-    {
+    { // Execution
       TreeNode root = createNode(ROOT);
       createPath(PATH, root, false);
       saveRoot(root, RESOURCE);
     }
 
-    // Verification
-    {
+    { // Verification
       TreeNode node = (TreeNode) loadRoot(RESOURCE);
       CDOResource cdoResource = ((CDOPersistentImpl) node).cdoGetResource();
       while (node != null)
@@ -155,6 +145,32 @@ public class BasicTest extends AbstractModel1Test
           node = (TreeNode) node.getChildren().get(0);
         }
       }
+    }
+  }
+
+  public void testGetResourceWithXRef() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final String[] PATH_A = { "a1", "a2", "a3", "a4"};
+    final String[] PATH_B = { "b1", "b2", "b3", "b4"};
+
+    { // Execution
+      TreeNode root = createNode(ROOT);
+      TreeNode a = createPath(PATH_A, root, false);
+      TreeNode b = createPath(PATH_B, root, false);
+      a.getReferences().add(b);
+      saveRoot(root, RESOURCE);
+    }
+
+    { // Verification
+      TreeNode root = (TreeNode) loadRoot(RESOURCE);
+      CDOResource cdoResource = ((CDOPersistentImpl) root).cdoGetResource();
+
+      TreeNode a = findPath(PATH_A, root);
+      TreeNode b = (TreeNode) a.getReferences().get(0);
+      Resource resource = b.eResource();
+      assertEquals(cdoResource, resource);
     }
   }
 }

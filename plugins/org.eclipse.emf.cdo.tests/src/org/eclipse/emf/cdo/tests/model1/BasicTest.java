@@ -66,7 +66,7 @@ public class BasicTest extends AbstractModel1Test
     }
   }
 
-  public void testXRefAlreadyLoaded() throws Exception
+  public void testRefAlreadyLoaded() throws Exception
   {
     final String RESOURCE = "/test/res";
     final String ROOT = "root";
@@ -91,7 +91,7 @@ public class BasicTest extends AbstractModel1Test
     }
   }
 
-  public void testXRefNotYetLoaded() throws Exception
+  public void testRefNotYetLoaded() throws Exception
   {
     final String RESOURCE = "/test/res";
     final String ROOT = "root";
@@ -148,7 +148,7 @@ public class BasicTest extends AbstractModel1Test
     }
   }
 
-  public void testGetResourceWithXRef() throws Exception
+  public void testGetResourceWithRef() throws Exception
   {
     final String RESOURCE = "/test/res";
     final String ROOT = "root";
@@ -171,7 +171,7 @@ public class BasicTest extends AbstractModel1Test
     }
   }
 
-  public void testInterResourceXRef1() throws Exception
+  public void testInterResourceRef1() throws Exception
   {
     final String RESOURCE1 = "/test/res1";
     final String RESOURCE2 = "/test/res2";
@@ -198,7 +198,7 @@ public class BasicTest extends AbstractModel1Test
     }
   }
 
-  public void testInterResourceXRef2() throws Exception
+  public void testInterResourceRef2() throws Exception
   {
     final String RESOURCE1 = "/test/res1";
     final String RESOURCE2 = "/test/res2";
@@ -227,7 +227,7 @@ public class BasicTest extends AbstractModel1Test
     }
   }
 
-  public void testInterResourceXRef3() throws Exception
+  public void testInterResourceRef3() throws Exception
   {
     final String RESOURCE1 = "/test/res1";
     final String RESOURCE2 = "/test/res2";
@@ -301,7 +301,7 @@ public class BasicTest extends AbstractModel1Test
     }
   }
 
-  public void testGetContainerWithXRef() throws Exception
+  public void testGetContainerWithRef() throws Exception
   {
     final String RESOURCE = "/test/res";
     final String ROOT = "root";

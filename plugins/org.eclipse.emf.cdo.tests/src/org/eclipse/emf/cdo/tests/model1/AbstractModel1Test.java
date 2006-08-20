@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import testmodel1.EmptyNode;
+import testmodel1.EmptyRefNode;
 import testmodel1.ExtendedNode;
 import testmodel1.TestModel1Factory;
 import testmodel1.TreeNode;
@@ -154,6 +155,19 @@ public abstract class AbstractModel1Test extends AbstractTopologyTest
     return node;
   }
 
+  protected EmptyRefNode createEmptyRef(String name)
+  {
+    return createEmptyRef(name, null);
+  }
+
+  protected EmptyRefNode createEmptyRef(String name, TreeNode parent)
+  {
+    EmptyRefNode node = TestModel1Factory.eINSTANCE.createEmptyRefNode();
+    node.setStringFeature(name);
+    node.setParent(parent);
+    return node;
+  }
+
   protected TreeNode findChild(String name, TreeNode parent)
   {
     return findNode(name, parent.getChildren());
@@ -194,6 +208,7 @@ public abstract class AbstractModel1Test extends AbstractTopologyTest
     super.wipeDatabase(jdbc);
     dropTable(jdbc, "TREE_NODE");
     dropTable(jdbc, "EMPTY_NODE");
+    dropTable(jdbc, "EMPTY_REF_NODE");
     dropTable(jdbc, "EXTENDED_NODE");
   }
 }

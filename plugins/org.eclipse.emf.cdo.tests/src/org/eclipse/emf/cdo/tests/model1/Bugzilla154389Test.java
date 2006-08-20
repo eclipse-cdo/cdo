@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.model1;
 
 
 import testmodel1.EmptyNode;
+import testmodel1.EmptyRefNode;
 import testmodel1.TreeNode;
 
 
@@ -82,7 +83,7 @@ public class Bugzilla154389Test extends AbstractModel1Test
     }
   }
 
-  public void testEmptyXRef() throws Exception
+  public void testEmptyViaRef() throws Exception
   {
     final String RESOURCE = "/test/res";
     final String ROOT = "root";
@@ -97,7 +98,6 @@ public class Bugzilla154389Test extends AbstractModel1Test
       TreeNode b = createEmpty(CHILD_B, root);
       b.setBooleanFeature(BOOLEAN_VALUE);
       b.setIntFeature(INT_VALUE);
-
       a.getReferences().add(b);
       saveRoot(root, RESOURCE);
     }
@@ -106,13 +106,72 @@ public class Bugzilla154389Test extends AbstractModel1Test
       TreeNode root = (TreeNode) loadRoot(RESOURCE);
       assertNode(ROOT, root);
 
-      TreeNode a = (TreeNode )root.getChildren().get(0);
+      TreeNode a = (TreeNode) root.getChildren().get(0);
       assertNode(CHILD_A, a);
-      
+
       TreeNode b = (TreeNode) a.getReferences().get(0);
       assertNode(CHILD_B, b);
       assertEquals(BOOLEAN_VALUE, b.isBooleanFeature());
       assertEquals(INT_VALUE, b.getIntFeature());
+    }
+  }
+
+  public void testEmptyViaRefWithRef() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final String CHILD_A = "a";
+    final String CHILD_B = "b";
+    final boolean BOOLEAN_VALUE = true;
+    final int INT_VALUE = 12345;
+
+    { // Execution
+      TreeNode root = createNode(ROOT);
+      TreeNode a = createNode(CHILD_A, root);
+      TreeNode b = createEmpty(CHILD_B, root);
+      b.setBooleanFeature(BOOLEAN_VALUE);
+      b.setIntFeature(INT_VALUE);
+      a.getReferences().add(b);
+      b.getReferences().add(a);
+      saveRoot(root, RESOURCE);
+    }
+
+    { // Verification
+      TreeNode root = (TreeNode) loadRoot(RESOURCE);
+      assertNode(ROOT, root);
+
+      TreeNode a = (TreeNode) root.getChildren().get(0);
+      assertNode(CHILD_A, a);
+
+      TreeNode b = (TreeNode) a.getReferences().get(0);
+      assertNode(CHILD_B, b);
+      assertEquals(BOOLEAN_VALUE, b.isBooleanFeature());
+      assertEquals(INT_VALUE, b.getIntFeature());
+      assertEquals(CHILD_A, ((TreeNode) b.getReferences().get(0)).getStringFeature());
+    }
+  }
+
+  public void testEmptyRefRoot() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final boolean BOOLEAN_VALUE = true;
+    final int INT_VALUE = 12345;
+
+    { // Execution
+      EmptyRefNode root = createEmptyRef(ROOT);
+      root.setBooleanFeature(BOOLEAN_VALUE);
+      root.setIntFeature(INT_VALUE);
+      root.getMoreReferences().add(root);
+      saveRoot(root, RESOURCE);
+    }
+
+    { // Verification
+      EmptyRefNode root = (EmptyRefNode) loadRoot(RESOURCE);
+      assertNode(ROOT, root);
+      assertEquals(BOOLEAN_VALUE, root.isBooleanFeature());
+      assertEquals(INT_VALUE, root.getIntFeature());
+      assertEquals(ROOT, ((TreeNode) root.getMoreReferences().get(0)).getStringFeature());
     }
   }
 }

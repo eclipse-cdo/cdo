@@ -238,6 +238,79 @@ public interface TestModel1Package extends EPackage
   int EXTENDED_NODE_FEATURE_COUNT = TREE_NODE_FEATURE_COUNT + 3;
 
   /**
+   * The meta object id for the '{@link testmodel1.impl.EmptyNodeImpl <em>Empty Node</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see testmodel1.impl.EmptyNodeImpl
+   * @see testmodel1.impl.TestModel1PackageImpl#getEmptyNode()
+   * @generated
+   */
+  int EMPTY_NODE = 2;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_NODE__PARENT = TREE_NODE__PARENT;
+
+  /**
+   * The feature id for the '<em><b>Children</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_NODE__CHILDREN = TREE_NODE__CHILDREN;
+
+  /**
+   * The feature id for the '<em><b>References</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_NODE__REFERENCES = TREE_NODE__REFERENCES;
+
+  /**
+   * The feature id for the '<em><b>Boolean Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_NODE__BOOLEAN_FEATURE = TREE_NODE__BOOLEAN_FEATURE;
+
+  /**
+   * The feature id for the '<em><b>Int Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_NODE__INT_FEATURE = TREE_NODE__INT_FEATURE;
+
+  /**
+   * The feature id for the '<em><b>String Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_NODE__STRING_FEATURE = TREE_NODE__STRING_FEATURE;
+
+  /**
+   * The number of structural features of the '<em>Empty Node</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_NODE_FEATURE_COUNT = TREE_NODE_FEATURE_COUNT + 0;
+
+  /**
    * Returns the meta object for class '{@link testmodel1.TreeNode <em>Tree Node</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -357,6 +430,16 @@ public interface TestModel1Package extends EPackage
   EAttribute getExtendedNode_StringFeature2();
 
   /**
+   * Returns the meta object for class '{@link testmodel1.EmptyNode <em>Empty Node</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Empty Node</em>'.
+   * @see testmodel1.EmptyNode
+   * @generated
+   */
+  EClass getEmptyNode();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -471,6 +554,16 @@ public interface TestModel1Package extends EPackage
      * @generated
      */
     EAttribute EXTENDED_NODE__STRING_FEATURE2 = eINSTANCE.getExtendedNode_StringFeature2();
+
+    /**
+     * The meta object literal for the '{@link testmodel1.impl.EmptyNodeImpl <em>Empty Node</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see testmodel1.impl.EmptyNodeImpl
+     * @see testmodel1.impl.TestModel1PackageImpl#getEmptyNode()
+     * @generated
+     */
+    EClass EMPTY_NODE = eINSTANCE.getEmptyNode();
 
   }
 

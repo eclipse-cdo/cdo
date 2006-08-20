@@ -7,15 +7,18 @@
 package testmodel1.util;
 
 
-import java.util.List;
-
 import org.eclipse.emf.cdo.client.CDOPersistable;
 import org.eclipse.emf.cdo.client.CDOPersistent;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
-import testmodel1.*;
+import testmodel1.EmptyNode;
+import testmodel1.ExtendedNode;
+import testmodel1.TestModel1Package;
+import testmodel1.TreeNode;
+
+import java.util.List;
 
 
 /**
@@ -118,6 +121,16 @@ public class TestModel1Switch
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case TestModel1Package.EMPTY_NODE:
+      {
+        EmptyNode emptyNode = (EmptyNode) theEObject;
+        Object result = caseEmptyNode(emptyNode);
+        if (result == null) result = caseTreeNode(emptyNode);
+        if (result == null) result = caseCDOPersistent(emptyNode);
+        if (result == null) result = caseCDOPersistable(emptyNode);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default:
         return defaultCase(theEObject);
     }
@@ -151,6 +164,22 @@ public class TestModel1Switch
    * @generated
    */
   public Object caseExtendedNode(ExtendedNode object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpretting the object as an instance of '<em>Empty Node</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpretting the object as an instance of '<em>Empty Node</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public Object caseEmptyNode(EmptyNode object)
   {
     return null;
   }

@@ -10,12 +10,14 @@ package testmodel1.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
-import testmodel1.*;
+import testmodel1.EmptyNode;
+import testmodel1.ExtendedNode;
+import testmodel1.TestModel1Factory;
+import testmodel1.TestModel1Package;
+import testmodel1.TreeNode;
 
 
 /**
@@ -74,6 +76,8 @@ public class TestModel1FactoryImpl extends EFactoryImpl implements TestModel1Fac
         return createTreeNode();
       case TestModel1Package.EXTENDED_NODE:
         return createExtendedNode();
+      case TestModel1Package.EMPTY_NODE:
+        return createEmptyNode();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName()
             + "' is not a valid classifier");
@@ -100,6 +104,17 @@ public class TestModel1FactoryImpl extends EFactoryImpl implements TestModel1Fac
   {
     ExtendedNodeImpl extendedNode = new ExtendedNodeImpl();
     return extendedNode;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EmptyNode createEmptyNode()
+  {
+    EmptyNodeImpl emptyNode = new EmptyNodeImpl();
+    return emptyNode;
   }
 
   /**

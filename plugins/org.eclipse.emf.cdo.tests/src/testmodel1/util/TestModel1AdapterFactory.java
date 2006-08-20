@@ -12,12 +12,13 @@ import org.eclipse.emf.cdo.client.CDOPersistent;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
-import testmodel1.*;
+import testmodel1.EmptyNode;
+import testmodel1.ExtendedNode;
+import testmodel1.TestModel1Package;
+import testmodel1.TreeNode;
 
 
 /**
@@ -91,6 +92,11 @@ public class TestModel1AdapterFactory extends AdapterFactoryImpl
       return createExtendedNodeAdapter();
     }
 
+    public Object caseEmptyNode(EmptyNode object)
+    {
+      return createEmptyNodeAdapter();
+    }
+
     public Object caseCDOPersistable(CDOPersistable object)
     {
       return createCDOPersistableAdapter();
@@ -146,6 +152,21 @@ public class TestModel1AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createExtendedNodeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link testmodel1.EmptyNode <em>Empty Node</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see testmodel1.EmptyNode
+   * @generated
+   */
+  public Adapter createEmptyNodeAdapter()
   {
     return null;
   }

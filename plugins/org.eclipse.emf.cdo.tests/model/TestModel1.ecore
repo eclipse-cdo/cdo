@@ -21,4 +21,5 @@
         eType="#//ExtendedNode" eOpposite="#//ExtendedNode/bidiSource"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringFeature2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EmptyNode" eSuperTypes="#//TreeNode"/>
 </ecore:EPackage>

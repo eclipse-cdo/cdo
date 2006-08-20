@@ -13,9 +13,9 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import testmodel1.EmptyNode;
 import testmodel1.ExtendedNode;
 import testmodel1.TestModel1Factory;
 import testmodel1.TestModel1Package;
@@ -43,6 +43,13 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
    * @generated
    */
   private EClass extendedNodeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass emptyNodeEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -235,6 +242,16 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getEmptyNode()
+  {
+    return emptyNodeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public TestModel1Factory getTestModel1Factory()
   {
     return (TestModel1Factory) getEFactoryInstance();
@@ -272,6 +289,8 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
     createEReference(extendedNodeEClass, EXTENDED_NODE__BIDI_SOURCE);
     createEReference(extendedNodeEClass, EXTENDED_NODE__BIDI_TARGET);
     createEAttribute(extendedNodeEClass, EXTENDED_NODE__STRING_FEATURE2);
+
+    emptyNodeEClass = createEClass(EMPTY_NODE);
   }
 
   /**
@@ -305,6 +324,7 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
     // Add supertypes to classes
     treeNodeEClass.getESuperTypes().add(theCDOPackage.getCDOPersistent());
     extendedNodeEClass.getESuperTypes().add(this.getTreeNode());
+    emptyNodeEClass.getESuperTypes().add(this.getTreeNode());
 
     // Initialize classes and features; add operations and parameters
     initEClass(treeNodeEClass, TreeNode.class, "TreeNode", !IS_ABSTRACT, !IS_INTERFACE,
@@ -341,6 +361,9 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
     initEAttribute(getExtendedNode_StringFeature2(), ecorePackage.getEString(), "stringFeature2",
         null, 0, 1, ExtendedNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
         !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(emptyNodeEClass, EmptyNode.class, "EmptyNode", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

@@ -20,7 +20,7 @@
 <stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/pde-junit"/>
 <stringAttribute key="application" value="org.eclipse.pde.junit.runtime.coretestapplication"/>
 <booleanAttribute key="clearws" value="true"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.cdo.tests.model1.BasicTest"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.cdo.tests.model1.Bugzilla154389Test"/>
 <stringAttribute key="pde.version" value="3.2a"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dcdo.test.mode=client-separated-server"/>
 <stringAttribute key="templateConfig" value="${target_home}\configuration\config.ini"/>

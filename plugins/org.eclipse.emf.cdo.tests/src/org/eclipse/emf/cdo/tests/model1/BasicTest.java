@@ -148,7 +148,7 @@ public class BasicTest extends AbstractModel1Test
     }
   }
 
-  public void testGetResourceWithRef() throws Exception
+  public void testGetResourceViaRef() throws Exception
   {
     final String RESOURCE = "/test/res";
     final String ROOT = "root";
@@ -301,7 +301,7 @@ public class BasicTest extends AbstractModel1Test
     }
   }
 
-  public void testGetContainerWithRef() throws Exception
+  public void testGetContainerViaRef() throws Exception
   {
     final String RESOURCE = "/test/res";
     final String ROOT = "root";

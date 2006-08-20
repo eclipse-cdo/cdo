@@ -31,6 +31,15 @@ import java.util.Iterator;
 import java.util.List;
 
 
+/**
+ * Base class for CDO tests based on selectable topologies and the TestModel1.
+ * 
+ * After adding EClasses to TestModel1, don't forget to
+ * <ol>
+ * <li> regenerate the test model
+ * <li> remove the CDO mapping file
+ * <li> add a line to wipeDatabase()
+ */
 public abstract class AbstractModel1Test extends AbstractTopologyTest
 {
   protected void assertChild(String name, EList nodes)

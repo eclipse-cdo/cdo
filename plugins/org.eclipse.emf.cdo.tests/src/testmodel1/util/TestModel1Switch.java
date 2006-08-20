@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
 import testmodel1.EmptyNode;
+import testmodel1.EmptyRefNode;
 import testmodel1.ExtendedNode;
 import testmodel1.TestModel1Package;
 import testmodel1.TreeNode;
@@ -131,6 +132,16 @@ public class TestModel1Switch
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case TestModel1Package.EMPTY_REF_NODE:
+      {
+        EmptyRefNode emptyRefNode = (EmptyRefNode) theEObject;
+        Object result = caseEmptyRefNode(emptyRefNode);
+        if (result == null) result = caseTreeNode(emptyRefNode);
+        if (result == null) result = caseCDOPersistent(emptyRefNode);
+        if (result == null) result = caseCDOPersistable(emptyRefNode);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default:
         return defaultCase(theEObject);
     }
@@ -180,6 +191,22 @@ public class TestModel1Switch
    * @generated
    */
   public Object caseEmptyNode(EmptyNode object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpretting the object as an instance of '<em>Empty Ref Node</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpretting the object as an instance of '<em>Empty Ref Node</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public Object caseEmptyRefNode(EmptyRefNode object)
   {
     return null;
   }

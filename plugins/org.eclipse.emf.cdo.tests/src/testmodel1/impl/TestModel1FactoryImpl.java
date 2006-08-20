@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 import testmodel1.EmptyNode;
+import testmodel1.EmptyRefNode;
 import testmodel1.ExtendedNode;
 import testmodel1.TestModel1Factory;
 import testmodel1.TestModel1Package;
@@ -78,6 +79,8 @@ public class TestModel1FactoryImpl extends EFactoryImpl implements TestModel1Fac
         return createExtendedNode();
       case TestModel1Package.EMPTY_NODE:
         return createEmptyNode();
+      case TestModel1Package.EMPTY_REF_NODE:
+        return createEmptyRefNode();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName()
             + "' is not a valid classifier");
@@ -115,6 +118,17 @@ public class TestModel1FactoryImpl extends EFactoryImpl implements TestModel1Fac
   {
     EmptyNodeImpl emptyNode = new EmptyNodeImpl();
     return emptyNode;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EmptyRefNode createEmptyRefNode()
+  {
+    EmptyRefNodeImpl emptyRefNode = new EmptyRefNodeImpl();
+    return emptyRefNode;
   }
 
   /**

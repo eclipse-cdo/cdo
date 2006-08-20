@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import testmodel1.EmptyNode;
+import testmodel1.EmptyRefNode;
 import testmodel1.ExtendedNode;
 import testmodel1.TestModel1Factory;
 import testmodel1.TestModel1Package;
@@ -50,6 +51,13 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
    * @generated
    */
   private EClass emptyNodeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass emptyRefNodeEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -252,6 +260,26 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getEmptyRefNode()
+  {
+    return emptyRefNodeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEmptyRefNode_MoreReferences()
+  {
+    return (EReference) emptyRefNodeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public TestModel1Factory getTestModel1Factory()
   {
     return (TestModel1Factory) getEFactoryInstance();
@@ -291,6 +319,9 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
     createEAttribute(extendedNodeEClass, EXTENDED_NODE__STRING_FEATURE2);
 
     emptyNodeEClass = createEClass(EMPTY_NODE);
+
+    emptyRefNodeEClass = createEClass(EMPTY_REF_NODE);
+    createEReference(emptyRefNodeEClass, EMPTY_REF_NODE__MORE_REFERENCES);
   }
 
   /**
@@ -325,6 +356,7 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
     treeNodeEClass.getESuperTypes().add(theCDOPackage.getCDOPersistent());
     extendedNodeEClass.getESuperTypes().add(this.getTreeNode());
     emptyNodeEClass.getESuperTypes().add(this.getTreeNode());
+    emptyRefNodeEClass.getESuperTypes().add(this.getTreeNode());
 
     // Initialize classes and features; add operations and parameters
     initEClass(treeNodeEClass, TreeNode.class, "TreeNode", !IS_ABSTRACT, !IS_INTERFACE,
@@ -364,6 +396,12 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
 
     initEClass(emptyNodeEClass, EmptyNode.class, "EmptyNode", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(emptyRefNodeEClass, EmptyRefNode.class, "EmptyRefNode", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEmptyRefNode_MoreReferences(), this.getTreeNode(), null, "moreReferences",
+        null, 0, -1, EmptyRefNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

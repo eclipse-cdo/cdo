@@ -311,6 +311,88 @@ public interface TestModel1Package extends EPackage
   int EMPTY_NODE_FEATURE_COUNT = TREE_NODE_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link testmodel1.impl.EmptyRefNodeImpl <em>Empty Ref Node</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see testmodel1.impl.EmptyRefNodeImpl
+   * @see testmodel1.impl.TestModel1PackageImpl#getEmptyRefNode()
+   * @generated
+   */
+  int EMPTY_REF_NODE = 3;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_REF_NODE__PARENT = TREE_NODE__PARENT;
+
+  /**
+   * The feature id for the '<em><b>Children</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_REF_NODE__CHILDREN = TREE_NODE__CHILDREN;
+
+  /**
+   * The feature id for the '<em><b>References</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_REF_NODE__REFERENCES = TREE_NODE__REFERENCES;
+
+  /**
+   * The feature id for the '<em><b>Boolean Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_REF_NODE__BOOLEAN_FEATURE = TREE_NODE__BOOLEAN_FEATURE;
+
+  /**
+   * The feature id for the '<em><b>Int Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_REF_NODE__INT_FEATURE = TREE_NODE__INT_FEATURE;
+
+  /**
+   * The feature id for the '<em><b>String Feature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_REF_NODE__STRING_FEATURE = TREE_NODE__STRING_FEATURE;
+
+  /**
+   * The feature id for the '<em><b>More References</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_REF_NODE__MORE_REFERENCES = TREE_NODE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Empty Ref Node</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_REF_NODE_FEATURE_COUNT = TREE_NODE_FEATURE_COUNT + 1;
+
+  /**
    * Returns the meta object for class '{@link testmodel1.TreeNode <em>Tree Node</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -440,6 +522,27 @@ public interface TestModel1Package extends EPackage
   EClass getEmptyNode();
 
   /**
+   * Returns the meta object for class '{@link testmodel1.EmptyRefNode <em>Empty Ref Node</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Empty Ref Node</em>'.
+   * @see testmodel1.EmptyRefNode
+   * @generated
+   */
+  EClass getEmptyRefNode();
+
+  /**
+   * Returns the meta object for the reference list '{@link testmodel1.EmptyRefNode#getMoreReferences <em>More References</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>More References</em>'.
+   * @see testmodel1.EmptyRefNode#getMoreReferences()
+   * @see #getEmptyRefNode()
+   * @generated
+   */
+  EReference getEmptyRefNode_MoreReferences();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -564,6 +667,24 @@ public interface TestModel1Package extends EPackage
      * @generated
      */
     EClass EMPTY_NODE = eINSTANCE.getEmptyNode();
+
+    /**
+     * The meta object literal for the '{@link testmodel1.impl.EmptyRefNodeImpl <em>Empty Ref Node</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see testmodel1.impl.EmptyRefNodeImpl
+     * @see testmodel1.impl.TestModel1PackageImpl#getEmptyRefNode()
+     * @generated
+     */
+    EClass EMPTY_REF_NODE = eINSTANCE.getEmptyRefNode();
+
+    /**
+     * The meta object literal for the '<em><b>More References</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EMPTY_REF_NODE__MORE_REFERENCES = eINSTANCE.getEmptyRefNode_MoreReferences();
 
   }
 

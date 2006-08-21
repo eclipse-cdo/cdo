@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.tests.model1;
 
 
+import org.eclipse.emf.cdo.client.ResourceManager;
+
 import org.eclipse.emf.ecore.resource.Resource;
 
 import testmodel1.TreeNode;
@@ -123,5 +125,50 @@ public class NotificationTest extends AbstractModel1Test
       if (duration > TIME_LIMIT) throw ex;
       Thread.sleep(1);
     }
+  }
+
+  public void testListener() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final String CHILD = "a";
+    final String NEW_NAME = "a2";
+    final long TIME_LIMIT = 100;
+    final boolean[] notificationReceived = { false};
+
+    // Client1 creates resource
+    TreeNode root = createNode(ROOT);
+    TreeNode a = createNode(CHILD, root);
+    saveRoot(root, RESOURCE);
+
+    // Client2 loads resource
+    TreeNode loaded = (TreeNode) loadRoot(RESOURCE);
+    TreeNode loadedA = (TreeNode) loaded.getChildren().get(0);
+    assertNode(CHILD, loadedA);
+
+    // Client2 remembers notifications
+    ResourceManager client2 = loaded.cdoGetResource().getResourceManager();
+    client2.addInvalidationListener(new ResourceManager.InvalidationListener()
+    {
+      public void notifyInvalidation(ResourceManager resourceManager, long[] oids)
+      {
+        notificationReceived[0] = true;
+      }
+    });
+
+    // Client1 modifies and commits resource
+    a.setStringFeature(NEW_NAME);
+    Resource resource = root.eResource();
+    resource.save(null);
+
+    // Give server and client2 enough time to get notified
+    long start = System.currentTimeMillis();
+    while (System.currentTimeMillis() - start < TIME_LIMIT)
+    {
+      if (notificationReceived[0]) break;
+      Thread.sleep(1);
+    }
+
+    if (!notificationReceived[0]) fail();
   }
 }

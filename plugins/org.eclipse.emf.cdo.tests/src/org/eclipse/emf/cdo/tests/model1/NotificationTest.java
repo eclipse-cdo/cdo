@@ -165,10 +165,10 @@ public class NotificationTest extends AbstractModel1Test
     long start = System.currentTimeMillis();
     while (System.currentTimeMillis() - start < TIME_LIMIT)
     {
-      if (notificationReceived[0]) break;
+      if (notificationReceived[0]) return;
       Thread.sleep(1);
     }
 
-    if (!notificationReceived[0]) fail();
+    fail("Notification did not arrive within " + TIME_LIMIT + " millis");
   }
 }

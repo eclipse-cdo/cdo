@@ -343,6 +343,81 @@ public class BasicTest extends AbstractModel1Test
     }
   }
 
+  public void testGetEContainer() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final String[] PATH = { "a1", "a2", "a3", "a4"};
+
+    { // Execution
+      TreeNode root = createNode(ROOT);
+      createPath(PATH, root, false);
+      saveRoot(root, RESOURCE);
+    }
+
+    { // Verification
+      TreeNode root = (TreeNode) loadRoot(RESOURCE);
+      TreeNode a4 = findPath(PATH, root);
+
+      TreeNode a3 = (TreeNode) a4.eContainer();
+      assertNode(PATH[2], a3);
+
+      TreeNode a2 = (TreeNode) a3.eContainer();
+      assertNode(PATH[1], a2);
+
+      TreeNode a1 = (TreeNode) a2.eContainer();
+      assertNode(PATH[0], a1);
+
+      TreeNode a0 = (TreeNode) a1.eContainer();
+      assertNode(ROOT, a0);
+      assertEquals(a0, root);
+
+      assertResource(RESOURCE, a0);
+      assertResource(RESOURCE, a1);
+      assertResource(RESOURCE, a2);
+      assertResource(RESOURCE, a3);
+      assertResource(RESOURCE, a4);
+    }
+  }
+
+  public void testGetEContainerViaRef() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final String[] PATH = { "a1", "a2", "a3", "a4"};
+
+    { // Execution
+      TreeNode root = createNode(ROOT);
+      TreeNode a4 = createPath(PATH, root, false);
+      root.getReferences().add(a4);
+      saveRoot(root, RESOURCE);
+    }
+
+    { // Verification
+      TreeNode root = (TreeNode) loadRoot(RESOURCE);
+      TreeNode a4 = (TreeNode) root.getReferences().get(0);
+
+      TreeNode a3 = (TreeNode) a4.eContainer();
+      assertNode(PATH[2], a3);
+
+      TreeNode a2 = (TreeNode) a3.eContainer();
+      assertNode(PATH[1], a2);
+
+      TreeNode a1 = (TreeNode) a2.eContainer();
+      assertNode(PATH[0], a1);
+
+      TreeNode a0 = (TreeNode) a1.eContainer();
+      assertNode(ROOT, a0);
+      assertEquals(a0, root);
+
+      assertResource(RESOURCE, a0);
+      assertResource(RESOURCE, a1);
+      assertResource(RESOURCE, a2);
+      assertResource(RESOURCE, a3);
+      assertResource(RESOURCE, a4);
+    }
+  }
+
   public void testUpdate() throws Exception
   {
     final String RESOURCE = "/test/res";

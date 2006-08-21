@@ -19,7 +19,7 @@ import junit.framework.ComparisonFailure;
 
 public class NotificationTest extends AbstractModel1Test
 {
-  public void testOneConnection() throws Exception
+  public void testRoot() throws Exception
   {
     final String RESOURCE = "/test/res";
     final String ROOT = "root";
@@ -43,6 +43,79 @@ public class NotificationTest extends AbstractModel1Test
     try
     {
       assertNode(NEW_ROOT, loaded);
+    }
+    catch (ComparisonFailure ex)
+    {
+      long duration = System.currentTimeMillis() - start;
+      if (duration > TIME_LIMIT) throw ex;
+      Thread.sleep(1);
+    }
+  }
+
+  public void testChildNotYetLoaded() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final String CHILD = "a";
+    final String NEW_NAME = "a2";
+    final long TIME_LIMIT = 100;
+
+    // Client1 creates resource
+    TreeNode root = createNode(ROOT);
+    TreeNode a = createNode(CHILD, root);
+    saveRoot(root, RESOURCE);
+
+    // Client2 loads resource
+    TreeNode loaded = (TreeNode) loadRoot(RESOURCE);
+    TreeNode loadedA = (TreeNode) loaded.getChildren().get(0);
+
+    // Client1 modifies and commits resource
+    a.setStringFeature(NEW_NAME);
+    Resource resource = root.eResource();
+    resource.save(null);
+
+    // Give server and client2 enough time to get notified
+    long start = System.currentTimeMillis();
+    try
+    {
+      assertNode(NEW_NAME, loadedA);
+    }
+    catch (ComparisonFailure ex)
+    {
+      long duration = System.currentTimeMillis() - start;
+      if (duration > TIME_LIMIT) throw ex;
+      Thread.sleep(1);
+    }
+  }
+
+  public void testChildAlreadyLoaded() throws Exception
+  {
+    final String RESOURCE = "/test/res";
+    final String ROOT = "root";
+    final String CHILD = "a";
+    final String NEW_NAME = "a2";
+    final long TIME_LIMIT = 100;
+
+    // Client1 creates resource
+    TreeNode root = createNode(ROOT);
+    TreeNode a = createNode(CHILD, root);
+    saveRoot(root, RESOURCE);
+
+    // Client2 loads resource
+    TreeNode loaded = (TreeNode) loadRoot(RESOURCE);
+    TreeNode loadedA = (TreeNode) loaded.getChildren().get(0);
+    assertNode(CHILD, loadedA);
+
+    // Client1 modifies and commits resource
+    a.setStringFeature(NEW_NAME);
+    Resource resource = root.eResource();
+    resource.save(null);
+
+    // Give server and client2 enough time to get notified
+    long start = System.currentTimeMillis();
+    try
+    {
+      assertNode(NEW_NAME, loadedA);
     }
     catch (ComparisonFailure ex)
     {

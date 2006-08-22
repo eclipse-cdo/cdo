@@ -17,6 +17,7 @@ import org.eclipse.net4j.spring.impl.ServiceImpl;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringHelper;
 
+import org.eclipse.emf.cdo.core.CDOProtocol;
 import org.eclipse.emf.cdo.core.CDOResProtocol;
 import org.eclipse.emf.cdo.core.OIDEncoder;
 import org.eclipse.emf.cdo.dbgen.ColumnType;
@@ -468,12 +469,12 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     return result;
   }
 
-  protected int selectMaxOIDFragment(int rid)
+  protected long selectMaxOIDFragment(int rid)
   {
     Object[] args = ridBounds(rid);
     if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_MAX_OID_FRAGMENT, "?", args));
     long oid = jdbcTemplate.queryForLong(SELECT_MAX_OID_FRAGMENT, args);
-    return (int) (oid & 0xFFFFFFFFL); // TODO Without OIDEncoder???
+    return oidEncoder.getOIDFragment(oid);
   }
 
   private Object[] ridBounds(int rid)
@@ -848,8 +849,11 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   public void transmitAllResources(final Channel channel)
   {
-    if (isDebugEnabled()) debug("Querying all resources");
-    if (isDebugEnabled()) debug(SELECT_ALL_RESOURCES);
+    if (isDebugEnabled())
+    {
+      debug("Querying all resources");
+      debug(SELECT_ALL_RESOURCES);
+    }
 
     jdbcTemplate.query(SELECT_ALL_RESOURCES, new RowCallbackHandler()
     {
@@ -864,6 +868,78 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     });
 
     channel.transmitInt(CDOResProtocol.NO_MORE_RESOURCES);
+  }
+
+  public void transmitExtent(final Channel channel, final int context, final boolean exactMatch,
+      int rid)
+  {
+    StringBuffer buffer = new StringBuffer();
+    buffer.append("SELECT ");
+    buffer.append(OBJECT_OID_COLUMN);
+    buffer.append(exactMatch ? "" : ", " + OBJECT_CID_COLUMN);
+    buffer.append(" FROM ");
+    buffer.append(OBJECT_TABLE);
+    buffer.append(" WHERE ");
+    buffer.append(OBJECT_CID_COLUMN);
+    buffer.append(" IN (");
+    buffer.append(context);
+
+    if (!exactMatch)
+    {
+      ClassInfo classInfo = packageManager.getClassInfo(context);
+      List<ClassInfo> subClasses = classInfo.getSubClasses();
+      for (ClassInfo info : subClasses)
+      {
+        buffer.append(", ");
+        buffer.append(info.getCID());
+      }
+    }
+
+    buffer.append(")");
+
+    if (rid != CDOProtocol.GLOBAL_EXTENT)
+    {
+      Object[] bounds = ridBounds(rid);
+      buffer.append(" AND ");
+      buffer.append(OBJECT_OID_COLUMN);
+      buffer.append(" BETWEEN ");
+      buffer.append(bounds[0]);
+      buffer.append(" AND ");
+      buffer.append(bounds[1]);
+    }
+
+    buffer.append(" ORDER BY ");
+    buffer.append(OBJECT_OID_COLUMN);
+
+    String sql = buffer.toString();
+    if (isDebugEnabled())
+    {
+      debug(sql);
+
+    }
+
+    jdbcTemplate.query(sql, new RowCallbackHandler()
+    {
+      public void processRow(ResultSet resultSet) throws SQLException
+      {
+        long oid = resultSet.getLong(1);
+        int cid = exactMatch ? context : resultSet.getInt(2);
+
+        if (isDebugEnabled())
+        {
+          debug("Extent: oid=" + oidEncoder.toString(oid) + (exactMatch ? "" : ", cid=" + cid));
+        }
+
+        channel.transmitLong(oid);
+        if (!exactMatch)
+        {
+          channel.transmitInt(cid);
+        }
+      }
+    });
+
+    channel.transmitLong(CDOProtocol.NO_MORE_OBJECTS);
+
   }
 
   public void createAttributeTables(PackageInfo packageInfo)

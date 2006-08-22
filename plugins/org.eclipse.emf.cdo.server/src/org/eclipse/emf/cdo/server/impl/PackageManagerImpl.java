@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.server.PackageListener;
 import org.eclipse.emf.cdo.server.PackageManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -30,6 +31,8 @@ public class PackageManagerImpl extends ServiceImpl implements PackageManager
   protected Map<Integer, ClassInfo> cidToClassInfoMap = new HashMap<Integer, ClassInfo>(2111);
 
   protected Map<String, ClassInfo> nameToClassInfoMap = new HashMap<String, ClassInfo>(2111);
+
+  protected Map<ClassInfo, List<ClassInfo>> subClassInfoMap;
 
   protected Map<String, PackageInfo> packages = new HashMap<String, PackageInfo>();
 
@@ -44,7 +47,7 @@ public class PackageManagerImpl extends ServiceImpl implements PackageManager
   {
     PackageInfo packageInfo = new PackageInfoImpl(pid, name, this);
     packages.put(name, packageInfo);
-    notifyPackageListeners();
+    notifyPackageListeners(); // TODO Not useful here because classes are not registered yet
     return packageInfo;
   }
 
@@ -62,6 +65,7 @@ public class PackageManagerImpl extends ServiceImpl implements PackageManager
   {
     cidToClassInfoMap.put(new Integer(classInfo.getCID()), classInfo);
     nameToClassInfoMap.put(classInfo.getName(), classInfo);
+    subClassInfoMap = null;
   }
 
   public ClassInfo getClassInfo(int cid)
@@ -72,6 +76,33 @@ public class PackageManagerImpl extends ServiceImpl implements PackageManager
   public ClassInfo getClassInfo(String name)
   {
     return nameToClassInfoMap.get(name);
+  }
+
+  public List<ClassInfo> getSubClassInfos(ClassInfo base)
+  {
+    if (subClassInfoMap == null)
+    {
+      subClassInfoMap = new HashMap<ClassInfo, List<ClassInfo>>();
+      Collection<ClassInfo> values = cidToClassInfoMap.values();
+      ClassInfo[] array = (ClassInfo[]) values.toArray(new ClassInfo[values.size()]);
+      for (int i = 0; i < array.length; i++)
+      {
+        ClassInfo parent = array[i];
+        List<ClassInfo> subClasses = new ArrayList<ClassInfo>();
+        for (int j = 0; j < array.length; j++)
+        {
+          ClassInfo derived = array[j];
+          if (parent.isParentOf(derived))
+          {
+            subClasses.add(derived);
+          }
+        }
+
+        subClassInfoMap.put(parent, subClasses);
+      }
+    }
+
+    return subClassInfoMap.get(base);
   }
 
   protected void notifyPackageListeners()

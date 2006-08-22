@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo.server;
 
 
+import java.util.List;
+
+
 public interface ClassInfo
 {
   public int getCID();
@@ -31,6 +34,10 @@ public interface ClassInfo
   public AttributeInfo[] getAttributeInfos();
 
   public ClassInfo getParent();
+
+  public boolean isParentOf(ClassInfo derived);
+
+  public List<ClassInfo> getSubClasses();
 
   public String getColumnNames();
 }

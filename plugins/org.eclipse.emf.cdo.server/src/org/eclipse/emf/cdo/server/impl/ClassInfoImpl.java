@@ -119,6 +119,22 @@ public class ClassInfoImpl implements ClassInfo
     return cachedParent;
   }
 
+  public boolean isParentOf(ClassInfo derived)
+  {
+    if (derived == null)
+    {
+      return false;
+    }
+
+    ClassInfo parent = derived.getParent();
+    return parent == this || isParentOf(parent);
+  }
+
+  public List<ClassInfo> getSubClasses()
+  {
+    return packageInfo.getPackageManager().getSubClassInfos(this);
+  }
+
   public String getColumnNames()
   {
     if (cachedColumnNames == null)

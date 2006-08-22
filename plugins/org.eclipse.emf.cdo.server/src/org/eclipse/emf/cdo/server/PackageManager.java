@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.net4j.spring.Service;
 
+import java.util.List;
+
 
 public interface PackageManager extends Service
 {
@@ -29,4 +31,6 @@ public interface PackageManager extends Service
   public ClassInfo getClassInfo(int cid);
 
   public ClassInfo getClassInfo(String name);
+
+  public List<ClassInfo> getSubClassInfos(ClassInfo base);
 }

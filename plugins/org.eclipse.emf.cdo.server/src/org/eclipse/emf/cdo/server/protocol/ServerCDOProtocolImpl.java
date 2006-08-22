@@ -66,6 +66,9 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
       case COMMIT_TRANSACTION:
         return new CommitTransactionIndication();
 
+      case QUERY_EXTENT:
+        return new QueryExtentIndication();
+        
       default:
         throw new ImplementationError("Invalid " + CDOProtocol.PROTOCOL_NAME + " signalId: "
             + signalId);

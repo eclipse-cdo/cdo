@@ -177,4 +177,18 @@ public abstract class AbstractTopologyTest extends TestCase
   {
     return System.getProperty(CDO_TEST_MODE_KEY, EMBEDDED_MODE).toLowerCase();
   }
+
+  protected void assertTrue(Object object)
+  {
+    assertNotNull(object);
+    assertSame(Boolean.class, object.getClass());
+    assertTrue(((Boolean) object).booleanValue());
+  }
+
+  protected void assertFalse(Object object)
+  {
+    assertNotNull(object);
+    assertSame(Boolean.class, object.getClass());
+    assertFalse(((Boolean) object).booleanValue());
+  }
 }

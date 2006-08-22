@@ -36,7 +36,7 @@ public class ExtentTest extends AbstractModel1Test
 
     CDOResource resource = saveRoot(root, RESOURCE);
     ResourceManager resourceManager = resource.getResourceManager();
-    Set extent = resourceManager.queryExtent(TestModel1Package.eINSTANCE.getTreeNode());
+    Set extent = resourceManager.queryExtent(TestModel1Package.eINSTANCE.getTreeNode(), true);
     assertEquals(1 + CHILDREN.length, extent.size());
 
     assertTrue(extent.contains(root));
@@ -62,7 +62,7 @@ public class ExtentTest extends AbstractModel1Test
 
     CDOResource resource = saveRoot(root, RESOURCE);
     ResourceManager resourceManager = resource.getResourceManager();
-    Set extent = resourceManager.queryExtent(TestModel1Package.eINSTANCE.getTreeNode(), true, null);
+    Set extent = resourceManager.queryExtent(TestModel1Package.eINSTANCE.getTreeNode());
     assertEquals(2 + CHILDREN.length, extent.size());
 
     assertTrue(extent.contains(root));

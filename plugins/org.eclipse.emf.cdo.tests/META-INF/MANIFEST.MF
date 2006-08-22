@@ -13,4 +13,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.cdo.client,
  org.eclipse.emf.cdo.server,
  org.eclipse.net4j.embedded,
- org.eclipse.net4j.socket
+ org.eclipse.net4j.socket,
+ org.eclipse.emf.cdo.client.ocl

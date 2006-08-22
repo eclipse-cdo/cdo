@@ -12,14 +12,7 @@ package org.eclipse.emf.cdo.tests.model1;
 
 
 import org.eclipse.emf.cdo.client.CDOResource;
-import org.eclipse.emf.cdo.client.ClassInfo;
-import org.eclipse.emf.cdo.client.PackageManager;
 import org.eclipse.emf.cdo.client.ResourceManager;
-import org.eclipse.emf.cdo.client.protocol.ClientCDOProtocolImpl;
-
-import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.net4j.core.Channel;
 
 import testmodel1.ExtendedNode;
 import testmodel1.TestModel1Package;
@@ -43,14 +36,7 @@ public class ExtentTest extends AbstractModel1Test
 
     CDOResource resource = saveRoot(root, RESOURCE);
     ResourceManager resourceManager = resource.getResourceManager();
-    Channel channel = resourceManager.getChannel();
-
-    PackageManager packageManager = resourceManager.getPackageManager();
-    EClass eClass = TestModel1Package.eINSTANCE.getTreeNode();
-    ClassInfo classInfo = packageManager.getClassInfo(eClass);
-    int cid = classInfo.getCID();
-
-    Set extent = ClientCDOProtocolImpl.requestQueryExtent(channel, cid, true);
+    Set extent = resourceManager.queryExtent(TestModel1Package.eINSTANCE.getTreeNode());
     assertEquals(1 + CHILDREN.length, extent.size());
 
     assertTrue(extent.contains(root));
@@ -76,14 +62,7 @@ public class ExtentTest extends AbstractModel1Test
 
     CDOResource resource = saveRoot(root, RESOURCE);
     ResourceManager resourceManager = resource.getResourceManager();
-    Channel channel = resourceManager.getChannel();
-
-    PackageManager packageManager = resourceManager.getPackageManager();
-    EClass eClass = TestModel1Package.eINSTANCE.getTreeNode();
-    ClassInfo classInfo = packageManager.getClassInfo(eClass);
-    int cid = classInfo.getCID();
-
-    Set extent = ClientCDOProtocolImpl.requestQueryExtent(channel, cid, false);
+    Set extent = resourceManager.queryExtent(TestModel1Package.eINSTANCE.getTreeNode(), true, null);
     assertEquals(2 + CHILDREN.length, extent.size());
 
     assertTrue(extent.contains(root));

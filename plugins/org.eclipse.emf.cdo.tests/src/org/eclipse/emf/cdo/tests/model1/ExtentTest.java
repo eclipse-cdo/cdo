@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.client.PackageManager;
 import org.eclipse.emf.cdo.client.ResourceManager;
 import org.eclipse.emf.cdo.client.protocol.ClientCDOProtocolImpl;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.net4j.core.Channel;
@@ -25,6 +24,8 @@ import org.eclipse.net4j.core.Channel;
 import testmodel1.ExtendedNode;
 import testmodel1.TestModel1Package;
 import testmodel1.TreeNode;
+
+import java.util.Set;
 
 
 public class ExtentTest extends AbstractModel1Test
@@ -49,7 +50,7 @@ public class ExtentTest extends AbstractModel1Test
     ClassInfo classInfo = packageManager.getClassInfo(eClass);
     int cid = classInfo.getCID();
 
-    EList extent = ClientCDOProtocolImpl.requestQueryExtent(channel, cid, true);
+    Set extent = ClientCDOProtocolImpl.requestQueryExtent(channel, cid, true);
     assertEquals(1 + CHILDREN.length, extent.size());
 
     assertTrue(extent.contains(root));
@@ -82,7 +83,7 @@ public class ExtentTest extends AbstractModel1Test
     ClassInfo classInfo = packageManager.getClassInfo(eClass);
     int cid = classInfo.getCID();
 
-    EList extent = ClientCDOProtocolImpl.requestQueryExtent(channel, cid, false);
+    Set extent = ClientCDOProtocolImpl.requestQueryExtent(channel, cid, false);
     assertEquals(2 + CHILDREN.length, extent.size());
 
     assertTrue(extent.contains(root));

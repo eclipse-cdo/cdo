@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launchConfiguration type="org.eclipse.pde.ui.JunitLaunchConfig">
+<stringAttribute key="product" value="org.eclipse.platform.ide"/>
+<stringAttribute key="bootstrap" value=""/>
+<booleanAttribute key="useProduct" value="false"/>
+<stringAttribute key="deselected_workspace_plugins" value="org.eclipse.net4j.examples.mvc.swt,org.eclipse.net4j.examples.prov.client.ui,org.eclipse.net4j.examples.mvc,org.eclipse.net4j.examples.prov.server,org.eclipse.emf.cdo.dbgen.edit,org.eclipse.emf.cdo.examples.library,org.eclipse.emf.cdo.examples.library.ui,org.eclipse.emf.cdo.analysis.gmf,org.eclipse.emf.cdo.mapping.editor,org.eclipse.net4j.examples.server,org.eclipse.net4j.tests,org.eclipse.emf.cdo.doc,org.eclipse.datatools.enablement.mysql,org.eclipse.net4j.spring.tests,org.eclipse.emf.cdo,org.eclipse.emf.cdo.dbgen.editor,org.eclipse.net4j.examples.prov.edit,org.eclipse.emf.cdo.utilities.migrator,org.eclipse.emf.cdo.analysis,org.eclipse.emf.cdo.examples.server,org.eclipse.datatools.enablement.mysql.dbdefinition,org.eclipse.net4j.examples.prov,org.eclipse.emf.cdo.examples.client,org.eclipse.emf.cdo.examples.ui,org.eclipse.net4j.examples.client.ui,org.eclipse.net4j.examples.client,org.eclipse.net4j.doc,org.eclipse.net4j.examples.prov.client,org.eclipse.net4j.examples.prov.editor,org.eclipse.net4j"/>
+<booleanAttribute key="tracing" value="false"/>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+<listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
+</listAttribute>
+<stringAttribute key="selected_target_plugins" value="com.ibm.icu,org.apache.ant,org.eclipse.ant.core,org.eclipse.core.contenttype,org.eclipse.core.expressions,org.eclipse.core.filesystem,org.eclipse.core.filesystem.win32.x86,org.eclipse.core.jobs,org.eclipse.core.resources,org.eclipse.core.resources.compatibility,org.eclipse.core.resources.win32,org.eclipse.core.runtime,org.eclipse.core.runtime.compatibility,org.eclipse.core.runtime.compatibility.auth,org.eclipse.core.runtime.compatibility.registry,org.eclipse.core.variables,org.eclipse.emf.common,org.eclipse.emf.ecore,org.eclipse.emf.ecore.change,org.eclipse.emf.ecore.edit,org.eclipse.emf.ecore.xmi,org.eclipse.emf.edit,org.eclipse.equinox.common,org.eclipse.equinox.preferences,org.eclipse.equinox.registry,org.eclipse.osgi,org.eclipse.update.configurator,org.junit"/>
+<stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value=""/>
+<booleanAttribute key="automaticValidate" value="true"/>
+<booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
+<booleanAttribute key="automaticAdd" value="false"/>
+<stringAttribute key="checked" value="[NONE]"/>
+<stringAttribute key="location" value="${workspace_loc}/../junit-workspace"/>
+<stringAttribute key="selected_workspace_plugins" value="org.eclipse.emf.cdo.jdbc,org.eclipse.net4j.spring,org.eclipse.net4j.socket,org.eclipse.net4j.core,org.eclipse.net4j.spring.db,org.eclipse.emf.cdo.dbgen,org.eclipse.emf.ocl,org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.core,org.eclipse.emf.cdo.mapping,org.eclipse.emf.cdo.client,org.eclipse.net4j.util,org.eclipse.emf.cdo.client.ocl,org.eclipse.emf.cdo.server,org.eclipse.net4j.embedded,org.eclipse.emf.cdo.jdbc.derby,org.eclipse.emf.cdo.dbgen.derby,org.eclipse.emf.cdo.dbgen.oracle,org.eclipse.emf.cdo.jdbc.hsqldb,org.eclipse.emf.cdo.jdbc.mysql,org.eclipse.emf.cdo.dbgen.ansi92,org.eclipse.emf.cdo.dbgen.mysql,org.eclipse.emf.cdo.dbgen.hsqldb"/>
+<stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/pde-junit"/>
+<stringAttribute key="application" value="org.eclipse.pde.junit.runtime.coretestapplication"/>
+<booleanAttribute key="clearws" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.cdo.tests.model1.AdapterTest"/>
+<stringAttribute key="pde.version" value="3.2a"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dcdo.test.mode=client-separated-server"/>
+<stringAttribute key="templateConfig" value="${target_home}\configuration\config.ini"/>
+<booleanAttribute key="default" value="false"/>
+<booleanAttribute key="clearConfig" value="true"/>
+<booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
+<booleanAttribute key="useDefaultConfigArea" value="false"/>
+<booleanAttribute key="useDefaultConfig" value="true"/>
+<stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.emf.cdo.tests"/>
+<booleanAttribute key="askclear" value="false"/>
+<booleanAttribute key="includeOptional" value="true"/>
+<stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit3"/>
+</launchConfiguration>

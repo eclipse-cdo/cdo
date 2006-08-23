@@ -21,11 +21,12 @@ public class AllModel1Tests
   {
     TestSuite suite = new TestSuite("Test for org.eclipse.emf.cdo.tests.model1");
     suite.addTestSuite(BasicTest.class);
-    suite.addTestSuite(Bugzilla154389Test.class);
-    suite.addTestSuite(ExtentTest.class);
-    suite.addTestSuite(NotificationTest.class);
-    suite.addTestSuite(OCLTest.class);
+    suite.addTestSuite(AdapterTest.class);
     suite.addTestSuite(SerializationTest.class);
+    suite.addTestSuite(NotificationTest.class);
+    suite.addTestSuite(ExtentTest.class);
+    suite.addTestSuite(OCLTest.class);
+    suite.addTestSuite(Bugzilla154389Test.class);
     return suite;
   }
 }

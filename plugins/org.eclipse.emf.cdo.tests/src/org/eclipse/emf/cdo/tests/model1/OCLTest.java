@@ -38,7 +38,7 @@ public class OCLTest extends AbstractModel1Test
     }
 
     TreeNode root = (TreeNode) loadRoot(RESOURCE);
-    IOCLHelper helper = HelperUtil.createOCLHelper();
+    IOCLHelper helper = CDOHelperUtil.createOCLHelper();
     helper.setContext(root);
 
     try
@@ -65,7 +65,7 @@ public class OCLTest extends AbstractModel1Test
     }
 
     TreeNode root = (TreeNode) loadRoot(RESOURCE);
-    IOCLHelper helper = HelperUtil.createOCLHelper();
+    IOCLHelper helper = CDOHelperUtil.createOCLHelper();
     helper.setContext(root);
 
     try

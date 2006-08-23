@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.client.ocl.CDOHelperUtil;
 
 import org.eclipse.emf.ocl.helper.HelperUtil;
 import org.eclipse.emf.ocl.helper.IOCLHelper;
+import org.eclipse.emf.ocl.helper.OCLParsingException;
 
 import testmodel1.TreeNode;
 
@@ -45,7 +46,7 @@ public class OCLTest extends AbstractModel1Test
       Object result = helper.evaluate(root, EXPR);
       assertFalse(result);
     }
-    catch (Exception ex)
+    catch (OCLParsingException ex)
     {
       ex.printStackTrace();
       fail("Parse failed: " + ex.getLocalizedMessage());
@@ -72,7 +73,7 @@ public class OCLTest extends AbstractModel1Test
       Object result = helper.evaluate(root, EXPR);
       assertTrue(result);
     }
-    catch (Exception ex)
+    catch (OCLParsingException ex)
     {
       ex.printStackTrace();
       fail("Parse failed: " + ex.getLocalizedMessage());
@@ -107,7 +108,7 @@ public class OCLTest extends AbstractModel1Test
       Set result = (Set) helper.evaluate(root, "ExtendedNode.allInstances()");
       assertEquals(3, result.size());
     }
-    catch (Exception ex)
+    catch (OCLParsingException ex)
     {
       ex.printStackTrace();
       fail("Parse failed: " + ex.getLocalizedMessage());
@@ -142,7 +143,7 @@ public class OCLTest extends AbstractModel1Test
       Set result = (Set) helper.evaluate(root, "TreeNode.allInstances()");
       assertEquals(10, result.size());
     }
-    catch (Exception ex)
+    catch (OCLParsingException ex)
     {
       ex.printStackTrace();
       fail("Parse failed: " + ex.getLocalizedMessage());
@@ -192,7 +193,7 @@ public class OCLTest extends AbstractModel1Test
       Set result = (Set) helper.evaluate(root, "ExtendedNode.allInstances()");
       assertEquals(3, result.size());
     }
-    catch (Exception ex)
+    catch (OCLParsingException ex)
     {
       ex.printStackTrace();
       fail("Parse failed: " + ex.getLocalizedMessage());
@@ -242,7 +243,7 @@ public class OCLTest extends AbstractModel1Test
       Set result = (Set) helper.evaluate(root, "ExtendedNode.allInstances()");
       assertEquals(6, result.size());
     }
-    catch (Exception ex)
+    catch (OCLParsingException ex)
     {
       ex.printStackTrace();
       fail("Parse failed: " + ex.getLocalizedMessage());

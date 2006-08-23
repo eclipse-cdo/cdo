@@ -99,7 +99,6 @@ public class OCLTest extends AbstractModel1Test
     }
 
     TreeNode root = (TreeNode) loadRoot(RESOURCE);
-    //    CDOResource resource = root.cdoGetResource();
     IOCLHelper helper = CDOHelperUtil.createOCLHelper();
     helper.setContext(root);
 
@@ -134,7 +133,6 @@ public class OCLTest extends AbstractModel1Test
     }
 
     TreeNode root = (TreeNode) loadRoot(RESOURCE);
-    //    CDOResource resource = root.cdoGetResource();
     IOCLHelper helper = CDOHelperUtil.createOCLHelper();
     helper.setContext(root);
 
@@ -184,7 +182,6 @@ public class OCLTest extends AbstractModel1Test
     }
 
     TreeNode root = (TreeNode) loadRoot(RESOURCE1);
-    //    CDOResource resource = root.cdoGetResource();
     IOCLHelper helper = CDOHelperUtil.createOCLHelper();
     helper.setContext(root);
 
@@ -234,7 +231,6 @@ public class OCLTest extends AbstractModel1Test
     }
 
     TreeNode root = (TreeNode) loadRoot(RESOURCE1);
-    //    CDOResource resource = root.cdoGetResource();
     IOCLHelper helper = CDOHelperUtil.createOCLHelper(true);
     helper.setContext(root);
 

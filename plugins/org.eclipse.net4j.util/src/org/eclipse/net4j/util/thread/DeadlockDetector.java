@@ -61,11 +61,16 @@ public final class DeadlockDetector
 
   public static void wait(Object object) throws ThreadInterruptedException
   {
+    wait(object, 0);
+  }
+
+  public static void wait(Object object, long timeout) throws ThreadInterruptedException
+  {
     preLock();
 
     try
     {
-      object.wait();
+      object.wait(timeout);
     }
     catch (InterruptedException ex)
     {

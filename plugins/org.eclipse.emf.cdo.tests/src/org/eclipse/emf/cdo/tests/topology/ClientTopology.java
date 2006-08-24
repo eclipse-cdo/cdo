@@ -15,7 +15,9 @@ import org.eclipse.net4j.spring.Container;
 
 import javax.sql.DataSource;
 
-
+/*
+ * TODO Test this topology (need external server for that) 
+ */
 public class ClientTopology extends AbstractTopology
 {
   private Container net4j;

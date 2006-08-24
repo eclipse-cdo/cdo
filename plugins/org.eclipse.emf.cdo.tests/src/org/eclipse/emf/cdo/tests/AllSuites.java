@@ -61,8 +61,7 @@ public class AllSuites extends TestSuite
   protected Test[] createPackageSuites()
   {
     return new Test[] { //
-    org.eclipse.emf.cdo.tests.AllTests.suite(), //
-        org.eclipse.emf.cdo.tests.model1.AllTests.suite() //
+    org.eclipse.emf.cdo.tests.model1.AllTests.suite() //
     };
   }
 }

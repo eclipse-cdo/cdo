@@ -8,24 +8,25 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.tests.model1;
 
 
-import org.eclipse.net4j.util.eclipse.AbstractPlugin;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 
-public class CDOTestPlugin extends AbstractPlugin
+public class AllTests
 {
-  private static CDOTestPlugin instance;
-
-  public CDOTestPlugin()
+  public static Test suite()
   {
-    super();
-    instance = this;
-  }
-
-  public static CDOTestPlugin getPlugin()
-  {
-    return instance;
+    TestSuite suite = new TestSuite("Test for org.eclipse.emf.cdo.tests.model1");
+    suite.addTestSuite(BasicTest.class);
+    suite.addTestSuite(AdapterTest.class);
+    suite.addTestSuite(SerializationTest.class);
+    suite.addTestSuite(NotificationTest.class);
+    suite.addTestSuite(ExtentTest.class);
+    suite.addTestSuite(OCLTest.class);
+    suite.addTestSuite(Bugzilla154389Test.class);
+    return suite;
   }
 }

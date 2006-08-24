@@ -36,13 +36,12 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
   @Override
   protected void setUp() throws Exception
   {
+    topology = createTopology();
     System.out.println("=========================================================================");
-    System.out.println("TC_START " + getName());
+    System.out.println("TC_START " + getName() + " [" + topology.getName() + "]");
     System.out.println("=========================================================================");
 
     super.setUp();
-    topology = createTopology();
-    System.out.println("Topology: " + topology.getName());
     topology.start();
   }
 
@@ -56,7 +55,7 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
     super.tearDown();
 
     System.out.println("=========================================================================");
-    System.out.println("TC_END " + getName());
+    System.out.println("TC_END " + getName() + " [" + topology.getName() + "]");
     System.out.println("=========================================================================");
     System.out.println();
     System.out.println();
@@ -170,7 +169,7 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
 
   protected String getMode()
   {
-    return System.getProperty(CDO_TEST_MODE_KEY, EMBEDDED_MODE);
+    return System.getProperty(CDO_TEST_MODE_KEY, DEFAULT_MODE);
   }
 
   protected void assertTrue(Object object)

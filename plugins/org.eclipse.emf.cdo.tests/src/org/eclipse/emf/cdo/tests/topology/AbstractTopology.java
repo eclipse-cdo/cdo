@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.tests.topology;
 
 
 import org.eclipse.emf.cdo.client.ResourceManager;
-import org.eclipse.emf.cdo.tests.CDOTestPlugin;
+import org.eclipse.emf.cdo.tests.internal.CDOTestPlugin;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 

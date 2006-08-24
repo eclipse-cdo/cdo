@@ -11,19 +11,18 @@
 package org.eclipse.emf.cdo.tests;
 
 
+import org.eclipse.emf.cdo.tests.topology.ITopologyConstants;
+import org.eclipse.emf.cdo.tests.topology.TopologySuite;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+
 public class AllSuites extends TestSuite
 {
-  private static Test[] suites = new Test []{ 
-    // list all test suites here
-	  org.eclipse.emf.cdo.tests.AllTests.suite()
-  };
-
   public static Test suite()
   {
-    return new AllSuites("cdo Build JUnit Test Suite");
+    return new AllSuites("CDO Build JUnit Test Suite");
   }
 
   public AllSuites()
@@ -46,9 +45,24 @@ public class AllSuites extends TestSuite
 
   protected void populateSuite()
   {
-    for (int i = 0; i < suites.length; i++)
+    for (String mode : ITopologyConstants.ALL_SELF_CONTAINED_MODES)
     {
-      addTest(suites[i]);
+      TopologySuite topologySuite = new TopologySuite(mode);
+      Test[] suites = createPackageSuites();
+      for (int i = 0; i < suites.length; i++)
+      {
+        topologySuite.addTest(suites[i]);
+      }
+
+      addTest(topologySuite);
     }
+  }
+
+  protected Test[] createPackageSuites()
+  {
+    return new Test[] { //
+    org.eclipse.emf.cdo.tests.AllTests.suite(), //
+        org.eclipse.emf.cdo.tests.model1.AllTests.suite() //
+    };
   }
 }

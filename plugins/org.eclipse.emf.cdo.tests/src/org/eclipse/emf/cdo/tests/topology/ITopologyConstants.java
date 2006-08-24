@@ -11,22 +11,22 @@
 package org.eclipse.emf.cdo.tests.topology;
 
 
-import org.eclipse.emf.cdo.client.ResourceManager;
-
-import org.eclipse.emf.ecore.resource.ResourceSet;
-
-import javax.sql.DataSource;
-
-
-public interface ITopology
+public interface ITopologyConstants
 {
-  public String getName();
+  public static final String CDO_TEST_MODE_KEY = "cdo.test.mode";
 
-  public void start() throws Exception;
+  public static final String CLIENT_SEPARATED_SERVER_MODE = "Client-Separated-Server";
 
-  public void stop() throws Exception;
+  public static final String CLIENT_SERVER_MODE = "Client-Server";
 
-  public ResourceManager createResourceManager(ResourceSet resourceSet);
+  public static final String CLIENT_MODE = "Client";
 
-  public DataSource getDataSource();
+  public static final String EMBEDDED_MODE = "Embedded";
+
+  public static final String[] ALL_MODES = { //
+  CLIENT_SEPARATED_SERVER_MODE, // 0
+      CLIENT_SERVER_MODE, // 1
+      CLIENT_MODE, // 2
+      EMBEDDED_MODE // 3
+  };
 }

@@ -26,6 +26,8 @@ public class Net4jUtilPlugin extends AbstractPlugin
   //The shared instance.
   private static Net4jUtilPlugin plugin;
 
+  private boolean inDebugMode;
+
   /**
    * The constructor.
    */
@@ -37,6 +39,7 @@ public class Net4jUtilPlugin extends AbstractPlugin
   public void doStart() throws Exception
   {
     initializeLogger();
+    //    determineDebugMode();
   }
 
   protected void doStop() throws Exception
@@ -72,4 +75,22 @@ public class Net4jUtilPlugin extends AbstractPlugin
       logger.debug("Log4j initialized");
     }
   }
+
+  //  private void determineDebugMode()
+  //  {
+  //    ServiceTracker environmentTracker = new ServiceTracker(getBundleContext(),
+  //        EnvironmentInfo.class.getName(), null);
+  //    environmentTracker.open();
+  //    EnvironmentInfo environmentInfo = (EnvironmentInfo) environmentTracker.getService();
+  //    environmentTracker.close();
+  //
+  //    if (environmentInfo == null) throw new IllegalStateException("environmentInfo == null");
+  //    inDebugMode = environmentInfo.inDebugMode();
+  //    System.out.println("DEBUG MODE: " + inDebugMode);
+  //  }
+  //
+  //  public static boolean inDebugMode()
+  //  {
+  //    return getDefault().inDebugMode;
+  //  }
 }

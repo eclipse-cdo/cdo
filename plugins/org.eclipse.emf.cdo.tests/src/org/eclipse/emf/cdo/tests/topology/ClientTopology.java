@@ -26,6 +26,11 @@ public class ClientTopology extends AbstractTopology
   {
   }
 
+  public String getName()
+  {
+    return ITopologyConstants.CLIENT_MODE;
+  }
+
   public void start() throws Exception
   {
     super.start();

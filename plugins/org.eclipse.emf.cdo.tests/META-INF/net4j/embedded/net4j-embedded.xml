@@ -39,8 +39,25 @@
 	
 	<!-- ######################################################## -->
 	<bean id="connector" class="org.eclipse.net4j.embedded.impl.ActiveEmbeddedConnectorImpl">
-		<property name="autoStart">
-			<value>false</value>
+		<property name="bufferPool">
+			<ref bean="bufferPool"/>
+		</property>
+		<property name="protocolManager">
+			<ref bean="protocolManager"/>
+		</property>
+	</bean>
+	
+	<!-- ######################################################## -->
+	<bean id="slave" singleton="false"
+		class="org.eclipse.net4j.embedded.impl.PassiveEmbeddedConnectorImpl">
+		<property name="bufferPool">
+			<ref bean="bufferPool"/>
+		</property>
+		<property name="connectionManager">
+			<ref local="connectionManager"/>
+		</property>
+		<property name="protocolManager">
+			<ref bean="protocolManager"/>
 		</property>
 	</bean>
 	

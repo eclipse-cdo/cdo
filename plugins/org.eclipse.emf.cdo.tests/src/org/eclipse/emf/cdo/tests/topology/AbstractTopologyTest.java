@@ -29,18 +29,8 @@ import javax.sql.DataSource;
 import junit.framework.TestCase;
 
 
-public abstract class AbstractTopologyTest extends TestCase
+public abstract class AbstractTopologyTest extends TestCase implements ITopologyConstants
 {
-  public static final String CDO_TEST_MODE_KEY = "cdo.test.mode";
-
-  public static final String CLIENT_SEPARATED_SERVER_MODE = "client-separated-server";
-
-  public static final String CLIENT_SERVER_MODE = "client-server";
-
-  public static final String CLIENT_MODE = "client";
-
-  public static final String EMBEDDED_MODE = "embedded";
-
   private ITopology topology;
 
   @Override
@@ -52,6 +42,7 @@ public abstract class AbstractTopologyTest extends TestCase
 
     super.setUp();
     topology = createTopology();
+    System.out.println("Topology: " + topology.getName());
     topology.start();
   }
 
@@ -67,6 +58,9 @@ public abstract class AbstractTopologyTest extends TestCase
     System.out.println("=========================================================================");
     System.out.println("TC_END " + getName());
     System.out.println("=========================================================================");
+    System.out.println();
+    System.out.println();
+    System.out.println();
     System.out.println();
   }
 
@@ -150,32 +144,33 @@ public abstract class AbstractTopologyTest extends TestCase
   protected ITopology createTopology()
   {
     String mode = getMode();
-    if (EMBEDDED_MODE.equals(mode))
+    if (EMBEDDED_MODE.equalsIgnoreCase(mode))
     {
       return new EmbeddedTopology();
     }
 
-    if (CLIENT_MODE.equals(mode))
+    if (CLIENT_MODE.equalsIgnoreCase(mode))
     {
       return new ClientTopology();
     }
 
-    if (CLIENT_SERVER_MODE.equals(mode))
+    if (CLIENT_SERVER_MODE.equalsIgnoreCase(mode))
     {
       return new ClientServerTopology();
     }
 
-    if (CLIENT_SEPARATED_SERVER_MODE.equals(mode))
+    if (CLIENT_SEPARATED_SERVER_MODE.equalsIgnoreCase(mode))
     {
       return new ClientSeparatedServerTopology();
     }
 
-    return null;
+    fail("Topology not recognized: " + mode);
+    return null; // Make compiler happy
   }
 
   protected String getMode()
   {
-    return System.getProperty(CDO_TEST_MODE_KEY, EMBEDDED_MODE).toLowerCase();
+    return System.getProperty(CDO_TEST_MODE_KEY, EMBEDDED_MODE);
   }
 
   protected void assertTrue(Object object)

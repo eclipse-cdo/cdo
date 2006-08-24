@@ -33,6 +33,11 @@ public class ClientServerTopology extends AbstractTopology
   {
   }
 
+  public String getName()
+  {
+    return ITopologyConstants.CLIENT_SERVER_MODE;
+  }
+
   public void start() throws Exception
   {
     super.start();

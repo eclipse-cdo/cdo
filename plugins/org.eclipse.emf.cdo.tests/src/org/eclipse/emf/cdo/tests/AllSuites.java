@@ -61,7 +61,7 @@ public class AllSuites extends TestSuite
     }
   }
 
-  private void recursivelySetMode(Test test, String mode)
+  protected void recursivelySetMode(Test test, String mode)
   {
     if (test instanceof AbstractTopologyTest)
     {
@@ -80,7 +80,7 @@ public class AllSuites extends TestSuite
     }
   }
 
-  private Test[] createPackageSuites()
+  protected Test[] createPackageSuites()
   {
     return new Test[] { //
     org.eclipse.emf.cdo.tests.model1.AllTests.suite() //

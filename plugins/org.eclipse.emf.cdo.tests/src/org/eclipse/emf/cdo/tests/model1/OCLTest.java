@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests.model1;
 
 import org.eclipse.emf.cdo.client.ocl.CDOHelperUtil;
 
-import org.eclipse.emf.ocl.helper.HelperUtil;
 import org.eclipse.emf.ocl.helper.IOCLHelper;
 import org.eclipse.emf.ocl.helper.OCLParsingException;
 

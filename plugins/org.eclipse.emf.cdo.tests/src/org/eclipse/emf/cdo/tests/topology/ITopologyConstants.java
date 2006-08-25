@@ -30,7 +30,7 @@ public interface ITopologyConstants
         EMBEDDED_MODE // 3
     };
 
-  public static final String[] ALL_SELF_CONTAINED_MODES = { //
+  public static final String[] SELF_CONTAINED_MODES = { //
     CLIENT_SEPARATED_SERVER_MODE, // 0
         CLIENT_SERVER_MODE, // 1
         EMBEDDED_MODE // 2

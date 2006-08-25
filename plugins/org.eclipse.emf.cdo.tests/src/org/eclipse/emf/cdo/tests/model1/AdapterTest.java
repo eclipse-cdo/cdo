@@ -22,8 +22,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
-import org.eclipse.net4j.util.PropertiesHelper;
-
 import testmodel1.TreeNode;
 
 import java.util.Iterator;

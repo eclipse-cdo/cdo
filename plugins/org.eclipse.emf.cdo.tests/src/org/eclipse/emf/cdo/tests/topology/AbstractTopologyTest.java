@@ -31,12 +31,34 @@ import junit.framework.TestCase;
 
 public abstract class AbstractTopologyTest extends TestCase implements ITopologyConstants
 {
+  private String mode;
+
   private ITopology topology;
+
+  public String getMode()
+  {
+    return mode;
+  }
+
+  public void setMode(String mode)
+  {
+    this.mode = mode;
+  }
+
+  public ITopology getTopology()
+  {
+    return topology;
+  }
+
+  public void setTopology(ITopology topology)
+  {
+    this.topology = topology;
+  }
 
   @Override
   protected void setUp() throws Exception
   {
-    topology = createTopology();
+    if (topology == null) topology = createTopology();
     System.out.println("=========================================================================");
     System.out.println("TC_START " + getName() + " [" + topology.getName() + "]");
     System.out.println("=========================================================================");
@@ -84,11 +106,6 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
     {
       ; // Intentionally left empty
     }
-  }
-
-  protected ITopology getTopology()
-  {
-    return topology;
   }
 
   protected DataSource getDataSource()
@@ -142,7 +159,11 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
 
   protected ITopology createTopology()
   {
-    String mode = getMode();
+    if (mode == null)
+    {
+      mode = System.getProperty(CDO_TEST_MODE_KEY, DEFAULT_MODE);
+    }
+
     if (EMBEDDED_MODE.equalsIgnoreCase(mode))
     {
       return new EmbeddedTopology();
@@ -165,11 +186,6 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
 
     fail("Topology not recognized: " + mode);
     return null; // Make compiler happy
-  }
-
-  protected String getMode()
-  {
-    return System.getProperty(CDO_TEST_MODE_KEY, DEFAULT_MODE);
   }
 
   protected void assertTrue(Object object)

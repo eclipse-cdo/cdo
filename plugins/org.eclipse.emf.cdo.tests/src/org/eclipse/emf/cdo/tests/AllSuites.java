@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.tests;
 
 
+import org.eclipse.emf.cdo.tests.topology.AbstractTopologyTest;
 import org.eclipse.emf.cdo.tests.topology.ITopologyConstants;
-import org.eclipse.emf.cdo.tests.topology.TopologySuite;
+
+import java.util.Enumeration;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -45,20 +47,40 @@ public class AllSuites extends TestSuite
 
   protected void populateSuite()
   {
-    for (String mode : ITopologyConstants.ALL_SELF_CONTAINED_MODES)
+    for (String mode : ITopologyConstants.SELF_CONTAINED_MODES)
     {
-      TopologySuite topologySuite = new TopologySuite(mode);
+      TestSuite topologySuite = new TestSuite("Mode " + mode);
       Test[] suites = createPackageSuites();
       for (int i = 0; i < suites.length; i++)
       {
         topologySuite.addTest(suites[i]);
       }
 
+      recursivelySetMode(topologySuite, mode);
       addTest(topologySuite);
     }
   }
 
-  protected Test[] createPackageSuites()
+  private void recursivelySetMode(Test test, String mode)
+  {
+    if (test instanceof AbstractTopologyTest)
+    {
+      AbstractTopologyTest topologyTest = (AbstractTopologyTest) test;
+      topologyTest.setMode(mode);
+    }
+    else if (test instanceof TestSuite)
+    {
+      TestSuite suite = (TestSuite) test;
+      Enumeration enumeration = suite.tests();
+      while (enumeration.hasMoreElements())
+      {
+        Test child = (Test) enumeration.nextElement();
+        recursivelySetMode(child, mode);
+      }
+    }
+  }
+
+  private Test[] createPackageSuites()
   {
     return new Test[] { //
     org.eclipse.emf.cdo.tests.model1.AllTests.suite() //

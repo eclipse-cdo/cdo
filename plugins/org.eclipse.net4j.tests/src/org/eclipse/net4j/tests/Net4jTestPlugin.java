@@ -1,18 +1,18 @@
 /**
  * <copyright>
  *
- * Copyright (c) 2002-2004 IBM Corporation and others.
+ * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   IBM - Initial API and implementation
+ *   Eike Stepper - Initial API and implementation
  *
  * </copyright>
  *
- * $Id: Net4jTestPlugin.java,v 1.1 2006-04-17 21:13:10 nickb Exp $
+ * $Id: Net4jTestPlugin.java,v 1.2 2006-08-25 09:38:15 estepper Exp $
  */
 package org.eclipse.net4j.tests;
 

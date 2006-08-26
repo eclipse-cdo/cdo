@@ -31,11 +31,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 
@@ -75,7 +78,7 @@ public class SerializationTest extends AbstractModel1Test
 
       { // Verification
         String content = IOHelper.readFully(FILE);
-        assertEquals(CONTENT, content);
+        assertFileContent(CONTENT, FILE);
       }
     }
     finally
@@ -131,8 +134,7 @@ public class SerializationTest extends AbstractModel1Test
       }
 
       { // Verification
-        String content = IOHelper.readFully(FILE);
-        assertEquals(CONTENT, content);
+        assertFileContent(CONTENT, FILE);
       }
     }
     finally
@@ -215,6 +217,29 @@ public class SerializationTest extends AbstractModel1Test
     {
       CDOPersistable persistable = (CDOPersistable) it.next();
       persistable.cdoLoad();
+    }
+  }
+
+  protected void assertFileContent(String content, File file) throws IOException
+  {
+    String[] lines = content.split("\n");
+    FileInputStream stream = null;
+
+    try
+    {
+      stream = new FileInputStream(file);
+      BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+
+      for (int i = 0; i < lines.length; i++)
+      {
+        String expectedLine = lines[i];
+        String fileLine = reader.readLine();
+        assertEquals(expectedLine, fileLine);
+      }
+    }
+    finally
+    {
+      IOHelper.close(stream);
     }
   }
 }

@@ -1,6 +1,7 @@
-tmp
+doc
 bin
 dist
 build
 runtime
-*.log
+tmp
+*.tmp

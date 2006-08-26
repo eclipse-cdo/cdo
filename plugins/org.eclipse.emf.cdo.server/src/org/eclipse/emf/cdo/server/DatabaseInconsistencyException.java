@@ -14,15 +14,20 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.core.CDOException;
 
 
+/**
+ * The <code>DatabaseInconsistencyException</code> class.<p>
+ *
+ * @author Eike Stepper
+ */
 public class DatabaseInconsistencyException extends CDOException
 {
   /**
-   * 
+   * Needed for serialization.<p>
    */
-  private static final long serialVersionUID = 3618700786088031544L;
+  private static final long serialVersionUID = 1L;
 
   /**
-   * 
+   * Creates an instance of this class.<p>
    */
   public DatabaseInconsistencyException()
   {
@@ -30,6 +35,8 @@ public class DatabaseInconsistencyException extends CDOException
   }
 
   /**
+   * Creates an instance of this class.<p>
+   *
    * @param message
    */
   public DatabaseInconsistencyException(String message)
@@ -38,6 +45,8 @@ public class DatabaseInconsistencyException extends CDOException
   }
 
   /**
+   * Creates an instance of this class.<p>
+   *
    * @param cause
    */
   public DatabaseInconsistencyException(Throwable cause)
@@ -46,6 +55,8 @@ public class DatabaseInconsistencyException extends CDOException
   }
 
   /**
+   * Creates an instance of this class.<p>
+   *
    * @param message
    * @param cause
    */

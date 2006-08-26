@@ -78,7 +78,7 @@ public class SerializationTest extends AbstractModel1Test
 
       { // Verification
         String content = IOHelper.readFully(FILE);
-        assertFileContent(CONTENT, FILE);
+        assertEquals(CONTENT, content.replaceAll("\r", ""));
       }
     }
     finally
@@ -134,7 +134,8 @@ public class SerializationTest extends AbstractModel1Test
       }
 
       { // Verification
-        assertFileContent(CONTENT, FILE);
+        String content = IOHelper.readFully(FILE);
+        assertEquals(CONTENT, content.replaceAll("\r", ""));
       }
     }
     finally
@@ -220,6 +221,7 @@ public class SerializationTest extends AbstractModel1Test
     }
   }
 
+  @Deprecated
   protected void assertFileContent(String content, File file) throws IOException
   {
     String[] lines = content.split("\n");

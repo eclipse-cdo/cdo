@@ -51,12 +51,12 @@ public class SerializationTest extends AbstractModel1Test
     final String[] CHILDREN = { "a", "b", "c"};
 
     final File FILE = new File("testExport.testmodel1");
-    final String CONTENT = "<?xml version=\"1.0\" encoding=\"ASCII\"?>\r\n"
-        + "<testmodel1:TreeNode xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:testmodel1=\"http://www.eclipse.org/emf/cdo/2006/TestModel1\" stringFeature=\"root\">\r\n" //
-        + "  <children stringFeature=\"a\"/>\r\n" // 
-        + "  <children stringFeature=\"b\"/>\r\n" //
-        + "  <children stringFeature=\"c\"/>\r\n" //
-        + "</testmodel1:TreeNode>\r\n";
+    final String CONTENT = "<?xml version=\"1.0\" encoding=\"ASCII\"?>\n"
+        + "<testmodel1:TreeNode xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:testmodel1=\"http://www.eclipse.org/emf/cdo/2006/TestModel1\" stringFeature=\"root\">\n" //
+        + "  <children stringFeature=\"a\"/>\n" // 
+        + "  <children stringFeature=\"b\"/>\n" //
+        + "  <children stringFeature=\"c\"/>\n" //
+        + "</testmodel1:TreeNode>\n";
 
     try
     {
@@ -77,8 +77,8 @@ public class SerializationTest extends AbstractModel1Test
       }
 
       { // Verification
-        String content = IOHelper.readFully(FILE);
-        assertEquals(CONTENT, content.replaceAll("\r", ""));
+        String content = IOHelper.readFully(FILE).replaceAll("\r", "");
+        assertEquals(CONTENT, content);
       }
     }
     finally
@@ -94,24 +94,24 @@ public class SerializationTest extends AbstractModel1Test
     final String[] CHILDREN = { "a", "b", "c"};
 
     final File FILE = new File("testExport.testmodel1");
-    final String CONTENT = "<?xml version=\"1.0\" encoding=\"ASCII\"?>\r\n"
-        + "<testmodel1:TreeNode xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:testmodel1=\"http://www.eclipse.org/emf/cdo/2006/TestModel1\" stringFeature=\"root\">\r\n" //
-        + "  <children stringFeature=\"a\">\r\n" // 
-        + "    <children stringFeature=\"a\"/>\r\n" //
-        + "    <children stringFeature=\"b\"/>\r\n" //
-        + "    <children stringFeature=\"c\"/>\r\n" //
-        + "  </children>\r\n" // 
-        + "  <children stringFeature=\"b\">\r\n" // 
-        + "    <children stringFeature=\"a\"/>\r\n" //
-        + "    <children stringFeature=\"b\"/>\r\n" //
-        + "    <children stringFeature=\"c\"/>\r\n" //
-        + "  </children>\r\n" // 
-        + "  <children stringFeature=\"c\">\r\n" // 
-        + "    <children stringFeature=\"a\"/>\r\n" //
-        + "    <children stringFeature=\"b\"/>\r\n" //
-        + "    <children stringFeature=\"c\"/>\r\n" //
-        + "  </children>\r\n" // 
-        + "</testmodel1:TreeNode>\r\n";
+    final String CONTENT = "<?xml version=\"1.0\" encoding=\"ASCII\"?>\n"
+        + "<testmodel1:TreeNode xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:testmodel1=\"http://www.eclipse.org/emf/cdo/2006/TestModel1\" stringFeature=\"root\">\n" //
+        + "  <children stringFeature=\"a\">\n" // 
+        + "    <children stringFeature=\"a\"/>\n" //
+        + "    <children stringFeature=\"b\"/>\n" //
+        + "    <children stringFeature=\"c\"/>\n" //
+        + "  </children>\n" // 
+        + "  <children stringFeature=\"b\">\n" // 
+        + "    <children stringFeature=\"a\"/>\n" //
+        + "    <children stringFeature=\"b\"/>\n" //
+        + "    <children stringFeature=\"c\"/>\n" //
+        + "  </children>\n" // 
+        + "  <children stringFeature=\"c\">\n" // 
+        + "    <children stringFeature=\"a\"/>\n" //
+        + "    <children stringFeature=\"b\"/>\n" //
+        + "    <children stringFeature=\"c\"/>\n" //
+        + "  </children>\n" // 
+        + "</testmodel1:TreeNode>\n";
 
     try
     {
@@ -134,8 +134,8 @@ public class SerializationTest extends AbstractModel1Test
       }
 
       { // Verification
-        String content = IOHelper.readFully(FILE);
-        assertEquals(CONTENT, content.replaceAll("\r", ""));
+        String content = IOHelper.readFully(FILE).replaceAll("\r", "");
+        assertEquals(CONTENT, content);
       }
     }
     finally
@@ -151,10 +151,10 @@ public class SerializationTest extends AbstractModel1Test
     final String[] CHILDREN = { "a", "b", "c"};
 
     final File FILE = new File("testExport.testmodel1");
-    final String CONTENT = "<?xml version=\"1.0\" encoding=\"ASCII\"?>\r\n"
-        + "<testmodel1:TreeNode xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:testmodel1=\"http://www.eclipse.org/emf/cdo/2006/TestModel1\" stringFeature=\"root\">\r\n"
-        + "  <children stringFeature=\"a\"/>\r\n" + "  <children stringFeature=\"b\"/>\r\n"
-        + "  <children stringFeature=\"c\"/>\r\n" + "</testmodel1:TreeNode>\r\n";
+    final String CONTENT = "<?xml version=\"1.0\" encoding=\"ASCII\"?>\n"
+        + "<testmodel1:TreeNode xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:testmodel1=\"http://www.eclipse.org/emf/cdo/2006/TestModel1\" stringFeature=\"root\">\n"
+        + "  <children stringFeature=\"a\"/>\n" + "  <children stringFeature=\"b\"/>\n"
+        + "  <children stringFeature=\"c\"/>\n" + "</testmodel1:TreeNode>\n";
 
     try
     {

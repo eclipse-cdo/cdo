@@ -69,7 +69,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
   {
     try
     {
-      TransactionTemplate transactionTemplate = ((ServerCDOProtocol) getProtocol())
+      final TransactionTemplate transactionTemplate = ((ServerCDOProtocol) getProtocol())
           .getTransactionTemplate();
       transactionTemplate.execute(new TransactionCallbackWithoutResult()
       {
@@ -78,8 +78,12 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
           receiveObjectsToDetach();
           receiveObjectsToAttach();
           receiveObjectChanges();
-
           receiveNewResources();
+
+          if (optimisticControlException)
+          {
+            status.setRollbackOnly();
+          }
         }
       });
     }
@@ -88,8 +92,11 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
       error("Error while committing transaction to database", ex);
     }
 
-    transmitInvalidations();
-    transmitRescourceChanges();
+    if (!optimisticControlException)
+    {
+      transmitInvalidations();
+      transmitRescourceChanges();
+    }
   }
 
   public void respond()

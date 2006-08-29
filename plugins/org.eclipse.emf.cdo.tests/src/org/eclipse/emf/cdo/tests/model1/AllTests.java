@@ -24,6 +24,7 @@ public class AllTests
     suite.addTestSuite(AdapterTest.class);
     suite.addTestSuite(SerializationTest.class);
     suite.addTestSuite(NotificationTest.class);
+    suite.addTestSuite(RollbackTest.class);
     suite.addTestSuite(ExtentTest.class);
     suite.addTestSuite(OCLTest.class);
     suite.addTestSuite(Bugzilla154389Test.class);

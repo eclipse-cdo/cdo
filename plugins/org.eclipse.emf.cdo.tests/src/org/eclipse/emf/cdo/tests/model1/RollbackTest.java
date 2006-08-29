@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.tests.model1;
 import org.eclipse.emf.cdo.client.OptimisticControlException;
 
 import testmodel1.TreeNode;
+import junit.framework.ComparisonFailure;
 
 
 public class RollbackTest extends AbstractModel1Test
@@ -66,7 +67,7 @@ public class RollbackTest extends AbstractModel1Test
     root.setStringFeature(NEW_ROOT1);
     root.eResource().save(null);
 
-    // Client2 commits resource
+    // Client2 commits resource, verify that exception occurs
     try
     {
       loaded.eResource().save(null);
@@ -77,7 +78,18 @@ public class RollbackTest extends AbstractModel1Test
       ; // This is the expected case
     }
 
-    // Verify that client2 is properly rolled back
-// XXX   assertNode(NEW_ROOT1, loaded);
+    // Verify that client2 has been rolled back
+    try
+    {
+      assertNode(NEW_ROOT2, loaded);
+      fail("Client2 has not been rolled back");
+    }
+    catch (ComparisonFailure ex)
+    {
+      ; // This is the expected case
+    }
+
+    // TODO Clarify what should be done with invalidated objects on rollback
+    // assertNode(NEW_ROOT1, loaded);
   }
 }

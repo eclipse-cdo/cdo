@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.model1;
 
 
 import org.eclipse.emf.cdo.client.OptimisticControlException;
+import org.eclipse.emf.cdo.client.ResourceManager;
 
 import testmodel1.TreeNode;
 import junit.framework.ComparisonFailure;
@@ -54,23 +55,46 @@ public class RollbackTest extends AbstractModel1Test
     final String ROOT = "root";
     final String NEW_ROOT1 = "new root 1";
     final String NEW_ROOT2 = "new root 2";
+    final long TIME_LIMIT = 1000;
+    final boolean[] notificationReceived = { false};
 
     // Client1 creates resource
-    TreeNode root = createNode(ROOT);
-    saveRoot(root, RESOURCE);
+    TreeNode client1 = createNode(ROOT);
+    saveRoot(client1, RESOURCE);
 
     // Client2 loads and modifies resource
-    TreeNode loaded = (TreeNode) loadRoot(RESOURCE);
-    loaded.setStringFeature(NEW_ROOT2);
+    TreeNode client2 = (TreeNode) loadRoot(RESOURCE);
+    client2.setStringFeature(NEW_ROOT2);
+
+    // Client2 remembers notifications
+    ResourceManager resourceManager = client2.cdoGetResource().getResourceManager();
+    resourceManager.addInvalidationListener(new ResourceManager.InvalidationListener()
+    {
+      public void notifyInvalidation(ResourceManager resourceManager, long[] oids)
+      {
+        notificationReceived[0] = true;
+      }
+    });
 
     // Client1 modifies and commits resource
-    root.setStringFeature(NEW_ROOT1);
-    root.eResource().save(null);
+    client1.setStringFeature(NEW_ROOT1);
+    client1.eResource().save(null);
+
+    // Give server and client2 enough time to get notified
+    long start = System.currentTimeMillis();
+    while (System.currentTimeMillis() - start < TIME_LIMIT)
+    {
+      if (notificationReceived[0]) break;
+      Thread.sleep(1);
+    }
+
+    assertTrue("Notification did not arrive within " + TIME_LIMIT + " millis",
+        notificationReceived[0]);
 
     // Client2 commits resource, verify that exception occurs
     try
     {
-      loaded.eResource().save(null);
+      client2.eResource().save(null);
       fail("OptimisticControlException did not occur");
     }
     catch (OptimisticControlException ex)
@@ -81,7 +105,7 @@ public class RollbackTest extends AbstractModel1Test
     // Verify that client2 has been rolled back
     try
     {
-      assertNode(NEW_ROOT2, loaded);
+      assertNode(NEW_ROOT2, client2);
       fail("Client2 has not been rolled back");
     }
     catch (ComparisonFailure ex)
@@ -90,6 +114,6 @@ public class RollbackTest extends AbstractModel1Test
     }
 
     // TODO Clarify what should be done with invalidated objects on rollback
-    // assertNode(NEW_ROOT1, loaded);
+    assertNode(NEW_ROOT1, client2);
   }
 }

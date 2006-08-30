@@ -150,7 +150,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     {
       long oid = receiveLong();
 
-      if (oid == 0)
+      if (oid == CDOProtocol.NO_MORE_OBJECTS)
       {
         break;
       }

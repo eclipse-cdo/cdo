@@ -69,6 +69,9 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
       case QUERY_EXTENT:
         return new QueryExtentIndication();
         
+      case QUERY_XREFS:
+        return new QueryXRefsIndication();
+        
       default:
         throw new ImplementationError("Invalid " + CDOProtocol.PROTOCOL_NAME + " signalId: "
             + signalId);

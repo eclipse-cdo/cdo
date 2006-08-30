@@ -77,6 +77,8 @@ public interface Mapper extends Service
 
   public void transmitExtent(Channel channel, int cid, boolean exactMatch, int rid);
 
+  public void transmitXRefs(Channel channel, long oid, int rid);
+
   public void createAttributeTables(PackageInfo packageInfo);
 
   public void insertResource(int rid, String path);

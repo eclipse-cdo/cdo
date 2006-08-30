@@ -939,7 +939,31 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     });
 
     channel.transmitLong(CDOProtocol.NO_MORE_OBJECTS);
+  }
 
+  public void transmitXRefs(final Channel channel, final long oid, int rid)
+  {
+    Object[] args = { new Long(oid)};
+    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_XREFS_OF_OBJECT, "?", args));
+    jdbcTemplate.query(SELECT_XREFS_OF_OBJECT, args, new RowCallbackHandler()
+    {
+      public void processRow(ResultSet resultSet) throws SQLException
+      {
+        long referer = resultSet.getLong(1);
+        int feature = resultSet.getInt(2);
+        int cid = resultSet.getInt(3);
+
+        if (isDebugEnabled())
+          debug("XRef: referer=" + oidEncoder.toString(referer) + ", feature=" + feature + ", cid="
+              + cid);
+
+        channel.transmitLong(referer);
+        channel.transmitInt(feature);
+        channel.transmitInt(cid);
+      }
+    });
+
+    channel.transmitLong(CDOProtocol.NO_MORE_OBJECTS);
   }
 
   public void createAttributeTables(PackageInfo packageInfo)

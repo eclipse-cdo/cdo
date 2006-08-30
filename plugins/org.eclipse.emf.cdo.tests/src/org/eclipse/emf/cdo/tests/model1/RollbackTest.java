@@ -14,7 +14,12 @@ package org.eclipse.emf.cdo.tests.model1;
 import org.eclipse.emf.cdo.client.OptimisticControlException;
 import org.eclipse.emf.cdo.client.ResourceManager;
 
+import org.eclipse.emf.ecore.EObject;
+
 import testmodel1.TreeNode;
+
+import java.util.List;
+
 import junit.framework.ComparisonFailure;
 
 
@@ -70,7 +75,8 @@ public class RollbackTest extends AbstractModel1Test
     ResourceManager resourceManager = client2.cdoGetResource().getResourceManager();
     resourceManager.addInvalidationListener(new ResourceManager.InvalidationListener()
     {
-      public void notifyInvalidation(ResourceManager resourceManager, long[] oids)
+      public void notifyInvalidation(ResourceManager resourceManager, List<EObject> invalidated,
+          List<EObject> deferred)
       {
         notificationReceived[0] = true;
       }

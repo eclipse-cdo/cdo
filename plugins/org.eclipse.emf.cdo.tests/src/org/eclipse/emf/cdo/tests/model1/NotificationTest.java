@@ -13,7 +13,10 @@ package org.eclipse.emf.cdo.tests.model1;
 
 import org.eclipse.emf.cdo.client.ResourceManager;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+
+import java.util.List;
 
 import testmodel1.TreeNode;
 import junit.framework.ComparisonFailure;
@@ -150,7 +153,8 @@ public class NotificationTest extends AbstractModel1Test
     ResourceManager client2 = loaded.cdoGetResource().getResourceManager();
     client2.addInvalidationListener(new ResourceManager.InvalidationListener()
     {
-      public void notifyInvalidation(ResourceManager resourceManager, long[] oids)
+      public void notifyInvalidation(ResourceManager resourceManager, List<EObject> invalidated,
+          List<EObject> deferred)
       {
         notificationReceived[0] = true;
       }

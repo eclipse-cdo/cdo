@@ -129,18 +129,26 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
     return topology.createResourceManager(resourceSet);
   }
 
-  protected CDOResource createResource(String path)
+  protected CDOResource createResource(String path, ResourceManager resourceManager)
   {
-    ResourceManager resourceManager = createResourceManager();
     URI uri = CDOResourceFactoryImpl.formatURI(path);
     return (CDOResource) resourceManager.createResource(uri);
   }
 
-  protected CDOResource getResource(String path)
+  protected CDOResource createResource(String path)
   {
-    ResourceManager resourceManager = createResourceManager();
+    return createResource(path, createResourceManager());
+  }
+
+  protected CDOResource getResource(String path, ResourceManager resourceManager)
+  {
     URI uri = CDOResourceFactoryImpl.formatURI(path);
     return (CDOResource) resourceManager.getResource(uri, true);
+  }
+
+  protected CDOResource getResource(String path)
+  {
+    return getResource(path, createResourceManager());
   }
 
   protected EObject loadRoot(String path) throws IOException

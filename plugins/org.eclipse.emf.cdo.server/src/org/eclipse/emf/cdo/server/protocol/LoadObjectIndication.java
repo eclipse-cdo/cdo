@@ -30,6 +30,11 @@ public class LoadObjectIndication extends AbstractIndicationWithResponse
   public void indicate()
   {
     oid = receiveLong();
+    if (isDebugEnabled())
+    {
+      Mapper mapper = ((ServerCDOProtocol) getProtocol()).getMapper();
+      debug("Loading object " + mapper.getOidEncoder().toString(oid));
+    }
   }
 
   public void respond()

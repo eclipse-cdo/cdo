@@ -33,6 +33,10 @@ public class LoadResourceIndication extends AbstractIndicationWithResponse
   public void indicate()
   {
     rid = receiveInt();
+    if (isDebugEnabled())
+    {
+      debug("Loading rid " + rid);
+    }
   }
 
   public void respond()

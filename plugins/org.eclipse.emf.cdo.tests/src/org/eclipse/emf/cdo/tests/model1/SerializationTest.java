@@ -11,9 +11,6 @@
 package org.eclipse.emf.cdo.tests.model1;
 
 
-import org.eclipse.emf.cdo.client.CDOPersistable;
-import org.eclipse.emf.cdo.client.CDOResource;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -28,17 +25,13 @@ import org.eclipse.net4j.util.IOHelper;
 import testmodel1.TreeNode;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 
@@ -66,7 +59,7 @@ public class SerializationTest extends AbstractModel1Test
         saveRoot(root, RESOURCE);
 
         TreeNode loaded = (TreeNode) loadRoot(RESOURCE);
-        preLoadResource((CDOResource) loaded.eResource());
+        loaded.cdoGetResource().preLoad();
         EObject copied = EcoreUtil.copy(loaded);
 
         ResourceSet resourceSet = createXMIResourceSet();
@@ -123,7 +116,7 @@ public class SerializationTest extends AbstractModel1Test
         saveRoot(root, RESOURCE);
 
         TreeNode loaded = (TreeNode) loadRoot(RESOURCE);
-        preLoadResource((CDOResource) loaded.eResource());
+        loaded.cdoGetResource().preLoad();
         EObject copied = EcoreUtil.copy(loaded);
 
         ResourceSet resourceSet = createXMIResourceSet();
@@ -209,39 +202,6 @@ public class SerializationTest extends AbstractModel1Test
     {
       IOHelper.close(is);
       IOHelper.close(os);
-    }
-  }
-
-  protected void preLoadResource(CDOResource cdoResource)
-  {
-    for (Iterator it = EcoreUtil.getAllContents(cdoResource, true); it.hasNext();)
-    {
-      CDOPersistable persistable = (CDOPersistable) it.next();
-      persistable.cdoLoad();
-    }
-  }
-
-  @Deprecated
-  protected void assertFileContent(String content, File file) throws IOException
-  {
-    String[] lines = content.split("\n");
-    FileInputStream stream = null;
-
-    try
-    {
-      stream = new FileInputStream(file);
-      BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-
-      for (int i = 0; i < lines.length; i++)
-      {
-        String expectedLine = lines[i];
-        String fileLine = reader.readLine();
-        assertEquals(expectedLine, fileLine);
-      }
-    }
-    finally
-    {
-      IOHelper.close(stream);
     }
   }
 }

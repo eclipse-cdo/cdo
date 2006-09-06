@@ -600,31 +600,8 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     if (!changedObjectIds.isEmpty())
     {
       Channel me = getChannel();
-      int myType = me.getConnector().getType();
-      Protocol cdo = me.getProtocol();
-
-      Channel[] channels = cdo.getChannels();
-      for (int i = 0; i < channels.length; i++)
-      {
-        Channel channel = channels[i];
-        if (channel != me)
-        {
-          int type = channel.getConnector().getType();
-          if (type == myType) // Important to exclude embedded peers (clients)
-          {
-            InvalidateObjectRequest signal = new InvalidateObjectRequest(changedObjectIds);
-
-            try
-            {
-              channel.transmit(signal);
-            }
-            catch (Exception ex)
-            {
-              error("Error while requesting signal " + signal, ex);
-            }
-          }
-        }
-      }
+      ServerCDOProtocol cdo = (ServerCDOProtocol) me.getProtocol();
+      cdo.fireInvalidationNotification(me, changedObjectIds);
     }
   }
 
@@ -633,29 +610,9 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     if (!newResources.isEmpty())
     {
       Channel me = getChannel();
-      int myType = me.getConnector().getType();
       ServerCDOProtocol cdo = (ServerCDOProtocol) me.getProtocol();
       ServerCDOResProtocol cdores = cdo.getServerCDOResProtocol();
-
-      Channel[] channels = cdores.getChannels();
-      for (int i = 0; i < channels.length; i++)
-      {
-        Channel channel = channels[i];
-        int type = channel.getConnector().getType();
-        if (type == myType) // Important to exclude embedded peers (clients)
-        {
-          ResourcesChangedRequest signal = new ResourcesChangedRequest(newResources);
-
-          try
-          {
-            channel.transmit(signal);
-          }
-          catch (Exception ex)
-          {
-            error("Error while requesting signal " + signal, ex);
-          }
-        }
-      }
+      cdores.fireResourcesChangedNotification(newResources);
     }
   }
 

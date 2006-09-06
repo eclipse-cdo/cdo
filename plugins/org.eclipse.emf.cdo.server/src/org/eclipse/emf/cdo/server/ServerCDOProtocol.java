@@ -11,9 +11,13 @@
 package org.eclipse.emf.cdo.server;
 
 
+import org.eclipse.net4j.core.Channel;
+
 import org.eclipse.emf.cdo.core.CDOProtocol;
 
 import org.springframework.transaction.support.TransactionTemplate;
+
+import java.util.Collection;
 
 
 public interface ServerCDOProtocol extends CDOProtocol
@@ -23,4 +27,6 @@ public interface ServerCDOProtocol extends CDOProtocol
   public TransactionTemplate getTransactionTemplate();
 
   public ServerCDOResProtocol getServerCDOResProtocol();
+
+  public void fireInvalidationNotification(Channel initiator, Collection<Long> changedObjectIds);
 }

@@ -15,15 +15,16 @@ import org.eclipse.net4j.core.impl.AbstractRequest;
 
 import org.eclipse.emf.cdo.core.CDOProtocol;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 
 public class InvalidateObjectRequest extends AbstractRequest
 {
-  private List changedObjectIds;
+  private Collection<Long> changedObjectIds;
 
-  public InvalidateObjectRequest(List changedObjectIds)
+  public InvalidateObjectRequest(Collection<Long> changedObjectIds)
   {
     this.changedObjectIds = changedObjectIds;
   }
@@ -36,11 +37,9 @@ public class InvalidateObjectRequest extends AbstractRequest
   public void request()
   {
     transmitInt(changedObjectIds.size());
-
-    for (Iterator iter = changedObjectIds.iterator(); iter.hasNext();)
+    for (Long oid : changedObjectIds)
     {
-      Long id = (Long) iter.next();
-      transmitLong(id.longValue());
+      transmitLong(oid);
     }
   }
 }

@@ -142,6 +142,17 @@ public interface SQLConstants
       + "." + REFERENCE_CONTENT_COLUMN + "=FALSE AND " + REFERENCE_TABLE + "."
       + REFERENCE_OID_COLUMN + "=" + OBJECT_TABLE + "." + OBJECT_OID_COLUMN;
 
+  public static final String SELECT_ALL_OBJECTS_OF_RESOURCE = "SELECT " + OBJECT_OID_COLUMN + ", "
+      + OBJECT_CID_COLUMN + " FROM " + OBJECT_TABLE + " WHERE " + OBJECT_OID_COLUMN
+      + " BETWEEN ? AND ?";
+
+  public static final String SELECT_ALL_STALE_REFERENCES = "SELECT " + REFERENCE_TABLE + "."
+      + REFERENCE_OID_COLUMN + ", " + REFERENCE_TABLE + "." + REFERENCE_FEATUREID_COLUMN + ", "
+      + REFERENCE_TABLE + "." + REFERENCE_ORDINAL_COLUMN + " FROM " + REFERENCE_TABLE
+      + " LEFT JOIN " + OBJECT_TABLE + " ON " + REFERENCE_TABLE + "." + REFERENCE_TARGET_COLUMN
+      + "=" + OBJECT_TABLE + "." + OBJECT_OID_COLUMN + " WHERE " + OBJECT_TABLE + "."
+      + OBJECT_OID_COLUMN + " IS NULL";
+
   public static final String SELECT_ALL_RESOURCES = "SELECT " + RESOURCE_RID_COLUMN + ", "
       + RESOURCE_PATH_COLUMN + " FROM " + RESOURCE_TABLE;
 
@@ -156,6 +167,9 @@ public interface SQLConstants
       + REFERENCE_FEATUREID_COLUMN + "=?";
 
   public static final String INSERT_RESOURCE = "INSERT INTO " + RESOURCE_TABLE + " VALUES (?, ?)";
+
+  public static final String DELETE_RESOURCE = "DELETE FROM " + RESOURCE_TABLE + " WHERE "
+      + RESOURCE_RID_COLUMN + "=?";
 
   public static final String INSERT_REFERENCE = "INSERT INTO " + REFERENCE_TABLE
       + " VALUES (?, ?, ?, ?, ?)";

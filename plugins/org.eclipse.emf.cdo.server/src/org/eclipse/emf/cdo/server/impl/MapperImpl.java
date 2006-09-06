@@ -42,9 +42,11 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -570,13 +572,9 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     jdbcTemplate.update(REMOVE_REFERENCES, args);
   }
 
-  public void removeObject(long oid)
+  public void removeObject(long oid, int cid)
   {
-    removeReferences(oid); // TODO optimize for objects with no refs
-
-    int cid = selectCIDOfObject(oid);
     ClassInfo classInfo = packageManager.getClassInfo(cid);
-
     while (classInfo != null)
     {
       removeUserSegment(oid, classInfo.getTableName());
@@ -584,6 +582,13 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     }
 
     removeSegment(oid);
+    removeReferences(oid); // TODO optimize for objects with no refs
+  }
+
+  public void removeObject(long oid)
+  {
+    int cid = selectCIDOfObject(oid);
+    removeObject(oid, cid);
   }
 
   protected int selectCIDOfObject(long oid)
@@ -868,6 +873,66 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     });
 
     channel.transmitInt(CDOResProtocol.NO_MORE_RESOURCES);
+  }
+
+  public void deleteResource(int rid)
+  {
+    if (isDebugEnabled())
+    {
+      debug("Deleting resource: rid=" + rid);
+    }
+
+    sql(DELETE_RESOURCE, new Object[] { rid});
+
+    Object[] args = ridBounds(rid);
+    if (isDebugEnabled())
+      debug(StringHelper.replaceWildcards(SELECT_ALL_OBJECTS_OF_RESOURCE, "?", args));
+
+    jdbcTemplate.query(SELECT_ALL_OBJECTS_OF_RESOURCE, args, new RowCallbackHandler()
+    {
+      public void processRow(ResultSet resultSet) throws SQLException
+      {
+        long oid = resultSet.getLong(1);
+        int cid = resultSet.getInt(2);
+
+        if (isDebugEnabled())
+        {
+          debug("Deleting object: oid=" + oidEncoder.toString(oid) + ", cid=" + cid);
+        }
+
+        removeObject(oid, cid);
+      }
+    });
+  }
+
+  public Set<Long> removeStaleReferences()
+  {
+    if (isDebugEnabled())
+    {
+      debug("Removing stale references");
+    }
+
+    final Set<Long> modifiedOIDs = new HashSet<Long>();
+    jdbcTemplate.query(SELECT_ALL_STALE_REFERENCES, new RowCallbackHandler()
+    {
+      public void processRow(ResultSet resultSet) throws SQLException
+      {
+        long oid = resultSet.getLong(1);
+        int feature = resultSet.getInt(2);
+        int ordinal = resultSet.getInt(3);
+
+        if (isDebugEnabled())
+        {
+          debug("Reference: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
+              + ", ordinal=" + ordinal);
+        }
+
+        removeReference(oid, feature, ordinal);
+        modifiedOIDs.add(oid);
+      }
+    });
+
+    return modifiedOIDs;
   }
 
   public void transmitExtent(final Channel channel, final int context, final boolean exactMatch,

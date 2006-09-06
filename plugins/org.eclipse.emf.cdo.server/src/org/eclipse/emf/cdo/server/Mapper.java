@@ -14,7 +14,11 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.net4j.core.Channel;
 import org.eclipse.net4j.spring.Service;
 
+import org.eclipse.emf.cdo.core.OID;
 import org.eclipse.emf.cdo.core.OIDEncoder;
+import org.eclipse.emf.cdo.core.RID;
+
+import java.util.Set;
 
 
 public interface Mapper extends Service
@@ -78,6 +82,20 @@ public interface Mapper extends Service
   public void transmitExtent(Channel channel, int cid, boolean exactMatch, int rid);
 
   public void transmitXRefs(Channel channel, long oid, int rid);
+
+  /**
+   * Deletes the given resource within a transaction.<p>
+   *
+   * @param rid The {@link RID} of the resource to be deleted.<p>
+   */
+  public void deleteResource(int rid);
+
+  /**
+   * Removes all references with missing target objects.<p>
+   * 
+   * @return The {@link Set} of modified {@link OID}s.<p>
+   */
+  public Set<Long> removeStaleReferences();
 
   public void createAttributeTables(PackageInfo packageInfo);
 

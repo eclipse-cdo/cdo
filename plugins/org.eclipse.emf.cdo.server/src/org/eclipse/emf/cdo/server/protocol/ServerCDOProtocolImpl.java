@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
+import org.eclipse.net4j.core.Channel;
 import org.eclipse.net4j.core.Indication;
 import org.eclipse.net4j.spring.ValidationException;
 import org.eclipse.net4j.util.ImplementationError;
@@ -20,11 +21,15 @@ import org.eclipse.emf.cdo.core.protocol.AbstractCDOProtocol;
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.ServerCDOProtocol;
 import org.eclipse.emf.cdo.server.ServerCDOResProtocol;
+import org.eclipse.emf.cdo.server.ServerCDOResProtocol.InvalidationListener;
 
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.Collection;
 
-public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements ServerCDOProtocol
+
+public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements ServerCDOProtocol,
+    InvalidationListener
 {
   protected Mapper mapper;
 
@@ -68,10 +73,10 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
 
       case QUERY_EXTENT:
         return new QueryExtentIndication();
-        
+
       case QUERY_XREFS:
         return new QueryXRefsIndication();
-        
+
       default:
         throw new ImplementationError("Invalid " + CDOProtocol.PROTOCOL_NAME + " signalId: "
             + signalId);
@@ -108,10 +113,57 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
     doSet("serverCDOResProtocol", serverCDOResProtocol);
   }
 
+  public void notifyInvalidation(ServerCDOResProtocol protocol, Collection<Long> modifiedOIDs)
+  {
+    fireInvalidationNotification(null, modifiedOIDs);
+  }
+
+  public void fireInvalidationNotification(Channel initiator, Collection<Long> changedObjectIds)
+  {
+    for (Channel channel : getChannels())
+    {
+      if (initiator == null || channel != initiator
+          && channel.getConnector().getType() == initiator.getConnector().getType())
+      {
+        try
+        {
+          InvalidateObjectRequest signal = new InvalidateObjectRequest(changedObjectIds);
+          channel.transmit(signal);
+        }
+        catch (Exception ex)
+        {
+          error("Error while transmitting invalidation notifications " + changedObjectIds, ex);
+        }
+      }
+    }
+  }
+
+  @Override
   protected void validate() throws ValidationException
   {
     super.validate();
     assertNotNull("mapper");
     assertNotNull("transactionTemplate");
+  }
+
+  @Override
+  protected void activate() throws Exception
+  {
+    super.activate();
+    if (serverCDOResProtocol != null)
+    {
+      serverCDOResProtocol.addInvalidationListener(this);
+    }
+  }
+
+  @Override
+  protected void deactivate() throws Exception
+  {
+    if (serverCDOResProtocol != null)
+    {
+      serverCDOResProtocol.removeInvalidationListener(this);
+    }
+
+    super.deactivate();
   }
 }

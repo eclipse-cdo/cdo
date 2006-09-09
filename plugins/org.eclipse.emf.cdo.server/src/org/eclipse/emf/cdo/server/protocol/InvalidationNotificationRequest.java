@@ -20,18 +20,18 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class InvalidateObjectRequest extends AbstractRequest
+public class InvalidationNotificationRequest extends AbstractRequest
 {
   private Collection<Long> changedObjectIds;
 
-  public InvalidateObjectRequest(Collection<Long> changedObjectIds)
+  public InvalidationNotificationRequest(Collection<Long> changedObjectIds)
   {
     this.changedObjectIds = changedObjectIds;
   }
 
   public short getSignalId()
   {
-    return CDOProtocol.INVALIDATE_OBJECT;
+    return CDOProtocol.INVALIDATION_NOTIFICATION;
   }
 
   public void request()

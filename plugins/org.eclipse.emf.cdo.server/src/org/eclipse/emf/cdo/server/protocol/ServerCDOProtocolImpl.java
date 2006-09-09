@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.core.protocol.AbstractCDOProtocol;
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.ServerCDOProtocol;
 import org.eclipse.emf.cdo.server.ServerCDOResProtocol;
-import org.eclipse.emf.cdo.server.ServerCDOResProtocol.InvalidationListener;
+import org.eclipse.emf.cdo.server.ServerCDOResProtocol.Listener;
 
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -29,7 +29,7 @@ import java.util.Collection;
 
 
 public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements ServerCDOProtocol,
-    InvalidationListener
+    Listener
 {
   protected Mapper mapper;
 
@@ -113,9 +113,30 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
     doSet("serverCDOResProtocol", serverCDOResProtocol);
   }
 
+  public void notifyRemoval(ServerCDOResProtocol protocol, Collection<Integer> rids)
+  {
+    fireRemovalNotification(rids);
+  }
+
   public void notifyInvalidation(ServerCDOResProtocol protocol, Collection<Long> modifiedOIDs)
   {
     fireInvalidationNotification(null, modifiedOIDs);
+  }
+
+  public void fireRemovalNotification(Collection<Integer> rids)
+  {
+    for (Channel channel : getChannels())
+    {
+      try
+      {
+        RemovalNotificationRequest signal = new RemovalNotificationRequest(rids);
+        channel.transmit(signal);
+      }
+      catch (Exception ex)
+      {
+        error("Error while transmitting removal notifications for rids " + rids, ex);
+      }
+    }
   }
 
   public void fireInvalidationNotification(Channel initiator, Collection<Long> changedObjectIds)
@@ -127,12 +148,13 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
       {
         try
         {
-          InvalidateObjectRequest signal = new InvalidateObjectRequest(changedObjectIds);
+          InvalidationNotificationRequest signal = new InvalidationNotificationRequest(
+              changedObjectIds);
           channel.transmit(signal);
         }
         catch (Exception ex)
         {
-          error("Error while transmitting invalidation notifications " + changedObjectIds, ex);
+          error("Error while transmitting invalidation notifications for oids " + changedObjectIds, ex);
         }
       }
     }
@@ -152,7 +174,7 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
     super.activate();
     if (serverCDOResProtocol != null)
     {
-      serverCDOResProtocol.addInvalidationListener(this);
+      serverCDOResProtocol.addListener(this);
     }
   }
 
@@ -161,7 +183,7 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
   {
     if (serverCDOResProtocol != null)
     {
-      serverCDOResProtocol.removeInvalidationListener(this);
+      serverCDOResProtocol.removeListener(this);
     }
 
     super.deactivate();

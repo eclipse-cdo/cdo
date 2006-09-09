@@ -13,13 +13,13 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.core.CDOResProtocol;
 import org.eclipse.emf.cdo.core.OID;
+import org.eclipse.emf.cdo.core.RID;
 import org.eclipse.emf.cdo.core.protocol.ResourceChangeInfo;
 
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 
 public interface ServerCDOResProtocol extends CDOResProtocol
@@ -32,38 +32,53 @@ public interface ServerCDOResProtocol extends CDOResProtocol
 
   public void fireInvalidationNotification(Collection<Long> modifiedOIDs);
 
+  public void fireRemovalNotification(Collection<Integer> rids);
+
   /**
-   * Adds a {@link InvalidationListener} to the list of listeners to be notified about 
-   * invalidated obejcts in the scope of this {@link ServerCDOResProtocol}.<p>
+   * Adds a {@link Listener} to the list of listeners to be notified about 
+   * removed resources and invalidated obejcts in the scope of this 
+   * {@link ServerCDOResProtocol}.<p>
    *
-   * @param listener The {@link InvalidationListener} to be added.<p>
+   * @param listener The {@link Listener} to be added.<p>
    */
-  public void addInvalidationListener(InvalidationListener listener);
+  public void addListener(Listener listener);
 
   /**
-   * Removes a {@link InvalidationListener} from the list of listeners to be notified about 
-   * invalidated obejcts in the scope of this {@link ServerCDOResProtocol}.<p>
+   * Removes a {@link Listener} from the list of listeners to be notified about
+   * removed resources and invalidated obejcts in the scope of this 
+   * {@link ServerCDOResProtocol}.<p>
    *
-   * @param listener The {@link InvalidationListener} to be removed.<p>
+   * @param listener The {@link Listener} to be removed.<p>
    */
-  public void removeInvalidationListener(InvalidationListener listener);
+  public void removeListener(Listener listener);
 
 
   /**
-   * Can be registered with a {@link ServerCDOResProtocol} to be subsequently notified about
-   * invalidated objects.<p>
+   * Can be registered with a {@link ServerCDOResProtocol} to be subsequently 
+   * notified about removed resources and invalidated objects.<p>
    *
    * @author Eike Stepper
    */
-  public interface InvalidationListener
+  public interface Listener
   {
     /**
-     * Called by the {@link ServerCDOResProtocol} this {@link InvalidationListener} is 
+     * Called by the {@link ServerCDOResProtocol} this {@link Listener} is 
+     * registered with to notify about removed resources.<p>
+     * 
+     * @param protocol The {@link ServerCDOResProtocol} this {@link Listener} is 
+     *        registered with.<p>
+     * @param rids A {@link Collection} of {@link RID}s which have been removed.<p>
+     */
+    public void notifyRemoval(ServerCDOResProtocol protocol, Collection<Integer> rids);
+
+    /**
+     * Called by the {@link ServerCDOResProtocol} this {@link Listener} is 
      * registered with to notify about invalidated objects.<p>
      * 
-     * @param protocol The {@link ServerCDOResProtocol} this {@link InvalidationListener} is 
-     * registered with.<p>
-     * @param modifiedOIDs A {@link Set} of {@link OID}s which have been invalidated.<p>
+     * @param protocol The {@link ServerCDOResProtocol} this {@link Listener} is 
+     *        registered with.<p>
+     * @param modifiedOIDs A {@link Collection} of {@link OID}s which have been 
+     *        invalidated.<p>
      */
     public void notifyInvalidation(ServerCDOResProtocol protocol, Collection<Long> modifiedOIDs);
   }

@@ -35,7 +35,7 @@ public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
 
   protected TransactionTemplate transactionTemplate;
 
-  protected transient List<InvalidationListener> listeners = new ArrayList<InvalidationListener>();
+  protected transient List<Listener> listeners = new ArrayList<Listener>();
 
   public ServerCDOResProtocolImpl()
   {
@@ -99,19 +99,28 @@ public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
 
   public void fireInvalidationNotification(Collection<Long> modifiedOIDs)
   {
-    InvalidationListener[] array = listeners.toArray(new InvalidationListener[listeners.size()]);
-    for (InvalidationListener listener : array)
+    Listener[] array = listeners.toArray(new Listener[listeners.size()]);
+    for (Listener listener : array)
     {
       listener.notifyInvalidation(this, modifiedOIDs);
     }
   }
 
-  public void addInvalidationListener(InvalidationListener listener)
+  public void fireRemovalNotification(Collection<Integer> rids)
+  {
+    Listener[] array = listeners.toArray(new Listener[listeners.size()]);
+    for (Listener listener : array)
+    {
+      listener.notifyRemoval(this, rids);
+    }
+  }
+  
+  public void addListener(Listener listener)
   {
     listeners.add(listener);
   }
 
-  public void removeInvalidationListener(InvalidationListener listener)
+  public void removeListener(Listener listener)
   {
     listeners.remove(listener);
   }

@@ -67,7 +67,8 @@ public class DeleteResourcesIndication extends AbstractIndicationWithResponse im
     {
       ok = true;
       transmitInvalidations(modifiedOIDs);
-      transmitRescourceChanges(rids);
+      transmitResourceChanges(rids);
+      transmitRemovals(rids);
     }
     else
     {
@@ -124,7 +125,17 @@ public class DeleteResourcesIndication extends AbstractIndicationWithResponse im
     }
   }
 
-  private void transmitRescourceChanges(Collection<Integer> rids)
+  private void transmitRemovals(Collection<Integer> rids)
+  {
+    if (!rids.isEmpty())
+    {
+      Channel me = getChannel();
+      ServerCDOResProtocol cdores = (ServerCDOResProtocol) me.getProtocol();
+      cdores.fireRemovalNotification(rids);
+    }
+  }
+  
+  private void transmitResourceChanges(Collection<Integer> rids)
   {
     if (!rids.isEmpty())
     {

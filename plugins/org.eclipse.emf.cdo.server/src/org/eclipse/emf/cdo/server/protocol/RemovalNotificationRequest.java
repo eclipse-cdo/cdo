@@ -8,27 +8,36 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server;
+package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.Channel;
+import org.eclipse.net4j.core.impl.AbstractRequest;
 
 import org.eclipse.emf.cdo.core.CDOProtocol;
-
-import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.Collection;
 
 
-public interface ServerCDOProtocol extends CDOProtocol
+public class RemovalNotificationRequest extends AbstractRequest
 {
-  public Mapper getMapper();
+  private Collection<Integer> rids;
 
-  public TransactionTemplate getTransactionTemplate();
+  public RemovalNotificationRequest(Collection<Integer> rids)
+  {
+    this.rids = rids;
+  }
 
-  public ServerCDOResProtocol getServerCDOResProtocol();
+  public short getSignalId()
+  {
+    return CDOProtocol.REMOVAL_NOTIFICATION;
+  }
 
-  public void fireRemovalNotification(Collection<Integer> rids);
-
-  public void fireInvalidationNotification(Channel initiator, Collection<Long> changedObjectIds);
+  public void request()
+  {
+    transmitInt(rids.size());
+    for (Integer rid : rids)
+    {
+      transmitInt(rid);
+    }
+  }
 }

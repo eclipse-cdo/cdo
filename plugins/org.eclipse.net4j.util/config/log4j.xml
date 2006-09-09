@@ -51,7 +51,7 @@
 	</category>
 
 	<root>
-		<priority value="info"/>
+		<priority value="debug"/>
 		<!--
 		<appender-ref ref="LOGFACTOR" />
 		<appender-ref ref="FILE"/>

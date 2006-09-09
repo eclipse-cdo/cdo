@@ -15,6 +15,8 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -31,8 +33,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 
-public class ResourcesHelper
+public final class ResourcesHelper
 {
+  public static final IWorkspace WS = ResourcesPlugin.getWorkspace();
+
+  public static final IWorkspaceRoot ROOT = WS.getRoot();
+
+  private ResourcesHelper()
+  {
+  }
+
   public static void writeFile(IFile file, String[] content, IProgressMonitor monitor)
       throws CoreException
   {
@@ -133,7 +143,7 @@ public class ResourcesHelper
 
   public static IProject ensureProject(String name) throws CoreException
   {
-    IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
+    IProject project = ROOT.getProject(name);
 
     if (!project.exists())
     {
@@ -152,7 +162,7 @@ public class ResourcesHelper
   {
     if (container == null)
     {
-      container = ResourcesPlugin.getWorkspace().getRoot();
+      container = ROOT;
     }
 
     IFolder folder = container.getFolder(new Path(path));

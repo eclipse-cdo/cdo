@@ -16,9 +16,10 @@ import org.eclipse.emf.cdo.client.ResourceManager;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
+import testmodel1.TreeNode;
+
 import java.util.List;
 
-import testmodel1.TreeNode;
 import junit.framework.ComparisonFailure;
 
 

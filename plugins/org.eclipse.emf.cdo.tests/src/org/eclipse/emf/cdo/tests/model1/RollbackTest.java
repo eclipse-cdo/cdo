@@ -31,7 +31,7 @@ public class RollbackTest extends AbstractModel1Test
     final String ROOT = "root";
     final String NEW_ROOT1 = "new root 1";
     final String NEW_ROOT2 = "new root 2";
-    final long TIME_LIMIT = 1000;
+    final long TIME_LIMIT = 10000;
 
     // Client1 creates resource
     TreeNode root = createNode(ROOT);

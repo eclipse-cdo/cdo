@@ -78,4 +78,12 @@ public class ResourceManagerImpl extends ServiceImpl implements ResourceManager
 
     return resourceInfo;
   }
+
+  @Override
+  protected void deactivate() throws Exception
+  {
+    pathToResourceMap = null;
+    ridToResourceMap = null;
+    super.deactivate();
+  }
 }

@@ -59,17 +59,70 @@ public class ClientServerTopology extends AbstractTopology
   {
     super.stop();
 
-    //Stop client
-    net4jClient.stop();
+    try
+    {
+      net4jClient.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      net4jClient = null;
+    }
 
-    //Stop server
-    acceptor.stop();
-    acceptor = null;
+    try
+    {
+      acceptor.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      acceptor = null;
+    }
 
-    cdoServer.stop();
-    net4jServer.stop();
+    try
+    {
+      cdoServer.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      cdoServer = null;
+    }
 
-    net4j.stop();
+    try
+    {
+      net4jServer.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      net4jServer = null;
+    }
+
+    try
+    {
+      net4j.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      net4j = null;
+    }
   }
 
   public DataSource getDataSource()

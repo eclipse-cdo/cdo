@@ -154,7 +154,8 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
         }
         catch (Exception ex)
         {
-          error("Error while transmitting invalidation notifications for oids " + changedObjectIds, ex);
+          error("Error while transmitting invalidation notifications for oids " + changedObjectIds,
+              ex);
         }
       }
     }
@@ -184,8 +185,11 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
     if (serverCDOResProtocol != null)
     {
       serverCDOResProtocol.removeListener(this);
+      serverCDOResProtocol = null;
     }
 
+    mapper = null;
+    transactionTemplate = null;
     super.deactivate();
   }
 }

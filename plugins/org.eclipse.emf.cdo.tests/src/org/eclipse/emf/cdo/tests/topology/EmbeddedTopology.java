@@ -45,9 +45,45 @@ public class EmbeddedTopology extends AbstractTopology
   public void stop() throws Exception
   {
     super.stop();
-    cdoServer.stop();
-    net4jEmbedded.stop();
-    net4j.stop();
+
+    try
+    {
+      cdoServer.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      cdoServer = null;
+    }
+
+    try
+    {
+      net4jEmbedded.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      net4jEmbedded = null;
+    }
+
+    try
+    {
+      net4j.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      net4j = null;
+    }
   }
 
   public DataSource getDataSource()

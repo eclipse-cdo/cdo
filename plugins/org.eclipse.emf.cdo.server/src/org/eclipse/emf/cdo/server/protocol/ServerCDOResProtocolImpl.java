@@ -55,7 +55,7 @@ public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
 
       case DELETE_RESOURCES:
         return new DeleteResourcesIndication();
-        
+
       default:
         throw new ImplementationError("Invalid " + PROTOCOL_NAME + " signalId: " + signalId);
     }
@@ -114,7 +114,7 @@ public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
       listener.notifyRemoval(this, rids);
     }
   }
-  
+
   public void addListener(Listener listener)
   {
     listeners.add(listener);
@@ -130,5 +130,14 @@ public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
     super.validate();
     assertNotNull("mapper");
     assertNotNull("transactionTemplate");
+  }
+
+  @Override
+  protected void deactivate() throws Exception
+  {
+    listeners = null;
+    mapper = null;
+    transactionTemplate = null;
+    super.deactivate();
   }
 }

@@ -35,6 +35,12 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
 
   private ITopology topology;
 
+  private long startMemory;
+
+  private String label;
+
+  private static int run;
+
   public String getMode()
   {
     return mode;
@@ -58,9 +64,13 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
   @Override
   protected void setUp() throws Exception
   {
+    System.gc();
+    startMemory = getUsedMemory();
+
     if (topology == null) topology = createTopology();
+    label = getName() + " [" + topology.getName() + "]";
     System.out.println("=========================================================================");
-    System.out.println("TC_START " + getName() + " [" + topology.getName() + "]");
+    System.out.println("TC_START " + label);
     System.out.println("=========================================================================");
 
     super.setUp();
@@ -74,15 +84,32 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
     wipeDatabase(jdbc);
 
     topology.stop();
+    topology = null;
     super.tearDown();
 
+    System.gc();
+    long endMemory = getUsedMemory();
+
+    System.out.println("Memory-Delta " + getRun() + "\t " + (endMemory - startMemory));
     System.out.println("=========================================================================");
-    System.out.println("TC_END " + getName() + " [" + topology.getName() + "]");
+    System.out.println("TC_END " + label);
     System.out.println("=========================================================================");
     System.out.println();
     System.out.println();
     System.out.println();
     System.out.println();
+    label = null;
+    mode = null;
+  }
+
+  private static long getUsedMemory()
+  {
+    return Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+  }
+
+  private static String getRun()
+  {
+    return String.format("%4d", new Object[] { ++run});
   }
 
   protected void wipeDatabase(JdbcTemplate jdbc)

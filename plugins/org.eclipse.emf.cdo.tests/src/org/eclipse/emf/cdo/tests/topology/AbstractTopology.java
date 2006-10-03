@@ -57,8 +57,20 @@ public abstract class AbstractTopology implements ITopology
 
   public void stop() throws Exception
   {
-    cdoClient.stop();
-    cdoClient = null;
+    try
+    {
+      cdoClient.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      cdoClient = null;
+    }
+
+    bundleLocation = null;
   }
 
   public ResourceManager createResourceManager(ResourceSet resourceSet)

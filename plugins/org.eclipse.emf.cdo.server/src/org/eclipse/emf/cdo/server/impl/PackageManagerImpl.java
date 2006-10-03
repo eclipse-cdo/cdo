@@ -113,4 +113,15 @@ public class PackageManagerImpl extends ServiceImpl implements PackageManager
       listener.notifyAddedPackage();
     }
   }
+
+  @Override
+  protected void deactivate() throws Exception
+  {
+    cidToClassInfoMap = null;
+    listeners = null;
+    nameToClassInfoMap = null;
+    packages = null;
+    subClassInfoMap = null;
+    super.deactivate();
+  }
 }

@@ -239,6 +239,20 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     nextRID = selectMaxRID() + 1;
   }
 
+  @Override
+  protected void deactivate() throws Exception
+  {
+    columnConverter = null;
+    dataSource = null;
+    jdbcTemplate = null;
+    oidEncoder = null;
+    packageManager = null;
+    resourceManager = null;
+    sqlDialectName = null;
+    cachedSqlDialect = null;
+    super.deactivate();
+  }
+
   protected void initTables()
   {
     Database database = DBGenFactory.eINSTANCE.createDatabase();

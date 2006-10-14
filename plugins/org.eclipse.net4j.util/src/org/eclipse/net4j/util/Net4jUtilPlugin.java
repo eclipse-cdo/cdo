@@ -57,10 +57,13 @@ public class Net4jUtilPlugin extends AbstractPlugin
   {
     try
     {
-      URL pluginURL = getBundle().getEntry("/config/log4j.xml");
-      URL absoluteURL = FileLocator.toFileURL(pluginURL);
+      URL pluginURL = getBundle().getEntry("/config/log4j-user.xml");
+      if (pluginURL == null)
+      {
+        pluginURL = getBundle().getEntry("/config/log4j.xml");
+      }
 
-      DOMConfigurator.configure(absoluteURL);
+      DOMConfigurator.configure(FileLocator.toFileURL(pluginURL));
     }
     catch (Exception ex)
     {

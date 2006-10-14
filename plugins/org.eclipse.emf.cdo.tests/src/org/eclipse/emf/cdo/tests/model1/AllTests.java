@@ -28,7 +28,9 @@ public class AllTests
     suite.addTestSuite(XRefsTest.class);
     suite.addTestSuite(ExtentTest.class);
     suite.addTestSuite(OCLTest.class);
+    suite.addTestSuite(BidiReferencesTest.class);
     suite.addTestSuite(Bugzilla154389Test.class);
+    suite.addTestSuite(Bugzilla155899Test.class);
     return suite;
   }
 }

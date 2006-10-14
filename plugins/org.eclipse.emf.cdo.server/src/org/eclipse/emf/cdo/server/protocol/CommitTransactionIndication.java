@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.server.protocol;
 
 
 import org.eclipse.net4j.core.Channel;
-import org.eclipse.net4j.core.Protocol;
 import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
 import org.eclipse.net4j.util.ImplementationError;
 
@@ -95,7 +94,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     if (!optimisticControlException)
     {
       transmitInvalidations();
-      transmitRescourceChanges();
+      transmitResourceChanges();
     }
   }
 
@@ -199,7 +198,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
       int feature = receiveInt();
       int ordinal = receiveInt();
       long target = receiveLong();
-      boolean content = receiveBoolean();
+      boolean containment = receiveBoolean();
 
       if (oid < 0)
       {
@@ -211,7 +210,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
         target = resolveTempOID(target);
       }
 
-      getMapper().insertReference(oid, feature, ordinal, target, content);
+      getMapper().insertReference(oid, feature, ordinal, target, containment);
     }
   }
 
@@ -336,7 +335,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     long oid = receiveLong();
     int feature = receiveInt();
     long target = receiveLong();
-    boolean content = receiveBoolean();
+    boolean containment = receiveBoolean();
 
     if (target < 0)
     {
@@ -347,10 +346,10 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     {
       OIDEncoder oidEncoder = getMapper().getOidEncoder();
       debug("received reference set: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
-          + ", target=" + oidEncoder.toString(target) + ", content=" + content);
+          + ", target=" + oidEncoder.toString(target) + ", containment=" + containment);
     }
 
-    getMapper().insertReference(oid, feature, 0, target, content);
+    getMapper().insertReference(oid, feature, 0, target, containment);
   }
 
   /**
@@ -381,7 +380,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     int feature = receiveInt();
     int ordinal = receiveInt() + 1;
     long target = receiveLong();
-    boolean content = receiveBoolean();
+    boolean containment = receiveBoolean();
 
     if (target < 0)
     {
@@ -392,8 +391,8 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     {
       OIDEncoder oidEncoder = getMapper().getOidEncoder();
       debug("received reference add: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
-          + ", ordinal=" + ordinal + ", target=" + oidEncoder.toString(target) + ", content="
-          + content);
+          + ", ordinal=" + ordinal + ", target=" + oidEncoder.toString(target) + ", containment="
+          + containment);
     }
 
     if (ordinal == 0)
@@ -402,7 +401,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     }
 
     getMapper().moveReferencesRelative(oid, feature, ordinal, Integer.MAX_VALUE, 1);
-    getMapper().insertReference(oid, feature, ordinal, target, content);
+    getMapper().insertReference(oid, feature, ordinal, target, containment);
   }
 
   /**
@@ -605,7 +604,7 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     }
   }
 
-  private void transmitRescourceChanges()
+  private void transmitResourceChanges()
   {
     if (!newResources.isEmpty())
     {

@@ -80,7 +80,7 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
   @Override
   protected void tearDown() throws Exception
   {
-    JdbcTemplate jdbc = getJdbcTemplate();
+    JdbcTemplate jdbc = jdbc();
     wipeDatabase(jdbc);
 
     topology.stop();
@@ -140,7 +140,7 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
     return topology.getDataSource();
   }
 
-  protected JdbcTemplate getJdbcTemplate()
+  protected JdbcTemplate jdbc()
   {
     return new JdbcTemplate(getDataSource());
   }

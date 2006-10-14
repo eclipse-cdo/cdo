@@ -309,12 +309,12 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     referenceTable.addColumn(REFERENCE_FEATUREID_COLUMN, ColumnType.INTEGER_LITERAL);
     referenceTable.addColumn(REFERENCE_ORDINAL_COLUMN, ColumnType.BIGINT_LITERAL);
     referenceTable.addColumn(REFERENCE_TARGET_COLUMN, ColumnType.BIGINT_LITERAL, 0, "NOT NULL");
-    referenceTable.addColumn(REFERENCE_CONTENT_COLUMN, ColumnType.BOOLEAN_LITERAL);
+    referenceTable.addColumn(REFERENCE_CONTAINMENT_COLUMN, ColumnType.BOOLEAN_LITERAL);
     referenceTable.addSimpleIndex(REFERENCE_TARGET_COLUMN, IndexType.NON_UNIQUE_LITERAL);
 
     // TODO Check if this compound index generally makes preceding simple index superfluous
     referenceTable.addCompoundIndex(new String[] { REFERENCE_TARGET_COLUMN,
-        REFERENCE_CONTENT_COLUMN,}, IndexType.NON_UNIQUE_LITERAL);
+        REFERENCE_CONTAINMENT_COLUMN,}, IndexType.NON_UNIQUE_LITERAL);
 
     // This index can not be a real PK (UNIQUE), since during movement of allReferences
     // it temporarily holds duplicate entries!!!
@@ -547,9 +547,9 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     sql(INSERT_RESOURCE, new Object[] { rid, path});
   }
 
-  public void insertReference(long oid, int feature, int ordinal, long target, boolean content)
+  public void insertReference(long oid, int feature, int ordinal, long target, boolean containment)
   {
-    sql(INSERT_REFERENCE, new Object[] { oid, feature, ordinal, target, content});
+    sql(INSERT_REFERENCE, new Object[] { oid, feature, ordinal, target, containment});
   }
 
   public void removeReference(long oid, int feature, int ordinal)

@@ -26,6 +26,10 @@ import org.eclipse.net4j.util.stream.ChannelInputStream;
 import org.eclipse.net4j.util.stream.ChannelOutputStream;
 
 import org.eclipse.internal.net4j.transport.BufferUtil;
+import org.eclipse.internal.net4j.transport.tcp.AbstractTCPConnector;
+import org.eclipse.internal.net4j.transport.tcp.TCPAcceptorImpl;
+import org.eclipse.internal.net4j.transport.tcp.TCPSelectorImpl;
+import org.eclipse.internal.net4j.transport.tcp.TCPUtil;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;

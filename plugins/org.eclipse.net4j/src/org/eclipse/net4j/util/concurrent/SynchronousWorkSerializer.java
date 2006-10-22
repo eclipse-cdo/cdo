@@ -8,15 +8,29 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.message;
+package org.eclipse.net4j.util.concurrent;
 
 /**
- * TODO The {@link Serializer} class.
- * <p>
- * 
  * @author Eike Stepper
  */
-public interface Serializer
+public class SynchronousWorkSerializer implements WorkSerializer
 {
+  public SynchronousWorkSerializer()
+  {
+  }
 
+  public void addWork(Runnable work)
+  {
+    work.run();
+  }
+
+  public void dispose()
+  {
+  }
+
+  @Override
+  public String toString()
+  {
+    return "SynchronousWorkSerializer";
+  }
 }

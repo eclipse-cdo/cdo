@@ -8,32 +8,29 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.signal;
+package org.eclipse.net4j.tests.signal;
 
-import java.io.OutputStream;
+import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.util.stream.BufferInputStream;
+import org.eclipse.net4j.util.stream.BufferOutputStream;
 
 /**
  * @author Eike Stepper
  */
-public abstract class Request extends Signal
+public class Signal1Reactor extends SignalReactor
 {
-  protected Request(SignalProtocol protocol)
+  @Override
+  protected short getSignalID()
   {
-    setProtocol(protocol);
-    setCorrelationID(protocol.getNextCorrelationID());
-  }
-
-  public Object send() throws Exception
-  {
-    return getProtocol().sendRequest(this);
+    return TestSignalProtocol.SIGNAL1;
   }
 
   @Override
-  public String toString()
+  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    return "Request[" + getSignalID() + ", " + getProtocol() + ", correlation="
-        + getCorrelationID() + "]";
-  }
+    byte[] data = readByteArray();
 
-  protected abstract void requesting(OutputStream stream) throws Exception;
+    writeByteArray(data);
+    out.flush();
+  }
 }

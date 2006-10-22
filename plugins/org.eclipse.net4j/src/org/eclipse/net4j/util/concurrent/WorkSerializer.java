@@ -13,13 +13,9 @@ package org.eclipse.net4j.util.concurrent;
 /**
  * @author Eike Stepper
  */
-public class Asynchronizer
+public interface WorkSerializer
 {
-  public Asynchronizer()
-  {
-  }
+  public void addWork(Runnable work);
 
-  public void addWork(Runnable work)
-  {
-  }
+  public void dispose();
 }

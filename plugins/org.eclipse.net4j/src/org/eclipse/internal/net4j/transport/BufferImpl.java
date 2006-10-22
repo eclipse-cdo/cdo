@@ -182,16 +182,26 @@ public class BufferImpl implements Buffer
 
   public ByteBuffer startPutting(short channelID)
   {
-    if (state != State.INITIAL)
+    if (state == State.PUTTING)
+    {
+      if (channelID != this.channelID)
+      {
+        throw new IllegalArgumentException("channelID != this.channelID");
+      }
+    }
+    else if (state != State.INITIAL)
     {
       throw new IllegalStateException("state == " + state);
     }
+    else
+    {
+      state = State.PUTTING;
+      this.channelID = channelID;
 
-    state = State.PUTTING;
-    this.channelID = channelID;
+      byteBuffer.clear();
+      byteBuffer.position(BufferImpl.HEADER_SIZE);
+    }
 
-    byteBuffer.clear();
-    byteBuffer.position(BufferImpl.HEADER_SIZE);
     return byteBuffer;
   }
 

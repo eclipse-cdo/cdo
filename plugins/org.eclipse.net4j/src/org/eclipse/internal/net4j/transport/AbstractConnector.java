@@ -57,7 +57,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
   /**
    * TODO synchronize on channels?
    */
-  private List<ChannelImpl> channels = new ArrayList();
+  private List<ChannelImpl> channels = new ArrayList(0);
 
   private State state = State.DISCONNECTED;
 
@@ -336,14 +336,8 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
   {
     ChannelImpl channel = new ChannelImpl(receiveExecutor);
     Protocol protocol = createProtocol(protocolID, channel);
-    if (protocol == null)
-    {
-      System.out.println(toString() + ": Opening channel without protocol");
-    }
-    else
-    {
-      System.out.println(toString() + ": Opening channel with protocol " + protocolID);
-    }
+    System.out.println(toString() + ": Opening channel " + channelID
+        + (protocol == null ? " without protocol" : " with protocol " + protocolID));
 
     channel.setChannelID(channelID);
     channel.setConnector(this);
@@ -379,7 +373,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     {
       for (final ChannelImpl channel : channels)
       {
-        if (channel != NULL_CHANNEL)
+        if (channel != NULL_CHANNEL && channel.isActive())
         {
           Queue<Buffer> bufferQueue = channel.getSendQueue();
           result.add(bufferQueue);
@@ -403,7 +397,6 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
         }
       }
 
-      channels.add(NULL_CHANNEL);
       return (short)size;
     }
   }

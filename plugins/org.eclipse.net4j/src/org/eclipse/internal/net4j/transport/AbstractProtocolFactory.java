@@ -18,6 +18,10 @@ import org.eclipse.net4j.transport.Connector.Type;
  */
 public abstract class AbstractProtocolFactory implements ProtocolFactory
 {
+  public AbstractProtocolFactory()
+  {
+  }
+
   public final boolean isForClients()
   {
     return getConnectorTypes().contains(Type.CLIENT);

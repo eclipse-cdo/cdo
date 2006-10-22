@@ -8,18 +8,15 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.concurrent;
+package org.eclipse.net4j.message;
 
 /**
+ * TODO The {@link MessageDeserializer} class.
+ * <p>
+ * 
  * @author Eike Stepper
  */
-public class Worker
+public interface MessageDeserializer
 {
-  public Worker()
-  {
-  }
 
-  public void addWork(Runnable work)
-  {
-  }
 }

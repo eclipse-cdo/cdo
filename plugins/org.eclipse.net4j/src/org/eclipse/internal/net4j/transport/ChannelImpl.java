@@ -15,6 +15,9 @@ import org.eclipse.net4j.transport.BufferHandler;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.Connector;
+import org.eclipse.net4j.util.concurrent.AsynchronousWorkSerializer;
+import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
+import org.eclipse.net4j.util.concurrent.WorkSerializer;
 import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
 
 import org.eclipse.internal.net4j.transport.BufferImpl.State;
@@ -26,7 +29,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public class ChannelImpl extends AbstractLifecycle implements Channel, BufferProvider, Runnable
+public class ChannelImpl extends AbstractLifecycle implements Channel, BufferProvider
 {
   private short channelID = BufferImpl.NO_CHANNEL;
 
@@ -38,22 +41,11 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
    */
   private BufferHandler receiveHandler;
 
-  /**
-   * An optional executor that is used to process the {@link #receiveQueue}
-   * instead of the current thread. If not <code>null</code> the sender and
-   * the receiver peers become decoupled.
-   * <p>
-   */
   private ExecutorService receiveExecutor;
 
-  private Occupation receiveExecutorOccupation = new Occupation();
+  private WorkSerializer receiveSerializer;
 
-  /**
-   * TODO Optimize for embedded transport
-   */
-  private Queue<Buffer> receiveQueue = new ConcurrentLinkedQueue();
-
-  private Queue<Buffer> sendQueue = new ConcurrentLinkedQueue();
+  private Queue<Buffer> sendQueue;
 
   public ChannelImpl(ExecutorService receiveExecutor)
   {
@@ -105,16 +97,6 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
     return sendQueue;
   }
 
-  public ExecutorService getReceiveExecutor()
-  {
-    return receiveExecutor;
-  }
-
-  public Queue<Buffer> getReceiveQueue()
-  {
-    return receiveQueue;
-  }
-
   public BufferHandler getReceiveHandler()
   {
     return receiveHandler;
@@ -123,6 +105,11 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   public void setReceiveHandler(BufferHandler receiveHandler)
   {
     this.receiveHandler = receiveHandler;
+  }
+
+  public ExecutorService getReceiveExecutor()
+  {
+    return receiveExecutor;
   }
 
   public void close()
@@ -148,7 +135,7 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
     connector.multiplexBuffer(this);
   }
 
-  public void handleBufferFromMultiplexer(Buffer buffer)
+  public void handleBufferFromMultiplexer(final Buffer buffer)
   {
     if (receiveHandler == null)
     {
@@ -157,46 +144,13 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
       return;
     }
 
-    if (receiveExecutor == null)
+    receiveSerializer.addWork(new Runnable()
     {
-      // Bypass the receiveQueue
-      receiveHandler.handleBuffer(buffer);
-      return;
-    }
-
-    receiveQueue.add(buffer);
-
-    // isOccupied can (and must) be called unsynchronized here
-    if (receiveExecutorOccupation.isOccupied())
-    {
-      return;
-    }
-
-    synchronized (receiveExecutorOccupation)
-    {
-      receiveExecutorOccupation.setOccupied(true);
-    }
-
-    System.out.println(toString() + ": Spawning new receive executor");
-    receiveExecutor.execute(this);
-  }
-
-  /**
-   * Executed in the context of the {@link #receiveExecutor}.
-   * <p>
-   */
-  public void run()
-  {
-    synchronized (receiveExecutorOccupation)
-    {
-      Buffer buffer;
-      while ((buffer = receiveQueue.poll()) != null)
+      public void run()
       {
         receiveHandler.handleBuffer(buffer);
       }
-
-      receiveExecutorOccupation.setOccupied(false);
-    }
+    });
   }
 
   @Override
@@ -221,27 +175,26 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   }
 
   @Override
-  protected void onDeactivate() throws Exception
+  protected void onActivate() throws Exception
   {
-    sendQueue.clear();
-    super.onDeactivate();
+    super.onActivate();
+    sendQueue = new ConcurrentLinkedQueue();
+    if (receiveExecutor == null)
+    {
+      receiveSerializer = new SynchronousWorkSerializer();
+    }
+    else
+    {
+      receiveSerializer = new AsynchronousWorkSerializer(receiveExecutor);
+    }
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  private static class Occupation
+  @Override
+  protected void onDeactivate() throws Exception
   {
-    private boolean occupied = false;
-
-    public boolean isOccupied()
-    {
-      return occupied;
-    }
-
-    public void setOccupied(boolean occupied)
-    {
-      this.occupied = occupied;
-    }
+    receiveSerializer = null;
+    sendQueue.clear();
+    sendQueue = null;
+    super.onDeactivate();
   }
 }

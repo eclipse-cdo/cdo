@@ -15,18 +15,16 @@ import java.io.InputStream;
 /**
  * @author Eike Stepper
  */
-public abstract class Indication extends Signal
+public abstract class SignalReactor extends Signal
 {
-  protected Indication()
+  protected SignalReactor()
   {
   }
 
   @Override
   public String toString()
   {
-    return "Indication[" + getSignalID() + ", " + getProtocol() + ", correlation="
+    return "SignalReactor[" + getSignalID() + ", " + getProtocol() + ", correlation="
         + getCorrelationID() + "]";
   }
-
-  protected abstract void indicating(InputStream stream) throws Exception;
 }

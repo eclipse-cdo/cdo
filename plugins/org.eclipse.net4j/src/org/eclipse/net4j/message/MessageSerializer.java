@@ -11,12 +11,12 @@
 package org.eclipse.net4j.message;
 
 /**
- * TODO The {@link Deserializer} class.
+ * TODO The {@link MessageSerializer} class.
  * <p>
  * 
  * @author Eike Stepper
  */
-public interface Deserializer
+public interface MessageSerializer
 {
 
 }

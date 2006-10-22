@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="javadoc">
+	<target name="javadoc">
+		<javadoc 
+			access="protected" 
+			author="true" 
+			destdir="doc" 
+			nodeprecated="false" 
+			nodeprecatedlist="false" 
+			noindex="false" 
+			nonavbar="false" 
+			notree="false" 
+			source="1.5" 
+			sourcepath="src" 
+			splitindex="true" 
+			use="true" 
+			version="true">
+			<package name="org.eclipse.net4j"/>
+			<package name="org.eclipse.net4j.message"/>
+			<package name="org.eclipse.net4j.remote"/>
+			<package name="org.eclipse.net4j.signal"/>
+			<package name="org.eclipse.net4j.transport"/>
+			<package name="org.eclipse.net4j.transport.tcp"/>
+			<package name="org.eclipse.net4j.util"/>
+			<package name="org.eclipse.net4j.util.concurrent"/>
+			<package name="org.eclipse.net4j.util.lifecycle"/>
+			<package name="org.eclipse.net4j.util.registry"/>
+			<link href="http://java.sun.com/j2se/1.5.0/docs/api/" />
+		</javadoc>
+	</target>
+</project>

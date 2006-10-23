@@ -26,7 +26,6 @@ public final class TCPUtil
   public static String toString(ServerSocketChannel channel)
   {
     return channel.toString();
-    // + "]";
   }
 
   public static String toString(SocketChannel channel)

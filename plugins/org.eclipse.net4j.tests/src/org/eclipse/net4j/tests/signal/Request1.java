@@ -12,9 +12,9 @@ package org.eclipse.net4j.tests.signal;
 
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
@@ -37,13 +37,13 @@ public class Request1 extends RequestWithConfirmation<Integer>
   }
 
   @Override
-  protected void requesting(DataOutputStream out) throws IOException
+  protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
     out.writeInt(data);
   }
 
   @Override
-  protected Integer confirming(DataInputStream in) throws IOException
+  protected Integer confirming(ExtendedDataInputStream in) throws IOException
   {
     return in.readInt();
   }

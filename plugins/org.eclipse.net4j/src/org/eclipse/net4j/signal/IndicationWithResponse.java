@@ -12,15 +12,15 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.util.stream.BufferInputStream;
 import org.eclipse.net4j.util.stream.BufferOutputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public abstract class IndicationWithResponse extends StrictSignalReactor
+public abstract class IndicationWithResponse extends SignalReactor
 {
   protected IndicationWithResponse()
   {
@@ -30,18 +30,14 @@ public abstract class IndicationWithResponse extends StrictSignalReactor
   protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
     System.out.println("================ Indicating " + this);
-    inputAllowed = true;
-    indicating(getDataInputStream());
-    inputAllowed = false;
+    indicating(new ExtendedDataInputStream(in));
 
     System.out.println("================ Responding " + this);
-    outputAllowed = true;
-    responding(getDataOutputStream());
-    outputAllowed = false;
+    responding(new ExtendedDataOutputStream(out));
     out.flush();
   }
 
-  protected abstract void indicating(DataInputStream in) throws IOException;
+  protected abstract void indicating(ExtendedDataInputStream in) throws IOException;
 
-  protected abstract void responding(DataOutputStream out) throws IOException;
+  protected abstract void responding(ExtendedDataOutputStream out) throws IOException;
 }

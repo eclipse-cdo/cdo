@@ -8,29 +8,25 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.signal;
+package org.eclipse.net4j.util.stream;
 
-import org.eclipse.net4j.util.stream.BufferInputStream;
-import org.eclipse.net4j.util.stream.BufferOutputStream;
-import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
-
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * @author Eike Stepper
  */
-public abstract class Indication extends SignalReactor
+public class ExtendedDataOutputStream extends DataOutputStream implements ExtendedDataOutput
 {
-  protected Indication()
+  public ExtendedDataOutputStream(OutputStream out)
   {
+    super(out);
   }
 
-  @Override
-  protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
+  public void writeByteArray(byte[] b) throws IOException
   {
-    System.out.println("================ Indicating " + this);
-    indicating(new ExtendedDataInputStream(in));
+    writeInt(b.length);
+    write(b);
   }
-
-  protected abstract void indicating(ExtendedDataInputStream in) throws IOException;
 }

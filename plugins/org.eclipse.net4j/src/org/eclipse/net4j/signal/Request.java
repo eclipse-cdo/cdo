@@ -13,14 +13,14 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.util.stream.BufferInputStream;
 import org.eclipse.net4j.util.stream.BufferOutputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public abstract class Request<RESULT> extends StrictSignalActor<RESULT>
+public abstract class Request<RESULT> extends SignalActor<RESULT>
 {
   protected Request(Channel channel)
   {
@@ -31,11 +31,9 @@ public abstract class Request<RESULT> extends StrictSignalActor<RESULT>
   protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
     System.out.println("================ Requesting " + this);
-    outputAllowed = true;
-    requesting(getDataOutputStream());
-    outputAllowed = false;
+    requesting(new ExtendedDataOutputStream(out));
     out.flush();
   }
 
-  protected abstract void requesting(DataOutputStream out) throws IOException;
+  protected abstract void requesting(ExtendedDataOutputStream out) throws IOException;
 }

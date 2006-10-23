@@ -13,15 +13,15 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.util.stream.BufferInputStream;
 import org.eclipse.net4j.util.stream.BufferOutputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public abstract class RequestWithConfirmation<RESULT> extends StrictSignalActor<RESULT>
+public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT>
 {
   protected RequestWithConfirmation(Channel channel)
   {
@@ -32,18 +32,14 @@ public abstract class RequestWithConfirmation<RESULT> extends StrictSignalActor<
   protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
     System.out.println("================ Requesting " + this);
-    outputAllowed = true;
-    requesting(getDataOutputStream());
-    outputAllowed = false;
+    requesting(new ExtendedDataOutputStream(out));
     out.flush();
 
     System.out.println("================ Confirming " + this);
-    inputAllowed = true;
-    setResult(confirming(getDataInputStream()));
-    inputAllowed = false;
+    setResult(confirming(new ExtendedDataInputStream(in)));
   }
 
-  protected abstract void requesting(DataOutputStream out) throws IOException;
+  protected abstract void requesting(ExtendedDataOutputStream out) throws IOException;
 
-  protected abstract RESULT confirming(DataInputStream in) throws IOException;
+  protected abstract RESULT confirming(ExtendedDataInputStream in) throws IOException;
 }

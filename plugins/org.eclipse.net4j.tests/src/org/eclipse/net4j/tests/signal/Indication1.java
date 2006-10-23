@@ -11,9 +11,9 @@
 package org.eclipse.net4j.tests.signal;
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
@@ -30,13 +30,13 @@ public class Indication1 extends IndicationWithResponse
   }
 
   @Override
-  protected void indicating(DataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     data = in.readInt();
   }
 
   @Override
-  protected void responding(DataOutputStream out) throws IOException
+  protected void responding(ExtendedDataOutputStream out) throws IOException
   {
     out.writeInt(data);
   }

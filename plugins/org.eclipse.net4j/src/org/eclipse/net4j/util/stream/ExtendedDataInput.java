@@ -8,20 +8,15 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.tests;
+package org.eclipse.net4j.util.stream;
 
-import org.eclipse.net4j.util.HexUtil;
+import java.io.DataInput;
+import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class EncodingTest
+public interface ExtendedDataInput extends DataInput
 {
-  public static void main(String[] args)
-  {
-    System.out.println(HexUtil.toHex(0));
-    System.out.println(HexUtil.toHex(127));
-    System.out.println(HexUtil.toHex(128));
-    System.out.println(HexUtil.toHex(255));
-  }
+  public byte[] readByteArray() throws IOException;
 }

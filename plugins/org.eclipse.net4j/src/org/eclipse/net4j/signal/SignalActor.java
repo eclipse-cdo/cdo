@@ -12,12 +12,15 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.transport.BufferHandler;
 import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.util.stream.BufferInputStream;
 
 /**
  * @author Eike Stepper
  */
 public abstract class SignalActor<RESULT> extends Signal
 {
+  public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
+
   private boolean terminated;
 
   private RESULT result;
@@ -31,7 +34,7 @@ public abstract class SignalActor<RESULT> extends Signal
 
   public RESULT send() throws Exception
   {
-    return send(0);
+    return send(NO_TIMEOUT);
   }
 
   public RESULT send(long timeout) throws Exception

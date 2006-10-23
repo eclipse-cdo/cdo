@@ -30,6 +30,8 @@ import java.util.concurrent.ExecutorService;
  */
 public abstract class SignalProtocol extends AbstractProtocol
 {
+  public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
+
   private static final int MIN_CORRELATION_ID = 1;
 
   private static final int MAX_CORRELATION_ID = Integer.MAX_VALUE;
@@ -76,7 +78,7 @@ public abstract class SignalProtocol extends AbstractProtocol
         signal = createSignalReactor(signalID);
         signal.setProtocol(this);
         signal.setCorrelationID(-correlationID);
-        signal.setInputStream(new SignalInputStream());
+        signal.setInputStream(new SignalInputStream(getInputStreamTimeout()));
         signal.setOutputStream(new SignalOutputStream(-correlationID, signalID, false));
         signals.put(-correlationID, signal);
         executorService.execute(signal);
@@ -96,6 +98,11 @@ public abstract class SignalProtocol extends AbstractProtocol
     signal.getInputStream().handleBuffer(buffer);
   }
 
+  public long getInputStreamTimeout()
+  {
+    return NO_TIMEOUT;
+  }
+
   @Override
   public String toString()
   {
@@ -113,7 +120,7 @@ public abstract class SignalProtocol extends AbstractProtocol
 
     short signalID = signalActor.getSignalID();
     int correlationID = signalActor.getCorrelationID();
-    signalActor.setInputStream(new SignalInputStream());
+    signalActor.setInputStream(new SignalInputStream(timeout));
     signalActor.setOutputStream(new SignalOutputStream(correlationID, signalID, true));
     signals.put(correlationID, signalActor);
 
@@ -144,8 +151,17 @@ public abstract class SignalProtocol extends AbstractProtocol
 
   class SignalInputStream extends BufferInputStream
   {
-    public SignalInputStream()
+    private long timeout;
+
+    public SignalInputStream(long timeout)
     {
+      this.timeout = timeout;
+    }
+
+    @Override
+    public long getMillisBeforeTimeout()
+    {
+      return timeout;
     }
   }
 

@@ -30,11 +30,15 @@ import java.util.concurrent.ExecutorService;
  */
 public abstract class SignalProtocol extends AbstractProtocol
 {
+  private static final int MIN_CORRELATION_ID = 1;
+
+  private static final int MAX_CORRELATION_ID = Integer.MAX_VALUE;
+
   private ExecutorService executorService;
 
   private Map<Integer, Signal> signals = new ConcurrentHashMap();
 
-  private int nextCorrelationID = 1;
+  private int nextCorrelationID = MIN_CORRELATION_ID;
 
   protected SignalProtocol(Channel channel, ExecutorService executorService)
   {
@@ -125,10 +129,10 @@ public abstract class SignalProtocol extends AbstractProtocol
   int getNextCorrelationID()
   {
     int correlationID = nextCorrelationID;
-    if (nextCorrelationID == Integer.MAX_VALUE)
+    if (nextCorrelationID == MAX_CORRELATION_ID)
     {
       System.out.println(toString() + ": Correlation wrap around");
-      nextCorrelationID = 0;
+      nextCorrelationID = MIN_CORRELATION_ID;
     }
     else
     {

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport.tcp;
 
+import org.eclipse.net4j.Net4jFactory;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ConnectorException;
@@ -260,7 +261,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     super.onAccessBeforeActivate();
     if (selector == null)
     {
-      selector = TCPUtil.createTCPSelector();
+      selector = Net4jFactory.createTCPSelector();
       LifecycleUtil.activate(selector);
     }
   }

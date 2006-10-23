@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
+import org.eclipse.net4j.Net4jFactory;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
@@ -25,11 +26,9 @@ import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.stream.ChannelInputStream;
 import org.eclipse.net4j.util.stream.ChannelOutputStream;
 
-import org.eclipse.internal.net4j.transport.BufferUtil;
 import org.eclipse.internal.net4j.transport.tcp.AbstractTCPConnector;
 import org.eclipse.internal.net4j.transport.tcp.TCPAcceptorImpl;
 import org.eclipse.internal.net4j.transport.tcp.TCPSelectorImpl;
-import org.eclipse.internal.net4j.transport.tcp.TCPUtil;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -66,16 +65,16 @@ public class TCPTransportTest extends TestCase
     System.out.print(getName());
     System.out.println(" =================================");
 
-    bufferPool = BufferUtil.createBufferPool();
+    bufferPool = Net4jFactory.createBufferPool();
     LifecycleUtil.activate(bufferPool);
     assertTrue(LifecycleUtil.isActive(bufferPool));
 
-    selector = (TCPSelectorImpl)TCPUtil.createTCPSelector();
+    selector = (TCPSelectorImpl)Net4jFactory.createTCPSelector();
     selector.activate();
     assertTrue(selector.isActive());
 
-    acceptor = (TCPAcceptorImpl)TCPUtil.createTCPAcceptor(bufferPool, selector);
-    connector = (AbstractTCPConnector)TCPUtil.createTCPConnector(bufferPool, selector, "localhost");
+    acceptor = (TCPAcceptorImpl)Net4jFactory.createTCPAcceptor(bufferPool, selector);
+    connector = (AbstractTCPConnector)Net4jFactory.createTCPConnector(bufferPool, selector, "localhost");
   }
 
   @Override

@@ -10,11 +10,6 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport.tcp;
 
-import org.eclipse.net4j.transport.BufferProvider;
-import org.eclipse.net4j.transport.tcp.TCPAcceptor;
-import org.eclipse.net4j.transport.tcp.TCPConnector;
-import org.eclipse.net4j.transport.tcp.TCPSelector;
-
 import java.nio.channels.SelectionKey;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
@@ -28,58 +23,15 @@ public final class TCPUtil
   {
   }
 
-  public static TCPSelector createTCPSelector()
-  {
-    TCPSelectorImpl selector = new TCPSelectorImpl();
-    return selector;
-  }
-
-  public static TCPAcceptor createTCPAcceptor(BufferProvider bufferProvider, TCPSelector selector,
-      String address, int port)
-  {
-    TCPAcceptorImpl acceptor = new TCPAcceptorImpl();
-    acceptor.setBufferProvider(bufferProvider);
-    acceptor.setSelector(selector);
-    acceptor.setListenPort(port);
-    acceptor.setListenAddr(address);
-    return acceptor;
-  }
-
-  public static TCPAcceptor createTCPAcceptor(BufferProvider bufferProvider, TCPSelector selector)
-  {
-    return createTCPAcceptor(bufferProvider, selector, TCPAcceptor.DEFAULT_ADDRESS,
-        TCPAcceptor.DEFAULT_PORT);
-  }
-
-  public static TCPConnector createTCPConnector(BufferProvider bufferProvider,
-      TCPSelector selector, String host, int port)
-  {
-    ClientTCPConnectorImpl connector = new ClientTCPConnectorImpl();
-    connector.setBufferProvider(bufferProvider);
-    connector.setSelector(selector);
-    connector.setHost(host);
-    connector.setPort(port);
-    return connector;
-  }
-
-  public static TCPConnector createTCPConnector(BufferProvider bufferProvider,
-      TCPSelector selector, String host)
-  {
-    return createTCPConnector(bufferProvider, selector, host, TCPConnector.DEFAULT_PORT);
-  }
-
   public static String toString(ServerSocketChannel channel)
   {
     return channel.toString();
-    // return "ServerSocketChannel[" + channel.socket().getLocalSocketAddress()
     // + "]";
   }
 
   public static String toString(SocketChannel channel)
   {
     return channel.toString();
-    // return "SocketChannel[" + channel.socket().getRemoteSocketAddress() +
-    // "]";
   }
 
   public static String formatInterestOps(int newOps)

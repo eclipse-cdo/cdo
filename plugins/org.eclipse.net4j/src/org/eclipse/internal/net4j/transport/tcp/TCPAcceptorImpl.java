@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport.tcp;
 
+import org.eclipse.net4j.Net4jFactory;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.ProtocolFactory;
@@ -295,7 +296,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
 
     if (selector == null)
     {
-      selector = TCPUtil.createTCPSelector();
+      selector = Net4jFactory.createTCPSelector();
       LifecycleUtil.activate(selector);
     }
   }

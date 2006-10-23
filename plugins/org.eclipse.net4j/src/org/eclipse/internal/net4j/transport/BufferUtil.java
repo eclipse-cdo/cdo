@@ -28,31 +28,6 @@ public final class BufferUtil
   {
   }
 
-  public static BufferProvider createBufferFactory(short bufferCapacity)
-  {
-    return new BufferFactoryImpl(bufferCapacity);
-  }
-
-  public static BufferProvider createBufferFactory()
-  {
-    return new BufferFactoryImpl(DEFAULT_BUFFER_CAPACITY);
-  }
-
-  public static BufferProvider createBufferPool(BufferProvider factory)
-  {
-    return new BufferPoolImpl(factory);
-  }
-
-  public static BufferProvider createBufferPool(short bufferCapacity)
-  {
-    return createBufferPool(createBufferFactory(bufferCapacity));
-  }
-
-  public static BufferProvider createBufferPool()
-  {
-    return createBufferPool(DEFAULT_BUFFER_CAPACITY);
-  }
-
   public static BufferProvider getBufferProvider(Object object)
   {
     if (object instanceof BufferProvider)

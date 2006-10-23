@@ -14,7 +14,6 @@ import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.util.stream.BufferInputStream;
-import org.eclipse.net4j.util.stream.BufferOutputStream;
 import org.eclipse.net4j.util.stream.ChannelOutputStream;
 
 import org.eclipse.internal.net4j.transport.AbstractProtocol;
@@ -73,8 +72,8 @@ public abstract class SignalProtocol extends AbstractProtocol
         signal = createSignalReactor(signalID);
         signal.setProtocol(this);
         signal.setCorrelationID(-correlationID);
-        signal.setInputStream(createInputStream());
-        signal.setOutputStream(createOutputStream(-correlationID, signalID, false));
+        signal.setInputStream(new SignalInputStream());
+        signal.setOutputStream(new SignalOutputStream(-correlationID, signalID, false));
         signals.put(-correlationID, signal);
         executorService.execute(signal);
       }
@@ -101,7 +100,7 @@ public abstract class SignalProtocol extends AbstractProtocol
 
   protected abstract SignalReactor createSignalReactor(short signalID);
 
-  void startSignal(SignalActor signalActor)
+  void startSignal(SignalActor signalActor, long timeout)
   {
     if (signalActor.getProtocol() != this)
     {
@@ -110,9 +109,10 @@ public abstract class SignalProtocol extends AbstractProtocol
 
     short signalID = signalActor.getSignalID();
     int correlationID = signalActor.getCorrelationID();
-    signalActor.setInputStream(createInputStream());
-    signalActor.setOutputStream(createOutputStream(correlationID, signalID, true));
+    signalActor.setInputStream(new SignalInputStream());
+    signalActor.setOutputStream(new SignalOutputStream(correlationID, signalID, true));
     signals.put(correlationID, signalActor);
+
     signalActor.run();
   }
 
@@ -136,16 +136,6 @@ public abstract class SignalProtocol extends AbstractProtocol
     }
 
     return correlationID;
-  }
-
-  BufferInputStream createInputStream()
-  {
-    return new BufferInputStream();
-  }
-
-  BufferOutputStream createOutputStream(int correlationID, short signalID, boolean addSignalID)
-  {
-    return new SignalOutputStream(correlationID, signalID, addSignalID);
   }
 
   class SignalInputStream extends BufferInputStream
@@ -180,7 +170,7 @@ public abstract class SignalProtocol extends AbstractProtocol
           byteBuffer.putInt(correlationID);
           if (firstBuffer)
           {
-            System.out.println("Setting signal id " + signalID);
+            System.out.println(SignalProtocol.this.toString() + ": Put signal id " + signalID);
             byteBuffer.putShort(signalID);
           }
 

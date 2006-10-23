@@ -29,14 +29,19 @@ public abstract class SignalActor<RESULT> extends Signal
     setCorrelationID(protocol.getNextCorrelationID());
   }
 
-  public RESULT start() throws Exception
+  public RESULT send() throws Exception
+  {
+    return send(0);
+  }
+
+  public RESULT send(long timeout) throws Exception
   {
     if (terminated)
     {
       throw new IllegalStateException("Terminated");
     }
 
-    getProtocol().startSignal(this);
+    getProtocol().startSignal(this, timeout);
     terminated = true;
     return result;
   }

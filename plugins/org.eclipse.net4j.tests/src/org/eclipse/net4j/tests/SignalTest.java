@@ -146,7 +146,7 @@ public class SignalTest extends TestCase
 
     Channel channel = connector.openChannel(TestSignalProtocol.PROTOCOL_ID);
     int data = 0x0a;
-    int result = new Request1(channel, data).start();
+    int result = new Request1(channel, data).send();
     assertEquals(data, result);
   }
 
@@ -167,7 +167,7 @@ public class SignalTest extends TestCase
 
     Channel channel = connector.openChannel(TestSignalProtocol.PROTOCOL_ID);
     byte[] data = TinyData.getBytes();
-    byte[] result = new Request2(channel, data).start();
+    byte[] result = new Request2(channel, data).send();
     assertTrue(Arrays.equals(data, result));
 
   }

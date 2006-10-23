@@ -96,47 +96,51 @@ public class BufferInputStream extends InputStream implements BufferHandler
 
   protected boolean ensureBuffer() throws IOException
   {
+    final long check = getMillisInterruptCheck();
+    final long timeout = getMillisBeforeTimeout();
+
     try
     {
-      final long check = getMillisInterruptCheck();
-      final long timeout = getMillisBeforeTimeout();
-
-      try
+      if (timeout == NO_TIMEOUT)
       {
-        if (timeout == NO_TIMEOUT)
+        while (currentBuffer == null)
         {
-          while (currentBuffer == null)
+          if (buffers == null)
           {
-            currentBuffer = buffers.poll(check, TimeUnit.MILLISECONDS);
+            // Stream has been closed
+            return false;
           }
-        }
-        else
-        {
-          final long stop = System.currentTimeMillis() + timeout;
-          while (currentBuffer == null)
-          {
-            final long remaining = stop - System.currentTimeMillis();
-            if (remaining <= 0)
-            {
-              return false;
-            }
 
-            currentBuffer = buffers.poll(Math.min(remaining, check), TimeUnit.MILLISECONDS);
-          }
+          currentBuffer = buffers.poll(check, TimeUnit.MILLISECONDS);
         }
       }
-      catch (InterruptedException ex)
+      else
       {
-        throw new IOException("Interrupted");
-      }
+        final long stop = System.currentTimeMillis() + timeout;
+        while (currentBuffer == null)
+        {
+          if (buffers == null)
+          {
+            // Stream has been closed
+            return false;
+          }
 
-      eos = currentBuffer.isEOS();
+          final long remaining = stop - System.currentTimeMillis();
+          if (remaining <= 0)
+          {
+            return false;
+          }
+
+          currentBuffer = buffers.poll(Math.min(remaining, check), TimeUnit.MILLISECONDS);
+        }
+      }
     }
-    catch (RuntimeException ex)
+    catch (InterruptedException ex)
     {
-      // TODO Remove
-      ex.printStackTrace();
+      throw new IOException("Interrupted");
     }
+
+    eos = currentBuffer.isEOS();
     return true;
   }
 

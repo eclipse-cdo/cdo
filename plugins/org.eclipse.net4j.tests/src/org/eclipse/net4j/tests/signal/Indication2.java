@@ -8,21 +8,36 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.signal;
+package org.eclipse.net4j.tests.signal;
+
+import org.eclipse.net4j.signal.IndicationWithResponse;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public abstract class SignalReactor extends Signal
+public class Indication2 extends IndicationWithResponse
 {
-  protected SignalReactor()
+  private byte[] data;
+
+  @Override
+  protected short getSignalID()
   {
+    return TestSignalProtocol.SIGNAL2;
   }
 
   @Override
-  public String toString()
+  protected void indicating(DataInputStream in) throws IOException
   {
-    return "SignalReactor[" + getSignalID() + ", " + getProtocol() + ", correlation="
-        + getCorrelationID() + "]";
+    data = readByteArray();
+  }
+
+  @Override
+  protected void responding(DataOutputStream out) throws IOException
+  {
+    writeByteArray(data);
   }
 }

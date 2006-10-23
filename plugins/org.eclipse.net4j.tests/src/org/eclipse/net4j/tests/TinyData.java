@@ -8,21 +8,34 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.signal;
+package org.eclipse.net4j.tests;
+
+import java.util.StringTokenizer;
 
 /**
  * @author Eike Stepper
  */
-public abstract class SignalReactor extends Signal
+public final class TinyData
 {
-  protected SignalReactor()
+  public static final String NL = System.getProperty("line.separator");
+
+  public static StringTokenizer getTokenizer()
   {
+    return new StringTokenizer(getText(), NL);
   }
 
-  @Override
-  public String toString()
+  public static String[] getArray()
   {
-    return "SignalReactor[" + getSignalID() + ", " + getProtocol() + ", correlation="
-        + getCorrelationID() + "]";
+    return getText().split(NL);
+  }
+
+  public static byte[] getBytes()
+  {
+    return getText().getBytes();
+  }
+
+  public static String getText()
+  {
+    return "Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany. All rights reserved.";
   }
 }

@@ -38,7 +38,14 @@ import java.util.concurrent.TimeUnit;
 public abstract class AbstractConnector extends AbstractLifecycle implements Connector,
     BufferProvider
 {
-  private static final ChannelImpl NULL_CHANNEL = new ChannelImpl(null);
+  private static final ChannelImpl NULL_CHANNEL = new ChannelImpl(null)
+  {
+    @Override
+    public String toString()
+    {
+      return "NullChannel";
+    }
+  };
 
   private ConnectorCredentials credentials;
 

@@ -10,19 +10,29 @@
  **************************************************************************/
 package org.eclipse.net4j.signal;
 
+import org.eclipse.net4j.util.stream.BufferInputStream;
+import org.eclipse.net4j.util.stream.BufferOutputStream;
+
+import java.io.DataInputStream;
+import java.io.IOException;
+
 /**
  * @author Eike Stepper
  */
-public abstract class SignalReactor extends Signal
+public abstract class Indication extends StrictSignalReactor
 {
-  protected SignalReactor()
+  protected Indication()
   {
   }
 
   @Override
-  public String toString()
+  protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    return "SignalReactor[" + getSignalID() + ", " + getProtocol() + ", correlation="
-        + getCorrelationID() + "]";
+    System.out.println("================ Indicating " + this);
+    inputAllowed = true;
+    indicating(getDataInputStream());
+    inputAllowed = false;
   }
+
+  protected abstract void indicating(DataInputStream in) throws IOException;
 }

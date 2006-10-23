@@ -156,7 +156,7 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   @Override
   public String toString()
   {
-    return "Channel[" + connector + ":" + channelID + "]";
+    return "Channel[" + connector + ", channelID=" + channelID + "]";
   }
 
   @Override

@@ -1,5 +1,7 @@
 package org.eclipse.net4j.util.lifecycle;
 
+import org.eclipse.net4j.util.ReflectUtil;
+
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -8,6 +10,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
 {
+  public static boolean DUMP_ON_ACTIVATE = false;
+
+  public static boolean USE_LABEL = true;
+
   private boolean active;
 
   /**
@@ -37,6 +43,12 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       onAccessBeforeActivate();
       onActivate();
       active = true;
+
+      if (DUMP_ON_ACTIVATE)
+      {
+        ReflectUtil.dump(this, toString() + ": DUMP ");
+      }
+
       fireLifecycleActivated();
     }
   }
@@ -69,6 +81,19 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
   public final boolean isActive()
   {
     return active;
+  }
+
+  @Override
+  public String toString()
+  {
+    if (USE_LABEL)
+    {
+      return ReflectUtil.getLabel(this);
+    }
+    else
+    {
+      return super.toString();
+    }
   }
 
   protected void fireLifecycleActivated()

@@ -35,7 +35,7 @@ public abstract class SignalProtocol extends AbstractProtocol
 
   private Map<Integer, Signal> signals = new ConcurrentHashMap();
 
-  private int nextCorrelationID = 0;
+  private int nextCorrelationID = 1;
 
   protected SignalProtocol(Channel channel, ExecutorService executorService)
   {
@@ -58,21 +58,36 @@ public abstract class SignalProtocol extends AbstractProtocol
   {
     ByteBuffer byteBuffer = buffer.getByteBuffer();
     int correlationID = byteBuffer.getInt();
-    System.out.println("Received buffer for signal " + correlationID);
+    System.out.println(toString() + ": Received buffer for correlation " + correlationID);
 
-    Signal signal = signals.get(correlationID);
-    if (signal == null)
+    Signal signal;
+    if (correlationID > 0)
     {
-      short signalID = byteBuffer.getShort();
-      System.out.println("Got signal id " + signalID);
+      // Incoming indication
+      signal = signals.get(-correlationID);
+      if (signal == null)
+      {
+        short signalID = byteBuffer.getShort();
+        System.out.println(toString() + ": Got signal id " + signalID);
 
-      signal = createSignalReactor(signalID);
-      signal.setProtocol(this);
-      signal.setCorrelationID(correlationID);
-      signal.setInputStream(createInputStream());
-      signal.setOutputStream(createOutputStream(correlationID, signalID));
-      signals.put(correlationID, signal);
-      executorService.execute(signal);
+        signal = createSignalReactor(signalID);
+        signal.setProtocol(this);
+        signal.setCorrelationID(-correlationID);
+        signal.setInputStream(createInputStream());
+        signal.setOutputStream(createOutputStream(-correlationID, signalID, false));
+        signals.put(-correlationID, signal);
+        executorService.execute(signal);
+      }
+    }
+    else
+    {
+      // Incoming confirmation
+      signal = signals.get(-correlationID);
+      if (signal == null)
+      {
+        System.out.println(toString() + ": Discarding buffer");
+        buffer.release();
+      }
     }
 
     signal.getInputStream().handleBuffer(buffer);
@@ -96,7 +111,7 @@ public abstract class SignalProtocol extends AbstractProtocol
     short signalID = signalActor.getSignalID();
     int correlationID = signalActor.getCorrelationID();
     signalActor.setInputStream(createInputStream());
-    signalActor.setOutputStream(createOutputStream(correlationID, signalID));
+    signalActor.setOutputStream(createOutputStream(correlationID, signalID, true));
     signals.put(correlationID, signalActor);
     signalActor.run();
   }
@@ -128,9 +143,9 @@ public abstract class SignalProtocol extends AbstractProtocol
     return new BufferInputStream();
   }
 
-  BufferOutputStream createOutputStream(int correlationID, short signalID)
+  BufferOutputStream createOutputStream(int correlationID, short signalID, boolean addSignalID)
   {
-    return new SignalOutputStream(correlationID, signalID);
+    return new SignalOutputStream(correlationID, signalID, addSignalID);
   }
 
   class SignalInputStream extends BufferInputStream
@@ -142,13 +157,14 @@ public abstract class SignalProtocol extends AbstractProtocol
 
   class SignalOutputStream extends ChannelOutputStream
   {
-    public SignalOutputStream(final int correlationID, final short signalID)
+    public SignalOutputStream(final int correlationID, final short signalID,
+        final boolean addSignalID)
     {
       super(getChannel(), new BufferProvider()
       {
         private BufferProvider delegate = BufferUtil.getBufferProvider(getChannel());
 
-        private boolean firstBuffer = true;
+        private boolean firstBuffer = addSignalID;
 
         public short getBufferCapacity()
         {
@@ -160,15 +176,15 @@ public abstract class SignalProtocol extends AbstractProtocol
           Buffer buffer = delegate.provideBuffer();
           ByteBuffer byteBuffer = buffer.startPutting(getChannel().getChannelID());
 
-          System.out.println("Providing buffer for signal " + correlationID);
+          System.out.println("Providing buffer for correlation " + correlationID);
           byteBuffer.putInt(correlationID);
           if (firstBuffer)
           {
             System.out.println("Setting signal id " + signalID);
             byteBuffer.putShort(signalID);
-            firstBuffer = false;
           }
 
+          firstBuffer = false;
           return buffer;
         }
 

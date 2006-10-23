@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.stream;
 
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferHandler;
+import org.eclipse.net4j.util.HexUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +30,8 @@ public class BufferInputStream extends InputStream implements BufferHandler
   public static final long DEFAULT_MILLIS_BEFORE_TIMEOUT = NO_TIMEOUT;
 
   public static final long DEFAULT_MILLIS_INTERRUPT_CHECK = 100;
+
+  public static boolean TRACE = false;
 
   private BlockingQueue<Buffer> buffers = new LinkedBlockingQueue<Buffer>();
 
@@ -60,7 +63,14 @@ public class BufferInputStream extends InputStream implements BufferHandler
       return -1;
     }
 
-    int result = currentBuffer.getByteBuffer().get() - Byte.MIN_VALUE;
+    final byte b = currentBuffer.getByteBuffer().get();
+    final int result = b < 0 ? ~b : b;
+    if (TRACE)
+    {
+      System.out.println("<-- " + HexUtil.toHex(result)
+          + (result >= 32 ? " " + Character.toString((char)result) : ""));
+    }
+
     if (!currentBuffer.getByteBuffer().hasRemaining())
     {
       currentBuffer.release();

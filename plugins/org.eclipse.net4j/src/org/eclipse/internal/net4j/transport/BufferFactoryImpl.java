@@ -25,8 +25,9 @@ public class BufferFactoryImpl extends BufferProviderImpl
   @Override
   protected Buffer doProvideBuffer()
   {
-    System.out.println(toString() + ": Creating buffer of capacity " + getBufferCapacity());
-    return new BufferImpl(this, getBufferCapacity());
+    BufferImpl buffer = new BufferImpl(this, getBufferCapacity());
+    System.out.println(toString() + ": Created " + buffer);
+    return buffer;
   }
 
   @Override

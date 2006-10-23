@@ -12,6 +12,8 @@ package org.eclipse.internal.net4j.transport;
 
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
+import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.ReflectUtil;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -26,6 +28,8 @@ public class BufferImpl implements Buffer
   public static final short HEADER_SIZE = 4;
 
   public static final short NO_CHANNEL = Short.MIN_VALUE;
+
+  public static boolean TRACE = false;
 
   private static final int EOS_OFFSET = 1;
 
@@ -156,8 +160,6 @@ public class BufferImpl implements Buffer
       }
 
       payloadSize -= EOS_OFFSET;
-      System.out.println(toString() + ": Read " + (HEADER_SIZE + payloadSize) + " bytes"
-          + (eos ? " (EOS)" : ""));
 
       byteBuffer.clear();
       byteBuffer.limit(payloadSize);
@@ -173,6 +175,13 @@ public class BufferImpl implements Buffer
     if (byteBuffer.hasRemaining())
     {
       return null;
+    }
+
+    if (TRACE)
+    {
+      System.out.println(toString() + ": Read " + byteBuffer.limit() + " bytes"
+          + (eos ? " (EOS)" : ""));
+      System.out.println(formatContent());
     }
 
     byteBuffer.flip();
@@ -212,7 +221,7 @@ public class BufferImpl implements Buffer
       throw new IllegalStateException("state == " + state);
     }
 
-    if (state != State.WRITING)
+    if (state == State.PUTTING)
     {
       if (channelID == NO_CHANNEL)
       {
@@ -225,6 +234,13 @@ public class BufferImpl implements Buffer
         payloadSize = -payloadSize;
       }
 
+      if (TRACE)
+      {
+        System.out.println(toString() + ": Writing " + (payloadSize - 1) + " bytes"
+            + (eos ? " (EOS)" : ""));
+        System.out.println(formatContent());
+      }
+
       byteBuffer.flip();
       byteBuffer.putShort(channelID);
       byteBuffer.putShort((short)payloadSize);
@@ -232,7 +248,8 @@ public class BufferImpl implements Buffer
       state = State.WRITING;
     }
 
-    if (socketChannel.write(byteBuffer) == -1)
+    int numBytes = socketChannel.write(byteBuffer);
+    if (numBytes == -1)
     {
       throw new IOException("Channel closed");
     }
@@ -242,8 +259,6 @@ public class BufferImpl implements Buffer
       return false;
     }
 
-    System.out.println(toString() + ": Wrote " + byteBuffer.limit() + " bytes"
-        + (eos ? " (EOS)" : ""));
     clear();
     return true;
   }
@@ -251,7 +266,37 @@ public class BufferImpl implements Buffer
   @Override
   public String toString()
   {
-    return "Buffer[channelID=" + channelID + ", state=" + state + "]";
+    return "Buffer@" + ReflectUtil.getID(this);
+  }
+
+  public String formatContent()
+  {
+    final int oldPosition = byteBuffer.position();
+    final int oldLimit = byteBuffer.limit();
+
+    try
+    {
+      byteBuffer.flip();
+      if (state == State.PUTTING)
+      {
+        byteBuffer.position(HEADER_SIZE);
+      }
+
+      StringBuilder builder = new StringBuilder();
+      while (byteBuffer.hasRemaining())
+      {
+        byte b = byteBuffer.get();
+        HexUtil.appendHex(builder, b < 0 ? ~b : b);
+        builder.append(' ');
+      }
+
+      return builder.toString();
+    }
+    finally
+    {
+      byteBuffer.position(oldPosition);
+      byteBuffer.limit(oldLimit);
+    }
   }
 
   /**

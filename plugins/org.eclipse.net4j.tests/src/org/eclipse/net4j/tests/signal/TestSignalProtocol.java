@@ -52,7 +52,9 @@ public class TestSignalProtocol extends SignalProtocol
     switch (signalID)
     {
     case SIGNAL1:
-      return new Signal1Reactor();
+      return new Indication1();
+    case SIGNAL2:
+      return new Indication2();
     }
 
     throw new IllegalArgumentException("Invalid signalID " + signalID);

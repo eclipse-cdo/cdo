@@ -10,19 +10,41 @@
  **************************************************************************/
 package org.eclipse.net4j.signal;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+
 /**
  * @author Eike Stepper
  */
-public abstract class SignalReactor extends Signal
+abstract class StrictSignalReactor extends SignalReactor
 {
-  protected SignalReactor()
+  boolean inputAllowed;
+
+  boolean outputAllowed;
+
+  protected StrictSignalReactor()
   {
   }
 
   @Override
-  public String toString()
+  protected final DataInputStream getDataInputStream()
   {
-    return "SignalReactor[" + getSignalID() + ", " + getProtocol() + ", correlation="
-        + getCorrelationID() + "]";
+    if (!inputAllowed)
+    {
+      throw new IllegalStateException("Input not allowed");
+    }
+
+    return super.getDataInputStream();
+  }
+
+  @Override
+  protected final DataOutputStream getDataOutputStream()
+  {
+    if (!outputAllowed)
+    {
+      throw new IllegalStateException("Output not allowed");
+    }
+
+    return super.getDataOutputStream();
   }
 }

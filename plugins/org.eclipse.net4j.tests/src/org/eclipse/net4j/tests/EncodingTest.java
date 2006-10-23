@@ -8,29 +8,20 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.tests.signal;
+package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.signal.SignalReactor;
-import org.eclipse.net4j.util.stream.BufferInputStream;
-import org.eclipse.net4j.util.stream.BufferOutputStream;
+import org.eclipse.net4j.util.HexUtil;
 
 /**
  * @author Eike Stepper
  */
-public class Signal1Reactor extends SignalReactor
+public class EncodingTest
 {
-  @Override
-  protected short getSignalID()
+  public static void main(String[] args)
   {
-    return TestSignalProtocol.SIGNAL1;
-  }
-
-  @Override
-  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
-  {
-    byte[] data = readByteArray();
-
-    writeByteArray(data);
-    out.flush();
+    System.out.println(HexUtil.toHex(0));
+    System.out.println(HexUtil.toHex(127));
+    System.out.println(HexUtil.toHex(128));
+    System.out.println(HexUtil.toHex(255));
   }
 }

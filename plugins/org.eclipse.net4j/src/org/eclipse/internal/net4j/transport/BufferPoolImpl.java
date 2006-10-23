@@ -48,7 +48,7 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
       return false;
     }
 
-    System.out.println(toString() + ": Evicting buffer");
+    System.out.println(toString() + ": Evicting " + buffer);
     factory.retainBuffer(buffer);
     --pooledBuffers;
     return true;
@@ -76,17 +76,14 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
   protected Buffer doProvideBuffer()
   {
     Buffer buffer = queue.poll();
-    if (buffer != null)
-    {
-      System.out.println(toString() + ": Obtaining buffer");
-    }
-    else
+    if (buffer == null)
     {
       buffer = factory.provideBuffer();
       ((BufferImpl)buffer).setBufferProvider(this);
     }
 
     buffer.clear();
+    System.out.println(toString() + ": Obtained " + buffer);
     return buffer;
   }
 
@@ -98,7 +95,7 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
       throw new IllegalArgumentException("buffer.getCapacity() != getBufferCapacity()");
     }
 
-    System.out.println(toString() + ": Retaining buffer");
+    System.out.println(toString() + ": Retaining " + buffer);
     queue.add(buffer);
   }
 

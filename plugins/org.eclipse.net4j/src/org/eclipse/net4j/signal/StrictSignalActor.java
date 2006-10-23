@@ -8,39 +8,46 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.tests.signal;
+package org.eclipse.net4j.signal;
 
-import org.eclipse.net4j.signal.SignalActor;
 import org.eclipse.net4j.transport.Channel;
-import org.eclipse.net4j.util.stream.BufferInputStream;
-import org.eclipse.net4j.util.stream.BufferOutputStream;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 
 /**
  * @author Eike Stepper
  */
-public class Signal1Actor extends SignalActor<byte[]>
+abstract class StrictSignalActor<RESULT> extends SignalActor<RESULT>
 {
-  private byte[] data;
+  boolean inputAllowed;
 
-  public Signal1Actor(Channel channel, byte[] data)
+  boolean outputAllowed;
+
+  protected StrictSignalActor(Channel channel)
   {
     super(channel);
-    this.data = data;
   }
 
   @Override
-  protected short getSignalID()
+  protected final DataInputStream getDataInputStream()
   {
-    return TestSignalProtocol.SIGNAL1;
+    if (!inputAllowed)
+    {
+      throw new IllegalStateException("Input not allowed");
+    }
+
+    return super.getDataInputStream();
   }
 
   @Override
-  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
+  protected final DataOutputStream getDataOutputStream()
   {
-    writeByteArray(data);
-    out.flush();
-    
-    byte[] result = readByteArray();
-    setResult(result);
+    if (!outputAllowed)
+    {
+      throw new IllegalStateException("Output not allowed");
+    }
+
+    return super.getDataOutputStream();
   }
 }

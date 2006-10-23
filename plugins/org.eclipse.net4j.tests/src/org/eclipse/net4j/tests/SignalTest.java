@@ -10,21 +10,27 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.tests.signal.Signal1Actor;
+import org.eclipse.net4j.tests.signal.Request1;
+import org.eclipse.net4j.tests.signal.Request2;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
+import org.eclipse.net4j.util.stream.BufferInputStream;
+import org.eclipse.net4j.util.stream.BufferOutputStream;
 
+import org.eclipse.internal.net4j.transport.BufferImpl;
 import org.eclipse.internal.net4j.transport.BufferUtil;
 import org.eclipse.internal.net4j.transport.tcp.AbstractTCPConnector;
 import org.eclipse.internal.net4j.transport.tcp.TCPAcceptorImpl;
 import org.eclipse.internal.net4j.transport.tcp.TCPSelectorImpl;
 import org.eclipse.internal.net4j.transport.tcp.TCPUtil;
 
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -47,11 +53,16 @@ public class SignalTest extends TestCase
   protected void setUp() throws Exception
   {
     super.setUp();
+    AbstractLifecycle.DUMP_ON_ACTIVATE = true;
+    BufferImpl.TRACE = true;
+    BufferInputStream.TRACE = true;
+    BufferOutputStream.TRACE = true;
+
     System.out.print("================================= ");
     System.out.print(getName());
     System.out.println(" =================================");
 
-    bufferPool = BufferUtil.createBufferPool();
+    bufferPool = BufferUtil.createBufferPool((short)64);
     LifecycleUtil.activate(bufferPool);
     assertTrue(LifecycleUtil.isActive(bufferPool));
 
@@ -118,7 +129,7 @@ public class SignalTest extends TestCase
     super.tearDown();
   }
 
-  public void testConnect() throws Exception
+  public void testInteger() throws Exception
   {
     ExecutorService threadPool = Executors.newCachedThreadPool();
     IRegistry<String, ProtocolFactory> registry = new HashMapRegistry();
@@ -134,8 +145,30 @@ public class SignalTest extends TestCase
     assertTrue(connector.connect(1000));
 
     Channel channel = connector.openChannel(TestSignalProtocol.PROTOCOL_ID);
-    byte[] data = HugeData.getBytes();
-    byte[] result = new Signal1Actor(channel, data).start();
+    int data = 0x0a;
+    int result = new Request1(channel, data).start();
     assertEquals(data, result);
+  }
+
+  public void testArray() throws Exception
+  {
+    ExecutorService threadPool = Executors.newCachedThreadPool();
+    IRegistry<String, ProtocolFactory> registry = new HashMapRegistry();
+    registry.register(new TestSignalProtocol.Factory());
+
+    acceptor.setReceiveExecutor(threadPool);
+    acceptor.setProtocolFactoryRegistry(registry);
+    acceptor.activate();
+    assertTrue(acceptor.isActive());
+
+    connector.setReceiveExecutor(threadPool);
+    connector.setProtocolFactoryRegistry(registry);
+    assertTrue(connector.connect(1000));
+
+    Channel channel = connector.openChannel(TestSignalProtocol.PROTOCOL_ID);
+    byte[] data = TinyData.getBytes();
+    byte[] result = new Request2(channel, data).start();
+    assertTrue(Arrays.equals(data, result));
+
   }
 }

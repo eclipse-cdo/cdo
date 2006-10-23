@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.stream;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferHandler;
 import org.eclipse.net4j.transport.BufferProvider;
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.io.IOException;
@@ -25,6 +26,8 @@ import java.nio.ByteBuffer;
 public class BufferOutputStream extends OutputStream
 {
   public static final boolean DEFAULT_PROPAGATE_CLOSE = false;
+
+  public static boolean TRACE = false;
 
   private BufferHandler bufferHandler;
 
@@ -61,8 +64,14 @@ public class BufferOutputStream extends OutputStream
   public void write(int b) throws IOException
   {
     ensureBuffer();
+    if (TRACE)
+    {
+      System.out.println("--> " + HexUtil.toHex(b)
+          + (b >= 32 ? " " + Character.toString((char)b) : ""));
+    }
+
     ByteBuffer buffer = currentBuffer.getByteBuffer();
-    buffer.put((byte)(b + Byte.MIN_VALUE));
+    buffer.put((byte)(b > Byte.MAX_VALUE ? ~(b + Byte.MIN_VALUE) : b));
 
     if (!buffer.hasRemaining())
     {

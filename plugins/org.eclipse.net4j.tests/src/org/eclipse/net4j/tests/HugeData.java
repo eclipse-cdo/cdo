@@ -13,9 +13,6 @@ package org.eclipse.net4j.tests;
 import java.util.StringTokenizer;
 
 /**
- * TODO The {@link HugeData} class.
- * <p>
- * 
  * @author Eike Stepper
  */
 public final class HugeData

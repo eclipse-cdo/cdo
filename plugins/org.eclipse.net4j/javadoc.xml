@@ -21,10 +21,12 @@
 			<package name="org.eclipse.net4j.signal"/>
 			<package name="org.eclipse.net4j.transport"/>
 			<package name="org.eclipse.net4j.transport.tcp"/>
+			<package name="org.eclipse.net4j.transport.util"/>
 			<package name="org.eclipse.net4j.util"/>
 			<package name="org.eclipse.net4j.util.concurrent"/>
 			<package name="org.eclipse.net4j.util.lifecycle"/>
 			<package name="org.eclipse.net4j.util.registry"/>
+			<package name="org.eclipse.net4j.util.stream"/>
 			<link href="http://java.sun.com/j2se/1.5.0/docs/api/" />
 		</javadoc>
 	</target>

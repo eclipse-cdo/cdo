@@ -13,8 +13,8 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
-import org.eclipse.net4j.util.stream.BufferInputStream;
-import org.eclipse.net4j.util.stream.ChannelOutputStream;
+import org.eclipse.net4j.transport.util.BufferInputStream;
+import org.eclipse.net4j.transport.util.ChannelOutputStream;
 
 import org.eclipse.internal.net4j.transport.AbstractProtocol;
 import org.eclipse.internal.net4j.transport.BufferUtil;

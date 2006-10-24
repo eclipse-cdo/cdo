@@ -1,4 +1,4 @@
-package org.eclipse.internal.net4j.util.bundle;
+package org.eclipse.internal.net4j.bundle;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

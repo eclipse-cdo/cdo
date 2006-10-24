@@ -11,8 +11,8 @@
 package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.transport.Channel;
-import org.eclipse.net4j.util.stream.BufferInputStream;
-import org.eclipse.net4j.util.stream.BufferOutputStream;
+import org.eclipse.net4j.transport.util.BufferInputStream;
+import org.eclipse.net4j.transport.util.BufferOutputStream;
 import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 

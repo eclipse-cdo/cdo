@@ -19,12 +19,12 @@ import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.tcp.TCPAcceptor;
 import org.eclipse.net4j.transport.tcp.TCPAcceptorListener;
 import org.eclipse.net4j.transport.tcp.TCPConnector;
+import org.eclipse.net4j.transport.util.ChannelInputStream;
+import org.eclipse.net4j.transport.util.ChannelOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.HashCacheRegistry;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
-import org.eclipse.net4j.util.stream.ChannelInputStream;
-import org.eclipse.net4j.util.stream.ChannelOutputStream;
 
 import org.eclipse.internal.net4j.transport.tcp.AbstractTCPConnector;
 import org.eclipse.internal.net4j.transport.tcp.TCPAcceptorImpl;

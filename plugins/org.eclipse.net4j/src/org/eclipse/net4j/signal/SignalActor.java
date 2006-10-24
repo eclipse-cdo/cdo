@@ -12,7 +12,7 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.transport.BufferHandler;
 import org.eclipse.net4j.transport.Channel;
-import org.eclipse.net4j.util.stream.BufferInputStream;
+import org.eclipse.net4j.transport.util.BufferInputStream;
 
 /**
  * @author Eike Stepper

@@ -67,8 +67,8 @@ public class BufferInputStream extends InputStream implements BufferHandler
     final int result = b < 0 ? ~b : b;
     if (TRACE)
     {
-      System.out.println("<-- " + HexUtil.toHex(result)
-          + (result >= 32 ? " " + Character.toString((char)result) : ""));
+      System.out.println("<-- " + HexUtil.toHex(result) //$NON-NLS-1$
+          + (result >= 32 ? " " + Character.toString((char)result) : "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     if (!currentBuffer.getByteBuffer().hasRemaining())
@@ -91,7 +91,7 @@ public class BufferInputStream extends InputStream implements BufferHandler
   @Override
   public String toString()
   {
-    return "BufferInputStream";
+    return "BufferInputStream"; //$NON-NLS-1$
   }
 
   protected boolean ensureBuffer() throws IOException
@@ -137,7 +137,7 @@ public class BufferInputStream extends InputStream implements BufferHandler
     }
     catch (InterruptedException ex)
     {
-      throw new IOException("Interrupted");
+      throw new IOException("Interrupted"); //$NON-NLS-1$
     }
 
     eos = currentBuffer.isEOS();

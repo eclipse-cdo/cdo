@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
  */
 public interface TCPAcceptor
 {
-  public static final String DEFAULT_ADDRESS = "0.0.0.0";
+  public static final String DEFAULT_ADDRESS = "0.0.0.0"; //$NON-NLS-1$
 
   public static final int DEFAULT_PORT = 2036;
 

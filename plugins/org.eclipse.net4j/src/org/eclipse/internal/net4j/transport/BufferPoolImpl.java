@@ -48,7 +48,7 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
       return false;
     }
 
-    System.out.println(toString() + ": Evicting " + buffer);
+    System.out.println(toString() + ": Evicting " + buffer); //$NON-NLS-1$
     factory.retainBuffer(buffer);
     --pooledBuffers;
     return true;
@@ -83,7 +83,7 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
     }
 
     buffer.clear();
-    System.out.println(toString() + ": Obtained " + buffer);
+    System.out.println(toString() + ": Obtained " + buffer); //$NON-NLS-1$
     return buffer;
   }
 
@@ -92,16 +92,16 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
   {
     if (buffer.getCapacity() != getBufferCapacity())
     {
-      throw new IllegalArgumentException("buffer.getCapacity() != getBufferCapacity()");
+      throw new IllegalArgumentException("buffer.getCapacity() != getBufferCapacity()"); //$NON-NLS-1$
     }
 
-    System.out.println(toString() + ": Retaining " + buffer);
+    System.out.println(toString() + ": Retaining " + buffer); //$NON-NLS-1$
     queue.add(buffer);
   }
 
   @Override
   public String toString()
   {
-    return "BufferPool[size=" + pooledBuffers + ", " + factory + "]";
+    return "BufferPool[size=" + pooledBuffers + ", " + factory + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 }

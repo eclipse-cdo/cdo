@@ -28,7 +28,7 @@ public abstract class Indication extends SignalReactor
   @Override
   protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    System.out.println("================ Indicating " + this);
+    System.out.println("================ Indicating " + this); //$NON-NLS-1$
     indicating(new ExtendedDataInputStream(in));
   }
 

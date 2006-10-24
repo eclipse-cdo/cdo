@@ -73,7 +73,7 @@ public class BufferImpl implements Buffer
   {
     if (state == State.INITIAL || state == State.READING_HEADER)
     {
-      throw new IllegalStateException("state == " + state);
+      throw new IllegalStateException("state == " + state); //$NON-NLS-1$
     }
 
     return channelID;
@@ -88,7 +88,7 @@ public class BufferImpl implements Buffer
   {
     if (state != State.GETTING && state != State.PUTTING)
     {
-      throw new IllegalStateException("state == " + state);
+      throw new IllegalStateException("state == " + state); //$NON-NLS-1$
     }
 
     return byteBuffer;
@@ -128,7 +128,7 @@ public class BufferImpl implements Buffer
   {
     if (state != State.INITIAL && state != State.READING_HEADER && state != State.READING_BODY)
     {
-      throw new IllegalStateException("state == " + state);
+      throw new IllegalStateException("state == " + state); //$NON-NLS-1$
     }
 
     if (state == State.INITIAL)
@@ -179,8 +179,8 @@ public class BufferImpl implements Buffer
 
     if (TRACE)
     {
-      System.out.println(toString() + ": Read " + byteBuffer.limit() + " bytes"
-          + (eos ? " (EOS)" : ""));
+      System.out.println(toString() + ": Read " + byteBuffer.limit() + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
+          + (eos ? " (EOS)" : "")); //$NON-NLS-1$ //$NON-NLS-2$
       System.out.println(formatContent());
     }
 
@@ -195,12 +195,12 @@ public class BufferImpl implements Buffer
     {
       if (channelID != this.channelID)
       {
-        throw new IllegalArgumentException("channelID != this.channelID");
+        throw new IllegalArgumentException("channelID != this.channelID"); //$NON-NLS-1$
       }
     }
     else if (state != State.INITIAL)
     {
-      throw new IllegalStateException("state == " + state);
+      throw new IllegalStateException("state == " + state); //$NON-NLS-1$
     }
     else
     {
@@ -218,14 +218,14 @@ public class BufferImpl implements Buffer
   {
     if (state != State.PUTTING && state != State.WRITING)
     {
-      throw new IllegalStateException("state == " + state);
+      throw new IllegalStateException("state == " + state); //$NON-NLS-1$
     }
 
     if (state == State.PUTTING)
     {
       if (channelID == NO_CHANNEL)
       {
-        throw new IllegalStateException("channelID == NO_CHANNEL");
+        throw new IllegalStateException("channelID == NO_CHANNEL"); //$NON-NLS-1$
       }
 
       int payloadSize = byteBuffer.position() - BufferImpl.HEADER_SIZE + EOS_OFFSET;
@@ -236,8 +236,8 @@ public class BufferImpl implements Buffer
 
       if (TRACE)
       {
-        System.out.println(toString() + ": Writing " + (payloadSize - 1) + " bytes"
-            + (eos ? " (EOS)" : ""));
+        System.out.println(toString() + ": Writing " + (payloadSize - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
+            + (eos ? " (EOS)" : "")); //$NON-NLS-1$ //$NON-NLS-2$
         System.out.println(formatContent());
       }
 
@@ -251,7 +251,7 @@ public class BufferImpl implements Buffer
     int numBytes = socketChannel.write(byteBuffer);
     if (numBytes == -1)
     {
-      throw new IOException("Channel closed");
+      throw new IOException("Channel closed"); //$NON-NLS-1$
     }
 
     if (byteBuffer.hasRemaining())
@@ -266,7 +266,7 @@ public class BufferImpl implements Buffer
   @Override
   public String toString()
   {
-    return "Buffer@" + ReflectUtil.getID(this);
+    return "Buffer@" + ReflectUtil.getID(this); //$NON-NLS-1$
   }
 
   public String formatContent()

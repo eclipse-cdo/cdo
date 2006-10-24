@@ -38,22 +38,22 @@ public final class TCPUtil
     StringBuilder builder = new StringBuilder();
     if ((newOps & SelectionKey.OP_ACCEPT) != 0)
     {
-      addInterestOp(builder, "ACCEPT");
+      addInterestOp(builder, "ACCEPT"); //$NON-NLS-1$
     }
 
     if ((newOps & SelectionKey.OP_CONNECT) != 0)
     {
-      addInterestOp(builder, "CONNECT");
+      addInterestOp(builder, "CONNECT"); //$NON-NLS-1$
     }
 
     if ((newOps & SelectionKey.OP_READ) != 0)
     {
-      addInterestOp(builder, "READ");
+      addInterestOp(builder, "READ"); //$NON-NLS-1$
     }
 
     if ((newOps & SelectionKey.OP_WRITE) != 0)
     {
-      addInterestOp(builder, "WRITE");
+      addInterestOp(builder, "WRITE"); //$NON-NLS-1$
     }
 
     return builder.toString();
@@ -74,8 +74,8 @@ public final class TCPUtil
 
     if (oldOps != newOps)
     {
-      System.out.println(selectionKey.channel().toString() + ": Setting interest "
-          + formatInterestOps(newOps) + " (was " + formatInterestOps(oldOps).toLowerCase() + ")");
+      System.out.println(selectionKey.channel().toString() + ": Setting interest " //$NON-NLS-1$
+          + formatInterestOps(newOps) + " (was " + formatInterestOps(oldOps).toLowerCase() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
       selectionKey.interestOps(newOps);
     }
   }
@@ -104,7 +104,7 @@ public final class TCPUtil
   {
     if (builder.length() != 0)
     {
-      builder.append("|");
+      builder.append("|"); //$NON-NLS-1$
     }
 
     builder.append(op);

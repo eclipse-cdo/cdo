@@ -26,7 +26,7 @@ public class BufferFactoryImpl extends BufferProviderImpl
   protected Buffer doProvideBuffer()
   {
     BufferImpl buffer = new BufferImpl(this, getBufferCapacity());
-    System.out.println(toString() + ": Created " + buffer);
+    System.out.println(toString() + ": Created " + buffer); //$NON-NLS-1$
     return buffer;
   }
 
@@ -44,6 +44,6 @@ public class BufferFactoryImpl extends BufferProviderImpl
   @Override
   public String toString()
   {
-    return "BufferFactory[capacity=" + getBufferCapacity() + "]";
+    return "BufferFactory[capacity=" + getBufferCapacity() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

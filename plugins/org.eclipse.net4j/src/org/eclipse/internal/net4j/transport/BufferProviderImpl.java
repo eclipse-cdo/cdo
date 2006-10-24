@@ -59,7 +59,7 @@ public abstract class BufferProviderImpl implements BufferProvider, BufferProvid
   @Override
   public String toString()
   {
-    return "BufferProvider[capacity=" + bufferCapacity + "]";
+    return "BufferProvider[capacity=" + bufferCapacity + "]"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   protected abstract Buffer doProvideBuffer();

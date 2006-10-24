@@ -64,6 +64,6 @@ public class ChannelInputStream extends BufferInputStream
   @Override
   public String toString()
   {
-    return "ChannelInputStream[" + channel + "]";
+    return "ChannelInputStream[" + channel + "]"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

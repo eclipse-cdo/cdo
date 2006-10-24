@@ -41,7 +41,7 @@ public abstract class SignalActor<RESULT> extends Signal
   {
     if (terminated)
     {
-      throw new IllegalStateException("Terminated");
+      throw new IllegalStateException("Terminated"); //$NON-NLS-1$
     }
 
     getProtocol().startSignal(this, timeout);
@@ -52,8 +52,8 @@ public abstract class SignalActor<RESULT> extends Signal
   @Override
   public String toString()
   {
-    return "SignalActor[" + getSignalID() + ", " + getProtocol() + ", correlation="
-        + getCorrelationID() + (terminated ? ", SENT" : "") + "]";
+    return "SignalActor[" + getSignalID() + ", " + getProtocol() + ", correlation=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        + getCorrelationID() + (terminated ? ", SENT" : "") + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   protected void setResult(RESULT result)
@@ -66,12 +66,12 @@ public abstract class SignalActor<RESULT> extends Signal
     BufferHandler receiveHandler = channel.getReceiveHandler();
     if (receiveHandler == null)
     {
-      throw new IllegalArgumentException("Channel has no protocol");
+      throw new IllegalArgumentException("Channel has no protocol"); //$NON-NLS-1$
     }
 
     if (!(receiveHandler instanceof SignalProtocol))
     {
-      throw new IllegalArgumentException("Channel has no signal protocol");
+      throw new IllegalArgumentException("Channel has no signal protocol"); //$NON-NLS-1$
     }
 
     return (SignalProtocol)receiveHandler;

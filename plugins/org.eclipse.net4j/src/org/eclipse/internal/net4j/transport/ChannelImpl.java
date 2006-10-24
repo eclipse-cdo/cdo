@@ -61,7 +61,7 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   {
     if (channelID == BufferImpl.NO_CHANNEL)
     {
-      throw new IllegalArgumentException("channelID == INVALID_CHANNEL_ID");
+      throw new IllegalArgumentException("channelID == INVALID_CHANNEL_ID"); //$NON-NLS-1$
     }
 
     this.channelID = channelID;
@@ -127,7 +127,7 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
     State state = ((BufferImpl)buffer).getState();
     if (state != State.PUTTING)
     {
-      System.out.println(toString() + ": Ignoring buffer in state == " + state);
+      System.out.println(toString() + ": Ignoring buffer in state == " + state); //$NON-NLS-1$
       return;
     }
 
@@ -139,7 +139,7 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   {
     if (receiveHandler == null)
     {
-      System.out.println(toString() + ": Ignoring buffer because receiveHandler == null");
+      System.out.println(toString() + ": Ignoring buffer because receiveHandler == null"); //$NON-NLS-1$
       buffer.release();
       return;
     }
@@ -156,7 +156,7 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   @Override
   public String toString()
   {
-    return "Channel[" + connector + ", channelID=" + channelID + "]";
+    return "Channel[" + connector + ", channelID=" + channelID + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   @Override
@@ -165,12 +165,12 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
     super.onAboutToActivate();
     if (channelID == BufferImpl.NO_CHANNEL)
     {
-      throw new IllegalStateException("channelID == INVALID_CHANNEL_ID");
+      throw new IllegalStateException("channelID == INVALID_CHANNEL_ID"); //$NON-NLS-1$
     }
 
     if (connector == null)
     {
-      throw new IllegalStateException("connector == null");
+      throw new IllegalStateException("connector == null"); //$NON-NLS-1$
     }
   }
 

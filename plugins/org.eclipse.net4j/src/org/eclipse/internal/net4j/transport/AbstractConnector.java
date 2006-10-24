@@ -43,7 +43,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     @Override
     public String toString()
     {
-      return "NullChannel";
+      return "NullChannel"; //$NON-NLS-1$
     }
   };
 
@@ -189,8 +189,8 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     State oldState = getState();
     if (newState != oldState)
     {
-      System.out.println(toString() + ": Setting state " + newState + " (was "
-          + oldState.toString().toLowerCase() + ")");
+      System.out.println(toString() + ": Setting state " + newState + " (was " //$NON-NLS-1$ //$NON-NLS-2$
+          + oldState.toString().toLowerCase() + ")"); //$NON-NLS-1$
       state = newState;
       fireStateChanged(newState, oldState);
 
@@ -264,7 +264,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
 
     try
     {
-      System.out.println(toString() + ": Waiting for connection...");
+      System.out.println(toString() + ": Waiting for connection..."); //$NON-NLS-1$
       return finishedNegotiating.await(timeout, TimeUnit.MILLISECONDS);
     }
     catch (InterruptedException ex)
@@ -343,8 +343,8 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
   {
     ChannelImpl channel = new ChannelImpl(receiveExecutor);
     Protocol protocol = createProtocol(protocolID, channel);
-    System.out.println(toString() + ": Opening channel " + channelID
-        + (protocol == null ? " without protocol" : " with protocol " + protocolID));
+    System.out.println(toString() + ": Opening channel " + channelID //$NON-NLS-1$
+        + (protocol == null ? " without protocol" : " with protocol " + protocolID)); //$NON-NLS-1$ //$NON-NLS-2$
 
     channel.setChannelID(channelID);
     channel.setConnector(this);
@@ -368,7 +368,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     }
     catch (IndexOutOfBoundsException ex)
     {
-      System.out.println(toString() + ": Invalid channelID " + channelID);
+      System.out.println(toString() + ": Invalid channelID " + channelID); //$NON-NLS-1$
       return null;
     }
   }
@@ -424,7 +424,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     channel.removeLifecycleListener(channelLifecycleListener);
     int channelID = channel.getChannelID();
 
-    System.out.println(toString() + ": Removing channel " + channelID);
+    System.out.println(toString() + ": Removing channel " + channelID); //$NON-NLS-1$
     channels.set(channelID, NULL_CHANNEL);
   }
 
@@ -444,7 +444,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     ProtocolFactory factory = registry.lookup(protocolID);
     if (factory == null)
     {
-      System.out.println(toString() + ": Unknown protocol " + protocolID);
+      System.out.println(toString() + ": Unknown protocol " + protocolID); //$NON-NLS-1$
       return null;
     }
 
@@ -516,17 +516,17 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     super.onAboutToActivate();
     if (bufferProvider == null)
     {
-      throw new IllegalStateException("bufferProvider == null");
+      throw new IllegalStateException("bufferProvider == null"); //$NON-NLS-1$
     }
 
     if (protocolFactoryRegistry == null)
     {
-      System.out.println(toString() + ": (INFO) protocolFactoryRegistry == null");
+      System.out.println(toString() + ": (INFO) protocolFactoryRegistry == null"); //$NON-NLS-1$
     }
 
     if (receiveExecutor == null)
     {
-      System.out.println(toString() + ": (INFO) receiveExecutor == null");
+      System.out.println(toString() + ": (INFO) receiveExecutor == null"); //$NON-NLS-1$
     }
   }
 

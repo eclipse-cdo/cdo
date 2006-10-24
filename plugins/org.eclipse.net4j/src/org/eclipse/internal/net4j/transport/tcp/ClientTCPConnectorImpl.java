@@ -55,7 +55,7 @@ public class ClientTCPConnectorImpl extends AbstractTCPConnector
   @Override
   public String toString()
   {
-    return "ClientTCPConnector[" + host + ":" + port + "]";
+    return "ClientTCPConnector[" + host + ":" + port + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   @Override
@@ -64,7 +64,7 @@ public class ClientTCPConnectorImpl extends AbstractTCPConnector
     super.onAboutToActivate();
     if (host == null || host.length() == 0)
     {
-      throw new IllegalArgumentException("host == null || host.length() == 0");
+      throw new IllegalArgumentException("host == null || host.length() == 0"); //$NON-NLS-1$
     }
   }
 

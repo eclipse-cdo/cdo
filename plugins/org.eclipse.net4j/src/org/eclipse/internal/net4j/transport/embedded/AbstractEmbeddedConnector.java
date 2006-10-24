@@ -52,7 +52,7 @@ public abstract class AbstractEmbeddedConnector extends AbstractConnector
       ChannelImpl channel = getPeer().createChannel(channelID, protocolID);
       if (channel == null)
       {
-        throw new ConnectorException("Failed to register channel with peer");
+        throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
       }
 
       channel.activate();
@@ -73,7 +73,7 @@ public abstract class AbstractEmbeddedConnector extends AbstractConnector
     ChannelImpl peerChannel = peer.getChannel(channelID);
     if (peerChannel == null)
     {
-      throw new IllegalStateException("peerChannel == null");
+      throw new IllegalStateException("peerChannel == null"); //$NON-NLS-1$
     }
 
     Queue<Buffer> localQueue = ((ChannelImpl)localChannel).getSendQueue();

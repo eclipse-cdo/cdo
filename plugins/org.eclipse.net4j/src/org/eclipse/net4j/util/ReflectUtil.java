@@ -28,7 +28,7 @@ public final class ReflectUtil
 
   public static final Object[] NO_ARGUMENTS = null;
 
-  private static final String NL = System.getProperty("line.separator");
+  private static final String NL = System.getProperty("line.separator"); //$NON-NLS-1$
 
   private static final Method hashCodeMethod = getHashCodeMethod();
 
@@ -87,12 +87,12 @@ public final class ReflectUtil
 
   public static String getLabel(Object object)
   {
-    return getSimpleClassName(object) + "@" + getID(object);
+    return getSimpleClassName(object) + "@" + getID(object); //$NON-NLS-1$
   }
 
   public static void dump(Object object)
   {
-    dump(object, "");
+    dump(object, ""); //$NON-NLS-1$
   }
 
   public static void dump(Object object, String prefix)
@@ -106,7 +106,7 @@ public final class ReflectUtil
     builder.append(prefix);
     builder.append(getLabel(object));
     builder.append(NL);
-    dumpSegment(object.getClass(), object, prefix + "  ", builder);
+    dumpSegment(object.getClass(), object, prefix + "  ", builder); //$NON-NLS-1$
     out.print(builder.toString());
   }
 
@@ -118,7 +118,7 @@ public final class ReflectUtil
       dumpSegment(segment.getSuperclass(), object, prefix, builder);
     }
 
-    String segmentPrefix = segment == object.getClass() ? "" : getSimpleName(segment) + ".";
+    String segmentPrefix = segment == object.getClass() ? "" : getSimpleName(segment) + "."; //$NON-NLS-1$ //$NON-NLS-2$
     Field[] fields = segment.getDeclaredFields();
     for (Field field : fields)
     {
@@ -135,7 +135,7 @@ public final class ReflectUtil
       builder.append(prefix);
       builder.append(segmentPrefix);
       builder.append(field.getName());
-      builder.append(" = ");
+      builder.append(" = "); //$NON-NLS-1$
       builder.append(getValue(object, field));
       builder.append(NL);
     }
@@ -167,7 +167,7 @@ public final class ReflectUtil
 
     try
     {
-      method = ROOT_CLASS.getMethod("hashCode", NO_PARAMETERS);
+      method = ROOT_CLASS.getMethod("hashCode", NO_PARAMETERS); //$NON-NLS-1$
     }
     catch (Exception ex)
     {

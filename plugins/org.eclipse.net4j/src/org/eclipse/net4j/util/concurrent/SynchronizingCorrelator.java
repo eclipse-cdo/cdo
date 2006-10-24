@@ -43,7 +43,7 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements
     Synchronizer<RESULT> synchronizer = createSynchronizer(correlation);
     if (map.putIfAbsent(correlation, synchronizer) != null)
     {
-      throw new IllegalStateException("Already correlated: " + correlation);
+      throw new IllegalStateException("Already correlated: " + correlation); //$NON-NLS-1$
     }
 
     return synchronizer;

@@ -25,7 +25,7 @@ public final class HexUtil
   public static String toHex(int b)
   {
     assertByte(b);
-    return "" + DIGITS[b >> 4] + DIGITS[b & 0xf];
+    return "" + DIGITS[b >> 4] + DIGITS[b & 0xf]; //$NON-NLS-1$
   }
 
   public static void appendHex(StringBuilder builder, int b)
@@ -39,7 +39,7 @@ public final class HexUtil
   {
     if (b < 0 || b > 255)
     {
-      throw new IllegalArgumentException("b < 0 || b > 255");
+      throw new IllegalArgumentException("b < 0 || b > 255"); //$NON-NLS-1$
     }
   }
 }

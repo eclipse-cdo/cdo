@@ -292,7 +292,7 @@ public abstract class AbstractCachingMap<K, V> extends AbstractDelegatingMap<K, 
   protected String mergedToString()
   {
     StringBuffer buf = new StringBuffer();
-    buf.append("{");
+    buf.append("{"); //$NON-NLS-1$
 
     Iterator<Entry<K, V>> i = entrySet().iterator();
     boolean hasNext = i.hasNext();
@@ -302,20 +302,20 @@ public abstract class AbstractCachingMap<K, V> extends AbstractDelegatingMap<K, 
       K key = e.getKey();
       V value = e.getValue();
       if (key == this)
-        buf.append("(this Map)");
+        buf.append("(this Map)"); //$NON-NLS-1$
       else
         buf.append(key);
-      buf.append("=");
+      buf.append("="); //$NON-NLS-1$
       if (value == this)
-        buf.append("(this Map)");
+        buf.append("(this Map)"); //$NON-NLS-1$
       else
         buf.append(value);
       hasNext = i.hasNext();
       if (hasNext)
-        buf.append(", ");
+        buf.append(", "); //$NON-NLS-1$
     }
 
-    buf.append("}");
+    buf.append("}"); //$NON-NLS-1$
     return buf.toString();
   }
 

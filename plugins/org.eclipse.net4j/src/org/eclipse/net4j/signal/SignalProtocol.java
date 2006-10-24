@@ -48,7 +48,7 @@ public abstract class SignalProtocol extends AbstractProtocol
 
     if (executorService == null)
     {
-      throw new IllegalArgumentException("executorService == null");
+      throw new IllegalArgumentException("executorService == null"); //$NON-NLS-1$
     }
 
     this.executorService = executorService;
@@ -63,7 +63,7 @@ public abstract class SignalProtocol extends AbstractProtocol
   {
     ByteBuffer byteBuffer = buffer.getByteBuffer();
     int correlationID = byteBuffer.getInt();
-    System.out.println(toString() + ": Received buffer for correlation " + correlationID);
+    System.out.println(toString() + ": Received buffer for correlation " + correlationID); //$NON-NLS-1$
 
     Signal signal;
     if (correlationID > 0)
@@ -73,7 +73,7 @@ public abstract class SignalProtocol extends AbstractProtocol
       if (signal == null)
       {
         short signalID = byteBuffer.getShort();
-        System.out.println(toString() + ": Got signal id " + signalID);
+        System.out.println(toString() + ": Got signal id " + signalID); //$NON-NLS-1$
 
         signal = createSignalReactor(signalID);
         signal.setProtocol(this);
@@ -90,7 +90,7 @@ public abstract class SignalProtocol extends AbstractProtocol
       signal = signals.get(-correlationID);
       if (signal == null)
       {
-        System.out.println(toString() + ": Discarding buffer");
+        System.out.println(toString() + ": Discarding buffer"); //$NON-NLS-1$
         buffer.release();
       }
     }
@@ -106,7 +106,7 @@ public abstract class SignalProtocol extends AbstractProtocol
   @Override
   public String toString()
   {
-    return "SignalProtocol[" + getProtocolID() + ", " + getChannel() + "]";
+    return "SignalProtocol[" + getProtocolID() + ", " + getChannel() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   protected abstract SignalReactor createSignalReactor(short signalID);
@@ -115,7 +115,7 @@ public abstract class SignalProtocol extends AbstractProtocol
   {
     if (signalActor.getProtocol() != this)
     {
-      throw new IllegalArgumentException("signalActor.getProtocol() != this");
+      throw new IllegalArgumentException("signalActor.getProtocol() != this"); //$NON-NLS-1$
     }
 
     short signalID = signalActor.getSignalID();
@@ -138,7 +138,7 @@ public abstract class SignalProtocol extends AbstractProtocol
     int correlationID = nextCorrelationID;
     if (nextCorrelationID == MAX_CORRELATION_ID)
     {
-      System.out.println(toString() + ": Correlation wrap around");
+      System.out.println(toString() + ": Correlation wrap around"); //$NON-NLS-1$
       nextCorrelationID = MIN_CORRELATION_ID;
     }
     else
@@ -186,11 +186,11 @@ public abstract class SignalProtocol extends AbstractProtocol
           Buffer buffer = delegate.provideBuffer();
           ByteBuffer byteBuffer = buffer.startPutting(getChannel().getChannelID());
 
-          System.out.println("Providing buffer for correlation " + correlationID);
+          System.out.println("Providing buffer for correlation " + correlationID); //$NON-NLS-1$
           byteBuffer.putInt(correlationID);
           if (firstBuffer)
           {
-            System.out.println(SignalProtocol.this.toString() + ": Put signal id " + signalID);
+            System.out.println(SignalProtocol.this.toString() + ": Put signal id " + signalID); //$NON-NLS-1$
             byteBuffer.putShort(signalID);
           }
 

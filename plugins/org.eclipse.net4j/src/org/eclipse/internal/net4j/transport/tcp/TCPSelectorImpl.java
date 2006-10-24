@@ -45,10 +45,10 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
   {
     if (listener == null)
     {
-      throw new IllegalArgumentException("listener == null");
+      throw new IllegalArgumentException("listener == null"); //$NON-NLS-1$
     }
 
-    System.out.println(toString() + ": Registering " + TCPUtil.toString(channel));
+    System.out.println(toString() + ": Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
     return channel.register(selector, SelectionKey.OP_ACCEPT, listener);
   }
 
@@ -57,10 +57,10 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
   {
     if (listener == null)
     {
-      throw new IllegalArgumentException("listener == null");
+      throw new IllegalArgumentException("listener == null"); //$NON-NLS-1$
     }
 
-    System.out.println(toString() + ": Registering " + TCPUtil.toString(channel));
+    System.out.println(toString() + ": Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
     return channel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ, listener);
   }
 
@@ -116,7 +116,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
   @Override
   public String toString()
   {
-    return "TCPSelector";
+    return "TCPSelector"; //$NON-NLS-1$
   }
 
   protected void handleSelection(SelectionKey selKey) throws IOException
@@ -129,7 +129,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
 
       if (selKey.isAcceptable())
       {
-        System.out.println(toString() + ": Accepting " + TCPUtil.toString(ssChannel));
+        System.out.println(toString() + ": Accepting " + TCPUtil.toString(ssChannel)); //$NON-NLS-1$
         listener.handleAccept(this, ssChannel);
       }
     }
@@ -140,19 +140,19 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
 
       if (selKey.isConnectable())
       {
-        System.out.println(toString() + ": Connecting " + TCPUtil.toString(sChannel));
+        System.out.println(toString() + ": Connecting " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
         listener.handleConnect(this, sChannel);
       }
 
       if (selKey.isReadable())
       {
-        System.out.println(toString() + ": Reading " + TCPUtil.toString(sChannel));
+        System.out.println(toString() + ": Reading " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
         listener.handleRead(this, sChannel);
       }
 
       if (selKey.isWritable())
       {
-        System.out.println(toString() + ": Writing " + TCPUtil.toString(sChannel));
+        System.out.println(toString() + ": Writing " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
         listener.handleWrite(this, sChannel);
       }
     }

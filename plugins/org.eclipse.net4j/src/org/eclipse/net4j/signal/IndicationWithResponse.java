@@ -29,10 +29,10 @@ public abstract class IndicationWithResponse extends SignalReactor
   @Override
   protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    System.out.println("================ Indicating " + this);
+    System.out.println("================ Indicating " + this); //$NON-NLS-1$
     indicating(new ExtendedDataInputStream(in));
 
-    System.out.println("================ Responding " + this);
+    System.out.println("================ Responding " + this); //$NON-NLS-1$
     responding(new ExtendedDataOutputStream(out));
     out.flush();
   }

@@ -30,7 +30,7 @@ public abstract class Request<RESULT> extends SignalActor<RESULT>
   @Override
   protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    System.out.println("================ Requesting " + this);
+    System.out.println("================ Requesting " + this); //$NON-NLS-1$
     requesting(new ExtendedDataOutputStream(out));
     out.flush();
   }

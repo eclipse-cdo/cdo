@@ -31,6 +31,6 @@ public class SynchronousWorkSerializer implements WorkSerializer
   @Override
   public String toString()
   {
-    return "SynchronousWorkSerializer";
+    return "SynchronousWorkSerializer"; //$NON-NLS-1$
   }
 }

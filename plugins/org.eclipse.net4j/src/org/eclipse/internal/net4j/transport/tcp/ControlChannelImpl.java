@@ -67,7 +67,7 @@ public final class ControlChannelImpl extends ChannelImpl
   {
     if (channelID <= CONTROL_CHANNEL_ID)
     {
-      throw new IllegalArgumentException("channelID <= CONTROL_CHANNEL_ID");
+      throw new IllegalArgumentException("channelID <= CONTROL_CHANNEL_ID"); //$NON-NLS-1$
     }
   }
 
@@ -77,7 +77,7 @@ public final class ControlChannelImpl extends ChannelImpl
     {
       ByteBuffer byteBuffer = buffer.getByteBuffer();
       byte opcode = byteBuffer.get();
-      System.out.println("CONTROL: " + opcode);
+      System.out.println("CONTROL: " + opcode); //$NON-NLS-1$
       switch (opcode)
       {
       case OPCODE_REGISTRATION:
@@ -123,7 +123,7 @@ public final class ControlChannelImpl extends ChannelImpl
         throw new UnsupportedOperationException();
 
       default:
-        System.out.println("Invalid opcode: " + opcode);
+        System.out.println("Invalid opcode: " + opcode); //$NON-NLS-1$
         ((AbstractTCPConnector)getConnector()).deactivate();
         break;
       }

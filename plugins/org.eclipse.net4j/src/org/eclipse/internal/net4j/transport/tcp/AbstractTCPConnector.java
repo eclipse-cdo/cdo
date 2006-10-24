@@ -152,7 +152,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
         }
         else
         {
-          System.out.println(toString() + ": Discarding buffer from unknown channel");
+          System.out.println(toString() + ": Discarding buffer from unknown channel"); //$NON-NLS-1$
           inputBuffer.release();
         }
 
@@ -240,7 +240,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
   {
     if (!controlChannel.registerChannel(channelID, protocolID))
     {
-      throw new ConnectorException("Failed to register channel with peer");
+      throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
     }
   }
 

@@ -42,12 +42,12 @@ public class BufferOutputStream extends OutputStream
   {
     if (bufferHandler == null)
     {
-      throw new IllegalArgumentException("bufferHandler == null");
+      throw new IllegalArgumentException("bufferHandler == null"); //$NON-NLS-1$
     }
 
     if (bufferProvider == null)
     {
-      throw new IllegalArgumentException("bufferProvider == null");
+      throw new IllegalArgumentException("bufferProvider == null"); //$NON-NLS-1$
     }
 
     this.bufferHandler = bufferHandler;
@@ -66,8 +66,8 @@ public class BufferOutputStream extends OutputStream
     ensureBuffer();
     if (TRACE)
     {
-      System.out.println("--> " + HexUtil.toHex(b)
-          + (b >= 32 ? " " + Character.toString((char)b) : ""));
+      System.out.println("--> " + HexUtil.toHex(b) //$NON-NLS-1$
+          + (b >= 32 ? " " + Character.toString((char)b) : "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     ByteBuffer buffer = currentBuffer.getByteBuffer();
@@ -118,7 +118,7 @@ public class BufferOutputStream extends OutputStream
   @Override
   public String toString()
   {
-    return "BufferOutputStream";
+    return "BufferOutputStream"; //$NON-NLS-1$
   }
 
   protected void ensureBuffer()
@@ -142,6 +142,6 @@ public class BufferOutputStream extends OutputStream
       return (BufferProvider)bufferHandler;
     }
 
-    throw new IllegalArgumentException("Buffer handler unable to provide buffers");
+    throw new IllegalArgumentException("Buffer handler unable to provide buffers"); //$NON-NLS-1$
   }
 }

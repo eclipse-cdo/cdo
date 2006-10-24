@@ -22,7 +22,7 @@ public abstract class SignalReactor extends Signal
   @Override
   public String toString()
   {
-    return "SignalReactor[" + getSignalID() + ", " + getProtocol() + ", correlation="
-        + getCorrelationID() + "]";
+    return "SignalReactor[" + getSignalID() + ", " + getProtocol() + ", correlation=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        + getCorrelationID() + "]"; //$NON-NLS-1$
   }
 }

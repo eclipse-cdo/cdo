@@ -226,7 +226,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
   @Override
   public String toString()
   {
-    return "TCPAcceptor[" + "/" + listenAddr + ":" + listenPort + "]";
+    return "TCPAcceptor[" + "/" + listenAddr + ":" + listenPort + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
   }
 
   protected void addConnector(SocketChannel socketChannel)
@@ -286,17 +286,17 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
     super.onAboutToActivate();
     if (bufferProvider == null)
     {
-      throw new IllegalStateException("bufferProvider == null");
+      throw new IllegalStateException("bufferProvider == null"); //$NON-NLS-1$
     }
 
     if (protocolFactoryRegistry == null)
     {
-      System.out.println(toString() + ": (INFO) protocolFactoryRegistry == null");
+      System.out.println(toString() + ": (INFO) protocolFactoryRegistry == null"); //$NON-NLS-1$
     }
 
     if (receiveExecutor == null)
     {
-      System.out.println(toString() + ": (INFO) receiveExecutor == null");
+      System.out.println(toString() + ": (INFO) receiveExecutor == null"); //$NON-NLS-1$
     }
 
     if (selector == null)

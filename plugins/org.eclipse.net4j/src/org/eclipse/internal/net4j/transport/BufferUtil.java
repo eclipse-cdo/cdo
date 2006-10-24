@@ -22,7 +22,7 @@ public final class BufferUtil
 {
   public static final short DEFAULT_BUFFER_CAPACITY = 4096;
 
-  public static final String UTF8_CHAR_SET_NAME = "UTF-8";
+  public static final String UTF8_CHAR_SET_NAME = "UTF-8"; //$NON-NLS-1$
 
   private BufferUtil()
   {
@@ -37,10 +37,10 @@ public final class BufferUtil
 
     if (object == null)
     {
-      throw new IllegalArgumentException("object == null");
+      throw new IllegalArgumentException("object == null"); //$NON-NLS-1$
     }
 
-    throw new IllegalArgumentException("Unable to provide buffers: " + object);
+    throw new IllegalArgumentException("Unable to provide buffers: " + object); //$NON-NLS-1$
   }
 
   public static byte[] toUTF8(String str)
@@ -56,7 +56,7 @@ public final class BufferUtil
       String test = new String(bytes, UTF8_CHAR_SET_NAME);
       if (!str.equals(test))
       {
-        throw new IllegalArgumentException("String not encodable: " + str);
+        throw new IllegalArgumentException("String not encodable: " + str); //$NON-NLS-1$
       }
 
       return bytes;
@@ -107,7 +107,7 @@ public final class BufferUtil
     byte[] bytes = BufferUtil.toUTF8(str);
     if (bytes.length > byteBuffer.remaining())
     {
-      throw new IllegalArgumentException("String too long: " + str);
+      throw new IllegalArgumentException("String too long: " + str); //$NON-NLS-1$
     }
 
     putByteArray(byteBuffer, bytes);

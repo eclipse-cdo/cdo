@@ -56,11 +56,11 @@ public class ServerTCPConnectorImpl extends AbstractTCPConnector
     try
     {
       SocketAddress address = getSocketChannel().socket().getRemoteSocketAddress();
-      return "ServerTCPConnector[" + address + "]";
+      return "ServerTCPConnector[" + address + "]"; //$NON-NLS-1$ //$NON-NLS-2$
     }
     catch (Exception ex)
     {
-      return "ServerTCPConnector";
+      return "ServerTCPConnector"; //$NON-NLS-1$
     }
   }
 

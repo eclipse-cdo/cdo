@@ -29,7 +29,7 @@ public class AsynchronousWorkSerializer implements WorkSerializer, Runnable
   {
     if (executorService == null)
     {
-      throw new IllegalArgumentException("executorService == null");
+      throw new IllegalArgumentException("executorService == null"); //$NON-NLS-1$
     }
 
     this.executorService = executorService;
@@ -58,7 +58,7 @@ public class AsynchronousWorkSerializer implements WorkSerializer, Runnable
         occupation.setOccupied(true);
       }
 
-      System.out.println(toString() + ": Notifying executor service");
+      System.out.println(toString() + ": Notifying executor service"); //$NON-NLS-1$
       executorService.execute(this);
     }
   }
@@ -104,7 +104,7 @@ public class AsynchronousWorkSerializer implements WorkSerializer, Runnable
   @Override
   public String toString()
   {
-    return "AsynchronousWorkSerializer[" + executorService + "]";
+    return "AsynchronousWorkSerializer[" + executorService + "]"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**

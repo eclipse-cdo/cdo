@@ -39,7 +39,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
   {
     if (!active)
     {
-      System.out.println(toString() + ": Activating");
+      System.out.println(toString() + ": Activating"); //$NON-NLS-1$
       onAboutToActivate();
       fireLifecycleAboutToActivate();
 
@@ -49,7 +49,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
 
       if (DUMP_ON_ACTIVATE)
       {
-        ReflectUtil.dump(this, toString() + ": DUMP ");
+        ReflectUtil.dump(this, toString() + ": DUMP "); //$NON-NLS-1$
       }
 }
   }
@@ -58,7 +58,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
   {
     if (active)
     {
-      System.out.println(toString() + ": Deactivating");
+      System.out.println(toString() + ": Deactivating"); //$NON-NLS-1$
       fireLifecycleDeactivating();
 
       try

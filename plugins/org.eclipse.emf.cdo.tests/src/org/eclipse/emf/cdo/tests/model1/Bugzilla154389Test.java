@@ -29,8 +29,6 @@ import testmodel1.TreeNode;
  * 
  * So, it looks like the client and server don't match here.
  * 
- * Both client and server are current with CVS as of today.
- * 
  * See https://bugs.eclipse.org/bugs/show_bug.cgi?id=154389
  */
 public class Bugzilla154389Test extends AbstractModel1Test

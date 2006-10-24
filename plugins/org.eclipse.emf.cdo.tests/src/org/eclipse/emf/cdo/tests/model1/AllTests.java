@@ -31,6 +31,7 @@ public class AllTests
     suite.addTestSuite(BidiReferencesTest.class);
     suite.addTestSuite(Bugzilla154389Test.class);
     suite.addTestSuite(Bugzilla155899Test.class);
+    suite.addTestSuite(Bugzilla162017Test.class);
     return suite;
   }
 }

@@ -80,6 +80,7 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
   @Override
   protected void tearDown() throws Exception
   {
+    Thread.sleep(200);
     JdbcTemplate jdbc = jdbc();
     wipeDatabase(jdbc);
 

@@ -40,17 +40,18 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
     if (!active)
     {
       System.out.println(toString() + ": Activating");
-      onAccessBeforeActivate();
-      onActivate();
+      onAboutToActivate();
+      fireLifecycleAboutToActivate();
+
       active = true;
+      onActivate();
+      fireLifecycleActivated();
 
       if (DUMP_ON_ACTIVATE)
       {
         ReflectUtil.dump(this, toString() + ": DUMP ");
       }
-
-      fireLifecycleActivated();
-    }
+}
   }
 
   public final synchronized Exception deactivate()
@@ -96,6 +97,20 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
     }
   }
 
+  protected void fireLifecycleAboutToActivate()
+  {
+    for (LifecycleListener listener : listeners)
+    {
+      try
+      {
+        listener.notifyLifecycleAboutToActivate(this);
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
+      }
+    }
+  }
   protected void fireLifecycleActivated()
   {
     for (LifecycleListener listener : listeners)
@@ -126,7 +141,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
     }
   }
 
-  protected void onAccessBeforeActivate() throws Exception
+  protected void onAboutToActivate() throws Exception
   {
   }
 

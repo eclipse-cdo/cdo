@@ -150,6 +150,8 @@ public interface Connector
    */
   public interface ChannelListener
   {
+    public void notifyChannelAboutToOpen(Channel channel);
+
     public void notifyChannelOpened(Channel channel);
 
     public void notifyChannelClosing(Channel channel);

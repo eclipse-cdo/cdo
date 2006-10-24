@@ -451,6 +451,20 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     return factory.createProtocol(channel);
   }
 
+  protected void fireChannelAboutToOpen(Channel channel)
+  {
+    for (ChannelListener listener : channelListeners)
+    {
+      try
+      {
+        listener.notifyChannelOpened(channel);
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
+      }
+    }
+  }
   protected void fireChannelOpened(Channel channel)
   {
     for (ChannelListener listener : channelListeners)
@@ -497,9 +511,9 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
   }
 
   @Override
-  protected void onAccessBeforeActivate() throws Exception
+  protected void onAboutToActivate() throws Exception
   {
-    super.onAccessBeforeActivate();
+    super.onAboutToActivate();
     if (bufferProvider == null)
     {
       throw new IllegalStateException("bufferProvider == null");
@@ -551,6 +565,12 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
    */
   private final class ChannelLifecycleListener implements LifecycleListener
   {
+    public void notifyLifecycleAboutToActivate(LifecycleNotifier notifier)
+    {
+      ChannelImpl channel = (ChannelImpl)notifier;
+      fireChannelAboutToOpen(channel);
+    }
+
     public void notifyLifecycleActivated(LifecycleNotifier notifier)
     {
       ChannelImpl channel = (ChannelImpl)notifier;

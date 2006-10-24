@@ -160,9 +160,9 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   }
 
   @Override
-  protected void onAccessBeforeActivate() throws Exception
+  protected void onAboutToActivate() throws Exception
   {
-    super.onAccessBeforeActivate();
+    super.onAboutToActivate();
     if (channelID == BufferImpl.NO_CHANNEL)
     {
       throw new IllegalStateException("channelID == INVALID_CHANNEL_ID");

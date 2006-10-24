@@ -59,9 +59,9 @@ public class ClientTCPConnectorImpl extends AbstractTCPConnector
   }
 
   @Override
-  protected void onAccessBeforeActivate() throws Exception
+  protected void onAboutToActivate() throws Exception
   {
-    super.onAccessBeforeActivate();
+    super.onAboutToActivate();
     if (host == null || host.length() == 0)
     {
       throw new IllegalArgumentException("host == null || host.length() == 0");

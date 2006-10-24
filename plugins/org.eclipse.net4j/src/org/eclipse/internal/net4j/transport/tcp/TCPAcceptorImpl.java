@@ -178,6 +178,11 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
     listeners.remove(listener);
   }
 
+  public void notifyLifecycleAboutToActivate(LifecycleNotifier notifier)
+  {
+    // Do nothing
+  }
+
   public void notifyLifecycleActivated(LifecycleNotifier notifier)
   {
     // Do nothing
@@ -276,9 +281,9 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
   }
 
   @Override
-  protected void onAccessBeforeActivate() throws Exception
+  protected void onAboutToActivate() throws Exception
   {
-    super.onAccessBeforeActivate();
+    super.onAboutToActivate();
     if (bufferProvider == null)
     {
       throw new IllegalStateException("bufferProvider == null");

@@ -74,7 +74,8 @@ public class TCPTransportTest extends TestCase
     assertTrue(selector.isActive());
 
     acceptor = (TCPAcceptorImpl)Net4jFactory.createTCPAcceptor(bufferPool, selector);
-    connector = (AbstractTCPConnector)Net4jFactory.createTCPConnector(bufferPool, selector, "localhost");
+    connector = (AbstractTCPConnector)Net4jFactory.createTCPConnector(bufferPool, selector,
+        "localhost");
   }
 
   @Override
@@ -275,6 +276,10 @@ public class TCPTransportTest extends TestCase
       {
         connector.addChannelListener(new Connector.ChannelListener()
         {
+          public void notifyChannelAboutToOpen(Channel channel)
+          {
+          }
+
           public void notifyChannelClosing(Channel channel)
           {
           }
@@ -332,6 +337,10 @@ public class TCPTransportTest extends TestCase
       {
         connector.addChannelListener(new Connector.ChannelListener()
         {
+          public void notifyChannelAboutToOpen(Channel channel)
+          {
+          }
+
           public void notifyChannelClosing(Channel channel)
           {
           }
@@ -396,6 +405,10 @@ public class TCPTransportTest extends TestCase
       {
         connector.addChannelListener(new Connector.ChannelListener()
         {
+          public void notifyChannelAboutToOpen(Channel channel)
+          {
+          }
+
           public void notifyChannelClosing(Channel channel)
           {
           }
@@ -474,6 +487,10 @@ public class TCPTransportTest extends TestCase
       {
         connector.addChannelListener(new Connector.ChannelListener()
         {
+          public void notifyChannelAboutToOpen(Channel channel)
+          {
+          }
+
           public void notifyChannelClosing(Channel channel)
           {
           }

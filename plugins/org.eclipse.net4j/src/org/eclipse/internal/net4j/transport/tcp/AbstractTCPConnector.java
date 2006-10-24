@@ -256,9 +256,9 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
   }
 
   @Override
-  protected void onAccessBeforeActivate() throws Exception
+  protected void onAboutToActivate() throws Exception
   {
-    super.onAccessBeforeActivate();
+    super.onAboutToActivate();
     if (selector == null)
     {
       selector = Net4jFactory.createTCPSelector();

@@ -1,113 +1,76 @@
-package org.eclipse.internal.net4j.util.bundle;
+/***************************************************************************
+ * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ **************************************************************************/
+package org.eclipse.internal.net4j.bundle;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.util.tracker.ServiceTracker;
+import org.eclipse.net4j.util.operation.ILogger;
+import org.eclipse.net4j.util.operation.ILogger.Level;
 
+import org.eclipse.internal.net4j.util.operation.ConsoleLogger;
 
+/**
+ * @author Eike Stepper
+ */
 public final class Log
 {
-  private static ServiceTracker logTracker;
+  private static ILogger logger;
 
   private Log()
   {
   };
 
-  static void init(BundleContext bc)
+  public static void log(Level level, Object plastic)
   {
-    logTracker = new ServiceTracker(bc, LogService.class.getName(), null);
-    logTracker.open();
+    getLogger().log(level, plastic);
   }
 
-  static void dispose()
+  public static void error(Object plastic)
   {
-    if (logTracker != null)
+    getLogger().error(plastic);
+  }
+
+  public static void warn(Object plastic)
+  {
+    getLogger().warn(plastic);
+  }
+
+  public static void info(Object plastic)
+  {
+    getLogger().info(plastic);
+  }
+
+  public static void debug(Object plastic)
+  {
+    getLogger().debug(plastic);
+  }
+
+  public static synchronized ILogger getLogger()
+  {
+    if (logger == null)
     {
-      logTracker.close();
-      logTracker = null;
+      logger = new ConsoleLogger(Activator.BUNDLE_ID);
     }
+
+    return logger;
   }
 
-  public static void debug(String message)
+  public static void setLogger(ILogger logger)
   {
-    log(LogService.LOG_DEBUG, message, null);
+    Log.logger = logger;
   }
 
-  public static void debug(String message, Throwable t)
+  public static void unsetLogger(ILogger logger)
   {
-    log(LogService.LOG_DEBUG, message, null);
-  }
-
-  public static void info(String message)
-  {
-    log(LogService.LOG_INFO, message, null);
-  }
-
-  public static void info(String message, Throwable t)
-  {
-    log(LogService.LOG_INFO, message, null);
-  }
-
-  public static void warn(String message)
-  {
-    log(LogService.LOG_WARNING, message, null);
-  }
-
-  public static void warn(String message, Throwable t)
-  {
-    log(LogService.LOG_WARNING, message, null);
-  }
-
-  public static void error(String message)
-  {
-    log(LogService.LOG_ERROR, message, null);
-  }
-
-  public static void error(String message, Throwable t)
-  {
-    log(LogService.LOG_ERROR, message, null);
-  }
-
-  public static void log(int level, String message)
-  {
-    log(level, message, null);
-  }
-
-  public static void log(int level, String message, Throwable t)
-  {
-    LogService logService = (LogService)logTracker.getService();
-    if (logService != null)
+    if (Log.logger == logger)
     {
-      logService.log(level, message, t);
-    }
-    else
-    {
-      switch (level)
-      {
-      case LogService.LOG_DEBUG:
-        System.out.print("[DEBUG] ");
-        break;
-
-      case LogService.LOG_INFO:
-        System.out.print("[INFO] ");
-        break;
-
-      case LogService.LOG_WARNING:
-        System.out.print("[WARN] ");
-        break;
-
-      case LogService.LOG_ERROR:
-        System.out.print("[ERROR] ");
-        break;
-
-      default:
-        break;
-      }
-
-      System.out.println(message);
-      if (t != null)
-      {
-        t.printStackTrace();
-      }
+      Log.logger = null;
     }
   }
 }

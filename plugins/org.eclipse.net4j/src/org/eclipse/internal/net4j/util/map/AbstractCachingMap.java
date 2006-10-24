@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j.util;
+package org.eclipse.internal.net4j.util.map;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;

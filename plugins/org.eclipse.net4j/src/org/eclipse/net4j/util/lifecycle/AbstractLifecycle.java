@@ -51,7 +51,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       {
         ReflectUtil.dump(this, toString() + ": DUMP "); //$NON-NLS-1$
       }
-}
+    }
   }
 
   public final synchronized Exception deactivate()
@@ -111,6 +111,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       }
     }
   }
+
   protected void fireLifecycleActivated()
   {
     for (LifecycleListener listener : listeners)

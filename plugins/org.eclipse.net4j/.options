@@ -1,0 +1,5 @@
+org.eclipse.net4j/debug = false
+
+org.eclipse.net4j/debug.connector = false
+org.eclipse.net4j/debug.connector.state = false
+org.eclipse.net4j/debug.connector.channels = false

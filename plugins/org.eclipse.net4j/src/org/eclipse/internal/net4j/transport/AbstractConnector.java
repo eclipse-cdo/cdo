@@ -24,6 +24,9 @@ import org.eclipse.net4j.util.lifecycle.LifecycleNotifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.IRegistry;
 
+import org.eclipse.internal.net4j.bundle.Log;
+import org.eclipse.internal.net4j.bundle.Trace;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -189,8 +192,12 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     State oldState = getState();
     if (newState != oldState)
     {
-      System.out.println(toString() + ": Setting state " + newState + " (was " //$NON-NLS-1$ //$NON-NLS-2$
-          + oldState.toString().toLowerCase() + ")"); //$NON-NLS-1$
+      if (Trace.CONNECTOR_STATE.isEnabled())
+      {
+        Trace.CONNECTOR_STATE.trace(AbstractConnector.class, "Setting state " + newState + " (was " //$NON-NLS-1$ //$NON-NLS-2$
+            + oldState.toString().toLowerCase() + ")"); //$NON-NLS-1$
+      }
+
       state = newState;
       fireStateChanged(newState, oldState);
 
@@ -264,7 +271,11 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
 
     try
     {
-      System.out.println(toString() + ": Waiting for connection..."); //$NON-NLS-1$
+      if (Trace.CONNECTOR_STATE.isEnabled())
+      {
+        Trace.CONNECTOR_STATE.trace(AbstractConnector.class, "Waiting for connection..."); //$NON-NLS-1$
+      }
+
       return finishedNegotiating.await(timeout, TimeUnit.MILLISECONDS);
     }
     catch (InterruptedException ex)
@@ -343,8 +354,11 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
   {
     ChannelImpl channel = new ChannelImpl(receiveExecutor);
     Protocol protocol = createProtocol(protocolID, channel);
-    System.out.println(toString() + ": Opening channel " + channelID //$NON-NLS-1$
-        + (protocol == null ? " without protocol" : " with protocol " + protocolID)); //$NON-NLS-1$ //$NON-NLS-2$
+    if (Trace.CONNECTOR_CHANNELS.isEnabled())
+    {
+      Trace.CONNECTOR_CHANNELS.trace(AbstractConnector.class, "Opening channel " + channelID //$NON-NLS-1$
+          + (protocol == null ? " without protocol" : " with protocol " + protocolID)); //$NON-NLS-1$ //$NON-NLS-2$
+    }
 
     channel.setChannelID(channelID);
     channel.setConnector(this);
@@ -368,7 +382,11 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     }
     catch (IndexOutOfBoundsException ex)
     {
-      System.out.println(toString() + ": Invalid channelID " + channelID); //$NON-NLS-1$
+      if (Trace.CONNECTOR_CHANNELS.isEnabled())
+      {
+        Trace.CONNECTOR_CHANNELS.trace(AbstractConnector.class, "Invalid channelID " + channelID); //$NON-NLS-1$
+      }
+
       return null;
     }
   }
@@ -423,8 +441,11 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
   {
     channel.removeLifecycleListener(channelLifecycleListener);
     int channelID = channel.getChannelID();
+    if (Trace.CONNECTOR_CHANNELS.isEnabled())
+    {
+      Trace.CONNECTOR_CHANNELS.trace(AbstractConnector.class, "Removing channel " + channelID); //$NON-NLS-1$
+    }
 
-    System.out.println(toString() + ": Removing channel " + channelID); //$NON-NLS-1$
     channels.set(channelID, NULL_CHANNEL);
   }
 
@@ -444,7 +465,11 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     ProtocolFactory factory = registry.lookup(protocolID);
     if (factory == null)
     {
-      System.out.println(toString() + ": Unknown protocol " + protocolID); //$NON-NLS-1$
+      if (Trace.CONNECTOR_CHANNELS.isEnabled())
+      {
+        Trace.CONNECTOR_CHANNELS.trace(AbstractConnector.class, "Unknown protocol " + protocolID); //$NON-NLS-1$
+      }
+
       return null;
     }
 
@@ -465,6 +490,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
       }
     }
   }
+
   protected void fireChannelOpened(Channel channel)
   {
     for (ChannelListener listener : channelListeners)
@@ -521,12 +547,12 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
 
     if (protocolFactoryRegistry == null)
     {
-      System.out.println(toString() + ": (INFO) protocolFactoryRegistry == null"); //$NON-NLS-1$
+      Log.info("protocolFactoryRegistry == null"); //$NON-NLS-1$
     }
 
     if (receiveExecutor == null)
     {
-      System.out.println(toString() + ": (INFO) receiveExecutor == null"); //$NON-NLS-1$
+      Log.info("receiveExecutor == null"); //$NON-NLS-1$
     }
   }
 

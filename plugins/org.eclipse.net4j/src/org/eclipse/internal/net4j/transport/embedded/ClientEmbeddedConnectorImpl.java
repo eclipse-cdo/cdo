@@ -15,6 +15,10 @@ package org.eclipse.internal.net4j.transport.embedded;
  */
 public class ClientEmbeddedConnectorImpl extends AbstractEmbeddedConnector
 {
+  public ClientEmbeddedConnectorImpl()
+  {
+  }
+
   public Type getType()
   {
     return Type.CLIENT;

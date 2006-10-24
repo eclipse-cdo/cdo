@@ -10,7 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j;
 
+import org.eclipse.net4j.transport.BufferPool;
 import org.eclipse.net4j.transport.BufferProvider;
+import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.transport.tcp.TCPAcceptor;
 import org.eclipse.net4j.transport.tcp.TCPConnector;
 import org.eclipse.net4j.transport.tcp.TCPSelector;
@@ -18,6 +20,7 @@ import org.eclipse.net4j.transport.tcp.TCPSelector;
 import org.eclipse.internal.net4j.transport.BufferFactoryImpl;
 import org.eclipse.internal.net4j.transport.BufferPoolImpl;
 import org.eclipse.internal.net4j.transport.BufferUtil;
+import org.eclipse.internal.net4j.transport.embedded.ClientEmbeddedConnectorImpl;
 import org.eclipse.internal.net4j.transport.tcp.ClientTCPConnectorImpl;
 import org.eclipse.internal.net4j.transport.tcp.TCPAcceptorImpl;
 import org.eclipse.internal.net4j.transport.tcp.TCPSelectorImpl;
@@ -41,25 +44,26 @@ public final class Net4jFactory
     return new BufferFactoryImpl(BufferUtil.DEFAULT_BUFFER_CAPACITY);
   }
 
-  public static BufferProvider createBufferPool(BufferProvider factory)
+  public static BufferPool createBufferPool(BufferProvider factory)
   {
     return new BufferPoolImpl(factory);
   }
 
-  public static BufferProvider createBufferPool(short bufferCapacity)
+  public static BufferPool createBufferPool(short bufferCapacity)
   {
     return createBufferPool(createBufferFactory(bufferCapacity));
   }
 
-  public static BufferProvider createBufferPool()
+  public static BufferPool createBufferPool()
   {
-    return createBufferPool(BufferUtil.DEFAULT_BUFFER_CAPACITY);
+    return createBufferPool(createBufferFactory());
   }
 
-  public static TCPSelector createTCPSelector()
+  public static Connector createEmbeddedConnector(BufferProvider bufferProvider)
   {
-    TCPSelectorImpl selector = new TCPSelectorImpl();
-    return selector;
+    ClientEmbeddedConnectorImpl connector = new ClientEmbeddedConnectorImpl();
+    connector.setBufferProvider(bufferProvider);
+    return connector;
   }
 
   public static TCPAcceptor createTCPAcceptor(BufferProvider bufferProvider, TCPSelector selector,
@@ -94,5 +98,10 @@ public final class Net4jFactory
       TCPSelector selector, String host)
   {
     return createTCPConnector(bufferProvider, selector, host, TCPConnector.DEFAULT_PORT);
+  }
+
+  public static TCPSelector createTCPSelector()
+  {
+    return new TCPSelectorImpl();
   }
 }

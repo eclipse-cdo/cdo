@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util;
 
+import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
+
 import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -30,7 +32,7 @@ public final class ReflectUtil
 
   private static final String NL = System.getProperty("line.separator"); //$NON-NLS-1$
 
-  private static final Method hashCodeMethod = getHashCodeMethod();
+  private static final Method HASH_CODE_METHOD = lookupHashCodeMethod();
 
   private static final Map<Object, Long> ids = new WeakHashMap();
 
@@ -46,7 +48,7 @@ public final class ReflectUtil
   {
     try
     {
-      return (Integer)hashCodeMethod.invoke(object, NO_ARGUMENTS);
+      return (Integer)HASH_CODE_METHOD.invoke(object, NO_ARGUMENTS);
     }
     catch (Exception ex)
     {
@@ -122,21 +124,34 @@ public final class ReflectUtil
 
   public static void dump(Object object, String prefix, PrintStream out)
   {
+    out.print(toString(object, prefix));
+  }
+
+  public static String toString(Object object)
+  {
+    return toString(object, ""); //$NON-NLS-1$
+  }
+
+  public static String toString(Object object, String prefix)
+  {
     StringBuilder builder = new StringBuilder();
     builder.append(prefix);
     builder.append(getLabel(object));
     builder.append(NL);
-    dumpSegment(object.getClass(), object, prefix + "  ", builder); //$NON-NLS-1$
-    out.print(builder.toString());
+    toString(object.getClass(), object, prefix, builder);
+    return builder.toString();
   }
 
-  private static void dumpSegment(Class<? extends Object> segment, Object object, String prefix,
+  private static void toString(Class<? extends Object> segment, Object object, String prefix,
       StringBuilder builder)
   {
-    if (segment != ROOT_CLASS)
+    if (segment == ROOT_CLASS || segment == AbstractLifecycle.class)
     {
-      dumpSegment(segment.getSuperclass(), object, prefix, builder);
+      return;
     }
+
+    // Recurse
+    toString(segment.getSuperclass(), object, prefix, builder);
 
     String segmentPrefix = segment == object.getClass() ? "" : getSimpleName(segment) + "."; //$NON-NLS-1$ //$NON-NLS-2$
     Field[] fields = segment.getDeclaredFields();
@@ -181,7 +196,7 @@ public final class ReflectUtil
     }
   }
 
-  private static Method getHashCodeMethod()
+  private static Method lookupHashCodeMethod()
   {
     Method method;
 

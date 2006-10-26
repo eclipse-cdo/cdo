@@ -23,8 +23,10 @@ import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleNotifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry;
 
+import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.ChannelImpl;
 
 import java.io.IOException;
@@ -48,6 +50,9 @@ import java.util.concurrent.ExecutorService;
 public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, BufferProvider,
     TCPSelectorListener.Passive, LifecycleListener
 {
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_ACCEPTOR,
+      TCPAcceptorImpl.class);
+
   private IRegistry<String, ProtocolFactory> protocolFactoryRegistry;
 
   private BufferProvider bufferProvider;
@@ -216,7 +221,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
     {
       if (isActive())
       {
-        ex.printStackTrace();
+        Net4j.LOG.error(ex);
       }
 
       deactivate();
@@ -242,19 +247,24 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
         acceptedConnectors.add(connector);
       }
 
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(toString() + ": Accepted connector " + connector);
+      }
+
       fireConnectorAccepted(connector);
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      Net4j.LOG.error(ex);
 
       try
       {
         socketChannel.close();
       }
-      catch (IOException ioex)
+      catch (IOException ignore)
       {
-        ioex.printStackTrace();
+        ;
       }
     }
   }
@@ -275,7 +285,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        Net4j.LOG.error(ex);
       }
     }
   }
@@ -291,12 +301,12 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
 
     if (protocolFactoryRegistry == null)
     {
-      System.out.println(toString() + ": (INFO) protocolFactoryRegistry == null"); //$NON-NLS-1$
+      Net4j.LOG.info("No protocol factory registry in " + this); //$NON-NLS-1$
     }
 
     if (receiveExecutor == null)
     {
-      System.out.println(toString() + ": (INFO) receiveExecutor == null"); //$NON-NLS-1$
+      Net4j.LOG.info("No receive executor in " + this); //$NON-NLS-1$
     }
 
     if (selector == null)
@@ -325,14 +335,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
   {
     for (TCPConnector connector : getAcceptedConnectors())
     {
-      try
-      {
-        LifecycleUtil.deactivate(connector);
-      }
-      catch (Exception ex)
-      {
-        ex.printStackTrace();
-      }
+      LifecycleUtil.deactivate(connector);
     }
 
     Exception exception = null;

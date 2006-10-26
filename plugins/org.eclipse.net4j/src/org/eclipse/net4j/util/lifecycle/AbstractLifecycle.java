@@ -1,6 +1,9 @@
 package org.eclipse.net4j.util.lifecycle;
 
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.om.ContextTracer;
+
+import org.eclipse.internal.net4j.bundle.Net4j;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -10,9 +13,13 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
 {
-  public static boolean DUMP_ON_ACTIVATE = false;
-
   public static boolean USE_LABEL = true;
+
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_LIFECYCLE,
+      AbstractLifecycle.class);
+
+  private static final ContextTracer DUMPER = new ContextTracer(Net4j.DEBUG_LIFECYCLE_DUMP,
+      AbstractLifecycle.class);
 
   private boolean active;
 
@@ -39,18 +46,22 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
   {
     if (!active)
     {
-      System.out.println(toString() + ": Activating"); //$NON-NLS-1$
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(toString() + ": Activating");//$NON-NLS-1$
+      }
+
       onAboutToActivate();
       fireLifecycleAboutToActivate();
-
-      active = true;
-      onActivate();
-      fireLifecycleActivated();
-
-      if (DUMP_ON_ACTIVATE)
+      if (DUMPER.isEnabled())
       {
-        ReflectUtil.dump(this, toString() + ": DUMP "); //$NON-NLS-1$
+        DUMPER.trace("DUMP " + ReflectUtil.toString(this)); //$NON-NLS-1$
       }
+
+      onActivate();
+      active = true;
+
+      fireLifecycleActivated();
     }
   }
 
@@ -58,7 +69,11 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
   {
     if (active)
     {
-      System.out.println(toString() + ": Deactivating"); //$NON-NLS-1$
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(toString() + ": Deactivating");//$NON-NLS-1$
+      }
+
       fireLifecycleDeactivating();
 
       try

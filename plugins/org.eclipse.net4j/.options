@@ -1,4 +1,10 @@
-org.eclipse.net4j/debug = true
+org.eclipse.net4j/debug = false
+org.eclipse.net4j/debug.lifecycle = true
+org.eclipse.net4j/debug.lifecycle.dump = true
+org.eclipse.net4j/debug.buffer = true
+org.eclipse.net4j/debug.channel = true
+org.eclipse.net4j/debug.selector = true
+org.eclipse.net4j/debug.acceptor = true
 org.eclipse.net4j/debug.connector = true
 
 org.eclipse.net4j/perf = false

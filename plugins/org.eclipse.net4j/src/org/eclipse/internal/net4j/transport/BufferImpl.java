@@ -14,6 +14,9 @@ import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.om.ContextTracer;
+
+import org.eclipse.internal.net4j.bundle.Net4j;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -29,9 +32,12 @@ public class BufferImpl implements Buffer
 
   public static final short NO_CHANNEL = Short.MIN_VALUE;
 
-  public static boolean TRACE = false;
-
   private static final int EOS_OFFSET = 1;
+
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER,
+      BufferImpl.class);
+
+  private static final String NL = System.getProperty("line.separator"); //$NON-NLS-1$
 
   private BufferProvider bufferProvider;
 
@@ -177,11 +183,10 @@ public class BufferImpl implements Buffer
       return null;
     }
 
-    if (TRACE)
+    if (TRACER.isEnabled())
     {
-      System.out.println(toString() + ": Read " + byteBuffer.limit() + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
-          + (eos ? " (EOS)" : "")); //$NON-NLS-1$ //$NON-NLS-2$
-      System.out.println(formatContent());
+      TRACER.trace(toString() + ": Read " + byteBuffer.limit() + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
+          + (eos ? " (EOS)" : "") + NL + formatContent()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     byteBuffer.flip();
@@ -234,11 +239,10 @@ public class BufferImpl implements Buffer
         payloadSize = -payloadSize;
       }
 
-      if (TRACE)
+      if (TRACER.isEnabled())
       {
-        System.out.println(toString() + ": Writing " + (payloadSize - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
-            + (eos ? " (EOS)" : "")); //$NON-NLS-1$ //$NON-NLS-2$
-        System.out.println(formatContent());
+        TRACER.trace(toString() + ": Writing " + (payloadSize - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
+            + (eos ? " (EOS)" : "") + NL + formatContent()); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
       byteBuffer.flip();

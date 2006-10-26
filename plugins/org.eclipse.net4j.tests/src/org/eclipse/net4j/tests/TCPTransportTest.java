@@ -22,6 +22,9 @@ import org.eclipse.net4j.transport.tcp.TCPConnector;
 import org.eclipse.net4j.transport.util.ChannelInputStream;
 import org.eclipse.net4j.transport.util.ChannelOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.PrintStreamLogHandler;
+import org.eclipse.net4j.util.om.PrintStreamTraceHandler;
 import org.eclipse.net4j.util.registry.HashCacheRegistry;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -61,6 +64,9 @@ public class TCPTransportTest extends TestCase
   protected void setUp() throws Exception
   {
     super.setUp();
+    OMPlatform.INSTANCE.addLogHandler(PrintStreamLogHandler.CONSOLE);
+    OMPlatform.INSTANCE.addTraceHandler(PrintStreamTraceHandler.CONSOLE);
+
     System.out.print("================================= ");
     System.out.print(getName());
     System.out.println(" =================================");

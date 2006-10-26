@@ -197,7 +197,8 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Setting state " + newState + " (was " + oldState.toString().toLowerCase() //$NON-NLS-1$ //$NON-NLS-2$
+        TRACER.trace(toString()
+            + ": Setting state " + newState + " (was " + oldState.toString().toLowerCase() //$NON-NLS-1$ //$NON-NLS-2$
             + ")"); //$NON-NLS-1$
       }
 
@@ -276,7 +277,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Waiting for connection..."); //$NON-NLS-1$
+        TRACER.trace(toString() + ": Waiting for connection..."); //$NON-NLS-1$
       }
 
       return finishedNegotiating.await(timeout, TimeUnit.MILLISECONDS);
@@ -359,7 +360,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     Protocol protocol = createProtocol(protocolID, channel);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Opening channel " + channelID //$NON-NLS-1$
+      TRACER.trace(toString() + ": Opening channel " + channelID //$NON-NLS-1$
           + (protocol == null ? " without protocol" : " with protocol " + protocolID)); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
@@ -387,7 +388,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Invalid channelID " + channelID); //$NON-NLS-1$
+        TRACER.trace(toString() + ": Invalid channelID " + channelID); //$NON-NLS-1$
       }
 
       return null;
@@ -446,7 +447,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     int channelID = channel.getChannelID();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Removing channel " + channelID); //$NON-NLS-1$
+      TRACER.trace(toString() + ": Removing channel " + channelID); //$NON-NLS-1$
     }
 
     channels.set(channelID, NULL_CHANNEL);
@@ -470,7 +471,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Unknown protocol " + protocolID); //$NON-NLS-1$
+        TRACER.trace(toString() + ": Unknown protocol " + protocolID); //$NON-NLS-1$
       }
 
       return null;
@@ -489,7 +490,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        Net4j.LOG.error(ex);
       }
     }
   }
@@ -504,7 +505,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        Net4j.LOG.error(ex);
       }
     }
   }
@@ -519,7 +520,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        Net4j.LOG.error(ex);
       }
     }
   }
@@ -534,7 +535,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        Net4j.LOG.error(ex);
       }
     }
   }

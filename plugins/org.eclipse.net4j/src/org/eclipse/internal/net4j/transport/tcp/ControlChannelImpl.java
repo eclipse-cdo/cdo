@@ -4,6 +4,7 @@ import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.util.concurrent.Synchronizer;
 import org.eclipse.net4j.util.concurrent.SynchronizingCorrelator;
 
+import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.BufferUtil;
 import org.eclipse.internal.net4j.transport.ChannelImpl;
 
@@ -77,7 +78,6 @@ public final class ControlChannelImpl extends ChannelImpl
     {
       ByteBuffer byteBuffer = buffer.getByteBuffer();
       byte opcode = byteBuffer.get();
-      System.out.println("CONTROL: " + opcode); //$NON-NLS-1$
       switch (opcode)
       {
       case OPCODE_REGISTRATION:
@@ -103,7 +103,7 @@ public final class ControlChannelImpl extends ChannelImpl
         }
         catch (Exception ex)
         {
-          ex.printStackTrace();
+          Net4j.LOG.error(ex);
           success = false;
         }
 
@@ -123,9 +123,8 @@ public final class ControlChannelImpl extends ChannelImpl
         throw new UnsupportedOperationException();
 
       default:
-        System.out.println("Invalid opcode: " + opcode); //$NON-NLS-1$
+        Net4j.LOG.error("Invalid opcode: " + opcode); //$NON-NLS-1$
         ((AbstractTCPConnector)getConnector()).deactivate();
-        break;
       }
     }
     finally

@@ -18,7 +18,9 @@ import org.eclipse.net4j.transport.tcp.TCPConnector;
 import org.eclipse.net4j.transport.tcp.TCPSelector;
 import org.eclipse.net4j.transport.tcp.TCPSelectorListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.ContextTracer;
 
+import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.AbstractConnector;
 import org.eclipse.internal.net4j.transport.ChannelImpl;
 
@@ -36,6 +38,9 @@ import java.util.Queue;
 public abstract class AbstractTCPConnector extends AbstractConnector implements TCPConnector,
     TCPSelectorListener.Active
 {
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR,
+      AbstractTCPConnector.class);
+
   private SocketChannel socketChannel;
 
   private TCPSelector selector;
@@ -55,7 +60,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     }
     catch (IOException ex)
     {
-      ex.printStackTrace();
+      Net4j.LOG.error(ex);
     }
   }
 
@@ -119,7 +124,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      Net4j.LOG.error(ex);
       deactivate();
     }
   }
@@ -152,7 +157,11 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
         }
         else
         {
-          System.out.println(toString() + ": Discarding buffer from unknown channel"); //$NON-NLS-1$
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace(toString() + ": Discarding buffer from unknown channel"); //$NON-NLS-1$
+          }
+
           inputBuffer.release();
         }
 
@@ -165,7 +174,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      Net4j.LOG.error(ex);
       deactivate();
     }
   }
@@ -216,7 +225,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      Net4j.LOG.error(ex);
       deactivate();
     }
   }

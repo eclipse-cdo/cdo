@@ -10,6 +10,10 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport.tcp;
 
+import org.eclipse.net4j.util.om.ContextTracer;
+
+import org.eclipse.internal.net4j.bundle.Net4j;
+
 import java.nio.channels.SelectionKey;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
@@ -19,6 +23,8 @@ import java.nio.channels.SocketChannel;
  */
 public final class TCPUtil
 {
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SELECTOR, TCPUtil.class);
+
   private TCPUtil()
   {
   }
@@ -74,8 +80,12 @@ public final class TCPUtil
 
     if (oldOps != newOps)
     {
-      System.out.println(selectionKey.channel().toString() + ": Setting interest " //$NON-NLS-1$
-          + formatInterestOps(newOps) + " (was " + formatInterestOps(oldOps).toLowerCase() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(selectionKey.channel().toString() + ": Setting interest " //$NON-NLS-1$
+            + formatInterestOps(newOps) + " (was " + formatInterestOps(oldOps).toLowerCase() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+      }
+
       selectionKey.interestOps(newOps);
     }
   }

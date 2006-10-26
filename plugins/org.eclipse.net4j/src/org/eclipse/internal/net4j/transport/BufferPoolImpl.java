@@ -13,6 +13,9 @@ package org.eclipse.internal.net4j.transport;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferPool;
 import org.eclipse.net4j.transport.BufferProvider;
+import org.eclipse.net4j.util.om.ContextTracer;
+
+import org.eclipse.internal.net4j.bundle.Net4j;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -23,6 +26,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
     BufferPool.Introspection
 {
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER,
+      BufferPoolImpl.class);
+
   private final BufferProvider factory;
 
   private final Queue<Buffer> queue = new ConcurrentLinkedQueue<Buffer>();
@@ -48,7 +54,11 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
       return false;
     }
 
-    System.out.println(toString() + ": Evicting " + buffer); //$NON-NLS-1$
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(toString() + ": Evicting " + buffer); //$NON-NLS-1$
+    }
+
     factory.retainBuffer(buffer);
     --pooledBuffers;
     return true;
@@ -83,7 +93,11 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
     }
 
     buffer.clear();
-    System.out.println(toString() + ": Obtained " + buffer); //$NON-NLS-1$
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(toString() + ": Obtained " + buffer); //$NON-NLS-1$
+    }
+
     return buffer;
   }
 
@@ -95,7 +109,11 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
       throw new IllegalArgumentException("buffer.getCapacity() != getBufferCapacity()"); //$NON-NLS-1$
     }
 
-    System.out.println(toString() + ": Retaining " + buffer); //$NON-NLS-1$
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(toString() + ": Retaining " + buffer); //$NON-NLS-1$
+    }
+
     queue.add(buffer);
   }
 

@@ -19,7 +19,9 @@ import org.eclipse.net4j.util.concurrent.AsynchronousWorkSerializer;
 import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.util.concurrent.WorkSerializer;
 import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
+import org.eclipse.net4j.util.om.ContextTracer;
 
+import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.BufferImpl.State;
 
 import java.util.Queue;
@@ -31,6 +33,9 @@ import java.util.concurrent.ExecutorService;
  */
 public class ChannelImpl extends AbstractLifecycle implements Channel, BufferProvider
 {
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CHANNEL,
+      ChannelImpl.class);
+
   private short channelID = BufferImpl.NO_CHANNEL;
 
   private AbstractConnector connector;
@@ -127,8 +132,13 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
     State state = ((BufferImpl)buffer).getState();
     if (state != State.PUTTING)
     {
-      System.out.println(toString() + ": Ignoring buffer in state == " + state); //$NON-NLS-1$
+      Net4j.LOG.warn("Ignoring buffer in state == " + state + ": " + this); //$NON-NLS-1$ //$NON-NLS-2$
       return;
+    }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(toString() + ": Handling buffer from client: " + buffer); //$NON-NLS-1$
     }
 
     sendQueue.add(buffer);
@@ -139,9 +149,14 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   {
     if (receiveHandler == null)
     {
-      System.out.println(toString() + ": Ignoring buffer because receiveHandler == null"); //$NON-NLS-1$
+      Net4j.LOG.warn("Ignoring buffer because receiveHandler == null: " + this); //$NON-NLS-1$
       buffer.release();
       return;
+    }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(toString() + ": Handling buffer from multiplexer: " + buffer); //$NON-NLS-1$
     }
 
     receiveSerializer.addWork(new Runnable()

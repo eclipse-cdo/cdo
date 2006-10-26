@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.bundle;
 
+import org.eclipse.net4j.util.IOUtil;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMLogger;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -197,12 +199,7 @@ public abstract class AbstractOMBundle implements OMBundle
       ResourceBundle bundle = translate ? resourceBundle : untranslatedResourceBundle;
       if (bundle == null)
       {
-        String packageName = getClass().getName();
-        int index = packageName.lastIndexOf(".");
-        if (index != -1)
-        {
-          packageName = packageName.substring(0, index);
-        }
+        String packageName = ReflectUtil.getPackageName(accessor);
         if (translate)
         {
           try
@@ -214,16 +211,20 @@ public abstract class AbstractOMBundle implements OMBundle
             // If the bundle can't be found the normal way, try to find it as
             // the base URL. If that also doesn't work, rethrow the original
             // exception.
+            InputStream inputStream = null;
             try
             {
-              InputStream inputStream = new URL(getBaseURL().toString() + "plugin.properties")
-                  .openStream();
-              bundle = untranslatedResourceBundle = resourceBundle = new PropertyResourceBundle(
-                  inputStream);
+              inputStream = getInputStream("plugin.properties");
+              bundle = new PropertyResourceBundle(inputStream);
+              untranslatedResourceBundle = resourceBundle = bundle;
               inputStream.close();
             }
             catch (IOException ioException)
             {
+            }
+            finally
+            {
+              IOUtil.closeSilent(inputStream);
             }
 
             if (resourceBundle == null)
@@ -234,17 +235,21 @@ public abstract class AbstractOMBundle implements OMBundle
         }
         else
         {
-          String resourceName = getBaseURL().toString() + "plugin.properties";
+          InputStream inputStream = null;
           try
           {
-            InputStream inputStream = new URL(resourceName).openStream();
+            inputStream = getInputStream("plugin.properties");
             bundle = untranslatedResourceBundle = new PropertyResourceBundle(inputStream);
             inputStream.close();
           }
           catch (IOException ioException)
           {
-            throw new MissingResourceException("Missing properties: " + resourceName, getClass()
-                .getName(), "plugin.properties");
+            throw new MissingResourceException("Missing resource: plugin.properties", accessor
+                .getName(), key);
+          }
+          finally
+          {
+            IOUtil.closeSilent(inputStream);
           }
         }
       }

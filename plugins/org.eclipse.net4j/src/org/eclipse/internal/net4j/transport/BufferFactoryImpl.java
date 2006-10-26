@@ -11,12 +11,18 @@
 package org.eclipse.internal.net4j.transport;
 
 import org.eclipse.net4j.transport.Buffer;
+import org.eclipse.net4j.util.om.ContextTracer;
+
+import org.eclipse.internal.net4j.bundle.Net4j;
 
 /**
  * @author Eike Stepper
  */
 public class BufferFactoryImpl extends BufferProviderImpl
 {
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER,
+      BufferFactoryImpl.class);
+
   public BufferFactoryImpl(short bufferCapacity)
   {
     super(bufferCapacity);
@@ -26,7 +32,11 @@ public class BufferFactoryImpl extends BufferProviderImpl
   protected Buffer doProvideBuffer()
   {
     BufferImpl buffer = new BufferImpl(this, getBufferCapacity());
-    System.out.println(toString() + ": Created " + buffer); //$NON-NLS-1$
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(toString() + ": Created " + buffer); //$NON-NLS-1$
+    }
+
     return buffer;
   }
 

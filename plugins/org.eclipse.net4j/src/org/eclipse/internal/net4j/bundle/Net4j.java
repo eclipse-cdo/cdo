@@ -25,6 +25,18 @@ public final class Net4j
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug");
 
+  public static final OMTracer DEBUG_LIFECYCLE = DEBUG.tracer("lifecycle");
+
+  public static final OMTracer DEBUG_LIFECYCLE_DUMP = DEBUG_LIFECYCLE.tracer("dump");
+
+  public static final OMTracer DEBUG_BUFFER = DEBUG.tracer("buffer");
+
+  public static final OMTracer DEBUG_CHANNEL = DEBUG.tracer("channel");
+
+  public static final OMTracer DEBUG_SELECTOR = DEBUG.tracer("selector");
+
+  public static final OMTracer DEBUG_ACCEPTOR = DEBUG.tracer("acceptor");
+
   public static final OMTracer DEBUG_CONNECTOR = DEBUG.tracer("connector");
 
   public static final OMTracer PERF = BUNDLE.tracer("perf");

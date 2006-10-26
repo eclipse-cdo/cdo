@@ -8,32 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.operation;
+package org.eclipse.net4j.util.om;
+
+import org.eclipse.net4j.util.om.OMLogger.Level;
 
 /**
  * @author Eike Stepper
  */
-public interface ILogger
+public interface OMLogHandler
 {
-  public String getLoggerName();
-
-  public void log(Level level, Object plastic);
-
-  public void error(Object plastic);
-
-  public void warn(Object plastic);
-
-  public void info(Object plastic);
-
-  public void debug(Object plastic);
-
-  public void dispose();
-
-  /**
-   * @author Eike Stepper
-   */
-  public enum Level
-  {
-    ERROR, WARN, INFO, DEBUG
-  }
+  public void logged(OMLogger logger, Level level, String msg, Throwable t);
 }

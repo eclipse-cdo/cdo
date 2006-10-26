@@ -10,23 +10,40 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.bundle;
 
-import org.osgi.framework.BundleActivator;
+import org.eclipse.core.runtime.FileLocator;
+
 import org.osgi.framework.BundleContext;
+
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * @author Eike Stepper
  */
-public class Activator implements BundleActivator
+public class OSGiBundle extends AbstractOMBundle
 {
-  public void start(BundleContext context) throws Exception
+  public OSGiBundle(AbstractOMPlatform platform, String bundleID, Class accessor)
   {
-    AbstractOMPlatform.systemContext = context;
-    Net4j.BUNDLE.setBundleContext(context);
+    super(platform, bundleID, accessor);
   }
 
-  public void stop(BundleContext context) throws Exception
+  @Override
+  public BundleContext getBundleContext()
   {
-    Net4j.BUNDLE.setBundleContext(null);
-    AbstractOMPlatform.systemContext = null;
+    return (BundleContext)super.getBundleContext();
+  }
+
+  public URL getBaseURL()
+  {
+    try
+    {
+      URL entry = getBundleContext().getBundle().getEntry(".");
+      return FileLocator.resolve(entry);
+    }
+    catch (IOException ex)
+    {
+      ex.printStackTrace();
+      return null;
+    }
   }
 }

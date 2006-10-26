@@ -8,51 +8,41 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j.util.operation;
+package org.eclipse.net4j.util.om;
+
+import org.eclipse.net4j.util.om.OMLogger.Level;
 
 import java.io.PrintStream;
 
 /**
  * @author Eike Stepper
  */
-public class ConsoleLogger extends AbstractLogger
+public class PrintStreamLogHandler implements OMLogHandler
 {
-  private String loggerName;
+  public static final PrintStreamLogHandler CONSOLE = new PrintStreamLogHandler();
 
   private PrintStream out;
 
   private PrintStream err;
 
-  public ConsoleLogger(String loggerName, PrintStream out, PrintStream err)
+  public PrintStreamLogHandler(PrintStream out, PrintStream err)
   {
-    this.loggerName = loggerName;
     this.out = out;
     this.err = err;
   }
 
-  public ConsoleLogger(String loggerName)
+  private PrintStreamLogHandler()
   {
-    this(loggerName, System.out, System.err);
+    this(System.out, System.err);
   }
 
-  public String getLoggerName()
-  {
-    return loggerName;
-  }
-
-  public void log(Level level, Object plastic)
+  public void logged(OMLogger logger, Level level, String msg, Throwable t)
   {
     PrintStream stream = level == Level.ERROR ? err : out;
-    String prefix = toString(level) + " ";
-    if (plastic instanceof Throwable)
+    stream.println((toString(level) + " ") + msg);
+    if (t != null)
     {
-      Throwable t = (Throwable)plastic;
-      stream.println(prefix + t.getLocalizedMessage());
       t.printStackTrace(stream);
-    }
-    else
-    {
-      stream.println(prefix + plastic.toString());
     }
   }
 

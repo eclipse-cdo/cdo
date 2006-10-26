@@ -8,20 +8,35 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.operation;
+package org.eclipse.net4j.util.om;
 
 /**
  * @author Eike Stepper
  */
-public interface ITracer
+public interface OMTracer
 {
-  public String getTracerName();
+  public OMBundle getBundle();
+
+  public OMTracer getParent();
+
+  public String getName();
+
+  public String getFullName();
 
   public boolean isEnabled();
 
   public void setEnabled(boolean enabled);
 
+  public void trace(Class context, String pattern, Object... args);
+
+  public void trace(Class context, String pattern, Throwable t, Object... args);
+
+  public void trace(Class context, String msg, Throwable t);
+
   public void trace(Class context, String msg);
 
-  public ITracer child(String tracerName);
+  public void trace(Class context, Throwable t);
+
+  public OMTracer tracer(String name);
+
 }

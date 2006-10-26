@@ -21,6 +21,9 @@ import org.eclipse.net4j.transport.util.BufferInputStream;
 import org.eclipse.net4j.transport.util.BufferOutputStream;
 import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.OSGiLoggingBridge;
+import org.eclipse.net4j.util.om.PrintStreamTraceHandler;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
@@ -52,6 +55,10 @@ public class SignalTest extends TestCase
   protected void setUp() throws Exception
   {
     super.setUp();
+    // OMPlatform.INSTANCE.addLogHandler(EclipseLoggingBridge.INSTANCE);
+    OMPlatform.INSTANCE.addLogHandler(OSGiLoggingBridge.INSTANCE);
+    OMPlatform.INSTANCE.addTraceHandler(PrintStreamTraceHandler.CONSOLE);
+
     AbstractLifecycle.DUMP_ON_ACTIVATE = true;
     BufferImpl.TRACE = true;
     BufferInputStream.TRACE = true;
@@ -70,7 +77,8 @@ public class SignalTest extends TestCase
     assertTrue(selector.isActive());
 
     acceptor = (TCPAcceptorImpl)Net4jFactory.createTCPAcceptor(bufferPool, selector);
-    connector = (AbstractTCPConnector)Net4jFactory.createTCPConnector(bufferPool, selector, "localhost");
+    connector = (AbstractTCPConnector)Net4jFactory.createTCPConnector(bufferPool, selector,
+        "localhost");
   }
 
   @Override
@@ -124,7 +132,7 @@ public class SignalTest extends TestCase
 
     System.out.println();
     System.out.println();
-    Thread.sleep(10);
+    Thread.sleep(100);
     super.tearDown();
   }
 

@@ -8,25 +8,35 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j.bundle;
+package org.eclipse.net4j.util.om;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
+import java.io.PrintStream;
 
 /**
  * @author Eike Stepper
  */
-public class Activator implements BundleActivator
+public class PrintStreamTraceHandler implements OMTraceHandler
 {
-  public void start(BundleContext context) throws Exception
+  public static final PrintStreamTraceHandler CONSOLE = new PrintStreamTraceHandler();
+
+  private PrintStream stream;
+
+  public PrintStreamTraceHandler(PrintStream stream)
   {
-    AbstractOMPlatform.systemContext = context;
-    Net4j.BUNDLE.setBundleContext(context);
+    this.stream = stream;
   }
 
-  public void stop(BundleContext context) throws Exception
+  private PrintStreamTraceHandler()
   {
-    Net4j.BUNDLE.setBundleContext(null);
-    AbstractOMPlatform.systemContext = null;
+    this(System.out);
+  }
+
+  public void traced(OMTracer tracer, Class context, String msg, Throwable t)
+  {
+    stream.println("[TRACE] " + msg);
+    if (t != null)
+    {
+      t.printStackTrace(stream);
+    }
   }
 }

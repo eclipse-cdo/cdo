@@ -14,8 +14,6 @@ Import-Package: org.eclipse.osgi.service.debug;version="1.0.0";resolution:=optio
 Export-Package: org.eclipse.internal.net4j.transport;version="0.8.0",
  org.eclipse.internal.net4j.transport.embedded;version="0.8.0",
  org.eclipse.internal.net4j.transport.tcp;version="0.8.0",
- org.eclipse.internal.net4j.util.map;version="0.8.0",
- org.eclipse.internal.net4j.util.operation;version="0.8.0",
  org.eclipse.net4j;version="0.8.0",
  org.eclipse.net4j.message;version="0.8.0",
  org.eclipse.net4j.remote;version="0.8.0",
@@ -26,6 +24,9 @@ Export-Package: org.eclipse.internal.net4j.transport;version="0.8.0",
  org.eclipse.net4j.util;version="0.8.0",
  org.eclipse.net4j.util.concurrent;version="0.8.0",
  org.eclipse.net4j.util.lifecycle;version="0.8.0",
+ org.eclipse.net4j.util.om;version="0.8.0",
  org.eclipse.net4j.util.registry;version="0.8.0",
  org.eclipse.net4j.util.stream;version="0.8.0"
 Eclipse-LazyStart: true
+Require-Bundle: org.eclipse.core.runtime;resolution:=optional,
+ org.eclipse.emf.common

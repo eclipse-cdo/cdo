@@ -8,41 +8,26 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j.util.operation;
-
-import org.eclipse.net4j.util.operation.IDebugOptions;
+package org.eclipse.net4j.util;
 
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractDebugOptions implements IDebugOptions
+public final class StringUtil
 {
-  private boolean initialized;
-
-  private boolean debugging;
-
-  public AbstractDebugOptions()
+  private StringUtil()
   {
   }
 
-  public void dispose()
+  public static int occurrences(String str, char c)
   {
-  }
-
-  public boolean isDebugging()
-  {
-    if (!initialized)
+    int count = 0;
+    for (int i = 0; (i = str.indexOf(c, i)) != -1; ++i)
     {
-      debugging = getBooleanOption("debug", false);
-      initialized = true;
+      ++count;
     }
 
-    return debugging;
+    return count;
   }
 
-  public void setDebugging(boolean debugging)
-  {
-    this.debugging = debugging;
-    initialized = true;
-  }
 }

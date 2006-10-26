@@ -8,40 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j.util.operation;
-
-import org.eclipse.net4j.util.operation.ILogger;
+package org.eclipse.net4j.util.om;
 
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractLogger implements ILogger
+public interface OMTraceHandler
 {
-  public AbstractLogger()
-  {
-  }
-
-  public void error(Object plastic)
-  {
-    log(Level.ERROR, plastic);
-  }
-
-  public void warn(Object plastic)
-  {
-    log(Level.WARN, plastic);
-  }
-
-  public void info(Object plastic)
-  {
-    log(Level.INFO, plastic);
-  }
-
-  public void debug(Object plastic)
-  {
-    log(Level.DEBUG, plastic);
-  }
-
-  public void dispose()
-  {
-  }
+  public void traced(OMTracer tracer, Class context, String msg, Throwable t);
 }

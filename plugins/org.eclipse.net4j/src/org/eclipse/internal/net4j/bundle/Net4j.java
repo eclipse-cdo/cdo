@@ -10,23 +10,28 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.bundle;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
+import org.eclipse.net4j.util.om.OMBundle;
+import org.eclipse.net4j.util.om.OMLogger;
+import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.OMTracer;
 
 /**
  * @author Eike Stepper
  */
-public class Activator implements BundleActivator
+public final class Net4j
 {
-  public void start(BundleContext context) throws Exception
-  {
-    AbstractOMPlatform.systemContext = context;
-    Net4j.BUNDLE.setBundleContext(context);
-  }
+  public static final OMBundle BUNDLE = OMPlatform.INSTANCE
+      .bundle("org.eclipse.net4j", Net4j.class);
 
-  public void stop(BundleContext context) throws Exception
+  public static final OMTracer DEBUG = BUNDLE.tracer("debug");
+
+  public static final OMTracer DEBUG_CONNECTOR = DEBUG.tracer("connector");
+
+  public static final OMTracer PERF = BUNDLE.tracer("perf");
+
+  public static final OMLogger LOG = BUNDLE.logger();
+
+  private Net4j()
   {
-    Net4j.BUNDLE.setBundleContext(null);
-    AbstractOMPlatform.systemContext = null;
   }
 }

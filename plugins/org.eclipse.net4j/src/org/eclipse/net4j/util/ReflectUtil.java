@@ -68,9 +68,29 @@ public final class ReflectUtil
     return id;
   }
 
+  public static String getPackageName(Class<? extends Object> c)
+  {
+    return getPackageName(c.getName());
+  }
+
+  public static String getPackageName(String className)
+  {
+    int lastDot = className.lastIndexOf('.');
+    if (lastDot != -1)
+    {
+      className = className.substring(0, lastDot);
+    }
+
+    return className;
+  }
+
   public static String getSimpleName(Class<? extends Object> c)
   {
-    String name = c.getName();
+    return getSimpleClassName(c.getName());
+  }
+
+  public static String getSimpleClassName(String name)
+  {
     int lastDot = name.lastIndexOf('.');
     if (lastDot != -1)
     {

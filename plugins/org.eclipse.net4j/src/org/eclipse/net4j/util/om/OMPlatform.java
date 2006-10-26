@@ -8,27 +8,24 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.operation;
+package org.eclipse.net4j.util.om;
+
+import org.eclipse.internal.net4j.bundle.AbstractOMPlatform;
 
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractTracer implements ITracer
+public interface OMPlatform
 {
-  private String tracerName;
+  public static final OMPlatform INSTANCE = AbstractOMPlatform.createPlatform();
 
-  public AbstractTracer(String tracerName)
-  {
-    this.tracerName = tracerName;
-  }
+  public OMBundle bundle(String bundleID, Class accessor);
 
-  public String getTracerName()
-  {
-    return tracerName;
-  }
+  public void addLogHandler(OMLogHandler logHandler);
 
-  public void trace(Class context, String msg)
-  {
-    System.out.println(context.getName() + ": " + msg);
-  }
+  public void removeLogHandler(OMLogHandler logHandler);
+
+  public void addTraceHandler(OMTraceHandler traceHandler);
+
+  public void removeTraceHandler(OMTraceHandler traceHandler);
 }

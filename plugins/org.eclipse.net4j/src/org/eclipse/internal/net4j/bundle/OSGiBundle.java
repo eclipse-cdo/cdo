@@ -37,7 +37,7 @@ public class OSGiBundle extends AbstractOMBundle
   {
     try
     {
-      URL entry = getBundleContext().getBundle().getEntry(".");
+      URL entry = getBundleContext().getBundle().getEntry("."); //$NON-NLS-1$
       return FileLocator.resolve(entry);
     }
     catch (IOException ex)

@@ -551,12 +551,12 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
 
     if (protocolFactoryRegistry == null)
     {
-      Net4j.LOG.info("No protocol factory registry for " + this);
+      Net4j.LOG.info("No protocol factory registry for " + this); //$NON-NLS-1$
     }
 
     if (receiveExecutor == null)
     {
-      Net4j.LOG.info("No receive executor for " + this);
+      Net4j.LOG.info("No receive executor for " + this); //$NON-NLS-1$
     }
   }
 

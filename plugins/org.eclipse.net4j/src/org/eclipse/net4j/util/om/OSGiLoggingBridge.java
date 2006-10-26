@@ -59,7 +59,7 @@ public class OSGiLoggingBridge implements OMLogHandler
     }
     catch (RuntimeException ex)
     {
-      throw new IllegalStateException("Log service not found", ex);
+      throw new IllegalStateException("Log service not found", ex); //$NON-NLS-1$
     }
   }
 
@@ -76,7 +76,7 @@ public class OSGiLoggingBridge implements OMLogHandler
     case DEBUG:
       return LogService.LOG_DEBUG;
     default:
-      throw new IllegalArgumentException("Illegal log level: " + level);
+      throw new IllegalArgumentException("Illegal log level: " + level); //$NON-NLS-1$
     }
   }
 }

@@ -36,12 +36,12 @@ public class LegacyPlatform extends AbstractOMPlatform
   @Override
   protected String getDebugOption(String bundleID, String option)
   {
-    return debugOptions.get(bundleID + "/" + option);
+    return debugOptions.get(bundleID + "/" + option); //$NON-NLS-1$
   }
 
   @Override
   protected void setDebugOption(String bundleID, String option, String value)
   {
-    debugOptions.put(bundleID + "/" + option, value);
+    debugOptions.put(bundleID + "/" + option, value); //$NON-NLS-1$
   }
 }

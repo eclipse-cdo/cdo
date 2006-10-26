@@ -39,7 +39,7 @@ public class PrintStreamLogHandler implements OMLogHandler
   public void logged(OMLogger logger, Level level, String msg, Throwable t)
   {
     PrintStream stream = level == Level.ERROR ? err : out;
-    stream.println((toString(level) + " ") + msg);
+    stream.println((toString(level) + " ") + msg); //$NON-NLS-1$
     if (t != null)
     {
       t.printStackTrace(stream);
@@ -51,15 +51,15 @@ public class PrintStreamLogHandler implements OMLogHandler
     switch (level)
     {
     case ERROR:
-      return "[ERROR]";
+      return "[ERROR]"; //$NON-NLS-1$
     case WARN:
-      return "[WARN]";
+      return "[WARN]"; //$NON-NLS-1$
     case INFO:
-      return "[INFO]";
+      return "[INFO]"; //$NON-NLS-1$
     case DEBUG:
-      return "[DEBUG]";
+      return "[DEBUG]"; //$NON-NLS-1$
     default:
-      throw new IllegalArgumentException("Illegal log level: " + level);
+      throw new IllegalArgumentException("Illegal log level: " + level); //$NON-NLS-1$
     }
   }
 }

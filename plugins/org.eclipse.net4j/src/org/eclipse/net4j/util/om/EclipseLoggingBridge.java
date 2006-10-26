@@ -56,7 +56,7 @@ public class EclipseLoggingBridge implements OMLogHandler
     case DEBUG:
       return IStatus.OK;
     default:
-      throw new IllegalArgumentException("Illegal log level: " + level);
+      throw new IllegalArgumentException("Illegal log level: " + level); //$NON-NLS-1$
     }
   }
 }

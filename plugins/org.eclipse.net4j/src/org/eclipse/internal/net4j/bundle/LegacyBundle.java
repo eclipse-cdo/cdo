@@ -56,10 +56,10 @@ public class LegacyBundle extends AbstractOMBundle
 
     try
     {
-      final String prefix = getBundleID() + "/";
+      final String prefix = getBundleID() + "/"; //$NON-NLS-1$
       final int length = prefix.length();
 
-      inputStream = getInputStream(".options");
+      inputStream = getInputStream(".options"); //$NON-NLS-1$
       properties.load(inputStream);
 
       for (Entry<Object, Object> entry : properties.entrySet())
@@ -111,7 +111,7 @@ public class LegacyBundle extends AbstractOMBundle
     // file:/D:/sandbox/unpackage1-3.1M7/eclipse/plugins/org.eclipse.emf.common/bin/org/eclipse/emf/common/CommonPlugin.class
 
     String className = accessor.getName();
-    URL url = accessor.getResource(ReflectUtil.getSimpleName(accessor) + ".class");
+    URL url = accessor.getResource(ReflectUtil.getSimpleName(accessor) + ".class"); //$NON-NLS-1$
 
     int segmentsToTrim = 1 + StringUtil.occurrences(className, '.');
     url = trimSegments(url, segmentsToTrim);
@@ -123,7 +123,7 @@ public class LegacyBundle extends AbstractOMBundle
       {
         // If we can open an input stream, then the plugin.properties is there,
         // and we have a good base URL.
-        InputStream inputStream = new URL(url.toString() + "plugin.properties").openStream();
+        InputStream inputStream = new URL(url.toString() + "plugin.properties").openStream(); //$NON-NLS-1$
         inputStream.close();
         baseURL = url;
       }
@@ -142,7 +142,7 @@ public class LegacyBundle extends AbstractOMBundle
     {
       // Trim off the "bin" or "runtime" segment.
       String lastSegment = lastSegment(url);
-      if ("bin".equals(lastSegment) || "runtime".equals(lastSegment))
+      if ("bin".equals(lastSegment) || "runtime".equals(lastSegment)) //$NON-NLS-1$ //$NON-NLS-2$
       {
         url = trimSegments(url, 1);
       }
@@ -151,7 +151,7 @@ public class LegacyBundle extends AbstractOMBundle
       {
         // If we can open an input stream, then the plugin.properties is in the
         // folder, and we have a good base URL.
-        InputStream inputStream = new URL(url.toString() + "plugin.properties").openStream();
+        InputStream inputStream = new URL(url.toString() + "plugin.properties").openStream(); //$NON-NLS-1$
         inputStream.close();
         baseURL = url;
       }
@@ -164,16 +164,16 @@ public class LegacyBundle extends AbstractOMBundle
     if (baseURL == null)
     {
       String resourceName = ReflectUtil.getPackageName(className).replace('.', '/')
-          + "/plugin.properties";
-      throw new MissingResourceException("Missing properties: " + resourceName, accessor.getName(),
-          "plugin.properties");
+          + "/plugin.properties"; //$NON-NLS-1$
+      throw new MissingResourceException("Missing properties: " + resourceName, accessor.getName(), //$NON-NLS-1$
+          "plugin.properties"); //$NON-NLS-1$
     }
   }
 
   private static String lastSegment(URL url)
   {
     String path = url.getPath();
-    if (path.endsWith("/"))
+    if (path.endsWith("/")) //$NON-NLS-1$
     {
       path = path.substring(0, path.length() - 1);
     }
@@ -185,7 +185,7 @@ public class LegacyBundle extends AbstractOMBundle
   private static URL trimSegments(URL url, int count) throws MalformedURLException
   {
     String path = url.getPath();
-    if (path.endsWith("/"))
+    if (path.endsWith("/")) //$NON-NLS-1$
     {
       ++count;
     }
@@ -202,7 +202,7 @@ public class LegacyBundle extends AbstractOMBundle
       path = path.substring(0, pos);
     }
 
-    return new URL(url.getProtocol() + ":" + path + "/");
+    return new URL(url.getProtocol() + ":" + path + "/"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**
@@ -212,6 +212,6 @@ public class LegacyBundle extends AbstractOMBundle
    */
   private static boolean isArchiveProtocol(String scheme)
   {
-    return "jar".equalsIgnoreCase(scheme);
+    return "jar".equalsIgnoreCase(scheme); //$NON-NLS-1$
   }
 }

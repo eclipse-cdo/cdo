@@ -33,7 +33,7 @@ public class PrintStreamTraceHandler implements OMTraceHandler
 
   public void traced(OMTracer tracer, Class context, String msg, Throwable t)
   {
-    stream.println("[TRACE] " + msg);
+    stream.println("[TRACE] " + msg); //$NON-NLS-1$
     if (t != null)
     {
       t.printStackTrace(stream);

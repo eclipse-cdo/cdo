@@ -40,7 +40,7 @@ public class OSGiPlatform extends AbstractOMPlatform
     try
     {
       DebugOptions debugOptions = getDebugOptions();
-      return debugOptions.getOption(bundleID + "/" + option);
+      return debugOptions.getOption(bundleID + "/" + option); //$NON-NLS-1$
     }
     catch (Exception ex)
     {
@@ -53,7 +53,7 @@ public class OSGiPlatform extends AbstractOMPlatform
     try
     {
       DebugOptions debugOptions = getDebugOptions();
-      debugOptions.setOption(bundleID + "/" + option, value);
+      debugOptions.setOption(bundleID + "/" + option, value); //$NON-NLS-1$
     }
     catch (Exception ex)
     {

@@ -249,7 +249,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace(toString() + ": Accepted connector " + connector);
+        TRACER.trace(toString() + ": Accepted connector " + connector); //$NON-NLS-1$
       }
 
       fireConnectorAccepted(connector);

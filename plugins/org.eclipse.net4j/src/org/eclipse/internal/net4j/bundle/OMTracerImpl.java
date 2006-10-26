@@ -40,7 +40,7 @@ public class OMTracerImpl implements OMTracer
     this.bundle = (OMBundle)parent.getBundle();
     this.parent = parent;
     this.name = name;
-    fullName = parent.getFullName() + "." + name;
+    fullName = parent.getFullName() + "." + name; //$NON-NLS-1$
   }
 
   public OMBundle getBundle()

@@ -95,7 +95,7 @@ public abstract class AbstractOMBundle implements OMBundle
   {
     if (!debuggingInitialized)
     {
-      debugging = getDebugOption("debug", false);
+      debugging = getDebugOption("debug", false); //$NON-NLS-1$
       debuggingInitialized = true;
     }
 
@@ -175,7 +175,7 @@ public abstract class AbstractOMBundle implements OMBundle
 
   public InputStream getInputStream(String path) throws IOException
   {
-    URL url = new URL(getBaseURL().toString() + ".options");
+    URL url = new URL(getBaseURL().toString() + ".options"); //$NON-NLS-1$
     return url.openStream();
   }
 
@@ -204,7 +204,7 @@ public abstract class AbstractOMBundle implements OMBundle
         {
           try
           {
-            bundle = resourceBundle = ResourceBundle.getBundle(packageName + ".plugin");
+            bundle = resourceBundle = ResourceBundle.getBundle(packageName + ".plugin"); //$NON-NLS-1$
           }
           catch (MissingResourceException exception)
           {
@@ -214,7 +214,7 @@ public abstract class AbstractOMBundle implements OMBundle
             InputStream inputStream = null;
             try
             {
-              inputStream = getInputStream("plugin.properties");
+              inputStream = getInputStream("plugin.properties"); //$NON-NLS-1$
               bundle = new PropertyResourceBundle(inputStream);
               untranslatedResourceBundle = resourceBundle = bundle;
               inputStream.close();
@@ -238,13 +238,13 @@ public abstract class AbstractOMBundle implements OMBundle
           InputStream inputStream = null;
           try
           {
-            inputStream = getInputStream("plugin.properties");
+            inputStream = getInputStream("plugin.properties"); //$NON-NLS-1$
             bundle = untranslatedResourceBundle = new PropertyResourceBundle(inputStream);
             inputStream.close();
           }
           catch (IOException ioException)
           {
-            throw new MissingResourceException("Missing resource: plugin.properties", accessor
+            throw new MissingResourceException("Missing resource: plugin.properties", accessor //$NON-NLS-1$
                 .getName(), key);
           }
           finally

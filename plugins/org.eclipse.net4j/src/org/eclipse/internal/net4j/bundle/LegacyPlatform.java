@@ -12,7 +12,6 @@ package org.eclipse.internal.net4j.bundle;
 
 import org.eclipse.net4j.util.om.OMBundle;
 
-import java.net.URI;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

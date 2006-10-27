@@ -46,7 +46,7 @@ public abstract class AbstractOMPlatform implements OMPlatform
     debugging = Boolean.parseBoolean(System.getProperty("debug", "false"));
   }
 
-  public OMBundle bundle(String bundleID, Class accessor)
+  public synchronized OMBundle bundle(String bundleID, Class accessor)
   {
     OMBundle bundle = bundles.get(bundleID);
     if (bundle == null)
@@ -135,7 +135,10 @@ public abstract class AbstractOMPlatform implements OMPlatform
 
   protected abstract void setDebugOption(String bundleID, String option, String value);
 
-  public static OMPlatform createPlatform()
+  /**
+   * TODO Make configurable via system property
+   */
+  public static synchronized OMPlatform createPlatform()
   {
     try
     {
@@ -143,6 +146,8 @@ public abstract class AbstractOMPlatform implements OMPlatform
       {
         return new OSGiPlatform(systemContext);
       }
+
+      return new LegacyPlatform();
     }
     catch (Exception ex)
     {
@@ -152,7 +157,7 @@ public abstract class AbstractOMPlatform implements OMPlatform
       }
     }
 
-    return new LegacyPlatform();
+    return null;
   }
 
   private static ContextTracer TRACER()

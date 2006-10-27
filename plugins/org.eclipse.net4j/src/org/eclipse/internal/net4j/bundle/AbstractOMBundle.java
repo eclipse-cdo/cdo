@@ -157,7 +157,7 @@ public abstract class AbstractOMBundle implements OMBundle
     platform.setDebugOption(bundleID, option, value);
   }
 
-  public OMTracer tracer(String name)
+  public synchronized OMTracer tracer(String name)
   {
     OMTracer tracer = tracers.get(name);
     if (tracer == null)
@@ -168,7 +168,7 @@ public abstract class AbstractOMBundle implements OMBundle
     return tracer;
   }
 
-  public OMLogger logger()
+  public synchronized OMLogger logger()
   {
     if (logger == null)
     {

@@ -312,7 +312,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
 
   public Channel[] getChannels()
   {
-    final List<Channel> result = new ArrayList<Channel>();
+    final List<Channel> result = new ArrayList(channels.size());
     synchronized (channels)
     {
       for (final ChannelImpl channel : channels)
@@ -397,7 +397,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
 
   protected List<Queue<Buffer>> getChannelBufferQueues()
   {
-    final List<Queue<Buffer>> result = new ArrayList();
+    final List<Queue<Buffer>> result = new ArrayList(channels.size());
     synchronized (channels)
     {
       for (final ChannelImpl channel : channels)

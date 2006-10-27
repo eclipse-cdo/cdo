@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class LegacyPlatform extends AbstractOMPlatform
 {
-  private Map<String, String> debugOptions = new ConcurrentHashMap();
+  private Map<String, String> debugOptions = new ConcurrentHashMap(0);
 
   public LegacyPlatform()
   {

@@ -40,6 +40,6 @@ public class HashCacheRegistry<ID, E extends IRegistryElement<ID>> extends
 
   protected Map<ID, E> createCache()
   {
-    return new HashMap();
+    return new HashMap(0);
   }
 }

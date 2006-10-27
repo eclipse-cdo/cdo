@@ -93,7 +93,7 @@ public abstract class AbstractRegistry<ID, E extends IRegistryElement<ID>> imple
   public final synchronized Collection<E> getElements(boolean resolve)
   {
     Set<ID> elementKeys = getElementIDs();
-    List<E> elements = new ArrayList<E>(elementKeys.size());
+    List<E> elements = new ArrayList(elementKeys.size());
     for (ID id : elementKeys)
     {
       elements.add(lookup(id, resolve));

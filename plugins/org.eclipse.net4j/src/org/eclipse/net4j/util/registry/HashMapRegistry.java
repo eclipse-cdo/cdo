@@ -40,6 +40,6 @@ public class HashMapRegistry<ID, E extends IRegistryElement<ID>> extends
 
   protected Map<ID, E> createMap()
   {
-    return new HashMap();
+    return new HashMap(0);
   }
 }

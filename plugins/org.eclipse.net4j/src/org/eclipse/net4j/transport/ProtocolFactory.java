@@ -17,7 +17,7 @@ public interface ProtocolFactory extends IRegistryElement<String>
 
   public static final Set<Type> FOR_SERVERS = Collections.singleton(Type.SERVER);
 
-  public static final Set<Type> SYMMETRIC = Collections.unmodifiableSet(new HashSet<Type>(Arrays
+  public static final Set<Type> SYMMETRIC = Collections.unmodifiableSet(new HashSet(Arrays
       .asList(new Type[] { Type.CLIENT, Type.SERVER })));
 
   public Set<Type> getConnectorTypes();

@@ -3,6 +3,7 @@ package org.eclipse.internal.net4j.transport.tcp;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.util.concurrent.Synchronizer;
 import org.eclipse.net4j.util.concurrent.SynchronizingCorrelator;
+import org.eclipse.net4j.util.om.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.BufferUtil;
@@ -28,6 +29,9 @@ public final class ControlChannelImpl extends ChannelImpl
   public static final byte SUCCESS = 1;
 
   public static final byte FAILURE = 0;
+
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CHANNEL,
+      ControlChannelImpl.class);
 
   private SynchronizingCorrelator<Short, Boolean> registrations = new SynchronizingCorrelator();
 
@@ -120,7 +124,32 @@ public final class ControlChannelImpl extends ChannelImpl
       }
 
       case OPCODE_DEREGISTRATION:
-        throw new UnsupportedOperationException();
+      {
+        short channelID = byteBuffer.getShort();
+        assertValidChannelID(channelID);
+
+        try
+        {
+          ChannelImpl channel = ((AbstractTCPConnector)getConnector()).getChannel(channelID);
+          if (channel != null)
+          {
+            channel.deactivate();
+          }
+          else
+          {
+            if (TRACER.isEnabled())
+            {
+              TRACER.trace(toString() + ": Invalid channel id: " + channelID); //$NON-NLS-1$
+            }
+          }
+        }
+        catch (Exception ex)
+        {
+          Net4j.LOG.error(ex);
+        }
+
+        break;
+      }
 
       default:
         Net4j.LOG.error("Invalid opcode: " + opcode); //$NON-NLS-1$
@@ -132,12 +161,6 @@ public final class ControlChannelImpl extends ChannelImpl
       buffer.release();
     }
   }
-
-  // private Buffer getBuffer()
-  // {
-  // return
-  // ((AbstractTCPConnector)getConnector()).getBufferProvider().provideBuffer();
-  // }
 
   private void sendStatus(byte opcode, short channelID, boolean status)
   {

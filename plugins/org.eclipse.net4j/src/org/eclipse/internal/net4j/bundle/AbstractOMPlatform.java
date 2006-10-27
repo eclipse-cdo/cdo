@@ -33,7 +33,7 @@ public abstract class AbstractOMPlatform implements OMPlatform
 
   private static ContextTracer __TRACER__;
 
-  private Map<String, AbstractOMBundle> bundles = new ConcurrentHashMap();
+  private Map<String, AbstractOMBundle> bundles = new ConcurrentHashMap(0);
 
   private Queue<OMLogHandler> logHandlers = new ConcurrentLinkedQueue();
 

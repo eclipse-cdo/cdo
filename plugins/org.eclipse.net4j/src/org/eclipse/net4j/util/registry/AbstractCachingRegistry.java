@@ -109,9 +109,12 @@ public abstract class AbstractCachingRegistry<ID, E extends IRegistryElement<ID>
   @Override
   public Set<ID> getElementIDs()
   {
-    Set<ID> ids = new HashSet();
-    ids.addAll(super.getElementIDs());
-    ids.addAll(getCache().keySet());
+    final Set<ID> delegateIDs = super.getElementIDs();
+    final Set<ID> cacheIDs = getCache().keySet();
+    final Set<ID> ids = new HashSet(delegateIDs.size() + cacheIDs.size());
+
+    ids.addAll(delegateIDs);
+    ids.addAll(cacheIDs);
     return ids;
   }
 

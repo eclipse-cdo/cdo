@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentMap;
 public class SynchronizingCorrelator<CORRELATION, RESULT> implements
     Correlator<CORRELATION, Synchronizer<RESULT>>
 {
-  private ConcurrentMap<CORRELATION, Synchronizer<RESULT>> map = new ConcurrentHashMap();
+  private ConcurrentMap<CORRELATION, Synchronizer<RESULT>> map = new ConcurrentHashMap(0);
 
   public boolean isCorrelated(CORRELATION correlation)
   {

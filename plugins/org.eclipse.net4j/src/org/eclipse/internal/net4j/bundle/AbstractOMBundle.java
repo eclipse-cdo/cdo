@@ -45,7 +45,7 @@ public abstract class AbstractOMBundle implements OMBundle
 
   private boolean debuggingInitialized;
 
-  private Map<String, OMTracerImpl> tracers = new ConcurrentHashMap();
+  private Map<String, OMTracerImpl> tracers = new ConcurrentHashMap(0);
 
   private OMLogger logger;
 
@@ -53,9 +53,9 @@ public abstract class AbstractOMBundle implements OMBundle
 
   public ResourceBundle untranslatedResourceBundle;
 
-  public Map<String, String> strings = new HashMap();
+  public Map<String, String> strings = new HashMap(0);
 
-  public Map<String, String> untranslatedStrings = new HashMap();
+  public Map<String, String> untranslatedStrings = new HashMap(0);
 
   public boolean shouldTranslate = true;
 

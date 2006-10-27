@@ -67,7 +67,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
 
   private SelectionKey selectionKey;
 
-  private Set<TCPConnector> acceptedConnectors = new HashSet();
+  private Set<TCPConnector> acceptedConnectors = new HashSet(0);
 
   /**
    * An optional executor to be used by the {@link Channel}s to process their
@@ -167,7 +167,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
     ArrayList<TCPConnector> result;
     synchronized (acceptedConnectors)
     {
-      result = new ArrayList<TCPConnector>(acceptedConnectors);
+      result = new ArrayList(acceptedConnectors);
     }
 
     return result.toArray(new TCPConnector[result.size()]);

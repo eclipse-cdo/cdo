@@ -43,7 +43,7 @@ public abstract class SignalProtocol extends AbstractProtocol
 
   private ExecutorService executorService;
 
-  private Map<Integer, Signal> signals = new ConcurrentHashMap();
+  private Map<Integer, Signal> signals = new ConcurrentHashMap(0);
 
   private int nextCorrelationID = MIN_CORRELATION_ID;
 

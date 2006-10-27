@@ -202,24 +202,31 @@ public abstract class AbstractCachingMap<K, V> extends AbstractDelegatingMap<K, 
 
   protected Set<Entry<K, V>> mergedEntrySet()
   {
-    final Map<K, V> merged = new HashMap<K, V>();
-    merged.putAll(getDelegate());
-    merged.putAll(getCache());
+    final Map<K, V> delegate = getDelegate();
+    final Map<K, V> cache = getCache();
+    final Map<K, V> merged = new HashMap(delegate.size() + cache.size());
+
+    merged.putAll(delegate);
+    merged.putAll(cache);
     return merged.entrySet();
   }
 
   protected Set<K> mergedKeySet()
   {
-    final Set<K> merged = new HashSet<K>();
-    merged.addAll(getDelegate().keySet());
-    merged.addAll(getCache().keySet());
+    final Set<K> delegateKeys = getDelegate().keySet();
+    final Set<K> cacheKeys = getCache().keySet();
+    final Set<K> merged = new HashSet(delegateKeys.size() + cacheKeys.size());
+
+    merged.addAll(delegateKeys);
+    merged.addAll(cacheKeys);
     return merged;
   }
 
   protected Collection<V> mergedValues()
   {
-    final List<V> result = new ArrayList<V>();
-    for (K key : keySet())
+    final Set<K> keys = keySet();
+    final List<V> result = new ArrayList(keys.size());
+    for (K key : keys)
     {
       result.add(get(key));
     }

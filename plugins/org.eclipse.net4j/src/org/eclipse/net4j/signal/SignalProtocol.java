@@ -168,6 +168,9 @@ public abstract class SignalProtocol extends AbstractProtocol
     return correlationID;
   }
 
+  /**
+   * @author Eike Stepper
+   */
   class SignalInputStream extends BufferInputStream
   {
     private long timeout;
@@ -184,6 +187,9 @@ public abstract class SignalProtocol extends AbstractProtocol
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   class SignalOutputStream extends ChannelOutputStream
   {
     public SignalOutputStream(final int correlationID, final short signalID,

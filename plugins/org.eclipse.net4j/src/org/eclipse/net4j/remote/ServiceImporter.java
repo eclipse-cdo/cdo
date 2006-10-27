@@ -11,12 +11,8 @@
 package org.eclipse.net4j.remote;
 
 /**
- * TODO The {@link ServiceImporter} class.
- * <p>
- * 
  * @author Eike Stepper
  */
 public interface ServiceImporter
 {
-
 }

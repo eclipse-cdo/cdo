@@ -60,6 +60,9 @@ public class TestSignalProtocol extends SignalProtocol
     throw new IllegalArgumentException("Invalid signalID " + signalID);
   }
 
+  /**
+   * @author Eike Stepper
+   */
   public static class Factory extends AbstractProtocolFactory
   {
     public String getID()

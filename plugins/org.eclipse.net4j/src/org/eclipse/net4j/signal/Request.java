@@ -23,7 +23,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public abstract class Request<RESULT> extends SignalActor<RESULT>
+public abstract class Request extends SignalActor
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL, Request.class);
 

@@ -12,11 +12,6 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.util.concurrent.Synchronizer;
 import org.eclipse.net4j.util.concurrent.SynchronizingCorrelator;
-import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.PrintStreamLogHandler;
-import org.eclipse.net4j.util.om.PrintStreamTraceHandler;
-
-import junit.framework.TestCase;
 
 /**
  * @author Eike Stepper

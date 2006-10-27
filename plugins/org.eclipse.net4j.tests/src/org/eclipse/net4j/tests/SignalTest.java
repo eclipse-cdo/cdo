@@ -18,9 +18,6 @@ import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.PrintStreamLogHandler;
-import org.eclipse.net4j.util.om.PrintStreamTraceHandler;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
@@ -31,8 +28,6 @@ import org.eclipse.internal.net4j.transport.tcp.TCPSelectorImpl;
 import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import junit.framework.TestCase;
 
 /**
  * @author Eike Stepper

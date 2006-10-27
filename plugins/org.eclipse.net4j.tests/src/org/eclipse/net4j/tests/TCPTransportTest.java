@@ -22,9 +22,6 @@ import org.eclipse.net4j.transport.tcp.TCPConnector;
 import org.eclipse.net4j.transport.util.ChannelInputStream;
 import org.eclipse.net4j.transport.util.ChannelOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.PrintStreamLogHandler;
-import org.eclipse.net4j.util.om.PrintStreamTraceHandler;
 import org.eclipse.net4j.util.registry.HashCacheRegistry;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -44,8 +41,6 @@ import java.util.StringTokenizer;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-import junit.framework.TestCase;
 
 /**
  * @author Eike Stepper

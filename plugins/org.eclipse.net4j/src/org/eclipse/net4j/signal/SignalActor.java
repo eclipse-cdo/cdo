@@ -13,6 +13,7 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.transport.BufferHandler;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.util.BufferInputStream;
+import org.eclipse.net4j.util.ReflectUtil;
 
 /**
  * @author Eike Stepper
@@ -52,7 +53,8 @@ public abstract class SignalActor<RESULT> extends Signal
   @Override
   public String toString()
   {
-    return "SignalActor[" + getSignalID() + ", " + getProtocol() + ", correlation=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return ReflectUtil.getSimpleName(getClass())
+        + "[" + getSignalID() + ", " + getProtocol() + ", correlation=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         + getCorrelationID() + (terminated ? ", SENT" : "") + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 

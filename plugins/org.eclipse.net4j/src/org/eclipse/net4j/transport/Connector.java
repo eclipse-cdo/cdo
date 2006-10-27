@@ -14,6 +14,8 @@ import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.registry.IRegistryElement;
 
+import java.util.concurrent.ExecutorService;
+
 /**
  * One endpoint of a physical connection of arbitrary nature between two
  * communicating parties. A {@link Connector} encapsulates the process of
@@ -116,6 +118,10 @@ public interface Connector extends IRegistryElement<Integer>
    *          The registry or <code>null</code>.
    */
   public void setProtocolFactoryRegistry(IRegistry<String, ProtocolFactory> protocolFactoryRegistry);
+
+  public ExecutorService getReceiveExecutor();
+
+  public void setReceiveExecutor(ExecutorService receiveExecutor);
 
   public void addStateListener(StateListener listener);
 

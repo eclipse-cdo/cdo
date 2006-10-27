@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.signal;
 
+import org.eclipse.net4j.util.ReflectUtil;
+
 /**
  * @author Eike Stepper
  */
@@ -22,7 +24,8 @@ public abstract class SignalReactor extends Signal
   @Override
   public String toString()
   {
-    return "SignalReactor[" + getSignalID() + ", " + getProtocol() + ", correlation=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return ReflectUtil.getSimpleName(getClass())
+        + "[" + getSignalID() + ", " + getProtocol() + ", correlation=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         + getCorrelationID() + "]"; //$NON-NLS-1$
   }
 }

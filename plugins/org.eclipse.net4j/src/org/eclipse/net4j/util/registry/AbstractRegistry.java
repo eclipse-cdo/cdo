@@ -10,8 +10,11 @@
  **************************************************************************/
 package org.eclipse.net4j.util.registry;
 
+import org.eclipse.net4j.util.om.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry.Listener.EventType;
 import org.eclipse.net4j.util.registry.IRegistryElement.Descriptor;
+
+import org.eclipse.internal.net4j.bundle.Net4j;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +30,9 @@ public abstract class AbstractRegistry<ID, E extends IRegistryElement<ID>> imple
     IRegistry<ID, E>
 {
   public static final boolean DEFAULT_RESOLVING = true;
+
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_REGISTRY,
+      AbstractRegistry.class);
 
   private boolean resolving;
 
@@ -121,7 +127,10 @@ public abstract class AbstractRegistry<ID, E extends IRegistryElement<ID>> imple
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
       }
     }
   }

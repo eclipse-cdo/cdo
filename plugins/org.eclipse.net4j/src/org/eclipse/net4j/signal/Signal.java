@@ -12,12 +12,17 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.transport.util.BufferInputStream;
 import org.eclipse.net4j.transport.util.BufferOutputStream;
+import org.eclipse.net4j.util.om.ContextTracer;
+
+import org.eclipse.internal.net4j.bundle.Net4j;
 
 /**
  * @author Eike Stepper
  */
 public abstract class Signal implements Runnable
 {
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL, Signal.class);
+
   private SignalProtocol protocol;
 
   private int correlationID;
@@ -58,7 +63,10 @@ public abstract class Signal implements Runnable
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(ex);
+      }
     }
     finally
     {

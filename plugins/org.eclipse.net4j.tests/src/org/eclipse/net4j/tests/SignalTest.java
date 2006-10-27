@@ -17,8 +17,6 @@ import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ProtocolFactory;
-import org.eclipse.net4j.transport.util.BufferInputStream;
-import org.eclipse.net4j.transport.util.BufferOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.PrintStreamLogHandler;
@@ -39,7 +37,7 @@ import junit.framework.TestCase;
 /**
  * @author Eike Stepper
  */
-public class SignalTest extends TestCase
+public class SignalTest extends AbstractOMTest
 {
   private BufferProvider bufferPool;
 
@@ -53,16 +51,6 @@ public class SignalTest extends TestCase
   protected void setUp() throws Exception
   {
     super.setUp();
-    OMPlatform.INSTANCE.addLogHandler(PrintStreamLogHandler.CONSOLE);
-    OMPlatform.INSTANCE.addTraceHandler(PrintStreamTraceHandler.CONSOLE);
-
-    BufferInputStream.TRACE = true;
-    BufferOutputStream.TRACE = true;
-
-    System.out.print("================================= ");
-    System.out.print(getName());
-    System.out.println(" =================================");
-
     bufferPool = Net4jFactory.createBufferPool((short)64);
     LifecycleUtil.activate(bufferPool);
     assertTrue(LifecycleUtil.isActive(bufferPool));
@@ -125,9 +113,6 @@ public class SignalTest extends TestCase
       ex.printStackTrace();
     }
 
-    System.out.println();
-    System.out.println();
-    Thread.sleep(100);
     super.tearDown();
   }
 

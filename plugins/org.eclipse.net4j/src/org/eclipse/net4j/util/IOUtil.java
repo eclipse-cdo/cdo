@@ -12,6 +12,7 @@ package org.eclipse.net4j.util;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.Reader;
 import java.io.Writer;
 
@@ -20,8 +21,39 @@ import java.io.Writer;
  */
 public final class IOUtil
 {
+  private static final InputStream IN = System.in;
+
+  private static final PrintStream OUT = System.out;
+
+  private static final PrintStream ERR = System.err;
+
   private IOUtil()
   {
+  }
+
+  public static InputStream IN()
+  {
+    return IN;
+  }
+
+  public static PrintStream OUT()
+  {
+    return OUT;
+  }
+
+  public static PrintStream ERR()
+  {
+    return ERR;
+  }
+
+  public static void print(Throwable t, PrintStream stream)
+  {
+    t.printStackTrace(stream);
+  }
+
+  public static void print(Throwable t)
+  {
+    print(t, ERR);
   }
 
   public static Exception closeSilent(InputStream stream)

@@ -10,6 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.util.concurrent;
 
+import org.eclipse.net4j.util.om.ContextTracer;
+
+import org.eclipse.internal.net4j.bundle.Net4j;
+
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
@@ -19,6 +23,9 @@ import java.util.concurrent.ExecutorService;
  */
 public class AsynchronousWorkSerializer implements WorkSerializer, Runnable
 {
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONCURRENCY,
+      AsynchronousWorkSerializer.class);
+
   private ExecutorService executorService;
 
   private Queue<Runnable> workQueue;
@@ -58,7 +65,11 @@ public class AsynchronousWorkSerializer implements WorkSerializer, Runnable
         occupation.setOccupied(true);
       }
 
-      System.out.println(toString() + ": Notifying executor service"); //$NON-NLS-1$
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(toString() + ": Notifying executor service"); //$NON-NLS-1$
+      }
+
       executorService.execute(this);
     }
   }
@@ -81,7 +92,10 @@ public class AsynchronousWorkSerializer implements WorkSerializer, Runnable
         }
         catch (RuntimeException ex)
         {
-          ex.printStackTrace();
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace(ex);
+          }
         }
       }
 

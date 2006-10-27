@@ -52,7 +52,7 @@ public final class ReflectUtil
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      IOUtil.print(ex);
     }
 
     return 0;
@@ -119,7 +119,7 @@ public final class ReflectUtil
 
   public static void dump(Object object, String prefix)
   {
-    dump(object, prefix, System.out);
+    dump(object, prefix, IOUtil.OUT());
   }
 
   public static void dump(Object object, String prefix, PrintStream out)

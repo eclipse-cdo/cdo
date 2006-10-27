@@ -93,6 +93,11 @@ public abstract class AbstractOMBundle implements OMBundle
 
   public boolean isDebugging()
   {
+    if (!platform.isDebugging())
+    {
+      return false;
+    }
+
     if (!debuggingInitialized)
     {
       debugging = getDebugOption("debug", false); //$NON-NLS-1$

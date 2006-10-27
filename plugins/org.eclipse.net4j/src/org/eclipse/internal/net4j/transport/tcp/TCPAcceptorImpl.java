@@ -299,14 +299,14 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
       throw new IllegalStateException("bufferProvider == null"); //$NON-NLS-1$
     }
 
-    if (protocolFactoryRegistry == null)
+    if (protocolFactoryRegistry == null && TRACER.isEnabled())
     {
-      Net4j.LOG.info("No protocol factory registry in " + this); //$NON-NLS-1$
+      TRACER.trace(toString() + ": No protocol factory registry!"); //$NON-NLS-1$
     }
 
-    if (receiveExecutor == null)
+    if (receiveExecutor == null && TRACER.isEnabled())
     {
-      Net4j.LOG.info("No receive executor in " + this); //$NON-NLS-1$
+      TRACER.trace(toString() + ": No receive executor!"); //$NON-NLS-1$
     }
 
     if (selector == null)

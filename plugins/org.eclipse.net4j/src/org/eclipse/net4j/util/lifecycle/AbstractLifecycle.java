@@ -82,7 +82,11 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
+
         return ex;
       }
       finally
@@ -122,7 +126,10 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
       }
     }
   }
@@ -137,7 +144,10 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
       }
     }
   }
@@ -152,7 +162,10 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
       }
     }
   }

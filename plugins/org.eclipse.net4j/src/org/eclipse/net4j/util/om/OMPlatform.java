@@ -21,6 +21,10 @@ public interface OMPlatform
 
   public OMBundle bundle(String bundleID, Class accessor);
 
+  public boolean isDebugging();
+
+  public void setDebugging(boolean debugging);
+
   public void addLogHandler(OMLogHandler logHandler);
 
   public void removeLogHandler(OMLogHandler logHandler);

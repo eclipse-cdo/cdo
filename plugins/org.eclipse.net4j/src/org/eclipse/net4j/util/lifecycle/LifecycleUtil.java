@@ -10,6 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.util.lifecycle;
 
+import org.eclipse.net4j.util.om.ContextTracer;
+
+import org.eclipse.internal.net4j.bundle.Net4j;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
@@ -18,6 +22,9 @@ import java.lang.reflect.Method;
  */
 public final class LifecycleUtil
 {
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_LIFECYCLE,
+      LifecycleUtil.class);
+
   private LifecycleUtil()
   {
   }
@@ -152,12 +159,18 @@ public final class LifecycleUtil
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
       }
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(ex);
+      }
     }
 
     return null;

@@ -15,7 +15,9 @@ import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.util.BufferInputStream;
 import org.eclipse.net4j.transport.util.ChannelOutputStream;
+import org.eclipse.net4j.util.om.ContextTracer;
 
+import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.AbstractProtocol;
 import org.eclipse.internal.net4j.transport.BufferUtil;
 import org.eclipse.internal.net4j.transport.ChannelImpl;
@@ -35,6 +37,9 @@ public abstract class SignalProtocol extends AbstractProtocol
   private static final int MIN_CORRELATION_ID = 1;
 
   private static final int MAX_CORRELATION_ID = Integer.MAX_VALUE;
+
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL,
+      SignalProtocol.class);
 
   private ExecutorService executorService;
 
@@ -63,7 +68,10 @@ public abstract class SignalProtocol extends AbstractProtocol
   {
     ByteBuffer byteBuffer = buffer.getByteBuffer();
     int correlationID = byteBuffer.getInt();
-    System.out.println(toString() + ": Received buffer for correlation " + correlationID); //$NON-NLS-1$
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(toString() + ": Received buffer for correlation " + correlationID); //$NON-NLS-1$
+    }
 
     Signal signal;
     if (correlationID > 0)
@@ -73,7 +81,10 @@ public abstract class SignalProtocol extends AbstractProtocol
       if (signal == null)
       {
         short signalID = byteBuffer.getShort();
-        System.out.println(toString() + ": Got signal id " + signalID); //$NON-NLS-1$
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(toString() + ": Got signal id " + signalID); //$NON-NLS-1$
+        }
 
         signal = createSignalReactor(signalID);
         signal.setProtocol(this);
@@ -90,7 +101,11 @@ public abstract class SignalProtocol extends AbstractProtocol
       signal = signals.get(-correlationID);
       if (signal == null)
       {
-        System.out.println(toString() + ": Discarding buffer"); //$NON-NLS-1$
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(toString() + ": Discarding buffer"); //$NON-NLS-1$
+        }
+
         buffer.release();
       }
     }
@@ -138,7 +153,11 @@ public abstract class SignalProtocol extends AbstractProtocol
     int correlationID = nextCorrelationID;
     if (nextCorrelationID == MAX_CORRELATION_ID)
     {
-      System.out.println(toString() + ": Correlation wrap around"); //$NON-NLS-1$
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(toString() + ": Correlation wrap around"); //$NON-NLS-1$
+      }
+
       nextCorrelationID = MIN_CORRELATION_ID;
     }
     else
@@ -185,12 +204,20 @@ public abstract class SignalProtocol extends AbstractProtocol
         {
           Buffer buffer = delegate.provideBuffer();
           ByteBuffer byteBuffer = buffer.startPutting(getChannel().getChannelID());
+          if (SignalProtocol.TRACER.isEnabled())
+          {
+            SignalProtocol.TRACER.trace("Providing buffer for correlation " + correlationID); //$NON-NLS-1$
+          }
 
-          System.out.println("Providing buffer for correlation " + correlationID); //$NON-NLS-1$
           byteBuffer.putInt(correlationID);
           if (firstBuffer)
           {
-            System.out.println(SignalProtocol.this.toString() + ": Put signal id " + signalID); //$NON-NLS-1$
+            if (SignalProtocol.TRACER.isEnabled())
+            {
+              SignalProtocol.TRACER.trace(SignalProtocol.this.toString()
+                  + ": Put signal id " + signalID); //$NON-NLS-1$
+            }
+
             byteBuffer.putShort(signalID);
           }
 

@@ -12,6 +12,7 @@ package org.eclipse.internal.net4j.bundle;
 
 import org.eclipse.net4j.util.om.OMBundle;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.osgi.service.debug.DebugOptions;
 
 import org.osgi.framework.BundleContext;
@@ -27,6 +28,15 @@ public class OSGiPlatform extends AbstractOMPlatform
   public OSGiPlatform(Object systemContext)
   {
     this.systemContext = (BundleContext)systemContext;
+
+    try
+    {
+      setDebugging(Platform.inDebugMode());
+    }
+    catch (RuntimeException ignore)
+    {
+      ;
+    }
   }
 
   @Override

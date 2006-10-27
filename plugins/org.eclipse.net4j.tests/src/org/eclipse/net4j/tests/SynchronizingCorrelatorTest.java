@@ -12,13 +12,16 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.util.concurrent.Synchronizer;
 import org.eclipse.net4j.util.concurrent.SynchronizingCorrelator;
+import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.PrintStreamLogHandler;
+import org.eclipse.net4j.util.om.PrintStreamTraceHandler;
 
 import junit.framework.TestCase;
 
 /**
  * @author Eike Stepper
  */
-public class SynchronizingCorrelatorTest extends TestCase
+public class SynchronizingCorrelatorTest extends AbstractOMTest
 {
   public void testPutConsumerFirst() throws Exception
   {
@@ -30,7 +33,7 @@ public class SynchronizingCorrelatorTest extends TestCase
       public void run()
       {
         Synchronizer<Boolean> eike = correlator.correlate("eike");
-        result[0] = eike.get(10000);
+        result[0] = eike.get(5000);
         System.out.println("RESULT: " + result[0]);
       }
     };
@@ -61,7 +64,7 @@ public class SynchronizingCorrelatorTest extends TestCase
       public void run()
       {
         Synchronizer<Boolean> eike = correlator.correlate("eike");
-        result[0] = eike.get(10000);
+        result[0] = eike.get(5000);
         System.out.println("RESULT: " + result[0]);
       }
     };
@@ -97,7 +100,7 @@ public class SynchronizingCorrelatorTest extends TestCase
       public void run()
       {
         Synchronizer<Boolean> eike = correlator.correlate("eike");
-        result[0] = eike.get(10000);
+        result[0] = eike.get(5000);
         System.out.println("RESULT: " + result[0]);
       }
     };
@@ -131,7 +134,7 @@ public class SynchronizingCorrelatorTest extends TestCase
       public void run()
       {
         Synchronizer<Boolean> eike = correlator.correlate("eike");
-        result[0] = eike.get(10000);
+        result[0] = eike.get(5000);
         System.out.println("RESULT: " + result[0]);
       }
     };

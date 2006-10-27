@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.om;
 
 import org.eclipse.net4j.util.om.OMLogger.Level;
 
+import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.bundle.OSGiBundle;
 
 import org.osgi.framework.BundleContext;
@@ -25,7 +26,10 @@ public class OSGiLoggingBridge implements OMLogHandler
 {
   public static final OSGiLoggingBridge INSTANCE = new OSGiLoggingBridge();
 
-  private OSGiLoggingBridge()
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_OM,
+      OSGiLoggingBridge.class);
+
+  protected OSGiLoggingBridge()
   {
   }
 
@@ -38,7 +42,10 @@ public class OSGiLoggingBridge implements OMLogHandler
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(ex);
+      }
     }
   }
 
@@ -63,7 +70,7 @@ public class OSGiLoggingBridge implements OMLogHandler
     }
   }
 
-  private static int toOSGi(Level level)
+  public static int toOSGi(Level level)
   {
     switch (level)
     {

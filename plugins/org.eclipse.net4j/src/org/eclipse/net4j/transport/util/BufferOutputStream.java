@@ -15,6 +15,9 @@ import org.eclipse.net4j.transport.BufferHandler;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.ContextTracer;
+
+import org.eclipse.internal.net4j.bundle.Net4j;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -27,7 +30,8 @@ public class BufferOutputStream extends OutputStream
 {
   public static final boolean DEFAULT_PROPAGATE_CLOSE = false;
 
-  public static boolean TRACE = false;
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM,
+      BufferOutputStream.class);
 
   private BufferHandler bufferHandler;
 
@@ -64,9 +68,9 @@ public class BufferOutputStream extends OutputStream
   public void write(int b) throws IOException
   {
     ensureBuffer();
-    if (TRACE)
+    if (TRACER.isEnabled())
     {
-      System.out.println("--> " + HexUtil.toHex(b) //$NON-NLS-1$
+      TRACER.trace("--> " + HexUtil.toHex(b) //$NON-NLS-1$
           + (b >= 32 ? " " + Character.toString((char)b) : "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 

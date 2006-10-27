@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.bundle;
 
+import org.eclipse.net4j.util.om.ContextTracer;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMLogHandler;
 import org.eclipse.net4j.util.om.OMLogger;
@@ -30,14 +31,19 @@ public abstract class AbstractOMPlatform implements OMPlatform
 {
   static Object systemContext;
 
+  private static ContextTracer __TRACER__;
+
   private Map<String, AbstractOMBundle> bundles = new ConcurrentHashMap();
 
   private Queue<OMLogHandler> logHandlers = new ConcurrentLinkedQueue();
 
   private Queue<OMTraceHandler> traceHandlers = new ConcurrentLinkedQueue();
 
+  private boolean debugging;
+
   protected AbstractOMPlatform()
   {
+    debugging = Boolean.parseBoolean(System.getProperty("debug", "false"));
   }
 
   public OMBundle bundle(String bundleID, Class accessor)
@@ -77,6 +83,16 @@ public abstract class AbstractOMPlatform implements OMPlatform
     traceHandlers.remove(traceHandler);
   }
 
+  public boolean isDebugging()
+  {
+    return debugging;
+  }
+
+  public void setDebugging(boolean debugging)
+  {
+    this.debugging = debugging;
+  }
+
   protected void log(OMLogger logger, Level level, String msg, Throwable t)
   {
     for (OMLogHandler logHandler : logHandlers)
@@ -87,7 +103,10 @@ public abstract class AbstractOMPlatform implements OMPlatform
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        if (TRACER().isEnabled())
+        {
+          TRACER().trace(ex);
+        }
       }
     }
   }
@@ -102,7 +121,10 @@ public abstract class AbstractOMPlatform implements OMPlatform
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        if (TRACER().isEnabled())
+        {
+          TRACER().trace(ex);
+        }
       }
     }
   }
@@ -124,9 +146,22 @@ public abstract class AbstractOMPlatform implements OMPlatform
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      if (TRACER().isEnabled())
+      {
+        TRACER().trace(ex);
+      }
     }
 
     return new LegacyPlatform();
+  }
+
+  private static ContextTracer TRACER()
+  {
+    if (__TRACER__ == null)
+    {
+      __TRACER__ = new ContextTracer(Net4j.DEBUG_OM, AbstractOMPlatform.class);
+    }
+
+    return __TRACER__;
   }
 }

@@ -40,7 +40,7 @@ public class LegacyBundle extends AbstractOMBundle
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      IOUtil.print(ex);
     }
   }
 

@@ -13,8 +13,11 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.util.BufferInputStream;
 import org.eclipse.net4j.transport.util.BufferOutputStream;
+import org.eclipse.net4j.util.om.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
+
+import org.eclipse.internal.net4j.bundle.Net4j;
 
 import java.io.IOException;
 
@@ -23,6 +26,9 @@ import java.io.IOException;
  */
 public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT>
 {
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL,
+      RequestWithConfirmation.class);
+
   protected RequestWithConfirmation(Channel channel)
   {
     super(channel);
@@ -31,11 +37,18 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT
   @Override
   protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    System.out.println("================ Requesting " + this); //$NON-NLS-1$
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("================ Requesting " + this); //$NON-NLS-1$
+    }
+
     requesting(new ExtendedDataOutputStream(out));
     out.flush();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("================ Confirming " + this); //$NON-NLS-1$
+    }
 
-    System.out.println("================ Confirming " + this); //$NON-NLS-1$
     setResult(confirming(new ExtendedDataInputStream(in)));
   }
 

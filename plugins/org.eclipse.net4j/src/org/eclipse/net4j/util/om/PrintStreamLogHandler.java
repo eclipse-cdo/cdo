@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om;
 
+import org.eclipse.net4j.util.IOUtil;
 import org.eclipse.net4j.util.om.OMLogger.Level;
 
 import java.io.PrintStream;
@@ -31,9 +32,9 @@ public class PrintStreamLogHandler implements OMLogHandler
     this.err = err;
   }
 
-  private PrintStreamLogHandler()
+  protected PrintStreamLogHandler()
   {
-    this(System.out, System.err);
+    this(IOUtil.OUT(), IOUtil.ERR());
   }
 
   public void logged(OMLogger logger, Level level, String msg, Throwable t)
@@ -42,11 +43,11 @@ public class PrintStreamLogHandler implements OMLogHandler
     stream.println((toString(level) + " ") + msg); //$NON-NLS-1$
     if (t != null)
     {
-      t.printStackTrace(stream);
+      IOUtil.print(t, stream);
     }
   }
 
-  private static String toString(Level level)
+  public static String toString(Level level)
   {
     switch (level)
     {

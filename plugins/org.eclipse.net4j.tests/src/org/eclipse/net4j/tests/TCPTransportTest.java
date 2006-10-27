@@ -50,7 +50,7 @@ import junit.framework.TestCase;
 /**
  * @author Eike Stepper
  */
-public class TCPTransportTest extends TestCase
+public class TCPTransportTest extends AbstractOMTest
 {
   private BufferProvider bufferPool;
 
@@ -64,13 +64,6 @@ public class TCPTransportTest extends TestCase
   protected void setUp() throws Exception
   {
     super.setUp();
-    OMPlatform.INSTANCE.addLogHandler(PrintStreamLogHandler.CONSOLE);
-    OMPlatform.INSTANCE.addTraceHandler(PrintStreamTraceHandler.CONSOLE);
-
-    System.out.print("================================= ");
-    System.out.print(getName());
-    System.out.println(" =================================");
-
     bufferPool = Net4jFactory.createBufferPool();
     LifecycleUtil.activate(bufferPool);
     assertTrue(LifecycleUtil.isActive(bufferPool));
@@ -133,9 +126,6 @@ public class TCPTransportTest extends TestCase
       ex.printStackTrace();
     }
 
-    System.out.println();
-    System.out.println();
-    Thread.sleep(10);
     super.tearDown();
   }
 
@@ -143,14 +133,14 @@ public class TCPTransportTest extends TestCase
   {
     acceptor.activate();
     assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(1000));
+    assertTrue(connector.connect(5000));
   }
 
   public void testSendBuffer() throws Exception
   {
     acceptor.activate();
     assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(1000));
+    assertTrue(connector.connect(5000));
 
     Channel channel = connector.openChannel();
     for (int i = 0; i < 3; i++)
@@ -173,7 +163,7 @@ public class TCPTransportTest extends TestCase
     acceptor.setProtocolFactoryRegistry(protocolFactoryRegistry);
     acceptor.activate();
     assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(1000));
+    assertTrue(connector.connect(5000));
 
     Channel channel = connector.openChannel(TestProtocolFactory.PROTOCOL_ID);
     for (int i = 0; i < COUNT; i++)
@@ -201,7 +191,7 @@ public class TCPTransportTest extends TestCase
     acceptor.setProtocolFactoryRegistry(local);
     acceptor.activate();
     assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(1000));
+    assertTrue(connector.connect(5000));
 
     Channel channel = connector.openChannel(TestProtocolFactory.PROTOCOL_ID);
     for (int i = 0; i < COUNT; i++)
@@ -229,7 +219,7 @@ public class TCPTransportTest extends TestCase
     acceptor.setProtocolFactoryRegistry(local);
     acceptor.activate();
     assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(1000));
+    assertTrue(connector.connect(5000));
 
     Channel channel = connector.openChannel(TestProtocolFactory.PROTOCOL_ID);
     for (int i = 0; i < COUNT; i++)
@@ -255,7 +245,7 @@ public class TCPTransportTest extends TestCase
     acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
     acceptor.activate();
     assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(1000));
+    assertTrue(connector.connect(5000));
 
     Channel channel = connector.openChannel(TestProtocolFactory.PROTOCOL_ID);
     for (int i = 0; i < COUNT; i++)
@@ -301,7 +291,7 @@ public class TCPTransportTest extends TestCase
 
     acceptor.activate();
     assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(1000));
+    assertTrue(connector.connect(5000));
 
     Channel channel = connector.openChannel();
     assertTrue(counter.await(2, TimeUnit.SECONDS));
@@ -362,7 +352,7 @@ public class TCPTransportTest extends TestCase
 
     acceptor.activate();
     assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(1000));
+    assertTrue(connector.connect(5000));
 
     Channel channel = connector.openChannel();
     assertTrue(counter.await(2, TimeUnit.SECONDS));
@@ -430,7 +420,7 @@ public class TCPTransportTest extends TestCase
 
     acceptor.activate();
     assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(1000));
+    assertTrue(connector.connect(5000));
 
     final Channel channel = connector.openChannel();
     assertTrue(counter.await(2, TimeUnit.SECONDS));
@@ -512,7 +502,7 @@ public class TCPTransportTest extends TestCase
 
     acceptor.activate();
     assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(1000));
+    assertTrue(connector.connect(5000));
 
     Channel channel = connector.openChannel();
     assertTrue(counter.await(2, TimeUnit.SECONDS));

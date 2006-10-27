@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.bundle;
 
+import org.eclipse.net4j.util.IOUtil;
+
 import org.eclipse.core.runtime.FileLocator;
 
 import org.osgi.framework.BundleContext;
@@ -42,7 +44,7 @@ public class OSGiBundle extends AbstractOMBundle
     }
     catch (IOException ex)
     {
-      ex.printStackTrace();
+      IOUtil.print(ex);
       return null;
     }
   }

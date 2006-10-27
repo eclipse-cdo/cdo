@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.bundle.OSGiBundle;
 
 /**
@@ -25,7 +26,10 @@ public class EclipseLoggingBridge implements OMLogHandler
 {
   public static final EclipseLoggingBridge INSTANCE = new EclipseLoggingBridge();
 
-  private EclipseLoggingBridge()
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_OM,
+      EclipseLoggingBridge.class);
+
+  protected EclipseLoggingBridge()
   {
   }
 
@@ -39,11 +43,14 @@ public class EclipseLoggingBridge implements OMLogHandler
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(ex);
+      }
     }
   }
 
-  private static int toEclipse(Level level)
+  public static int toEclipse(Level level)
   {
     switch (level)
     {

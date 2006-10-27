@@ -13,6 +13,9 @@ package org.eclipse.net4j.transport.util;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferHandler;
 import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.om.ContextTracer;
+
+import org.eclipse.internal.net4j.bundle.Net4j;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +34,8 @@ public class BufferInputStream extends InputStream implements BufferHandler
 
   public static final long DEFAULT_MILLIS_INTERRUPT_CHECK = 100;
 
-  public static boolean TRACE = false;
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM,
+      BufferInputStream.class);
 
   private BlockingQueue<Buffer> buffers = new LinkedBlockingQueue<Buffer>();
 
@@ -65,9 +69,9 @@ public class BufferInputStream extends InputStream implements BufferHandler
 
     final byte b = currentBuffer.getByteBuffer().get();
     final int result = b < 0 ? ~b : b;
-    if (TRACE)
+    if (TRACER.isEnabled())
     {
-      System.out.println("<-- " + HexUtil.toHex(result) //$NON-NLS-1$
+      TRACER.trace("<-- " + HexUtil.toHex(result) //$NON-NLS-1$
           + (result >= 32 ? " " + Character.toString((char)result) : "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 

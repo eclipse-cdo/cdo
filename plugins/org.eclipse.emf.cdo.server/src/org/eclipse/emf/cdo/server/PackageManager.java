@@ -11,12 +11,13 @@
 package org.eclipse.emf.cdo.server;
 
 
-import org.eclipse.net4j.spring.Service;
-
 import java.util.List;
 
 
-public interface PackageManager extends Service
+/**
+ * @author Eike Stepper
+ */
+public interface PackageManager
 {
   public void addPackageListener(PackageListener listener);
 

@@ -47,6 +47,7 @@ public class AllSuites extends TestSuite
 
   protected void populateSuite()
   {
+    //    String mode = ITopologyConstants.EMBEDDED_MODE;
     for (String mode : ITopologyConstants.SELF_CONTAINED_MODES)
     {
       TestSuite topologySuite = new TestSuite("Mode " + mode);

@@ -11,21 +11,18 @@
 package org.eclipse.emf.cdo.server;
 
 
-import org.eclipse.net4j.core.Channel;
+import org.eclipse.net4j.transport.Channel;
 
 import org.eclipse.emf.cdo.core.CDOProtocol;
-
-import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.Collection;
 
 
+/**
+ * @author Eike Stepper
+ */
 public interface ServerCDOProtocol extends CDOProtocol
 {
-  public Mapper getMapper();
-
-  public TransactionTemplate getTransactionTemplate();
-
   public ServerCDOResProtocol getServerCDOResProtocol();
 
   public void fireRemovalNotification(Collection<Integer> rids);

@@ -14,6 +14,9 @@ package org.eclipse.emf.cdo.server;
 import java.util.List;
 
 
+/**
+ * @author Eike Stepper
+ */
 public interface ClassInfo
 {
   public int getCID();

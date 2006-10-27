@@ -11,34 +11,42 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.Protocol;
-import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
+import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
 import org.eclipse.emf.cdo.core.CDOResSignals;
 import org.eclipse.emf.cdo.server.Mapper;
-import org.eclipse.emf.cdo.server.ServerCDOResProtocol;
+
+import java.io.IOException;
 
 
-public class QueryAllResourcesIndication extends AbstractIndicationWithResponse implements
-    CDOResSignals
+/**
+ * @author Eike Stepper
+ */
+public class QueryAllResourcesIndication extends IndicationWithResponse implements CDOResSignals
 {
-  public QueryAllResourcesIndication()
+  private Mapper mapper;
+
+  public QueryAllResourcesIndication(Mapper mapper)
   {
+    this.mapper = mapper;
   }
 
-  public short getSignalId()
+  @Override
+  protected short getSignalID()
   {
     return QUERY_ALL_RESOURCES;
   }
 
-  public void indicate()
+  @Override
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
   }
 
-  public void respond()
+  @Override
+  protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    Protocol protocol = getProtocol();
-    Mapper mapper = ((ServerCDOResProtocol) protocol).getMapper();
-    mapper.transmitAllResources(channel);
+    mapper.transmitAllResources(out);
   }
 }

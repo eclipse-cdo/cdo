@@ -11,36 +11,61 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
+import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import org.eclipse.emf.cdo.core.CDOProtocol;
+import org.eclipse.emf.cdo.core.CDOSignals;
 import org.eclipse.emf.cdo.server.Mapper;
-import org.eclipse.emf.cdo.server.ServerCDOProtocol;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
+
+import java.io.IOException;
 
 
-public class QueryExtentIndication extends AbstractIndicationWithResponse
+/**
+ * @author Eike Stepper
+ */
+public class QueryExtentIndication extends IndicationWithResponse
 {
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_PROTOCOL,
+      QueryExtentIndication.class);
+
+  private Mapper mapper;
+
   private int cid;
 
   private boolean exactMatch;
 
   private int rid;
 
-  public short getSignalId()
+  public QueryExtentIndication(Mapper mapper)
   {
-    return CDOProtocol.QUERY_EXTENT;
+    this.mapper = mapper;
   }
 
-  public void indicate()
+  @Override
+  protected short getSignalID()
   {
-    cid = receiveInt();
-    exactMatch = receiveBoolean();
-    rid = receiveInt();
+    return CDOSignals.QUERY_EXTENT;
   }
 
-  public void respond()
+  @Override
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    Mapper mapper = ((ServerCDOProtocol) getProtocol()).getMapper();
-    mapper.transmitExtent(getChannel(), cid, exactMatch, rid);
+    cid = in.readInt();
+    exactMatch = in.readBoolean();
+    rid = in.readInt();
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Received cid=" + cid + ", exactMatch=" + exactMatch + ", rid=" + rid);
+    }
+  }
+
+  @Override
+  protected void responding(ExtendedDataOutputStream out) throws IOException
+  {
+    mapper.transmitExtent(out, cid, exactMatch, rid);
   }
 }

@@ -11,8 +11,7 @@
 package org.eclipse.emf.cdo.server;
 
 
-import org.eclipse.net4j.core.Channel;
-import org.eclipse.net4j.spring.Service;
+import org.eclipse.net4j.util.stream.ExtendedDataOutput;
 
 import org.eclipse.emf.cdo.core.OID;
 import org.eclipse.emf.cdo.core.OIDEncoder;
@@ -20,8 +19,13 @@ import org.eclipse.emf.cdo.core.RID;
 
 import java.util.Set;
 
+import java.io.IOException;
 
-public interface Mapper extends Service
+
+/**
+ * @author Eike Stepper
+ */
+public interface Mapper
 {
   public int getNextPid();
 
@@ -69,19 +73,21 @@ public interface Mapper extends Service
 
   public void removeContent(long oid);
 
-  public void transmitContent(Channel channel, ResourceInfo resourceInfo);
+  public void transmitContent(ExtendedDataOutput out, ResourceInfo resourceInfo) throws IOException;
 
-  public void transmitObject(Channel channel, long oid);
+  public void transmitObject(ExtendedDataOutput out, long oid) throws IOException;
 
-  public void transmitAttributes(Channel channel, long oid, ClassInfo classInfo);
+  public void transmitAttributes(ExtendedDataOutput out, long oid, ClassInfo classInfo)
+      throws IOException;
 
-  public void transmitReferences(Channel channel, long oid);
+  public void transmitReferences(ExtendedDataOutput out, long oid) throws IOException;
 
-  public void transmitAllResources(Channel channel);
+  public void transmitAllResources(ExtendedDataOutput out) throws IOException;
 
-  public void transmitExtent(Channel channel, int cid, boolean exactMatch, int rid);
+  public void transmitExtent(ExtendedDataOutput out, int cid, boolean exactMatch, int rid)
+      throws IOException;
 
-  public void transmitXRefs(Channel channel, long oid, int rid);
+  public void transmitXRefs(ExtendedDataOutput out, long oid, int rid) throws IOException;
 
   /**
    * Deletes the given resource within a transaction.<p>

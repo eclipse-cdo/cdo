@@ -177,6 +177,19 @@ public abstract class AbstractModel1Test extends AbstractTopologyTest
     return node;
   }
 
+  protected void createTree(ExtendedNode root, int levels, int children)
+  {
+    String name = root.getStringFeature();
+    for (int i = 0; i < children; i++)
+    {
+      ExtendedNode child = createExtended(name + (i + 1), root);
+      if (levels > 1)
+      {
+        createTree(child, levels - 1, children);
+      }
+    }
+  }
+
   protected TreeNode findChild(String name, TreeNode parent)
   {
     return findNode(name, parent.getChildren());

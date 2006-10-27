@@ -20,6 +20,9 @@ import java.util.Iterator;
 import java.util.List;
 
 
+/**
+ * @author Eike Stepper
+ */
 public class ClassInfoImpl implements ClassInfo
 {
   protected int cid;

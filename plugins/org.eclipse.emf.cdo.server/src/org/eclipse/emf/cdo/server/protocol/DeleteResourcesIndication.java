@@ -11,14 +11,17 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.Channel;
-import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
+import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
 import org.eclipse.emf.cdo.core.CDOResProtocol;
 import org.eclipse.emf.cdo.core.CDOResSignals;
 import org.eclipse.emf.cdo.core.protocol.ResourceChangeInfo;
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.ServerCDOResProtocol;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
 
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.TransactionStatus;
@@ -31,32 +34,50 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import java.io.IOException;
 
-public class DeleteResourcesIndication extends AbstractIndicationWithResponse implements
-    CDOResSignals
+
+/**
+ * @author Eike Stepper
+ */
+public class DeleteResourcesIndication extends IndicationWithResponse implements CDOResSignals
 {
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_PROTOCOL,
+      DeleteResourcesIndication.class);
+
   private boolean ok;
 
-  public DeleteResourcesIndication()
+  private Mapper mapper;
+
+  private TransactionTemplate transactionTemplate;
+
+  public DeleteResourcesIndication(Mapper mapper, TransactionTemplate transactionTemplate)
   {
+    this.mapper = mapper;
+    this.transactionTemplate = transactionTemplate;
   }
 
-  public short getSignalId()
+  @Override
+  protected short getSignalID()
   {
     return DELETE_RESOURCES;
   }
 
-  public void indicate()
+  @Override
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     Set<Integer> rids = new HashSet<Integer>();
     for (;;)
     {
-      int rid = receiveInt();
-      if (rid == CDOResProtocol.NO_MORE_RESOURCES) break;
-
-      if (isDebugEnabled())
+      int rid = in.readInt();
+      if (rid == CDOResProtocol.NO_MORE_RESOURCES)
       {
-        debug("Deleting rid " + rid);
+        break;
+      }
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Deleting rid " + rid);
       }
 
       rids.add(rid);
@@ -76,24 +97,21 @@ public class DeleteResourcesIndication extends AbstractIndicationWithResponse im
     }
   }
 
-  public void respond()
+  @Override
+  protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    if (isDebugEnabled())
+    if (TRACER.isEnabled())
     {
-      debug("Deleted resources: " + ok);
+      TRACER.trace("Deleted resources: " + ok);
     }
 
-    transmitBoolean(ok);
+    out.writeBoolean(ok);
   }
 
   private Set<Long> deleteResources(final Set<Integer> rids)
   {
     try
     {
-      ServerCDOResProtocol protocol = (ServerCDOResProtocol) getProtocol();
-      final Mapper mapper = protocol.getMapper();
-
-      TransactionTemplate transactionTemplate = protocol.getTransactionTemplate();
       return (Set<Long>) transactionTemplate.execute(new TransactionCallback()
       {
         public Object doInTransaction(TransactionStatus status)
@@ -109,7 +127,7 @@ public class DeleteResourcesIndication extends AbstractIndicationWithResponse im
     }
     catch (TransactionException ex)
     {
-      error("Error while committing transaction to database", ex);
+      CDOServer.LOG.error("Error while committing transaction to database", ex);
     }
 
     return null;
@@ -119,8 +137,7 @@ public class DeleteResourcesIndication extends AbstractIndicationWithResponse im
   {
     if (!changedObjectIds.isEmpty())
     {
-      Channel me = getChannel();
-      ServerCDOResProtocol cdores = (ServerCDOResProtocol) me.getProtocol();
+      ServerCDOResProtocol cdores = (ServerCDOResProtocol) getProtocol();
       cdores.fireInvalidationNotification(changedObjectIds);
     }
   }
@@ -129,12 +146,11 @@ public class DeleteResourcesIndication extends AbstractIndicationWithResponse im
   {
     if (!rids.isEmpty())
     {
-      Channel me = getChannel();
-      ServerCDOResProtocol cdores = (ServerCDOResProtocol) me.getProtocol();
+      ServerCDOResProtocol cdores = (ServerCDOResProtocol) getProtocol();
       cdores.fireRemovalNotification(rids);
     }
   }
-  
+
   private void transmitResourceChanges(Collection<Integer> rids)
   {
     if (!rids.isEmpty())
@@ -146,8 +162,7 @@ public class DeleteResourcesIndication extends AbstractIndicationWithResponse im
         resourceChanges.add(info);
       }
 
-      Channel me = getChannel();
-      ServerCDOResProtocol cdores = (ServerCDOResProtocol) me.getProtocol();
+      ServerCDOResProtocol cdores = (ServerCDOResProtocol) getProtocol();
       cdores.fireResourcesChangedNotification(resourceChanges);
     }
   }

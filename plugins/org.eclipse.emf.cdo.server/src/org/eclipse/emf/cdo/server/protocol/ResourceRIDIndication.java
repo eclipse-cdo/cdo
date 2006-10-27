@@ -11,45 +11,75 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
+import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import org.eclipse.emf.cdo.core.CDOProtocol;
+import org.eclipse.emf.cdo.core.CDOSignals;
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.ResourceInfo;
 import org.eclipse.emf.cdo.server.ResourceManager;
-import org.eclipse.emf.cdo.server.ServerCDOProtocol;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
+
+import java.io.IOException;
 
 
-public class ResourceRIDIndication extends AbstractIndicationWithResponse
+/**
+ * @author Eike Stepper
+ */
+public class ResourceRIDIndication extends IndicationWithResponse
 {
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_PROTOCOL,
+      ResourceRIDIndication.class);
+
+  private Mapper mapper;
+
   private int rid;
 
-  public short getSignalId()
+  public ResourceRIDIndication(Mapper mapper)
   {
-    return CDOProtocol.RESOURCE_RID;
+    this.mapper = mapper;
   }
 
-  public void indicate()
+  @Override
+  protected short getSignalID()
   {
-    rid = receiveInt();
-    if (isDebugEnabled()) debug("Requested rid " + rid);
+    return CDOSignals.RESOURCE_RID;
   }
 
-  public void respond()
+  @Override
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    Mapper mapper = ((ServerCDOProtocol) getProtocol()).getMapper();
+    rid = in.readInt();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Requested rid " + rid);
+    }
+  }
+
+  @Override
+  protected void responding(ExtendedDataOutputStream out) throws IOException
+  {
     ResourceManager resourceManager = mapper.getResourceManager();
     ResourceInfo info = resourceManager.getResourceInfo(rid, mapper);
-
     if (info == null)
     {
-      if (isDebugEnabled()) debug("No resource with rid " + rid);
-      transmitString(null);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("No resource with rid " + rid);
+      }
+
+      out.writeString(null);
     }
     else
     {
-      if (isDebugEnabled()) debug("Responding path " + info.getPath());
-      transmitString(info.getPath());
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Responding path " + info.getPath());
+      }
+
+      out.writeString(info.getPath());
     }
   }
 }

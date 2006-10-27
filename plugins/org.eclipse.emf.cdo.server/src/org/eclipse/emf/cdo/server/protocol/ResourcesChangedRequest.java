@@ -11,35 +11,61 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.impl.AbstractRequest;
+import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
 import org.eclipse.emf.cdo.core.CDOResSignals;
 import org.eclipse.emf.cdo.core.protocol.ResourceChangeInfo;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
 
 import java.util.List;
 
+import java.io.IOException;
 
-public class ResourcesChangedRequest extends AbstractRequest
+
+/**
+ * @author Eike Stepper
+ */
+public class ResourcesChangedRequest extends Request
 {
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_PROTOCOL,
+      ResourcesChangedRequest.class);
+
   private List<ResourceChangeInfo> infos;
 
-  public ResourcesChangedRequest(List<ResourceChangeInfo> infos)
+  public ResourcesChangedRequest(Channel channel, List<ResourceChangeInfo> infos)
   {
+    super(channel);
     this.infos = infos;
   }
 
-  public short getSignalId()
+  @Override
+  protected short getSignalID()
   {
     return CDOResSignals.RESOURCES_CHANGED;
   }
 
-  public void request()
+  @Override
+  protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    for (ResourceChangeInfo info : infos)
+    if (TRACER.isEnabled())
     {
-      info.transmit(getChannel());
+      TRACER.trace("Transmitting " + infos.size() + " resource changes");
     }
 
-    transmitByte(ResourceChangeInfo.NONE);
+    for (ResourceChangeInfo info : infos)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Transmitting changeKind=" + info.getChangeKind() + ", rid=" + info.getRID()
+            + ". path=" + info.getPath());
+      }
+
+      info.transmit(out);
+    }
+
+    out.writeByte(ResourceChangeInfo.NONE);
   }
 }

@@ -11,10 +11,6 @@
 package org.eclipse.emf.cdo.examples.server.internal;
 
 
-import org.eclipse.net4j.examples.server.internal.AbstractBackendInitializer;
-import org.eclipse.net4j.spring.Container;
-
-
 public class CDOServerBackendInitializer extends AbstractBackendInitializer
 {
   public CDOServerBackendInitializer()

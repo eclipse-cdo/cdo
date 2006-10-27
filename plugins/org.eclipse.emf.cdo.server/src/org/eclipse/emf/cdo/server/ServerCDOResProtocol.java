@@ -16,18 +16,15 @@ import org.eclipse.emf.cdo.core.OID;
 import org.eclipse.emf.cdo.core.RID;
 import org.eclipse.emf.cdo.core.protocol.ResourceChangeInfo;
 
-import org.springframework.transaction.support.TransactionTemplate;
-
 import java.util.Collection;
 import java.util.List;
 
 
+/**
+ * @author Eike Stepper
+ */
 public interface ServerCDOResProtocol extends CDOResProtocol
 {
-  public Mapper getMapper();
-
-  public TransactionTemplate getTransactionTemplate();
-
   public void fireResourcesChangedNotification(List<ResourceChangeInfo> resourceChanges);
 
   public void fireInvalidationNotification(Collection<Long> modifiedOIDs);

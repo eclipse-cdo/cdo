@@ -11,22 +11,22 @@
 package org.eclipse.emf.cdo.server.impl;
 
 
-import org.eclipse.net4j.core.Channel;
-import org.eclipse.net4j.spring.ValidationException;
-import org.eclipse.net4j.spring.impl.ServiceImpl;
-import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.StringHelper;
+import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
+import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.stream.ExtendedDataOutput;
 
 import org.eclipse.emf.cdo.core.CDOProtocol;
 import org.eclipse.emf.cdo.core.CDOResProtocol;
+import org.eclipse.emf.cdo.core.ImplementationError;
 import org.eclipse.emf.cdo.core.OIDEncoder;
+import org.eclipse.emf.cdo.core.WrappedIOException;
+import org.eclipse.emf.cdo.core.util.StringHelper;
 import org.eclipse.emf.cdo.dbgen.ColumnType;
 import org.eclipse.emf.cdo.dbgen.DBGenFactory;
 import org.eclipse.emf.cdo.dbgen.Database;
 import org.eclipse.emf.cdo.dbgen.IndexType;
 import org.eclipse.emf.cdo.dbgen.SQLDialect;
 import org.eclipse.emf.cdo.dbgen.Table;
-import org.eclipse.emf.cdo.dbgen.internal.DBGenActivator;
 import org.eclipse.emf.cdo.server.AttributeInfo;
 import org.eclipse.emf.cdo.server.ClassInfo;
 import org.eclipse.emf.cdo.server.ColumnConverter;
@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.server.PackageManager;
 import org.eclipse.emf.cdo.server.ResourceInfo;
 import org.eclipse.emf.cdo.server.ResourceManager;
 import org.eclipse.emf.cdo.server.ResourceNotFoundException;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
 
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -48,17 +49,25 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import java.io.IOException;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
 
-public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
+/**
+ * @author Eike Stepper
+ */
+public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstants
 {
   protected static final int OBJECT_NOT_FOUND_IN_DB = 0;
 
   protected static final long OBJECT_NOT_REFERENCED_IN_DB = 0;
+
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_MAPPER,
+      MapperImpl.class);
 
   protected ColumnConverter columnConverter;
 
@@ -95,7 +104,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
    */
   public void setPackageManager(PackageManager packageManager)
   {
-    doSet("packageManager", packageManager);
+    this.packageManager = packageManager;
   }
 
   /**
@@ -111,7 +120,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
    */
   public void setColumnConverter(ColumnConverter columnConverter)
   {
-    doSet("columnConverter", columnConverter);
+    this.columnConverter = columnConverter;
   }
 
   public ResourceManager getResourceManager()
@@ -121,7 +130,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   public void setResourceManager(ResourceManager resourceManager)
   {
-    doSet("resourceManager", resourceManager);
+    this.resourceManager = resourceManager;
   }
 
   /**
@@ -137,7 +146,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
    */
   public void setDataSource(DataSource dataSource)
   {
-    doSet("dataSource", dataSource);
+    this.dataSource = dataSource;
   }
 
   /**
@@ -147,8 +156,9 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
   {
     if (cachedSqlDialect == null)
     {
-      cachedSqlDialect = DBGenActivator.INSTANCE.createDialect(sqlDialectName);
+      cachedSqlDialect = DBGenFactory.eINSTANCE.createDialect(sqlDialectName);
     }
+
     return cachedSqlDialect;
   }
 
@@ -162,7 +172,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
    */
   public void setSqlDialectName(String sqlDialectName)
   {
-    doSet("sqlDialectName", sqlDialectName);
+    this.sqlDialectName = sqlDialectName;
   }
 
   /**
@@ -178,7 +188,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
    */
   public void setOidEncoder(OIDEncoder oidEncoder) // Don't change case! Spring will be irritated
   {
-    doSet("oidEncoder", oidEncoder);
+    this.oidEncoder = oidEncoder;
   }
 
   /**
@@ -194,7 +204,7 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
    */
   public void setJdbcTemplate(JdbcTemplate jdbcTemplate)
   {
-    doSet("jdbcTemplate", jdbcTemplate);
+    this.jdbcTemplate = jdbcTemplate;
   }
 
   public int getNextPid()
@@ -215,21 +225,48 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
   public long getNextOID(int rid)
   {
     ResourceInfo resourceInfo = resourceManager.getResourceInfo(rid, this);
-    if (resourceInfo == null) throw new ResourceNotFoundException("Unknown RID: " + rid);
+    if (resourceInfo == null)
+    {
+      throw new ResourceNotFoundException("Unknown RID: " + rid);
+    }
 
     long nextOIDFragment = resourceInfo.getNextOIDFragment();
     return oidEncoder.getOID(rid, nextOIDFragment);
   }
 
-  protected void validate() throws ValidationException
+  @Override
+  protected void onAboutToActivate() throws Exception
   {
-    super.validate();
-    assertNotNull("columnConverter");
-    assertNotNull("packageManager");
-    assertNotNull("resourceManager");
-    assertNotNull("dataSource");
-    assertNotNull("oidEncoder");
-    assertNotNull("jdbcTemplate");
+    super.onAboutToActivate();
+    if (columnConverter == null)
+    {
+      throw new IllegalStateException("columnConverter == null");
+    }
+
+    if (packageManager == null)
+    {
+      throw new IllegalStateException("packageManager == null");
+    }
+
+    if (resourceManager == null)
+    {
+      throw new IllegalStateException("resourceManager == null");
+    }
+
+    if (dataSource == null)
+    {
+      throw new IllegalStateException("dataSource == null");
+    }
+
+    if (oidEncoder == null)
+    {
+      throw new IllegalStateException("oidEncoder == null");
+    }
+
+    if (jdbcTemplate == null)
+    {
+      throw new IllegalStateException("jdbcTemplate == null");
+    }
 
     initTables();
     initPackages();
@@ -237,6 +274,20 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     nextPid = selectMaxPid() + 1;
     nextCID = selectMaxCID() + 1;
     nextRID = selectMaxRID() + 1;
+  }
+
+  @Override
+  protected void onDeactivate() throws Exception
+  {
+    columnConverter = null;
+    dataSource = null;
+    jdbcTemplate = null;
+    oidEncoder = null;
+    packageManager = null;
+    resourceManager = null;
+    sqlDialectName = null;
+    cachedSqlDialect = null;
+    super.onDeactivate();
   }
 
   protected void initTables()
@@ -295,12 +346,12 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     referenceTable.addColumn(REFERENCE_FEATUREID_COLUMN, ColumnType.INTEGER_LITERAL);
     referenceTable.addColumn(REFERENCE_ORDINAL_COLUMN, ColumnType.BIGINT_LITERAL);
     referenceTable.addColumn(REFERENCE_TARGET_COLUMN, ColumnType.BIGINT_LITERAL, 0, "NOT NULL");
-    referenceTable.addColumn(REFERENCE_CONTENT_COLUMN, ColumnType.BOOLEAN_LITERAL);
+    referenceTable.addColumn(REFERENCE_CONTAINMENT_COLUMN, ColumnType.BOOLEAN_LITERAL);
     referenceTable.addSimpleIndex(REFERENCE_TARGET_COLUMN, IndexType.NON_UNIQUE_LITERAL);
 
     // TODO Check if this compound index generally makes preceding simple index superfluous
     referenceTable.addCompoundIndex(new String[] { REFERENCE_TARGET_COLUMN,
-        REFERENCE_CONTENT_COLUMN,}, IndexType.NON_UNIQUE_LITERAL);
+        REFERENCE_CONTAINMENT_COLUMN,}, IndexType.NON_UNIQUE_LITERAL);
 
     // This index can not be a real PK (UNIQUE), since during movement of allReferences
     // it temporarily holds duplicate entries!!!
@@ -312,7 +363,11 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   protected void initPackages()
   {
-    if (isDebugEnabled()) debug(SELECT_PACKAGES);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(SELECT_PACKAGES);
+    }
+
     jdbcTemplate.query(SELECT_PACKAGES, new RowCallbackHandler()
     {
       public void processRow(ResultSet resultSet) throws SQLException
@@ -320,7 +375,10 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
         int pid = resultSet.getInt(1);
         String name = resultSet.getString(2);
 
-        if (isDebugEnabled()) debug("Initializing package: pid=" + pid + ", name=" + name);
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Initializing package: pid=" + pid + ", name=" + name);
+        }
         PackageInfo packageInfo = packageManager.addPackage(pid, name);
         initClasses(packageInfo);
       }
@@ -334,7 +392,10 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     JdbcTemplate nestedTemplate = new JdbcTemplate(dataSource);
 
     Object[] args = { new Integer(packageInfo.getPid())};
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_CLASSES, "?", args));
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_CLASSES, "?", args));
+    }
 
     nestedTemplate.query(SELECT_CLASSES, args, new RowCallbackHandler()
     {
@@ -350,9 +411,11 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
           parentName = null;
         }
 
-        if (isDebugEnabled())
-          debug("Initializing class: cid=" + cid + ", name=" + name + ", parentName=" + parentName
-              + ", tableName=" + tableName);
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Initializing class: cid=" + cid + ", name=" + name + ", parentName="
+              + parentName + ", tableName=" + tableName);
+        }
         ClassInfo classInfo = packageInfo.addClass(cid, name, parentName, tableName);
         initAttributes(classInfo);
 
@@ -372,7 +435,10 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     JdbcTemplate nestedTemplate = new JdbcTemplate(dataSource);
 
     Object[] args = { new Integer(classInfo.getCID())};
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_ATTRIBUTES, "?", args));
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_ATTRIBUTES, "?", args));
+    }
 
     nestedTemplate.query(SELECT_ATTRIBUTES, args, new RowCallbackHandler()
     {
@@ -384,9 +450,12 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
         String columnName = resultSet.getString(4);
         int columnType = resultSet.getInt(5);
 
-        if (isDebugEnabled())
-          debug("Initializing attribute: name=" + name + ", featureId=" + featureId + ", dataType="
-              + dataType + ", columnName=" + columnName + ", columnType=" + columnType);
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Initializing attribute: name=" + name + ", featureId=" + featureId
+              + ", dataType=" + dataType + ", columnName=" + columnName + ", columnType="
+              + columnType);
+        }
         classInfo.addAttribute(name, featureId, dataType, columnName, columnType);
       }
     });
@@ -414,7 +483,10 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
   public ResourceInfo selectResourceInfo(String path)
   {
     Object[] args = { path};
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_RID_OF_RESOURCE, "?", args));
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_RID_OF_RESOURCE, "?", args));
+    }
 
     final int[] rows = new int[1];
     final ResourceInfoImpl result = new ResourceInfoImpl();
@@ -437,14 +509,20 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     long nextOIDFragment = selectMaxOIDFragment(result.getRID()) + 1;
     result.setNextOIDFragment(nextOIDFragment);
 
-    if (isDebugEnabled()) debug("Selected " + result);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Selected " + result);
+    }
     return result;
   }
 
   public ResourceInfo selectResourceInfo(int rid)
   {
     Object[] args = { new Integer(rid)};
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_PATH_OF_RESOURCE, "?", args));
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_PATH_OF_RESOURCE, "?", args));
+    }
 
     final int[] rows = new int[1];
     final ResourceInfoImpl result = new ResourceInfoImpl();
@@ -467,14 +545,20 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     long nextOIDFragment = selectMaxOIDFragment(result.getRID()) + 1;
     result.setNextOIDFragment(nextOIDFragment);
 
-    if (isDebugEnabled()) debug("Selected " + result);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Selected " + result);
+    }
     return result;
   }
 
   protected long selectMaxOIDFragment(int rid)
   {
     Object[] args = ridBounds(rid);
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_MAX_OID_FRAGMENT, "?", args));
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_MAX_OID_FRAGMENT, "?", args));
+    }
     long oid = jdbcTemplate.queryForLong(SELECT_MAX_OID_FRAGMENT, args);
     return oidEncoder.getOIDFragment(oid);
   }
@@ -488,19 +572,28 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   private int selectMaxPid()
   {
-    if (isDebugEnabled()) debug(SELECT_MAX_PID);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(SELECT_MAX_PID);
+    }
     return jdbcTemplate.queryForInt(SELECT_MAX_PID);
   }
 
   private int selectMaxCID()
   {
-    if (isDebugEnabled()) debug(SELECT_MAX_CID);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(SELECT_MAX_CID);
+    }
     return jdbcTemplate.queryForInt(SELECT_MAX_CID);
   }
 
   private int selectMaxRID()
   {
-    if (isDebugEnabled()) debug(SELECT_MAX_RID);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(SELECT_MAX_RID);
+    }
     return jdbcTemplate.queryForInt(SELECT_MAX_RID);
   }
 
@@ -514,7 +607,10 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
   public int getCollectionCount(long oid, int feature)
   {
     Object[] args = { new Long(oid), new Integer(feature)};
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_COLLECTION_COUNT, "?", args));
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_COLLECTION_COUNT, "?", args));
+    }
 
     return jdbcTemplate.queryForInt(SELECT_COLLECTION_COUNT, args);
   }
@@ -522,7 +618,10 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
   public boolean lock(long oid, int oca)
   {
     Object[] args = { new Long(oid), new Integer(oca)};
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(DO_OPTIMISTIC_CONTROL, "?", args));
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(DO_OPTIMISTIC_CONTROL, "?", args));
+    }
 
     int changed = jdbcTemplate.update(DO_OPTIMISTIC_CONTROL, args);
     return changed == 1;
@@ -533,9 +632,9 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     sql(INSERT_RESOURCE, new Object[] { rid, path});
   }
 
-  public void insertReference(long oid, int feature, int ordinal, long target, boolean content)
+  public void insertReference(long oid, int feature, int ordinal, long target, boolean containment)
   {
-    sql(INSERT_REFERENCE, new Object[] { oid, feature, ordinal, target, content});
+    sql(INSERT_REFERENCE, new Object[] { oid, feature, ordinal, target, containment});
   }
 
   public void removeReference(long oid, int feature, int ordinal)
@@ -552,8 +651,10 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
   {
     Object[] args = { new Integer(offset), new Long(oid), new Integer(feature),
         new Integer(startIndex), new Integer(endIndex)};
-    if (isDebugEnabled())
-      debug(StringHelper.replaceWildcards(MOVE_REFERENCES_RELATIVE, "?", args));
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(MOVE_REFERENCES_RELATIVE, "?", args));
+    }
 
     // ignore number of affected rows
     jdbcTemplate.update(MOVE_REFERENCES_RELATIVE, args);
@@ -567,7 +668,10 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
   protected void removeReferences(long oid)
   {
     Object[] args = { oid};
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(REMOVE_REFERENCES, "?", args));
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(REMOVE_REFERENCES, "?", args));
+    }
 
     jdbcTemplate.update(REMOVE_REFERENCES, args);
   }
@@ -594,7 +698,10 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
   protected int selectCIDOfObject(long oid)
   {
     Object[] args = { new Long(oid)};
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_CID_OF_OBJECT, "?", args));
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_CID_OF_OBJECT, "?", args));
+    }
 
     try
     {
@@ -642,7 +749,10 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   public void sql(String sql)
   {
-    if (isDebugEnabled()) debug(sql);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
 
     int rows = jdbcTemplate.update(sql);
 
@@ -654,7 +764,10 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   public void sql(String sql, Object[] args)
   {
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(sql, "?", args));
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(sql, "?", args));
+    }
 
     int rows = jdbcTemplate.update(sql, args);
 
@@ -666,82 +779,131 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   public void sql(String sql, Object[] args, int[] types)
   {
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(sql, "?", args));
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(sql, "?", args));
+    }
 
     int rows = jdbcTemplate.update(sql, args, types);
-
     if (rows != 1)
     {
       throw new DatabaseInconsistencyException(sql);
     }
   }
 
-  public void transmitContent(final Channel channel, ResourceInfo resourceInfo)
+  public void transmitContent(final ExtendedDataOutput out, ResourceInfo resourceInfo)
+      throws IOException
   {
     if (resourceInfo != null)
     {
       Object[] args = ridBounds(resourceInfo.getRID());
-      if (isDebugEnabled()) debug(StringHelper.replaceWildcards(TRANSMIT_CONTENT, "?", args));
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(StringHelper.replaceWildcards(TRANSMIT_CONTENT, "?", args));
+      }
 
-      jdbcTemplate.query(TRANSMIT_CONTENT, args, new RowCallbackHandler()
+      try
+      {
+        jdbcTemplate.query(TRANSMIT_CONTENT, args, new RowCallbackHandler()
+        {
+          public void processRow(ResultSet resultSet) throws SQLException
+          {
+            try
+            {
+              long oid = resultSet.getLong(1);
+              int oca = resultSet.getInt(2);
+              int cid = resultSet.getInt(3);
+
+              if (TRACER.isEnabled())
+              {
+                TRACER.trace("Object: oid=" + oidEncoder.toString(oid) + ", oca=" + oca + ", cid="
+                    + cid);
+              }
+
+              out.writeLong(oid);
+              out.writeInt(oca);
+              out.writeInt(cid);
+
+              ClassInfo classInfo = packageManager.getClassInfo(cid);
+              if (classInfo == null)
+              {
+                throw new ImplementationError("Unknown cid " + cid);
+              }
+
+              transmitAttributes(out, oid, classInfo);
+              transmitReferences(out, oid);
+            }
+            catch (IOException ex)
+            {
+              throw new WrappedIOException(ex);
+            }
+          }
+        });
+      }
+      catch (WrappedIOException ex)
+      {
+        ex.reThrow();
+      }
+    }
+
+    out.writeLong(0);
+  }
+
+  public void transmitObject(final ExtendedDataOutput out, final long oid) throws IOException
+  {
+    Object[] args = { new Long(oid)};
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(TRANSMIT_OBJECT, "?", args));
+    }
+
+    try
+    {
+      jdbcTemplate.query(TRANSMIT_OBJECT, args, new RowCallbackHandler()
       {
         public void processRow(ResultSet resultSet) throws SQLException
         {
-          long oid = resultSet.getLong(1);
-          int oca = resultSet.getInt(2);
-          int cid = resultSet.getInt(3);
+          try
+          {
+            int oca = resultSet.getInt(1);
+            int cid = resultSet.getInt(2);
 
-          if (isDebugEnabled())
-            debug("Object: oid=" + oidEncoder.toString(oid) + ", oca=" + oca + ", cid=" + cid);
+            if (TRACER.isEnabled())
+            {
+              TRACER.trace("Object: oid=" + oidEncoder.toString(oid) + ", oca=" + oca + ", cid="
+                  + cid);
+            }
 
-          channel.transmitLong(oid);
-          channel.transmitInt(oca);
-          channel.transmitInt(cid);
+            out.writeLong(oid);
+            out.writeInt(oca);
+            out.writeInt(cid);
 
-          ClassInfo classInfo = packageManager.getClassInfo(cid);
-          if (classInfo == null) throw new ImplementationError("Unknown cid " + cid);
+            ClassInfo classInfo = packageManager.getClassInfo(cid);
+            if (classInfo == null)
+            {
+              throw new ImplementationError("Unknown cid " + cid);
+            }
 
-          transmitAttributes(channel, oid, classInfo);
-          transmitReferences(channel, oid);
+            transmitContainers(out, oid);
+            transmitAttributes(out, oid, classInfo);
+            transmitReferences(out, oid);
+          }
+          catch (IOException ex)
+          {
+            throw new WrappedIOException(ex);
+          }
         }
       });
     }
-
-    channel.transmitLong(0);
-  }
-
-  public void transmitObject(final Channel channel, final long oid)
-  {
-    Object[] args = { new Long(oid)};
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(TRANSMIT_OBJECT, "?", args));
-
-    jdbcTemplate.query(TRANSMIT_OBJECT, args, new RowCallbackHandler()
+    catch (WrappedIOException ex)
     {
-      public void processRow(ResultSet resultSet) throws SQLException
-      {
-        int oca = resultSet.getInt(1);
-        int cid = resultSet.getInt(2);
+      ex.reThrow();
+    }
 
-        if (isDebugEnabled())
-          debug("Object: oid=" + oidEncoder.toString(oid) + ", oca=" + oca + ", cid=" + cid);
-
-        channel.transmitLong(oid);
-        channel.transmitInt(oca);
-        channel.transmitInt(cid);
-
-        ClassInfo classInfo = packageManager.getClassInfo(cid);
-        if (classInfo == null) throw new ImplementationError("Unknown cid " + cid);
-
-        transmitContainers(channel, oid);
-        transmitAttributes(channel, oid, classInfo);
-        transmitReferences(channel, oid);
-      }
-    });
-
-    channel.transmitLong(0);
+    out.writeLong(0);
   }
 
-  public void transmitContainers(final Channel channel, long oid)
+  public void transmitContainers(final ExtendedDataOutput out, long oid) throws IOException
   {
     class Container
     {
@@ -755,16 +917,16 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
         this.cid = cid;
       }
     }
-    ;
 
     final List containers = new LinkedList();
     final long[] child = { oid};
-
     while (child[0] != 0)
     {
       Object[] args = { new Long(child[0]), Boolean.TRUE};
-      if (isDebugEnabled())
-        debug(StringHelper.replaceWildcards(SELECT_CONTAINER_OF_OBJECT, "?", args));
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(StringHelper.replaceWildcards(SELECT_CONTAINER_OF_OBJECT, "?", args));
+      }
 
       child[0] = 0;
       jdbcTemplate.query(SELECT_CONTAINER_OF_OBJECT, args, new RowCallbackHandler()
@@ -773,56 +935,77 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
         {
           long oid = resultSet.getLong(1);
           int cid = resultSet.getInt(2);
-
           containers.add(0, new Container(oid, cid));
           child[0] = oid;
         }
       });
     }
 
-    channel.transmitInt(containers.size());
+    out.writeInt(containers.size());
     for (Iterator it = containers.iterator(); it.hasNext();)
     {
       Container container = (Container) it.next();
-      if (isDebugEnabled())
-        debug("Container: oid=" + oidEncoder.toString(container.oid) + ", cid=" + container.cid);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Container: oid=" + oidEncoder.toString(container.oid) + ", cid="
+            + container.cid);
+      }
 
-      channel.transmitLong(container.oid);
-      channel.transmitInt(container.cid);
+      out.writeLong(container.oid);
+      out.writeInt(container.cid);
     }
   }
 
-  public void transmitReferences(final Channel channel, long oid)
+  public void transmitReferences(final ExtendedDataOutput out, long oid) throws IOException
   {
     Object[] args = { new Long(oid)};
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(TRANSMIT_REFERENCES, "?", args));
-    jdbcTemplate.query(TRANSMIT_REFERENCES, args, new RowCallbackHandler()
+    if (TRACER.isEnabled())
     {
-      public void processRow(ResultSet resultSet) throws SQLException
+      TRACER.trace(StringHelper.replaceWildcards(TRANSMIT_REFERENCES, "?", args));
+    }
+
+    try
+    {
+      jdbcTemplate.query(TRANSMIT_REFERENCES, args, new RowCallbackHandler()
       {
-        int feature = resultSet.getInt(1);
-        long target = resultSet.getLong(2);
-        int cid = resultSet.getInt(3);
+        public void processRow(ResultSet resultSet) throws SQLException
+        {
+          try
+          {
+            int feature = resultSet.getInt(1);
+            long target = resultSet.getLong(2);
+            int cid = resultSet.getInt(3);
+            if (TRACER.isEnabled())
+            {
+              TRACER.trace("Reference: feature=" + feature + ", target="
+                  + oidEncoder.toString(target) + ", cid=" + cid);
+            }
 
-        if (isDebugEnabled())
-          debug("Reference: feature=" + feature + ", target=" + oidEncoder.toString(target)
-              + ", cid=" + cid);
+            out.writeInt(feature);
+            out.writeLong(target);
+            out.writeInt(cid);
+          }
+          catch (IOException ex)
+          {
+            throw new WrappedIOException(ex);
+          }
+        }
+      });
+    }
+    catch (WrappedIOException ex)
+    {
+      ex.reThrow();
+    }
 
-        channel.transmitInt(feature);
-        channel.transmitLong(target);
-        channel.transmitInt(cid);
-      }
-    });
-
-    channel.transmitInt(-1);
+    out.writeInt(-1);
   }
 
-  public void transmitAttributes(final Channel channel, long oid, ClassInfo classInfo)
+  public void transmitAttributes(final ExtendedDataOutput out, long oid, ClassInfo classInfo)
+      throws IOException
   {
     while (classInfo != null)
     {
       String columnNames = classInfo.getColumnNames();
-
       if (columnNames != null && columnNames.length() > 0)
       {
         final ClassInfo finalClassInfo = classInfo;
@@ -830,63 +1013,95 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
             + USER_OID_COLUMN + "=?";
 
         Object[] args = { new Long(oid)};
-        if (isDebugEnabled()) debug(StringHelper.replaceWildcards(sql, "?", args));
-
-        jdbcTemplate.query(sql, args, new RowCallbackHandler()
+        if (TRACER.isEnabled())
         {
-          public void processRow(ResultSet resultSet) throws SQLException
-          {
-            AttributeInfo[] attributeInfos = finalClassInfo.getAttributeInfos();
-            for (int i = 0; i < attributeInfos.length; i++)
-            {
-              AttributeInfo attributeInfo = attributeInfos[i];
+          TRACER.trace(StringHelper.replaceWildcards(sql, "?", args));
+        }
 
-              Object value = resultSet.getObject(i + 1);
-              columnConverter.toChannel(channel, attributeInfo.getDataType(), value);
+        try
+        {
+          jdbcTemplate.query(sql, args, new RowCallbackHandler()
+          {
+            public void processRow(ResultSet resultSet) throws SQLException
+            {
+              try
+              {
+                AttributeInfo[] attributeInfos = finalClassInfo.getAttributeInfos();
+                for (int i = 0; i < attributeInfos.length; i++)
+                {
+                  AttributeInfo attributeInfo = attributeInfos[i];
+
+                  Object value = resultSet.getObject(i + 1);
+                  columnConverter.toChannel(out, attributeInfo.getDataType(), value);
+                }
+              }
+              catch (IOException ex)
+              {
+                throw new WrappedIOException(ex);
+              }
             }
-          }
-        });
+          });
+        }
+        catch (WrappedIOException ex)
+        {
+          ex.reThrow();
+        }
       }
 
       classInfo = classInfo.getParent();
     }
   }
 
-  public void transmitAllResources(final Channel channel)
+  public void transmitAllResources(final ExtendedDataOutput out) throws IOException
   {
-    if (isDebugEnabled())
+    if (TRACER.isEnabled())
     {
-      debug("Querying all resources");
-      debug(SELECT_ALL_RESOURCES);
+      TRACER.trace("Querying all resources");
+      TRACER.trace(SELECT_ALL_RESOURCES);
     }
 
-    jdbcTemplate.query(SELECT_ALL_RESOURCES, new RowCallbackHandler()
+    try
     {
-      public void processRow(ResultSet resultSet) throws SQLException
+      jdbcTemplate.query(SELECT_ALL_RESOURCES, new RowCallbackHandler()
       {
-        int rid = resultSet.getInt(1);
-        String path = resultSet.getString(2);
+        public void processRow(ResultSet resultSet) throws SQLException
+        {
+          try
+          {
+            int rid = resultSet.getInt(1);
+            String path = resultSet.getString(2);
+            out.writeInt(rid);
+            out.writeString(path);
+          }
+          catch (IOException ex)
+          {
+            throw new WrappedIOException(ex);
+          }
+        }
+      });
+    }
+    catch (WrappedIOException ex)
+    {
+      ex.reThrow();
+    }
 
-        channel.transmitInt(rid);
-        channel.transmitString(path);
-      }
-    });
-
-    channel.transmitInt(CDOResProtocol.NO_MORE_RESOURCES);
+    out.writeInt(CDOResProtocol.NO_MORE_RESOURCES);
   }
 
   public void deleteResource(int rid)
   {
-    if (isDebugEnabled())
+    if (TRACER.isEnabled())
     {
-      debug("Deleting resource: rid=" + rid);
+      TRACER.trace("Deleting resource: rid=" + rid);
     }
 
     sql(DELETE_RESOURCE, new Object[] { rid});
 
     Object[] args = ridBounds(rid);
-    if (isDebugEnabled())
-      debug(StringHelper.replaceWildcards(SELECT_ALL_OBJECTS_OF_RESOURCE, "?", args));
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_ALL_OBJECTS_OF_RESOURCE, "?", args));
+    }
 
     jdbcTemplate.query(SELECT_ALL_OBJECTS_OF_RESOURCE, args, new RowCallbackHandler()
     {
@@ -895,9 +1110,9 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
         long oid = resultSet.getLong(1);
         int cid = resultSet.getInt(2);
 
-        if (isDebugEnabled())
+        if (TRACER.isEnabled())
         {
-          debug("Deleting object: oid=" + oidEncoder.toString(oid) + ", cid=" + cid);
+          TRACER.trace("Deleting object: oid=" + oidEncoder.toString(oid) + ", cid=" + cid);
         }
 
         removeObject(oid, cid);
@@ -907,9 +1122,9 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
   public Set<Long> removeStaleReferences()
   {
-    if (isDebugEnabled())
+    if (TRACER.isEnabled())
     {
-      debug("Removing stale references");
+      TRACER.trace("Removing stale references");
     }
 
     final Set<Long> modifiedOIDs = new HashSet<Long>();
@@ -921,9 +1136,9 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
         int feature = resultSet.getInt(2);
         int ordinal = resultSet.getInt(3);
 
-        if (isDebugEnabled())
+        if (TRACER.isEnabled())
         {
-          debug("Reference: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
+          TRACER.trace("Reference: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
               + ", ordinal=" + ordinal);
         }
 
@@ -935,8 +1150,8 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     return modifiedOIDs;
   }
 
-  public void transmitExtent(final Channel channel, final int context, final boolean exactMatch,
-      int rid)
+  public void transmitExtent(final ExtendedDataOutput out, final int context,
+      final boolean exactMatch, int rid) throws IOException
   {
     StringBuffer buffer = new StringBuffer();
     buffer.append("SELECT ");
@@ -948,7 +1163,6 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     buffer.append(OBJECT_CID_COLUMN);
     buffer.append(" IN (");
     buffer.append(context);
-
     if (!exactMatch)
     {
       ClassInfo classInfo = packageManager.getClassInfo(context);
@@ -961,7 +1175,6 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
     }
 
     buffer.append(")");
-
     if (rid != CDOProtocol.GLOBAL_EXTENT)
     {
       Object[] bounds = ridBounds(rid);
@@ -975,65 +1188,100 @@ public class MapperImpl extends ServiceImpl implements Mapper, SQLConstants
 
     buffer.append(" ORDER BY ");
     buffer.append(OBJECT_OID_COLUMN);
-
     String sql = buffer.toString();
-    if (isDebugEnabled())
+    if (TRACER.isEnabled())
     {
-      debug(sql);
-
+      TRACER.trace(sql);
     }
 
-    jdbcTemplate.query(sql, new RowCallbackHandler()
+    try
     {
-      public void processRow(ResultSet resultSet) throws SQLException
+      jdbcTemplate.query(sql, new RowCallbackHandler()
       {
-        long oid = resultSet.getLong(1);
-        int cid = exactMatch ? context : resultSet.getInt(2);
-
-        if (isDebugEnabled())
+        public void processRow(ResultSet resultSet) throws SQLException
         {
-          debug("Extent: oid=" + oidEncoder.toString(oid) + (exactMatch ? "" : ", cid=" + cid));
-        }
+          try
+          {
+            long oid = resultSet.getLong(1);
+            int cid = exactMatch ? context : resultSet.getInt(2);
+            if (TRACER.isEnabled())
+            {
+              TRACER.trace("Extent: oid=" + oidEncoder.toString(oid)
+                  + (exactMatch ? "" : ", cid=" + cid));
+            }
 
-        channel.transmitLong(oid);
-        if (!exactMatch)
-        {
-          channel.transmitInt(cid);
+            out.writeLong(oid);
+            if (!exactMatch)
+            {
+              out.writeInt(cid);
+            }
+          }
+          catch (IOException ex)
+          {
+            throw new WrappedIOException(ex);
+          }
         }
-      }
-    });
+      });
+    }
+    catch (WrappedIOException ex)
+    {
+      ex.reThrow();
+    }
 
-    channel.transmitLong(CDOProtocol.NO_MORE_OBJECTS);
+    out.writeLong(CDOProtocol.NO_MORE_OBJECTS);
   }
 
-  public void transmitXRefs(final Channel channel, final long oid, int rid)
+  public void transmitXRefs(final ExtendedDataOutput out, final long oid, int rid)
+      throws IOException
   {
     Object[] args = { new Long(oid)};
-    if (isDebugEnabled()) debug(StringHelper.replaceWildcards(SELECT_XREFS_OF_OBJECT, "?", args));
-    jdbcTemplate.query(SELECT_XREFS_OF_OBJECT, args, new RowCallbackHandler()
+    if (TRACER.isEnabled())
     {
-      public void processRow(ResultSet resultSet) throws SQLException
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_XREFS_OF_OBJECT, "?", args));
+    }
+
+    try
+    {
+      jdbcTemplate.query(SELECT_XREFS_OF_OBJECT, args, new RowCallbackHandler()
       {
-        long referer = resultSet.getLong(1);
-        int feature = resultSet.getInt(2);
-        int cid = resultSet.getInt(3);
+        public void processRow(ResultSet resultSet) throws SQLException
+        {
+          try
+          {
+            long referer = resultSet.getLong(1);
+            int feature = resultSet.getInt(2);
+            int cid = resultSet.getInt(3);
+            if (TRACER.isEnabled())
+            {
+              TRACER.trace("XRef: referer=" + oidEncoder.toString(referer) + ", feature=" + feature
+                  + ", cid=" + cid);
+            }
 
-        if (isDebugEnabled())
-          debug("XRef: referer=" + oidEncoder.toString(referer) + ", feature=" + feature + ", cid="
-              + cid);
+            out.writeLong(referer);
+            out.writeInt(feature);
+            out.writeInt(cid);
+          }
+          catch (IOException ex)
+          {
+            throw new WrappedIOException(ex);
+          }
+        }
+      });
+    }
+    catch (WrappedIOException ex)
+    {
+      ex.reThrow();
+    }
 
-        channel.transmitLong(referer);
-        channel.transmitInt(feature);
-        channel.transmitInt(cid);
-      }
-    });
-
-    channel.transmitLong(CDOProtocol.NO_MORE_OBJECTS);
+    out.writeLong(CDOProtocol.NO_MORE_OBJECTS);
   }
 
   public void createAttributeTables(PackageInfo packageInfo)
   {
-    if (isDebugEnabled()) debug("Creating attribute tables");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Creating attribute tables");
+    }
 
     Database database = DBGenFactory.eINSTANCE.createDatabase();
     ClassInfo[] classes = packageInfo.getClasses();

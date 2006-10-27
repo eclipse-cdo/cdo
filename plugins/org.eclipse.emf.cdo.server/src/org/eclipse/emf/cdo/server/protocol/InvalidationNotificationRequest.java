@@ -11,35 +11,59 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.impl.AbstractRequest;
+import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import org.eclipse.emf.cdo.core.CDOProtocol;
+import org.eclipse.emf.cdo.core.CDOSignals;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
 
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+
+import java.io.IOException;
 
 
-public class InvalidationNotificationRequest extends AbstractRequest
+/**
+ * @author Eike Stepper
+ */
+public class InvalidationNotificationRequest extends Request
 {
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_PROTOCOL,
+      InvalidationNotificationRequest.class);
+
   private Collection<Long> changedObjectIds;
 
-  public InvalidationNotificationRequest(Collection<Long> changedObjectIds)
+  public InvalidationNotificationRequest(Channel channel, Collection<Long> changedObjectIds)
   {
+    super(channel);
     this.changedObjectIds = changedObjectIds;
   }
 
-  public short getSignalId()
+  @Override
+  protected short getSignalID()
   {
-    return CDOProtocol.INVALIDATION_NOTIFICATION;
+    return CDOSignals.INVALIDATION_NOTIFICATION;
   }
 
-  public void request()
+  @Override
+  protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    transmitInt(changedObjectIds.size());
+    int size = changedObjectIds.size();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Transmitting " + size + " invalidations");
+    }
+
+    out.writeInt(size);
     for (Long oid : changedObjectIds)
     {
-      transmitLong(oid);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Transmitting oid " + oid);
+      }
+
+      out.writeLong(oid);
     }
   }
 }

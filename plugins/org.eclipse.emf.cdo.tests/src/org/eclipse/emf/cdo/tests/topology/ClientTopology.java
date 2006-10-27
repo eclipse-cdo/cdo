@@ -11,9 +11,8 @@
 package org.eclipse.emf.cdo.tests.topology;
 
 
-import org.eclipse.net4j.spring.Container;
-
 import javax.sql.DataSource;
+
 
 /*
  * TODO Test this topology (need external server for that) 
@@ -47,9 +46,31 @@ public class ClientTopology extends AbstractTopology
   {
     super.stop();
 
-    //Stop client
-    net4jClient.stop();
-    net4j.stop();
+    try
+    {
+      net4jClient.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      net4jClient = null;
+    }
+
+    try
+    {
+      net4j.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      net4j = null;
+    }
   }
 
   public DataSource getDataSource()

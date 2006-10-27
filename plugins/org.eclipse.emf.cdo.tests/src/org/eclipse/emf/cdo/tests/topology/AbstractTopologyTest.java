@@ -20,9 +20,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.PrintStreamLogHandler;
+import org.eclipse.net4j.util.om.PrintStreamTraceHandler;
 
-import java.io.IOException;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
@@ -34,6 +36,12 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
   private String mode;
 
   private ITopology topology;
+
+  private long startMemory;
+
+  private String label;
+
+  private static int run;
 
   public String getMode()
   {
@@ -58,9 +66,17 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
   @Override
   protected void setUp() throws Exception
   {
+    OMPlatform.INSTANCE.addLogHandler(PrintStreamLogHandler.CONSOLE);
+    OMPlatform.INSTANCE.addTraceHandler(PrintStreamTraceHandler.CONSOLE);
+    OMPlatform.INSTANCE.setDebugging(true);
+
+    System.gc();
+    startMemory = getUsedMemory();
+
     if (topology == null) topology = createTopology();
+    label = getName() + " [" + topology.getName() + "]";
     System.out.println("=========================================================================");
-    System.out.println("TC_START " + getName() + " [" + topology.getName() + "]");
+    System.out.println("TC_START " + label);
     System.out.println("=========================================================================");
 
     super.setUp();
@@ -70,19 +86,37 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
   @Override
   protected void tearDown() throws Exception
   {
-    JdbcTemplate jdbc = getJdbcTemplate();
+    Thread.sleep(200);
+    JdbcTemplate jdbc = jdbc();
     wipeDatabase(jdbc);
 
     topology.stop();
+    topology = null;
     super.tearDown();
 
+    System.gc();
+    long endMemory = getUsedMemory();
+
+    System.out.println("Memory-Delta " + getRun() + "\t " + (endMemory - startMemory));
     System.out.println("=========================================================================");
-    System.out.println("TC_END " + getName() + " [" + topology.getName() + "]");
+    System.out.println("TC_END " + label);
     System.out.println("=========================================================================");
     System.out.println();
     System.out.println();
     System.out.println();
     System.out.println();
+    label = null;
+    mode = null;
+  }
+
+  private static long getUsedMemory()
+  {
+    return Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+  }
+
+  private static String getRun()
+  {
+    return String.format("%4d", new Object[] { ++run});
   }
 
   protected void wipeDatabase(JdbcTemplate jdbc)
@@ -113,20 +147,19 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
     return topology.getDataSource();
   }
 
-  protected JdbcTemplate getJdbcTemplate()
+  protected JdbcTemplate jdbc()
   {
     return new JdbcTemplate(getDataSource());
   }
 
-  protected ResourceManager createResourceManager(ResourceSet resourceSet)
+  protected ResourceManager createResourceManager(ResourceSet resourceSet) throws Exception
   {
     return topology.createResourceManager(resourceSet);
   }
 
-  protected ResourceManager createResourceManager()
+  protected ResourceManager createResourceManager() throws Exception
   {
-    ResourceSet resourceSet = new ResourceSetImpl();
-    return topology.createResourceManager(resourceSet);
+    return createResourceManager(new ResourceSetImpl());
   }
 
   protected CDOResource createResource(String path, ResourceManager resourceManager)
@@ -135,7 +168,7 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
     return (CDOResource) resourceManager.createResource(uri);
   }
 
-  protected CDOResource createResource(String path)
+  protected CDOResource createResource(String path) throws Exception
   {
     return createResource(path, createResourceManager());
   }
@@ -146,18 +179,18 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
     return (CDOResource) resourceManager.getResource(uri, true);
   }
 
-  protected CDOResource getResource(String path)
+  protected CDOResource getResource(String path) throws Exception
   {
     return getResource(path, createResourceManager());
   }
 
-  protected EObject loadRoot(String path) throws IOException
+  protected EObject loadRoot(String path) throws Exception
   {
     CDOResource resource = getResource(path);
     return (EObject) resource.getContents().get(0);
   }
 
-  protected CDOResource saveRoot(EObject root, String path) throws IOException
+  protected CDOResource saveRoot(EObject root, String path) throws Exception
   {
     CDOResource resource = createResource(path);
     resource.getContents().add(root);
@@ -167,33 +200,34 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
 
   protected ITopology createTopology()
   {
-    if (mode == null)
-    {
-      mode = System.getProperty(CDO_TEST_MODE_KEY, DEFAULT_MODE);
-    }
-
-    if (EMBEDDED_MODE.equalsIgnoreCase(mode))
-    {
-      return new EmbeddedTopology();
-    }
-
-    if (CLIENT_MODE.equalsIgnoreCase(mode))
-    {
-      return new ClientTopology();
-    }
-
-    if (CLIENT_SERVER_MODE.equalsIgnoreCase(mode))
-    {
-      return new ClientServerTopology();
-    }
-
-    if (CLIENT_SEPARATED_SERVER_MODE.equalsIgnoreCase(mode))
-    {
-      return new ClientSeparatedServerTopology();
-    }
-
-    fail("Topology not recognized: " + mode);
-    return null; // Make compiler happy
+    return new ClientServerTopology();
+    //    if (mode == null)
+    //    {
+    //      mode = System.getProperty(CDO_TEST_MODE_KEY, DEFAULT_MODE);
+    //    }
+    //
+    //    if (EMBEDDED_MODE.equalsIgnoreCase(mode))
+    //    {
+    //      return new EmbeddedTopology();
+    //    }
+    //
+    //    if (CLIENT_MODE.equalsIgnoreCase(mode))
+    //    {
+    //      return new ClientTopology();
+    //    }
+    //
+    //    if (CLIENT_SERVER_MODE.equalsIgnoreCase(mode))
+    //    {
+    //      return new ClientServerTopology();
+    //    }
+    //
+    //    if (CLIENT_SEPARATED_SERVER_MODE.equalsIgnoreCase(mode))
+    //    {
+    //      return new ClientSeparatedServerTopology();
+    //    }
+    //
+    //    fail("Topology not recognized: " + mode);
+    //    return null; // Make compiler happy
   }
 
   protected void assertTrue(Object object)

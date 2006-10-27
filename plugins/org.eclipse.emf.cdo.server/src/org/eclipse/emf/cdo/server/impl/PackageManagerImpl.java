@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.server.impl;
 
 
-import org.eclipse.net4j.spring.impl.ServiceImpl;
+import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
 
 import org.eclipse.emf.cdo.server.ClassInfo;
 import org.eclipse.emf.cdo.server.PackageInfo;
@@ -26,7 +26,10 @@ import java.util.List;
 import java.util.Map;
 
 
-public class PackageManagerImpl extends ServiceImpl implements PackageManager
+/**
+ * @author Eike Stepper
+ */
+public class PackageManagerImpl extends AbstractLifecycle implements PackageManager
 {
   protected Map<Integer, ClassInfo> cidToClassInfoMap = new HashMap<Integer, ClassInfo>(2111);
 
@@ -112,5 +115,16 @@ public class PackageManagerImpl extends ServiceImpl implements PackageManager
       PackageListener listener = iter.next();
       listener.notifyAddedPackage();
     }
+  }
+
+  @Override
+  protected void onDeactivate() throws Exception
+  {
+    cidToClassInfoMap = null;
+    listeners = null;
+    nameToClassInfoMap = null;
+    packages = null;
+    subClassInfoMap = null;
+    super.onDeactivate();
   }
 }

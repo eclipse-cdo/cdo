@@ -11,33 +11,59 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.impl.AbstractRequest;
+import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import org.eclipse.emf.cdo.core.CDOProtocol;
+import org.eclipse.emf.cdo.core.CDOSignals;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
 
 import java.util.Collection;
 
+import java.io.IOException;
 
-public class RemovalNotificationRequest extends AbstractRequest
+
+/**
+ * @author Eike Stepper
+ */
+public class RemovalNotificationRequest extends Request
 {
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_PROTOCOL,
+      RemovalNotificationRequest.class);
+
   private Collection<Integer> rids;
 
-  public RemovalNotificationRequest(Collection<Integer> rids)
+  public RemovalNotificationRequest(Channel channel, Collection<Integer> rids)
   {
+    super(channel);
     this.rids = rids;
   }
 
-  public short getSignalId()
+  @Override
+  protected short getSignalID()
   {
-    return CDOProtocol.REMOVAL_NOTIFICATION;
+    return CDOSignals.REMOVAL_NOTIFICATION;
   }
 
-  public void request()
+  @Override
+  protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    transmitInt(rids.size());
+    int size = rids.size();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Transmitting " + size + " removals");
+    }
+
+    out.writeInt(size);
     for (Integer rid : rids)
     {
-      transmitInt(rid);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Transmitting rid " + rid);
+      }
+
+      out.writeInt(rid);
     }
   }
 }

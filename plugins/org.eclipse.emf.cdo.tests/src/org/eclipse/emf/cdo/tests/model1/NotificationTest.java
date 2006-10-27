@@ -30,7 +30,7 @@ public class NotificationTest extends AbstractModel1Test
     final String RESOURCE = "/test/res";
     final String ROOT = "root";
     final String NEW_ROOT = "new root";
-    final long TIME_LIMIT = 1000;
+    final long TIME_LIMIT = 10000;
 
     // Client1 creates resource
     TreeNode root = createNode(ROOT);
@@ -64,7 +64,7 @@ public class NotificationTest extends AbstractModel1Test
     final String ROOT = "root";
     final String CHILD = "a";
     final String NEW_NAME = "a2";
-    final long TIME_LIMIT = 1000;
+    final long TIME_LIMIT = 10000;
 
     // Client1 creates resource
     TreeNode root = createNode(ROOT);
@@ -100,7 +100,7 @@ public class NotificationTest extends AbstractModel1Test
     final String ROOT = "root";
     final String CHILD = "a";
     final String NEW_NAME = "a2";
-    final long TIME_LIMIT = 1000;
+    final long TIME_LIMIT = 10000;
 
     // Client1 creates resource
     TreeNode root = createNode(ROOT);
@@ -137,7 +137,7 @@ public class NotificationTest extends AbstractModel1Test
     final String ROOT = "root";
     final String CHILD = "a";
     final String NEW_NAME = "a2";
-    final long TIME_LIMIT = 1000;
+    final long TIME_LIMIT = 10000;
     final boolean[] notificationReceived = { false};
 
     // Client1 creates resource

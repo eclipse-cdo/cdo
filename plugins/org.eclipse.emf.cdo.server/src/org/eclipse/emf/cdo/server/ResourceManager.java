@@ -11,10 +11,10 @@
 package org.eclipse.emf.cdo.server;
 
 
-import org.eclipse.net4j.spring.Service;
-
-
-public interface ResourceManager extends Service
+/**
+ * @author Eike Stepper
+ */
+public interface ResourceManager
 {
   public void registerResourceInfo(ResourceInfo resourceInfo);
 

@@ -14,6 +14,9 @@ package org.eclipse.emf.cdo.server.impl;
 import org.eclipse.emf.cdo.server.ResourceInfo;
 
 
+/**
+ * @author Eike Stepper
+ */
 public class ResourceInfoImpl implements ResourceInfo
 {
   private String path;

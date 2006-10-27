@@ -11,49 +11,77 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
+import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import org.eclipse.emf.cdo.core.CDOProtocol;
+import org.eclipse.emf.cdo.core.CDOSignals;
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.ResourceInfo;
 import org.eclipse.emf.cdo.server.ResourceManager;
-import org.eclipse.emf.cdo.server.ServerCDOProtocol;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
+
+import java.io.IOException;
 
 
-public class ResourcePathIndication extends AbstractIndicationWithResponse
+/**
+ * @author Eike Stepper
+ */
+public class ResourcePathIndication extends IndicationWithResponse
 {
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_PROTOCOL,
+      ResourcePathIndication.class);
+
+  private Mapper mapper;
+
   private String path;
 
-  public short getSignalId()
+  public ResourcePathIndication(Mapper mapper)
   {
-    return CDOProtocol.RESOURCE_PATH;
+    this.mapper = mapper;
   }
 
-  public void indicate()
+  @Override
+  protected short getSignalID()
   {
-    path = receiveString();
-    if (isDebugEnabled()) debug("Requested path " + path);
+    return CDOSignals.RESOURCE_PATH;
   }
 
-  public void respond()
+  @Override
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    Mapper mapper = ((ServerCDOProtocol) getProtocol()).getMapper();
+    path = in.readString();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Requested path " + path);
+    }
+  }
+
+  @Override
+  protected void responding(ExtendedDataOutputStream out) throws IOException
+  {
     ResourceManager resourceManager = mapper.getResourceManager();
     ResourceInfo info = resourceManager.getResourceInfo(path, mapper);
-
     if (info == null)
     {
       int rid = mapper.getNextRID();
       resourceManager.registerResourceInfo(path, rid, 1);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("No resource with path " + path + " - reserving rid " + rid);
+      }
 
-      if (isDebugEnabled()) debug("No resource with path " + path);
-      if (isDebugEnabled()) debug("Reserving rid " + rid);
-      transmitInt(-rid);
+      out.writeInt(-rid);
     }
     else
     {
-      if (isDebugEnabled()) debug("Responding rid " + info.getRID());
-      transmitInt(info.getRID());
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Responding rid " + info.getRID());
+      }
+
+      out.writeInt(info.getRID());
     }
   }
 }

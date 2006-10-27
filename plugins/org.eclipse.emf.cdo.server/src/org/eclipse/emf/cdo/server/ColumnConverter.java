@@ -11,22 +11,18 @@
 package org.eclipse.emf.cdo.server;
 
 
-import org.eclipse.net4j.core.Channel;
-import org.eclipse.net4j.spring.Service;
+import org.eclipse.net4j.util.stream.ExtendedDataInput;
+import org.eclipse.net4j.util.stream.ExtendedDataOutput;
+
+import java.io.IOException;
 
 
-public interface ColumnConverter extends Service
+/**
+ * @author Eike Stepper
+ */
+public interface ColumnConverter
 {
-  /**
-   * @param channel
-   * @return
-   */
-  public Object fromChannel(Channel channel, int dataType);
+  public Object fromChannel(ExtendedDataInput channel, int dataType) throws IOException;
 
-  /**
-   * 
-   * @param channel
-   * @param value
-   */
-  public void toChannel(Channel channel, int dataType, Object value);
+  public void toChannel(ExtendedDataOutput channel, int dataType, Object value) throws IOException;
 }

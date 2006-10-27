@@ -11,47 +11,38 @@
 package org.eclipse.emf.cdo.server.internal;
 
 
-import org.eclipse.net4j.util.eclipse.AbstractPlugin;
-import org.eclipse.net4j.util.eclipse.Element;
-import org.eclipse.net4j.util.eclipse.ListExtensionParser;
+import org.eclipse.emf.cdo.core.util.extensions.Element;
+import org.eclipse.emf.cdo.core.util.extensions.ListExtensionParser;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
 
 import java.util.List;
 
 
 /**
- * The main plugin class to be used in the desktop.
+ * @author Eike Stepper
  */
-public class ServerPlugin extends AbstractPlugin
+public class Activator implements BundleActivator
 {
-  //The shared instance.
-  private static ServerPlugin plugin;
+  public Activator()
+  {
+  }
+
+  public void start(BundleContext context) throws Exception
+  {
+    CDOServer.BUNDLE.setBundleContext(context);
+  }
+
+  public void stop(BundleContext context) throws Exception
+  {
+    CDOServer.BUNDLE.setBundleContext(null);
+  }
+
 
   /**
-   * The constructor.
+   * @author Eike Stepper
    */
-  public ServerPlugin()
-  {
-    if (plugin == null) plugin = this;
-  }
-
-  protected void doStart() throws Exception
-  {
-  }
-
-  protected void doStop() throws Exception
-  {
-    plugin = null;
-  }
-
-  /**
-   * Returns the shared instance.
-   */
-  public static ServerPlugin getDefault()
-  {
-    return plugin;
-  }
-
-
   public class MappingElement extends Element
   {
     protected String uri;
@@ -85,6 +76,9 @@ public class ServerPlugin extends AbstractPlugin
   }
 
 
+  /**
+   * @author Eike Stepper
+   */
   public class MappingExtensionParser extends ListExtensionParser
   {
     public MappingExtensionParser(List list)

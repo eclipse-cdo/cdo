@@ -11,23 +11,76 @@
 package org.eclipse.emf.cdo.tests.topology;
 
 
-import org.eclipse.net4j.core.Acceptor;
-import org.eclipse.net4j.spring.Container;
+import org.eclipse.emf.cdo.client.ResourceManager;
+import org.eclipse.emf.cdo.client.impl.AttributeConverterImpl;
+import org.eclipse.emf.cdo.client.impl.PackageManagerImpl;
+import org.eclipse.emf.cdo.client.impl.ResourceManagerImpl;
+import org.eclipse.emf.cdo.client.protocol.ClientCDOProtocolImpl;
+import org.eclipse.emf.cdo.client.protocol.ClientCDOResProtocolImpl;
+import org.eclipse.emf.cdo.core.impl.OIDEncoderImpl;
+import org.eclipse.emf.cdo.server.impl.ColumnConverterImpl;
+import org.eclipse.emf.cdo.server.impl.MapperImpl;
+import org.eclipse.emf.cdo.server.protocol.ServerCDOProtocolImpl;
+import org.eclipse.emf.cdo.server.protocol.ServerCDOResProtocolImpl;
+
+import org.eclipse.emf.ecore.resource.ResourceSet;
+
+import org.eclipse.net4j.transport.BufferProvider;
+import org.eclipse.net4j.transport.Connector;
+import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.transport.tcp.TCPAcceptor;
+import org.eclipse.net4j.transport.tcp.TCPSelector;
+import org.eclipse.net4j.util.Net4jUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.transaction.support.TransactionTemplate;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.sql.DataSource;
 
 
-public class ClientServerTopology extends AbstractTopology
+public class ClientServerTopology implements ITopology
 {
-  private Container net4j;
+  public static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
 
-  private Container net4jServer;
+  private AttributeConverterImpl attributeConverter;
 
-  private Container cdoServer;
+  private OIDEncoderImpl oidEncoder;
 
-  private Container net4jClient;
+  private PackageManagerImpl clientPackageManager;
 
-  private Acceptor acceptor;
+  private IRegistry<String, ProtocolFactory> clientRegistry;
+
+  private IRegistry<String, ProtocolFactory> serverRegistry;
+
+  private BufferProvider bufferPool;
+
+  private TCPSelector selector;
+
+  private TCPAcceptor acceptor;
+
+  private Connector connector;
+
+  private org.eclipse.emf.cdo.server.impl.PackageManagerImpl serverPackageManager;
+
+  private org.eclipse.emf.cdo.server.impl.ResourceManagerImpl serverResourceManager;
+
+  private ColumnConverterImpl columnConverter;
+
+  private DriverManagerDataSource dataSource;
+
+  private DataSourceTransactionManager transactionManager;
+
+  private TransactionTemplate transactionTemplate;
+
+  private JdbcTemplate jdbcTemplate;
 
   public ClientServerTopology()
   {
@@ -40,40 +93,111 @@ public class ClientServerTopology extends AbstractTopology
 
   public void start() throws Exception
   {
-    super.start();
-    net4j = createContainer("net4j", NET4J_LOCATION, null);
+    bufferPool = Net4jUtil.createBufferPool();
+    LifecycleUtil.activate(bufferPool);
 
-    // Start server
-    net4jServer = createContainer("server", NET4J_SERVER_LOCATION, net4j);
-    cdoServer = createContainer("cdo", CDO_SERVER_LOCATION, net4jServer);
+    selector = Net4jUtil.createTCPSelector();
+    LifecycleUtil.activate(selector);
 
-    acceptor = (Acceptor) cdoServer.getBean("acceptor", Acceptor.class);
-    acceptor.start();
+    oidEncoder = new OIDEncoderImpl();
+    oidEncoder.setFragmentBits(48);
+    LifecycleUtil.activate(oidEncoder);
 
-    // Start client
-    net4jClient = createContainer("client", NET4J_CLIENT_LOCATION, net4j);
-    createCDOClient("cdo", net4jClient);
+    // Server
+    columnConverter = new ColumnConverterImpl();
+    LifecycleUtil.activate(columnConverter);
+
+    serverPackageManager = new org.eclipse.emf.cdo.server.impl.PackageManagerImpl();
+    LifecycleUtil.activate(serverPackageManager);
+
+    serverResourceManager = new org.eclipse.emf.cdo.server.impl.ResourceManagerImpl();
+    LifecycleUtil.activate(serverResourceManager);
+
+    dataSource = new DriverManagerDataSource();
+    dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
+    dataSource.setUrl("jdbc:hsqldb:.");
+    dataSource.setUsername("sa");
+
+    jdbcTemplate = new JdbcTemplate();
+    jdbcTemplate.setDataSource(dataSource);
+
+    MapperImpl mapper = new MapperImpl();
+    mapper.setColumnConverter(columnConverter);
+    mapper.setDataSource(dataSource);
+    mapper.setJdbcTemplate(jdbcTemplate);
+    mapper.setOidEncoder(oidEncoder);
+    mapper.setPackageManager(serverPackageManager);
+    mapper.setResourceManager(serverResourceManager);
+    mapper.setSqlDialectName("HSQLDB");
+    LifecycleUtil.activate(mapper);
+
+    transactionManager = new DataSourceTransactionManager();
+    transactionManager.setDataSource(dataSource);
+
+    transactionTemplate = new TransactionTemplate();
+
+    serverRegistry = new HashMapRegistry();
+    serverRegistry.register(new ServerCDOResProtocolImpl.Factory(mapper, transactionTemplate));
+    serverRegistry.register(new ServerCDOProtocolImpl.Factory(mapper, transactionTemplate));
+
+    acceptor = Net4jUtil.createTCPAcceptor(bufferPool, selector);
+    acceptor.setProtocolFactoryRegistry(serverRegistry);
+    acceptor.setReceiveExecutor(THREAD_POOL);
+    LifecycleUtil.activate(acceptor);
+
+    // Client
+    attributeConverter = new AttributeConverterImpl();
+    LifecycleUtil.activate(attributeConverter);
+
+    clientPackageManager = new PackageManagerImpl();
+    clientPackageManager.setAttributeConverter(attributeConverter);
+    clientPackageManager.setOidEncoder(oidEncoder);
+    clientPackageManager.setAutoPersistent(true);
+    LifecycleUtil.activate(clientPackageManager);
+
+    clientRegistry = new HashMapRegistry();
+    clientRegistry.register(new ClientCDOProtocolImpl.Factory());
+    clientRegistry.register(new ClientCDOResProtocolImpl.Factory());
+
+    connector = Net4jUtil.createTCPConnector(bufferPool, selector, "localhost");
+    connector.setProtocolFactoryRegistry(clientRegistry);
+    connector.setReceiveExecutor(THREAD_POOL);
+    LifecycleUtil.activate(connector);
   }
 
   public void stop() throws Exception
   {
-    super.stop();
+    LifecycleUtil.deactivate(connector);
+    connector = null;
 
-    //Stop client
-    net4jClient.stop();
+    LifecycleUtil.deactivate(selector);
+    selector = null;
 
-    //Stop server
-    acceptor.stop();
-    acceptor = null;
+    LifecycleUtil.deactivate(bufferPool);
+    bufferPool = null;
 
-    cdoServer.stop();
-    net4jServer.stop();
+    LifecycleUtil.deactivate(clientPackageManager);
+    clientPackageManager = null;
 
-    net4j.stop();
+    LifecycleUtil.deactivate(oidEncoder);
+    oidEncoder = null;
+
+    LifecycleUtil.deactivate(attributeConverter);
+    attributeConverter = null;
+  }
+
+  public ResourceManager createResourceManager(ResourceSet resourceSet) throws Exception
+  {
+    ResourceManagerImpl resourceManager = new ResourceManagerImpl();
+    resourceManager.setConnector(connector);
+    resourceManager.setPackageManager(clientPackageManager);
+    resourceManager.setResourceSet(resourceSet);
+    LifecycleUtil.activate(resourceManager);
+    return resourceManager;
   }
 
   public DataSource getDataSource()
   {
-    return (DataSource) cdoServer.getBean("dataSource");
+    return dataSource;
   }
 }

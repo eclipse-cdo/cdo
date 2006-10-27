@@ -11,23 +11,34 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.Channel;
-import org.eclipse.net4j.core.Indication;
-import org.eclipse.net4j.spring.ValidationException;
-import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.transport.Protocol;
+import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.transport.Connector.Type;
+import org.eclipse.net4j.util.Net4jUtil;
 
 import org.eclipse.emf.cdo.core.CDOProtocol;
+import org.eclipse.emf.cdo.core.ImplementationError;
 import org.eclipse.emf.cdo.core.protocol.AbstractCDOProtocol;
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.ServerCDOProtocol;
 import org.eclipse.emf.cdo.server.ServerCDOResProtocol;
 import org.eclipse.emf.cdo.server.ServerCDOResProtocol.Listener;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
+
+import org.eclipse.internal.net4j.transport.AbstractProtocolFactory;
 
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.Collection;
+import java.util.Set;
 
 
+/**
+ * @author Eike Stepper
+ */
 public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements ServerCDOProtocol,
     Listener
 {
@@ -37,49 +48,37 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
 
   protected ServerCDOResProtocol serverCDOResProtocol;
 
-  public ServerCDOProtocolImpl()
+  public ServerCDOProtocolImpl(Channel channel)
   {
+    super(channel);
   }
 
-  public int getType()
+  @Override
+  protected SignalReactor createSignalReactor(short signalID)
   {
-    return SERVER;
-  }
-
-  public Indication createIndication(short signalId)
-  {
-    switch (signalId)
+    switch (signalID)
     {
       case ANNOUNCE_PACKAGE:
-        return new AnnouncePackageIndication();
-
+        return new AnnouncePackageIndication(mapper);
       case DESCRIBE_PACKAGE:
-        return new DescribePackageIndication();
-
+        return new DescribePackageIndication(mapper);
       case RESOURCE_RID:
-        return new ResourceRIDIndication();
-
+        return new ResourceRIDIndication(mapper);
       case RESOURCE_PATH:
-        return new ResourcePathIndication();
-
+        return new ResourcePathIndication(mapper);
       case LOAD_RESOURCE:
-        return new LoadResourceIndication();
-
+        return new LoadResourceIndication(mapper);
       case LOAD_OBJECT:
-        return new LoadObjectIndication();
-
+        return new LoadObjectIndication(mapper);
       case COMMIT_TRANSACTION:
-        return new CommitTransactionIndication();
-
+        return new CommitTransactionIndication(mapper, transactionTemplate);
       case QUERY_EXTENT:
-        return new QueryExtentIndication();
-
+        return new QueryExtentIndication(mapper);
       case QUERY_XREFS:
-        return new QueryXRefsIndication();
-
+        return new QueryXRefsIndication(mapper);
       default:
-        throw new ImplementationError("Invalid " + CDOProtocol.PROTOCOL_NAME + " signalId: "
-            + signalId);
+        throw new ImplementationError("Invalid " + CDOProtocol.PROTOCOL_NAME + " signalID: "
+            + signalID);
     }
   }
 
@@ -90,7 +89,7 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
 
   public void setMapper(Mapper mapper)
   {
-    doSet("mapper", mapper);
+    this.mapper = mapper;
   }
 
   public TransactionTemplate getTransactionTemplate()
@@ -100,7 +99,7 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
 
   public void setTransactionTemplate(TransactionTemplate transactionTemplate)
   {
-    doSet("transactionTemplate", transactionTemplate);
+    this.transactionTemplate = transactionTemplate;
   }
 
   public ServerCDOResProtocol getServerCDOResProtocol()
@@ -110,7 +109,7 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
 
   public void setServerCDOResProtocol(ServerCDOResProtocol serverCDOResProtocol)
   {
-    doSet("serverCDOResProtocol", serverCDOResProtocol);
+    this.serverCDOResProtocol = serverCDOResProtocol;
   }
 
   public void notifyRemoval(ServerCDOResProtocol protocol, Collection<Integer> rids)
@@ -125,53 +124,65 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
 
   public void fireRemovalNotification(Collection<Integer> rids)
   {
-    for (Channel channel : getChannels())
+    for (Channel channel : getCDOServerChannels())
     {
       try
       {
-        RemovalNotificationRequest signal = new RemovalNotificationRequest(rids);
-        channel.transmit(signal);
+        Request signal = new RemovalNotificationRequest(channel, rids);
+        signal.send();
       }
       catch (Exception ex)
       {
-        error("Error while transmitting removal notifications for rids " + rids, ex);
+        CDOServer.LOG.error("Error while transmitting removal notifications for rids " + rids, ex);
       }
     }
   }
 
   public void fireInvalidationNotification(Channel initiator, Collection<Long> changedObjectIds)
   {
-    for (Channel channel : getChannels())
+    for (Channel channel : getCDOServerChannels())
     {
       if (initiator == null || channel != initiator
           && channel.getConnector().getType() == initiator.getConnector().getType())
       {
         try
         {
-          InvalidationNotificationRequest signal = new InvalidationNotificationRequest(
-              changedObjectIds);
-          channel.transmit(signal);
+          Request signal = new InvalidationNotificationRequest(channel, changedObjectIds);
+          signal.send();
         }
         catch (Exception ex)
         {
-          error("Error while transmitting invalidation notifications for oids " + changedObjectIds, ex);
+          CDOServer.LOG.error("Error while transmitting invalidation notifications for oids "
+              + changedObjectIds, ex);
         }
       }
     }
   }
 
-  @Override
-  protected void validate() throws ValidationException
+  protected Collection<Channel> getCDOServerChannels()
   {
-    super.validate();
-    assertNotNull("mapper");
-    assertNotNull("transactionTemplate");
+    return Net4jUtil.getChannels(getProtocolID(), ProtocolFactory.FOR_SERVERS);
   }
 
   @Override
-  protected void activate() throws Exception
+  protected void onAboutToActivate() throws Exception
   {
-    super.activate();
+    super.onAboutToActivate();
+    if (mapper == null)
+    {
+      throw new IllegalStateException("mapper == null");
+    }
+
+    if (transactionTemplate == null)
+    {
+      throw new IllegalStateException("transactionTemplate == null");
+    }
+  }
+
+  @Override
+  protected void onActivate() throws Exception
+  {
+    super.onActivate();
     if (serverCDOResProtocol != null)
     {
       serverCDOResProtocol.addListener(this);
@@ -179,13 +190,60 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
   }
 
   @Override
-  protected void deactivate() throws Exception
+  protected void onDeactivate() throws Exception
   {
     if (serverCDOResProtocol != null)
     {
       serverCDOResProtocol.removeListener(this);
+      serverCDOResProtocol = null;
     }
 
-    super.deactivate();
+    mapper = null;
+    transactionTemplate = null;
+    super.onDeactivate();
+  }
+
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Factory extends AbstractProtocolFactory
+  {
+    private Mapper mapper;
+
+    private TransactionTemplate transactionTemplate;
+
+    public Factory(Mapper mapper, TransactionTemplate transactionTemplate)
+    {
+      this.mapper = mapper;
+      this.transactionTemplate = transactionTemplate;
+    }
+
+    public Protocol createProtocol(Channel channel)
+    {
+      try
+      {
+        ServerCDOProtocolImpl protocol = new ServerCDOProtocolImpl(channel);
+        protocol.setMapper(mapper);
+        protocol.setTransactionTemplate(transactionTemplate);
+        protocol.activate();
+        return protocol;
+      }
+      catch (Exception ex)
+      {
+        CDOServer.LOG.error(ex);
+        return null;
+      }
+    }
+
+    public Set<Type> getConnectorTypes()
+    {
+      return ProtocolFactory.FOR_SERVERS;
+    }
+
+    public String getID()
+    {
+      return PROTOCOL_NAME;
+    }
   }
 }

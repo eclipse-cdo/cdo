@@ -1,0 +1,4 @@
+org.eclipse.emf.cdo.server/debug = true
+org.eclipse.emf.cdo.server/debug.mapper = true
+org.eclipse.emf.cdo.server/debug.resource = true
+org.eclipse.emf.cdo.server/debug.protocol = true

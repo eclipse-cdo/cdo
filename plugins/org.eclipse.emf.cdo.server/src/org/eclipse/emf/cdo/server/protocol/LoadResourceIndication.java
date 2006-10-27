@@ -11,42 +11,58 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.Channel;
-import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
+import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import org.eclipse.emf.cdo.core.CDOProtocol;
+import org.eclipse.emf.cdo.core.CDOSignals;
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.ResourceInfo;
 import org.eclipse.emf.cdo.server.ResourceManager;
-import org.eclipse.emf.cdo.server.ServerCDOProtocol;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
+
+import java.io.IOException;
 
 
-public class LoadResourceIndication extends AbstractIndicationWithResponse
+/**
+ * @author Eike Stepper
+ */
+public class LoadResourceIndication extends IndicationWithResponse
 {
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_PROTOCOL,
+      LoadResourceIndication.class);
+
+  private Mapper mapper;
+
   private int rid;
 
-  public short getSignalId()
+  public LoadResourceIndication(Mapper mapper)
   {
-    return CDOProtocol.LOAD_RESOURCE;
+    this.mapper = mapper;
   }
 
-  public void indicate()
+  @Override
+  protected short getSignalID()
   {
-    rid = receiveInt();
-    if (isDebugEnabled())
+    return CDOSignals.LOAD_RESOURCE;
+  }
+
+  @Override
+  protected void indicating(ExtendedDataInputStream in) throws IOException
+  {
+    rid = in.readInt();
+    if (TRACER.isEnabled())
     {
-      debug("Loading rid " + rid);
+      TRACER.trace("Loading rid " + rid);
     }
   }
 
-  public void respond()
+  @Override
+  protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    Mapper mapper = ((ServerCDOProtocol) getProtocol()).getMapper();
     ResourceManager resourceManager = mapper.getResourceManager();
     ResourceInfo resourceInfo = resourceManager.getResourceInfo(rid, mapper);
-
-    Channel channel = getChannel();
-    //    ServerCDOProtocolImpl.setResourceInfo(channel, resourceInfo);
-    mapper.transmitContent(channel, resourceInfo);
+    mapper.transmitContent(out, resourceInfo);
   }
 }

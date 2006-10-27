@@ -11,23 +11,34 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.Channel;
-import org.eclipse.net4j.core.Indication;
-import org.eclipse.net4j.spring.ValidationException;
-import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.transport.Protocol;
+import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.transport.Connector.Type;
+import org.eclipse.net4j.util.Net4jUtil;
 
+import org.eclipse.emf.cdo.core.ImplementationError;
 import org.eclipse.emf.cdo.core.protocol.AbstractCDOResProtocol;
 import org.eclipse.emf.cdo.core.protocol.ResourceChangeInfo;
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.ServerCDOResProtocol;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
+
+import org.eclipse.internal.net4j.transport.AbstractProtocolFactory;
 
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 
+/**
+ * @author Eike Stepper
+ */
 public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
     ServerCDOResProtocol
 {
@@ -37,27 +48,22 @@ public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
 
   protected transient List<Listener> listeners = new ArrayList<Listener>();
 
-  public ServerCDOResProtocolImpl()
+  public ServerCDOResProtocolImpl(Channel channel)
   {
+    super(channel);
   }
 
-  public int getType()
+  @Override
+  protected SignalReactor createSignalReactor(short signalID)
   {
-    return SERVER;
-  }
-
-  public Indication createIndication(short signalId)
-  {
-    switch (signalId)
+    switch (signalID)
     {
       case QUERY_ALL_RESOURCES:
-        return new QueryAllResourcesIndication();
-
+        return new QueryAllResourcesIndication(mapper);
       case DELETE_RESOURCES:
-        return new DeleteResourcesIndication();
-        
+        return new DeleteResourcesIndication(mapper, transactionTemplate);
       default:
-        throw new ImplementationError("Invalid " + PROTOCOL_NAME + " signalId: " + signalId);
+        throw new ImplementationError("Invalid " + PROTOCOL_NAME + " signalID: " + signalID);
     }
   }
 
@@ -68,7 +74,7 @@ public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
 
   public void setMapper(Mapper mapper)
   {
-    doSet("mapper", mapper);
+    this.mapper = mapper;
   }
 
   public TransactionTemplate getTransactionTemplate()
@@ -78,21 +84,21 @@ public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
 
   public void setTransactionTemplate(TransactionTemplate transactionTemplate)
   {
-    doSet("transactionTemplate", transactionTemplate);
+    this.transactionTemplate = transactionTemplate;
   }
 
   public void fireResourcesChangedNotification(List<ResourceChangeInfo> resourceChanges)
   {
-    for (Channel channel : getChannels())
+    for (Channel channel : getCDOResServerChannels())
     {
       try
       {
-        ResourcesChangedRequest signal = new ResourcesChangedRequest(resourceChanges);
-        channel.transmit(signal);
+        Request signal = new ResourcesChangedRequest(channel, resourceChanges);
+        signal.send();
       }
       catch (Exception ex)
       {
-        error("Error while notifying resource changes " + resourceChanges, ex);
+        CDOServer.LOG.error("Error while notifying resource changes " + resourceChanges, ex);
       }
     }
   }
@@ -114,7 +120,7 @@ public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
       listener.notifyRemoval(this, rids);
     }
   }
-  
+
   public void addListener(Listener listener)
   {
     listeners.add(listener);
@@ -125,10 +131,76 @@ public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
     listeners.remove(listener);
   }
 
-  protected void validate() throws ValidationException
+  protected Collection<Channel> getCDOResServerChannels()
   {
-    super.validate();
-    assertNotNull("mapper");
-    assertNotNull("transactionTemplate");
+    return Net4jUtil.getChannels(getProtocolID(), ProtocolFactory.FOR_SERVERS);
+  }
+
+  @Override
+  protected void onAboutToActivate() throws Exception
+  {
+    super.onAboutToActivate();
+    if (mapper == null)
+    {
+      throw new IllegalStateException("mapper == null");
+    }
+
+    if (transactionTemplate == null)
+    {
+      throw new IllegalStateException("transactionTemplate == null");
+    }
+  }
+
+  @Override
+  protected void onDeactivate() throws Exception
+  {
+    listeners = null;
+    mapper = null;
+    transactionTemplate = null;
+    super.onDeactivate();
+  }
+
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Factory extends AbstractProtocolFactory
+  {
+    private Mapper mapper;
+
+    private TransactionTemplate transactionTemplate;
+
+    public Factory(Mapper mapper, TransactionTemplate transactionTemplate)
+    {
+      this.mapper = mapper;
+      this.transactionTemplate = transactionTemplate;
+    }
+
+    public Protocol createProtocol(Channel channel)
+    {
+      try
+      {
+        ServerCDOResProtocolImpl protocol = new ServerCDOResProtocolImpl(channel);
+        protocol.setMapper(mapper);
+        protocol.setTransactionTemplate(transactionTemplate);
+        protocol.activate();
+        return protocol;
+      }
+      catch (Exception ex)
+      {
+        CDOServer.LOG.error(ex);
+        return null;
+      }
+    }
+
+    public Set<Type> getConnectorTypes()
+    {
+      return ProtocolFactory.FOR_SERVERS;
+    }
+
+    public String getID()
+    {
+      return PROTOCOL_NAME;
+    }
   }
 }

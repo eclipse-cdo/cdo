@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo.server;
 
 
+/**
+ * @author Eike Stepper
+ */
 public interface PackageListener
 {
   public void notifyAddedPackage();

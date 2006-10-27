@@ -11,26 +11,11 @@
 package org.eclipse.emf.cdo.tests.topology;
 
 
-import org.eclipse.net4j.core.Acceptor;
-import org.eclipse.net4j.spring.Container;
-
 import javax.sql.DataSource;
 
 
 public class ClientSeparatedServerTopology extends AbstractTopology
 {
-  private Container serverNet4j;
-
-  private Container net4jServer;
-
-  private Container cdoServer;
-
-  private Container clientNet4j;
-
-  private Container net4jClient;
-
-  private Acceptor acceptor;
-
   public ClientSeparatedServerTopology()
   {
   }
@@ -62,17 +47,83 @@ public class ClientSeparatedServerTopology extends AbstractTopology
   {
     super.stop();
 
-    //Stop client
-    net4jClient.stop();
-    clientNet4j.stop();
+    try
+    {
+      net4jClient.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      net4jClient = null;
+    }
 
-    //Stop server
-    acceptor.stop();
-    acceptor = null;
+    try
+    {
+      clientNet4j.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      clientNet4j = null;
+    }
 
-    cdoServer.stop();
-    net4jServer.stop();
-    serverNet4j.stop();
+    try
+    {
+      acceptor.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      acceptor = null;
+    }
+
+    try
+    {
+      cdoServer.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      cdoServer = null;
+    }
+
+    try
+    {
+      net4jServer.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      net4jServer = null;
+    }
+
+    try
+    {
+      serverNet4j.stop();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      serverNet4j = null;
+    }
   }
 
   public DataSource getDataSource()

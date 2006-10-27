@@ -11,19 +11,25 @@
 package org.eclipse.emf.cdo.server.impl;
 
 
-import org.eclipse.net4j.core.Channel;
+import org.eclipse.net4j.util.stream.ExtendedDataInput;
+import org.eclipse.net4j.util.stream.ExtendedDataOutput;
 
 import org.eclipse.emf.cdo.core.impl.AbstractConverter;
 import org.eclipse.emf.cdo.server.ColumnConverter;
 
+import java.io.IOException;
 
+
+/**
+ * @author Eike Stepper
+ */
 public class ColumnConverterImpl extends AbstractConverter implements ColumnConverter
 {
-  public Object fromChannel(Channel channel, int dataType)
+  public Object fromChannel(ExtendedDataInput channel, int dataType) throws IOException
   {
     if (dataType > MIN_PRIMITIVE)
     {
-      boolean isNull = channel.receiveBoolean();
+      boolean isNull = channel.readBoolean();
 
       if (isNull)
       {
@@ -39,12 +45,12 @@ public class ColumnConverterImpl extends AbstractConverter implements ColumnConv
     return dispatchFromChannel(channel, dataType);
   }
 
-  public void toChannel(Channel channel, int dataType, Object value)
+  public void toChannel(ExtendedDataOutput channel, int dataType, Object value) throws IOException
   {
     if (dataType > MIN_PRIMITIVE)
     {
       boolean isNull = value == null;
-      channel.transmitBoolean(isNull);
+      channel.writeBoolean(isNull);
 
       if (isNull)
       {

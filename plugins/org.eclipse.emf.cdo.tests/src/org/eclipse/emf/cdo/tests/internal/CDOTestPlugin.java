@@ -11,10 +11,11 @@
 package org.eclipse.emf.cdo.tests.internal;
 
 
-import org.eclipse.net4j.util.eclipse.AbstractPlugin;
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
 
 
-public class CDOTestPlugin extends AbstractPlugin
+public class CDOTestPlugin implements BundleActivator
 {
   private static CDOTestPlugin instance;
 
@@ -27,5 +28,13 @@ public class CDOTestPlugin extends AbstractPlugin
   public static CDOTestPlugin getPlugin()
   {
     return instance;
+  }
+
+  public void start(BundleContext context) throws Exception
+  {
+  }
+
+  public void stop(BundleContext context) throws Exception
+  {
   }
 }

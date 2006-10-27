@@ -11,12 +11,6 @@
 package org.eclipse.emf.cdo.examples.server.internal;
 
 
-import org.eclipse.net4j.examples.server.internal.ExampleServerPlugin;
-import org.eclipse.net4j.spring.Container;
-import org.eclipse.net4j.spring.ContainerCreationException;
-import org.eclipse.net4j.spring.impl.ContainerImpl;
-import org.eclipse.net4j.util.eclipse.AbstractPlugin;
-
 import java.io.IOException;
 
 

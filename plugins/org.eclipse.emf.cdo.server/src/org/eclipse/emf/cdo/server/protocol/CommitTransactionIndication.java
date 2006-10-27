@@ -11,13 +11,15 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.Channel;
-import org.eclipse.net4j.core.Protocol;
-import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
-import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
 import org.eclipse.emf.cdo.core.CDOProtocol;
+import org.eclipse.emf.cdo.core.ImplementationError;
 import org.eclipse.emf.cdo.core.OIDEncoder;
+import org.eclipse.emf.cdo.core.WrappedIOException;
 import org.eclipse.emf.cdo.core.protocol.ResourceChangeInfo;
 import org.eclipse.emf.cdo.server.AttributeInfo;
 import org.eclipse.emf.cdo.server.ClassInfo;
@@ -27,6 +29,7 @@ import org.eclipse.emf.cdo.server.ResourceInfo;
 import org.eclipse.emf.cdo.server.ServerCDOProtocol;
 import org.eclipse.emf.cdo.server.ServerCDOResProtocol;
 import org.eclipse.emf.cdo.server.impl.SQLConstants;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
 
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.TransactionStatus;
@@ -39,12 +42,24 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import java.io.IOException;
+
 import java.sql.Types;
 
 
-public class CommitTransactionIndication extends AbstractIndicationWithResponse
+/**
+ * @author Eike Stepper
+ */
+public class CommitTransactionIndication extends IndicationWithResponse
 {
   public static final int CAPACITY_tempIdtoPersistentIdMap = 499;
+
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_PROTOCOL,
+      CommitTransactionIndication.class);
+
+  private Mapper mapper;
+
+  private TransactionTemplate transactionTemplate;
 
   private Map<Long, Long> tempOIDs = new HashMap<Long, Long>(CAPACITY_tempIdtoPersistentIdMap);
 
@@ -56,151 +71,168 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
   private boolean optimisticControlException = false;
 
-  private Mapper mapper;
-
   private List<ResourceChangeInfo> newResources = new ArrayList<ResourceChangeInfo>();
 
-  public short getSignalId()
+  public CommitTransactionIndication(Mapper mapper, TransactionTemplate transactionTemplate)
+  {
+    this.mapper = mapper;
+    this.transactionTemplate = transactionTemplate;
+  }
+
+  @Override
+  protected short getSignalID()
   {
     return CDOProtocol.COMMIT_TRANSACTION;
   }
 
-  public void indicate()
+  @Override
+  protected void indicating(final ExtendedDataInputStream in) throws IOException
   {
     try
     {
-      final TransactionTemplate transactionTemplate = ((ServerCDOProtocol) getProtocol())
-          .getTransactionTemplate();
       transactionTemplate.execute(new TransactionCallbackWithoutResult()
       {
         public void doInTransactionWithoutResult(TransactionStatus status)
         {
-          receiveObjectsToDetach();
-          receiveObjectsToAttach();
-          receiveObjectChanges();
-          receiveNewResources();
-
-          if (optimisticControlException)
+          try
           {
-            status.setRollbackOnly();
+            receiveObjectsToDetach(in);
+            receiveObjectsToAttach(in);
+            receiveObjectChanges(in);
+            receiveNewResources(in);
+            if (optimisticControlException)
+            {
+              status.setRollbackOnly();
+            }
+          }
+          catch (IOException ex)
+          {
+            throw new WrappedIOException(ex);
           }
         }
       });
     }
+    catch (WrappedIOException ex)
+    {
+      ex.reThrow();
+    }
     catch (TransactionException ex)
     {
-      error("Error while committing transaction to database", ex);
+      CDOServer.LOG.error("Error while committing transaction to database", ex);
     }
 
     if (!optimisticControlException)
     {
       transmitInvalidations();
-      transmitRescourceChanges();
+      transmitResourceChanges();
     }
   }
 
-  public void respond()
+  @Override
+  protected void responding(ExtendedDataOutputStream out) throws IOException
   {
     if (optimisticControlException)
     {
-      transmitBoolean(false);
+      out.writeBoolean(false);
       return;
     }
     else
     {
-      transmitBoolean(true);
+      out.writeBoolean(true);
     }
 
-    transmitInt(oidList.size());
-
+    out.writeInt(oidList.size());
     for (Iterator<Long> iter = oidList.iterator(); iter.hasNext();)
     {
       Long id = iter.next();
-      transmitLong(id.longValue());
+      out.writeLong(id.longValue());
     }
 
-    transmitInt(changedObjectIds.size());
-
+    out.writeInt(changedObjectIds.size());
     for (Iterator<Long> iter = changedObjectIds.iterator(); iter.hasNext();)
     {
       Long id = iter.next();
-      transmitLong(id.longValue());
-
       Integer oca = changedObjectOIDOCA.get(id);
-      transmitInt(oca.intValue());
+      out.writeLong(id.longValue());
+      out.writeInt(oca.intValue());
     }
   }
 
-  private void receiveNewResources()
+  private void receiveNewResources(ExtendedDataInputStream in) throws IOException
   {
     int rid;
-    while ((rid = receiveInt()) != 0)
+    while ((rid = in.readInt()) != 0)
     {
-      String path = receiveString();
-      getMapper().insertResource(rid, path);
+      String path = in.readString();
+      mapper.insertResource(rid, path);
       newResources.add(new ResourceChangeInfo(ResourceChangeInfo.ADDED, rid, path));
     }
   }
 
-  private void receiveObjectsToDetach()
+  private void receiveObjectsToDetach(ExtendedDataInputStream in) throws IOException
   {
-    if (isDebugEnabled()) debug("receiveObjectsToDetach()");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("receiveObjectsToDetach()");
+    }
 
     for (;;)
     {
-      long oid = receiveLong();
-
+      long oid = in.readLong();
       if (oid == CDOProtocol.NO_MORE_OBJECTS)
       {
         break;
       }
 
-      getMapper().removeObject(oid);
+      mapper.removeObject(oid);
     }
   }
 
-  private void receiveObjectsToAttach()
+  private void receiveObjectsToAttach(ExtendedDataInputStream in) throws IOException
   {
-    if (isDebugEnabled()) debug("receiveObjectsToAttach()");
-    int count = receiveInt();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("receiveObjectsToAttach()");
+    }
 
+    int count = in.readInt();
     for (int i = 0; i < count; i++)
     {
-      long oid = receiveLong();
-
+      long oid = in.readLong();
       if (oid < 0)
       {
         oid = registerTempOID(oid);
       }
 
-      ClassInfo info = receiveClassInfo();
-      getMapper().insertObject(oid, info.getCID());
-
-      boolean isContent = receiveBoolean();
+      ClassInfo info = receiveClassInfo(in);
+      mapper.insertObject(oid, info.getCID());
+      boolean isContent = in.readBoolean();
       if (isContent)
       {
-        getMapper().insertContent(oid);
+        mapper.insertContent(oid);
       }
 
-      receiveObjectsToAttachAttributes(info, oid);
+      receiveObjectsToAttachAttributes(in, info, oid);
     }
 
-    receiveObjectsToAttachReferences();
+    receiveObjectsToAttachReferences(in);
   }
 
-  private void receiveObjectsToAttachReferences()
+  private void receiveObjectsToAttachReferences(ExtendedDataInputStream in) throws IOException
   {
-    if (isDebugEnabled()) debug("receiveObjectsToAttachReferences()");
-    int count = receiveInt();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("receiveObjectsToAttachReferences()");
+    }
 
+    int count = in.readInt();
     for (int i = 0; i < count; i++)
     {
-      long oid = receiveLong();
-      int feature = receiveInt();
-      int ordinal = receiveInt();
-      long target = receiveLong();
-      boolean content = receiveBoolean();
-
+      long oid = in.readLong();
+      int feature = in.readInt();
+      int ordinal = in.readInt();
+      long target = in.readLong();
+      boolean containment = in.readBoolean();
       if (oid < 0)
       {
         oid = resolveTempOID(oid);
@@ -211,18 +243,23 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
         target = resolveTempOID(target);
       }
 
-      getMapper().insertReference(oid, feature, ordinal, target, content);
+      mapper.insertReference(oid, feature, ordinal, target, containment);
     }
   }
 
   /**
+   * @param in 
    * @return
+   * @throws IOException 
    */
-  private ClassInfo receiveClassInfo()
+  private ClassInfo receiveClassInfo(ExtendedDataInputStream in) throws IOException
   {
-    int cid = receiveInt();
-    ClassInfo classInfo = getMapper().getPackageManager().getClassInfo(cid);
-    if (classInfo == null) throw new ImplementationError("Unknown cid " + cid);
+    int cid = in.readInt();
+    ClassInfo classInfo = mapper.getPackageManager().getClassInfo(cid);
+    if (classInfo == null)
+    {
+      throw new ImplementationError("Unknown cid " + cid);
+    }
 
     return classInfo;
   }
@@ -233,9 +270,9 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
    */
   private long registerTempOID(long tempOID)
   {
-    OIDEncoder oidEncoder = getMapper().getOidEncoder();
+    OIDEncoder oidEncoder = mapper.getOidEncoder();
     int rid = oidEncoder.getRID(-tempOID);
-    ResourceInfo resourceInfo = getMapper().getResourceManager().getResourceInfo(rid, getMapper());
+    ResourceInfo resourceInfo = mapper.getResourceManager().getResourceInfo(rid, mapper);
     long oidFragment = resourceInfo.getNextOIDFragment();
 
     Long key = new Long(tempOID);
@@ -244,9 +281,11 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     tempOIDs.put(key, val);
     oidList.add(val);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Mapping oid " + oidEncoder.toString(key) + " --> " + oidEncoder.toString(val));
+    }
 
-    if (isDebugEnabled())
-      debug("Mapping oid " + oidEncoder.toString(key) + " --> " + oidEncoder.toString(val));
     return oid;
   }
 
@@ -257,42 +296,43 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
   private long resolveTempOID(long tempOID)
   {
     Long sourceVal = tempOIDs.get(new Long(tempOID));
-
     if (sourceVal == null)
     {
-      OIDEncoder oidEncoder = getMapper().getOidEncoder();
+      OIDEncoder oidEncoder = mapper.getOidEncoder();
       throw new ImplementationError("no mapping for temporary oid " + oidEncoder.toString(tempOID));
     }
 
     return sourceVal.longValue();
   }
 
-  private void receiveObjectChanges()
+  private void receiveObjectChanges(ExtendedDataInputStream in) throws IOException
   {
-    if (isDebugEnabled()) debug("receiveObjectChanges()");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("receiveObjectChanges()");
+    }
 
     for (;;)
     {
-      long oid = receiveLong();
+      long oid = in.readLong();
       if (oid == CDOProtocol.NO_MORE_OBJECT_CHANGES)
       {
         break;
       }
 
-      int oca = receiveInt();
+      int oca = in.readInt();
       int newOCA = lock(oid, oca);
-
-      receiveReferenceChanges();
-      receiveAttributeChanges(oid);
+      receiveReferenceChanges(in);
+      receiveAttributeChanges(in, oid);
       rememberChangedObject(oid, newOCA);
     }
   }
 
-  private void receiveReferenceChanges()
+  private void receiveReferenceChanges(ExtendedDataInputStream in) throws IOException
   {
     for (;;)
     {
-      byte changeKind = receiveByte();
+      byte changeKind = in.readByte();
       if (changeKind == CDOProtocol.NO_MORE_REFERENCE_CHANGES)
       {
         break;
@@ -301,25 +341,20 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
       switch (changeKind)
       {
         case CDOProtocol.FEATURE_SET:
-          receiveReferenceSet();
+          receiveReferenceSet(in);
           break;
-
         case CDOProtocol.FEATURE_UNSET:
-          receiveReferenceUnset();
+          receiveReferenceUnset(in);
           break;
-
         case CDOProtocol.LIST_ADD:
-          receiveReferenceAdd();
+          receiveReferenceAdd(in);
           break;
-
         case CDOProtocol.LIST_REMOVE:
-          receiveReferenceRemove();
+          receiveReferenceRemove(in);
           break;
-
         case CDOProtocol.LIST_MOVE:
-          receiveReferenceMove();
+          receiveReferenceMove(in);
           break;
-
         default:
           throw new ImplementationError("invalid changeKind: " + changeKind);
       }
@@ -327,138 +362,142 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
   }
 
   /**
+   * @param in 
    * @param oid
    * @param feature
+   * @throws IOException 
    */
-  private void receiveReferenceSet()
+  private void receiveReferenceSet(ExtendedDataInputStream in) throws IOException
   {
     // oid is not mapped for changes!
-    long oid = receiveLong();
-    int feature = receiveInt();
-    long target = receiveLong();
-    boolean content = receiveBoolean();
-
+    long oid = in.readLong();
+    int feature = in.readInt();
+    long target = in.readLong();
+    boolean containment = in.readBoolean();
     if (target < 0)
     {
       target = resolveTempOID(target);
     }
 
-    if (isDebugEnabled())
+    if (TRACER.isEnabled())
     {
-      OIDEncoder oidEncoder = getMapper().getOidEncoder();
-      debug("received reference set: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
-          + ", target=" + oidEncoder.toString(target) + ", content=" + content);
+      OIDEncoder oidEncoder = mapper.getOidEncoder();
+      TRACER.trace("received reference set: oid=" + oidEncoder.toString(oid) + ", feature="
+          + feature + ", target=" + oidEncoder.toString(target) + ", containment=" + containment);
     }
 
-    getMapper().insertReference(oid, feature, 0, target, content);
+    mapper.insertReference(oid, feature, 0, target, containment);
   }
 
   /**
+   * @param in 
+   * @throws IOException 
    * 
    */
-  private void receiveReferenceUnset()
+  private void receiveReferenceUnset(ExtendedDataInputStream in) throws IOException
   {
     // oid is not mapped for changes!
-    long oid = receiveLong();
-    int feature = receiveInt();
-
-    if (isDebugEnabled())
+    long oid = in.readLong();
+    int feature = in.readInt();
+    if (TRACER.isEnabled())
     {
-      OIDEncoder oidEncoder = getMapper().getOidEncoder();
-      debug("received reference unset: oid=" + oidEncoder.toString(oid) + ", feature=" + feature);
+      OIDEncoder oidEncoder = mapper.getOidEncoder();
+      TRACER.trace("received reference unset: oid=" + oidEncoder.toString(oid) + ", feature="
+          + feature);
     }
 
-    getMapper().removeReference(oid, feature, 0);
+    mapper.removeReference(oid, feature, 0);
   }
 
   /**
+   * @param in 
+   * @throws IOException 
    * 
    */
-  private void receiveReferenceAdd()
+  private void receiveReferenceAdd(ExtendedDataInputStream in) throws IOException
   {
     // oid is not mapped for changes!
-    long oid = receiveLong();
-    int feature = receiveInt();
-    int ordinal = receiveInt() + 1;
-    long target = receiveLong();
-    boolean content = receiveBoolean();
-
+    long oid = in.readLong();
+    int feature = in.readInt();
+    int ordinal = in.readInt() + 1;
+    long target = in.readLong();
+    boolean containment = in.readBoolean();
     if (target < 0)
     {
       target = resolveTempOID(target);
     }
 
-    if (isDebugEnabled())
+    if (TRACER.isEnabled())
     {
-      OIDEncoder oidEncoder = getMapper().getOidEncoder();
-      debug("received reference add: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
-          + ", ordinal=" + ordinal + ", target=" + oidEncoder.toString(target) + ", content="
-          + content);
+      OIDEncoder oidEncoder = mapper.getOidEncoder();
+      TRACER.trace("received reference add: oid=" + oidEncoder.toString(oid) + ", feature="
+          + feature + ", ordinal=" + ordinal + ", target=" + oidEncoder.toString(target)
+          + ", containment=" + containment);
     }
 
     if (ordinal == 0)
     {
-      ordinal = getMapper().getCollectionCount(oid, feature);
+      ordinal = mapper.getCollectionCount(oid, feature);
     }
 
-    getMapper().moveReferencesRelative(oid, feature, ordinal, Integer.MAX_VALUE, 1);
-    getMapper().insertReference(oid, feature, ordinal, target, content);
+    mapper.moveReferencesRelative(oid, feature, ordinal, Integer.MAX_VALUE, 1);
+    mapper.insertReference(oid, feature, ordinal, target, containment);
   }
 
   /**
+   * @param in 
+   * @throws IOException 
    * 
    */
-  private void receiveReferenceRemove()
+  private void receiveReferenceRemove(ExtendedDataInputStream in) throws IOException
   {
     // oid is not mapped for changes!
-    long oid = receiveLong();
-    int feature = receiveInt();
-    int ordinal = receiveInt() + 1;
-
-    if (isDebugEnabled())
+    long oid = in.readLong();
+    int feature = in.readInt();
+    int ordinal = in.readInt() + 1;
+    if (TRACER.isEnabled())
     {
-      OIDEncoder oidEncoder = getMapper().getOidEncoder();
-      debug("receiveObjectChangesReferences(REMOVE, sourceId=" + oidEncoder.toString(oid)
+      OIDEncoder oidEncoder = mapper.getOidEncoder();
+      TRACER.trace("receiveObjectChangesReferences(REMOVE, sourceId=" + oidEncoder.toString(oid)
           + ", featureId=" + feature + ", sourceOrdinal=" + ordinal + ")");
     }
 
-    getMapper().removeReference(oid, feature, ordinal);
-    getMapper().moveReferencesRelative(oid, feature, ordinal, Integer.MAX_VALUE, -1);
+    mapper.removeReference(oid, feature, ordinal);
+    mapper.moveReferencesRelative(oid, feature, ordinal, Integer.MAX_VALUE, -1);
   }
 
   /**
+   * @param in 
+   * @throws IOException 
    * 
    */
-  private void receiveReferenceMove()
+  private void receiveReferenceMove(ExtendedDataInputStream in) throws IOException
   {
     // oid is not mapped for changes!
-    long oid = receiveLong();
-    int feature = receiveInt();
-    int ordinal = receiveInt();
-    int moveToIndex = receiveInt();
-
-    if (isDebugEnabled())
+    long oid = in.readLong();
+    int feature = in.readInt();
+    int ordinal = in.readInt();
+    int moveToIndex = in.readInt();
+    if (TRACER.isEnabled())
     {
-      OIDEncoder oidEncoder = getMapper().getOidEncoder();
-      debug("received reference move: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
-          + ", ordinal=" + ordinal + ", moveToIndex=" + moveToIndex);
+      OIDEncoder oidEncoder = mapper.getOidEncoder();
+      TRACER.trace("received reference move: oid=" + oidEncoder.toString(oid) + ", feature="
+          + feature + ", ordinal=" + ordinal + ", moveToIndex=" + moveToIndex);
     }
 
     ordinal++;
     moveToIndex++;
-
-    getMapper().moveReferenceAbsolute(oid, feature, -1, ordinal);
-
+    mapper.moveReferenceAbsolute(oid, feature, -1, ordinal);
     if (moveToIndex > ordinal)
     {
-      getMapper().moveReferencesRelative(oid, feature, ordinal + 1, moveToIndex, -1);
+      mapper.moveReferencesRelative(oid, feature, ordinal + 1, moveToIndex, -1);
     }
     else if (moveToIndex < ordinal)
     {
-      getMapper().moveReferencesRelative(oid, feature, moveToIndex, ordinal - 1, 1);
+      mapper.moveReferencesRelative(oid, feature, moveToIndex, ordinal - 1, 1);
     }
 
-    getMapper().moveReferenceAbsolute(oid, feature, moveToIndex, -1);
+    mapper.moveReferenceAbsolute(oid, feature, moveToIndex, -1);
   }
 
   /**
@@ -468,19 +507,17 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
    */
   private int lock(long oid, int oca)
   {
-    boolean ok = getMapper().lock(oid, oca);
-
+    boolean ok = mapper.lock(oid, oca);
     if (!ok)
     {
       optimisticControlException = true;
-
-      if (isDebugEnabled())
+      if (TRACER.isEnabled())
       {
-        debug("");
-        debug("============================");
-        debug("OPTIMISTIC CONTROL EXCEPTION");
-        debug("============================");
-        debug("");
+        TRACER.trace("");
+        TRACER.trace("============================");
+        TRACER.trace("OPTIMISTIC CONTROL EXCEPTION");
+        TRACER.trace("============================");
+        TRACER.trace("");
       }
 
       return oca;
@@ -500,33 +537,37 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
   }
 
   /**
+   * @param in 
    * @param info
    * @param oid
+   * @throws IOException 
    * @throws InterruptedException
    */
-  private void receiveAttributeChanges(long oid)
+  private void receiveAttributeChanges(ExtendedDataInputStream in, long oid) throws IOException
   {
     ClassInfo classInfo = null;
-
     for (;;)
     {
-      int cid = receiveInt();
+      int cid = in.readInt();
       if (cid == CDOProtocol.NO_MORE_SEGMENTS)
       {
         break;
       }
 
-      classInfo = getMapper().getPackageManager().getClassInfo(cid);
-      receiveAttributeChangeSegment(oid, classInfo);
+      classInfo = mapper.getPackageManager().getClassInfo(cid);
+      receiveAttributeChangeSegment(in, oid, classInfo);
     }
   }
 
   /**
+   * @param in 
+   * @throws IOException 
    * 
    */
-  private void receiveAttributeChangeSegment(long oid, ClassInfo classInfo)
+  private void receiveAttributeChangeSegment(ExtendedDataInputStream in, long oid,
+      ClassInfo classInfo) throws IOException
   {
-    int count = receiveInt();
+    int count = in.readInt();
     Object[] args = new Object[count + 1]; // last element is the oid
     args[count] = oid;
     int[] types = new int[count + 1];
@@ -538,14 +579,18 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
 
     for (int i = 0; i < count; i++)
     {
-      int feature = receiveInt();
+      int feature = in.readInt();
       AttributeInfo attributeInfo = classInfo.getAttributeInfo(feature);
-      ColumnConverter converter = getMapper().getColumnConverter();
+      ColumnConverter converter = mapper.getColumnConverter();
 
-      args[i] = converter.fromChannel(getChannel(), attributeInfo.getDataType());
+      args[i] = converter.fromChannel(in, attributeInfo.getDataType());
       types[i] = attributeInfo.getColumnType();
 
-      if (i > 0) sql.append(", ");
+      if (i > 0)
+      {
+        sql.append(", ");
+      }
+
       sql.append(attributeInfo.getColumnName());
       sql.append("=?");
     }
@@ -553,19 +598,20 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
     sql.append(" WHERE ");
     sql.append(SQLConstants.USER_OID_COLUMN);
     sql.append("=?");
-
-    getMapper().sql(sql.toString(), args, types);
-
+    mapper.sql(sql.toString(), args, types);
   }
 
-  private void receiveObjectsToAttachAttributes(ClassInfo classInfo, long oid)
+  private void receiveObjectsToAttachAttributes(ExtendedDataInputStream in, ClassInfo classInfo,
+      long oid) throws IOException
   {
-    if (isDebugEnabled()) debug("receiveObjectsToAttachAttributes()");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("receiveObjectsToAttachAttributes()");
+    }
 
     while (classInfo != null)
     {
       AttributeInfo[] attributeInfos = classInfo.getAttributeInfos();
-
       Object[] args = new Object[attributeInfos.length + 1]; // the first element is the oid
       args[0] = oid;
 
@@ -575,22 +621,22 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
       StringBuffer sql = new StringBuffer("INSERT INTO ");
       sql.append(classInfo.getTableName());
       sql.append(" VALUES(?");
-
       for (int i = 0; i < attributeInfos.length; i++)
       {
         AttributeInfo attributeInfo = attributeInfos[i];
-        if (isDebugEnabled()) debug("Receiving attribute " + attributeInfo.getName());
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Receiving attribute " + attributeInfo.getName());
+        }
 
-        ColumnConverter converter = getMapper().getColumnConverter();
-        args[i + 1] = converter.fromChannel(getChannel(), attributeInfo.getDataType());
+        ColumnConverter converter = mapper.getColumnConverter();
+        args[i + 1] = converter.fromChannel(in, attributeInfo.getDataType());
         types[i + 1] = attributeInfo.getColumnType();
-
         sql.append(", ?");
       }
 
       sql.append(")");
-      getMapper().sql(sql.toString(), args, types);
-
+      mapper.sql(sql.toString(), args, types);
       classInfo = classInfo.getParent();
     }
   }
@@ -599,30 +645,18 @@ public class CommitTransactionIndication extends AbstractIndicationWithResponse
   {
     if (!changedObjectIds.isEmpty())
     {
-      Channel me = getChannel();
-      ServerCDOProtocol cdo = (ServerCDOProtocol) me.getProtocol();
-      cdo.fireInvalidationNotification(me, changedObjectIds);
+      ServerCDOProtocol cdo = (ServerCDOProtocol) getProtocol();
+      cdo.fireInvalidationNotification(cdo.getChannel(), changedObjectIds);
     }
   }
 
-  private void transmitRescourceChanges()
+  private void transmitResourceChanges()
   {
     if (!newResources.isEmpty())
     {
-      Channel me = getChannel();
-      ServerCDOProtocol cdo = (ServerCDOProtocol) me.getProtocol();
+      ServerCDOProtocol cdo = (ServerCDOProtocol) getProtocol();
       ServerCDOResProtocol cdores = cdo.getServerCDOResProtocol();
       cdores.fireResourcesChangedNotification(newResources);
     }
-  }
-
-  private Mapper getMapper()
-  {
-    if (mapper == null)
-    {
-      mapper = ((ServerCDOProtocol) getProtocol()).getMapper();
-    }
-
-    return mapper;
   }
 }

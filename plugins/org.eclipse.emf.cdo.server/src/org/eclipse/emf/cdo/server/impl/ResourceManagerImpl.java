@@ -11,25 +11,37 @@
 package org.eclipse.emf.cdo.server.impl;
 
 
-import org.eclipse.net4j.spring.impl.ServiceImpl;
+import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
+import org.eclipse.net4j.util.om.ContextTracer;
 
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.ResourceInfo;
 import org.eclipse.emf.cdo.server.ResourceManager;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class ResourceManagerImpl extends ServiceImpl implements ResourceManager
+/**
+ * @author Eike Stepper
+ */
+public class ResourceManagerImpl extends AbstractLifecycle implements ResourceManager
 {
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_RESOURCE,
+      ResourceManagerImpl.class);
+
   private Map<Integer, ResourceInfo> ridToResourceMap = new HashMap<Integer, ResourceInfo>();
 
   private Map<String, ResourceInfo> pathToResourceMap = new HashMap<String, ResourceInfo>();
 
   public void registerResourceInfo(ResourceInfo resourceInfo)
   {
-    if (isDebugEnabled()) debug("Registering " + resourceInfo);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Registering " + resourceInfo);
+    }
+
     ridToResourceMap.put(resourceInfo.getRID(), resourceInfo);
     pathToResourceMap.put(resourceInfo.getPath(), resourceInfo);
   }
@@ -44,11 +56,9 @@ public class ResourceManagerImpl extends ServiceImpl implements ResourceManager
   public ResourceInfo getResourceInfo(String path, Mapper mapper)
   {
     ResourceInfo resourceInfo = pathToResourceMap.get(path);
-
     if (resourceInfo == null)
     {
       resourceInfo = mapper.selectResourceInfo(path);
-
       if (resourceInfo == null)
       {
         return null;
@@ -63,11 +73,9 @@ public class ResourceManagerImpl extends ServiceImpl implements ResourceManager
   public ResourceInfo getResourceInfo(int rid, Mapper mapper)
   {
     ResourceInfo resourceInfo = ridToResourceMap.get(new Integer(rid));
-
     if (resourceInfo == null)
     {
       resourceInfo = mapper.selectResourceInfo(rid);
-
       if (resourceInfo == null)
       {
         return null;
@@ -77,5 +85,13 @@ public class ResourceManagerImpl extends ServiceImpl implements ResourceManager
     }
 
     return resourceInfo;
+  }
+
+  @Override
+  protected void onDeactivate() throws Exception
+  {
+    pathToResourceMap = null;
+    ridToResourceMap = null;
+    super.onDeactivate();
   }
 }

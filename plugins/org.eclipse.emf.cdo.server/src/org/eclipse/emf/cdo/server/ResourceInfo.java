@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo.server;
 
 
+/**
+ * @author Eike Stepper
+ */
 public interface ResourceInfo
 {
   public long getNextOIDFragment();

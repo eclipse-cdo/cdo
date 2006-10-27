@@ -11,53 +11,80 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
+import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import org.eclipse.emf.cdo.core.CDOProtocol;
+import org.eclipse.emf.cdo.core.CDOSignals;
 import org.eclipse.emf.cdo.server.ClassInfo;
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.PackageInfo;
-import org.eclipse.emf.cdo.server.ServerCDOProtocol;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
+
+import java.io.IOException;
 
 
-public class AnnouncePackageIndication extends AbstractIndicationWithResponse
+/**
+ * @author Eike Stepper
+ */
+public class AnnouncePackageIndication extends IndicationWithResponse
 {
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_PROTOCOL,
+      AnnouncePackageIndication.class);
+
+  private Mapper mapper;
+
   private String packageName;
 
-  public short getSignalId()
+  public AnnouncePackageIndication(Mapper mapper)
   {
-    return CDOProtocol.ANNOUNCE_PACKAGE;
+    this.mapper = mapper;
   }
 
-  public void indicate()
+  @Override
+  protected short getSignalID()
   {
-    packageName = receiveString();
-    if (isDebugEnabled()) debug("Announced package " + packageName);
+    return CDOSignals.ANNOUNCE_PACKAGE;
   }
 
-  public void respond()
+  @Override
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    Mapper mapper = ((ServerCDOProtocol) getProtocol()).getMapper();
+    packageName = in.readString();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Announced package " + packageName);
+    }
+  }
+
+  @Override
+  protected void responding(ExtendedDataOutputStream out) throws IOException
+  {
     PackageInfo packageInfo = mapper.getPackageManager().getPackageInfo(packageName);
-
     if (packageInfo == null)
     {
-      if (isDebugEnabled()) debug("Unknown package " + packageName);
-      transmitInt(-1);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Unknown package " + packageName);
+      }
+
+      out.writeInt(-1);
     }
     else
     {
       ClassInfo[] classInfos = packageInfo.getClasses();
-      transmitInt(classInfos.length);
-
+      out.writeInt(classInfos.length);
       for (int i = 0; i < classInfos.length; i++)
       {
         ClassInfo classInfo = classInfos[i];
-        if (isDebugEnabled())
-          debug("Responding class " + classInfo.getName() + " = " + classInfo.getCID());
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Responding class " + classInfo.getName() + " = " + classInfo.getCID());
+        }
 
-        transmitInt(classInfo.getCID());
-        transmitString(classInfo.getName());
+        out.writeInt(classInfo.getCID());
+        out.writeString(classInfo.getName());
       }
     }
   }

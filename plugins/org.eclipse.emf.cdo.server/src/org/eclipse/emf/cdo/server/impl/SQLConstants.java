@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo.server.impl;
 
 
+/**
+ * @author Eike Stepper
+ */
 public interface SQLConstants
 {
   //--------------------------------------------------------------------
@@ -83,7 +86,7 @@ public interface SQLConstants
 
   public static final String REFERENCE_FEATUREID_COLUMN = "FEATUREID";
 
-  public static final String REFERENCE_CONTENT_COLUMN = "CONTENT";
+  public static final String REFERENCE_CONTAINMENT_COLUMN = "CONTENT";
 
   public static final String REFERENCE_ORDINAL_COLUMN = "ORDINAL";
 
@@ -131,7 +134,7 @@ public interface SQLConstants
   public static final String SELECT_CONTAINER_OF_OBJECT = "SELECT " + REFERENCE_TABLE + "."
       + REFERENCE_OID_COLUMN + ", " + OBJECT_TABLE + "." + OBJECT_CID_COLUMN + " FROM "
       + REFERENCE_TABLE + ", " + OBJECT_TABLE + " WHERE " + REFERENCE_TABLE + "."
-      + REFERENCE_TARGET_COLUMN + "=? AND " + REFERENCE_TABLE + "." + REFERENCE_CONTENT_COLUMN
+      + REFERENCE_TARGET_COLUMN + "=? AND " + REFERENCE_TABLE + "." + REFERENCE_CONTAINMENT_COLUMN
       + "=? AND " + REFERENCE_TABLE + "." + REFERENCE_OID_COLUMN + "=" + OBJECT_TABLE + "."
       + OBJECT_OID_COLUMN;
 
@@ -139,7 +142,7 @@ public interface SQLConstants
       + REFERENCE_OID_COLUMN + ", " + REFERENCE_TABLE + "." + REFERENCE_FEATUREID_COLUMN + ", "
       + OBJECT_TABLE + "." + OBJECT_CID_COLUMN + " FROM " + REFERENCE_TABLE + ", " + OBJECT_TABLE
       + " WHERE " + REFERENCE_TABLE + "." + REFERENCE_TARGET_COLUMN + "=? AND " + REFERENCE_TABLE
-      + "." + REFERENCE_CONTENT_COLUMN + "=FALSE AND " + REFERENCE_TABLE + "."
+      + "." + REFERENCE_CONTAINMENT_COLUMN + "=FALSE AND " + REFERENCE_TABLE + "."
       + REFERENCE_OID_COLUMN + "=" + OBJECT_TABLE + "." + OBJECT_OID_COLUMN;
 
   public static final String SELECT_ALL_OBJECTS_OF_RESOURCE = "SELECT " + OBJECT_OID_COLUMN + ", "

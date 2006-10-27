@@ -26,7 +26,7 @@ public interface ITopology
 
   public void stop() throws Exception;
 
-  public ResourceManager createResourceManager(ResourceSet resourceSet);
+  public ResourceManager createResourceManager(ResourceSet resourceSet) throws Exception;
 
   public DataSource getDataSource();
 }

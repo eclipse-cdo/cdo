@@ -14,6 +14,9 @@ package org.eclipse.emf.cdo.server.impl;
 import org.eclipse.emf.cdo.server.AttributeInfo;
 
 
+/**
+ * @author Eike Stepper
+ */
 public class AttributeInfoImpl implements AttributeInfo
 {
   protected String name;

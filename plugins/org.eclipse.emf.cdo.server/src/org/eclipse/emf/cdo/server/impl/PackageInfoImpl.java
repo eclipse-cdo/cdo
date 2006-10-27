@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * @author Eike Stepper
+ */
 public class PackageInfoImpl implements PackageInfo
 {
   protected int pid;

@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.core.CDOException;
 
 
 /**
- * The <code>ResourceNotFoundException</code> class.<p>
- *
  * @author Eike Stepper
  */
 public class ResourceNotFoundException extends CDOException
@@ -26,40 +24,20 @@ public class ResourceNotFoundException extends CDOException
    */
   private static final long serialVersionUID = 1L;
 
-  /**
-   * Creates an instance of this class.<p>
-   */
   public ResourceNotFoundException()
   {
-    super();
   }
 
-  /**
-   * Creates an instance of this class.<p>
-   *
-   * @param message
-   */
   public ResourceNotFoundException(String message)
   {
     super(message);
   }
 
-  /**
-   * Creates an instance of this class.<p>
-   *
-   * @param cause
-   */
   public ResourceNotFoundException(Throwable cause)
   {
     super(cause);
   }
 
-  /**
-   * Creates an instance of this class.<p>
-   *
-   * @param message
-   * @param cause
-   */
   public ResourceNotFoundException(String message, Throwable cause)
   {
     super(message, cause);

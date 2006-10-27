@@ -11,35 +11,54 @@
 package org.eclipse.emf.cdo.server.protocol;
 
 
-import org.eclipse.net4j.core.impl.AbstractIndicationWithResponse;
+import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import org.eclipse.emf.cdo.core.CDOProtocol;
+import org.eclipse.emf.cdo.core.CDOSignals;
 import org.eclipse.emf.cdo.server.Mapper;
-import org.eclipse.emf.cdo.server.ServerCDOProtocol;
+import org.eclipse.emf.cdo.server.internal.CDOServer;
+
+import java.io.IOException;
 
 
-public class LoadObjectIndication extends AbstractIndicationWithResponse
+/**
+ * @author Eike Stepper
+ */
+public class LoadObjectIndication extends IndicationWithResponse
 {
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_PROTOCOL,
+      LoadObjectIndication.class);
+
+  private Mapper mapper;
+
   private long oid;
 
-  public short getSignalId()
+  public LoadObjectIndication(Mapper mapper)
   {
-    return CDOProtocol.LOAD_OBJECT;
+    this.mapper = mapper;
   }
 
-  public void indicate()
+  @Override
+  protected short getSignalID()
   {
-    oid = receiveLong();
-    if (isDebugEnabled())
+    return CDOSignals.LOAD_OBJECT;
+  }
+
+  @Override
+  protected void indicating(ExtendedDataInputStream in) throws IOException
+  {
+    oid = in.readLong();
+    if (TRACER.isEnabled())
     {
-      Mapper mapper = ((ServerCDOProtocol) getProtocol()).getMapper();
-      debug("Loading object " + mapper.getOidEncoder().toString(oid));
+      TRACER.trace("Loading object " + mapper.getOidEncoder().toString(oid));
     }
   }
 
-  public void respond()
+  @Override
+  protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    Mapper mapper = ((ServerCDOProtocol) getProtocol()).getMapper();
-    mapper.transmitObject(getChannel(), oid);
+    mapper.transmitObject(out, oid);
   }
 }

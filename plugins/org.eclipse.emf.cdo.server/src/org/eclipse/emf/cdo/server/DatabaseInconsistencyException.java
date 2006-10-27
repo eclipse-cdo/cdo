@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.core.CDOException;
 
 
 /**
- * The <code>DatabaseInconsistencyException</code> class.<p>
- *
  * @author Eike Stepper
  */
 public class DatabaseInconsistencyException extends CDOException
@@ -26,40 +24,20 @@ public class DatabaseInconsistencyException extends CDOException
    */
   private static final long serialVersionUID = 1L;
 
-  /**
-   * Creates an instance of this class.<p>
-   */
   public DatabaseInconsistencyException()
   {
-    super();
   }
 
-  /**
-   * Creates an instance of this class.<p>
-   *
-   * @param message
-   */
   public DatabaseInconsistencyException(String message)
   {
     super(message);
   }
 
-  /**
-   * Creates an instance of this class.<p>
-   *
-   * @param cause
-   */
   public DatabaseInconsistencyException(Throwable cause)
   {
     super(cause);
   }
 
-  /**
-   * Creates an instance of this class.<p>
-   *
-   * @param message
-   * @param cause
-   */
   public DatabaseInconsistencyException(String message, Throwable cause)
   {
     super(message, cause);

@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.tests.model1;
 
 
+import org.eclipse.emf.cdo.tests.IOHelper;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -20,7 +22,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
-import org.eclipse.net4j.util.IOHelper;
+import org.eclipse.net4j.util.IOUtil;
 
 import testmodel1.TreeNode;
 
@@ -200,8 +202,8 @@ public class SerializationTest extends AbstractModel1Test
     }
     finally
     {
-      IOHelper.close(is);
-      IOHelper.close(os);
+      IOUtil.closeSilent(is);
+      IOUtil.closeSilent(os);
     }
   }
 }

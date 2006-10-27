@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.Net4jFactory;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
@@ -21,6 +20,7 @@ import org.eclipse.net4j.transport.tcp.TCPAcceptorListener;
 import org.eclipse.net4j.transport.tcp.TCPConnector;
 import org.eclipse.net4j.transport.util.ChannelInputStream;
 import org.eclipse.net4j.transport.util.ChannelOutputStream;
+import org.eclipse.net4j.util.Net4jUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.HashCacheRegistry;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
@@ -59,16 +59,16 @@ public class TCPTransportTest extends AbstractOMTest
   protected void setUp() throws Exception
   {
     super.setUp();
-    bufferPool = Net4jFactory.createBufferPool();
+    bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);
     assertTrue(LifecycleUtil.isActive(bufferPool));
 
-    selector = (TCPSelectorImpl)Net4jFactory.createTCPSelector();
+    selector = (TCPSelectorImpl)Net4jUtil.createTCPSelector();
     selector.activate();
     assertTrue(selector.isActive());
 
-    acceptor = (TCPAcceptorImpl)Net4jFactory.createTCPAcceptor(bufferPool, selector);
-    connector = (AbstractTCPConnector)Net4jFactory.createTCPConnector(bufferPool, selector,
+    acceptor = (TCPAcceptorImpl)Net4jUtil.createTCPAcceptor(bufferPool, selector);
+    connector = (AbstractTCPConnector)Net4jUtil.createTCPConnector(bufferPool, selector,
         "localhost");
   }
 
@@ -141,7 +141,7 @@ public class TCPTransportTest extends AbstractOMTest
     for (int i = 0; i < 3; i++)
     {
       Buffer buffer = bufferPool.provideBuffer();
-      ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelID());
+      ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
       byteBuffer.putInt(1970);
       channel.handleBuffer(buffer);
     }
@@ -164,7 +164,7 @@ public class TCPTransportTest extends AbstractOMTest
     for (int i = 0; i < COUNT; i++)
     {
       Buffer buffer = bufferPool.provideBuffer();
-      ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelID());
+      ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
       byteBuffer.putInt(1970);
       channel.handleBuffer(buffer);
     }
@@ -192,7 +192,7 @@ public class TCPTransportTest extends AbstractOMTest
     for (int i = 0; i < COUNT; i++)
     {
       Buffer buffer = bufferPool.provideBuffer();
-      ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelID());
+      ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
       byteBuffer.putInt(1970);
       channel.handleBuffer(buffer);
     }
@@ -220,7 +220,7 @@ public class TCPTransportTest extends AbstractOMTest
     for (int i = 0; i < COUNT; i++)
     {
       Buffer buffer = bufferPool.provideBuffer();
-      ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelID());
+      ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
       byteBuffer.putInt(1970);
       channel.handleBuffer(buffer);
     }
@@ -246,7 +246,7 @@ public class TCPTransportTest extends AbstractOMTest
     for (int i = 0; i < COUNT; i++)
     {
       Buffer buffer = bufferPool.provideBuffer();
-      ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelID());
+      ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
       byteBuffer.putInt(1970);
       channel.handleBuffer(buffer);
     }

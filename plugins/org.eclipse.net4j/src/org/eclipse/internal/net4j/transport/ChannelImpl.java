@@ -14,7 +14,9 @@ import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferHandler;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.transport.ChannelID;
 import org.eclipse.net4j.transport.Connector;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.AsynchronousWorkSerializer;
 import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.util.concurrent.WorkSerializer;
@@ -23,6 +25,7 @@ import org.eclipse.net4j.util.om.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.BufferImpl.State;
+import org.eclipse.internal.net4j.transport.tcp.ControlChannelImpl;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -36,7 +39,7 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CHANNEL,
       ChannelImpl.class);
 
-  private short channelID = BufferImpl.NO_CHANNEL;
+  private short channelIndex = BufferImpl.NO_CHANNEL;
 
   private AbstractConnector connector;
 
@@ -57,19 +60,24 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
     this.receiveExecutor = receiveExecutor;
   }
 
-  public short getChannelID()
+  public ChannelID getID()
   {
-    return channelID;
+    return new ChannelIDImpl();
   }
 
-  public void setChannelID(short channelID)
+  public short getChannelIndex()
   {
-    if (channelID == BufferImpl.NO_CHANNEL)
+    return channelIndex;
+  }
+
+  public void setChannelIndex(short channelIndex)
+  {
+    if (channelIndex == BufferImpl.NO_CHANNEL)
     {
-      throw new IllegalArgumentException("channelID == INVALID_CHANNEL_ID"); //$NON-NLS-1$
+      throw new IllegalArgumentException("channelIndex == INVALID_CHANNEL_ID"); //$NON-NLS-1$
     }
 
-    this.channelID = channelID;
+    this.channelIndex = channelIndex;
   }
 
   public Connector getConnector()
@@ -171,16 +179,16 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   @Override
   public String toString()
   {
-    return "Channel[" + connector + ", channelID=" + channelID + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return "Channel[" + connector + ", channelIndex=" + channelIndex + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   @Override
   protected void onAboutToActivate() throws Exception
   {
     super.onAboutToActivate();
-    if (channelID == BufferImpl.NO_CHANNEL)
+    if (channelIndex == BufferImpl.NO_CHANNEL)
     {
-      throw new IllegalStateException("channelID == INVALID_CHANNEL_ID"); //$NON-NLS-1$
+      throw new IllegalStateException("channelIndex == INVALID_CHANNEL_ID"); //$NON-NLS-1$
     }
 
     if (connector == null)
@@ -202,14 +210,69 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
     {
       receiveSerializer = new AsynchronousWorkSerializer(receiveExecutor);
     }
+
+    if (!(this instanceof ControlChannelImpl))
+    {
+      Channel.REGISTRY.register(this);
+    }
   }
 
   @Override
   protected void onDeactivate() throws Exception
   {
+    if (!(this instanceof ControlChannelImpl))
+    {
+      Channel.REGISTRY.deregister(getID());
+    }
+
     receiveSerializer = null;
-    sendQueue.clear();
-    sendQueue = null;
+    if (sendQueue != null)
+    {
+      sendQueue.clear();
+      sendQueue = null;
+    }
+
     super.onDeactivate();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ChannelIDImpl implements ChannelID
+  {
+    public Connector getConnector()
+    {
+      return connector;
+    }
+
+    public short getChannelIndex()
+    {
+      return channelIndex;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+      if (obj instanceof ChannelID)
+      {
+        ChannelID that = (ChannelID)obj;
+        return channelIndex == that.getChannelIndex()
+            && ObjectUtil.equals(connector, that.getConnector());
+      }
+
+      return false;
+    }
+
+    @Override
+    public int hashCode()
+    {
+      return ObjectUtil.hashCode(connector) ^ channelIndex;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "ChannelID[" + connector + ", channelIndex=" + channelIndex + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    }
   }
 }

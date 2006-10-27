@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport.tcp;
 
-import org.eclipse.net4j.Net4jFactory;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ConnectorException;
 import org.eclipse.net4j.transport.tcp.TCPConnector;
 import org.eclipse.net4j.transport.tcp.TCPSelector;
 import org.eclipse.net4j.transport.tcp.TCPSelectorListener;
+import org.eclipse.net4j.util.Net4jUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.ContextTracer;
 
@@ -148,9 +148,9 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
       ByteBuffer byteBuffer = inputBuffer.startGetting(socketChannel);
       if (byteBuffer != null)
       {
-        short channelID = inputBuffer.getChannelID();
-        ChannelImpl channel = channelID == ControlChannelImpl.CONTROL_CHANNEL_ID ? controlChannel
-            : getChannel(channelID);
+        short channelIndex = inputBuffer.getChannelIndex();
+        ChannelImpl channel = channelIndex == ControlChannelImpl.CONTROL_CHANNEL_ID ? controlChannel
+            : getChannel(channelIndex);
         if (channel != null)
         {
           channel.handleBufferFromMultiplexer(inputBuffer);
@@ -244,10 +244,10 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelID, String protocolID)
+  protected void registerChannelWithPeer(short channelIndex, String protocolID)
       throws ConnectorException
   {
-    if (!controlChannel.registerChannel(channelID, protocolID))
+    if (!controlChannel.registerChannel(channelIndex, protocolID))
     {
       throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
     }
@@ -258,7 +258,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
   {
     if (isConnected())
     {
-      controlChannel.deregisterChannel(channel.getChannelID());
+      controlChannel.deregisterChannel(channel.getChannelIndex());
     }
 
     super.removeChannel(channel);
@@ -270,7 +270,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     super.onAboutToActivate();
     if (selector == null)
     {
-      selector = Net4jFactory.createTCPSelector();
+      selector = Net4jUtil.createTCPSelector();
       LifecycleUtil.activate(selector);
     }
   }

@@ -35,7 +35,6 @@ public abstract class AbstractMappingRegistry<ID, E extends IRegistryElement<ID>
     if (oldElement != null)
     {
       fireElementDeregistering(oldElement);
-      oldElement.dispose();
     }
 
     fireElementRegistered(element);
@@ -47,7 +46,6 @@ public abstract class AbstractMappingRegistry<ID, E extends IRegistryElement<ID>
     if (element != null)
     {
       fireElementDeregistering(element);
-      element.dispose();
     }
   }
 
@@ -73,11 +71,6 @@ public abstract class AbstractMappingRegistry<ID, E extends IRegistryElement<ID>
   @Override
   public synchronized void dispose()
   {
-    for (E element : getMap().values())
-    {
-      element.dispose();
-    }
-
     getMap().clear();
   }
 

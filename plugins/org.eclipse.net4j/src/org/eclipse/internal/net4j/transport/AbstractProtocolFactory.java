@@ -36,8 +36,4 @@ public abstract class AbstractProtocolFactory implements ProtocolFactory
   {
     return isForClients() && isForServers();
   }
-
-  public void dispose()
-  {
-  }
 }

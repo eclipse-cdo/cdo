@@ -41,7 +41,7 @@ public class BufferImpl implements Buffer
 
   private BufferProvider bufferProvider;
 
-  private short channelID;
+  private short channelIndex;
 
   private boolean eos;
 
@@ -75,14 +75,14 @@ public class BufferImpl implements Buffer
     this.bufferProvider = bufferProvider;
   }
 
-  public short getChannelID()
+  public short getChannelIndex()
   {
     if (state == State.INITIAL || state == State.READING_HEADER)
     {
       throw new IllegalStateException("state == " + state); //$NON-NLS-1$
     }
 
-    return channelID;
+    return channelIndex;
   }
 
   public short getCapacity()
@@ -120,7 +120,7 @@ public class BufferImpl implements Buffer
   {
     byteBuffer.clear();
     state = State.INITIAL;
-    channelID = NO_CHANNEL;
+    channelIndex = NO_CHANNEL;
     eos = false;
   }
 
@@ -157,7 +157,7 @@ public class BufferImpl implements Buffer
       }
 
       byteBuffer.flip();
-      channelID = byteBuffer.getShort();
+      channelIndex = byteBuffer.getShort();
       short payloadSize = byteBuffer.getShort();
       if (payloadSize < 0)
       {
@@ -194,13 +194,13 @@ public class BufferImpl implements Buffer
     return byteBuffer;
   }
 
-  public ByteBuffer startPutting(short channelID)
+  public ByteBuffer startPutting(short channelIndex)
   {
     if (state == State.PUTTING)
     {
-      if (channelID != this.channelID)
+      if (channelIndex != this.channelIndex)
       {
-        throw new IllegalArgumentException("channelID != this.channelID"); //$NON-NLS-1$
+        throw new IllegalArgumentException("channelIndex != this.channelIndex"); //$NON-NLS-1$
       }
     }
     else if (state != State.INITIAL)
@@ -210,7 +210,7 @@ public class BufferImpl implements Buffer
     else
     {
       state = State.PUTTING;
-      this.channelID = channelID;
+      this.channelIndex = channelIndex;
 
       byteBuffer.clear();
       byteBuffer.position(BufferImpl.HEADER_SIZE);
@@ -228,9 +228,9 @@ public class BufferImpl implements Buffer
 
     if (state == State.PUTTING)
     {
-      if (channelID == NO_CHANNEL)
+      if (channelIndex == NO_CHANNEL)
       {
-        throw new IllegalStateException("channelID == NO_CHANNEL"); //$NON-NLS-1$
+        throw new IllegalStateException("channelIndex == NO_CHANNEL"); //$NON-NLS-1$
       }
 
       int payloadSize = byteBuffer.position() - BufferImpl.HEADER_SIZE + EOS_OFFSET;
@@ -246,7 +246,7 @@ public class BufferImpl implements Buffer
       }
 
       byteBuffer.flip();
-      byteBuffer.putShort(channelID);
+      byteBuffer.putShort(channelIndex);
       byteBuffer.putShort((short)payloadSize);
       byteBuffer.position(0);
       state = State.WRITING;

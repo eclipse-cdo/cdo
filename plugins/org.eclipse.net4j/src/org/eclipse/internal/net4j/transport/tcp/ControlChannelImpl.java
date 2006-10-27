@@ -48,41 +48,41 @@ public final class ControlChannelImpl extends ChannelImpl
   public ControlChannelImpl(AbstractTCPConnector connector)
   {
     super(connector.getReceiveExecutor());
-    setChannelID(CONTROL_CHANNEL_ID);
+    setChannelIndex(CONTROL_CHANNEL_ID);
     setConnector(connector);
   }
 
-  public boolean registerChannel(short channelID, String protocolID)
+  public boolean registerChannel(short channelIndex, String protocolID)
   {
-    assertValidChannelID(channelID);
-    Synchronizer<Boolean> registration = registrations.correlate(channelID);
+    assertValidChannelIndex(channelIndex);
+    Synchronizer<Boolean> registration = registrations.correlate(channelIndex);
 
     Buffer buffer = provideBuffer();
     ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_ID);
     byteBuffer.put(OPCODE_REGISTRATION);
-    byteBuffer.putShort(channelID);
+    byteBuffer.putShort(channelIndex);
     BufferUtil.putUTF8(byteBuffer, protocolID);
     handleBuffer(buffer);
 
     return registration.get(REGISTRATION_TIMEOUT);
   }
 
-  public void deregisterChannel(short channelID)
+  public void deregisterChannel(short channelIndex)
   {
-    assertValidChannelID(channelID);
+    assertValidChannelIndex(channelIndex);
 
     Buffer buffer = provideBuffer();
     ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_ID);
     byteBuffer.put(OPCODE_DEREGISTRATION);
-    byteBuffer.putShort(channelID);
+    byteBuffer.putShort(channelIndex);
     handleBuffer(buffer);
   }
 
-  private void assertValidChannelID(short channelID)
+  private void assertValidChannelIndex(short channelIndex)
   {
-    if (channelID <= CONTROL_CHANNEL_ID)
+    if (channelIndex <= CONTROL_CHANNEL_ID)
     {
-      throw new IllegalArgumentException("channelID <= CONTROL_CHANNEL_ID"); //$NON-NLS-1$
+      throw new IllegalArgumentException("channelIndex <= CONTROL_CHANNEL_ID"); //$NON-NLS-1$
     }
   }
 
@@ -96,15 +96,15 @@ public final class ControlChannelImpl extends ChannelImpl
       {
       case OPCODE_REGISTRATION:
       {
-        short channelID = byteBuffer.getShort();
-        assertValidChannelID(channelID);
+        short channelIndex = byteBuffer.getShort();
+        assertValidChannelIndex(channelIndex);
         boolean success = true;
 
         try
         {
           byte[] handlerFactoryUTF8 = BufferUtil.getByteArray(byteBuffer);
           String protocolID = BufferUtil.fromUTF8(handlerFactoryUTF8);
-          ChannelImpl channel = ((AbstractTCPConnector)getConnector()).createChannel(channelID,
+          ChannelImpl channel = ((AbstractTCPConnector)getConnector()).createChannel(channelIndex,
               protocolID);
           if (channel != null)
           {
@@ -121,26 +121,26 @@ public final class ControlChannelImpl extends ChannelImpl
           success = false;
         }
 
-        sendStatus(OPCODE_REGISTRATION_ACK, channelID, success);
+        sendStatus(OPCODE_REGISTRATION_ACK, channelIndex, success);
         break;
       }
 
       case OPCODE_REGISTRATION_ACK:
       {
-        short channelID = byteBuffer.getShort();
+        short channelIndex = byteBuffer.getShort();
         boolean success = byteBuffer.get() == SUCCESS;
-        registrations.put(channelID, success);
+        registrations.put(channelIndex, success);
         break;
       }
 
       case OPCODE_DEREGISTRATION:
       {
-        short channelID = byteBuffer.getShort();
-        assertValidChannelID(channelID);
+        short channelIndex = byteBuffer.getShort();
+        assertValidChannelIndex(channelIndex);
 
         try
         {
-          ChannelImpl channel = ((AbstractTCPConnector)getConnector()).getChannel(channelID);
+          ChannelImpl channel = ((AbstractTCPConnector)getConnector()).getChannel(channelIndex);
           if (channel != null)
           {
             channel.deactivate();
@@ -149,7 +149,7 @@ public final class ControlChannelImpl extends ChannelImpl
           {
             if (TRACER.isEnabled())
             {
-              TRACER.trace(toString() + ": Invalid channel id: " + channelID); //$NON-NLS-1$
+              TRACER.trace(toString() + ": Invalid channel id: " + channelIndex); //$NON-NLS-1$
             }
           }
         }
@@ -172,12 +172,12 @@ public final class ControlChannelImpl extends ChannelImpl
     }
   }
 
-  private void sendStatus(byte opcode, short channelID, boolean status)
+  private void sendStatus(byte opcode, short channelIndex, boolean status)
   {
     Buffer buffer = provideBuffer();
     ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_ID);
     byteBuffer.put(opcode);
-    byteBuffer.putShort(channelID);
+    byteBuffer.putShort(channelIndex);
     byteBuffer.put(status ? SUCCESS : FAILURE);
     handleBuffer(buffer);
   }

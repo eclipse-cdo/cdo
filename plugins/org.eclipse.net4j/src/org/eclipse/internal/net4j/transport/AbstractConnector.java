@@ -53,6 +53,14 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     }
   };
 
+  private static final int MIN_CONNECTOR_ID = 1;
+
+  private static final int MAX_CONNECTOR_ID = Integer.MAX_VALUE;
+
+  private static int nextConnectorID = MIN_CONNECTOR_ID;
+
+  private int connectorID = getNextConnectorID();
+
   private ConnectorCredentials credentials;
 
   private IRegistry<String, ProtocolFactory> protocolFactoryRegistry;
@@ -96,6 +104,11 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
 
   public AbstractConnector()
   {
+  }
+
+  public Integer getID()
+  {
+    return connectorID;
   }
 
   public abstract void multiplexBuffer(Channel channel);
@@ -204,10 +217,10 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
 
       state = newState;
       fireStateChanged(newState, oldState);
-
       switch (newState)
       {
       case DISCONNECTED:
+        REGISTRY.deregister(connectorID);
         if (finishedConnecting != null)
         {
           finishedConnecting.countDown();
@@ -238,6 +251,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
       case CONNECTED:
         finishedConnecting.countDown(); // Just in case of suspicion
         finishedNegotiating.countDown();
+        REGISTRY.register(this);
         break;
 
       }
@@ -334,9 +348,9 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
 
   public Channel openChannel(String protocolID) throws ConnectorException
   {
-    short channelID = findFreeChannelID();
-    ChannelImpl channel = createChannel(channelID, protocolID);
-    registerChannelWithPeer(channelID, protocolID);
+    short channelIndex = findFreeChannelIndex();
+    ChannelImpl channel = createChannel(channelIndex, protocolID);
+    registerChannelWithPeer(channelIndex, protocolID);
 
     try
     {
@@ -354,17 +368,17 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     return channel;
   }
 
-  public ChannelImpl createChannel(short channelID, String protocolID)
+  public ChannelImpl createChannel(short channelIndex, String protocolID)
   {
     ChannelImpl channel = new ChannelImpl(receiveExecutor);
     Protocol protocol = createProtocol(protocolID, channel);
     if (TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": Opening channel " + channelID //$NON-NLS-1$
+      TRACER.trace(toString() + ": Opening channel " + channelIndex //$NON-NLS-1$
           + (protocol == null ? " without protocol" : " with protocol " + protocolID)); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    channel.setChannelID(channelID);
+    channel.setChannelIndex(channelIndex);
     channel.setConnector(this);
     channel.setReceiveHandler(protocol);
     channel.addLifecycleListener(channelLifecycleListener);
@@ -372,11 +386,11 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     return channel;
   }
 
-  public ChannelImpl getChannel(short channelID)
+  public ChannelImpl getChannel(short channelIndex)
   {
     try
     {
-      ChannelImpl channel = channels.get(channelID);
+      ChannelImpl channel = channels.get(channelIndex);
       if (channel == null || channel == NULL_CHANNEL)
       {
         throw new NullPointerException();
@@ -388,7 +402,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(toString() + ": Invalid channelID " + channelID); //$NON-NLS-1$
+        TRACER.trace(toString() + ": Invalid channelIndex " + channelIndex); //$NON-NLS-1$
       }
 
       return null;
@@ -413,7 +427,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     return result;
   }
 
-  protected short findFreeChannelID()
+  protected short findFreeChannelIndex()
   {
     synchronized (channels)
     {
@@ -432,25 +446,25 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
 
   protected void addChannel(ChannelImpl channel)
   {
-    short channelID = channel.getChannelID();
-    while (channelID >= channels.size())
+    short channelIndex = channel.getChannelIndex();
+    while (channelIndex >= channels.size())
     {
       channels.add(NULL_CHANNEL);
     }
 
-    channels.set(channelID, channel);
+    channels.set(channelIndex, channel);
   }
 
   protected void removeChannel(ChannelImpl channel)
   {
     channel.removeLifecycleListener(channelLifecycleListener);
-    int channelID = channel.getChannelID();
+    int channelIndex = channel.getChannelIndex();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": Removing channel " + channelID); //$NON-NLS-1$
+      TRACER.trace(toString() + ": Removing channel " + channelIndex); //$NON-NLS-1$
     }
 
-    channels.set(channelID, NULL_CHANNEL);
+    channels.set(channelIndex, NULL_CHANNEL);
   }
 
   protected Protocol createProtocol(String protocolID, Channel channel)
@@ -584,8 +598,28 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     super.onDeactivate();
   }
 
-  protected abstract void registerChannelWithPeer(short channelID, String protocolID)
+  protected abstract void registerChannelWithPeer(short channelIndex, String protocolID)
       throws ConnectorException;
+
+  private int getNextConnectorID()
+  {
+    int id = nextConnectorID;
+    if (nextConnectorID == MAX_CONNECTOR_ID)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(toString() + ": ID wrap around"); //$NON-NLS-1$
+      }
+
+      nextConnectorID = MIN_CONNECTOR_ID;
+    }
+    else
+    {
+      ++nextConnectorID;
+    }
+
+    return id;
+  }
 
   /**
    * Is registered with each {@link Channel} of this {@link Connector}.

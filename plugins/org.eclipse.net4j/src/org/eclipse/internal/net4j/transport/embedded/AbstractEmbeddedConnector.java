@@ -44,12 +44,12 @@ public abstract class AbstractEmbeddedConnector extends AbstractConnector
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelID, String protocolID)
+  protected void registerChannelWithPeer(short channelIndex, String protocolID)
       throws ConnectorException
   {
     try
     {
-      ChannelImpl channel = getPeer().createChannel(channelID, protocolID);
+      ChannelImpl channel = getPeer().createChannel(channelIndex, protocolID);
       if (channel == null)
       {
         throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
@@ -69,8 +69,8 @@ public abstract class AbstractEmbeddedConnector extends AbstractConnector
 
   public void multiplexBuffer(Channel localChannel)
   {
-    short channelID = localChannel.getChannelID();
-    ChannelImpl peerChannel = peer.getChannel(channelID);
+    short channelIndex = localChannel.getChannelIndex();
+    ChannelImpl peerChannel = peer.getChannel(channelIndex);
     if (peerChannel == null)
     {
       throw new IllegalStateException("peerChannel == null"); //$NON-NLS-1$

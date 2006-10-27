@@ -8,20 +8,34 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.registry;
+package org.eclipse.net4j.util;
 
 /**
  * @author Eike Stepper
  */
-public interface IRegistryElement<ID>
+public final class ObjectUtil
 {
-  public ID getID();
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface Descriptor<ID> extends IRegistryElement<ID>
+  private ObjectUtil()
   {
-    public IRegistryElement<ID> resolve();
+  }
+
+  public static boolean equals(Object o1, Object o2)
+  {
+    if (o1 == null)
+    {
+      return o2 == null;
+    }
+
+    return o1.equals(o2);
+  }
+
+  public static int hashCode(Object o)
+  {
+    if (o == null)
+    {
+      return 0;
+    }
+
+    return o.hashCode();
   }
 }

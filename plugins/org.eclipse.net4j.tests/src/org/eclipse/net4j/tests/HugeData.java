@@ -634,11 +634,11 @@ public final class HugeData
         + NL
         + "  {"
         + NL
-        + "    short channelID = findFreeChannelID();"
+        + "    short channelIndex = findFreeChannelIndex();"
         + NL
-        + "    ChannelImpl channel = createChannel(channelID, protocolID);"
+        + "    ChannelImpl channel = createChannel(channelIndex, protocolID);"
         + NL
-        + "    registerChannelWithPeer(channelID, protocolID);"
+        + "    registerChannelWithPeer(channelIndex, protocolID);"
         + NL
         + ""
         + NL
@@ -674,7 +674,7 @@ public final class HugeData
         + NL
         + ""
         + NL
-        + "  public ChannelImpl createChannel(short channelID, String protocolID)"
+        + "  public ChannelImpl createChannel(short channelIndex, String protocolID)"
         + NL
         + "  {"
         + NL
@@ -693,87 +693,404 @@ public final class HugeData
         + "    {"
         + NL
         + "      System.out.println(toString() + \": Opening channel with protocol \" + protocolID);"
-        + NL + "    }" + NL + "" + NL
-        + "    ChannelImpl channel = new ChannelImpl(receiveExecutor);" + NL
-        + "    channel.setChannelID(channelID);" + NL + "    channel.setMultiplexer(this);" + NL
-        + "    channel.setReceiveHandler(protocol);" + NL
-        + "    channel.addLifecycleListener(channelLifecycleListener);" + NL
-        + "    addChannel(channel);" + NL + "    return channel;" + NL + "  }" + NL + "" + NL
-        + "  public ChannelImpl getChannel(short channelID)" + NL + "  {" + NL + "    try" + NL
-        + "    {" + NL + "      ChannelImpl channel = channels.get(channelID);" + NL
-        + "      if (channel == null || channel == NULL_CHANNEL)" + NL + "      {" + NL
-        + "        throw new NullPointerException();" + NL + "      }" + NL + "" + NL
-        + "      return channel;" + NL + "    }" + NL + "    catch (IndexOutOfBoundsException ex)"
-        + NL + "    {" + NL
-        + "      System.out.println(toString() + \": Invalid channelID \" + channelID);" + NL
-        + "      return null;" + NL + "    }" + NL + "  }" + NL + "" + NL
-        + "  protected List<BufferQueue> getChannelBufferQueues()" + NL + "  {" + NL
-        + "    final List<BufferQueue> result = new ArrayList<BufferQueue>();" + NL
-        + "    synchronized (channels)" + NL + "    {" + NL
-        + "      for (final ChannelImpl channel : channels)" + NL + "      {" + NL
-        + "        if (channel != NULL_CHANNEL)" + NL + "        {" + NL
-        + "          BufferQueue bufferQueue = channel.getSendQueue();" + NL
-        + "          result.add(bufferQueue);" + NL + "        }" + NL + "      }" + NL + "    }"
-        + NL + "" + NL + "    return result;" + NL + "  }" + NL + "" + NL
-        + "  protected short findFreeChannelID()" + NL + "  {" + NL + "    synchronized (channels)"
-        + NL + "    {" + NL + "      int size = channels.size();" + NL
-        + "      for (short i = 0; i < size; i++)" + NL + "      {" + NL
-        + "        if (channels.get(i) == NULL_CHANNEL)" + NL + "        {" + NL
-        + "          return i;" + NL + "        }" + NL + "      }" + NL + "" + NL
-        + "      channels.add(NULL_CHANNEL);" + NL + "      return (short)size;" + NL + "    }"
-        + NL + "  }" + NL + "" + NL + "  protected void addChannel(ChannelImpl channel)" + NL
-        + "  {" + NL + "    short channelID = channel.getChannelID();" + NL
-        + "    while (channelID >= channels.size())" + NL + "    {" + NL
-        + "      channels.add(NULL_CHANNEL);" + NL + "    }" + NL + "" + NL
-        + "    channels.set(channelID, channel);" + NL + "  }" + NL + "" + NL
-        + "  protected void removeChannel(ChannelImpl channel)" + NL + "  {" + NL
-        + "    channel.removeLifecycleListener(channelLifecycleListener);" + NL
-        + "    int channelID = channel.getChannelID();" + NL + "" + NL
-        + "    System.out.println(toString() + \": Removing channel \" + channelID);" + NL
-        + "    channels.set(channelID, NULL_CHANNEL);" + NL + "  }" + NL + "" + NL
-        + "  protected Protocol createProtocol(String protocolID)" + NL + "  {" + NL
-        + "    if (protocolID == null || protocolID.length() == 0)" + NL + "    {" + NL
-        + "      return null;" + NL + "    }" + NL + "" + NL
-        + "    IRegistry<String, ProtocolFactory> registry = getProtocolFactoryRegistry();" + NL
-        + "    if (registry == null)" + NL + "    {" + NL + "      return null;" + NL + "    }"
-        + NL + "" + NL + "    ProtocolFactory factory = registry.lookup(protocolID);" + NL
-        + "    if (factory == null)" + NL + "    {" + NL + "      return null;" + NL + "    }" + NL
-        + "" + NL + "    System.out.println(toString() + \": Creating protocol \" + protocolID);"
-        + NL + "    return factory.createProtocol();" + NL + "  }" + NL + "" + NL
-        + "  protected void fireChannelOpened(Channel channel)" + NL + "  {" + NL
-        + "    for (ChannelListener listener : channelListeners)" + NL + "    {" + NL + "      try"
-        + NL + "      {" + NL + "        listener.notifyChannelOpened(channel);" + NL + "      }"
-        + NL + "      catch (Exception ex)" + NL + "      {" + NL + "        ex.printStackTrace();"
-        + NL + "      }" + NL + "    }" + NL + "  }" + NL + "" + NL
-        + "  protected void fireChannelClosing(Channel channel)" + NL + "  {" + NL
-        + "    for (ChannelListener listener : channelListeners)" + NL + "    {" + NL + "      try"
-        + NL + "      {" + NL + "        listener.notifyChannelClosing(channel);" + NL + "      }"
-        + NL + "      catch (Exception ex)" + NL + "      {" + NL + "        ex.printStackTrace();"
-        + NL + "      }" + NL + "    }" + NL + "  }" + NL + "" + NL
-        + "  protected void fireStateChanged(State newState, State oldState)" + NL + "  {" + NL
-        + "    for (StateListener listener : stateListeners)" + NL + "    {" + NL + "      try"
-        + NL + "      {" + NL + "        listener.notifyStateChanged(this, newState, oldState);"
-        + NL + "      }" + NL + "      catch (Exception ex)" + NL + "      {" + NL
-        + "        ex.printStackTrace();" + NL + "      }" + NL + "    }" + NL + "  }" + NL + ""
-        + NL + "  @Override" + NL + "  protected void onAccessBeforeActivate() throws Exception"
-        + NL + "  {" + NL + "    super.onAccessBeforeActivate();" + NL
-        + "    if (bufferProvider == null)" + NL + "    {" + NL
-        + "      throw new IllegalStateException(\"bufferProvider == null\");" + NL + "    }" + NL
-        + "" + NL + "    if (protocolFactoryRegistry == null)" + NL + "    {" + NL
+        + NL
+        + "    }"
+        + NL
+        + ""
+        + NL
+        + "    ChannelImpl channel = new ChannelImpl(receiveExecutor);"
+        + NL
+        + "    channel.setChannelIndex(channelIndex);"
+        + NL
+        + "    channel.setMultiplexer(this);"
+        + NL
+        + "    channel.setReceiveHandler(protocol);"
+        + NL
+        + "    channel.addLifecycleListener(channelLifecycleListener);"
+        + NL
+        + "    addChannel(channel);"
+        + NL
+        + "    return channel;"
+        + NL
+        + "  }"
+        + NL
+        + ""
+        + NL
+        + "  public ChannelImpl getChannel(short channelIndex)"
+        + NL
+        + "  {"
+        + NL
+        + "    try"
+        + NL
+        + "    {"
+        + NL
+        + "      ChannelImpl channel = channels.get(channelIndex);"
+        + NL
+        + "      if (channel == null || channel == NULL_CHANNEL)"
+        + NL
+        + "      {"
+        + NL
+        + "        throw new NullPointerException();"
+        + NL
+        + "      }"
+        + NL
+        + ""
+        + NL
+        + "      return channel;"
+        + NL
+        + "    }"
+        + NL
+        + "    catch (IndexOutOfBoundsException ex)"
+        + NL
+        + "    {"
+        + NL
+        + "      System.out.println(toString() + \": Invalid channelIndex \" + channelIndex);"
+        + NL
+        + "      return null;"
+        + NL
+        + "    }"
+        + NL
+        + "  }"
+        + NL
+        + ""
+        + NL
+        + "  protected List<BufferQueue> getChannelBufferQueues()"
+        + NL
+        + "  {"
+        + NL
+        + "    final List<BufferQueue> result = new ArrayList<BufferQueue>();"
+        + NL
+        + "    synchronized (channels)"
+        + NL
+        + "    {"
+        + NL
+        + "      for (final ChannelImpl channel : channels)"
+        + NL
+        + "      {"
+        + NL
+        + "        if (channel != NULL_CHANNEL)"
+        + NL
+        + "        {"
+        + NL
+        + "          BufferQueue bufferQueue = channel.getSendQueue();"
+        + NL
+        + "          result.add(bufferQueue);"
+        + NL
+        + "        }"
+        + NL
+        + "      }"
+        + NL
+        + "    }"
+        + NL
+        + ""
+        + NL
+        + "    return result;"
+        + NL
+        + "  }"
+        + NL
+        + ""
+        + NL
+        + "  protected short findFreeChannelIndex()"
+        + NL
+        + "  {"
+        + NL
+        + "    synchronized (channels)"
+        + NL
+        + "    {"
+        + NL
+        + "      int size = channels.size();"
+        + NL
+        + "      for (short i = 0; i < size; i++)"
+        + NL
+        + "      {"
+        + NL
+        + "        if (channels.get(i) == NULL_CHANNEL)"
+        + NL
+        + "        {"
+        + NL
+        + "          return i;"
+        + NL
+        + "        }"
+        + NL
+        + "      }"
+        + NL
+        + ""
+        + NL
+        + "      channels.add(NULL_CHANNEL);"
+        + NL
+        + "      return (short)size;"
+        + NL
+        + "    }"
+        + NL
+        + "  }"
+        + NL
+        + ""
+        + NL
+        + "  protected void addChannel(ChannelImpl channel)"
+        + NL
+        + "  {"
+        + NL
+        + "    short channelIndex = channel.getChannelIndex();"
+        + NL
+        + "    while (channelIndex >= channels.size())"
+        + NL
+        + "    {"
+        + NL
+        + "      channels.add(NULL_CHANNEL);"
+        + NL
+        + "    }"
+        + NL
+        + ""
+        + NL
+        + "    channels.set(channelIndex, channel);"
+        + NL
+        + "  }"
+        + NL
+        + ""
+        + NL
+        + "  protected void removeChannel(ChannelImpl channel)"
+        + NL
+        + "  {"
+        + NL
+        + "    channel.removeLifecycleListener(channelLifecycleListener);"
+        + NL
+        + "    int channelIndex = channel.getChannelIndex();"
+        + NL
+        + ""
+        + NL
+        + "    System.out.println(toString() + \": Removing channel \" + channelIndex);"
+        + NL
+        + "    channels.set(channelIndex, NULL_CHANNEL);"
+        + NL
+        + "  }"
+        + NL
+        + ""
+        + NL
+        + "  protected Protocol createProtocol(String protocolID)"
+        + NL
+        + "  {"
+        + NL
+        + "    if (protocolID == null || protocolID.length() == 0)"
+        + NL
+        + "    {"
+        + NL
+        + "      return null;"
+        + NL
+        + "    }"
+        + NL
+        + ""
+        + NL
+        + "    IRegistry<String, ProtocolFactory> registry = getProtocolFactoryRegistry();"
+        + NL
+        + "    if (registry == null)"
+        + NL
+        + "    {"
+        + NL
+        + "      return null;"
+        + NL
+        + "    }"
+        + NL
+        + ""
+        + NL
+        + "    ProtocolFactory factory = registry.lookup(protocolID);"
+        + NL
+        + "    if (factory == null)"
+        + NL
+        + "    {"
+        + NL
+        + "      return null;"
+        + NL
+        + "    }"
+        + NL
+        + ""
+        + NL
+        + "    System.out.println(toString() + \": Creating protocol \" + protocolID);"
+        + NL
+        + "    return factory.createProtocol();"
+        + NL
+        + "  }"
+        + NL
+        + ""
+        + NL
+        + "  protected void fireChannelOpened(Channel channel)"
+        + NL
+        + "  {"
+        + NL
+        + "    for (ChannelListener listener : channelListeners)"
+        + NL
+        + "    {"
+        + NL
+        + "      try"
+        + NL
+        + "      {"
+        + NL
+        + "        listener.notifyChannelOpened(channel);"
+        + NL
+        + "      }"
+        + NL
+        + "      catch (Exception ex)"
+        + NL
+        + "      {"
+        + NL
+        + "        ex.printStackTrace();"
+        + NL
+        + "      }"
+        + NL
+        + "    }"
+        + NL
+        + "  }"
+        + NL
+        + ""
+        + NL
+        + "  protected void fireChannelClosing(Channel channel)"
+        + NL
+        + "  {"
+        + NL
+        + "    for (ChannelListener listener : channelListeners)"
+        + NL
+        + "    {"
+        + NL
+        + "      try"
+        + NL
+        + "      {"
+        + NL
+        + "        listener.notifyChannelClosing(channel);"
+        + NL
+        + "      }"
+        + NL
+        + "      catch (Exception ex)"
+        + NL
+        + "      {"
+        + NL
+        + "        ex.printStackTrace();"
+        + NL
+        + "      }"
+        + NL
+        + "    }"
+        + NL
+        + "  }"
+        + NL
+        + ""
+        + NL
+        + "  protected void fireStateChanged(State newState, State oldState)"
+        + NL
+        + "  {"
+        + NL
+        + "    for (StateListener listener : stateListeners)"
+        + NL
+        + "    {"
+        + NL
+        + "      try"
+        + NL
+        + "      {"
+        + NL
+        + "        listener.notifyStateChanged(this, newState, oldState);"
+        + NL
+        + "      }"
+        + NL
+        + "      catch (Exception ex)"
+        + NL
+        + "      {"
+        + NL
+        + "        ex.printStackTrace();"
+        + NL
+        + "      }"
+        + NL
+        + "    }"
+        + NL
+        + "  }"
+        + NL
+        + ""
+        + NL
+        + "  @Override"
+        + NL
+        + "  protected void onAccessBeforeActivate() throws Exception"
+        + NL
+        + "  {"
+        + NL
+        + "    super.onAccessBeforeActivate();"
+        + NL
+        + "    if (bufferProvider == null)"
+        + NL
+        + "    {"
+        + NL
+        + "      throw new IllegalStateException(\"bufferProvider == null\");"
+        + NL
+        + "    }"
+        + NL
+        + ""
+        + NL
+        + "    if (protocolFactoryRegistry == null)"
+        + NL
+        + "    {"
+        + NL
         + "      System.out.println(toString() + \": (INFO) protocolFactoryRegistry == null\");"
-        + NL + "    }" + NL + "" + NL + "    if (receiveExecutor == null)" + NL + "    {" + NL
-        + "      System.out.println(toString() + \": (INFO) receiveExecutor == null\");" + NL
-        + "    }" + NL + "  }" + NL + "" + NL + "  @Override" + NL
-        + "  protected void onActivate() throws Exception" + NL + "  {" + NL
-        + "    super.onActivate();" + NL + "    setState(State.CONNECTING);" + NL + "  }" + NL + ""
-        + NL + "  @Override" + NL + "  protected void onDeactivate() throws Exception" + NL + "  {"
-        + NL + "    setState(State.DISCONNECTED);" + NL
-        + "    for (short i = 0; i < channels.size(); i++)" + NL + "    {" + NL
-        + "      ChannelImpl channel = channels.get(i);" + NL + "      if (channel != null)" + NL
-        + "      {" + NL + "        LifecycleUtil.deactivate(channel);" + NL + "      }" + NL
-        + "    }" + NL + "" + NL + "    channels.clear();" + NL + "    super.onDeactivate();" + NL
-        + "  }" + NL + "" + NL
-        + "  protected abstract void registerChannelWithPeer(short channelID, String protocolID)"
+        + NL
+        + "    }"
+        + NL
+        + ""
+        + NL
+        + "    if (receiveExecutor == null)"
+        + NL
+        + "    {"
+        + NL
+        + "      System.out.println(toString() + \": (INFO) receiveExecutor == null\");"
+        + NL
+        + "    }"
+        + NL
+        + "  }"
+        + NL
+        + ""
+        + NL
+        + "  @Override"
+        + NL
+        + "  protected void onActivate() throws Exception"
+        + NL
+        + "  {"
+        + NL
+        + "    super.onActivate();"
+        + NL
+        + "    setState(State.CONNECTING);"
+        + NL
+        + "  }"
+        + NL
+        + ""
+        + NL
+        + "  @Override"
+        + NL
+        + "  protected void onDeactivate() throws Exception"
+        + NL
+        + "  {"
+        + NL
+        + "    setState(State.DISCONNECTED);"
+        + NL
+        + "    for (short i = 0; i < channels.size(); i++)"
+        + NL
+        + "    {"
+        + NL
+        + "      ChannelImpl channel = channels.get(i);"
+        + NL
+        + "      if (channel != null)"
+        + NL
+        + "      {"
+        + NL
+        + "        LifecycleUtil.deactivate(channel);"
+        + NL
+        + "      }"
+        + NL
+        + "    }"
+        + NL
+        + ""
+        + NL
+        + "    channels.clear();"
+        + NL
+        + "    super.onDeactivate();"
+        + NL
+        + "  }"
+        + NL
+        + ""
+        + NL
+        + "  protected abstract void registerChannelWithPeer(short channelIndex, String protocolID)"
         + NL + "      throws ConnectorException;" + NL + "" + NL + "  /**" + NL
         + "   * Is registered with each {@link Channel} of this {@link Connector}." + NL
         + "   * <p>" + NL + "   * " + NL + "   * @author Eike Stepper" + NL + "   */" + NL

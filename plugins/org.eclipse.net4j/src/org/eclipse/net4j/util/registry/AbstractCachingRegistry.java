@@ -54,7 +54,6 @@ public abstract class AbstractCachingRegistry<ID, E extends IRegistryElement<ID>
     else
     {
       fireElementDeregistering(oldElement);
-      oldElement.dispose();
     }
 
     fireElementRegistered(element);
@@ -69,7 +68,6 @@ public abstract class AbstractCachingRegistry<ID, E extends IRegistryElement<ID>
     if (element != null)
     {
       fireElementDeregistering(element);
-      element.dispose();
 
       if (delegatedElement != null)
       {
@@ -124,7 +122,6 @@ public abstract class AbstractCachingRegistry<ID, E extends IRegistryElement<ID>
     for (E element : getCache().values())
     {
       fireElementDeregistering(element);
-      element.dispose();
     }
 
     getCache().clear();

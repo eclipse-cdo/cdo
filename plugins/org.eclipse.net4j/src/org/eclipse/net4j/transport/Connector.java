@@ -10,7 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.transport;
 
+import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
+import org.eclipse.net4j.util.registry.IRegistryElement;
 
 /**
  * One endpoint of a physical connection of arbitrary nature between two
@@ -26,8 +28,10 @@ import org.eclipse.net4j.util.registry.IRegistry;
  * 
  * @author Eike Stepper
  */
-public interface Connector
+public interface Connector extends IRegistryElement<Integer>
 {
+  public static final IRegistry<Integer, Connector> REGISTRY = new HashMapRegistry();
+
   public Type getType();
 
   public boolean isClient();

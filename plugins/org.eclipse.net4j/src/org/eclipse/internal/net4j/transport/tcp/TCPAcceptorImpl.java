@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport.tcp;
 
-import org.eclipse.net4j.Net4jFactory;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.ProtocolFactory;
@@ -19,6 +18,7 @@ import org.eclipse.net4j.transport.tcp.TCPAcceptorListener;
 import org.eclipse.net4j.transport.tcp.TCPConnector;
 import org.eclipse.net4j.transport.tcp.TCPSelector;
 import org.eclipse.net4j.transport.tcp.TCPSelectorListener;
+import org.eclipse.net4j.util.Net4jUtil;
 import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleNotifier;
@@ -311,7 +311,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
 
     if (selector == null)
     {
-      selector = Net4jFactory.createTCPSelector();
+      selector = Net4jUtil.createTCPSelector();
       LifecycleUtil.activate(selector);
     }
   }

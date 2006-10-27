@@ -8,11 +8,15 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
+package org.eclipse.net4j.util;
 
 import org.eclipse.net4j.transport.BufferPool;
 import org.eclipse.net4j.transport.BufferProvider;
+import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.Connector;
+import org.eclipse.net4j.transport.Protocol;
+import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.transport.Connector.Type;
 import org.eclipse.net4j.transport.tcp.TCPAcceptor;
 import org.eclipse.net4j.transport.tcp.TCPConnector;
 import org.eclipse.net4j.transport.tcp.TCPSelector;
@@ -25,12 +29,16 @@ import org.eclipse.internal.net4j.transport.tcp.ClientTCPConnectorImpl;
 import org.eclipse.internal.net4j.transport.tcp.TCPAcceptorImpl;
 import org.eclipse.internal.net4j.transport.tcp.TCPSelectorImpl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
-public final class Net4jFactory
+public final class Net4jUtil
 {
-  private Net4jFactory()
+  private Net4jUtil()
   {
   }
 
@@ -103,5 +111,49 @@ public final class Net4jFactory
   public static TCPSelector createTCPSelector()
   {
     return new TCPSelectorImpl();
+  }
+
+  public static Collection<Channel> getChannels(String protocolID, Set<Type> types)
+  {
+    if (types == null)
+    {
+      types = ProtocolFactory.SYMMETRIC;
+    }
+
+    Collection<Channel> channels = Channel.REGISTRY.getElements();
+    Collection<Channel> result = new ArrayList(channels.size());
+    for (Channel channel : channels)
+    {
+      if (types.contains(channel.getConnector().getType()))
+      {
+        if (protocolID == null || protocolID.length() == 0)
+        {
+          result.add(channel);
+        }
+        else
+        {
+          if (channel.getReceiveHandler() instanceof Protocol)
+          {
+            Protocol protocol = (Protocol)channel.getReceiveHandler();
+            if (protocolID.equals(protocol.getProtocolID()))
+            {
+              result.add(channel);
+            }
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
+  public static Collection<Channel> getChannels(String protocolID)
+  {
+    return getChannels(protocolID, null);
+  }
+
+  public static Collection<Channel> getChannels(Set<Type> types)
+  {
+    return getChannels(null, types);
   }
 }

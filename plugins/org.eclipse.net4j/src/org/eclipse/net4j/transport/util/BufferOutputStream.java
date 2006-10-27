@@ -39,10 +39,10 @@ public class BufferOutputStream extends OutputStream
 
   private Buffer currentBuffer;
 
-  private short channelID;
+  private short channelIndex;
 
   public BufferOutputStream(BufferHandler bufferHandler, BufferProvider bufferProvider,
-      short channelID)
+      short channelIndex)
   {
     if (bufferHandler == null)
     {
@@ -56,12 +56,12 @@ public class BufferOutputStream extends OutputStream
 
     this.bufferHandler = bufferHandler;
     this.bufferProvider = bufferProvider;
-    this.channelID = channelID;
+    this.channelIndex = channelIndex;
   }
 
-  public BufferOutputStream(BufferHandler bufferHandler, short channelID)
+  public BufferOutputStream(BufferHandler bufferHandler, short channelIndex)
   {
-    this(bufferHandler, extractBufferProvider(bufferHandler), channelID);
+    this(bufferHandler, extractBufferProvider(bufferHandler), channelIndex);
   }
 
   @Override
@@ -130,7 +130,7 @@ public class BufferOutputStream extends OutputStream
     if (currentBuffer == null)
     {
       currentBuffer = bufferProvider.provideBuffer();
-      currentBuffer.startPutting(channelID);
+      currentBuffer.startPutting(channelIndex);
     }
   }
 

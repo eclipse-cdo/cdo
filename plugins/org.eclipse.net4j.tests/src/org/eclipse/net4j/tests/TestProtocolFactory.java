@@ -51,10 +51,6 @@ public class TestProtocolFactory extends AbstractProtocolFactory implements Prot
     return new TestProtocol(channel);
   }
 
-  public void dispose()
-  {
-  }
-
   /**
    * @author Eike Stepper
    */

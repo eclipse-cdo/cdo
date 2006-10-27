@@ -38,7 +38,7 @@ import java.nio.channels.SocketChannel;
  * // Obtain a fresh buffer 
  * Buffer buffer = bufferProvider.getBuffer();
  * 
- * // Start filling the buffer for channelID 4711
+ * // Start filling the buffer for channelIndex 4711
  * ByteBuffer byteBuffer = buffer.startPutting(4711);
  * byteBuffer.putDouble(15.47);
  * 
@@ -82,13 +82,13 @@ public interface Buffer
 {
   public BufferProvider getBufferProvider();
 
-  public short getChannelID();
+  public short getChannelIndex();
 
   public short getCapacity();
 
   public ByteBuffer startGetting(SocketChannel socketChannel) throws IOException;
 
-  public ByteBuffer startPutting(short channelID);
+  public ByteBuffer startPutting(short channelIndex);
 
   public boolean write(SocketChannel socketChannel) throws IOException;
 

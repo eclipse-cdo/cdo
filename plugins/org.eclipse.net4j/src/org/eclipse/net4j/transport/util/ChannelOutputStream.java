@@ -20,11 +20,11 @@ public class ChannelOutputStream extends BufferOutputStream
 {
   public ChannelOutputStream(Channel channel)
   {
-    super(channel, channel.getChannelID());
+    super(channel, channel.getChannelIndex());
   }
 
   public ChannelOutputStream(Channel channel, BufferProvider bufferProvider)
   {
-    super(channel, bufferProvider, channel.getChannelID());
+    super(channel, bufferProvider, channel.getChannelIndex());
   }
 }

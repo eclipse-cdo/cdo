@@ -8,20 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.registry;
+package org.eclipse.net4j.transport;
 
 /**
  * @author Eike Stepper
  */
-public interface IRegistryElement<ID>
+public interface ChannelID
 {
-  public ID getID();
+  public Connector getConnector();
 
-  /**
-   * @author Eike Stepper
-   */
-  public interface Descriptor<ID> extends IRegistryElement<ID>
-  {
-    public IRegistryElement<ID> resolve();
-  }
+  public short getChannelIndex();
 }

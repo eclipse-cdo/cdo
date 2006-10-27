@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.Net4jFactory;
 import org.eclipse.net4j.tests.signal.Request1;
 import org.eclipse.net4j.tests.signal.Request2;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.util.Net4jUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -46,16 +46,16 @@ public class SignalTest extends AbstractOMTest
   protected void setUp() throws Exception
   {
     super.setUp();
-    bufferPool = Net4jFactory.createBufferPool((short)64);
+    bufferPool = Net4jUtil.createBufferPool((short)64);
     LifecycleUtil.activate(bufferPool);
     assertTrue(LifecycleUtil.isActive(bufferPool));
 
-    selector = (TCPSelectorImpl)Net4jFactory.createTCPSelector();
+    selector = (TCPSelectorImpl)Net4jUtil.createTCPSelector();
     selector.activate();
     assertTrue(selector.isActive());
 
-    acceptor = (TCPAcceptorImpl)Net4jFactory.createTCPAcceptor(bufferPool, selector);
-    connector = (AbstractTCPConnector)Net4jFactory.createTCPConnector(bufferPool, selector,
+    acceptor = (TCPAcceptorImpl)Net4jUtil.createTCPAcceptor(bufferPool, selector);
+    connector = (AbstractTCPConnector)Net4jUtil.createTCPConnector(bufferPool, selector,
         "localhost");
   }
 

@@ -18,6 +18,4 @@ public interface Protocol extends BufferHandler
   public String getProtocolID();
 
   public Channel getChannel();
-
-  public void dispose();
 }

@@ -14,11 +14,13 @@ import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.Protocol;
+import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
 
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractProtocol implements Protocol, BufferProvider
+public abstract class AbstractProtocol extends AbstractLifecycle implements Protocol,
+    BufferProvider
 {
   private Channel channel;
 
@@ -47,8 +49,10 @@ public abstract class AbstractProtocol implements Protocol, BufferProvider
     BufferUtil.getBufferProvider(channel).retainBuffer(buffer);
   }
 
-  public void dispose()
+  @Override
+  protected void onDeactivate() throws Exception
   {
     channel = null;
+    super.onDeactivate();
   }
 }

@@ -29,4 +29,9 @@ public class ExtendedDataOutputStream extends DataOutputStream implements Extend
     writeInt(b.length);
     write(b);
   }
+
+  public void writeString(String str) throws IOException
+  {
+    writeByteArray(str.getBytes());
+  }
 }

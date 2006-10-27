@@ -31,4 +31,9 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
     read(b);
     return b;
   }
+
+  public String readString() throws IOException
+  {
+    return new String(readByteArray());
+  }
 }

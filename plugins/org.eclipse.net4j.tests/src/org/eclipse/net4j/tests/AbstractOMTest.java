@@ -28,7 +28,7 @@ public abstract class AbstractOMTest extends TestCase
   @Override
   protected void setUp() throws Exception
   {
-    this.setUp();
+    super.setUp();
     System.out.print("================================= ");
     System.out.print(getName());
     System.out.println(" =================================");

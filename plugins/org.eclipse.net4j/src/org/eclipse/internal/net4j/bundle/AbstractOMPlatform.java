@@ -43,7 +43,7 @@ public abstract class AbstractOMPlatform implements OMPlatform
 
   protected AbstractOMPlatform()
   {
-    debugging = Boolean.parseBoolean(System.getProperty("debug", "false"));
+    debugging = Boolean.parseBoolean(System.getProperty("debug", "false")); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   public synchronized OMBundle bundle(String bundleID, Class accessor)

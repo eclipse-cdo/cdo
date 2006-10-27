@@ -224,8 +224,9 @@ public abstract class AbstractOMBundle implements OMBundle
               untranslatedResourceBundle = resourceBundle = bundle;
               inputStream.close();
             }
-            catch (IOException ioException)
+            catch (IOException ignore)
             {
+              ;
             }
             finally
             {
@@ -241,6 +242,7 @@ public abstract class AbstractOMBundle implements OMBundle
         else
         {
           InputStream inputStream = null;
+
           try
           {
             inputStream = getInputStream("plugin.properties"); //$NON-NLS-1$

@@ -15,5 +15,5 @@ package org.eclipse.net4j.util.om;
  */
 public interface OMTraceHandler
 {
-  public void traced(OMTracer tracer, Class context, String msg, Throwable t);
+  public void traced(OMTracer tracer, Class context, Object instance, String msg, Throwable t);
 }

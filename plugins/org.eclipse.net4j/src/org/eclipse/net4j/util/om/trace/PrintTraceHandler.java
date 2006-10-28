@@ -8,32 +8,34 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.om;
+package org.eclipse.net4j.util.om.trace;
 
 import org.eclipse.net4j.util.IOUtil;
+import org.eclipse.net4j.util.om.OMTraceHandler;
+import org.eclipse.net4j.util.om.OMTracer;
 
 import java.io.PrintStream;
 
 /**
  * @author Eike Stepper
  */
-public class PrintStreamTraceHandler implements OMTraceHandler
+public class PrintTraceHandler implements OMTraceHandler
 {
-  public static final PrintStreamTraceHandler CONSOLE = new PrintStreamTraceHandler();
+  public static final PrintTraceHandler CONSOLE = new PrintTraceHandler();
 
   private PrintStream stream;
 
-  public PrintStreamTraceHandler(PrintStream stream)
+  public PrintTraceHandler(PrintStream stream)
   {
     this.stream = stream;
   }
 
-  protected PrintStreamTraceHandler()
+  protected PrintTraceHandler()
   {
     this(IOUtil.OUT());
   }
 
-  public void traced(OMTracer tracer, Class context, String msg, Throwable t)
+  public void traced(OMTracer tracer, Class context, Object instance, String msg, Throwable t)
   {
     stream.println("[TRACE] " + msg); //$NON-NLS-1$
     if (t != null)

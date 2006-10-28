@@ -13,7 +13,7 @@ package org.eclipse.internal.net4j.transport;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferPool;
 import org.eclipse.net4j.transport.BufferProvider;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 
@@ -56,7 +56,7 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": Evicting " + buffer); //$NON-NLS-1$
+      TRACER.trace(this, "Evicting " + buffer); //$NON-NLS-1$
     }
 
     factory.retainBuffer(buffer);
@@ -95,7 +95,7 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
     buffer.clear();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": Obtained " + buffer); //$NON-NLS-1$
+      TRACER.trace(this, "Obtained " + buffer); //$NON-NLS-1$
     }
 
     return buffer;
@@ -111,7 +111,7 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": Retaining " + buffer); //$NON-NLS-1$
+      TRACER.trace(this, "Retaining " + buffer); //$NON-NLS-1$
     }
 
     queue.add(buffer);

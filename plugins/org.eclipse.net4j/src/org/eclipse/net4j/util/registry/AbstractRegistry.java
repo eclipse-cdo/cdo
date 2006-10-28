@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.registry;
 
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry.Listener.EventType;
 import org.eclipse.net4j.util.registry.IRegistryElement.Descriptor;
 
@@ -129,7 +129,7 @@ public abstract class AbstractRegistry<ID, E extends IRegistryElement<ID>> imple
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(ex);
+          TRACER.trace(this, ex);
         }
       }
     }

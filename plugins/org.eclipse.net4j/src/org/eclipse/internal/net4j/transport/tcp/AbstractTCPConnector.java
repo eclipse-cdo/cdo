@@ -18,7 +18,7 @@ import org.eclipse.net4j.transport.tcp.TCPSelector;
 import org.eclipse.net4j.transport.tcp.TCPSelectorListener;
 import org.eclipse.net4j.util.Net4jUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.AbstractConnector;
@@ -159,7 +159,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
         {
           if (TRACER.isEnabled())
           {
-            TRACER.trace(toString() + ": Discarding buffer from unknown channel"); //$NON-NLS-1$
+            TRACER.trace(this, "Discarding buffer from unknown channel"); //$NON-NLS-1$
           }
 
           inputBuffer.release();

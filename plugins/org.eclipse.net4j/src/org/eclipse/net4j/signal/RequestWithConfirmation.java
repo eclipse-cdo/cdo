@@ -13,7 +13,7 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.util.BufferInputStream;
 import org.eclipse.net4j.transport.util.BufferOutputStream;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
@@ -39,14 +39,14 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("================ Requesting " + this); //$NON-NLS-1$
+      TRACER.trace(this, "================ Requesting"); //$NON-NLS-1$
     }
 
     requesting(new ExtendedDataOutputStream(out));
     out.flush();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("================ Confirming " + this); //$NON-NLS-1$
+      TRACER.trace(this, "================ Confirming"); //$NON-NLS-1$
     }
 
     setResult(confirming(new ExtendedDataInputStream(in)));

@@ -8,9 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.om;
+package org.eclipse.net4j.util.om.log;
 
+import org.eclipse.net4j.util.om.OMLogHandler;
+import org.eclipse.net4j.util.om.OMLogger;
 import org.eclipse.net4j.util.om.OMLogger.Level;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.bundle.OSGiBundle;
@@ -44,7 +47,7 @@ public class OSGiLoggingBridge implements OMLogHandler
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(ex);
+        TRACER.trace(this, ex);
       }
     }
   }

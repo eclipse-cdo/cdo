@@ -13,7 +13,7 @@ package org.eclipse.internal.net4j.transport.tcp;
 import org.eclipse.net4j.transport.tcp.TCPSelector;
 import org.eclipse.net4j.transport.tcp.TCPSelectorListener;
 import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 
@@ -56,7 +56,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
+      TRACER.trace(this, "Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
     }
 
     return channel.register(selector, SelectionKey.OP_ACCEPT, listener);
@@ -72,7 +72,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
+      TRACER.trace(this, "Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
     }
 
     return channel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ, listener);
@@ -145,7 +145,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(toString() + ": Accepting " + TCPUtil.toString(ssChannel)); //$NON-NLS-1$
+          TRACER.trace(this, "Accepting " + TCPUtil.toString(ssChannel)); //$NON-NLS-1$
         }
 
         listener.handleAccept(this, ssChannel);
@@ -160,7 +160,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(toString() + ": Connecting " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
+          TRACER.trace(this, "Connecting " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
         }
 
         listener.handleConnect(this, sChannel);
@@ -170,7 +170,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(toString() + ": Reading " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
+          TRACER.trace(this, "Reading " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
         }
 
         listener.handleRead(this, sChannel);
@@ -180,7 +180,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(toString() + ": Writing " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
+          TRACER.trace(this, "Writing " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
         }
 
         listener.handleWrite(this, sChannel);

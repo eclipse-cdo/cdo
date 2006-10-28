@@ -13,7 +13,7 @@ package org.eclipse.internal.net4j.transport.tcp;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.util.concurrent.Synchronizer;
 import org.eclipse.net4j.util.concurrent.SynchronizingCorrelator;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.BufferUtil;
@@ -149,7 +149,7 @@ public final class ControlChannelImpl extends ChannelImpl
           {
             if (TRACER.isEnabled())
             {
-              TRACER.trace(toString() + ": Invalid channel id: " + channelIndex); //$NON-NLS-1$
+              TRACER.trace(this, "Invalid channel id: " + channelIndex); //$NON-NLS-1$
             }
           }
         }

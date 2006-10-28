@@ -73,30 +73,55 @@ public class OMTracerImpl implements OMTracer
     bundle.setDebugOption(fullName, enabled);
   }
 
+  public void trace(Class context, Object instance, String msg, Throwable t)
+  {
+    ((AbstractOMPlatform)bundle.getPlatform()).trace(this, context, instance, msg, t);
+  }
+
+  public void trace(Class context, Object instance, String msg)
+  {
+    trace(context, instance, msg, (Throwable)null);
+  }
+
+  public void trace(Class context, Object instance, Throwable t)
+  {
+    trace(context, instance, t.getLocalizedMessage(), t);
+  }
+
+  public void trace(Class context, Object instance, String pattern, Object... args)
+  {
+    trace(context, instance, pattern, (Throwable)null, args);
+  }
+
+  public void trace(Class context, Object instance, String pattern, Throwable t, Object... args)
+  {
+    String msg = MessageFormat.format(pattern, args);
+    trace(context, instance, msg, t);
+  }
+
   public void trace(Class context, String pattern, Object... args)
   {
-    trace(context, pattern, null, args);
+    trace(context, NO_INSTANCE, pattern, (Throwable)null, args);
   }
 
   public void trace(Class context, String pattern, Throwable t, Object... args)
   {
-    String msg = MessageFormat.format(pattern, args);
-    trace(context, msg, t);
+    trace(context, NO_INSTANCE, pattern, t, args);
   }
 
   public void trace(Class context, String msg, Throwable t)
   {
-    ((AbstractOMPlatform)bundle.getPlatform()).trace(this, context, msg, t);
+    trace(context, NO_INSTANCE, msg, t);
   }
 
   public void trace(Class context, String msg)
   {
-    trace(context, msg, (Throwable)null);
+    trace(context, NO_INSTANCE, msg);
   }
 
   public void trace(Class context, Throwable t)
   {
-    trace(context, t.getLocalizedMessage(), t);
+    trace(context, NO_INSTANCE, t);
   }
 
   public OMTracer tracer(String name)

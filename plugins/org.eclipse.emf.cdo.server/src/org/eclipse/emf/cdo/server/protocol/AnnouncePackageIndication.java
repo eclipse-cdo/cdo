@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.protocol;
 
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
@@ -54,7 +54,7 @@ public class AnnouncePackageIndication extends IndicationWithResponse
     packageName = in.readString();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Announced package " + packageName);
+      TRACER.trace(this, "Announced package " + packageName);
     }
   }
 
@@ -66,7 +66,7 @@ public class AnnouncePackageIndication extends IndicationWithResponse
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Unknown package " + packageName);
+        TRACER.trace(this, "Unknown package " + packageName);
       }
 
       out.writeInt(-1);
@@ -80,7 +80,8 @@ public class AnnouncePackageIndication extends IndicationWithResponse
         ClassInfo classInfo = classInfos[i];
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Responding class " + classInfo.getName() + " = " + classInfo.getCID());
+          TRACER
+              .trace(this, "Responding class " + classInfo.getName() + " = " + classInfo.getCID());
         }
 
         out.writeInt(classInfo.getCID());

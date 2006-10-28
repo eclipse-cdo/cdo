@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.protocol;
 
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.transport.Channel;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
 import org.eclipse.emf.cdo.core.CDOSignals;
@@ -52,7 +52,7 @@ public class InvalidationNotificationRequest extends Request
     int size = changedObjectIds.size();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Transmitting " + size + " invalidations");
+      TRACER.trace(this, "Transmitting " + size + " invalidations");
     }
 
     out.writeInt(size);
@@ -60,7 +60,7 @@ public class InvalidationNotificationRequest extends Request
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Transmitting oid " + oid);
+        TRACER.trace(this, "Transmitting oid " + oid);
       }
 
       out.writeLong(oid);

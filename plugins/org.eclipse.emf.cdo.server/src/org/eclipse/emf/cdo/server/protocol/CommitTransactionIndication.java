@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.protocol;
 
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
@@ -173,7 +173,7 @@ public class CommitTransactionIndication extends IndicationWithResponse
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("receiveObjectsToDetach()");
+      TRACER.trace(this, "receiveObjectsToDetach()");
     }
 
     for (;;)
@@ -192,7 +192,7 @@ public class CommitTransactionIndication extends IndicationWithResponse
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("receiveObjectsToAttach()");
+      TRACER.trace(this, "receiveObjectsToAttach()");
     }
 
     int count = in.readInt();
@@ -222,7 +222,7 @@ public class CommitTransactionIndication extends IndicationWithResponse
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("receiveObjectsToAttachReferences()");
+      TRACER.trace(this, "receiveObjectsToAttachReferences()");
     }
 
     int count = in.readInt();
@@ -283,7 +283,8 @@ public class CommitTransactionIndication extends IndicationWithResponse
     oidList.add(val);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Mapping oid " + oidEncoder.toString(key) + " --> " + oidEncoder.toString(val));
+      TRACER.trace(this, "Mapping oid " + oidEncoder.toString(key) + " --> "
+          + oidEncoder.toString(val));
     }
 
     return oid;
@@ -309,7 +310,7 @@ public class CommitTransactionIndication extends IndicationWithResponse
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("receiveObjectChanges()");
+      TRACER.trace(this, "receiveObjectChanges()");
     }
 
     for (;;)
@@ -382,7 +383,7 @@ public class CommitTransactionIndication extends IndicationWithResponse
     if (TRACER.isEnabled())
     {
       OIDEncoder oidEncoder = mapper.getOidEncoder();
-      TRACER.trace("received reference set: oid=" + oidEncoder.toString(oid) + ", feature="
+      TRACER.trace(this, "received reference set: oid=" + oidEncoder.toString(oid) + ", feature="
           + feature + ", target=" + oidEncoder.toString(target) + ", containment=" + containment);
     }
 
@@ -402,7 +403,7 @@ public class CommitTransactionIndication extends IndicationWithResponse
     if (TRACER.isEnabled())
     {
       OIDEncoder oidEncoder = mapper.getOidEncoder();
-      TRACER.trace("received reference unset: oid=" + oidEncoder.toString(oid) + ", feature="
+      TRACER.trace(this, "received reference unset: oid=" + oidEncoder.toString(oid) + ", feature="
           + feature);
     }
 
@@ -430,7 +431,7 @@ public class CommitTransactionIndication extends IndicationWithResponse
     if (TRACER.isEnabled())
     {
       OIDEncoder oidEncoder = mapper.getOidEncoder();
-      TRACER.trace("received reference add: oid=" + oidEncoder.toString(oid) + ", feature="
+      TRACER.trace(this, "received reference add: oid=" + oidEncoder.toString(oid) + ", feature="
           + feature + ", ordinal=" + ordinal + ", target=" + oidEncoder.toString(target)
           + ", containment=" + containment);
     }
@@ -458,8 +459,9 @@ public class CommitTransactionIndication extends IndicationWithResponse
     if (TRACER.isEnabled())
     {
       OIDEncoder oidEncoder = mapper.getOidEncoder();
-      TRACER.trace("receiveObjectChangesReferences(REMOVE, sourceId=" + oidEncoder.toString(oid)
-          + ", featureId=" + feature + ", sourceOrdinal=" + ordinal + ")");
+      TRACER.trace(this, "receiveObjectChangesReferences(REMOVE, sourceId="
+          + oidEncoder.toString(oid) + ", featureId=" + feature + ", sourceOrdinal=" + ordinal
+          + ")");
     }
 
     mapper.removeReference(oid, feature, ordinal);
@@ -481,7 +483,7 @@ public class CommitTransactionIndication extends IndicationWithResponse
     if (TRACER.isEnabled())
     {
       OIDEncoder oidEncoder = mapper.getOidEncoder();
-      TRACER.trace("received reference move: oid=" + oidEncoder.toString(oid) + ", feature="
+      TRACER.trace(this, "received reference move: oid=" + oidEncoder.toString(oid) + ", feature="
           + feature + ", ordinal=" + ordinal + ", moveToIndex=" + moveToIndex);
     }
 
@@ -513,11 +515,11 @@ public class CommitTransactionIndication extends IndicationWithResponse
       optimisticControlException = true;
       if (TRACER.isEnabled())
       {
-        TRACER.trace("");
-        TRACER.trace("============================");
-        TRACER.trace("OPTIMISTIC CONTROL EXCEPTION");
-        TRACER.trace("============================");
-        TRACER.trace("");
+        TRACER.trace(this, "");
+        TRACER.trace(this, "============================");
+        TRACER.trace(this, "OPTIMISTIC CONTROL EXCEPTION");
+        TRACER.trace(this, "============================");
+        TRACER.trace(this, "");
       }
 
       return oca;
@@ -606,7 +608,7 @@ public class CommitTransactionIndication extends IndicationWithResponse
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("receiveObjectsToAttachAttributes()");
+      TRACER.trace(this, "receiveObjectsToAttachAttributes()");
     }
 
     while (classInfo != null)
@@ -626,7 +628,7 @@ public class CommitTransactionIndication extends IndicationWithResponse
         AttributeInfo attributeInfo = attributeInfos[i];
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Receiving attribute " + attributeInfo.getName());
+          TRACER.trace(this, "Receiving attribute " + attributeInfo.getName());
         }
 
         ColumnConverter converter = mapper.getColumnConverter();

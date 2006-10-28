@@ -23,7 +23,7 @@ import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleNotifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
@@ -249,7 +249,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace(toString() + ": Accepted connector " + connector); //$NON-NLS-1$
+        TRACER.trace(this, "Accepted connector " + connector); //$NON-NLS-1$
       }
 
       fireConnectorAccepted(connector);
@@ -301,12 +301,12 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
 
     if (protocolFactoryRegistry == null && TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": No protocol factory registry!"); //$NON-NLS-1$
+      TRACER.trace(this, "No protocol factory registry!"); //$NON-NLS-1$
     }
 
     if (receiveExecutor == null && TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": No receive executor!"); //$NON-NLS-1$
+      TRACER.trace(this, "No receive executor!"); //$NON-NLS-1$
     }
 
     if (selector == null)

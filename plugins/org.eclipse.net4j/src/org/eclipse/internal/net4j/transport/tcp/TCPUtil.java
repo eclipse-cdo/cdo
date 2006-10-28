@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport.tcp;
 
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 
@@ -82,7 +82,7 @@ public final class TCPUtil
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(selectionKey.channel().toString() + ": Setting interest " //$NON-NLS-1$
+        TRACER.trace(selectionKey, "Setting interest " //$NON-NLS-1$
             + formatInterestOps(newOps) + " (was " + formatInterestOps(oldOps).toLowerCase() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
       }
 

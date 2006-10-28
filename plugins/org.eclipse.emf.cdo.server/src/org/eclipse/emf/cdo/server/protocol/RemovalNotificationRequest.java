@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.protocol;
 
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.transport.Channel;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
 import org.eclipse.emf.cdo.core.CDOSignals;
@@ -52,7 +52,7 @@ public class RemovalNotificationRequest extends Request
     int size = rids.size();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Transmitting " + size + " removals");
+      TRACER.trace(this, "Transmitting " + size + " removals");
     }
 
     out.writeInt(size);
@@ -60,7 +60,7 @@ public class RemovalNotificationRequest extends Request
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Transmitting rid " + rid);
+        TRACER.trace(this, "Transmitting rid " + rid);
       }
 
       out.writeInt(rid);

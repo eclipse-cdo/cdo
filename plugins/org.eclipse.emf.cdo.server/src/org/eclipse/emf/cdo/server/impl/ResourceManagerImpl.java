@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.impl;
 
 
 import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.cdo.server.Mapper;
 import org.eclipse.emf.cdo.server.ResourceInfo;
@@ -39,7 +39,7 @@ public class ResourceManagerImpl extends AbstractLifecycle implements ResourceMa
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Registering " + resourceInfo);
+      TRACER.trace(this, "Registering " + resourceInfo);
     }
 
     ridToResourceMap.put(resourceInfo.getRID(), resourceInfo);

@@ -11,7 +11,7 @@
 package org.eclipse.internal.net4j.transport;
 
 import org.eclipse.net4j.transport.Buffer;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 
@@ -34,7 +34,7 @@ public class BufferFactoryImpl extends BufferProviderImpl
     BufferImpl buffer = new BufferImpl(this, getBufferCapacity());
     if (TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": Created " + buffer); //$NON-NLS-1$
+      TRACER.trace(this, "Created " + buffer); //$NON-NLS-1$
     }
 
     return buffer;

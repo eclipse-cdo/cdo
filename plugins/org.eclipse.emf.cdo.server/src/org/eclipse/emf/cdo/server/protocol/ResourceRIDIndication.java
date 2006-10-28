@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.protocol;
 
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
@@ -54,7 +54,7 @@ public class ResourceRIDIndication extends IndicationWithResponse
     rid = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Requested rid " + rid);
+      TRACER.trace(this, "Requested rid " + rid);
     }
   }
 
@@ -67,7 +67,7 @@ public class ResourceRIDIndication extends IndicationWithResponse
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("No resource with rid " + rid);
+        TRACER.trace(this, "No resource with rid " + rid);
       }
 
       out.writeString(null);
@@ -76,7 +76,7 @@ public class ResourceRIDIndication extends IndicationWithResponse
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Responding path " + info.getPath());
+        TRACER.trace(this, "Responding path " + info.getPath());
       }
 
       out.writeString(info.getPath());

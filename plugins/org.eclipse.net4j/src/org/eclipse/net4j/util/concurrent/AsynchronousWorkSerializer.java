@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.concurrent;
 
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 
@@ -67,7 +67,7 @@ public class AsynchronousWorkSerializer implements WorkSerializer, Runnable
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace(toString() + ": Notifying executor service"); //$NON-NLS-1$
+        TRACER.trace(this, "Notifying executor service"); //$NON-NLS-1$
       }
 
       executorService.execute(this);
@@ -94,7 +94,7 @@ public class AsynchronousWorkSerializer implements WorkSerializer, Runnable
         {
           if (TRACER.isEnabled())
           {
-            TRACER.trace(ex);
+            TRACER.trace(this, ex);
           }
         }
       }

@@ -15,7 +15,7 @@ import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.util.BufferInputStream;
 import org.eclipse.net4j.transport.util.ChannelOutputStream;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.AbstractProtocol;
@@ -40,6 +40,9 @@ public abstract class SignalProtocol extends AbstractProtocol
 
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL,
       SignalProtocol.class);
+
+  private static final ContextTracer STREAM_TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM,
+      SignalOutputStream.class);
 
   private ExecutorService executorService;
 
@@ -70,7 +73,7 @@ public abstract class SignalProtocol extends AbstractProtocol
     int correlationID = byteBuffer.getInt();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": Received buffer for correlation " + correlationID); //$NON-NLS-1$
+      TRACER.trace(this, "Received buffer for correlation " + correlationID); //$NON-NLS-1$
     }
 
     Signal signal;
@@ -83,7 +86,7 @@ public abstract class SignalProtocol extends AbstractProtocol
         short signalID = byteBuffer.getShort();
         if (TRACER.isEnabled())
         {
-          TRACER.trace(toString() + ": Got signal id " + signalID); //$NON-NLS-1$
+          TRACER.trace(this, "Got signal id " + signalID); //$NON-NLS-1$
         }
 
         signal = createSignalReactor(signalID);
@@ -103,7 +106,7 @@ public abstract class SignalProtocol extends AbstractProtocol
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(toString() + ": Discarding buffer"); //$NON-NLS-1$
+          TRACER.trace(this, "Discarding buffer"); //$NON-NLS-1$
         }
 
         buffer.release();
@@ -155,7 +158,7 @@ public abstract class SignalProtocol extends AbstractProtocol
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(toString() + ": Correlation wrap around"); //$NON-NLS-1$
+        TRACER.trace(this, "Correlation wrap around"); //$NON-NLS-1$
       }
 
       nextCorrelationID = MIN_CORRELATION_ID;
@@ -210,9 +213,9 @@ public abstract class SignalProtocol extends AbstractProtocol
         {
           Buffer buffer = delegate.provideBuffer();
           ByteBuffer byteBuffer = buffer.startPutting(getChannel().getChannelIndex());
-          if (SignalProtocol.TRACER.isEnabled())
+          if (STREAM_TRACER.isEnabled())
           {
-            SignalProtocol.TRACER.trace("Providing buffer for correlation " + correlationID); //$NON-NLS-1$
+            STREAM_TRACER.trace(this, "Providing buffer for correlation " + correlationID); //$NON-NLS-1$
           }
 
           byteBuffer.putInt(correlationID);
@@ -220,8 +223,7 @@ public abstract class SignalProtocol extends AbstractProtocol
           {
             if (SignalProtocol.TRACER.isEnabled())
             {
-              SignalProtocol.TRACER.trace(SignalProtocol.this.toString()
-                  + ": Put signal id " + signalID); //$NON-NLS-1$
+              STREAM_TRACER.trace(this, "Put signal id " + signalID); //$NON-NLS-1$
             }
 
             byteBuffer.putShort(signalID);

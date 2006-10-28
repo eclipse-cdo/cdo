@@ -21,7 +21,7 @@ import org.eclipse.net4j.util.concurrent.AsynchronousWorkSerializer;
 import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.util.concurrent.WorkSerializer;
 import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.BufferImpl.State;
@@ -146,7 +146,7 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": Handling buffer from client: " + buffer); //$NON-NLS-1$
+      TRACER.trace(this, "Handling buffer from client: " + buffer); //$NON-NLS-1$
     }
 
     sendQueue.add(buffer);
@@ -164,7 +164,7 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": Handling buffer from multiplexer: " + buffer); //$NON-NLS-1$
+      TRACER.trace(this, "Handling buffer from multiplexer: " + buffer); //$NON-NLS-1$
     }
 
     receiveSerializer.addWork(new Runnable()

@@ -13,7 +13,7 @@ package org.eclipse.net4j.transport.util;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferHandler;
 import org.eclipse.net4j.util.HexUtil;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 
@@ -71,7 +71,7 @@ public class BufferInputStream extends InputStream implements BufferHandler
     final int result = b < 0 ? ~b : b;
     if (TRACER.isEnabled())
     {
-      TRACER.trace("<-- " + HexUtil.toHex(result) //$NON-NLS-1$
+      TRACER.trace(this, "<-- " + HexUtil.toHex(result) //$NON-NLS-1$
           + (result >= 32 ? " " + Character.toString((char)result) : "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 

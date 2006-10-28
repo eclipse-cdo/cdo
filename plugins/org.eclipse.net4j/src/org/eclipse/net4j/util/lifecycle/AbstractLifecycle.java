@@ -11,7 +11,7 @@
 package org.eclipse.net4j.util.lifecycle;
 
 import org.eclipse.net4j.util.ReflectUtil;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 
@@ -58,14 +58,14 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(toString() + ": Activating");//$NON-NLS-1$
+        TRACER.trace(this, "Activating");//$NON-NLS-1$
       }
 
       onAboutToActivate();
       fireLifecycleAboutToActivate();
       if (DUMPER.isEnabled())
       {
-        DUMPER.trace("DUMP " + ReflectUtil.toString(this)); //$NON-NLS-1$
+        DUMPER.trace(this, "DUMP " + ReflectUtil.toString(this)); //$NON-NLS-1$
       }
 
       onActivate();
@@ -81,7 +81,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(toString() + ": Deactivating");//$NON-NLS-1$
+        TRACER.trace(this, "Deactivating");//$NON-NLS-1$
       }
 
       fireLifecycleDeactivating();
@@ -94,7 +94,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(ex);
+          TRACER.trace(this, ex);
         }
 
         return ex;
@@ -138,7 +138,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(ex);
+          TRACER.trace(this, ex);
         }
       }
     }
@@ -156,7 +156,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(ex);
+          TRACER.trace(this, ex);
         }
       }
     }
@@ -174,7 +174,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(ex);
+          TRACER.trace(this, ex);
         }
       }
     }

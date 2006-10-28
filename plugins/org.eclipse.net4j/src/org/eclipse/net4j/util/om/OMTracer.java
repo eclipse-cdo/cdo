@@ -15,6 +15,8 @@ package org.eclipse.net4j.util.om;
  */
 public interface OMTracer
 {
+  public static final Object NO_INSTANCE = null;
+
   public OMBundle getBundle();
 
   public OMTracer getParent();
@@ -26,6 +28,16 @@ public interface OMTracer
   public boolean isEnabled();
 
   public void setEnabled(boolean enabled);
+
+  public void trace(Class context, Object instance, String pattern, Object... args);
+
+  public void trace(Class context, Object instance, String pattern, Throwable t, Object... args);
+
+  public void trace(Class context, Object instance, String msg, Throwable t);
+
+  public void trace(Class context, Object instance, String msg);
+
+  public void trace(Class context, Object instance, Throwable t);
 
   public void trace(Class context, String pattern, Object... args);
 

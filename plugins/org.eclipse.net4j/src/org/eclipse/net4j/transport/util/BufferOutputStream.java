@@ -15,7 +15,7 @@ import org.eclipse.net4j.transport.BufferHandler;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 
@@ -70,7 +70,7 @@ public class BufferOutputStream extends OutputStream
     ensureBuffer();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("--> " + HexUtil.toHex(b) //$NON-NLS-1$
+      TRACER.trace(this, "--> " + HexUtil.toHex(b) //$NON-NLS-1$
           + (b >= 32 ? " " + Character.toString((char)b) : "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 

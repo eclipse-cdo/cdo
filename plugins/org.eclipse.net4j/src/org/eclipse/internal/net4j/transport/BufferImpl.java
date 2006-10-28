@@ -14,7 +14,7 @@ import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ReflectUtil;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 
@@ -185,7 +185,7 @@ public class BufferImpl implements Buffer
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(toString() + ": Read " + byteBuffer.limit() + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
+      TRACER.trace(this, "Read " + byteBuffer.limit() + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
           + (eos ? " (EOS)" : "") + NL + formatContent()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
@@ -241,7 +241,7 @@ public class BufferImpl implements Buffer
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace(toString() + ": Writing " + (payloadSize - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
+        TRACER.trace(this, "Writing " + (payloadSize - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
             + (eos ? " (EOS)" : "") + NL + formatContent()); //$NON-NLS-1$ //$NON-NLS-2$
       }
 

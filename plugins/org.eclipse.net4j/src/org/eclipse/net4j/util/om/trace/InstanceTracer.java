@@ -8,21 +8,27 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.om;
+package org.eclipse.net4j.util.om.trace;
+
+import org.eclipse.net4j.util.om.OMBundle;
+import org.eclipse.net4j.util.om.OMTracer;
 
 /**
  * @author Eike Stepper
  */
-public class ContextTracer
+public class InstanceTracer
 {
   private OMTracer delegate;
 
   private Class context;
 
-  public ContextTracer(OMTracer delegate, Class context)
+  private Object instance;
+
+  public InstanceTracer(OMTracer delegate, Class context, Object instance)
   {
     this.delegate = delegate;
     this.context = context;
+    this.instance = instance;
   }
 
   public OMBundle getBundle()
@@ -55,18 +61,28 @@ public class ContextTracer
     delegate.setEnabled(enabled);
   }
 
+  public void trace(String pattern, Object... args)
+  {
+    delegate.trace(context, instance, pattern, args);
+  }
+
+  public void trace(String pattern, Throwable t, Object... args)
+  {
+    delegate.trace(context, instance, pattern, t, args);
+  }
+
   public void trace(String msg, Throwable t)
   {
-    delegate.trace(context, msg, t);
+    delegate.trace(context, instance, msg, t);
   }
 
   public void trace(String msg)
   {
-    delegate.trace(context, msg);
+    delegate.trace(context, instance, msg);
   }
 
   public void trace(Throwable t)
   {
-    delegate.trace(context, t);
+    delegate.trace(context, instance, t);
   }
 }

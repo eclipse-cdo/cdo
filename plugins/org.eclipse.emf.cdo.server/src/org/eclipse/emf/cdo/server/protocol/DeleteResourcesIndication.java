@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.protocol;
 
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
@@ -77,7 +77,7 @@ public class DeleteResourcesIndication extends IndicationWithResponse implements
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Deleting rid " + rid);
+        TRACER.trace(this, "Deleting rid " + rid);
       }
 
       rids.add(rid);
@@ -102,7 +102,7 @@ public class DeleteResourcesIndication extends IndicationWithResponse implements
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Deleted resources: " + ok);
+      TRACER.trace(this, "Deleted resources: " + ok);
     }
 
     out.writeBoolean(ok);

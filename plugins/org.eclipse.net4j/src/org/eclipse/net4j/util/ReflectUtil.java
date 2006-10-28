@@ -72,11 +72,21 @@ public final class ReflectUtil
 
   public static String getPackageName(Class<? extends Object> c)
   {
+    if (c == null)
+    {
+      return null;
+    }
+
     return getPackageName(c.getName());
   }
 
   public static String getPackageName(String className)
   {
+    if (className == null)
+    {
+      return null;
+    }
+
     int lastDot = className.lastIndexOf('.');
     if (lastDot != -1)
     {
@@ -88,11 +98,21 @@ public final class ReflectUtil
 
   public static String getSimpleName(Class<? extends Object> c)
   {
+    if (c == null)
+    {
+      return null;
+    }
+
     return getSimpleClassName(c.getName());
   }
 
   public static String getSimpleClassName(String name)
   {
+    if (name == null)
+    {
+      return null;
+    }
+
     int lastDot = name.lastIndexOf('.');
     if (lastDot != -1)
     {
@@ -104,11 +124,21 @@ public final class ReflectUtil
 
   public static String getSimpleClassName(Object object)
   {
+    if (object == null)
+    {
+      return null;
+    }
+
     return getSimpleName(object.getClass());
   }
 
   public static String getLabel(Object object)
   {
+    if (object == null)
+    {
+      return null;
+    }
+
     return getSimpleClassName(object) + "@" + getID(object); //$NON-NLS-1$
   }
 

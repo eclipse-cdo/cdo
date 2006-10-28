@@ -11,8 +11,8 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.PrintStreamLogHandler;
-import org.eclipse.net4j.util.om.PrintStreamTraceHandler;
+import org.eclipse.net4j.util.om.log.PrintLogHandler;
+import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import junit.framework.TestCase;
 
@@ -33,8 +33,8 @@ public abstract class AbstractOMTest extends TestCase
     System.out.print(getName());
     System.out.println(" =================================");
 
-    OMPlatform.INSTANCE.addLogHandler(PrintStreamLogHandler.CONSOLE);
-    OMPlatform.INSTANCE.addTraceHandler(PrintStreamTraceHandler.CONSOLE);
+    OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     OMPlatform.INSTANCE.setDebugging(true);
   }
 

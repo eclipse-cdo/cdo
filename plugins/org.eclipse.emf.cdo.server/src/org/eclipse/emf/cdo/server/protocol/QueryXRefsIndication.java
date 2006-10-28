@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.protocol;
 
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
@@ -56,7 +56,7 @@ public class QueryXRefsIndication extends IndicationWithResponse
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Received oid=" + oid + ", rid=" + rid);
+      TRACER.trace(this, "Received oid=" + oid + ", rid=" + rid);
     }
   }
 

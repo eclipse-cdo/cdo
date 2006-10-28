@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.protocol;
 
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.transport.Channel;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
 import org.eclipse.emf.cdo.core.CDOResSignals;
@@ -52,15 +52,15 @@ public class ResourcesChangedRequest extends Request
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Transmitting " + infos.size() + " resource changes");
+      TRACER.trace(this, "Transmitting " + infos.size() + " resource changes");
     }
 
     for (ResourceChangeInfo info : infos)
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Transmitting changeKind=" + info.getChangeKind() + ", rid=" + info.getRID()
-            + ". path=" + info.getPath());
+        TRACER.trace(this, "Transmitting changeKind=" + info.getChangeKind() + ", rid="
+            + info.getRID() + ". path=" + info.getPath());
       }
 
       info.transmit(out);

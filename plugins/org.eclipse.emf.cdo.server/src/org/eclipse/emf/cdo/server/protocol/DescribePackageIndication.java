@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.protocol;
 
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
-import org.eclipse.net4j.util.om.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
@@ -60,7 +60,7 @@ public class DescribePackageIndication extends IndicationWithResponse
     String packageName = in.readString();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Described package " + packageName);
+      TRACER.trace(this, "Described package " + packageName);
     }
 
     PackageInfo packageInfo = mapper.getPackageManager().addPackage(pid, packageName);
@@ -79,7 +79,7 @@ public class DescribePackageIndication extends IndicationWithResponse
       ClassInfo classInfo = iter.next();
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Responding class " + classInfo.getName() + " = " + classInfo.getCID());
+        TRACER.trace(this, "Responding class " + classInfo.getName() + " = " + classInfo.getCID());
       }
 
       out.writeInt(classInfo.getCID());
@@ -100,7 +100,7 @@ public class DescribePackageIndication extends IndicationWithResponse
       String tableName = in.readString();
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Described class " + name);
+        TRACER.trace(this, "Described class " + name);
       }
 
       ClassInfo classInfo = packageInfo.addClass(cid, name, parentName, tableName);
@@ -126,7 +126,7 @@ public class DescribePackageIndication extends IndicationWithResponse
       int columnType = in.readInt();
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Described attribute " + name);
+        TRACER.trace(this, "Described attribute " + name);
       }
 
       AttributeInfo attributeInfo = classInfo.addAttribute(name, featureId, dataType, columnName,

@@ -1,0 +1,344 @@
+/***************************************************************************
+ * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ **************************************************************************/
+package org.eclipse.net4j.util.om.trace;
+
+import org.eclipse.net4j.util.IOUtil;
+
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.EventObject;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+/**
+ * @author Eike Stepper
+ */
+public class RemoteTraceServer
+{
+  public static final String DEFAULT_ADDRESS = "0.0.0.0"; //$NON-NLS-1$
+
+  public static final int DEFAULT_PORT = 2037;
+
+  public static final int ANY_PORT = 0;
+
+  private int port;
+
+  private String address;
+
+  private ServerSocket serverSocket;
+
+  private Queue<Listener> listeners = new ConcurrentLinkedQueue();
+
+  public RemoteTraceServer() throws IOException
+  {
+    this(DEFAULT_PORT);
+  }
+
+  public RemoteTraceServer(int port) throws IOException
+  {
+    this(port, DEFAULT_ADDRESS);
+  }
+
+  public RemoteTraceServer(int port, String address) throws IOException
+  {
+    this.port = port;
+    this.address = address;
+    serverSocket = bind();
+    new Thread()
+    {
+      @Override
+      public void run()
+      {
+        handleConnections();
+      }
+    }.start();
+  }
+
+  public void addListener(Listener listener)
+  {
+    if (!listeners.contains(listener))
+    {
+      listeners.add(listener);
+    }
+  }
+
+  public void removeListener(Listener listener)
+  {
+    listeners.remove(listener);
+  }
+
+  public Exception close()
+  {
+    try
+    {
+      serverSocket.close();
+      return null;
+    }
+    catch (IOException ex)
+    {
+      return ex;
+    }
+  }
+
+  protected ServerSocket bind() throws IOException
+  {
+    InetAddress addr = InetAddress.getByName(this.address);
+    return new ServerSocket(port, 5, addr);
+  }
+
+  protected void handleConnections()
+  {
+    for (;;)
+    {
+      try
+      {
+        final Socket socket = serverSocket.accept();
+        new Thread()
+        {
+          @Override
+          public void run()
+          {
+            handleSession(socket);
+          }
+        }.start();
+      }
+      catch (IOException ex)
+      {
+        IOUtil.print(ex);
+      }
+    }
+  }
+
+  protected void handleSession(Socket socket)
+  {
+    try
+    {
+      InputStream inputStream = socket.getInputStream();
+      DataInputStream in = new DataInputStream(inputStream);
+
+      for (;;)
+      {
+        handleTrace(in);
+      }
+    }
+    catch (IOException ex)
+    {
+      IOUtil.print(ex);
+    }
+  }
+
+  protected void handleTrace(DataInputStream in) throws IOException
+  {
+    Event event = new Event(this);
+    event.agentID = in.readUTF();
+    event.bundleID = in.readUTF();
+    event.tracerName = in.readUTF();
+    event.context = in.readUTF();
+    event.instance = in.readUTF();
+    event.msg = in.readUTF();
+    if (in.readBoolean())
+    {
+      event.throwable = in.readUTF();
+      int size = in.readInt();
+      event.stackTrace = new StackTraceElement[size];
+      for (int i = 0; i < size; i++)
+      {
+        String className = in.readUTF();
+        String methodName = in.readUTF();
+        String fileName = in.readUTF();
+        int lineNumber = in.readInt();
+        event.stackTrace[i] = new StackTraceElement(className, methodName, fileName, lineNumber);
+      }
+    }
+
+    fireEvent(event);
+  }
+
+  protected void fireEvent(Event event)
+  {
+    for (Listener listener : listeners)
+    {
+      try
+      {
+        listener.notifyRemoteTrace(event);
+      }
+      catch (RuntimeException ex)
+      {
+        IOUtil.print(ex);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public class Event extends EventObject
+  {
+    private static final long serialVersionUID = 1L;
+
+    String agentID;
+
+    String bundleID;
+
+    String tracerName;
+
+    String context;
+
+    String instance;
+
+    String msg;
+
+    String throwable;
+
+    StackTraceElement[] stackTrace;
+
+    Event(RemoteTraceServer source)
+    {
+      super(source);
+    }
+
+    public RemoteTraceServer getRemoteTraceServer()
+    {
+      return (RemoteTraceServer)source;
+    }
+
+    public String getAgentID()
+    {
+      return agentID;
+    }
+
+    public String getBundleID()
+    {
+      return bundleID;
+    }
+
+    public String getContext()
+    {
+      return context;
+    }
+
+    public String getInstance()
+    {
+      return instance;
+    }
+
+    public String getMsg()
+    {
+      return msg;
+    }
+
+    public StackTraceElement[] getStackTrace()
+    {
+      return stackTrace;
+    }
+
+    public String getThrowable()
+    {
+      return throwable;
+    }
+
+    public String getTracerName()
+    {
+      return tracerName;
+    }
+
+    @Override
+    public String toString()
+    {
+      StringBuilder builder = new StringBuilder();
+      builder.append("TraceEvent[agentID=");
+      builder.append(agentID);
+
+      builder.append(", bundleID=");
+      builder.append(bundleID);
+
+      builder.append(", tracerName=");
+      builder.append(tracerName);
+
+      builder.append(", context=");
+      builder.append(context);
+
+      builder.append(", instance=");
+      builder.append(instance);
+
+      builder.append(", msg=");
+      builder.append(msg);
+
+      builder.append(", throwable=");
+      builder.append(throwable);
+
+      builder.append(", stackTrace=");
+      builder.append(stackTrace);
+
+      builder.append("]");
+      return builder.toString();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface Listener
+  {
+    public void notifyRemoteTrace(Event event);
+  }
+
+  public static class PrintListener implements Listener
+  {
+    public static final PrintListener CONSOLE = new PrintListener();
+
+    private PrintStream stream;
+
+    public PrintListener(PrintStream stream)
+    {
+      this.stream = stream;
+    }
+
+    protected PrintListener()
+    {
+      this(IOUtil.OUT());
+    }
+
+    public void notifyRemoteTrace(Event event)
+    {
+      stream.println("[TRACE] " + event.getAgentID());
+      stream.println(event.getBundleID());
+      stream.println(event.getTracerName());
+      stream.println(event.getContext());
+      stream.println(event.getInstance());
+      stream.println(event.getMsg());
+
+      String throwable = event.getThrowable();
+      if (throwable != null && throwable.length() != 0)
+      {
+        stream.println(throwable);
+      }
+
+      StackTraceElement[] stackTrace = event.getStackTrace();
+      if (stackTrace != null)
+        for (StackTraceElement element : stackTrace)
+        {
+          stream.print(element.getClassName());
+          stream.print("." + element.getMethodName());
+          stream.print("(" + element.getFileName());
+          stream.print(":" + element.getLineNumber());
+          stream.println(")");
+        }
+
+      stream.println();
+    }
+  }
+}

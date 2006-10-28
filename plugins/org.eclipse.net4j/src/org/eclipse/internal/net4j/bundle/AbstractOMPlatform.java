@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.bundle;
 
-import org.eclipse.net4j.util.om.ContextTracer;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMLogHandler;
 import org.eclipse.net4j.util.om.OMLogger;
@@ -18,6 +17,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OMTraceHandler;
 import org.eclipse.net4j.util.om.OMTracer;
 import org.eclipse.net4j.util.om.OMLogger.Level;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.Map;
 import java.util.Queue;
@@ -105,25 +105,25 @@ public abstract class AbstractOMPlatform implements OMPlatform
       {
         if (TRACER().isEnabled())
         {
-          TRACER().trace(ex);
+          TRACER().trace(this, ex);
         }
       }
     }
   }
 
-  protected void trace(OMTracer tracer, Class context, String msg, Throwable t)
+  protected void trace(OMTracer tracer, Class context, Object instance, String msg, Throwable t)
   {
     for (OMTraceHandler traceHandler : traceHandlers)
     {
       try
       {
-        traceHandler.traced(tracer, context, msg, t);
+        traceHandler.traced(tracer, context, instance, msg, t);
       }
       catch (Exception ex)
       {
         if (TRACER().isEnabled())
         {
-          TRACER().trace(ex);
+          TRACER().trace(this, ex);
         }
       }
     }

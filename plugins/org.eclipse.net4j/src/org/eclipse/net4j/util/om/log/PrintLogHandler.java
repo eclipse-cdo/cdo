@@ -8,9 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.om;
+package org.eclipse.net4j.util.om.log;
 
 import org.eclipse.net4j.util.IOUtil;
+import org.eclipse.net4j.util.om.OMLogHandler;
+import org.eclipse.net4j.util.om.OMLogger;
 import org.eclipse.net4j.util.om.OMLogger.Level;
 
 import java.io.PrintStream;
@@ -18,21 +20,21 @@ import java.io.PrintStream;
 /**
  * @author Eike Stepper
  */
-public class PrintStreamLogHandler implements OMLogHandler
+public class PrintLogHandler implements OMLogHandler
 {
-  public static final PrintStreamLogHandler CONSOLE = new PrintStreamLogHandler();
+  public static final PrintLogHandler CONSOLE = new PrintLogHandler();
 
   private PrintStream out;
 
   private PrintStream err;
 
-  public PrintStreamLogHandler(PrintStream out, PrintStream err)
+  public PrintLogHandler(PrintStream out, PrintStream err)
   {
     this.out = out;
     this.err = err;
   }
 
-  protected PrintStreamLogHandler()
+  protected PrintLogHandler()
   {
     this(IOUtil.OUT(), IOUtil.ERR());
   }

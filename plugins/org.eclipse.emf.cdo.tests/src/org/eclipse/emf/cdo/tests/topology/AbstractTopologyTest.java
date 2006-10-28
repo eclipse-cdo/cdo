@@ -21,8 +21,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.PrintStreamLogHandler;
-import org.eclipse.net4j.util.om.PrintStreamTraceHandler;
+import org.eclipse.net4j.util.om.log.PrintLogHandler;
+import org.eclipse.net4j.util.om.trace.RemoteTraceHandler;
+import org.eclipse.net4j.util.om.trace.RemoteTraceServer;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -33,6 +34,8 @@ import junit.framework.TestCase;
 
 public abstract class AbstractTopologyTest extends TestCase implements ITopologyConstants
 {
+  private static int run;
+
   private String mode;
 
   private ITopology topology;
@@ -41,7 +44,7 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
 
   private String label;
 
-  private static int run;
+  private RemoteTraceServer remoteTraceServer;
 
   public String getMode()
   {
@@ -66,9 +69,13 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
   @Override
   protected void setUp() throws Exception
   {
-    OMPlatform.INSTANCE.addLogHandler(PrintStreamLogHandler.CONSOLE);
-    OMPlatform.INSTANCE.addTraceHandler(PrintStreamTraceHandler.CONSOLE);
+    //    remoteTraceServer = new RemoteTraceServer();
+    //    remoteTraceServer.addListener(RemoteTraceServer.PrintListener.CONSOLE);
+
     OMPlatform.INSTANCE.setDebugging(true);
+    OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+    OMPlatform.INSTANCE.addTraceHandler(new RemoteTraceHandler());
+    //    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
 
     System.gc();
     startMemory = getUsedMemory();

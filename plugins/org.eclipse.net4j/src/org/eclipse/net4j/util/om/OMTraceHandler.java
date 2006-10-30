@@ -15,5 +15,23 @@ package org.eclipse.net4j.util.om;
  */
 public interface OMTraceHandler
 {
-  public void traced(OMTracer tracer, Class context, Object instance, String msg, Throwable t);
+  public void traced(Event event);
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface Event
+  {
+    public long getTimeStamp();
+
+    public OMTracer getTracer();
+
+    public Class getContext();
+
+    public Object getInstance();
+
+    public String getMessage();
+
+    public Throwable getThrowable();
+  }
 }

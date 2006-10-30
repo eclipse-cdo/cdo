@@ -13,7 +13,6 @@ package org.eclipse.net4j.util.om.trace;
 import org.eclipse.net4j.util.IOUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.OMTraceHandler;
-import org.eclipse.net4j.util.om.OMTracer;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -77,30 +76,31 @@ public class RemoteTraceHandler implements OMTraceHandler
     }
   }
 
-  public void traced(OMTracer tracer, Class context, Object instance, String msg, Throwable t)
+  public void traced(Event event)
   {
     try
     {
       OutputStream outputStream = socket.getOutputStream();
       DataOutputStream out = new DataOutputStream(outputStream);
 
+      out.writeLong(event.getTimeStamp());
       writeUTF(out, agentID);
-      writeUTF(out, tracer.getBundle().getBundleID());
-      writeUTF(out, tracer.getFullName());
-      writeUTF(out, context);
-      writeUTF(out, ReflectUtil.getLabel(instance));
-      writeUTF(out, msg);
-      if (t == null)
+      writeUTF(out, event.getTracer().getBundle().getBundleID());
+      writeUTF(out, event.getTracer().getFullName());
+      writeUTF(out, event.getContext() == null ? "" : event.getContext().getName());
+      writeUTF(out, ReflectUtil.getLabel(event.getInstance()));
+      writeUTF(out, event.getMessage());
+      if (event.getThrowable() == null)
       {
         out.writeBoolean(false);
       }
       else
       {
         out.writeBoolean(true);
-        String message = t.getMessage();
+        String message = event.getThrowable().getMessage();
         writeUTF(out, message);
 
-        StackTraceElement[] stackTrace = t.getStackTrace();
+        StackTraceElement[] stackTrace = event.getThrowable().getStackTrace();
         int size = stackTrace == null ? 0 : stackTrace.length;
         out.writeInt(size);
 
@@ -130,16 +130,6 @@ public class RemoteTraceHandler implements OMTraceHandler
   protected void writeUTF(DataOutputStream out, String str) throws IOException
   {
     out.writeUTF(str == null ? "" : str);
-  }
-
-  private void writeUTF(DataOutputStream out, Object object) throws IOException
-  {
-    writeUTF(out, object == null ? "" : object.toString());
-  }
-
-  private void writeUTF(DataOutputStream out, Class clazz) throws IOException
-  {
-    writeUTF(out, clazz == null ? "" : clazz.getName());
   }
 
   public static String uniqueAgentID()

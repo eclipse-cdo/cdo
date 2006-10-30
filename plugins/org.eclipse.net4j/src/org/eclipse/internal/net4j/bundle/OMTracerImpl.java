@@ -12,6 +12,7 @@ package org.eclipse.internal.net4j.bundle;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMTracer;
+import org.eclipse.net4j.util.om.OMTraceHandler.Event;
 
 import java.text.MessageFormat;
 
@@ -73,55 +74,62 @@ public class OMTracerImpl implements OMTracer
     bundle.setDebugOption(fullName, enabled);
   }
 
-  public void trace(Class context, Object instance, String msg, Throwable t)
+  public void trace(Event event)
   {
-    ((AbstractOMPlatform)bundle.getPlatform()).trace(this, context, instance, msg, t);
+    ((AbstractOMPlatform)bundle.getPlatform()).trace(event);
   }
 
-  public void trace(Class context, Object instance, String msg)
+  public Event trace(Class context, Object instance, String msg, Throwable t)
   {
-    trace(context, instance, msg, (Throwable)null);
+    Event event = new OMTraceHandlerEventImpl(this, context, instance, msg, t);
+    trace(event);
+    return event;
   }
 
-  public void trace(Class context, Object instance, Throwable t)
+  public Event trace(Class context, Object instance, String msg)
   {
-    trace(context, instance, t.getLocalizedMessage(), t);
+    return trace(context, instance, msg, (Throwable)null);
   }
 
-  public void trace(Class context, Object instance, String pattern, Object... args)
+  public Event trace(Class context, Object instance, Throwable t)
   {
-    trace(context, instance, pattern, (Throwable)null, args);
+    return trace(context, instance, t.getLocalizedMessage(), t);
   }
 
-  public void trace(Class context, Object instance, String pattern, Throwable t, Object... args)
+  public Event trace(Class context, Object instance, String pattern, Object... args)
+  {
+    return trace(context, instance, pattern, (Throwable)null, args);
+  }
+
+  public Event trace(Class context, Object instance, String pattern, Throwable t, Object... args)
   {
     String msg = MessageFormat.format(pattern, args);
-    trace(context, instance, msg, t);
+    return trace(context, instance, msg, t);
   }
 
-  public void trace(Class context, String pattern, Object... args)
+  public Event trace(Class context, String pattern, Object... args)
   {
-    trace(context, NO_INSTANCE, pattern, (Throwable)null, args);
+    return trace(context, NO_INSTANCE, pattern, (Throwable)null, args);
   }
 
-  public void trace(Class context, String pattern, Throwable t, Object... args)
+  public Event trace(Class context, String pattern, Throwable t, Object... args)
   {
-    trace(context, NO_INSTANCE, pattern, t, args);
+    return trace(context, NO_INSTANCE, pattern, t, args);
   }
 
-  public void trace(Class context, String msg, Throwable t)
+  public Event trace(Class context, String msg, Throwable t)
   {
-    trace(context, NO_INSTANCE, msg, t);
+    return trace(context, NO_INSTANCE, msg, t);
   }
 
-  public void trace(Class context, String msg)
+  public Event trace(Class context, String msg)
   {
-    trace(context, NO_INSTANCE, msg);
+    return trace(context, NO_INSTANCE, msg);
   }
 
-  public void trace(Class context, Throwable t)
+  public Event trace(Class context, Throwable t)
   {
-    trace(context, NO_INSTANCE, t);
+    return trace(context, NO_INSTANCE, t);
   }
 
   public OMTracer tracer(String name)

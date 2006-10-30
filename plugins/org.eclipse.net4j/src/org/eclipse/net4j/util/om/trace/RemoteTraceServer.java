@@ -19,6 +19,7 @@ import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Date;
 import java.util.EventObject;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -33,6 +34,8 @@ public class RemoteTraceServer
   public static final int DEFAULT_PORT = 2037;
 
   public static final int ANY_PORT = 0;
+
+  private static long lastEventID = 0;
 
   private int port;
 
@@ -142,13 +145,14 @@ public class RemoteTraceServer
 
   protected void handleTrace(DataInputStream in) throws IOException
   {
-    Event event = new Event(this);
+    Event event = new Event();
+    event.timeStamp = in.readLong();
     event.agentID = in.readUTF();
     event.bundleID = in.readUTF();
     event.tracerName = in.readUTF();
     event.context = in.readUTF();
     event.instance = in.readUTF();
-    event.msg = in.readUTF();
+    event.message = in.readUTF();
     if (in.readBoolean())
     {
       event.throwable = in.readUTF();
@@ -189,6 +193,10 @@ public class RemoteTraceServer
   {
     private static final long serialVersionUID = 1L;
 
+    private long id;
+
+    long timeStamp;
+
     String agentID;
 
     String bundleID;
@@ -199,20 +207,31 @@ public class RemoteTraceServer
 
     String instance;
 
-    String msg;
+    String message;
 
     String throwable;
 
     StackTraceElement[] stackTrace;
 
-    Event(RemoteTraceServer source)
+    Event()
     {
-      super(source);
+      super(RemoteTraceServer.this);
+      id = ++lastEventID;
     }
 
     public RemoteTraceServer getRemoteTraceServer()
     {
       return (RemoteTraceServer)source;
+    }
+
+    public long getID()
+    {
+      return id;
+    }
+
+    public long getTimeStamp()
+    {
+      return timeStamp;
     }
 
     public String getAgentID()
@@ -235,9 +254,9 @@ public class RemoteTraceServer
       return instance;
     }
 
-    public String getMsg()
+    public String getMessage()
     {
-      return msg;
+      return message;
     }
 
     public StackTraceElement[] getStackTrace()
@@ -274,8 +293,8 @@ public class RemoteTraceServer
       builder.append(", instance=");
       builder.append(instance);
 
-      builder.append(", msg=");
-      builder.append(msg);
+      builder.append(", message=");
+      builder.append(message);
 
       builder.append(", throwable=");
       builder.append(throwable);
@@ -286,6 +305,40 @@ public class RemoteTraceServer
       builder.append("]");
       return builder.toString();
     }
+
+    public String getText(int index)
+    {
+      switch (index)
+      {
+      case 0:
+        return Long.toString(id);
+      case 1:
+        return new Date(timeStamp).toString();
+      case 2:
+        return agentID;
+      case 3:
+        return bundleID;
+      case 4:
+        return tracerName;
+      case 5:
+        return context;
+      case 6:
+        return instance;
+      case 7:
+        return message;
+      case 8:
+        return throwable;
+      }
+
+      throw new IllegalArgumentException("Invalid index: " + index);
+    }
+
+    public boolean hasError()
+    {
+      return throwable != null && throwable.length() != 0 //
+          || stackTrace != null && stackTrace.length != 0;
+    }
+
   }
 
   /**
@@ -319,7 +372,7 @@ public class RemoteTraceServer
       stream.println(event.getTracerName());
       stream.println(event.getContext());
       stream.println(event.getInstance());
-      stream.println(event.getMsg());
+      stream.println(event.getMessage());
 
       String throwable = event.getThrowable();
       if (throwable != null && throwable.length() != 0)

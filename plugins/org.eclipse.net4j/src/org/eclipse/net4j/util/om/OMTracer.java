@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om;
 
+import org.eclipse.net4j.util.om.OMTraceHandler.Event;
+
 /**
  * @author Eike Stepper
  */
@@ -29,26 +31,27 @@ public interface OMTracer
 
   public void setEnabled(boolean enabled);
 
-  public void trace(Class context, Object instance, String pattern, Object... args);
+  public void trace(Event traceRecord);
 
-  public void trace(Class context, Object instance, String pattern, Throwable t, Object... args);
+  public Event trace(Class context, Object instance, String pattern, Object... args);
 
-  public void trace(Class context, Object instance, String msg, Throwable t);
+  public Event trace(Class context, Object instance, String pattern, Throwable t, Object... args);
 
-  public void trace(Class context, Object instance, String msg);
+  public Event trace(Class context, Object instance, String msg, Throwable t);
 
-  public void trace(Class context, Object instance, Throwable t);
+  public Event trace(Class context, Object instance, String msg);
 
-  public void trace(Class context, String pattern, Object... args);
+  public Event trace(Class context, Object instance, Throwable t);
 
-  public void trace(Class context, String pattern, Throwable t, Object... args);
+  public Event trace(Class context, String pattern, Object... args);
 
-  public void trace(Class context, String msg, Throwable t);
+  public Event trace(Class context, String pattern, Throwable t, Object... args);
 
-  public void trace(Class context, String msg);
+  public Event trace(Class context, String msg, Throwable t);
 
-  public void trace(Class context, Throwable t);
+  public Event trace(Class context, String msg);
+
+  public Event trace(Class context, Throwable t);
 
   public OMTracer tracer(String name);
-
 }

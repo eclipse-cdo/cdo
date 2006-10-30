@@ -15,8 +15,8 @@ import org.eclipse.net4j.util.om.OMLogHandler;
 import org.eclipse.net4j.util.om.OMLogger;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OMTraceHandler;
-import org.eclipse.net4j.util.om.OMTracer;
 import org.eclipse.net4j.util.om.OMLogger.Level;
+import org.eclipse.net4j.util.om.OMTraceHandler.Event;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.Map;
@@ -111,13 +111,13 @@ public abstract class AbstractOMPlatform implements OMPlatform
     }
   }
 
-  protected void trace(OMTracer tracer, Class context, Object instance, String msg, Throwable t)
+  protected void trace(Event event)
   {
     for (OMTraceHandler traceHandler : traceHandlers)
     {
       try
       {
-        traceHandler.traced(tracer, context, instance, msg, t);
+        traceHandler.traced(event);
       }
       catch (Exception ex)
       {

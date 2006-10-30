@@ -12,7 +12,6 @@ package org.eclipse.net4j.util.om.trace;
 
 import org.eclipse.net4j.util.IOUtil;
 import org.eclipse.net4j.util.om.OMTraceHandler;
-import org.eclipse.net4j.util.om.OMTracer;
 
 import java.io.PrintStream;
 
@@ -35,12 +34,12 @@ public class PrintTraceHandler implements OMTraceHandler
     this(IOUtil.OUT());
   }
 
-  public void traced(OMTracer tracer, Class context, Object instance, String msg, Throwable t)
+  public void traced(Event event)
   {
-    stream.println("[TRACE] " + msg); //$NON-NLS-1$
-    if (t != null)
+    stream.println("[TRACE] " + event.getMessage()); //$NON-NLS-1$
+    if (event.getThrowable() != null)
     {
-      IOUtil.print(t, stream);
+      IOUtil.print(event.getThrowable(), stream);
     }
   }
 }

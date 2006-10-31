@@ -93,13 +93,31 @@ public interface TestModel1Package extends EPackage
   int TREE_NODE__CHILDREN = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Parent2</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TREE_NODE__PARENT2 = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Children2</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TREE_NODE__CHILDREN2 = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 3;
+
+  /**
    * The feature id for the '<em><b>References</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TREE_NODE__REFERENCES = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 2;
+  int TREE_NODE__REFERENCES = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Boolean Feature</b></em>' attribute.
@@ -108,7 +126,7 @@ public interface TestModel1Package extends EPackage
    * @generated
    * @ordered
    */
-  int TREE_NODE__BOOLEAN_FEATURE = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 3;
+  int TREE_NODE__BOOLEAN_FEATURE = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Int Feature</b></em>' attribute.
@@ -117,7 +135,7 @@ public interface TestModel1Package extends EPackage
    * @generated
    * @ordered
    */
-  int TREE_NODE__INT_FEATURE = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 4;
+  int TREE_NODE__INT_FEATURE = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>String Feature</b></em>' attribute.
@@ -126,7 +144,7 @@ public interface TestModel1Package extends EPackage
    * @generated
    * @ordered
    */
-  int TREE_NODE__STRING_FEATURE = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 5;
+  int TREE_NODE__STRING_FEATURE = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 7;
 
   /**
    * The number of structural features of the '<em>Tree Node</em>' class.
@@ -135,7 +153,7 @@ public interface TestModel1Package extends EPackage
    * @generated
    * @ordered
    */
-  int TREE_NODE_FEATURE_COUNT = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 6;
+  int TREE_NODE_FEATURE_COUNT = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 8;
 
   /**
    * The meta object id for the '{@link testmodel1.impl.ExtendedNodeImpl <em>Extended Node</em>}' class.
@@ -164,6 +182,24 @@ public interface TestModel1Package extends EPackage
    * @ordered
    */
   int EXTENDED_NODE__CHILDREN = TREE_NODE__CHILDREN;
+
+  /**
+   * The feature id for the '<em><b>Parent2</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__PARENT2 = TREE_NODE__PARENT2;
+
+  /**
+   * The feature id for the '<em><b>Children2</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__CHILDREN2 = TREE_NODE__CHILDREN2;
 
   /**
    * The feature id for the '<em><b>References</b></em>' reference list.
@@ -266,6 +302,24 @@ public interface TestModel1Package extends EPackage
   int EMPTY_NODE__CHILDREN = TREE_NODE__CHILDREN;
 
   /**
+   * The feature id for the '<em><b>Parent2</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_NODE__PARENT2 = TREE_NODE__PARENT2;
+
+  /**
+   * The feature id for the '<em><b>Children2</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_NODE__CHILDREN2 = TREE_NODE__CHILDREN2;
+
+  /**
    * The feature id for the '<em><b>References</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -337,6 +391,24 @@ public interface TestModel1Package extends EPackage
    * @ordered
    */
   int EMPTY_REF_NODE__CHILDREN = TREE_NODE__CHILDREN;
+
+  /**
+   * The feature id for the '<em><b>Parent2</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_REF_NODE__PARENT2 = TREE_NODE__PARENT2;
+
+  /**
+   * The feature id for the '<em><b>Children2</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_REF_NODE__CHILDREN2 = TREE_NODE__CHILDREN2;
 
   /**
    * The feature id for the '<em><b>References</b></em>' reference list.
@@ -423,6 +495,28 @@ public interface TestModel1Package extends EPackage
    * @generated
    */
   EReference getTreeNode_Children();
+
+  /**
+   * Returns the meta object for the container reference '{@link testmodel1.TreeNode#getParent2 <em>Parent2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the container reference '<em>Parent2</em>'.
+   * @see testmodel1.TreeNode#getParent2()
+   * @see #getTreeNode()
+   * @generated
+   */
+  EReference getTreeNode_Parent2();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link testmodel1.TreeNode#getChildren2 <em>Children2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Children2</em>'.
+   * @see testmodel1.TreeNode#getChildren2()
+   * @see #getTreeNode()
+   * @generated
+   */
+  EReference getTreeNode_Children2();
 
   /**
    * Returns the meta object for the reference list '{@link testmodel1.TreeNode#getReferences <em>References</em>}'.
@@ -591,6 +685,22 @@ public interface TestModel1Package extends EPackage
      * @generated
      */
     EReference TREE_NODE__CHILDREN = eINSTANCE.getTreeNode_Children();
+
+    /**
+     * The meta object literal for the '<em><b>Parent2</b></em>' container reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TREE_NODE__PARENT2 = eINSTANCE.getTreeNode_Parent2();
+
+    /**
+     * The meta object literal for the '<em><b>Children2</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TREE_NODE__CHILDREN2 = eINSTANCE.getTreeNode_Children2();
 
     /**
      * The meta object literal for the '<em><b>References</b></em>' reference list feature.

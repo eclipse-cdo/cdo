@@ -13,6 +13,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
+import testmodel1.*;
+
 import testmodel1.EmptyNode;
 import testmodel1.EmptyRefNode;
 import testmodel1.ExtendedNode;

@@ -170,7 +170,7 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTreeNode_References()
+  public EReference getTreeNode_Parent2()
   {
     return (EReference) treeNodeEClass.getEStructuralFeatures().get(2);
   }
@@ -180,9 +180,29 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getTreeNode_Children2()
+  {
+    return (EReference) treeNodeEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTreeNode_References()
+  {
+    return (EReference) treeNodeEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getTreeNode_BooleanFeature()
   {
-    return (EAttribute) treeNodeEClass.getEStructuralFeatures().get(3);
+    return (EAttribute) treeNodeEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -192,7 +212,7 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
    */
   public EAttribute getTreeNode_IntFeature()
   {
-    return (EAttribute) treeNodeEClass.getEStructuralFeatures().get(4);
+    return (EAttribute) treeNodeEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -202,7 +222,7 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
    */
   public EAttribute getTreeNode_StringFeature()
   {
-    return (EAttribute) treeNodeEClass.getEStructuralFeatures().get(5);
+    return (EAttribute) treeNodeEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -308,6 +328,8 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
     treeNodeEClass = createEClass(TREE_NODE);
     createEReference(treeNodeEClass, TREE_NODE__PARENT);
     createEReference(treeNodeEClass, TREE_NODE__CHILDREN);
+    createEReference(treeNodeEClass, TREE_NODE__PARENT2);
+    createEReference(treeNodeEClass, TREE_NODE__CHILDREN2);
     createEReference(treeNodeEClass, TREE_NODE__REFERENCES);
     createEAttribute(treeNodeEClass, TREE_NODE__BOOLEAN_FEATURE);
     createEAttribute(treeNodeEClass, TREE_NODE__INT_FEATURE);
@@ -366,6 +388,12 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTreeNode_Children(), this.getTreeNode(), this.getTreeNode_Parent(),
         "children", null, 0, -1, TreeNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTreeNode_Parent2(), this.getTreeNode(), this.getTreeNode_Children2(),
+        "parent2", null, 0, 1, TreeNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTreeNode_Children2(), this.getTreeNode(), this.getTreeNode_Parent2(),
+        "children2", null, 0, -1, TreeNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTreeNode_References(), this.getTreeNode(), null, "references", null, 0, -1,
         TreeNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,

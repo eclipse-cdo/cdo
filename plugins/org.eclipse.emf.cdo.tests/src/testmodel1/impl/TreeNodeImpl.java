@@ -35,6 +35,8 @@ import java.util.Collection;
  * <ul>
  *   <li>{@link testmodel1.impl.TreeNodeImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link testmodel1.impl.TreeNodeImpl#getChildren <em>Children</em>}</li>
+ *   <li>{@link testmodel1.impl.TreeNodeImpl#getParent2 <em>Parent2</em>}</li>
+ *   <li>{@link testmodel1.impl.TreeNodeImpl#getChildren2 <em>Children2</em>}</li>
  *   <li>{@link testmodel1.impl.TreeNodeImpl#getReferences <em>References</em>}</li>
  *   <li>{@link testmodel1.impl.TreeNodeImpl#isBooleanFeature <em>Boolean Feature</em>}</li>
  *   <li>{@link testmodel1.impl.TreeNodeImpl#getIntFeature <em>Int Feature</em>}</li>
@@ -55,6 +57,16 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    * @ordered
    */
   protected EList children = null;
+
+  /**
+   * The cached value of the '{@link #getChildren2() <em>Children2</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getChildren2()
+   * @generated
+   * @ordered
+   */
+  protected EList children2 = null;
 
   /**
    * The cached value of the '{@link #getReferences() <em>References</em>}' reference list.
@@ -218,6 +230,73 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    * <!-- end-user-doc -->
    * @generated
    */
+  public TreeNode getParent2()
+  {
+    cdoLoad();
+    if (eContainerFeatureID != TestModel1Package.TREE_NODE__PARENT2) return null;
+    return (TreeNode) eContainer();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetParent2(TreeNode newParent2, NotificationChain msgs)
+  {
+    cdoLoad();
+    msgs = eBasicSetContainer((InternalEObject) newParent2, TestModel1Package.TREE_NODE__PARENT2,
+        msgs);
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setParent2(TreeNode newParent2)
+  {
+
+    if (newParent2 != eInternalContainer()
+        || (eContainerFeatureID != TestModel1Package.TREE_NODE__PARENT2 && newParent2 != null))
+    {
+      if (EcoreUtil.isAncestor(this, newParent2))
+        throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      NotificationChain msgs = null;
+      if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+      if (newParent2 != null)
+        msgs = ((InternalEObject) newParent2).eInverseAdd(this,
+            TestModel1Package.TREE_NODE__CHILDREN2, TreeNode.class, msgs);
+      msgs = basicSetParent2(newParent2, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, TestModel1Package.TREE_NODE__PARENT2,
+          newParent2, newParent2));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList getChildren2()
+  {
+    cdoLoad();
+    if (children2 == null)
+    {
+      children2 = new EObjectContainmentWithInverseEList(TreeNode.class, this,
+          TestModel1Package.TREE_NODE__CHILDREN2, TestModel1Package.TREE_NODE__PARENT2);
+    }
+    return children2;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList getReferences()
   {
     cdoLoad();
@@ -322,6 +401,11 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
         return basicSetParent((TreeNode) otherEnd, msgs);
       case TestModel1Package.TREE_NODE__CHILDREN:
         return ((InternalEList) getChildren()).basicAdd(otherEnd, msgs);
+      case TestModel1Package.TREE_NODE__PARENT2:
+        if (eInternalContainer() != null) msgs = eBasicRemoveFromContainer(msgs);
+        return basicSetParent2((TreeNode) otherEnd, msgs);
+      case TestModel1Package.TREE_NODE__CHILDREN2:
+        return ((InternalEList) getChildren2()).basicAdd(otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -340,6 +424,10 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
         return basicSetParent(null, msgs);
       case TestModel1Package.TREE_NODE__CHILDREN:
         return ((InternalEList) getChildren()).basicRemove(otherEnd, msgs);
+      case TestModel1Package.TREE_NODE__PARENT2:
+        return basicSetParent2(null, msgs);
+      case TestModel1Package.TREE_NODE__CHILDREN2:
+        return ((InternalEList) getChildren2()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -355,6 +443,9 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
     {
       case TestModel1Package.TREE_NODE__PARENT:
         return eInternalContainer().eInverseRemove(this, TestModel1Package.TREE_NODE__CHILDREN,
+            TreeNode.class, msgs);
+      case TestModel1Package.TREE_NODE__PARENT2:
+        return eInternalContainer().eInverseRemove(this, TestModel1Package.TREE_NODE__CHILDREN2,
             TreeNode.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
@@ -373,6 +464,10 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
         return getParent();
       case TestModel1Package.TREE_NODE__CHILDREN:
         return getChildren();
+      case TestModel1Package.TREE_NODE__PARENT2:
+        return getParent2();
+      case TestModel1Package.TREE_NODE__CHILDREN2:
+        return getChildren2();
       case TestModel1Package.TREE_NODE__REFERENCES:
         return getReferences();
       case TestModel1Package.TREE_NODE__BOOLEAN_FEATURE:
@@ -400,6 +495,13 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
       case TestModel1Package.TREE_NODE__CHILDREN:
         getChildren().clear();
         getChildren().addAll((Collection) newValue);
+        return;
+      case TestModel1Package.TREE_NODE__PARENT2:
+        setParent2((TreeNode) newValue);
+        return;
+      case TestModel1Package.TREE_NODE__CHILDREN2:
+        getChildren2().clear();
+        getChildren2().addAll((Collection) newValue);
         return;
       case TestModel1Package.TREE_NODE__REFERENCES:
         getReferences().clear();
@@ -433,6 +535,12 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
       case TestModel1Package.TREE_NODE__CHILDREN:
         getChildren().clear();
         return;
+      case TestModel1Package.TREE_NODE__PARENT2:
+        setParent2((TreeNode) null);
+        return;
+      case TestModel1Package.TREE_NODE__CHILDREN2:
+        getChildren2().clear();
+        return;
       case TestModel1Package.TREE_NODE__REFERENCES:
         getReferences().clear();
         return;
@@ -462,6 +570,10 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
         return getParent() != null;
       case TestModel1Package.TREE_NODE__CHILDREN:
         return children != null && !children.isEmpty();
+      case TestModel1Package.TREE_NODE__PARENT2:
+        return getParent2() != null;
+      case TestModel1Package.TREE_NODE__CHILDREN2:
+        return children2 != null && !children2.isEmpty();
       case TestModel1Package.TREE_NODE__REFERENCES:
         return references != null && !references.isEmpty();
       case TestModel1Package.TREE_NODE__BOOLEAN_FEATURE:

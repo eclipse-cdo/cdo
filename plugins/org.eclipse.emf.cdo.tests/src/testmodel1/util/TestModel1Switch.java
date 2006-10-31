@@ -13,6 +13,8 @@ import org.eclipse.emf.cdo.client.CDOPersistent;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
+import testmodel1.*;
+
 import testmodel1.EmptyNode;
 import testmodel1.EmptyRefNode;
 import testmodel1.ExtendedNode;

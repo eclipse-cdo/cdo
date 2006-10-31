@@ -8,6 +8,10 @@
         eOpposite="#//TreeNode/children"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
         eType="#//TreeNode" containment="true" eOpposite="#//TreeNode/parent"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent2" eType="#//TreeNode"
+        eOpposite="#//TreeNode/children2"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children2" upperBound="-1"
+        eType="#//TreeNode" containment="true" eOpposite="#//TreeNode/parent2"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="references" upperBound="-1"
         eType="#//TreeNode"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="booleanFeature" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>

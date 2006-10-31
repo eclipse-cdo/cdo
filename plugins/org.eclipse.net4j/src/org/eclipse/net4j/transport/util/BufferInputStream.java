@@ -37,7 +37,7 @@ public class BufferInputStream extends InputStream implements BufferHandler
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM,
       BufferInputStream.class);
 
-  private BlockingQueue<Buffer> buffers = new LinkedBlockingQueue<Buffer>();
+  private BlockingQueue<Buffer> buffers = new LinkedBlockingQueue();
 
   private Buffer currentBuffer;
 
@@ -67,8 +67,7 @@ public class BufferInputStream extends InputStream implements BufferHandler
       return -1;
     }
 
-    final byte b = currentBuffer.getByteBuffer().get();
-    final int result = b < 0 ? ~b : b;
+    final int result = currentBuffer.getByteBuffer().get() & 0xff;
     if (TRACER.isEnabled())
     {
       TRACER.trace(this, "<-- " + HexUtil.toHex(result) //$NON-NLS-1$

@@ -25,7 +25,10 @@ import org.eclipse.emf.cdo.server.protocol.ServerCDOResProtocolImpl;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import org.eclipse.net4j.signal.SignalProtocol;
+import org.eclipse.net4j.transport.BufferHandler;
 import org.eclipse.net4j.transport.BufferProvider;
+import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.tcp.TCPAcceptor;
@@ -40,15 +43,39 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import javax.sql.DataSource;
 
 
 public class ClientServerTopology implements ITopology
 {
-  public static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
+  public static final ThreadGroup ACCEPTOR_GROUP = new ThreadGroup("acceptor");
+
+  public static final ThreadGroup CONNECTOR_GROUP = new ThreadGroup("connector");
+
+  public static final ExecutorService ACCEPTOR_POOL = Executors
+      .newCachedThreadPool(new ThreadFactory()
+      {
+        public Thread newThread(Runnable r)
+        {
+          return new Thread(ACCEPTOR_GROUP, r);
+        }
+      });
+
+  public static final ExecutorService CONNECTOR_POOL = Executors
+      .newCachedThreadPool(new ThreadFactory()
+      {
+        public Thread newThread(Runnable r)
+        {
+          return new Thread(CONNECTOR_GROUP, r);
+        }
+      });
 
   private AttributeConverterImpl attributeConverter;
 
@@ -81,6 +108,10 @@ public class ClientServerTopology implements ITopology
   private TransactionTemplate transactionTemplate;
 
   private JdbcTemplate jdbcTemplate;
+
+  private MapperImpl mapper;
+
+  private List<ResourceManager> resourceManagers = new ArrayList();
 
   public ClientServerTopology()
   {
@@ -121,7 +152,7 @@ public class ClientServerTopology implements ITopology
     jdbcTemplate = new JdbcTemplate();
     jdbcTemplate.setDataSource(dataSource);
 
-    MapperImpl mapper = new MapperImpl();
+    mapper = new MapperImpl();
     mapper.setColumnConverter(columnConverter);
     mapper.setDataSource(dataSource);
     mapper.setJdbcTemplate(jdbcTemplate);
@@ -135,6 +166,7 @@ public class ClientServerTopology implements ITopology
     transactionManager.setDataSource(dataSource);
 
     transactionTemplate = new TransactionTemplate();
+    transactionTemplate.setTransactionManager(transactionManager);
 
     serverRegistry = new HashMapRegistry();
     serverRegistry.register(new ServerCDOResProtocolImpl.Factory(mapper, transactionTemplate));
@@ -142,7 +174,7 @@ public class ClientServerTopology implements ITopology
 
     acceptor = Net4jUtil.createTCPAcceptor(bufferPool, selector);
     acceptor.setProtocolFactoryRegistry(serverRegistry);
-    acceptor.setReceiveExecutor(THREAD_POOL);
+    acceptor.setReceiveExecutor(ACCEPTOR_POOL);
     LifecycleUtil.activate(acceptor);
 
     // Client
@@ -156,34 +188,80 @@ public class ClientServerTopology implements ITopology
     LifecycleUtil.activate(clientPackageManager);
 
     clientRegistry = new HashMapRegistry();
-    clientRegistry.register(new ClientCDOProtocolImpl.Factory());
+    clientRegistry.register(new ClientCDOProtocolImpl.Factory(clientPackageManager));
     clientRegistry.register(new ClientCDOResProtocolImpl.Factory());
 
     connector = Net4jUtil.createTCPConnector(bufferPool, selector, "localhost");
     connector.setProtocolFactoryRegistry(clientRegistry);
-    connector.setReceiveExecutor(THREAD_POOL);
+    connector.setReceiveExecutor(CONNECTOR_POOL);
     LifecycleUtil.activate(connector);
   }
 
   public void stop() throws Exception
   {
+    for (ResourceManager resourceManager : resourceManagers)
+    {
+      LifecycleUtil.deactivate(resourceManager);
+    }
+
+    resourceManagers.clear();
+    resourceManagers = null;
+
     LifecycleUtil.deactivate(connector);
     connector = null;
+
+    clientRegistry = null;
+
+    LifecycleUtil.deactivate(clientPackageManager);
+    clientPackageManager = null;
+
+    LifecycleUtil.deactivate(attributeConverter);
+    attributeConverter = null;
+
+    LifecycleUtil.deactivate(acceptor);
+    acceptor = null;
+
+    serverRegistry = null;
+    transactionTemplate = null;
+    transactionManager = null;
+
+    LifecycleUtil.deactivate(mapper);
+    mapper = null;
+
+    jdbcTemplate = null;
+    dataSource = null;
+
+    LifecycleUtil.deactivate(serverResourceManager);
+    serverResourceManager = null;
+
+    LifecycleUtil.deactivate(serverPackageManager);
+    serverPackageManager = null;
+
+    LifecycleUtil.deactivate(columnConverter);
+    columnConverter = null;
+
+    LifecycleUtil.deactivate(oidEncoder);
+    oidEncoder = null;
 
     LifecycleUtil.deactivate(selector);
     selector = null;
 
     LifecycleUtil.deactivate(bufferPool);
     bufferPool = null;
+  }
 
-    LifecycleUtil.deactivate(clientPackageManager);
-    clientPackageManager = null;
-
-    LifecycleUtil.deactivate(oidEncoder);
-    oidEncoder = null;
-
-    LifecycleUtil.deactivate(attributeConverter);
-    attributeConverter = null;
+  public void waitForSignals()
+  {
+    Collection<Channel> channels = Channel.REGISTRY.getElements();
+    for (Channel channel : channels)
+    {
+      BufferHandler receiveHandler = channel.getReceiveHandler();
+      if (receiveHandler instanceof SignalProtocol)
+      {
+        SignalProtocol signalProtocol = (SignalProtocol) receiveHandler;
+        signalProtocol.waitForSignals(2000);
+      }
+    }
   }
 
   public ResourceManager createResourceManager(ResourceSet resourceSet) throws Exception
@@ -193,6 +271,7 @@ public class ClientServerTopology implements ITopology
     resourceManager.setPackageManager(clientPackageManager);
     resourceManager.setResourceSet(resourceSet);
     LifecycleUtil.activate(resourceManager);
+    resourceManagers.add(resourceManager);
     return resourceManager;
   }
 

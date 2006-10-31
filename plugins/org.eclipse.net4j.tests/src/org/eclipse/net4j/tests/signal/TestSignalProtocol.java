@@ -75,7 +75,7 @@ public class TestSignalProtocol extends SignalProtocol
       return ProtocolFactory.SYMMETRIC;
     }
 
-    public Protocol createProtocol(Channel channel)
+    public Protocol createProtocol(Channel channel, Object protocolData)
     {
       return new TestSignalProtocol(channel);
     }

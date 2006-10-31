@@ -219,7 +219,7 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
       this.transactionTemplate = transactionTemplate;
     }
 
-    public Protocol createProtocol(Channel channel)
+    public Protocol createProtocol(Channel channel, Object protocolData)
     {
       try
       {

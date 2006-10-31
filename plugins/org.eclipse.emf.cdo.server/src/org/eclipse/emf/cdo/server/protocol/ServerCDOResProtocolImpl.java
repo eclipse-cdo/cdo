@@ -176,7 +176,7 @@ public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
       this.transactionTemplate = transactionTemplate;
     }
 
-    public Protocol createProtocol(Channel channel)
+    public Protocol createProtocol(Channel channel, Object protocolData)
     {
       try
       {

@@ -22,8 +22,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
-import org.eclipse.net4j.util.om.trace.RemoteTraceHandler;
-import org.eclipse.net4j.util.om.trace.RemoteTraceServer;
+import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -42,9 +41,11 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
 
   private long startMemory;
 
-  private String label;
+  private long startTime;
 
-  private RemoteTraceServer remoteTraceServer;
+  private long runTime;
+
+  private String label;
 
   public String getMode()
   {
@@ -69,13 +70,14 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
   @Override
   protected void setUp() throws Exception
   {
+    startTime = System.currentTimeMillis();
     //    remoteTraceServer = new RemoteTraceServer();
     //    remoteTraceServer.addListener(RemoteTraceServer.PrintListener.CONSOLE);
 
     OMPlatform.INSTANCE.setDebugging(true);
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
-    OMPlatform.INSTANCE.addTraceHandler(new RemoteTraceHandler());
-    //    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
+    //    OMPlatform.INSTANCE.addTraceHandler(new RemoteTraceHandler());
+    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
 
     System.gc();
     startMemory = getUsedMemory();
@@ -88,12 +90,19 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
 
     super.setUp();
     topology.start();
+
+    startTime = System.currentTimeMillis() - startTime;
+    runTime = System.currentTimeMillis();
   }
 
   @Override
   protected void tearDown() throws Exception
   {
-    Thread.sleep(200);
+    topology.waitForSignals();
+    runTime = System.currentTimeMillis() - runTime;
+    long stopTime = System.currentTimeMillis();
+
+    Thread.sleep(50);
     JdbcTemplate jdbc = jdbc();
     wipeDatabase(jdbc);
 
@@ -103,8 +112,12 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
 
     System.gc();
     long endMemory = getUsedMemory();
+    stopTime = System.currentTimeMillis() - stopTime;
 
-    System.out.println("Memory-Delta " + getRun() + "\t " + (endMemory - startMemory));
+    String run = getRun();
+    System.out.println("Runtime-Stat " + run + "\t " + startTime + "\t " + runTime + "\t "
+        + stopTime);
+    System.out.println("Memory-Delta " + run + "\t " + (endMemory - startMemory));
     System.out.println("=========================================================================");
     System.out.println("TC_END " + label);
     System.out.println("=========================================================================");

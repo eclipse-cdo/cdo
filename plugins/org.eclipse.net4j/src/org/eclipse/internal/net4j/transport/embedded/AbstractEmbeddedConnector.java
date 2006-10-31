@@ -49,7 +49,7 @@ public abstract class AbstractEmbeddedConnector extends AbstractConnector
   {
     try
     {
-      ChannelImpl channel = getPeer().createChannel(channelIndex, protocolID);
+      ChannelImpl channel = getPeer().createChannel(channelIndex, protocolID, null);
       if (channel == null)
       {
         throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$

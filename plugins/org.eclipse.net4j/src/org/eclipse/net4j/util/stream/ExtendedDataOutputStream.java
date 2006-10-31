@@ -32,6 +32,13 @@ public class ExtendedDataOutputStream extends DataOutputStream implements Extend
 
   public void writeString(String str) throws IOException
   {
-    writeByteArray(str.getBytes());
+    if (str != null)
+    {
+      writeByteArray(str.getBytes());
+    }
+    else
+    {
+      writeInt(-1);
+    }
   }
 }

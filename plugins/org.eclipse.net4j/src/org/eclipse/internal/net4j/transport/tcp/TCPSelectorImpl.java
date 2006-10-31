@@ -36,7 +36,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SELECTOR,
       TCPSelectorImpl.class);
 
-  private static final long SELECT_TIMEOUT = 100;
+  private static final long SELECT_TIMEOUT = 2;
 
   private Selector selector;
 
@@ -204,7 +204,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
 
     try
     {
-      thread.join(2 * SELECT_TIMEOUT);
+      thread.join(2 * SELECT_TIMEOUT + 200);
     }
     catch (RuntimeException ex)
     {

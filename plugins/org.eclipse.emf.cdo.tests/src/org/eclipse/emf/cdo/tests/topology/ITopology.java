@@ -29,4 +29,6 @@ public interface ITopology
   public ResourceManager createResourceManager(ResourceSet resourceSet) throws Exception;
 
   public DataSource getDataSource();
+
+  public void waitForSignals();
 }

@@ -100,6 +100,8 @@ public interface Connector extends IRegistryElement<Integer>
    */
   public Channel openChannel(String protocolID) throws ConnectorException;
 
+  public Channel openChannel(String protocolID, Object protocolData) throws ConnectorException;
+
   /**
    * Returns the {@link IRegistry} of {@link ProtocolFactory}s associated with
    * this connector.

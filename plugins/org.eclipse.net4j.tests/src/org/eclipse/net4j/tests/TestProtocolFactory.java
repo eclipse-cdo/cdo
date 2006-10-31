@@ -46,7 +46,7 @@ public class TestProtocolFactory extends AbstractProtocolFactory implements Prot
     return ProtocolFactory.SYMMETRIC;
   }
 
-  public Protocol createProtocol(Channel channel)
+  public Protocol createProtocol(Channel channel, Object protocolData)
   {
     return new TestProtocol(channel);
   }

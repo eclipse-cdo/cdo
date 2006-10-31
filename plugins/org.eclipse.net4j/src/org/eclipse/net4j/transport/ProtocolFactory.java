@@ -38,5 +38,5 @@ public interface ProtocolFactory extends IRegistryElement<String>
 
   public boolean isSymmetric();
 
-  public Protocol createProtocol(Channel channel);
+  public Protocol createProtocol(Channel channel, Object protocolData);
 }

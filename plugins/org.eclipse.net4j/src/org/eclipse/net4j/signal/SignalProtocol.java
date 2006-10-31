@@ -67,6 +67,26 @@ public abstract class SignalProtocol extends AbstractProtocol
     this(channel, ((ChannelImpl)channel).getReceiveExecutor());
   }
 
+  public boolean waitForSignals(long timeout)
+  {
+    synchronized (signals)
+    {
+      while (!signals.isEmpty())
+      {
+        try
+        {
+          signals.wait(timeout);
+        }
+        catch (InterruptedException ex)
+        {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   public void handleBuffer(Buffer buffer)
   {
     ByteBuffer byteBuffer = buffer.getByteBuffer();
@@ -149,6 +169,11 @@ public abstract class SignalProtocol extends AbstractProtocol
   {
     int correlationID = signal.getCorrelationID();
     signals.remove(correlationID);
+
+    synchronized (signals)
+    {
+      signals.notifyAll();
+    }
   }
 
   int getNextCorrelationID()

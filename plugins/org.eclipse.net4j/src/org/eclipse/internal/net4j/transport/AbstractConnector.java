@@ -348,8 +348,13 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
 
   public Channel openChannel(String protocolID) throws ConnectorException
   {
+    return openChannel(protocolID, null);
+  }
+
+  public Channel openChannel(String protocolID, Object protocolData) throws ConnectorException
+  {
     short channelIndex = findFreeChannelIndex();
-    ChannelImpl channel = createChannel(channelIndex, protocolID);
+    ChannelImpl channel = createChannel(channelIndex, protocolID, protocolData);
     registerChannelWithPeer(channelIndex, protocolID);
 
     try
@@ -368,10 +373,10 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     return channel;
   }
 
-  public ChannelImpl createChannel(short channelIndex, String protocolID)
+  public ChannelImpl createChannel(short channelIndex, String protocolID, Object protocolData)
   {
     ChannelImpl channel = new ChannelImpl(receiveExecutor);
-    Protocol protocol = createProtocol(protocolID, channel);
+    Protocol protocol = createProtocol(protocolID, channel, protocolData);
     if (TRACER.isEnabled())
     {
       TRACER.trace(this, "Opening channel " + channelIndex //$NON-NLS-1$
@@ -391,9 +396,9 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     try
     {
       ChannelImpl channel = channels.get(channelIndex);
-      if (channel == null || channel == NULL_CHANNEL)
+      if (channel == NULL_CHANNEL)
       {
-        throw new NullPointerException();
+        channel = null;
       }
 
       return channel;
@@ -467,7 +472,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     channels.set(channelIndex, NULL_CHANNEL);
   }
 
-  protected Protocol createProtocol(String protocolID, Channel channel)
+  protected Protocol createProtocol(String protocolID, Channel channel, Object protocolData)
   {
     if (protocolID == null || protocolID.length() == 0)
     {
@@ -491,7 +496,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
       return null;
     }
 
-    return factory.createProtocol(channel);
+    return factory.createProtocol(channel, protocolData);
   }
 
   protected void fireChannelAboutToOpen(Channel channel)

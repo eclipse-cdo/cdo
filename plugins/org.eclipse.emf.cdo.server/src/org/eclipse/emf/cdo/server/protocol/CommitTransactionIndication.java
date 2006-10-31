@@ -654,11 +654,13 @@ public class CommitTransactionIndication extends IndicationWithResponse
 
   private void transmitResourceChanges()
   {
-    if (!newResources.isEmpty())
-    {
-      ServerCDOProtocol cdo = (ServerCDOProtocol) getProtocol();
-      ServerCDOResProtocol cdores = cdo.getServerCDOResProtocol();
-      cdores.fireResourcesChangedNotification(newResources);
-    }
+    CDOServer.LOG.warn("NOT IMPLEMENTED");
+    //XXX
+    //    if (!newResources.isEmpty())
+    //    {
+    //      ServerCDOProtocol cdo = (ServerCDOProtocol) getProtocol();
+    //      ServerCDOResProtocol cdores = cdo.getServerCDOResProtocol();
+    //      cdores.fireResourcesChangedNotification(newResources);
+    //    }
   }
 }

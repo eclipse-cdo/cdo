@@ -75,7 +75,7 @@ public class BufferOutputStream extends OutputStream
     }
 
     ByteBuffer buffer = currentBuffer.getByteBuffer();
-    buffer.put((byte)(b > Byte.MAX_VALUE ? ~(b + Byte.MIN_VALUE) : b));
+    buffer.put((byte)b);
 
     if (!buffer.hasRemaining())
     {

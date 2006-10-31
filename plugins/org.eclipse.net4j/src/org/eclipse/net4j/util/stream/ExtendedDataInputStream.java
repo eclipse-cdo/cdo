@@ -27,6 +27,11 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
   public byte[] readByteArray() throws IOException
   {
     int length = readInt();
+    if (length < 0)
+    {
+      throw new IndexOutOfBoundsException();
+    }
+
     byte[] b = new byte[length];
     read(b);
     return b;
@@ -34,6 +39,13 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
 
   public String readString() throws IOException
   {
-    return new String(readByteArray());
+    try
+    {
+      return new String(readByteArray());
+    }
+    catch (IndexOutOfBoundsException ex)
+    {
+      return null;
+    }
   }
 }

@@ -105,7 +105,7 @@ public final class ControlChannelImpl extends ChannelImpl
           byte[] handlerFactoryUTF8 = BufferUtil.getByteArray(byteBuffer);
           String protocolID = BufferUtil.fromUTF8(handlerFactoryUTF8);
           ChannelImpl channel = ((AbstractTCPConnector)getConnector()).createChannel(channelIndex,
-              protocolID);
+              protocolID, null);
           if (channel != null)
           {
             channel.activate();

@@ -100,9 +100,10 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
   {
     topology.waitForSignals();
     runTime = System.currentTimeMillis() - runTime;
+
+    Thread.sleep(100);
     long stopTime = System.currentTimeMillis();
 
-    Thread.sleep(50);
     JdbcTemplate jdbc = jdbc();
     wipeDatabase(jdbc);
 

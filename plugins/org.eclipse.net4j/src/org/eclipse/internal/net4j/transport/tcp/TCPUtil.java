@@ -67,6 +67,11 @@ public final class TCPUtil
 
   public static void setInterest(SelectionKey selectionKey, int operation, boolean interested)
   {
+    if (selectionKey == null || !selectionKey.isValid())
+    {
+      return;
+    }
+
     int newOps;
     int oldOps = selectionKey.interestOps();
     if (interested)
@@ -87,6 +92,7 @@ public final class TCPUtil
       }
 
       selectionKey.interestOps(newOps);
+      selectionKey.selector().wakeup();
     }
   }
 

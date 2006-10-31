@@ -200,6 +200,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
   @Override
   protected void onDeactivate() throws Exception
   {
+    selector.wakeup();
     Exception exception = null;
 
     try

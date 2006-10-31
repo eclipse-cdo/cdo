@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.transport.tcp;
 
-import java.nio.channels.ClosedChannelException;
-import java.nio.channels.SelectionKey;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
@@ -20,9 +18,15 @@ import java.nio.channels.SocketChannel;
  */
 public interface TCPSelector
 {
-  public SelectionKey register(ServerSocketChannel channel, TCPSelectorListener.Passive listener)
-      throws ClosedChannelException;
+  public void invokeLater(Runnable operation);
 
-  public SelectionKey register(SocketChannel channel, TCPSelectorListener.Active listener)
-      throws ClosedChannelException;
+  public void register(ServerSocketChannel channel, TCPSelectorListener.Passive listener);
+
+  public void register(SocketChannel channel, TCPSelectorListener.Active listener);
+
+  public void setConnectInterest(SocketChannel channel, boolean on);
+
+  public void setReadInterest(SocketChannel channel, boolean on);
+
+  public void setWriteInterest(SocketChannel channel, boolean on);
 }

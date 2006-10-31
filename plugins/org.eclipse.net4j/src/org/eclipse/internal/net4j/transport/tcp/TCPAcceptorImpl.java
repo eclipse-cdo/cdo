@@ -34,7 +34,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.channels.Channel;
 import java.nio.channels.ClosedByInterruptException;
-import java.nio.channels.SelectionKey;
+import java.nio.channels.ClosedChannelException;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
@@ -64,8 +64,6 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
   private int listenPort = DEFAULT_PORT;
 
   private ServerSocketChannel serverSocketChannel;
-
-  private SelectionKey selectionKey;
 
   private Set<TCPConnector> acceptedConnectors = new HashSet(0);
 
@@ -213,7 +211,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
         addConnector(socketChannel);
       }
     }
-    catch (ClosedByInterruptException ex)
+    catch (ClosedChannelException ex)
     {
       deactivate();
     }
@@ -327,7 +325,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
     serverSocketChannel.configureBlocking(false);
     serverSocketChannel.socket().bind(sAddr);
 
-    selectionKey = selector.register(serverSocketChannel, this);
+    selector.register(serverSocketChannel, this);
   }
 
   @Override
@@ -338,43 +336,6 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
       LifecycleUtil.deactivate(connector);
     }
 
-    Exception exception = null;
-
-    try
-    {
-      selectionKey.cancel();
-    }
-    catch (RuntimeException ex)
-    {
-      if (exception == null)
-      {
-        exception = ex;
-      }
-    }
-    finally
-    {
-      selectionKey = null;
-    }
-
-    try
-    {
-      serverSocketChannel.close();
-    }
-    catch (RuntimeException ex)
-    {
-      if (exception == null)
-      {
-        exception = ex;
-      }
-    }
-    finally
-    {
-      serverSocketChannel = null;
-    }
-
-    if (exception != null)
-    {
-      throw exception;
-    }
+    serverSocketChannel.close();
   }
 }

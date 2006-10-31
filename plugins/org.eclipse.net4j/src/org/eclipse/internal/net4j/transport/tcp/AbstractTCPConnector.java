@@ -27,7 +27,6 @@ import org.eclipse.internal.net4j.transport.ChannelImpl;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
-import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.List;
 import java.util.Queue;
@@ -44,8 +43,6 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
   private SocketChannel socketChannel;
 
   private TCPSelector selector;
-
-  private SelectionKey selectionKey;
 
   private Buffer inputBuffer;
 
@@ -87,11 +84,6 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     return socketChannel;
   }
 
-  public SelectionKey getSelectionKey()
-  {
-    return selectionKey;
-  }
-
   /**
    * Called by {@link ChannelImpl} each time a new buffer is available for
    * multiplexing. This or another buffer can be dequeued from the outputQueue
@@ -99,7 +91,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
    */
   public void multiplexBuffer(Channel channel)
   {
-    TCPUtil.setWriteInterest(selectionKey, true);
+    selector.setWriteInterest(socketChannel, true);
   }
 
   public void handleConnect(TCPSelector selector, SocketChannel channel)
@@ -118,8 +110,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
 
     try
     {
-      TCPUtil.setConnectInterest(selectionKey, false);
-      TCPUtil.setReadInterest(selectionKey, true);
+      selector.setConnectInterest(socketChannel, false);
       setState(State.NEGOTIATING);
     }
     catch (Exception ex)
@@ -131,13 +122,6 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
 
   public void handleRead(TCPSelector selector, SocketChannel socketChannel)
   {
-    // TODO Is this needed?
-    if (!socketChannel.isConnected())
-    {
-      deactivate();
-      return;
-    }
-
     try
     {
       if (inputBuffer == null)
@@ -181,13 +165,6 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
 
   public void handleWrite(TCPSelector selector, SocketChannel socketChannel)
   {
-    // TODO Is this needed?
-    if (!socketChannel.isConnected())
-    {
-      deactivate();
-      return;
-    }
-
     try
     {
       boolean moreToWrite = false;
@@ -216,8 +193,12 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
 
       if (!moreToWrite)
       {
-        TCPUtil.setWriteInterest(selectionKey, false);
+        selector.setWriteInterest(socketChannel, false);
       }
+    }
+    catch (NullPointerException ignore)
+    {
+      ;
     }
     catch (ClosedChannelException ex)
     {
@@ -282,10 +263,10 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     controlChannel = new ControlChannelImpl(this);
     controlChannel.activate();
 
-    selectionKey = selector.register(socketChannel, this);
+    selector.register(socketChannel, this);
     if (getType() == Type.SERVER)
     {
-      TCPUtil.setConnectInterest(selectionKey, false);
+      selector.setConnectInterest(socketChannel, false);
     }
   }
 
@@ -296,9 +277,9 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
 
     try
     {
-      selectionKey.cancel();
+      controlChannel.deactivate();
     }
-    catch (RuntimeException ex)
+    catch (Exception ex)
     {
       if (exception == null)
       {
@@ -307,7 +288,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     }
     finally
     {
-      selectionKey = null;
+      controlChannel = null;
     }
 
     try
@@ -324,22 +305,6 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     finally
     {
       socketChannel = null;
-    }
-
-    try
-    {
-      controlChannel.deactivate();
-    }
-    catch (Exception ex)
-    {
-      if (exception == null)
-      {
-        exception = ex;
-      }
-    }
-    finally
-    {
-      controlChannel = null;
     }
 
     try

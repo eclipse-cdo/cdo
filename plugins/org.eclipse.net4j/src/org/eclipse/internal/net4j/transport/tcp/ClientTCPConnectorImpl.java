@@ -72,9 +72,6 @@ public class ClientTCPConnectorImpl extends AbstractTCPConnector
   protected void onActivate() throws Exception
   {
     super.onActivate();
-    SelectionKey selKey = getSelectionKey();
-    selKey.interestOps(selKey.interestOps() | SelectionKey.OP_CONNECT);
-
     InetAddress addr = InetAddress.getByName(host);
     InetSocketAddress sAddr = new InetSocketAddress(addr, port);
     getSocketChannel().connect(sAddr);

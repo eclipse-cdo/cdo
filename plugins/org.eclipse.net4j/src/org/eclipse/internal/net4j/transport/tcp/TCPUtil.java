@@ -92,7 +92,6 @@ public final class TCPUtil
       }
 
       selectionKey.interestOps(newOps);
-      selectionKey.selector().wakeup();
     }
   }
 

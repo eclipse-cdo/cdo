@@ -27,6 +27,8 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author Eike Stepper
@@ -40,42 +42,113 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
 
   private Selector selector;
 
+  private Queue<Runnable> pendingOperations = new ConcurrentLinkedQueue();
+
   private Thread thread;
 
   public TCPSelectorImpl()
   {
   }
 
-  public SelectionKey register(ServerSocketChannel channel, TCPSelectorListener.Passive listener)
-      throws ClosedChannelException
+  public void invokeLater(Runnable operation)
   {
-    if (listener == null)
-    {
-      throw new IllegalArgumentException("listener == null"); //$NON-NLS-1$
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace(this, "Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
-    }
-
-    return channel.register(selector, SelectionKey.OP_ACCEPT, listener);
+    pendingOperations.add(operation);
+    selector.wakeup();
   }
 
-  public SelectionKey register(SocketChannel channel, TCPSelectorListener.Active listener)
-      throws ClosedChannelException
+  public void register(final ServerSocketChannel channel, final TCPSelectorListener.Passive listener)
   {
     if (listener == null)
     {
       throw new IllegalArgumentException("listener == null"); //$NON-NLS-1$
     }
 
-    if (TRACER.isEnabled())
+    invokeLater(new Runnable()
     {
-      TRACER.trace(this, "Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
+      public void run()
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(this, "Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
+        }
+
+        try
+        {
+          channel.register(selector, SelectionKey.OP_ACCEPT, listener);
+        }
+        catch (ClosedChannelException ignore)
+        {
+          ;
+        }
+      }
+    });
+  }
+
+  public void register(final SocketChannel channel, final TCPSelectorListener.Active listener)
+  {
+    if (listener == null)
+    {
+      throw new IllegalArgumentException("listener == null"); //$NON-NLS-1$
     }
 
-    return channel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ, listener);
+    invokeLater(new Runnable()
+    {
+      public void run()
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(TCPSelectorImpl.this, "Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
+        }
+
+        try
+        {
+          channel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ, listener);
+        }
+        catch (ClosedChannelException ignore)
+        {
+          ;
+        }
+      }
+    });
+  }
+
+  public void setConnectInterest(final SocketChannel channel, final boolean on)
+  {
+    invokeLater(new Runnable()
+    {
+      public void run()
+      {
+        // TODO Optimize this lookup away
+        SelectionKey selectionKey = channel.keyFor(selector);
+        TCPUtil.setConnectInterest(selectionKey, on);
+      }
+    });
+  }
+
+  public void setReadInterest(final SocketChannel channel, final boolean on)
+  {
+    invokeLater(new Runnable()
+    {
+      public void run()
+      {
+        // TODO Optimize this lookup away
+        SelectionKey selectionKey = channel.keyFor(selector);
+        TCPUtil.setReadInterest(selectionKey, on);
+      }
+    });
+  }
+
+  public void setWriteInterest(final SocketChannel channel, final boolean on)
+  {
+    invokeLater(new Runnable()
+    {
+      public void run()
+      {
+        // TODO Optimize this lookup away
+        SelectionKey selectionKey = channel.keyFor(selector);
+        TCPUtil.setWriteInterest(selectionKey, on);
+      }
+    });
   }
 
   public void run()
@@ -90,7 +163,13 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
 
       try
       {
-        if (selector.select(SELECT_TIMEOUT) > 0)
+        Runnable operation;
+        while ((operation = pendingOperations.poll()) != null)
+        {
+          operation.run();
+        }
+
+        if (selector.select() > 0)
         {
           Iterator<SelectionKey> it = selector.selectedKeys().iterator();
           while (it.hasNext())
@@ -103,6 +182,10 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
               handleSelection(selKey);
             }
             catch (CancelledKeyException ignore)
+            {
+              ; // Do nothing
+            }
+            catch (NullPointerException ignore)
             {
               ; // Do nothing
             }

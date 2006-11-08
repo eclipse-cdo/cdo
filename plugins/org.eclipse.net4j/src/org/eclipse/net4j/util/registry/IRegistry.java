@@ -10,8 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.util.registry;
 
+
 import java.util.Collection;
 import java.util.Set;
+
 
 /**
  * Implementation note: {@link Object#equals(Object)} and
@@ -46,25 +48,9 @@ public interface IRegistry<ID, E extends IRegistryElement<ID>>
 
   public Collection<E> getElements(boolean resolve);
 
-  public void addListener(Listener<ID, E> listener);
+  public void addRegistryListener(IRegistryListener<ID, E> listener);
 
-  public void removeListener(Listener<ID, E> listener);
+  public void removeRegistryListener(IRegistryListener<ID, E> listener);
 
   public void dispose();
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface Listener<ID, E extends IRegistryElement<ID>>
-  {
-    public void notifyRegistryEvent(IRegistry<ID, E> registry, EventType eventType, E element);
-
-    /**
-     * @author Eike Stepper
-     */
-    public enum EventType
-    {
-      REGISTERED, DEREGISTERING, RESOLVED
-    }
-  }
 }

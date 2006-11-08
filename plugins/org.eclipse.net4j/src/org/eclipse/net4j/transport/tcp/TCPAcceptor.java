@@ -34,9 +34,9 @@ public interface TCPAcceptor
 
   public void setProtocolFactoryRegistry(IRegistry<String, ProtocolFactory> protocolFactoryRegistry);
 
-  public void addListener(TCPAcceptorListener listener);
+  public void addAcceptorListener(TCPAcceptorListener listener);
 
-  public void removeListener(TCPAcceptorListener listener);
+  public void removeAcceptorListener(TCPAcceptorListener listener);
 
   public ExecutorService getReceiveExecutor();
 

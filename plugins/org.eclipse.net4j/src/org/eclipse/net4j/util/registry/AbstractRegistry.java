@@ -11,8 +11,8 @@
 package org.eclipse.net4j.util.registry;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.registry.IRegistry.Listener.EventType;
 import org.eclipse.net4j.util.registry.IRegistryElement.Descriptor;
+import org.eclipse.net4j.util.registry.IRegistryListener.EventType;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 
@@ -39,7 +39,7 @@ public abstract class AbstractRegistry<ID, E extends IRegistryElement<ID>> imple
   /**
    * Don't initialize lazily to circumvent synchronization!
    */
-  private Queue<Listener> listeners = new ConcurrentLinkedQueue();
+  private Queue<IRegistryListener> listeners = new ConcurrentLinkedQueue();
 
   protected AbstractRegistry()
   {
@@ -102,12 +102,12 @@ public abstract class AbstractRegistry<ID, E extends IRegistryElement<ID>> imple
     return elements;
   }
 
-  public void addListener(IRegistry.Listener<ID, E> listener)
+  public void addRegistryListener(IRegistryListener<ID, E> listener)
   {
     listeners.add(listener);
   }
 
-  public void removeListener(IRegistry.Listener<ID, E> listener)
+  public void removeRegistryListener(IRegistryListener<ID, E> listener)
   {
     listeners.remove(listener);
   }
@@ -119,7 +119,7 @@ public abstract class AbstractRegistry<ID, E extends IRegistryElement<ID>> imple
 
   protected void fireRegistryEvent(EventType eventType, E element)
   {
-    for (Listener listener : listeners)
+    for (IRegistryListener listener : listeners)
     {
       try
       {

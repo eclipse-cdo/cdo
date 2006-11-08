@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.registry;
 
-import org.eclipse.net4j.util.registry.IRegistry.Listener.EventType;
 import org.eclipse.net4j.util.registry.IRegistryElement.Descriptor;
+import org.eclipse.net4j.util.registry.IRegistryListener.EventType;
 
 import java.util.HashSet;
 import java.util.Map;

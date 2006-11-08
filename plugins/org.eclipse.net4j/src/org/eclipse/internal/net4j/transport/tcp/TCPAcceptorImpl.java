@@ -170,12 +170,12 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
     return result.toArray(new TCPConnector[result.size()]);
   }
 
-  public void addListener(TCPAcceptorListener listener)
+  public void addAcceptorListener(TCPAcceptorListener listener)
   {
     listeners.add(listener);
   }
 
-  public void removeListener(TCPAcceptorListener listener)
+  public void removeAcceptorListener(TCPAcceptorListener listener)
   {
     listeners.remove(listener);
   }

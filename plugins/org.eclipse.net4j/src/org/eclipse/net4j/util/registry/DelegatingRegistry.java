@@ -10,7 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.registry;
 
-import org.eclipse.net4j.util.registry.IRegistry.Listener.EventType;
+
+import org.eclipse.net4j.util.registry.IRegistryListener.EventType;
 
 import java.util.Set;
 
@@ -21,7 +22,7 @@ public class DelegatingRegistry<ID, E extends IRegistryElement<ID>> extends Abst
 {
   private IRegistry<ID, E> delegate;
 
-  private Listener<ID, E> delegateListener = new Listener<ID, E>()
+  private IRegistryListener<ID, E> delegateListener = new IRegistryListener<ID, E>()
   {
     public void notifyRegistryEvent(IRegistry<ID, E> registry, EventType eventType, E element)
     {
@@ -38,7 +39,7 @@ public class DelegatingRegistry<ID, E extends IRegistryElement<ID>> extends Abst
   {
     super(resolving);
     this.delegate = delegate;
-    delegate.addListener(delegateListener);
+    delegate.addRegistryListener(delegateListener);
   }
 
   public IRegistry<ID, E> getDelegate()
@@ -69,7 +70,7 @@ public class DelegatingRegistry<ID, E extends IRegistryElement<ID>> extends Abst
   @Override
   public void dispose()
   {
-    delegate.removeListener(delegateListener);
+    delegate.removeRegistryListener(delegateListener);
   }
 
   protected void delegatedRegister(E element)

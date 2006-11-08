@@ -46,7 +46,7 @@ public class OMTraceHandlerEventImpl implements OMTraceHandler.Event, Serializab
     {
       throw new IllegalArgumentException("context == null");
     }
-    
+
     timeStamp = System.currentTimeMillis();
     this.tracer = tracer;
     this.context = context;

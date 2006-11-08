@@ -12,7 +12,6 @@ package org.eclipse.internal.net4j.transport.tcp;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.nio.channels.SelectionKey;
 
 /**
  * @author Eike Stepper

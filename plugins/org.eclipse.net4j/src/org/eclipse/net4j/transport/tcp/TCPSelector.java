@@ -10,6 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.transport.tcp;
 
+import org.eclipse.net4j.transport.tcp.TCPSelectorListener.Active;
+import org.eclipse.net4j.transport.tcp.TCPSelectorListener.Passive;
+
+import java.nio.channels.SelectionKey;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
@@ -18,15 +22,21 @@ import java.nio.channels.SocketChannel;
  */
 public interface TCPSelector
 {
-  public void invokeLater(Runnable operation);
+  public void invokeAsync(Runnable operation);
 
-  public void register(ServerSocketChannel channel, TCPSelectorListener.Passive listener);
+  public void registerAsync(ServerSocketChannel channel, Passive listener);
 
-  public void register(SocketChannel channel, TCPSelectorListener.Active listener);
+  public void registerAsync(SocketChannel channel, Active listener);
 
-  public void setConnectInterest(SocketChannel channel, boolean on);
+  public boolean invoke(Runnable operation, long timeout);
 
-  public void setReadInterest(SocketChannel channel, boolean on);
+  public SelectionKey register(ServerSocketChannel channel, Passive listener, long timeout);
 
-  public void setWriteInterest(SocketChannel channel, boolean on);
+  public SelectionKey register(SocketChannel channel, Active listener, long timeout);
+
+  public void setConnectInterest(SelectionKey selectionKey, boolean on);
+
+  public void setReadInterest(SelectionKey selectionKey, boolean on);
+
+  public void setWriteInterest(SelectionKey selectionKey, boolean on);
 }

@@ -33,7 +33,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.channels.Channel;
-import java.nio.channels.ClosedByInterruptException;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
@@ -325,7 +324,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
     serverSocketChannel.configureBlocking(false);
     serverSocketChannel.socket().bind(sAddr);
 
-    selector.register(serverSocketChannel, this);
+    selector.registerAsync(serverSocketChannel, this);
   }
 
   @Override

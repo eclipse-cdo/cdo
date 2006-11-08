@@ -27,9 +27,11 @@ import org.eclipse.internal.net4j.transport.ChannelImpl;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
+import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Eike Stepper
@@ -40,9 +42,13 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR,
       AbstractTCPConnector.class);
 
+  private static final long REGISTER_SELECTOR_TIMEOUT = 250000;
+
   private SocketChannel socketChannel;
 
   private TCPSelector selector;
+
+  private SelectionKey selectionKey;
 
   private Buffer inputBuffer;
 
@@ -91,7 +97,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
    */
   public void multiplexBuffer(Channel channel)
   {
-    selector.setWriteInterest(socketChannel, true);
+    selector.setWriteInterest(selectionKey, true);
   }
 
   public void handleConnect(TCPSelector selector, SocketChannel channel)
@@ -110,7 +116,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
 
     try
     {
-      selector.setConnectInterest(socketChannel, false);
+      selector.setConnectInterest(selectionKey, false);
       setState(State.NEGOTIATING);
     }
     catch (Exception ex)
@@ -193,7 +199,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
 
       if (!moreToWrite)
       {
-        selector.setWriteInterest(socketChannel, false);
+        selector.setWriteInterest(selectionKey, false);
       }
     }
     catch (NullPointerException ignore)
@@ -263,10 +269,15 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     controlChannel = new ControlChannelImpl(this);
     controlChannel.activate();
 
-    selector.register(socketChannel, this);
+    selectionKey = selector.register(socketChannel, this, REGISTER_SELECTOR_TIMEOUT);
+    if (selectionKey == null)
+    {
+      throw new TimeoutException("Unable to register channel with selector");
+    }
+
     if (getType() == Type.SERVER)
     {
-      selector.setConnectInterest(socketChannel, false);
+      selector.setConnectInterest(selectionKey, false);
     }
   }
 

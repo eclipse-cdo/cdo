@@ -28,14 +28,11 @@ public class OMTraceHandlerEventImpl implements OMTraceHandler.Event, Serializab
 
   protected Class context;
 
-  protected Object instance;
-
   protected String message;
 
   protected Throwable throwable;
 
-  public OMTraceHandlerEventImpl(OMTracer tracer, Class context, Object instance, String message,
-      Throwable throwable)
+  public OMTraceHandlerEventImpl(OMTracer tracer, Class context, String message, Throwable throwable)
   {
     if (tracer == null)
     {
@@ -50,7 +47,6 @@ public class OMTraceHandlerEventImpl implements OMTraceHandler.Event, Serializab
     timeStamp = System.currentTimeMillis();
     this.tracer = tracer;
     this.context = context;
-    this.instance = instance;
     this.message = message;
     this.throwable = throwable;
   }
@@ -68,11 +64,6 @@ public class OMTraceHandlerEventImpl implements OMTraceHandler.Event, Serializab
   public Class getContext()
   {
     return context;
-  }
-
-  public Object getInstance()
-  {
-    return instance;
   }
 
   public String getMessage()

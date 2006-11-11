@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.bundle.OSGiBundle;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
@@ -46,7 +47,7 @@ public class OSGiLoggingBridge implements OMLogHandler
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, ex);
+        TRACER.trace(ex);
       }
     }
   }

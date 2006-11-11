@@ -365,7 +365,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, SELECT_PACKAGES);
+      TRACER.trace(SELECT_PACKAGES);
     }
 
     jdbcTemplate.query(SELECT_PACKAGES, new RowCallbackHandler()
@@ -377,7 +377,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
 
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, "Initializing package: pid=" + pid + ", name=" + name);
+          TRACER.trace("Initializing package: pid=" + pid + ", name=" + name);
         }
         PackageInfo packageInfo = packageManager.addPackage(pid, name);
         initClasses(packageInfo);
@@ -394,7 +394,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     Object[] args = { new Integer(packageInfo.getPid())};
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(SELECT_CLASSES, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_CLASSES, "?", args));
     }
 
     nestedTemplate.query(SELECT_CLASSES, args, new RowCallbackHandler()
@@ -413,7 +413,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
 
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, "Initializing class: cid=" + cid + ", name=" + name + ", parentName="
+          TRACER.trace("Initializing class: cid=" + cid + ", name=" + name + ", parentName="
               + parentName + ", tableName=" + tableName);
         }
         ClassInfo classInfo = packageInfo.addClass(cid, name, parentName, tableName);
@@ -437,7 +437,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     Object[] args = { new Integer(classInfo.getCID())};
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(SELECT_ATTRIBUTES, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_ATTRIBUTES, "?", args));
     }
 
     nestedTemplate.query(SELECT_ATTRIBUTES, args, new RowCallbackHandler()
@@ -452,7 +452,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
 
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, "Initializing attribute: name=" + name + ", featureId=" + featureId
+          TRACER.trace("Initializing attribute: name=" + name + ", featureId=" + featureId
               + ", dataType=" + dataType + ", columnName=" + columnName + ", columnType="
               + columnType);
         }
@@ -485,7 +485,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     Object[] args = { path};
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(SELECT_RID_OF_RESOURCE, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_RID_OF_RESOURCE, "?", args));
     }
 
     final int[] rows = new int[1];
@@ -511,7 +511,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Selected " + result);
+      TRACER.trace("Selected " + result);
     }
     return result;
   }
@@ -521,7 +521,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     Object[] args = { new Integer(rid)};
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(SELECT_PATH_OF_RESOURCE, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_PATH_OF_RESOURCE, "?", args));
     }
 
     final int[] rows = new int[1];
@@ -547,7 +547,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Selected " + result);
+      TRACER.trace("Selected " + result);
     }
     return result;
   }
@@ -557,7 +557,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     Object[] args = ridBounds(rid);
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(SELECT_MAX_OID_FRAGMENT, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_MAX_OID_FRAGMENT, "?", args));
     }
     long oid = jdbcTemplate.queryForLong(SELECT_MAX_OID_FRAGMENT, args);
     return oidEncoder.getOIDFragment(oid);
@@ -574,7 +574,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, SELECT_MAX_PID);
+      TRACER.trace(SELECT_MAX_PID);
     }
     return jdbcTemplate.queryForInt(SELECT_MAX_PID);
   }
@@ -583,7 +583,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, SELECT_MAX_CID);
+      TRACER.trace(SELECT_MAX_CID);
     }
     return jdbcTemplate.queryForInt(SELECT_MAX_CID);
   }
@@ -592,7 +592,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, SELECT_MAX_RID);
+      TRACER.trace(SELECT_MAX_RID);
     }
     return jdbcTemplate.queryForInt(SELECT_MAX_RID);
   }
@@ -609,7 +609,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     Object[] args = { new Long(oid), new Integer(feature)};
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(SELECT_COLLECTION_COUNT, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_COLLECTION_COUNT, "?", args));
     }
 
     return jdbcTemplate.queryForInt(SELECT_COLLECTION_COUNT, args);
@@ -620,7 +620,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     Object[] args = { new Long(oid), new Integer(oca)};
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(DO_OPTIMISTIC_CONTROL, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(DO_OPTIMISTIC_CONTROL, "?", args));
     }
 
     int changed = jdbcTemplate.update(DO_OPTIMISTIC_CONTROL, args);
@@ -653,7 +653,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
         new Integer(startIndex), new Integer(endIndex)};
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(MOVE_REFERENCES_RELATIVE, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(MOVE_REFERENCES_RELATIVE, "?", args));
     }
 
     // ignore number of affected rows
@@ -670,7 +670,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     Object[] args = { oid};
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(REMOVE_REFERENCES, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(REMOVE_REFERENCES, "?", args));
     }
 
     jdbcTemplate.update(REMOVE_REFERENCES, args);
@@ -700,7 +700,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     Object[] args = { new Long(oid)};
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(SELECT_CID_OF_OBJECT, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_CID_OF_OBJECT, "?", args));
     }
 
     try
@@ -751,7 +751,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, sql);
+      TRACER.trace(sql);
     }
 
     int rows = jdbcTemplate.update(sql);
@@ -766,7 +766,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(sql, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(sql, "?", args));
     }
 
     int rows = jdbcTemplate.update(sql, args);
@@ -781,7 +781,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(sql, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(sql, "?", args));
     }
 
     int rows = jdbcTemplate.update(sql, args, types);
@@ -799,7 +799,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
       Object[] args = ridBounds(resourceInfo.getRID());
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, StringHelper.replaceWildcards(TRANSMIT_CONTENT, "?", args));
+        TRACER.trace(StringHelper.replaceWildcards(TRANSMIT_CONTENT, "?", args));
       }
 
       try
@@ -816,8 +816,8 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
 
               if (TRACER.isEnabled())
               {
-                TRACER.trace(this, "Object: oid=" + oidEncoder.toString(oid) + ", oca=" + oca
-                    + ", cid=" + cid);
+                TRACER.trace("Object: oid=" + oidEncoder.toString(oid) + ", oca=" + oca + ", cid="
+                    + cid);
               }
 
               out.writeLong(oid);
@@ -854,7 +854,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     Object[] args = { new Long(oid)};
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(TRANSMIT_OBJECT, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(TRANSMIT_OBJECT, "?", args));
     }
 
     try
@@ -870,8 +870,8 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
 
             if (TRACER.isEnabled())
             {
-              TRACER.trace(this, "Object: oid=" + oidEncoder.toString(oid) + ", oca=" + oca
-                  + ", cid=" + cid);
+              TRACER.trace("Object: oid=" + oidEncoder.toString(oid) + ", oca=" + oca + ", cid="
+                  + cid);
             }
 
             out.writeLong(oid);
@@ -925,7 +925,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
       Object[] args = { new Long(child[0]), Boolean.TRUE};
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, StringHelper.replaceWildcards(SELECT_CONTAINER_OF_OBJECT, "?", args));
+        TRACER.trace(StringHelper.replaceWildcards(SELECT_CONTAINER_OF_OBJECT, "?", args));
       }
 
       child[0] = 0;
@@ -947,7 +947,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
       Container container = (Container) it.next();
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Container: oid=" + oidEncoder.toString(container.oid) + ", cid="
+        TRACER.trace("Container: oid=" + oidEncoder.toString(container.oid) + ", cid="
             + container.cid);
       }
 
@@ -961,7 +961,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     Object[] args = { new Long(oid)};
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(TRANSMIT_REFERENCES, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(TRANSMIT_REFERENCES, "?", args));
     }
 
     try
@@ -977,7 +977,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
             int cid = resultSet.getInt(3);
             if (TRACER.isEnabled())
             {
-              TRACER.trace(this, "Reference: feature=" + feature + ", target="
+              TRACER.trace("Reference: feature=" + feature + ", target="
                   + oidEncoder.toString(target) + ", cid=" + cid);
             }
 
@@ -1015,7 +1015,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
         Object[] args = { new Long(oid)};
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, StringHelper.replaceWildcards(sql, "?", args));
+          TRACER.trace(StringHelper.replaceWildcards(sql, "?", args));
         }
 
         try
@@ -1056,8 +1056,8 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Querying all resources");
-      TRACER.trace(this, SELECT_ALL_RESOURCES);
+      TRACER.trace("Querying all resources");
+      TRACER.trace(SELECT_ALL_RESOURCES);
     }
 
     try
@@ -1092,7 +1092,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Deleting resource: rid=" + rid);
+      TRACER.trace("Deleting resource: rid=" + rid);
     }
 
     sql(DELETE_RESOURCE, new Object[] { rid});
@@ -1100,7 +1100,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     Object[] args = ridBounds(rid);
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(SELECT_ALL_OBJECTS_OF_RESOURCE, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_ALL_OBJECTS_OF_RESOURCE, "?", args));
     }
 
     jdbcTemplate.query(SELECT_ALL_OBJECTS_OF_RESOURCE, args, new RowCallbackHandler()
@@ -1112,7 +1112,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
 
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, "Deleting object: oid=" + oidEncoder.toString(oid) + ", cid=" + cid);
+          TRACER.trace("Deleting object: oid=" + oidEncoder.toString(oid) + ", cid=" + cid);
         }
 
         removeObject(oid, cid);
@@ -1124,7 +1124,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Removing stale references");
+      TRACER.trace("Removing stale references");
     }
 
     final Set<Long> modifiedOIDs = new HashSet<Long>();
@@ -1138,7 +1138,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
 
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, "Reference: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
+          TRACER.trace("Reference: oid=" + oidEncoder.toString(oid) + ", feature=" + feature
               + ", ordinal=" + ordinal);
         }
 
@@ -1191,7 +1191,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     String sql = buffer.toString();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, sql);
+      TRACER.trace(sql);
     }
 
     try
@@ -1206,7 +1206,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
             int cid = exactMatch ? context : resultSet.getInt(2);
             if (TRACER.isEnabled())
             {
-              TRACER.trace(this, "Extent: oid=" + oidEncoder.toString(oid)
+              TRACER.trace("Extent: oid=" + oidEncoder.toString(oid)
                   + (exactMatch ? "" : ", cid=" + cid));
             }
 
@@ -1237,7 +1237,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
     Object[] args = { new Long(oid)};
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, StringHelper.replaceWildcards(SELECT_XREFS_OF_OBJECT, "?", args));
+      TRACER.trace(StringHelper.replaceWildcards(SELECT_XREFS_OF_OBJECT, "?", args));
     }
 
     try
@@ -1253,8 +1253,8 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
             int cid = resultSet.getInt(3);
             if (TRACER.isEnabled())
             {
-              TRACER.trace(this, "XRef: referer=" + oidEncoder.toString(referer) + ", feature="
-                  + feature + ", cid=" + cid);
+              TRACER.trace("XRef: referer=" + oidEncoder.toString(referer) + ", feature=" + feature
+                  + ", cid=" + cid);
             }
 
             out.writeLong(referer);
@@ -1280,7 +1280,7 @@ public class MapperImpl extends AbstractLifecycle implements Mapper, SQLConstant
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Creating attribute tables");
+      TRACER.trace("Creating attribute tables");
     }
 
     Database database = DBGenFactory.eINSTANCE.createDatabase();

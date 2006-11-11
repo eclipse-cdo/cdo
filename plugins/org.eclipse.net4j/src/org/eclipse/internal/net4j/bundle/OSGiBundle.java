@@ -13,6 +13,7 @@ package org.eclipse.internal.net4j.bundle;
 import org.eclipse.net4j.util.IOUtil;
 
 import org.eclipse.core.runtime.FileLocator;
+
 import org.osgi.framework.BundleContext;
 
 import java.io.IOException;

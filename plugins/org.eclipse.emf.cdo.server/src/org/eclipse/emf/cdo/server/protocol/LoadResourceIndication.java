@@ -54,7 +54,7 @@ public class LoadResourceIndication extends IndicationWithResponse
     rid = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Loading rid " + rid);
+      TRACER.trace("Loading rid " + rid);
     }
   }
 

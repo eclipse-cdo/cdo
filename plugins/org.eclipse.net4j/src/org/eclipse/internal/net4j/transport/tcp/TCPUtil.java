@@ -87,7 +87,7 @@ public final class TCPUtil
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(selectionKey, "Setting interest " //$NON-NLS-1$
+        TRACER.trace("Setting interest " //$NON-NLS-1$
             + formatInterestOps(newOps) + " (was " + formatInterestOps(oldOps).toLowerCase() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
       }
 

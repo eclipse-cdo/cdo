@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.om.OMBundle;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.osgi.service.debug.DebugOptions;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 

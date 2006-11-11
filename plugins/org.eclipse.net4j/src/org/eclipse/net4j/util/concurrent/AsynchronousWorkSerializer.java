@@ -67,7 +67,7 @@ public class AsynchronousWorkSerializer implements WorkSerializer, Runnable
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Notifying executor service"); //$NON-NLS-1$
+        TRACER.trace("Notifying executor service"); //$NON-NLS-1$
       }
 
       executorService.execute(this);
@@ -94,7 +94,7 @@ public class AsynchronousWorkSerializer implements WorkSerializer, Runnable
         {
           if (TRACER.isEnabled())
           {
-            TRACER.trace(this, ex);
+            TRACER.trace(ex);
           }
         }
       }

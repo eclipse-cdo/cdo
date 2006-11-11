@@ -18,8 +18,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * TODO Check if all methods of {@link DelegatingRegistry} still do what they should.
- * TODO Remove {@link DelegatingRegistry}?
+ * TODO Check if all methods of {@link DelegatingRegistry} still do what they
+ * should. TODO Remove {@link DelegatingRegistry}?
  * 
  * @author Eike Stepper
  */

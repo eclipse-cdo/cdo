@@ -52,7 +52,7 @@ public class InvalidationNotificationRequest extends Request
     int size = changedObjectIds.size();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Transmitting " + size + " invalidations");
+      TRACER.trace("Transmitting " + size + " invalidations");
     }
 
     out.writeInt(size);
@@ -60,7 +60,7 @@ public class InvalidationNotificationRequest extends Request
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Transmitting oid " + oid);
+        TRACER.trace("Transmitting oid " + oid);
       }
 
       out.writeLong(oid);

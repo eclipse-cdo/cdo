@@ -52,15 +52,15 @@ public class ResourcesChangedRequest extends Request
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Transmitting " + infos.size() + " resource changes");
+      TRACER.trace("Transmitting " + infos.size() + " resource changes");
     }
 
     for (ResourceChangeInfo info : infos)
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Transmitting changeKind=" + info.getChangeKind() + ", rid="
-            + info.getRID() + ". path=" + info.getPath());
+        TRACER.trace("Transmitting changeKind=" + info.getChangeKind() + ", rid=" + info.getRID()
+            + ". path=" + info.getPath());
       }
 
       info.transmit(out);

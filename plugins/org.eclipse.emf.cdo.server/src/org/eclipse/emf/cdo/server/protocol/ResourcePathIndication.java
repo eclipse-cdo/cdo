@@ -54,7 +54,7 @@ public class ResourcePathIndication extends IndicationWithResponse
     path = in.readString();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Requested path " + path);
+      TRACER.trace("Requested path " + path);
     }
   }
 
@@ -69,7 +69,7 @@ public class ResourcePathIndication extends IndicationWithResponse
       resourceManager.registerResourceInfo(path, rid, 1);
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "No resource with path " + path + " - reserving rid " + rid);
+        TRACER.trace("No resource with path " + path + " - reserving rid " + rid);
       }
 
       out.writeInt(-rid);
@@ -78,7 +78,7 @@ public class ResourcePathIndication extends IndicationWithResponse
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Responding rid " + info.getRID());
+        TRACER.trace("Responding rid " + info.getRID());
       }
 
       out.writeInt(info.getRID());

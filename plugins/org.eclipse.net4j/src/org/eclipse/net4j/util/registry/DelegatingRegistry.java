@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util.registry;
 
-
 import org.eclipse.net4j.util.registry.IRegistryListener.EventType;
 
 import java.util.Set;

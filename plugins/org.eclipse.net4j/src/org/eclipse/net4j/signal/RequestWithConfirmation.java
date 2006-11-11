@@ -39,14 +39,14 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "================ Requesting"); //$NON-NLS-1$
+      TRACER.trace("================ Requesting"); //$NON-NLS-1$
     }
 
     requesting(new ExtendedDataOutputStream(out));
     out.flush();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "================ Confirming"); //$NON-NLS-1$
+      TRACER.trace("================ Confirming"); //$NON-NLS-1$
     }
 
     setResult(confirming(new ExtendedDataInputStream(in)));

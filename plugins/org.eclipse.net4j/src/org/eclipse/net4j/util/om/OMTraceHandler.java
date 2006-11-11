@@ -28,8 +28,6 @@ public interface OMTraceHandler
 
     public Class getContext();
 
-    public Object getInstance();
-
     public String getMessage();
 
     public Throwable getThrowable();

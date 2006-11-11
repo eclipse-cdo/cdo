@@ -70,7 +70,7 @@ public class BufferInputStream extends InputStream implements BufferHandler
     final int result = currentBuffer.getByteBuffer().get() & 0xff;
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "<-- " + HexUtil.toHex(result) //$NON-NLS-1$
+      TRACER.trace("<-- " + HexUtil.toHex(result) //$NON-NLS-1$
           + (result >= 32 ? " " + Character.toString((char)result) : "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 

@@ -10,10 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.registry;
 
-
 import java.util.Collection;
 import java.util.Set;
-
 
 /**
  * Implementation note: {@link Object#equals(Object)} and

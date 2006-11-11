@@ -79,57 +79,32 @@ public class OMTracerImpl implements OMTracer
     ((AbstractOMPlatform)bundle.getPlatform()).trace(event);
   }
 
-  public Event trace(Class context, Object instance, String msg, Throwable t)
+  public Event trace(Class context, String msg, Throwable t)
   {
-    Event event = new OMTraceHandlerEventImpl(this, context, instance, msg, t);
+    Event event = new OMTraceHandlerEventImpl(this, context, msg, t);
     trace(event);
     return event;
   }
 
-  public Event trace(Class context, Object instance, String msg)
-  {
-    return trace(context, instance, msg, (Throwable)null);
-  }
-
-  public Event trace(Class context, Object instance, Throwable t)
-  {
-    return trace(context, instance, t.getLocalizedMessage(), t);
-  }
-
-  public Event format(Class context, Object instance, String pattern, Object... args)
-  {
-    return format(context, instance, pattern, (Throwable)null, args);
-  }
-
-  public Event format(Class context, Object instance, String pattern, Throwable t, Object... args)
+  public Event format(Class context, String pattern, Throwable t, Object... args)
   {
     String msg = MessageFormat.format(pattern, args);
-    return trace(context, instance, msg, t);
+    return trace(context, msg, t);
   }
 
   public Event format(Class context, String pattern, Object... args)
   {
-    return format(context, NO_INSTANCE, pattern, (Throwable)null, args);
-  }
-
-  public Event format(Class context, String pattern, Throwable t, Object... args)
-  {
-    return format(context, NO_INSTANCE, pattern, t, args);
-  }
-
-  public Event trace(Class context, String msg, Throwable t)
-  {
-    return trace(context, NO_INSTANCE, msg, t);
+    return format(context, pattern, (Throwable)null, args);
   }
 
   public Event trace(Class context, String msg)
   {
-    return trace(context, NO_INSTANCE, msg);
+    return trace(context, msg);
   }
 
   public Event trace(Class context, Throwable t)
   {
-    return trace(context, NO_INSTANCE, t);
+    return trace(context, t);
   }
 
   public OMTracer tracer(String name)

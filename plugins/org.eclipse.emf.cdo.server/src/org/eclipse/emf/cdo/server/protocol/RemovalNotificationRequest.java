@@ -52,7 +52,7 @@ public class RemovalNotificationRequest extends Request
     int size = rids.size();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Transmitting " + size + " removals");
+      TRACER.trace("Transmitting " + size + " removals");
     }
 
     out.writeInt(size);
@@ -60,7 +60,7 @@ public class RemovalNotificationRequest extends Request
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Transmitting rid " + rid);
+        TRACER.trace("Transmitting rid " + rid);
       }
 
       out.writeInt(rid);

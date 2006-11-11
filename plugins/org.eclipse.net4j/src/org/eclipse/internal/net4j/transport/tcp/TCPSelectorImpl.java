@@ -260,7 +260,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, "Accepting " + TCPUtil.toString(ssChannel)); //$NON-NLS-1$
+          TRACER.trace("Accepting " + TCPUtil.toString(ssChannel)); //$NON-NLS-1$
         }
 
         listener.handleAccept(this, ssChannel);
@@ -275,7 +275,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, "Connecting " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
+          TRACER.trace("Connecting " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
         }
 
         listener.handleConnect(this, sChannel);
@@ -285,7 +285,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, "Reading " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
+          TRACER.trace("Reading " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
         }
 
         listener.handleRead(this, sChannel);
@@ -295,7 +295,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, "Writing " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
+          TRACER.trace("Writing " + TCPUtil.toString(sChannel)); //$NON-NLS-1$
         }
 
         listener.handleWrite(this, sChannel);
@@ -369,7 +369,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
+      TRACER.trace("Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
     }
 
     try
@@ -386,7 +386,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(TCPSelectorImpl.this, "Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
+      TRACER.trace("Registering " + TCPUtil.toString(channel)); //$NON-NLS-1$
     }
 
     try

@@ -39,7 +39,7 @@ public class ResourceManagerImpl extends AbstractLifecycle implements ResourceMa
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Registering " + resourceInfo);
+      TRACER.trace("Registering " + resourceInfo);
     }
 
     ridToResourceMap.put(resourceInfo.getRID(), resourceInfo);

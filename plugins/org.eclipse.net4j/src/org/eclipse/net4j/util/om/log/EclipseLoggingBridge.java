@@ -48,7 +48,7 @@ public class EclipseLoggingBridge implements OMLogHandler
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, ex);
+        TRACER.trace(ex);
       }
     }
   }

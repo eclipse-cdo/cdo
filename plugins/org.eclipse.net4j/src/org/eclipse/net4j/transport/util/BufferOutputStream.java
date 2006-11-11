@@ -70,7 +70,7 @@ public class BufferOutputStream extends OutputStream
     ensureBuffer();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "--> " + HexUtil.toHex(b) //$NON-NLS-1$
+      TRACER.trace("--> " + HexUtil.toHex(b) //$NON-NLS-1$
           + (b >= 32 ? " " + Character.toString((char)b) : "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 

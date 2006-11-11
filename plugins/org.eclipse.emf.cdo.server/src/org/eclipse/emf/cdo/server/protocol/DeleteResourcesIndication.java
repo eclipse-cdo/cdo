@@ -77,7 +77,7 @@ public class DeleteResourcesIndication extends IndicationWithResponse implements
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Deleting rid " + rid);
+        TRACER.trace("Deleting rid " + rid);
       }
 
       rids.add(rid);
@@ -102,7 +102,7 @@ public class DeleteResourcesIndication extends IndicationWithResponse implements
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Deleted resources: " + ok);
+      TRACER.trace("Deleted resources: " + ok);
     }
 
     out.writeBoolean(ok);

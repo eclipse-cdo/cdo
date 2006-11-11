@@ -11,7 +11,6 @@
 package org.eclipse.net4j.util.om.trace;
 
 import org.eclipse.net4j.util.IOUtil;
-import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.OMTraceHandler;
 
 import java.io.DataOutputStream;
@@ -88,7 +87,6 @@ public class RemoteTraceHandler implements OMTraceHandler
       writeUTF(out, event.getTracer().getBundle().getBundleID());
       writeUTF(out, event.getTracer().getFullName());
       writeUTF(out, event.getContext() == null ? "" : event.getContext().getName());
-      writeUTF(out, ReflectUtil.getLabel(event.getInstance()));
       writeUTF(out, event.getMessage());
       if (event.getThrowable() == null)
       {

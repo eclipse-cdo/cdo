@@ -56,7 +56,7 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Evicting " + buffer); //$NON-NLS-1$
+      TRACER.trace("Evicting " + buffer); //$NON-NLS-1$
     }
 
     factory.retainBuffer(buffer);
@@ -95,7 +95,7 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
     buffer.clear();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Obtained " + buffer); //$NON-NLS-1$
+      TRACER.trace("Obtained " + buffer); //$NON-NLS-1$
     }
 
     return buffer;
@@ -111,7 +111,7 @@ public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Retaining " + buffer); //$NON-NLS-1$
+      TRACER.trace("Retaining " + buffer); //$NON-NLS-1$
     }
 
     queue.add(buffer);

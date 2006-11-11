@@ -261,7 +261,7 @@ public class TCPTransportTest extends AbstractOMTest
     final ChannelInputStream[] inputStream = new ChannelInputStream[1];
 
     acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
-    acceptor.addListener(new TCPAcceptorListener()
+    acceptor.addAcceptorListener(new TCPAcceptorListener()
     {
       public void notifyConnectorAccepted(TCPAcceptor acceptor, TCPConnector connector)
       {
@@ -322,7 +322,7 @@ public class TCPTransportTest extends AbstractOMTest
     final ChannelInputStream[] inputStream = new ChannelInputStream[1];
 
     acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
-    acceptor.addListener(new TCPAcceptorListener()
+    acceptor.addAcceptorListener(new TCPAcceptorListener()
     {
       public void notifyConnectorAccepted(TCPAcceptor acceptor, TCPConnector connector)
       {
@@ -390,7 +390,7 @@ public class TCPTransportTest extends AbstractOMTest
     final ChannelInputStream[] inputStream = new ChannelInputStream[1];
 
     acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
-    acceptor.addListener(new TCPAcceptorListener()
+    acceptor.addAcceptorListener(new TCPAcceptorListener()
     {
       public void notifyConnectorAccepted(TCPAcceptor acceptor, TCPConnector connector)
       {
@@ -472,7 +472,7 @@ public class TCPTransportTest extends AbstractOMTest
     final ChannelInputStream[] inputStream = new ChannelInputStream[1];
 
     acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
-    acceptor.addListener(new TCPAcceptorListener()
+    acceptor.addAcceptorListener(new TCPAcceptorListener()
     {
       public void notifyConnectorAccepted(TCPAcceptor acceptor, TCPConnector connector)
       {

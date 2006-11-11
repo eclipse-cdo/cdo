@@ -93,7 +93,7 @@ public abstract class SignalProtocol extends AbstractProtocol
     int correlationID = byteBuffer.getInt();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Received buffer for correlation " + correlationID); //$NON-NLS-1$
+      TRACER.trace("Received buffer for correlation " + correlationID); //$NON-NLS-1$
     }
 
     Signal signal;
@@ -106,7 +106,7 @@ public abstract class SignalProtocol extends AbstractProtocol
         short signalID = byteBuffer.getShort();
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, "Got signal id " + signalID); //$NON-NLS-1$
+          TRACER.trace("Got signal id " + signalID); //$NON-NLS-1$
         }
 
         signal = createSignalReactor(signalID);
@@ -126,7 +126,7 @@ public abstract class SignalProtocol extends AbstractProtocol
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, "Discarding buffer"); //$NON-NLS-1$
+          TRACER.trace("Discarding buffer"); //$NON-NLS-1$
         }
 
         buffer.release();
@@ -183,7 +183,7 @@ public abstract class SignalProtocol extends AbstractProtocol
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Correlation wrap around"); //$NON-NLS-1$
+        TRACER.trace("Correlation wrap around"); //$NON-NLS-1$
       }
 
       nextCorrelationID = MIN_CORRELATION_ID;
@@ -240,7 +240,7 @@ public abstract class SignalProtocol extends AbstractProtocol
           ByteBuffer byteBuffer = buffer.startPutting(getChannel().getChannelIndex());
           if (STREAM_TRACER.isEnabled())
           {
-            STREAM_TRACER.trace(this, "Providing buffer for correlation " + correlationID); //$NON-NLS-1$
+            STREAM_TRACER.trace("Providing buffer for correlation " + correlationID); //$NON-NLS-1$
           }
 
           byteBuffer.putInt(correlationID);
@@ -248,7 +248,7 @@ public abstract class SignalProtocol extends AbstractProtocol
           {
             if (SignalProtocol.TRACER.isEnabled())
             {
-              STREAM_TRACER.trace(this, "Put signal id " + signalID); //$NON-NLS-1$
+              STREAM_TRACER.trace("Put signal id " + signalID); //$NON-NLS-1$
             }
 
             byteBuffer.putShort(signalID);

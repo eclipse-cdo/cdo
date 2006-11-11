@@ -146,7 +146,7 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Handling buffer from client: " + buffer); //$NON-NLS-1$
+      TRACER.trace("Handling buffer from client: " + buffer); //$NON-NLS-1$
     }
 
     sendQueue.add(buffer);
@@ -164,7 +164,7 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Handling buffer from multiplexer: " + buffer); //$NON-NLS-1$
+      TRACER.trace("Handling buffer from multiplexer: " + buffer); //$NON-NLS-1$
     }
 
     receiveSerializer.addWork(new Runnable()

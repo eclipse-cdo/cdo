@@ -37,13 +37,13 @@ public abstract class IndicationWithResponse extends SignalReactor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "================ Indicating"); //$NON-NLS-1$
+      TRACER.trace("================ Indicating"); //$NON-NLS-1$
     }
 
     indicating(new ExtendedDataInputStream(in));
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "================ Responding"); //$NON-NLS-1$
+      TRACER.trace("================ Responding"); //$NON-NLS-1$
     }
 
     responding(new ExtendedDataOutputStream(out));

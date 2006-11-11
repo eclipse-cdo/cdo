@@ -59,7 +59,7 @@ public class QueryExtentIndication extends IndicationWithResponse
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Received cid=" + cid + ", exactMatch=" + exactMatch + ", rid=" + rid);
+      TRACER.trace("Received cid=" + cid + ", exactMatch=" + exactMatch + ", rid=" + rid);
     }
   }
 

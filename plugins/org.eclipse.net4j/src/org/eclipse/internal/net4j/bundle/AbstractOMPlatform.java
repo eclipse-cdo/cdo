@@ -105,7 +105,7 @@ public abstract class AbstractOMPlatform implements OMPlatform
       {
         if (TRACER().isEnabled())
         {
-          TRACER().trace(this, ex);
+          TRACER().trace(ex);
         }
       }
     }
@@ -123,7 +123,7 @@ public abstract class AbstractOMPlatform implements OMPlatform
       {
         if (TRACER().isEnabled())
         {
-          TRACER().trace(this, ex);
+          TRACER().trace(ex);
         }
       }
     }

@@ -129,7 +129,7 @@ public abstract class AbstractRegistry<ID, E extends IRegistryElement<ID>> imple
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, ex);
+          TRACER.trace(ex);
         }
       }
     }

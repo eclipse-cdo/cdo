@@ -34,7 +34,7 @@ public class BufferFactoryImpl extends BufferProviderImpl
     BufferImpl buffer = new BufferImpl(this, getBufferCapacity());
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Created " + buffer); //$NON-NLS-1$
+      TRACER.trace("Created " + buffer); //$NON-NLS-1$
     }
 
     return buffer;

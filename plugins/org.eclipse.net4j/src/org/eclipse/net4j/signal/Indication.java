@@ -36,7 +36,7 @@ public abstract class Indication extends SignalReactor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "================ Indicating"); //$NON-NLS-1$
+      TRACER.trace("================ Indicating"); //$NON-NLS-1$
     }
 
     indicating(new ExtendedDataInputStream(in));

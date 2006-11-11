@@ -54,7 +54,7 @@ public class ResourceRIDIndication extends IndicationWithResponse
     rid = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Requested rid " + rid);
+      TRACER.trace("Requested rid " + rid);
     }
   }
 
@@ -67,7 +67,7 @@ public class ResourceRIDIndication extends IndicationWithResponse
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "No resource with rid " + rid);
+        TRACER.trace("No resource with rid " + rid);
       }
 
       out.writeString(null);
@@ -76,7 +76,7 @@ public class ResourceRIDIndication extends IndicationWithResponse
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Responding path " + info.getPath());
+        TRACER.trace("Responding path " + info.getPath());
       }
 
       out.writeString(info.getPath());

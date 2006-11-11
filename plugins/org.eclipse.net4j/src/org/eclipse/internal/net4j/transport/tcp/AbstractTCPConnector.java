@@ -149,7 +149,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
         {
           if (TRACER.isEnabled())
           {
-            TRACER.trace(this, "Discarding buffer from unknown channel"); //$NON-NLS-1$
+            TRACER.trace("Discarding buffer from unknown channel"); //$NON-NLS-1$
           }
 
           inputBuffer.release();

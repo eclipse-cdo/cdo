@@ -210,9 +210,8 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this,
-            "Setting state " + newState + " (was " + oldState.toString().toLowerCase() //$NON-NLS-1$ //$NON-NLS-2$
-                + ")"); //$NON-NLS-1$
+        TRACER.trace("Setting state " + newState + " (was " + oldState.toString().toLowerCase() //$NON-NLS-1$ //$NON-NLS-2$
+            + ")"); //$NON-NLS-1$
       }
 
       state = newState;
@@ -291,7 +290,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Waiting for connection..."); //$NON-NLS-1$
+        TRACER.trace("Waiting for connection..."); //$NON-NLS-1$
       }
 
       return finishedNegotiating.await(timeout, TimeUnit.MILLISECONDS);
@@ -379,7 +378,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     Protocol protocol = createProtocol(protocolID, channel, protocolData);
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Opening channel " + channelIndex //$NON-NLS-1$
+      TRACER.trace("Opening channel " + channelIndex //$NON-NLS-1$
           + (protocol == null ? " without protocol" : " with protocol " + protocolID)); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
@@ -407,7 +406,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Invalid channelIndex " + channelIndex); //$NON-NLS-1$
+        TRACER.trace("Invalid channelIndex " + channelIndex); //$NON-NLS-1$
       }
 
       return null;
@@ -466,7 +465,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     int channelIndex = channel.getChannelIndex();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Removing channel " + channelIndex); //$NON-NLS-1$
+      TRACER.trace("Removing channel " + channelIndex); //$NON-NLS-1$
     }
 
     channels.set(channelIndex, NULL_CHANNEL);
@@ -490,7 +489,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Unknown protocol " + protocolID); //$NON-NLS-1$
+        TRACER.trace("Unknown protocol " + protocolID); //$NON-NLS-1$
       }
 
       return null;
@@ -570,12 +569,12 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
 
     if (protocolFactoryRegistry == null && TRACER.isEnabled())
     {
-      TRACER.trace(this, "No protocol factory registry!"); //$NON-NLS-1$
+      TRACER.trace("No protocol factory registry!"); //$NON-NLS-1$
     }
 
     if (receiveExecutor == null && TRACER.isEnabled())
     {
-      TRACER.trace(this, "No receive executor!"); //$NON-NLS-1$
+      TRACER.trace("No receive executor!"); //$NON-NLS-1$
     }
   }
 
@@ -613,7 +612,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "ID wrap around"); //$NON-NLS-1$
+        TRACER.trace("ID wrap around"); //$NON-NLS-1$
       }
 
       nextConnectorID = MIN_CONNECTOR_ID;

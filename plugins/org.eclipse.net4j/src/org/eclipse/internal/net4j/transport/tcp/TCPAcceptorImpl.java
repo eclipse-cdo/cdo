@@ -246,7 +246,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Accepted connector " + connector); //$NON-NLS-1$
+        TRACER.trace("Accepted connector " + connector); //$NON-NLS-1$
       }
 
       fireConnectorAccepted(connector);
@@ -298,12 +298,12 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
 
     if (protocolFactoryRegistry == null && TRACER.isEnabled())
     {
-      TRACER.trace(this, "No protocol factory registry!"); //$NON-NLS-1$
+      TRACER.trace("No protocol factory registry!"); //$NON-NLS-1$
     }
 
     if (receiveExecutor == null && TRACER.isEnabled())
     {
-      TRACER.trace(this, "No receive executor!"); //$NON-NLS-1$
+      TRACER.trace("No receive executor!"); //$NON-NLS-1$
     }
 
     if (selector == null)

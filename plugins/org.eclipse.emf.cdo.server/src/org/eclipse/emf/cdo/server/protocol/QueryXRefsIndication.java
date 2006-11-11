@@ -56,7 +56,7 @@ public class QueryXRefsIndication extends IndicationWithResponse
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Received oid=" + oid + ", rid=" + rid);
+      TRACER.trace("Received oid=" + oid + ", rid=" + rid);
     }
   }
 

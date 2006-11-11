@@ -58,31 +58,6 @@ public class ContextTracer
     delegate.setEnabled(enabled);
   }
 
-  public void format(Object instance, String pattern, Object... args)
-  {
-    delegate.format(context, instance, pattern, args);
-  }
-
-  public void format(Object instance, String pattern, Throwable t, Object... args)
-  {
-    delegate.format(context, instance, pattern, t, args);
-  }
-
-  public void trace(Object instance, String msg, Throwable t)
-  {
-    delegate.trace(context, instance, msg, t);
-  }
-
-  public void trace(Object instance, String msg)
-  {
-    delegate.trace(context, instance, msg);
-  }
-
-  public void trace(Object instance, Throwable t)
-  {
-    delegate.trace(context, instance, t);
-  }
-
   public void format(String pattern, Object... args)
   {
     delegate.format(context, pattern, args);

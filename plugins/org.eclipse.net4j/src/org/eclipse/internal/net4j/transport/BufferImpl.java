@@ -185,7 +185,7 @@ public class BufferImpl implements Buffer
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Read " + byteBuffer.limit() + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
+      TRACER.trace("Read " + byteBuffer.limit() + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
           + (eos ? " (EOS)" : "") + NL + formatContent()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
@@ -241,7 +241,7 @@ public class BufferImpl implements Buffer
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Writing " + (payloadSize - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
+        TRACER.trace("Writing " + (payloadSize - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
             + (eos ? " (EOS)" : "") + NL + formatContent()); //$NON-NLS-1$ //$NON-NLS-2$
       }
 

@@ -149,7 +149,7 @@ public final class ControlChannelImpl extends ChannelImpl
           {
             if (TRACER.isEnabled())
             {
-              TRACER.trace(this, "Invalid channel id: " + channelIndex); //$NON-NLS-1$
+              TRACER.trace("Invalid channel id: " + channelIndex); //$NON-NLS-1$
             }
           }
         }

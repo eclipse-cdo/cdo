@@ -17,8 +17,6 @@ import org.eclipse.net4j.util.om.OMTraceHandler.Event;
  */
 public interface OMTracer
 {
-  public static final Object NO_INSTANCE = null;
-
   public OMBundle getBundle();
 
   public OMTracer getParent();
@@ -32,16 +30,6 @@ public interface OMTracer
   public void setEnabled(boolean enabled);
 
   public void trace(Event traceRecord);
-
-  public Event format(Class context, Object instance, String pattern, Object... args);
-
-  public Event format(Class context, Object instance, String pattern, Throwable t, Object... args);
-
-  public Event trace(Class context, Object instance, String msg, Throwable t);
-
-  public Event trace(Class context, Object instance, String msg);
-
-  public Event trace(Class context, Object instance, Throwable t);
 
   public Event format(Class context, String pattern, Object... args);
 

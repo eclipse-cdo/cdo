@@ -52,7 +52,7 @@ public class LoadObjectIndication extends IndicationWithResponse
     oid = in.readLong();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Loading object " + mapper.getOidEncoder().toString(oid));
+      TRACER.trace("Loading object " + mapper.getOidEncoder().toString(oid));
     }
   }
 

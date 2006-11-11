@@ -37,7 +37,7 @@ public abstract class Request extends SignalActor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "================ Requesting"); //$NON-NLS-1$
+      TRACER.trace("================ Requesting"); //$NON-NLS-1$
     }
 
     requesting(new ExtendedDataOutputStream(out));

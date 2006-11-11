@@ -54,7 +54,7 @@ public class AnnouncePackageIndication extends IndicationWithResponse
     packageName = in.readString();
     if (TRACER.isEnabled())
     {
-      TRACER.trace(this, "Announced package " + packageName);
+      TRACER.trace("Announced package " + packageName);
     }
   }
 
@@ -66,7 +66,7 @@ public class AnnouncePackageIndication extends IndicationWithResponse
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Unknown package " + packageName);
+        TRACER.trace("Unknown package " + packageName);
       }
 
       out.writeInt(-1);
@@ -80,8 +80,7 @@ public class AnnouncePackageIndication extends IndicationWithResponse
         ClassInfo classInfo = classInfos[i];
         if (TRACER.isEnabled())
         {
-          TRACER
-              .trace(this, "Responding class " + classInfo.getName() + " = " + classInfo.getCID());
+          TRACER.trace("Responding class " + classInfo.getName() + " = " + classInfo.getCID());
         }
 
         out.writeInt(classInfo.getCID());

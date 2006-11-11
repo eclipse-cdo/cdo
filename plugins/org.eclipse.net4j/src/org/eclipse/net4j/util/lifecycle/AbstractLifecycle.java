@@ -58,14 +58,14 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Activating");//$NON-NLS-1$
+        TRACER.trace("Activating");//$NON-NLS-1$
       }
 
       onAboutToActivate();
       fireLifecycleAboutToActivate();
       if (DUMPER.isEnabled())
       {
-        DUMPER.trace(this, "DUMP " + ReflectUtil.toString(this)); //$NON-NLS-1$
+        DUMPER.trace("DUMP " + ReflectUtil.toString(this)); //$NON-NLS-1$
       }
 
       onActivate();
@@ -81,7 +81,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, "Deactivating");//$NON-NLS-1$
+        TRACER.trace("Deactivating");//$NON-NLS-1$
       }
 
       fireLifecycleDeactivating();
@@ -94,7 +94,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, ex);
+          TRACER.trace(ex);
         }
 
         return ex;
@@ -138,7 +138,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, ex);
+          TRACER.trace(ex);
         }
       }
     }
@@ -156,7 +156,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, ex);
+          TRACER.trace(ex);
         }
       }
     }
@@ -174,7 +174,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(this, ex);
+          TRACER.trace(ex);
         }
       }
     }

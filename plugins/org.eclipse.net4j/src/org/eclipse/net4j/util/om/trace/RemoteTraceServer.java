@@ -151,7 +151,6 @@ public class RemoteTraceServer
     event.bundleID = in.readUTF();
     event.tracerName = in.readUTF();
     event.context = in.readUTF();
-    event.instance = in.readUTF();
     event.message = in.readUTF();
     if (in.readBoolean())
     {
@@ -205,8 +204,6 @@ public class RemoteTraceServer
 
     String context;
 
-    String instance;
-
     String message;
 
     String throwable;
@@ -249,11 +246,6 @@ public class RemoteTraceServer
       return context;
     }
 
-    public String getInstance()
-    {
-      return instance;
-    }
-
     public String getMessage()
     {
       return message;
@@ -290,9 +282,6 @@ public class RemoteTraceServer
       builder.append(", context=");
       builder.append(context);
 
-      builder.append(", instance=");
-      builder.append(instance);
-
       builder.append(", message=");
       builder.append(message);
 
@@ -323,10 +312,8 @@ public class RemoteTraceServer
       case 5:
         return context;
       case 6:
-        return instance;
-      case 7:
         return message;
-      case 8:
+      case 7:
         return throwable;
       }
 
@@ -371,7 +358,6 @@ public class RemoteTraceServer
       stream.println(event.getBundleID());
       stream.println(event.getTracerName());
       stream.println(event.getContext());
-      stream.println(event.getInstance());
       stream.println(event.getMessage());
 
       String throwable = event.getThrowable();

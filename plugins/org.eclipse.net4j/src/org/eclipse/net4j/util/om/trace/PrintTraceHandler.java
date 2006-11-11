@@ -36,7 +36,7 @@ public class PrintTraceHandler implements OMTraceHandler
 
   public void traced(Event event)
   {
-    stream.println("[" + event.getInstance() + "] " + event.getMessage()); //$NON-NLS-1$
+    stream.println("[" + event.getContext() + "] " + event.getMessage()); //$NON-NLS-1$
     if (event.getThrowable() != null)
     {
       IOUtil.print(event.getThrowable(), stream);

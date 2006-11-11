@@ -65,7 +65,7 @@ public abstract class Signal implements Runnable
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(this, ex);
+        TRACER.trace(ex);
       }
     }
     finally

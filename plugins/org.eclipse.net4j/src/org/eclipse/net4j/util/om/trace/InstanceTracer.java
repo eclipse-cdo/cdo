@@ -61,12 +61,12 @@ public class InstanceTracer
     delegate.setEnabled(enabled);
   }
 
-  public void trace(String pattern, Object... args)
+  public void format(String pattern, Object... args)
   {
     delegate.format(context, instance, pattern, args);
   }
 
-  public void trace(String pattern, Throwable t, Object... args)
+  public void format(String pattern, Throwable t, Object... args)
   {
     delegate.format(context, instance, pattern, t, args);
   }

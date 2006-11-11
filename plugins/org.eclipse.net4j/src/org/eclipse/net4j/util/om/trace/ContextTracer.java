@@ -60,12 +60,12 @@ public class ContextTracer
 
   public void trace(Object instance, String pattern, Object... args)
   {
-    delegate.trace(context, instance, pattern, args);
+    delegate.format(context, instance, pattern, args);
   }
 
   public void trace(Object instance, String pattern, Throwable t, Object... args)
   {
-    delegate.trace(context, instance, pattern, t, args);
+    delegate.format(context, instance, pattern, t, args);
   }
 
   public void trace(Object instance, String msg, Throwable t)
@@ -85,12 +85,12 @@ public class ContextTracer
 
   public void trace(String pattern, Object... args)
   {
-    delegate.trace(context, pattern, args);
+    delegate.format(context, pattern, args);
   }
 
   public void trace(String pattern, Throwable t, Object... args)
   {
-    delegate.trace(context, pattern, t, args);
+    delegate.format(context, pattern, t, args);
   }
 
   public void trace(String msg, Throwable t)

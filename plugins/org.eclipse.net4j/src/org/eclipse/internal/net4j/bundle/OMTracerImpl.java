@@ -96,25 +96,25 @@ public class OMTracerImpl implements OMTracer
     return trace(context, instance, t.getLocalizedMessage(), t);
   }
 
-  public Event trace(Class context, Object instance, String pattern, Object... args)
+  public Event format(Class context, Object instance, String pattern, Object... args)
   {
-    return trace(context, instance, pattern, (Throwable)null, args);
+    return format(context, instance, pattern, (Throwable)null, args);
   }
 
-  public Event trace(Class context, Object instance, String pattern, Throwable t, Object... args)
+  public Event format(Class context, Object instance, String pattern, Throwable t, Object... args)
   {
     String msg = MessageFormat.format(pattern, args);
     return trace(context, instance, msg, t);
   }
 
-  public Event trace(Class context, String pattern, Object... args)
+  public Event format(Class context, String pattern, Object... args)
   {
-    return trace(context, NO_INSTANCE, pattern, (Throwable)null, args);
+    return format(context, NO_INSTANCE, pattern, (Throwable)null, args);
   }
 
-  public Event trace(Class context, String pattern, Throwable t, Object... args)
+  public Event format(Class context, String pattern, Throwable t, Object... args)
   {
-    return trace(context, NO_INSTANCE, pattern, t, args);
+    return format(context, NO_INSTANCE, pattern, t, args);
   }
 
   public Event trace(Class context, String msg, Throwable t)

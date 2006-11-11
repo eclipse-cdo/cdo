@@ -33,9 +33,9 @@ public interface OMTracer
 
   public void trace(Event traceRecord);
 
-  public Event trace(Class context, Object instance, String pattern, Object... args);
+  public Event format(Class context, Object instance, String pattern, Object... args);
 
-  public Event trace(Class context, Object instance, String pattern, Throwable t, Object... args);
+  public Event format(Class context, Object instance, String pattern, Throwable t, Object... args);
 
   public Event trace(Class context, Object instance, String msg, Throwable t);
 
@@ -43,9 +43,9 @@ public interface OMTracer
 
   public Event trace(Class context, Object instance, Throwable t);
 
-  public Event trace(Class context, String pattern, Object... args);
+  public Event format(Class context, String pattern, Object... args);
 
-  public Event trace(Class context, String pattern, Throwable t, Object... args);
+  public Event format(Class context, String pattern, Throwable t, Object... args);
 
   public Event trace(Class context, String msg, Throwable t);
 

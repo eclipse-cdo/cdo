@@ -63,12 +63,12 @@ public class InstanceTracer
 
   public void trace(String pattern, Object... args)
   {
-    delegate.trace(context, instance, pattern, args);
+    delegate.format(context, instance, pattern, args);
   }
 
   public void trace(String pattern, Throwable t, Object... args)
   {
-    delegate.trace(context, instance, pattern, t, args);
+    delegate.format(context, instance, pattern, t, args);
   }
 
   public void trace(String msg, Throwable t)

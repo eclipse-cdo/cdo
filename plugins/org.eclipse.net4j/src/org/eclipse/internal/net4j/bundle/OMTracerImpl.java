@@ -99,12 +99,12 @@ public class OMTracerImpl implements OMTracer
 
   public Event trace(Class context, String msg)
   {
-    return trace(context, msg);
+    return trace(context, msg, (Throwable)null);
   }
 
   public Event trace(Class context, Throwable t)
   {
-    return trace(context, t);
+    return trace(context, (String)null, t);
   }
 
   public OMTracer tracer(String name)

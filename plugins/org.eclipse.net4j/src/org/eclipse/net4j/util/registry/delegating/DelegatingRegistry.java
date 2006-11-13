@@ -8,8 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.registry;
+package org.eclipse.net4j.util.registry.delegating;
 
+import org.eclipse.net4j.util.registry.AbstractRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
+import org.eclipse.net4j.util.registry.IRegistryListener;
 import org.eclipse.net4j.util.registry.IRegistryListener.EventType;
 
 import java.util.Set;
@@ -111,5 +114,13 @@ public class DelegatingRegistry<ID, E extends IRegistryElement<ID>> extends Abst
   protected void replaceElement(ID id, E element)
   {
     // Do nothing
+  }
+
+  /* (non-Javadoc)
+   * @see org.eclipse.net4j.util.registry.AbstractRegistry#getMap()
+   */
+  protected Map<ID, E> getMap()
+  {
+    return null;
   }
 }

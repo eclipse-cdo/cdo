@@ -8,7 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.registry;
+package org.eclipse.net4j.util.registry.delegating;
+
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import java.util.HashMap;
 import java.util.Map;

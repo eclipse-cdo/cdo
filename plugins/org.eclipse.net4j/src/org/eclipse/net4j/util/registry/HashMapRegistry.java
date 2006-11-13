@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class HashMapRegistry<K, V> extends AbstractMappingRegistry<K, V>
+public class HashMapRegistry<K, V> extends AbstractRegistry<K, V>
 {
   private Map<K, V> map;
 

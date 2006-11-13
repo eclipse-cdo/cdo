@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.internal.net4j.bundle.Net4j;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +38,6 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
 
   private Transaction transaction;
 
-  private Object transactionLock = new Object();
-
   protected AbstractRegistry()
   {
   }
@@ -53,13 +52,29 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
     listeners.remove(listener);
   }
 
-  public void clear()
+  public boolean isEmpty()
   {
-    Set<K> keys = keySet();
-    for (K key : keys)
-    {
-      deregister(key);
-    }
+    return keySet().isEmpty();
+  }
+
+  public int size()
+  {
+    return keySet().size();
+  }
+
+  public Set<Entry<K, V>> entrySet()
+  {
+    return getMap().entrySet();
+  }
+
+  public Set<K> keySet()
+  {
+    return getMap().keySet();
+  }
+
+  public Collection<V> values()
+  {
+    return getMap().values();
   }
 
   public boolean containsKey(Object key)
@@ -72,17 +87,23 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
     return values().contains(value);
   }
 
-  public boolean isEmpty()
+  public V get(Object key)
   {
-    return keySet().isEmpty();
+    return getMap().get(key);
   }
 
-  public V put(K key, V value)
+  /**
+   * Requires {@link #commit()} to be called later.
+   */
+  public synchronized V put(K key, V value)
   {
     return getTransaction().put(key, value);
   }
 
-  public void putAll(Map<? extends K, ? extends V> t)
+  /**
+   * Requires {@link #commit()} to be called later.
+   */
+  public synchronized void putAll(Map<? extends K, ? extends V> t)
   {
     if (!t.isEmpty())
     {
@@ -96,49 +117,95 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
     }
   }
 
-  public V remove(Object key)
+  /**
+   * Requires {@link #commit()} to be called later.
+   */
+  public synchronized V remove(Object key)
   {
     return getTransaction().remove(key);
   }
 
-  public int size()
+  /**
+   * Requires {@link #commit()} to be called later.
+   */
+  public synchronized void clear()
   {
-    return keySet().size();
-  }
-
-  public void commit()
-  {
-    synchronized (transactionLock)
+    if (isEmpty())
     {
-      if (transaction != null)
+      Transaction transaction = getTransaction();
+      Set<K> keys = keySet();
+      for (K key : keys)
       {
-        transaction.commit();
+        transaction.remove(key);
       }
     }
   }
 
-  protected Transaction getTransaction()
+  public synchronized void commit()
   {
-    synchronized (transactionLock)
+    if (transaction != null && transaction.isOwned())
     {
-      if (transaction != null)
-      {
-        transaction = new Transaction();
-      }
-
-      transaction.increaseNesting();
+      transaction.commit();
+      transaction = null;
+      notifyAll();
     }
-
-    return transaction;
   }
 
-  public void dispose()
+  public synchronized void dispose()
   {
     listeners.clear();
   }
 
+  protected V register(K key, V value)
+  {
+    return getMap().put(key, value);
+  }
+
+  protected V deregister(Object key)
+  {
+    return getMap().remove(key);
+  }
+
+  protected Transaction getTransaction()
+  {
+    for (;;)
+    {
+      if (transaction == null)
+      {
+        transaction = new Transaction();
+        return transaction;
+      }
+
+      if (transaction.isOwned())
+      {
+        transaction.increaseNesting();
+        return transaction;
+      }
+
+      try
+      {
+        wait();
+      }
+      catch (InterruptedException ex)
+      {
+        return null;
+      }
+    }
+  }
+
   protected void fireRegistryEvent(IRegistryEvent<K, V> event)
   {
+    if (TRACER.isEnabled())
+    {
+      for (IRegistryDelta<K, V> delta : event.getDeltas())
+      {
+        K key = delta.getKey();
+        V value = delta.getValue();
+        int kind = delta.getKind();
+        TRACER.trace("Registry delta " + key + " = " + value + " (" + kind + ")");
+      }
+    }
+
     for (IRegistryListener listener : listeners)
     {
       try
@@ -147,29 +214,32 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
       }
       catch (Exception ex)
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace(ex);
-        }
+        Net4j.LOG.error(ex);
       }
     }
   }
 
-  protected abstract V register(K key, V value);
-
-  protected abstract V deregister(Object key);
+  protected abstract Map<K, V> getMap();
 
   /**
    * @author Eike Stepper
    */
   protected class Transaction
   {
-    private int nesting;
+    private int nesting = 1;
 
     private List<IRegistryDelta<K, V>> deltas = new ArrayList();
 
+    private Thread owner;
+
     public Transaction()
     {
+      owner = Thread.currentThread();
+    }
+
+    public boolean isOwned()
+    {
+      return owner == Thread.currentThread();
     }
 
     public void increaseNesting()
@@ -210,7 +280,6 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
         }
 
         deltas = null;
-        transaction = null;
       }
     }
 
@@ -222,6 +291,71 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
     protected void rememberDeregistering(Object key, V value)
     {
       deltas.add(new RegistryDelta(key, value, IRegistryDelta.DEREGISTERING));
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class RegistryEvent<K, V> implements IRegistryEvent<K, V>
+  {
+    private IRegistry<K, V> registry;
+
+    private List<IRegistryDelta<K, V>> deltas;
+
+    public RegistryEvent(IRegistry<K, V> registry, List<IRegistryDelta<K, V>> deltas)
+    {
+      this.registry = registry;
+      this.deltas = deltas;
+    }
+
+    public IRegistry<K, V> getRegistry()
+    {
+      return registry;
+    }
+
+    public IRegistryDelta<K, V>[] getDeltas()
+    {
+      return deltas.toArray(new IRegistryDelta[deltas.size()]);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class RegistryDelta<K, V> implements IRegistryDelta<K, V>
+  {
+    private K key;
+
+    private V value;
+
+    private int kind;
+
+    public RegistryDelta(K key, V value, int kind)
+    {
+      this.key = key;
+      this.value = value;
+      this.kind = kind;
+    }
+
+    public K getKey()
+    {
+      return key;
+    }
+
+    public V getValue()
+    {
+      return value;
+    }
+
+    public V setValue(V value)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public int getKind()
+    {
+      return kind;
     }
   }
 }

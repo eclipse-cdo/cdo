@@ -143,8 +143,13 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
 
   public synchronized void commit()
   {
-    if (transaction != null && transaction.isOwned())
+    if (transaction != null)
     {
+      if (!transaction.isOwned())
+      {
+        Net4j.LOG.warn("Committing thread is not owner of transaction: " + Thread.currentThread());
+      }
+
       transaction.commit();
       transaction = null;
       notifyAll();

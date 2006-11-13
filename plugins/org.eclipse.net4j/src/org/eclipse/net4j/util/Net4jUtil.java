@@ -120,7 +120,7 @@ public final class Net4jUtil
       types = ProtocolFactory.SYMMETRIC;
     }
 
-    Collection<Channel> channels = Channel.REGISTRY.getElements();
+    Collection<Channel> channels = Channel.REGISTRY.values();
     Collection<Channel> result = new ArrayList(channels.size());
     for (Channel channel : channels)
     {

@@ -10,39 +10,16 @@
  **************************************************************************/
 package org.eclipse.net4j.util.registry;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public class HashMapRegistry<K, V> extends AbstractMappingRegistry<K, V>
+public interface IRegistryDelta<K, V> extends Map.Entry<K, V>
 {
-  private Map<K, V> map;
+  public static final int REGISTERED = 1;
 
-  public HashMapRegistry()
-  {
-    map = new HashMap();
-  }
+  public static final int DEREGISTERING = 2;
 
-  public HashMapRegistry(int initialCapacity)
-  {
-    map = new HashMap(initialCapacity);
-  }
-
-  public HashMapRegistry(int initialCapacity, float loadFactor)
-  {
-    map = new HashMap(initialCapacity, loadFactor);
-  }
-
-  public HashMapRegistry(Map<? extends K, ? extends V> m)
-  {
-    map = new HashMap(m);
-  }
-
-  @Override
-  protected Map<K, V> getMap()
-  {
-    return map;
-  }
+  public int getKind();
 }

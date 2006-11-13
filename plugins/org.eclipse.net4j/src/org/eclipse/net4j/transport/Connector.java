@@ -12,7 +12,6 @@ package org.eclipse.net4j.transport;
 
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
-import org.eclipse.net4j.util.registry.IRegistryElement;
 
 import java.util.concurrent.ExecutorService;
 
@@ -30,7 +29,7 @@ import java.util.concurrent.ExecutorService;
  * 
  * @author Eike Stepper
  */
-public interface Connector extends IRegistryElement<Integer>
+public interface Connector
 {
   public static final IRegistry<Integer, Connector> REGISTRY = new HashMapRegistry();
 

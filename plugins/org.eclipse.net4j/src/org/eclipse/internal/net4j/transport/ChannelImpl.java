@@ -213,7 +213,8 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
 
     if (!(this instanceof ControlChannelImpl))
     {
-      Channel.REGISTRY.register(this);
+      Channel.REGISTRY.put(getID(), this);
+      Channel.REGISTRY.commit();
     }
   }
 
@@ -222,7 +223,8 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   {
     if (!(this instanceof ControlChannelImpl))
     {
-      Channel.REGISTRY.deregister(getID());
+      Channel.REGISTRY.remove(getID());
+      Channel.REGISTRY.commit();
     }
 
     receiveSerializer = null;

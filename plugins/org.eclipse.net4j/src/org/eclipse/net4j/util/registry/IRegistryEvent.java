@@ -13,15 +13,9 @@ package org.eclipse.net4j.util.registry;
 /**
  * @author Eike Stepper
  */
-public interface IRegistryElement<ID>
+public interface IRegistryEvent<ID, E>
 {
-  public ID getID();
+  public IRegistry<ID, E> getRegistry();
 
-  /**
-   * @author Eike Stepper
-   */
-  public interface Descriptor<ID> extends IRegistryElement<ID>
-  {
-    public IRegistryElement<ID> resolve();
-  }
+  public IRegistryDelta<ID, E>[] getDeltas();
 }

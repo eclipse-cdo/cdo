@@ -219,7 +219,8 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
       switch (newState)
       {
       case DISCONNECTED:
-        REGISTRY.deregister(connectorID);
+        REGISTRY.remove(connectorID);
+        REGISTRY.commit();
         if (finishedConnecting != null)
         {
           finishedConnecting.countDown();
@@ -250,7 +251,8 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
       case CONNECTED:
         finishedConnecting.countDown(); // Just in case of suspicion
         finishedNegotiating.countDown();
-        REGISTRY.register(this);
+        REGISTRY.put(connectorID, this);
+        REGISTRY.commit();
         break;
 
       }
@@ -484,7 +486,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
       return null;
     }
 
-    ProtocolFactory factory = registry.lookup(protocolID);
+    ProtocolFactory factory = registry.get(protocolID);
     if (factory == null)
     {
       if (TRACER.isEnabled())

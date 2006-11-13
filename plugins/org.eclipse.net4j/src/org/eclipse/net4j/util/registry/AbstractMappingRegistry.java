@@ -10,75 +10,50 @@
  **************************************************************************/
 package org.eclipse.net4j.util.registry;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractMappingRegistry<ID, E extends IRegistryElement<ID>> extends
-    AbstractRegistry<ID, E>
+public abstract class AbstractMappingRegistry<K, V> extends AbstractRegistry<K, V>
 {
   public AbstractMappingRegistry()
   {
-    this(DEFAULT_RESOLVING);
   }
 
-  public AbstractMappingRegistry(boolean resolving)
+  @Override
+  protected V deregister(Object key)
   {
-    super(resolving);
+    return getMap().remove(key);
   }
 
-  public synchronized void register(E element)
+  @Override
+  protected V register(K key, V value)
   {
-    E oldElement = getMap().put(element.getID(), element);
-    if (oldElement != null)
-    {
-      fireElementDeregistering(oldElement);
-    }
-
-    fireElementRegistered(element);
+    return getMap().put(key, value);
   }
 
-  public synchronized void deregister(ID id)
+  public Set<Entry<K, V>> entrySet()
   {
-    E element = getMap().remove(id);
-    if (element != null)
-    {
-      fireElementDeregistering(element);
-    }
+    return getMap().entrySet();
   }
 
-  /**
-   * Synchronized to support {@link #resolveElement(IRegistryElement)}
-   */
-  public synchronized E lookup(ID id, boolean resolve)
+  public V get(Object key)
   {
-    E element = getMap().get(id);
-    if (resolve)
-    {
-      element = resolveElement(element);
-    }
-
-    return element;
+    return getMap().get(key);
   }
 
-  public Set<ID> getElementIDs()
+  public Set<K> keySet()
   {
     return getMap().keySet();
   }
 
-  @Override
-  public synchronized void dispose()
+  public Collection<V> values()
   {
-    getMap().clear();
+    return getMap().values();
   }
 
-  @Override
-  protected void replaceElement(ID id, E element)
-  {
-    getMap().put(id, element);
-  }
-
-  protected abstract Map<ID, E> getMap();
+  protected abstract Map<K, V> getMap();
 }

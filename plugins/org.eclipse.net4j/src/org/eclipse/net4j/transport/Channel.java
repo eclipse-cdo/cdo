@@ -12,7 +12,6 @@ package org.eclipse.net4j.transport;
 
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
-import org.eclipse.net4j.util.registry.IRegistryElement;
 
 /**
  * A bidirectional communications channel for the asynchronous exchange of
@@ -26,7 +25,7 @@ import org.eclipse.net4j.util.registry.IRegistryElement;
  * 
  * @author Eike Stepper
  */
-public interface Channel extends BufferHandler, IRegistryElement<ChannelID>
+public interface Channel extends BufferHandler
 {
   public static final IRegistry<ChannelID, Channel> REGISTRY = new HashMapRegistry();
 

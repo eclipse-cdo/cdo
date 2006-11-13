@@ -10,45 +10,18 @@
  **************************************************************************/
 package org.eclipse.net4j.util.registry;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.Map;
 
 /**
- * Implementation note: {@link Object#equals(Object)} and
- * {@link Object#hashCode()} are based on pointer equality.
- * <p>
- * 
  * @author Eike Stepper
  */
-public interface IRegistry<ID, E extends IRegistryElement<ID>>
+public interface IRegistry<K, V> extends Map<K, V>
 {
-  public void setResolving(boolean resolving);
+  public void addRegistryListener(IRegistryListener<K, V> listener);
 
-  public boolean isResolving();
+  public void removeRegistryListener(IRegistryListener<K, V> listener);
 
-  public boolean isResolved(ID id);
-
-  public boolean isRegistered(ID id);
-
-  public int size();
-
-  public void register(E element);
-
-  public void deregister(ID id);
-
-  public E lookup(ID id);
-
-  public E lookup(ID id, boolean resolve);
-
-  public Set<ID> getElementIDs();
-
-  public Collection<E> getElements();
-
-  public Collection<E> getElements(boolean resolve);
-
-  public void addRegistryListener(IRegistryListener<ID, E> listener);
-
-  public void removeRegistryListener(IRegistryListener<ID, E> listener);
+  public void commit();
 
   public void dispose();
 }

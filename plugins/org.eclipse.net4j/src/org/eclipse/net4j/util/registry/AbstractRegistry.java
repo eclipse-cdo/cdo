@@ -16,6 +16,7 @@ import org.eclipse.internal.net4j.bundle.Net4j;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -247,6 +248,16 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
     }
   }
 
+  protected void fireRegistryEvent(IRegistryDelta<K, V> delta)
+  {
+    fireRegistryEvent(Collections.singletonList(delta));
+  }
+
+  protected void fireRegistryEvent(List<IRegistryDelta<K, V>> deltas)
+  {
+    fireRegistryEvent(new RegistryEvent<K, V>(AbstractRegistry.this, deltas));
+  }
+
   protected void fireRegistryEvent(IRegistryEvent<K, V> event)
   {
     if (TRACER.isEnabled())
@@ -330,7 +341,7 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
       {
         if (notifications && !deltas.isEmpty())
         {
-          fireRegistryEvent(new RegistryEvent<K, V>(AbstractRegistry.this, deltas));
+          fireRegistryEvent(deltas);
         }
 
         deltas = null;

@@ -36,10 +36,18 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
    */
   private Queue<IRegistryListener> listeners = new ConcurrentLinkedQueue();
 
+  private boolean autoCommit;
+
   private Transaction transaction;
+
+  protected AbstractRegistry(boolean autoCommit)
+  {
+    this.autoCommit = autoCommit;
+  }
 
   protected AbstractRegistry()
   {
+    this(true);
   }
 
   public void addRegistryListener(IRegistryListener<K, V> listener)
@@ -93,15 +101,23 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
   }
 
   /**
-   * Requires {@link #commit()} to be called later.
+   * Requires {@link #commit()} to be called later if not
+   * {@link #isAutoCommit()}.
    */
   public synchronized V put(K key, V value)
   {
-    return getTransaction().put(key, value);
+    V result = getTransaction().put(key, value);
+    if (autoCommit)
+    {
+      commit();
+    }
+
+    return result;
   }
 
   /**
-   * Requires {@link #commit()} to be called later.
+   * Requires {@link #commit()} to be called later if not
+   * {@link #isAutoCommit()}.
    */
   public synchronized void putAll(Map<? extends K, ? extends V> t)
   {
@@ -114,19 +130,32 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
         Entry<? extends K, ? extends V> e = i.next();
         transaction.put(e.getKey(), e.getValue());
       }
+
+      if (autoCommit)
+      {
+        commit();
+      }
     }
   }
 
   /**
-   * Requires {@link #commit()} to be called later.
+   * Requires {@link #commit()} to be called later if not
+   * {@link #isAutoCommit()}.
    */
   public synchronized V remove(Object key)
   {
-    return getTransaction().remove(key);
+    V result = getTransaction().remove(key);
+    if (autoCommit)
+    {
+      commit();
+    }
+
+    return result;
   }
 
   /**
-   * Requires {@link #commit()} to be called later.
+   * Requires {@link #commit()} to be called later if not
+   * {@link #isAutoCommit()}.
    */
   public synchronized void clear()
   {
@@ -138,10 +167,25 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
       {
         transaction.remove(key);
       }
+
+      if (autoCommit)
+      {
+        commit();
+      }
     }
   }
 
-  public synchronized void commit()
+  public boolean isAutoCommit()
+  {
+    return autoCommit;
+  }
+
+  public void setAutoCommit(boolean autoCommit)
+  {
+    this.autoCommit = autoCommit;
+  }
+
+  public synchronized void commit(boolean notifications)
   {
     if (transaction != null)
     {
@@ -150,10 +194,15 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
         Net4j.LOG.warn("Committing thread is not owner of transaction: " + Thread.currentThread());
       }
 
-      transaction.commit();
+      transaction.commit(notifications);
       transaction = null;
       notifyAll();
     }
+  }
+
+  public void commit()
+  {
+    commit(true);
   }
 
   public synchronized void dispose()
@@ -275,11 +324,11 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
       return value;
     }
 
-    public void commit()
+    public void commit(boolean notifications)
     {
       if (--nesting == 0)
       {
-        if (!deltas.isEmpty())
+        if (notifications && !deltas.isEmpty())
         {
           fireRegistryEvent(new RegistryEvent<K, V>(AbstractRegistry.this, deltas));
         }

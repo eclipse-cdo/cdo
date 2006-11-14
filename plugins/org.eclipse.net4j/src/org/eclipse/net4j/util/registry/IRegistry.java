@@ -21,6 +21,12 @@ public interface IRegistry<K, V> extends Map<K, V>
 
   public void removeRegistryListener(IRegistryListener<K, V> listener);
 
+  public boolean isAutoCommit();
+
+  public void setAutoCommit(boolean on);
+
+  public void commit(boolean notifications);
+
   public void commit();
 
   public void dispose();

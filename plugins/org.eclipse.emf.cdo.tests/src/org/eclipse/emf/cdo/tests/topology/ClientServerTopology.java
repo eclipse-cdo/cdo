@@ -169,8 +169,16 @@ public class ClientServerTopology implements ITopology
     transactionTemplate.setTransactionManager(transactionManager);
 
     serverRegistry = new HashMapRegistry();
-    serverRegistry.register(new ServerCDOResProtocolImpl.Factory(mapper, transactionTemplate));
-    serverRegistry.register(new ServerCDOProtocolImpl.Factory(mapper, transactionTemplate));
+    {
+      ServerCDOResProtocolImpl.Factory factory = new ServerCDOResProtocolImpl.Factory(mapper,
+          transactionTemplate);
+      serverRegistry.put(factory.getID(), factory);
+    }
+    {
+      ServerCDOProtocolImpl.Factory factory = new ServerCDOProtocolImpl.Factory(mapper,
+          transactionTemplate);
+      serverRegistry.put(factory.getID(), factory);
+    }
 
     acceptor = Net4jUtil.createTCPAcceptor(bufferPool, selector);
     acceptor.setProtocolFactoryRegistry(serverRegistry);
@@ -188,8 +196,15 @@ public class ClientServerTopology implements ITopology
     LifecycleUtil.activate(clientPackageManager);
 
     clientRegistry = new HashMapRegistry();
-    clientRegistry.register(new ClientCDOProtocolImpl.Factory(clientPackageManager));
-    clientRegistry.register(new ClientCDOResProtocolImpl.Factory());
+    {
+      ClientCDOProtocolImpl.Factory factory = new ClientCDOProtocolImpl.Factory(
+          clientPackageManager);
+      clientRegistry.put(factory.getID(), factory);
+    }
+    {
+      ClientCDOResProtocolImpl.Factory factory = new ClientCDOResProtocolImpl.Factory();
+      clientRegistry.put(factory.getID(), factory);
+    }
 
     connector = Net4jUtil.createTCPConnector(bufferPool, selector, "localhost");
     connector.setProtocolFactoryRegistry(clientRegistry);
@@ -252,7 +267,7 @@ public class ClientServerTopology implements ITopology
 
   public void waitForSignals()
   {
-    Collection<Channel> channels = Channel.REGISTRY.getElements();
+    Collection<Channel> channels = Channel.REGISTRY.values();
     for (Channel channel : channels)
     {
       BufferHandler receiveHandler = channel.getReceiveHandler();

@@ -108,11 +108,7 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
   public synchronized V put(K key, V value)
   {
     V result = getTransaction().put(key, value);
-    if (autoCommit)
-    {
-      commit();
-    }
-
+    autoCommit();
     return result;
   }
 
@@ -132,10 +128,7 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
         transaction.put(e.getKey(), e.getValue());
       }
 
-      if (autoCommit)
-      {
-        commit();
-      }
+      autoCommit();
     }
   }
 
@@ -146,11 +139,7 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
   public synchronized V remove(Object key)
   {
     V result = getTransaction().remove(key);
-    if (autoCommit)
-    {
-      commit();
-    }
-
+    autoCommit();
     return result;
   }
 
@@ -169,10 +158,7 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
         transaction.remove(key);
       }
 
-      if (autoCommit)
-      {
-        commit();
-      }
+      autoCommit();
     }
   }
 
@@ -281,6 +267,14 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
       {
         Net4j.LOG.error(ex);
       }
+    }
+  }
+
+  protected void autoCommit()
+  {
+    if (autoCommit)
+    {
+      commit();
     }
   }
 

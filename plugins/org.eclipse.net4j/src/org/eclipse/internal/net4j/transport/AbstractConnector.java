@@ -249,10 +249,10 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
         break;
 
       case CONNECTED:
-        finishedConnecting.countDown(); // Just in case of suspicion
-        finishedNegotiating.countDown();
         REGISTRY.put(connectorID, this);
         REGISTRY.commit();
+        finishedConnecting.countDown(); // Just in case of suspicion
+        finishedNegotiating.countDown();
         break;
 
       }

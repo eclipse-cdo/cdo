@@ -58,14 +58,14 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Activating");//$NON-NLS-1$
+        TRACER.trace("Activating " + this);//$NON-NLS-1$
       }
 
       onAboutToActivate();
       fireLifecycleAboutToActivate();
       if (DUMPER.isEnabled())
       {
-        DUMPER.trace("DUMP " + ReflectUtil.toString(this)); //$NON-NLS-1$
+        DUMPER.trace("DUMP" + ReflectUtil.toString(this)); //$NON-NLS-1$
       }
 
       onActivate();
@@ -81,7 +81,7 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Deactivating");//$NON-NLS-1$
+        TRACER.trace("Deactivating " + this);//$NON-NLS-1$
       }
 
       fireLifecycleDeactivating();

@@ -31,8 +31,6 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
@@ -41,8 +39,6 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SELECTOR,
       TCPSelectorImpl.class);
-
-  private static final long SELECT_TIMEOUT = 2;
 
   private Selector selector;
 
@@ -56,6 +52,11 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
 
   public void invokeAsync(final Runnable operation)
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Pending operation " + operation);
+    }
+
     pendingOperations.add(operation);
     selector.wakeup();
   }
@@ -69,6 +70,12 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
       {
         doRegister(channel, listener);
       }
+
+      @Override
+      public String toString()
+      {
+        return "REGISTER " + TCPUtil.toString(channel);
+      }
     });
   }
 
@@ -81,73 +88,13 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
       {
         doRegister(channel, listener);
       }
-    });
-  }
 
-  public boolean invoke(final Runnable operation, long timeout)
-  {
-    final CountDownLatch latch = new CountDownLatch(1);
-    pendingOperations.add(new Runnable()
-    {
-      public void run()
+      @Override
+      public String toString()
       {
-        operation.run();
-        latch.countDown();
+        return "REGISTER " + TCPUtil.toString(channel);
       }
     });
-
-    selector.wakeup();
-
-    try
-    {
-      boolean result = latch.await(timeout, TimeUnit.MILLISECONDS);
-      return result;
-    }
-    catch (InterruptedException ex)
-    {
-      return false;
-    }
-  }
-
-  public SelectionKey register(final ServerSocketChannel channel, final Passive listener,
-      long timeout)
-  {
-    assertValidListener(listener);
-    boolean success = invoke(new Runnable()
-    {
-      public void run()
-      {
-        doRegister(channel, listener);
-      }
-    }, timeout);
-
-    if (!success)
-    {
-      return null;
-    }
-
-    return channel.keyFor(selector);
-  }
-
-  public SelectionKey register(final SocketChannel channel, final Active listener, long timeout)
-  {
-    assertValidListener(listener);
-    boolean success = invoke(new Runnable()
-    {
-      public void run()
-      {
-        System.out.println("START REGISTER");
-        doRegister(channel, listener);
-        System.out.println("STOP REGISTER");
-      }
-    }, timeout);
-
-    if (!success)
-    {
-      return null;
-    }
-
-    return channel.keyFor(selector);
   }
 
   public void setConnectInterest(final SelectionKey selectionKey, final boolean on)
@@ -157,6 +104,12 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
       public void run()
       {
         TCPUtil.setConnectInterest(selectionKey, on);
+      }
+
+      @Override
+      public String toString()
+      {
+        return "INTEREST CONNECT " + selectionKey + " = " + on;
       }
     });
   }
@@ -169,6 +122,12 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
       {
         TCPUtil.setReadInterest(selectionKey, on);
       }
+
+      @Override
+      public String toString()
+      {
+        return "INTEREST READ " + selectionKey + " = " + on;
+      }
     });
   }
 
@@ -180,6 +139,13 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
       {
         TCPUtil.setWriteInterest(selectionKey, on);
       }
+
+      @Override
+      public String toString()
+      {
+        return "INTEREST WRITE " + selectionKey + " = " + on;
+      }
+
     });
   }
 
@@ -198,6 +164,11 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
         Runnable operation;
         while ((operation = pendingOperations.poll()) != null)
         {
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Executing operation " + operation);
+          }
+
           operation.run();
         }
 
@@ -307,7 +278,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
   protected void onActivate() throws Exception
   {
     selector = Selector.open();
-    thread = new Thread(this);
+    thread = new Thread(this, "selector"); //$NON-NLS-1$
     thread.setDaemon(true);
     thread.start();
   }
@@ -320,7 +291,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
 
     try
     {
-      thread.join(2 * SELECT_TIMEOUT + 200);
+      thread.join(200);
     }
     catch (RuntimeException ex)
     {
@@ -391,7 +362,9 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
 
     try
     {
-      channel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ, listener);
+      int interest = SelectionKey.OP_CONNECT | SelectionKey.OP_READ;
+      SelectionKey selectionKey = channel.register(selector, interest, listener);
+      listener.registered(selectionKey);
     }
     catch (ClosedChannelException ignore)
     {

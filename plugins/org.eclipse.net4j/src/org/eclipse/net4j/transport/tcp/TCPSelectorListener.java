@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.transport.tcp;
 
+import java.nio.channels.SelectionKey;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
@@ -31,6 +32,8 @@ public interface TCPSelectorListener
    */
   public interface Active
   {
+    public void registered(SelectionKey selectionKey);
+
     public void handleConnect(TCPSelector selector, SocketChannel channel);
 
     public void handleRead(TCPSelector selector, SocketChannel socketChannel);

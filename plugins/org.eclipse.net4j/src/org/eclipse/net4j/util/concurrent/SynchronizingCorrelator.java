@@ -93,4 +93,10 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements
       }
     };
   }
+
+  @Override
+  public String toString()
+  {
+    return "SynchronizingCorrelator" + map;
+  }
 }

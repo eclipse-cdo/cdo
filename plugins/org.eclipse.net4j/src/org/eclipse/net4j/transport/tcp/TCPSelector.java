@@ -28,12 +28,6 @@ public interface TCPSelector
 
   public void registerAsync(SocketChannel channel, Active listener);
 
-  public boolean invoke(Runnable operation, long timeout);
-
-  public SelectionKey register(ServerSocketChannel channel, Passive listener, long timeout);
-
-  public SelectionKey register(SocketChannel channel, Active listener, long timeout);
-
   public void setConnectInterest(SelectionKey selectionKey, boolean on);
 
   public void setReadInterest(SelectionKey selectionKey, boolean on);

@@ -17,9 +17,17 @@ import java.util.Map;
  */
 public interface IRegistryDelta<K, V> extends Map.Entry<K, V>
 {
-  public static final int REGISTERED = 1;
+  // public static final int REGISTERED = 1;
+  //
+  // public static final int DEREGISTERING = 2;
 
-  public static final int DEREGISTERING = 2;
+  public Kind getKind();
 
-  public int getKind();
+  /**
+   * @author Eike Stepper
+   */
+  public enum Kind
+  {
+    REGISTERED, DEREGISTERING
+  }
 }

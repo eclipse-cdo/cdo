@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.registry;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.registry.IRegistryDelta.Kind;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 
@@ -252,7 +253,7 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
       {
         K key = delta.getKey();
         V value = delta.getValue();
-        int kind = delta.getKind();
+        Kind kind = delta.getKind();
         TRACER.trace("Registry delta " + key + " = " + value + " (" + kind + ")");
       }
     }
@@ -344,12 +345,12 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
 
     protected void rememberRegistered(K key, V value)
     {
-      deltas.add(new RegistryDelta(key, value, IRegistryDelta.REGISTERED));
+      deltas.add(new RegistryDelta(key, value, Kind.REGISTERED));
     }
 
     protected void rememberDeregistering(Object key, V value)
     {
-      deltas.add(new RegistryDelta(key, value, IRegistryDelta.DEREGISTERING));
+      deltas.add(new RegistryDelta(key, value, Kind.DEREGISTERING));
     }
   }
 
@@ -388,9 +389,9 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
 
     private V value;
 
-    private int kind;
+    private Kind kind;
 
-    public RegistryDelta(K key, V value, int kind)
+    public RegistryDelta(K key, V value, Kind kind)
     {
       this.key = key;
       this.value = value;
@@ -412,7 +413,7 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
       throw new UnsupportedOperationException();
     }
 
-    public int getKind()
+    public Kind getKind()
     {
       return kind;
     }

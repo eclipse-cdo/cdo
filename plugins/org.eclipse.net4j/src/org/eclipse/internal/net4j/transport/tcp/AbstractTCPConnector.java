@@ -31,7 +31,6 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @author Eike Stepper
@@ -41,8 +40,6 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR,
       AbstractTCPConnector.class);
-
-  private static final long REGISTER_SELECTOR_TIMEOUT = 250000;
 
   private SocketChannel socketChannel;
 
@@ -97,7 +94,17 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
    */
   public void multiplexBuffer(Channel channel)
   {
+    checkSelectionKey();
     selector.setWriteInterest(selectionKey, true);
+  }
+
+  public void registered(SelectionKey selectionKey)
+  {
+    this.selectionKey = selectionKey;
+    if (getType() == Type.SERVER)
+    {
+      selector.setConnectInterest(selectionKey, false);
+    }
   }
 
   public void handleConnect(TCPSelector selector, SocketChannel channel)
@@ -116,6 +123,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
 
     try
     {
+      checkSelectionKey();
       selector.setConnectInterest(selectionKey, false);
       setState(State.NEGOTIATING);
     }
@@ -199,6 +207,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
 
       if (!moreToWrite)
       {
+        checkSelectionKey();
         selector.setWriteInterest(selectionKey, false);
       }
     }
@@ -268,17 +277,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     super.onActivate();
     controlChannel = new ControlChannelImpl(this);
     controlChannel.activate();
-
-    selectionKey = selector.register(socketChannel, this, REGISTER_SELECTOR_TIMEOUT);
-    if (selectionKey == null)
-    {
-      throw new TimeoutException("Unable to register channel with selector");
-    }
-
-    if (getType() == Type.SERVER)
-    {
-      selector.setConnectInterest(selectionKey, false);
-    }
+    selector.registerAsync(socketChannel, this);
   }
 
   @Override
@@ -333,6 +332,14 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     if (exception != null)
     {
       throw exception;
+    }
+  }
+
+  private void checkSelectionKey()
+  {
+    if (selectionKey == null)
+    {
+      throw new IllegalStateException("selectionKey == null");
     }
   }
 }

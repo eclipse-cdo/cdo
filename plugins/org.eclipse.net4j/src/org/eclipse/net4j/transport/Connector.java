@@ -13,18 +13,24 @@ package org.eclipse.net4j.transport;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
+import org.eclipse.internal.net4j.transport.AbstractConnector;
+import org.eclipse.internal.net4j.transport.ChannelImpl;
+
 import java.util.concurrent.ExecutorService;
 
 /**
  * One endpoint of a physical connection of arbitrary nature between two
  * communicating parties. A {@link Connector} encapsulates the process of
  * establishing and closing such connections and has a {@link Type} of
- * {@link Type#CLIENT FOR_CLIENTS} or {@link Type#SERVER FOR_SERVERS} with
+ * {@link Type#CLIENT} or {@link Type#SERVER} with
  * respect to this process. Once a connection is established either party can
- * use its {@link Connector} to open multiple {@link Channel}s to
+ * use its connector to open multiple {@link Channel}s to
  * asynchronously exchange {@link Buffer}s.
  * <p>
- * This interface is <b>not</b> intended to be implemented by clients.
+ * This interface is <b>not</b> intended to be implemented by clients. Providers of 
+ * connectors for new physical connection types have to subclass {@link AbstractConnector}
+ * (see {@link ChannelImpl#setConnector(AbstractConnector)}.
+ *  
  * <p>
  * 
  * @author Eike Stepper
@@ -32,6 +38,8 @@ import java.util.concurrent.ExecutorService;
 public interface Connector
 {
   public static final IRegistry<Integer, Connector> REGISTRY = new HashMapRegistry();
+
+  public Integer getID();
 
   public Type getType();
 
@@ -59,7 +67,7 @@ public interface Connector
   public void connectAsync() throws ConnectorException;
 
   /**
-   * Blocks until <code>{@link #isConnected()} == true</code>.
+   * Blocks until <code>{@link #isConnected()} == true</code> or the given timeout expired.
    * <p>
    * 
    * @throws ConnectorException
@@ -68,7 +76,7 @@ public interface Connector
 
   /**
    * Synchronous connect. Blocks until <code>{@link #isConnected()} ==
-   * true</code>.
+   * true</code> or the given timeout expired.
    * <p>
    */
   public boolean connect(long timeout) throws ConnectorException;

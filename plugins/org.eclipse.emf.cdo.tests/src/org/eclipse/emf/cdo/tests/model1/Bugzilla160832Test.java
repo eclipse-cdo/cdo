@@ -76,4 +76,8 @@ public class Bugzilla160832Test extends AbstractModel1Test
       assertEquals(0, node1.getBidiTarget().size());
     }
   }
+
+  //  public void testUnsetNonExistingRefs()
+  //  {
+  //  }
 }

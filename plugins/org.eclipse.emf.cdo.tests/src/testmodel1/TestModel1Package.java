@@ -120,13 +120,40 @@ public interface TestModel1Package extends EPackage
   int TREE_NODE__REFERENCES = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 4;
 
   /**
+   * The feature id for the '<em><b>Reference</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TREE_NODE__REFERENCE = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>Source Ref</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TREE_NODE__SOURCE_REF = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 6;
+
+  /**
+   * The feature id for the '<em><b>Target Ref</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TREE_NODE__TARGET_REF = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 7;
+
+  /**
    * The feature id for the '<em><b>Boolean Feature</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TREE_NODE__BOOLEAN_FEATURE = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 5;
+  int TREE_NODE__BOOLEAN_FEATURE = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 8;
 
   /**
    * The feature id for the '<em><b>Int Feature</b></em>' attribute.
@@ -135,7 +162,7 @@ public interface TestModel1Package extends EPackage
    * @generated
    * @ordered
    */
-  int TREE_NODE__INT_FEATURE = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 6;
+  int TREE_NODE__INT_FEATURE = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 9;
 
   /**
    * The feature id for the '<em><b>String Feature</b></em>' attribute.
@@ -144,7 +171,7 @@ public interface TestModel1Package extends EPackage
    * @generated
    * @ordered
    */
-  int TREE_NODE__STRING_FEATURE = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 7;
+  int TREE_NODE__STRING_FEATURE = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 10;
 
   /**
    * The number of structural features of the '<em>Tree Node</em>' class.
@@ -153,7 +180,7 @@ public interface TestModel1Package extends EPackage
    * @generated
    * @ordered
    */
-  int TREE_NODE_FEATURE_COUNT = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 8;
+  int TREE_NODE_FEATURE_COUNT = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 11;
 
   /**
    * The meta object id for the '{@link testmodel1.impl.ExtendedNodeImpl <em>Extended Node</em>}' class.
@@ -209,6 +236,33 @@ public interface TestModel1Package extends EPackage
    * @ordered
    */
   int EXTENDED_NODE__REFERENCES = TREE_NODE__REFERENCES;
+
+  /**
+   * The feature id for the '<em><b>Reference</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__REFERENCE = TREE_NODE__REFERENCE;
+
+  /**
+   * The feature id for the '<em><b>Source Ref</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__SOURCE_REF = TREE_NODE__SOURCE_REF;
+
+  /**
+   * The feature id for the '<em><b>Target Ref</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_NODE__TARGET_REF = TREE_NODE__TARGET_REF;
 
   /**
    * The feature id for the '<em><b>Boolean Feature</b></em>' attribute.
@@ -329,6 +383,33 @@ public interface TestModel1Package extends EPackage
   int EMPTY_NODE__REFERENCES = TREE_NODE__REFERENCES;
 
   /**
+   * The feature id for the '<em><b>Reference</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_NODE__REFERENCE = TREE_NODE__REFERENCE;
+
+  /**
+   * The feature id for the '<em><b>Source Ref</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_NODE__SOURCE_REF = TREE_NODE__SOURCE_REF;
+
+  /**
+   * The feature id for the '<em><b>Target Ref</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_NODE__TARGET_REF = TREE_NODE__TARGET_REF;
+
+  /**
    * The feature id for the '<em><b>Boolean Feature</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -418,6 +499,33 @@ public interface TestModel1Package extends EPackage
    * @ordered
    */
   int EMPTY_REF_NODE__REFERENCES = TREE_NODE__REFERENCES;
+
+  /**
+   * The feature id for the '<em><b>Reference</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_REF_NODE__REFERENCE = TREE_NODE__REFERENCE;
+
+  /**
+   * The feature id for the '<em><b>Source Ref</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_REF_NODE__SOURCE_REF = TREE_NODE__SOURCE_REF;
+
+  /**
+   * The feature id for the '<em><b>Target Ref</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_REF_NODE__TARGET_REF = TREE_NODE__TARGET_REF;
 
   /**
    * The feature id for the '<em><b>Boolean Feature</b></em>' attribute.
@@ -528,6 +636,39 @@ public interface TestModel1Package extends EPackage
    * @generated
    */
   EReference getTreeNode_References();
+
+  /**
+   * Returns the meta object for the reference '{@link testmodel1.TreeNode#getReference <em>Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Reference</em>'.
+   * @see testmodel1.TreeNode#getReference()
+   * @see #getTreeNode()
+   * @generated
+   */
+  EReference getTreeNode_Reference();
+
+  /**
+   * Returns the meta object for the reference '{@link testmodel1.TreeNode#getSourceRef <em>Source Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Source Ref</em>'.
+   * @see testmodel1.TreeNode#getSourceRef()
+   * @see #getTreeNode()
+   * @generated
+   */
+  EReference getTreeNode_SourceRef();
+
+  /**
+   * Returns the meta object for the reference '{@link testmodel1.TreeNode#getTargetRef <em>Target Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Target Ref</em>'.
+   * @see testmodel1.TreeNode#getTargetRef()
+   * @see #getTreeNode()
+   * @generated
+   */
+  EReference getTreeNode_TargetRef();
 
   /**
    * Returns the meta object for the attribute '{@link testmodel1.TreeNode#isBooleanFeature <em>Boolean Feature</em>}'.
@@ -709,6 +850,30 @@ public interface TestModel1Package extends EPackage
      * @generated
      */
     EReference TREE_NODE__REFERENCES = eINSTANCE.getTreeNode_References();
+
+    /**
+     * The meta object literal for the '<em><b>Reference</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TREE_NODE__REFERENCE = eINSTANCE.getTreeNode_Reference();
+
+    /**
+     * The meta object literal for the '<em><b>Source Ref</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TREE_NODE__SOURCE_REF = eINSTANCE.getTreeNode_SourceRef();
+
+    /**
+     * The meta object literal for the '<em><b>Target Ref</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TREE_NODE__TARGET_REF = eINSTANCE.getTreeNode_TargetRef();
 
     /**
      * The meta object literal for the '<em><b>Boolean Feature</b></em>' attribute feature.

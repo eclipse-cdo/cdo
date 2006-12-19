@@ -25,6 +25,9 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link testmodel1.TreeNode#getParent2 <em>Parent2</em>}</li>
  *   <li>{@link testmodel1.TreeNode#getChildren2 <em>Children2</em>}</li>
  *   <li>{@link testmodel1.TreeNode#getReferences <em>References</em>}</li>
+ *   <li>{@link testmodel1.TreeNode#getReference <em>Reference</em>}</li>
+ *   <li>{@link testmodel1.TreeNode#getSourceRef <em>Source Ref</em>}</li>
+ *   <li>{@link testmodel1.TreeNode#getTargetRef <em>Target Ref</em>}</li>
  *   <li>{@link testmodel1.TreeNode#isBooleanFeature <em>Boolean Feature</em>}</li>
  *   <li>{@link testmodel1.TreeNode#getIntFeature <em>Int Feature</em>}</li>
  *   <li>{@link testmodel1.TreeNode#getStringFeature <em>String Feature</em>}</li>
@@ -144,6 +147,88 @@ public interface TreeNode extends CDOPersistent
    * @generated
    */
   EList getReferences();
+
+  /**
+   * Returns the value of the '<em><b>Reference</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Reference</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Reference</em>' reference.
+   * @see #setReference(TreeNode)
+   * @see testmodel1.TestModel1Package#getTreeNode_Reference()
+   * @model
+   * @generated
+   */
+  TreeNode getReference();
+
+  /**
+   * Sets the value of the '{@link testmodel1.TreeNode#getReference <em>Reference</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Reference</em>' reference.
+   * @see #getReference()
+   * @generated
+   */
+  void setReference(TreeNode value);
+
+  /**
+   * Returns the value of the '<em><b>Source Ref</b></em>' reference.
+   * It is bidirectional and its opposite is '{@link testmodel1.TreeNode#getTargetRef <em>Target Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Source Ref</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Source Ref</em>' reference.
+   * @see #setSourceRef(TreeNode)
+   * @see testmodel1.TestModel1Package#getTreeNode_SourceRef()
+   * @see testmodel1.TreeNode#getTargetRef
+   * @model opposite="targetRef"
+   * @generated
+   */
+  TreeNode getSourceRef();
+
+  /**
+   * Sets the value of the '{@link testmodel1.TreeNode#getSourceRef <em>Source Ref</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Source Ref</em>' reference.
+   * @see #getSourceRef()
+   * @generated
+   */
+  void setSourceRef(TreeNode value);
+
+  /**
+   * Returns the value of the '<em><b>Target Ref</b></em>' reference.
+   * It is bidirectional and its opposite is '{@link testmodel1.TreeNode#getSourceRef <em>Source Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Target Ref</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Target Ref</em>' reference.
+   * @see #setTargetRef(TreeNode)
+   * @see testmodel1.TestModel1Package#getTreeNode_TargetRef()
+   * @see testmodel1.TreeNode#getSourceRef
+   * @model opposite="sourceRef"
+   * @generated
+   */
+  TreeNode getTargetRef();
+
+  /**
+   * Sets the value of the '{@link testmodel1.TreeNode#getTargetRef <em>Target Ref</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Target Ref</em>' reference.
+   * @see #getTargetRef()
+   * @generated
+   */
+  void setTargetRef(TreeNode value);
 
   /**
    * Returns the value of the '<em><b>Boolean Feature</b></em>' attribute.

@@ -14,6 +14,11 @@
         eType="#//TreeNode" containment="true" eOpposite="#//TreeNode/parent2"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="references" upperBound="-1"
         eType="#//TreeNode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" eType="#//TreeNode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceRef" eType="#//TreeNode"
+        eOpposite="#//TreeNode/targetRef"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetRef" eType="#//TreeNode"
+        eOpposite="#//TreeNode/sourceRef"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="booleanFeature" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="intFeature" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringFeature" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

@@ -38,6 +38,9 @@ import java.util.Collection;
  *   <li>{@link testmodel1.impl.TreeNodeImpl#getParent2 <em>Parent2</em>}</li>
  *   <li>{@link testmodel1.impl.TreeNodeImpl#getChildren2 <em>Children2</em>}</li>
  *   <li>{@link testmodel1.impl.TreeNodeImpl#getReferences <em>References</em>}</li>
+ *   <li>{@link testmodel1.impl.TreeNodeImpl#getReference <em>Reference</em>}</li>
+ *   <li>{@link testmodel1.impl.TreeNodeImpl#getSourceRef <em>Source Ref</em>}</li>
+ *   <li>{@link testmodel1.impl.TreeNodeImpl#getTargetRef <em>Target Ref</em>}</li>
  *   <li>{@link testmodel1.impl.TreeNodeImpl#isBooleanFeature <em>Boolean Feature</em>}</li>
  *   <li>{@link testmodel1.impl.TreeNodeImpl#getIntFeature <em>Int Feature</em>}</li>
  *   <li>{@link testmodel1.impl.TreeNodeImpl#getStringFeature <em>String Feature</em>}</li>
@@ -77,6 +80,36 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    * @ordered
    */
   protected EList references = null;
+
+  /**
+   * The cached value of the '{@link #getReference() <em>Reference</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getReference()
+   * @generated
+   * @ordered
+   */
+  protected TreeNode reference = null;
+
+  /**
+   * The cached value of the '{@link #getSourceRef() <em>Source Ref</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSourceRef()
+   * @generated
+   * @ordered
+   */
+  protected TreeNode sourceRef = null;
+
+  /**
+   * The cached value of the '{@link #getTargetRef() <em>Target Ref</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTargetRef()
+   * @generated
+   * @ordered
+   */
+  protected TreeNode targetRef = null;
 
   /**
    * The default value of the '{@link #isBooleanFeature() <em>Boolean Feature</em>}' attribute.
@@ -313,6 +346,214 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    * <!-- end-user-doc -->
    * @generated
    */
+  public TreeNode getReference()
+  {
+
+    if (reference != null && reference.eIsProxy())
+    {
+      InternalEObject oldReference = (InternalEObject) reference;
+      reference = (TreeNode) eResolveProxy(oldReference);
+      if (reference != oldReference)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+              TestModel1Package.TREE_NODE__REFERENCE, oldReference, reference));
+      }
+    }
+    return reference;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TreeNode basicGetReference()
+  {
+    cdoLoad();
+    return reference;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setReference(TreeNode newReference)
+  {
+    cdoLoad();
+    TreeNode oldReference = reference;
+    reference = newReference;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, TestModel1Package.TREE_NODE__REFERENCE,
+          oldReference, reference));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TreeNode getSourceRef()
+  {
+
+    if (sourceRef != null && sourceRef.eIsProxy())
+    {
+      InternalEObject oldSourceRef = (InternalEObject) sourceRef;
+      sourceRef = (TreeNode) eResolveProxy(oldSourceRef);
+      if (sourceRef != oldSourceRef)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+              TestModel1Package.TREE_NODE__SOURCE_REF, oldSourceRef, sourceRef));
+      }
+    }
+    return sourceRef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TreeNode basicGetSourceRef()
+  {
+    cdoLoad();
+    return sourceRef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetSourceRef(TreeNode newSourceRef, NotificationChain msgs)
+  {
+    cdoLoad();
+    TreeNode oldSourceRef = sourceRef;
+    sourceRef = newSourceRef;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+          TestModel1Package.TREE_NODE__SOURCE_REF, oldSourceRef, newSourceRef);
+      if (msgs == null)
+        msgs = notification;
+      else
+        msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setSourceRef(TreeNode newSourceRef)
+  {
+
+    if (newSourceRef != sourceRef)
+    {
+      NotificationChain msgs = null;
+      if (sourceRef != null)
+        msgs = ((InternalEObject) sourceRef).eInverseRemove(this,
+            TestModel1Package.TREE_NODE__TARGET_REF, TreeNode.class, msgs);
+      if (newSourceRef != null)
+        msgs = ((InternalEObject) newSourceRef).eInverseAdd(this,
+            TestModel1Package.TREE_NODE__TARGET_REF, TreeNode.class, msgs);
+      msgs = basicSetSourceRef(newSourceRef, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET,
+          TestModel1Package.TREE_NODE__SOURCE_REF, newSourceRef, newSourceRef));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TreeNode getTargetRef()
+  {
+
+    if (targetRef != null && targetRef.eIsProxy())
+    {
+      InternalEObject oldTargetRef = (InternalEObject) targetRef;
+      targetRef = (TreeNode) eResolveProxy(oldTargetRef);
+      if (targetRef != oldTargetRef)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+              TestModel1Package.TREE_NODE__TARGET_REF, oldTargetRef, targetRef));
+      }
+    }
+    return targetRef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TreeNode basicGetTargetRef()
+  {
+    cdoLoad();
+    return targetRef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetTargetRef(TreeNode newTargetRef, NotificationChain msgs)
+  {
+    cdoLoad();
+    TreeNode oldTargetRef = targetRef;
+    targetRef = newTargetRef;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+          TestModel1Package.TREE_NODE__TARGET_REF, oldTargetRef, newTargetRef);
+      if (msgs == null)
+        msgs = notification;
+      else
+        msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTargetRef(TreeNode newTargetRef)
+  {
+
+    if (newTargetRef != targetRef)
+    {
+      NotificationChain msgs = null;
+      if (targetRef != null)
+        msgs = ((InternalEObject) targetRef).eInverseRemove(this,
+            TestModel1Package.TREE_NODE__SOURCE_REF, TreeNode.class, msgs);
+      if (newTargetRef != null)
+        msgs = ((InternalEObject) newTargetRef).eInverseAdd(this,
+            TestModel1Package.TREE_NODE__SOURCE_REF, TreeNode.class, msgs);
+      msgs = basicSetTargetRef(newTargetRef, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET,
+          TestModel1Package.TREE_NODE__TARGET_REF, newTargetRef, newTargetRef));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public boolean isBooleanFeature()
   {
     cdoLoad();
@@ -406,6 +647,16 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
         return basicSetParent2((TreeNode) otherEnd, msgs);
       case TestModel1Package.TREE_NODE__CHILDREN2:
         return ((InternalEList) getChildren2()).basicAdd(otherEnd, msgs);
+      case TestModel1Package.TREE_NODE__SOURCE_REF:
+        if (sourceRef != null)
+          msgs = ((InternalEObject) sourceRef).eInverseRemove(this,
+              TestModel1Package.TREE_NODE__TARGET_REF, TreeNode.class, msgs);
+        return basicSetSourceRef((TreeNode) otherEnd, msgs);
+      case TestModel1Package.TREE_NODE__TARGET_REF:
+        if (targetRef != null)
+          msgs = ((InternalEObject) targetRef).eInverseRemove(this,
+              TestModel1Package.TREE_NODE__SOURCE_REF, TreeNode.class, msgs);
+        return basicSetTargetRef((TreeNode) otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -428,6 +679,10 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
         return basicSetParent2(null, msgs);
       case TestModel1Package.TREE_NODE__CHILDREN2:
         return ((InternalEList) getChildren2()).basicRemove(otherEnd, msgs);
+      case TestModel1Package.TREE_NODE__SOURCE_REF:
+        return basicSetSourceRef(null, msgs);
+      case TestModel1Package.TREE_NODE__TARGET_REF:
+        return basicSetTargetRef(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -470,6 +725,15 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
         return getChildren2();
       case TestModel1Package.TREE_NODE__REFERENCES:
         return getReferences();
+      case TestModel1Package.TREE_NODE__REFERENCE:
+        if (resolve) return getReference();
+        return basicGetReference();
+      case TestModel1Package.TREE_NODE__SOURCE_REF:
+        if (resolve) return getSourceRef();
+        return basicGetSourceRef();
+      case TestModel1Package.TREE_NODE__TARGET_REF:
+        if (resolve) return getTargetRef();
+        return basicGetTargetRef();
       case TestModel1Package.TREE_NODE__BOOLEAN_FEATURE:
         return isBooleanFeature() ? Boolean.TRUE : Boolean.FALSE;
       case TestModel1Package.TREE_NODE__INT_FEATURE:
@@ -506,6 +770,15 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
       case TestModel1Package.TREE_NODE__REFERENCES:
         getReferences().clear();
         getReferences().addAll((Collection) newValue);
+        return;
+      case TestModel1Package.TREE_NODE__REFERENCE:
+        setReference((TreeNode) newValue);
+        return;
+      case TestModel1Package.TREE_NODE__SOURCE_REF:
+        setSourceRef((TreeNode) newValue);
+        return;
+      case TestModel1Package.TREE_NODE__TARGET_REF:
+        setTargetRef((TreeNode) newValue);
         return;
       case TestModel1Package.TREE_NODE__BOOLEAN_FEATURE:
         setBooleanFeature(((Boolean) newValue).booleanValue());
@@ -544,6 +817,15 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
       case TestModel1Package.TREE_NODE__REFERENCES:
         getReferences().clear();
         return;
+      case TestModel1Package.TREE_NODE__REFERENCE:
+        setReference((TreeNode) null);
+        return;
+      case TestModel1Package.TREE_NODE__SOURCE_REF:
+        setSourceRef((TreeNode) null);
+        return;
+      case TestModel1Package.TREE_NODE__TARGET_REF:
+        setTargetRef((TreeNode) null);
+        return;
       case TestModel1Package.TREE_NODE__BOOLEAN_FEATURE:
         setBooleanFeature(BOOLEAN_FEATURE_EDEFAULT);
         return;
@@ -576,6 +858,12 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
         return children2 != null && !children2.isEmpty();
       case TestModel1Package.TREE_NODE__REFERENCES:
         return references != null && !references.isEmpty();
+      case TestModel1Package.TREE_NODE__REFERENCE:
+        return reference != null;
+      case TestModel1Package.TREE_NODE__SOURCE_REF:
+        return sourceRef != null;
+      case TestModel1Package.TREE_NODE__TARGET_REF:
+        return targetRef != null;
       case TestModel1Package.TREE_NODE__BOOLEAN_FEATURE:
         return booleanFeature != BOOLEAN_FEATURE_EDEFAULT;
       case TestModel1Package.TREE_NODE__INT_FEATURE:

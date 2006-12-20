@@ -25,7 +25,7 @@ public class AllTests
     suite.addTestSuite(SerializationTest.class);
     suite.addTestSuite(NotificationTest.class);
     suite.addTestSuite(RollbackTest.class);
-    //    suite.addTestSuite(XRefsTest.class);
+    // TODO suite.addTestSuite(XRefsTest.class);
     suite.addTestSuite(ExtentTest.class);
     suite.addTestSuite(OCLTest.class);
     suite.addTestSuite(BidiReferencesTest.class);

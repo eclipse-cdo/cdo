@@ -116,7 +116,7 @@ public class SignalTest extends AbstractOMTest
     ExecutorService threadPool = Executors.newCachedThreadPool();
     IRegistry<String, ProtocolFactory> registry = new HashMapRegistry();
     TestSignalProtocol.Factory factory = new TestSignalProtocol.Factory();
-    registry.put(factory.getID(), factory);
+    registry.put(factory.getProtocolID(), factory);
 
     acceptor.setReceiveExecutor(threadPool);
     acceptor.setProtocolFactoryRegistry(registry);
@@ -138,7 +138,7 @@ public class SignalTest extends AbstractOMTest
     ExecutorService threadPool = Executors.newCachedThreadPool();
     IRegistry<String, ProtocolFactory> registry = new HashMapRegistry();
     TestSignalProtocol.Factory factory = new TestSignalProtocol.Factory();
-    registry.put(factory.getID(), factory);
+    registry.put(factory.getProtocolID(), factory);
 
     acceptor.setReceiveExecutor(threadPool);
     acceptor.setProtocolFactoryRegistry(registry);

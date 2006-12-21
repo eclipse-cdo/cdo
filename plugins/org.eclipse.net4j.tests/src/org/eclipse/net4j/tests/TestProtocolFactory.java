@@ -36,7 +36,7 @@ public class TestProtocolFactory extends AbstractProtocolFactory implements Prot
     this.counter = counter;
   }
 
-  public String getID()
+  public String getProtocolID()
   {
     return PROTOCOL_ID;
   }

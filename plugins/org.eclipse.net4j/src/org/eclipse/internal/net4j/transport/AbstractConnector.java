@@ -569,13 +569,23 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
       throw new IllegalStateException("bufferProvider == null"); //$NON-NLS-1$
     }
 
-    if (protocolFactoryRegistry == null && TRACER.isEnabled())
+    if (protocolFactoryRegistry == null)
     {
-      TRACER.trace("No protocol factory registry!"); //$NON-NLS-1$
+      // TODO Replace global registry with local delegating registry
+      switch (getType())
+      {
+      case CLIENT:
+        protocolFactoryRegistry = ProtocolFactory.CLIENT_REGISTRY;
+        break;
+      case SERVER:
+        protocolFactoryRegistry = ProtocolFactory.SERVER_REGISTRY;
+        break;
+      }
     }
 
     if (receiveExecutor == null && TRACER.isEnabled())
     {
+      // Just a reminder during development
       TRACER.trace("No receive executor!"); //$NON-NLS-1$
     }
   }

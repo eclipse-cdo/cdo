@@ -65,7 +65,7 @@ public class TestSignalProtocol extends SignalProtocol
    */
   public static class Factory extends AbstractProtocolFactory
   {
-    public String getID()
+    public String getProtocolID()
     {
       return PROTOCOL_ID;
     }

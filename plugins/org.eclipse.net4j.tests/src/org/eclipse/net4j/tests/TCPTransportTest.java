@@ -158,7 +158,7 @@ public class TCPTransportTest extends AbstractOMTest
 
     IRegistry<String, ProtocolFactory> protocolFactoryRegistry = new HashMapRegistry();
     TestProtocolFactory factory = new TestProtocolFactory(counter);
-    protocolFactoryRegistry.put(factory.getID(), factory);
+    protocolFactoryRegistry.put(factory.getProtocolID(), factory);
 
     acceptor.setProtocolFactoryRegistry(protocolFactoryRegistry);
     acceptor.activate();
@@ -240,7 +240,7 @@ public class TCPTransportTest extends AbstractOMTest
 
     IRegistry<String, ProtocolFactory> protocolFactoryRegistry = new HashMapRegistry();
     TestProtocolFactory factory = new TestProtocolFactory(counter);
-    protocolFactoryRegistry.put(factory.getID(), factory);
+    protocolFactoryRegistry.put(factory.getProtocolID(), factory);
 
     acceptor.setProtocolFactoryRegistry(protocolFactoryRegistry);
     acceptor.setReceiveExecutor(Executors.newCachedThreadPool());

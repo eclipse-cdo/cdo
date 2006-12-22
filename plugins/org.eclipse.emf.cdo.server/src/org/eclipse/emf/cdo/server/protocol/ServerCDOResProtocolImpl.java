@@ -193,6 +193,11 @@ public class ServerCDOResProtocolImpl extends AbstractCDOResProtocol implements
       }
     }
 
+    public String getProtocolID()
+    {
+      return "cdores";
+    }
+
     public Set<Type> getConnectorTypes()
     {
       return ProtocolFactory.FOR_SERVERS;

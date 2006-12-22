@@ -236,6 +236,11 @@ public class ServerCDOProtocolImpl extends AbstractCDOProtocol implements Server
       }
     }
 
+    public String getProtocolID()
+    {
+      return "cdo";
+    }
+
     public Set<Type> getConnectorTypes()
     {
       return ProtocolFactory.FOR_SERVERS;

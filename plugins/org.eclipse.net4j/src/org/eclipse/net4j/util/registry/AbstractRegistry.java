@@ -108,7 +108,7 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
    */
   public synchronized V put(K key, V value)
   {
-    V result = getTransaction().put(key, value);
+    V result = register(key, value);
     autoCommit();
     return result;
   }
@@ -121,12 +121,11 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
   {
     if (!t.isEmpty())
     {
-      Transaction transaction = getTransaction();
       Iterator<? extends Entry<? extends K, ? extends V>> i = t.entrySet().iterator();
       while (i.hasNext())
       {
         Entry<? extends K, ? extends V> e = i.next();
-        transaction.put(e.getKey(), e.getValue());
+        register(e.getKey(), e.getValue());
       }
 
       autoCommit();
@@ -139,7 +138,7 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
    */
   public synchronized V remove(Object key)
   {
-    V result = getTransaction().remove(key);
+    V result = deregister(key);
     autoCommit();
     return result;
   }
@@ -152,11 +151,10 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
   {
     if (isEmpty())
     {
-      Transaction transaction = getTransaction();
       Set<K> keys = keySet();
       for (K key : keys)
       {
-        transaction.remove(key);
+        deregister(key);
       }
 
       autoCommit();
@@ -200,12 +198,26 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
 
   protected V register(K key, V value)
   {
-    return getMap().put(key, value);
+    Transaction transaction = getTransaction();
+    V oldValue = getMap().put(key, value);
+    if (oldValue != null)
+    {
+      transaction.rememberDeregistered(key, oldValue);
+    }
+
+    transaction.rememberRegistered(key, value);
+    return oldValue;
   }
 
   protected V deregister(Object key)
   {
-    return getMap().remove(key);
+    V value = getMap().remove(key);
+    if (value != null)
+    {
+      getTransaction().rememberDeregistered(key, value);
+    }
+
+    return value;
   }
 
   protected Transaction getTransaction()
@@ -307,29 +319,6 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
       ++nesting;
     }
 
-    public V put(K key, V value)
-    {
-      V oldValue = register(key, value);
-      if (oldValue != null)
-      {
-        rememberDeregistering(key, oldValue);
-      }
-
-      rememberRegistered(key, value);
-      return oldValue;
-    }
-
-    public V remove(Object key)
-    {
-      V value = deregister(key);
-      if (value != null)
-      {
-        rememberDeregistering(key, value);
-      }
-
-      return value;
-    }
-
     public void commit(boolean notifications)
     {
       if (--nesting == 0)
@@ -343,14 +332,14 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
       }
     }
 
-    protected void rememberRegistered(K key, V value)
+    public void rememberRegistered(K key, V value)
     {
       deltas.add(new RegistryDelta(key, value, Kind.REGISTERED));
     }
 
-    protected void rememberDeregistering(Object key, V value)
+    public void rememberDeregistered(Object key, V value)
     {
-      deltas.add(new RegistryDelta(key, value, Kind.DEREGISTERING));
+      deltas.add(new RegistryDelta(key, value, Kind.DEREGISTERED));
     }
   }
 

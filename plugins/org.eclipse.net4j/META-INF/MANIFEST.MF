@@ -28,7 +28,6 @@ Export-Package: org.eclipse.internal.net4j.transport;version="0.8.0",
  org.eclipse.net4j.util.om.log;version="0.8.0",
  org.eclipse.net4j.util.om.trace;version="0.8.0",
  org.eclipse.net4j.util.registry;version="0.8.0",
- org.eclipse.net4j.util.registry.delegating;version="0.8.0",
  org.eclipse.net4j.util.stream;version="0.8.0"
 Eclipse-LazyStart: true
 Require-Bundle: org.eclipse.core.runtime;resolution:=optional

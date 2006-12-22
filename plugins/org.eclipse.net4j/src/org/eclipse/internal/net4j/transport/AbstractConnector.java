@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleNotifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.registry.HashMapDelegatingRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
@@ -571,7 +572,6 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
 
     if (protocolFactoryRegistry == null)
     {
-      // TODO Replace global registry with local delegating registry
       switch (getType())
       {
       case CLIENT:
@@ -581,6 +581,8 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
         protocolFactoryRegistry = ProtocolFactory.SERVER_REGISTRY;
         break;
       }
+
+      protocolFactoryRegistry = new HashMapDelegatingRegistry(protocolFactoryRegistry);
     }
 
     if (receiveExecutor == null && TRACER.isEnabled())

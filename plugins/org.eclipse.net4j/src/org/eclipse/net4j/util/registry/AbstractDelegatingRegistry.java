@@ -47,9 +47,9 @@ public abstract class AbstractDelegatingRegistry<K, V> extends AbstractRegistry<
   public V get(Object key)
   {
     V result = getMap().get(key);
-    if (result == null)
+    if (result == null && delegate != null)
     {
-      result = getDelegate().get(key);
+      result = delegate.get(key);
     }
 
     return result;
@@ -76,7 +76,7 @@ public abstract class AbstractDelegatingRegistry<K, V> extends AbstractRegistry<
   @Override
   protected V register(K key, V value)
   {
-    V delegated = getDelegate().get(key);
+    V delegated = delegate != null ? delegate.get(key) : null;
     V old = getMap().put(key, value);
     if (old == null)
     {
@@ -100,7 +100,7 @@ public abstract class AbstractDelegatingRegistry<K, V> extends AbstractRegistry<
   @Override
   protected V deregister(Object key)
   {
-    V delegated = getDelegate().get(key);
+    V delegated = delegate != null ? delegate.get(key) : null;
     V old = getMap().remove(key);
     if (old != null)
     {
@@ -118,7 +118,11 @@ public abstract class AbstractDelegatingRegistry<K, V> extends AbstractRegistry<
   protected Set<Entry<K, V>> mergedEntrySet()
   {
     final Map<K, V> merged = new HashMap<K, V>();
-    merged.putAll(getDelegate());
+    if (delegate != null)
+    {
+      merged.putAll(delegate);
+    }
+
     merged.putAll(getMap());
     return merged.entrySet();
   }
@@ -126,7 +130,11 @@ public abstract class AbstractDelegatingRegistry<K, V> extends AbstractRegistry<
   protected Set<K> mergedKeySet()
   {
     final Set<K> merged = new HashSet<K>();
-    merged.addAll(getDelegate().keySet());
+    if (delegate != null)
+    {
+      merged.addAll(delegate.keySet());
+    }
+
     merged.addAll(getMap().keySet());
     return merged;
   }
@@ -140,10 +148,5 @@ public abstract class AbstractDelegatingRegistry<K, V> extends AbstractRegistry<
     }
 
     return result;
-  }
-
-  protected IRegistry<K, V> getDelegate()
-  {
-    return delegate;
   }
 }

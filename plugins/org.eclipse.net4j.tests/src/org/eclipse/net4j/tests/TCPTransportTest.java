@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
+import org.eclipse.net4j.stream.ChannelInputStream;
+import org.eclipse.net4j.stream.ChannelOutputStream;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
@@ -18,8 +20,6 @@ import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.tcp.TCPAcceptor;
 import org.eclipse.net4j.transport.tcp.TCPAcceptorListener;
 import org.eclipse.net4j.transport.tcp.TCPConnector;
-import org.eclipse.net4j.transport.util.ChannelInputStream;
-import org.eclipse.net4j.transport.util.ChannelOutputStream;
 import org.eclipse.net4j.util.Net4jUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.HashMapRegistry;

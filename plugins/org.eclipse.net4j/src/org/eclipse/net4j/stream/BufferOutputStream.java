@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport.util;
+package org.eclipse.net4j.stream;
 
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferHandler;

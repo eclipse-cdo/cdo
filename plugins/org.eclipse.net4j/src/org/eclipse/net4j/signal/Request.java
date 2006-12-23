@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.signal;
 
+import org.eclipse.net4j.stream.BufferInputStream;
+import org.eclipse.net4j.stream.BufferOutputStream;
 import org.eclipse.net4j.transport.Channel;
-import org.eclipse.net4j.transport.util.BufferInputStream;
-import org.eclipse.net4j.transport.util.BufferOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 

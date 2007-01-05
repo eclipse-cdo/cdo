@@ -24,6 +24,8 @@ public class PrintTraceHandler implements OMTraceHandler
 
   private PrintStream stream;
 
+  private boolean shortContext;
+
   public PrintTraceHandler(PrintStream stream)
   {
     this.stream = stream;
@@ -34,10 +36,29 @@ public class PrintTraceHandler implements OMTraceHandler
     this(IOUtil.OUT());
   }
 
+  public boolean isShortContext()
+  {
+    return shortContext;
+  }
+
+  public void setShortContext(boolean shortContext)
+  {
+    this.shortContext = shortContext;
+  }
+
   public void traced(Event event)
   {
-    stream.println(Thread.currentThread().getName()
-        + " [" + event.getContext() + "] " + event.getMessage()); //$NON-NLS-1$
+    String context = event.getContext().getName();
+    if (shortContext)
+    {
+      int pos = Math.max(context.lastIndexOf('.'), context.lastIndexOf('$'));
+      if (pos != -1)
+      {
+        context = context.substring(pos + 1);
+      }
+    }
+
+    stream.println(Thread.currentThread().getName() + " [" + context + "] " + event.getMessage()); //$NON-NLS-1$
     if (event.getThrowable() != null)
     {
       IOUtil.print(event.getThrowable(), stream);

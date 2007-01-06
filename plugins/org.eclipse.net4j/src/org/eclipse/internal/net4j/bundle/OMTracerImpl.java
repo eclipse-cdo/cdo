@@ -38,7 +38,7 @@ public class OMTracerImpl implements OMTracer
 
   private OMTracerImpl(OMTracerImpl parent, String name)
   {
-    this.bundle = (OMBundle)parent.getBundle();
+    this.bundle = parent.getBundle();
     this.parent = parent;
     this.name = name;
     fullName = parent.getFullName() + "." + name; //$NON-NLS-1$

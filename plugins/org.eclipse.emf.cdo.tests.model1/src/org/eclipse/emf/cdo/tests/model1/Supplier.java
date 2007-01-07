@@ -6,20 +6,18 @@
  */
 package org.eclipse.emf.cdo.tests.model1;
 
-import org.eclipse.emf.cdo.local.CDOObject;
+import org.eclipse.emf.cdo.CDOObject;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Supplier</b></em>'.
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Supplier</b></em>'.
  * <!-- end-user-doc -->
- *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.Supplier#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.Supplier#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getSupplier()
  * @model
  * @extends CDOObject
@@ -28,13 +26,14 @@ import org.eclipse.emf.cdo.local.CDOObject;
 public interface Supplier extends CDOObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute. <!--
+   * begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Name</em>' attribute isn't clear, there
+   * really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getSupplier_Name()
@@ -44,10 +43,11 @@ public interface Supplier extends CDOObject
   String getName();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Supplier#getName <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Supplier#getName <em>Name</em>}'
+   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
    * @generated
    */

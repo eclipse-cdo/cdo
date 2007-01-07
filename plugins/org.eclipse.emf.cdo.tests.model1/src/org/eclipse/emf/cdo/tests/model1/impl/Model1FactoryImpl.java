@@ -6,35 +6,37 @@
  */
 package org.eclipse.emf.cdo.tests.model1.impl;
 
-import org.eclipse.emf.cdo.tests.model1.*;
+import org.eclipse.emf.cdo.tests.model1.Model1Factory;
+import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.Supplier;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!--
+ * end-user-doc -->
+ * 
  * @generated
  */
 public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @generated
    */
   public static Model1Factory init()
   {
     try
     {
-      Model1Factory theModel1Factory = (Model1Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/emf/CDO/tests/model1/1.0.0"); 
+      Model1Factory theModel1Factory = (Model1Factory)EPackage.Registry.INSTANCE
+          .getEFactory("http://www.eclipse.org/emf/CDO/tests/model1/1.0.0");
       if (theModel1Factory != null)
       {
         return theModel1Factory;
@@ -48,9 +50,9 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @generated
    */
   public Model1FactoryImpl()
@@ -59,24 +61,27 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EObject create(EClass eClass)
   {
     switch (eClass.getClassifierID())
     {
-      case Model1Package.SUPPLIER: return (EObject)createSupplier();
-      case Model1Package.PURCHASE_ORDER: return (EObject)createPurchaseOrder();
-      default:
-        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    case Model1Package.SUPPLIER:
+      return (EObject)createSupplier();
+    case Model1Package.PURCHASE_ORDER:
+      return (EObject)createPurchaseOrder();
+    default:
+      throw new IllegalArgumentException("The class '" + eClass.getName()
+          + "' is not a valid classifier");
     }
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Supplier createSupplier()
@@ -86,8 +91,8 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public PurchaseOrder createPurchaseOrder()
@@ -97,8 +102,8 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Model1Package getModel1Package()
@@ -107,8 +112,8 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */
@@ -117,4 +122,4 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
     return Model1Package.eINSTANCE;
   }
 
-} //Model1FactoryImpl
+} // Model1FactoryImpl

@@ -208,7 +208,7 @@ public abstract class AbstractTopologyTest extends TestCase implements ITopology
   protected EObject loadRoot(String path) throws Exception
   {
     CDOResource resource = getResource(path);
-    return (EObject) resource.getContents().get(0);
+    return resource.getContents().get(0);
   }
 
   protected CDOResource saveRoot(EObject root, String path) throws Exception

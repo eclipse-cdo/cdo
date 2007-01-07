@@ -80,11 +80,4 @@ public abstract class AbstractEmbeddedConnector extends AbstractConnector
     Buffer buffer = localQueue.poll();
     peerChannel.handleBufferFromMultiplexer(buffer);
   }
-
-  @Override
-  protected void onDeactivate() throws Exception
-  {
-    LifecycleUtil.deactivateNoisy(getPeer());
-    super.onDeactivate();
-  }
 }

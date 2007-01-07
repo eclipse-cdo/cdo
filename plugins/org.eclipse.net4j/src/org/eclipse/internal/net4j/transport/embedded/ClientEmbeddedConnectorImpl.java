@@ -10,10 +10,15 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport.embedded;
 
+import org.eclipse.net4j.util.lifecycle.LifecycleListener;
+import org.eclipse.net4j.util.lifecycle.LifecycleNotifier;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
 /**
  * @author Eike Stepper
  */
-public class ClientEmbeddedConnectorImpl extends AbstractEmbeddedConnector
+public class ClientEmbeddedConnectorImpl extends AbstractEmbeddedConnector implements
+    LifecycleListener
 {
   public ClientEmbeddedConnectorImpl()
   {
@@ -24,6 +29,20 @@ public class ClientEmbeddedConnectorImpl extends AbstractEmbeddedConnector
     return Type.CLIENT;
   }
 
+  public void notifyLifecycleAboutToActivate(LifecycleNotifier notifier)
+  {
+  }
+
+  public void notifyLifecycleActivated(LifecycleNotifier notifier)
+  {
+  }
+
+  public void notifyLifecycleDeactivating(LifecycleNotifier notifier)
+  {
+    setPeer(null);
+    deactivate();
+  }
+
   @Override
   protected void onActivate() throws Exception
   {
@@ -31,8 +50,20 @@ public class ClientEmbeddedConnectorImpl extends AbstractEmbeddedConnector
     setPeer(createServerPeer());
   }
 
-  protected AbstractEmbeddedConnector createServerPeer()
+  @Override
+  protected void onDeactivate() throws Exception
   {
-    return new ServerEmbeddedConnectorImpl(this);
+    LifecycleUtil.deactivateNoisy(getPeer());
+    super.onDeactivate();
+  }
+
+  protected AbstractEmbeddedConnector createServerPeer() throws Exception
+  {
+    ServerEmbeddedConnectorImpl server = new ServerEmbeddedConnectorImpl(this);
+    server.setBufferProvider(getBufferProvider());
+    server.setReceiveExecutor(getReceiveExecutor());
+    server.addLifecycleListener(this);
+    server.activate();
+    return server;
   }
 }

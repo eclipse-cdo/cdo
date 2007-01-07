@@ -11,7 +11,9 @@
 package org.eclipse.net4j.transport;
 
 import org.eclipse.net4j.transport.Connector.Type;
-import org.eclipse.net4j.util.registry.IRegistry;
+
+import org.eclipse.internal.net4j.transport.ClientProtocolFactoryRegistry;
+import org.eclipse.internal.net4j.transport.ServerProtocolFactoryRegistry;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,9 +25,9 @@ import java.util.Set;
  */
 public interface ProtocolFactory
 {
-  public static final IRegistry<String, ProtocolFactory> CLIENT_REGISTRY = new org.eclipse.internal.net4j.transport.ClientProtocolFactoryRegistry();
+  public static final ClientProtocolFactoryRegistry CLIENT_REGISTRY = new ClientProtocolFactoryRegistry();
 
-  public static final IRegistry<String, ProtocolFactory> SERVER_REGISTRY = new org.eclipse.internal.net4j.transport.ServerProtocolFactoryRegistry();
+  public static final ServerProtocolFactoryRegistry SERVER_REGISTRY = new ServerProtocolFactoryRegistry();
 
   public static final Set<Type> FOR_CLIENTS = Collections.singleton(Type.CLIENT);
 

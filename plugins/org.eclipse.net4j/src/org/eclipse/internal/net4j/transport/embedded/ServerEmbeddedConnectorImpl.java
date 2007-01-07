@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport.embedded;
 
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
 /**
  * @author Eike Stepper
  */
@@ -23,5 +25,12 @@ public class ServerEmbeddedConnectorImpl extends AbstractEmbeddedConnector
   public Type getType()
   {
     return Type.SERVER;
+  }
+
+  @Override
+  protected void onDeactivate() throws Exception
+  {
+    LifecycleUtil.deactivateNoisy(getPeer());
+    super.onDeactivate();
   }
 }

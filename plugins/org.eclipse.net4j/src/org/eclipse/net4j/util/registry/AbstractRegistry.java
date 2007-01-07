@@ -149,7 +149,7 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
    */
   public synchronized void clear()
   {
-    if (isEmpty())
+    if (!isEmpty())
     {
       Set<K> keys = keySet();
       for (K key : keys)
@@ -194,6 +194,12 @@ public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
   public synchronized void dispose()
   {
     listeners.clear();
+  }
+
+  @Override
+  public String toString()
+  {
+    return getMap().toString();
   }
 
   protected V register(K key, V value)

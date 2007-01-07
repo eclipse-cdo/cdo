@@ -13,6 +13,8 @@ package org.eclipse.internal.net4j.transport;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.Connector.Type;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -35,5 +37,11 @@ public abstract class AbstractProtocolFactory implements ProtocolFactory
   public final boolean isSymmetric()
   {
     return isForClients() && isForServers();
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("Protocol.Factory({0}, {1})", getProtocolID(), getConnectorTypes());
   }
 }

@@ -94,7 +94,7 @@ public final class LifecycleUtil
     {
       return ((Lifecycle)object).deactivate();
     }
-    else if (useAnnotation)
+    else if (object != null && useAnnotation)
     {
       invokeAnnotation(object, Deactivator.class);
     }

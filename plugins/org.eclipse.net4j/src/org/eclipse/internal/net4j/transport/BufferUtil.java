@@ -12,6 +12,11 @@ package org.eclipse.internal.net4j.transport;
 
 import org.eclipse.net4j.transport.BufferProvider;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
@@ -20,6 +25,10 @@ import java.nio.ByteBuffer;
  */
 public final class BufferUtil
 {
+  private static final byte FALSE = (byte)0;
+
+  private static final byte TRUE = (byte)1;
+
   public static final short DEFAULT_BUFFER_CAPACITY = 4096;
 
   public static final String UTF8_CHAR_SET_NAME = "UTF-8"; //$NON-NLS-1$
@@ -79,6 +88,38 @@ public final class BufferUtil
       // This should really not happen
       throw new RuntimeException(ex);
     }
+  }
+
+  public static void putObject(ByteBuffer byteBuffer, Object object) throws IOException
+  {
+    if (object != null)
+    {
+      byteBuffer.put(TRUE);
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      ObjectOutputStream stream = new ObjectOutputStream(baos);
+      stream.writeObject(object);
+
+      byte[] array = baos.toByteArray();
+      putByteArray(byteBuffer, array);
+    }
+    else
+    {
+      byteBuffer.put(FALSE);
+    }
+  }
+
+  public static Object getObject(ByteBuffer byteBuffer) throws IOException, ClassNotFoundException
+  {
+    boolean nonNull = byteBuffer.get() == TRUE;
+    if (nonNull)
+    {
+      byte[] array = getByteArray(byteBuffer);
+      ByteArrayInputStream bais = new ByteArrayInputStream(array);
+      ObjectInputStream stream = new ObjectInputStream(bais);
+      return stream.readObject();
+    }
+
+    return null;
   }
 
   public static void putByteArray(ByteBuffer byteBuffer, byte[] array)

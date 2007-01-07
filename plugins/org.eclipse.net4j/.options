@@ -7,7 +7,7 @@ org.eclipse.net4j/debug.registry = true
 org.eclipse.net4j/debug.om = true
 
 org.eclipse.net4j/debug.buffer = true
-org.eclipse.net4j/debug.buffer.stream = false
+org.eclipse.net4j/debug.buffer.stream = true
 org.eclipse.net4j/debug.channel = true
 org.eclipse.net4j/debug.selector = true
 org.eclipse.net4j/debug.acceptor = true

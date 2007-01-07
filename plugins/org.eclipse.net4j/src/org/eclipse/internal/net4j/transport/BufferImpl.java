@@ -267,6 +267,18 @@ public class BufferImpl implements Buffer
     return true;
   }
 
+  public void flip()
+  {
+    if (state != State.PUTTING)
+    {
+      throw new IllegalStateException("state == " + state); //$NON-NLS-1$
+    }
+
+    byteBuffer.flip();
+    byteBuffer.position(HEADER_SIZE);
+    state = State.GETTING;
+  }
+
   @Override
   public String toString()
   {
@@ -280,7 +292,11 @@ public class BufferImpl implements Buffer
 
     try
     {
-      byteBuffer.flip();
+      if (state != State.GETTING)
+      {
+        byteBuffer.flip();
+      }
+      
       if (state == State.PUTTING)
       {
         byteBuffer.position(HEADER_SIZE);

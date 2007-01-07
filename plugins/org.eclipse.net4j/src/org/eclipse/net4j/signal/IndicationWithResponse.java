@@ -12,6 +12,7 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.BufferOutputStream;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
@@ -37,13 +38,13 @@ public abstract class IndicationWithResponse extends SignalReactor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("================ Indicating"); //$NON-NLS-1$
+      TRACER.trace("================ Indicating " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
     indicating(new ExtendedDataInputStream(in));
     if (TRACER.isEnabled())
     {
-      TRACER.trace("================ Responding"); //$NON-NLS-1$
+      TRACER.trace("================ Responding " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
     responding(new ExtendedDataOutputStream(out));

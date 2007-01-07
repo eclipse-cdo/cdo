@@ -92,6 +92,8 @@ public interface Buffer
 
   public boolean write(SocketChannel socketChannel) throws IOException;
 
+  public void flip();
+
   public ByteBuffer getByteBuffer();
 
   public boolean isEOS();

@@ -13,7 +13,6 @@ package org.eclipse.internal.net4j.transport.embedded;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ConnectorException;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.internal.net4j.transport.AbstractConnector;
 import org.eclipse.internal.net4j.transport.ChannelImpl;
@@ -44,12 +43,12 @@ public abstract class AbstractEmbeddedConnector extends AbstractConnector
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, String protocolID)
+  protected void registerChannelWithPeer(short channelIndex, String protocolID, Object protocolData)
       throws ConnectorException
   {
     try
     {
-      ChannelImpl channel = getPeer().createChannel(channelIndex, protocolID, null);
+      ChannelImpl channel = getPeer().createChannel(channelIndex, protocolID, protocolData);
       if (channel == null)
       {
         throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
@@ -78,6 +77,7 @@ public abstract class AbstractEmbeddedConnector extends AbstractConnector
 
     Queue<Buffer> localQueue = ((ChannelImpl)localChannel).getSendQueue();
     Buffer buffer = localQueue.poll();
+    buffer.flip();
     peerChannel.handleBufferFromMultiplexer(buffer);
   }
 }

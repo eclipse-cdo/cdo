@@ -19,6 +19,7 @@ import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.BufferUtil;
 import org.eclipse.internal.net4j.transport.ChannelImpl;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
@@ -52,7 +53,7 @@ public final class ControlChannelImpl extends ChannelImpl
     setConnector(connector);
   }
 
-  public boolean registerChannel(short channelIndex, String protocolID)
+  public boolean registerChannel(short channelIndex, String protocolID, Object protocolData) throws IOException
   {
     assertValidChannelIndex(channelIndex);
     Synchronizer<Boolean> registration = registrations.correlate(channelIndex);
@@ -62,6 +63,7 @@ public final class ControlChannelImpl extends ChannelImpl
     byteBuffer.put(OPCODE_REGISTRATION);
     byteBuffer.putShort(channelIndex);
     BufferUtil.putUTF8(byteBuffer, protocolID);
+    BufferUtil.putObject(byteBuffer, protocolData);
     handleBuffer(buffer);
 
     return registration.get(REGISTRATION_TIMEOUT);
@@ -104,8 +106,9 @@ public final class ControlChannelImpl extends ChannelImpl
         {
           byte[] handlerFactoryUTF8 = BufferUtil.getByteArray(byteBuffer);
           String protocolID = BufferUtil.fromUTF8(handlerFactoryUTF8);
+          Object protocolData = BufferUtil.getObject(byteBuffer);
           ChannelImpl channel = ((AbstractTCPConnector)getConnector()).createChannel(channelIndex,
-              protocolID, null);
+              protocolID, protocolData);
           if (channel != null)
           {
             channel.activate();

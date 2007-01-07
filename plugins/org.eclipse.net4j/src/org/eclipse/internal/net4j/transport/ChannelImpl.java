@@ -146,7 +146,7 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Handling buffer from client: " + buffer); //$NON-NLS-1$
+      TRACER.format("Handling buffer from client: {0} --> {1}", buffer, this); //$NON-NLS-1$
     }
 
     sendQueue.add(buffer);
@@ -164,16 +164,10 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Handling buffer from multiplexer: " + buffer); //$NON-NLS-1$
+      TRACER.format("Handling buffer from multiplexer: {0} --> {1}", buffer, this); //$NON-NLS-1$
     }
 
-    receiveSerializer.addWork(new Runnable()
-    {
-      public void run()
-      {
-        receiveHandler.handleBuffer(buffer);
-      }
-    });
+    receiveSerializer.addWork(new ReceiverWork(buffer));
   }
 
   @Override
@@ -242,6 +236,10 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
    */
   private final class ChannelIDImpl implements ChannelID
   {
+    public ChannelIDImpl()
+    {
+    }
+
     public Connector getConnector()
     {
       return connector;
@@ -275,6 +273,24 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
     public String toString()
     {
       return "ChannelID[" + connector + ", channelIndex=" + channelIndex + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ReceiverWork implements Runnable
+  {
+    private final Buffer buffer;
+
+    private ReceiverWork(Buffer buffer)
+    {
+      this.buffer = buffer;
+    }
+
+    public void run()
+    {
+      receiveHandler.handleBuffer(buffer);
     }
   }
 }

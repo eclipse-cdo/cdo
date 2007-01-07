@@ -357,7 +357,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
   {
     short channelIndex = findFreeChannelIndex();
     ChannelImpl channel = createChannel(channelIndex, protocolID, protocolData);
-    registerChannelWithPeer(channelIndex, protocolID);
+    registerChannelWithPeer(channelIndex, protocolID, protocolData);
 
     try
     {
@@ -616,8 +616,8 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     super.onDeactivate();
   }
 
-  protected abstract void registerChannelWithPeer(short channelIndex, String protocolID)
-      throws ConnectorException;
+  protected abstract void registerChannelWithPeer(short channelIndex, String protocolID,
+      Object protocolData) throws ConnectorException;
 
   private static int getNextConnectorID()
   {

@@ -105,6 +105,21 @@ public class TestModel1AdapterFactory extends AdapterFactoryImpl
       return createEmptyRefNodeAdapter();
     }
 
+    public Object caseRoot(Root object)
+    {
+      return createRootAdapter();
+    }
+
+    public Object caseAuthor(Author object)
+    {
+      return createAuthorAdapter();
+    }
+
+    public Object caseBook(Book object)
+    {
+      return createBookAdapter();
+    }
+
     public Object caseCDOPersistable(CDOPersistable object)
     {
       return createCDOPersistableAdapter();
@@ -190,6 +205,51 @@ public class TestModel1AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEmptyRefNodeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link testmodel1.Root <em>Root</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see testmodel1.Root
+   * @generated
+   */
+  public Adapter createRootAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link testmodel1.Author <em>Author</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see testmodel1.Author
+   * @generated
+   */
+  public Adapter createAuthorAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link testmodel1.Book <em>Book</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see testmodel1.Book
+   * @generated
+   */
+  public Adapter createBookAdapter()
   {
     return null;
   }

@@ -83,6 +83,12 @@ public class TestModel1FactoryImpl extends EFactoryImpl implements TestModel1Fac
         return createEmptyNode();
       case TestModel1Package.EMPTY_REF_NODE:
         return createEmptyRefNode();
+      case TestModel1Package.ROOT:
+        return createRoot();
+      case TestModel1Package.AUTHOR:
+        return createAuthor();
+      case TestModel1Package.BOOK:
+        return createBook();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName()
             + "' is not a valid classifier");
@@ -131,6 +137,39 @@ public class TestModel1FactoryImpl extends EFactoryImpl implements TestModel1Fac
   {
     EmptyRefNodeImpl emptyRefNode = new EmptyRefNodeImpl();
     return emptyRefNode;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Root createRoot()
+  {
+    RootImpl root = new RootImpl();
+    return root;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Author createAuthor()
+  {
+    AuthorImpl author = new AuthorImpl();
+    return author;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Book createBook()
+  {
+    BookImpl book = new BookImpl();
+    return book;
   }
 
   /**

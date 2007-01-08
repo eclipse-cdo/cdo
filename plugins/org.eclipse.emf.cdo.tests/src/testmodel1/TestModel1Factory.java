@@ -65,6 +65,33 @@ public interface TestModel1Factory extends EFactory
   EmptyRefNode createEmptyRefNode();
 
   /**
+   * Returns a new object of class '<em>Root</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Root</em>'.
+   * @generated
+   */
+  Root createRoot();
+
+  /**
+   * Returns a new object of class '<em>Author</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Author</em>'.
+   * @generated
+   */
+  Author createAuthor();
+
+  /**
+   * Returns a new object of class '<em>Book</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Book</em>'.
+   * @generated
+   */
+  Book createBook();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

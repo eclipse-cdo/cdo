@@ -573,6 +573,108 @@ public interface TestModel1Package extends EPackage
   int EMPTY_REF_NODE_FEATURE_COUNT = TREE_NODE_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link testmodel1.impl.RootImpl <em>Root</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see testmodel1.impl.RootImpl
+   * @see testmodel1.impl.TestModel1PackageImpl#getRoot()
+   * @generated
+   */
+  int ROOT = 4;
+
+  /**
+   * The feature id for the '<em><b>Children</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROOT__CHILDREN = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Root</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROOT_FEATURE_COUNT = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link testmodel1.impl.AuthorImpl <em>Author</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see testmodel1.impl.AuthorImpl
+   * @see testmodel1.impl.TestModel1PackageImpl#getAuthor()
+   * @generated
+   */
+  int AUTHOR = 5;
+
+  /**
+   * The feature id for the '<em><b>Books</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHOR__BOOKS = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHOR__NAME = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Author</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHOR_FEATURE_COUNT = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link testmodel1.impl.BookImpl <em>Book</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see testmodel1.impl.BookImpl
+   * @see testmodel1.impl.TestModel1PackageImpl#getBook()
+   * @generated
+   */
+  int BOOK = 6;
+
+  /**
+   * The feature id for the '<em><b>Author</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOK__AUTHOR = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOK__NAME = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Book</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOK_FEATURE_COUNT = CDOPackage.CDO_PERSISTENT_FEATURE_COUNT + 2;
+
+  /**
    * Returns the meta object for class '{@link testmodel1.TreeNode <em>Tree Node</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -778,6 +880,91 @@ public interface TestModel1Package extends EPackage
   EReference getEmptyRefNode_MoreReferences();
 
   /**
+   * Returns the meta object for class '{@link testmodel1.Root <em>Root</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Root</em>'.
+   * @see testmodel1.Root
+   * @generated
+   */
+  EClass getRoot();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link testmodel1.Root#getChildren <em>Children</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Children</em>'.
+   * @see testmodel1.Root#getChildren()
+   * @see #getRoot()
+   * @generated
+   */
+  EReference getRoot_Children();
+
+  /**
+   * Returns the meta object for class '{@link testmodel1.Author <em>Author</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Author</em>'.
+   * @see testmodel1.Author
+   * @generated
+   */
+  EClass getAuthor();
+
+  /**
+   * Returns the meta object for the reference list '{@link testmodel1.Author#getBooks <em>Books</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Books</em>'.
+   * @see testmodel1.Author#getBooks()
+   * @see #getAuthor()
+   * @generated
+   */
+  EReference getAuthor_Books();
+
+  /**
+   * Returns the meta object for the attribute '{@link testmodel1.Author#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see testmodel1.Author#getName()
+   * @see #getAuthor()
+   * @generated
+   */
+  EAttribute getAuthor_Name();
+
+  /**
+   * Returns the meta object for class '{@link testmodel1.Book <em>Book</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Book</em>'.
+   * @see testmodel1.Book
+   * @generated
+   */
+  EClass getBook();
+
+  /**
+   * Returns the meta object for the reference '{@link testmodel1.Book#getAuthor <em>Author</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Author</em>'.
+   * @see testmodel1.Book#getAuthor()
+   * @see #getBook()
+   * @generated
+   */
+  EReference getBook_Author();
+
+  /**
+   * Returns the meta object for the attribute '{@link testmodel1.Book#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see testmodel1.Book#getName()
+   * @see #getBook()
+   * @generated
+   */
+  EAttribute getBook_Name();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -960,6 +1147,76 @@ public interface TestModel1Package extends EPackage
      * @generated
      */
     EReference EMPTY_REF_NODE__MORE_REFERENCES = eINSTANCE.getEmptyRefNode_MoreReferences();
+
+    /**
+     * The meta object literal for the '{@link testmodel1.impl.RootImpl <em>Root</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see testmodel1.impl.RootImpl
+     * @see testmodel1.impl.TestModel1PackageImpl#getRoot()
+     * @generated
+     */
+    EClass ROOT = eINSTANCE.getRoot();
+
+    /**
+     * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ROOT__CHILDREN = eINSTANCE.getRoot_Children();
+
+    /**
+     * The meta object literal for the '{@link testmodel1.impl.AuthorImpl <em>Author</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see testmodel1.impl.AuthorImpl
+     * @see testmodel1.impl.TestModel1PackageImpl#getAuthor()
+     * @generated
+     */
+    EClass AUTHOR = eINSTANCE.getAuthor();
+
+    /**
+     * The meta object literal for the '<em><b>Books</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference AUTHOR__BOOKS = eINSTANCE.getAuthor_Books();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AUTHOR__NAME = eINSTANCE.getAuthor_Name();
+
+    /**
+     * The meta object literal for the '{@link testmodel1.impl.BookImpl <em>Book</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see testmodel1.impl.BookImpl
+     * @see testmodel1.impl.TestModel1PackageImpl#getBook()
+     * @generated
+     */
+    EClass BOOK = eINSTANCE.getBook();
+
+    /**
+     * The meta object literal for the '<em><b>Author</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference BOOK__AUTHOR = eINSTANCE.getBook_Author();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BOOK__NAME = eINSTANCE.getBook_Name();
 
   }
 

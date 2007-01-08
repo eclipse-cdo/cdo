@@ -223,7 +223,7 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public void setParent(TreeNode newParent)
   {
-
+    cdoLoad();
     if (newParent != eInternalContainer()
         || (eContainerFeatureID != TestModel1Package.TREE_NODE__PARENT && newParent != null))
     {
@@ -290,7 +290,7 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public void setParent2(TreeNode newParent2)
   {
-
+    cdoLoad();
     if (newParent2 != eInternalContainer()
         || (eContainerFeatureID != TestModel1Package.TREE_NODE__PARENT2 && newParent2 != null))
     {
@@ -348,7 +348,7 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public TreeNode getReference()
   {
-
+    cdoLoad();
     if (reference != null && reference.eIsProxy())
     {
       InternalEObject oldReference = (InternalEObject) reference;
@@ -396,7 +396,7 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public TreeNode getSourceRef()
   {
-
+    cdoLoad();
     if (sourceRef != null && sourceRef.eIsProxy())
     {
       InternalEObject oldSourceRef = (InternalEObject) sourceRef;
@@ -451,7 +451,7 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public void setSourceRef(TreeNode newSourceRef)
   {
-
+    cdoLoad();
     if (newSourceRef != sourceRef)
     {
       NotificationChain msgs = null;
@@ -476,7 +476,7 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public TreeNode getTargetRef()
   {
-
+    cdoLoad();
     if (targetRef != null && targetRef.eIsProxy())
     {
       InternalEObject oldTargetRef = (InternalEObject) targetRef;
@@ -531,7 +531,7 @@ public class TreeNodeImpl extends CDOPersistentImpl implements TreeNode
    */
   public void setTargetRef(TreeNode newTargetRef)
   {
-
+    cdoLoad();
     if (newTargetRef != targetRef)
     {
       NotificationChain msgs = null;

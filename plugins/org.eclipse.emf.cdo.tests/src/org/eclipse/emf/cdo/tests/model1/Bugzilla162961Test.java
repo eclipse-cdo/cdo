@@ -13,7 +13,11 @@ package org.eclipse.emf.cdo.tests.model1;
 
 import org.eclipse.emf.common.util.EList;
 
+import testmodel1.Author;
+import testmodel1.Book;
 import testmodel1.ExtendedNode;
+import testmodel1.Root;
+import testmodel1.TestModel1Factory;
 import testmodel1.TreeNode;
 
 
@@ -52,252 +56,315 @@ import testmodel1.TreeNode;
  */
 public class Bugzilla162961Test extends AbstractModel1Test
 {
-  public void testViaContainment() throws Exception
+    public void testViaContainment() throws Exception
+    {
+      {
+        TreeNode root = createNode("root");
+        TreeNode books = createNode("books", root);
+        TreeNode genres = createNode("genres", root);
+  
+        ExtendedNode book0 = createExtended("book0", books);
+        ExtendedNode book1 = createExtended("book1", books);
+        ExtendedNode book2 = createExtended("book2", books);
+        ExtendedNode book3 = createExtended("book3", books);
+  
+        ExtendedNode genre0 = createExtended("genre0", genres);
+        ExtendedNode genre1 = createExtended("genre1", genres);
+        ExtendedNode genre2 = createExtended("genre2", genres);
+        ExtendedNode genre3 = createExtended("genre3", genres);
+  
+        book0.getBidiSource().add(genre0);
+        book0.getBidiSource().add(genre1);
+        book0.getBidiSource().add(genre2);
+        book0.getBidiSource().add(genre3);
+  
+        book1.getBidiSource().add(genre0);
+        book1.getBidiSource().add(genre1);
+        book1.getBidiSource().add(genre2);
+  
+        book2.getBidiSource().add(genre0);
+        book2.getBidiSource().add(genre1);
+  
+        book3.getBidiSource().add(genre0);
+        saveRoot(root, "/test/res");
+      }
+  
+      {
+        TreeNode root = (TreeNode) loadRoot("/test/res");
+        TreeNode books = findChild("books", root);
+        EList children = books.getChildren();
+        assertEquals("book0", ((ExtendedNode) children.get(0)).getStringFeature());
+        assertEquals("book1", ((ExtendedNode) children.get(1)).getStringFeature());
+        assertEquals("book2", ((ExtendedNode) children.get(2)).getStringFeature());
+        assertEquals("book3", ((ExtendedNode) children.get(3)).getStringFeature());
+      }
+    }
+  
+    public void testViaXRef() throws Exception
+    {
+      {
+        TreeNode root = createNode("root");
+        TreeNode books = createNode("books", root);
+        TreeNode genres = createNode("genres", root);
+  
+        ExtendedNode book0 = createExtended("book0", books);
+        ExtendedNode book1 = createExtended("book1", books);
+        ExtendedNode book2 = createExtended("book2", books);
+        ExtendedNode book3 = createExtended("book3", books);
+  
+        ExtendedNode genre0 = createExtended("genre0", genres);
+        ExtendedNode genre1 = createExtended("genre1", genres);
+        ExtendedNode genre2 = createExtended("genre2", genres);
+        ExtendedNode genre3 = createExtended("genre3", genres);
+  
+        book0.getBidiSource().add(genre0);
+        book0.getBidiSource().add(genre1);
+        book0.getBidiSource().add(genre2);
+        book0.getBidiSource().add(genre3);
+  
+        book1.getBidiSource().add(genre0);
+        book1.getBidiSource().add(genre1);
+        book1.getBidiSource().add(genre2);
+  
+        book2.getBidiSource().add(genre0);
+        book2.getBidiSource().add(genre1);
+  
+        book3.getBidiSource().add(genre0);
+        saveRoot(root, "/test/res");
+      }
+  
+      {
+        TreeNode root = (TreeNode) loadRoot("/test/res");
+        TreeNode genres = findChild("genres", root);
+        ExtendedNode genre0 = (ExtendedNode) genres.getChildren().get(0);
+        assertEquals("book0", ((ExtendedNode) genre0.getBidiTarget().get(0)).getStringFeature());
+        assertEquals("book1", ((ExtendedNode) genre0.getBidiTarget().get(1)).getStringFeature());
+        assertEquals("book2", ((ExtendedNode) genre0.getBidiTarget().get(2)).getStringFeature());
+        assertEquals("book3", ((ExtendedNode) genre0.getBidiTarget().get(3)).getStringFeature());
+  
+        TreeNode books = findChild("books", root);
+        EList children = books.getChildren();
+        assertEquals("book0", ((ExtendedNode) children.get(0)).getStringFeature());
+        assertEquals("book1", ((ExtendedNode) children.get(1)).getStringFeature());
+        assertEquals("book2", ((ExtendedNode) children.get(2)).getStringFeature());
+        assertEquals("book3", ((ExtendedNode) children.get(3)).getStringFeature());
+      }
+    }
+  
+    public void testViaXRefBooksFirst() throws Exception
+    {
+      {
+        TreeNode root = createNode("root");
+        TreeNode books = createNode("books", root);
+        TreeNode genres = createNode("genres", root);
+  
+        ExtendedNode book0 = createExtended("book0", books);
+        ExtendedNode book1 = createExtended("book1", books);
+        ExtendedNode book2 = createExtended("book2", books);
+        ExtendedNode book3 = createExtended("book3", books);
+  
+        ExtendedNode genre0 = createExtended("genre0", genres);
+        ExtendedNode genre1 = createExtended("genre1", genres);
+        ExtendedNode genre2 = createExtended("genre2", genres);
+        ExtendedNode genre3 = createExtended("genre3", genres);
+  
+        book0.getBidiSource().add(genre0);
+        book0.getBidiSource().add(genre1);
+        book0.getBidiSource().add(genre2);
+        book0.getBidiSource().add(genre3);
+  
+        book1.getBidiSource().add(genre0);
+        book1.getBidiSource().add(genre1);
+        book1.getBidiSource().add(genre2);
+  
+        book2.getBidiSource().add(genre0);
+        book2.getBidiSource().add(genre1);
+  
+        book3.getBidiSource().add(genre0);
+        saveRoot(root, "/test/res");
+      }
+  
+      {
+        TreeNode root = (TreeNode) loadRoot("/test/res");
+        TreeNode books = findChild("books", root);
+        TreeNode genres = findChild("genres", root);
+  
+        ExtendedNode genre0 = (ExtendedNode) genres.getChildren().get(0);
+        assertEquals("book0", ((ExtendedNode) genre0.getBidiTarget().get(0)).getStringFeature());
+        assertEquals("book1", ((ExtendedNode) genre0.getBidiTarget().get(1)).getStringFeature());
+        assertEquals("book2", ((ExtendedNode) genre0.getBidiTarget().get(2)).getStringFeature());
+        assertEquals("book3", ((ExtendedNode) genre0.getBidiTarget().get(3)).getStringFeature());
+  
+        EList children = books.getChildren();
+        assertEquals("book0", ((ExtendedNode) children.get(0)).getStringFeature());
+        assertEquals("book1", ((ExtendedNode) children.get(1)).getStringFeature());
+        assertEquals("book2", ((ExtendedNode) children.get(2)).getStringFeature());
+        assertEquals("book3", ((ExtendedNode) children.get(3)).getStringFeature());
+      }
+    }
+  
+    public void testViaXRefSharedRoot() throws Exception
+    {
+      {
+        TreeNode root = createNode("root");
+  
+        ExtendedNode book0 = createExtended("book0", root);
+        ExtendedNode book1 = createExtended("book1", root);
+        ExtendedNode book2 = createExtended("book2", root);
+        ExtendedNode book3 = createExtended("book3", root);
+  
+        ExtendedNode genre0 = createExtended("genre0", root);
+        ExtendedNode genre1 = createExtended("genre1", root);
+        ExtendedNode genre2 = createExtended("genre2", root);
+        ExtendedNode genre3 = createExtended("genre3", root);
+  
+        book0.getBidiSource().add(genre0);
+        book0.getBidiSource().add(genre1);
+        book0.getBidiSource().add(genre2);
+        book0.getBidiSource().add(genre3);
+  
+        book1.getBidiSource().add(genre0);
+        book1.getBidiSource().add(genre1);
+        book1.getBidiSource().add(genre2);
+  
+        book2.getBidiSource().add(genre0);
+        book2.getBidiSource().add(genre1);
+  
+        book3.getBidiSource().add(genre0);
+        saveRoot(root, "/test/res");
+      }
+  
+      {
+        TreeNode root = (TreeNode) loadRoot("/test/res");
+  
+        ExtendedNode genre0 = (ExtendedNode) root.getChildren().get(4);
+        assertEquals("book0", ((ExtendedNode) genre0.getBidiTarget().get(0)).getStringFeature());
+        assertEquals("book1", ((ExtendedNode) genre0.getBidiTarget().get(1)).getStringFeature());
+        assertEquals("book2", ((ExtendedNode) genre0.getBidiTarget().get(2)).getStringFeature());
+        assertEquals("book3", ((ExtendedNode) genre0.getBidiTarget().get(3)).getStringFeature());
+  
+        EList children = root.getChildren();
+        assertEquals("book0", ((ExtendedNode) children.get(0)).getStringFeature());
+        assertEquals("book1", ((ExtendedNode) children.get(1)).getStringFeature());
+        assertEquals("book2", ((ExtendedNode) children.get(2)).getStringFeature());
+        assertEquals("book3", ((ExtendedNode) children.get(3)).getStringFeature());
+      }
+    }
+  
+    public void testViaXRefChildren2() throws Exception
+    {
+      {
+        TreeNode root = createNode("root");
+  
+        // Insert books into children
+        ExtendedNode book0 = createExtended("book0", root);
+        ExtendedNode book1 = createExtended("book1", root);
+        ExtendedNode book2 = createExtended("book2", root);
+        ExtendedNode book3 = createExtended("book3", root);
+  
+        // Insert genres into children2
+        ExtendedNode genre0 = createExtended("genre0");
+        genre0.setParent2(root);
+        ExtendedNode genre1 = createExtended("genre1");
+        genre1.setParent2(root);
+        ExtendedNode genre2 = createExtended("genre2");
+        genre2.setParent2(root);
+        ExtendedNode genre3 = createExtended("genre3");
+        genre3.setParent2(root);
+  
+        book0.getBidiSource().add(genre0);
+        book0.getBidiSource().add(genre1);
+        book0.getBidiSource().add(genre2);
+        book0.getBidiSource().add(genre3);
+  
+        book1.getBidiSource().add(genre0);
+        book1.getBidiSource().add(genre1);
+        book1.getBidiSource().add(genre2);
+  
+        book2.getBidiSource().add(genre0);
+        book2.getBidiSource().add(genre1);
+  
+        book3.getBidiSource().add(genre0);
+        saveRoot(root, "/test/res");
+      }
+  
+      {
+        TreeNode root = (TreeNode) loadRoot("/test/res");
+  
+        ExtendedNode genre0 = (ExtendedNode) root.getChildren2().get(0);
+        assertEquals("book0", ((ExtendedNode) genre0.getBidiTarget().get(0)).getStringFeature());
+        assertEquals("book1", ((ExtendedNode) genre0.getBidiTarget().get(1)).getStringFeature());
+        assertEquals("book2", ((ExtendedNode) genre0.getBidiTarget().get(2)).getStringFeature());
+        assertEquals("book3", ((ExtendedNode) genre0.getBidiTarget().get(3)).getStringFeature());
+  
+        EList children = root.getChildren();
+        assertEquals("book0", ((ExtendedNode) children.get(0)).getStringFeature());
+        assertEquals("book1", ((ExtendedNode) children.get(1)).getStringFeature());
+        assertEquals("book2", ((ExtendedNode) children.get(2)).getStringFeature());
+        assertEquals("book3", ((ExtendedNode) children.get(3)).getStringFeature());
+      }
+    }
+
+  public void testEcoreEList_contains() throws Exception
   {
     {
-      TreeNode root = createNode("root");
-      TreeNode books = createNode("books", root);
-      TreeNode genres = createNode("genres", root);
+      Root root = TestModel1Factory.eINSTANCE.createRoot();
 
-      ExtendedNode book0 = createExtended("book0", books);
-      ExtendedNode book1 = createExtended("book1", books);
-      ExtendedNode book2 = createExtended("book2", books);
-      ExtendedNode book3 = createExtended("book3", books);
+      Author author = TestModel1Factory.eINSTANCE.createAuthor();
+      author.setName("author");
 
-      ExtendedNode genre0 = createExtended("genre0", genres);
-      ExtendedNode genre1 = createExtended("genre1", genres);
-      ExtendedNode genre2 = createExtended("genre2", genres);
-      ExtendedNode genre3 = createExtended("genre3", genres);
+      Book book1 = TestModel1Factory.eINSTANCE.createBook();
+      book1.setName("book1");
 
-      book0.getBidiSource().add(genre0);
-      book0.getBidiSource().add(genre1);
-      book0.getBidiSource().add(genre2);
-      book0.getBidiSource().add(genre3);
+      Book book2 = TestModel1Factory.eINSTANCE.createBook();
+      book2.setName("book2");
 
-      book1.getBidiSource().add(genre0);
-      book1.getBidiSource().add(genre1);
-      book1.getBidiSource().add(genre2);
+      Book book3 = TestModel1Factory.eINSTANCE.createBook();
+      book3.setName("book3");
 
-      book2.getBidiSource().add(genre0);
-      book2.getBidiSource().add(genre1);
+      Book book4 = TestModel1Factory.eINSTANCE.createBook();
+      book4.setName("book4");
 
-      book3.getBidiSource().add(genre0);
-      saveRoot(root, "/test/res");
-    }
+      Book book5 = TestModel1Factory.eINSTANCE.createBook();
+      book5.setName("book5");
 
-    {
-      TreeNode root = (TreeNode) loadRoot("/test/res");
-      TreeNode books = findChild("books", root);
-      EList children = books.getChildren();
-      assertEquals("book0", ((ExtendedNode) children.get(0)).getStringFeature());
-      assertEquals("book1", ((ExtendedNode) children.get(1)).getStringFeature());
-      assertEquals("book2", ((ExtendedNode) children.get(2)).getStringFeature());
-      assertEquals("book3", ((ExtendedNode) children.get(3)).getStringFeature());
-    }
-  }
-
-  public void testViaXRef() throws Exception
-  {
-    {
-      TreeNode root = createNode("root");
-      TreeNode books = createNode("books", root);
-      TreeNode genres = createNode("genres", root);
-
-      ExtendedNode book0 = createExtended("book0", books);
-      ExtendedNode book1 = createExtended("book1", books);
-      ExtendedNode book2 = createExtended("book2", books);
-      ExtendedNode book3 = createExtended("book3", books);
-
-      ExtendedNode genre0 = createExtended("genre0", genres);
-      ExtendedNode genre1 = createExtended("genre1", genres);
-      ExtendedNode genre2 = createExtended("genre2", genres);
-      ExtendedNode genre3 = createExtended("genre3", genres);
-
-      book0.getBidiSource().add(genre0);
-      book0.getBidiSource().add(genre1);
-      book0.getBidiSource().add(genre2);
-      book0.getBidiSource().add(genre3);
-
-      book1.getBidiSource().add(genre0);
-      book1.getBidiSource().add(genre1);
-      book1.getBidiSource().add(genre2);
-
-      book2.getBidiSource().add(genre0);
-      book2.getBidiSource().add(genre1);
-
-      book3.getBidiSource().add(genre0);
-      saveRoot(root, "/test/res");
-    }
-
-    {
-      TreeNode root = (TreeNode) loadRoot("/test/res");
-      TreeNode genres = findChild("genres", root);
-      ExtendedNode genre0 = (ExtendedNode) genres.getChildren().get(0);
-      assertEquals("book0", ((ExtendedNode) genre0.getBidiTarget().get(0)).getStringFeature());
-      assertEquals("book1", ((ExtendedNode) genre0.getBidiTarget().get(1)).getStringFeature());
-      assertEquals("book2", ((ExtendedNode) genre0.getBidiTarget().get(2)).getStringFeature());
-      assertEquals("book3", ((ExtendedNode) genre0.getBidiTarget().get(3)).getStringFeature());
-
-      TreeNode books = findChild("books", root);
-      EList children = books.getChildren();
-      assertEquals("book0", ((ExtendedNode) children.get(0)).getStringFeature());
-      assertEquals("book1", ((ExtendedNode) children.get(1)).getStringFeature());
-      assertEquals("book2", ((ExtendedNode) children.get(2)).getStringFeature());
-      assertEquals("book3", ((ExtendedNode) children.get(3)).getStringFeature());
-    }
-  }
-
-  public void testViaXRefBooksFirst() throws Exception
-  {
-    {
-      TreeNode root = createNode("root");
-      TreeNode books = createNode("books", root);
-      TreeNode genres = createNode("genres", root);
-
-      ExtendedNode book0 = createExtended("book0", books);
-      ExtendedNode book1 = createExtended("book1", books);
-      ExtendedNode book2 = createExtended("book2", books);
-      ExtendedNode book3 = createExtended("book3", books);
-
-      ExtendedNode genre0 = createExtended("genre0", genres);
-      ExtendedNode genre1 = createExtended("genre1", genres);
-      ExtendedNode genre2 = createExtended("genre2", genres);
-      ExtendedNode genre3 = createExtended("genre3", genres);
-
-      book0.getBidiSource().add(genre0);
-      book0.getBidiSource().add(genre1);
-      book0.getBidiSource().add(genre2);
-      book0.getBidiSource().add(genre3);
-
-      book1.getBidiSource().add(genre0);
-      book1.getBidiSource().add(genre1);
-      book1.getBidiSource().add(genre2);
-
-      book2.getBidiSource().add(genre0);
-      book2.getBidiSource().add(genre1);
-
-      book3.getBidiSource().add(genre0);
-      saveRoot(root, "/test/res");
-    }
-
-    {
-      TreeNode root = (TreeNode) loadRoot("/test/res");
-      TreeNode books = findChild("books", root);
-      TreeNode genres = findChild("genres", root);
-
-      ExtendedNode genre0 = (ExtendedNode) genres.getChildren().get(0);
-      assertEquals("book0", ((ExtendedNode) genre0.getBidiTarget().get(0)).getStringFeature());
-      assertEquals("book1", ((ExtendedNode) genre0.getBidiTarget().get(1)).getStringFeature());
-      assertEquals("book2", ((ExtendedNode) genre0.getBidiTarget().get(2)).getStringFeature());
-      assertEquals("book3", ((ExtendedNode) genre0.getBidiTarget().get(3)).getStringFeature());
-
-      EList children = books.getChildren();
-      assertEquals("book0", ((ExtendedNode) children.get(0)).getStringFeature());
-      assertEquals("book1", ((ExtendedNode) children.get(1)).getStringFeature());
-      assertEquals("book2", ((ExtendedNode) children.get(2)).getStringFeature());
-      assertEquals("book3", ((ExtendedNode) children.get(3)).getStringFeature());
-    }
-  }
-
-  public void testViaXRefSharedRoot() throws Exception
-  {
-    {
-      TreeNode root = createNode("root");
-
-      ExtendedNode book0 = createExtended("book0", root);
-      ExtendedNode book1 = createExtended("book1", root);
-      ExtendedNode book2 = createExtended("book2", root);
-      ExtendedNode book3 = createExtended("book3", root);
-
-      ExtendedNode genre0 = createExtended("genre0", root);
-      ExtendedNode genre1 = createExtended("genre1", root);
-      ExtendedNode genre2 = createExtended("genre2", root);
-      ExtendedNode genre3 = createExtended("genre3", root);
-
-      book0.getBidiSource().add(genre0);
-      book0.getBidiSource().add(genre1);
-      book0.getBidiSource().add(genre2);
-      book0.getBidiSource().add(genre3);
-
-      book1.getBidiSource().add(genre0);
-      book1.getBidiSource().add(genre1);
-      book1.getBidiSource().add(genre2);
-
-      book2.getBidiSource().add(genre0);
-      book2.getBidiSource().add(genre1);
-
-      book3.getBidiSource().add(genre0);
-      saveRoot(root, "/test/res");
-    }
-
-    {
-      TreeNode root = (TreeNode) loadRoot("/test/res");
-
-      ExtendedNode genre0 = (ExtendedNode) root.getChildren().get(4);
-      assertEquals("book0", ((ExtendedNode) genre0.getBidiTarget().get(0)).getStringFeature());
-      assertEquals("book1", ((ExtendedNode) genre0.getBidiTarget().get(1)).getStringFeature());
-      assertEquals("book2", ((ExtendedNode) genre0.getBidiTarget().get(2)).getStringFeature());
-      assertEquals("book3", ((ExtendedNode) genre0.getBidiTarget().get(3)).getStringFeature());
+      Book book6 = TestModel1Factory.eINSTANCE.createBook();
+      book6.setName("book6");
 
       EList children = root.getChildren();
-      assertEquals("book0", ((ExtendedNode) children.get(0)).getStringFeature());
-      assertEquals("book1", ((ExtendedNode) children.get(1)).getStringFeature());
-      assertEquals("book2", ((ExtendedNode) children.get(2)).getStringFeature());
-      assertEquals("book3", ((ExtendedNode) children.get(3)).getStringFeature());
-    }
-  }
+      children.add(author);
+      children.add(book1);
+      children.add(book2);
+      children.add(book3);
+      children.add(book4);
+      children.add(book5);
+      children.add(book6);
 
-  public void testViaXRefChildren2() throws Exception
-  {
-    {
-      TreeNode root = createNode("root");
-
-      // Insert books into children
-      ExtendedNode book0 = createExtended("book0", root);
-      ExtendedNode book1 = createExtended("book1", root);
-      ExtendedNode book2 = createExtended("book2", root);
-      ExtendedNode book3 = createExtended("book3", root);
-
-      // Insert genres into children2
-      ExtendedNode genre0 = createExtended("genre0");
-      genre0.setParent2(root);
-      ExtendedNode genre1 = createExtended("genre1");
-      genre1.setParent2(root);
-      ExtendedNode genre2 = createExtended("genre2");
-      genre2.setParent2(root);
-      ExtendedNode genre3 = createExtended("genre3");
-      genre3.setParent2(root);
-
-      book0.getBidiSource().add(genre0);
-      book0.getBidiSource().add(genre1);
-      book0.getBidiSource().add(genre2);
-      book0.getBidiSource().add(genre3);
-
-      book1.getBidiSource().add(genre0);
-      book1.getBidiSource().add(genre1);
-      book1.getBidiSource().add(genre2);
-
-      book2.getBidiSource().add(genre0);
-      book2.getBidiSource().add(genre1);
-
-      book3.getBidiSource().add(genre0);
       saveRoot(root, "/test/res");
     }
 
-    {
-      TreeNode root = (TreeNode) loadRoot("/test/res");
+    Root root = (Root) loadRoot("/test/res");
+    EList children = root.getChildren();
 
-      ExtendedNode genre0 = (ExtendedNode) root.getChildren2().get(0);
-      assertEquals("book0", ((ExtendedNode) genre0.getBidiTarget().get(0)).getStringFeature());
-      assertEquals("book1", ((ExtendedNode) genre0.getBidiTarget().get(1)).getStringFeature());
-      assertEquals("book2", ((ExtendedNode) genre0.getBidiTarget().get(2)).getStringFeature());
-      assertEquals("book3", ((ExtendedNode) genre0.getBidiTarget().get(3)).getStringFeature());
+    Author author = (Author) children.get(0);
+    EList books = author.getBooks();
 
-      EList children = root.getChildren();
-      assertEquals("book0", ((ExtendedNode) children.get(0)).getStringFeature());
-      assertEquals("book1", ((ExtendedNode) children.get(1)).getStringFeature());
-      assertEquals("book2", ((ExtendedNode) children.get(2)).getStringFeature());
-      assertEquals("book3", ((ExtendedNode) children.get(3)).getStringFeature());
-    }
+    Object book1 = children.get(1);
+    assertTrue(books.add(book1));
+
+    Object book2 = children.get(2);
+    assertTrue(books.add(book2));
+
+    Object book3 = children.get(3);
+    assertTrue(books.add(book3));
+
+    Object book4 = children.get(4);
+    assertTrue(books.add(book4));
+
+    Object book5 = children.get(5);
+    assertTrue(books.add(book5));
+
+    Object book6 = children.get(6);
+    assertTrue(books.add(book6));
   }
 }

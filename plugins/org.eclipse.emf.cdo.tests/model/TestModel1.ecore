@@ -35,4 +35,19 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="moreReferences" upperBound="-1"
         eType="#//TreeNode"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Root" eSuperTypes="../../org.eclipse.emf.cdo.client/model/client.ecore#//CDOPersistent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="ecore:EClass ../../org.eclipse.emf.cdo.client/model/client.ecore#//CDOPersistent"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Author" eSuperTypes="../../org.eclipse.emf.cdo.client/model/client.ecore#//CDOPersistent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="books" upperBound="-1"
+        eType="#//Book" eOpposite="#//Book/author"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Book" eSuperTypes="../../org.eclipse.emf.cdo.client/model/client.ecore#//CDOPersistent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="author" eType="#//Author"
+        eOpposite="#//Author/books"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

@@ -15,9 +15,12 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import testmodel1.Author;
+import testmodel1.Book;
 import testmodel1.EmptyNode;
 import testmodel1.EmptyRefNode;
 import testmodel1.ExtendedNode;
+import testmodel1.Root;
 import testmodel1.TestModel1Factory;
 import testmodel1.TestModel1Package;
 import testmodel1.TreeNode;
@@ -58,6 +61,27 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
    * @generated
    */
   private EClass emptyRefNodeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass rootEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass authorEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass bookEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -330,6 +354,86 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getRoot()
+  {
+    return rootEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRoot_Children()
+  {
+    return (EReference) rootEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAuthor()
+  {
+    return authorEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAuthor_Books()
+  {
+    return (EReference) authorEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAuthor_Name()
+  {
+    return (EAttribute) authorEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getBook()
+  {
+    return bookEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getBook_Author()
+  {
+    return (EReference) bookEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBook_Name()
+  {
+    return (EAttribute) bookEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public TestModel1Factory getTestModel1Factory()
   {
     return (TestModel1Factory) getEFactoryInstance();
@@ -377,6 +481,17 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
 
     emptyRefNodeEClass = createEClass(EMPTY_REF_NODE);
     createEReference(emptyRefNodeEClass, EMPTY_REF_NODE__MORE_REFERENCES);
+
+    rootEClass = createEClass(ROOT);
+    createEReference(rootEClass, ROOT__CHILDREN);
+
+    authorEClass = createEClass(AUTHOR);
+    createEReference(authorEClass, AUTHOR__BOOKS);
+    createEAttribute(authorEClass, AUTHOR__NAME);
+
+    bookEClass = createEClass(BOOK);
+    createEReference(bookEClass, BOOK__AUTHOR);
+    createEAttribute(bookEClass, BOOK__NAME);
   }
 
   /**
@@ -412,6 +527,9 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
     extendedNodeEClass.getESuperTypes().add(this.getTreeNode());
     emptyNodeEClass.getESuperTypes().add(this.getTreeNode());
     emptyRefNodeEClass.getESuperTypes().add(this.getTreeNode());
+    rootEClass.getESuperTypes().add(theCDOPackage.getCDOPersistent());
+    authorEClass.getESuperTypes().add(theCDOPackage.getCDOPersistent());
+    bookEClass.getESuperTypes().add(theCDOPackage.getCDOPersistent());
 
     // Initialize classes and features; add operations and parameters
     initEClass(treeNodeEClass, TreeNode.class, "TreeNode", !IS_ABSTRACT, !IS_INTERFACE,
@@ -472,6 +590,30 @@ public class TestModel1PackageImpl extends EPackageImpl implements TestModel1Pac
     initEReference(getEmptyRefNode_MoreReferences(), this.getTreeNode(), null, "moreReferences",
         null, 0, -1, EmptyRefNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(rootEClass, Root.class, "Root", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRoot_Children(), theCDOPackage.getCDOPersistent(), null, "children", null, 0,
+        -1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(authorEClass, Author.class, "Author", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAuthor_Books(), this.getBook(), this.getBook_Author(), "books", null, 0, -1,
+        Author.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAuthor_Name(), ecorePackage.getEString(), "name", null, 0, 1, Author.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+
+    initEClass(bookEClass, Book.class, "Book", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getBook_Author(), this.getAuthor(), this.getAuthor_Books(), "author", null, 0,
+        1, Book.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBook_Name(), ecorePackage.getEString(), "name", null, 0, 1, Book.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

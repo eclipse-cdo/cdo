@@ -144,6 +144,33 @@ public class TestModel1Switch
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case TestModel1Package.ROOT:
+      {
+        Root root = (Root) theEObject;
+        Object result = caseRoot(root);
+        if (result == null) result = caseCDOPersistent(root);
+        if (result == null) result = caseCDOPersistable(root);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case TestModel1Package.AUTHOR:
+      {
+        Author author = (Author) theEObject;
+        Object result = caseAuthor(author);
+        if (result == null) result = caseCDOPersistent(author);
+        if (result == null) result = caseCDOPersistable(author);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case TestModel1Package.BOOK:
+      {
+        Book book = (Book) theEObject;
+        Object result = caseBook(book);
+        if (result == null) result = caseCDOPersistent(book);
+        if (result == null) result = caseCDOPersistable(book);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default:
         return defaultCase(theEObject);
     }
@@ -209,6 +236,54 @@ public class TestModel1Switch
    * @generated
    */
   public Object caseEmptyRefNode(EmptyRefNode object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpretting the object as an instance of '<em>Root</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpretting the object as an instance of '<em>Root</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public Object caseRoot(Root object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpretting the object as an instance of '<em>Author</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpretting the object as an instance of '<em>Author</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public Object caseAuthor(Author object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpretting the object as an instance of '<em>Book</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpretting the object as an instance of '<em>Book</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public Object caseBook(Book object)
   {
     return null;
   }

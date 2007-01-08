@@ -50,10 +50,11 @@ public final class HashBag<T> implements Set<T>
     {
       counter = new Counter();
       map.put(o, counter);
+      return true;
     }
 
     counter.incValue();
-    return true;
+    return false;
   }
 
   public boolean addAll(Collection<? extends T> c)
@@ -147,7 +148,7 @@ public final class HashBag<T> implements Set<T>
    */
   private static final class Counter
   {
-    private int value;
+    private int value = 1;
 
     public Counter()
     {

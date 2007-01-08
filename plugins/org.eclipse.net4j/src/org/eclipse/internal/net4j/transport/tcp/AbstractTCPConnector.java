@@ -240,12 +240,12 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, String protocolID, Object protocolData)
+  protected void registerChannelWithPeer(short channelIndex, String protocolID)
       throws ConnectorException
   {
     try
     {
-      if (!controlChannel.registerChannel(channelIndex, protocolID, protocolData))
+      if (!controlChannel.registerChannel(channelIndex, protocolID))
       {
         throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
       }
@@ -254,7 +254,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     {
       throw ex;
     }
-    catch (IOException ex)
+    catch (Exception ex)
     {
       throw new ConnectorException(ex);
     }

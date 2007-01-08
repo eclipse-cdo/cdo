@@ -43,12 +43,12 @@ public abstract class AbstractEmbeddedConnector extends AbstractConnector
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, String protocolID, Object protocolData)
+  protected void registerChannelWithPeer(short channelIndex, String protocolID)
       throws ConnectorException
   {
     try
     {
-      ChannelImpl channel = getPeer().createChannel(channelIndex, protocolID, protocolData);
+      ChannelImpl channel = getPeer().createChannel(channelIndex, protocolID, null);
       if (channel == null)
       {
         throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$

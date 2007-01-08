@@ -35,7 +35,7 @@ public abstract class Signal implements Runnable
   {
   }
 
-  protected final SignalProtocol getProtocol()
+  protected SignalProtocol getProtocol()
   {
     return protocol;
   }
@@ -59,7 +59,7 @@ public abstract class Signal implements Runnable
   {
     try
     {
-      execute(inputStream, outputStream);
+      runSync();
     }
     catch (Exception ex)
     {
@@ -67,6 +67,14 @@ public abstract class Signal implements Runnable
       {
         TRACER.trace(ex);
       }
+    }
+  }
+
+  protected void runSync() throws Exception
+  {
+    try
+    {
+      execute(inputStream, outputStream);
     }
     finally
     {

@@ -149,7 +149,7 @@ public abstract class SignalProtocol extends AbstractProtocol
 
   protected abstract SignalReactor createSignalReactor(short signalID);
 
-  void startSignal(SignalActor signalActor, long timeout)
+  void startSignal(SignalActor signalActor, long timeout) throws Exception
   {
     if (signalActor.getProtocol() != this)
     {
@@ -162,7 +162,7 @@ public abstract class SignalProtocol extends AbstractProtocol
     signalActor.setOutputStream(new SignalOutputStream(correlationID, signalID, true));
     signals.put(correlationID, signalActor);
 
-    signalActor.run();
+    signalActor.runSync();
   }
 
   void stopSignal(Signal signal)

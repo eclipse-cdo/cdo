@@ -296,7 +296,7 @@ public class BufferImpl implements Buffer
       {
         byteBuffer.flip();
       }
-      
+
       if (state == State.PUTTING)
       {
         byteBuffer.position(HEADER_SIZE);

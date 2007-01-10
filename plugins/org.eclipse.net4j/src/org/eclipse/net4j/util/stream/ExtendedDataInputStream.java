@@ -32,8 +32,22 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
       throw new IndexOutOfBoundsException();
     }
 
-    byte[] b = new byte[length];
-    read(b);
+    byte[] b;
+    try
+    {
+      b = new byte[length];
+    }
+    catch (Throwable t)
+    {
+      throw new IOException("Unable to allocate " + length + " bytes");
+    }
+
+    int bytes = read(b);
+    if (bytes != length)
+    {
+      throw new IOException("Unable to read " + length + " bytes (after " + bytes + " bytes)");
+    }
+
     return b;
   }
 

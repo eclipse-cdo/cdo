@@ -616,7 +616,8 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     super.onDeactivate();
   }
 
-  protected abstract void registerChannelWithPeer(short channelIndex, String protocolID) throws ConnectorException;
+  protected abstract void registerChannelWithPeer(short channelIndex, String protocolID)
+      throws ConnectorException;
 
   private static int getNextConnectorID()
   {

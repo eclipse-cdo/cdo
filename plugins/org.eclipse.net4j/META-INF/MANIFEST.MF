@@ -6,3 +6,4 @@ Bundle-Version: 0.7.2.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Eclipse-LazyStart: true
+Bundle-ClassPath: .

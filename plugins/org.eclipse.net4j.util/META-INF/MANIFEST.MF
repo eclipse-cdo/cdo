@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.util
 Bundle-Version: 0.7.2.qualifier
-Bundle-ClassPath: org.eclipse.net4j.util.jar,
+Bundle-ClassPath: .,
  lib/commons-logging.jar,
  lib/log4j-1.2.13.jar
 Bundle-Vendor: %providerName

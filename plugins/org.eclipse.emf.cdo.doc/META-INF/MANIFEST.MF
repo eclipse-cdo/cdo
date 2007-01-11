@@ -7,3 +7,4 @@ Bundle-Vendor: %Provider.name
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.help
 Eclipse-LazyStart: true
+Bundle-ClassPath: .

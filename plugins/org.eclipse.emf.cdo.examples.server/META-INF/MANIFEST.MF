@@ -11,3 +11,4 @@ Require-Bundle: org.eclipse.emf.cdo.server,
  org.eclipse.net4j.examples.server
 Export-Package: org.eclipse.emf.cdo.examples.server.internal
 Bundle-Activator: org.eclipse.emf.cdo.examples.server.internal.CDOServerPlugin
+Bundle-ClassPath: .

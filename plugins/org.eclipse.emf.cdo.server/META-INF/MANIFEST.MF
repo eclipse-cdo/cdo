@@ -14,3 +14,4 @@ Export-Package: org.eclipse.emf.cdo.server,
  org.eclipse.emf.cdo.server.impl,
  org.eclipse.emf.cdo.server.internal,
  org.eclipse.emf.cdo.server.protocol
+Bundle-ClassPath: .

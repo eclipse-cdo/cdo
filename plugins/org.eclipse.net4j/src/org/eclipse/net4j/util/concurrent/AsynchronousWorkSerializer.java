@@ -124,7 +124,7 @@ public class AsynchronousWorkSerializer implements WorkSerializer, Runnable
   /**
    * @author Eike Stepper
    */
-  private static class Occupation
+  private static final class Occupation
   {
     private boolean occupied = false;
 

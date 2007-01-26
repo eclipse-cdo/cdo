@@ -63,6 +63,7 @@ public abstract class Signal implements Runnable
     }
     catch (Exception ex)
     {
+      Net4j.LOG.error(ex);
       if (TRACER.isEnabled())
       {
         TRACER.trace(ex);

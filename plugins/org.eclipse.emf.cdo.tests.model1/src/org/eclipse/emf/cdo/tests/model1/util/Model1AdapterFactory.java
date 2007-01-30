@@ -6,7 +6,11 @@
  */
 package org.eclipse.emf.cdo.tests.model1.util;
 
+import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.OrderDetail;
+import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
@@ -86,6 +90,26 @@ public class Model1AdapterFactory extends AdapterFactoryImpl
       return createPurchaseOrderAdapter();
     }
 
+    public Object caseOrderDetail(OrderDetail object)
+    {
+      return createOrderDetailAdapter();
+    }
+
+    public Object caseProduct(Product object)
+    {
+      return createProductAdapter();
+    }
+
+    public Object caseCategory(Category object)
+    {
+      return createCategoryAdapter();
+    }
+
+    public Object caseCompany(Company object)
+    {
+      return createCompanyAdapter();
+    }
+
     public Object defaultCase(EObject object)
     {
       return createEObjectAdapter();
@@ -132,6 +156,66 @@ public class Model1AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPurchaseOrderAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail <em>Order Detail</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
+   * can easily ignore cases; it's useful to ignore a case when inheritance will
+   * catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model1.OrderDetail
+   * @generated
+   */
+  public Adapter createOrderDetailAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model1.Product <em>Product</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
+   * can easily ignore cases; it's useful to ignore a case when inheritance will
+   * catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model1.Product
+   * @generated
+   */
+  public Adapter createProductAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model1.Category <em>Category</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
+   * can easily ignore cases; it's useful to ignore a case when inheritance will
+   * catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model1.Category
+   * @generated
+   */
+  public Adapter createCategoryAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model1.Company <em>Company</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
+   * can easily ignore cases; it's useful to ignore a case when inheritance will
+   * catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model1.Company
+   * @generated
+   */
+  public Adapter createCompanyAdapter()
   {
     return null;
   }

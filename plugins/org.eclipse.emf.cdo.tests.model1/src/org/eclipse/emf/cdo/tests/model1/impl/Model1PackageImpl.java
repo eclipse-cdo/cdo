@@ -6,8 +6,12 @@
  */
 package org.eclipse.emf.cdo.tests.model1.impl;
 
+import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.OrderDetail;
+import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
@@ -38,6 +42,34 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * @generated
    */
   private EClass purchaseOrderEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass orderDetailEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass productEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass categoryEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass companyEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -166,6 +198,136 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * 
    * @generated
    */
+  public EClass getOrderDetail()
+  {
+    return orderDetailEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getOrderDetail_Product()
+  {
+    return (EReference)orderDetailEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getOrderDetail_Price()
+  {
+    return (EAttribute)orderDetailEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getProduct()
+  {
+    return productEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getProduct_Name()
+  {
+    return (EAttribute)productEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getProduct_OrderDetails()
+  {
+    return (EReference)productEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getCategory()
+  {
+    return categoryEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getCategory_Name()
+  {
+    return (EAttribute)categoryEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getCategory_Products()
+  {
+    return (EReference)categoryEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getCompany()
+  {
+    return companyEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getCompany_Categories()
+  {
+    return (EReference)companyEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getCompany_Suppliers()
+  {
+    return (EReference)companyEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getCompany_PurchaseOrders()
+  {
+    return (EReference)companyEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public Model1Factory getModel1Factory()
   {
     return (Model1Factory)getEFactoryInstance();
@@ -198,6 +360,23 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     purchaseOrderEClass = createEClass(PURCHASE_ORDER);
     createEAttribute(purchaseOrderEClass, PURCHASE_ORDER__DATE);
     createEReference(purchaseOrderEClass, PURCHASE_ORDER__SUPPLIER);
+
+    orderDetailEClass = createEClass(ORDER_DETAIL);
+    createEReference(orderDetailEClass, ORDER_DETAIL__PRODUCT);
+    createEAttribute(orderDetailEClass, ORDER_DETAIL__PRICE);
+
+    productEClass = createEClass(PRODUCT);
+    createEAttribute(productEClass, PRODUCT__NAME);
+    createEReference(productEClass, PRODUCT__ORDER_DETAILS);
+
+    categoryEClass = createEClass(CATEGORY);
+    createEAttribute(categoryEClass, CATEGORY__NAME);
+    createEReference(categoryEClass, CATEGORY__PRODUCTS);
+
+    companyEClass = createEClass(COMPANY);
+    createEReference(companyEClass, COMPANY__CATEGORIES);
+    createEReference(companyEClass, COMPANY__SUPPLIERS);
+    createEReference(companyEClass, COMPANY__PURCHASE_ORDERS);
   }
 
   /**
@@ -242,6 +421,45 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     initEReference(getPurchaseOrder_Supplier(), this.getSupplier(), null, "supplier", null, 0, 1,
         PurchaseOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(orderDetailEClass, OrderDetail.class, "OrderDetail", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getOrderDetail_Product(), this.getProduct(), this.getProduct_OrderDetails(),
+        "product", null, 0, 1, OrderDetail.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getOrderDetail_Price(), ecorePackage.getEFloat(), "price", null, 0, 1,
+        OrderDetail.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(productEClass, Product.class, "Product", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getProduct_Name(), ecorePackage.getEString(), "name", null, 0, 1, Product.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+    initEReference(getProduct_OrderDetails(), this.getOrderDetail(), this.getOrderDetail_Product(),
+        "orderDetails", null, 0, -1, Product.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(categoryEClass, Category.class, "Category", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getCategory_Name(), ecorePackage.getEString(), "name", null, 0, 1,
+        Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCategory_Products(), this.getProduct(), null, "products", null, 0, -1,
+        Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(companyEClass, Company.class, "Company", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCompany_Categories(), this.getCategory(), null, "categories", null, 0, -1,
+        Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCompany_Suppliers(), this.getSupplier(), null, "suppliers", null, 0, -1,
+        Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCompany_PurchaseOrders(), this.getPurchaseOrder(), null, "purchaseOrders",
+        null, 0, -1, Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

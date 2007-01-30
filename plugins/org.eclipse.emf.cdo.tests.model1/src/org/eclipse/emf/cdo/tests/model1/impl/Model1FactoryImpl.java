@@ -6,8 +6,12 @@
  */
 package org.eclipse.emf.cdo.tests.model1.impl;
 
+import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.OrderDetail;
+import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
@@ -73,6 +77,14 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
       return (EObject)createSupplier();
     case Model1Package.PURCHASE_ORDER:
       return (EObject)createPurchaseOrder();
+    case Model1Package.ORDER_DETAIL:
+      return (EObject)createOrderDetail();
+    case Model1Package.PRODUCT:
+      return (EObject)createProduct();
+    case Model1Package.CATEGORY:
+      return (EObject)createCategory();
+    case Model1Package.COMPANY:
+      return (EObject)createCompany();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName()
           + "' is not a valid classifier");
@@ -99,6 +111,50 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   {
     PurchaseOrderImpl purchaseOrder = new PurchaseOrderImpl();
     return purchaseOrder;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public OrderDetail createOrderDetail()
+  {
+    OrderDetailImpl orderDetail = new OrderDetailImpl();
+    return orderDetail;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Product createProduct()
+  {
+    ProductImpl product = new ProductImpl();
+    return product;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Category createCategory()
+  {
+    CategoryImpl category = new CategoryImpl();
+    return category;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Company createCompany()
+  {
+    CompanyImpl company = new CompanyImpl();
+    return company;
   }
 
   /**

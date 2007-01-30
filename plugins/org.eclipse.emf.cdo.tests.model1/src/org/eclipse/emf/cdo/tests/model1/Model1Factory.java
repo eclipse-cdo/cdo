@@ -44,6 +44,42 @@ public interface Model1Factory extends EFactory
   PurchaseOrder createPurchaseOrder();
 
   /**
+   * Returns a new object of class '<em>Order Detail</em>'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Order Detail</em>'.
+   * @generated
+   */
+  OrderDetail createOrderDetail();
+
+  /**
+   * Returns a new object of class '<em>Product</em>'. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Product</em>'.
+   * @generated
+   */
+  Product createProduct();
+
+  /**
+   * Returns a new object of class '<em>Category</em>'. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Category</em>'.
+   * @generated
+   */
+  Category createCategory();
+
+  /**
+   * Returns a new object of class '<em>Company</em>'. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Company</em>'.
+   * @generated
+   */
+  Company createCompany();
+
+  /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 

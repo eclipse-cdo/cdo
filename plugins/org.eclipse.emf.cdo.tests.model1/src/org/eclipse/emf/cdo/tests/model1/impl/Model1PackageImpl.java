@@ -278,9 +278,19 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * 
    * @generated
    */
-  public EReference getCategory_Products()
+  public EReference getCategory_Categories()
   {
     return (EReference)categoryEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getCategory_Products()
+  {
+    return (EReference)categoryEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -371,6 +381,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
     categoryEClass = createEClass(CATEGORY);
     createEAttribute(categoryEClass, CATEGORY__NAME);
+    createEReference(categoryEClass, CATEGORY__CATEGORIES);
     createEReference(categoryEClass, CATEGORY__PRODUCTS);
 
     companyEClass = createEClass(COMPANY);
@@ -445,6 +456,9 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     initEAttribute(getCategory_Name(), ecorePackage.getEString(), "name", null, 0, 1,
         Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCategory_Categories(), this.getCategory(), null, "categories", null, 0, -1,
+        Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getCategory_Products(), this.getProduct(), null, "products", null, 0, -1,
         Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

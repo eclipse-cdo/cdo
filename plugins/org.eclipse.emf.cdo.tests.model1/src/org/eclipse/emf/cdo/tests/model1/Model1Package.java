@@ -216,13 +216,22 @@ public interface Model1Package extends EPackage
   int CATEGORY__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Categories</b></em>' containment
+   * reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CATEGORY__CATEGORIES = 1;
+
+  /**
    * The feature id for the '<em><b>Products</b></em>' containment
    * reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int CATEGORY__PRODUCTS = 1;
+  int CATEGORY__PRODUCTS = 2;
 
   /**
    * The number of structural features of the '<em>Category</em>' class.
@@ -231,7 +240,7 @@ public interface Model1Package extends EPackage
    * @generated
    * @ordered
    */
-  int CATEGORY_FEATURE_COUNT = 2;
+  int CATEGORY_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl <em>Company</em>}'
@@ -416,6 +425,17 @@ public interface Model1Package extends EPackage
    * @generated
    */
   EAttribute getCategory_Name();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model1.Category#getCategories <em>Categories</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Categories</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Category#getCategories()
+   * @see #getCategory()
+   * @generated
+   */
+  EReference getCategory_Categories();
 
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model1.Category#getProducts <em>Products</em>}'.
@@ -608,6 +628,15 @@ public interface Model1Package extends EPackage
      * @generated
      */
     EAttribute CATEGORY__NAME = eINSTANCE.getCategory_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Categories</b></em>'
+     * containment reference list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference CATEGORY__CATEGORIES = eINSTANCE.getCategory_Categories();
 
     /**
      * The meta object literal for the '<em><b>Products</b></em>'

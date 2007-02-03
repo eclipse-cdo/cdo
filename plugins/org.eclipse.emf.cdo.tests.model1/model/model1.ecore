@@ -22,6 +22,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Category">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
+        eType="#//Category" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="products" upperBound="-1"
         eType="#//Product" containment="true"/>
   </eClassifiers>

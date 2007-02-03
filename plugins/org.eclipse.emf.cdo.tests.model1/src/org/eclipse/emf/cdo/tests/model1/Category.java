@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.tests.model1.Category#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.Category#getCategories <em>Categories</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.tests.model1.Category#getProducts <em>Products</em>}</li>
  * </ul>
  * </p>
@@ -55,6 +56,24 @@ public interface Category extends CDOObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Categories</b></em>' containment
+   * reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model1.Category}. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Categories</em>' containment reference list
+   * isn't clear, there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Categories</em>' containment reference
+   *         list.
+   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCategory_Categories()
+   * @model type="org.eclipse.emf.cdo.tests.model1.Category" containment="true"
+   * @generated
+   */
+  EList getCategories();
 
   /**
    * Returns the value of the '<em><b>Products</b></em>' containment

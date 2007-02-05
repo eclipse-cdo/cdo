@@ -1,4 +1,4 @@
-org.eclipse.net4j/debug = true
+org.eclipse.net4j/debug = false
 
 org.eclipse.net4j/debug.lifecycle = true
 org.eclipse.net4j/debug.lifecycle.dump = true

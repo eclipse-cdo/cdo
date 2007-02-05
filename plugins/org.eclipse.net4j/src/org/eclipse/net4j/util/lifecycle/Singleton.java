@@ -22,4 +22,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Singleton
 {
+  boolean stateful() default false;
 }

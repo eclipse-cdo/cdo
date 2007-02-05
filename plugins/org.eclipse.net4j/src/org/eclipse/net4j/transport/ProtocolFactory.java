@@ -26,10 +26,10 @@ import java.util.Set;
  */
 public interface ProtocolFactory
 {
-  @Singleton
+  @Singleton(stateful = true)
   public static final ClientProtocolFactoryRegistry CLIENT_REGISTRY = new ClientProtocolFactoryRegistry();
 
-  @Singleton
+  @Singleton(stateful = true)
   public static final ServerProtocolFactoryRegistry SERVER_REGISTRY = new ServerProtocolFactoryRegistry();
 
   public static final Set<Type> FOR_CLIENTS = Collections.singleton(Type.CLIENT);

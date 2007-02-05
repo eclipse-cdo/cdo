@@ -28,7 +28,7 @@ import org.eclipse.net4j.util.registry.IRegistry;
  */
 public interface Channel extends BufferHandler
 {
-  @Singleton
+  @Singleton(stateful = true)
   public static final IRegistry<ChannelID, Channel> REGISTRY = new HashMapRegistry();
 
   public short getChannelIndex();

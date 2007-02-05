@@ -37,7 +37,7 @@ import java.util.concurrent.ExecutorService;
  */
 public interface Connector
 {
-  @Singleton
+  @Singleton(stateful = true)
   public static final IRegistry<Integer, Connector> REGISTRY = new HashMapRegistry();
 
   public Integer getID();

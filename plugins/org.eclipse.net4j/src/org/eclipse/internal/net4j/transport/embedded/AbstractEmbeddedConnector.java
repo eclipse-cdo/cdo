@@ -43,8 +43,7 @@ public abstract class AbstractEmbeddedConnector extends AbstractConnector
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, String protocolID)
-      throws ConnectorException
+  protected void registerChannelWithPeer(short channelIndex, String protocolID) throws ConnectorException
   {
     try
     {

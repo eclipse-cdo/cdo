@@ -23,11 +23,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * @author Eike Stepper
  */
-public class BufferPoolImpl extends BufferProviderImpl implements BufferPool,
-    BufferPool.Introspection
+public class BufferPoolImpl extends BufferProviderImpl implements BufferPool, BufferPool.Introspection
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER,
-      BufferPoolImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER, BufferPoolImpl.class);
 
   private final BufferProvider factory;
 

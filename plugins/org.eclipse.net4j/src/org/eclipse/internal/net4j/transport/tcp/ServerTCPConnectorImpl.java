@@ -25,8 +25,7 @@ import java.util.concurrent.ExecutorService;
 public class ServerTCPConnectorImpl extends AbstractTCPConnector
 {
   public ServerTCPConnectorImpl(SocketChannel socketChannel, ExecutorService receiveExecutor,
-      IRegistry<String, ProtocolFactory> protocolFactoryRegistry, BufferProvider bufferProvider,
-      TCPSelector selector)
+      IRegistry<String, ProtocolFactory> protocolFactoryRegistry, BufferProvider bufferProvider, TCPSelector selector)
   {
     super(socketChannel);
     setReceiveExecutor(receiveExecutor);

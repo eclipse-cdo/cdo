@@ -16,8 +16,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class SynchronizingCorrelator<CORRELATION, RESULT> implements
-    Correlator<CORRELATION, Synchronizer<RESULT>>
+public class SynchronizingCorrelator<CORRELATION, RESULT> implements Correlator<CORRELATION, Synchronizer<RESULT>>
 {
   private ConcurrentMap<CORRELATION, Synchronizer<RESULT>> map = new ConcurrentHashMap(0);
 

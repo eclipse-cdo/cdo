@@ -74,8 +74,8 @@ public final class Net4jUtil
     return connector;
   }
 
-  public static TCPAcceptor createTCPAcceptor(BufferProvider bufferProvider, TCPSelector selector,
-      String address, int port)
+  public static TCPAcceptor createTCPAcceptor(BufferProvider bufferProvider, TCPSelector selector, String address,
+      int port)
   {
     TCPAcceptorImpl acceptor = new TCPAcceptorImpl();
     acceptor.setBufferProvider(bufferProvider);
@@ -87,12 +87,11 @@ public final class Net4jUtil
 
   public static TCPAcceptor createTCPAcceptor(BufferProvider bufferProvider, TCPSelector selector)
   {
-    return createTCPAcceptor(bufferProvider, selector, TCPAcceptor.DEFAULT_ADDRESS,
-        TCPAcceptor.DEFAULT_PORT);
+    return createTCPAcceptor(bufferProvider, selector, TCPAcceptor.DEFAULT_ADDRESS, TCPAcceptor.DEFAULT_PORT);
   }
 
-  public static TCPConnector createTCPConnector(BufferProvider bufferProvider,
-      TCPSelector selector, String host, int port)
+  public static TCPConnector createTCPConnector(BufferProvider bufferProvider, TCPSelector selector, String host,
+      int port)
   {
     ClientTCPConnectorImpl connector = new ClientTCPConnectorImpl();
     connector.setBufferProvider(bufferProvider);
@@ -102,8 +101,7 @@ public final class Net4jUtil
     return connector;
   }
 
-  public static TCPConnector createTCPConnector(BufferProvider bufferProvider,
-      TCPSelector selector, String host)
+  public static TCPConnector createTCPConnector(BufferProvider bufferProvider, TCPSelector selector, String host)
   {
     return createTCPConnector(bufferProvider, selector, host, TCPConnector.DEFAULT_PORT);
   }

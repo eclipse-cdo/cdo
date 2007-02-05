@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.transport;
 
+import org.eclipse.net4j.util.lifecycle.Singleton;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
@@ -27,6 +28,7 @@ import org.eclipse.net4j.util.registry.IRegistry;
  */
 public interface Channel extends BufferHandler
 {
+  @Singleton
   public static final IRegistry<ChannelID, Channel> REGISTRY = new HashMapRegistry();
 
   public short getChannelIndex();

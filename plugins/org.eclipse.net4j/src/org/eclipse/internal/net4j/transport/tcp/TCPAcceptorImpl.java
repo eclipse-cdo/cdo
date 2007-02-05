@@ -49,8 +49,7 @@ import java.util.concurrent.ExecutorService;
 public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, BufferProvider,
     TCPSelectorListener.Passive, LifecycleListener
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_ACCEPTOR,
-      TCPAcceptorImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_ACCEPTOR, TCPAcceptorImpl.class);
 
   private IRegistry<String, ProtocolFactory> protocolFactoryRegistry;
 
@@ -268,8 +267,8 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
 
   protected AbstractTCPConnector createConnector(SocketChannel socketChannel)
   {
-    return new ServerTCPConnectorImpl(socketChannel, getReceiveExecutor(),
-        getProtocolFactoryRegistry(), bufferProvider, selector);
+    return new ServerTCPConnectorImpl(socketChannel, getReceiveExecutor(), getProtocolFactoryRegistry(),
+        bufferProvider, selector);
   }
 
   protected void fireConnectorAccepted(TCPConnector connector)

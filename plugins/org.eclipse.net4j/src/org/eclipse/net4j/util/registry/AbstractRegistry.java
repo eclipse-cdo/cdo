@@ -30,8 +30,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public abstract class AbstractRegistry<K, V> implements IRegistry<K, V>
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_REGISTRY,
-      AbstractRegistry.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_REGISTRY, AbstractRegistry.class);
 
   /**
    * Don't initialize lazily to circumvent synchronization!

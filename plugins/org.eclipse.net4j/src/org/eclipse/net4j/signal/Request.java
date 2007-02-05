@@ -13,6 +13,7 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.BufferOutputStream;
 import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
@@ -37,7 +38,7 @@ public abstract class Request extends SignalActor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("================ Requesting"); //$NON-NLS-1$
+      TRACER.trace("================ Requesting " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
     requesting(new ExtendedDataOutputStream(out));

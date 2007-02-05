@@ -172,8 +172,7 @@ public final class ReflectUtil
     return builder.toString();
   }
 
-  private static void toString(Class<? extends Object> segment, Object object, String prefix,
-      StringBuilder builder)
+  private static void toString(Class<? extends Object> segment, Object object, String prefix, StringBuilder builder)
   {
     if (segment == ROOT_CLASS || segment == AbstractLifecycle.class)
     {

@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.debug;
 
 import org.eclipse.net4j.internal.debug.views.RemoteTraceView;
 import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
+import org.eclipse.net4j.util.lifecycle.Singleton;
 import org.eclipse.net4j.util.om.trace.RemoteTraceServer;
 import org.eclipse.net4j.util.om.trace.RemoteTraceServer.Event;
 import org.eclipse.net4j.util.om.trace.RemoteTraceServer.Listener;
@@ -24,6 +25,7 @@ import java.util.List;
  */
 public class RemoteTraceManager extends AbstractLifecycle implements Listener
 {
+  @Singleton
   public static final RemoteTraceManager INSTANCE = new RemoteTraceManager();
 
   private RemoteTraceServer server;
@@ -47,10 +49,7 @@ public class RemoteTraceManager extends AbstractLifecycle implements Listener
   public void notifyRemoteTrace(Event event)
   {
     events.add(event);
-    if (RemoteTraceView.INSTANCE != null)
-    {
-      RemoteTraceView.INSTANCE.notifyNewTrace();
-    }
+    RemoteTraceView.notifyNewTrace();
   }
 
   @Override

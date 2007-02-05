@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om.log;
 
+import org.eclipse.net4j.util.lifecycle.Singleton;
 import org.eclipse.net4j.util.om.OMLogHandler;
 import org.eclipse.net4j.util.om.OMLogger;
 import org.eclipse.net4j.util.om.OMLogger.Level;
@@ -27,10 +28,10 @@ import org.eclipse.internal.net4j.bundle.OSGiBundle;
  */
 public class EclipseLoggingBridge implements OMLogHandler
 {
+  @Singleton
   public static final EclipseLoggingBridge INSTANCE = new EclipseLoggingBridge();
 
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_OM,
-      EclipseLoggingBridge.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_OM, EclipseLoggingBridge.class);
 
   protected EclipseLoggingBridge()
   {

@@ -38,8 +38,7 @@ public abstract class SignalProtocol extends AbstractProtocol
 
   private static final int MAX_CORRELATION_ID = Integer.MAX_VALUE;
 
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL,
-      SignalProtocol.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL, SignalProtocol.class);
 
   private static final ContextTracer STREAM_TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM,
       SignalOutputStream.class);
@@ -220,8 +219,7 @@ public abstract class SignalProtocol extends AbstractProtocol
    */
   class SignalOutputStream extends ChannelOutputStream
   {
-    public SignalOutputStream(final int correlationID, final short signalID,
-        final boolean addSignalID)
+    public SignalOutputStream(final int correlationID, final short signalID, final boolean addSignalID)
     {
       super(getChannel(), new BufferProvider()
       {

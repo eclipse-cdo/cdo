@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.transport;
 
+import org.eclipse.net4j.util.lifecycle.Singleton;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
@@ -36,6 +37,7 @@ import java.util.concurrent.ExecutorService;
  */
 public interface Connector
 {
+  @Singleton
   public static final IRegistry<Integer, Connector> REGISTRY = new HashMapRegistry();
 
   public Integer getID();

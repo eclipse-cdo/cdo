@@ -20,8 +20,7 @@ import org.eclipse.internal.net4j.bundle.Net4j;
  */
 public class BufferFactoryImpl extends BufferProviderImpl
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER,
-      BufferFactoryImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER, BufferFactoryImpl.class);
 
   public BufferFactoryImpl(short bufferCapacity)
   {

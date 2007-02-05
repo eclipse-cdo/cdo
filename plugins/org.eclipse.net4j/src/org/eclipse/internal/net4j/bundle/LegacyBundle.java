@@ -163,8 +163,7 @@ public class LegacyBundle extends AbstractOMBundle
     // If we still don't have a good base URL, complain about it.
     if (baseURL == null)
     {
-      String resourceName = ReflectUtil.getPackageName(className).replace('.', '/')
-          + "/plugin.properties"; //$NON-NLS-1$
+      String resourceName = ReflectUtil.getPackageName(className).replace('.', '/') + "/plugin.properties"; //$NON-NLS-1$
       throw new MissingResourceException("Missing properties: " + resourceName, accessor.getName(), //$NON-NLS-1$
           "plugin.properties"); //$NON-NLS-1$
     }

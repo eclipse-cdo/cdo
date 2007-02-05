@@ -38,8 +38,7 @@ import java.util.Queue;
 public abstract class AbstractTCPConnector extends AbstractConnector implements TCPConnector,
     TCPSelectorListener.Active
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR,
-      AbstractTCPConnector.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, AbstractTCPConnector.class);
 
   private SocketChannel socketChannel;
 
@@ -240,8 +239,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, String protocolID)
-      throws ConnectorException
+  protected void registerChannelWithPeer(short channelIndex, String protocolID) throws ConnectorException
   {
     try
     {

@@ -37,8 +37,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, Runnable
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SELECTOR,
-      TCPSelectorImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SELECTOR, TCPSelectorImpl.class);
 
   private Selector selector;
 
@@ -335,8 +334,7 @@ public class TCPSelectorImpl extends AbstractLifecycle implements TCPSelector, R
     }
   }
 
-  private void doRegister(final ServerSocketChannel channel,
-      final TCPSelectorListener.Passive listener)
+  private void doRegister(final ServerSocketChannel channel, final TCPSelectorListener.Passive listener)
   {
     if (TRACER.isEnabled())
     {

@@ -36,8 +36,7 @@ import java.util.concurrent.ExecutorService;
  */
 public class ChannelImpl extends AbstractLifecycle implements Channel, BufferProvider
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CHANNEL,
-      ChannelImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CHANNEL, ChannelImpl.class);
 
   private short channelIndex = BufferImpl.NO_CHANNEL;
 
@@ -149,6 +148,11 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
       TRACER.format("Handling buffer from client: {0} --> {1}", buffer, this); //$NON-NLS-1$
     }
 
+    if (sendQueue == null)
+    {
+      throw new IllegalStateException("sendQueue == null");
+    }
+
     sendQueue.add(buffer);
     connector.multiplexBuffer(this);
   }
@@ -256,8 +260,7 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
       if (obj instanceof ChannelID)
       {
         ChannelID that = (ChannelID)obj;
-        return channelIndex == that.getChannelIndex()
-            && ObjectUtil.equals(connector, that.getConnector());
+        return channelIndex == that.getChannelIndex() && ObjectUtil.equals(connector, that.getConnector());
       }
 
       return false;

@@ -15,8 +15,7 @@ package org.eclipse.net4j.util;
  */
 public final class HexUtil
 {
-  public static final char DIGITS[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b',
-      'c', 'd', 'e', 'f', };
+  public static final char DIGITS[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', };
 
   private HexUtil()
   {

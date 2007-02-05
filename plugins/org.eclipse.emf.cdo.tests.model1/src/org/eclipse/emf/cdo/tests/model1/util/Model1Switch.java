@@ -85,8 +85,7 @@ public class Model1Switch
     else
     {
       List eSuperTypes = theEClass.getESuperTypes();
-      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch((EClass)eSuperTypes.get(0),
-          theEObject);
+      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch((EClass)eSuperTypes.get(0), theEObject);
     }
   }
 

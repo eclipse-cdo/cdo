@@ -19,8 +19,7 @@ import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractProtocol extends AbstractLifecycle implements Protocol,
-    BufferProvider
+public abstract class AbstractProtocol extends AbstractLifecycle implements Protocol, BufferProvider
 {
   private Channel channel;
 

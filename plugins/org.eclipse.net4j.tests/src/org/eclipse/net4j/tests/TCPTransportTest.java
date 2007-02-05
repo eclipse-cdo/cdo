@@ -67,8 +67,7 @@ public class TCPTransportTest extends AbstractOMTest
     assertTrue(selector.isActive());
 
     acceptor = (TCPAcceptorImpl)Net4jUtil.createTCPAcceptor(bufferPool, selector);
-    connector = (AbstractTCPConnector)Net4jUtil.createTCPConnector(bufferPool, selector,
-        "localhost");
+    connector = (AbstractTCPConnector)Net4jUtil.createTCPConnector(bufferPool, selector, "localhost");
 
     System.out.println("---------------- START ----------------");
   }

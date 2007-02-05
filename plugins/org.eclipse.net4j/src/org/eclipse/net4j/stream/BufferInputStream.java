@@ -34,8 +34,7 @@ public class BufferInputStream extends InputStream implements BufferHandler
 
   public static final long DEFAULT_MILLIS_INTERRUPT_CHECK = 100;
 
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM,
-      BufferInputStream.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM, BufferInputStream.class);
 
   private BlockingQueue<Buffer> buffers = new LinkedBlockingQueue();
 

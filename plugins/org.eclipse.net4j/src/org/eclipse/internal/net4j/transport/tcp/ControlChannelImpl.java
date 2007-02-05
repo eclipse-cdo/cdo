@@ -40,8 +40,7 @@ public final class ControlChannelImpl extends ChannelImpl
 
   public static final byte FAILURE = 0;
 
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CHANNEL,
-      ControlChannelImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CHANNEL, ControlChannelImpl.class);
 
   private SynchronizingCorrelator<Short, Boolean> registrations = new SynchronizingCorrelator();
 
@@ -104,8 +103,7 @@ public final class ControlChannelImpl extends ChannelImpl
         {
           byte[] handlerFactoryUTF8 = BufferUtil.getByteArray(byteBuffer);
           String protocolID = BufferUtil.fromUTF8(handlerFactoryUTF8);
-          ChannelImpl channel = ((AbstractTCPConnector)getConnector()).createChannel(channelIndex,
-              protocolID, null);
+          ChannelImpl channel = ((AbstractTCPConnector)getConnector()).createChannel(channelIndex, protocolID, null);
           if (channel != null)
           {
             channel.activate();

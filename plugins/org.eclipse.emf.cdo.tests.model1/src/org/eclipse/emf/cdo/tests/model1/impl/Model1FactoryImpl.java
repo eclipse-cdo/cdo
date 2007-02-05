@@ -86,8 +86,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
     case Model1Package.COMPANY:
       return (EObject)createCompany();
     default:
-      throw new IllegalArgumentException("The class '" + eClass.getName()
-          + "' is not a valid classifier");
+      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
 

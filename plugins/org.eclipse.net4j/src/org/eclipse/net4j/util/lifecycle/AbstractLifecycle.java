@@ -25,11 +25,9 @@ public abstract class AbstractLifecycle implements Lifecycle, LifecycleNotifier
 {
   public static boolean USE_LABEL = true;
 
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_LIFECYCLE,
-      AbstractLifecycle.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_LIFECYCLE, AbstractLifecycle.class);
 
-  private static final ContextTracer DUMPER = new ContextTracer(Net4j.DEBUG_LIFECYCLE_DUMP,
-      AbstractLifecycle.class);
+  private static final ContextTracer DUMPER = new ContextTracer(Net4j.DEBUG_LIFECYCLE_DUMP, AbstractLifecycle.class);
 
   private boolean active;
 

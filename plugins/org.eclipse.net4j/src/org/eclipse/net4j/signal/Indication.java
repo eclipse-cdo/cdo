@@ -12,6 +12,7 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.BufferOutputStream;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
 
@@ -24,8 +25,7 @@ import java.io.IOException;
  */
 public abstract class Indication extends SignalReactor
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL,
-      Indication.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL, Indication.class);
 
   protected Indication()
   {
@@ -36,7 +36,7 @@ public abstract class Indication extends SignalReactor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("================ Indicating"); //$NON-NLS-1$
+      TRACER.trace("================ Indicating " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
     indicating(new ExtendedDataInputStream(in));

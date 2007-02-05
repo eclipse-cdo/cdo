@@ -22,8 +22,7 @@ import java.lang.reflect.Method;
  */
 public final class LifecycleUtil
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_LIFECYCLE,
-      LifecycleUtil.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_LIFECYCLE, LifecycleUtil.class);
 
   private LifecycleUtil()
   {
@@ -130,8 +129,8 @@ public final class LifecycleUtil
           if (annotation != null)
           {
             invokeMethod(object, method);
-            boolean propagate = annotationClass == Activator.class ? ((Activator)annotation)
-                .propagate() : ((Deactivator)annotation).propagate();
+            boolean propagate = annotationClass == Activator.class ? ((Activator)annotation).propagate()
+                : ((Deactivator)annotation).propagate();
             if (!propagate)
             {
               break;

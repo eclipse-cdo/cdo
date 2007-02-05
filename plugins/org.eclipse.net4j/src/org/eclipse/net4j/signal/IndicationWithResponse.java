@@ -26,8 +26,7 @@ import java.io.IOException;
  */
 public abstract class IndicationWithResponse extends SignalReactor
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL,
-      IndicationWithResponse.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL, IndicationWithResponse.class);
 
   protected IndicationWithResponse()
   {

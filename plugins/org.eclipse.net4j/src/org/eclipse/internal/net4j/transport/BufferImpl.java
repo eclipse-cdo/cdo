@@ -34,8 +34,7 @@ public class BufferImpl implements Buffer
 
   private static final int EOS_OFFSET = 1;
 
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER,
-      BufferImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER, BufferImpl.class);
 
   private static final String NL = System.getProperty("line.separator"); //$NON-NLS-1$
 

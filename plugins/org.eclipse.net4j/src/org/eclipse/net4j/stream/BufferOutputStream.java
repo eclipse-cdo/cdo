@@ -30,8 +30,7 @@ public class BufferOutputStream extends OutputStream
 {
   public static final boolean DEFAULT_PROPAGATE_CLOSE = false;
 
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM,
-      BufferOutputStream.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM, BufferOutputStream.class);
 
   private BufferHandler bufferHandler;
 
@@ -41,8 +40,7 @@ public class BufferOutputStream extends OutputStream
 
   private short channelIndex;
 
-  public BufferOutputStream(BufferHandler bufferHandler, BufferProvider bufferProvider,
-      short channelIndex)
+  public BufferOutputStream(BufferHandler bufferHandler, BufferProvider bufferProvider, short channelIndex)
   {
     if (bufferHandler == null)
     {

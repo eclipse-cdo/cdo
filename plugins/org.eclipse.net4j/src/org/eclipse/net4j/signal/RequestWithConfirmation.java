@@ -27,8 +27,7 @@ import java.io.IOException;
  */
 public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT>
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL,
-      RequestWithConfirmation.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL, RequestWithConfirmation.class);
 
   protected RequestWithConfirmation(Channel channel)
   {

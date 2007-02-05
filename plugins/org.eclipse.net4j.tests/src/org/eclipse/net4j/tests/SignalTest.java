@@ -55,8 +55,7 @@ public class SignalTest extends AbstractOMTest
     assertTrue(selector.isActive());
 
     acceptor = (TCPAcceptorImpl)Net4jUtil.createTCPAcceptor(bufferPool, selector);
-    connector = (AbstractTCPConnector)Net4jUtil.createTCPConnector(bufferPool, selector,
-        "localhost");
+    connector = (AbstractTCPConnector)Net4jUtil.createTCPConnector(bufferPool, selector, "localhost");
   }
 
   @Override

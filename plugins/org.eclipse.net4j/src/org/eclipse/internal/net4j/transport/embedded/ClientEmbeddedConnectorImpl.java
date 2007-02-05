@@ -17,8 +17,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 /**
  * @author Eike Stepper
  */
-public class ClientEmbeddedConnectorImpl extends AbstractEmbeddedConnector implements
-    LifecycleListener
+public class ClientEmbeddedConnectorImpl extends AbstractEmbeddedConnector implements LifecycleListener
 {
   public ClientEmbeddedConnectorImpl()
   {

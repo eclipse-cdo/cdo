@@ -48,7 +48,7 @@ import org.eclipse.ui.part.ViewPart;
  */
 public class RemoteTraceView extends ViewPart
 {
-  public static RemoteTraceView INSTANCE;
+  private static RemoteTraceView instance;
 
   private TableViewer viewer;
 
@@ -63,7 +63,7 @@ public class RemoteTraceView extends ViewPart
   @Override
   public void dispose()
   {
-    INSTANCE = null;
+    instance = null;
     super.dispose();
   }
 
@@ -85,13 +85,13 @@ public class RemoteTraceView extends ViewPart
     hookContextMenu();
     hookDoubleClickAction();
     contributeToActionBars();
-    INSTANCE = this;
+    instance = this;
   }
 
   protected void createColmuns(TableViewer viewer)
   {
-    final String[] columnNames = { "ID", "Time Stamp", "Agent ID", "Bundle ID", "Tracer Name",
-        "Context", "Message", "Throwable" };
+    final String[] columnNames = { "ID", "Time Stamp", "Agent ID", "Bundle ID", "Tracer Name", "Context", "Message",
+        "Throwable" };
     final int[] columnWidths = { 60, 170, 80, 160, 120, 120, 400, 200 };
     TableColumn[] columns = new TableColumn[columnNames.length];
     for (int i = 0; i < columns.length; i++)
@@ -104,9 +104,12 @@ public class RemoteTraceView extends ViewPart
     }
   }
 
-  public void notifyNewTrace()
+  public static void notifyNewTrace()
   {
-    refreshViewer();
+    if (instance != null)
+    {
+      instance.refreshViewer();
+    }
   }
 
   public void refreshViewer()

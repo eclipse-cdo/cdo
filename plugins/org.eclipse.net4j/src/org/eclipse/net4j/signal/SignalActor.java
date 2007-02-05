@@ -53,8 +53,7 @@ public abstract class SignalActor<RESULT> extends Signal
   @Override
   public String toString()
   {
-    return ReflectUtil.getSimpleName(getClass())
-        + "[" + getSignalID() + ", " + getProtocol() + ", correlation=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return ReflectUtil.getSimpleName(getClass()) + "[" + getSignalID() + ", " + getProtocol() + ", correlation=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         + getCorrelationID() + (terminated ? ", SENT" : "") + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 

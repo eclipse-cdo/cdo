@@ -8,23 +8,18 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.signal;
+package org.eclipse.net4j.util.lifecycle;
 
-import org.eclipse.net4j.util.ReflectUtil;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author Eike Stepper
  */
-public abstract class SignalReactor extends Signal
+@Retention(RetentionPolicy.SOURCE)
+@Target(ElementType.FIELD)
+public @interface Singleton
 {
-  protected SignalReactor()
-  {
-  }
-
-  @Override
-  public String toString()
-  {
-    return ReflectUtil.getSimpleName(getClass()) + "[" + getSignalID() + ", " + getProtocol() + ", correlation=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        + getCorrelationID() + "]"; //$NON-NLS-1$
-  }
 }

@@ -39,11 +39,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractConnector extends AbstractLifecycle implements Connector,
-    BufferProvider
+public abstract class AbstractConnector extends AbstractLifecycle implements Connector, BufferProvider
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR,
-      AbstractConnector.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, AbstractConnector.class);
 
   private static final ChannelImpl NULL_CHANNEL = new ChannelImpl(null)
   {
@@ -616,8 +614,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
     super.onDeactivate();
   }
 
-  protected abstract void registerChannelWithPeer(short channelIndex, String protocolID)
-      throws ConnectorException;
+  protected abstract void registerChannelWithPeer(short channelIndex, String protocolID) throws ConnectorException;
 
   private static int getNextConnectorID()
   {

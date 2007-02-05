@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om.log;
 
+import org.eclipse.net4j.util.lifecycle.Singleton;
 import org.eclipse.net4j.util.om.OMLogHandler;
 import org.eclipse.net4j.util.om.OMLogger;
 import org.eclipse.net4j.util.om.OMLogger.Level;
@@ -27,10 +28,10 @@ import org.osgi.service.log.LogService;
  */
 public class OSGiLoggingBridge implements OMLogHandler
 {
+  @Singleton
   public static final OSGiLoggingBridge INSTANCE = new OSGiLoggingBridge();
 
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_OM,
-      OSGiLoggingBridge.class);
+  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_OM, OSGiLoggingBridge.class);
 
   protected OSGiLoggingBridge()
   {
@@ -52,8 +53,7 @@ public class OSGiLoggingBridge implements OMLogHandler
     }
   }
 
-  public void logged(BundleContext bundleContext, Level level, String msg, Throwable t)
-      throws Exception
+  public void logged(BundleContext bundleContext, Level level, String msg, Throwable t) throws Exception
   {
     LogService logService = getLogService(bundleContext);
     logService.log(toOSGi(level), msg, t);

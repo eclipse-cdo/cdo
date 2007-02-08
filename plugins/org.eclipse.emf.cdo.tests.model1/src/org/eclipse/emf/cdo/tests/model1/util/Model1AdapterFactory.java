@@ -8,10 +8,12 @@ package org.eclipse.emf.cdo.tests.model1.util;
 
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -108,6 +110,16 @@ public class Model1AdapterFactory extends AdapterFactoryImpl
     public Object caseCompany(Company object)
     {
       return createCompanyAdapter();
+    }
+
+    public Object caseCustomer(Customer object)
+    {
+      return createCustomerAdapter();
+    }
+
+    public Object caseSalesOrder(SalesOrder object)
+    {
+      return createSalesOrderAdapter();
     }
 
     public Object defaultCase(EObject object)
@@ -216,6 +228,36 @@ public class Model1AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createCompanyAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model1.Customer <em>Customer</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
+   * can easily ignore cases; it's useful to ignore a case when inheritance will
+   * catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model1.Customer
+   * @generated
+   */
+  public Adapter createCustomerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder <em>Sales Order</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
+   * can easily ignore cases; it's useful to ignore a case when inheritance will
+   * catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model1.SalesOrder
+   * @generated
+   */
+  public Adapter createSalesOrderAdapter()
   {
     return null;
   }

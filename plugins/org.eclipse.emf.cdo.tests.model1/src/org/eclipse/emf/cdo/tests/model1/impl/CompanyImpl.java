@@ -22,6 +22,8 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getCategories <em>Categories</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getSuppliers <em>Suppliers</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getCustomers <em>Customers</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getSalesOrders <em>Sales Orders</em>}</li>
  * </ul>
  * </p>
  * 
@@ -77,6 +79,26 @@ public class CompanyImpl extends CDOObjectImpl implements Company
   public EList getPurchaseOrders()
   {
     return (EList)eGet(Model1Package.Literals.COMPANY__PURCHASE_ORDERS, true);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EList getCustomers()
+  {
+    return (EList)eGet(Model1Package.Literals.COMPANY__CUSTOMERS, true);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EList getSalesOrders()
+  {
+    return (EList)eGet(Model1Package.Literals.COMPANY__SALES_ORDERS, true);
   }
 
 } // CompanyImpl

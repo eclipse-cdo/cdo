@@ -8,10 +8,12 @@ package org.eclipse.emf.cdo.tests.model1.util;
 
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
 import org.eclipse.emf.ecore.EClass;
@@ -150,6 +152,22 @@ public class Model1Switch
         result = defaultCase(theEObject);
       return result;
     }
+    case Model1Package.CUSTOMER:
+    {
+      Customer customer = (Customer)theEObject;
+      Object result = caseCustomer(customer);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model1Package.SALES_ORDER:
+    {
+      SalesOrder salesOrder = (SalesOrder)theEObject;
+      Object result = caseSalesOrder(salesOrder);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -247,6 +265,38 @@ public class Model1Switch
    * @generated
    */
   public Object caseCompany(Company object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpretting the object as an instance of '<em>Customer</em>'.
+   * <!-- begin-user-doc --> This implementation returns null; returning a
+   * non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpretting the object as an instance of '<em>Customer</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public Object caseCustomer(Customer object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpretting the object as an instance of '<em>Sales Order</em>'.
+   * <!-- begin-user-doc --> This implementation returns null; returning a
+   * non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpretting the object as an instance of '<em>Sales Order</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public Object caseSalesOrder(SalesOrder object)
   {
     return null;
   }

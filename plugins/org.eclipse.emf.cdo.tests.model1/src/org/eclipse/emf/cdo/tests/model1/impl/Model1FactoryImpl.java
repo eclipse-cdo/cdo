@@ -8,11 +8,13 @@ package org.eclipse.emf.cdo.tests.model1.impl;
 
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
 import org.eclipse.emf.ecore.EClass;
@@ -85,6 +87,10 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
       return (EObject)createCategory();
     case Model1Package.COMPANY:
       return (EObject)createCompany();
+    case Model1Package.CUSTOMER:
+      return (EObject)createCustomer();
+    case Model1Package.SALES_ORDER:
+      return (EObject)createSalesOrder();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -154,6 +160,28 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   {
     CompanyImpl company = new CompanyImpl();
     return company;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Customer createCustomer()
+  {
+    CustomerImpl customer = new CustomerImpl();
+    return customer;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public SalesOrder createSalesOrder()
+  {
+    SalesOrderImpl salesOrder = new SalesOrderImpl();
+    return salesOrder;
   }
 
   /**

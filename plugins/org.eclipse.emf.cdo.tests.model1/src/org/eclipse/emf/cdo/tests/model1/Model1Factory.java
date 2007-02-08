@@ -80,6 +80,24 @@ public interface Model1Factory extends EFactory
   Company createCompany();
 
   /**
+   * Returns a new object of class '<em>Customer</em>'. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Customer</em>'.
+   * @generated
+   */
+  Customer createCustomer();
+
+  /**
+   * Returns a new object of class '<em>Sales Order</em>'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Sales Order</em>'.
+   * @generated
+   */
+  SalesOrder createSalesOrder();
+
+  /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 

@@ -19,6 +19,8 @@ import org.eclipse.emf.common.util.EList;
  * <li>{@link org.eclipse.emf.cdo.tests.model1.Company#getCategories <em>Categories</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.tests.model1.Company#getSuppliers <em>Suppliers</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.tests.model1.Company#getPurchaseOrders <em>Purchase Orders</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.Company#getCustomers <em>Customers</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.Company#getSalesOrders <em>Sales Orders</em>}</li>
  * </ul>
  * </p>
  * 
@@ -84,5 +86,43 @@ public interface Company extends CDOObject
    * @generated
    */
   EList getPurchaseOrders();
+
+  /**
+   * Returns the value of the '<em><b>Customers</b></em>' containment
+   * reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model1.Customer}. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Customers</em>' containment reference list
+   * isn't clear, there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Customers</em>' containment reference
+   *         list.
+   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_Customers()
+   * @model type="org.eclipse.emf.cdo.tests.model1.Customer" containment="true"
+   * @generated
+   */
+  EList getCustomers();
+
+  /**
+   * Returns the value of the '<em><b>Sales Orders</b></em>' containment
+   * reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model1.SalesOrder}. <!-- begin-user-doc
+   * -->
+   * <p>
+   * If the meaning of the '<em>Sales Orders</em>' containment reference
+   * list isn't clear, there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Sales Orders</em>' containment reference
+   *         list.
+   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_SalesOrders()
+   * @model type="org.eclipse.emf.cdo.tests.model1.SalesOrder"
+   *        containment="true"
+   * @generated
+   */
+  EList getSalesOrders();
 
 } // Company

@@ -280,13 +280,105 @@ public interface Model1Package extends EPackage
   int COMPANY__PURCHASE_ORDERS = 2;
 
   /**
+   * The feature id for the '<em><b>Customers</b></em>' containment
+   * reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int COMPANY__CUSTOMERS = 3;
+
+  /**
+   * The feature id for the '<em><b>Sales Orders</b></em>' containment
+   * reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int COMPANY__SALES_ORDERS = 4;
+
+  /**
    * The number of structural features of the '<em>Company</em>' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int COMPANY_FEATURE_COUNT = 3;
+  int COMPANY_FEATURE_COUNT = 5;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.CustomerImpl <em>Customer</em>}'
+   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model1.impl.CustomerImpl
+   * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getCustomer()
+   * @generated
+   */
+  int CUSTOMER = 6;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CUSTOMER__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Sales Orders</b></em>' reference list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CUSTOMER__SALES_ORDERS = 1;
+
+  /**
+   * The number of structural features of the '<em>Customer</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CUSTOMER_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.SalesOrderImpl <em>Sales Order</em>}'
+   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model1.impl.SalesOrderImpl
+   * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getSalesOrder()
+   * @generated
+   */
+  int SALES_ORDER = 7;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SALES_ORDER__ID = 0;
+
+  /**
+   * The feature id for the '<em><b>Customer</b></em>' reference. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SALES_ORDER__CUSTOMER = 1;
+
+  /**
+   * The number of structural features of the '<em>Sales Order</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SALES_ORDER_FEATURE_COUNT = 2;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Supplier <em>Supplier</em>}'.
@@ -492,6 +584,92 @@ public interface Model1Package extends EPackage
   EReference getCompany_PurchaseOrders();
 
   /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model1.Company#getCustomers <em>Customers</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Customers</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Company#getCustomers()
+   * @see #getCompany()
+   * @generated
+   */
+  EReference getCompany_Customers();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model1.Company#getSalesOrders <em>Sales Orders</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Sales Orders</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Company#getSalesOrders()
+   * @see #getCompany()
+   * @generated
+   */
+  EReference getCompany_SalesOrders();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Customer <em>Customer</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Customer</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Customer
+   * @generated
+   */
+  EClass getCustomer();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Customer#getName <em>Name</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Customer#getName()
+   * @see #getCustomer()
+   * @generated
+   */
+  EAttribute getCustomer_Name();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model1.Customer#getSalesOrders <em>Sales Orders</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference list '<em>Sales Orders</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Customer#getSalesOrders()
+   * @see #getCustomer()
+   * @generated
+   */
+  EReference getCustomer_SalesOrders();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder <em>Sales Order</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Sales Order</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.SalesOrder
+   * @generated
+   */
+  EClass getSalesOrder();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getId <em>Id</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Id</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.SalesOrder#getId()
+   * @see #getSalesOrder()
+   * @generated
+   */
+  EAttribute getSalesOrder_Id();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getCustomer <em>Customer</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference '<em>Customer</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.SalesOrder#getCustomer()
+   * @see #getSalesOrder()
+   * @generated
+   */
+  EReference getSalesOrder_Customer();
+
+  /**
    * Returns the factory that creates the instances of the model. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -683,6 +861,76 @@ public interface Model1Package extends EPackage
      * @generated
      */
     EReference COMPANY__PURCHASE_ORDERS = eINSTANCE.getCompany_PurchaseOrders();
+
+    /**
+     * The meta object literal for the '<em><b>Customers</b></em>'
+     * containment reference list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference COMPANY__CUSTOMERS = eINSTANCE.getCompany_Customers();
+
+    /**
+     * The meta object literal for the '<em><b>Sales Orders</b></em>'
+     * containment reference list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference COMPANY__SALES_ORDERS = eINSTANCE.getCompany_SalesOrders();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model1.impl.CustomerImpl <em>Customer</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model1.impl.CustomerImpl
+     * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getCustomer()
+     * @generated
+     */
+    EClass CUSTOMER = eINSTANCE.getCustomer();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute
+     * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute CUSTOMER__NAME = eINSTANCE.getCustomer_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Sales Orders</b></em>'
+     * reference list feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference CUSTOMER__SALES_ORDERS = eINSTANCE.getCustomer_SalesOrders();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model1.impl.SalesOrderImpl <em>Sales Order</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model1.impl.SalesOrderImpl
+     * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getSalesOrder()
+     * @generated
+     */
+    EClass SALES_ORDER = eINSTANCE.getSalesOrder();
+
+    /**
+     * The meta object literal for the '<em><b>Id</b></em>' attribute
+     * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute SALES_ORDER__ID = eINSTANCE.getSalesOrder_Id();
+
+    /**
+     * The meta object literal for the '<em><b>Customer</b></em>' reference
+     * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference SALES_ORDER__CUSTOMER = eINSTANCE.getSalesOrder_Customer();
 
   }
 

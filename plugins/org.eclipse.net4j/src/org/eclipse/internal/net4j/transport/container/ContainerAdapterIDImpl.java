@@ -8,10 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j.transport;
+package org.eclipse.internal.net4j.transport.container;
 
-import org.eclipse.net4j.transport.Connector;
-import org.eclipse.net4j.transport.ProtocolFactoryID;
+import org.eclipse.net4j.transport.container.ContainerAdapterID;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.Value;
 
@@ -20,43 +19,43 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class ProtocolFactoryIDImpl extends Value implements ProtocolFactoryID
+public final class ContainerAdapterIDImpl extends Value implements ContainerAdapterID
 {
   private static final long serialVersionUID = 1L;
 
-  private Connector.Type type;
+  private Type type;
 
-  private String protocolID;
+  private String name;
 
-  public ProtocolFactoryIDImpl(Connector.Type type, String protocolID)
+  public ContainerAdapterIDImpl(Type type, String name)
   {
     this.type = type;
-    this.protocolID = protocolID;
+    this.name = name;
   }
 
-  public Connector.Type getType()
+  public Type getType()
   {
     return type;
   }
 
-  public String getProtocolID()
+  public String getName()
   {
-    return protocolID;
+    return name;
   }
 
   @Override
   protected Object clone() throws CloneNotSupportedException
   {
-    return this;
+    return new ContainerAdapterIDImpl(type, name);
   }
 
   @Override
   public boolean equals(Object obj)
   {
-    if (obj instanceof ProtocolFactoryID)
+    if (obj instanceof ContainerAdapterID)
     {
-      ProtocolFactoryID that = (ProtocolFactoryID)obj;
-      return this.type == that.getType() && ObjectUtil.equals(this.protocolID, that.getProtocolID());
+      ContainerAdapterID that = (ContainerAdapterID)obj;
+      return this.type.equals(that.getType()) && ObjectUtil.equals(this.name, that.getName());
     }
 
     return false;
@@ -65,12 +64,12 @@ public class ProtocolFactoryIDImpl extends Value implements ProtocolFactoryID
   @Override
   public int hashCode()
   {
-    return type.hashCode() ^ protocolID.hashCode();
+    return type.hashCode() ^ name.hashCode();
   }
 
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}[{1}]", type, protocolID);
+    return MessageFormat.format("{0}:{1}", type, name);
   }
 }

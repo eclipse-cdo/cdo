@@ -8,16 +8,30 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport;
+package org.eclipse.net4j.transport.container;
 
+import org.eclipse.net4j.transport.BufferProvider;
+import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.transport.ChannelID;
+import org.eclipse.net4j.transport.Connector;
+import org.eclipse.net4j.transport.ConnectorFactory;
+import org.eclipse.net4j.transport.Protocol;
+import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.transport.ProtocolFactoryID;
 import org.eclipse.net4j.util.registry.IRegistry;
+
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
  */
-public interface TransportContainer
+public interface Container
 {
-  public BufferPool getBufferPool();
+  public ContainerAdapter getAdapter(ContainerAdapterID adapterID);
+
+  public ExecutorService getExecutorService();
+
+  public BufferProvider getBufferProvider();
 
   public IRegistry<String, ConnectorFactory> getConnectorFactoryRegistry();
 
@@ -26,4 +40,8 @@ public interface TransportContainer
   public IRegistry<Integer, Connector> getConnectorRegistry();
 
   public IRegistry<ChannelID, Channel> getChannelRegistry();
+
+  public Connector createConnector(String connectorFactoryID);
+
+  public Protocol createProtocol(String protocolID);
 }

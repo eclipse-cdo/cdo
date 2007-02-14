@@ -13,7 +13,7 @@ package org.eclipse.internal.net4j.transport;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.ProtocolFactoryID;
 import org.eclipse.net4j.transport.Connector.Type;
-import org.eclipse.net4j.util.Net4jUtil;
+import org.eclipse.net4j.transport.container.ContainerUtil;
 
 import java.text.MessageFormat;
 
@@ -43,7 +43,7 @@ public abstract class AbstractProtocolFactory implements ProtocolFactory
 
   public ProtocolFactoryID createID(Type type)
   {
-    return Net4jUtil.createProtocolFactoryID(type, getProtocolID());
+    return ContainerUtil.createProtocolFactoryID(type, getProtocolID());
   }
 
   @Override

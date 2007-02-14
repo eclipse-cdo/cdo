@@ -20,8 +20,8 @@ import org.eclipse.net4j.transport.ConnectorException;
 import org.eclipse.net4j.transport.Protocol;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.ProtocolFactoryID;
-import org.eclipse.net4j.util.Net4jUtil;
-import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
+import org.eclipse.net4j.transport.container.ContainerUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
 import org.eclipse.net4j.util.lifecycle.LifecycleListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleNotifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractConnector extends AbstractLifecycle implements Connector, BufferProvider
+public abstract class AbstractConnector extends LifecycleImpl implements Connector, BufferProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, AbstractConnector.class);
 
@@ -506,7 +506,7 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
       return null;
     }
 
-    ProtocolFactoryID protocolFactoryID = Net4jUtil.createProtocolFactoryID(getType(), protocolID);
+    ProtocolFactoryID protocolFactoryID = ContainerUtil.createProtocolFactoryID(getType(), protocolID);
     ProtocolFactory factory = protocolFactoryRegistry.get(protocolFactoryID);
 
     if (factory == null)

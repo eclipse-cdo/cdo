@@ -8,18 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport.tcp;
+package org.eclipse.net4j.transport.container;
 
-import org.eclipse.net4j.transport.ConnectorDescription;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 /**
  * @author Eike Stepper
  */
-public interface TCPConnectorDescription extends ConnectorDescription
+public interface ContainerAdapterFactory
 {
-  public static final int DEFAULT_PORT = TCPAcceptor.DEFAULT_PORT;
+  public static final IRegistry<ContainerAdapterID, ContainerAdapterFactory> REGISTRY = new HashMapRegistry();
 
-  public String getHost();
+  public ContainerAdapterID getID();
 
-  public int getPort();
+  public ContainerAdapter createAdapter(Container container);
 }

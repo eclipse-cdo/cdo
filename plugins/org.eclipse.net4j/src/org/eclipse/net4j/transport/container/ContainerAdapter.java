@@ -8,14 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport.tcp;
-
-import org.eclipse.net4j.transport.Connector;
+package org.eclipse.net4j.transport.container;
 
 /**
  * @author Eike Stepper
  */
-public interface TCPAcceptorListener
+public interface ContainerAdapter
 {
-  public void notifyConnectorAccepted(TCPAcceptor acceptor, Connector connector);
+  public Container getContainer();
+
+  public ContainerAdapterID getID();
 }

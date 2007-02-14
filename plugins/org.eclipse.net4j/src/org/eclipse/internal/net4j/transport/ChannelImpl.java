@@ -17,10 +17,11 @@ import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ChannelID;
 import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.Value;
 import org.eclipse.net4j.util.concurrent.AsynchronousWorkSerializer;
 import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.util.concurrent.WorkSerializer;
-import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry;
 
@@ -34,7 +35,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public class ChannelImpl extends AbstractLifecycle implements Channel, BufferProvider
+public class ChannelImpl extends LifecycleImpl implements Channel, BufferProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CHANNEL, ChannelImpl.class);
 
@@ -255,8 +256,10 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   /**
    * @author Eike Stepper
    */
-  private final class ChannelIDImpl implements ChannelID
+  private final class ChannelIDImpl extends Value implements ChannelID
   {
+    private static final long serialVersionUID = 1L;
+
     public ChannelIDImpl()
     {
     }
@@ -269,6 +272,12 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
     public short getChannelIndex()
     {
       return channelIndex;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException
+    {
+      return this;
     }
 
     @Override

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util;
 
-import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
 
 import java.io.PrintStream;
 import java.lang.reflect.Field;
@@ -174,7 +174,7 @@ public final class ReflectUtil
 
   private static void toString(Class<? extends Object> segment, Object object, String prefix, StringBuilder builder)
   {
-    if (segment == ROOT_CLASS || segment == AbstractLifecycle.class)
+    if (segment == ROOT_CLASS || segment == LifecycleImpl.class)
     {
       return;
     }

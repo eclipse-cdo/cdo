@@ -8,26 +8,28 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport.tcp;
+package org.eclipse.net4j.util;
 
-import org.eclipse.net4j.transport.Connector;
+import java.io.Serializable;
 
 /**
  * @author Eike Stepper
  */
-public interface TCPAcceptor
+public abstract class Value implements Cloneable, Serializable
 {
-  public static final String DEFAULT_ADDRESS = "0.0.0.0"; //$NON-NLS-1$
+  protected Value()
+  {
+  }
 
-  public static final int DEFAULT_PORT = 2036;
+  @Override
+  protected abstract Object clone() throws CloneNotSupportedException;
 
-  public String getAddress();
+  @Override
+  public abstract boolean equals(Object obj);
 
-  public int getPort();
+  @Override
+  public abstract int hashCode();
 
-  public Connector[] getAcceptedConnectors();
-
-  public void addAcceptorListener(TCPAcceptorListener listener);
-
-  public void removeAcceptorListener(TCPAcceptorListener listener);
+  @Override
+  public abstract String toString();
 }

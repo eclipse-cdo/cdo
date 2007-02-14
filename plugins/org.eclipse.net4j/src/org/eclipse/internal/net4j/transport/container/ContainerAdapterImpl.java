@@ -8,16 +8,34 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport;
+package org.eclipse.internal.net4j.transport.container;
 
 import org.eclipse.net4j.transport.container.Container;
+import org.eclipse.net4j.transport.container.ContainerAdapter;
+import org.eclipse.net4j.transport.container.ContainerAdapterID;
 
 /**
  * @author Eike Stepper
  */
-public interface ConnectorFactory
+public class ContainerAdapterImpl implements ContainerAdapter
 {
-  public String getID();
+  private Container container;
 
-  public Connector createConnector(Container container);
+  private ContainerAdapterID id;
+
+  public ContainerAdapterImpl(Container container, ContainerAdapterID id)
+  {
+    this.container = container;
+    this.id = id;
+  }
+
+  public Container getContainer()
+  {
+    return container;
+  }
+
+  public ContainerAdapterID getID()
+  {
+    return id;
+  }
 }

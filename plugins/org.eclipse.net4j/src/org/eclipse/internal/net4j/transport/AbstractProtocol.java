@@ -14,12 +14,12 @@ import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.Protocol;
-import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
 
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractProtocol extends AbstractLifecycle implements Protocol, BufferProvider
+public abstract class AbstractProtocol extends LifecycleImpl implements Protocol, BufferProvider
 {
   private Channel channel;
 

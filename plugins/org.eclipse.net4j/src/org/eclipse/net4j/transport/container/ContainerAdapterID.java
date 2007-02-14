@@ -8,14 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport.tcp;
-
-import org.eclipse.net4j.transport.ConnectorFactory;
+package org.eclipse.net4j.transport.container;
 
 /**
  * @author Eike Stepper
  */
-public interface TCPConnectorFactory extends ConnectorFactory
+public interface ContainerAdapterID
 {
-  public static final String ID = "TCP";
+  public Type getType();
+
+  public String getName();
+
+  public enum Type
+  {
+    ACCEPTOR, CONNECTOR, PROTOCOL
+  }
 }

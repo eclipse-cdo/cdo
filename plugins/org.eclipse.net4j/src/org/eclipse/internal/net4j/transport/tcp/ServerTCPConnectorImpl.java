@@ -10,28 +10,17 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport.tcp;
 
-import org.eclipse.net4j.transport.BufferProvider;
-import org.eclipse.net4j.transport.ProtocolFactory;
-import org.eclipse.net4j.transport.tcp.TCPSelector;
-import org.eclipse.net4j.util.registry.IRegistry;
-
 import java.net.SocketAddress;
 import java.nio.channels.SocketChannel;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
  */
 public class ServerTCPConnectorImpl extends AbstractTCPConnector
 {
-  public ServerTCPConnectorImpl(SocketChannel socketChannel, ExecutorService receiveExecutor,
-      IRegistry<String, ProtocolFactory> protocolFactoryRegistry, BufferProvider bufferProvider, TCPSelector selector)
+  public ServerTCPConnectorImpl(SocketChannel socketChannel)
   {
     super(socketChannel);
-    setReceiveExecutor(receiveExecutor);
-    setProtocolFactoryRegistry(protocolFactoryRegistry);
-    setBufferProvider(bufferProvider);
-    setSelector(selector);
   }
 
   public Type getType()

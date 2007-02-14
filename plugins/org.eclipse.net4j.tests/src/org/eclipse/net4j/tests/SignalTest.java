@@ -16,9 +16,10 @@ import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.transport.ProtocolFactoryID;
+import org.eclipse.net4j.transport.Connector.Type;
 import org.eclipse.net4j.util.Net4jUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.transport.tcp.AbstractTCPConnector;
@@ -26,6 +27,7 @@ import org.eclipse.internal.net4j.transport.tcp.TCPAcceptorImpl;
 import org.eclipse.internal.net4j.transport.tcp.TCPSelectorImpl;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -113,17 +115,20 @@ public class SignalTest extends AbstractOMTest
   public void testInteger() throws Exception
   {
     ExecutorService threadPool = Executors.newCachedThreadPool();
-    IRegistry<String, ProtocolFactory> registry = new HashMapRegistry();
+
+    Map<Type, IRegistry<ProtocolFactoryID, ProtocolFactory>> registries = // 
+    Net4jUtil.createProtocolFactoryRegistries(ProtocolFactory.SYMMETRIC);
+
     TestSignalProtocol.Factory factory = new TestSignalProtocol.Factory();
-    registry.put(factory.getProtocolID(), factory);
+    Net4jUtil.registerProtocolFactory(factory, registries);
 
     acceptor.setReceiveExecutor(threadPool);
-    acceptor.setProtocolFactoryRegistry(registry);
+    acceptor.setProtocolFactoryRegistry(registries.get(Type.SERVER));
     acceptor.activate();
     assertTrue(acceptor.isActive());
 
     connector.setReceiveExecutor(threadPool);
-    connector.setProtocolFactoryRegistry(registry);
+    connector.setProtocolFactoryRegistry(registries.get(Type.CLIENT));
     assertTrue(connector.connect(1000));
 
     Channel channel = connector.openChannel(TestSignalProtocol.PROTOCOL_ID);
@@ -135,17 +140,20 @@ public class SignalTest extends AbstractOMTest
   public void testArray() throws Exception
   {
     ExecutorService threadPool = Executors.newCachedThreadPool();
-    IRegistry<String, ProtocolFactory> registry = new HashMapRegistry();
+
+    Map<Type, IRegistry<ProtocolFactoryID, ProtocolFactory>> registries = // 
+    Net4jUtil.createProtocolFactoryRegistries(ProtocolFactory.SYMMETRIC);
+
     TestSignalProtocol.Factory factory = new TestSignalProtocol.Factory();
-    registry.put(factory.getProtocolID(), factory);
+    Net4jUtil.registerProtocolFactory(factory, registries);
 
     acceptor.setReceiveExecutor(threadPool);
-    acceptor.setProtocolFactoryRegistry(registry);
+    acceptor.setProtocolFactoryRegistry(registries.get(Type.SERVER));
     acceptor.activate();
     assertTrue(acceptor.isActive());
 
     connector.setReceiveExecutor(threadPool);
-    connector.setProtocolFactoryRegistry(registry);
+    connector.setProtocolFactoryRegistry(registries.get(Type.CLIENT));
     assertTrue(connector.connect(1000));
 
     Channel channel = connector.openChannel(TestSignalProtocol.PROTOCOL_ID);

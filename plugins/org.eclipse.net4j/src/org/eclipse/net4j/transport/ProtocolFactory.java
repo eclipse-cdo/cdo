@@ -11,10 +11,6 @@
 package org.eclipse.net4j.transport;
 
 import org.eclipse.net4j.transport.Connector.Type;
-import org.eclipse.net4j.util.lifecycle.Singleton;
-
-import org.eclipse.internal.net4j.transport.ClientProtocolFactoryRegistry;
-import org.eclipse.internal.net4j.transport.ServerProtocolFactoryRegistry;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,12 +22,6 @@ import java.util.Set;
  */
 public interface ProtocolFactory
 {
-  @Singleton(stateful = true)
-  public static final ClientProtocolFactoryRegistry CLIENT_REGISTRY = new ClientProtocolFactoryRegistry();
-
-  @Singleton(stateful = true)
-  public static final ServerProtocolFactoryRegistry SERVER_REGISTRY = new ServerProtocolFactoryRegistry();
-
   public static final Set<Type> FOR_CLIENTS = Collections.singleton(Type.CLIENT);
 
   public static final Set<Type> FOR_SERVERS = Collections.singleton(Type.SERVER);
@@ -48,6 +38,8 @@ public interface ProtocolFactory
   public boolean isForServers();
 
   public boolean isSymmetric();
+
+  public ProtocolFactoryID createID(Type type);
 
   public Protocol createProtocol(Channel channel, Object protocolData);
 }

@@ -10,14 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.transport;
 
-import org.eclipse.net4j.util.lifecycle.Singleton;
-import org.eclipse.net4j.util.registry.HashMapRegistry;
-import org.eclipse.net4j.util.registry.IRegistry;
-
 import org.eclipse.internal.net4j.transport.AbstractConnector;
 import org.eclipse.internal.net4j.transport.ChannelImpl;
-
-import java.util.concurrent.ExecutorService;
 
 /**
  * One endpoint of a physical connection of arbitrary nature between two
@@ -37,9 +31,6 @@ import java.util.concurrent.ExecutorService;
  */
 public interface Connector<DESCRIPTION extends ConnectorDescription>
 {
-  @Singleton(stateful = true)
-  public static final IRegistry<Integer, Connector> REGISTRY = new HashMapRegistry();
-
   public Integer getID();
 
   public Type getType();
@@ -111,29 +102,6 @@ public interface Connector<DESCRIPTION extends ConnectorDescription>
   public Channel openChannel(String protocolID) throws ConnectorException;
 
   public Channel openChannel(String protocolID, Object protocolData) throws ConnectorException;
-
-  /**
-   * Returns the {@link IRegistry} of {@link ProtocolFactory}s associated with
-   * this connector.
-   * <p>
-   * 
-   * @see #setProtocolFactoryRegistry(IRegistry)
-   * @return The registry or <code>null</code>.
-   */
-  public IRegistry<String, ProtocolFactory> getProtocolFactoryRegistry();
-
-  /**
-   * Sets the {@link IRegistry} of {@link ProtocolFactory}s for this connector.
-   * <p>
-   * 
-   * @param protocolFactoryRegistry
-   *          The registry or <code>null</code>.
-   */
-  public void setProtocolFactoryRegistry(IRegistry<String, ProtocolFactory> protocolFactoryRegistry);
-
-  public ExecutorService getReceiveExecutor();
-
-  public void setReceiveExecutor(ExecutorService receiveExecutor);
 
   public void addStateListener(StateListener listener);
 

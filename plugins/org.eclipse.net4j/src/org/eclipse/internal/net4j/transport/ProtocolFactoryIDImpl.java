@@ -8,9 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j.transport.tcp;
+package org.eclipse.internal.net4j.transport;
 
-import org.eclipse.net4j.transport.tcp.TCPConnectorDescription;
+import org.eclipse.net4j.transport.ProtocolFactoryID;
+import org.eclipse.net4j.transport.Connector.Type;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import java.io.Serializable;
@@ -19,48 +20,43 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class TCPConnectorDescriptionImpl implements TCPConnectorDescription, Cloneable, Serializable
+public class ProtocolFactoryIDImpl implements ProtocolFactoryID, Cloneable, Serializable
 {
   private static final long serialVersionUID = 1L;
 
-  private String host;
+  private Type type;
 
-  private int port = DEFAULT_PORT;
+  private String protocolID;
 
-  public TCPConnectorDescriptionImpl(String host, int port)
+  public ProtocolFactoryIDImpl(Type type, String protocolID)
   {
-    this.host = host;
-    this.port = port;
+    this.type = type;
+    this.protocolID = protocolID;
   }
 
-  public String getHost()
+  public Type getType()
   {
-    return host;
+    return type;
   }
 
-  public int getPort()
+  public String getProtocolID()
   {
-    return port;
-  }
-
-  public String getDisplayName()
-  {
-    return MessageFormat.format("{0}:{1}", host, port);
+    return protocolID;
   }
 
   @Override
   protected Object clone() throws CloneNotSupportedException
   {
-    return new TCPConnectorDescriptionImpl(host, port);
+    return this;
   }
 
   @Override
   public boolean equals(Object obj)
   {
-    if (obj instanceof TCPConnectorDescription)
+    if (obj instanceof ProtocolFactoryID)
     {
-      TCPConnectorDescription that = (TCPConnectorDescription)obj;
-      return this.port == that.getPort() && ObjectUtil.equals(this.host, that.getHost());
+      ProtocolFactoryID that = (ProtocolFactoryID)obj;
+      return this.type == that.getType() && ObjectUtil.equals(this.protocolID, that.getProtocolID());
     }
 
     return false;
@@ -69,12 +65,12 @@ public class TCPConnectorDescriptionImpl implements TCPConnectorDescription, Clo
   @Override
   public int hashCode()
   {
-    return port ^ host.hashCode();
+    return type.hashCode() ^ protocolID.hashCode();
   }
 
   @Override
   public String toString()
   {
-    return getDisplayName();
+    return MessageFormat.format("{0}[{1}]", type, protocolID);
   }
 }

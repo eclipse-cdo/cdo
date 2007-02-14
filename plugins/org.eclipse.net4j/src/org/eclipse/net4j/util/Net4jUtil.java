@@ -13,17 +13,23 @@ package org.eclipse.net4j.util;
 import org.eclipse.net4j.transport.BufferPool;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.transport.ChannelID;
 import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.transport.Protocol;
 import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.transport.ProtocolFactoryID;
+import org.eclipse.net4j.transport.TransportContainer;
 import org.eclipse.net4j.transport.Connector.Type;
 import org.eclipse.net4j.transport.tcp.TCPAcceptor;
 import org.eclipse.net4j.transport.tcp.TCPConnectorDescription;
 import org.eclipse.net4j.transport.tcp.TCPSelector;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.transport.BufferFactoryImpl;
 import org.eclipse.internal.net4j.transport.BufferPoolImpl;
 import org.eclipse.internal.net4j.transport.BufferUtil;
+import org.eclipse.internal.net4j.transport.ProtocolFactoryIDImpl;
 import org.eclipse.internal.net4j.transport.embedded.ClientEmbeddedConnectorImpl;
 import org.eclipse.internal.net4j.transport.tcp.ClientTCPConnectorImpl;
 import org.eclipse.internal.net4j.transport.tcp.TCPAcceptorImpl;
@@ -32,7 +38,11 @@ import org.eclipse.internal.net4j.transport.tcp.TCPSelectorImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -68,6 +78,11 @@ public final class Net4jUtil
     return createBufferPool(createBufferFactory());
   }
 
+  public static ProtocolFactoryID createProtocolFactoryID(Type type, String protocolID)
+  {
+    return new ProtocolFactoryIDImpl(type, protocolID);
+  }
+
   public static Connector createEmbeddedConnector(BufferProvider bufferProvider)
   {
     ClientEmbeddedConnectorImpl connector = new ClientEmbeddedConnectorImpl();
@@ -94,14 +109,10 @@ public final class Net4jUtil
   public static Connector<TCPConnectorDescription> createTCPConnector(BufferProvider bufferProvider,
       TCPSelector selector, String host, int port)
   {
-    TCPConnectorDescriptionImpl description = new TCPConnectorDescriptionImpl();
-    description.setHost(host);
-    description.setPort(port);
-
     ClientTCPConnectorImpl connector = new ClientTCPConnectorImpl();
     connector.setBufferProvider(bufferProvider);
     connector.setSelector(selector);
-    connector.setDescription(description);
+    connector.setDescription(new TCPConnectorDescriptionImpl(host, port));
     return connector;
   }
 
@@ -116,14 +127,20 @@ public final class Net4jUtil
     return new TCPSelectorImpl();
   }
 
-  public static Collection<Channel> getChannels(String protocolID, Set<Type> types)
+  public static Collection<Channel> getChannels(TransportContainer container, String protocolID, Set<Type> types)
   {
     if (types == null)
     {
       types = ProtocolFactory.SYMMETRIC;
     }
 
-    Collection<Channel> channels = Channel.REGISTRY.values();
+    IRegistry<ChannelID, Channel> channelRegistry = container.getChannelRegistry();
+    if (channelRegistry == null)
+    {
+      return null;
+    }
+
+    Collection<Channel> channels = channelRegistry.values();
     Collection<Channel> result = new ArrayList(channels.size());
     for (Channel channel : channels)
     {
@@ -150,13 +167,71 @@ public final class Net4jUtil
     return result;
   }
 
-  public static Collection<Channel> getChannels(String protocolID)
+  public static Collection<Channel> getChannels(TransportContainer container, String protocolID)
   {
-    return getChannels(protocolID, null);
+    return getChannels(container, protocolID, null);
   }
 
-  public static Collection<Channel> getChannels(Set<Type> types)
+  public static Collection<Channel> getChannels(TransportContainer container, Set<Type> types)
   {
-    return getChannels(null, types);
+    return getChannels(container, null, types);
+  }
+
+  public static Map<Type, IRegistry<ProtocolFactoryID, ProtocolFactory>> createProtocolFactoryRegistries(Set<Type> types)
+  {
+    Map<Type, IRegistry<ProtocolFactoryID, ProtocolFactory>> result = new HashMap();
+    for (Type type : types)
+    {
+      result.put(type, new HashMapRegistry());
+    }
+
+    return result;
+  }
+
+  public static Set<Type> registerProtocolFactory(ProtocolFactory factory,
+      Map<Type, IRegistry<ProtocolFactoryID, ProtocolFactory>> registries)
+  {
+    Set<Type> result = new HashSet();
+    for (Entry<Type, IRegistry<ProtocolFactoryID, ProtocolFactory>> entry : registries.entrySet())
+    {
+      Type type = entry.getKey();
+      IRegistry<ProtocolFactoryID, ProtocolFactory> registry = entry.getValue();
+      if (factory.getConnectorTypes().contains(type))
+      {
+        ProtocolFactoryID id = factory.createID(type);
+        if (!registry.containsKey(id))
+        {
+          registry.put(id, factory);
+        }
+        else
+        {
+          result.add(type);
+        }
+      }
+    }
+
+    return result;
+  }
+
+  public static Set<Type> deregisterProtocolFactory(ProtocolFactory factory,
+      Map<Type, IRegistry<ProtocolFactoryID, ProtocolFactory>> registries)
+  {
+    Set<Type> result = new HashSet();
+    for (Entry<Type, IRegistry<ProtocolFactoryID, ProtocolFactory>> entry : registries.entrySet())
+    {
+      Type type = entry.getKey();
+      IRegistry<ProtocolFactoryID, ProtocolFactory> registry = entry.getValue();
+      if (factory.getConnectorTypes().contains(type))
+      {
+        ProtocolFactoryID id = factory.createID(type);
+        ProtocolFactory old = registry.remove(id);
+        if (old != null)
+        {
+          result.add(type);
+        }
+      }
+    }
+
+    return result;
   }
 }

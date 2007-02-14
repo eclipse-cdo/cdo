@@ -10,10 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.transport;
 
-import org.eclipse.net4j.util.lifecycle.Singleton;
-import org.eclipse.net4j.util.registry.HashMapRegistry;
-import org.eclipse.net4j.util.registry.IRegistry;
-
 /**
  * A bidirectional communications channel for the asynchronous exchange of
  * {@link Buffer}s. A channel is lightweight and virtual in the sense that it
@@ -28,9 +24,6 @@ import org.eclipse.net4j.util.registry.IRegistry;
  */
 public interface Channel extends BufferHandler
 {
-  @Singleton(stateful = true)
-  public static final IRegistry<ChannelID, Channel> REGISTRY = new HashMapRegistry();
-
   public short getChannelIndex();
 
   public Connector getConnector();

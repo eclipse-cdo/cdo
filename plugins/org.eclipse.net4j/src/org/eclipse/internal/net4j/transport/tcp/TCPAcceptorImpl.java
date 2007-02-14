@@ -14,6 +14,7 @@ import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.transport.ProtocolFactoryID;
 import org.eclipse.net4j.transport.tcp.TCPAcceptor;
 import org.eclipse.net4j.transport.tcp.TCPAcceptorListener;
 import org.eclipse.net4j.transport.tcp.TCPSelector;
@@ -51,7 +52,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_ACCEPTOR, TCPAcceptorImpl.class);
 
-  private IRegistry<String, ProtocolFactory> protocolFactoryRegistry;
+  private IRegistry<ProtocolFactoryID, ProtocolFactory> protocolFactoryRegistry;
 
   private BufferProvider bufferProvider;
 
@@ -93,12 +94,12 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
     this.receiveExecutor = receiveExecutor;
   }
 
-  public IRegistry<String, ProtocolFactory> getProtocolFactoryRegistry()
+  public IRegistry<ProtocolFactoryID, ProtocolFactory> getProtocolFactoryRegistry()
   {
     return protocolFactoryRegistry;
   }
 
-  public void setProtocolFactoryRegistry(IRegistry<String, ProtocolFactory> protocolFactoryRegistry)
+  public void setProtocolFactoryRegistry(IRegistry<ProtocolFactoryID, ProtocolFactory> protocolFactoryRegistry)
   {
     this.protocolFactoryRegistry = protocolFactoryRegistry;
   }
@@ -267,8 +268,12 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
 
   protected AbstractTCPConnector createConnector(SocketChannel socketChannel)
   {
-    return new ServerTCPConnectorImpl(socketChannel, getReceiveExecutor(), getProtocolFactoryRegistry(),
-        bufferProvider, selector);
+    ServerTCPConnectorImpl connector = new ServerTCPConnectorImpl(socketChannel);
+    connector.setReceiveExecutor(receiveExecutor);
+    connector.setProtocolFactoryRegistry(protocolFactoryRegistry);
+    connector.setBufferProvider(bufferProvider);
+    connector.setSelector(selector);
+    return connector;
   }
 
   protected void fireConnectorAccepted(Connector connector)

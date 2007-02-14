@@ -22,10 +22,10 @@ import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.util.concurrent.WorkSerializer;
 import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.BufferImpl.State;
-import org.eclipse.internal.net4j.transport.tcp.ControlChannelImpl;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -53,6 +53,8 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   private WorkSerializer receiveSerializer;
 
   private Queue<Buffer> sendQueue;
+
+  public IRegistry<ChannelID, Channel> channelRegistry;
 
   public ChannelImpl(ExecutorService receiveExecutor)
   {
@@ -109,6 +111,16 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
     return sendQueue;
   }
 
+  public IRegistry<ChannelID, Channel> getChannelRegistry()
+  {
+    return channelRegistry;
+  }
+
+  public void setChannelRegistry(IRegistry<ChannelID, Channel> channelRegistry)
+  {
+    this.channelRegistry = channelRegistry;
+  }
+
   public BufferHandler getReceiveHandler()
   {
     return receiveHandler;
@@ -122,6 +134,11 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
   public ExecutorService getReceiveExecutor()
   {
     return receiveExecutor;
+  }
+
+  public boolean isInternal()
+  {
+    return false;
   }
 
   public void close()
@@ -209,20 +226,20 @@ public class ChannelImpl extends AbstractLifecycle implements Channel, BufferPro
       receiveSerializer = new AsynchronousWorkSerializer(receiveExecutor);
     }
 
-    if (!(this instanceof ControlChannelImpl))
+    if (!isInternal() && channelRegistry != null)
     {
-      Channel.REGISTRY.put(getID(), this);
-      Channel.REGISTRY.commit();
+      channelRegistry.put(getID(), this);
+      channelRegistry.commit();
     }
   }
 
   @Override
   protected void onDeactivate() throws Exception
   {
-    if (!(this instanceof ControlChannelImpl))
+    if (!isInternal() && channelRegistry != null)
     {
-      Channel.REGISTRY.remove(getID());
-      Channel.REGISTRY.commit();
+      channelRegistry.remove(getID());
+      channelRegistry.commit();
     }
 
     receiveSerializer = null;

@@ -8,26 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport.tcp;
+package org.eclipse.net4j.transport;
 
-import org.eclipse.net4j.transport.Connector;
+import org.eclipse.net4j.transport.Connector.Type;
 
 /**
  * @author Eike Stepper
  */
-public interface TCPAcceptor
+public interface ProtocolFactoryID
 {
-  public static final String DEFAULT_ADDRESS = "0.0.0.0"; //$NON-NLS-1$
+  public Type getType();
 
-  public static final int DEFAULT_PORT = 2036;
-
-  public String getAddress();
-
-  public int getPort();
-
-  public Connector[] getAcceptedConnectors();
-
-  public void addAcceptorListener(TCPAcceptorListener listener);
-
-  public void removeAcceptorListener(TCPAcceptorListener listener);
+  public String getProtocolID();
 }

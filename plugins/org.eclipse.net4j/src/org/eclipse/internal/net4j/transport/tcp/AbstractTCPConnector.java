@@ -67,7 +67,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector<TCPConnecto
   /**
    * SocketChannel must already be non-blocking!
    */
-  public AbstractTCPConnector(SocketChannel socketChannel)
+  protected AbstractTCPConnector(SocketChannel socketChannel)
   {
     this.socketChannel = socketChannel;
   }

@@ -51,6 +51,12 @@ public final class ControlChannelImpl extends ChannelImpl
     setConnector(connector);
   }
 
+  @Override
+  public boolean isInternal()
+  {
+    return true;
+  }
+
   public boolean registerChannel(short channelIndex, String protocolID)
   {
     assertValidChannelIndex(channelIndex);
@@ -75,14 +81,6 @@ public final class ControlChannelImpl extends ChannelImpl
     byteBuffer.put(OPCODE_DEREGISTRATION);
     byteBuffer.putShort(channelIndex);
     handleBuffer(buffer);
-  }
-
-  private void assertValidChannelIndex(short channelIndex)
-  {
-    if (channelIndex <= CONTROL_CHANNEL_ID)
-    {
-      throw new IllegalArgumentException("channelIndex <= CONTROL_CHANNEL_ID"); //$NON-NLS-1$
-    }
   }
 
   public void handleBufferFromMultiplexer(Buffer buffer)
@@ -178,5 +176,13 @@ public final class ControlChannelImpl extends ChannelImpl
     byteBuffer.putShort(channelIndex);
     byteBuffer.put(status ? SUCCESS : FAILURE);
     handleBuffer(buffer);
+  }
+
+  private void assertValidChannelIndex(short channelIndex)
+  {
+    if (channelIndex <= CONTROL_CHANNEL_ID)
+    {
+      throw new IllegalArgumentException("channelIndex <= CONTROL_CHANNEL_ID"); //$NON-NLS-1$
+    }
   }
 }

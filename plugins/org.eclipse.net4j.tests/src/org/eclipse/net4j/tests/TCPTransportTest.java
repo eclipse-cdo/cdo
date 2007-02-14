@@ -17,6 +17,8 @@ import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.transport.ProtocolFactoryID;
+import org.eclipse.net4j.transport.Connector.Type;
 import org.eclipse.net4j.transport.tcp.TCPAcceptor;
 import org.eclipse.net4j.transport.tcp.TCPAcceptorListener;
 import org.eclipse.net4j.util.Net4jUtil;
@@ -154,9 +156,9 @@ public class TCPTransportTest extends AbstractOMTest
     final int COUNT = 3;
     final CountDownLatch counter = new CountDownLatch(COUNT);
 
-    IRegistry<String, ProtocolFactory> protocolFactoryRegistry = new HashMapRegistry();
+    IRegistry<ProtocolFactoryID, ProtocolFactory> protocolFactoryRegistry = new HashMapRegistry();
     TestProtocolFactory factory = new TestProtocolFactory(counter);
-    protocolFactoryRegistry.put(factory.getProtocolID(), factory);
+    protocolFactoryRegistry.put(factory.createID(Type.SERVER), factory);
 
     acceptor.setProtocolFactoryRegistry(protocolFactoryRegistry);
     acceptor.activate();
@@ -236,9 +238,9 @@ public class TCPTransportTest extends AbstractOMTest
     final int COUNT = 3;
     final CountDownLatch counter = new CountDownLatch(COUNT);
 
-    IRegistry<String, ProtocolFactory> protocolFactoryRegistry = new HashMapRegistry();
+    IRegistry<ProtocolFactoryID, ProtocolFactory> protocolFactoryRegistry = new HashMapRegistry();
     TestProtocolFactory factory = new TestProtocolFactory(counter);
-    protocolFactoryRegistry.put(factory.getProtocolID(), factory);
+    protocolFactoryRegistry.put(factory.createID(Type.SERVER), factory);
 
     acceptor.setProtocolFactoryRegistry(protocolFactoryRegistry);
     acceptor.setReceiveExecutor(Executors.newCachedThreadPool());

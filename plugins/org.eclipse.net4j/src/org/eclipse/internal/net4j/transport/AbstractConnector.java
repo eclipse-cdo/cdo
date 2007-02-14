@@ -14,8 +14,6 @@ import static org.eclipse.net4j.transport.Connector.State.CONNECTED;
 import static org.eclipse.net4j.transport.Connector.State.CONNECTING;
 import static org.eclipse.net4j.transport.Connector.State.DISCONNECTED;
 import static org.eclipse.net4j.transport.Connector.State.NEGOTIATING;
-import static org.eclipse.net4j.transport.Connector.Type.CLIENT;
-import static org.eclipse.net4j.transport.Connector.Type.SERVER;
 
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
@@ -26,12 +24,13 @@ import org.eclipse.net4j.transport.ConnectorDescription;
 import org.eclipse.net4j.transport.ConnectorException;
 import org.eclipse.net4j.transport.Protocol;
 import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.transport.ProtocolFactoryID;
+import org.eclipse.net4j.util.Net4jUtil;
 import org.eclipse.net4j.util.lifecycle.AbstractLifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleNotifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.registry.HashMapDelegatingRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
@@ -52,14 +51,7 @@ public abstract class AbstractConnector<DESCRIPTION extends ConnectorDescription
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, AbstractConnector.class);
 
-  private static final ChannelImpl NULL_CHANNEL = new ChannelImpl(null)
-  {
-    @Override
-    public String toString()
-    {
-      return "NullChannel"; //$NON-NLS-1$
-    }
-  };
+  private static final ChannelImpl NULL_CHANNEL = new NullChannel();
 
   private static final int MIN_CONNECTOR_ID = 1;
 
@@ -73,7 +65,9 @@ public abstract class AbstractConnector<DESCRIPTION extends ConnectorDescription
 
   private ConnectorCredentials credentials;
 
-  private IRegistry<String, ProtocolFactory> protocolFactoryRegistry;
+  private IRegistry<ProtocolFactoryID, ProtocolFactory> protocolFactoryRegistry;
+
+  private IRegistry<Integer, Connector> connectorRegistry;
 
   private BufferProvider bufferProvider;
 
@@ -133,12 +127,12 @@ public abstract class AbstractConnector<DESCRIPTION extends ConnectorDescription
     this.receiveExecutor = receiveExecutor;
   }
 
-  public IRegistry<String, ProtocolFactory> getProtocolFactoryRegistry()
+  public IRegistry<ProtocolFactoryID, ProtocolFactory> getProtocolFactoryRegistry()
   {
     return protocolFactoryRegistry;
   }
 
-  public void setProtocolFactoryRegistry(IRegistry<String, ProtocolFactory> protocolFactoryRegistry)
+  public void setProtocolFactoryRegistry(IRegistry<ProtocolFactoryID, ProtocolFactory> protocolFactoryRegistry)
   {
     this.protocolFactoryRegistry = protocolFactoryRegistry;
   }
@@ -161,6 +155,16 @@ public abstract class AbstractConnector<DESCRIPTION extends ConnectorDescription
   public void removeChannelListener(ChannelListener listener)
   {
     channelListeners.remove(listener);
+  }
+
+  public IRegistry<Integer, Connector> getConnectorRegistry()
+  {
+    return connectorRegistry;
+  }
+
+  public void setConnectorRegistry(IRegistry<Integer, Connector> connectorRegistry)
+  {
+    this.connectorRegistry = connectorRegistry;
   }
 
   public BufferProvider getBufferProvider()
@@ -239,8 +243,12 @@ public abstract class AbstractConnector<DESCRIPTION extends ConnectorDescription
       switch (newState)
       {
       case DISCONNECTED:
-        REGISTRY.remove(connectorID);
-        REGISTRY.commit();
+        if (connectorRegistry != null)
+        {
+          connectorRegistry.remove(connectorID);
+          connectorRegistry.commit();
+        }
+
         if (finishedConnecting != null)
         {
           finishedConnecting.countDown();
@@ -269,8 +277,12 @@ public abstract class AbstractConnector<DESCRIPTION extends ConnectorDescription
         break;
 
       case CONNECTED:
-        REGISTRY.put(connectorID, this);
-        REGISTRY.commit();
+        if (connectorRegistry != null)
+        {
+          connectorRegistry.put(connectorID, this);
+          connectorRegistry.commit();
+        }
+
         finishedConnecting.countDown(); // Just in case of suspicion
         finishedNegotiating.countDown();
         break;
@@ -495,18 +507,14 @@ public abstract class AbstractConnector<DESCRIPTION extends ConnectorDescription
 
   protected Protocol createProtocol(String protocolID, Channel channel, Object protocolData)
   {
-    if (protocolID == null || protocolID.length() == 0)
+    if (protocolID == null || protocolID.length() == 0 || protocolFactoryRegistry == null)
     {
       return null;
     }
 
-    IRegistry<String, ProtocolFactory> registry = getProtocolFactoryRegistry();
-    if (registry == null)
-    {
-      return null;
-    }
+    ProtocolFactoryID protocolFactoryID = Net4jUtil.createProtocolFactoryID(getType(), protocolID);
+    ProtocolFactory factory = protocolFactoryRegistry.get(protocolFactoryID);
 
-    ProtocolFactory factory = registry.get(protocolID);
     if (factory == null)
     {
       if (TRACER.isEnabled())
@@ -589,25 +597,16 @@ public abstract class AbstractConnector<DESCRIPTION extends ConnectorDescription
       throw new IllegalStateException("bufferProvider == null"); //$NON-NLS-1$
     }
 
-    if (protocolFactoryRegistry == null)
+    if (protocolFactoryRegistry == null && TRACER.isEnabled())
     {
-      switch (getType())
-      {
-      case CLIENT:
-        protocolFactoryRegistry = ProtocolFactory.CLIENT_REGISTRY;
-        break;
-      case SERVER:
-        protocolFactoryRegistry = ProtocolFactory.SERVER_REGISTRY;
-        break;
-      }
-
-      protocolFactoryRegistry = new HashMapDelegatingRegistry(protocolFactoryRegistry);
+      // Just a reminder during development
+      TRACER.trace("No receive protocolFactoryRegistry!"); //$NON-NLS-1$
     }
 
     if (receiveExecutor == null && TRACER.isEnabled())
     {
       // Just a reminder during development
-      TRACER.trace("No receive executor!"); //$NON-NLS-1$
+      TRACER.trace("No receiveExecutor!"); //$NON-NLS-1$
     }
   }
 
@@ -655,6 +654,29 @@ public abstract class AbstractConnector<DESCRIPTION extends ConnectorDescription
     }
 
     return id;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class NullChannel extends ChannelImpl
+  {
+    private NullChannel()
+    {
+      super(null);
+    }
+
+    @Override
+    public boolean isInternal()
+    {
+      return true;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "NullChannel"; //$NON-NLS-1$
+    }
   }
 
   /**

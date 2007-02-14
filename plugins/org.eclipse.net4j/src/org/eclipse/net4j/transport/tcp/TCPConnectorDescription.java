@@ -10,12 +10,16 @@
  **************************************************************************/
 package org.eclipse.net4j.transport.tcp;
 
-import org.eclipse.net4j.transport.Connector;
+import org.eclipse.net4j.transport.ConnectorDescription;
 
 /**
  * @author Eike Stepper
  */
-public interface TCPAcceptorListener
+public interface TCPConnectorDescription extends ConnectorDescription
 {
-  public void notifyConnectorAccepted(TCPAcceptor acceptor, Connector connector);
+  public static final int DEFAULT_PORT = TCPAcceptor.DEFAULT_PORT;
+
+  public String getHost();
+
+  public int getPort();
 }

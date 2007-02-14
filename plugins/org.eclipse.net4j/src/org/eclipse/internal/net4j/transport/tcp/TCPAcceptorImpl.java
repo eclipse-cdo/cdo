@@ -12,10 +12,10 @@ package org.eclipse.internal.net4j.transport.tcp;
 
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
+import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.tcp.TCPAcceptor;
 import org.eclipse.net4j.transport.tcp.TCPAcceptorListener;
-import org.eclipse.net4j.transport.tcp.TCPConnector;
 import org.eclipse.net4j.transport.tcp.TCPSelector;
 import org.eclipse.net4j.transport.tcp.TCPSelectorListener;
 import org.eclipse.net4j.util.Net4jUtil;
@@ -63,7 +63,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
 
   private ServerSocketChannel serverSocketChannel;
 
-  private Set<TCPConnector> acceptedConnectors = new HashSet(0);
+  private Set<Connector> acceptedConnectors = new HashSet(0);
 
   /**
    * An optional executor to be used by the {@link Channel}s to process their
@@ -158,15 +158,15 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
     this.listenPort = listenPort;
   }
 
-  public TCPConnector[] getAcceptedConnectors()
+  public Connector[] getAcceptedConnectors()
   {
-    ArrayList<TCPConnector> result;
+    ArrayList<Connector> result;
     synchronized (acceptedConnectors)
     {
       result = new ArrayList(acceptedConnectors);
     }
 
-    return result.toArray(new TCPConnector[result.size()]);
+    return result.toArray(new Connector[result.size()]);
   }
 
   public void addAcceptorListener(TCPAcceptorListener listener)
@@ -271,7 +271,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
         bufferProvider, selector);
   }
 
-  protected void fireConnectorAccepted(TCPConnector connector)
+  protected void fireConnectorAccepted(Connector connector)
   {
     for (TCPAcceptorListener listener : listeners)
     {
@@ -329,7 +329,7 @@ public class TCPAcceptorImpl extends AbstractLifecycle implements TCPAcceptor, B
   @Override
   protected void onDeactivate() throws Exception
   {
-    for (TCPConnector connector : getAcceptedConnectors())
+    for (Connector connector : getAcceptedConnectors())
     {
       LifecycleUtil.deactivate(connector);
     }

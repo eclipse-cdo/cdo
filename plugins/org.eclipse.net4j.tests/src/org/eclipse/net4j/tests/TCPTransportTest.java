@@ -19,7 +19,6 @@ import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.tcp.TCPAcceptor;
 import org.eclipse.net4j.transport.tcp.TCPAcceptorListener;
-import org.eclipse.net4j.transport.tcp.TCPConnector;
 import org.eclipse.net4j.util.Net4jUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
@@ -268,7 +267,7 @@ public class TCPTransportTest extends AbstractOMTest
     acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
     acceptor.addAcceptorListener(new TCPAcceptorListener()
     {
-      public void notifyConnectorAccepted(TCPAcceptor acceptor, TCPConnector connector)
+      public void notifyConnectorAccepted(TCPAcceptor acceptor, Connector connector)
       {
         connector.addChannelListener(new Connector.ChannelListener()
         {
@@ -329,7 +328,7 @@ public class TCPTransportTest extends AbstractOMTest
     acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
     acceptor.addAcceptorListener(new TCPAcceptorListener()
     {
-      public void notifyConnectorAccepted(TCPAcceptor acceptor, TCPConnector connector)
+      public void notifyConnectorAccepted(TCPAcceptor acceptor, Connector connector)
       {
         connector.addChannelListener(new Connector.ChannelListener()
         {
@@ -397,7 +396,7 @@ public class TCPTransportTest extends AbstractOMTest
     acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
     acceptor.addAcceptorListener(new TCPAcceptorListener()
     {
-      public void notifyConnectorAccepted(TCPAcceptor acceptor, TCPConnector connector)
+      public void notifyConnectorAccepted(TCPAcceptor acceptor, Connector connector)
       {
         connector.addChannelListener(new Connector.ChannelListener()
         {
@@ -479,7 +478,7 @@ public class TCPTransportTest extends AbstractOMTest
     acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
     acceptor.addAcceptorListener(new TCPAcceptorListener()
     {
-      public void notifyConnectorAccepted(TCPAcceptor acceptor, TCPConnector connector)
+      public void notifyConnectorAccepted(TCPAcceptor acceptor, Connector connector)
       {
         connector.addChannelListener(new Connector.ChannelListener()
         {

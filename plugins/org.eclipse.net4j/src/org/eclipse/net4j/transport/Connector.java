@@ -35,7 +35,7 @@ import java.util.concurrent.ExecutorService;
  * 
  * @author Eike Stepper
  */
-public interface Connector
+public interface Connector<DESCRIPTION extends ConnectorDescription>
 {
   @Singleton(stateful = true)
   public static final IRegistry<Integer, Connector> REGISTRY = new HashMapRegistry();
@@ -48,9 +48,9 @@ public interface Connector
 
   public boolean isServer();
 
-  public ConnectorCredentials getCredentials();
+  public DESCRIPTION getDescription();
 
-  public void setCredentials(ConnectorCredentials credentials);
+  public ConnectorCredentials getCredentials();
 
   public State getState();
 

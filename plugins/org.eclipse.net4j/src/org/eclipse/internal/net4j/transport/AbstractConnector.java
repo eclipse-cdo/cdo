@@ -10,11 +10,19 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport;
 
+import static org.eclipse.net4j.transport.Connector.State.CONNECTED;
+import static org.eclipse.net4j.transport.Connector.State.CONNECTING;
+import static org.eclipse.net4j.transport.Connector.State.DISCONNECTED;
+import static org.eclipse.net4j.transport.Connector.State.NEGOTIATING;
+import static org.eclipse.net4j.transport.Connector.Type.CLIENT;
+import static org.eclipse.net4j.transport.Connector.Type.SERVER;
+
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.transport.ConnectorCredentials;
+import org.eclipse.net4j.transport.ConnectorDescription;
 import org.eclipse.net4j.transport.ConnectorException;
 import org.eclipse.net4j.transport.Protocol;
 import org.eclipse.net4j.transport.ProtocolFactory;
@@ -39,7 +47,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractConnector extends AbstractLifecycle implements Connector, BufferProvider
+public abstract class AbstractConnector<DESCRIPTION extends ConnectorDescription> extends AbstractLifecycle implements
+    Connector<DESCRIPTION>, BufferProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, AbstractConnector.class);
 
@@ -59,6 +68,8 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
   private static int nextConnectorID = MIN_CONNECTOR_ID;
 
   private int connectorID = getNextConnectorID();
+
+  private DESCRIPTION description;
 
   private ConnectorCredentials credentials;
 
@@ -185,6 +196,16 @@ public abstract class AbstractConnector extends AbstractLifecycle implements Con
   public boolean isServer()
   {
     return getType() == Type.SERVER;
+  }
+
+  public DESCRIPTION getDescription()
+  {
+    return description;
+  }
+
+  public void setDescription(DESCRIPTION description)
+  {
+    this.description = description;
   }
 
   public ConnectorCredentials getCredentials()

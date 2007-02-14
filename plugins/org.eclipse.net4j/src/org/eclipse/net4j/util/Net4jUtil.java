@@ -18,7 +18,7 @@ import org.eclipse.net4j.transport.Protocol;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.Connector.Type;
 import org.eclipse.net4j.transport.tcp.TCPAcceptor;
-import org.eclipse.net4j.transport.tcp.TCPConnector;
+import org.eclipse.net4j.transport.tcp.TCPConnectorDescription;
 import org.eclipse.net4j.transport.tcp.TCPSelector;
 
 import org.eclipse.internal.net4j.transport.BufferFactoryImpl;
@@ -27,6 +27,7 @@ import org.eclipse.internal.net4j.transport.BufferUtil;
 import org.eclipse.internal.net4j.transport.embedded.ClientEmbeddedConnectorImpl;
 import org.eclipse.internal.net4j.transport.tcp.ClientTCPConnectorImpl;
 import org.eclipse.internal.net4j.transport.tcp.TCPAcceptorImpl;
+import org.eclipse.internal.net4j.transport.tcp.TCPConnectorDescriptionImpl;
 import org.eclipse.internal.net4j.transport.tcp.TCPSelectorImpl;
 
 import java.util.ArrayList;
@@ -90,20 +91,24 @@ public final class Net4jUtil
     return createTCPAcceptor(bufferProvider, selector, TCPAcceptor.DEFAULT_ADDRESS, TCPAcceptor.DEFAULT_PORT);
   }
 
-  public static TCPConnector createTCPConnector(BufferProvider bufferProvider, TCPSelector selector, String host,
-      int port)
+  public static Connector<TCPConnectorDescription> createTCPConnector(BufferProvider bufferProvider,
+      TCPSelector selector, String host, int port)
   {
+    TCPConnectorDescriptionImpl description = new TCPConnectorDescriptionImpl();
+    description.setHost(host);
+    description.setPort(port);
+
     ClientTCPConnectorImpl connector = new ClientTCPConnectorImpl();
     connector.setBufferProvider(bufferProvider);
     connector.setSelector(selector);
-    connector.setHost(host);
-    connector.setPort(port);
+    connector.setDescription(description);
     return connector;
   }
 
-  public static TCPConnector createTCPConnector(BufferProvider bufferProvider, TCPSelector selector, String host)
+  public static Connector<TCPConnectorDescription> createTCPConnector(BufferProvider bufferProvider,
+      TCPSelector selector, String host)
   {
-    return createTCPConnector(bufferProvider, selector, host, TCPConnector.DEFAULT_PORT);
+    return createTCPConnector(bufferProvider, selector, host, TCPConnectorDescription.DEFAULT_PORT);
   }
 
   public static TCPSelector createTCPSelector()

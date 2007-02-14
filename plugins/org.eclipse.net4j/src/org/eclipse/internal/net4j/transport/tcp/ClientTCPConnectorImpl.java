@@ -18,32 +18,8 @@ import java.net.InetSocketAddress;
  */
 public class ClientTCPConnectorImpl extends AbstractTCPConnector
 {
-  private String host;
-
-  private int port = DEFAULT_PORT;
-
   public ClientTCPConnectorImpl()
   {
-  }
-
-  public String getHost()
-  {
-    return host;
-  }
-
-  public void setHost(String host)
-  {
-    this.host = host;
-  }
-
-  public int getPort()
-  {
-    return port;
-  }
-
-  public void setPort(int port)
-  {
-    this.port = port;
   }
 
   public Type getType()
@@ -54,16 +30,16 @@ public class ClientTCPConnectorImpl extends AbstractTCPConnector
   @Override
   public String toString()
   {
-    return "ClientTCPConnector[" + host + ":" + port + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return "ClientTCPConnector[" + getDescription() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   @Override
   protected void onAboutToActivate() throws Exception
   {
     super.onAboutToActivate();
-    if (host == null || host.length() == 0)
+    if (getDescription() == null)
     {
-      throw new IllegalArgumentException("host == null || host.length() == 0"); //$NON-NLS-1$
+      throw new IllegalStateException("getDescription() == null"); //$NON-NLS-1$
     }
   }
 
@@ -71,8 +47,8 @@ public class ClientTCPConnectorImpl extends AbstractTCPConnector
   protected void onActivate() throws Exception
   {
     super.onActivate();
-    InetAddress addr = InetAddress.getByName(host);
-    InetSocketAddress sAddr = new InetSocketAddress(addr, port);
+    InetAddress addr = InetAddress.getByName(getDescription().getHost());
+    InetSocketAddress sAddr = new InetSocketAddress(addr, getDescription().getPort());
     getSocketChannel().connect(sAddr);
   }
 }

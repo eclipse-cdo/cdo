@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.transport.tcp;
 
+import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.util.registry.IRegistry;
 
@@ -28,7 +29,7 @@ public interface TCPAcceptor
 
   public int getPort();
 
-  public TCPConnector[] getAcceptedConnectors();
+  public Connector[] getAcceptedConnectors();
 
   public IRegistry<String, ProtocolFactory> getProtocolFactoryRegistry();
 

@@ -8,17 +8,8 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util;
+package org.eclipse.net4j.transport;
 
-import org.eclipse.net4j.transport.BufferPool;
-import org.eclipse.net4j.transport.BufferProvider;
-import org.eclipse.net4j.transport.Channel;
-import org.eclipse.net4j.transport.ChannelID;
-import org.eclipse.net4j.transport.Connector;
-import org.eclipse.net4j.transport.Protocol;
-import org.eclipse.net4j.transport.ProtocolFactory;
-import org.eclipse.net4j.transport.ProtocolFactoryID;
-import org.eclipse.net4j.transport.TransportContainer;
 import org.eclipse.net4j.transport.Connector.Type;
 import org.eclipse.net4j.transport.tcp.TCPAcceptor;
 import org.eclipse.net4j.transport.tcp.TCPConnectorDescription;
@@ -47,9 +38,9 @@ import java.util.Map.Entry;
 /**
  * @author Eike Stepper
  */
-public final class Net4jUtil
+public final class TransportUtil
 {
-  private Net4jUtil()
+  private TransportUtil()
   {
   }
 
@@ -81,6 +72,23 @@ public final class Net4jUtil
   public static ProtocolFactoryID createProtocolFactoryID(Type type, String protocolID)
   {
     return new ProtocolFactoryIDImpl(type, protocolID);
+  }
+
+  public static Connector createConnector(TransportContainer container, String connectorFactoryID)
+  {
+    IRegistry<String, ConnectorFactory> registry = container.getConnectorFactoryRegistry();
+    if (registry == null)
+    {
+      return null;
+    }
+
+    ConnectorFactory connectorFactory = registry.get(connectorFactoryID);
+    if (connectorFactory == null)
+    {
+      return null;
+    }
+
+    return connectorFactory.createConnector();
   }
 
   public static Connector createEmbeddedConnector(BufferProvider bufferProvider)

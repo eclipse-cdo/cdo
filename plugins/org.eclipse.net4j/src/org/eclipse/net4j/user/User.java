@@ -8,22 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport;
-
-import org.eclipse.net4j.util.registry.IRegistry;
+package org.eclipse.net4j.user;
 
 /**
  * @author Eike Stepper
  */
-public interface TransportContainer
+public interface User
 {
-  public BufferPool getBufferPool();
-
-  public IRegistry<String, ConnectorFactory> getConnectorFactoryRegistry();
-
-  public IRegistry<ProtocolFactoryID, ProtocolFactory> getProtocolFactoryRegistry();
-
-  public IRegistry<Integer, Connector> getConnectorRegistry();
-
-  public IRegistry<ChannelID, Channel> getChannelRegistry();
+  public String getID();
 }

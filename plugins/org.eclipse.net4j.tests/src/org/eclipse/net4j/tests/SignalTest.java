@@ -22,7 +22,7 @@ import org.eclipse.net4j.util.Net4jUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.IRegistry;
 
-import org.eclipse.internal.net4j.transport.tcp.AbstractTCPConnector;
+import org.eclipse.internal.net4j.transport.AbstractConnector;
 import org.eclipse.internal.net4j.transport.tcp.TCPAcceptorImpl;
 import org.eclipse.internal.net4j.transport.tcp.TCPSelectorImpl;
 
@@ -42,7 +42,7 @@ public class SignalTest extends AbstractOMTest
 
   private TCPAcceptorImpl acceptor;
 
-  private AbstractTCPConnector connector;
+  private AbstractConnector connector;
 
   @Override
   protected void setUp() throws Exception
@@ -57,7 +57,7 @@ public class SignalTest extends AbstractOMTest
     assertTrue(selector.isActive());
 
     acceptor = (TCPAcceptorImpl)Net4jUtil.createTCPAcceptor(bufferPool, selector);
-    connector = (AbstractTCPConnector)Net4jUtil.createTCPConnector(bufferPool, selector, "localhost");
+    connector = (AbstractConnector)Net4jUtil.createTCPConnector(bufferPool, selector, "localhost");
   }
 
   @Override
@@ -68,7 +68,7 @@ public class SignalTest extends AbstractOMTest
       if (connector != null)
       {
         connector.disconnect();
-        assertFalse(connector.isActive());
+        assertFalse(LifecycleUtil.isActive(connector));
         assertFalse(connector.isConnected());
         connector = null;
       }

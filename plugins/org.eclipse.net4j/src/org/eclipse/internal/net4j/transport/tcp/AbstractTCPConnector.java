@@ -14,7 +14,6 @@ import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.transport.ConnectorException;
-import org.eclipse.net4j.transport.tcp.TCPConnectorDescription;
 import org.eclipse.net4j.transport.tcp.TCPSelector;
 import org.eclipse.net4j.transport.tcp.TCPSelectorListener;
 import org.eclipse.net4j.util.Net4jUtil;
@@ -36,8 +35,7 @@ import java.util.Queue;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractTCPConnector extends AbstractConnector<TCPConnectorDescription> implements
-    Connector<TCPConnectorDescription>, TCPSelectorListener.Active
+public abstract class AbstractTCPConnector extends AbstractConnector implements Connector, TCPSelectorListener.Active
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, AbstractTCPConnector.class);
 

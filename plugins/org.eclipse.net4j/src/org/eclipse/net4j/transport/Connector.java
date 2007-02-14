@@ -29,7 +29,7 @@ import org.eclipse.internal.net4j.transport.ChannelImpl;
  * 
  * @author Eike Stepper
  */
-public interface Connector<DESCRIPTION extends ConnectorDescription>
+public interface Connector
 {
   public Integer getID();
 
@@ -39,7 +39,7 @@ public interface Connector<DESCRIPTION extends ConnectorDescription>
 
   public boolean isServer();
 
-  public DESCRIPTION getDescription();
+  public ConnectorDescription getDescription();
 
   public ConnectorCredentials getCredentials();
 

@@ -10,11 +10,6 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport;
 
-import static org.eclipse.net4j.transport.Connector.State.CONNECTED;
-import static org.eclipse.net4j.transport.Connector.State.CONNECTING;
-import static org.eclipse.net4j.transport.Connector.State.DISCONNECTED;
-import static org.eclipse.net4j.transport.Connector.State.NEGOTIATING;
-
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
@@ -46,8 +41,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractConnector<DESCRIPTION extends ConnectorDescription> extends AbstractLifecycle implements
-    Connector<DESCRIPTION>, BufferProvider
+public abstract class AbstractConnector extends AbstractLifecycle implements Connector, BufferProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, AbstractConnector.class);
 
@@ -61,7 +55,7 @@ public abstract class AbstractConnector<DESCRIPTION extends ConnectorDescription
 
   private int connectorID = getNextConnectorID();
 
-  private DESCRIPTION description;
+  private ConnectorDescription description;
 
   private ConnectorCredentials credentials;
 
@@ -202,12 +196,12 @@ public abstract class AbstractConnector<DESCRIPTION extends ConnectorDescription
     return getType() == Type.SERVER;
   }
 
-  public DESCRIPTION getDescription()
+  public ConnectorDescription getDescription()
   {
     return description;
   }
 
-  public void setDescription(DESCRIPTION description)
+  public void setDescription(ConnectorDescription description)
   {
     this.description = description;
   }

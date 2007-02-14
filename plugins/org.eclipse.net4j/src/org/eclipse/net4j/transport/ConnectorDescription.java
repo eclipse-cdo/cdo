@@ -15,5 +15,5 @@ package org.eclipse.net4j.transport;
  */
 public interface ConnectorDescription
 {
-  public String getDisplayName();
+  public String getFactoryID();
 }

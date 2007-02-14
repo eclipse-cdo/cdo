@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport.tcp;
 
+import org.eclipse.net4j.transport.tcp.TCPConnectorDescription;
+
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
@@ -47,8 +49,9 @@ public class ClientTCPConnectorImpl extends AbstractTCPConnector
   protected void onActivate() throws Exception
   {
     super.onActivate();
-    InetAddress addr = InetAddress.getByName(getDescription().getHost());
-    InetSocketAddress sAddr = new InetSocketAddress(addr, getDescription().getPort());
+    TCPConnectorDescription description = (TCPConnectorDescription)getDescription();
+    InetAddress addr = InetAddress.getByName(description.getHost());
+    InetSocketAddress sAddr = new InetSocketAddress(addr, description.getPort());
     getSocketChannel().connect(sAddr);
   }
 }

@@ -8,18 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport.tcp;
-
-import org.eclipse.net4j.transport.Connector;
+package org.eclipse.net4j.transport;
 
 /**
  * @author Eike Stepper
  */
-public interface TCPConnector extends Connector
+public interface ConnectorFactory
 {
-  public static final int DEFAULT_PORT = TCPAcceptor.DEFAULT_PORT;
+  public String getID();
 
-  public int getPort();
-
-  public String getHost();
+  public Connector createConnector();
 }

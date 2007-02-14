@@ -11,6 +11,7 @@
 package org.eclipse.internal.net4j.transport.tcp;
 
 import org.eclipse.net4j.transport.tcp.TCPConnectorDescription;
+import org.eclipse.net4j.transport.tcp.TCPConnectorFactory;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import java.io.Serializable;
@@ -31,6 +32,11 @@ public class TCPConnectorDescriptionImpl implements TCPConnectorDescription, Clo
   {
     this.host = host;
     this.port = port;
+  }
+
+  public String getFactoryID()
+  {
+    return TCPConnectorFactory.ID;
   }
 
   public String getHost()

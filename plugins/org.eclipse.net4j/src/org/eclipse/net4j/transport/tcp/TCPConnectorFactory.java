@@ -8,22 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport;
+package org.eclipse.net4j.transport.tcp;
 
-import org.eclipse.net4j.util.registry.IRegistry;
+import org.eclipse.net4j.transport.ConnectorFactory;
 
 /**
  * @author Eike Stepper
  */
-public interface TransportContainer
+public interface TCPConnectorFactory extends ConnectorFactory
 {
-  public BufferPool getBufferPool();
-
-  public IRegistry<String, ConnectorFactory> getConnectorFactoryRegistry();
-
-  public IRegistry<ProtocolFactoryID, ProtocolFactory> getProtocolFactoryRegistry();
-
-  public IRegistry<Integer, Connector> getConnectorRegistry();
-
-  public IRegistry<ChannelID, Channel> getChannelRegistry();
+  public static final String ID = "TCP";
 }

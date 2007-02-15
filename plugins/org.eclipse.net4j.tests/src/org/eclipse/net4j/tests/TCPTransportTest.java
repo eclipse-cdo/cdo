@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -12,23 +12,14 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.stream.ChannelInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
+import org.eclipse.net4j.tests.signal.TestSignalProtocol;
+import org.eclipse.net4j.transport.AcceptorConnectorsEvent;
 import org.eclipse.net4j.transport.Buffer;
-import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
-import org.eclipse.net4j.transport.Connector;
-import org.eclipse.net4j.transport.ProtocolFactory;
-import org.eclipse.net4j.transport.ProtocolFactoryID;
-import org.eclipse.net4j.transport.Connector.Type;
-import org.eclipse.net4j.transport.tcp.TCPAcceptor;
-import org.eclipse.net4j.transport.tcp.TCPAcceptorListener;
-import org.eclipse.net4j.util.Net4jUtil;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.registry.HashMapRegistry;
-import org.eclipse.net4j.util.registry.IRegistry;
-
-import org.eclipse.internal.net4j.transport.tcp.AbstractTCPConnector;
-import org.eclipse.internal.net4j.transport.tcp.TCPAcceptorImpl;
-import org.eclipse.internal.net4j.transport.tcp.TCPSelectorImpl;
+import org.eclipse.net4j.transport.ConnectorChannelsEvent;
+import org.eclipse.net4j.transport.container.Container;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -39,112 +30,38 @@ import java.io.PrintStream;
 import java.nio.ByteBuffer;
 import java.util.StringTokenizer;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
  */
-public class TCPTransportTest extends AbstractOMTest
+public class TCPTransportTest extends AbstractTCPTest
 {
-  private BufferProvider bufferPool;
-
-  private TCPSelectorImpl selector;
-
-  private TCPAcceptorImpl acceptor;
-
-  private AbstractTCPConnector connector;
-
   @Override
-  protected void setUp() throws Exception
+  protected Container createContainer()
   {
-    super.setUp();
-    bufferPool = Net4jUtil.createBufferPool();
-    LifecycleUtil.activate(bufferPool);
-    assertTrue(LifecycleUtil.isActive(bufferPool));
-
-    selector = (TCPSelectorImpl)Net4jUtil.createTCPSelector();
-    selector.activate();
-    assertTrue(selector.isActive());
-
-    acceptor = (TCPAcceptorImpl)Net4jUtil.createTCPAcceptor(bufferPool, selector);
-    connector = (AbstractTCPConnector)Net4jUtil.createTCPConnector(bufferPool, selector, "localhost");
-
-    System.out.println("---------------- START ----------------");
+    Container container = super.createContainer();
+    container.register(new TestSignalProtocol.Factory());
+    return container;
   }
 
-  @Override
-  protected void tearDown() throws Exception
+  protected Buffer provideBuffer()
   {
-    Thread.sleep(200);
-    System.out.println("---------------- END ------------------");
-
-    try
-    {
-      if (connector != null)
-      {
-        connector.disconnect();
-        assertFalse(connector.isActive());
-        assertFalse(connector.isConnected());
-        connector = null;
-      }
-    }
-    catch (Exception ex)
-    {
-      ex.printStackTrace();
-    }
-
-    try
-    {
-      acceptor.deactivate();
-      assertFalse(acceptor.isActive());
-      acceptor = null;
-    }
-    catch (Exception ex)
-    {
-      ex.printStackTrace();
-    }
-
-    try
-    {
-      selector.deactivate();
-      selector = null;
-    }
-    catch (Exception ex)
-    {
-      ex.printStackTrace();
-    }
-
-    try
-    {
-      LifecycleUtil.deactivate(bufferPool);
-      bufferPool = null;
-    }
-    catch (Exception ex)
-    {
-      ex.printStackTrace();
-    }
-
-    super.tearDown();
+    return container.getBufferProvider().provideBuffer();
   }
 
   public void testConnect() throws Exception
   {
-    acceptor.activate();
-    assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(5000));
+    startTransport();
   }
 
   public void testSendBuffer() throws Exception
   {
-    acceptor.activate();
-    assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(500000));
-
-    Channel channel = connector.openChannel();
+    startTransport();
+    Channel channel = getConnector().openChannel();
     for (int i = 0; i < 3; i++)
     {
-      Buffer buffer = bufferPool.provideBuffer();
+      Buffer buffer = provideBuffer();
       ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
       byteBuffer.putInt(1970);
       channel.handleBuffer(buffer);
@@ -155,20 +72,13 @@ public class TCPTransportTest extends AbstractOMTest
   {
     final int COUNT = 3;
     final CountDownLatch counter = new CountDownLatch(COUNT);
+    container.register(new TestProtocolFactory(counter));
+    startTransport();
 
-    IRegistry<ProtocolFactoryID, ProtocolFactory> protocolFactoryRegistry = new HashMapRegistry();
-    TestProtocolFactory factory = new TestProtocolFactory(counter);
-    protocolFactoryRegistry.put(factory.createID(Type.SERVER), factory);
-
-    acceptor.setProtocolFactoryRegistry(protocolFactoryRegistry);
-    acceptor.activate();
-    assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(5000));
-
-    Channel channel = connector.openChannel(TestProtocolFactory.PROTOCOL_ID);
+    Channel channel = getConnector().openChannel(TestProtocolFactory.PROTOCOL_ID);
     for (int i = 0; i < COUNT; i++)
     {
-      Buffer buffer = bufferPool.provideBuffer();
+      Buffer buffer = provideBuffer();
       ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
       byteBuffer.putInt(1970);
       channel.handleBuffer(buffer);
@@ -196,7 +106,7 @@ public class TCPTransportTest extends AbstractOMTest
   // Channel channel = connector.openChannel(TestProtocolFactory.PROTOCOL_ID);
   // for (int i = 0; i < COUNT; i++)
   // {
-  // Buffer buffer = bufferPool.provideBuffer();
+  // Buffer buffer = provideBuffer();
   // ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
   // byteBuffer.putInt(1970);
   // channel.handleBuffer(buffer);
@@ -224,7 +134,7 @@ public class TCPTransportTest extends AbstractOMTest
   // Channel channel = connector.openChannel(TestProtocolFactory.PROTOCOL_ID);
   // for (int i = 0; i < COUNT; i++)
   // {
-  // Buffer buffer = bufferPool.provideBuffer();
+  // Buffer buffer = provideBuffer();
   // ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
   // byteBuffer.putInt(1970);
   // channel.handleBuffer(buffer);
@@ -233,68 +143,39 @@ public class TCPTransportTest extends AbstractOMTest
   // assertTrue(counter.await(2, TimeUnit.SECONDS));
   // }
 
-  public void testReceiveThreadPool() throws Exception
-  {
-    final int COUNT = 3;
-    final CountDownLatch counter = new CountDownLatch(COUNT);
-
-    IRegistry<ProtocolFactoryID, ProtocolFactory> protocolFactoryRegistry = new HashMapRegistry();
-    TestProtocolFactory factory = new TestProtocolFactory(counter);
-    protocolFactoryRegistry.put(factory.createID(Type.SERVER), factory);
-
-    acceptor.setProtocolFactoryRegistry(protocolFactoryRegistry);
-    acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
-    acceptor.activate();
-    assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(5000));
-
-    Channel channel = connector.openChannel(TestProtocolFactory.PROTOCOL_ID);
-    for (int i = 0; i < COUNT; i++)
-    {
-      Buffer buffer = bufferPool.provideBuffer();
-      ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
-      byteBuffer.putInt(1970);
-      channel.handleBuffer(buffer);
-    }
-
-    assertTrue(counter.await(2, TimeUnit.SECONDS));
-  }
-
   public void testStreaming() throws Exception
   {
     final int COUNT = 1;
     final CountDownLatch counter = new CountDownLatch(COUNT);
     final ChannelInputStream[] inputStream = new ChannelInputStream[1];
 
-    acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
-    acceptor.addAcceptorListener(new TCPAcceptorListener()
+    getAcceptor().addListener(new IListener()
     {
-      public void notifyConnectorAccepted(TCPAcceptor acceptor, Connector connector)
+      public void notifyEvent(IEvent event)
       {
-        connector.addChannelListener(new Connector.ChannelListener()
+        if (event instanceof AcceptorConnectorsEvent)
         {
-          public void notifyChannelAboutToOpen(Channel channel)
+          AcceptorConnectorsEvent e = (AcceptorConnectorsEvent)event;
+          e.getAcceptedConnector().addListener(new IListener()
           {
-          }
-
-          public void notifyChannelClosing(Channel channel)
-          {
-          }
-
-          public void notifyChannelOpened(Channel channel)
-          {
-            inputStream[0] = new ChannelInputStream(channel, 2000);
-            counter.countDown();
-          }
-        });
+            public void notifyEvent(IEvent event)
+            {
+              if (event instanceof ConnectorChannelsEvent)
+              {
+                ConnectorChannelsEvent e = (ConnectorChannelsEvent)event;
+                if (e.getType() == ConnectorChannelsEvent.Type.OPENED)
+                {
+                  inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
+                  counter.countDown();
+                }
+              }
+            }
+          });
+        }
       }
     });
 
-    acceptor.activate();
-    assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(5000));
-
-    Channel channel = connector.openChannel();
+    Channel channel = getConnector().openChannel();
     assertTrue(counter.await(2, TimeUnit.SECONDS));
     assertNotNull(inputStream[0]);
 
@@ -327,35 +208,33 @@ public class TCPTransportTest extends AbstractOMTest
     final CountDownLatch counter = new CountDownLatch(COUNT);
     final ChannelInputStream[] inputStream = new ChannelInputStream[1];
 
-    acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
-    acceptor.addAcceptorListener(new TCPAcceptorListener()
+    getAcceptor().addListener(new IListener()
     {
-      public void notifyConnectorAccepted(TCPAcceptor acceptor, Connector connector)
+      public void notifyEvent(IEvent event)
       {
-        connector.addChannelListener(new Connector.ChannelListener()
+        if (event instanceof AcceptorConnectorsEvent)
         {
-          public void notifyChannelAboutToOpen(Channel channel)
+          AcceptorConnectorsEvent e = (AcceptorConnectorsEvent)event;
+          e.getAcceptedConnector().addListener(new IListener()
           {
-          }
-
-          public void notifyChannelClosing(Channel channel)
-          {
-          }
-
-          public void notifyChannelOpened(Channel channel)
-          {
-            inputStream[0] = new ChannelInputStream(channel, 2000);
-            counter.countDown();
-          }
-        });
+            public void notifyEvent(IEvent event)
+            {
+              if (event instanceof ConnectorChannelsEvent)
+              {
+                ConnectorChannelsEvent e = (ConnectorChannelsEvent)event;
+                if (e.getType() == ConnectorChannelsEvent.Type.OPENED)
+                {
+                  inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
+                  counter.countDown();
+                }
+              }
+            }
+          });
+        }
       }
     });
 
-    acceptor.activate();
-    assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(5000));
-
-    Channel channel = connector.openChannel();
+    Channel channel = getConnector().openChannel();
     assertTrue(counter.await(2, TimeUnit.SECONDS));
     assertNotNull(inputStream[0]);
 
@@ -395,35 +274,33 @@ public class TCPTransportTest extends AbstractOMTest
     final CountDownLatch counter = new CountDownLatch(COUNT);
     final ChannelInputStream[] inputStream = new ChannelInputStream[1];
 
-    acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
-    acceptor.addAcceptorListener(new TCPAcceptorListener()
+    getAcceptor().addListener(new IListener()
     {
-      public void notifyConnectorAccepted(TCPAcceptor acceptor, Connector connector)
+      public void notifyEvent(IEvent event)
       {
-        connector.addChannelListener(new Connector.ChannelListener()
+        if (event instanceof AcceptorConnectorsEvent)
         {
-          public void notifyChannelAboutToOpen(Channel channel)
+          AcceptorConnectorsEvent e = (AcceptorConnectorsEvent)event;
+          e.getAcceptedConnector().addListener(new IListener()
           {
-          }
-
-          public void notifyChannelClosing(Channel channel)
-          {
-          }
-
-          public void notifyChannelOpened(Channel channel)
-          {
-            inputStream[0] = new ChannelInputStream(channel, 2000);
-            counter.countDown();
-          }
-        });
+            public void notifyEvent(IEvent event)
+            {
+              if (event instanceof ConnectorChannelsEvent)
+              {
+                ConnectorChannelsEvent e = (ConnectorChannelsEvent)event;
+                if (e.getType() == ConnectorChannelsEvent.Type.OPENED)
+                {
+                  inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
+                  counter.countDown();
+                }
+              }
+            }
+          });
+        }
       }
     });
 
-    acceptor.activate();
-    assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(5000));
-
-    final Channel channel = connector.openChannel();
+    final Channel channel = getConnector().openChannel();
     assertTrue(counter.await(2, TimeUnit.SECONDS));
     assertNotNull(inputStream[0]);
 
@@ -433,7 +310,7 @@ public class TCPTransportTest extends AbstractOMTest
       {
         try
         {
-          ChannelOutputStream outputStream = new ChannelOutputStream(channel, bufferPool);
+          ChannelOutputStream outputStream = new ChannelOutputStream(channel, container.getBufferProvider());
           PrintStream printer = new PrintStream(outputStream);
           StringTokenizer tokenizer = HugeData.getTokenizer();
           while (tokenizer.hasMoreTokens())
@@ -477,35 +354,33 @@ public class TCPTransportTest extends AbstractOMTest
     final CountDownLatch counter = new CountDownLatch(COUNT);
     final ChannelInputStream[] inputStream = new ChannelInputStream[1];
 
-    acceptor.setReceiveExecutor(Executors.newCachedThreadPool());
-    acceptor.addAcceptorListener(new TCPAcceptorListener()
+    getAcceptor().addListener(new IListener()
     {
-      public void notifyConnectorAccepted(TCPAcceptor acceptor, Connector connector)
+      public void notifyEvent(IEvent event)
       {
-        connector.addChannelListener(new Connector.ChannelListener()
+        if (event instanceof AcceptorConnectorsEvent)
         {
-          public void notifyChannelAboutToOpen(Channel channel)
+          AcceptorConnectorsEvent e = (AcceptorConnectorsEvent)event;
+          e.getAcceptedConnector().addListener(new IListener()
           {
-          }
-
-          public void notifyChannelClosing(Channel channel)
-          {
-          }
-
-          public void notifyChannelOpened(Channel channel)
-          {
-            inputStream[0] = new ChannelInputStream(channel, 2000);
-            counter.countDown();
-          }
-        });
+            public void notifyEvent(IEvent event)
+            {
+              if (event instanceof ConnectorChannelsEvent)
+              {
+                ConnectorChannelsEvent e = (ConnectorChannelsEvent)event;
+                if (e.getType() == ConnectorChannelsEvent.Type.OPENED)
+                {
+                  inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
+                  counter.countDown();
+                }
+              }
+            }
+          });
+        }
       }
     });
 
-    acceptor.activate();
-    assertTrue(acceptor.isActive());
-    assertTrue(connector.connect(5000));
-
-    Channel channel = connector.openChannel();
+    Channel channel = getConnector().openChannel();
     assertTrue(counter.await(2, TimeUnit.SECONDS));
 
     ChannelOutputStream outputStream = new ChannelOutputStream(channel);

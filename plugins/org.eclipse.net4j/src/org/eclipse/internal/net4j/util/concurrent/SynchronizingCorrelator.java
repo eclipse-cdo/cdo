@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.concurrent;
+package org.eclipse.internal.net4j.util.concurrent;
+
+import org.eclipse.net4j.util.concurrent.ICorrelator;
+import org.eclipse.net4j.util.concurrent.ISynchronizer;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -16,18 +19,18 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class SynchronizingCorrelator<CORRELATION, RESULT> implements Correlator<CORRELATION, Synchronizer<RESULT>>
+public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator<CORRELATION, ISynchronizer<RESULT>>
 {
-  private ConcurrentMap<CORRELATION, Synchronizer<RESULT>> map = new ConcurrentHashMap(0);
+  private ConcurrentMap<CORRELATION, ISynchronizer<RESULT>> map = new ConcurrentHashMap(0);
 
   public boolean isCorrelated(CORRELATION correlation)
   {
     return map.containsKey(correlation);
   }
 
-  public Synchronizer<RESULT> correlate(CORRELATION correlation)
+  public ISynchronizer<RESULT> correlate(CORRELATION correlation)
   {
-    Synchronizer<RESULT> synchronizer = map.get(correlation);
+    ISynchronizer<RESULT> synchronizer = map.get(correlation);
     if (synchronizer == null)
     {
       synchronizer = createSynchronizer(correlation);
@@ -37,9 +40,9 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements Correlator<
     return synchronizer;
   }
 
-  public Synchronizer<RESULT> correlateUnique(CORRELATION correlation)
+  public ISynchronizer<RESULT> correlateUnique(CORRELATION correlation)
   {
-    Synchronizer<RESULT> synchronizer = createSynchronizer(correlation);
+    ISynchronizer<RESULT> synchronizer = createSynchronizer(correlation);
     if (map.putIfAbsent(correlation, synchronizer) != null)
     {
       throw new IllegalStateException("Already correlated: " + correlation); //$NON-NLS-1$
@@ -48,7 +51,7 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements Correlator<
     return synchronizer;
   }
 
-  public Synchronizer<RESULT> uncorrelate(CORRELATION correlation)
+  public ISynchronizer<RESULT> uncorrelate(CORRELATION correlation)
   {
     return map.remove(correlation);
   }
@@ -68,11 +71,11 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements Correlator<
     return correlate(correlation).put(result, timeout);
   }
 
-  protected Synchronizer<RESULT> createSynchronizer(final CORRELATION correlation)
+  protected ISynchronizer<RESULT> createSynchronizer(final CORRELATION correlation)
   {
-    return new Synchronizer<RESULT>()
+    return new ISynchronizer<RESULT>()
     {
-      private Synchronizer<RESULT> delegate = new ResultSynchronizer<RESULT>();
+      private ISynchronizer<RESULT> delegate = new ResultSynchronizer<RESULT>();
 
       public RESULT get(long timeout)
       {

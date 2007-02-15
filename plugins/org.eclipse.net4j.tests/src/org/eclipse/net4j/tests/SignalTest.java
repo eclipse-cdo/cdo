@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,125 +13,28 @@ package org.eclipse.net4j.tests;
 import org.eclipse.net4j.tests.signal.Request1;
 import org.eclipse.net4j.tests.signal.Request2;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
-import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
-import org.eclipse.net4j.transport.ProtocolFactory;
-import org.eclipse.net4j.transport.ProtocolFactoryID;
-import org.eclipse.net4j.transport.Connector.Type;
-import org.eclipse.net4j.util.Net4jUtil;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.registry.IRegistry;
-
-import org.eclipse.internal.net4j.transport.AbstractConnector;
-import org.eclipse.internal.net4j.transport.tcp.TCPAcceptorImpl;
-import org.eclipse.internal.net4j.transport.tcp.TCPSelectorImpl;
+import org.eclipse.net4j.transport.container.Container;
 
 import java.util.Arrays;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author Eike Stepper
  */
-public class SignalTest extends AbstractOMTest
+public class SignalTest extends AbstractTCPTest
 {
-  private BufferProvider bufferPool;
-
-  private TCPSelectorImpl selector;
-
-  private TCPAcceptorImpl acceptor;
-
-  private AbstractConnector connector;
-
   @Override
-  protected void setUp() throws Exception
+  protected Container createContainer()
   {
-    super.setUp();
-    bufferPool = Net4jUtil.createBufferPool((short)64);
-    LifecycleUtil.activate(bufferPool);
-    assertTrue(LifecycleUtil.isActive(bufferPool));
-
-    selector = (TCPSelectorImpl)Net4jUtil.createTCPSelector();
-    selector.activate();
-    assertTrue(selector.isActive());
-
-    acceptor = (TCPAcceptorImpl)Net4jUtil.createTCPAcceptor(bufferPool, selector);
-    connector = (AbstractConnector)Net4jUtil.createTCPConnector(bufferPool, selector, "localhost");
-  }
-
-  @Override
-  protected void tearDown() throws Exception
-  {
-    try
-    {
-      if (connector != null)
-      {
-        connector.disconnect();
-        assertFalse(LifecycleUtil.isActive(connector));
-        assertFalse(connector.isConnected());
-        connector = null;
-      }
-    }
-    catch (Exception ex)
-    {
-      ex.printStackTrace();
-    }
-
-    try
-    {
-      acceptor.deactivate();
-      assertFalse(acceptor.isActive());
-      acceptor = null;
-    }
-    catch (Exception ex)
-    {
-      ex.printStackTrace();
-    }
-
-    try
-    {
-      selector.deactivate();
-      selector = null;
-    }
-    catch (Exception ex)
-    {
-      ex.printStackTrace();
-    }
-
-    try
-    {
-      LifecycleUtil.deactivate(bufferPool);
-      bufferPool = null;
-    }
-    catch (Exception ex)
-    {
-      ex.printStackTrace();
-    }
-
-    super.tearDown();
+    Container container = super.createContainer();
+    container.register(new TestSignalProtocol.Factory());
+    return container;
   }
 
   public void testInteger() throws Exception
   {
-    ExecutorService threadPool = Executors.newCachedThreadPool();
-
-    Map<Type, IRegistry<ProtocolFactoryID, ProtocolFactory>> registries = // 
-    Net4jUtil.createProtocolFactoryRegistries(ProtocolFactory.SYMMETRIC);
-
-    TestSignalProtocol.Factory factory = new TestSignalProtocol.Factory();
-    Net4jUtil.registerProtocolFactory(factory, registries);
-
-    acceptor.setReceiveExecutor(threadPool);
-    acceptor.setProtocolFactoryRegistry(registries.get(Type.SERVER));
-    acceptor.activate();
-    assertTrue(acceptor.isActive());
-
-    connector.setReceiveExecutor(threadPool);
-    connector.setProtocolFactoryRegistry(registries.get(Type.CLIENT));
-    assertTrue(connector.connect(1000));
-
-    Channel channel = connector.openChannel(TestSignalProtocol.PROTOCOL_ID);
+    startTransport();
+    Channel channel = getConnector().openChannel(TestSignalProtocol.PROTOCOL_ID);
     int data = 0x0a;
     int result = new Request1(channel, data).send();
     assertEquals(data, result);
@@ -139,27 +42,10 @@ public class SignalTest extends AbstractOMTest
 
   public void testArray() throws Exception
   {
-    ExecutorService threadPool = Executors.newCachedThreadPool();
-
-    Map<Type, IRegistry<ProtocolFactoryID, ProtocolFactory>> registries = // 
-    Net4jUtil.createProtocolFactoryRegistries(ProtocolFactory.SYMMETRIC);
-
-    TestSignalProtocol.Factory factory = new TestSignalProtocol.Factory();
-    Net4jUtil.registerProtocolFactory(factory, registries);
-
-    acceptor.setReceiveExecutor(threadPool);
-    acceptor.setProtocolFactoryRegistry(registries.get(Type.SERVER));
-    acceptor.activate();
-    assertTrue(acceptor.isActive());
-
-    connector.setReceiveExecutor(threadPool);
-    connector.setProtocolFactoryRegistry(registries.get(Type.CLIENT));
-    assertTrue(connector.connect(1000));
-
-    Channel channel = connector.openChannel(TestSignalProtocol.PROTOCOL_ID);
+    startTransport();
+    Channel channel = getConnector().openChannel(TestSignalProtocol.PROTOCOL_ID);
     byte[] data = TinyData.getBytes();
     byte[] result = new Request2(channel, data).send();
     assertTrue(Arrays.equals(data, result));
-
   }
 }

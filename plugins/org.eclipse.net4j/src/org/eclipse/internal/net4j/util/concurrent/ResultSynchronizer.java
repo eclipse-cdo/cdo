@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.concurrent;
+package org.eclipse.internal.net4j.util.concurrent;
+
+import org.eclipse.net4j.util.concurrent.ISynchronizer;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public final class ResultSynchronizer<RESULT> implements Synchronizer<RESULT>
+public final class ResultSynchronizer<RESULT> implements ISynchronizer<RESULT>
 {
   private RESULT result;
 

@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,13 +14,18 @@ import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.Connector;
+import org.eclipse.net4j.transport.ConnectorChannelsEvent;
 import org.eclipse.net4j.transport.ConnectorCredentials;
-import org.eclipse.net4j.transport.ConnectorDescription;
 import org.eclipse.net4j.transport.ConnectorException;
+import org.eclipse.net4j.transport.ConnectorLocation;
+import org.eclipse.net4j.transport.ConnectorState;
+import org.eclipse.net4j.transport.ConnectorStateEvent;
 import org.eclipse.net4j.transport.Protocol;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.ProtocolFactoryID;
 import org.eclipse.net4j.transport.container.ContainerUtil;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
 import org.eclipse.net4j.util.lifecycle.LifecycleListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleNotifier;
@@ -29,11 +34,12 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
+import org.eclipse.internal.net4j.util.event.EventImpl;
+import org.eclipse.internal.net4j.util.event.NotifierImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -41,7 +47,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractConnector extends LifecycleImpl implements Connector, BufferProvider
+public abstract class AbstractConnector extends LifecycleImpl implements Connector, INotifier.Introspection
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, AbstractConnector.class);
 
@@ -55,13 +61,11 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
 
   private int connectorID = getNextConnectorID();
 
-  private ConnectorDescription description;
+  private String description;
 
   private ConnectorCredentials credentials;
 
   private IRegistry<ProtocolFactoryID, ProtocolFactory> protocolFactoryRegistry;
-
-  private IRegistry<Integer, Connector> connectorRegistry;
 
   private BufferProvider bufferProvider;
 
@@ -78,17 +82,9 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
    */
   private List<ChannelImpl> channels = new ArrayList(0);
 
-  private State state = State.DISCONNECTED;
+  private ConnectorState connectorState = ConnectorState.DISCONNECTED;
 
-  /**
-   * Don't initialize lazily to circumvent synchronization!
-   */
-  private Queue<StateListener> stateListeners = new ConcurrentLinkedQueue();
-
-  /**
-   * Don't initialize lazily to circumvent synchronization!
-   */
-  private Queue<ChannelListener> channelListeners = new ConcurrentLinkedQueue();
+  private NotifierImpl notifier = new NotifierImpl();
 
   /**
    * Is registered with each {@link Channel} of this {@link Connector}.
@@ -111,6 +107,21 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
 
   public abstract void multiplexBuffer(Channel channel);
 
+  public void addListener(IListener listener)
+  {
+    notifier.addListener(listener);
+  }
+
+  public void removeListener(IListener listener)
+  {
+    notifier.removeListener(listener);
+  }
+
+  public IListener[] getListeners()
+  {
+    return notifier.getListeners();
+  }
+
   public ExecutorService getReceiveExecutor()
   {
     return receiveExecutor;
@@ -131,36 +142,6 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
     this.protocolFactoryRegistry = protocolFactoryRegistry;
   }
 
-  public void addStateListener(StateListener listener)
-  {
-    stateListeners.add(listener);
-  }
-
-  public void removeStateListener(StateListener listener)
-  {
-    stateListeners.remove(listener);
-  }
-
-  public void addChannelListener(ChannelListener listener)
-  {
-    channelListeners.add(listener);
-  }
-
-  public void removeChannelListener(ChannelListener listener)
-  {
-    channelListeners.remove(listener);
-  }
-
-  public IRegistry<Integer, Connector> getConnectorRegistry()
-  {
-    return connectorRegistry;
-  }
-
-  public void setConnectorRegistry(IRegistry<Integer, Connector> connectorRegistry)
-  {
-    this.connectorRegistry = connectorRegistry;
-  }
-
   public BufferProvider getBufferProvider()
   {
     return bufferProvider;
@@ -171,37 +152,22 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
     this.bufferProvider = bufferProvider;
   }
 
-  public short getBufferCapacity()
-  {
-    return bufferProvider.getBufferCapacity();
-  }
-
-  public Buffer provideBuffer()
-  {
-    return bufferProvider.provideBuffer();
-  }
-
-  public void retainBuffer(Buffer buffer)
-  {
-    bufferProvider.retainBuffer(buffer);
-  }
-
   public boolean isClient()
   {
-    return getType() == Type.CLIENT;
+    return getLocation() == ConnectorLocation.CLIENT;
   }
 
   public boolean isServer()
   {
-    return getType() == Type.SERVER;
+    return getLocation() == ConnectorLocation.SERVER;
   }
 
-  public ConnectorDescription getDescription()
+  public String getDescription()
   {
     return description;
   }
 
-  public void setDescription(ConnectorDescription description)
+  public void setDescription(String description)
   {
     this.description = description;
   }
@@ -216,14 +182,14 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
     this.credentials = credentials;
   }
 
-  public State getState()
+  public ConnectorState getState()
   {
-    return state;
+    return connectorState;
   }
 
-  public void setState(State newState) throws ConnectorException
+  public void setState(ConnectorState newState) throws ConnectorException
   {
-    State oldState = getState();
+    ConnectorState oldState = getState();
     if (newState != oldState)
     {
       if (TRACER.isEnabled())
@@ -232,17 +198,11 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
             + ")"); //$NON-NLS-1$
       }
 
-      state = newState;
-      fireStateChanged(newState, oldState);
+      connectorState = newState;
+      fireStateChanged(oldState, newState);
       switch (newState)
       {
       case DISCONNECTED:
-        if (connectorRegistry != null)
-        {
-          connectorRegistry.remove(connectorID);
-          connectorRegistry.commit();
-        }
-
         if (finishedConnecting != null)
         {
           finishedConnecting.countDown();
@@ -259,24 +219,18 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
       case CONNECTING:
         finishedConnecting = new CountDownLatch(1);
         finishedNegotiating = new CountDownLatch(1);
-        if (getType() == Type.SERVER)
+        if (isServer())
         {
-          setState(State.NEGOTIATING);
+          setState(ConnectorState.NEGOTIATING);
         }
         break;
 
       case NEGOTIATING:
         finishedConnecting.countDown();
-        setState(State.CONNECTED); // TODO Implement negotiation
+        setState(ConnectorState.CONNECTED); // TODO Implement negotiation
         break;
 
       case CONNECTED:
-        if (connectorRegistry != null)
-        {
-          connectorRegistry.put(connectorID, this);
-          connectorRegistry.commit();
-        }
-
         finishedConnecting.countDown(); // Just in case of suspicion
         finishedNegotiating.countDown();
         break;
@@ -287,7 +241,7 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
 
   public boolean isConnected()
   {
-    return getState() == State.CONNECTED;
+    return getState() == ConnectorState.CONNECTED;
   }
 
   public void connectAsync() throws ConnectorException
@@ -308,8 +262,8 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
 
   public boolean waitForConnection(long timeout) throws ConnectorException
   {
-    State state = getState();
-    if (state == State.DISCONNECTED)
+    ConnectorState connectorState = getState();
+    if (connectorState == ConnectorState.DISCONNECTED)
     {
       return false;
     }
@@ -506,7 +460,7 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
       return null;
     }
 
-    ProtocolFactoryID protocolFactoryID = ContainerUtil.createProtocolFactoryID(getType(), protocolID);
+    ProtocolFactoryID protocolFactoryID = ContainerUtil.createProtocolFactoryID(getLocation(), protocolID);
     ProtocolFactory factory = protocolFactoryRegistry.get(protocolFactoryID);
 
     if (factory == null)
@@ -522,64 +476,24 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
     return factory.createProtocol(channel, protocolData);
   }
 
+  protected void fireStateChanged(ConnectorState oldState, ConnectorState newState)
+  {
+    notifier.fireEvent(new ConnectorStateEventImpl(this, oldState, newState));
+  }
+
   protected void fireChannelAboutToOpen(Channel channel)
   {
-    for (ChannelListener listener : channelListeners)
-    {
-      try
-      {
-        listener.notifyChannelOpened(channel);
-      }
-      catch (Exception ex)
-      {
-        Net4j.LOG.error(ex);
-      }
-    }
+    notifier.fireEvent(new ConnectorChannelsEventImpl(this, channel, ConnectorChannelsEvent.Type.ABOUT_TO_OPEN));
   }
 
   protected void fireChannelOpened(Channel channel)
   {
-    for (ChannelListener listener : channelListeners)
-    {
-      try
-      {
-        listener.notifyChannelOpened(channel);
-      }
-      catch (Exception ex)
-      {
-        Net4j.LOG.error(ex);
-      }
-    }
+    notifier.fireEvent(new ConnectorChannelsEventImpl(this, channel, ConnectorChannelsEvent.Type.OPENED));
   }
 
   protected void fireChannelClosing(Channel channel)
   {
-    for (ChannelListener listener : channelListeners)
-    {
-      try
-      {
-        listener.notifyChannelClosing(channel);
-      }
-      catch (Exception ex)
-      {
-        Net4j.LOG.error(ex);
-      }
-    }
-  }
-
-  protected void fireStateChanged(State newState, State oldState)
-  {
-    for (StateListener listener : stateListeners)
-    {
-      try
-      {
-        listener.notifyStateChanged(this, newState, oldState);
-      }
-      catch (Exception ex)
-      {
-        Net4j.LOG.error(ex);
-      }
-    }
+    notifier.fireEvent(new ConnectorChannelsEventImpl(this, channel, ConnectorChannelsEvent.Type.CLOSING));
   }
 
   @Override
@@ -608,13 +522,13 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
   protected void onActivate() throws Exception
   {
     super.onActivate();
-    setState(State.CONNECTING);
+    setState(ConnectorState.CONNECTING);
   }
 
   @Override
   protected void onDeactivate() throws Exception
   {
-    setState(State.DISCONNECTED);
+    setState(ConnectorState.DISCONNECTED);
     for (short i = 0; i < channels.size(); i++)
     {
       ChannelImpl channel = channels.get(i);
@@ -698,6 +612,64 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
       ChannelImpl channel = (ChannelImpl)notifier;
       fireChannelClosing(channel);
       removeChannel(channel);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static class ConnectorStateEventImpl extends EventImpl implements ConnectorStateEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private ConnectorState oldState;
+
+    private ConnectorState newState;
+
+    public ConnectorStateEventImpl(INotifier notifier, ConnectorState oldState, ConnectorState newState)
+    {
+      super(notifier);
+      this.oldState = oldState;
+      this.newState = newState;
+    }
+
+    public ConnectorState getOldState()
+    {
+      return oldState;
+    }
+
+    public ConnectorState getNewState()
+    {
+      return newState;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static class ConnectorChannelsEventImpl extends EventImpl implements ConnectorChannelsEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private Channel channel;
+
+    private ConnectorChannelsEvent.Type type;
+
+    public ConnectorChannelsEventImpl(INotifier notifier, Channel channel, Type type)
+    {
+      super(notifier);
+      this.channel = channel;
+      this.type = type;
+    }
+
+    public Channel getChannel()
+    {
+      return channel;
+    }
+
+    public ConnectorChannelsEvent.Type getType()
+    {
+      return type;
     }
   }
 }

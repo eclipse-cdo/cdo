@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -12,9 +12,9 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.transport.ConnectorLocation;
 import org.eclipse.net4j.transport.Protocol;
 import org.eclipse.net4j.transport.ProtocolFactory;
-import org.eclipse.net4j.transport.Connector.Type;
 
 import org.eclipse.internal.net4j.transport.AbstractProtocol;
 import org.eclipse.internal.net4j.transport.AbstractProtocolFactory;
@@ -41,7 +41,7 @@ public class TestProtocolFactory extends AbstractProtocolFactory implements Prot
     return PROTOCOL_ID;
   }
 
-  public Set<Type> getConnectorTypes()
+  public Set<ConnectorLocation> getLocations()
   {
     return ProtocolFactory.SYMMETRIC;
   }

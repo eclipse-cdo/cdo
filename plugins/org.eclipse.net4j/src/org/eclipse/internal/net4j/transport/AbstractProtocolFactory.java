@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport;
 
+import org.eclipse.net4j.transport.ConnectorLocation;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.ProtocolFactoryID;
-import org.eclipse.net4j.transport.Connector.Type;
 import org.eclipse.net4j.transport.container.ContainerUtil;
 
 import java.text.MessageFormat;
@@ -28,12 +28,12 @@ public abstract class AbstractProtocolFactory implements ProtocolFactory
 
   public final boolean isForClients()
   {
-    return getConnectorTypes().contains(Type.CLIENT);
+    return getLocations().contains(ConnectorLocation.CLIENT);
   }
 
   public final boolean isForServers()
   {
-    return getConnectorTypes().contains(Type.SERVER);
+    return getLocations().contains(ConnectorLocation.SERVER);
   }
 
   public final boolean isSymmetric()
@@ -41,14 +41,14 @@ public abstract class AbstractProtocolFactory implements ProtocolFactory
     return isForClients() && isForServers();
   }
 
-  public ProtocolFactoryID createID(Type type)
+  public ProtocolFactoryID getID(ConnectorLocation location)
   {
-    return ContainerUtil.createProtocolFactoryID(type, getProtocolID());
+    return ContainerUtil.createProtocolFactoryID(location, getProtocolID());
   }
 
   @Override
   public String toString()
   {
-    return MessageFormat.format("Protocol.Factory({0}, {1})", getProtocolID(), getConnectorTypes());
+    return MessageFormat.format("Protocol.Factory({0}, {1})", getProtocolID(), getLocations());
   }
 }

@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,16 +10,19 @@
  **************************************************************************/
 package org.eclipse.net4j.transport;
 
+import org.eclipse.net4j.util.event.INotifier;
+
 import org.eclipse.internal.net4j.transport.AbstractConnector;
 import org.eclipse.internal.net4j.transport.ChannelImpl;
 
 /**
  * One endpoint of a physical connection of arbitrary nature between two
  * communicating parties. A {@link Connector} encapsulates the process of
- * establishing and closing such connections and has a {@link Type} of
- * {@link Type#CLIENT} or {@link Type#SERVER} with respect to this process. Once
- * a connection is established either party can use its connector to open
- * multiple {@link Channel}s to asynchronously exchange {@link Buffer}s.
+ * establishing and closing such connections and has a {@link ConnectorLocation}
+ * of {@link ConnectorLocation#CLIENT} or {@link ConnectorLocation#SERVER} with
+ * respect to this process. Once a connection is established either party can
+ * use its connector to open multiple {@link Channel}s to asynchronously
+ * exchange {@link Buffer}s.
  * <p>
  * This interface is <b>not</b> intended to be implemented by clients.
  * Providers of connectors for new physical connection types have to subclass
@@ -29,24 +32,25 @@ import org.eclipse.internal.net4j.transport.ChannelImpl;
  * 
  * @author Eike Stepper
  */
-public interface Connector
+public interface Connector extends INotifier.Introspection
 {
   public Integer getID();
 
-  public Type getType();
+  public ConnectorLocation getLocation();
 
   public boolean isClient();
 
   public boolean isServer();
 
-  public ConnectorDescription getDescription();
+  public String getDescription();
 
   public ConnectorCredentials getCredentials();
 
-  public State getState();
+  public ConnectorState getState();
 
   /**
-   * Same as <code>{@link #getState()} == {@link State#CONNECTED}</code>.
+   * Same as
+   * <code>{@link #getState()} == {@link ConnectorState#CONNECTED}</code>.
    * <p>
    */
   public boolean isConnected();
@@ -102,48 +106,4 @@ public interface Connector
   public Channel openChannel(String protocolID) throws ConnectorException;
 
   public Channel openChannel(String protocolID, Object protocolData) throws ConnectorException;
-
-  public void addStateListener(StateListener listener);
-
-  public void removeStateListener(StateListener listener);
-
-  public void addChannelListener(ChannelListener listener);
-
-  public void removeChannelListener(ChannelListener listener);
-
-  /**
-   * @author Eike Stepper
-   */
-  public enum Type
-  {
-    CLIENT, SERVER
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public enum State
-  {
-    DISCONNECTED, CONNECTING, NEGOTIATING, CONNECTED
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface StateListener
-  {
-    public void notifyStateChanged(Connector connector, State newState, State oldState);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface ChannelListener
-  {
-    public void notifyChannelAboutToOpen(Channel channel);
-
-    public void notifyChannelOpened(Channel channel);
-
-    public void notifyChannelClosing(Channel channel);
-  }
 }

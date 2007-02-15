@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,21 +10,16 @@
  **************************************************************************/
 package org.eclipse.net4j.util.concurrent;
 
+import java.util.concurrent.ExecutorCompletionService;
+
 /**
- * Synchronizes a producer and a consumer thread letting the producer pass a
- * value to the consumer. Both producer and consumer must have access to this
- * {@link Synchronizer} and there must only ever exist one consumer for it. Once
- * the result value is consumed by the consumer this {@link Synchronizer} must
- * not be reused.
- * <p>
+ * TODO Replace by {@link ExecutorCompletionService}?
  * 
  * @author Eike Stepper
  */
-public interface Synchronizer<RESULT>
+public interface IWorkSerializer
 {
-  public RESULT get(long timeout);
+  public void addWork(Runnable work);
 
-  public void put(RESULT result);
-
-  public boolean put(RESULT result, long timeout);
+  public void dispose();
 }

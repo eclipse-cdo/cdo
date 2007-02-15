@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,19 +8,28 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport.container;
+package org.eclipse.internal.net4j.util;
+
+import java.io.Serializable;
 
 /**
  * @author Eike Stepper
  */
-public interface ContainerAdapterID
+public abstract class Value implements Cloneable, Serializable
 {
-  public Type getType();
-
-  public String getName();
-
-  public enum Type
+  protected Value()
   {
-    ACCEPTOR, CONNECTOR, PROTOCOL
   }
+
+  @Override
+  protected abstract Object clone() throws CloneNotSupportedException;
+
+  @Override
+  public abstract boolean equals(Object obj);
+
+  @Override
+  public abstract int hashCode();
+
+  @Override
+  public abstract String toString();
 }

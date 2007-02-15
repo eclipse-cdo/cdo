@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,10 +10,11 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport;
 
-import org.eclipse.net4j.transport.Connector;
+import org.eclipse.net4j.transport.ConnectorLocation;
 import org.eclipse.net4j.transport.ProtocolFactoryID;
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.Value;
+
+import org.eclipse.internal.net4j.util.Value;
 
 import java.text.MessageFormat;
 
@@ -24,19 +25,19 @@ public class ProtocolFactoryIDImpl extends Value implements ProtocolFactoryID
 {
   private static final long serialVersionUID = 1L;
 
-  private Connector.Type type;
+  private ConnectorLocation location;
 
   private String protocolID;
 
-  public ProtocolFactoryIDImpl(Connector.Type type, String protocolID)
+  public ProtocolFactoryIDImpl(ConnectorLocation location, String protocolID)
   {
-    this.type = type;
+    this.location = location;
     this.protocolID = protocolID;
   }
 
-  public Connector.Type getType()
+  public ConnectorLocation getLocation()
   {
-    return type;
+    return location;
   }
 
   public String getProtocolID()
@@ -56,7 +57,7 @@ public class ProtocolFactoryIDImpl extends Value implements ProtocolFactoryID
     if (obj instanceof ProtocolFactoryID)
     {
       ProtocolFactoryID that = (ProtocolFactoryID)obj;
-      return this.type == that.getType() && ObjectUtil.equals(this.protocolID, that.getProtocolID());
+      return this.location == that.getLocation() && ObjectUtil.equals(this.protocolID, that.getProtocolID());
     }
 
     return false;
@@ -65,12 +66,12 @@ public class ProtocolFactoryIDImpl extends Value implements ProtocolFactoryID
   @Override
   public int hashCode()
   {
-    return type.hashCode() ^ protocolID.hashCode();
+    return location.hashCode() ^ protocolID.hashCode();
   }
 
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}[{1}]", type, protocolID);
+    return MessageFormat.format("{0}[{1}]", location, protocolID);
   }
 }

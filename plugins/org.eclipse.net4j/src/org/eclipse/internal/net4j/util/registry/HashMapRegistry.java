@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.registry;
+package org.eclipse.internal.net4j.util.registry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,31 +16,27 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class HashMapDelegatingRegistry<K, V> extends AbstractDelegatingRegistry<K, V>
+public class HashMapRegistry<K, V> extends AbstractRegistry<K, V>
 {
   private Map<K, V> map;
 
-  public HashMapDelegatingRegistry(IRegistry<K, V> delegate)
+  public HashMapRegistry()
   {
-    super(delegate);
     map = new HashMap();
   }
 
-  public HashMapDelegatingRegistry(IRegistry<K, V> delegate, int initialCapacity)
+  public HashMapRegistry(int initialCapacity)
   {
-    super(delegate);
     map = new HashMap(initialCapacity);
   }
 
-  public HashMapDelegatingRegistry(IRegistry<K, V> delegate, int initialCapacity, float loadFactor)
+  public HashMapRegistry(int initialCapacity, float loadFactor)
   {
-    super(delegate);
     map = new HashMap(initialCapacity, loadFactor);
   }
 
-  public HashMapDelegatingRegistry(IRegistry<K, V> delegate, Map<? extends K, ? extends V> m)
+  public HashMapRegistry(Map<? extends K, ? extends V> m)
   {
-    super(delegate);
     map = new HashMap(m);
   }
 

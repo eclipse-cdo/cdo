@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,16 +17,16 @@ import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ChannelID;
 import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.Value;
-import org.eclipse.net4j.util.concurrent.AsynchronousWorkSerializer;
-import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
-import org.eclipse.net4j.util.concurrent.WorkSerializer;
+import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.BufferImpl.State;
+import org.eclipse.internal.net4j.util.Value;
+import org.eclipse.internal.net4j.util.concurrent.AsynchronousWorkSerializer;
+import org.eclipse.internal.net4j.util.concurrent.SynchronousWorkSerializer;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -51,7 +51,7 @@ public class ChannelImpl extends LifecycleImpl implements Channel, BufferProvide
 
   private ExecutorService receiveExecutor;
 
-  private WorkSerializer receiveSerializer;
+  private IWorkSerializer receiveSerializer;
 
   private Queue<Buffer> sendQueue;
 
@@ -94,17 +94,17 @@ public class ChannelImpl extends LifecycleImpl implements Channel, BufferProvide
 
   public short getBufferCapacity()
   {
-    return BufferUtil.getBufferProvider(connector).getBufferCapacity();
+    return connector.getBufferProvider().getBufferCapacity();
   }
 
   public Buffer provideBuffer()
   {
-    return BufferUtil.getBufferProvider(connector).provideBuffer();
+    return connector.getBufferProvider().provideBuffer();
   }
 
   public void retainBuffer(Buffer buffer)
   {
-    BufferUtil.getBufferProvider(connector).retainBuffer(buffer);
+    connector.getBufferProvider().retainBuffer(buffer);
   }
 
   public Queue<Buffer> getSendQueue()

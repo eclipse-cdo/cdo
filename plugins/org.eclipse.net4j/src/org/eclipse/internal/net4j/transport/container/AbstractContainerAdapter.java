@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -12,21 +12,21 @@ package org.eclipse.internal.net4j.transport.container;
 
 import org.eclipse.net4j.transport.container.Container;
 import org.eclipse.net4j.transport.container.ContainerAdapter;
-import org.eclipse.net4j.transport.container.ContainerAdapterID;
+import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
 
 /**
  * @author Eike Stepper
  */
-public class ContainerAdapterImpl implements ContainerAdapter
+public abstract class AbstractContainerAdapter extends LifecycleImpl implements ContainerAdapter
 {
   private Container container;
 
-  private ContainerAdapterID id;
+  private String type;
 
-  public ContainerAdapterImpl(Container container, ContainerAdapterID id)
+  public AbstractContainerAdapter(Container container, String type)
   {
     this.container = container;
-    this.id = id;
+    this.type = type;
   }
 
   public Container getContainer()
@@ -34,8 +34,8 @@ public class ContainerAdapterImpl implements ContainerAdapter
     return container;
   }
 
-  public ContainerAdapterID getID()
+  public String getType()
   {
-    return id;
+    return type;
   }
 }

@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,16 +10,16 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport.container;
 
+import org.eclipse.net4j.transport.Acceptor;
+import org.eclipse.net4j.transport.AcceptorFactory;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ChannelID;
 import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.transport.ConnectorFactory;
-import org.eclipse.net4j.transport.Protocol;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.ProtocolFactoryID;
 import org.eclipse.net4j.transport.container.ContainerAdapterFactory;
-import org.eclipse.net4j.transport.container.ContainerAdapterID;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import java.util.concurrent.ExecutorService;
@@ -33,19 +33,19 @@ public class ContainerImpl extends AbstractContainer
 
   private BufferProvider bufferProvider;
 
+  private IRegistry<String, AcceptorFactory> acceptorFactoryRegistry;
+
   private IRegistry<String, ConnectorFactory> connectorFactoryRegistry;
 
   private IRegistry<ProtocolFactoryID, ProtocolFactory> protocolFactoryRegistry;
 
-  private IRegistry<Integer, Connector> connectorRegistry;
+  private IRegistry<String, Acceptor> acceptorRegistry;
+
+  private IRegistry<String, Connector> connectorRegistry;
 
   private IRegistry<ChannelID, Channel> channelRegistry;
 
-  public ContainerImpl()
-  {
-  }
-
-  public ContainerImpl(IRegistry<ContainerAdapterID, ContainerAdapterFactory> adapterFactoryRegistry)
+  public ContainerImpl(IRegistry<String, ContainerAdapterFactory> adapterFactoryRegistry)
   {
     super(adapterFactoryRegistry);
   }
@@ -70,6 +70,16 @@ public class ContainerImpl extends AbstractContainer
     this.bufferProvider = bufferProvider;
   }
 
+  public IRegistry<String, AcceptorFactory> getAcceptorFactoryRegistry()
+  {
+    return acceptorFactoryRegistry;
+  }
+
+  public void setAcceptorFactoryRegistry(IRegistry<String, AcceptorFactory> acceptorFactoryRegistry)
+  {
+    this.acceptorFactoryRegistry = acceptorFactoryRegistry;
+  }
+
   public IRegistry<String, ConnectorFactory> getConnectorFactoryRegistry()
   {
     return connectorFactoryRegistry;
@@ -90,12 +100,22 @@ public class ContainerImpl extends AbstractContainer
     this.protocolFactoryRegistry = protocolFactoryRegistry;
   }
 
-  public IRegistry<Integer, Connector> getConnectorRegistry()
+  public IRegistry<String, Acceptor> getAcceptorRegistry()
+  {
+    return acceptorRegistry;
+  }
+
+  public void setAcceptorRegistry(IRegistry<String, Acceptor> acceptorRegistry)
+  {
+    this.acceptorRegistry = acceptorRegistry;
+  }
+
+  public IRegistry<String, Connector> getConnectorRegistry()
   {
     return connectorRegistry;
   }
 
-  public void setConnectorRegistry(IRegistry<Integer, Connector> connectorRegistry)
+  public void setConnectorRegistry(IRegistry<String, Connector> connectorRegistry)
   {
     this.connectorRegistry = connectorRegistry;
   }
@@ -108,28 +128,5 @@ public class ContainerImpl extends AbstractContainer
   public void setChannelRegistry(IRegistry<ChannelID, Channel> channelRegistry)
   {
     this.channelRegistry = channelRegistry;
-  }
-
-  public Connector createConnector(String connectorFactoryID)
-  {
-    IRegistry<String, ConnectorFactory> registry = getConnectorFactoryRegistry();
-    if (registry == null)
-    {
-      return null;
-    }
-
-    ConnectorFactory connectorFactory = registry.get(connectorFactoryID);
-    if (connectorFactory == null)
-    {
-      return null;
-    }
-
-    return connectorFactory.createConnector(this);
-  }
-
-  public Protocol createProtocol(String protocolID)
-  {
-    // TODO Implement method ContainerUtil.createProtocol()
-    throw new UnsupportedOperationException("Not yet implemented");
   }
 }

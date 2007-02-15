@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,9 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.registry;
+package org.eclipse.internal.net4j.util.registry;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.registry.IRegistry;
+import org.eclipse.net4j.util.registry.IRegistryDelta;
+import org.eclipse.net4j.util.registry.IRegistryEvent;
+import org.eclipse.net4j.util.registry.IRegistryListener;
 import org.eclipse.net4j.util.registry.IRegistryDelta.Kind;
 
 import org.eclipse.internal.net4j.bundle.Net4j;

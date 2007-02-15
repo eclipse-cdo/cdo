@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,19 +14,17 @@ import org.eclipse.net4j.transport.BufferPool;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ChannelID;
-import org.eclipse.net4j.transport.Connector;
+import org.eclipse.net4j.transport.ConnectorLocation;
 import org.eclipse.net4j.transport.Protocol;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.ProtocolFactoryID;
-import org.eclipse.net4j.transport.container.ContainerAdapterID.Type;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.transport.BufferFactoryImpl;
 import org.eclipse.internal.net4j.transport.BufferPoolImpl;
 import org.eclipse.internal.net4j.transport.BufferUtil;
 import org.eclipse.internal.net4j.transport.ProtocolFactoryIDImpl;
-import org.eclipse.internal.net4j.transport.container.ContainerAdapterIDImpl;
-import org.eclipse.internal.net4j.transport.container.ContainerImpl;
+import org.eclipse.internal.net4j.transport.container.DefaultContainer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,24 +39,30 @@ public final class ContainerUtil
   {
   }
 
-  public static ContainerAdapterID createContainerAdapterID(Type type, String name)
+  public static ProtocolFactoryID createProtocolFactoryID(ConnectorLocation connectorLocation, String protocolID)
   {
-    return new ContainerAdapterIDImpl(type, name);
-  }
-
-  public static ProtocolFactoryID createProtocolFactoryID(Connector.Type type, String protocolID)
-  {
-    return new ProtocolFactoryIDImpl(type, protocolID);
-  }
-
-  public static Container createContainer(IRegistry<ContainerAdapterID, ContainerAdapterFactory> adapterFactoryRegistry)
-  {
-    return new ContainerImpl(adapterFactoryRegistry);
+    return new ProtocolFactoryIDImpl(connectorLocation, protocolID);
   }
 
   public static Container createContainer()
   {
-    return new ContainerImpl();
+    return new DefaultContainer();
+  }
+
+  public static Container createContainer(short bufferCapacity)
+  {
+    return new DefaultContainer(bufferCapacity);
+  }
+
+  public static Container createContainer(IRegistry<String, ContainerAdapterFactory> adapterFactoryRegistry)
+  {
+    return new DefaultContainer(adapterFactoryRegistry);
+  }
+
+  public static Container createContainer(IRegistry<String, ContainerAdapterFactory> adapterFactoryRegistry,
+      short bufferCapacity)
+  {
+    return new DefaultContainer(adapterFactoryRegistry, bufferCapacity);
   }
 
   public static BufferProvider createBufferFactory(short bufferCapacity)
@@ -135,11 +139,11 @@ public final class ContainerUtil
   // return new TCPSelectorImpl();
   // }
 
-  public static Collection<Channel> getChannels(Container container, String protocolID, Set<Connector.Type> types)
+  public static Collection<Channel> getChannels(Container container, String protocolID, Set<ConnectorLocation> locations)
   {
-    if (types == null)
+    if (locations == null)
     {
-      types = ProtocolFactory.SYMMETRIC;
+      locations = ProtocolFactory.SYMMETRIC;
     }
 
     IRegistry<ChannelID, Channel> channelRegistry = container.getChannelRegistry();
@@ -152,7 +156,7 @@ public final class ContainerUtil
     Collection<Channel> result = new ArrayList(channels.size());
     for (Channel channel : channels)
     {
-      if (types.contains(channel.getConnector().getType()))
+      if (locations.contains(channel.getConnector().getLocation()))
       {
         if (protocolID == null || protocolID.length() == 0)
         {
@@ -180,9 +184,9 @@ public final class ContainerUtil
     return getChannels(container, protocolID, null);
   }
 
-  public static Collection<Channel> getChannels(Container container, Set<Connector.Type> types)
+  public static Collection<Channel> getChannels(Container container, Set<ConnectorLocation> locations)
   {
-    return getChannels(container, null, types);
+    return getChannels(container, null, locations);
   }
 
   // public static Map<Type, IRegistry<ProtocolFactoryID, ProtocolFactory>>

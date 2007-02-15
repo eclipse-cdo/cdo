@@ -103,7 +103,10 @@ public abstract class AbstractTCPTest extends AbstractOMTest
 
   protected void startTransport()
   {
-    assertTrue(getAcceptor().isActive());
-    assertTrue(getConnector().isActive());
+    if (container != null)
+    {
+      assertTrue(getAcceptor().isActive());
+      assertTrue(getConnector().isActive());
+    }
   }
 }

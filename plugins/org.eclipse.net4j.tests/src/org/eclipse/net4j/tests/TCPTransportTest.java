@@ -202,6 +202,10 @@ public class TCPTransportTest extends AbstractTCPTest
     }
   }
 
+  /**
+   * TODO Fails occasionally ;-( Caused by: java.lang.IllegalStateException:
+   * selectionKey == null
+   */
   public void testTextStreaming() throws Exception
   {
     final int COUNT = 1;

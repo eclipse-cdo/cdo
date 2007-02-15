@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.internal.tcp.TCPContainerAdapterFactoryImpl;
+import org.eclipse.net4j.container.Container;
+import org.eclipse.net4j.container.ContainerUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
-import org.eclipse.net4j.transport.container.Container;
-import org.eclipse.net4j.transport.container.ContainerUtil;
+import org.eclipse.net4j.tcp.internal.container.TCPContainerAdapterFactoryImpl;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.internal.net4j.transport.AbstractAcceptor;

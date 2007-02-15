@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
+import org.eclipse.net4j.container.Container;
 import org.eclipse.net4j.stream.ChannelInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
@@ -17,7 +18,6 @@ import org.eclipse.net4j.transport.AcceptorConnectorsEvent;
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ConnectorChannelsEvent;
-import org.eclipse.net4j.transport.container.Container;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 

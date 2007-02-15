@@ -9,5 +9,4 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.core.runtime,
  org.junit,
- org.eclipse.net4j,
- org.eclipse.net4j.tcp
+ org.eclipse.net4j.tcp.container;visibility:=reexport

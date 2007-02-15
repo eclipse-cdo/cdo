@@ -10,11 +10,11 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
+import org.eclipse.net4j.container.Container;
 import org.eclipse.net4j.tests.signal.Request1;
 import org.eclipse.net4j.tests.signal.Request2;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.transport.Channel;
-import org.eclipse.net4j.transport.container.Container;
 
 import java.util.Arrays;
 

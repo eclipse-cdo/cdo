@@ -74,4 +74,9 @@ public class ProtocolFactoryIDImpl extends Value implements ProtocolFactoryID
   {
     return MessageFormat.format("{0}[{1}]", location, protocolID);
   }
+
+  public static ProtocolFactoryID create(ConnectorLocation location, String protocolID)
+  {
+    return new ProtocolFactoryIDImpl(location, protocolID);
+  }
 }

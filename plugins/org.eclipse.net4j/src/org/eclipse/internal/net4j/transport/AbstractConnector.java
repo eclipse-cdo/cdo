@@ -23,7 +23,6 @@ import org.eclipse.net4j.transport.ConnectorStateEvent;
 import org.eclipse.net4j.transport.Protocol;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.ProtocolFactoryID;
-import org.eclipse.net4j.transport.container.ContainerUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
@@ -460,7 +459,7 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
       return null;
     }
 
-    ProtocolFactoryID protocolFactoryID = ContainerUtil.createProtocolFactoryID(getLocation(), protocolID);
+    ProtocolFactoryID protocolFactoryID = ProtocolFactoryIDImpl.create(getLocation(), protocolID);
     ProtocolFactory factory = protocolFactoryRegistry.get(protocolFactoryID);
 
     if (factory == null)

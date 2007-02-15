@@ -13,7 +13,6 @@ package org.eclipse.internal.net4j.transport;
 import org.eclipse.net4j.transport.ConnectorLocation;
 import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.ProtocolFactoryID;
-import org.eclipse.net4j.transport.container.ContainerUtil;
 
 import java.text.MessageFormat;
 
@@ -43,7 +42,7 @@ public abstract class AbstractProtocolFactory implements ProtocolFactory
 
   public ProtocolFactoryID getID(ConnectorLocation location)
   {
-    return ContainerUtil.createProtocolFactoryID(location, getProtocolID());
+    return ProtocolFactoryIDImpl.create(location, getProtocolID());
   }
 
   @Override

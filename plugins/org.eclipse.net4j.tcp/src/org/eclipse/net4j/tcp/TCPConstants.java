@@ -8,21 +8,18 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport.container;
-
-import org.eclipse.net4j.transport.Acceptor;
-import org.eclipse.net4j.transport.Connector;
+package org.eclipse.net4j.tcp;
 
 /**
  * @author Eike Stepper
  */
-public interface ContainerAdapter
+public interface TCPConstants
 {
-  public Container getContainer();
 
-  public String getType();
+  public static final String TYPE = "TCP";
 
-  public void initAcceptor(Acceptor acceptor);
+  public static final String DEFAULT_ADDRESS = "0.0.0.0"; //$NON-NLS-1$
 
-  public void initConnector(Connector connector);
+  public static final int DEFAULT_PORT = 2036;
+
 }

@@ -32,7 +32,9 @@ public class DefaultContainer extends ContainerImpl
   {
     public Thread newThread(Runnable r)
     {
-      return new Thread(r);
+      Thread thread = new Thread(r);
+      thread.setDaemon(true);
+      return thread;
     }
   };
 

@@ -73,7 +73,11 @@ public abstract class AbstractTCPTest extends AbstractOMTest
   protected Container createContainer()
   {
     Container container = ContainerUtil.createContainer();
-    container.register(new TCPContainerAdapterFactoryImpl());
+    if (container != null)
+    {
+      container.register(new TCPContainerAdapterFactoryImpl());
+    }
+
     return container;
   }
 

@@ -21,6 +21,8 @@ import junit.framework.TestCase;
  */
 public abstract class AbstractOMTest extends TestCase
 {
+  private static boolean consoleEnabled;
+
   protected AbstractOMTest()
   {
   }
@@ -29,21 +31,55 @@ public abstract class AbstractOMTest extends TestCase
   protected void setUp() throws Exception
   {
     super.setUp();
-    System.out.print("================================= ");
-    System.out.print(getName());
-    System.out.println(" =================================");
+    System.out.println("************************************************");
+    System.out.println("START " + getName());
+    System.out.println("************************************************");
 
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     OMPlatform.INSTANCE.setDebugging(true);
+    enableConsole();
   }
 
   @Override
   protected void tearDown() throws Exception
   {
-    System.out.println();
-    System.out.println();
     Thread.sleep(20);
     super.tearDown();
+    System.out.println();
+    System.out.println();
+  }
+
+  protected void enableConsole()
+  {
+    if (!consoleEnabled)
+    {
+      PrintTraceHandler.CONSOLE.setShortContext(true);
+      OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
+      OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+      OMPlatform.INSTANCE.setDebugging(true);
+      consoleEnabled = true;
+    }
+  }
+
+  @SuppressWarnings("unused")
+  protected void disableConsole()
+  {
+    if (consoleEnabled)
+    {
+      consoleEnabled = false;
+      OMPlatform.INSTANCE.setDebugging(false);
+      OMPlatform.INSTANCE.removeTraceHandler(PrintTraceHandler.CONSOLE);
+      OMPlatform.INSTANCE.removeLogHandler(PrintLogHandler.CONSOLE);
+    }
+  }
+
+  protected static void msg(String m)
+  {
+    if (consoleEnabled)
+    {
+      System.out.println();
+      System.out.println("--> " + m);
+    }
   }
 }

@@ -10,8 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
+import org.eclipse.net4j.tcp.TCPAcceptor;
 import org.eclipse.net4j.tcp.TCPSelector;
 import org.eclipse.net4j.tcp.TCPSelectorListener;
+import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
@@ -20,6 +22,8 @@ import org.eclipse.internal.net4j.transport.DescriptionUtil;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.SocketAddress;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
@@ -28,7 +32,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class TCPAcceptorImpl extends AbstractAcceptor implements TCPSelectorListener.Passive
+public class TCPAcceptorImpl extends AbstractAcceptor implements TCPAcceptor, TCPSelectorListener.Passive
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_ACCEPTOR, TCPAcceptorImpl.class);
 
@@ -36,8 +40,22 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPSelectorList
 
   private ServerSocketChannel serverSocketChannel;
 
+  private String address;
+
+  private int port;
+
   public TCPAcceptorImpl()
   {
+  }
+
+  public String getAddress()
+  {
+    return address;
+  }
+
+  public int getPort()
+  {
+    return port;
   }
 
   public TCPSelector getSelector()
@@ -90,7 +108,10 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPSelectorList
 
   protected ServerTCPConnectorImpl createConnector(SocketChannel socketChannel)
   {
+    String description = createConnectorDescription(socketChannel);
+
     ServerTCPConnectorImpl connector = new ServerTCPConnectorImpl();
+    connector.setDescription(description);
     connector.setSocketChannel(socketChannel);
     connector.setReceiveExecutor(getReceiveExecutor());
     connector.setProtocolFactoryRegistry(getProtocolFactoryRegistry());
@@ -105,7 +126,13 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPSelectorList
     super.onAboutToActivate();
     if (getDescription() == null)
     {
-      throw new IllegalStateException("getDescription() == null"); //$NON-NLS-1$
+      throw new IllegalStateException("description == null"); //$NON-NLS-1$
+    }
+    else
+    {
+      String[] elements = DescriptionUtil.getElements(getDescription());
+      address = elements[1];
+      port = Integer.parseInt(elements[2]);
     }
 
     if (selector == null)
@@ -118,17 +145,33 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPSelectorList
   protected void onActivate() throws Exception
   {
     super.onActivate();
-
-    String[] elements = DescriptionUtil.getElements(getDescription());
-    String address = elements[1];
-    int port = Integer.parseInt(elements[2]);
-
-    InetAddress addr = InetAddress.getByName(address);
-    InetSocketAddress sAddr = new InetSocketAddress(addr, port);
+    InetSocketAddress addr = null;
+    if (address != null)
+    {
+      addr = new InetSocketAddress(InetAddress.getByName(address), port);
+    }
 
     serverSocketChannel = ServerSocketChannel.open();
     serverSocketChannel.configureBlocking(false);
-    serverSocketChannel.socket().bind(sAddr);
+
+    ServerSocket socket = serverSocketChannel.socket();
+    socket.bind(addr);
+
+    if (address == null)
+    {
+      address = socket.getInetAddress().toString();
+      if (address.startsWith("/"))
+      {
+        address = address.substring(1);
+      }
+
+      int colon = address.indexOf(':');
+      if (colon != -1)
+      {
+        port = Integer.parseInt(address.substring(colon + 1));
+        address = address.substring(0, colon);
+      }
+    }
 
     selector.registerAsync(serverSocketChannel, this);
   }
@@ -138,5 +181,25 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPSelectorList
   {
     serverSocketChannel.close();
     super.onDeactivate();
+  }
+
+  private String createConnectorDescription(SocketChannel socketChannel)
+  {
+    SocketAddress addr = socketChannel.socket().getRemoteSocketAddress();
+    String host = addr.toString();
+    if (host.startsWith("/"))
+    {
+      host = host.substring(1);
+    }
+
+    int port = 0;
+    int colon = host.indexOf(':');
+    if (colon != -1)
+    {
+      port = Integer.parseInt(host.substring(colon + 1));
+      host = host.substring(0, colon);
+    }
+
+    return TCPUtil.createConnectorDescription(host, port);
   }
 }

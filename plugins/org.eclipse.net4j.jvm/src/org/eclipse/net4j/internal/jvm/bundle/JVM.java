@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.tcp.bundle;
+package org.eclipse.net4j.internal.jvm.bundle;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMLogger;
@@ -21,17 +21,17 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Eike Stepper
  */
-public final class TCP
+public final class JVM
 {
-  public static final String BUNDLE_ID = "org.eclipse.net4j.tcp"; //$NON-NLS-1$
+  public static final String BUNDLE_ID = "org.eclipse.net4j.jvm"; //$NON-NLS-1$
 
-  public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, TCP.class);
+  public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, JVM.class);
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  private TCP()
+  private JVM()
   {
   }
   /**

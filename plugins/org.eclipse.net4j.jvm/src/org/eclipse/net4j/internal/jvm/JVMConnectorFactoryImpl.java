@@ -8,33 +8,24 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.registry;
+package org.eclipse.net4j.internal.jvm;
 
-import java.util.Map;
+import org.eclipse.net4j.jvm.JVMConstants;
+import org.eclipse.net4j.transport.Connector;
+import org.eclipse.net4j.transport.ConnectorFactory;
 
 /**
  * @author Eike Stepper
  */
-public interface IRegistry<K, V> extends Map<K, V>
+public class JVMConnectorFactoryImpl implements ConnectorFactory
 {
-  public void addRegistryListener(IRegistryListener<K, V> listener);
-
-  public void removeRegistryListener(IRegistryListener<K, V> listener);
-
-  public boolean isAutoCommit();
-
-  public void setAutoCommit(boolean on);
-
-  public void commit(boolean notifications);
-
-  public void commit();
-
-  public void dispose();
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface Unmodifiable<K, V> extends IRegistry<K, V>
+  public String getType()
   {
+    return JVMConstants.TYPE;
+  }
+
+  public Connector createConnector()
+  {
+    return new ClientJVMConnectorImpl();
   }
 }

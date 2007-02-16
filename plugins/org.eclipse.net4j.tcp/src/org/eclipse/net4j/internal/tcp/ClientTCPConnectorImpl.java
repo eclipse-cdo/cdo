@@ -13,7 +13,6 @@ package org.eclipse.net4j.internal.tcp;
 import org.eclipse.net4j.transport.ConnectorLocation;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
-import org.eclipse.internal.net4j.transport.DescriptionUtil;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -52,26 +51,11 @@ public class ClientTCPConnectorImpl extends AbstractTCPConnector
   }
 
   @Override
-  protected void onAboutToActivate() throws Exception
-  {
-    super.onAboutToActivate();
-    if (getDescription() == null)
-    {
-      throw new IllegalStateException("getDescription() == null"); //$NON-NLS-1$
-    }
-  }
-
-  @Override
   protected void onActivate() throws Exception
   {
     super.onActivate();
-
-    String[] elements = DescriptionUtil.getElements(getDescription());
-    String host = elements[1];
-    int port = Integer.parseInt(elements[2]);
-
-    InetAddress addr = InetAddress.getByName(host);
-    InetSocketAddress sAddr = new InetSocketAddress(addr, port);
+    InetAddress addr = InetAddress.getByName(getHost());
+    InetSocketAddress sAddr = new InetSocketAddress(addr, getPort());
     getSocketChannel().connect(sAddr);
   }
 }

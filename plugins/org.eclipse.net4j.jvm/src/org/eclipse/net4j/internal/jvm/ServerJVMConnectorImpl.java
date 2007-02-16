@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j.transport.embedded;
+package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.transport.ConnectorLocation;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -16,9 +16,9 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 /**
  * @author Eike Stepper
  */
-public class ServerEmbeddedConnectorImpl extends AbstractEmbeddedConnector
+public class ServerJVMConnectorImpl extends AbstractJVMConnector
 {
-  public ServerEmbeddedConnectorImpl(ClientEmbeddedConnectorImpl clientPeer)
+  public ServerJVMConnectorImpl(ClientJVMConnectorImpl clientPeer)
   {
     setPeer(clientPeer);
   }

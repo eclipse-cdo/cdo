@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
+import org.eclipse.net4j.tcp.TCPConnector;
 import org.eclipse.net4j.tcp.TCPSelector;
 import org.eclipse.net4j.tcp.TCPSelectorListener;
 import org.eclipse.net4j.transport.Buffer;
@@ -21,6 +22,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.AbstractConnector;
 import org.eclipse.internal.net4j.transport.ChannelImpl;
+import org.eclipse.internal.net4j.transport.DescriptionUtil;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
@@ -32,7 +34,8 @@ import java.util.Queue;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractTCPConnector extends AbstractConnector implements TCPSelectorListener.Active
+public abstract class AbstractTCPConnector extends AbstractConnector implements TCPConnector,
+    TCPSelectorListener.Active
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, AbstractTCPConnector.class);
 
@@ -46,8 +49,22 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
 
   private ControlChannelImpl controlChannel;
 
+  private String host;
+
+  private int port;
+
   public AbstractTCPConnector()
   {
+  }
+
+  public String getHost()
+  {
+    return host;
+  }
+
+  public int getPort()
+  {
+    return port;
   }
 
   public TCPSelector getSelector()
@@ -268,6 +285,19 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     if (selector == null)
     {
       throw new IllegalStateException("selector == null");
+    }
+
+    String[] elements = DescriptionUtil.getElements(getDescription());
+    host = elements[2];
+    if (host == null)
+    {
+      throw new IllegalStateException("host == null");
+    }
+
+    port = Integer.parseInt(elements[3]);
+    if (port == 0)
+    {
+      throw new IllegalStateException("port == 0");
     }
   }
 

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j.transport.embedded;
+package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.Channel;
@@ -16,6 +16,7 @@ import org.eclipse.net4j.transport.ConnectorException;
 
 import org.eclipse.internal.net4j.transport.AbstractConnector;
 import org.eclipse.internal.net4j.transport.ChannelImpl;
+import org.eclipse.internal.net4j.transport.DescriptionUtil;
 
 import java.util.Queue;
 
@@ -24,20 +25,27 @@ import java.util.Queue;
  * 
  * @author Eike Stepper
  */
-public abstract class AbstractEmbeddedConnector extends AbstractConnector
+public abstract class AbstractJVMConnector extends AbstractConnector
 {
-  private AbstractEmbeddedConnector peer;
+  private AbstractJVMConnector peer;
 
-  public AbstractEmbeddedConnector()
+  private String name;
+
+  public AbstractJVMConnector()
   {
   }
 
-  public AbstractEmbeddedConnector getPeer()
+  public String getName()
+  {
+    return name;
+  }
+
+  public AbstractJVMConnector getPeer()
   {
     return peer;
   }
 
-  public void setPeer(AbstractEmbeddedConnector peer)
+  public void setPeer(AbstractJVMConnector peer)
   {
     this.peer = peer;
   }
@@ -78,5 +86,16 @@ public abstract class AbstractEmbeddedConnector extends AbstractConnector
     Buffer buffer = localQueue.poll();
     buffer.flip();
     peerChannel.handleBufferFromMultiplexer(buffer);
+  }
+
+  @Override
+  protected void onAboutToActivate() throws Exception
+  {
+    super.onAboutToActivate();
+    name = DescriptionUtil.getElement(getDescription(), 2);
+    if (name == null)
+    {
+      throw new IllegalStateException("name == null");
+    }
   }
 }

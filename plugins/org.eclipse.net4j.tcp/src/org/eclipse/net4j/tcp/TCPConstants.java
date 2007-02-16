@@ -15,11 +15,9 @@ package org.eclipse.net4j.tcp;
  */
 public interface TCPConstants
 {
-
-  public static final String TYPE = "TCP";
+  public static final String TYPE = "tcp";
 
   public static final String DEFAULT_ADDRESS = "0.0.0.0"; //$NON-NLS-1$
 
   public static final int DEFAULT_PORT = 2036;
-
 }

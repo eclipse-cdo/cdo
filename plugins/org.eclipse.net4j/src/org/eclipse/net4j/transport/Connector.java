@@ -44,6 +44,8 @@ public interface Connector extends INotifier.Introspection
 
   public String getDescription();
 
+  public String getUserID();
+
   public ConnectorCredentials getCredentials();
 
   public ConnectorState getState();

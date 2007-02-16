@@ -8,23 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.tcp.bundle;
+package org.eclipse.net4j.jvm;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
+import org.eclipse.net4j.transport.Connector;
 
 /**
  * @author Eike Stepper
  */
-public class Activator implements BundleActivator
+public interface JVMConnector extends Connector
 {
-  public void start(BundleContext context) throws Exception
-  {
-    TCP.BUNDLE.setBundleContext(context);
-  }
-
-  public void stop(BundleContext context) throws Exception
-  {
-    TCP.BUNDLE.setBundleContext(null);
-  }
+  public String getName();
 }

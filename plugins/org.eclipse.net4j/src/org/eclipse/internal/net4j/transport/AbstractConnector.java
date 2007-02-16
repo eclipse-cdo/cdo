@@ -60,6 +60,8 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
 
   private int connectorID = getNextConnectorID();
 
+  private String userID;
+
   private String description;
 
   private ConnectorCredentials credentials;
@@ -159,6 +161,11 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
   public boolean isServer()
   {
     return getLocation() == ConnectorLocation.SERVER;
+  }
+
+  public String getUserID()
+  {
+    return userID;
   }
 
   public String getDescription()
@@ -499,6 +506,15 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
   protected void onAboutToActivate() throws Exception
   {
     super.onAboutToActivate();
+    if (description == null)
+    {
+      throw new IllegalStateException("description == null"); //$NON-NLS-1$
+    }
+    else
+    {
+      userID = DescriptionUtil.getElement(description, 1);
+    }
+
     if (bufferProvider == null)
     {
       throw new IllegalStateException("bufferProvider == null"); //$NON-NLS-1$

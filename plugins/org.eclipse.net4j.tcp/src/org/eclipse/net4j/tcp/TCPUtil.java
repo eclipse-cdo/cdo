@@ -39,22 +39,22 @@ public final class TCPUtil
 
   public static String createConnectorDescription(String host)
   {
-    return createConnectorDescription(host, null);
+    return createConnectorDescription(null, host);
   }
 
   public static String createConnectorDescription(String host, int port)
   {
-    return createConnectorDescription(host, port, null);
+    return createConnectorDescription(null, host, port);
   }
 
-  public static String createConnectorDescription(String host, String userName)
+  public static String createConnectorDescription(String userName, String host)
   {
-    return createConnectorDescription(host, TCPConstants.DEFAULT_PORT, userName);
+    return createConnectorDescription(userName, host, TCPConstants.DEFAULT_PORT);
   }
 
-  public static String createConnectorDescription(String host, int port, String userName)
+  public static String createConnectorDescription(String userName, String host, int port)
   {
-    Object[] elements = { host, port, userName };
+    Object[] elements = { userName, host, port };
     return DescriptionUtil.getDescription(TCPConstants.TYPE, elements);
   }
 }

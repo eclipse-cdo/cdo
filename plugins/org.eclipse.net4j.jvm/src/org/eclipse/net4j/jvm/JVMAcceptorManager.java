@@ -8,33 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.registry;
+package org.eclipse.net4j.jvm;
 
-import java.util.Map;
+import org.eclipse.net4j.internal.jvm.JVMAcceptorManagerImpl;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 /**
  * @author Eike Stepper
  */
-public interface IRegistry<K, V> extends Map<K, V>
+public interface JVMAcceptorManager
 {
-  public void addRegistryListener(IRegistryListener<K, V> listener);
+  public static final JVMAcceptorManager INSTANCE = JVMAcceptorManagerImpl.INSTANCE;
 
-  public void removeRegistryListener(IRegistryListener<K, V> listener);
+  public IRegistry<String, JVMAcceptor> getAcceptorRegistry();
 
-  public boolean isAutoCommit();
-
-  public void setAutoCommit(boolean on);
-
-  public void commit(boolean notifications);
-
-  public void commit();
-
-  public void dispose();
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface Unmodifiable<K, V> extends IRegistry<K, V>
-  {
-  }
+  public JVMAcceptor getAcceptor(String name);
 }

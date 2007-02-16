@@ -171,7 +171,7 @@ public class TCPSelectorImpl extends LifecycleImpl implements TCPSelector, Runna
           operation.run();
         }
 
-        if (selector.select() > 0)
+        if (selector != null && selector.select() > 0)
         {
           Iterator<SelectionKey> it = selector.selectedKeys().iterator();
           while (it.hasNext())

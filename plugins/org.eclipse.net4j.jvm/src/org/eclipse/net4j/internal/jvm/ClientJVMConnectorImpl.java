@@ -10,14 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jvm;
 
-import org.eclipse.net4j.jvm.JVMAcceptor;
-import org.eclipse.net4j.jvm.JVMAcceptorManager;
 import org.eclipse.net4j.transport.ConnectorLocation;
 import org.eclipse.net4j.util.lifecycle.LifecycleListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleNotifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-
-import org.eclipse.internal.net4j.transport.DescriptionUtil;
 
 /**
  * @author Eike Stepper

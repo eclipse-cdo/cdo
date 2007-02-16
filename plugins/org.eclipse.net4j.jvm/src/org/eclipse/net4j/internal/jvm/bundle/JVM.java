@@ -34,6 +34,7 @@ public final class JVM
   private JVM()
   {
   }
+
   /**
    * @author Eike Stepper
    */

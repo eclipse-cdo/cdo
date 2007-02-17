@@ -85,17 +85,17 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
 
   private ConnectorState connectorState = ConnectorState.DISCONNECTED;
 
-  private NotifierImpl notifier = new NotifierImpl();
+  private transient NotifierImpl notifier = new NotifierImpl();
 
   /**
    * Is registered with each {@link Channel} of this {@link Connector}.
    * <p>
    */
-  private LifecycleListener channelLifecycleListener = new ChannelLifecycleListener();
+  private transient LifecycleListener channelLifecycleListener = new ChannelLifecycleListener();
 
-  private CountDownLatch finishedConnecting;
+  private transient CountDownLatch finishedConnecting;
 
-  private CountDownLatch finishedNegotiating;
+  private transient CountDownLatch finishedNegotiating;
 
   public AbstractConnector()
   {

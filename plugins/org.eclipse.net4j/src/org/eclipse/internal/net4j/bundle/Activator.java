@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.bundle;
 
+import org.eclipse.net4j.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import org.osgi.framework.BundleActivator;
@@ -24,6 +25,7 @@ public class Activator implements BundleActivator
   {
     AbstractOMPlatform.systemContext = context;
     AbstractOMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
+    AbstractOMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
     Net4j.BUNDLE.setBundleContext(context);
   }
 

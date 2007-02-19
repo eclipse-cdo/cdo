@@ -13,17 +13,26 @@ package org.eclipse.net4j.util.lifecycle;
 /**
  * @author Eike Stepper
  */
-public interface Lifecycle
+public class LifecycleException extends RuntimeException
 {
-  public void activate() throws LifecycleException;
+  private static final long serialVersionUID = 1L;
 
-  public Exception deactivate();
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface Introspection
+  public LifecycleException()
   {
-    public boolean isActive();
+  }
+
+  public LifecycleException(String message)
+  {
+    super(message);
+  }
+
+  public LifecycleException(Throwable cause)
+  {
+    super(cause);
+  }
+
+  public LifecycleException(String message, Throwable cause)
+  {
+    super(message, cause);
   }
 }

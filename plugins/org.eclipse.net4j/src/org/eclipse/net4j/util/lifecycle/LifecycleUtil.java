@@ -68,7 +68,7 @@ public final class LifecycleUtil
   /**
    * @see Activator
    */
-  public static void activate(Object object, boolean useAnnotation) throws Exception
+  public static void activate(Object object, boolean useAnnotation) throws LifecycleException
   {
     if (object instanceof Lifecycle)
     {

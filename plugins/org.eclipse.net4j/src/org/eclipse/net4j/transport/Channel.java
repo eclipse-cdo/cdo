@@ -24,6 +24,8 @@ package org.eclipse.net4j.transport;
  */
 public interface Channel extends BufferHandler
 {
+  public ChannelID getID();
+
   public short getChannelIndex();
 
   public Connector getConnector();

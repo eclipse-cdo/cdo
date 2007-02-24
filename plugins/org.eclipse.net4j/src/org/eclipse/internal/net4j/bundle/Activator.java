@@ -24,6 +24,7 @@ public class Activator implements BundleActivator
   public void start(BundleContext context) throws Exception
   {
     AbstractOMPlatform.systemContext = context;
+    PrintTraceHandler.CONSOLE.setPattern("{6} [{0}] {5}");
     AbstractOMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     AbstractOMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
     Net4j.BUNDLE.setBundleContext(context);

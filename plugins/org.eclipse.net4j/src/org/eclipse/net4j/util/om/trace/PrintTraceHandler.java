@@ -12,8 +12,10 @@ package org.eclipse.net4j.util.om.trace;
 
 import org.eclipse.net4j.util.IOUtil;
 import org.eclipse.net4j.util.om.OMTraceHandler;
+import org.eclipse.net4j.util.om.OMTracer;
 
 import java.io.PrintStream;
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -23,6 +25,8 @@ public class PrintTraceHandler implements OMTraceHandler
   public static final PrintTraceHandler CONSOLE = new PrintTraceHandler();
 
   private PrintStream stream;
+
+  private String pattern;
 
   private boolean shortContext;
 
@@ -34,6 +38,32 @@ public class PrintTraceHandler implements OMTraceHandler
   protected PrintTraceHandler()
   {
     this(IOUtil.OUT());
+  }
+
+  public String getPattern()
+  {
+    return pattern;
+  }
+
+  /**
+   * Pattern arguments:
+   * <p>
+   * <ul>
+   * <li>{0} --> String <b>tracerName</b><br>
+   * <li>{1} --> String <b>tracerShort</b><br>
+   * <li>{2} --> String <b>contextName</b><br>
+   * <li>{3} --> String <b>contextShort</b><br>
+   * <li>{4} --> long <b>timeStamp</b><br>
+   * <li>{5} --> String <b>message</b><br>
+   * <li>{6} --> String <b>threadName</b><br>
+   * <li>{7} --> long <b>threadID</b><br>
+   * <li>{8} --> int <b>threadPriority</b><br>
+   * <li>{9} --> Thread.State <b>threadState</b><br>
+   * </ul>
+   */
+  public void setPattern(String pattern)
+  {
+    this.pattern = pattern;
   }
 
   public boolean isShortContext()
@@ -48,20 +78,57 @@ public class PrintTraceHandler implements OMTraceHandler
 
   public void traced(Event event)
   {
-    String context = event.getContext().getName();
-    if (shortContext)
-    {
-      int pos = Math.max(context.lastIndexOf('.'), context.lastIndexOf('$'));
-      if (pos != -1)
-      {
-        context = context.substring(pos + 1);
-      }
-    }
-
-    stream.println(Thread.currentThread().getName() + " [" + context + "] " + event.getMessage()); //$NON-NLS-1$
+    String line = pattern == null ? format(shortContext, event) : format(pattern, event);
+    stream.println(line);
     if (event.getThrowable() != null)
     {
       IOUtil.print(event.getThrowable(), stream);
     }
+  }
+
+  public static String format(boolean shortContext, Event event)
+  {
+    Class context = event.getContext();
+    String contextName = shortContext ? context.getSimpleName() : context.getName();
+    return Thread.currentThread().getName() + " [" + contextName + "] " + event.getMessage();
+  }
+
+  /**
+   * Pattern arguments:
+   * <p>
+   * <ul>
+   * <li>{0} --> String <b>tracerName</b><br>
+   * <li>{1} --> String <b>tracerShort</b><br>
+   * <li>{2} --> String <b>contextName</b><br>
+   * <li>{3} --> String <b>contextShort</b><br>
+   * <li>{4} --> long <b>timeStamp</b><br>
+   * <li>{5} --> String <b>message</b><br>
+   * <li>{6} --> String <b>threadName</b><br>
+   * <li>{7} --> long <b>threadID</b><br>
+   * <li>{8} --> int <b>threadPriority</b><br>
+   * <li>{9} --> Thread.State <b>threadState</b><br>
+   * </ul>
+   */
+  public static String format(String pattern, Event event)
+  {
+    final OMTracer tracer = event.getTracer();
+    final String tracerName = tracer.getFullName();
+    final String tracerShort = tracer.getName();
+
+    final Class context = event.getContext();
+    final String contextName = context.getName();
+    final String contextShort = context.getName();
+
+    final long timeStamp = event.getTimeStamp();
+    final String message = event.getMessage();
+
+    final Thread thread = Thread.currentThread();
+    final String threadName = thread.getName();
+    final long threadID = thread.getId();
+    final int threadPriority = thread.getPriority();
+    final Thread.State threadState = thread.getState();
+
+    return MessageFormat.format(pattern, tracerName, tracerShort, contextName, contextShort, timeStamp, message,
+        threadName, threadID, threadPriority, threadState);
   }
 }

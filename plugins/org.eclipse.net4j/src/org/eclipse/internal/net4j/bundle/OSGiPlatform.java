@@ -33,7 +33,7 @@ public class OSGiPlatform extends AbstractOMPlatform
     {
       setDebugging(Platform.inDebugMode());
     }
-    catch (RuntimeException ignore)
+    catch (Throwable ignore)
     {
       ;
     }

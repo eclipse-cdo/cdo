@@ -15,7 +15,7 @@ package org.eclipse.net4j.util.lifecycle;
  */
 public interface Lifecycle
 {
-  public void activate() throws LifecycleException;
+  public void activate() throws Exception;
 
   public Exception deactivate();
 

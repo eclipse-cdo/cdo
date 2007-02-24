@@ -50,7 +50,7 @@ public class LifecycleImpl implements Lifecycle, LifecycleNotifier
     listeners.remove(listener);
   }
 
-  public final synchronized void activate() throws LifecycleException
+  public final synchronized void activate() throws Exception
   {
     if (!active)
     {
@@ -59,38 +59,14 @@ public class LifecycleImpl implements Lifecycle, LifecycleNotifier
         TRACER.trace("Activating " + this);//$NON-NLS-1$
       }
 
-      try
-      {
-        onAboutToActivate();
-      }
-      catch (RuntimeException ex)
-      {
-        throw ex;
-      }
-      catch (Exception ex)
-      {
-        throw new LifecycleException(ex);
-      }
-
+      onAboutToActivate();
       fireLifecycleAboutToActivate();
       if (DUMPER.isEnabled())
       {
         DUMPER.trace("DUMP" + ReflectUtil.toString(this)); //$NON-NLS-1$
       }
 
-      try
-      {
-        onActivate();
-      }
-      catch (RuntimeException ex)
-      {
-        throw ex;
-      }
-      catch (Exception ex)
-      {
-        throw new LifecycleException(ex);
-      }
-      
+      onActivate();
       active = true;
       fireLifecycleActivated();
     }

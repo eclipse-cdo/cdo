@@ -60,19 +60,32 @@ public final class LifecycleUtil
     return true;
   }
 
-  public static void activate(Object object) throws Exception
+  public static void activate(Object object)
   {
     activate(object, false);
   }
 
   /**
+   * @throws Exception
+   *           TODO
    * @see Activator
    */
-  public static void activate(Object object, boolean useAnnotation) throws LifecycleException
+  public static void activate(Object object, boolean useAnnotation)
   {
     if (object instanceof Lifecycle)
     {
-      ((Lifecycle)object).activate();
+      try
+      {
+        ((Lifecycle)object).activate();
+      }
+      catch (RuntimeException ex)
+      {
+        throw ex;
+      }
+      catch (Exception ex)
+      {
+        throw new LifecycleException(ex);
+      }
     }
     else if (useAnnotation)
     {

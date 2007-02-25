@@ -10,10 +10,18 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.views;
 
+import static org.eclipse.net4j.util.registry.IRegistryDelta.Kind.DEREGISTERED;
+import static org.eclipse.net4j.util.registry.IRegistryDelta.Kind.REGISTERED;
+
+import org.eclipse.emf.cdo.CDOAdapter;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.container.CDOContainerAdapter;
+import org.eclipse.emf.cdo.internal.container.CDOContainerAdapterImpl;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.registry.IRegistryDelta;
 import org.eclipse.net4j.util.registry.IRegistryEvent;
 import org.eclipse.net4j.util.registry.IRegistryListener;
 
@@ -22,7 +30,7 @@ import org.eclipse.swt.graphics.Image;
 import java.text.MessageFormat;
 import java.util.Collection;
 
-public class CDOSessionsItemProvider extends ItemProvider<CDOContainerAdapter> implements IRegistryListener
+public class CDOSessionsItemProvider extends ItemProvider<CDOContainerAdapter> implements IRegistryListener, IListener
 {
   public CDOSessionsItemProvider()
   {
@@ -33,6 +41,12 @@ public class CDOSessionsItemProvider extends ItemProvider<CDOContainerAdapter> i
     if (child instanceof CDOSession)
     {
       return getInput();
+    }
+
+    if (child instanceof CDOAdapter)
+    {
+      CDOAdapter adapter = (CDOAdapter)child;
+      return adapter.getSession();
     }
 
     return null;
@@ -46,10 +60,40 @@ public class CDOSessionsItemProvider extends ItemProvider<CDOContainerAdapter> i
       return values.toArray(new Object[values.size()]);
     }
 
+    if (parent instanceof CDOSession)
+    {
+      CDOSession session = (CDOSession)parent;
+      return session.getAdapters();
+    }
+
     return NO_CHILDREN;
   }
 
   public void notifyRegistryEvent(IRegistryEvent event)
+  {
+    IRegistryDelta[] deltas = event.getDeltas();
+    for (IRegistryDelta delta : deltas)
+    {
+      Object element = delta.getValue();
+      if (element instanceof CDOSession)
+      {
+        CDOSession session = (CDOSession)element;
+        switch (delta.getKind())
+        {
+        case REGISTERED:
+          session.addListener(this);
+          break;
+        case DEREGISTERED:
+          session.removeListener(this);
+          break;
+        }
+      }
+    }
+
+    refreshViewer(false);
+  }
+
+  public void notifyEvent(IEvent event)
   {
     refreshViewer(false);
   }
@@ -60,8 +104,8 @@ public class CDOSessionsItemProvider extends ItemProvider<CDOContainerAdapter> i
     if (obj instanceof CDOSession)
     {
       CDOSession session = (CDOSession)obj;
-      return MessageFormat.format("[{0}] {1}@{2}", session.getSessionID(), session.getRepository().getName(), session
-          .getChannel().getConnector().getDescription());
+      String description = CDOContainerAdapterImpl.getDescription(session);
+      return MessageFormat.format("[{0}] {1}", session.getSessionID(), description);
     }
 
     return super.getText(obj);

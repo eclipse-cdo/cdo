@@ -12,6 +12,8 @@ package org.eclipse.internal.net4j.util.om;
 
 import org.eclipse.net4j.util.om.OMBundle;
 
+import org.eclipse.internal.net4j.bundle.Net4j;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -29,6 +31,7 @@ public abstract class OSGiActivator implements BundleActivator
     try
     {
       getOMBundle().setBundleContext(context);
+      Net4j.Activator.traceStart(context);
       start();
     }
     catch (Exception ex)
@@ -42,6 +45,7 @@ public abstract class OSGiActivator implements BundleActivator
   {
     try
     {
+      Net4j.Activator.traceStop(context);
       stop();
       getOMBundle().setBundleContext(null);
     }

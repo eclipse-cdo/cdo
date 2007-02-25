@@ -2,9 +2,11 @@ package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.CDOConstants;
 import org.eclipse.emf.cdo.container.CDOContainerAdapter;
+import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
 
 import org.eclipse.net4j.container.Container;
 import org.eclipse.net4j.container.ContainerManager;
+import org.eclipse.net4j.transport.ConnectorException;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -196,9 +198,14 @@ public class CDOSessionsView extends ViewPart
       if (dialog.open() == InputDialog.OK)
       {
         String description = dialog.getValue();
-        Object object = CDO_ADAPTER.getSession(description);
-        if (object == null)
+
+        try
         {
+          CDO_ADAPTER.getSession(description);
+        }
+        catch (ConnectorException ex)
+        {
+          CDOUI.LOG.error(ex);
           showMessage("Error while creating session for description " + description);
         }
       }

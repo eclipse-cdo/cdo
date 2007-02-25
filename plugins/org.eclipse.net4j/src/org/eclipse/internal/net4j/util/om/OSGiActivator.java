@@ -34,6 +34,11 @@ public abstract class OSGiActivator implements BundleActivator
       Net4j.Activator.traceStart(context);
       start();
     }
+    catch (Error error)
+    {
+      getOMBundle().logger().error(error);
+      throw error;
+    }
     catch (Exception ex)
     {
       getOMBundle().logger().error(ex);
@@ -48,6 +53,11 @@ public abstract class OSGiActivator implements BundleActivator
       Net4j.Activator.traceStop(context);
       stop();
       getOMBundle().setBundleContext(null);
+    }
+    catch (Error error)
+    {
+      getOMBundle().logger().error(error);
+      throw error;
     }
     catch (Exception ex)
     {

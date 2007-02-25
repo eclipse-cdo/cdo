@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.bundle;
 
+import org.eclipse.net4j.util.om.log.EclipseLoggingBridge;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
@@ -24,9 +25,19 @@ public class Activator implements BundleActivator
   public void start(BundleContext context) throws Exception
   {
     AbstractOMPlatform.systemContext = context;
+
     PrintTraceHandler.CONSOLE.setPattern("{6} [{0}] {5}");
     AbstractOMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     AbstractOMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+
+    try
+    {
+      AbstractOMPlatform.INSTANCE.addLogHandler(EclipseLoggingBridge.INSTANCE);
+    }
+    catch (Exception ignore)
+    {
+    }
+
     Net4j.BUNDLE.setBundleContext(context);
   }
 

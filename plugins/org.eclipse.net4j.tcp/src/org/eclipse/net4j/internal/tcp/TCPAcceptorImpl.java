@@ -36,6 +36,8 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPAcceptor, TC
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_ACCEPTOR, TCPAcceptorImpl.class);
 
+  private static final String DEFAULT_ADDRESS = "0.0.0.0";
+
   private TCPSelector selector;
 
   private ServerSocketChannel serverSocketChannel;
@@ -132,6 +134,11 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPAcceptor, TC
     {
       String[] elements = DescriptionUtil.getElements(getDescription());
       address = elements[1];
+      if (address.length() == 0)
+      {
+        address = DEFAULT_ADDRESS;
+      }
+
       port = Integer.parseInt(elements[2]);
     }
 

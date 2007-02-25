@@ -49,6 +49,8 @@ public interface OMBundle
 
   public void setDebugOption(String option, int value);
 
+  public String getStateLocation();
+
   public InputStream getInputStream(String path) throws IOException;
 
   /**

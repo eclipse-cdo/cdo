@@ -44,6 +44,11 @@ public class LegacyBundle extends AbstractOMBundle
     }
   }
 
+  public String getStateLocation()
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public URL getBaseURL()
   {
     return baseURL;

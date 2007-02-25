@@ -39,7 +39,6 @@ import java.util.concurrent.ExecutorService;
  * @author Eike Stepper
  */
 public abstract class AbstractAcceptor extends LifecycleImpl implements Acceptor, INotifier.Introspection
-
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_ACCEPTOR, AbstractAcceptor.class);
 

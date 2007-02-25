@@ -13,7 +13,9 @@ package org.eclipse.internal.net4j.bundle;
 import org.eclipse.net4j.util.IOUtil;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Platform;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 import java.io.IOException;
@@ -47,5 +49,11 @@ public class OSGiBundle extends AbstractOMBundle
       IOUtil.print(ex);
       return null;
     }
+  }
+
+  public String getStateLocation()
+  {
+    Bundle bundle = getBundleContext().getBundle();
+    return Platform.getStateLocation(bundle).toString();
   }
 }

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.registry.IRegistryDelta;
 import org.eclipse.net4j.util.registry.IRegistryEvent;
 import org.eclipse.net4j.util.registry.IRegistryListener;
@@ -125,7 +126,12 @@ public class CDOSessionsItemProvider extends ItemProvider<CDOContainerAdapter> i
   @Override
   protected void connectInput(CDOContainerAdapter input)
   {
-    input.getSessionRegistry().addRegistryListener(this);
+    IRegistry<String, CDOSession> registry = input.getSessionRegistry();
+    registry.addRegistryListener(this);
+    for (CDOSession session : registry.values())
+    {
+      session.addListener(this);
+    }
   }
 
   @Override

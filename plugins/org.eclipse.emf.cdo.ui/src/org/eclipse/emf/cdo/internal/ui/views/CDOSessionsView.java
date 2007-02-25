@@ -1,6 +1,7 @@
 package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.CDOConstants;
+import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.container.CDOContainerAdapter;
 import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
 
@@ -8,10 +9,12 @@ import org.eclipse.net4j.container.Container;
 import org.eclipse.net4j.container.ContainerManager;
 import org.eclipse.net4j.transport.ConnectorException;
 
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -30,9 +33,9 @@ public class CDOSessionsView extends StructuredView
 
   private TreeViewer viewer;
 
-  private Action openSessionAction = new OpenSessionAction();
+  private OpenSessionAction openSessionAction = new OpenSessionAction();
 
-  private Action attachAdapterAction = new AttachAdapterAction();
+  private AttachAdapterAction attachAdapterAction = new AttachAdapterAction();
 
   public CDOSessionsView()
   {
@@ -58,10 +61,26 @@ public class CDOSessionsView extends StructuredView
   }
 
   @Override
+  protected void fillContextMenu(IMenuManager manager)
+  {
+    IStructuredSelection selection = (IStructuredSelection)getCurrentViewer().getSelection();
+    if (selection.size() == 1)
+    {
+      Object element = selection.getFirstElement();
+      if (element instanceof CDOSession)
+      {
+        attachAdapterAction.setSession((CDOSession)element);
+        addContribution(manager, attachAdapterAction);
+      }
+    }
+
+    super.fillContextMenu(manager);
+  }
+
+  @Override
   protected void fillLocalPullDown(IMenuManager manager)
   {
     addContribution(manager, openSessionAction);
-    addContribution(manager, attachAdapterAction);
     super.fillLocalPullDown(manager);
   }
 
@@ -69,7 +88,6 @@ public class CDOSessionsView extends StructuredView
   protected void fillLocalToolBar(IToolBarManager manager)
   {
     addContribution(manager, openSessionAction);
-    addContribution(manager, attachAdapterAction);
     super.fillLocalToolBar(manager);
   }
 
@@ -109,6 +127,8 @@ public class CDOSessionsView extends StructuredView
    */
   private final class AttachAdapterAction extends Action
   {
+    private CDOSession session;
+
     public AttachAdapterAction()
     {
       setText("Attach Adapter");
@@ -117,23 +137,27 @@ public class CDOSessionsView extends StructuredView
           ISharedImages.IMG_TOOL_NEW_WIZARD));
     }
 
+    public CDOSession getSession()
+    {
+      return session;
+    }
+
+    public void setSession(CDOSession session)
+    {
+      this.session = session;
+      setEnabled(session != null);
+    }
+
     public void run()
     {
-      InputDialog dialog = new InputDialog(getCurrentViewer().getControl().getShell(), "CDO Sessions",
-          "Enter a session description:", null, null);
-      if (dialog.open() == InputDialog.OK)
+      try
       {
-        String description = dialog.getValue();
-
-        try
-        {
-          CDO_ADAPTER.getSession(description);
-        }
-        catch (ConnectorException ex)
-        {
-          CDOUI.LOG.error(ex);
-          showMessage("Error while creating session for description " + description);
-        }
+        session.attach(new ResourceSetImpl());
+      }
+      catch (Exception ex)
+      {
+        CDOUI.LOG.error(ex);
+        showMessage("Error while attaching adapter to session " + session);
       }
     }
   }

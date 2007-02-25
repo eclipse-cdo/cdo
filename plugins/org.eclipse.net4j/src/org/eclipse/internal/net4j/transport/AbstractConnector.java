@@ -340,6 +340,7 @@ public abstract class AbstractConnector extends LifecycleImpl implements Connect
 
   public Channel openChannel(String protocolID, Object protocolData) throws ConnectorException
   {
+    waitForConnection(Long.MAX_VALUE);
     short channelIndex = findFreeChannelIndex();
     ChannelImpl channel = createChannel(channelIndex, protocolID, protocolData);
     registerChannelWithPeer(channelIndex, protocolID);

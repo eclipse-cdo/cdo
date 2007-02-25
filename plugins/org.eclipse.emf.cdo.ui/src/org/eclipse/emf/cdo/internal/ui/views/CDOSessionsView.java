@@ -7,6 +7,9 @@ import org.eclipse.net4j.container.Container;
 import org.eclipse.net4j.container.ContainerManager;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -42,11 +45,11 @@ public class CDOSessionsView extends ViewPart
 
   // private DrillDownAdapter drillDownAdapter;
 
-  private Action openSessionAction;
+  private Action doubleClickAction = new DoubleClickAction();
+
+  private Action openSessionAction = new OpenSessionAction();
 
   private Action addConnectorAction;
-
-  private Action doubleClickAction;
 
   public CDOSessionsView()
   {
@@ -63,7 +66,6 @@ public class CDOSessionsView extends ViewPart
     viewer.setSorter(new CDOSessionsNameSorter());
     viewer.setInput(CDO_ADAPTER);
 
-    makeActions();
     hookContextMenu();
     hookDoubleClickAction();
     contributeToActionBars();
@@ -80,6 +82,7 @@ public class CDOSessionsView extends ViewPart
         CDOSessionsView.this.fillContextMenu(manager);
       }
     });
+
     Menu menu = menuMgr.createContextMenu(getCurrentViewer().getControl());
     getCurrentViewer().getControl().setMenu(menu);
     getSite().registerContextMenu(menuMgr, getCurrentViewer());
@@ -99,8 +102,8 @@ public class CDOSessionsView extends ViewPart
 
   private void fillLocalPullDown(IMenuManager manager)
   {
-    manager.add(openSessionAction);
-    manager.add(addConnectorAction);
+    addContribution(manager, openSessionAction);
+    addContribution(manager, addConnectorAction);
     // manager.add(new Separator());
     // manager.add(action2);
   }
@@ -117,68 +120,26 @@ public class CDOSessionsView extends ViewPart
 
   private void fillLocalToolBar(IToolBarManager manager)
   {
-    manager.add(openSessionAction);
-    manager.add(addConnectorAction);
-    // manager.add(action2);
+    addContribution(manager, openSessionAction);
+    addContribution(manager, addConnectorAction);
     // manager.add(new Separator());
     // drillDownAdapter.addNavigationActions(manager);
   }
 
-  private void makeActions()
+  protected void addContribution(IContributionManager manager, IContributionItem item)
   {
-    openSessionAction = new Action()
+    if (manager != null && item != null)
     {
-      public void run()
-      {
-        InputDialog dialog = new InputDialog(getCurrentViewer().getControl().getShell(), "CDO Sessions",
-            "Enter a session description:", null, null);
-        if (dialog.open() == InputDialog.OK)
-        {
-          String description = dialog.getValue();
-          Object object = CDO_ADAPTER.getSession(description);
-          if (object == null)
-          {
-            showMessage("Error while creating session for description" + description);
-          }
-        }
-      }
-    };
-    openSessionAction.setText("Open Session");
-    openSessionAction.setToolTipText("Open a CDO session");
-    openSessionAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
-        ISharedImages.IMG_TOOL_NEW_WIZARD));
+      manager.add(item);
+    }
+  }
 
-    addConnectorAction = new Action()
+  protected void addContribution(IContributionManager manager, IAction action)
+  {
+    if (manager != null && action != null)
     {
-      public void run()
-      {
-        InputDialog dialog = new InputDialog(getCurrentViewer().getControl().getShell(), "Net4j Explorer",
-            "Enter a connector description:", null, null);
-        if (dialog.open() == InputDialog.OK)
-        {
-          String description = dialog.getValue();
-          Object object = CONTAINER.getConnector(description);
-          if (object == null)
-          {
-            showMessage("Error while creating connector for description" + description);
-          }
-        }
-      }
-    };
-    addConnectorAction.setText("Add Connector");
-    addConnectorAction.setToolTipText("Add a connector");
-    addConnectorAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
-        ISharedImages.IMG_TOOL_NEW_WIZARD));
-
-    doubleClickAction = new Action()
-    {
-      public void run()
-      {
-        ISelection selection = getCurrentViewer().getSelection();
-        Object obj = ((IStructuredSelection)selection).getFirstElement();
-        showMessage("Double-click detected on " + obj.toString());
-      }
-    };
+      manager.add(action);
+    }
   }
 
   private void hookDoubleClickAction()
@@ -192,7 +153,7 @@ public class CDOSessionsView extends ViewPart
     });
   }
 
-  private void showMessage(String message)
+  protected void showMessage(String message)
   {
     MessageDialog.openInformation(getCurrentViewer().getControl().getShell(), "Net4j Explorer", message);
   }
@@ -200,5 +161,47 @@ public class CDOSessionsView extends ViewPart
   public void setFocus()
   {
     getCurrentViewer().getControl().setFocus();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class DoubleClickAction extends Action
+  {
+    public void run()
+    {
+      ISelection selection = getCurrentViewer().getSelection();
+      Object obj = ((IStructuredSelection)selection).getFirstElement();
+      showMessage("Double-click detected on " + obj.toString());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class OpenSessionAction extends Action
+  {
+    public OpenSessionAction()
+    {
+      setText("Open Session");
+      setToolTipText("Open a CDO session");
+      setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
+          ISharedImages.IMG_TOOL_NEW_WIZARD));
+    }
+
+    public void run()
+    {
+      InputDialog dialog = new InputDialog(getCurrentViewer().getControl().getShell(), "CDO Sessions",
+          "Enter a session description:", null, null);
+      if (dialog.open() == InputDialog.OK)
+      {
+        String description = dialog.getValue();
+        Object object = CDO_ADAPTER.getSession(description);
+        if (object == null)
+        {
+          showMessage("Error while creating session for description " + description);
+        }
+      }
+    }
   }
 }

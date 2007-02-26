@@ -75,6 +75,6 @@ public interface Customer extends CDOObject
    *        opposite="customer"
    * @generated
    */
-  EList getSalesOrders();
+  EList<SalesOrder> getSalesOrders();
 
 } // Customer

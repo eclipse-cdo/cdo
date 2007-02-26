@@ -8,6 +8,7 @@ package org.eclipse.emf.cdo.tests.model1.impl;
 
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.Product;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -44,6 +45,7 @@ public class CategoryImpl extends CDOObjectImpl implements Category
    * 
    * @generated
    */
+  @Override
   protected EClass eStaticClass()
   {
     return Model1Package.Literals.CATEGORY;
@@ -74,9 +76,9 @@ public class CategoryImpl extends CDOObjectImpl implements Category
    * 
    * @generated
    */
-  public EList getCategories()
+  public EList<Category> getCategories()
   {
-    return (EList)eGet(Model1Package.Literals.CATEGORY__CATEGORIES, true);
+    return (EList<Category>)eGet(Model1Package.Literals.CATEGORY__CATEGORIES, true);
   }
 
   /**
@@ -84,9 +86,9 @@ public class CategoryImpl extends CDOObjectImpl implements Category
    * 
    * @generated
    */
-  public EList getProducts()
+  public EList<Product> getProducts()
   {
-    return (EList)eGet(Model1Package.Literals.CATEGORY__PRODUCTS, true);
+    return (EList<Product>)eGet(Model1Package.Literals.CATEGORY__PRODUCTS, true);
   }
 
 } // CategoryImpl

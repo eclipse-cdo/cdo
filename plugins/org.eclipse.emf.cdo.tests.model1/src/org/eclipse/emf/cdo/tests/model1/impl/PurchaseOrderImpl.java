@@ -45,6 +45,7 @@ public class PurchaseOrderImpl extends CDOObjectImpl implements PurchaseOrder
    * 
    * @generated
    */
+  @Override
   protected EClass eStaticClass()
   {
     return Model1Package.Literals.PURCHASE_ORDER;

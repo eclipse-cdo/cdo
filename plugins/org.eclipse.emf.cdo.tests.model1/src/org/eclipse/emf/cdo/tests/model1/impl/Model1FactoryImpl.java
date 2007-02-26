@@ -71,6 +71,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * 
    * @generated
    */
+  @Override
   public EObject create(EClass eClass)
   {
     switch (eClass.getClassifierID())
@@ -200,6 +201,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * @deprecated
    * @generated
    */
+  @Deprecated
   public static Model1Package getPackage()
   {
     return Model1Package.eINSTANCE;

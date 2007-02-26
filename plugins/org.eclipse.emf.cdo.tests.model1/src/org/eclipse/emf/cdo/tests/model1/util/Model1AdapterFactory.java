@@ -61,6 +61,7 @@ public class Model1AdapterFactory extends AdapterFactoryImpl
    * @return whether this factory is applicable for the type of the object.
    * @generated
    */
+  @Override
   public boolean isFactoryForType(Object object)
   {
     if (object == modelPackage)
@@ -80,49 +81,58 @@ public class Model1AdapterFactory extends AdapterFactoryImpl
    * 
    * @generated
    */
-  protected Model1Switch modelSwitch = new Model1Switch()
+  protected Model1Switch<Adapter> modelSwitch = new Model1Switch<Adapter>()
   {
-    public Object caseSupplier(Supplier object)
+    @Override
+    public Adapter caseSupplier(Supplier object)
     {
       return createSupplierAdapter();
     }
 
-    public Object casePurchaseOrder(PurchaseOrder object)
+    @Override
+    public Adapter casePurchaseOrder(PurchaseOrder object)
     {
       return createPurchaseOrderAdapter();
     }
 
-    public Object caseOrderDetail(OrderDetail object)
+    @Override
+    public Adapter caseOrderDetail(OrderDetail object)
     {
       return createOrderDetailAdapter();
     }
 
-    public Object caseProduct(Product object)
+    @Override
+    public Adapter caseProduct(Product object)
     {
       return createProductAdapter();
     }
 
-    public Object caseCategory(Category object)
+    @Override
+    public Adapter caseCategory(Category object)
     {
       return createCategoryAdapter();
     }
 
-    public Object caseCompany(Company object)
+    @Override
+    public Adapter caseCompany(Company object)
     {
       return createCompanyAdapter();
     }
 
-    public Object caseCustomer(Customer object)
+    @Override
+    public Adapter caseCustomer(Customer object)
     {
       return createCustomerAdapter();
     }
 
-    public Object caseSalesOrder(SalesOrder object)
+    @Override
+    public Adapter caseSalesOrder(SalesOrder object)
     {
       return createSalesOrderAdapter();
     }
 
-    public Object defaultCase(EObject object)
+    @Override
+    public Adapter defaultCase(EObject object)
     {
       return createEObjectAdapter();
     }
@@ -137,9 +147,10 @@ public class Model1AdapterFactory extends AdapterFactoryImpl
    * @return the adapter for the <code>target</code>.
    * @generated
    */
+  @Override
   public Adapter createAdapter(Notifier target)
   {
-    return (Adapter)modelSwitch.doSwitch((EObject)target);
+    return modelSwitch.doSwitch((EObject)target);
   }
 
   /**

@@ -75,6 +75,6 @@ public interface Product extends CDOObject
    *        opposite="product"
    * @generated
    */
-  EList getOrderDetails();
+  EList<OrderDetail> getOrderDetails();
 
 } // Product

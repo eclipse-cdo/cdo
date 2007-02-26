@@ -6,8 +6,13 @@
  */
 package org.eclipse.emf.cdo.tests.model1.impl;
 
+import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model1.Supplier;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -46,6 +51,7 @@ public class CompanyImpl extends CDOObjectImpl implements Company
    * 
    * @generated
    */
+  @Override
   protected EClass eStaticClass()
   {
     return Model1Package.Literals.COMPANY;
@@ -56,9 +62,9 @@ public class CompanyImpl extends CDOObjectImpl implements Company
    * 
    * @generated
    */
-  public EList getCategories()
+  public EList<Category> getCategories()
   {
-    return (EList)eGet(Model1Package.Literals.COMPANY__CATEGORIES, true);
+    return (EList<Category>)eGet(Model1Package.Literals.COMPANY__CATEGORIES, true);
   }
 
   /**
@@ -66,9 +72,9 @@ public class CompanyImpl extends CDOObjectImpl implements Company
    * 
    * @generated
    */
-  public EList getSuppliers()
+  public EList<Supplier> getSuppliers()
   {
-    return (EList)eGet(Model1Package.Literals.COMPANY__SUPPLIERS, true);
+    return (EList<Supplier>)eGet(Model1Package.Literals.COMPANY__SUPPLIERS, true);
   }
 
   /**
@@ -76,9 +82,9 @@ public class CompanyImpl extends CDOObjectImpl implements Company
    * 
    * @generated
    */
-  public EList getPurchaseOrders()
+  public EList<PurchaseOrder> getPurchaseOrders()
   {
-    return (EList)eGet(Model1Package.Literals.COMPANY__PURCHASE_ORDERS, true);
+    return (EList<PurchaseOrder>)eGet(Model1Package.Literals.COMPANY__PURCHASE_ORDERS, true);
   }
 
   /**
@@ -86,9 +92,9 @@ public class CompanyImpl extends CDOObjectImpl implements Company
    * 
    * @generated
    */
-  public EList getCustomers()
+  public EList<Customer> getCustomers()
   {
-    return (EList)eGet(Model1Package.Literals.COMPANY__CUSTOMERS, true);
+    return (EList<Customer>)eGet(Model1Package.Literals.COMPANY__CUSTOMERS, true);
   }
 
   /**
@@ -96,9 +102,9 @@ public class CompanyImpl extends CDOObjectImpl implements Company
    * 
    * @generated
    */
-  public EList getSalesOrders()
+  public EList<SalesOrder> getSalesOrders()
   {
-    return (EList)eGet(Model1Package.Literals.COMPANY__SALES_ORDERS, true);
+    return (EList<SalesOrder>)eGet(Model1Package.Literals.COMPANY__SALES_ORDERS, true);
   }
 
 } // CompanyImpl

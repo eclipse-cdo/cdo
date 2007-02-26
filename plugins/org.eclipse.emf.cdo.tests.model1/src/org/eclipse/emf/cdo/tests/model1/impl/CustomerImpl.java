@@ -8,6 +8,7 @@ package org.eclipse.emf.cdo.tests.model1.impl;
 
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -43,6 +44,7 @@ public class CustomerImpl extends CDOObjectImpl implements Customer
    * 
    * @generated
    */
+  @Override
   protected EClass eStaticClass()
   {
     return Model1Package.Literals.CUSTOMER;
@@ -73,9 +75,9 @@ public class CustomerImpl extends CDOObjectImpl implements Customer
    * 
    * @generated
    */
-  public EList getSalesOrders()
+  public EList<SalesOrder> getSalesOrders()
   {
-    return (EList)eGet(Model1Package.Literals.CUSTOMER__SALES_ORDERS, true);
+    return (EList<SalesOrder>)eGet(Model1Package.Literals.CUSTOMER__SALES_ORDERS, true);
   }
 
 } // CustomerImpl

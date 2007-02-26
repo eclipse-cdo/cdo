@@ -41,6 +41,7 @@ public class SupplierImpl extends CDOObjectImpl implements Supplier
    * 
    * @generated
    */
+  @Override
   protected EClass eStaticClass()
   {
     return Model1Package.Literals.SUPPLIER;

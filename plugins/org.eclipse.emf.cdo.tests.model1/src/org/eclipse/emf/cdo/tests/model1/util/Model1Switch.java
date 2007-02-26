@@ -32,7 +32,7 @@ import java.util.List;
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package
  * @generated
  */
-public class Model1Switch
+public class Model1Switch<T>
 {
   /**
    * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -64,7 +64,7 @@ public class Model1Switch
    *         call.
    * @generated
    */
-  public Object doSwitch(EObject theEObject)
+  public T doSwitch(EObject theEObject)
   {
     return doSwitch(theEObject.eClass(), theEObject);
   }
@@ -78,7 +78,7 @@ public class Model1Switch
    *         call.
    * @generated
    */
-  protected Object doSwitch(EClass theEClass, EObject theEObject)
+  protected T doSwitch(EClass theEClass, EObject theEObject)
   {
     if (theEClass.eContainer() == modelPackage)
     {
@@ -86,8 +86,8 @@ public class Model1Switch
     }
     else
     {
-      List eSuperTypes = theEClass.getESuperTypes();
-      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch((EClass)eSuperTypes.get(0), theEObject);
+      List<EClass> eSuperTypes = theEClass.getESuperTypes();
+      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
     }
   }
 
@@ -100,14 +100,14 @@ public class Model1Switch
    *         call.
    * @generated
    */
-  protected Object doSwitch(int classifierID, EObject theEObject)
+  protected T doSwitch(int classifierID, EObject theEObject)
   {
     switch (classifierID)
     {
     case Model1Package.SUPPLIER:
     {
       Supplier supplier = (Supplier)theEObject;
-      Object result = caseSupplier(supplier);
+      T result = caseSupplier(supplier);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -115,7 +115,7 @@ public class Model1Switch
     case Model1Package.PURCHASE_ORDER:
     {
       PurchaseOrder purchaseOrder = (PurchaseOrder)theEObject;
-      Object result = casePurchaseOrder(purchaseOrder);
+      T result = casePurchaseOrder(purchaseOrder);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -123,7 +123,7 @@ public class Model1Switch
     case Model1Package.ORDER_DETAIL:
     {
       OrderDetail orderDetail = (OrderDetail)theEObject;
-      Object result = caseOrderDetail(orderDetail);
+      T result = caseOrderDetail(orderDetail);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -131,7 +131,7 @@ public class Model1Switch
     case Model1Package.PRODUCT:
     {
       Product product = (Product)theEObject;
-      Object result = caseProduct(product);
+      T result = caseProduct(product);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -139,7 +139,7 @@ public class Model1Switch
     case Model1Package.CATEGORY:
     {
       Category category = (Category)theEObject;
-      Object result = caseCategory(category);
+      T result = caseCategory(category);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -147,7 +147,7 @@ public class Model1Switch
     case Model1Package.COMPANY:
     {
       Company company = (Company)theEObject;
-      Object result = caseCompany(company);
+      T result = caseCompany(company);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -155,7 +155,7 @@ public class Model1Switch
     case Model1Package.CUSTOMER:
     {
       Customer customer = (Customer)theEObject;
-      Object result = caseCustomer(customer);
+      T result = caseCustomer(customer);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -163,7 +163,7 @@ public class Model1Switch
     case Model1Package.SALES_ORDER:
     {
       SalesOrder salesOrder = (SalesOrder)theEObject;
-      Object result = caseSalesOrder(salesOrder);
+      T result = caseSalesOrder(salesOrder);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -184,7 +184,7 @@ public class Model1Switch
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public Object caseSupplier(Supplier object)
+  public T caseSupplier(Supplier object)
   {
     return null;
   }
@@ -200,7 +200,7 @@ public class Model1Switch
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public Object casePurchaseOrder(PurchaseOrder object)
+  public T casePurchaseOrder(PurchaseOrder object)
   {
     return null;
   }
@@ -216,7 +216,7 @@ public class Model1Switch
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public Object caseOrderDetail(OrderDetail object)
+  public T caseOrderDetail(OrderDetail object)
   {
     return null;
   }
@@ -232,7 +232,7 @@ public class Model1Switch
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public Object caseProduct(Product object)
+  public T caseProduct(Product object)
   {
     return null;
   }
@@ -248,7 +248,7 @@ public class Model1Switch
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public Object caseCategory(Category object)
+  public T caseCategory(Category object)
   {
     return null;
   }
@@ -264,7 +264,7 @@ public class Model1Switch
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public Object caseCompany(Company object)
+  public T caseCompany(Company object)
   {
     return null;
   }
@@ -280,7 +280,7 @@ public class Model1Switch
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public Object caseCustomer(Customer object)
+  public T caseCustomer(Customer object)
   {
     return null;
   }
@@ -296,7 +296,7 @@ public class Model1Switch
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public Object caseSalesOrder(SalesOrder object)
+  public T caseSalesOrder(SalesOrder object)
   {
     return null;
   }
@@ -313,7 +313,7 @@ public class Model1Switch
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated
    */
-  public Object defaultCase(EObject object)
+  public T defaultCase(EObject object)
   {
     return null;
   }

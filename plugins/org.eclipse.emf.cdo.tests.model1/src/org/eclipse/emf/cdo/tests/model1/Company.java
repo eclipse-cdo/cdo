@@ -47,7 +47,7 @@ public interface Company extends CDOObject
    * @model type="org.eclipse.emf.cdo.tests.model1.Category" containment="true"
    * @generated
    */
-  EList getCategories();
+  EList<Category> getCategories();
 
   /**
    * Returns the value of the '<em><b>Suppliers</b></em>' containment
@@ -65,7 +65,7 @@ public interface Company extends CDOObject
    * @model type="org.eclipse.emf.cdo.tests.model1.Supplier" containment="true"
    * @generated
    */
-  EList getSuppliers();
+  EList<Supplier> getSuppliers();
 
   /**
    * Returns the value of the '<em><b>Purchase Orders</b></em>' containment
@@ -85,7 +85,7 @@ public interface Company extends CDOObject
    *        containment="true"
    * @generated
    */
-  EList getPurchaseOrders();
+  EList<PurchaseOrder> getPurchaseOrders();
 
   /**
    * Returns the value of the '<em><b>Customers</b></em>' containment
@@ -103,7 +103,7 @@ public interface Company extends CDOObject
    * @model type="org.eclipse.emf.cdo.tests.model1.Customer" containment="true"
    * @generated
    */
-  EList getCustomers();
+  EList<Customer> getCustomers();
 
   /**
    * Returns the value of the '<em><b>Sales Orders</b></em>' containment
@@ -123,6 +123,6 @@ public interface Company extends CDOObject
    *        containment="true"
    * @generated
    */
-  EList getSalesOrders();
+  EList<SalesOrder> getSalesOrders();
 
 } // Company

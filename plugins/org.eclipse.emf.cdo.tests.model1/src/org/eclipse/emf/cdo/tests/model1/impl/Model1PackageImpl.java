@@ -521,6 +521,10 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     setNsPrefix(eNS_PREFIX);
     setNsURI(eNS_URI);
 
+    // Create type parameters
+
+    // Set bounds for type parameters
+
     // Add supertypes to classes
 
     // Initialize classes and features; add operations and parameters

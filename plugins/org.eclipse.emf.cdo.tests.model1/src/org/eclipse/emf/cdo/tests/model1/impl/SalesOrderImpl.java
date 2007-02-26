@@ -43,6 +43,7 @@ public class SalesOrderImpl extends CDOObjectImpl implements SalesOrder
    * 
    * @generated
    */
+  @Override
   protected EClass eStaticClass()
   {
     return Model1Package.Literals.SALES_ORDER;

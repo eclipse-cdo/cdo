@@ -7,6 +7,7 @@
 package org.eclipse.emf.cdo.tests.model1.impl;
 
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product;
 
 import org.eclipse.emf.common.util.EList;
@@ -43,6 +44,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    * 
    * @generated
    */
+  @Override
   protected EClass eStaticClass()
   {
     return Model1Package.Literals.PRODUCT;
@@ -73,9 +75,9 @@ public class ProductImpl extends CDOObjectImpl implements Product
    * 
    * @generated
    */
-  public EList getOrderDetails()
+  public EList<OrderDetail> getOrderDetails()
   {
-    return (EList)eGet(Model1Package.Literals.PRODUCT__ORDER_DETAILS, true);
+    return (EList<OrderDetail>)eGet(Model1Package.Literals.PRODUCT__ORDER_DETAILS, true);
   }
 
 } // ProductImpl

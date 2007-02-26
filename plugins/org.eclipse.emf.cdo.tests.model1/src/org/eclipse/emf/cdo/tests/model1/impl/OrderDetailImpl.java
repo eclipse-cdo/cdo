@@ -43,6 +43,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * 
    * @generated
    */
+  @Override
   protected EClass eStaticClass()
   {
     return Model1Package.Literals.ORDER_DETAIL;

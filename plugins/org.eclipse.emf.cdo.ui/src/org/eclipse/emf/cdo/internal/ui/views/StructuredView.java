@@ -1,6 +1,5 @@
 package org.eclipse.emf.cdo.internal.ui.views;
 
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IContributionManager;
@@ -13,7 +12,6 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -26,7 +24,6 @@ import org.eclipse.ui.part.ViewPart;
 
 public abstract class StructuredView extends ViewPart
 {
-  private Action doubleClickAction = createDoubleClickAction();
 
   public StructuredView()
   {
@@ -53,11 +50,6 @@ public abstract class StructuredView extends ViewPart
 
   protected abstract void doCreatePartControl(Composite parent);
 
-  protected Action createDoubleClickAction()
-  {
-    return new DoubleClickAction();
-  }
-
   protected void fillLocalPullDown(IMenuManager manager)
   {
   }
@@ -69,6 +61,16 @@ public abstract class StructuredView extends ViewPart
   protected void fillContextMenu(IMenuManager manager)
   {
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+  }
+
+  protected void onDoubleClick(Object selectedElement)
+  {
+    StructuredViewer viewer = getCurrentViewer();
+    if (viewer instanceof TreeViewer)
+    {
+      TreeViewer treeViewer = (TreeViewer)viewer;
+      treeViewer.setExpandedState(selectedElement, !treeViewer.getExpandedState(selectedElement));
+    }
   }
 
   protected void addContribution(IContributionManager manager, IContributionItem item)
@@ -148,26 +150,8 @@ public abstract class StructuredView extends ViewPart
     {
       public void doubleClick(DoubleClickEvent event)
       {
-        doubleClickAction.run();
+        onDoubleClick(((IStructuredSelection)event.getSelection()).getFirstElement());
       }
     });
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class DoubleClickAction extends Action
-  {
-    public void run()
-    {
-      StructuredViewer viewer = getCurrentViewer();
-      if (viewer instanceof TreeViewer)
-      {
-        TreeViewer treeViewer = (TreeViewer)viewer;
-        ISelection selection = viewer.getSelection();
-        Object obj = ((IStructuredSelection)selection).getFirstElement();
-        treeViewer.setExpandedState(obj, !treeViewer.getExpandedState(obj));
-      }
-    }
   }
 }

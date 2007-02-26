@@ -47,7 +47,6 @@ public class CDOSessionsView extends StructuredView
     viewer = new TreeViewer(parent, (SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL));
     viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
 
-    // drillDownAdapter = new DrillDownAdapter(viewer);
     viewer.setContentProvider(ITEM_PROVIDER);
     viewer.setLabelProvider(ITEM_PROVIDER);
     viewer.setSorter(new CDOSessionsNameSorter());
@@ -89,6 +88,20 @@ public class CDOSessionsView extends StructuredView
   {
     addContribution(manager, openSessionAction);
     super.fillLocalToolBar(manager);
+  }
+
+  @Override
+  protected void onDoubleClick(Object selectedElement)
+  {
+    if (selectedElement instanceof CDOSession && !viewer.isExpandable(selectedElement))
+    {
+      attachAdapterAction.setSession((CDOSession)selectedElement);
+      attachAdapterAction.run();
+    }
+    else
+    {
+      super.onDoubleClick(selectedElement);
+    }
   }
 
   /**
@@ -135,6 +148,11 @@ public class CDOSessionsView extends StructuredView
       setToolTipText("Attach a CDO adapter");
       setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
           ISharedImages.IMG_TOOL_NEW_WIZARD));
+    }
+
+    public AttachAdapterAction(boolean readOnly)
+    {
+      this();
     }
 
     public CDOSession getSession()

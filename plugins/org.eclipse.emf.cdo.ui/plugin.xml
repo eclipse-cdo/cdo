@@ -12,7 +12,7 @@
       <view
             category="org.eclipse.emf.cdo.ui"
             class="org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView"
-            icon="icons/sample.gif"
+            icon="icons/full/view16/cdo_sessions.gif"
             id="org.eclipse.emf.cdo.ui.CDOSessionsView"
             name="CDO Sessions">
       </view>

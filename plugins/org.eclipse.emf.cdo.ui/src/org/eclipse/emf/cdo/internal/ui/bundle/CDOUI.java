@@ -22,7 +22,7 @@ import org.eclipse.internal.net4j.util.om.OSGiActivator;
  */
 public final class CDOUI
 {
-  public static final String BUNDLE_ID = "org.eclipse.net4j.container.ui"; //$NON-NLS-1$
+  public static final String BUNDLE_ID = "org.eclipse.emf.cdo.ui"; //$NON-NLS-1$
 
   public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, CDOUI.class);
 

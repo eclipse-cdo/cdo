@@ -23,36 +23,59 @@ public class SharedIcons
 {
   private static final ImageRegistry REGISTRY = new ImageRegistry(getDisplay());
 
-  private static final String OBJ = "icons/full/obj16/";
+  private static final String ETOOL = "etool16/";
 
-  public static final ImageDescriptor OBJ_ACCEPTOR = getDescriptor(OBJ + "acceptor.gif");
+  private static final String OBJ = "obj16/";
 
-  public static final ImageDescriptor OBJ_ADAPTER = getDescriptor(OBJ + "adapter.gif");
+  private static final String VIEW = "view16/";
 
-  public static final ImageDescriptor OBJ_CHANNEL = getDescriptor(OBJ + "channel.gif");
+  public static final String ETOOL_OPEN_SESSION = ETOOL + "open_session";
 
-  public static final ImageDescriptor OBJ_CONNECTOR = getDescriptor(OBJ + "connector.gif");
+  public static final String ETOOL_OPEN_EDITOR = ETOOL + "open_editor";
 
-  public static final ImageDescriptor OBJ_FACTORY = getDescriptor(OBJ + "factory.gif");
+  public static final String OBJ_SESSION = OBJ + "cdo_session";
 
-  public static final ImageDescriptor OBJ_FOLDER = getDescriptor(OBJ + "folder.gif");
+  public static final String OBJ_EDITOR = OBJ + "cdo_editor";
+
+  public static final String OBJ_EDITOR_READWRITE = OBJ + "cdo_editor_readwrite";
+
+  public static final String OBJ_EDITOR_READONLY = OBJ + "cdo_editor_readonly";
+
+  public static final String OBJ_EDITOR_HISTORICAL = OBJ + "cdo_editor_historical";
+
+  public static final String VIEW_SESSIONS = VIEW + "cdo_sessions";
 
   public static Image getImage(String key)
   {
-    ImageDescriptor descriptor = getDescriptor(key);
-    return descriptor.createImage();
+    key = mangleKey(key);
+    Image image = REGISTRY.get(key);
+    if (image == null)
+    {
+      createDescriptor(key);
+      image = REGISTRY.get(key);
+    }
+
+    return image;
   }
 
   public static ImageDescriptor getDescriptor(String key)
   {
+    key = mangleKey(key);
     ImageDescriptor descriptor = REGISTRY.getDescriptor(key);
     if (descriptor == null)
     {
-      descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(CDOUI.BUNDLE_ID, key);
-      if (descriptor != null)
-      {
-        REGISTRY.put(key, descriptor);
-      }
+      descriptor = createDescriptor(key);
+    }
+
+    return descriptor;
+  }
+
+  private static ImageDescriptor createDescriptor(String key)
+  {
+    ImageDescriptor descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(CDOUI.BUNDLE_ID, key);
+    if (descriptor != null)
+    {
+      REGISTRY.put(key, descriptor);
     }
 
     return descriptor;
@@ -72,5 +95,10 @@ public class SharedIcons
     }
 
     return display;
+  }
+
+  private static String mangleKey(String key)
+  {
+    return "icons/full/" + key + ".gif";
   }
 }

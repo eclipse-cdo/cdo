@@ -4,6 +4,7 @@ import org.eclipse.emf.cdo.CDOConstants;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.container.CDOContainerAdapter;
 import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
+import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 
 import org.eclipse.net4j.container.Container;
 import org.eclipse.net4j.container.ContainerManager;
@@ -17,11 +18,10 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 
 public class CDOSessionsView extends StructuredView
 {
@@ -35,7 +35,11 @@ public class CDOSessionsView extends StructuredView
 
   private OpenSessionAction openSessionAction = new OpenSessionAction();
 
-  private AttachAdapterAction attachAdapterAction = new AttachAdapterAction();
+  private OpenEditorAction openEditorAction = new OpenEditorAction();
+
+  private OpenEditorAction openEditorReadOnlyAction = new OpenEditorReadOnlyAction();
+
+  private OpenEditorAction openEditorHistoricalAction = new OpenEditorHistoricalAction();
 
   public CDOSessionsView()
   {
@@ -49,7 +53,7 @@ public class CDOSessionsView extends StructuredView
 
     viewer.setContentProvider(ITEM_PROVIDER);
     viewer.setLabelProvider(ITEM_PROVIDER);
-    viewer.setSorter(new CDOSessionsNameSorter());
+    viewer.setSorter(new NameSorter());
     viewer.setInput(CDO_ADAPTER);
   }
 
@@ -68,8 +72,14 @@ public class CDOSessionsView extends StructuredView
       Object element = selection.getFirstElement();
       if (element instanceof CDOSession)
       {
-        attachAdapterAction.setSession((CDOSession)element);
-        addContribution(manager, attachAdapterAction);
+        openEditorAction.setSession((CDOSession)element);
+        addContribution(manager, openEditorAction);
+
+        openEditorReadOnlyAction.setSession((CDOSession)element);
+        addContribution(manager, openEditorReadOnlyAction);
+
+        openEditorHistoricalAction.setSession((CDOSession)element);
+        addContribution(manager, openEditorHistoricalAction);
       }
     }
 
@@ -95,13 +105,17 @@ public class CDOSessionsView extends StructuredView
   {
     if (selectedElement instanceof CDOSession && !viewer.isExpandable(selectedElement))
     {
-      attachAdapterAction.setSession((CDOSession)selectedElement);
-      attachAdapterAction.run();
+      openEditorAction.setSession((CDOSession)selectedElement);
+      openEditorAction.run();
     }
     else
     {
       super.onDoubleClick(selectedElement);
     }
+  }
+
+  private static final class NameSorter extends ViewerSorter
+  {
   }
 
   /**
@@ -113,8 +127,7 @@ public class CDOSessionsView extends StructuredView
     {
       setText("Open Session");
       setToolTipText("Open a CDO session");
-      setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
-          ISharedImages.IMG_TOOL_NEW_WIZARD));
+      setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_SESSION));
     }
 
     public void run()
@@ -138,21 +151,20 @@ public class CDOSessionsView extends StructuredView
   /**
    * @author Eike Stepper
    */
-  private final class AttachAdapterAction extends Action
+  private class OpenEditorAction extends Action
   {
     private CDOSession session;
 
-    public AttachAdapterAction()
+    public OpenEditorAction()
     {
-      setText("Attach Adapter");
-      setToolTipText("Attach a CDO adapter");
-      setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
-          ISharedImages.IMG_TOOL_NEW_WIZARD));
+      this("Open Editor", "Open a CDO editor", SharedIcons.ETOOL_OPEN_EDITOR);
     }
 
-    public AttachAdapterAction(boolean readOnly)
+    protected OpenEditorAction(String text, String tooltip, String iconKey)
     {
-      this();
+      setText(text);
+      setToolTipText(tooltip);
+      setImageDescriptor(SharedIcons.getDescriptor(iconKey));
     }
 
     public CDOSession getSession()
@@ -170,13 +182,52 @@ public class CDOSessionsView extends StructuredView
     {
       try
       {
-        session.attach(new ResourceSetImpl());
+        openEditor(session);
       }
       catch (Exception ex)
       {
         CDOUI.LOG.error(ex);
-        showMessage("Error while attaching adapter to session " + session);
+        showMessage("Error while opening editor on session " + session);
       }
+    }
+
+    protected void openEditor(CDOSession session)
+    {
+      session.attach(new ResourceSetImpl());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private class OpenEditorReadOnlyAction extends OpenEditorAction
+  {
+    public OpenEditorReadOnlyAction()
+    {
+      super("Open Editor in Read Only Mode", "Open a CDO editor in read only mode", null);
+    }
+
+    @Override
+    protected void openEditor(CDOSession session)
+    {
+      session.attach(new ResourceSetImpl(), true);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private class OpenEditorHistoricalAction extends OpenEditorAction
+  {
+    public OpenEditorHistoricalAction()
+    {
+      super("Open Editor in Historical Mode", "Open a CDO editor in historical mode", null);
+    }
+
+    @Override
+    protected void openEditor(CDOSession session)
+    {
+      session.attach(new ResourceSetImpl(), System.currentTimeMillis());
     }
   }
 }

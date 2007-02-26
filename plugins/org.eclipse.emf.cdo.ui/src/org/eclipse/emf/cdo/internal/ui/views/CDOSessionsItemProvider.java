@@ -117,7 +117,23 @@ public class CDOSessionsItemProvider extends ItemProvider<CDOContainerAdapter> i
   {
     if (obj instanceof CDOSession)
     {
-      return SharedIcons.OBJ_CHANNEL.createImage();
+      return SharedIcons.getImage(SharedIcons.OBJ_SESSION);
+    }
+
+    if (obj instanceof CDOAdapter)
+    {
+      CDOAdapter adapter = (CDOAdapter)obj;
+      if (adapter.isHistorical())
+      {
+        return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_HISTORICAL);
+      }
+
+      if (adapter.isReadOnly())
+      {
+        return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_READONLY);
+      }
+
+      return SharedIcons.getImage(SharedIcons.OBJ_EDITOR);
     }
 
     return null;

@@ -4,7 +4,8 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.tests.model1/src"
     modelPluginID="org.eclipse.emf.cdo.tests.model1" modelName="Model1" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject"
     rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl" reflectiveDelegation="true"
-    importerID="org.eclipse.emf.importer.ecore" featureDelegation="Reflective">
+    testsDirectory="" importerID="org.eclipse.emf.importer.ecore" featureDelegation="Reflective"
+    complianceLevel="5.0">
   <foreignModel>model1.ecore</foreignModel>
   <genPackages prefix="Model1" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"
       ecorePackage="model1.ecore#/">
@@ -14,6 +15,34 @@
     <genClasses ecoreClass="model1.ecore#//PurchaseOrder">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//PurchaseOrder/date"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model1.ecore#//PurchaseOrder/supplier"/>
+    </genClasses>
+    <genClasses ecoreClass="model1.ecore#//OrderDetail">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model1.ecore#//OrderDetail/product"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//OrderDetail/price"/>
+    </genClasses>
+    <genClasses ecoreClass="model1.ecore#//Product">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//Product/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model1.ecore#//Product/orderDetails"/>
+    </genClasses>
+    <genClasses ecoreClass="model1.ecore#//Category">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//Category/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model1.ecore#//Category/categories"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model1.ecore#//Category/products"/>
+    </genClasses>
+    <genClasses ecoreClass="model1.ecore#//Company">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model1.ecore#//Company/categories"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model1.ecore#//Company/suppliers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model1.ecore#//Company/purchaseOrders"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model1.ecore#//Company/customers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model1.ecore#//Company/salesOrders"/>
+    </genClasses>
+    <genClasses ecoreClass="model1.ecore#//Customer">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//Customer/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model1.ecore#//Customer/salesOrders"/>
+    </genClasses>
+    <genClasses ecoreClass="model1.ecore#//SalesOrder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//SalesOrder/id"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model1.ecore#//SalesOrder/customer"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

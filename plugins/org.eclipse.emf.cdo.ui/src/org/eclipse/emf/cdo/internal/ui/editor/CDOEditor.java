@@ -11,9 +11,6 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CommandStack;
-import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.ui.MarkerHelper;
@@ -108,8 +105,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EventObject;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -654,44 +649,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     //
     Registry regsitry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
     adapterFactory = new ComposedAdapterFactory(regsitry);
-
-    // Create the command stack that will notify this editor as commands are
-    // executed.
-    //
-    BasicCommandStack commandStack = new BasicCommandStack();
-
-    // Add a listener to set the most recent command's affected objects to be
-    // the selection of the viewer with focus.
-    //
-    commandStack.addCommandStackListener(new CommandStackListener()
-    {
-      public void commandStackChanged(final EventObject event)
-      {
-        getContainer().getDisplay().asyncExec(new Runnable()
-        {
-          public void run()
-          {
-            firePropertyChange(IEditorPart.PROP_DIRTY);
-
-            // Try to select the affected objects.
-            //
-            Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
-            if (mostRecentCommand != null)
-            {
-              setSelectionToViewer(mostRecentCommand.getAffectedObjects());
-            }
-            if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
-            {
-              propertySheetPage.refresh();
-            }
-          }
-        });
-      }
-    });
-
-    // Create the editing domain with a special command stack.
-    //
-    editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
   }
 
   /**
@@ -924,14 +881,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   public void createModel()
   {
-    // Assumes that the input is a file object.
-    //
     CDOEditorInput input = (CDOEditorInput)getEditorInput();
     URI resourceURI = CDOUtil.createURI(input.getResourcePath());
-    Exception exception = null;
 
     ResourceSet resourceSet = editingDomain.getResourceSet();
     Resource resource = null;
+    Exception exception = null;
 
     CDOSession session = input.getSession();
     if (input.isHistorical())
@@ -949,8 +904,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     try
     {
-      // Load the resource through the editing domain.
-      //
       resource = resourceSet.getResource(resourceURI, true);
     }
     catch (Exception e)

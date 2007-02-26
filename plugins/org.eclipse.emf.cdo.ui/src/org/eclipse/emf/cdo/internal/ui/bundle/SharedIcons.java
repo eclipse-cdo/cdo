@@ -43,6 +43,10 @@ public class SharedIcons
 
   public static final String OBJ_EDITOR_HISTORICAL = OBJ + "cdo_editor_historical";
 
+  public static final String OBJ_EPACKAGE = OBJ + "EPackage";
+
+  public static final String OBJ_ECLASS = OBJ + "EClass";
+
   public static final String VIEW_SESSIONS = VIEW + "cdo_sessions";
 
   public static Image getImage(String key)

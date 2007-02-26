@@ -24,7 +24,6 @@ import org.eclipse.ui.part.ViewPart;
 
 public abstract class StructuredView extends ViewPart
 {
-
   public StructuredView()
   {
   }

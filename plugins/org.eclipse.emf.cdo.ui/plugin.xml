@@ -30,5 +30,31 @@
          </view>
       </perspectiveExtension>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.emf.cdo.ui"
+            name="CDO">
+      </category>
+      <wizard
+            category="org.eclipse.emf.cdo.ui"
+            class="org.eclipse.emf.cdo.internal.ui.wizards.NewEditorWizard"
+            hasPages="true"
+            icon="icons/full/etool16/open_editor.gif"
+            id="org.eclipse.emf.cdo.ui.NewEditorWizard"
+            name="New CDO Editor"
+            project="false">
+      </wizard>
+      <wizard
+            category="org.eclipse.emf.cdo.ui"
+            class="org.eclipse.emf.cdo.internal.ui.wizards.NewSessionWizard"
+            hasPages="true"
+            icon="icons/full/etool16/open_session.gif"
+            id="org.eclipse.emf.cdo.ui.NewSessionWizard"
+            name="New CDO Session"
+            project="false">
+      </wizard>
+   </extension>
 
 </plugin>

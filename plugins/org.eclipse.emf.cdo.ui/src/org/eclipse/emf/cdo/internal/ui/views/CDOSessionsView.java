@@ -23,6 +23,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CDOSessionsView extends StructuredView
 {
   private static final Container CONTAINER = ContainerManager.INSTANCE.getContainer();
@@ -55,6 +60,8 @@ public class CDOSessionsView extends StructuredView
     viewer.setLabelProvider(ITEM_PROVIDER);
     viewer.setSorter(new NameSorter());
     viewer.setInput(CDO_ADAPTER);
+
+    getSite().setSelectionProvider(viewer);
   }
 
   @Override
@@ -227,7 +234,21 @@ public class CDOSessionsView extends StructuredView
     @Override
     protected void openEditor(CDOSession session)
     {
-      session.attach(new ResourceSetImpl(), System.currentTimeMillis());
+      DateFormat formatter = SimpleDateFormat.getInstance();
+      String value = formatter.format(new Date());
+      String str = showInputDialog("Enter a date", value);
+      if (str != null)
+      {
+        try
+        {
+          Date date = formatter.parse(str);
+          session.attach(new ResourceSetImpl(), date.getTime());
+        }
+        catch (ParseException ex)
+        {
+          CDOUI.LOG.error(ex);
+        }
+      }
     }
   }
 }

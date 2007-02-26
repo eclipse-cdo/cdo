@@ -1,0 +1,129 @@
+package org.eclipse.emf.cdo.internal.ui.wizards;
+
+import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.container.CDOContainerAdapter;
+
+import org.eclipse.net4j.container.Container;
+import org.eclipse.net4j.container.ContainerManager;
+import org.eclipse.net4j.transport.ConnectorException;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.ui.INewWizard;
+import org.eclipse.ui.IWorkbench;
+
+import java.lang.reflect.InvocationTargetException;
+
+public class NewEditorWizard extends Wizard implements INewWizard
+{
+  private NewSessionWizardPage sessionPage;
+
+  private NewEditorWizardPage editorPage;
+
+  private ISelection selection;
+
+  public NewEditorWizard()
+  {
+    setNeedsProgressMonitor(true);
+  }
+
+  public void addPages()
+  {
+    CDOSession session = null;
+    if (selection instanceof IStructuredSelection)
+    {
+      Object element = ((IStructuredSelection)selection).getFirstElement();
+      if (element instanceof CDOSession)
+      {
+        session = (CDOSession)element;
+      }
+    }
+
+    if (session == null)
+    {
+      addPage(sessionPage = new NewSessionWizardPage(selection));
+    }
+
+    addPage(editorPage = new NewEditorWizardPage());
+    editorPage.setSession(session);
+  }
+
+  public boolean performFinish()
+  {
+    final String connectorDescription = sessionPage.getConnectorDescription();
+    final String repositoryName = sessionPage.getRepositoryName();
+    IRunnableWithProgress op = new IRunnableWithProgress()
+    {
+      public void run(IProgressMonitor monitor) throws InvocationTargetException
+      {
+        try
+        {
+          doFinish(connectorDescription, repositoryName, monitor);
+        }
+        catch (Exception e)
+        {
+          throw new InvocationTargetException(e);
+        }
+        finally
+        {
+          monitor.done();
+        }
+      }
+    };
+
+    try
+    {
+      getContainer().run(true, false, op);
+    }
+    catch (InterruptedException e)
+    {
+      return false;
+    }
+    catch (InvocationTargetException e)
+    {
+      Throwable realException = e.getTargetException();
+      MessageDialog.openError(getShell(), "Error", realException.getMessage());
+      return false;
+    }
+
+    return true;
+  }
+
+  private void doFinish(String connectorDescription, String repositoryName, IProgressMonitor monitor)
+      throws ConnectorException
+  {
+    String description = repositoryName + "@" + connectorDescription;
+    monitor.beginTask("Opening " + description, 1);
+    Container container = ContainerManager.INSTANCE.getContainer();
+    CDOContainerAdapter adapter = (CDOContainerAdapter)container.getAdapter("cdoclient");
+    adapter.getSession(description);
+    monitor.worked(1);
+
+    // monitor.setTaskName("Opening file for editing...");
+    // getShell().getDisplay().asyncExec(new Runnable()
+    // {
+    // public void run()
+    // {
+    // IWorkbenchPage page =
+    // PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+    // try
+    // {
+    // IDE.openEditor(page, file, true);
+    // }
+    // catch (PartInitException e)
+    // {
+    // }
+    // }
+    // });
+    // monitor.worked(1);
+  }
+
+  public void init(IWorkbench workbench, IStructuredSelection selection)
+  {
+    this.selection = selection;
+  }
+}

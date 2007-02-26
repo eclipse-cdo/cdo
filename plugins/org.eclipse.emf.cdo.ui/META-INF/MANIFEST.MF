@@ -7,5 +7,8 @@ Bundle-Activator: org.eclipse.emf.cdo.internal.ui.bundle.CDOUI$Activator
 Bundle-Vendor: %providerName
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
- org.eclipse.emf.cdo.container
+ org.eclipse.emf.cdo.container,
+ org.eclipse.emf.edit.ui;visibility:=reexport,
+ org.eclipse.ui.ide;visibility:=reexport,
+ org.eclipse.core.resources
 Eclipse-LazyStart: true

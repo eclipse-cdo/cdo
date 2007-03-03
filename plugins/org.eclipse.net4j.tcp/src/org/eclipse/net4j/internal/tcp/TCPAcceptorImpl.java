@@ -25,9 +25,11 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.SocketAddress;
 import java.nio.channels.ClosedChannelException;
+import java.nio.channels.SelectionKey;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.text.MessageFormat;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author Eike Stepper
@@ -39,6 +41,12 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPAcceptor, TC
   private static final String DEFAULT_ADDRESS = "0.0.0.0";
 
   private TCPSelectorImpl selector;
+
+  private SelectionKey selectionKey;
+
+  private boolean startSynchronously = true;
+
+  private CountDownLatch startLatch;
 
   private ServerSocketChannel serverSocketChannel;
 
@@ -68,6 +76,30 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPAcceptor, TC
   public void setSelector(TCPSelectorImpl selector)
   {
     this.selector = selector;
+  }
+
+  public boolean isStartSynchronously()
+  {
+    return startSynchronously;
+  }
+
+  public void setStartSynchronously(boolean startSynchronously)
+  {
+    this.startSynchronously = startSynchronously;
+  }
+
+  public SelectionKey getSelectionKey()
+  {
+    return selectionKey;
+  }
+
+  public void registered(SelectionKey selectionKey)
+  {
+    this.selectionKey = selectionKey;
+    if (startSynchronously)
+    {
+      startLatch.countDown();
+    }
   }
 
   public void handleAccept(TCPSelector selector, ServerSocketChannel serverSocketChannel)
@@ -180,7 +212,16 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPAcceptor, TC
       }
     }
 
+    if (startSynchronously)
+    {
+      startLatch = new CountDownLatch(1);
+    }
+
     selector.registerAsync(serverSocketChannel, this);
+    if (startSynchronously)
+    {
+      startLatch.await();
+    }
   }
 
   @Override

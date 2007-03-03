@@ -343,7 +343,9 @@ public class TCPSelectorImpl extends LifecycleImpl implements TCPSelector, Runna
 
     try
     {
-      channel.register(selector, SelectionKey.OP_ACCEPT, listener);
+      int interest = SelectionKey.OP_ACCEPT;
+      SelectionKey selectionKey = channel.register(selector, interest, listener);
+      listener.registered(selectionKey);
     }
     catch (ClosedChannelException ignore)
     {

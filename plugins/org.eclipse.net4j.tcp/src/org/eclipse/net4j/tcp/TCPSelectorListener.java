@@ -19,10 +19,12 @@ import java.nio.channels.SocketChannel;
  */
 public interface TCPSelectorListener
 {
+  public void registered(SelectionKey selectionKey);
+
   /**
    * @author Eike Stepper
    */
-  public interface Passive
+  public interface Passive extends TCPSelectorListener
   {
     public void handleAccept(TCPSelector selector, ServerSocketChannel serverSocketChannel);
   }
@@ -30,10 +32,8 @@ public interface TCPSelectorListener
   /**
    * @author Eike Stepper
    */
-  public interface Active
+  public interface Active extends TCPSelectorListener
   {
-    public void registered(SelectionKey selectionKey);
-
     public void handleConnect(TCPSelector selector, SocketChannel channel);
 
     public void handleRead(TCPSelector selector, SocketChannel socketChannel);

@@ -6,6 +6,8 @@ import org.eclipse.net4j.container.ContainerManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -68,6 +70,13 @@ public class NewSessionWizardPage extends WizardPage
     connectorList = new List(connectorGroup, SWT.BORDER | SWT.SINGLE);
     connectorList.setSize(300, 100);
     connectorList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    connectorList.addSelectionListener(new SelectionAdapter()
+    {
+      public void widgetSelected(SelectionEvent e)
+      {
+        dialogChanged();
+      }
+    });
 
     newConnectorButton = new Button(connectorGroup, SWT.RADIO);
     newConnectorButton.setText("New connector:");
@@ -82,6 +91,13 @@ public class NewSessionWizardPage extends WizardPage
 
     connectorText = new Text(connectorGroup, SWT.BORDER);
     connectorText.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+    connectorText.addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        dialogChanged();
+      }
+    });
 
     Group repositoryGroup = new Group(container, SWT.None);
     repositoryGroup.setText("Repository");
@@ -93,6 +109,13 @@ public class NewSessionWizardPage extends WizardPage
 
     repositoryText = new Text(repositoryGroup, SWT.BORDER);
     repositoryText.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+    repositoryText.addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        dialogChanged();
+      }
+    });
 
     initialize();
     dialogChanged();
@@ -147,6 +170,25 @@ public class NewSessionWizardPage extends WizardPage
   {
     connectorList.setEnabled(existingConnectorButton.getSelection());
     connectorText.setEnabled(newConnectorButton.getSelection());
+
+    if (connectorList.isEnabled() && connectorList.getSelectionCount() == 0)
+    {
+      updateStatus("Select an existing connector from the list.");
+      return;
+    }
+
+    if (connectorText.isEnabled() && connectorText.getText().length() == 0)
+    {
+      updateStatus("Enter a description to create a new connector.");
+      return;
+    }
+
+    if (repositoryText.getText().length() == 0)
+    {
+      updateStatus("Enter the name of a remote repository.");
+      return;
+    }
+
     updateStatus(null);
   }
 

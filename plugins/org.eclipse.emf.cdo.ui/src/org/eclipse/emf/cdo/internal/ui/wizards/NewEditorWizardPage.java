@@ -159,6 +159,40 @@ public class NewEditorWizardPage extends WizardPage
   {
     loadComposite.setEnabled(loadResourceButton.getSelection());
     createComposite.setEnabled(createResourceButton.getSelection());
+
+    if (loadComposite.isEnabled() && loadComposite.getViewer().getSelection().isEmpty())
+    {
+      updateStatus("Select an existing resource to be loaded from the list.");
+      return;
+    }
+
+    if (createComposite.isEnabled())
+    {
+      if (createComposite.getText().getText().isEmpty())
+      {
+        updateStatus("Select an existing resource to be loaded from the list.");
+        return;
+      }
+
+      if (createComposite.getViewer().getSelection().isEmpty())
+      {
+        updateStatus("Select an existing resource to be loaded from the list.");
+        return;
+      }
+    }
+
+//    if (connectorText.isEnabled() && connectorText.getText().length() == 0)
+//    {
+//      updateStatus("Enter a description to create a new connector.");
+//      return;
+//    }
+//
+//    if (repositoryText.getText().length() == 0)
+//    {
+//      updateStatus("Enter the name of a remote repository.");
+//      return;
+//    }
+
     updateStatus(null);
   }
 

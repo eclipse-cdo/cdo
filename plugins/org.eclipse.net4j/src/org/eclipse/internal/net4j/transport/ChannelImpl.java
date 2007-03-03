@@ -18,7 +18,6 @@ import org.eclipse.net4j.transport.ChannelID;
 import org.eclipse.net4j.transport.Connector;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
-import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry;
 
@@ -27,6 +26,7 @@ import org.eclipse.internal.net4j.transport.BufferImpl.State;
 import org.eclipse.internal.net4j.util.Value;
 import org.eclipse.internal.net4j.util.concurrent.AsynchronousWorkSerializer;
 import org.eclipse.internal.net4j.util.concurrent.SynchronousWorkSerializer;
+import org.eclipse.internal.net4j.util.lifecycle.LifecycleImpl;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;

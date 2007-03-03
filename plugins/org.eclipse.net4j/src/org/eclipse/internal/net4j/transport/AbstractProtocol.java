@@ -14,7 +14,8 @@ import org.eclipse.net4j.transport.Buffer;
 import org.eclipse.net4j.transport.BufferProvider;
 import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.Protocol;
-import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
+
+import org.eclipse.internal.net4j.util.lifecycle.LifecycleImpl;
 
 /**
  * @author Eike Stepper

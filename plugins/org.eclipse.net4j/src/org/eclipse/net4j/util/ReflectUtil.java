@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util;
 
-import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
+import org.eclipse.internal.net4j.util.lifecycle.LifecycleImpl;
 
 import java.io.PrintStream;
 import java.lang.reflect.Field;

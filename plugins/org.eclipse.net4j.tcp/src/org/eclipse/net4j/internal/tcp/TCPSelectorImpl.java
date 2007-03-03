@@ -14,10 +14,10 @@ import org.eclipse.net4j.tcp.TCPSelector;
 import org.eclipse.net4j.tcp.TCPSelectorListener;
 import org.eclipse.net4j.tcp.TCPSelectorListener.Active;
 import org.eclipse.net4j.tcp.TCPSelectorListener.Passive;
-import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
+import org.eclipse.internal.net4j.util.lifecycle.LifecycleImpl;
 
 import java.io.IOException;
 import java.nio.channels.CancelledKeyException;

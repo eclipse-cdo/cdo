@@ -115,10 +115,8 @@ public class CDOSessionsView extends StructuredView
       openEditorAction.setSession((CDOSession)selectedElement);
       openEditorAction.run();
     }
-    else
-    {
-      super.onDoubleClick(selectedElement);
-    }
+
+    super.onDoubleClick(selectedElement);
   }
 
   private static final class NameSorter extends ViewerSorter

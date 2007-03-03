@@ -25,7 +25,6 @@ import org.eclipse.net4j.transport.ProtocolFactory;
 import org.eclipse.net4j.transport.ProtocolFactoryID;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
-import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
 import org.eclipse.net4j.util.lifecycle.LifecycleListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleNotifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -35,6 +34,7 @@ import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.util.event.EventImpl;
 import org.eclipse.internal.net4j.util.event.NotifierImpl;
+import org.eclipse.internal.net4j.util.lifecycle.LifecycleImpl;
 
 import java.util.ArrayList;
 import java.util.List;

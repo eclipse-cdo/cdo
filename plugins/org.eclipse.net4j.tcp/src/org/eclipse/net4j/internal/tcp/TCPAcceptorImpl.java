@@ -38,7 +38,7 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPAcceptor, TC
 
   private static final String DEFAULT_ADDRESS = "0.0.0.0";
 
-  private TCPSelector selector;
+  private TCPSelectorImpl selector;
 
   private ServerSocketChannel serverSocketChannel;
 
@@ -60,12 +60,12 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPAcceptor, TC
     return port;
   }
 
-  public TCPSelector getSelector()
+  public TCPSelectorImpl getSelector()
   {
     return selector;
   }
 
-  public void setSelector(TCPSelector selector)
+  public void setSelector(TCPSelectorImpl selector)
   {
     this.selector = selector;
   }

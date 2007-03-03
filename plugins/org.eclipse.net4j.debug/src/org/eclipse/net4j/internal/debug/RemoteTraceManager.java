@@ -11,11 +11,12 @@
 package org.eclipse.net4j.internal.debug;
 
 import org.eclipse.net4j.internal.debug.views.RemoteTraceView;
-import org.eclipse.net4j.util.lifecycle.LifecycleImpl;
 import org.eclipse.net4j.util.lifecycle.Singleton;
 import org.eclipse.net4j.util.om.trace.RemoteTraceServer;
 import org.eclipse.net4j.util.om.trace.RemoteTraceServer.Event;
 import org.eclipse.net4j.util.om.trace.RemoteTraceServer.Listener;
+
+import org.eclipse.internal.net4j.util.lifecycle.LifecycleImpl;
 
 import java.util.ArrayList;
 import java.util.List;

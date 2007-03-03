@@ -181,17 +181,17 @@ public class NewEditorWizardPage extends WizardPage
       }
     }
 
-//    if (connectorText.isEnabled() && connectorText.getText().length() == 0)
-//    {
-//      updateStatus("Enter a description to create a new connector.");
-//      return;
-//    }
-//
-//    if (repositoryText.getText().length() == 0)
-//    {
-//      updateStatus("Enter the name of a remote repository.");
-//      return;
-//    }
+    // if (connectorText.isEnabled() && connectorText.getText().length() == 0)
+    // {
+    // updateStatus("Enter a description to create a new connector.");
+    // return;
+    // }
+    //
+    // if (repositoryText.getText().length() == 0)
+    // {
+    // updateStatus("Enter the name of a remote repository.");
+    // return;
+    // }
 
     updateStatus(null);
   }

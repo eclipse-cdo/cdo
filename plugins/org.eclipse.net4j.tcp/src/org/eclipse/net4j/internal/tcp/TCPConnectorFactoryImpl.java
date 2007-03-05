@@ -11,20 +11,20 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.tcp.TCPConstants;
-import org.eclipse.net4j.transport.Connector;
-import org.eclipse.net4j.transport.ConnectorFactory;
+import org.eclipse.net4j.transport.IConnector;
+import org.eclipse.net4j.transport.IConnectorFactory;
 
 /**
  * @author Eike Stepper
  */
-public class TCPConnectorFactoryImpl implements ConnectorFactory
+public class TCPConnectorFactoryImpl implements IConnectorFactory
 {
   public String getType()
   {
     return TCPConstants.TYPE;
   }
 
-  public Connector createConnector()
+  public IConnector createConnector()
   {
     return new ClientTCPConnectorImpl();
   }

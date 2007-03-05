@@ -10,12 +10,16 @@
  **************************************************************************/
 package org.eclipse.net4j.util.registry;
 
+import org.eclipse.net4j.util.event.IEvent;
+
 /**
  * @author Eike Stepper
  */
-public interface IRegistryEvent<ID, E>
+public interface IRegistryEvent<K, V> extends IEvent
 {
-  public IRegistry<ID, E> getRegistry();
+  public IRegistry<K, V> getRegistry();
 
-  public IRegistryDelta<ID, E>[] getDeltas();
+  public IRegistryDelta<K, V>[] getDeltas();
+
+  public void accept(IRegistryEventVisitor<K, V> visitor);
 }

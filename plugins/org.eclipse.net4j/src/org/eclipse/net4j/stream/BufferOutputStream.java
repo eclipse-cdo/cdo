@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.stream;
 
-import org.eclipse.net4j.transport.Buffer;
-import org.eclipse.net4j.transport.BufferHandler;
-import org.eclipse.net4j.transport.BufferProvider;
+import org.eclipse.net4j.transport.IBuffer;
+import org.eclipse.net4j.transport.IBufferHandler;
+import org.eclipse.net4j.transport.IBufferProvider;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -32,15 +32,15 @@ public class BufferOutputStream extends OutputStream
 
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM, BufferOutputStream.class);
 
-  private BufferHandler bufferHandler;
+  private IBufferHandler bufferHandler;
 
-  private BufferProvider bufferProvider;
+  private IBufferProvider bufferProvider;
 
-  private Buffer currentBuffer;
+  private IBuffer currentBuffer;
 
   private short channelIndex;
 
-  public BufferOutputStream(BufferHandler bufferHandler, BufferProvider bufferProvider, short channelIndex)
+  public BufferOutputStream(IBufferHandler bufferHandler, IBufferProvider bufferProvider, short channelIndex)
   {
     if (bufferHandler == null)
     {
@@ -57,7 +57,7 @@ public class BufferOutputStream extends OutputStream
     this.channelIndex = channelIndex;
   }
 
-  public BufferOutputStream(BufferHandler bufferHandler, short channelIndex)
+  public BufferOutputStream(IBufferHandler bufferHandler, short channelIndex)
   {
     this(bufferHandler, extractBufferProvider(bufferHandler), channelIndex);
   }
@@ -137,11 +137,11 @@ public class BufferOutputStream extends OutputStream
     return DEFAULT_PROPAGATE_CLOSE;
   }
 
-  private static BufferProvider extractBufferProvider(BufferHandler bufferHandler)
+  private static IBufferProvider extractBufferProvider(IBufferHandler bufferHandler)
   {
-    if (bufferHandler instanceof BufferProvider)
+    if (bufferHandler instanceof IBufferProvider)
     {
-      return (BufferProvider)bufferHandler;
+      return (IBufferProvider)bufferHandler;
     }
 
     throw new IllegalArgumentException("Buffer handler unable to provide buffers"); //$NON-NLS-1$

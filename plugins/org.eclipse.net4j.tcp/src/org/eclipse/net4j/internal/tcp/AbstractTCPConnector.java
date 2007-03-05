@@ -13,15 +13,15 @@ package org.eclipse.net4j.internal.tcp;
 import org.eclipse.net4j.tcp.TCPConnector;
 import org.eclipse.net4j.tcp.TCPSelector;
 import org.eclipse.net4j.tcp.TCPSelectorListener;
-import org.eclipse.net4j.transport.Buffer;
-import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ConnectorException;
 import org.eclipse.net4j.transport.ConnectorState;
+import org.eclipse.net4j.transport.IBuffer;
+import org.eclipse.net4j.transport.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
-import org.eclipse.internal.net4j.transport.AbstractConnector;
-import org.eclipse.internal.net4j.transport.ChannelImpl;
+import org.eclipse.internal.net4j.transport.Channel;
+import org.eclipse.internal.net4j.transport.Connector;
 import org.eclipse.internal.net4j.transport.DescriptionUtil;
 
 import java.nio.ByteBuffer;
@@ -34,8 +34,7 @@ import java.util.Queue;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractTCPConnector extends AbstractConnector implements TCPConnector,
-    TCPSelectorListener.Active
+public abstract class AbstractTCPConnector extends Connector implements TCPConnector, TCPSelectorListener.Active
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, AbstractTCPConnector.class);
 
@@ -45,7 +44,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
 
   private SelectionKey selectionKey;
 
-  private Buffer inputBuffer;
+  private IBuffer inputBuffer;
 
   private ControlChannelImpl controlChannel;
 
@@ -91,11 +90,11 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
   }
 
   /**
-   * Called by {@link ChannelImpl} each time a new buffer is available for
+   * Called by {@link Channel} each time a new buffer is available for
    * multiplexing. This or another buffer can be dequeued from the outputQueue
-   * of the {@link ChannelImpl}.
+   * of the {@link Channel}.
    */
-  public void multiplexBuffer(Channel channel)
+  public void multiplexBuffer(IChannel channel)
   {
     checkSelectionKey();
     selector.setWriteInterest(selectionKey, true);
@@ -150,7 +149,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
       if (byteBuffer != null)
       {
         short channelIndex = inputBuffer.getChannelIndex();
-        ChannelImpl channel = channelIndex == ControlChannelImpl.CONTROL_CHANNEL_ID ? controlChannel
+        Channel channel = channelIndex == ControlChannelImpl.CONTROL_CHANNEL_ID ? controlChannel
             : getChannel(channelIndex);
         if (channel != null)
         {
@@ -185,9 +184,9 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
     try
     {
       boolean moreToWrite = false;
-      for (Queue<Buffer> bufferQueue : getChannelBufferQueues())
+      for (Queue<IBuffer> bufferQueue : getChannelBufferQueues())
       {
-        Buffer buffer = bufferQueue.peek();
+        IBuffer buffer = bufferQueue.peek();
         if (buffer != null)
         {
           if (buffer.write(socketChannel))
@@ -230,10 +229,10 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
   }
 
   @Override
-  protected List<Queue<Buffer>> getChannelBufferQueues()
+  protected List<Queue<IBuffer>> getChannelBufferQueues()
   {
-    List<Queue<Buffer>> queues = super.getChannelBufferQueues();
-    Queue<Buffer> controlQueue = controlChannel.getSendQueue();
+    List<Queue<IBuffer>> queues = super.getChannelBufferQueues();
+    Queue<IBuffer> controlQueue = controlChannel.getSendQueue();
     if (!controlQueue.isEmpty())
     {
       queues.add(controlQueue);
@@ -263,7 +262,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
   }
 
   @Override
-  protected void removeChannel(ChannelImpl channel)
+  protected void removeChannel(Channel channel)
   {
     if (isConnected())
     {
@@ -274,9 +273,9 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
   }
 
   @Override
-  protected void onAboutToActivate() throws Exception
+  protected void doBeforeActivate() throws Exception
   {
-    super.onAboutToActivate();
+    super.doBeforeActivate();
     if (socketChannel == null)
     {
       throw new IllegalStateException("socketChannel == null");
@@ -302,16 +301,16 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
   }
 
   @Override
-  protected void onActivate() throws Exception
+  protected void doActivate() throws Exception
   {
-    super.onActivate();
+    super.doActivate();
     controlChannel = new ControlChannelImpl(this);
     controlChannel.activate();
     selector.registerAsync(socketChannel, this);
   }
 
   @Override
-  protected void onDeactivate() throws Exception
+  protected void doDeactivate() throws Exception
   {
     Exception exception = null;
 
@@ -349,7 +348,7 @@ public abstract class AbstractTCPConnector extends AbstractConnector implements 
 
     try
     {
-      super.onDeactivate();
+      super.doDeactivate();
     }
     catch (Exception ex)
     {

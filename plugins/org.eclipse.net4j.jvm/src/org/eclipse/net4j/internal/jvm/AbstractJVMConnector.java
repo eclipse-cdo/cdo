@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jvm;
 
-import org.eclipse.net4j.transport.Buffer;
-import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ConnectorException;
+import org.eclipse.net4j.transport.IBuffer;
+import org.eclipse.net4j.transport.IChannel;
 
-import org.eclipse.internal.net4j.transport.AbstractConnector;
-import org.eclipse.internal.net4j.transport.ChannelImpl;
+import org.eclipse.internal.net4j.transport.Channel;
+import org.eclipse.internal.net4j.transport.Connector;
 import org.eclipse.internal.net4j.transport.DescriptionUtil;
 
 import java.util.Queue;
@@ -25,7 +25,7 @@ import java.util.Queue;
  * 
  * @author Eike Stepper
  */
-public abstract class AbstractJVMConnector extends AbstractConnector
+public abstract class AbstractJVMConnector extends Connector
 {
   private AbstractJVMConnector peer;
 
@@ -55,7 +55,7 @@ public abstract class AbstractJVMConnector extends AbstractConnector
   {
     try
     {
-      ChannelImpl channel = getPeer().createChannel(channelIndex, protocolID, null);
+      Channel channel = getPeer().createChannel(channelIndex, protocolID, null);
       if (channel == null)
       {
         throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
@@ -73,25 +73,25 @@ public abstract class AbstractJVMConnector extends AbstractConnector
     }
   }
 
-  public void multiplexBuffer(Channel localChannel)
+  public void multiplexBuffer(IChannel localChannel)
   {
     short channelIndex = localChannel.getChannelIndex();
-    ChannelImpl peerChannel = peer.getChannel(channelIndex);
+    Channel peerChannel = peer.getChannel(channelIndex);
     if (peerChannel == null)
     {
       throw new IllegalStateException("peerChannel == null"); //$NON-NLS-1$
     }
 
-    Queue<Buffer> localQueue = ((ChannelImpl)localChannel).getSendQueue();
-    Buffer buffer = localQueue.poll();
+    Queue<IBuffer> localQueue = ((Channel)localChannel).getSendQueue();
+    IBuffer buffer = localQueue.poll();
     buffer.flip();
     peerChannel.handleBufferFromMultiplexer(buffer);
   }
 
   @Override
-  protected void onAboutToActivate() throws Exception
+  protected void doBeforeActivate() throws Exception
   {
-    super.onAboutToActivate();
+    super.doBeforeActivate();
     name = DescriptionUtil.getElement(getDescription(), 2);
     if (name == null)
     {

@@ -10,17 +10,15 @@
  **************************************************************************/
 package org.eclipse.net4j.util.registry;
 
+import org.eclipse.net4j.util.container.IContainer;
+
 import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public interface IRegistry<K, V> extends Map<K, V>
+public interface IRegistry<K, V> extends Map<K, V>, IContainer<Map.Entry<K, V>>
 {
-  public void addRegistryListener(IRegistryListener<K, V> listener);
-
-  public void removeRegistryListener(IRegistryListener<K, V> listener);
-
   public boolean isAutoCommit();
 
   public void setAutoCommit(boolean on);
@@ -28,13 +26,4 @@ public interface IRegistry<K, V> extends Map<K, V>
   public void commit(boolean notifications);
 
   public void commit();
-
-  public void dispose();
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface Unmodifiable<K, V> extends IRegistry<K, V>
-  {
-  }
 }

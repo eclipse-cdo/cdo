@@ -10,9 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.views;
 
-import static org.eclipse.net4j.util.registry.IRegistryDelta.Kind.DEREGISTERED;
-import static org.eclipse.net4j.util.registry.IRegistryDelta.Kind.REGISTERED;
-
 import org.eclipse.emf.cdo.CDOAdapter;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.container.CDOContainerAdapter;
@@ -22,9 +19,6 @@ import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.registry.IRegistry;
-import org.eclipse.net4j.util.registry.IRegistryDelta;
-import org.eclipse.net4j.util.registry.IRegistryEvent;
-import org.eclipse.net4j.util.registry.IRegistryListener;
 
 import org.eclipse.swt.graphics.Image;
 
@@ -75,7 +69,7 @@ public class CDOSessionsItemProvider extends ItemProvider<CDOContainerAdapter> i
     IRegistryDelta[] deltas = event.getDeltas();
     for (IRegistryDelta delta : deltas)
     {
-      Object element = delta.getValue();
+      Object element = delta.getElement();
       if (element instanceof CDOSession)
       {
         CDOSession session = (CDOSession)element;

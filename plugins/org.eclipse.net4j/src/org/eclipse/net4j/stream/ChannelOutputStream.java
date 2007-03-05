@@ -10,20 +10,20 @@
  **************************************************************************/
 package org.eclipse.net4j.stream;
 
-import org.eclipse.net4j.transport.BufferProvider;
-import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.transport.IBufferProvider;
+import org.eclipse.net4j.transport.IChannel;
 
 /**
  * @author Eike Stepper
  */
 public class ChannelOutputStream extends BufferOutputStream
 {
-  public ChannelOutputStream(Channel channel)
+  public ChannelOutputStream(IChannel channel)
   {
     super(channel, channel.getChannelIndex());
   }
 
-  public ChannelOutputStream(Channel channel, BufferProvider bufferProvider)
+  public ChannelOutputStream(IChannel channel, IBufferProvider bufferProvider)
   {
     super(channel, bufferProvider, channel.getChannelIndex());
   }

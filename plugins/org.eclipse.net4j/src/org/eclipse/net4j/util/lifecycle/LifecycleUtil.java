@@ -28,33 +28,11 @@ public final class LifecycleUtil
   {
   }
 
-  public static boolean addListener(Object notifier, LifecycleListener listener)
-  {
-    if (notifier instanceof LifecycleNotifier)
-    {
-      ((LifecycleNotifier)notifier).addLifecycleListener(listener);
-      return true;
-    }
-
-    return false;
-  }
-
-  public static boolean removeListener(Object notifier, LifecycleListener listener)
-  {
-    if (notifier instanceof LifecycleNotifier)
-    {
-      ((LifecycleNotifier)notifier).removeLifecycleListener(listener);
-      return true;
-    }
-
-    return false;
-  }
-
   public static boolean isActive(Object object)
   {
-    if (object instanceof Lifecycle.Introspection)
+    if (object instanceof ILifecycle.Introspection)
     {
-      return ((Lifecycle.Introspection)object).isActive();
+      return ((ILifecycle.Introspection)object).isActive();
     }
 
     return true;
@@ -72,11 +50,11 @@ public final class LifecycleUtil
    */
   public static void activate(Object object, boolean useAnnotation)
   {
-    if (object instanceof Lifecycle)
+    if (object instanceof ILifecycle)
     {
       try
       {
-        ((Lifecycle)object).activate();
+        ((ILifecycle)object).activate();
       }
       catch (RuntimeException ex)
       {
@@ -124,9 +102,9 @@ public final class LifecycleUtil
    */
   public static Exception deactivate(Object object, boolean useAnnotation)
   {
-    if (object instanceof Lifecycle)
+    if (object instanceof ILifecycle)
     {
-      return ((Lifecycle)object).deactivate();
+      return ((ILifecycle)object).deactivate();
     }
     else if (object != null && useAnnotation)
     {

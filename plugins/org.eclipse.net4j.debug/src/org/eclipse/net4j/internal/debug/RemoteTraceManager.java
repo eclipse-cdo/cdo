@@ -11,12 +11,11 @@
 package org.eclipse.net4j.internal.debug;
 
 import org.eclipse.net4j.internal.debug.views.RemoteTraceView;
-import org.eclipse.net4j.util.lifecycle.Singleton;
 import org.eclipse.net4j.util.om.trace.RemoteTraceServer;
 import org.eclipse.net4j.util.om.trace.RemoteTraceServer.Event;
 import org.eclipse.net4j.util.om.trace.RemoteTraceServer.Listener;
 
-import org.eclipse.internal.net4j.util.lifecycle.LifecycleImpl;
+import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +23,9 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class RemoteTraceManager extends LifecycleImpl implements Listener
+public class RemoteTraceManager extends Lifecycle implements Listener
 {
-  @Singleton
+  // @Singleton
   public static final RemoteTraceManager INSTANCE = new RemoteTraceManager();
 
   private RemoteTraceServer server;
@@ -54,18 +53,18 @@ public class RemoteTraceManager extends LifecycleImpl implements Listener
   }
 
   @Override
-  protected void onActivate() throws Exception
+  protected void doActivate() throws Exception
   {
-    super.onActivate();
+    super.doActivate();
     server = new RemoteTraceServer();
     server.addListener(this);
   }
 
   @Override
-  protected void onDeactivate() throws Exception
+  protected void doDeactivate() throws Exception
   {
     server.removeListener(this);
     server.close();
-    super.onDeactivate();
+    super.doDeactivate();
   }
 }

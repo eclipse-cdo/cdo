@@ -32,6 +32,6 @@ public class ServerJVMConnectorImpl extends AbstractJVMConnector
   protected void onDeactivate() throws Exception
   {
     LifecycleUtil.deactivateNoisy(getPeer());
-    super.onDeactivate();
+    super.doDeactivate();
   }
 }

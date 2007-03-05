@@ -11,20 +11,20 @@
 package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.jvm.JVMConstants;
-import org.eclipse.net4j.transport.Acceptor;
-import org.eclipse.net4j.transport.AcceptorFactory;
+import org.eclipse.net4j.transport.IAcceptor;
+import org.eclipse.net4j.transport.IAcceptorFactory;
 
 /**
  * @author Eike Stepper
  */
-public class JVMAcceptorFactoryImpl implements AcceptorFactory
+public class JVMAcceptorFactoryImpl implements IAcceptorFactory
 {
   public String getType()
   {
     return JVMConstants.TYPE;
   }
 
-  public Acceptor createAcceptor()
+  public IAcceptor createAcceptor()
   {
     return new JVMAcceptorImpl();
   }

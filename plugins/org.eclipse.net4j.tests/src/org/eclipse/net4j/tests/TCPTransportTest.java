@@ -14,10 +14,10 @@ import org.eclipse.net4j.container.Container;
 import org.eclipse.net4j.stream.ChannelInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
-import org.eclipse.net4j.transport.AcceptorConnectorsEvent;
-import org.eclipse.net4j.transport.Buffer;
-import org.eclipse.net4j.transport.Channel;
-import org.eclipse.net4j.transport.ConnectorChannelsEvent;
+import org.eclipse.net4j.transport.IAcceptorAcceptedEvent;
+import org.eclipse.net4j.transport.IBuffer;
+import org.eclipse.net4j.transport.IChannel;
+import org.eclipse.net4j.transport.IConnectorChannelsEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
@@ -45,7 +45,7 @@ public class TCPTransportTest extends AbstractTCPTest
     return container;
   }
 
-  protected Buffer provideBuffer()
+  protected IBuffer provideBuffer()
   {
     return container.getBufferProvider().provideBuffer();
   }
@@ -58,10 +58,10 @@ public class TCPTransportTest extends AbstractTCPTest
   public void testSendBuffer() throws Exception
   {
     startTransport();
-    Channel channel = getConnector().openChannel();
+    IChannel channel = getConnector().openChannel();
     for (int i = 0; i < 3; i++)
     {
-      Buffer buffer = provideBuffer();
+      IBuffer buffer = provideBuffer();
       ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
       byteBuffer.putInt(1970);
       channel.handleBuffer(buffer);
@@ -75,10 +75,10 @@ public class TCPTransportTest extends AbstractTCPTest
     container.register(new TestProtocolFactory(counter));
     startTransport();
 
-    Channel channel = getConnector().openChannel(TestProtocolFactory.PROTOCOL_ID);
+    IChannel channel = getConnector().openChannel(TestProtocolFactory.PROTOCOL_ID);
     for (int i = 0; i < COUNT; i++)
     {
-      Buffer buffer = provideBuffer();
+      IBuffer buffer = provideBuffer();
       ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
       byteBuffer.putInt(1970);
       channel.handleBuffer(buffer);
@@ -153,17 +153,17 @@ public class TCPTransportTest extends AbstractTCPTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof AcceptorConnectorsEvent)
+        if (event instanceof IAcceptorAcceptedEvent)
         {
-          AcceptorConnectorsEvent e = (AcceptorConnectorsEvent)event;
-          e.getAcceptedConnector().addListener(new IListener()
+          IAcceptorAcceptedEvent e = (IAcceptorAcceptedEvent)event;
+          e.getConnector().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
             {
-              if (event instanceof ConnectorChannelsEvent)
+              if (event instanceof IConnectorChannelsEvent)
               {
-                ConnectorChannelsEvent e = (ConnectorChannelsEvent)event;
-                if (e.getType() == ConnectorChannelsEvent.Type.OPENED)
+                IConnectorChannelsEvent e = (IConnectorChannelsEvent)event;
+                if (e.getType() == ConnectorChaIConnectorChannelsEvent)
                 {
                   inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
                   counter.countDown();
@@ -175,7 +175,7 @@ public class TCPTransportTest extends AbstractTCPTest
       }
     });
 
-    Channel channel = getConnector().openChannel();
+    IChannel channel = getConnector().openChannel();
     assertTrue(counter.await(2, TimeUnit.SECONDS));
     assertNotNull(inputStream[0]);
 
@@ -216,17 +216,17 @@ public class TCPTransportTest extends AbstractTCPTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof AcceptorConnectorsEvent)
+        if (event instanceof IAcceptorAcceptedEvent)
         {
-          AcceptorConnectorsEvent e = (AcceptorConnectorsEvent)event;
-          e.getAcceptedConnector().addListener(new IListener()
+          IAcceptorAcceptedEvent e = (IAcceptorAcceptedEvent)event;
+          e.getConnector().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
             {
-              if (event instanceof ConnectorChannelsEvent)
+              if (event instanceof IConnectorChannelsEvent)
               {
-                ConnectorChannelsEvent e = (ConnectorChannelsEvent)event;
-                if (e.getType() == ConnectorChannelsEvent.Type.OPENED)
+                IConnectorChannelsEvent e = (IConnectorChannelsEvent)event;
+                if (e.getType() == ConnectorChaIConnectorChannelsEvent)
                 {
                   inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
                   counter.countDown();
@@ -238,7 +238,7 @@ public class TCPTransportTest extends AbstractTCPTest
       }
     });
 
-    Channel channel = getConnector().openChannel();
+    IChannel channel = getConnector().openChannel();
     assertTrue(counter.await(2, TimeUnit.SECONDS));
     assertNotNull(inputStream[0]);
 
@@ -282,17 +282,17 @@ public class TCPTransportTest extends AbstractTCPTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof AcceptorConnectorsEvent)
+        if (event instanceof IAcceptorAcceptedEvent)
         {
-          AcceptorConnectorsEvent e = (AcceptorConnectorsEvent)event;
-          e.getAcceptedConnector().addListener(new IListener()
+          IAcceptorAcceptedEvent e = (IAcceptorAcceptedEvent)event;
+          e.getConnector().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
             {
-              if (event instanceof ConnectorChannelsEvent)
+              if (event instanceof IConnectorChannelsEvent)
               {
-                ConnectorChannelsEvent e = (ConnectorChannelsEvent)event;
-                if (e.getType() == ConnectorChannelsEvent.Type.OPENED)
+                IConnectorChannelsEvent e = (IConnectorChannelsEvent)event;
+                if (e.getType() == ConnectorChaIConnectorChannelsEvent)
                 {
                   inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
                   counter.countDown();
@@ -304,7 +304,7 @@ public class TCPTransportTest extends AbstractTCPTest
       }
     });
 
-    final Channel channel = getConnector().openChannel();
+    final IChannel channel = getConnector().openChannel();
     assertTrue(counter.await(2, TimeUnit.SECONDS));
     assertNotNull(inputStream[0]);
 
@@ -362,17 +362,17 @@ public class TCPTransportTest extends AbstractTCPTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof AcceptorConnectorsEvent)
+        if (event instanceof IAcceptorAcceptedEvent)
         {
-          AcceptorConnectorsEvent e = (AcceptorConnectorsEvent)event;
-          e.getAcceptedConnector().addListener(new IListener()
+          IAcceptorAcceptedEvent e = (IAcceptorAcceptedEvent)event;
+          e.getConnector().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
             {
-              if (event instanceof ConnectorChannelsEvent)
+              if (event instanceof IConnectorChannelsEvent)
               {
-                ConnectorChannelsEvent e = (ConnectorChannelsEvent)event;
-                if (e.getType() == ConnectorChannelsEvent.Type.OPENED)
+                IConnectorChannelsEvent e = (IConnectorChannelsEvent)event;
+                if (e.getType() == ConnectorChaIConnectorChannelsEvent)
                 {
                   inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
                   counter.countDown();
@@ -384,7 +384,7 @@ public class TCPTransportTest extends AbstractTCPTest
       }
     });
 
-    Channel channel = getConnector().openChannel();
+    IChannel channel = getConnector().openChannel();
     assertTrue(counter.await(2, TimeUnit.SECONDS));
 
     ChannelOutputStream outputStream = new ChannelOutputStream(channel);

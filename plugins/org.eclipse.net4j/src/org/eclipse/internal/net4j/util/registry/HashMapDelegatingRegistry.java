@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class HashMapDelegatingRegistry<K, V> extends AbstractDelegatingRegistry<K, V>
+public class HashMapDelegatingRegistry<K, V> extends DelegatingRegistry<K, V>
 {
   private Map<K, V> map;
 

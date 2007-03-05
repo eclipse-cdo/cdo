@@ -11,8 +11,6 @@
 package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.transport.ConnectorLocation;
-import org.eclipse.net4j.util.lifecycle.LifecycleListener;
-import org.eclipse.net4j.util.lifecycle.LifecycleNotifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
@@ -54,9 +52,9 @@ public class ClientJVMConnectorImpl extends AbstractJVMConnector
   }
 
   @Override
-  protected void onAboutToActivate() throws Exception
+  protected void doBeforeActivate() throws Exception
   {
-    super.onAboutToActivate();
+    super.doBeforeActivate();
     acceptor = JVMAcceptorManagerImpl.INSTANCE.getAcceptor(getName());
     if (acceptor == null)
     {
@@ -67,7 +65,7 @@ public class ClientJVMConnectorImpl extends AbstractJVMConnector
   @Override
   protected void onActivate() throws Exception
   {
-    super.onActivate();
+    super.doActivate();
     AbstractJVMConnector peer = acceptor.handleAccept(this);
     setPeer(peer);
   }
@@ -76,7 +74,7 @@ public class ClientJVMConnectorImpl extends AbstractJVMConnector
   protected void onDeactivate() throws Exception
   {
     LifecycleUtil.deactivateNoisy(getPeer());
-    super.onDeactivate();
+    super.doDeactivate();
   }
 
   protected AbstractJVMConnector createServerPeer() throws Exception

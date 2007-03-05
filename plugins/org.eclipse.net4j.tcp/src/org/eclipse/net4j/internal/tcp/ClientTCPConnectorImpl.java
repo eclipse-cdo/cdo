@@ -51,9 +51,9 @@ public class ClientTCPConnectorImpl extends AbstractTCPConnector
   }
 
   @Override
-  protected void onActivate() throws Exception
+  protected void doActivate() throws Exception
   {
-    super.onActivate();
+    super.doActivate();
     InetAddress addr = InetAddress.getByName(getHost());
     InetSocketAddress sAddr = new InetSocketAddress(addr, getPort());
     getSocketChannel().connect(sAddr);

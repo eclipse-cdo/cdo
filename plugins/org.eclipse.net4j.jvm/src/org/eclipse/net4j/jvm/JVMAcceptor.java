@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.jvm;
 
-import org.eclipse.net4j.transport.Acceptor;
+import org.eclipse.net4j.transport.IAcceptor;
 
 /**
  * @author Eike Stepper
  */
-public interface JVMAcceptor extends Acceptor
+public interface JVMAcceptor extends IAcceptor
 {
   public String getName();
 }

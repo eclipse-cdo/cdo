@@ -45,8 +45,8 @@ public class ServerTCPConnectorImpl extends AbstractTCPConnector
   }
 
   @Override
-  protected void onDeactivate() throws Exception
+  protected void doDeactivate() throws Exception
   {
-    super.onDeactivate();
+    super.doDeactivate();
   }
 }

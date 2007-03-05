@@ -11,8 +11,8 @@
 package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.stream.BufferInputStream;
-import org.eclipse.net4j.transport.BufferHandler;
-import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.transport.IBufferHandler;
+import org.eclipse.net4j.transport.IChannel;
 import org.eclipse.net4j.util.ReflectUtil;
 
 /**
@@ -26,7 +26,7 @@ public abstract class SignalActor<RESULT> extends Signal
 
   private RESULT result;
 
-  protected SignalActor(Channel channel)
+  protected SignalActor(IChannel channel)
   {
     SignalProtocol protocol = extractSignalProtocol(channel);
     setProtocol(protocol);
@@ -62,9 +62,9 @@ public abstract class SignalActor<RESULT> extends Signal
     this.result = result;
   }
 
-  private static SignalProtocol extractSignalProtocol(Channel channel)
+  private static SignalProtocol extractSignalProtocol(IChannel channel)
   {
-    BufferHandler receiveHandler = channel.getReceiveHandler();
+    IBufferHandler receiveHandler = channel.getReceiveHandler();
     if (receiveHandler == null)
     {
       throw new IllegalArgumentException("Channel has no protocol"); //$NON-NLS-1$

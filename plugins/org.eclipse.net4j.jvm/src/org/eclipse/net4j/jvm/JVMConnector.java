@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.jvm;
 
-import org.eclipse.net4j.transport.Connector;
+import org.eclipse.net4j.transport.IConnector;
 
 /**
  * @author Eike Stepper
  */
-public interface JVMConnector extends Connector
+public interface JVMConnector extends IConnector
 {
   public String getName();
 }

@@ -11,20 +11,20 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.tcp.TCPConstants;
-import org.eclipse.net4j.transport.Acceptor;
-import org.eclipse.net4j.transport.AcceptorFactory;
+import org.eclipse.net4j.transport.IAcceptor;
+import org.eclipse.net4j.transport.IAcceptorFactory;
 
 /**
  * @author Eike Stepper
  */
-public class TCPAcceptorFactoryImpl implements AcceptorFactory
+public class TCPAcceptorFactoryImpl implements IAcceptorFactory
 {
   public String getType()
   {
     return TCPConstants.TYPE;
   }
 
-  public Acceptor createAcceptor()
+  public IAcceptor createAcceptor()
   {
     return new TCPAcceptorImpl();
   }

@@ -12,7 +12,6 @@ package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.jvm.JVMAcceptor;
 import org.eclipse.net4j.jvm.JVMAcceptorManager;
-import org.eclipse.net4j.util.lifecycle.Singleton;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.util.registry.HashMapRegistry;
@@ -22,7 +21,7 @@ import org.eclipse.internal.net4j.util.registry.HashMapRegistry;
  */
 public class JVMAcceptorManagerImpl implements JVMAcceptorManager
 {
-  @Singleton
+  // @Singleton
   public static final JVMAcceptorManagerImpl INSTANCE = new JVMAcceptorManagerImpl();
 
   private IRegistry<String, JVMAcceptor> acceptorRegistry = new HashMapRegistry();

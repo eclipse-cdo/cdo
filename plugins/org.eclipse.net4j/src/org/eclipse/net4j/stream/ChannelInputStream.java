@@ -10,25 +10,25 @@
  **************************************************************************/
 package org.eclipse.net4j.stream;
 
-import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.transport.IChannel;
 
 /**
  * @author Eike Stepper
  */
 public class ChannelInputStream extends BufferInputStream
 {
-  private Channel channel;
+  private IChannel channel;
 
   private long millisBeforeTimeout = DEFAULT_MILLIS_BEFORE_TIMEOUT;
 
   private long millisInterruptCheck = DEFAULT_MILLIS_INTERRUPT_CHECK;
 
-  public ChannelInputStream(Channel channel)
+  public ChannelInputStream(IChannel channel)
   {
     this(channel, DEFAULT_MILLIS_BEFORE_TIMEOUT);
   }
 
-  public ChannelInputStream(Channel channel, long millisBeforeTimeout)
+  public ChannelInputStream(IChannel channel, long millisBeforeTimeout)
   {
     this.channel = channel;
     channel.setReceiveHandler(this);
@@ -36,7 +36,7 @@ public class ChannelInputStream extends BufferInputStream
     millisInterruptCheck = DEFAULT_MILLIS_INTERRUPT_CHECK;
   }
 
-  public Channel getChannel()
+  public IChannel getChannel()
   {
     return channel;
   }

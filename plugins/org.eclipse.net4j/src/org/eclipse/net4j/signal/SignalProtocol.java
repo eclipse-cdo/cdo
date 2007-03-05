@@ -12,15 +12,15 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
-import org.eclipse.net4j.transport.Buffer;
-import org.eclipse.net4j.transport.BufferProvider;
-import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.transport.IBuffer;
+import org.eclipse.net4j.transport.IBufferProvider;
+import org.eclipse.net4j.transport.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
-import org.eclipse.internal.net4j.transport.AbstractProtocol;
 import org.eclipse.internal.net4j.transport.BufferUtil;
-import org.eclipse.internal.net4j.transport.ChannelImpl;
+import org.eclipse.internal.net4j.transport.Channel;
+import org.eclipse.internal.net4j.transport.Protocol;
 
 import java.nio.ByteBuffer;
 import java.util.Map;
@@ -30,7 +30,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public abstract class SignalProtocol extends AbstractProtocol
+public abstract class SignalProtocol extends Protocol
 {
   public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
 
@@ -49,7 +49,7 @@ public abstract class SignalProtocol extends AbstractProtocol
 
   private int nextCorrelationID = MIN_CORRELATION_ID;
 
-  protected SignalProtocol(Channel channel, ExecutorService executorService)
+  protected SignalProtocol(IChannel channel, ExecutorService executorService)
   {
     super(channel);
 
@@ -61,9 +61,9 @@ public abstract class SignalProtocol extends AbstractProtocol
     this.executorService = executorService;
   }
 
-  protected SignalProtocol(Channel channel)
+  protected SignalProtocol(IChannel channel)
   {
-    this(channel, ((ChannelImpl)channel).getReceiveExecutor());
+    this(channel, ((Channel)channel).getReceiveExecutor());
   }
 
   public boolean waitForSignals(long timeout)
@@ -86,7 +86,7 @@ public abstract class SignalProtocol extends AbstractProtocol
     return true;
   }
 
-  public void handleBuffer(Buffer buffer)
+  public void handleBuffer(IBuffer buffer)
   {
     ByteBuffer byteBuffer = buffer.getByteBuffer();
     int correlationID = byteBuffer.getInt();
@@ -221,9 +221,9 @@ public abstract class SignalProtocol extends AbstractProtocol
   {
     public SignalOutputStream(final int correlationID, final short signalID, final boolean addSignalID)
     {
-      super(getChannel(), new BufferProvider()
+      super(getChannel(), new IBufferProvider()
       {
-        private BufferProvider delegate = BufferUtil.getBufferProvider(getChannel());
+        private IBufferProvider delegate = BufferUtil.getBufferProvider(getChannel());
 
         private boolean firstBuffer = addSignalID;
 
@@ -232,9 +232,9 @@ public abstract class SignalProtocol extends AbstractProtocol
           return delegate.getBufferCapacity();
         }
 
-        public Buffer provideBuffer()
+        public IBuffer provideBuffer()
         {
-          Buffer buffer = delegate.provideBuffer();
+          IBuffer buffer = delegate.provideBuffer();
           ByteBuffer byteBuffer = buffer.startPutting(getChannel().getChannelIndex());
           if (STREAM_TRACER.isEnabled())
           {
@@ -256,7 +256,7 @@ public abstract class SignalProtocol extends AbstractProtocol
           return buffer;
         }
 
-        public void retainBuffer(Buffer buffer)
+        public void retainBuffer(IBuffer buffer)
         {
           delegate.retainBuffer(buffer);
         }

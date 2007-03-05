@@ -16,8 +16,8 @@ import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.tcp.internal.container.TCPContainerAdapterFactoryImpl;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import org.eclipse.internal.net4j.transport.AbstractAcceptor;
-import org.eclipse.internal.net4j.transport.AbstractConnector;
+import org.eclipse.internal.net4j.transport.Acceptor;
+import org.eclipse.internal.net4j.transport.Connector;
 
 /**
  * @author Eike Stepper
@@ -31,9 +31,9 @@ public abstract class AbstractTCPTest extends AbstractOMTest
   protected Container container;
 
   @SuppressWarnings("unused")
-  private AbstractAcceptor acceptor;
+  private Acceptor acceptor;
 
-  private AbstractConnector connector;
+  private Connector connector;
 
   @Override
   protected void setUp() throws Exception
@@ -81,21 +81,21 @@ public abstract class AbstractTCPTest extends AbstractOMTest
     return container;
   }
 
-  protected AbstractAcceptor getAcceptor()
+  protected Acceptor getAcceptor()
   {
     if (acceptor == null)
     {
-      acceptor = (AbstractAcceptor)container.getAcceptor(ACCEPTOR_DESCRIPTION);
+      acceptor = (Acceptor)container.getAcceptor(ACCEPTOR_DESCRIPTION);
     }
 
     return acceptor;
   }
 
-  protected AbstractConnector getConnector()
+  protected Connector getConnector()
   {
     if (connector == null)
     {
-      connector = (AbstractConnector)container.getConnector(CONNECTOR_DESCRIPTION);
+      connector = (Connector)container.getConnector(CONNECTOR_DESCRIPTION);
     }
 
     return connector;

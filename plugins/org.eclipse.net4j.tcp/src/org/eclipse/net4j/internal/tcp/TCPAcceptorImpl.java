@@ -17,7 +17,7 @@ import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
-import org.eclipse.internal.net4j.transport.AbstractAcceptor;
+import org.eclipse.internal.net4j.transport.Acceptor;
 import org.eclipse.internal.net4j.transport.DescriptionUtil;
 
 import java.net.InetAddress;
@@ -34,7 +34,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * @author Eike Stepper
  */
-public class TCPAcceptorImpl extends AbstractAcceptor implements TCPAcceptor, TCPSelectorListener.Passive
+public class TCPAcceptorImpl extends Acceptor implements TCPAcceptor, TCPSelectorListener.Passive
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_ACCEPTOR, TCPAcceptorImpl.class);
 
@@ -155,9 +155,9 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPAcceptor, TC
   }
 
   @Override
-  protected void onAboutToActivate() throws Exception
+  protected void doBeforeActivate() throws Exception
   {
-    super.onAboutToActivate();
+    super.doBeforeActivate();
     if (getDescription() == null)
     {
       throw new IllegalStateException("description == null"); //$NON-NLS-1$
@@ -181,9 +181,9 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPAcceptor, TC
   }
 
   @Override
-  protected void onActivate() throws Exception
+  protected void doActivate() throws Exception
   {
-    super.onActivate();
+    super.doActivate();
     InetSocketAddress addr = null;
     if (address != null)
     {
@@ -225,10 +225,10 @@ public class TCPAcceptorImpl extends AbstractAcceptor implements TCPAcceptor, TC
   }
 
   @Override
-  protected void onDeactivate() throws Exception
+  protected void doDeactivate() throws Exception
   {
     serverSocketChannel.close();
-    super.onDeactivate();
+    super.doDeactivate();
   }
 
   private String createConnectorDescription(SocketChannel socketChannel)

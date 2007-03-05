@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport;
 
-import org.eclipse.net4j.transport.BufferProvider;
+import org.eclipse.net4j.transport.IBufferProvider;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -37,11 +37,11 @@ public final class BufferUtil
   {
   }
 
-  public static BufferProvider getBufferProvider(Object object)
+  public static IBufferProvider getBufferProvider(Object object)
   {
-    if (object instanceof BufferProvider)
+    if (object instanceof IBufferProvider)
     {
-      return (BufferProvider)object;
+      return (IBufferProvider)object;
     }
 
     if (object == null)

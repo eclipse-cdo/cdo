@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.transport.Buffer;
+import org.eclipse.net4j.transport.IBuffer;
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.BufferUtil;
-import org.eclipse.internal.net4j.transport.ChannelImpl;
+import org.eclipse.internal.net4j.transport.Channel;
 import org.eclipse.internal.net4j.util.concurrent.SynchronizingCorrelator;
 
 import java.nio.ByteBuffer;
@@ -24,7 +24,7 @@ import java.nio.ByteBuffer;
 /**
  * @author Eike Stepper
  */
-public final class ControlChannelImpl extends ChannelImpl
+public final class ControlChannelImpl extends Channel
 {
   public static final short CONTROL_CHANNEL_ID = -1;
 
@@ -62,7 +62,7 @@ public final class ControlChannelImpl extends ChannelImpl
     assertValidChannelIndex(channelIndex);
     ISynchronizer<Boolean> registration = registrations.correlate(channelIndex);
 
-    Buffer buffer = provideBuffer();
+    IBuffer buffer = provideBuffer();
     ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_ID);
     byteBuffer.put(OPCODE_REGISTRATION);
     byteBuffer.putShort(channelIndex);
@@ -76,14 +76,14 @@ public final class ControlChannelImpl extends ChannelImpl
   {
     assertValidChannelIndex(channelIndex);
 
-    Buffer buffer = provideBuffer();
+    IBuffer buffer = provideBuffer();
     ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_ID);
     byteBuffer.put(OPCODE_DEREGISTRATION);
     byteBuffer.putShort(channelIndex);
     handleBuffer(buffer);
   }
 
-  public void handleBufferFromMultiplexer(Buffer buffer)
+  public void handleBufferFromMultiplexer(IBuffer buffer)
   {
     try
     {
@@ -101,7 +101,7 @@ public final class ControlChannelImpl extends ChannelImpl
         {
           byte[] handlerFactoryUTF8 = BufferUtil.getByteArray(byteBuffer);
           String protocolID = BufferUtil.fromUTF8(handlerFactoryUTF8);
-          ChannelImpl channel = ((AbstractTCPConnector)getConnector()).createChannel(channelIndex, protocolID, null);
+          Channel channel = ((AbstractTCPConnector)getConnector()).createChannel(channelIndex, protocolID, null);
           if (channel != null)
           {
             channel.activate();
@@ -136,7 +136,7 @@ public final class ControlChannelImpl extends ChannelImpl
 
         try
         {
-          ChannelImpl channel = ((AbstractTCPConnector)getConnector()).getChannel(channelIndex);
+          Channel channel = ((AbstractTCPConnector)getConnector()).getChannel(channelIndex);
           if (channel != null)
           {
             channel.deactivate();
@@ -170,7 +170,7 @@ public final class ControlChannelImpl extends ChannelImpl
 
   private void sendStatus(byte opcode, short channelIndex, boolean status)
   {
-    Buffer buffer = provideBuffer();
+    IBuffer buffer = provideBuffer();
     ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_ID);
     byteBuffer.put(opcode);
     byteBuffer.putShort(channelIndex);

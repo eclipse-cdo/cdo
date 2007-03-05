@@ -15,5 +15,5 @@ package org.eclipse.net4j.util.event;
  */
 public interface IEvent
 {
-  public INotifier getNotifier();
+  public INotifier getSource();
 }

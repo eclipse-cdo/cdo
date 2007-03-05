@@ -10,14 +10,14 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.transport.Buffer;
-import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ConnectorLocation;
-import org.eclipse.net4j.transport.Protocol;
-import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.transport.IBuffer;
+import org.eclipse.net4j.transport.IChannel;
+import org.eclipse.net4j.transport.IProtocol;
+import org.eclipse.net4j.transport.IProtocolFactory;
 
-import org.eclipse.internal.net4j.transport.AbstractProtocol;
-import org.eclipse.internal.net4j.transport.AbstractProtocolFactory;
+import org.eclipse.internal.net4j.transport.Protocol;
+import org.eclipse.internal.net4j.transport.ProtocolFactory;
 
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -25,7 +25,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * @author Eike Stepper
  */
-public class TestProtocolFactory extends AbstractProtocolFactory implements ProtocolFactory
+public class TestProtocolFactory extends ProtocolFactory implements IProtocolFactory
 {
   public static final String PROTOCOL_ID = "test.protocol";
 
@@ -43,10 +43,10 @@ public class TestProtocolFactory extends AbstractProtocolFactory implements Prot
 
   public Set<ConnectorLocation> getLocations()
   {
-    return ProtocolFactory.SYMMETRIC;
+    return IProtocolFactory.SYMMETRIC;
   }
 
-  public Protocol createProtocol(Channel channel, Object protocolData)
+  public IProtocol createProtocol(IChannel channel, Object protocolData)
   {
     return new TestProtocol(channel);
   }
@@ -54,9 +54,9 @@ public class TestProtocolFactory extends AbstractProtocolFactory implements Prot
   /**
    * @author Eike Stepper
    */
-  private final class TestProtocol extends AbstractProtocol
+  private final class TestProtocol extends Protocol
   {
-    public TestProtocol(Channel channel)
+    public TestProtocol(IChannel channel)
     {
       super(channel);
     }
@@ -66,7 +66,7 @@ public class TestProtocolFactory extends AbstractProtocolFactory implements Prot
       return PROTOCOL_ID;
     }
 
-    public void handleBuffer(Buffer buffer)
+    public void handleBuffer(IBuffer buffer)
     {
       System.out.println("BUFFER ARRIVED");
       buffer.release();

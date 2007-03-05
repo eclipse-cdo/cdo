@@ -13,7 +13,7 @@ package org.eclipse.net4j.util.lifecycle;
 /**
  * @author Eike Stepper
  */
-public interface LifecycleNotifier extends Lifecycle.Introspection
+public interface LifecycleNotifier extends ILifecycle.Introspection
 {
   public void addLifecycleListener(LifecycleListener listener);
 

@@ -14,7 +14,7 @@ import org.eclipse.net4j.jvm.JVMAcceptor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
-import org.eclipse.internal.net4j.transport.AbstractAcceptor;
+import org.eclipse.internal.net4j.transport.Acceptor;
 import org.eclipse.internal.net4j.transport.DescriptionUtil;
 
 import java.text.MessageFormat;
@@ -22,7 +22,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class JVMAcceptorImpl extends AbstractAcceptor implements JVMAcceptor
+public class JVMAcceptorImpl extends Acceptor implements JVMAcceptor
 {
   @SuppressWarnings("unused")
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_ACCEPTOR, JVMAcceptorImpl.class);
@@ -54,9 +54,9 @@ public class JVMAcceptorImpl extends AbstractAcceptor implements JVMAcceptor
   }
 
   @Override
-  protected void onAboutToActivate() throws Exception
+  protected void doBeforeActivate() throws Exception
   {
-    super.onAboutToActivate();
+    super.doBeforeActivate();
     if (getDescription() == null)
     {
       throw new IllegalStateException("getDescription() == null"); //$NON-NLS-1$
@@ -68,16 +68,16 @@ public class JVMAcceptorImpl extends AbstractAcceptor implements JVMAcceptor
   }
 
   @Override
-  protected void onActivate() throws Exception
+  protected void doActivate() throws Exception
   {
-    super.onActivate();
+    super.doActivate();
     JVMAcceptorManagerImpl.INSTANCE.registerAcceptor(this);
   }
 
   @Override
-  protected void onDeactivate() throws Exception
+  protected void doDeactivate() throws Exception
   {
     JVMAcceptorManagerImpl.INSTANCE.deregisterAcceptor(this);
-    super.onDeactivate();
+    super.doDeactivate();
   }
 }

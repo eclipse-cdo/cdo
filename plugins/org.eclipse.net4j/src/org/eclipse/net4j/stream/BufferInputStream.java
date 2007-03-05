@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.stream;
 
-import org.eclipse.net4j.transport.Buffer;
-import org.eclipse.net4j.transport.BufferHandler;
+import org.eclipse.net4j.transport.IBuffer;
+import org.eclipse.net4j.transport.IBufferHandler;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public class BufferInputStream extends InputStream implements BufferHandler
+public class BufferInputStream extends InputStream implements IBufferHandler
 {
   public static final long NO_TIMEOUT = -1;
 
@@ -36,9 +36,9 @@ public class BufferInputStream extends InputStream implements BufferHandler
 
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM, BufferInputStream.class);
 
-  private BlockingQueue<Buffer> buffers = new LinkedBlockingQueue();
+  private BlockingQueue<IBuffer> buffers = new LinkedBlockingQueue();
 
-  private Buffer currentBuffer;
+  private IBuffer currentBuffer;
 
   private boolean eos;
 
@@ -46,7 +46,7 @@ public class BufferInputStream extends InputStream implements BufferHandler
   {
   }
 
-  public void handleBuffer(Buffer buffer)
+  public void handleBuffer(IBuffer buffer)
   {
     buffers.add(buffer);
   }

@@ -17,7 +17,7 @@ import org.eclipse.net4j.tcp.TCPSelectorListener.Passive;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
-import org.eclipse.internal.net4j.util.lifecycle.LifecycleImpl;
+import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
 
 import java.io.IOException;
 import java.nio.channels.CancelledKeyException;
@@ -35,7 +35,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * @author Eike Stepper
  */
-public class TCPSelectorImpl extends LifecycleImpl implements TCPSelector, Runnable
+public class TCPSelectorImpl extends Lifecycle implements TCPSelector, Runnable
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SELECTOR, TCPSelectorImpl.class);
 
@@ -274,7 +274,7 @@ public class TCPSelectorImpl extends LifecycleImpl implements TCPSelector, Runna
   }
 
   @Override
-  protected void onActivate() throws Exception
+  protected void doActivate() throws Exception
   {
     selector = Selector.open();
     thread = new Thread(this, "selector"); //$NON-NLS-1$
@@ -283,7 +283,7 @@ public class TCPSelectorImpl extends LifecycleImpl implements TCPSelector, Runna
   }
 
   @Override
-  protected void onDeactivate() throws Exception
+  protected void doDeactivate() throws Exception
   {
     selector.wakeup();
     Exception exception = null;

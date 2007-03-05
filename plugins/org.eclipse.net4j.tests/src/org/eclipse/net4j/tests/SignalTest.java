@@ -14,7 +14,7 @@ import org.eclipse.net4j.container.Container;
 import org.eclipse.net4j.tests.signal.Request1;
 import org.eclipse.net4j.tests.signal.Request2;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
-import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.transport.IChannel;
 
 import java.util.Arrays;
 
@@ -34,7 +34,7 @@ public class SignalTest extends AbstractTCPTest
   public void testInteger() throws Exception
   {
     startTransport();
-    Channel channel = getConnector().openChannel(TestSignalProtocol.PROTOCOL_ID);
+    IChannel channel = getConnector().openChannel(TestSignalProtocol.PROTOCOL_ID);
     int data = 0x0a;
     int result = new Request1(channel, data).send();
     assertEquals(data, result);
@@ -43,7 +43,7 @@ public class SignalTest extends AbstractTCPTest
   public void testArray() throws Exception
   {
     startTransport();
-    Channel channel = getConnector().openChannel(TestSignalProtocol.PROTOCOL_ID);
+    IChannel channel = getConnector().openChannel(TestSignalProtocol.PROTOCOL_ID);
     byte[] data = TinyData.getBytes();
     byte[] result = new Request2(channel, data).send();
     assertTrue(Arrays.equals(data, result));

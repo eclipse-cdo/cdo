@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.tcp;
 
-import org.eclipse.net4j.transport.Connector;
+import org.eclipse.net4j.transport.IConnector;
 
 /**
  * @author Eike Stepper
  */
-public interface TCPConnector extends Connector
+public interface TCPConnector extends IConnector
 {
   public String getHost();
 

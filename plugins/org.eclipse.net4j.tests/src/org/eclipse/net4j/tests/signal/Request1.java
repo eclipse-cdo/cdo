@@ -11,7 +11,7 @@
 package org.eclipse.net4j.tests.signal;
 
 import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.transport.Channel;
+import org.eclipse.net4j.transport.IChannel;
 import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
@@ -24,7 +24,7 @@ public class Request1 extends RequestWithConfirmation<Integer>
 {
   private int data;
 
-  public Request1(Channel channel, int data)
+  public Request1(IChannel channel, int data)
   {
     super(channel);
     this.data = data;

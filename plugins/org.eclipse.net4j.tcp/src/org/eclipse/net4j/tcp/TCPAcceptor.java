@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.tcp;
 
-import org.eclipse.net4j.transport.Acceptor;
+import org.eclipse.net4j.transport.IAcceptor;
 
 /**
  * @author Eike Stepper
  */
-public interface TCPAcceptor extends Acceptor
+public interface TCPAcceptor extends IAcceptor
 {
   public String getAddress();
 

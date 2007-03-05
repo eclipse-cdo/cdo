@@ -12,12 +12,12 @@ package org.eclipse.net4j.tests.signal;
 
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
-import org.eclipse.net4j.transport.Channel;
 import org.eclipse.net4j.transport.ConnectorLocation;
-import org.eclipse.net4j.transport.Protocol;
-import org.eclipse.net4j.transport.ProtocolFactory;
+import org.eclipse.net4j.transport.IChannel;
+import org.eclipse.net4j.transport.IProtocol;
+import org.eclipse.net4j.transport.IProtocolFactory;
 
-import org.eclipse.internal.net4j.transport.AbstractProtocolFactory;
+import org.eclipse.internal.net4j.transport.ProtocolFactory;
 
 import java.util.Set;
 
@@ -36,7 +36,7 @@ public class TestSignalProtocol extends SignalProtocol
 
   public static final short SIGNAL4 = 4;
 
-  public TestSignalProtocol(Channel channel)
+  public TestSignalProtocol(IChannel channel)
   {
     super(channel);
   }
@@ -63,7 +63,7 @@ public class TestSignalProtocol extends SignalProtocol
   /**
    * @author Eike Stepper
    */
-  public static class Factory extends AbstractProtocolFactory
+  public static class Factory extends ProtocolFactory
   {
     public String getProtocolID()
     {
@@ -72,10 +72,10 @@ public class TestSignalProtocol extends SignalProtocol
 
     public Set<ConnectorLocation> getLocations()
     {
-      return ProtocolFactory.SYMMETRIC;
+      return IProtocolFactory.SYMMETRIC;
     }
 
-    public Protocol createProtocol(Channel channel, Object protocolData)
+    public IProtocol createProtocol(IChannel channel, Object protocolData)
     {
       return new TestSignalProtocol(channel);
     }

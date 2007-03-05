@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om;
 
-import org.eclipse.net4j.util.lifecycle.Singleton;
-
 import org.eclipse.internal.net4j.bundle.AbstractOMPlatform;
 
 /**
@@ -19,7 +17,7 @@ import org.eclipse.internal.net4j.bundle.AbstractOMPlatform;
  */
 public interface OMPlatform
 {
-  @Singleton
+  // @Singleton
   public static final OMPlatform INSTANCE = AbstractOMPlatform.createPlatform();
 
   public OMBundle bundle(String bundleID, Class accessor);

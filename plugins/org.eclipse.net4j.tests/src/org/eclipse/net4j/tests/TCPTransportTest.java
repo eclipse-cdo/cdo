@@ -18,6 +18,7 @@ import org.eclipse.net4j.transport.IAcceptorAcceptedEvent;
 import org.eclipse.net4j.transport.IBuffer;
 import org.eclipse.net4j.transport.IChannel;
 import org.eclipse.net4j.transport.IConnectorChannelsEvent;
+import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
@@ -163,7 +164,7 @@ public class TCPTransportTest extends AbstractTCPTest
               if (event instanceof IConnectorChannelsEvent)
               {
                 IConnectorChannelsEvent e = (IConnectorChannelsEvent)event;
-                if (e.getType() == ConnectorChaIConnectorChannelsEvent)
+                if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
                 {
                   inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
                   counter.countDown();
@@ -226,7 +227,7 @@ public class TCPTransportTest extends AbstractTCPTest
               if (event instanceof IConnectorChannelsEvent)
               {
                 IConnectorChannelsEvent e = (IConnectorChannelsEvent)event;
-                if (e.getType() == ConnectorChaIConnectorChannelsEvent)
+                if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
                 {
                   inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
                   counter.countDown();
@@ -292,7 +293,7 @@ public class TCPTransportTest extends AbstractTCPTest
               if (event instanceof IConnectorChannelsEvent)
               {
                 IConnectorChannelsEvent e = (IConnectorChannelsEvent)event;
-                if (e.getType() == ConnectorChaIConnectorChannelsEvent)
+                if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
                 {
                   inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
                   counter.countDown();
@@ -372,7 +373,7 @@ public class TCPTransportTest extends AbstractTCPTest
               if (event instanceof IConnectorChannelsEvent)
               {
                 IConnectorChannelsEvent e = (IConnectorChannelsEvent)event;
-                if (e.getType() == ConnectorChaIConnectorChannelsEvent)
+                if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
                 {
                   inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
                   counter.countDown();

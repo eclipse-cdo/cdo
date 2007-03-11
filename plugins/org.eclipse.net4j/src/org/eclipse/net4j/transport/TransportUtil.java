@@ -24,28 +24,58 @@ public final class TransportUtil
   {
   }
 
-  public static IBufferProvider.Introspection createBufferFactory(short bufferCapacity)
+  public static IBufferProvider createBufferFactory(short bufferCapacity)
   {
     return new BufferFactory(bufferCapacity);
   }
 
-  public static IBufferProvider.Introspection createBufferFactory()
+  public static IBufferProvider createBufferFactory()
   {
     return new BufferFactory(DEFAULT_BUFFER_CAPACITY);
   }
 
-  public static IBufferPool.Introspection createBufferPool(IBufferProvider factory)
+  public static IBufferPool createBufferPool(IBufferProvider factory)
   {
     return new BufferPool(factory);
   }
 
-  public static IBufferPool.Introspection createBufferPool(short bufferCapacity)
+  public static IBufferPool createBufferPool(short bufferCapacity)
   {
     return createBufferPool(createBufferFactory(bufferCapacity));
   }
 
-  public static IBufferPool.Introspection createBufferPool()
+  public static IBufferPool createBufferPool()
   {
     return createBufferPool(createBufferFactory());
+  }
+
+  public static long getProvidedBuffers(IBufferProvider bufferProvider)
+  {
+    if (bufferProvider instanceof IBufferProvider.Introspection)
+    {
+      return ((IBufferProvider.Introspection)bufferProvider).getProvidedBuffers();
+    }
+
+    return -1L;
+  }
+
+  public static long getRetainedBuffers(IBufferProvider bufferProvider)
+  {
+    if (bufferProvider instanceof IBufferProvider.Introspection)
+    {
+      return ((IBufferProvider.Introspection)bufferProvider).getRetainedBuffers();
+    }
+
+    return -1L;
+  }
+
+  public static int getPooledBuffers(IBufferPool bufferPool)
+  {
+    if (bufferPool instanceof IBufferPool.Introspection)
+    {
+      return ((IBufferPool.Introspection)bufferPool).getPooledBuffers();
+    }
+
+    return -1;
   }
 }

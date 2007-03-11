@@ -13,6 +13,10 @@ package org.eclipse.net4j.util;
 import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
 
 import java.io.PrintStream;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -196,6 +200,11 @@ public final class ReflectUtil
         continue;
       }
 
+      if (field.getAnnotation(ExcludeFromDump.class) != null)
+      {
+        continue;
+      }
+
       builder.append(prefix);
       builder.append(segmentPrefix);
       builder.append(field.getName());
@@ -245,5 +254,14 @@ public final class ReflectUtil
     }
 
     return method;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target(ElementType.FIELD)
+  public @interface ExcludeFromDump
+  {
   }
 }

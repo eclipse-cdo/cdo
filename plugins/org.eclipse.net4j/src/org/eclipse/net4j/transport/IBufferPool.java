@@ -22,7 +22,7 @@ public interface IBufferPool extends IBufferProvider
   /**
    * @author Eike Stepper
    */
-  public interface Introspection extends IBufferProvider.Introspection
+  public interface Introspection extends IBufferPool, IBufferProvider.Introspection
   {
     public int getPooledBuffers();
   }

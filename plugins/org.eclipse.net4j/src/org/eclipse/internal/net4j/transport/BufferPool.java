@@ -13,10 +13,13 @@ package org.eclipse.internal.net4j.transport;
 import org.eclipse.net4j.transport.IBuffer;
 import org.eclipse.net4j.transport.IBufferPool;
 import org.eclipse.net4j.transport.IBufferProvider;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.SoftReference;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -27,16 +30,33 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER, BufferPool.class);
 
-  private final IBufferProvider factory;
-
-  private final Queue<IBuffer> queue = new ConcurrentLinkedQueue<IBuffer>();
+  private final IBufferProvider provider;
 
   private int pooledBuffers;
 
-  public BufferPool(IBufferProvider factory)
+  @ExcludeFromDump
+  private final Queue<BufferRef> buffers = new ConcurrentLinkedQueue();
+
+  @ExcludeFromDump
+  private final ReferenceQueue<BufferRef> referenceQueue = new ReferenceQueue();
+
+  @ExcludeFromDump
+  private Monitor monitor;
+
+  public BufferPool(IBufferProvider provider)
   {
-    super(factory.getBufferCapacity());
-    this.factory = factory;
+    super(provider.getBufferCapacity());
+    this.provider = provider;
+  }
+
+  public IBufferProvider getProvider()
+  {
+    return provider;
+  }
+
+  public ReferenceQueue<BufferRef> getReferenceQueue()
+  {
+    return referenceQueue;
   }
 
   public int getPooledBuffers()
@@ -46,20 +66,27 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
 
   public boolean evictOne()
   {
-    IBuffer buffer = queue.poll();
-    if (buffer == null)
+    for (;;)
     {
-      return false;
-    }
+      BufferRef bufferRef = buffers.poll();
+      if (bufferRef == null)
+      {
+        return false;
+      }
 
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Evicting " + buffer); //$NON-NLS-1$
-    }
+      IBuffer buffer = bufferRef.get();
+      if (buffer != null)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Evicting " + buffer); //$NON-NLS-1$
+        }
 
-    factory.retainBuffer(buffer);
-    --pooledBuffers;
-    return true;
+        provider.retainBuffer(buffer);
+        --pooledBuffers;
+        return true;
+      }
+    }
   }
 
   public int evict(int survivors)
@@ -81,13 +108,29 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
   }
 
   @Override
+  public String toString()
+  {
+    return "BufferPool[" + pooledBuffers + ", " + provider + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  }
+
+  @Override
   protected IBuffer doProvideBuffer()
   {
-    IBuffer buffer = queue.poll();
+    IBuffer buffer = null;
+    BufferRef bufferRef = buffers.poll();
+    if (bufferRef != null)
+    {
+      buffer = bufferRef.get();
+    }
+
     if (buffer == null)
     {
-      buffer = factory.provideBuffer();
+      buffer = provider.provideBuffer();
       ((Buffer)buffer).setBufferProvider(this);
+    }
+    else
+    {
+      --pooledBuffers;
     }
 
     buffer.clear();
@@ -112,12 +155,79 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
       TRACER.trace("Retaining " + buffer); //$NON-NLS-1$
     }
 
-    queue.add(buffer);
+    buffers.add(new BufferRef(buffer, referenceQueue));
+    ++pooledBuffers;
   }
 
   @Override
-  public String toString()
+  protected void doActivate() throws Exception
   {
-    return "BufferPool[size=" + pooledBuffers + ", " + factory + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    super.doActivate();
+    monitor = new Monitor();
+    monitor.start();
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    monitor.interrupt();
+    monitor = null;
+    super.doDeactivate();
+  }
+
+  private static final class BufferRef extends SoftReference<IBuffer>
+  {
+    public BufferRef(IBuffer buffer, ReferenceQueue queue)
+    {
+      super(buffer, queue);
+    }
+  }
+
+  private final class Monitor extends Thread
+  {
+    public Monitor()
+    {
+      setName("BufferPoolMonitor");
+      setDaemon(true);
+    }
+
+    @Override
+    public void run()
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Start monitoring"); //$NON-NLS-1$
+      }
+
+      try
+      {
+        while (isActive() && !isInterrupted())
+        {
+          BufferRef bufferRef = (BufferRef)referenceQueue.remove(200);
+          if (bufferRef != null)
+          {
+            if (buffers.remove(bufferRef))
+            {
+              --pooledBuffers;
+              if (TRACER.isEnabled())
+              {
+                TRACER.trace("Collected buffer"); //$NON-NLS-1$
+              }
+            }
+          }
+        }
+      }
+      catch (InterruptedException ex)
+      {
+        return;
+      }
+      finally
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Stop monitoring"); //$NON-NLS-1$
+        }
+      }
+    }
   }
 }

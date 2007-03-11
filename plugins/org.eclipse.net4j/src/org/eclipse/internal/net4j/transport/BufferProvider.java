@@ -13,10 +13,12 @@ package org.eclipse.internal.net4j.transport;
 import org.eclipse.net4j.transport.IBuffer;
 import org.eclipse.net4j.transport.IBufferProvider;
 
+import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
+
 /**
  * @author Eike Stepper
  */
-public abstract class BufferProvider implements IBufferProvider, IBufferProvider.Introspection
+public abstract class BufferProvider extends Lifecycle implements IBufferProvider, IBufferProvider.Introspection
 {
   private short bufferCapacity;
 

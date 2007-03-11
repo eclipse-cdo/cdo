@@ -29,8 +29,6 @@ public final class BufferUtil
 
   private static final byte TRUE = (byte)1;
 
-  public static final short DEFAULT_BUFFER_CAPACITY = 4096;
-
   public static final String UTF8_CHAR_SET_NAME = "UTF-8"; //$NON-NLS-1$
 
   private BufferUtil()

@@ -24,7 +24,7 @@ public interface IBufferProvider
   /**
    * @author Eike Stepper
    */
-  public interface Introspection
+  public interface Introspection extends IBufferProvider
   {
     public long getProvidedBuffers();
 

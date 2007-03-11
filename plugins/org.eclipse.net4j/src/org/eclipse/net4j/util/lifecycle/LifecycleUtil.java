@@ -13,8 +13,13 @@ package org.eclipse.net4j.util.lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
+import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
 
 import java.lang.annotation.Annotation;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.Method;
 
 /**
@@ -128,6 +133,14 @@ public final class LifecycleUtil
     }
   }
 
+  public static void dump(Object object)
+  {
+    if (object instanceof Lifecycle)
+    {
+      ((Lifecycle)object).dump();
+    }
+  }
+
   private static void invokeAnnotation(Object object, Class annotationClass)
   {
     Class c = object.getClass();
@@ -186,5 +199,25 @@ public final class LifecycleUtil
     }
 
     return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target(ElementType.METHOD)
+  public @interface Activator
+  {
+    boolean propagate() default true;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target(ElementType.METHOD)
+  public @interface Deactivator
+  {
+    boolean propagate() default true;
   }
 }

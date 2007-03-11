@@ -22,7 +22,6 @@ import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.product.IProduct;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
@@ -37,7 +36,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public abstract class Acceptor extends Lifecycle implements IAcceptor, IContainer<IConnector>, IProduct
+public abstract class Acceptor extends Lifecycle implements IAcceptor, IContainer<IConnector>
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_ACCEPTOR, Acceptor.class);
 
@@ -63,11 +62,6 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor, IContaine
 
   public Acceptor()
   {
-  }
-
-  public String getProductGroupID()
-  {
-    return PRODUCT_GROUP_ID;
   }
 
   public String getDescription()

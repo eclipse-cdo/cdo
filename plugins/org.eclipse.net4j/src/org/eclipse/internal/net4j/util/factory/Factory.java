@@ -8,16 +8,32 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.product;
+package org.eclipse.internal.net4j.util.factory;
+
+import org.eclipse.net4j.util.factory.IFactory;
 
 /**
  * @author Eike Stepper
  */
-public interface IProductFactory<PRODUCT extends IProduct>
+public abstract class Factory<PRODUCT> implements IFactory<PRODUCT>
 {
-  public String getProductGroupID();
+  private String productGroupID;
 
-  public String getType();
+  private String type;
 
-  public PRODUCT create(String description);
+  public Factory(String productGroupID, String type)
+  {
+    this.productGroupID = productGroupID;
+    this.type = type;
+  }
+
+  public String getProductGroup()
+  {
+    return productGroupID;
+  }
+
+  public String getType()
+  {
+    return type;
+  }
 }

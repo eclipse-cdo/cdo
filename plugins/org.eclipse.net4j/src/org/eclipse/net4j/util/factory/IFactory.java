@@ -8,16 +8,18 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.product;
-
-import org.eclipse.net4j.util.registry.IRegistry;
+package org.eclipse.net4j.util.factory;
 
 /**
  * @author Eike Stepper
  */
-public interface IProductGroup<PRODUCT extends IProduct>
+public interface IFactory<PRODUCT>
 {
-  public String getID();
+  public String getProductGroup();
 
-  public IRegistry<String, IProductFactory<PRODUCT>> getFactoryRegistry();
+  public String getType();
+
+  public PRODUCT create(String description);
+
+  public String getDescriptionFor(PRODUCT product);
 }

@@ -8,24 +8,24 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.product;
+package org.eclipse.net4j.util.factory;
 
 import org.eclipse.net4j.util.registry.IRegistry;
 
 /**
  * @author Eike Stepper
  */
-public final class ProductUtil
+public final class FactoryUtil
 {
-  private ProductUtil()
+  private FactoryUtil()
   {
   }
 
-  public static String getProductGroupID(Object product)
+  public static String getProductGroup(Object product)
   {
     if (product instanceof IProduct)
     {
-      return ((IProduct)product).getProductGroupID();
+      return ((IProduct)product).getProductGroup();
     }
 
     return null;
@@ -60,14 +60,14 @@ public final class ProductUtil
       return null;
     }
 
-    IRegistry<String, IProductFactory> factoryRegistry = productGroup.getFactoryRegistry();
-    IProductFactory productFactory = factoryRegistry.get(factoryType);
-    if (productFactory == null)
+    IRegistry<String, IFactory> factoryRegistry = productGroup.getFactoryRegistry();
+    IFactory factory = factoryRegistry.get(factoryType);
+    if (factory == null)
     {
       return null;
     }
 
-    IProduct product = productFactory.create(description);
+    IProduct product = factory.create(description);
     return product;
   }
 }

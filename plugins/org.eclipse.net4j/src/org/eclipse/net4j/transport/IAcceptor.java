@@ -17,9 +17,5 @@ import org.eclipse.net4j.util.event.INotifier;
  */
 public interface IAcceptor extends INotifier
 {
-  public static final String PRODUCT_GROUP_ID = "org.eclipse.net4j.acceptor";
-
-  public String getDescription();
-
   public IConnector[] getAcceptedConnectors();
 }

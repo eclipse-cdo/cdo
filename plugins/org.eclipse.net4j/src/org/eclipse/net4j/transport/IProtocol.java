@@ -15,8 +15,6 @@ package org.eclipse.net4j.transport;
  */
 public interface IProtocol extends IBufferHandler
 {
-  public static final String PRODUCT_GROUP_ID = "org.eclipse.net4j.protocol";
-
   public String getProtocolID();
 
   public IChannel getChannel();

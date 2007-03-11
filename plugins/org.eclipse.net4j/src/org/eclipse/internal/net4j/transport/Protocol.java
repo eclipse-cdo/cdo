@@ -14,14 +14,13 @@ import org.eclipse.net4j.transport.IBuffer;
 import org.eclipse.net4j.transport.IBufferProvider;
 import org.eclipse.net4j.transport.IChannel;
 import org.eclipse.net4j.transport.IProtocol;
-import org.eclipse.net4j.util.product.IProduct;
 
 import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
 
 /**
  * @author Eike Stepper
  */
-public abstract class Protocol extends Lifecycle implements IProtocol, IBufferProvider, IProduct
+public abstract class Protocol extends Lifecycle implements IProtocol, IBufferProvider
 {
   private IChannel channel;
 

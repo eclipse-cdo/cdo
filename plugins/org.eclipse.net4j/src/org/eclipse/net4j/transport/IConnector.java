@@ -33,8 +33,6 @@ import org.eclipse.internal.net4j.transport.Connector;
  */
 public interface IConnector extends INotifier
 {
-  public static final String PRODUCT_GROUP_ID = "org.eclipse.net4j.connector";
-
   public Integer getID();
 
   public ConnectorLocation getLocation();
@@ -42,8 +40,6 @@ public interface IConnector extends INotifier
   public boolean isClient();
 
   public boolean isServer();
-
-  public String getDescription();
 
   public String getUserID();
 

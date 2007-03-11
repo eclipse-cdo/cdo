@@ -27,7 +27,6 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.product.IProduct;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
@@ -45,7 +44,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public abstract class Connector extends Lifecycle implements IConnector, IContainer<IChannel>, IProduct
+public abstract class Connector extends Lifecycle implements IConnector, IContainer<IChannel>
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, Connector.class);
 
@@ -148,11 +147,6 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
   public String getUserID()
   {
     return userID;
-  }
-
-  public String getProductGroupID()
-  {
-    return PRODUCT_GROUP_ID;
   }
 
   public ConnectorLocation getLocation()

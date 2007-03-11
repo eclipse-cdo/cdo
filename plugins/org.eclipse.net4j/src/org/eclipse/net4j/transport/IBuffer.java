@@ -73,9 +73,9 @@ import java.nio.channels.SocketChannel;
  * </pre>
  * 
  * @see IBufferProvider
- * @see IChannel#sendBuffer(Buffer)
+ * @see IChannel#sendBuffer(IBuffer)
  * @see IChannel#setReceiveHandler(IBufferHandler)
- * @see IBufferHandler#handleBuffer(Buffer)
+ * @see IBufferHandler#handleBuffer(IBuffer)
  * @author Eike Stepper
  */
 public interface IBuffer

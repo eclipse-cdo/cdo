@@ -60,14 +60,14 @@ public final class ProductUtil
       return null;
     }
 
-    IRegistry<String, IFactory> factoryRegistry = productGroup.getFactoryRegistry();
-    IFactory factory = factoryRegistry.get(factoryType);
-    if (factory == null)
+    IRegistry<String, IProductFactory> factoryRegistry = productGroup.getFactoryRegistry();
+    IProductFactory productFactory = factoryRegistry.get(factoryType);
+    if (productFactory == null)
     {
       return null;
     }
 
-    IProduct product = factory.create(description);
+    IProduct product = productFactory.create(description);
     return product;
   }
 }

@@ -8,26 +8,33 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.lifecycle;
+package org.eclipse.internal.net4j.util.product;
+
+import org.eclipse.net4j.util.product.IProduct;
+import org.eclipse.net4j.util.product.IProductFactory;
 
 /**
  * @author Eike Stepper
  */
-public abstract class LifecycleAdapter implements LifecycleListener
+public abstract class ProductFactory<PRODUCT extends IProduct> implements IProductFactory<PRODUCT>
 {
-  protected LifecycleAdapter()
+  private String productGroupID;
+
+  private String type;
+
+  public ProductFactory(String productGroupID, String type)
   {
+    this.productGroupID = productGroupID;
+    this.type = type;
   }
 
-  public void notifyLifecycleAboutToActivate(LifecycleNotifier notifier)
+  public String getProductGroupID()
   {
+    return productGroupID;
   }
 
-  public void notifyLifecycleActivated(LifecycleNotifier notifier)
+  public String getType()
   {
-  }
-
-  public void notifyLifecycleDeactivating(LifecycleNotifier notifier)
-  {
+    return type;
   }
 }

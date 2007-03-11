@@ -19,5 +19,5 @@ public interface IProductGroup<PRODUCT extends IProduct>
 {
   public String getID();
 
-  public IRegistry<String, IFactory<PRODUCT>> getFactoryRegistry();
+  public IRegistry<String, IProductFactory<PRODUCT>> getFactoryRegistry();
 }

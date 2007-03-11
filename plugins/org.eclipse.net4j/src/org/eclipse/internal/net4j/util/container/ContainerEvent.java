@@ -24,15 +24,15 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
 
   private List<IContainerDelta<E>> deltas;
 
-  public ContainerEvent(IContainer<E> registry)
+  public ContainerEvent(IContainer<E> container)
   {
-    super(registry);
+    super(container);
     deltas = new ArrayList();
   }
 
-  public ContainerEvent(IContainer<E> registry, List<IContainerDelta<E>> deltas)
+  public ContainerEvent(IContainer<E> container, List<IContainerDelta<E>> deltas)
   {
-    super(registry);
+    super(container);
     this.deltas = deltas;
   }
 
@@ -44,6 +44,26 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
   public IContainerDelta<E>[] getDeltas()
   {
     return deltas.toArray(new IContainerDelta[deltas.size()]);
+  }
+
+  public IContainerDelta<E> getDelta() throws IllegalStateException
+  {
+    if (deltas.size() != 1)
+    {
+      throw new IllegalStateException("deltas.size() != 1");
+    }
+
+    return deltas.get(0);
+  }
+
+  public E getDeltaElement() throws IllegalStateException
+  {
+    return getDelta().getElement();
+  }
+
+  public Kind getDeltaKind() throws IllegalStateException
+  {
+    return getDelta().getKind();
   }
 
   public boolean isEmpty()

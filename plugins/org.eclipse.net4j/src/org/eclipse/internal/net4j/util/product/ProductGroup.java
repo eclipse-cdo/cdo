@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.util.product;
 
-import org.eclipse.net4j.util.product.IFactory;
 import org.eclipse.net4j.util.product.IProduct;
+import org.eclipse.net4j.util.product.IProductFactory;
 import org.eclipse.net4j.util.product.IProductGroup;
 import org.eclipse.net4j.util.registry.IRegistry;
 
@@ -24,7 +24,7 @@ public class ProductGroup<PRODUCT extends IProduct> implements IProductGroup<PRO
 {
   private String id;
 
-  private IRegistry<String, IFactory<PRODUCT>> factoryRegistry = new HashMapRegistry();
+  private IRegistry<String, IProductFactory<PRODUCT>> factoryRegistry = new HashMapRegistry();
 
   public ProductGroup(String id)
   {
@@ -36,17 +36,17 @@ public class ProductGroup<PRODUCT extends IProduct> implements IProductGroup<PRO
     return id;
   }
 
-  public IRegistry<String, IFactory<PRODUCT>> getFactoryRegistry()
+  public IRegistry<String, IProductFactory<PRODUCT>> getFactoryRegistry()
   {
     return factoryRegistry;
   }
 
-  public void addFactory(IFactory<PRODUCT> factory)
+  public void addFactory(IProductFactory<PRODUCT> factory)
   {
     factoryRegistry.put(factory.getType(), factory);
   }
 
-  public void removeFactory(IFactory<PRODUCT> factory)
+  public void removeFactory(IProductFactory<PRODUCT> factory)
   {
     factoryRegistry.remove(factory.getType());
   }

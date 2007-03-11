@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IEvent;
 
 /**
@@ -20,6 +21,12 @@ public interface IContainerEvent<E> extends IEvent
   public IContainer<E> getContainer();
 
   public IContainerDelta<E>[] getDeltas();
+
+  public IContainerDelta<E> getDelta() throws IllegalStateException;
+
+  public E getDeltaElement() throws IllegalStateException;
+
+  public Kind getDeltaKind() throws IllegalStateException;
 
   public void accept(IContainerEventVisitor<E> visitor);
 }

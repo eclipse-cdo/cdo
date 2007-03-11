@@ -13,7 +13,7 @@ package org.eclipse.net4j.util.product;
 /**
  * @author Eike Stepper
  */
-public interface IFactory<PRODUCT extends IProduct>
+public interface IProductFactory<PRODUCT extends IProduct>
 {
   public String getProductGroupID();
 

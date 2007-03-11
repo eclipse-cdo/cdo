@@ -40,8 +40,6 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor, IContaine
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_ACCEPTOR, Acceptor.class);
 
-  private String description;
-
   private IBufferProvider bufferProvider;
 
   private IRegistry<IProtocolFactoryID, IProtocolFactory> protocolFactoryRegistry;
@@ -62,16 +60,6 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor, IContaine
 
   public Acceptor()
   {
-  }
-
-  public String getDescription()
-  {
-    return description;
-  }
-
-  public void setDescription(String description)
-  {
-    this.description = description;
   }
 
   public IBufferProvider getBufferProvider()

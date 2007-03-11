@@ -33,8 +33,6 @@ import org.eclipse.internal.net4j.transport.Connector;
  */
 public interface IConnector extends INotifier
 {
-  public Integer getID();
-
   public ConnectorLocation getLocation();
 
   public boolean isClient();

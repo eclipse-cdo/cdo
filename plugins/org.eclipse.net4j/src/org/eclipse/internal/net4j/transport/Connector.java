@@ -50,17 +50,7 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
 
   private static final Channel NULL_CHANNEL = new NullChannel();
 
-  private static final int MIN_CONNECTOR_ID = 1;
-
-  private static final int MAX_CONNECTOR_ID = Integer.MAX_VALUE;
-
-  private static int nextConnectorID = MIN_CONNECTOR_ID;
-
-  private int connectorID = getNextConnectorID();
-
   private String userID;
-
-  private String description;
 
   private IConnectorCredentials credentials;
 
@@ -95,11 +85,6 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
 
   public Connector()
   {
-  }
-
-  public Integer getID()
-  {
-    return connectorID;
   }
 
   public abstract void multiplexBuffer(IChannel channel);
@@ -149,19 +134,14 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
     return userID;
   }
 
+  public void setUserID(String userID)
+  {
+    this.userID = userID;
+  }
+
   public ConnectorLocation getLocation()
   {
     return null;
-  }
-
-  public String getDescription()
-  {
-    return description;
-  }
-
-  public void setDescription(String description)
-  {
-    this.description = description;
   }
 
   public IConnectorCredentials getCredentials()
@@ -478,15 +458,6 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (description == null)
-    {
-      throw new IllegalStateException("description == null"); //$NON-NLS-1$
-    }
-    else
-    {
-      userID = DescriptionUtil.getElement(description, 1);
-    }
-
     if (bufferProvider == null)
     {
       throw new IllegalStateException("bufferProvider == null"); //$NON-NLS-1$
@@ -530,26 +501,6 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
   }
 
   protected abstract void registerChannelWithPeer(short channelIndex, String protocolID) throws ConnectorException;
-
-  private static int getNextConnectorID()
-  {
-    int id = nextConnectorID;
-    if (nextConnectorID == MAX_CONNECTOR_ID)
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("ID wrap around"); //$NON-NLS-1$
-      }
-
-      nextConnectorID = MIN_CONNECTOR_ID;
-    }
-    else
-    {
-      ++nextConnectorID;
-    }
-
-    return id;
-  }
 
   /**
    * @author Eike Stepper

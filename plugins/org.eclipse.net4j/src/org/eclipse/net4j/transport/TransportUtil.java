@@ -31,7 +31,7 @@ public final class TransportUtil
 
   public static IBufferProvider createBufferFactory()
   {
-    return new BufferFactory(DEFAULT_BUFFER_CAPACITY);
+    return createBufferFactory(DEFAULT_BUFFER_CAPACITY);
   }
 
   public static IBufferPool createBufferPool(IBufferProvider factory)

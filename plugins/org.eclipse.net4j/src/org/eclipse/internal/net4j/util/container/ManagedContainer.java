@@ -234,7 +234,7 @@ public class ManagedContainer extends Notifier implements IManagedContainer
   {
     synchronized (elementRegistry)
     {
-      maxElementID = 0;
+      maxElementID = 0L;
       for (ElementKey key : elementRegistry.keySet())
       {
         long id = key.getID();

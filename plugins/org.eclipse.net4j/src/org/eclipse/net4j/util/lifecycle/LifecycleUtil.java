@@ -70,7 +70,7 @@ public final class LifecycleUtil
         throw new LifecycleException(ex);
       }
     }
-    else if (useAnnotation)
+    else if (object != null && useAnnotation)
     {
       invokeAnnotation(object, Activator.class);
     }

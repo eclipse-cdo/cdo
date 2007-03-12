@@ -17,5 +17,7 @@ import org.eclipse.net4j.util.event.INotifier;
  */
 public interface IContainer<E> extends INotifier
 {
+  public boolean isEmpty();
+
   public E[] getElements();
 }

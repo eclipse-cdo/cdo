@@ -17,23 +17,30 @@ import org.eclipse.net4j.util.factory.IFactory;
  */
 public abstract class Factory<PRODUCT> implements IFactory<PRODUCT>
 {
-  private String productGroup;
-
-  private String type;
+  private FactoryKey key;
 
   public Factory(String productGroup, String type)
   {
-    this.productGroup = productGroup;
-    this.type = type;
+    key = new FactoryKey(productGroup, type);
+  }
+
+  public FactoryKey getKey()
+  {
+    return key;
+  }
+
+  public String getFactoryType()
+  {
+    return key.getFactoryType();
   }
 
   public String getProductGroup()
   {
-    return productGroup;
+    return key.getProductGroup();
   }
 
-  public String getType()
+  public String toString()
   {
-    return type;
+    return key.toString();
   }
 }

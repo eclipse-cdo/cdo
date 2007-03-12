@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.util.event.Notifier;
+import org.eclipse.internal.net4j.util.factory.FactoryKey;
 import org.eclipse.internal.net4j.util.registry.HashMapRegistry;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class ManagedContainer extends Notifier implements IManagedContainer
 
   private IRegistry<ElementKey, Object> elementRegistry = new HashMapRegistry();
 
-  private long lastElementID;
+  private long maxElementID;
 
   public IFactory[] getFactories()
   {
@@ -135,7 +136,7 @@ public class ManagedContainer extends Notifier implements IManagedContainer
           element = factory.create(description);
           if (element != null)
           {
-            key.setID(++lastElementID);
+            key.setID(++maxElementID);
             elementRegistry.put(key, element);
             fireEvent(new SingleDeltaContainerEvent(this, element, IContainerDelta.Kind.ADDED));
           }
@@ -200,6 +201,8 @@ public class ManagedContainer extends Notifier implements IManagedContainer
         {
         }
       }
+
+      initMaxElementID();
     }
   }
 
@@ -220,47 +223,19 @@ public class ManagedContainer extends Notifier implements IManagedContainer
     }
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  private static final class FactoryKey
+  public void initMaxElementID()
   {
-    private String productGroup;
-
-    private String factoryType;
-
-    public FactoryKey(String productGroup, String factoryType)
+    synchronized (elementRegistry)
     {
-      this.productGroup = productGroup;
-      this.factoryType = factoryType;
-    }
-
-    public String getProductGroup()
-    {
-      return productGroup;
-    }
-
-    public String getFactoryType()
-    {
-      return factoryType;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-      if (obj instanceof FactoryKey)
+      maxElementID = 0;
+      for (ElementKey key : elementRegistry.keySet())
       {
-        FactoryKey key = (FactoryKey)obj;
-        return ObjectUtil.equals(productGroup, key.productGroup) && ObjectUtil.equals(factoryType, key.factoryType);
+        long id = key.getID();
+        if (maxElementID < id)
+        {
+          maxElementID = id;
+        }
       }
-
-      return false;
-    }
-
-    @Override
-    public int hashCode()
-    {
-      return ObjectUtil.hashCode(productGroup) ^ ObjectUtil.hashCode(factoryType);
     }
   }
 

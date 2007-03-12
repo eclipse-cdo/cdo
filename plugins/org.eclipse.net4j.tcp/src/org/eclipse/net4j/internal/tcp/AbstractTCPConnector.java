@@ -22,7 +22,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.Channel;
 import org.eclipse.internal.net4j.transport.Connector;
-import org.eclipse.internal.net4j.transport.DescriptionUtil;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
@@ -286,14 +285,11 @@ public abstract class AbstractTCPConnector extends Connector implements TCPConne
       throw new IllegalStateException("selector == null");
     }
 
-    String[] elements = DescriptionUtil.getElements(getDescription());
-    host = elements[2];
     if (host == null)
     {
       throw new IllegalStateException("host == null");
     }
 
-    port = Integer.parseInt(elements[3]);
     if (port == 0)
     {
       throw new IllegalStateException("port == 0");

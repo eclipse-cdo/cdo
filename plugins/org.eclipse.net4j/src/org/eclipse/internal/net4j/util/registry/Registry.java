@@ -14,7 +14,6 @@ import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
-import org.eclipse.internal.net4j.util.container.ContainerEvent;
 import org.eclipse.internal.net4j.util.event.Notifier;
 
 import java.util.Collection;
@@ -249,7 +248,7 @@ public abstract class Registry<K, V> extends Notifier implements IRegistry<K, V>
   {
     private int nesting = 1;
 
-    private ContainerEvent<Map.Entry<K, V>> event;
+    private RegistryEvent<K, V> event;
 
     private Thread owner;
 
@@ -261,7 +260,7 @@ public abstract class Registry<K, V> extends Notifier implements IRegistry<K, V>
 
     private void initEvent()
     {
-      event = new ContainerEvent(Registry.this);
+      event = new RegistryEvent(Registry.this);
     }
 
     public boolean isOwned()

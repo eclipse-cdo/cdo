@@ -12,7 +12,6 @@ package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.jvm.JVMConstants;
 import org.eclipse.net4j.transport.IAcceptor;
-import org.eclipse.net4j.transport.IAcceptorFactory;
 
 /**
  * @author Eike Stepper

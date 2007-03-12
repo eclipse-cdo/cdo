@@ -47,7 +47,14 @@ public class ClientTCPConnectorImpl extends AbstractTCPConnector
   @Override
   public String toString()
   {
-    return MessageFormat.format("ClientTCPConnector[{0}]", getDescription()); //$NON-NLS-1$ 
+    if (getUserID() == null)
+    {
+      return MessageFormat.format("ClientTCPConnector[{0}:{1}]", getHost(), getPort()); //$NON-NLS-1$
+    }
+    else
+    {
+      return MessageFormat.format("ClientTCPConnector[{3}@{0}:{1}]", getHost(), getPort(), getUserID()); //$NON-NLS-1$
+    }
   }
 
   @Override

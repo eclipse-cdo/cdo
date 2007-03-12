@@ -30,18 +30,39 @@ public class ServerTCPConnectorImpl extends AbstractTCPConnector
 
   public String getHost()
   {
-    return getSocketChannel().socket().getInetAddress().getHostAddress();
+    try
+    {
+      return getSocketChannel().socket().getInetAddress().getHostAddress();
+    }
+    catch (RuntimeException ex)
+    {
+      return null;
+    }
   }
 
   public int getPort()
   {
-    return getSocketChannel().socket().getPort();
+    try
+    {
+      return getSocketChannel().socket().getPort();
+    }
+    catch (RuntimeException ex)
+    {
+      return 0;
+    }
   }
 
   @Override
   public String toString()
   {
-    return MessageFormat.format("ServerTCPConnector[{0}]", getDescription()); //$NON-NLS-1$ 
+    if (getUserID() == null)
+    {
+      return MessageFormat.format("ServerTCPConnector[{0}:{1}]", getHost(), getPort()); //$NON-NLS-1$
+    }
+    else
+    {
+      return MessageFormat.format("ServerTCPConnector[{3}@{0}:{1}]", getHost(), getPort(), getUserID()); //$NON-NLS-1$
+    }
   }
 
   @Override

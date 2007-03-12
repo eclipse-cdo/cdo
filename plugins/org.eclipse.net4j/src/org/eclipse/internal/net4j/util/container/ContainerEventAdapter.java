@@ -19,7 +19,7 @@ import org.eclipse.net4j.util.event.IListener;
 /**
  * @author Eike Stepper
  */
-public class ContainerEventAdapter implements IListener
+public class ContainerEventAdapter<E> implements IListener
 {
   public final void notifyEvent(IEvent event)
   {
@@ -34,17 +34,17 @@ public class ContainerEventAdapter implements IListener
     }
   }
 
-  protected void notifyContainerEvent(IContainerEvent event)
+  protected void notifyContainerEvent(IContainerEvent<E> event)
   {
-    final IContainer container = event.getContainer();
-    event.accept(new IContainerEventVisitor()
+    final IContainer<E> container = event.getContainer();
+    event.accept(new IContainerEventVisitor<E>()
     {
-      public void added(Object element)
+      public void added(E element)
       {
         onAdded(container, element);
       }
 
-      public void removed(Object element)
+      public void removed(E element)
       {
         onRemoved(container, element);
       }
@@ -55,11 +55,11 @@ public class ContainerEventAdapter implements IListener
   {
   }
 
-  protected void onAdded(IContainer container, Object element)
+  protected void onAdded(IContainer<E> container, E element)
   {
   }
 
-  protected void onRemoved(IContainer container, Object element)
+  protected void onRemoved(IContainer<E> container, E element)
   {
   }
 }

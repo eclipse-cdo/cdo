@@ -12,7 +12,6 @@ package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.jvm.JVMConstants;
 import org.eclipse.net4j.transport.IConnector;
-import org.eclipse.net4j.transport.IConnectorFactory;
 
 /**
  * @author Eike Stepper

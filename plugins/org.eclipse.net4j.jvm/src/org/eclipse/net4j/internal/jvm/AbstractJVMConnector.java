@@ -16,7 +16,6 @@ import org.eclipse.net4j.transport.IChannel;
 
 import org.eclipse.internal.net4j.transport.Channel;
 import org.eclipse.internal.net4j.transport.Connector;
-import org.eclipse.internal.net4j.transport.DescriptionUtil;
 
 import java.util.Queue;
 
@@ -92,7 +91,6 @@ public abstract class AbstractJVMConnector extends Connector
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    name = DescriptionUtil.getElement(getDescription(), 2);
     if (name == null)
     {
       throw new IllegalStateException("name == null");

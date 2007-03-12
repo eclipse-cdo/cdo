@@ -8,23 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.tcp;
+package org.eclipse.net4j.util.registry;
 
-import org.eclipse.net4j.tcp.TCPConstants;
-import org.eclipse.net4j.transport.IAcceptor;
+import org.eclipse.net4j.util.container.IContainerEvent;
+
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public class TCPAcceptorFactoryImpl implements IAcceptorFactory
+public interface IRegistryEvent<K, V> extends IContainerEvent<Map.Entry<K, V>>
 {
-  public String getType()
-  {
-    return TCPConstants.TYPE;
-  }
-
-  public IAcceptor createAcceptor()
-  {
-    return new TCPAcceptorImpl();
-  }
+  public IRegistry getRegistry();
 }

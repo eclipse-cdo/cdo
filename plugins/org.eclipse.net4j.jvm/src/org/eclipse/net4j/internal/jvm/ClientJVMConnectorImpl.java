@@ -11,7 +11,11 @@
 package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.transport.ConnectorLocation;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
+import org.eclipse.internal.net4j.util.lifecycle.LifecycleEventAdapter;
 
 /**
  * @author Eike Stepper
@@ -20,17 +24,10 @@ public class ClientJVMConnectorImpl extends AbstractJVMConnector
 {
   private JVMAcceptorImpl acceptor;
 
-  private LifecycleListener peerLifecycleListener = new LifecycleListener()
+  private IListener peerLifecycleListener = new LifecycleEventAdapter()
   {
-    public void notifyLifecycleAboutToActivate(LifecycleNotifier notifier)
-    {
-    }
-
-    public void notifyLifecycleActivated(LifecycleNotifier notifier)
-    {
-    }
-
-    public void notifyLifecycleDeactivating(LifecycleNotifier notifier)
+    @Override
+    protected void onAboutToDeactivate(ILifecycle lifecycle)
     {
       setPeer(null);
       deactivate();
@@ -63,7 +60,7 @@ public class ClientJVMConnectorImpl extends AbstractJVMConnector
   }
 
   @Override
-  protected void onActivate() throws Exception
+  protected void doActivate() throws Exception
   {
     super.doActivate();
     AbstractJVMConnector peer = acceptor.handleAccept(this);
@@ -71,7 +68,7 @@ public class ClientJVMConnectorImpl extends AbstractJVMConnector
   }
 
   @Override
-  protected void onDeactivate() throws Exception
+  protected void doDeactivate() throws Exception
   {
     LifecycleUtil.deactivateNoisy(getPeer());
     super.doDeactivate();
@@ -82,7 +79,7 @@ public class ClientJVMConnectorImpl extends AbstractJVMConnector
     ServerJVMConnectorImpl server = new ServerJVMConnectorImpl(this);
     server.setBufferProvider(getBufferProvider());
     server.setReceiveExecutor(getReceiveExecutor());
-    server.addLifecycleListener(peerLifecycleListener);
+    server.addListener(peerLifecycleListener);
     server.activate();
     return server;
   }

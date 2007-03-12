@@ -130,16 +130,12 @@ public class ManagedContainer extends Notifier implements IManagedContainer
       Object element = elementRegistry.get(key);
       if (element == null)
       {
-        IFactory factory = getFactory(productGroup, factoryType);
-        if (factory != null)
+        element = createElement(productGroup, factoryType, description);
+        if (element != null)
         {
-          element = factory.create(description);
-          if (element != null)
-          {
-            key.setID(++maxElementID);
-            elementRegistry.put(key, element);
-            fireEvent(new SingleDeltaContainerEvent(this, element, IContainerDelta.Kind.ADDED));
-          }
+          key.setID(++maxElementID);
+          elementRegistry.put(key, element);
+          fireEvent(new SingleDeltaContainerEvent(this, element, IContainerDelta.Kind.ADDED));
         }
       }
 
@@ -223,7 +219,18 @@ public class ManagedContainer extends Notifier implements IManagedContainer
     }
   }
 
-  public void initMaxElementID()
+  protected Object createElement(String productGroup, String factoryType, String description)
+  {
+    IFactory factory = getFactory(productGroup, factoryType);
+    if (factory != null)
+    {
+      return factory.create(description);
+    }
+
+    return null;
+  }
+
+  protected void initMaxElementID()
   {
     synchronized (elementRegistry)
     {

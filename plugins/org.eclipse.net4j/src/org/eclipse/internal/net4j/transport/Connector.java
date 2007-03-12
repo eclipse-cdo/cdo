@@ -139,11 +139,6 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
     this.userID = userID;
   }
 
-  public ConnectorLocation getLocation()
-  {
-    return null;
-  }
-
   public IConnectorCredentials getCredentials()
   {
     return credentials;

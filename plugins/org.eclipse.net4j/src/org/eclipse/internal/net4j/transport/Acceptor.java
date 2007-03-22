@@ -11,14 +11,14 @@
 package org.eclipse.internal.net4j.transport;
 
 import org.eclipse.net4j.transport.IAcceptor;
-import org.eclipse.net4j.transport.IAcceptorAcceptedEvent;
+import org.eclipse.net4j.transport.IAcceptorEvent;
 import org.eclipse.net4j.transport.IBufferProvider;
 import org.eclipse.net4j.transport.IConnector;
-import org.eclipse.net4j.transport.IProtocolFactory;
-import org.eclipse.net4j.transport.IProtocolFactoryID;
-import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.factory.IFactory;
+import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -26,7 +26,7 @@ import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.util.container.LifecycleEventConverter;
-import org.eclipse.internal.net4j.util.event.Event;
+import org.eclipse.internal.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
 
 import java.util.HashSet;
@@ -36,13 +36,13 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public abstract class Acceptor extends Lifecycle implements IAcceptor, IContainer<IConnector>
+public abstract class Acceptor extends Lifecycle implements IAcceptor
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_ACCEPTOR, Acceptor.class);
 
   private IBufferProvider bufferProvider;
 
-  private IRegistry<IProtocolFactoryID, IProtocolFactory> protocolFactoryRegistry;
+  private IRegistry<IFactoryKey, IFactory> factoryRegistry;
 
   private ExecutorService receiveExecutor;
 
@@ -82,14 +82,14 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor, IContaine
     this.receiveExecutor = receiveExecutor;
   }
 
-  public IRegistry<IProtocolFactoryID, IProtocolFactory> getProtocolFactoryRegistry()
+  public IRegistry<IFactoryKey, IFactory> getFactoryRegistry()
   {
-    return protocolFactoryRegistry;
+    return factoryRegistry;
   }
 
-  public void setProtocolFactoryRegistry(IRegistry<IProtocolFactoryID, IProtocolFactory> protocolFactoryRegistry)
+  public void setFactoryRegistry(IRegistry<IFactoryKey, IFactory> factoryRegistry)
   {
-    this.protocolFactoryRegistry = protocolFactoryRegistry;
+    this.factoryRegistry = factoryRegistry;
   }
 
   public IConnector[] getAcceptedConnectors()
@@ -98,6 +98,11 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor, IContaine
     {
       return acceptedConnectors.toArray(new IConnector[acceptedConnectors.size()]);
     }
+  }
+
+  public boolean isEmpty()
+  {
+    return acceptedConnectors.isEmpty();
   }
 
   public IConnector[] getElements()
@@ -109,6 +114,9 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor, IContaine
   {
     try
     {
+      connector.setBufferProvider(bufferProvider);
+      connector.setReceiveExecutor(receiveExecutor);
+      connector.setFactoryRegistry(factoryRegistry);
       connector.activate();
       connector.addListener(lifecycleEventConverter);
 
@@ -122,7 +130,7 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor, IContaine
         TRACER.trace("Added connector " + connector); //$NON-NLS-1$
       }
 
-      fireEvent(new AcceptorAcceptedEventImpl(this, connector));
+      fireEvent(new AcceptorEvent(this, connector, IContainerDelta.Kind.ADDED));
     }
     catch (Exception ex)
     {
@@ -142,6 +150,8 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor, IContaine
     {
       TRACER.trace("Removed connector " + connector); //$NON-NLS-1$
     }
+
+    fireEvent(new AcceptorEvent(this, connector, IContainerDelta.Kind.REMOVED));
   }
 
   @Override
@@ -153,13 +163,15 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor, IContaine
       throw new IllegalStateException("bufferProvider == null"); //$NON-NLS-1$
     }
 
-    if (protocolFactoryRegistry == null && TRACER.isEnabled())
+    if (factoryRegistry == null && TRACER.isEnabled())
     {
-      TRACER.trace("protocolFactoryRegistry == null"); //$NON-NLS-1$
+      // Just a reminder during development
+      TRACER.trace("factoryRegistry == null"); //$NON-NLS-1$
     }
 
     if (receiveExecutor == null && TRACER.isEnabled())
     {
+      // Just a reminder during development
       TRACER.trace("receiveExecutor == null"); //$NON-NLS-1$
     }
   }
@@ -178,21 +190,23 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor, IContaine
   /**
    * @author Eike Stepper
    */
-  private static class AcceptorAcceptedEventImpl extends Event implements IAcceptorAcceptedEvent
+  private static class AcceptorEvent extends SingleDeltaContainerEvent<IConnector> implements IAcceptorEvent
   {
     private static final long serialVersionUID = 1L;
 
-    private IConnector acceptedConnector;
-
-    public AcceptorAcceptedEventImpl(INotifier notifier, IConnector acceptedConnector)
+    public AcceptorEvent(IAcceptor acceptor, IConnector connector, Kind kind)
     {
-      super(notifier);
-      this.acceptedConnector = acceptedConnector;
+      super(acceptor, connector, kind);
+    }
+
+    public IAcceptor getAcceptor()
+    {
+      return (IAcceptor)getContainer();
     }
 
     public IConnector getConnector()
     {
-      return acceptedConnector;
+      return getDeltaElement();
     }
   }
 }

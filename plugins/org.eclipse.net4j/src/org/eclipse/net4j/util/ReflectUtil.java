@@ -20,6 +20,7 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Collection;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -209,8 +210,28 @@ public final class ReflectUtil
       builder.append(segmentPrefix);
       builder.append(field.getName());
       builder.append(" = "); //$NON-NLS-1$
-      builder.append(getValue(object, field));
-      builder.append(NL);
+
+      Object value = getValue(object, field);
+      if (value instanceof Map)
+      {
+        value = ((Map)value).entrySet();
+      }
+
+      if (value instanceof Collection)
+      {
+        builder.append(NL);
+        for (Object element : (Collection)value)
+        {
+          builder.append("    ");
+          builder.append(element);
+          builder.append(NL);
+        }
+      }
+      else
+      {
+        builder.append(value);
+        builder.append(NL);
+      }
     }
   }
 

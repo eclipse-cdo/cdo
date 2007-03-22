@@ -1,8 +1,6 @@
 package org.eclipse.emf.cdo.internal.ui.wizards;
 
-import org.eclipse.net4j.container.Container;
-import org.eclipse.net4j.container.ContainerManager;
-
+import org.eclipse.core.internal.resources.Container;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;

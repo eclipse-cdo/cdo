@@ -15,11 +15,9 @@ package org.eclipse.net4j.util.factory;
  */
 public interface IFactory<PRODUCT>
 {
-  public String getProductGroup();
+  public IFactoryKey getKey();
 
-  public String getType();
-
-  public PRODUCT create(String description);
+  public PRODUCT create(String description) throws ProductCreationException;
 
   public String getDescriptionFor(PRODUCT product);
 }

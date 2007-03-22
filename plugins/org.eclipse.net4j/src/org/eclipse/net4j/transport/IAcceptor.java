@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.transport;
 
-import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.container.IContainer;
 
 /**
  * @author Eike Stepper
  */
-public interface IAcceptor extends INotifier
+public interface IAcceptor extends IContainer<IConnector>
 {
   public IConnector[] getAcceptedConnectors();
 }

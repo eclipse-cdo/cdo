@@ -10,31 +10,33 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.container.Container;
 import org.eclipse.net4j.tests.signal.Request1;
 import org.eclipse.net4j.tests.signal.Request2;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
+import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
 import org.eclipse.net4j.transport.IChannel;
+
+import org.eclipse.internal.net4j.transport.TransportContainer;
 
 import java.util.Arrays;
 
 /**
  * @author Eike Stepper
  */
-public class SignalTest extends AbstractTCPTest
+public class SignalTest extends AbstractTransportTest
 {
   @Override
-  protected Container createContainer()
+  protected TransportContainer createContainer()
   {
-    Container container = super.createContainer();
-    container.register(new TestSignalProtocol.Factory());
+    TransportContainer container = super.createContainer();
+    container.registerFactory(new TestSignalServerProtocolFactory());
     return container;
   }
 
   public void testInteger() throws Exception
   {
     startTransport();
-    IChannel channel = getConnector().openChannel(TestSignalProtocol.PROTOCOL_ID);
+    IChannel channel = getConnector().openChannel(TestSignalProtocol.TYPE);
     int data = 0x0a;
     int result = new Request1(channel, data).send();
     assertEquals(data, result);
@@ -43,7 +45,7 @@ public class SignalTest extends AbstractTCPTest
   public void testArray() throws Exception
   {
     startTransport();
-    IChannel channel = getConnector().openChannel(TestSignalProtocol.PROTOCOL_ID);
+    IChannel channel = getConnector().openChannel(TestSignalProtocol.TYPE);
     byte[] data = TinyData.getBytes();
     byte[] result = new Request2(channel, data).send();
     assertTrue(Arrays.equals(data, result));

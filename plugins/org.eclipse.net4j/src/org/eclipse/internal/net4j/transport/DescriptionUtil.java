@@ -13,6 +13,7 @@ package org.eclipse.internal.net4j.transport;
 /**
  * @author Eike Stepper
  */
+@Deprecated
 public final class DescriptionUtil
 {
   public static final String SEPARATOR = ":"; //$NON-NLS-1$

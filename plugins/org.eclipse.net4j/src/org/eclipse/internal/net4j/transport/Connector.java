@@ -17,21 +17,27 @@ import org.eclipse.net4j.transport.IBuffer;
 import org.eclipse.net4j.transport.IBufferProvider;
 import org.eclipse.net4j.transport.IChannel;
 import org.eclipse.net4j.transport.IConnector;
+import org.eclipse.net4j.transport.IConnectorChannelsEvent;
 import org.eclipse.net4j.transport.IConnectorCredentials;
 import org.eclipse.net4j.transport.IConnectorStateEvent;
 import org.eclipse.net4j.transport.IProtocol;
-import org.eclipse.net4j.transport.IProtocolFactory;
-import org.eclipse.net4j.transport.IProtocolFactoryID;
-import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.factory.IFactory;
+import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.util.container.LifecycleEventConverter;
+import org.eclipse.internal.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.internal.net4j.util.event.Event;
+import org.eclipse.internal.net4j.util.factory.FactoryKey;
 import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
 
 import java.util.ArrayList;
@@ -44,7 +50,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public abstract class Connector extends Lifecycle implements IConnector, IContainer<IChannel>
+public abstract class Connector extends Lifecycle implements IConnector
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, Connector.class);
 
@@ -54,7 +60,7 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
 
   private IConnectorCredentials credentials;
 
-  private IRegistry<IProtocolFactoryID, IProtocolFactory> protocolFactoryRegistry;
+  private IRegistry<IFactoryKey, IFactory> factoryRegistry;
 
   private IBufferProvider bufferProvider;
 
@@ -77,7 +83,22 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
    * Is registered with each {@link IChannel} of this {@link IConnector}.
    * <p>
    */
-  private transient IListener lifecycleEventConverter = new LifecycleEventConverter(this);
+  private transient IListener lifecycleEventConverter = new LifecycleEventConverter(this)
+  {
+    @Override
+    protected void added(ILifecycleEvent e)
+    {
+      super.added(e);
+      fireEvent(new ConnectorChannelsEvent(Connector.this, (IChannel)e.getLifecycle(), IContainerDelta.Kind.ADDED));
+    }
+
+    @Override
+    protected void removed(ILifecycleEvent e)
+    {
+      fireEvent(new ConnectorChannelsEvent(Connector.this, (IChannel)e.getLifecycle(), IContainerDelta.Kind.REMOVED));
+      super.removed(e);
+    }
+  };
 
   private transient CountDownLatch finishedConnecting;
 
@@ -99,14 +120,14 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
     this.receiveExecutor = receiveExecutor;
   }
 
-  public IRegistry<IProtocolFactoryID, IProtocolFactory> getProtocolFactoryRegistry()
+  public IRegistry<IFactoryKey, IFactory> getFactoryRegistry()
   {
-    return protocolFactoryRegistry;
+    return factoryRegistry;
   }
 
-  public void setProtocolFactoryRegistry(IRegistry<IProtocolFactoryID, IProtocolFactory> protocolFactoryRegistry)
+  public void setFactoryRegistry(IRegistry<IFactoryKey, IFactory> factoryRegistry)
   {
-    this.protocolFactoryRegistry = protocolFactoryRegistry;
+    this.factoryRegistry = factoryRegistry;
   }
 
   public IBufferProvider getBufferProvider()
@@ -166,7 +187,7 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
       }
 
       connectorState = newState;
-      fireEvent(new ConnectorStateEventImpl(this, oldState, newState));
+      fireEvent(new ConnectorStateEvent(this, oldState, newState));
       switch (newState)
       {
       case DISCONNECTED:
@@ -289,6 +310,11 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
     return result.toArray(new IChannel[result.size()]);
   }
 
+  public boolean isEmpty()
+  {
+    return getElements().length == 0;
+  }
+
   public IChannel[] getElements()
   {
     return getChannels();
@@ -301,14 +327,9 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
 
   public IChannel openChannel(String protocolID) throws ConnectorException
   {
-    return openChannel(protocolID, null);
-  }
-
-  public IChannel openChannel(String protocolID, Object protocolData) throws ConnectorException
-  {
     waitForConnection(Long.MAX_VALUE);
     short channelIndex = findFreeChannelIndex();
-    Channel channel = createChannel(channelIndex, protocolID, protocolData);
+    Channel channel = createChannel(channelIndex, protocolID);
     registerChannelWithPeer(channelIndex, protocolID);
 
     try
@@ -327,14 +348,24 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
     return channel;
   }
 
-  public Channel createChannel(short channelIndex, String protocolID, Object protocolData)
+  public Channel createChannel(short channelIndex, String protocolID)
   {
     Channel channel = new Channel(receiveExecutor);
-    IProtocol protocol = createProtocol(protocolID, channel, protocolData);
-    if (TRACER.isEnabled())
+    IProtocol protocol = createProtocol(protocolID);
+    if (protocol != null)
     {
-      TRACER.trace("Opening channel " + channelIndex //$NON-NLS-1$
-          + (protocol == null ? " without protocol" : " with protocol " + protocolID)); //$NON-NLS-1$ //$NON-NLS-2$
+      protocol.setChannel(channel);
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Opening channel {0} with protocol {1}", channelIndex, protocolID); //$NON-NLS-1$
+      }
+    }
+    else
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Opening channel {0} without protocol", channelIndex); //$NON-NLS-1$
+      }
     }
 
     channel.setChannelIndex(channelIndex);
@@ -426,27 +457,39 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
     channels.set(channelIndex, NULL_CHANNEL);
   }
 
-  protected IProtocol createProtocol(String protocolID, IChannel channel, Object protocolData)
+  protected IProtocol createProtocol(String type)
   {
-    if (protocolID == null || protocolID.length() == 0 || protocolFactoryRegistry == null)
+    if (StringUtil.isEmpty(type) || factoryRegistry == null)
     {
       return null;
     }
 
-    IProtocolFactoryID protocolFactoryID = ProtocolFactoryID.create(getLocation(), protocolID);
-    IProtocolFactory factory = protocolFactoryRegistry.get(protocolFactoryID);
-
+    IFactoryKey key = createProtocolFactoryKey(type);
+    IFactory<IProtocol> factory = factoryRegistry.get(key);
     if (factory == null)
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Unknown protocol " + protocolID); //$NON-NLS-1$
+        TRACER.trace("Unknown protocol " + type); //$NON-NLS-1$
       }
 
       return null;
     }
 
-    return factory.createProtocol(channel, protocolData);
+    return factory.create(null);
+  }
+
+  protected IFactoryKey createProtocolFactoryKey(String type)
+  {
+    switch (getLocation())
+    {
+    case SERVER:
+      return new FactoryKey(ServerProtocolFactory.SERVER_PROTOCOL_GROUP, type);
+    case CLIENT:
+      return new FactoryKey(ClientProtocolFactory.CLIENT_PROTOCOL_GROUP, type);
+    default:
+      throw new IllegalStateException();
+    }
   }
 
   @Override
@@ -458,10 +501,10 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
       throw new IllegalStateException("bufferProvider == null"); //$NON-NLS-1$
     }
 
-    if (protocolFactoryRegistry == null && TRACER.isEnabled())
+    if (factoryRegistry == null && TRACER.isEnabled())
     {
       // Just a reminder during development
-      TRACER.trace("No protocolFactoryRegistry!"); //$NON-NLS-1$
+      TRACER.trace("No factoryRegistry!"); //$NON-NLS-1$
     }
 
     if (receiveExecutor == null && TRACER.isEnabled())
@@ -523,7 +566,7 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
   /**
    * @author Eike Stepper
    */
-  private static class ConnectorStateEventImpl extends Event implements IConnectorStateEvent
+  private static class ConnectorStateEvent extends Event implements IConnectorStateEvent
   {
     private static final long serialVersionUID = 1L;
 
@@ -531,7 +574,7 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
 
     private ConnectorState newState;
 
-    public ConnectorStateEventImpl(INotifier notifier, ConnectorState oldState, ConnectorState newState)
+    public ConnectorStateEvent(INotifier notifier, ConnectorState oldState, ConnectorState newState)
     {
       super(notifier);
       this.oldState = oldState;
@@ -546,6 +589,30 @@ public abstract class Connector extends Lifecycle implements IConnector, IContai
     public ConnectorState getNewState()
     {
       return newState;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static class ConnectorChannelsEvent extends SingleDeltaContainerEvent<IChannel> implements
+      IConnectorChannelsEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    public ConnectorChannelsEvent(IConnector connector, IChannel channel, Kind kind)
+    {
+      super(connector, channel, kind);
+    }
+
+    public IConnector getConnector()
+    {
+      return (IConnector)getContainer();
+    }
+
+    public IChannel getChannel()
+    {
+      return getDeltaElement();
     }
   }
 }

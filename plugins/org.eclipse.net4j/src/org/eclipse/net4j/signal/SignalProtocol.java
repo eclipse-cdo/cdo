@@ -14,12 +14,10 @@ import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
 import org.eclipse.net4j.transport.IBuffer;
 import org.eclipse.net4j.transport.IBufferProvider;
-import org.eclipse.net4j.transport.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.transport.BufferUtil;
-import org.eclipse.internal.net4j.transport.Channel;
 import org.eclipse.internal.net4j.transport.Protocol;
 
 import java.nio.ByteBuffer;
@@ -43,27 +41,17 @@ public abstract class SignalProtocol extends Protocol
   private static final ContextTracer STREAM_TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM,
       SignalOutputStream.class);
 
-  private ExecutorService executorService;
-
   private Map<Integer, Signal> signals = new ConcurrentHashMap(0);
 
   private int nextCorrelationID = MIN_CORRELATION_ID;
 
-  protected SignalProtocol(IChannel channel, ExecutorService executorService)
+  protected SignalProtocol()
   {
-    super(channel);
-
-    if (executorService == null)
-    {
-      throw new IllegalArgumentException("executorService == null"); //$NON-NLS-1$
-    }
-
-    this.executorService = executorService;
   }
 
-  protected SignalProtocol(IChannel channel)
+  public ExecutorService getExecutorService()
   {
-    this(channel, ((Channel)channel).getReceiveExecutor());
+    return getChannel().getConnector().getReceiveExecutor();
   }
 
   public boolean waitForSignals(long timeout)
@@ -114,7 +102,7 @@ public abstract class SignalProtocol extends Protocol
         signal.setInputStream(new SignalInputStream(getInputStreamTimeout()));
         signal.setOutputStream(new SignalOutputStream(-correlationID, signalID, false));
         signals.put(-correlationID, signal);
-        executorService.execute(signal);
+        getExecutorService().execute(signal);
       }
     }
     else
@@ -143,7 +131,7 @@ public abstract class SignalProtocol extends Protocol
   @Override
   public String toString()
   {
-    return "SignalProtocol[" + getProtocolID() + ", " + getChannel() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return "SignalProtocol[" + getType() + ", " + getChannel() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   protected abstract SignalReactor createSignalReactor(short signalID);

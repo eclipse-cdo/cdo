@@ -1,17 +1,11 @@
 package org.eclipse.emf.cdo.internal.ui.views;
 
-import org.eclipse.emf.cdo.CDOConstants;
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.container.CDOContainerAdapter;
 import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 
-import org.eclipse.net4j.container.Container;
-import org.eclipse.net4j.container.ContainerManager;
-import org.eclipse.net4j.transport.ConnectorException;
-
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
+import org.eclipse.core.internal.resources.Container;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;

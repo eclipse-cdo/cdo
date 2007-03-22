@@ -22,16 +22,20 @@ import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
  */
 public abstract class Protocol extends Lifecycle implements IProtocol, IBufferProvider
 {
-  private IChannel channel;
+  private Channel channel;
 
-  public Protocol(IChannel channel)
+  public Protocol()
   {
-    this.channel = channel;
   }
 
-  public IChannel getChannel()
+  public Channel getChannel()
   {
     return channel;
+  }
+
+  public void setChannel(IChannel channel)
+  {
+    this.channel = (Channel)channel;
   }
 
   public short getBufferCapacity()
@@ -47,6 +51,16 @@ public abstract class Protocol extends Lifecycle implements IProtocol, IBufferPr
   public void retainBuffer(IBuffer buffer)
   {
     BufferUtil.getBufferProvider(channel).retainBuffer(buffer);
+  }
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    if (channel == null)
+    {
+      throw new IllegalStateException("channel == null");
+    }
   }
 
   @Override

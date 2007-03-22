@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+
+<plugin>
+
+   <extension
+         point="org.eclipse.net4j.factories">
+      <factory
+            class="org.eclipse.net4j.internal.tcp.TCPAcceptorFactory"
+            productGroup="org.eclipse.net4j.acceptors"
+            type="tcp"/>
+      <factory
+            class="org.eclipse.net4j.internal.tcp.TCPConnectorFactory"
+            productGroup="org.eclipse.net4j.connectors"
+            type="tcp"/>
+   </extension>
+
+</plugin>

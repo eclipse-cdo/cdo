@@ -11,25 +11,26 @@
 package org.eclipse.net4j.util.container;
 
 import org.eclipse.net4j.util.factory.IFactory;
+import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 /**
  * @author Eike Stepper
  */
 public interface IManagedContainer extends IContainer
 {
-  public IFactory[] getFactories();
+  public IRegistry<IFactoryKey, IFactory> getFactoryRegistry();
 
-  public IFactory[] getFactories(String productGroup);
+  public List<IElementProcessor> getPostProcessors();
 
-  public IFactory getFactory(String productGroup, String factoryType);
+  public void addPostProcessor(IElementProcessor postProcessor);
 
-  public void registerFactory(IFactory factory);
-
-  public void deregisterFactory(IFactory factory);
+  public void removePostProcessor(IElementProcessor postProcessor);
 
   public Object[] getElements(String productGroup);
 

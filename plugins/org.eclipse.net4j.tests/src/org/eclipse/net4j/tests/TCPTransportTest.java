@@ -10,17 +10,18 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.container.Container;
 import org.eclipse.net4j.stream.ChannelInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
-import org.eclipse.net4j.tests.signal.TestSignalProtocol;
-import org.eclipse.net4j.transport.IAcceptorAcceptedEvent;
+import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
+import org.eclipse.net4j.transport.IAcceptorEvent;
 import org.eclipse.net4j.transport.IBuffer;
 import org.eclipse.net4j.transport.IChannel;
 import org.eclipse.net4j.transport.IConnectorChannelsEvent;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+
+import org.eclipse.internal.net4j.transport.TransportContainer;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -36,13 +37,13 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public class TCPTransportTest extends AbstractTCPTest
+public class TCPTransportTest extends AbstractTransportTest
 {
   @Override
-  protected Container createContainer()
+  protected TransportContainer createContainer()
   {
-    Container container = super.createContainer();
-    container.register(new TestSignalProtocol.Factory());
+    TransportContainer container = super.createContainer();
+    container.registerFactory(new TestSignalServerProtocolFactory());
     return container;
   }
 
@@ -73,10 +74,10 @@ public class TCPTransportTest extends AbstractTCPTest
   {
     final int COUNT = 3;
     final CountDownLatch counter = new CountDownLatch(COUNT);
-    container.register(new TestProtocolFactory(counter));
+    container.registerFactory(new TestProtocolFactory(counter));
     startTransport();
 
-    IChannel channel = getConnector().openChannel(TestProtocolFactory.PROTOCOL_ID);
+    IChannel channel = getConnector().openChannel(TestProtocolFactory.TYPE);
     for (int i = 0; i < COUNT; i++)
     {
       IBuffer buffer = provideBuffer();
@@ -154,9 +155,9 @@ public class TCPTransportTest extends AbstractTCPTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof IAcceptorAcceptedEvent)
+        if (event instanceof IAcceptorEvent)
         {
-          IAcceptorAcceptedEvent e = (IAcceptorAcceptedEvent)event;
+          IAcceptorEvent e = (IAcceptorEvent)event;
           e.getConnector().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
@@ -217,9 +218,9 @@ public class TCPTransportTest extends AbstractTCPTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof IAcceptorAcceptedEvent)
+        if (event instanceof IAcceptorEvent)
         {
-          IAcceptorAcceptedEvent e = (IAcceptorAcceptedEvent)event;
+          IAcceptorEvent e = (IAcceptorEvent)event;
           e.getConnector().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
@@ -283,9 +284,9 @@ public class TCPTransportTest extends AbstractTCPTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof IAcceptorAcceptedEvent)
+        if (event instanceof IAcceptorEvent)
         {
-          IAcceptorAcceptedEvent e = (IAcceptorAcceptedEvent)event;
+          IAcceptorEvent e = (IAcceptorEvent)event;
           e.getConnector().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
@@ -311,6 +312,7 @@ public class TCPTransportTest extends AbstractTCPTest
 
     new Thread()
     {
+      @Override
       public void run()
       {
         try
@@ -363,9 +365,9 @@ public class TCPTransportTest extends AbstractTCPTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof IAcceptorAcceptedEvent)
+        if (event instanceof IAcceptorEvent)
         {
-          IAcceptorAcceptedEvent e = (IAcceptorAcceptedEvent)event;
+          IAcceptorEvent e = (IAcceptorEvent)event;
           e.getConnector().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)

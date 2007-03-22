@@ -14,7 +14,7 @@ import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
-import org.eclipse.internal.net4j.util.event.Notifier;
+import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -24,7 +24,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class Registry<K, V> extends Notifier implements IRegistry<K, V>
+public abstract class Registry<K, V> extends Lifecycle implements IRegistry<K, V>
 {
   private boolean autoCommit;
 

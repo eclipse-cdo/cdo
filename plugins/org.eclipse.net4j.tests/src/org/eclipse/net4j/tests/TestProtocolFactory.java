@@ -10,67 +10,29 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.transport.ConnectorLocation;
-import org.eclipse.net4j.transport.IBuffer;
-import org.eclipse.net4j.transport.IChannel;
-import org.eclipse.net4j.transport.IProtocol;
-import org.eclipse.net4j.transport.IProtocolFactory;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 
-import org.eclipse.internal.net4j.transport.Protocol;
-import org.eclipse.internal.net4j.transport.ProtocolFactory;
+import org.eclipse.internal.net4j.transport.ServerProtocolFactory;
 
-import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 /**
  * @author Eike Stepper
  */
-public class TestProtocolFactory extends ProtocolFactory implements IProtocolFactory
+public class TestProtocolFactory extends ServerProtocolFactory<TestProtocol>
 {
-  public static final String PROTOCOL_ID = "test.protocol";
+  public static final String TYPE = "test.protocol";
 
   private CountDownLatch counter;
 
   public TestProtocolFactory(CountDownLatch counter)
   {
+    super(TYPE);
     this.counter = counter;
   }
 
-  public String getProtocolID()
+  public TestProtocol create(String description) throws ProductCreationException
   {
-    return PROTOCOL_ID;
-  }
-
-  public Set<ConnectorLocation> getLocations()
-  {
-    return IProtocolFactory.SYMMETRIC;
-  }
-
-  public IProtocol createProtocol(IChannel channel, Object protocolData)
-  {
-    return new TestProtocol(channel);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class TestProtocol extends Protocol
-  {
-    public TestProtocol(IChannel channel)
-    {
-      super(channel);
-    }
-
-    public String getProtocolID()
-    {
-      return PROTOCOL_ID;
-    }
-
-    public void handleBuffer(IBuffer buffer)
-    {
-      System.out.println("BUFFER ARRIVED");
-      buffer.release();
-      counter.countDown();
-    }
+    return new TestProtocol(counter);
   }
 }

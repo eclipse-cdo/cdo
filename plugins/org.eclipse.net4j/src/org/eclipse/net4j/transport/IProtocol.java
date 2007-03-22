@@ -15,7 +15,9 @@ package org.eclipse.net4j.transport;
  */
 public interface IProtocol extends IBufferHandler
 {
-  public String getProtocolID();
+  public String getType();
 
   public IChannel getChannel();
+
+  public void setChannel(IChannel channel);
 }

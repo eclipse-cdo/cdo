@@ -12,13 +12,16 @@ package org.eclipse.internal.net4j.util.container;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.IFactory;
+import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.IRegistry;
 
-import org.eclipse.internal.net4j.util.event.Notifier;
+import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.util.factory.FactoryKey;
+import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.internal.net4j.util.registry.HashMapRegistry;
 
 import java.io.IOException;
@@ -27,6 +30,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -36,49 +40,54 @@ import java.util.Map.Entry;
 /**
  * @author Eike Stepper
  */
-public class ManagedContainer extends Notifier implements IManagedContainer
+public class ManagedContainer extends Lifecycle implements IManagedContainer
 {
-  private IRegistry<FactoryKey, IFactory> factoryRegistry = new HashMapRegistry();
+  private IRegistry<IFactoryKey, IFactory> factoryRegistry;
+
+  private List<IElementProcessor> postProcessors;
 
   private IRegistry<ElementKey, Object> elementRegistry = new HashMapRegistry();
 
   private long maxElementID;
 
-  public IFactory[] getFactories()
+  public ManagedContainer()
   {
-    return factoryRegistry.values().toArray(new IFactory[factoryRegistry.size()]);
   }
 
-  public IFactory[] getFactories(String productGroup)
+  public synchronized IRegistry<IFactoryKey, IFactory> getFactoryRegistry()
   {
-    List<IFactory> result = new ArrayList();
-    for (IFactory factory : factoryRegistry.values())
+    if (factoryRegistry == null)
     {
-      if (ObjectUtil.equals(factory.getProductGroup(), productGroup))
-      {
-        result.add(factory);
-      }
+      factoryRegistry = createFactoryRegistry();
     }
 
-    return result.toArray(new IFactory[result.size()]);
+    return factoryRegistry;
   }
 
-  public IFactory getFactory(String productGroup, String factoryType)
+  public ManagedContainer registerFactory(IFactory factory)
   {
-    FactoryKey key = new FactoryKey(productGroup, factoryType);
-    return factoryRegistry.get(key);
+    getFactoryRegistry().put(factory.getKey(), factory);
+    return this;
   }
 
-  public void registerFactory(IFactory factory)
+  public synchronized List<IElementProcessor> getPostProcessors()
   {
-    FactoryKey key = new FactoryKey(factory.getProductGroup(), factory.getType());
-    factoryRegistry.put(key, factory);
+    if (postProcessors == null)
+    {
+      postProcessors = createPostProcessors();
+    }
+
+    return postProcessors;
   }
 
-  public void deregisterFactory(IFactory factory)
+  public void addPostProcessor(IElementProcessor postProcessor)
   {
-    FactoryKey key = new FactoryKey(factory.getProductGroup(), factory.getType());
-    factoryRegistry.remove(key);
+    getPostProcessors().add(postProcessor);
+  }
+
+  public void removePostProcessor(IElementProcessor postProcessor)
+  {
+    getPostProcessors().remove(postProcessor);
   }
 
   public boolean isEmpty()
@@ -133,6 +142,8 @@ public class ManagedContainer extends Notifier implements IManagedContainer
         element = createElement(productGroup, factoryType, description);
         if (element != null)
         {
+          element = postProcessElement(productGroup, factoryType, description, element);
+          LifecycleUtil.activate(element);
           key.setID(++maxElementID);
           elementRegistry.put(key, element);
           fireEvent(new SingleDeltaContainerEvent(this, element, IContainerDelta.Kind.ADDED));
@@ -140,6 +151,29 @@ public class ManagedContainer extends Notifier implements IManagedContainer
       }
 
       return element;
+    }
+  }
+
+  /**
+   * TODO Replace usages by factories (BufferProvider, ExecutorService,
+   * ProtocolFactoryRegistry)
+   */
+  public Object putElement(String productGroup, String factoryType, String description, Object element)
+  {
+    synchronized (elementRegistry)
+    {
+      ContainerEvent event = new ContainerEvent(this);
+      ElementKey key = new ElementKey(productGroup, factoryType, description);
+      key.setID(++maxElementID);
+      Object oldElement = elementRegistry.put(key, element);
+      if (oldElement != null)
+      {
+        event.addDelta(oldElement, IContainerDelta.Kind.REMOVED);
+      }
+
+      event.addDelta(element, IContainerDelta.Kind.ADDED);
+      fireEvent(event);
+      return oldElement;
     }
   }
 
@@ -219,15 +253,42 @@ public class ManagedContainer extends Notifier implements IManagedContainer
     }
   }
 
+  @Override
+  public String toString()
+  {
+    return "ManagedContainer";
+  }
+
+  protected HashMapRegistry createFactoryRegistry()
+  {
+    return new HashMapRegistry();
+  }
+
+  protected ArrayList createPostProcessors()
+  {
+    return new ArrayList();
+  }
+
   protected Object createElement(String productGroup, String factoryType, String description)
   {
-    IFactory factory = getFactory(productGroup, factoryType);
+    FactoryKey key = new FactoryKey(productGroup, factoryType);
+    IFactory factory = getFactoryRegistry().get(key);
     if (factory != null)
     {
       return factory.create(description);
     }
 
     return null;
+  }
+
+  protected Object postProcessElement(String productGroup, String factoryType, String description, Object element)
+  {
+    for (IElementProcessor processor : getPostProcessors())
+    {
+      element = processor.process(this, productGroup, factoryType, description, element);
+    }
+
+    return element;
   }
 
   protected void initMaxElementID()
@@ -244,6 +305,23 @@ public class ManagedContainer extends Notifier implements IManagedContainer
         }
       }
     }
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    for (Object element : elementRegistry.values())
+    {
+      try
+      {
+        LifecycleUtil.deactivateNoisy(element);
+      }
+      catch (RuntimeException ex)
+      {
+        Net4j.LOG.error(ex);
+      }
+    }
+    super.doDeactivate();
   }
 
   /**
@@ -310,6 +388,12 @@ public class ManagedContainer extends Notifier implements IManagedContainer
     public int hashCode()
     {
       return ObjectUtil.hashCode(productGroup) ^ ObjectUtil.hashCode(factoryType) ^ ObjectUtil.hashCode(description);
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("{0}[{1}, {2}]", productGroup, factoryType, description);
     }
 
     public int compareTo(Object o)

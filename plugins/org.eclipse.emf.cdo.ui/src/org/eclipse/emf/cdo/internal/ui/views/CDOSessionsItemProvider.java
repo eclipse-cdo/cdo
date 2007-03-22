@@ -10,16 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.views;
 
-import org.eclipse.emf.cdo.CDOAdapter;
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.container.CDOContainerAdapter;
-import org.eclipse.emf.cdo.internal.container.CDOContainerAdapterImpl;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
-
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.registry.IRegistry;
-import org.eclipse.net4j.util.registry.IRegistryEvent;
 
 import org.eclipse.swt.graphics.Image;
 

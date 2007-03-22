@@ -12,6 +12,8 @@ package org.eclipse.internal.net4j.util.factory;
 
 import org.eclipse.net4j.util.factory.IFactory;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -19,9 +21,14 @@ public abstract class Factory<PRODUCT> implements IFactory<PRODUCT>
 {
   private FactoryKey key;
 
+  public Factory(FactoryKey key)
+  {
+    this.key = key;
+  }
+
   public Factory(String productGroup, String type)
   {
-    key = new FactoryKey(productGroup, type);
+    this(new FactoryKey(productGroup, type));
   }
 
   public FactoryKey getKey()
@@ -29,18 +36,24 @@ public abstract class Factory<PRODUCT> implements IFactory<PRODUCT>
     return key;
   }
 
-  public String getFactoryType()
-  {
-    return key.getFactoryType();
-  }
-
   public String getProductGroup()
   {
     return key.getProductGroup();
   }
 
+  public String getType()
+  {
+    return key.getType();
+  }
+
+  public String getDescriptionFor(PRODUCT product)
+  {
+    return null;
+  }
+
+  @Override
   public String toString()
   {
-    return key.toString();
+    return MessageFormat.format("Factory[{0}, {1}]", getProductGroup(), getType());
   }
 }

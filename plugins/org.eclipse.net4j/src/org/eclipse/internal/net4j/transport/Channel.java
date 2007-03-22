@@ -82,7 +82,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     this.channelIndex = channelIndex;
   }
 
-  public IConnector getConnector()
+  public Connector getConnector()
   {
     return connector;
   }

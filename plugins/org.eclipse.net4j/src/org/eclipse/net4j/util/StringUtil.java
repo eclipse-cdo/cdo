@@ -31,6 +31,21 @@ public final class StringUtil
     return str;
   }
 
+  public static int compare(String s1, String s2)
+  {
+    if (s1 == null)
+    {
+      return s2 == null ? 0 : -1;
+    }
+
+    if (s2 == null)
+    {
+      return 1;
+    }
+
+    return s1.compareTo(s2);
+  }
+
   public static int occurrences(String str, char c)
   {
     int count = 0;
@@ -40,5 +55,10 @@ public final class StringUtil
     }
 
     return count;
+  }
+
+  public static boolean isEmpty(String str)
+  {
+    return str == null || str.length() == 0;
   }
 }

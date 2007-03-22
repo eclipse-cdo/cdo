@@ -8,5 +8,8 @@ Bundle-Activator: org.eclipse.net4j.tests.bundle.Activator
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.core.runtime,
- org.junit,
- org.eclipse.net4j.tcp.container;visibility:=reexport
+ org.junit;visibility:=reexport,
+ org.eclipse.net4j.tcp;visibility:=reexport
+Export-Package: org.eclipse.net4j.tests,
+ org.eclipse.net4j.tests.bundle,
+ org.eclipse.net4j.tests.signal

@@ -12,38 +12,25 @@ package org.eclipse.net4j.tests.signal;
 
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
-import org.eclipse.net4j.transport.ConnectorLocation;
-import org.eclipse.net4j.transport.IChannel;
-import org.eclipse.net4j.transport.IProtocol;
-import org.eclipse.net4j.transport.IProtocolFactory;
-
-import org.eclipse.internal.net4j.transport.ProtocolFactory;
-
-import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public class TestSignalProtocol extends SignalProtocol
 {
-  public static final String PROTOCOL_ID = "signal.protocol";
+  public static final String TYPE = "signal.protocol";
 
   public static final short SIGNAL1 = 1;
 
   public static final short SIGNAL2 = 2;
 
-  public static final short SIGNAL3 = 3;
-
-  public static final short SIGNAL4 = 4;
-
-  public TestSignalProtocol(IChannel channel)
+  public TestSignalProtocol()
   {
-    super(channel);
   }
 
-  public String getProtocolID()
+  public String getType()
   {
-    return PROTOCOL_ID;
+    return TYPE;
   }
 
   @Override
@@ -58,26 +45,5 @@ public class TestSignalProtocol extends SignalProtocol
     }
 
     throw new IllegalArgumentException("Invalid signalID " + signalID);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class Factory extends ProtocolFactory
-  {
-    public String getProtocolID()
-    {
-      return PROTOCOL_ID;
-    }
-
-    public Set<ConnectorLocation> getLocations()
-    {
-      return IProtocolFactory.SYMMETRIC;
-    }
-
-    public IProtocol createProtocol(IChannel channel, Object protocolData)
-    {
-      return new TestSignalProtocol(channel);
-    }
   }
 }

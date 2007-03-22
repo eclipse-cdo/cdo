@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.transport;
 
-import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.container.IContainer;
 
 import org.eclipse.internal.net4j.transport.Channel;
 import org.eclipse.internal.net4j.transport.Connector;
@@ -31,7 +31,7 @@ import org.eclipse.internal.net4j.transport.Connector;
  * 
  * @author Eike Stepper
  */
-public interface IConnector extends INotifier
+public interface IConnector extends IContainer<IChannel>
 {
   public ConnectorLocation getLocation();
 
@@ -102,6 +102,4 @@ public interface IConnector extends INotifier
    * @see #openChannel()
    */
   public IChannel openChannel(String protocolID) throws ConnectorException;
-
-  public IChannel openChannel(String protocolID, Object protocolData) throws ConnectorException;
 }

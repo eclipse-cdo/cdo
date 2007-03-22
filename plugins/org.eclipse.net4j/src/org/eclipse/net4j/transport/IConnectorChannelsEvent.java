@@ -17,5 +17,7 @@ import org.eclipse.net4j.util.container.IContainerEvent;
  */
 public interface IConnectorChannelsEvent extends IContainerEvent<IChannel>
 {
+  public IConnector getConnector();
+
   public IChannel getChannel();
 }

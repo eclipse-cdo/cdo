@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.transport.IBuffer;
+import org.eclipse.net4j.transport.IProtocol;
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -57,7 +58,7 @@ public final class ControlChannel extends Channel
     return true;
   }
 
-  public boolean registerChannel(short channelIndex, String protocolID)
+  public boolean registerChannel(short channelIndex, IProtocol protocol)
   {
     assertValidChannelIndex(channelIndex);
     ISynchronizer<Boolean> registration = registrations.correlate(channelIndex);
@@ -66,7 +67,7 @@ public final class ControlChannel extends Channel
     ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_ID);
     byteBuffer.put(OPCODE_REGISTRATION);
     byteBuffer.putShort(channelIndex);
-    BufferUtil.putUTF8(byteBuffer, protocolID);
+    BufferUtil.putUTF8(byteBuffer, protocol.getType());
     handleBuffer(buffer);
 
     return registration.get(REGISTRATION_TIMEOUT);
@@ -83,6 +84,7 @@ public final class ControlChannel extends Channel
     handleBuffer(buffer);
   }
 
+  @Override
   public void handleBufferFromMultiplexer(IBuffer buffer)
   {
     try

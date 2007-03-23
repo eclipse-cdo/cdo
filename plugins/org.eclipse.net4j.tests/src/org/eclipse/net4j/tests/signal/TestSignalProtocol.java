@@ -34,7 +34,7 @@ public class TestSignalProtocol extends SignalProtocol
   }
 
   @Override
-  protected SignalReactor createSignalReactor(short signalID)
+  protected SignalReactor doCreateSignalReactor(short signalID)
   {
     switch (signalID)
     {
@@ -44,6 +44,6 @@ public class TestSignalProtocol extends SignalProtocol
       return new Indication2();
     }
 
-    throw new IllegalArgumentException("Invalid signalID " + signalID);
+    return null;
   }
 }

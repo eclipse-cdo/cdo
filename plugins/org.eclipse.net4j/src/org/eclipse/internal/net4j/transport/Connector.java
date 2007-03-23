@@ -322,15 +322,21 @@ public abstract class Connector extends Lifecycle implements IConnector
 
   public IChannel openChannel() throws ConnectorException
   {
-    return openChannel(null);
+    return openChannel((IProtocol)null);
   }
 
   public IChannel openChannel(String protocolID) throws ConnectorException
   {
+    IProtocol protocol = createProtocol(protocolID);
+    return openChannel(protocol);
+  }
+
+  public IChannel openChannel(IProtocol protocol) throws ConnectorException
+  {
     waitForConnection(Long.MAX_VALUE);
     short channelIndex = findFreeChannelIndex();
-    Channel channel = createChannel(channelIndex, protocolID);
-    registerChannelWithPeer(channelIndex, protocolID);
+    Channel channel = createChannel(channelIndex, protocol);
+    registerChannelWithPeer(channelIndex, protocol);
 
     try
     {
@@ -350,14 +356,20 @@ public abstract class Connector extends Lifecycle implements IConnector
 
   public Channel createChannel(short channelIndex, String protocolID)
   {
-    Channel channel = new Channel(receiveExecutor);
     IProtocol protocol = createProtocol(protocolID);
+    return createChannel(channelIndex, protocol);
+  }
+
+  public Channel createChannel(short channelIndex, IProtocol protocol)
+  {
+    Channel channel = new Channel(receiveExecutor);
     if (protocol != null)
     {
       protocol.setChannel(channel);
+      LifecycleUtil.activate(protocol);
       if (TRACER.isEnabled())
       {
-        TRACER.format("Opening channel {0} with protocol {1}", channelIndex, protocolID); //$NON-NLS-1$
+        TRACER.format("Opening channel {0} with protocol {1}", channelIndex, protocol.getType()); //$NON-NLS-1$
       }
     }
     else
@@ -538,7 +550,7 @@ public abstract class Connector extends Lifecycle implements IConnector
     super.doDeactivate();
   }
 
-  protected abstract void registerChannelWithPeer(short channelIndex, String protocolID) throws ConnectorException;
+  protected abstract void registerChannelWithPeer(short channelIndex, IProtocol protocol) throws ConnectorException;
 
   /**
    * @author Eike Stepper

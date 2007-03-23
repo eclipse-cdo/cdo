@@ -13,6 +13,7 @@ package org.eclipse.net4j.internal.jvm;
 import org.eclipse.net4j.transport.ConnectorException;
 import org.eclipse.net4j.transport.IBuffer;
 import org.eclipse.net4j.transport.IChannel;
+import org.eclipse.net4j.transport.IProtocol;
 
 import org.eclipse.internal.net4j.transport.Channel;
 import org.eclipse.internal.net4j.transport.Connector;
@@ -55,11 +56,11 @@ public abstract class JVMConnector extends Connector
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, String protocolID) throws ConnectorException
+  protected void registerChannelWithPeer(short channelIndex, IProtocol protocol) throws ConnectorException
   {
     try
     {
-      Channel channel = getPeer().createChannel(channelIndex, protocolID);
+      Channel channel = getPeer().createChannel(channelIndex, protocol);
       if (channel == null)
       {
         throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$

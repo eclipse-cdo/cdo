@@ -17,6 +17,7 @@ import org.eclipse.net4j.transport.ConnectorException;
 import org.eclipse.net4j.transport.ConnectorState;
 import org.eclipse.net4j.transport.IBuffer;
 import org.eclipse.net4j.transport.IChannel;
+import org.eclipse.net4j.transport.IProtocol;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
@@ -250,11 +251,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, String protocolID) throws ConnectorException
+  protected void registerChannelWithPeer(short channelIndex, IProtocol protocol) throws ConnectorException
   {
     try
     {
-      if (!controlChannel.registerChannel(channelIndex, protocolID))
+      if (!controlChannel.registerChannel(channelIndex, protocol))
       {
         throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
       }

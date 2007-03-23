@@ -114,6 +114,14 @@ public class Lifecycle extends Notifier implements ILifecycle
     }
   }
 
+  protected void checkActive()
+  {
+    if (!active)
+    {
+      throw new IllegalStateException("Not active: " + this);
+    }
+  }
+
   protected void doBeforeActivate() throws Exception
   {
   }

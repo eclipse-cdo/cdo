@@ -134,7 +134,19 @@ public abstract class SignalProtocol extends Protocol
     return "SignalProtocol[" + getType() + ", " + getChannel() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
-  protected abstract SignalReactor createSignalReactor(short signalID);
+  protected final SignalReactor createSignalReactor(short signalID)
+  {
+    checkActive();
+    SignalReactor signal = doCreateSignalReactor(signalID);
+    if (signal == null)
+    {
+      throw new IllegalArgumentException("Invalid signalID " + signalID);
+    }
+
+    return signal;
+  }
+
+  protected abstract SignalReactor doCreateSignalReactor(short signalID);
 
   void startSignal(SignalActor signalActor, long timeout) throws Exception
   {

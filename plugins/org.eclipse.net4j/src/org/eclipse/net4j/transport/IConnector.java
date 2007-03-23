@@ -102,4 +102,6 @@ public interface IConnector extends IContainer<IChannel>
    * @see #openChannel()
    */
   public IChannel openChannel(String protocolID) throws ConnectorException;
+
+  public IChannel openChannel(IProtocol protocol) throws ConnectorException;
 }

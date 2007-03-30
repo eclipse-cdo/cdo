@@ -369,7 +369,8 @@ public abstract class Connector extends Lifecycle implements IConnector
       LifecycleUtil.activate(protocol);
       if (TRACER.isEnabled())
       {
-        TRACER.format("Opening channel {0} with protocol {1}", channelIndex, protocol.getType()); //$NON-NLS-1$
+        TRACER.format(
+            "Opening channel {0} with protocol {1}", channelIndex, protocol == null ? null : protocol.getType()); //$NON-NLS-1$
       }
     }
     else

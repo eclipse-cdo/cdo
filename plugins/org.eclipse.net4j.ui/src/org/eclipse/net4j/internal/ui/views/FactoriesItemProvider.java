@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.ui.views;
 
-import org.eclipse.net4j.container.internal.ui.bundle.SharedIcons;
+import org.eclipse.net4j.internal.ui.bundle.SharedIcons;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.registry.IRegistryEvent;
 

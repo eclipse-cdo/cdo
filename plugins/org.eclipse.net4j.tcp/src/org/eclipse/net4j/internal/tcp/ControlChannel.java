@@ -67,7 +67,7 @@ public final class ControlChannel extends Channel
     ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_ID);
     byteBuffer.put(OPCODE_REGISTRATION);
     byteBuffer.putShort(channelIndex);
-    BufferUtil.putUTF8(byteBuffer, protocol.getType());
+    BufferUtil.putUTF8(byteBuffer, protocol == null ? null : protocol.getType());
     handleBuffer(buffer);
 
     return registration.get(REGISTRATION_TIMEOUT);

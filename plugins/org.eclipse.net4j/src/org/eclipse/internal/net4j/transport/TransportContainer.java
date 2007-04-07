@@ -16,35 +16,17 @@ import org.eclipse.net4j.transport.TransportUtil;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
-import org.eclipse.internal.net4j.bundle.Net4j;
+import org.eclipse.internal.net4j.util.concurrent.NamedExecutorService;
 import org.eclipse.internal.net4j.util.container.ManagedContainer;
 
 import java.text.MessageFormat;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 /**
  * @author Eike Stepper
  */
 public class TransportContainer extends ManagedContainer implements ITransportContainer
 {
-  public static final String EXECUTOR_SERVICE_GROUP = Net4j.BUNDLE_ID + ".executorServices";
-
-  public static final String BUFFER_PROVIDER_GROUP = Net4j.BUNDLE_ID + ".bufferProviders";
-
-  public static final short DEFAULT_BUFFER_CAPACITY = 4096;
-
-  public static final ThreadFactory THREAD_FACTORY = new ThreadFactory()
-  {
-    public Thread newThread(Runnable r)
-    {
-      Thread thread = new Thread(r);
-      thread.setDaemon(true);
-      return thread;
-    }
-  };
-
   private short bufferCapacity;
 
   public TransportContainer(short bufferCapacity)
@@ -98,7 +80,7 @@ public class TransportContainer extends ManagedContainer implements ITransportCo
 
   protected ExecutorService createExecutorService()
   {
-    return Executors.newCachedThreadPool(THREAD_FACTORY);
+    return new NamedExecutorService();
   }
 
   /**

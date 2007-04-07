@@ -28,6 +28,7 @@ import org.eclipse.internal.net4j.util.concurrent.AsynchronousWorkSerializer;
 import org.eclipse.internal.net4j.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
 
+import java.text.MessageFormat;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
@@ -195,7 +196,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
   @Override
   public String toString()
   {
-    return "Channel[" + connector + ", channelIndex=" + channelIndex + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return MessageFormat.format("Channel[{0}, {1}]", channelIndex, receiveHandler); //$NON-NLS-1$ 
   }
 
   @Override

@@ -66,7 +66,7 @@ public class TCPTransportTest extends AbstractTransportTest
       IBuffer buffer = provideBuffer();
       ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
       byteBuffer.putInt(1970);
-      channel.handleBuffer(buffer);
+      channel.sendBuffer(buffer);
     }
   }
 
@@ -74,16 +74,18 @@ public class TCPTransportTest extends AbstractTransportTest
   {
     final int COUNT = 3;
     final CountDownLatch counter = new CountDownLatch(COUNT);
-    container.registerFactory(new TestProtocolFactory(counter));
+    container.registerFactory(new ServerTestProtocolFactory(counter));
+    container.registerFactory(new ClientTestProtocolFactory());
     startTransport();
 
-    IChannel channel = getConnector().openChannel(TestProtocolFactory.TYPE);
+    IChannel channel = getConnector().openChannel(ServerTestProtocolFactory.TYPE);
     for (int i = 0; i < COUNT; i++)
     {
       IBuffer buffer = provideBuffer();
       ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
       byteBuffer.putInt(1970);
-      channel.handleBuffer(buffer);
+      channel.sendBuffer(buffer);
+      Thread.sleep(500000);
     }
 
     assertTrue(counter.await(2, TimeUnit.SECONDS));

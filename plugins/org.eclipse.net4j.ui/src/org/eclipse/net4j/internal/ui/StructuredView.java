@@ -1,4 +1,4 @@
-package org.eclipse.emf.cdo.internal.ui.views;
+package org.eclipse.net4j.internal.ui;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
@@ -22,6 +22,7 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
 
+@Deprecated
 public abstract class StructuredView extends ViewPart
 {
   public StructuredView()

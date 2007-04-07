@@ -6,6 +6,9 @@ Bundle-Version: 0.8.0.qualifier
 Bundle-Activator: org.eclipse.net4j.internal.ui.bundle.Net4jUI$Activator
 Bundle-Vendor: %providerName
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.ui,
- org.eclipse.net4j
+ org.eclipse.ui;visibility:=reexport,
+ org.eclipse.net4j;visibility:=reexport
 Eclipse-LazyStart: true
+Export-Package: org.eclipse.net4j.internal.ui,
+ org.eclipse.net4j.internal.ui.bundle,
+ org.eclipse.net4j.internal.ui.views

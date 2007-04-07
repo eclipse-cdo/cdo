@@ -20,6 +20,7 @@ import org.eclipse.internal.net4j.bundle.Net4j;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
+import java.text.MessageFormat;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -110,7 +111,7 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
   @Override
   public String toString()
   {
-    return "BufferPool[" + pooledBuffers + ", " + provider + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return MessageFormat.format("BufferPool[{0}]", getBufferCapacity()); //$NON-NLS-1$ 
   }
 
   @Override

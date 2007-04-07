@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004-2007 Eike Stepper, Germany.
+ * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,29 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.transport;
 
+import org.eclipse.internal.net4j.bundle.PluginTransportContainer;
+
 /**
  * @author Eike Stepper
  */
-public class ConnectorException extends RuntimeException
+public interface IPluginTransportContainer extends ITransportContainer
 {
-  private static final long serialVersionUID = 1L;
-
-  public ConnectorException()
-  {
-  }
-
-  public ConnectorException(String message)
-  {
-    super(message);
-  }
-
-  public ConnectorException(Throwable cause)
-  {
-    super(cause);
-  }
-
-  public ConnectorException(String message, Throwable cause)
-  {
-    super(message, cause);
-  }
+  public static final ITransportContainer INSTANCE = PluginTransportContainer.getInstance();
 }

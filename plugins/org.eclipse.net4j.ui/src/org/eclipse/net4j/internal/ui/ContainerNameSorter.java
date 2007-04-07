@@ -8,10 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.ui.views;
+package org.eclipse.net4j.internal.ui;
 
 import org.eclipse.jface.viewers.ViewerSorter;
 
-public class Net4jExplorerNameSorter extends ViewerSorter
+public class ContainerNameSorter extends ViewerSorter
 {
 }

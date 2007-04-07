@@ -11,10 +11,17 @@
       </category>
       <view
             category="org.eclipse.net4j.ui"
-            class="org.eclipse.net4j.internal.ui.views.Net4jExplorerView"
-            icon="icons/sample.gif"
-            id="org.eclipse.net4j.internal.ui.views.Net4jExplorerView"
-            name="Net4j Explorer">
+            class="org.eclipse.net4j.internal.ui.views.AcceptorsView"
+            icon="icons/full/view16/acceptors.gif"
+            id="org.eclipse.net4j.internal.ui.views.AcceptorsView"
+            name="Acceptors">
+      </view>
+      <view
+            category="org.eclipse.net4j.ui"
+            class="org.eclipse.net4j.internal.ui.views.ConnectorsView"
+            icon="icons/full/view16/connectors.gif"
+            id="org.eclipse.net4j.internal.ui.views.ConnectorsView"
+            name="Connectors">
       </view>
    </extension>
 

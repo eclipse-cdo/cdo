@@ -19,13 +19,13 @@ import java.util.concurrent.CountDownLatch;
 /**
  * @author Eike Stepper
  */
-public class TestProtocolFactory extends ServerProtocolFactory<TestProtocol>
+public class ServerTestProtocolFactory extends ServerProtocolFactory<TestProtocol>
 {
   public static final String TYPE = "test.protocol";
 
   private CountDownLatch counter;
 
-  public TestProtocolFactory(CountDownLatch counter)
+  public ServerTestProtocolFactory(CountDownLatch counter)
   {
     super(TYPE);
     this.counter = counter;

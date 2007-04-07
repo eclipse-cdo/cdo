@@ -23,36 +23,61 @@ public class SharedIcons
 {
   private static final ImageRegistry REGISTRY = new ImageRegistry(getDisplay());
 
-  private static final String OBJ = "icons/full/obj16/";
+  private static final String ETOOL = "etool16/";
 
-  public static final ImageDescriptor OBJ_ACCEPTOR = getDescriptor(OBJ + "acceptor.gif");
+  private static final String OBJ = "obj16/";
 
-  public static final ImageDescriptor OBJ_ADAPTER = getDescriptor(OBJ + "adapter.gif");
+  public static final String OBJ_ACCEPTOR = OBJ + "acceptor";
 
-  public static final ImageDescriptor OBJ_CHANNEL = getDescriptor(OBJ + "channel.gif");
+  public static final String OBJ_ADAPTER = OBJ + "adapter";
 
-  public static final ImageDescriptor OBJ_CONNECTOR = getDescriptor(OBJ + "connector.gif");
+  public static final String OBJ_CHANNEL = OBJ + "channel";
 
-  public static final ImageDescriptor OBJ_FACTORY = getDescriptor(OBJ + "factory.gif");
+  public static final String OBJ_CONNECTOR = OBJ + "connector";
 
-  public static final ImageDescriptor OBJ_FOLDER = getDescriptor(OBJ + "folder.gif");
+  public static final String OBJ_FACTORY = OBJ + "factory";
+
+  public static final String OBJ_FOLDER = OBJ + "folder";
+
+  public static final String ETOOL_ADD_ACCEPTOR = ETOOL + "add_acceptor";
+
+  public static final String ETOOL_ADD_CONNECTOR = ETOOL + "add_connector";
+
+  public static final String ETOOL_ADD = ETOOL + "add";
+
+  public static final String ETOOL_DELETE = ETOOL + "delete";
 
   public static Image getImage(String key)
   {
-    ImageDescriptor descriptor = getDescriptor(key);
-    return descriptor.createImage();
+    key = mangleKey(key);
+    Image image = REGISTRY.get(key);
+    if (image == null)
+    {
+      createDescriptor(key);
+      image = REGISTRY.get(key);
+    }
+
+    return image;
   }
 
   public static ImageDescriptor getDescriptor(String key)
   {
+    key = mangleKey(key);
     ImageDescriptor descriptor = REGISTRY.getDescriptor(key);
     if (descriptor == null)
     {
-      descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(Net4jUI.BUNDLE_ID, key);
-      if (descriptor != null)
-      {
-        REGISTRY.put(key, descriptor);
-      }
+      descriptor = createDescriptor(key);
+    }
+
+    return descriptor;
+  }
+
+  private static ImageDescriptor createDescriptor(String key)
+  {
+    ImageDescriptor descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(Net4jUI.BUNDLE_ID, key);
+    if (descriptor != null)
+    {
+      REGISTRY.put(key, descriptor);
     }
 
     return descriptor;
@@ -72,5 +97,10 @@ public class SharedIcons
     }
 
     return display;
+  }
+
+  private static String mangleKey(String key)
+  {
+    return "icons/full/" + key + ".gif";
   }
 }

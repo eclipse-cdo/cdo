@@ -22,18 +22,21 @@ import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * @author Eike Stepper
  */
-public class PluginElementProcessorList extends Lifecycle
+public class PluginElementProcessorList extends Lifecycle implements List<IElementProcessor>
 {
   private static final String ATTR_CLASS = "class";
 
   public static final String NAMESPACE = Net4j.BUNDLE_ID;
 
-  public static final String EXT_POINT = "postProcessors";
+  public static final String EXT_POINT = "elementProcessors";
 
   private List<IElementProcessor> processors = new ArrayList();
 
@@ -52,6 +55,131 @@ public class PluginElementProcessorList extends Lifecycle
 
   public PluginElementProcessorList()
   {
+  }
+
+  public boolean add(IElementProcessor o)
+  {
+    return processors.add(o);
+  }
+
+  public void add(int index, IElementProcessor element)
+  {
+    processors.add(index, element);
+  }
+
+  public boolean addAll(Collection<? extends IElementProcessor> c)
+  {
+    return processors.addAll(c);
+  }
+
+  public boolean addAll(int index, Collection<? extends IElementProcessor> c)
+  {
+    return processors.addAll(index, c);
+  }
+
+  public void clear()
+  {
+    processors.clear();
+  }
+
+  public boolean contains(Object o)
+  {
+    return processors.contains(o);
+  }
+
+  public boolean containsAll(Collection<?> c)
+  {
+    return processors.containsAll(c);
+  }
+
+  public boolean equals(Object o)
+  {
+    return processors.equals(o);
+  }
+
+  public IElementProcessor get(int index)
+  {
+    return processors.get(index);
+  }
+
+  public int hashCode()
+  {
+    return processors.hashCode();
+  }
+
+  public int indexOf(Object o)
+  {
+    return processors.indexOf(o);
+  }
+
+  public boolean isEmpty()
+  {
+    return processors.isEmpty();
+  }
+
+  public Iterator<IElementProcessor> iterator()
+  {
+    return processors.iterator();
+  }
+
+  public int lastIndexOf(Object o)
+  {
+    return processors.lastIndexOf(o);
+  }
+
+  public ListIterator<IElementProcessor> listIterator()
+  {
+    return processors.listIterator();
+  }
+
+  public ListIterator<IElementProcessor> listIterator(int index)
+  {
+    return processors.listIterator(index);
+  }
+
+  public IElementProcessor remove(int index)
+  {
+    return processors.remove(index);
+  }
+
+  public boolean remove(Object o)
+  {
+    return processors.remove(o);
+  }
+
+  public boolean removeAll(Collection<?> c)
+  {
+    return processors.removeAll(c);
+  }
+
+  public boolean retainAll(Collection<?> c)
+  {
+    return processors.retainAll(c);
+  }
+
+  public IElementProcessor set(int index, IElementProcessor element)
+  {
+    return processors.set(index, element);
+  }
+
+  public int size()
+  {
+    return processors.size();
+  }
+
+  public List<IElementProcessor> subList(int fromIndex, int toIndex)
+  {
+    return processors.subList(fromIndex, toIndex);
+  }
+
+  public Object[] toArray()
+  {
+    return processors.toArray();
+  }
+
+  public <T> T[] toArray(T[] a)
+  {
+    return processors.toArray(a);
   }
 
   @Override

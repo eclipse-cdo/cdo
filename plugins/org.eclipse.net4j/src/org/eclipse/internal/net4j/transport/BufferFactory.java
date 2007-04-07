@@ -15,6 +15,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -53,6 +55,6 @@ public class BufferFactory extends BufferProvider
   @Override
   public String toString()
   {
-    return "BufferFactory[capacity=" + getBufferCapacity() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+    return MessageFormat.format("BufferFactory[{0}]", getBufferCapacity()); //$NON-NLS-1$ 
   }
 }

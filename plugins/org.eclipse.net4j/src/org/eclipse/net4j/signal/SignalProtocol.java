@@ -21,6 +21,7 @@ import org.eclipse.internal.net4j.transport.BufferUtil;
 import org.eclipse.internal.net4j.transport.Protocol;
 
 import java.nio.ByteBuffer;
+import java.text.MessageFormat;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -131,7 +132,7 @@ public abstract class SignalProtocol extends Protocol
   @Override
   public String toString()
   {
-    return "SignalProtocol[" + getType() + ", " + getChannel() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return MessageFormat.format("SignalProtocol[{0}]", getType()); //$NON-NLS-1$ 
   }
 
   protected final SignalReactor createSignalReactor(short signalID)

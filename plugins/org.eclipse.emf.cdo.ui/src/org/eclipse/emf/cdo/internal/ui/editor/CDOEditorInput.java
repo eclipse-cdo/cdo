@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.editor;
 
+import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 
 import org.eclipse.jface.resource.ImageDescriptor;

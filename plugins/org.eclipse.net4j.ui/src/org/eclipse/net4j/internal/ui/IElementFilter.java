@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004-2007 Eike Stepper, Germany.
+ * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,31 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport;
+package org.eclipse.net4j.internal.ui;
 
 /**
  * @author Eike Stepper
  */
-public class ConnectorException extends RuntimeException
+public interface IElementFilter
 {
-  private static final long serialVersionUID = 1L;
-
-  public ConnectorException()
-  {
-  }
-
-  public ConnectorException(String message)
-  {
-    super(message);
-  }
-
-  public ConnectorException(Throwable cause)
-  {
-    super(cause);
-  }
-
-  public ConnectorException(String message, Throwable cause)
-  {
-    super(message, cause);
-  }
+  public boolean filter(Object element);
 }

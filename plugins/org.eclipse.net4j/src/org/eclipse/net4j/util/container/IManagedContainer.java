@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -31,6 +32,10 @@ public interface IManagedContainer extends IContainer
   public void addPostProcessor(IElementProcessor postProcessor);
 
   public void removePostProcessor(IElementProcessor postProcessor);
+
+  public Set<String> getProductGroups();
+
+  public Set<String> getFactoryTypes(String productGroup);
 
   public Object[] getElements(String productGroup);
 

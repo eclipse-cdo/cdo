@@ -34,7 +34,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Map.Entry;
 
 /**
@@ -88,6 +90,44 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   public void removePostProcessor(IElementProcessor postProcessor)
   {
     getPostProcessors().remove(postProcessor);
+  }
+
+  public Set<String> getProductGroups()
+  {
+    Set<String> result = new HashSet();
+    for (IFactoryKey key : factoryRegistry.keySet())
+    {
+      result.add(key.getProductGroup());
+    }
+
+    for (ElementKey key : elementRegistry.keySet())
+    {
+      result.add(key.getProductGroup());
+    }
+
+    return result;
+  }
+
+  public Set<String> getFactoryTypes(String productGroup)
+  {
+    Set<String> result = new HashSet();
+    for (IFactoryKey key : factoryRegistry.keySet())
+    {
+      if (ObjectUtil.equals(key.getProductGroup(), productGroup))
+      {
+        result.add(key.getType());
+      }
+    }
+
+    for (ElementKey key : elementRegistry.keySet())
+    {
+      if (ObjectUtil.equals(key.getProductGroup(), productGroup))
+      {
+        result.add(key.getFactoryType());
+      }
+    }
+
+    return result;
   }
 
   public boolean isEmpty()
@@ -259,12 +299,12 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return "ManagedContainer";
   }
 
-  protected HashMapRegistry createFactoryRegistry()
+  protected IRegistry<IFactoryKey, IFactory> createFactoryRegistry()
   {
     return new HashMapRegistry();
   }
 
-  protected ArrayList createPostProcessors()
+  protected List<IElementProcessor> createPostProcessors()
   {
     return new ArrayList();
   }
@@ -308,6 +348,14 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   }
 
   @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    LifecycleUtil.activate(getFactoryRegistry());
+    LifecycleUtil.activate(getPostProcessors());
+  }
+
+  @Override
   protected void doDeactivate() throws Exception
   {
     for (Object element : elementRegistry.values())
@@ -321,6 +369,9 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
         Net4j.LOG.error(ex);
       }
     }
+
+    LifecycleUtil.deactivate(factoryRegistry);
+    LifecycleUtil.deactivate(postProcessors);
     super.doDeactivate();
   }
 

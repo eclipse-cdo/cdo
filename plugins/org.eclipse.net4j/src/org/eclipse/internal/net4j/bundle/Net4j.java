@@ -94,6 +94,7 @@ public final class Net4j
 
     public void stop(BundleContext context) throws Exception
     {
+      PluginTransportContainer.dispose();
       traceStop(context);
       Net4j.BUNDLE.setBundleContext(null);
       AbstractOMPlatform.systemContext = null;

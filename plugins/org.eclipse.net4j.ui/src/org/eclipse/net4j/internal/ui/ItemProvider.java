@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.ui.views;
+package org.eclipse.net4j.internal.ui;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -57,20 +57,21 @@ public abstract class ItemProvider<INPUT> extends LabelProvider implements IStru
     if (viewer instanceof StructuredViewer)
     {
       this.viewer = (StructuredViewer)viewer;
-
-      if (input != null)
+      if (newInput != input)
       {
-        disconnectInput(input);
-      }
-
-      try
-      {
-        input = (INPUT)newInput;
-        connectInput(input);
-      }
-      catch (Exception ex)
-      {
-        input = null;
+        if (input != null)
+        {
+          disconnectInput(input);
+        }
+        try
+        {
+          input = (INPUT)newInput;
+          connectInput(input);
+        }
+        catch (Exception ex)
+        {
+          input = null;
+        }
       }
     }
   }
@@ -111,13 +112,13 @@ public abstract class ItemProvider<INPUT> extends LabelProvider implements IStru
 
   protected void refreshElement(final Object element, final boolean updateLabels)
   {
-    if (isViewerActive())
+    try
     {
       getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {
-          if (isViewerActive())
+          try
           {
             if (element != null)
             {
@@ -128,12 +129,19 @@ public abstract class ItemProvider<INPUT> extends LabelProvider implements IStru
               viewer.refresh(updateLabels);
             }
           }
+          catch (Exception ignore)
+          {
+            ignore.printStackTrace();
+          }
         }
       });
     }
+    catch (Exception ignore)
+    {
+    }
   }
 
-  private Display getDisplay()
+  protected Display getDisplay()
   {
     Display display = viewer.getControl().getDisplay();
     if (display == null)
@@ -152,10 +160,5 @@ public abstract class ItemProvider<INPUT> extends LabelProvider implements IStru
     }
 
     return display;
-  }
-
-  private boolean isViewerActive()
-  {
-    return viewer != null && viewer.getControl() != null && !viewer.getControl().isDisposed();
   }
 }

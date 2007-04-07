@@ -8,31 +8,27 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.transport;
+package org.eclipse.net4j.tests;
+
+import org.eclipse.net4j.transport.IProtocol;
+import org.eclipse.net4j.util.factory.ProductCreationException;
+
+import org.eclipse.internal.net4j.transport.ClientProtocolFactory;
 
 /**
  * @author Eike Stepper
  */
-public class ConnectorException extends RuntimeException
+public class ClientTestProtocolFactory extends ClientProtocolFactory
 {
-  private static final long serialVersionUID = 1L;
+  public static final String TYPE = ServerTestProtocolFactory.TYPE;
 
-  public ConnectorException()
+  public ClientTestProtocolFactory()
   {
+    super(TYPE);
   }
 
-  public ConnectorException(String message)
+  public IProtocol create(String description) throws ProductCreationException
   {
-    super(message);
-  }
-
-  public ConnectorException(Throwable cause)
-  {
-    super(cause);
-  }
-
-  public ConnectorException(String message, Throwable cause)
-  {
-    super(message, cause);
+    return null;
   }
 }

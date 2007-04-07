@@ -1,5 +1,7 @@
 package org.eclipse.emf.cdo.internal.ui.wizards;
 
+import org.eclipse.net4j.transport.ConnectorException;
+
 import org.eclipse.core.internal.resources.Container;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;

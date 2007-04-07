@@ -6,6 +6,10 @@
  */
 package org.eclipse.emf.cdo.internal.ui.editor;
 
+import org.eclipse.emf.cdo.CDOAdapter;
+import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.util.CDOUtil;
+
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;

@@ -40,28 +40,30 @@ public class LifecycleEventConverter<E> implements IListener
       {
       case ACTIVATED:
         added(e);
-        fireContainerEvent(e, IContainerDelta.Kind.ADDED);
-        return;
+        break;
 
       case DEACTIVATED:
         removed(e);
-        fireContainerEvent(e, IContainerDelta.Kind.REMOVED);
-        return;
+        break;
       }
     }
-
-    owner.fireEvent(event);
+    // else
+    // {
+    // owner.fireEvent(event);
+    // }
   }
 
   protected void added(ILifecycleEvent e)
   {
+    fireContainerEvent(e, IContainerDelta.Kind.ADDED);
   }
 
   protected void removed(ILifecycleEvent e)
   {
+    fireContainerEvent(e, IContainerDelta.Kind.REMOVED);
   }
 
-  private void fireContainerEvent(ILifecycleEvent e, IContainerDelta.Kind kind)
+  protected void fireContainerEvent(ILifecycleEvent e, IContainerDelta.Kind kind)
   {
     ContainerEvent<E> containerEvent = new ContainerEvent<E>((IContainer<E>)owner);
     containerEvent.addDelta(new ContainerDelta<E>((E)e.getLifecycle(), kind));

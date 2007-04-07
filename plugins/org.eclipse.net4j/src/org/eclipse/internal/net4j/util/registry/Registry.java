@@ -129,8 +129,7 @@ public abstract class Registry<K, V> extends Lifecycle implements IRegistry<K, V
   {
     if (!isEmpty())
     {
-      Set<K> keys = keySet();
-      for (K key : keys)
+      for (Object key : keySet().toArray())
       {
         deregister(key);
       }

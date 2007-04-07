@@ -22,13 +22,11 @@ import org.eclipse.net4j.transport.IConnectorCredentials;
 import org.eclipse.net4j.transport.IConnectorStateEvent;
 import org.eclipse.net4j.transport.IProtocol;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
-import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -83,21 +81,23 @@ public abstract class Connector extends Lifecycle implements IConnector
    * Is registered with each {@link IChannel} of this {@link IConnector}.
    * <p>
    */
-  private transient IListener lifecycleEventConverter = new LifecycleEventConverter(this)
+  private transient IListener lifecycleEventConverter = new LifecycleEventConverter(this);
   {
-    @Override
-    protected void added(ILifecycleEvent e)
-    {
-      super.added(e);
-      fireEvent(new ConnectorChannelsEvent(Connector.this, (IChannel)e.getLifecycle(), IContainerDelta.Kind.ADDED));
-    }
-
-    @Override
-    protected void removed(ILifecycleEvent e)
-    {
-      fireEvent(new ConnectorChannelsEvent(Connector.this, (IChannel)e.getLifecycle(), IContainerDelta.Kind.REMOVED));
-      super.removed(e);
-    }
+    // @Override
+    // protected void added(ILifecycleEvent e)
+    // {
+    // super.added(e);
+    // fireEvent(new ConnectorChannelsEvent(Connector.this,
+    // (IChannel)e.getLifecycle(), IContainerDelta.Kind.ADDED));
+    // }
+    //
+    // @Override
+    // protected void removed(ILifecycleEvent e)
+    // {
+    // fireEvent(new ConnectorChannelsEvent(Connector.this,
+    // (IChannel)e.getLifecycle(), IContainerDelta.Kind.REMOVED));
+    // super.removed(e);
+    // }
   };
 
   private transient CountDownLatch finishedConnecting;
@@ -328,6 +328,11 @@ public abstract class Connector extends Lifecycle implements IConnector
   public IChannel openChannel(String protocolID) throws ConnectorException
   {
     IProtocol protocol = createProtocol(protocolID);
+    if (protocol == null)
+    {
+      throw new IllegalArgumentException("Unknown protocolID: " + protocolID);
+    }
+
     return openChannel(protocol);
   }
 

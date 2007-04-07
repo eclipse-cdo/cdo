@@ -10,6 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.bundle;
 
+import org.eclipse.net4j.util.om.OMBundle;
+import org.eclipse.net4j.util.om.OMLogger;
+import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.OMTracer;
+
+import org.eclipse.internal.net4j.util.om.OSGiActivator;
+
 /**
  * @author Eike Stepper
  */

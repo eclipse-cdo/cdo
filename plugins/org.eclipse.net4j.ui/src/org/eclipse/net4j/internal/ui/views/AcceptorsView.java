@@ -1,33 +1,28 @@
-package org.eclipse.emf.cdo.internal.ui.views;
-
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+package org.eclipse.net4j.internal.ui.views;
 
 import org.eclipse.net4j.internal.ui.ContainerItemProvider;
 import org.eclipse.net4j.internal.ui.ContainerView;
 import org.eclipse.net4j.internal.ui.IElementFilter;
 import org.eclipse.net4j.internal.ui.SafeAction;
+import org.eclipse.net4j.transport.IAcceptor;
 import org.eclipse.net4j.transport.IPluginTransportContainer;
 import org.eclipse.net4j.transport.ITransportContainer;
-
-import org.eclipse.emf.internal.cdo.CDOSessionFactory;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 
-public class CDOSessionsView extends ContainerView
+public class AcceptorsView extends ContainerView
 {
-  private Action openSessionAction = new SafeAction("Open Session", "Open a CDO session", getAddImageDescriptor())
+  private Action addAcceptorAction = new SafeAction("Add Acceptor", "Add an acceptor", getAddImageDescriptor())
   {
     @Override
     protected void doRun() throws Exception
     {
-      IPluginTransportContainer.INSTANCE.getElement(CDOSessionFactory.SESSION_GROUP,
-          CDOProtocolConstants.PROTOCOL_NAME, "tcp://127.0.0.1:2036/repo1");
+      IPluginTransportContainer.INSTANCE.getAcceptor("tcp", "0.0.0.0:2036");
     }
   };
 
-  public CDOSessionsView()
+  public AcceptorsView()
   {
   }
 
@@ -40,11 +35,11 @@ public class CDOSessionsView extends ContainerView
   @Override
   protected ContainerItemProvider createContainerItemProvider()
   {
-    return new CDOItemProvider(new IElementFilter()
+    return new Net4jItemProvider(new IElementFilter()
     {
       public boolean filter(Object element)
       {
-        return element instanceof CDOSession;
+        return element instanceof IAcceptor;
       }
     });
   }
@@ -52,7 +47,7 @@ public class CDOSessionsView extends ContainerView
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
-    manager.add(openSessionAction);
+    manager.add(addAcceptorAction);
     super.fillLocalToolBar(manager);
   }
 }

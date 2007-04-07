@@ -20,7 +20,7 @@ public final class TestProtocol extends Protocol
 
   public String getType()
   {
-    return TestProtocolFactory.TYPE;
+    return ServerTestProtocolFactory.TYPE;
   }
 
   public void handleBuffer(IBuffer buffer)

@@ -1,6 +1,18 @@
+/***************************************************************************
+ * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ **************************************************************************/
 package org.eclipse.net4j.transport;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+
+import org.eclipse.internal.net4j.bundle.Net4j;
 
 import java.util.concurrent.ExecutorService;
 
@@ -9,6 +21,12 @@ import java.util.concurrent.ExecutorService;
  */
 public interface ITransportContainer extends IManagedContainer
 {
+  public static final String EXECUTOR_SERVICE_GROUP = Net4j.BUNDLE_ID + ".executorServices";
+
+  public static final String BUFFER_PROVIDER_GROUP = Net4j.BUNDLE_ID + ".bufferProviders";
+
+  public static final short DEFAULT_BUFFER_CAPACITY = 4096;
+
   public short getBufferCapacity();
 
   public IBufferProvider getBufferProvider();

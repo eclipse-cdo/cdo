@@ -11,16 +11,17 @@
 package org.eclipse.net4j.transport;
 
 /**
+ * Provides the ability to execute a negotitation phase between two connectors.
+ * 
  * @author Eike Stepper
+ * @since 0.8.0
  */
 public interface IConnectorNegotiator
 {
   /**
-   * Executes a negotitation phase between two connectors.
-   * <p>
+   * Executes the negotitation phase between the given connector and ts peer
+   * connector.
    * 
-   * @param connector
-   *          The connector to be used in the negotiation phase.
    * @return <code>true</code> if the negotiation succeeded,
    *         <code>false</code> otherwise.
    */

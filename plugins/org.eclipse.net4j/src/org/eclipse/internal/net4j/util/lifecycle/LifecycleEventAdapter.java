@@ -20,6 +20,10 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
  */
 public class LifecycleEventAdapter implements IListener
 {
+  public LifecycleEventAdapter()
+  {
+  }
+
   public final void notifyEvent(IEvent event)
   {
     if (event instanceof ILifecycleEvent)

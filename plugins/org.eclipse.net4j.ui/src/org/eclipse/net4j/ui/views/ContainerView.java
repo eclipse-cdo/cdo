@@ -1,7 +1,8 @@
-package org.eclipse.net4j.internal.ui;
+package org.eclipse.net4j.ui.views;
 
 import org.eclipse.net4j.internal.ui.bundle.SharedIcons;
 import org.eclipse.net4j.transport.ITransportContainer;
+import org.eclipse.net4j.ui.actions.SafeAction;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
@@ -14,7 +15,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -22,23 +25,26 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
 
-public abstract class ContainerView extends ViewPart
+public abstract class ContainerView extends ViewPart implements ISetSelectionTarget
 {
   private ContainerItemProvider itemProvider;
 
   private TreeViewer viewer;
 
-  private Action doubleClickAction = new Action()
+  private ISelectionChangedListener selectionListener = new ISelectionChangedListener()
   {
-    public void run()
+    public void selectionChanged(SelectionChangedEvent event)
     {
-      ISelection selection = viewer.getSelection();
-      Object obj = ((IStructuredSelection)selection).getFirstElement();
-      showMessage("Double-click detected on " + obj.toString());
+      ITreeSelection selection = (ITreeSelection)event.getSelection();
+      IActionBars bars = getViewSite().getActionBars();
+      ContainerView.this.selectionChanged(bars, selection);
     }
   };
+
+  private Action refreshAction = new RefreshAction();
 
   public ContainerView()
   {
@@ -49,6 +55,11 @@ public abstract class ContainerView extends ViewPart
     viewer.getControl().setFocus();
   }
 
+  public void selectReveal(ISelection selection)
+  {
+    viewer.setSelection(selection, true);
+  }
+
   public void createPartControl(Composite parent)
   {
     itemProvider = createContainerItemProvider();
@@ -57,9 +68,11 @@ public abstract class ContainerView extends ViewPart
     viewer.setLabelProvider(itemProvider);
     viewer.setSorter(new ContainerNameSorter());
     viewer.setInput(getContainer());
+    viewer.addSelectionChangedListener(selectionListener);
+    getSite().setSelectionProvider(viewer);
 
     hookContextMenu();
-    hookDoubleClickAction();
+    hookDoubleClick();
     contributeToActionBars();
   }
 
@@ -110,6 +123,19 @@ public abstract class ContainerView extends ViewPart
 
   protected abstract ITransportContainer getContainer();
 
+  protected void hookDoubleClick()
+  {
+    viewer.addDoubleClickListener(new IDoubleClickListener()
+    {
+      public void doubleClick(DoubleClickEvent event)
+      {
+        ITreeSelection selection = (ITreeSelection)viewer.getSelection();
+        Object object = selection.getFirstElement();
+        doubleClicked(object);
+      }
+    });
+  }
+
   protected void hookContextMenu()
   {
     MenuManager menuMgr = new MenuManager("#PopupMenu");
@@ -118,7 +144,8 @@ public abstract class ContainerView extends ViewPart
     {
       public void menuAboutToShow(IMenuManager manager)
       {
-        ContainerView.this.fillContextMenu(manager);
+        ITreeSelection selection = (ITreeSelection)viewer.getSelection();
+        fillContextMenu(manager, selection);
       }
     });
 
@@ -136,31 +163,70 @@ public abstract class ContainerView extends ViewPart
 
   protected void fillLocalPullDown(IMenuManager manager)
   {
-  }
-
-  protected void fillContextMenu(IMenuManager manager)
-  {
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+    manager.add(refreshAction);
   }
 
   protected void fillLocalToolBar(IToolBarManager manager)
   {
+    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
   }
 
-  protected void hookDoubleClickAction()
+  protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
-    viewer.addDoubleClickListener(new IDoubleClickListener()
+    itemProvider.fillContextMenu(manager, selection);
+    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+  }
+
+  protected void selectionChanged(IActionBars bars, ITreeSelection selection)
+  {
+  }
+
+  protected void doubleClicked(Object object)
+  {
+    if (object != null && viewer.isExpandable(object))
     {
-      public void doubleClick(DoubleClickEvent event)
+      if (viewer.getExpandedState(object))
       {
-        doubleClickAction.run();
+        viewer.collapseToLevel(object, TreeViewer.ALL_LEVELS);
       }
-    });
+      else
+      {
+        viewer.expandToLevel(object, 1);
+      }
+    }
   }
 
   protected void showMessage(String message)
   {
-    MessageDialog.openInformation(viewer.getControl().getShell(), getTitle(), message);
+    showMessage(MessageType.INFORMATION, message);
+  }
+
+  protected boolean showMessage(MessageType type, String message)
+  {
+    switch (type)
+    {
+    case INFORMATION:
+      MessageDialog.openInformation(viewer.getControl().getShell(), getTitle(), message);
+      return true;
+
+    case ERROR:
+      MessageDialog.openError(viewer.getControl().getShell(), getTitle(), message);
+      return true;
+
+    case WARNING:
+      MessageDialog.openWarning(viewer.getControl().getShell(), getTitle(), message);
+      return true;
+
+    case CONFIRM:
+      return MessageDialog.openConfirm(viewer.getControl().getShell(), getTitle(), message);
+
+    case QUESTION:
+      return MessageDialog.openQuestion(viewer.getControl().getShell(), getTitle(), message);
+
+    default:
+      return true;
+    }
   }
 
   public static ImageDescriptor getAddImageDescriptor()
@@ -171,5 +237,33 @@ public abstract class ContainerView extends ViewPart
   public static ImageDescriptor getDeleteImageDescriptor()
   {
     return SharedIcons.getDescriptor(SharedIcons.ETOOL_DELETE);
+  }
+
+  public static ImageDescriptor getRefreshImageDescriptor()
+  {
+    return SharedIcons.getDescriptor(SharedIcons.ETOOL_REFRESH);
+  }
+
+  protected static enum MessageType
+  {
+    INFORMATION, ERROR, WARNING, CONFIRM, QUESTION
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class RefreshAction extends SafeAction
+  {
+    private RefreshAction()
+    {
+      super("Refresh", "Refresh view", getRefreshImageDescriptor());
+    }
+
+    @Override
+    protected void doRun() throws Exception
+    {
+      System.out.println("Refreshing");
+      viewer.refresh(false);
+    }
   }
 }

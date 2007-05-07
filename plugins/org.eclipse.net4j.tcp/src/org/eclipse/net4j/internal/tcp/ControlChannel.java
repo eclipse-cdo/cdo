@@ -60,6 +60,11 @@ public final class ControlChannel extends Channel
 
   public boolean registerChannel(short channelIndex, IProtocol protocol)
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Registering channel {0} with protocol {1}", channelIndex, protocol);
+    }
+
     assertValidChannelIndex(channelIndex);
     ISynchronizer<Boolean> registration = registrations.correlate(channelIndex);
 
@@ -75,6 +80,11 @@ public final class ControlChannel extends Channel
 
   public void deregisterChannel(short channelIndex)
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Deregistering channel {0}", channelIndex);
+    }
+
     assertValidChannelIndex(channelIndex);
 
     IBuffer buffer = provideBuffer();
@@ -134,26 +144,20 @@ public final class ControlChannel extends Channel
       case OPCODE_DEREGISTRATION:
       {
         short channelIndex = byteBuffer.getShort();
-        assertValidChannelIndex(channelIndex);
-
-        try
+        if (channelIndex != CONTROL_CHANNEL_ID)
         {
-          Channel channel = ((TCPConnector)getConnector()).getChannel(channelIndex);
-          if (channel != null)
+          try
           {
-            channel.deactivate();
-          }
-          else
-          {
-            if (TRACER.isEnabled())
+            Channel channel = ((TCPConnector)getConnector()).getChannel(channelIndex);
+            if (channel != null)
             {
-              TRACER.trace("Invalid channel id: " + channelIndex); //$NON-NLS-1$
+              channel.deactivate();
             }
           }
-        }
-        catch (Exception ex)
-        {
-          Net4j.LOG.error(ex);
+          catch (Exception ex)
+          {
+            Net4j.LOG.error(ex);
+          }
         }
 
         break;
@@ -168,6 +172,12 @@ public final class ControlChannel extends Channel
     {
       buffer.release();
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    return "Channel[Control]";
   }
 
   private void sendStatus(byte opcode, short channelIndex, boolean status)

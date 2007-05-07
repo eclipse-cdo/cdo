@@ -1,8 +1,5 @@
 package org.eclipse.internal.net4j.util.container;
 
-import static org.eclipse.net4j.util.container.IContainerDelta.Kind.ADDED;
-import static org.eclipse.net4j.util.container.IContainerDelta.Kind.REMOVED;
-
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;

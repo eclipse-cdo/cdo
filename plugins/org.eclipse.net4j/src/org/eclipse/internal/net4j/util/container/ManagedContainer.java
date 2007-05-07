@@ -14,14 +14,18 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.util.factory.FactoryKey;
 import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.internal.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.internal.net4j.util.registry.HashMapRegistry;
 
 import java.io.IOException;
@@ -32,6 +36,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -51,6 +56,22 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   private IRegistry<ElementKey, Object> elementRegistry = new HashMapRegistry();
 
   private long maxElementID;
+
+  private IListener elementListener = new LifecycleEventAdapter()
+  {
+    @Override
+    protected void onDeactivated(ILifecycle lifecycle)
+    {
+      for (Entry<ElementKey, Object> entry : elementRegistry.entrySet())
+      {
+        if (lifecycle == entry.getValue())
+        {
+          removeElement(entry.getKey());
+          return;
+        }
+      }
+    }
+  };
 
   public ManagedContainer()
   {
@@ -135,6 +156,22 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return elementRegistry.isEmpty();
   }
 
+  public String[] getElementKey(Object element)
+  {
+    Set<Entry<ElementKey, Object>> entries = elementRegistry.entrySet();
+    for (Entry<ElementKey, Object> entry : entries)
+    {
+      if (entry.getValue() == element)
+      {
+        ElementKey key = entry.getKey();
+        String[] result = { key.getProductGroup(), key.getFactoryType(), key.getDescription() };
+        return result;
+      }
+    }
+
+    return null;
+  }
+
   public Object[] getElements()
   {
     return elementRegistry.values().toArray();
@@ -184,6 +221,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
         {
           element = postProcessElement(productGroup, factoryType, description, element);
           LifecycleUtil.activate(element);
+          EventUtil.addListener(element, elementListener);
           key.setID(++maxElementID);
           elementRegistry.put(key, element);
           fireEvent(new SingleDeltaContainerEvent(this, element, IContainerDelta.Kind.ADDED));
@@ -220,13 +258,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   public Object removeElement(String productGroup, String factoryType, String description)
   {
     ElementKey key = new ElementKey(productGroup, factoryType, description);
-    Object element = elementRegistry.remove(key);
-    if (element != null)
-    {
-      fireEvent(new SingleDeltaContainerEvent(this, element, IContainerDelta.Kind.REMOVED));
-    }
-
-    return element;
+    return removeElement(key);
   }
 
   public void clearElements()
@@ -331,6 +363,18 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return element;
   }
 
+  protected Object removeElement(ElementKey key)
+  {
+    Object element = elementRegistry.remove(key);
+    if (element != null)
+    {
+      EventUtil.removeListener(element, elementListener);
+      fireEvent(new SingleDeltaContainerEvent(this, element, IContainerDelta.Kind.REMOVED));
+    }
+
+    return element;
+  }
+
   protected void initMaxElementID()
   {
     synchronized (elementRegistry)
@@ -358,7 +402,8 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   @Override
   protected void doDeactivate() throws Exception
   {
-    for (Object element : elementRegistry.values())
+    Collection<Object> values = elementRegistry.values();
+    for (Object element : values.toArray())
     {
       try
       {

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport;
 
+import org.eclipse.net4j.transport.BufferState;
 import org.eclipse.net4j.transport.IBuffer;
 import org.eclipse.net4j.transport.IBufferProvider;
 import org.eclipse.net4j.util.HexUtil;
@@ -30,8 +31,6 @@ public class Buffer implements IBuffer
 {
   public static final short HEADER_SIZE = 4;
 
-  public static final short NO_CHANNEL = Short.MIN_VALUE;
-
   private static final int EOS_OFFSET = 1;
 
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER, Buffer.class);
@@ -44,7 +43,7 @@ public class Buffer implements IBuffer
 
   private boolean eos;
 
-  private State state = State.INITIAL;
+  private BufferState state = BufferState.INITIAL;
 
   private ByteBuffer byteBuffer;
 
@@ -76,7 +75,7 @@ public class Buffer implements IBuffer
 
   public short getChannelIndex()
   {
-    if (state == State.INITIAL || state == State.READING_HEADER)
+    if (state == BufferState.INITIAL || state == BufferState.READING_HEADER)
     {
       throw new IllegalStateException("state == " + state); //$NON-NLS-1$
     }
@@ -91,7 +90,7 @@ public class Buffer implements IBuffer
 
   public ByteBuffer getByteBuffer()
   {
-    if (state != State.GETTING && state != State.PUTTING)
+    if (state != BufferState.GETTING && state != BufferState.PUTTING)
     {
       throw new IllegalStateException("state == " + state); //$NON-NLS-1$
     }
@@ -99,7 +98,7 @@ public class Buffer implements IBuffer
     return byteBuffer;
   }
 
-  public State getState()
+  public BufferState getState()
   {
     return state;
   }
@@ -118,7 +117,7 @@ public class Buffer implements IBuffer
   public void clear()
   {
     byteBuffer.clear();
-    state = State.INITIAL;
+    state = BufferState.INITIAL;
     channelIndex = NO_CHANNEL;
     eos = false;
   }
@@ -131,18 +130,18 @@ public class Buffer implements IBuffer
 
   public ByteBuffer startGetting(SocketChannel socketChannel) throws IOException
   {
-    if (state != State.INITIAL && state != State.READING_HEADER && state != State.READING_BODY)
+    if (state != BufferState.INITIAL && state != BufferState.READING_HEADER && state != BufferState.READING_BODY)
     {
       throw new IllegalStateException("state == " + state); //$NON-NLS-1$
     }
 
-    if (state == State.INITIAL)
+    if (state == BufferState.INITIAL)
     {
       byteBuffer.limit(Buffer.HEADER_SIZE);
-      state = State.READING_HEADER;
+      state = BufferState.READING_HEADER;
     }
 
-    if (state == State.READING_HEADER)
+    if (state == BufferState.READING_HEADER)
     {
       int num = socketChannel.read(byteBuffer);
       if (num == -1)
@@ -168,7 +167,7 @@ public class Buffer implements IBuffer
 
       byteBuffer.clear();
       byteBuffer.limit(payloadSize);
-      state = State.READING_BODY;
+      state = BufferState.READING_BODY;
     }
 
     // state == State.READING_BODY
@@ -189,26 +188,26 @@ public class Buffer implements IBuffer
     }
 
     byteBuffer.flip();
-    state = State.GETTING;
+    state = BufferState.GETTING;
     return byteBuffer;
   }
 
   public ByteBuffer startPutting(short channelIndex)
   {
-    if (state == State.PUTTING)
+    if (state == BufferState.PUTTING)
     {
       if (channelIndex != this.channelIndex)
       {
         throw new IllegalArgumentException("channelIndex != this.channelIndex"); //$NON-NLS-1$
       }
     }
-    else if (state != State.INITIAL)
+    else if (state != BufferState.INITIAL)
     {
       throw new IllegalStateException("state == " + state); //$NON-NLS-1$
     }
     else
     {
-      state = State.PUTTING;
+      state = BufferState.PUTTING;
       this.channelIndex = channelIndex;
 
       byteBuffer.clear();
@@ -220,12 +219,12 @@ public class Buffer implements IBuffer
 
   public boolean write(SocketChannel socketChannel) throws IOException
   {
-    if (state != State.PUTTING && state != State.WRITING)
+    if (state != BufferState.PUTTING && state != BufferState.WRITING)
     {
       throw new IllegalStateException("state == " + state); //$NON-NLS-1$
     }
 
-    if (state == State.PUTTING)
+    if (state == BufferState.PUTTING)
     {
       if (channelIndex == NO_CHANNEL)
       {
@@ -248,7 +247,7 @@ public class Buffer implements IBuffer
       byteBuffer.putShort(channelIndex);
       byteBuffer.putShort((short)payloadSize);
       byteBuffer.position(0);
-      state = State.WRITING;
+      state = BufferState.WRITING;
     }
 
     int numBytes = socketChannel.write(byteBuffer);
@@ -268,14 +267,14 @@ public class Buffer implements IBuffer
 
   public void flip()
   {
-    if (state != State.PUTTING)
+    if (state != BufferState.PUTTING)
     {
       throw new IllegalStateException("state == " + state); //$NON-NLS-1$
     }
 
     byteBuffer.flip();
     byteBuffer.position(HEADER_SIZE);
-    state = State.GETTING;
+    state = BufferState.GETTING;
   }
 
   @Override
@@ -291,12 +290,12 @@ public class Buffer implements IBuffer
 
     try
     {
-      if (state != State.GETTING)
+      if (state != BufferState.GETTING)
       {
         byteBuffer.flip();
       }
 
-      if (state == State.PUTTING)
+      if (state == BufferState.PUTTING)
       {
         byteBuffer.position(HEADER_SIZE);
       }
@@ -316,13 +315,5 @@ public class Buffer implements IBuffer
       byteBuffer.position(oldPosition);
       byteBuffer.limit(oldLimit);
     }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static enum State
-  {
-    INITIAL, PUTTING, WRITING, READING_HEADER, READING_BODY, GETTING
   }
 }

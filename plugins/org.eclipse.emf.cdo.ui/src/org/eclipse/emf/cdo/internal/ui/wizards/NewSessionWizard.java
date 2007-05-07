@@ -1,108 +1,107 @@
+/***************************************************************************
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.wizards;
 
-import org.eclipse.net4j.transport.ConnectorException;
+import org.eclipse.emf.cdo.internal.ui.wizards.steps.RepoNameStep;
+import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
-import org.eclipse.core.internal.resources.Container;
+import org.eclipse.net4j.internal.ui.wizards.steps.ProvideConnectorStep;
+import org.eclipse.net4j.internal.ui.wizards.steps.SelectConnectorStep;
+import org.eclipse.net4j.transport.IConnector;
+import org.eclipse.net4j.transport.IPluginTransportContainer;
+import org.eclipse.net4j.transport.ITransportContainer;
+import org.eclipse.net4j.ui.wizards.ParallelStep;
+import org.eclipse.net4j.ui.wizards.Step;
+import org.eclipse.net4j.ui.wizards.SteppingNewWizard;
+
+import org.eclipse.emf.internal.cdo.CDOSessionFactory;
+
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.ui.INewWizard;
-import org.eclipse.ui.IWorkbench;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-public class NewSessionWizard extends Wizard implements INewWizard
+/**
+ * @author Eike Stepper
+ */
+public class NewSessionWizard extends SteppingNewWizard
 {
-  private NewSessionWizardPage page;
+  private ProvideConnectorStep connectorStep;
 
-  private ISelection selection;
+  private RepoNameStep repoNameStep;
+
+  public NewSessionWizard(Map<String, Object> context)
+  {
+    super(context);
+  }
+
+  public NewSessionWizard(IConnector connector, String repoName)
+  {
+    super(createContext(connector, repoName));
+  }
 
   public NewSessionWizard()
   {
-    setNeedsProgressMonitor(true);
   }
 
-  public void addPages()
+  @Override
+  protected Step createRootStep()
   {
-    page = new NewSessionWizardPage(selection);
-    addPage(page);
+    ParallelStep root = new ParallelStep();
+    root.add(connectorStep = new ProvideConnectorStep(getTransportContainer()));
+    root.add(repoNameStep = new RepoNameStep());
+    return root;
   }
 
-  public boolean performFinish()
+  @Override
+  protected void doFinish(IProgressMonitor monitor) throws Exception
   {
-    final String connectorDescription = page.getConnectorDescription();
-    final String repositoryName = page.getRepositoryName();
-    IRunnableWithProgress op = new IRunnableWithProgress()
+    IConnector connector = connectorStep.getConnector();
+    if (connector == null)
     {
-      public void run(IProgressMonitor monitor) throws InvocationTargetException
-      {
-        try
-        {
-          doFinish(connectorDescription, repositoryName, monitor);
-        }
-        catch (Exception e)
-        {
-          throw new InvocationTargetException(e);
-        }
-        finally
-        {
-          monitor.done();
-        }
-      }
-    };
-
-    try
-    {
-      getContainer().run(true, false, op);
-    }
-    catch (InterruptedException e)
-    {
-      return false;
-    }
-    catch (InvocationTargetException e)
-    {
-      Throwable realException = e.getTargetException();
-      MessageDialog.openError(getShell(), "Error", realException.getMessage());
-      return false;
+      throw new IllegalStateException("connector == null");
     }
 
-    return true;
+    String repoName = repoNameStep.getRepoName();
+    if (repoName == null)
+    {
+      throw new IllegalStateException("repoName == null");
+    }
+
+    ITransportContainer transportContainer = getTransportContainer();
+    String[] key = transportContainer.getElementKey(connector);
+
+    String description = key[1] + "://" + key[2] + "/" + repoName;
+    transportContainer.getElement(CDOSessionFactory.SESSION_GROUP, CDOProtocolConstants.PROTOCOL_NAME, description);
   }
 
-  private void doFinish(String connectorDescription, String repositoryName, IProgressMonitor monitor)
-      throws ConnectorException
+  protected ITransportContainer getTransportContainer()
   {
-    String description = repositoryName + "@" + connectorDescription;
-    monitor.beginTask("Opening " + description, 1);
-    Container container = ContainerManager.INSTANCE.getContainer();
-    CDOContainerAdapter adapter = (CDOContainerAdapter)container.getAdapter("cdoclient");
-    adapter.getSession(description);
-    monitor.worked(1);
-
-    // monitor.setTaskName("Opening file for editing...");
-    // getShell().getDisplay().asyncExec(new Runnable()
-    // {
-    // public void run()
-    // {
-    // IWorkbenchPage page =
-    // PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-    // try
-    // {
-    // IDE.openEditor(page, file, true);
-    // }
-    // catch (PartInitException e)
-    // {
-    // }
-    // }
-    // });
-    // monitor.worked(1);
+    return IPluginTransportContainer.INSTANCE;
   }
 
-  public void init(IWorkbench workbench, IStructuredSelection selection)
+  private static Map<String, Object> createContext(IConnector connector, String repoName)
   {
-    this.selection = selection;
+    Map<String, Object> context = new HashMap();
+    if (connector != null)
+    {
+      context.put(SelectConnectorStep.KEY_CONNECTOR, Collections.singleton(connector));
+    }
+
+    if (repoName != null)
+    {
+      context.put(RepoNameStep.KEY_REPO_NAME, repoName);
+    }
+
+    return context;
   }
 }

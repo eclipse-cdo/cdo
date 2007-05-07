@@ -47,6 +47,8 @@ public class SharedIcons
 
   public static final String ETOOL_DELETE = ETOOL + "delete";
 
+  public static final String ETOOL_REFRESH = ETOOL + "refresh";
+
   public static Image getImage(String key)
   {
     key = mangleKey(key);

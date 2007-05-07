@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.editor;
 
-import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOAdapter;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -24,60 +24,24 @@ import java.text.MessageFormat;
  */
 public class CDOEditorInput implements IEditorInput
 {
-  private CDOSession session;
+  private CDOAdapter adapter;
 
   private String resourcePath;
 
-  private boolean readOnly;
-
-  private long timeStamp;
-
-  public CDOEditorInput(CDOSession session, String resourcePath)
+  public CDOEditorInput(CDOAdapter adapter, String resourcePath)
   {
-    this.session = session;
+    this.adapter = adapter;
     this.resourcePath = resourcePath;
   }
 
-  public CDOEditorInput(CDOSession session, String resourcePath, boolean readOnly)
+  public CDOAdapter getAdapter()
   {
-    this(session, resourcePath);
-    this.readOnly = readOnly;
-  }
-
-  public CDOEditorInput(CDOSession session, String resourcePath, long timeStamp)
-  {
-    this(session, resourcePath);
-    this.timeStamp = timeStamp;
-  }
-
-  public CDOSession getSession()
-  {
-    return session;
+    return adapter;
   }
 
   public String getResourcePath()
   {
     return resourcePath;
-  }
-
-  public boolean isActual()
-  {
-    return !isHistorical() && !isReadOnly();
-  }
-
-  public boolean isHistorical()
-  {
-    return timeStamp != 0;
-  }
-
-  public boolean isReadOnly()
-  {
-    return readOnly;
-  }
-
-  public long getTimeStamp()
-  {
-    return timeStamp;
   }
 
   public boolean exists()
@@ -87,12 +51,12 @@ public class CDOEditorInput implements IEditorInput
 
   public ImageDescriptor getImageDescriptor()
   {
-    if (isHistorical())
+    if (adapter.isHistorical())
     {
       return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR_HISTORICAL);
     }
 
-    if (isReadOnly())
+    if (adapter.isReadOnly())
     {
       return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR_READONLY);
     }
@@ -112,12 +76,12 @@ public class CDOEditorInput implements IEditorInput
 
   public String getToolTipText()
   {
-    if (isHistorical())
+    if (adapter.isHistorical())
     {
-      return MessageFormat.format("{0} ({1,D})", resourcePath, timeStamp);
+      return MessageFormat.format("{0} ({1,D})", resourcePath, adapter.getView().getTimeStamp());
     }
 
-    if (isReadOnly())
+    if (adapter.isReadOnly())
     {
       return MessageFormat.format("{0} (read only)", resourcePath);
     }

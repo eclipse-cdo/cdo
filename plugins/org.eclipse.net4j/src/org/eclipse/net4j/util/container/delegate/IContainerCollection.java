@@ -8,10 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.ui;
+package org.eclipse.net4j.util.container.delegate;
 
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.net4j.util.container.IContainer;
 
-public class ContainerNameSorter extends ViewerSorter
+import java.util.Collection;
+
+/**
+ * @author Eike Stepper
+ */
+public interface IContainerCollection<E> extends IContainer<E>, Collection<E>
 {
+  public Collection<E> getDelegate();
 }

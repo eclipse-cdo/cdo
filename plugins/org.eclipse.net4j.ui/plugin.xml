@@ -24,5 +24,31 @@
             name="Connectors">
       </view>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.net4j.ui"
+            name="Net4j">
+      </category>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.net4j.ui"
+            class="org.eclipse.net4j.internal.ui.wizards.NewConnectorWizard"
+            hasPages="true"
+            icon="icons/sample.gif"
+            id="org.eclipse.net4j.ui.NewConnectorWizard"
+            name="New Connector">
+      </wizard>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.net4j.ui"
+            class="org.eclipse.net4j.internal.ui.wizards.NewAcceptorWizard"
+            hasPages="true"
+            icon="icons/sample.gif"
+            id="org.eclipse.net4j.ui.NewAcceptorWizard"
+            name="New Acceptor">
+      </wizard>
+   </extension>
 
 </plugin>

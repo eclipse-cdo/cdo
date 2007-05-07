@@ -12,6 +12,7 @@ package org.eclipse.net4j.transport;
 
 /**
  * @author Eike Stepper
+ * @since 0.8.0
  */
 public interface IProtocol extends IBufferHandler
 {

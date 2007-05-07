@@ -18,6 +18,7 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
+ * @since 0.8.0
  */
 public interface ITransportContainer extends IManagedContainer
 {

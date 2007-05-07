@@ -10,14 +10,32 @@
  **************************************************************************/
 package org.eclipse.net4j.transport;
 
+import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 
 /**
+ * An event that is fired by an {@link IConnector} to indicate that its state
+ * has changed.
+ * 
  * @author Eike Stepper
+ * @since 0.8.0
  */
 public interface IConnectorStateEvent extends IEvent
 {
+  /**
+   * The {@link IConnector} that sent this event.
+   * 
+   * @see IContainerEvent#getContainer()
+   */
+  public IConnector getConnector();
+
+  /**
+   * The old state of the {@link IConnector} that sent this event.
+   */
   public ConnectorState getOldState();
 
+  /**
+   * The new state of the {@link IConnector} that sent this event.
+   */
   public ConnectorState getNewState();
 }

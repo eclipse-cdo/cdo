@@ -21,6 +21,10 @@ import org.eclipse.net4j.util.event.IListener;
  */
 public class ContainerEventAdapter<E> implements IListener
 {
+  public ContainerEventAdapter()
+  {
+  }
+
   public final void notifyEvent(IEvent event)
   {
     if (event instanceof IContainerEvent)

@@ -1,4 +1,4 @@
-package org.eclipse.net4j.internal.ui;
+package org.eclipse.net4j.ui.actions;
 
 import org.eclipse.net4j.internal.ui.bundle.Net4jUI;
 
@@ -30,7 +30,7 @@ public abstract class SafeAction extends Action
     super(text);
   }
 
-  public void run()
+  public final void run()
   {
     try
     {

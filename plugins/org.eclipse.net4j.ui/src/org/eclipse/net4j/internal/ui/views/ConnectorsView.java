@@ -1,12 +1,12 @@
 package org.eclipse.net4j.internal.ui.views;
 
-import org.eclipse.net4j.internal.ui.ContainerItemProvider;
-import org.eclipse.net4j.internal.ui.ContainerView;
-import org.eclipse.net4j.internal.ui.IElementFilter;
-import org.eclipse.net4j.internal.ui.SafeAction;
 import org.eclipse.net4j.transport.IConnector;
 import org.eclipse.net4j.transport.IPluginTransportContainer;
 import org.eclipse.net4j.transport.ITransportContainer;
+import org.eclipse.net4j.ui.actions.SafeAction;
+import org.eclipse.net4j.ui.views.ContainerItemProvider;
+import org.eclipse.net4j.ui.views.ContainerView;
+import org.eclipse.net4j.ui.views.IElementFilter;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;

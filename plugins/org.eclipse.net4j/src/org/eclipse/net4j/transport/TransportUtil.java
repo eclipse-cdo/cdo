@@ -15,6 +15,7 @@ import org.eclipse.internal.net4j.transport.BufferPool;
 
 /**
  * @author Eike Stepper
+ * @since 0.8.0
  */
 public final class TransportUtil
 {

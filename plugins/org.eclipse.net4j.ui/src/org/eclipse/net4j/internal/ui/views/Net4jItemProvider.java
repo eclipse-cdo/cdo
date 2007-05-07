@@ -10,13 +10,18 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.ui.views;
 
-import org.eclipse.net4j.internal.ui.ContainerItemProvider;
-import org.eclipse.net4j.internal.ui.IElementFilter;
 import org.eclipse.net4j.internal.ui.bundle.SharedIcons;
 import org.eclipse.net4j.transport.IAcceptor;
 import org.eclipse.net4j.transport.IChannel;
 import org.eclipse.net4j.transport.IConnector;
+import org.eclipse.net4j.ui.actions.SafeAction;
+import org.eclipse.net4j.ui.views.ContainerItemProvider;
+import org.eclipse.net4j.ui.views.ContainerView;
+import org.eclipse.net4j.ui.views.IElementFilter;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -65,5 +70,38 @@ public class Net4jItemProvider extends ContainerItemProvider
     }
 
     return super.getImage(obj);
+  }
+
+  @Override
+  protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
+  {
+    if (selection.size() == 1)
+    {
+      Object obj = selection.getFirstElement();
+      if (obj instanceof IAcceptor || obj instanceof IConnector || obj instanceof IChannel)
+      {
+        manager.add(new RemoveAction(obj));
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public class RemoveAction extends SafeAction
+  {
+    private Object object;
+
+    public RemoveAction(Object object)
+    {
+      super("Remove", "Remove", ContainerView.getDeleteImageDescriptor());
+      this.object = object;
+    }
+
+    @Override
+    protected void doRun() throws Exception
+    {
+      LifecycleUtil.deactivateNoisy(object);
+    }
   }
 }

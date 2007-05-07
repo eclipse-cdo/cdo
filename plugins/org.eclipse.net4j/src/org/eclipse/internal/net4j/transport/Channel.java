@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.transport;
 
+import org.eclipse.net4j.transport.BufferState;
 import org.eclipse.net4j.transport.IBuffer;
 import org.eclipse.net4j.transport.IBufferHandler;
 import org.eclipse.net4j.transport.IBufferProvider;
@@ -22,7 +23,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
-import org.eclipse.internal.net4j.transport.Buffer.State;
 import org.eclipse.internal.net4j.util.Value;
 import org.eclipse.internal.net4j.util.concurrent.AsynchronousWorkSerializer;
 import org.eclipse.internal.net4j.util.concurrent.SynchronousWorkSerializer;
@@ -155,8 +155,8 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
 
   public void handleBuffer(IBuffer buffer)
   {
-    State state = ((Buffer)buffer).getState();
-    if (state != State.PUTTING)
+    BufferState state = ((Buffer)buffer).getState();
+    if (state != BufferState.PUTTING)
     {
       Net4j.LOG.warn("Ignoring buffer in state == " + state + ": " + this); //$NON-NLS-1$ //$NON-NLS-2$
       return;
@@ -169,11 +169,18 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
 
     if (sendQueue == null)
     {
-      throw new IllegalStateException("sendQueue == null");
-    }
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Ignoring buffer because sendQueue == null: " + this); //$NON-NLS-1$
+      }
 
-    sendQueue.add(buffer);
-    connector.multiplexBuffer(this);
+      buffer.release();
+    }
+    else
+    {
+      sendQueue.add(buffer);
+      connector.multiplexBuffer(this);
+    }
   }
 
   public void handleBufferFromMultiplexer(final IBuffer buffer)

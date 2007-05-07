@@ -7,10 +7,13 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOAdapter;
-import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CommandStack;
+import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.ui.MarkerHelper;
@@ -86,6 +89,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
@@ -105,6 +109,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EventObject;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -119,6 +125,11 @@ import java.util.Map;
 public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
     IMenuListener, IViewerProvider, IGotoMarker
 {
+  /**
+   * @ADDED
+   */
+  public static final String EDITOR_ID = "org.eclipse.emf.cdo.ui.CDOEditor";
+
   /**
    * @ADDED
    */
@@ -337,7 +348,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         case Resource.RESOURCE__WARNINGS:
         {
           Resource resource = (Resource)notification.getNotifier();
-          Diagnostic diagnostic = analyzeResourceProblems((Resource)notification.getNotifier(), null);
+          Diagnostic diagnostic = analyzeResourceProblems(resource, null);
           if (diagnostic.getSeverity() != Diagnostic.OK)
           {
             resourceToDiagnosticMap.put(resource, diagnostic);
@@ -643,10 +654,14 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   public CDOEditor()
   {
-    super();
+    initAdapterFactory();
+  }
 
-    // Create an adapter factory that yields item providers.
-    //
+  /**
+   * @ADDED
+   */
+  protected void initAdapterFactory()
+  {
     Registry regsitry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
     adapterFactory = new ComposedAdapterFactory(regsitry);
   }
@@ -882,42 +897,39 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   public void createModel()
   {
     CDOEditorInput input = (CDOEditorInput)getEditorInput();
+    adapter = input.getAdapter();
     URI resourceURI = CDOUtil.createURI(input.getResourcePath());
 
-    ResourceSet resourceSet = editingDomain.getResourceSet();
-    Resource resource = null;
-    Exception exception = null;
+    BasicCommandStack commandStack = new BasicCommandStack();
+    commandStack.addCommandStackListener(new CommandStackListener()
+    {
+      public void commandStackChanged(final EventObject event)
+      {
+        getContainer().getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            firePropertyChange(IEditorPart.PROP_DIRTY);
 
-    CDOSession session = input.getSession();
-    if (input.isHistorical())
-    {
-      adapter = session.attach(resourceSet, input.getTimeStamp());
-    }
-    else if (input.isReadOnly())
-    {
-      adapter = session.attach(resourceSet, true);
-    }
-    else
-    {
-      adapter = session.attach(resourceSet);
-    }
+            Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
+            if (mostRecentCommand != null)
+            {
+              setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+            }
+            if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
+            {
+              propertySheetPage.refresh();
+            }
+          }
+        });
+      }
+    });
 
-    try
-    {
-      resource = resourceSet.getResource(resourceURI, true);
-    }
-    catch (Exception e)
-    {
-      exception = e;
-      resource = resourceSet.getResource(resourceURI, false);
-    }
+    ResourceSet resourceSet = adapter.getResourceSet();
+    editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, resourceSet);
+    editingDomain.setResourceToReadOnlyMap(new HashMap<Resource, Boolean>());
 
-    Diagnostic diagnostic = analyzeResourceProblems(resource, exception);
-    if (diagnostic.getSeverity() != Diagnostic.OK)
-    {
-      resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
-    }
-
+    resourceSet.getResource(resourceURI, true);
     resourceSet.eAdapters().add(problemIndicationAdapter);
   }
 
@@ -1642,5 +1654,22 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   protected boolean showOutlineView()
   {
     return false;
+  }
+
+  /**
+   * @ADDED
+   */
+  public static CDOEditor open(IWorkbenchPage page, CDOAdapter adapter, String resourcePath)
+  {
+    try
+    {
+      IEditorInput input = new CDOEditorInput(adapter, resourcePath);
+      return (CDOEditor)page.openEditor(input, EDITOR_ID);
+    }
+    catch (Exception ex)
+    {
+      CDOUI.LOG.error(ex);
+      return null;
+    }
   }
 }

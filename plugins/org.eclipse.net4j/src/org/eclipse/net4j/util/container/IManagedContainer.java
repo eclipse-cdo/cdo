@@ -37,6 +37,8 @@ public interface IManagedContainer extends IContainer
 
   public Set<String> getFactoryTypes(String productGroup);
 
+  public String[] getElementKey(Object element);
+
   public Object[] getElements(String productGroup);
 
   public Object[] getElements(String productGroup, String factoryType);

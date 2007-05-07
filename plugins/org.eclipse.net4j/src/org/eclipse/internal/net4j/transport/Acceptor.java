@@ -14,12 +14,13 @@ import org.eclipse.net4j.transport.IAcceptor;
 import org.eclipse.net4j.transport.IAcceptorEvent;
 import org.eclipse.net4j.transport.IBufferProvider;
 import org.eclipse.net4j.transport.IConnector;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
-import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -46,15 +47,29 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor
 
   private ExecutorService receiveExecutor;
 
+  /**
+   * Is registered with each {@link IConnector} of this {@link IAcceptor}.
+   * <p>
+   */
   private transient IListener lifecycleEventConverter = new LifecycleEventConverter(this)
   {
     @Override
-    protected void removed(ILifecycleEvent e)
+    protected IContainerEvent createContainerEvent(IContainer container, Object element, Kind kind)
     {
-      removeConnector((IConnector)e.getLifecycle());
-      super.removed(e);
+      return new AcceptorEvent((IAcceptor)container, (IConnector)element, kind);
     }
   };
+
+  // private transient IListener lifecycleEventConverter = new
+  // LifecycleEventConverter(this)
+  // {
+  // @Override
+  // protected void removed(ILifecycleEvent e)
+  // {
+  // removeConnector((IConnector)e.getLifecycle());
+  // super.removed(e);
+  // }
+  // };
 
   private Set<IConnector> acceptedConnectors = new HashSet(0);
 

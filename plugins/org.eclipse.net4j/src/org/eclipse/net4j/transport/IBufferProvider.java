@@ -11,23 +11,46 @@
 package org.eclipse.net4j.transport;
 
 /**
+ * Provides clients with the ability to obtain and retain {@link IBuffer}s.
+ * 
  * @author Eike Stepper
+ * @since 0.8.0
  */
 public interface IBufferProvider
 {
+  /**
+   * Returns the capacity of the buffers provided by {@link #provideBuffer()} .
+   */
   public short getBufferCapacity();
 
+  /**
+   * Provides a buffer from this <code>BufferProvider</code>.
+   */
   public IBuffer provideBuffer();
 
+  /**
+   * Retains a buffer to this <code>BufferProvider</code>.
+   */
   public void retainBuffer(IBuffer buffer);
 
   /**
+   * Offers additional introspection features for {@link IBufferProvider}s.
+   * 
    * @author Eike Stepper
+   * @since 0.8.0
    */
   public interface Introspection extends IBufferProvider
   {
+    /**
+     * Returns the number of buffers that have already been provided by this
+     * <code>BufferProvider</code>.
+     */
     public long getProvidedBuffers();
 
+    /**
+     * Returns the number of buffers that have already been retained to this
+     * <code>BufferProvider</code>.
+     */
     public long getRetainedBuffers();
   }
 }

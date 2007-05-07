@@ -4,6 +4,8 @@ import org.eclipse.net4j.transport.IChannel;
 import org.eclipse.net4j.transport.IConnector;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IContainerEvent;
+import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
@@ -47,10 +49,6 @@ public class LifecycleEventConverter<E> implements IListener
         break;
       }
     }
-    // else
-    // {
-    // owner.fireEvent(event);
-    // }
   }
 
   protected void added(ILifecycleEvent e)
@@ -65,8 +63,18 @@ public class LifecycleEventConverter<E> implements IListener
 
   protected void fireContainerEvent(ILifecycleEvent e, IContainerDelta.Kind kind)
   {
-    ContainerEvent<E> containerEvent = new ContainerEvent<E>((IContainer<E>)owner);
-    containerEvent.addDelta(new ContainerDelta<E>((E)e.getLifecycle(), kind));
-    owner.fireEvent(containerEvent);
+    E element = (E)e.getLifecycle();
+    if (element != null)
+    {
+      IContainerEvent<E> event = createContainerEvent((IContainer<E>)owner, element, kind);
+      owner.fireEvent(event);
+    }
+  }
+
+  protected IContainerEvent<E> createContainerEvent(IContainer<E> container, E element, Kind kind)
+  {
+    ContainerEvent<E> event = new ContainerEvent<E>(container);
+    event.addDelta(new ContainerDelta<E>(element, kind));
+    return event;
   }
 }

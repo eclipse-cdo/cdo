@@ -12,8 +12,12 @@ package org.eclipse.net4j.transport;
 
 /**
  * @author Eike Stepper
+ * @since 0.8.0
  */
 public interface IConnectorCredentials
 {
+  /**
+   * Returns the userID of this connector.
+   */
   public String getUserID();
 }

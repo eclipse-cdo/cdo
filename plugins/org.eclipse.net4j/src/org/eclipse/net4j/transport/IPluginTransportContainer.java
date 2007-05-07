@@ -14,6 +14,7 @@ import org.eclipse.internal.net4j.bundle.PluginTransportContainer;
 
 /**
  * @author Eike Stepper
+ * @since 0.8.0
  */
 public interface IPluginTransportContainer extends ITransportContainer
 {

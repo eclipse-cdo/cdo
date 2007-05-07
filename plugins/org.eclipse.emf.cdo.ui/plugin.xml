@@ -31,6 +31,7 @@
       </perspectiveExtension>
    </extension>
    
+   <!--
    <extension
          point="org.eclipse.ui.newWizards">
       <category
@@ -54,6 +55,35 @@
             id="org.eclipse.emf.cdo.ui.NewSessionWizard"
             name="New CDO Session"
             project="false">
+      </wizard>
+   </extension>
+	-->
+	
+  <extension point = "org.eclipse.ui.editors">
+    <editor
+        id = "org.eclipse.emf.cdo.ui.CDOEditor"
+        name = "CDO Editor"
+        icon = "icons/full/obj16/cdo_editor.gif"
+        extensions = "*"
+        class = "org.eclipse.emf.cdo.internal.ui.editor.CDOEditor" 
+        contributorClass="org.eclipse.emf.cdo.internal.ui.editor.CDOActionBarContributor" >
+    </editor>
+  </extension>    
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.emf.cdo.ui"
+            name="CDO">
+      </category>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.emf.cdo.ui"
+            class="org.eclipse.emf.cdo.internal.ui.wizards.NewSessionWizard"
+            hasPages="true"
+            icon="icons/full/etool16/open_session.gif"
+            id="org.eclipse.net4j.ui.NewSessionWizard"
+            name="New Session">
       </wizard>
    </extension>
 

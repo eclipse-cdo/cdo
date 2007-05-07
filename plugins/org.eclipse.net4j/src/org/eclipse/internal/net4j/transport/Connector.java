@@ -22,6 +22,9 @@ import org.eclipse.net4j.transport.IConnectorCredentials;
 import org.eclipse.net4j.transport.IConnectorStateEvent;
 import org.eclipse.net4j.transport.IProtocol;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
@@ -52,8 +55,6 @@ public abstract class Connector extends Lifecycle implements IConnector
 {
   private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, Connector.class);
 
-  private static final Channel NULL_CHANNEL = new NullChannel();
-
   private String userID;
 
   private IConnectorCredentials credentials;
@@ -81,23 +82,18 @@ public abstract class Connector extends Lifecycle implements IConnector
    * Is registered with each {@link IChannel} of this {@link IConnector}.
    * <p>
    */
-  private transient IListener lifecycleEventConverter = new LifecycleEventConverter(this);
+  private transient IListener channelListener = new LifecycleEventConverter(this)
   {
-    // @Override
-    // protected void added(ILifecycleEvent e)
-    // {
-    // super.added(e);
-    // fireEvent(new ConnectorChannelsEvent(Connector.this,
-    // (IChannel)e.getLifecycle(), IContainerDelta.Kind.ADDED));
-    // }
-    //
-    // @Override
-    // protected void removed(ILifecycleEvent e)
-    // {
-    // fireEvent(new ConnectorChannelsEvent(Connector.this,
-    // (IChannel)e.getLifecycle(), IContainerDelta.Kind.REMOVED));
-    // super.removed(e);
-    // }
+    @Override
+    protected IContainerEvent createContainerEvent(IContainer container, Object element, Kind kind)
+    {
+      if (kind == IContainerDelta.Kind.REMOVED)
+      {
+        removeChannel((Channel)element);
+      }
+
+      return new ConnectorChannelsEvent((IConnector)container, (IChannel)element, kind);
+    }
   };
 
   private transient CountDownLatch finishedConnecting;
@@ -300,7 +296,7 @@ public abstract class Connector extends Lifecycle implements IConnector
     {
       for (final Channel channel : channels)
       {
-        if (channel != NULL_CHANNEL)
+        if (channel != null)
         {
           result.add(channel);
         }
@@ -389,7 +385,7 @@ public abstract class Connector extends Lifecycle implements IConnector
     channel.setChannelIndex(channelIndex);
     channel.setConnector(this);
     channel.setReceiveHandler(protocol);
-    channel.addListener(lifecycleEventConverter);
+    channel.addListener(channelListener);
     addChannel(channel);
     return channel;
   }
@@ -398,13 +394,7 @@ public abstract class Connector extends Lifecycle implements IConnector
   {
     try
     {
-      Channel channel = channels.get(channelIndex);
-      if (channel == NULL_CHANNEL)
-      {
-        channel = null;
-      }
-
-      return channel;
+      return channels.get(channelIndex);
     }
     catch (IndexOutOfBoundsException ex)
     {
@@ -424,7 +414,7 @@ public abstract class Connector extends Lifecycle implements IConnector
     {
       for (final Channel channel : channels)
       {
-        if (channel != NULL_CHANNEL && channel.isActive())
+        if (channel != null && channel.isActive())
         {
           Queue<IBuffer> bufferQueue = channel.getSendQueue();
           result.add(bufferQueue);
@@ -442,7 +432,7 @@ public abstract class Connector extends Lifecycle implements IConnector
       int size = channels.size();
       for (short i = 0; i < size; i++)
       {
-        if (channels.get(i) == NULL_CHANNEL)
+        if (channels.get(i) == null)
         {
           return i;
         }
@@ -457,22 +447,30 @@ public abstract class Connector extends Lifecycle implements IConnector
     short channelIndex = channel.getChannelIndex();
     while (channelIndex >= channels.size())
     {
-      channels.add(NULL_CHANNEL);
+      channels.add(null);
     }
 
     channels.set(channelIndex, channel);
   }
 
-  protected void removeChannel(Channel channel)
+  protected boolean removeChannel(Channel channel)
   {
-    channel.removeListener(lifecycleEventConverter);
     int channelIndex = channel.getChannelIndex();
-    if (TRACER.isEnabled())
+    if (channels.get(channelIndex) == channel)
     {
-      TRACER.trace("Removing channel " + channelIndex); //$NON-NLS-1$
-    }
+      channel.removeListener(channelListener);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Removing channel " + channelIndex); //$NON-NLS-1$
+      }
 
-    channels.set(channelIndex, NULL_CHANNEL);
+      channels.set(channelIndex, null);
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 
   protected IProtocol createProtocol(String type)
@@ -561,29 +559,6 @@ public abstract class Connector extends Lifecycle implements IConnector
   /**
    * @author Eike Stepper
    */
-  private static final class NullChannel extends Channel
-  {
-    private NullChannel()
-    {
-      super(null);
-    }
-
-    @Override
-    public boolean isInternal()
-    {
-      return true;
-    }
-
-    @Override
-    public String toString()
-    {
-      return "NullChannel"; //$NON-NLS-1$
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
   private static class ConnectorStateEvent extends Event implements IConnectorStateEvent
   {
     private static final long serialVersionUID = 1L;
@@ -597,6 +572,11 @@ public abstract class Connector extends Lifecycle implements IConnector
       super(notifier);
       this.oldState = oldState;
       this.newState = newState;
+    }
+
+    public IConnector getConnector()
+    {
+      return (IConnector)getSource();
     }
 
     public ConnectorState getOldState()

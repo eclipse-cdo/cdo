@@ -49,6 +49,20 @@ public final class ReflectUtil
   {
   }
 
+  public static void printStackTrace(PrintStream out, StackTraceElement[] stackTrace)
+  {
+    for (int i = 2; i < stackTrace.length; i++)
+    {
+      StackTraceElement stackTraceElement = stackTrace[i];
+      out.println("\tat " + stackTraceElement);
+    }
+  }
+
+  public static void printStackTrace(StackTraceElement[] stackTrace)
+  {
+    printStackTrace(System.err, stackTrace);
+  }
+
   public static Integer getHashCode(Object object)
   {
     try
@@ -162,6 +176,26 @@ public final class ReflectUtil
     out.print(toString(object, prefix));
   }
 
+  public static Object getValue(Object object, Field field)
+  {
+    try
+    {
+      return field.get(object);
+    }
+    catch (IllegalAccessException ex)
+    {
+      field.setAccessible(true);
+      try
+      {
+        return field.get(object);
+      }
+      catch (IllegalAccessException ex1)
+      {
+        throw new RuntimeException(ex1);
+      }
+    }
+  }
+
   public static String toString(Object object)
   {
     return toString(object, " "); //$NON-NLS-1$
@@ -231,26 +265,6 @@ public final class ReflectUtil
       {
         builder.append(value);
         builder.append(NL);
-      }
-    }
-  }
-
-  public static Object getValue(Object object, Field field)
-  {
-    try
-    {
-      return field.get(object);
-    }
-    catch (IllegalAccessException ex)
-    {
-      field.setAccessible(true);
-      try
-      {
-        return field.get(object);
-      }
-      catch (IllegalAccessException ex1)
-      {
-        throw new RuntimeException(ex1);
       }
     }
   }

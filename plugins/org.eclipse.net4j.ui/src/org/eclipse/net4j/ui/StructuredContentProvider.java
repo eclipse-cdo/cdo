@@ -8,28 +8,26 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.ui;
+package org.eclipse.net4j.ui;
+
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 
-public abstract class ItemProvider<INPUT> extends LabelProvider implements IStructuredContentProvider,
-    ITreeContentProvider
+/**
+ * @author Eike Stepper
+ */
+public abstract class StructuredContentProvider<INPUT> implements IStructuredContentProvider, IListener
 {
-  protected static final Object[] NO_CHILDREN = new Object[0];
-
   private StructuredViewer viewer;
 
   private INPUT input;
 
-  public ItemProvider()
+  public StructuredContentProvider()
   {
   }
 
@@ -42,59 +40,35 @@ public abstract class ItemProvider<INPUT> extends LabelProvider implements IStru
     }
   }
 
-  public StructuredViewer getViewer()
-  {
-    return viewer;
-  }
-
   public INPUT getInput()
   {
     return input;
   }
 
+  public StructuredViewer getViewer()
+  {
+    return viewer;
+  }
+
   public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
   {
-    if (viewer instanceof StructuredViewer)
+    this.viewer = (StructuredViewer)viewer;
+    if (newInput != input)
     {
-      this.viewer = (StructuredViewer)viewer;
-      if (newInput != input)
+      if (input != null)
       {
-        if (input != null)
-        {
-          disconnectInput(input);
-        }
-        try
-        {
-          input = (INPUT)newInput;
-          connectInput(input);
-        }
-        catch (Exception ex)
-        {
-          input = null;
-        }
+        disconnectInput(input);
+      }
+      try
+      {
+        input = (INPUT)newInput;
+        connectInput(input);
+      }
+      catch (Exception ex)
+      {
+        input = null;
       }
     }
-  }
-
-  public Object[] getElements(Object parent)
-  {
-    return getChildren(parent);
-  }
-
-  public boolean hasChildren(Object parent)
-  {
-    return getChildren(parent).length != 0;
-  }
-
-  public String getText(Object obj)
-  {
-    return obj.toString();
-  }
-
-  public Image getImage(Object obj)
-  {
-    String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
-    return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
   }
 
   protected void connectInput(INPUT input)
@@ -103,6 +77,11 @@ public abstract class ItemProvider<INPUT> extends LabelProvider implements IStru
 
   protected void disconnectInput(INPUT input)
   {
+  }
+
+  public void notifyEvent(IEvent event)
+  {
+    refreshViewer(true);
   }
 
   protected void refreshViewer(boolean updateLabels)
@@ -131,7 +110,6 @@ public abstract class ItemProvider<INPUT> extends LabelProvider implements IStru
           }
           catch (Exception ignore)
           {
-            ignore.printStackTrace();
           }
         }
       });

@@ -8,16 +8,18 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.ui;
+package org.eclipse.net4j.ui.views;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.internal.net4j.util.container.ContainerEventAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -49,28 +51,58 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
   @Override
   public boolean hasChildren(Object element)
   {
-    Node node = getNode(element);
-    return !node.getChildren().isEmpty();
+    try
+    {
+      Node node = getNode(element);
+      return !node.getChildren().isEmpty();
+    }
+    catch (RuntimeException ex)
+    {
+      return false;
+    }
   }
 
   public Object[] getChildren(Object element)
   {
-    Node node = getNode(element);
-    List<Node> children = node.getChildren();
-    Object[] elements = new Object[children.size()];
-    for (int i = 0; i < elements.length; i++)
+    try
     {
-      elements[i] = children.get(i).getElement();
-    }
+      Node node = getNode(element);
+      List<Node> children = node.getChildren();
+      for (Iterator it = children.iterator(); it.hasNext();)
+      {
+        Object child = it.next();
+        if (!LifecycleUtil.isActive(child))
+        {
+          it.remove();
+        }
+      }
 
-    return elements;
+      Object[] result = new Object[children.size()];
+      for (int i = 0; i < result.length; i++)
+      {
+        result[i] = children.get(i).getElement();
+      }
+
+      return result;
+    }
+    catch (RuntimeException ex)
+    {
+      return NO_CHILDREN;
+    }
   }
 
   public Object getParent(Object element)
   {
-    Node node = getNode(element);
-    Node parentNode = node.getParent();
-    return parentNode == null ? null : parentNode.getElement();
+    try
+    {
+      Node node = getNode(element);
+      Node parentNode = node.getParent();
+      return parentNode == null ? null : parentNode.getElement();
+    }
+    catch (RuntimeException ex)
+    {
+      return null;
+    }
   }
 
   @Override
@@ -100,12 +132,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
 
   protected Node getNode(Object element)
   {
-    if (element == getInput())
+    Node node = root;
+    if (element != getInput())
     {
-      return root;
+      node = nodes.get(element);
     }
 
-    Node node = nodes.get(element);
     if (node == null)
     {
       throw new IllegalStateException("No node for " + element);
@@ -293,9 +325,18 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
       Node node = nodes.remove(element);
       if (node != null)
       {
+        Object parentElement = node.getParent().getElement();
         getChildren().remove(node);
         node.dispose();
-        refreshElement(getElement(), false);
+
+        if (parentElement == null)
+        {
+          refreshElement(root, false);
+        }
+        else
+        {
+          refreshElement(parentElement, false);
+        }
       }
     }
   }

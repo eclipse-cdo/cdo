@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.ui;
+package org.eclipse.net4j.ui.views;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 

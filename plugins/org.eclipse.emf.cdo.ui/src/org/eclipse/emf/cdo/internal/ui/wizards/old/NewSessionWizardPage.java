@@ -1,4 +1,4 @@
-package org.eclipse.emf.cdo.internal.ui.wizards;
+package org.eclipse.emf.cdo.internal.ui.wizards.old;
 
 import org.eclipse.core.internal.resources.Container;
 import org.eclipse.jface.viewers.ISelection;

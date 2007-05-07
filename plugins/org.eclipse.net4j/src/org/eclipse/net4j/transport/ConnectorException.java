@@ -11,7 +11,10 @@
 package org.eclipse.net4j.transport;
 
 /**
+ * Thrown by an {@link IConnector} to indicate connection problems.
+ * 
  * @author Eike Stepper
+ * @since 0.8.0
  */
 public class ConnectorException extends RuntimeException
 {

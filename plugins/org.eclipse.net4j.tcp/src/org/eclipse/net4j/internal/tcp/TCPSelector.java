@@ -108,7 +108,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       @Override
       public String toString()
       {
-        return "INTEREST CONNECT " + selectionKey + " = " + on;
+        return "INTEREST CONNECT " + selectionKey.channel() + " = " + on;
       }
     });
   }
@@ -125,7 +125,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       @Override
       public String toString()
       {
-        return "INTEREST READ " + selectionKey + " = " + on;
+        return "INTEREST READ " + selectionKey.channel() + " = " + on;
       }
     });
   }
@@ -142,7 +142,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       @Override
       public String toString()
       {
-        return "INTEREST WRITE " + selectionKey + " = " + on;
+        return "INTEREST WRITE " + selectionKey.channel() + " = " + on;
       }
 
     });

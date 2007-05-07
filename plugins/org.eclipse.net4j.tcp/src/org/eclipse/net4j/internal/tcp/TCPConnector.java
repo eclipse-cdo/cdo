@@ -271,14 +271,21 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  protected void removeChannel(Channel channel)
+  protected boolean removeChannel(Channel channel)
   {
-    if (isConnected())
+    if (super.removeChannel(channel))
     {
-      controlChannel.deregisterChannel(channel.getChannelIndex());
-    }
+      if (isConnected())
+      {
+        controlChannel.deregisterChannel(channel.getChannelIndex());
+      }
 
-    super.removeChannel(channel);
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 
   @Override

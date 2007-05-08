@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util;
 
+import java.io.Closeable;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -56,64 +57,13 @@ public final class IOUtil
     print(t, ERR);
   }
 
-  public static Exception closeSilent(InputStream stream)
+  public static Exception closeSilent(Closeable closeable)
   {
     try
     {
-      if (stream != null)
+      if (closeable != null)
       {
-        stream.close();
-      }
-
-      return null;
-    }
-    catch (Exception ex)
-    {
-      return ex;
-    }
-  }
-
-  public static Exception closeSilent(OutputStream stream)
-  {
-    try
-    {
-      if (stream != null)
-      {
-        stream.close();
-      }
-
-      return null;
-    }
-    catch (Exception ex)
-    {
-      return ex;
-    }
-  }
-
-  public static Exception closeSilent(Reader reader)
-  {
-    try
-    {
-      if (reader != null)
-      {
-        reader.close();
-      }
-
-      return null;
-    }
-    catch (Exception ex)
-    {
-      return ex;
-    }
-  }
-
-  public static Exception closeSilent(Writer writer)
-  {
-    try
-    {
-      if (writer != null)
-      {
-        writer.close();
+        closeable.close();
       }
 
       return null;

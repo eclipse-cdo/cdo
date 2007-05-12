@@ -21,4 +21,6 @@ public interface ExtendedDataOutput extends DataOutput
   public void writeByteArray(byte[] b) throws IOException;
 
   public void writeString(String str) throws IOException;
+
+  public void writeObject(Object object) throws IOException;
 }

@@ -65,15 +65,12 @@ public abstract class Connector extends Lifecycle implements IConnector
 
   /**
    * An optional executor to be used by the {@link IChannel}s to process their
-   * {@link Channel#receiveQueue} instead of the current thread. If not
-   * <code>null</code> the sender and the receiver peers become decoupled.
+   * {@link Channel#receiveQueue} instead of the current thread. If not <code>null</code> the
+   * sender and the receiver peers become decoupled.
    * <p>
    */
   private ExecutorService receiveExecutor;
 
-  /**
-   * TODO synchronize on channels?
-   */
   private List<Channel> channels = new ArrayList(0);
 
   private ConnectorState connectorState = ConnectorState.DISCONNECTED;
@@ -291,10 +288,10 @@ public abstract class Connector extends Lifecycle implements IConnector
 
   public IChannel[] getChannels()
   {
-    final List<IChannel> result = new ArrayList(channels.size());
+    List<IChannel> result = new ArrayList(channels.size());
     synchronized (channels)
     {
-      for (final Channel channel : channels)
+      for (Channel channel : channels)
       {
         if (channel != null)
         {
@@ -444,32 +441,38 @@ public abstract class Connector extends Lifecycle implements IConnector
 
   protected void addChannel(Channel channel)
   {
-    short channelIndex = channel.getChannelIndex();
-    while (channelIndex >= channels.size())
+    synchronized (channels)
     {
-      channels.add(null);
-    }
+      short channelIndex = channel.getChannelIndex();
+      while (channelIndex >= channels.size())
+      {
+        channels.add(null);
+      }
 
-    channels.set(channelIndex, channel);
+      channels.set(channelIndex, channel);
+    }
   }
 
   protected boolean removeChannel(Channel channel)
   {
-    int channelIndex = channel.getChannelIndex();
-    if (channels.get(channelIndex) == channel)
+    synchronized (channels)
     {
-      channel.removeListener(channelListener);
-      if (TRACER.isEnabled())
+      int channelIndex = channel.getChannelIndex();
+      if (channels.get(channelIndex) == channel)
       {
-        TRACER.trace("Removing channel " + channelIndex); //$NON-NLS-1$
-      }
+        channel.removeListener(channelListener);
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Removing channel " + channelIndex); //$NON-NLS-1$
+        }
 
-      channels.set(channelIndex, null);
-      return true;
-    }
-    else
-    {
-      return false;
+        channels.set(channelIndex, null);
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     }
   }
 

@@ -43,17 +43,15 @@ public final class LifecycleUtil
     return true;
   }
 
-  public static void activate(Object object)
+  public static void activate(Object object) throws LifecycleException
   {
     activate(object, false);
   }
 
   /**
-   * @throws Exception
-   *           TODO
    * @see Activator
    */
-  public static void activate(Object object, boolean useAnnotation)
+  public static void activate(Object object, boolean useAnnotation) throws LifecycleException
   {
     if (object instanceof ILifecycle)
     {
@@ -119,17 +117,21 @@ public final class LifecycleUtil
     return null;
   }
 
-  public static void deactivateNoisy(Object object) throws Exception
+  public static void deactivateNoisy(Object object) throws LifecycleException
   {
     deactivateNoisy(object, false);
   }
 
-  public static void deactivateNoisy(Object object, boolean useAnnotation) throws Exception
+  public static void deactivateNoisy(Object object, boolean useAnnotation) throws LifecycleException
   {
     Exception ex = deactivate(object, useAnnotation);
-    if (ex != null)
+    if (ex instanceof RuntimeException)
     {
-      throw ex;
+      throw (RuntimeException)ex;
+    }
+    else if (ex != null)
+    {
+      throw new LifecycleException(ex);
     }
   }
 

@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004-2007 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -65,8 +65,8 @@ public abstract class Connector extends Lifecycle implements IConnector
 
   /**
    * An optional executor to be used by the {@link IChannel}s to process their
-   * {@link Channel#receiveQueue} instead of the current thread. If not <code>null</code> the
-   * sender and the receiver peers become decoupled.
+   * {@link Channel#receiveQueue} instead of the current thread. If not
+   * <code>null</code> the sender and the receiver peers become decoupled.
    * <p>
    */
   private ExecutorService receiveExecutor;
@@ -86,7 +86,7 @@ public abstract class Connector extends Lifecycle implements IConnector
     {
       if (kind == IContainerDelta.Kind.REMOVED)
       {
-        removeChannel((Channel)element);
+        removeChannel((Channel)element, false);
       }
 
       return new ConnectorChannelsEvent((IConnector)container, (IChannel)element, kind);
@@ -453,7 +453,7 @@ public abstract class Connector extends Lifecycle implements IConnector
     }
   }
 
-  protected boolean removeChannel(Channel channel)
+  protected boolean removeChannel(Channel channel, boolean actively)
   {
     synchronized (channels)
     {

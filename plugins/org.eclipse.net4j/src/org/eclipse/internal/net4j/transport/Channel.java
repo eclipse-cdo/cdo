@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004-2007 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -20,7 +20,6 @@ import org.eclipse.net4j.transport.IConnector;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.bundle.Net4j;
 import org.eclipse.internal.net4j.util.Value;
@@ -55,8 +54,6 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
   private IWorkSerializer receiveSerializer;
 
   private Queue<IBuffer> sendQueue;
-
-  public IRegistry<IChannelID, IChannel> channelRegistry;
 
   public Channel(ExecutorService receiveExecutor)
   {
@@ -113,16 +110,6 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     return sendQueue;
   }
 
-  public IRegistry<IChannelID, IChannel> getChannelRegistry()
-  {
-    return channelRegistry;
-  }
-
-  public void setChannelRegistry(IRegistry<IChannelID, IChannel> channelRegistry)
-  {
-    this.channelRegistry = channelRegistry;
-  }
-
   public IBufferHandler getReceiveHandler()
   {
     return receiveHandler;
@@ -145,6 +132,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
 
   public void close()
   {
+    connector.removeChannel(this, true);
     deactivate();
   }
 
@@ -234,23 +222,11 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     {
       receiveSerializer = new AsynchronousWorkSerializer(receiveExecutor);
     }
-
-    if (!isInternal() && channelRegistry != null)
-    {
-      channelRegistry.put(getID(), this);
-      channelRegistry.commit();
-    }
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    if (!isInternal() && channelRegistry != null)
-    {
-      channelRegistry.remove(getID());
-      channelRegistry.commit();
-    }
-
     receiveSerializer = null;
     if (sendQueue != null)
     {

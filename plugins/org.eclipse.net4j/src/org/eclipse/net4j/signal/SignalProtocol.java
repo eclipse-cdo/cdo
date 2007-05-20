@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004-2007 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -121,7 +121,11 @@ public abstract class SignalProtocol extends Protocol
       }
     }
 
-    signal.getInputStream().handleBuffer(buffer);
+    if (signal != null) // Can be null after timeout
+    {
+      BufferInputStream inputStream = signal.getInputStream();
+      inputStream.handleBuffer(buffer);
+    }
   }
 
   public long getInputStreamTimeout()

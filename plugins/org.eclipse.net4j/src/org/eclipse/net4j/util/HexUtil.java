@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004-2007 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,7 +21,18 @@ public final class HexUtil
   {
   }
 
-  public static String toHex(int b)
+  public static String formatLong(long v)
+  {
+    final String hex = Long.toHexString(v);
+    if (hex.length() < 8)
+    {
+      return "00000000".substring(hex.length()) + hex;
+    }
+
+    return hex;
+  }
+
+  public static String formatByte(int b)
   {
     assertByte(b);
     return "" + DIGITS[b >> 4] + DIGITS[b & 0xf]; //$NON-NLS-1$

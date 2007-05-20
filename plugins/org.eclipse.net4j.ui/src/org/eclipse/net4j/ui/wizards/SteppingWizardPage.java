@@ -86,11 +86,12 @@ public class SteppingWizardPage extends WizardPage
         DecisionStep decisionStep = (DecisionStep)step;
         Group group = new Group(composite, SWT.BORDER);
         group.setText(decisionStep.getLabel());
-        for (Step decision : decisionStep)
-        {
-
-        }
-        decisionStep.createControl(composite);
+        // for (Step decision : decisionStep)
+        // {
+        //
+        // }
+        //
+        // decisionStep.createControl(composite);
       }
     }
 

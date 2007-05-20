@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004-2007 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -271,11 +271,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  protected boolean removeChannel(Channel channel)
+  protected boolean removeChannel(Channel channel, boolean actively)
   {
-    if (super.removeChannel(channel))
+    if (super.removeChannel(channel, actively))
     {
-      if (isConnected())
+      if (isConnected() && actively)
       {
         controlChannel.deregisterChannel(channel.getChannelIndex());
       }

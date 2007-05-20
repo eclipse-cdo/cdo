@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004-2007 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,8 @@
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
 package org.eclipse.net4j.transport;
+
+import org.eclipse.net4j.util.event.INotifier;
 
 /**
  * A bidirectional communications channel for the asynchronous exchange of
@@ -89,7 +91,7 @@ package org.eclipse.net4j.transport;
  * @author Eike Stepper
  * @since 0.8.0
  */
-public interface IChannel extends IBufferHandler
+public interface IChannel extends IBufferHandler, INotifier
 {
   /**
    * Returns an identifier of this channel that is unique among all channels of

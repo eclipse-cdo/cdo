@@ -8,25 +8,40 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.container;
+package org.eclipse.net4j.util.concurrent;
 
-import org.eclipse.net4j.util.container.IContainerDelta.Kind;
-import org.eclipse.net4j.util.event.IEvent;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author Eike Stepper
  */
-public interface IContainerEvent<E> extends IEvent
+public final class NonBlockingLongCounter
 {
-  public IContainer<E> getContainer();
+  private AtomicLong value;
 
-  public IContainerDelta<E>[] getDeltas();
+  public NonBlockingLongCounter()
+  {
+    this(0L);
+  }
 
-  public IContainerDelta<E> getDelta() throws IllegalStateException;
+  public NonBlockingLongCounter(long initialValue)
+  {
+    value = new AtomicLong(initialValue);
+  }
 
-  public E getDeltaElement() throws IllegalStateException;
+  public long getValue()
+  {
+    return value.get();
+  }
 
-  public Kind getDeltaKind() throws IllegalStateException;
+  public long increment()
+  {
+    long v;
+    do
+    {
+      v = value.get();
+    } while (!value.compareAndSet(v, v + 1));
 
-  public void accept(IContainerEventVisitor<E> visitor);
+    return v + 1;
+  }
 }

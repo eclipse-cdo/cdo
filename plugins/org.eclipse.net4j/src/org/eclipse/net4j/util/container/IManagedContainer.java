@@ -14,6 +14,8 @@ import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.registry.IRegistry;
 
+import org.eclipse.internal.net4j.util.container.ManagedContainer;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,6 +28,8 @@ import java.util.Set;
 public interface IManagedContainer extends IContainer
 {
   public IRegistry<IFactoryKey, IFactory> getFactoryRegistry();
+
+  public ManagedContainer registerFactory(IFactory factory);
 
   public List<IElementProcessor> getPostProcessors();
 

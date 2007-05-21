@@ -10,14 +10,14 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
+import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelectorListener;
 import org.eclipse.net4j.tcp.ITCPSelectorListener.Active;
 import org.eclipse.net4j.tcp.ITCPSelectorListener.Passive;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.internal.net4j.bundle.Net4j;
-import org.eclipse.internal.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
 import java.nio.channels.CancelledKeyException;
@@ -37,7 +37,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SELECTOR, TCPSelector.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SELECTOR, TCPSelector.class);
 
   private Selector selector;
 
@@ -193,7 +193,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
             }
             catch (Exception ex)
             {
-              Net4j.LOG.error(ex);
+              OM.LOG.error(ex);
               selKey.cancel();
             }
           }
@@ -205,7 +205,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       }
       catch (Exception ex)
       {
-        Net4j.LOG.error(ex);
+        OM.LOG.error(ex);
         deactivate();
         break;
       }

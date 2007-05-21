@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+
+<plugin>
+
+   <extension-point id="factories" name="Factories" schema="schema/factories.exsd"/>
+   <extension-point id="elementProcessors" name="Element Processors" schema="schema/elementProcessors.exsd"/>
+
+</plugin>

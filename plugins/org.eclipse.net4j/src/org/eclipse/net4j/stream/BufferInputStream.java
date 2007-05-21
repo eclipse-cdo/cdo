@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.stream;
 
-import org.eclipse.net4j.transport.IBuffer;
-import org.eclipse.net4j.transport.IBufferHandler;
+import org.eclipse.net4j.IBuffer;
+import org.eclipse.net4j.IBufferHandler;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.internal.net4j.bundle.Net4j;
+import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +34,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
   public static final long DEFAULT_MILLIS_INTERRUPT_CHECK = 100;
 
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM, BufferInputStream.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, BufferInputStream.class);
 
   private BlockingQueue<IBuffer> buffers = new LinkedBlockingQueue();
 

@@ -10,12 +10,11 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jvm;
 
-import org.eclipse.net4j.transport.ConnectorLocation;
+import org.eclipse.net4j.ConnectorLocation;
+import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-
-import org.eclipse.internal.net4j.util.lifecycle.LifecycleEventAdapter;
 
 /**
  * @author Eike Stepper

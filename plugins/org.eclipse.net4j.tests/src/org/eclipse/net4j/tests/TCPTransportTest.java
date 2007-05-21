@@ -10,18 +10,18 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
+import org.eclipse.net4j.IAcceptorEvent;
+import org.eclipse.net4j.IBuffer;
+import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.IConnectorChannelsEvent;
 import org.eclipse.net4j.stream.ChannelInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
 import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
-import org.eclipse.net4j.transport.IAcceptorEvent;
-import org.eclipse.net4j.transport.IBuffer;
-import org.eclipse.net4j.transport.IChannel;
-import org.eclipse.net4j.transport.IConnectorChannelsEvent;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
-import org.eclipse.internal.net4j.transport.TransportContainer;
+import org.eclipse.internal.net4j.TransportContainer;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;

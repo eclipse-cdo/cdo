@@ -13,7 +13,7 @@ package org.eclipse.net4j.internal.jvm;
 import org.eclipse.net4j.jvm.IJVMConstants;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
-import org.eclipse.internal.net4j.transport.ConnectorFactory;
+import org.eclipse.internal.net4j.ConnectorFactory;
 
 /**
  * @author Eike Stepper

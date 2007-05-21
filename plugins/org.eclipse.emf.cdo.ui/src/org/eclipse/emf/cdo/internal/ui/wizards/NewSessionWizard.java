@@ -13,11 +13,11 @@ package org.eclipse.emf.cdo.internal.ui.wizards;
 import org.eclipse.emf.cdo.internal.ui.wizards.steps.RepoNameStep;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
+import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.IPluginTransportContainer;
+import org.eclipse.net4j.ITransportContainer;
 import org.eclipse.net4j.internal.ui.wizards.steps.ProvideConnectorStep;
 import org.eclipse.net4j.internal.ui.wizards.steps.SelectConnectorStep;
-import org.eclipse.net4j.transport.IConnector;
-import org.eclipse.net4j.transport.IPluginTransportContainer;
-import org.eclipse.net4j.transport.ITransportContainer;
 import org.eclipse.net4j.ui.wizards.ParallelStep;
 import org.eclipse.net4j.ui.wizards.Step;
 import org.eclipse.net4j.ui.wizards.SteppingNewWizard;

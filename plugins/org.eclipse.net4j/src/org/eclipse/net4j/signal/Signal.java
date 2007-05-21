@@ -14,7 +14,7 @@ import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.BufferOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.internal.net4j.bundle.Net4j;
+import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.EOFException;
 import java.util.concurrent.TimeoutException;
@@ -24,7 +24,7 @@ import java.util.concurrent.TimeoutException;
  */
 public abstract class Signal implements Runnable
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL, Signal.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Signal.class);
 
   private SignalProtocol protocol;
 
@@ -66,7 +66,7 @@ public abstract class Signal implements Runnable
     }
     catch (Exception ex)
     {
-      Net4j.LOG.error(ex);
+      OM.LOG.error(ex);
       if (TRACER.isEnabled())
       {
         TRACER.trace(ex);

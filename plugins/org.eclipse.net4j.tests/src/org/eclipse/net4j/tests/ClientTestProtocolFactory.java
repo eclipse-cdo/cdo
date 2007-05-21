@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.transport.IProtocol;
+import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
-import org.eclipse.internal.net4j.transport.ClientProtocolFactory;
+import org.eclipse.internal.net4j.ClientProtocolFactory;
 
 /**
  * @author Eike Stepper

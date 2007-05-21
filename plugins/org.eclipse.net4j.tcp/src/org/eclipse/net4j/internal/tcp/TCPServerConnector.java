@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.transport.ConnectorLocation;
+import org.eclipse.net4j.ConnectorLocation;
 
 import java.text.MessageFormat;
 

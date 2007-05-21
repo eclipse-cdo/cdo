@@ -1,13 +1,13 @@
 package org.eclipse.net4j.internal.ui.wizards.steps;
 
+import org.eclipse.net4j.IPluginTransportContainer;
+import org.eclipse.net4j.ITransportContainer;
 import org.eclipse.net4j.internal.ui.FactoryTypeContentProvider;
-import org.eclipse.net4j.transport.IPluginTransportContainer;
-import org.eclipse.net4j.transport.ITransportContainer;
 import org.eclipse.net4j.ui.wizards.ParallelStep;
 import org.eclipse.net4j.ui.wizards.SelectionStep;
 import org.eclipse.net4j.ui.wizards.StringStep;
 
-import org.eclipse.internal.net4j.transport.AcceptorFactory;
+import org.eclipse.internal.net4j.AcceptorFactory;
 
 /**
  * @author Eike Stepper

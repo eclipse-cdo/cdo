@@ -10,15 +10,15 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.transport.IBuffer;
-import org.eclipse.net4j.transport.IProtocol;
+import org.eclipse.net4j.IBuffer;
+import org.eclipse.net4j.IProtocol;
+import org.eclipse.net4j.internal.util.concurrent.SynchronizingCorrelator;
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.internal.net4j.bundle.Net4j;
-import org.eclipse.internal.net4j.transport.BufferUtil;
-import org.eclipse.internal.net4j.transport.Channel;
-import org.eclipse.internal.net4j.util.concurrent.SynchronizingCorrelator;
+import org.eclipse.internal.net4j.BufferUtil;
+import org.eclipse.internal.net4j.Channel;
+import org.eclipse.internal.net4j.bundle.OM;
 
 import java.nio.ByteBuffer;
 
@@ -41,7 +41,7 @@ public final class ControlChannel extends Channel
 
   public static final byte FAILURE = 0;
 
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CHANNEL, ControlChannel.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CHANNEL, ControlChannel.class);
 
   private SynchronizingCorrelator<Short, Boolean> registrations = new SynchronizingCorrelator();
 
@@ -125,7 +125,7 @@ public final class ControlChannel extends Channel
         }
         catch (Exception ex)
         {
-          Net4j.LOG.error(ex);
+          OM.LOG.error(ex);
           success = false;
         }
 
@@ -156,7 +156,7 @@ public final class ControlChannel extends Channel
           }
           catch (Exception ex)
           {
-            Net4j.LOG.error(ex);
+            OM.LOG.error(ex);
           }
         }
 
@@ -164,7 +164,7 @@ public final class ControlChannel extends Channel
       }
 
       default:
-        Net4j.LOG.error("Invalid opcode: " + opcode); //$NON-NLS-1$
+        OM.LOG.error("Invalid opcode: " + opcode); //$NON-NLS-1$
         ((TCPConnector)getConnector()).deactivate();
       }
     }

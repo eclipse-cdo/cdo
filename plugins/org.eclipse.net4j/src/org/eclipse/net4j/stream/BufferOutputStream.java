@@ -10,14 +10,14 @@
  **************************************************************************/
 package org.eclipse.net4j.stream;
 
-import org.eclipse.net4j.transport.IBuffer;
-import org.eclipse.net4j.transport.IBufferHandler;
-import org.eclipse.net4j.transport.IBufferProvider;
+import org.eclipse.net4j.IBuffer;
+import org.eclipse.net4j.IBufferHandler;
+import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.internal.net4j.bundle.Net4j;
+import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -30,7 +30,7 @@ public class BufferOutputStream extends OutputStream
 {
   public static final boolean DEFAULT_PROPAGATE_CLOSE = false;
 
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM, BufferOutputStream.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, BufferOutputStream.class);
 
   private IBufferHandler bufferHandler;
 

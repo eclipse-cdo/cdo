@@ -14,7 +14,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.internal.net4j.bundle.Net4j;
+import org.eclipse.internal.net4j.bundle.OM;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -81,6 +81,6 @@ public abstract class LongRunningAction extends SafeAction
 
   protected IStatus handleException(Exception ex)
   {
-    return new Status(IStatus.ERROR, Net4j.BUNDLE_ID, "An error has occured.", ex);
+    return new Status(IStatus.ERROR, OM.BUNDLE_ID, "An error has occured.", ex);
   }
 }

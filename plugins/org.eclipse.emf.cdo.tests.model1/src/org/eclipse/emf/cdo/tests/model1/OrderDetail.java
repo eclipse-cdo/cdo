@@ -11,7 +11,6 @@ import org.eclipse.emf.cdo.CDOObject;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Order Detail</b></em>'.
  * <!-- end-user-doc -->
- * 
  * <p>
  * The following features are supported:
  * <ul>

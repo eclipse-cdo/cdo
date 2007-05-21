@@ -12,7 +12,7 @@ package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.internal.net4j.bundle.Net4j;
+import org.eclipse.internal.net4j.bundle.OM;
 
 import java.nio.channels.SelectionKey;
 
@@ -21,7 +21,7 @@ import java.nio.channels.SelectionKey;
  */
 public final class SelectorUtil
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SELECTOR, SelectorUtil.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SELECTOR, SelectorUtil.class);
 
   private SelectorUtil()
   {

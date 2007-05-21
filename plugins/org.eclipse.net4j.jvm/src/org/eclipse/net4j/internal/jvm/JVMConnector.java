@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jvm;
 
-import org.eclipse.net4j.transport.ConnectorException;
-import org.eclipse.net4j.transport.IBuffer;
-import org.eclipse.net4j.transport.IChannel;
-import org.eclipse.net4j.transport.IProtocol;
+import org.eclipse.net4j.ConnectorException;
+import org.eclipse.net4j.IBuffer;
+import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.IProtocol;
 
-import org.eclipse.internal.net4j.transport.Channel;
-import org.eclipse.internal.net4j.transport.Connector;
+import org.eclipse.internal.net4j.Channel;
+import org.eclipse.internal.net4j.Connector;
 
 import java.util.Queue;
 

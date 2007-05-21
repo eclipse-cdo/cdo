@@ -17,9 +17,9 @@ import org.eclipse.net4j.internal.tcp.TCPSelectorInjector;
 import org.eclipse.net4j.tcp.ITCPConstants;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import org.eclipse.internal.net4j.transport.Acceptor;
-import org.eclipse.internal.net4j.transport.Connector;
-import org.eclipse.internal.net4j.transport.TransportContainer;
+import org.eclipse.internal.net4j.Acceptor;
+import org.eclipse.internal.net4j.Connector;
+import org.eclipse.internal.net4j.TransportContainer;
 
 /**
  * @author Eike Stepper

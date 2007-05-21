@@ -10,15 +10,15 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.bundle;
 
-import org.eclipse.net4j.transport.IPluginTransportContainer;
+import org.eclipse.net4j.IPluginTransportContainer;
+import org.eclipse.net4j.internal.util.container.PluginElementProcessorList;
+import org.eclipse.net4j.internal.util.factory.PluginFactoryRegistry;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.registry.IRegistry;
 
-import org.eclipse.internal.net4j.transport.TransportContainer;
-import org.eclipse.internal.net4j.util.container.PluginElementProcessorList;
-import org.eclipse.internal.net4j.util.factory.PluginFactoryRegistry;
+import org.eclipse.internal.net4j.TransportContainer;
 
 import java.util.List;
 
@@ -66,7 +66,7 @@ public class PluginTransportContainer extends TransportContainer implements IPlu
       }
       catch (Exception ex)
       {
-        Net4j.LOG.error(ex);
+        OM.LOG.error(ex);
         instance = null;
       }
     }

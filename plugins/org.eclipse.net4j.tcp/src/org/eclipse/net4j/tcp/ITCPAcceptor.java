@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.tcp;
 
-import org.eclipse.net4j.transport.IAcceptor;
+import org.eclipse.net4j.IAcceptor;
 
 /**
  * @author Eike Stepper

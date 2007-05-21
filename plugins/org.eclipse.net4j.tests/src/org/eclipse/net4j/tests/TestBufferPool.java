@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.transport.IBuffer;
-import org.eclipse.net4j.transport.IBufferPool;
-import org.eclipse.net4j.transport.TransportUtil;
+import org.eclipse.net4j.IBuffer;
+import org.eclipse.net4j.IBufferPool;
+import org.eclipse.net4j.TransportUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;

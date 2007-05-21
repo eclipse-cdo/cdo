@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.transport.ConnectorLocation;
+import org.eclipse.net4j.ConnectorLocation;
 
-import org.eclipse.internal.net4j.bundle.Net4j;
+import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -35,7 +35,7 @@ public class TCPClientConnector extends TCPConnector
     }
     catch (IOException ex)
     {
-      Net4j.LOG.error(ex);
+      OM.LOG.error(ex);
     }
   }
 

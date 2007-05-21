@@ -10,19 +10,19 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
+import org.eclipse.net4j.ConnectorException;
+import org.eclipse.net4j.ConnectorState;
+import org.eclipse.net4j.IBuffer;
+import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelectorListener;
-import org.eclipse.net4j.transport.ConnectorException;
-import org.eclipse.net4j.transport.ConnectorState;
-import org.eclipse.net4j.transport.IBuffer;
-import org.eclipse.net4j.transport.IChannel;
-import org.eclipse.net4j.transport.IProtocol;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.internal.net4j.bundle.Net4j;
-import org.eclipse.internal.net4j.transport.Channel;
-import org.eclipse.internal.net4j.transport.Connector;
+import org.eclipse.internal.net4j.Channel;
+import org.eclipse.internal.net4j.Connector;
+import org.eclipse.internal.net4j.bundle.OM;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
@@ -36,7 +36,7 @@ import java.util.Queue;
  */
 public abstract class TCPConnector extends Connector implements ITCPConnector, ITCPSelectorListener.Active
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_CONNECTOR, TCPConnector.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONNECTOR, TCPConnector.class);
 
   private SocketChannel socketChannel;
 
@@ -141,7 +141,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
     catch (Exception ex)
     {
-      Net4j.LOG.error(ex);
+      OM.LOG.error(ex);
       deactivate();
     }
   }
@@ -183,7 +183,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
     catch (Exception ex)
     {
-      Net4j.LOG.error(ex);
+      OM.LOG.error(ex);
       deactivate();
     }
   }
@@ -232,7 +232,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
     catch (Exception ex)
     {
-      Net4j.LOG.error(ex);
+      OM.LOG.error(ex);
       deactivate();
     }
   }

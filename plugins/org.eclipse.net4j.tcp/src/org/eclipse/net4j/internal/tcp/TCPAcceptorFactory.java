@@ -13,7 +13,7 @@ package org.eclipse.net4j.internal.tcp;
 import org.eclipse.net4j.tcp.ITCPConstants;
 import org.eclipse.net4j.util.StringUtil;
 
-import org.eclipse.internal.net4j.transport.AcceptorFactory;
+import org.eclipse.internal.net4j.AcceptorFactory;
 
 /**
  * @author Eike Stepper

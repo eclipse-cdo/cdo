@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.ui.wizards;
 
+import org.eclipse.net4j.IPluginTransportContainer;
+import org.eclipse.net4j.ITransportContainer;
 import org.eclipse.net4j.internal.ui.wizards.steps.NewAcceptorStep;
-import org.eclipse.net4j.transport.IPluginTransportContainer;
-import org.eclipse.net4j.transport.ITransportContainer;
 import org.eclipse.net4j.ui.wizards.Step;
 import org.eclipse.net4j.ui.wizards.SteppingNewWizard;
 

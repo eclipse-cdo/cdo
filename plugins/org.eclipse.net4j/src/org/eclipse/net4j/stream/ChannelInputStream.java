@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.stream;
 
-import org.eclipse.net4j.transport.IChannel;
+import org.eclipse.net4j.IChannel;
 
 /**
  * @author Eike Stepper

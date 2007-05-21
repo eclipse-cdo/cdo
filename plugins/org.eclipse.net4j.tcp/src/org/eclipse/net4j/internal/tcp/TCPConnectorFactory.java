@@ -14,7 +14,7 @@ import org.eclipse.net4j.tcp.ITCPConstants;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
-import org.eclipse.internal.net4j.transport.ConnectorFactory;
+import org.eclipse.internal.net4j.ConnectorFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;

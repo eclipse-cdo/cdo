@@ -3,8 +3,8 @@ package org.eclipse.emf.cdo.internal.ui.views;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
-import org.eclipse.net4j.transport.IPluginTransportContainer;
-import org.eclipse.net4j.transport.ITransportContainer;
+import org.eclipse.net4j.IPluginTransportContainer;
+import org.eclipse.net4j.ITransportContainer;
 import org.eclipse.net4j.ui.actions.SafeAction;
 import org.eclipse.net4j.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.ui.views.ContainerView;

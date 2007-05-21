@@ -1,9 +1,9 @@
 package org.eclipse.net4j.internal.ui.wizards.steps;
 
+import org.eclipse.net4j.IAcceptor;
+import org.eclipse.net4j.IPluginTransportContainer;
+import org.eclipse.net4j.ITransportContainer;
 import org.eclipse.net4j.internal.ui.AcceptorContentProvider;
-import org.eclipse.net4j.transport.IAcceptor;
-import org.eclipse.net4j.transport.IPluginTransportContainer;
-import org.eclipse.net4j.transport.ITransportContainer;
 import org.eclipse.net4j.ui.wizards.ParallelStep;
 import org.eclipse.net4j.ui.wizards.SelectionStep;
 

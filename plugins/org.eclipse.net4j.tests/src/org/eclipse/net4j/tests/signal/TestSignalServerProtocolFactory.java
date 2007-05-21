@@ -2,7 +2,7 @@ package org.eclipse.net4j.tests.signal;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
-import org.eclipse.internal.net4j.transport.ServerProtocolFactory;
+import org.eclipse.internal.net4j.ServerProtocolFactory;
 
 /**
  * @author Eike Stepper

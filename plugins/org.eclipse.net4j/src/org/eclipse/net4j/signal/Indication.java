@@ -16,7 +16,7 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
 
-import org.eclipse.internal.net4j.bundle.Net4j;
+import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ import java.io.IOException;
  */
 public abstract class Indication extends SignalReactor
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL, Indication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Indication.class);
 
   protected Indication()
   {

@@ -1,8 +1,8 @@
 package org.eclipse.net4j.internal.ui.views;
 
-import org.eclipse.net4j.transport.IAcceptor;
-import org.eclipse.net4j.transport.IPluginTransportContainer;
-import org.eclipse.net4j.transport.ITransportContainer;
+import org.eclipse.net4j.IAcceptor;
+import org.eclipse.net4j.IPluginTransportContainer;
+import org.eclipse.net4j.ITransportContainer;
 import org.eclipse.net4j.ui.actions.SafeAction;
 import org.eclipse.net4j.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.ui.views.ContainerView;

@@ -10,11 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jvm;
 
+import org.eclipse.net4j.internal.util.registry.HashMapRegistry;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.jvm.IJVMAcceptorManager;
 import org.eclipse.net4j.util.registry.IRegistry;
-
-import org.eclipse.internal.net4j.util.registry.HashMapRegistry;
 
 /**
  * @author Eike Stepper

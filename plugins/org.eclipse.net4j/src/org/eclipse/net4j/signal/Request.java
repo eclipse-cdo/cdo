@@ -10,14 +10,14 @@
  **************************************************************************/
 package org.eclipse.net4j.signal;
 
+import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.BufferOutputStream;
-import org.eclipse.net4j.transport.IChannel;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
-import org.eclipse.internal.net4j.bundle.Net4j;
+import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
 
@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 public abstract class Request extends SignalActor
 {
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL, Request.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Request.class);
 
   protected Request(IChannel channel)
   {

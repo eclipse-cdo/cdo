@@ -10,15 +10,15 @@
  **************************************************************************/
 package org.eclipse.net4j.signal;
 
+import org.eclipse.net4j.IBuffer;
+import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
-import org.eclipse.net4j.transport.IBuffer;
-import org.eclipse.net4j.transport.IBufferProvider;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.internal.net4j.bundle.Net4j;
-import org.eclipse.internal.net4j.transport.BufferUtil;
-import org.eclipse.internal.net4j.transport.Protocol;
+import org.eclipse.internal.net4j.BufferUtil;
+import org.eclipse.internal.net4j.Protocol;
+import org.eclipse.internal.net4j.bundle.OM;
 
 import java.nio.ByteBuffer;
 import java.text.MessageFormat;
@@ -37,10 +37,9 @@ public abstract class SignalProtocol extends Protocol
 
   private static final int MAX_CORRELATION_ID = Integer.MAX_VALUE;
 
-  private static final ContextTracer TRACER = new ContextTracer(Net4j.DEBUG_SIGNAL, SignalProtocol.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, SignalProtocol.class);
 
-  private static final ContextTracer STREAM_TRACER = new ContextTracer(Net4j.DEBUG_BUFFER_STREAM,
-      SignalOutputStream.class);
+  private static final ContextTracer STREAM_TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, SignalOutputStream.class);
 
   private Map<Integer, Signal> signals = new ConcurrentHashMap(0);
 

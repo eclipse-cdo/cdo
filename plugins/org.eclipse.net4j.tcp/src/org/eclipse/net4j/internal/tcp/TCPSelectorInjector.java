@@ -29,12 +29,18 @@ public class TCPSelectorInjector implements IElementProcessor
     if (element instanceof TCPAcceptor)
     {
       TCPAcceptor acceptor = (TCPAcceptor)element;
-      acceptor.setSelector(getSelector(container));
+      if (acceptor.getSelector() == null)
+      {
+        acceptor.setSelector(getSelector(container));
+      }
     }
     else if (element instanceof TCPConnector)
     {
       TCPConnector connector = (TCPConnector)element;
-      connector.setSelector(getSelector(container));
+      if (connector.getSelector() == null)
+      {
+        connector.setSelector(getSelector(container));
+      }
     }
 
     return element;

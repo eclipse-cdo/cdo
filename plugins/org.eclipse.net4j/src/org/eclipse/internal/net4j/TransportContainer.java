@@ -93,16 +93,39 @@ public class TransportContainer extends ManagedContainer implements ITransportCo
       if (element instanceof Acceptor)
       {
         Acceptor acceptor = (Acceptor)element;
-        acceptor.setBufferProvider(getBufferProvider());
-        acceptor.setReceiveExecutor(getExecutorService());
-        acceptor.setFactoryRegistry(getFactoryRegistry());
+        if (acceptor.getBufferProvider() == null)
+        {
+          acceptor.setBufferProvider(getBufferProvider());
+        }
+
+        if (acceptor.getReceiveExecutor() == null)
+        {
+          acceptor.setReceiveExecutor(getExecutorService());
+        }
+
+        if (acceptor.getFactoryRegistry() == null)
+        {
+          acceptor.setFactoryRegistry(getFactoryRegistry());
+        }
       }
+
       else if (element instanceof Connector)
       {
         Connector connector = (Connector)element;
-        connector.setBufferProvider(getBufferProvider());
-        connector.setReceiveExecutor(getExecutorService());
-        connector.setFactoryRegistry(getFactoryRegistry());
+        if (connector.getBufferProvider() == null)
+        {
+          connector.setBufferProvider(getBufferProvider());
+        }
+
+        if (connector.getReceiveExecutor() == null)
+        {
+          connector.setReceiveExecutor(getExecutorService());
+        }
+
+        if (connector.getFactoryRegistry() == null)
+        {
+          connector.setFactoryRegistry(getFactoryRegistry());
+        }
       }
 
       return element;

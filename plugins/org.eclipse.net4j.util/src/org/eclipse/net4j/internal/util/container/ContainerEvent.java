@@ -47,6 +47,11 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
     return (IContainer<E>)getSource();
   }
 
+  public boolean isEmpty()
+  {
+    return deltas.isEmpty();
+  }
+
   public IContainerDelta<E>[] getDeltas()
   {
     return deltas.toArray(new IContainerDelta[deltas.size()]);
@@ -70,11 +75,6 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
   public Kind getDeltaKind() throws IllegalStateException
   {
     return getDelta().getKind();
-  }
-
-  public boolean isEmpty()
-  {
-    return deltas.isEmpty();
   }
 
   public void addDelta(E element, Kind kind)

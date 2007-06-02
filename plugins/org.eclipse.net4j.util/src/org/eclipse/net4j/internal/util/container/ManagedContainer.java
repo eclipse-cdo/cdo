@@ -17,9 +17,11 @@ import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.internal.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
@@ -102,6 +104,34 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return postProcessors;
   }
 
+  public synchronized void addPostProcessor(IElementProcessor postProcessor, boolean processExistingElements)
+  {
+    if (processExistingElements)
+    {
+      ContainerEvent event = new ContainerEvent(this);
+      for (Entry<ElementKey, Object> entry : elementRegistry.entrySet())
+      {
+        ElementKey key = entry.getKey();
+        Object element = entry.getValue();
+
+        String productGroup = key.getProductGroup();
+        String factoryType = key.getFactoryType();
+        String description = key.getDescription();
+        Object newElement = postProcessor.process(this, productGroup, factoryType, description, element);
+        if (newElement != element)
+        {
+          elementRegistry.put(key, newElement);
+          event.addDelta(element, IContainerDelta.Kind.REMOVED);
+          event.addDelta(newElement, IContainerDelta.Kind.ADDED);
+        }
+      }
+
+      fireEvent(event);
+    }
+
+    getPostProcessors().add(postProcessor);
+  }
+
   public void addPostProcessor(IElementProcessor postProcessor)
   {
     getPostProcessors().add(postProcessor);
@@ -157,8 +187,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public String[] getElementKey(Object element)
   {
-    Set<Entry<ElementKey, Object>> entries = elementRegistry.entrySet();
-    for (Entry<ElementKey, Object> entry : entries)
+    for (Entry<ElementKey, Object> entry : elementRegistry.entrySet())
     {
       if (entry.getValue() == element)
       {
@@ -322,6 +351,21 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
         oos.writeBoolean(LifecycleUtil.isActive(entry.getValue()));
       }
     }
+  }
+
+  @Override
+  public void fireEvent(IEvent event)
+  {
+    if (event instanceof IContainerEvent)
+    {
+      IContainerEvent containerEvent = (IContainerEvent)event;
+      if (containerEvent.isEmpty())
+      {
+        return;
+      }
+    }
+
+    super.fireEvent(event);
   }
 
   @Override

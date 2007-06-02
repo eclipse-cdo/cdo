@@ -32,6 +32,8 @@ public interface IManagedContainer extends IContainer
 
   public List<IElementProcessor> getPostProcessors();
 
+  public void addPostProcessor(IElementProcessor postProcessor, boolean processExistingElements);
+
   public void addPostProcessor(IElementProcessor postProcessor);
 
   public void removePostProcessor(IElementProcessor postProcessor);

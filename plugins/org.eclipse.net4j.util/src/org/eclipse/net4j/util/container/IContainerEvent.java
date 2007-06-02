@@ -20,6 +20,8 @@ public interface IContainerEvent<E> extends IEvent
 {
   public IContainer<E> getContainer();
 
+  public boolean isEmpty();
+
   public IContainerDelta<E>[] getDeltas();
 
   public IContainerDelta<E> getDelta() throws IllegalStateException;

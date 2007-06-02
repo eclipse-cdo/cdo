@@ -38,6 +38,11 @@ public class SingleDeltaContainerEvent<E> extends Event implements IContainerEve
     return (IContainer<E>)getSource();
   }
 
+  public boolean isEmpty()
+  {
+    return false;
+  }
+
   public IContainerDelta<E>[] getDeltas()
   {
     return deltas;

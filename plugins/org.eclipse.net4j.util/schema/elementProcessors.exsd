@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipse.net4j">
+<schema targetNamespace="org.eclipse.net4j.util">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.net4j" id="elementProcessors" name="Element Processors"/>
+         <meta.schema plugin="org.eclipse.net4j.util" id="elementProcessors" name="Element Processors"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]

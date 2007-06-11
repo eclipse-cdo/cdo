@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.bundle;
 
+import org.eclipse.net4j.util.IOUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMLogHandler;
 import org.eclipse.net4j.util.om.OMLogger;
@@ -19,7 +20,11 @@ import org.eclipse.net4j.util.om.OMLogger.Level;
 import org.eclipse.net4j.util.om.OMTraceHandler.Event;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -29,6 +34,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public abstract class AbstractOMPlatform implements OMPlatform
 {
+  public static final String SYSTEM_PROPERTY_NET4J_CONFIG = "net4j.config"; //$NON-NLS-1$
+
   static Object systemContext;
 
   private static ContextTracer __TRACER__;
@@ -91,6 +98,71 @@ public abstract class AbstractOMPlatform implements OMPlatform
   public void setDebugging(boolean debugging)
   {
     this.debugging = debugging;
+  }
+
+  public File getConfigFolder()
+  {
+    String config = System.getProperty(SYSTEM_PROPERTY_NET4J_CONFIG);
+    if (config == null)
+    {
+      return null;
+    }
+
+    File configFolder = new File(config);
+    if (!configFolder.exists())
+    {
+      if (!configFolder.mkdirs())
+      {
+        OM.LOG.error("Config folder " + config + " could not be created");
+        return null;
+      }
+    }
+
+    if (!configFolder.isDirectory())
+    {
+      OM.LOG.error("Config folder " + config + " is not a directoy");
+      return null;
+    }
+
+    return configFolder;
+  }
+
+  public File getConfigFile(String name)
+  {
+    File configFolder = getConfigFolder();
+    if (configFolder == null)
+    {
+      return null;
+    }
+
+    return new File(configFolder, name);
+  }
+
+  public Properties getConfigProperties(String name)
+  {
+    File configFile = getConfigFile(name);
+    if (configFile == null)
+    {
+      return null;
+    }
+
+    FileInputStream fis = null;
+    try
+    {
+      fis = new FileInputStream(configFile);
+      Properties properties = new Properties();
+      properties.load(fis);
+      return properties;
+    }
+    catch (IOException ex)
+    {
+      OM.LOG.error("Config file " + configFile.getAbsolutePath() + " could not be read");
+      return null;
+    }
+    finally
+    {
+      IOUtil.closeSilent(fis);
+    }
   }
 
   protected void log(OMLogger logger, Level level, String msg, Throwable t)

@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.om.OMLogger;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OMTracer;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -24,6 +25,7 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.MissingResourceException;
+import java.util.Properties;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
@@ -176,6 +178,16 @@ public abstract class AbstractOMBundle implements OMBundle
     }
 
     return logger;
+  }
+
+  public File getConfigFile()
+  {
+    return platform.getConfigFile(bundleID);
+  }
+
+  public Properties getConfigProperties()
+  {
+    return platform.getConfigProperties(bundleID);
   }
 
   public InputStream getInputStream(String path) throws IOException

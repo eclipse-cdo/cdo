@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 
 import java.io.PrintStream;
@@ -18,17 +19,22 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
+import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
  */
 public final class ReflectUtil
 {
+  private static final String NAMESPACE_SEPARATOR = ".";
+
   public static final Class<Object> ROOT_CLASS = Object.class;
 
   public static final Class[] NO_PARAMETERS = null;
@@ -196,6 +202,142 @@ public final class ReflectUtil
     }
   }
 
+  public static Object instantiate(Map<Object, Object> properties, String namespace, String classKey,
+      ClassLoader classLoader) throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+      IllegalArgumentException, InvocationTargetException
+  {
+    if (namespace != null)
+    {
+      if (namespace.length() == 0)
+      {
+        namespace = null;
+      }
+      else if (!namespace.endsWith(NAMESPACE_SEPARATOR))
+      {
+        namespace += NAMESPACE_SEPARATOR;
+      }
+    }
+
+    String className = null;
+    Map<String, Object> values = new HashMap();
+    for (Entry<Object, Object> entry : properties.entrySet())
+    {
+      if (entry.getKey() instanceof String)
+      {
+        String key = (String)entry.getKey();
+        if (namespace != null)
+        {
+          if (key.startsWith(namespace))
+          {
+            key = key.substring(namespace.length());
+          }
+          else
+          {
+            continue;
+          }
+        }
+
+        if (classKey.equals(key))
+        {
+          Object classValue = entry.getValue();
+          if (classValue instanceof String)
+          {
+            className = (String)classValue;
+          }
+          else
+          {
+            OM.LOG.warn("Value of classKey " + classKey + " is not a String");
+          }
+        }
+        else
+        {
+          values.put(key, entry.getValue());
+        }
+      }
+    }
+
+    if (className == null)
+    {
+      throw new IllegalArgumentException("Properties do not contain a valid class name for key " + classKey);
+    }
+
+    Class<?> c = classLoader.loadClass(className);
+    Object instance = c.newInstance();
+    Method[] methods = c.getMethods();
+    for (Method method : methods)
+    {
+      if (isSetter(method))
+      {
+        String name = StringUtil.uncap(method.getName().substring(3));
+        Object value = values.get(name);
+        if (value != null)
+        {
+          Class<?> type = method.getParameterTypes()[0];
+          if (!type.isAssignableFrom(value.getClass()))
+          {
+            if (value instanceof String)
+            {
+              String str = (String)value;
+              value = null;
+              if (type.isAssignableFrom(Boolean.class))
+              {
+                value = Boolean.parseBoolean(str);
+              }
+              else if (type.isAssignableFrom(Byte.class))
+              {
+                value = Byte.parseByte(str);
+              }
+              else if (type.isAssignableFrom(Short.class))
+              {
+                value = Short.parseShort(str);
+              }
+              else if (type.isAssignableFrom(Integer.class))
+              {
+                value = Integer.parseInt(str);
+              }
+              else if (type.isAssignableFrom(Long.class))
+              {
+                value = Long.parseLong(str);
+              }
+              else if (type.isAssignableFrom(Float.class))
+              {
+                value = Float.parseFloat(str);
+              }
+              else if (type.isAssignableFrom(Double.class))
+              {
+                value = Double.parseDouble(str);
+              }
+            }
+            else
+            {
+              value = null;
+            }
+          }
+
+          if (value == null)
+          {
+            throw new IllegalArgumentException("Value of property " + name + " can not be assigned to type "
+                + type.getName());
+          }
+
+          method.invoke(instance, value);
+        }
+      }
+    }
+
+    return instance;
+  }
+
+  public static boolean isSetter(Method method)
+  {
+    return method.getParameterTypes().length == 1 && isSetterName(method.getName());
+  }
+
+  public static boolean isSetterName(String name)
+  {
+    return name.startsWith("set") && name.length() > 3 && Character.isUpperCase(name.charAt(3));
+  }
+
   public static String toString(Object object)
   {
     return toString(object, " "); //$NON-NLS-1$
@@ -221,7 +363,7 @@ public final class ReflectUtil
     // Recurse
     toString(segment.getSuperclass(), object, prefix, builder);
 
-    String segmentPrefix = segment == object.getClass() ? "" : getSimpleName(segment) + "."; //$NON-NLS-1$ //$NON-NLS-2$
+    String segmentPrefix = segment == object.getClass() ? "" : getSimpleName(segment) + NAMESPACE_SEPARATOR; //$NON-NLS-1$ //$NON-NLS-2$
     Field[] fields = segment.getDeclaredFields();
     for (Field field : fields)
     {

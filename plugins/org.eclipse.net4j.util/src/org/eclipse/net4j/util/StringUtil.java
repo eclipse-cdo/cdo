@@ -46,6 +46,52 @@ public final class StringUtil
     return s1.compareTo(s2);
   }
 
+  public static String cap(String str)
+  {
+    if (str == null || str.length() == 0)
+    {
+      return str;
+    }
+
+    char first = str.charAt(0);
+    if (Character.isUpperCase(first))
+    {
+      return str;
+    }
+
+    if (str.length() == 1)
+    {
+      return str.toUpperCase();
+    }
+
+    StringBuilder builder = new StringBuilder(str);
+    builder.setCharAt(0, Character.toUpperCase(first));
+    return builder.toString();
+  }
+
+  public static String uncap(String str)
+  {
+    if (str == null || str.length() == 0)
+    {
+      return str;
+    }
+
+    char first = str.charAt(0);
+    if (Character.isLowerCase(first))
+    {
+      return str;
+    }
+
+    if (str.length() == 1)
+    {
+      return str.toLowerCase();
+    }
+
+    StringBuilder builder = new StringBuilder(str);
+    builder.setCharAt(0, Character.toLowerCase(first));
+    return builder.toString();
+  }
+
   public static int occurrences(String str, char c)
   {
     int count = 0;

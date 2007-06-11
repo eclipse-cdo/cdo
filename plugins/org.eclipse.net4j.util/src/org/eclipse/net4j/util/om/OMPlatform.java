@@ -12,6 +12,9 @@ package org.eclipse.net4j.util.om;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractOMPlatform;
 
+import java.io.File;
+import java.util.Properties;
+
 /**
  * @author Eike Stepper
  */
@@ -33,4 +36,10 @@ public interface OMPlatform
   public void addTraceHandler(OMTraceHandler traceHandler);
 
   public void removeTraceHandler(OMTraceHandler traceHandler);
+
+  public File getConfigFolder();
+
+  public File getConfigFile(String name);
+
+  public Properties getConfigProperties(String name);
 }

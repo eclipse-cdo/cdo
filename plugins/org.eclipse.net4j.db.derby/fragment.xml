@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.net4j.db.dbAdapters">
+      <dbAdapter
+            class="org.eclipse.net4j.db.internal.mysql.DerbyAdapter"
+            name="derby"
+            version="10.2.2.0">
+      </dbAdapter>
+   </extension>
+
+</plugin>

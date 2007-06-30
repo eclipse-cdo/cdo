@@ -10,13 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j;
 
-import static org.eclipse.net4j.BufferState.GETTING;
-import static org.eclipse.net4j.BufferState.INITIAL;
-import static org.eclipse.net4j.BufferState.PUTTING;
-import static org.eclipse.net4j.BufferState.READING_BODY;
-import static org.eclipse.net4j.BufferState.READING_HEADER;
-import static org.eclipse.net4j.BufferState.WRITING;
-
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 

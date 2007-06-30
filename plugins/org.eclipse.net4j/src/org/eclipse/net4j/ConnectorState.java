@@ -10,11 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j;
 
-import static org.eclipse.net4j.ConnectorState.CONNECTED;
-import static org.eclipse.net4j.ConnectorState.CONNECTING;
-import static org.eclipse.net4j.ConnectorState.DISCONNECTED;
-import static org.eclipse.net4j.ConnectorState.NEGOTIATING;
-
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 

@@ -44,4 +44,10 @@ public final class NonBlockingLongCounter
 
     return v + 1;
   }
+
+  @Override
+  public String toString()
+  {
+    return Long.toString(getValue());
+  }
 }

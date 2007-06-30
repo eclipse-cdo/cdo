@@ -102,12 +102,7 @@ public abstract class AbstractOMPlatform implements OMPlatform
 
   public File getConfigFolder()
   {
-    String config = System.getProperty(SYSTEM_PROPERTY_NET4J_CONFIG);
-    if (config == null)
-    {
-      return null;
-    }
-
+    String config = System.getProperty(SYSTEM_PROPERTY_NET4J_CONFIG, "config");
     File configFolder = new File(config);
     if (!configFolder.exists())
     {

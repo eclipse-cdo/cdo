@@ -10,9 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j;
 
-import static org.eclipse.net4j.ConnectorLocation.CLIENT;
-import static org.eclipse.net4j.ConnectorLocation.SERVER;
-
 /**
  * Enumerates the roles that an {@link IConnector} can play during the
  * establishment of a physical connection.

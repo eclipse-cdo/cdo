@@ -182,12 +182,12 @@ public abstract class AbstractOMBundle implements OMBundle
 
   public File getConfigFile()
   {
-    return platform.getConfigFile(bundleID);
+    return platform.getConfigFile(getConfigFileName());
   }
 
   public Properties getConfigProperties()
   {
-    return platform.getConfigProperties(bundleID);
+    return platform.getConfigProperties(getConfigFileName());
   }
 
   public InputStream getInputStream(String path) throws IOException
@@ -303,5 +303,10 @@ public abstract class AbstractOMBundle implements OMBundle
   protected OMLogger createLogger()
   {
     return new OMLoggerImpl(this);
+  }
+
+  protected String getConfigFileName()
+  {
+    return bundleID + ".properties";
   }
 }

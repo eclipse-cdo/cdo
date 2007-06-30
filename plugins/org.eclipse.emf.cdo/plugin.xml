@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+   <extension
+         point="org.eclipse.net4j.factories">
+      <factory
+            class="org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory"
+            productGroup="org.eclipse.net4j.clientProtocols"
+            type="cdo"/>
+      <factory
+            class="org.eclipse.emf.internal.cdo.CDOSessionFactory"
+            productGroup="org.eclipse.emf.cdo.sessions"
+            type="cdo"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.net4j.elementProcessors">
+      <elementProcessor
+            class="org.eclipse.emf.internal.cdo.ChannelInjector">
+      </elementProcessor>
+   </extension>
+
+   <extension
+  			point="org.eclipse.emf.ecore.generated_package">
+     <package 
+       		uri="http://www.eclipse.org/emf/CDO/Eresource/1.0.0" 
+       		class="org.eclipse.emf.cdo.eresource.EresourcePackage"
+       		genModel="model/resource.genmodel" /> 
+   </extension>
+
+</plugin>

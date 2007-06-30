@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="eresource"
+    nsURI="http://www.eclipse.org/emf/CDO/resource/1.0.0" nsPrefix="eresource">
+  <eClassifiers xsi:type="ecore:EClass" name="CDOResource">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resourceSet" eType="#//ResourceSet"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRI" eType="#//URI" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
+        eType="ecore:EClass ../../../plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="modified" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="loaded" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="trackingModification" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="errors" upperBound="-1"
+        eType="#//Diagnostic" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="warnings" upperBound="-1"
+        eType="#//Diagnostic" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="ResourceSet" instanceClassName="org.eclipse.emf.ecore.resource.ResourceSet"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Diagnostic" instanceClassName="org.eclipse.emf.ecore.resource.Resource.Diagnostic"
+      serializable="false"/>
+</ecore:EPackage>

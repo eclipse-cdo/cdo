@@ -16,6 +16,7 @@ import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.internal.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IElementProcessor;
@@ -245,15 +246,12 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       if (element == null)
       {
         element = createElement(productGroup, factoryType, description);
-        if (element != null)
-        {
-          element = postProcessElement(productGroup, factoryType, description, element);
-          LifecycleUtil.activate(element);
-          EventUtil.addListener(element, elementListener);
-          key.setID(++maxElementID);
-          elementRegistry.put(key, element);
-          fireEvent(new SingleDeltaContainerEvent(this, element, IContainerDelta.Kind.ADDED));
-        }
+        element = postProcessElement(productGroup, factoryType, description, element);
+        LifecycleUtil.activate(element);
+        EventUtil.addListener(element, elementListener);
+        key.setID(++maxElementID);
+        elementRegistry.put(key, element);
+        fireEvent(new SingleDeltaContainerEvent(this, element, IContainerDelta.Kind.ADDED));
       }
 
       return element;
@@ -388,12 +386,12 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   {
     FactoryKey key = new FactoryKey(productGroup, factoryType);
     IFactory factory = getFactoryRegistry().get(key);
-    if (factory != null)
+    if (factory == null)
     {
-      return factory.create(description);
+      throw new FactoryNotFoundException("Factory not found: " + key);
     }
 
-    return null;
+    return factory.create(description);
   }
 
   protected Object postProcessElement(String productGroup, String factoryType, String description, Object element)

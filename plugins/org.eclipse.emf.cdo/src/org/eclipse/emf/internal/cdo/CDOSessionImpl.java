@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionAdaptersEvent;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -83,6 +83,11 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   public IConnector getConnector()
   {
+    if (channel == null)
+    {
+      return null;
+    }
+
     return channel.getConnector();
   }
 

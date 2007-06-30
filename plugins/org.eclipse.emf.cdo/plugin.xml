@@ -4,7 +4,7 @@
 <plugin>
 
    <extension
-         point="org.eclipse.net4j.factories">
+         point="org.eclipse.net4j.util.factories">
       <factory
             class="org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory"
             productGroup="org.eclipse.net4j.clientProtocols"
@@ -16,7 +16,7 @@
    </extension>
    
    <extension
-         point="org.eclipse.net4j.elementProcessors">
+         point="org.eclipse.net4j.util.elementProcessors">
       <elementProcessor
             class="org.eclipse.emf.internal.cdo.ChannelInjector">
       </elementProcessor>

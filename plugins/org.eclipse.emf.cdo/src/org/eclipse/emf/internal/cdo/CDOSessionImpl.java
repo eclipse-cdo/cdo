@@ -240,7 +240,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   private void prepare(ResourceSet resourceSet)
   {
-    CDOView adapter = CDOUtil.getAdapter(resourceSet);
+    CDOView adapter = CDOUtil.getView(resourceSet);
     if (adapter != null)
     {
       throw new IllegalStateException("CDO adapter already present: " + adapter);

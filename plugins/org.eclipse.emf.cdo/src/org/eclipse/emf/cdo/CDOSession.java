@@ -26,13 +26,13 @@ public interface CDOSession extends IContainer<CDOView>
 
   public boolean isOpen();
 
-  public void close();
-
   public String getRepositoryName();
 
   public String getRepositoryUUID();
 
   public CDORevisionManager getRevisionManager();
+
+  public CDOView[] getViews();
 
   public CDOView openView(ResourceSet resourceSet, long timeStamp);
 
@@ -40,5 +40,5 @@ public interface CDOSession extends IContainer<CDOView>
 
   public CDOView openView(ResourceSet resourceSet);
 
-  public CDOView[] getViews();
+  public void close();
 }

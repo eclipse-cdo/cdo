@@ -53,7 +53,7 @@ public final class CDOUtil
     return session;
   }
 
-  public static CDOView getAdapter(ResourceSet resourceSet)
+  public static CDOView getView(ResourceSet resourceSet)
   {
     EList<Adapter> adapters = resourceSet.eAdapters();
     for (Adapter adapter : adapters)

@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
+import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.CDO;
 
@@ -78,7 +78,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   /**
    * @ADDED
    */
-  private CDOAdapterImpl adapter;
+  private CDOViewImpl adapter;
 
   /**
    * @ADDED
@@ -428,7 +428,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    * @ADDED
    */
   @Override
-  public CDOAdapterImpl cdoAdapter()
+  public CDOViewImpl cdoView()
   {
     return adapter;
   }
@@ -436,7 +436,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   /**
    * @ADDED
    */
-  public void cdoSetAdapter(CDOAdapterImpl adapter)
+  public void cdoSetAdapter(CDOViewImpl adapter)
   {
     if (TRACER.isEnabled())
     {

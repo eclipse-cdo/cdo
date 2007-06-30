@@ -28,7 +28,7 @@ public interface CDOObject extends EObject
 
   public CDOState cdoState();
 
-  public CDOAdapter cdoAdapter();
+  public CDOView cdoView();
 
   public CDOResource cdoResource();
 

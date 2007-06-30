@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.util.ImplementationError;
@@ -27,7 +26,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class CDOTransactionImpl implements CDOTransaction
+public class CDOTransactionImpl
 {
   private static final ContextTracer TRACER = new ContextTracer(CDO.DEBUG_TRANSCTION, CDOTransactionImpl.class);
 
@@ -35,7 +34,7 @@ public class CDOTransactionImpl implements CDOTransaction
 
   private long nextTemporaryID = INITIAL_TEMPORARY_ID;
 
-  private CDOAdapterImpl adapter;
+  private CDOViewImpl adapter;
 
   private Map<CDOID, CDOResourceImpl> newResources = new HashMap();
 
@@ -43,12 +42,12 @@ public class CDOTransactionImpl implements CDOTransaction
 
   private Map<CDOID, CDOObjectImpl> dirtyObjects = new HashMap();
 
-  public CDOTransactionImpl(CDOAdapterImpl adapter)
+  public CDOTransactionImpl(CDOViewImpl adapter)
   {
     this.adapter = adapter;
   }
 
-  public CDOAdapterImpl getAdapter()
+  public CDOViewImpl getAdapter()
   {
     return adapter;
   }

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.editor;
 
-import org.eclipse.emf.cdo.CDOAdapter;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -24,19 +24,19 @@ import java.text.MessageFormat;
  */
 public class CDOEditorInput implements IEditorInput
 {
-  private CDOAdapter adapter;
+  private CDOView view;
 
   private String resourcePath;
 
-  public CDOEditorInput(CDOAdapter adapter, String resourcePath)
+  public CDOEditorInput(CDOView view, String resourcePath)
   {
-    this.adapter = adapter;
+    this.view = view;
     this.resourcePath = resourcePath;
   }
 
-  public CDOAdapter getAdapter()
+  public CDOView getView()
   {
-    return adapter;
+    return view;
   }
 
   public String getResourcePath()
@@ -51,12 +51,12 @@ public class CDOEditorInput implements IEditorInput
 
   public ImageDescriptor getImageDescriptor()
   {
-    if (adapter.isHistorical())
+    if (view.isHistorical())
     {
       return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR_HISTORICAL);
     }
 
-    if (adapter.isReadOnly())
+    if (view.isReadOnly())
     {
       return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR_READONLY);
     }
@@ -76,12 +76,12 @@ public class CDOEditorInput implements IEditorInput
 
   public String getToolTipText()
   {
-    if (adapter.isHistorical())
+    if (view.isHistorical())
     {
-      return MessageFormat.format("{0} ({1,D})", resourcePath, adapter.getView().getTimeStamp());
+      return MessageFormat.format("{0} ({1,D})", resourcePath, view.getTimeStamp());
     }
 
-    if (adapter.isReadOnly())
+    if (view.isReadOnly())
     {
       return MessageFormat.format("{0} (read only)", resourcePath);
     }

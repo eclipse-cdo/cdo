@@ -10,23 +10,55 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.event.CDOEventSource;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * @author Eike Stepper
  */
-public interface CDOView
+public interface CDOView extends CDOEventSource, Adapter
 {
   public static final long UNSPECIFIED_DATE = CDORevision.UNSPECIFIED_DATE;
 
-  public CDOAdapter getAdapter();
+  public ResourceSet getResourceSet();
 
-  public boolean isActual();
+  public CDOSession getSession();
+
+  public long getTimeStamp();
 
   public boolean isHistorical();
 
-  public long getTimeStamp();
+  public boolean isReadWrite();
+
+  public boolean isReadOnly();
+
+  /**
+   * @see ResourceSet#createResource(URI)
+   */
+  public CDOResource createResource(String path);
+
+  /**
+   * @see ResourceSet#getResource(URI, boolean)
+   */
+  public CDOResource getResource(String path);
+
+  /**
+   * @see CDOTransaction#commit()
+   */
+  public void commit();
+
+  /**
+   * @see CDOTransaction#rollback()
+   */
+  public void rollback();
+
+  public void close();
 
   public CDORevision resolve(CDOID id);
 }

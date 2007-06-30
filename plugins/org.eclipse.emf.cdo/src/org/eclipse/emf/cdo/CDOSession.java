@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 /**
  * @author Eike Stepper
  */
-public interface CDOSession extends IContainer<CDOAdapter>
+public interface CDOSession extends IContainer<CDOView>
 {
   public int getSessionID();
 
@@ -34,11 +34,11 @@ public interface CDOSession extends IContainer<CDOAdapter>
 
   public CDORevisionManager getRevisionManager();
 
-  public CDOAdapter attach(ResourceSet resourceSet, long timeStamp);
+  public CDOView openView(ResourceSet resourceSet, long timeStamp);
 
-  public CDOAdapter attach(ResourceSet resourceSet, boolean readOnly);
+  public CDOView openView(ResourceSet resourceSet, boolean readOnly);
 
-  public CDOAdapter attach(ResourceSet resourceSet);
+  public CDOView openView(ResourceSet resourceSet);
 
-  public CDOAdapter[] getAdapters();
+  public CDOView[] getViews();
 }

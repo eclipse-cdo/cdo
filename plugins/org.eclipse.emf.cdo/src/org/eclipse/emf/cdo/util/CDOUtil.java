@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
-import org.eclipse.emf.cdo.CDOAdapter;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
@@ -53,14 +53,14 @@ public final class CDOUtil
     return session;
   }
 
-  public static CDOAdapter getAdapter(ResourceSet resourceSet)
+  public static CDOView getAdapter(ResourceSet resourceSet)
   {
     EList<Adapter> adapters = resourceSet.eAdapters();
     for (Adapter adapter : adapters)
     {
-      if (adapter instanceof CDOAdapter)
+      if (adapter instanceof CDOView)
       {
-        return (CDOAdapter)adapter;
+        return (CDOView)adapter;
       }
     }
 

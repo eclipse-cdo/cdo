@@ -6,7 +6,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui.editor;
 
-import org.eclipse.emf.cdo.CDOAdapter;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -133,7 +133,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  private CDOAdapter adapter;
+  private CDOView adapter;
 
   /**
    * This keeps track of the editing domain that is used to track all changes to
@@ -882,7 +882,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  public CDOAdapter getAdapter()
+  public CDOView getAdapter()
   {
     return adapter;
   }
@@ -897,7 +897,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   public void createModel()
   {
     CDOEditorInput input = (CDOEditorInput)getEditorInput();
-    adapter = input.getAdapter();
+    adapter = input.getView();
     URI resourceURI = CDOUtil.createURI(input.getResourcePath());
 
     BasicCommandStack commandStack = new BasicCommandStack();
@@ -1659,7 +1659,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  public static CDOEditor open(IWorkbenchPage page, CDOAdapter adapter, String resourcePath)
+  public static CDOEditor open(IWorkbenchPage page, CDOView adapter, String resourcePath)
   {
     try
     {

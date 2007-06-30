@@ -50,9 +50,9 @@ public class CDOSessionsView extends ContainerView
   @Override
   protected void doubleClicked(Object object)
   {
-    // if (object instanceof CDOAdapter)
+    // if (object instanceof CDOView)
     // {
-    // openEditor((CDOAdapter)object);
+    // openEditor((CDOView)object);
     // }
     // else
     {

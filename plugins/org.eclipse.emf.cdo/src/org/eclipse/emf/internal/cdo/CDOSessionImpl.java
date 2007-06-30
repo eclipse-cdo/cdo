@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOAdapter;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionAdaptersEvent;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -60,7 +60,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   private CDORevisionManagerImpl revisionManager;
 
-  private Map<ResourceSet, CDOAdapterImpl> adapters = new HashMap();
+  private Map<ResourceSet, CDOViewImpl> adapters = new HashMap();
 
   private IListener channelListener = new LifecycleEventAdapter()
   {
@@ -134,36 +134,36 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     return revisionManager;
   }
 
-  public CDOAdapterImpl attach(ResourceSet resourceSet)
+  public CDOViewImpl openView(ResourceSet resourceSet)
   {
-    return attach(resourceSet, false);
+    return openView(resourceSet, false);
   }
 
-  public CDOAdapterImpl attach(ResourceSet resourceSet, boolean readOnly)
+  public CDOViewImpl openView(ResourceSet resourceSet, boolean readOnly)
   {
     prepare(resourceSet);
-    return attach(resourceSet, new CDOAdapterImpl(this, readOnly));
+    return attach(resourceSet, new CDOViewImpl(this, readOnly));
   }
 
-  public CDOAdapterImpl attach(ResourceSet resourceSet, long timeStamp)
+  public CDOViewImpl openView(ResourceSet resourceSet, long timeStamp)
   {
     prepare(resourceSet);
-    return attach(resourceSet, new CDOAdapterImpl(this, timeStamp));
+    return attach(resourceSet, new CDOViewImpl(this, timeStamp));
   }
 
-  public CDOAdapterImpl[] getAdapters()
+  public CDOViewImpl[] getViews()
   {
-    Collection<CDOAdapterImpl> values;
+    Collection<CDOViewImpl> values;
     synchronized (adapters)
     {
       values = adapters.values();
     }
-    return values.toArray(new CDOAdapterImpl[values.size()]);
+    return values.toArray(new CDOViewImpl[values.size()]);
   }
 
-  public CDOAdapter[] getElements()
+  public CDOView[] getElements()
   {
-    return getAdapters();
+    return getViews();
   }
 
   public boolean isEmpty()
@@ -171,7 +171,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     return adapters.isEmpty();
   }
 
-  public void adapterDetached(CDOAdapterImpl adapter)
+  public void adapterDetached(CDOViewImpl adapter)
   {
     synchronized (adapters)
     {
@@ -180,16 +180,16 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     }
   }
 
-  public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs, CDOAdapterImpl excludedAdapter)
+  public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs, CDOViewImpl excludedAdapter)
   {
-    CDOAdapterImpl[] values;
+    CDOViewImpl[] values;
     synchronized (adapters)
     {
-      values = adapters.values().toArray(new CDOAdapterImpl[adapters.size()]);
+      values = adapters.values().toArray(new CDOViewImpl[adapters.size()]);
     }
 
     Set<CDOID> unmodifiableSet = Collections.unmodifiableSet(dirtyOIDs);
-    for (CDOAdapterImpl adapter : values)
+    for (CDOViewImpl adapter : values)
     {
       if (adapter != excludedAdapter)
       {
@@ -240,7 +240,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   private void prepare(ResourceSet resourceSet)
   {
-    CDOAdapter adapter = CDOUtil.getAdapter(resourceSet);
+    CDOView adapter = CDOUtil.getAdapter(resourceSet);
     if (adapter != null)
     {
       throw new IllegalStateException("CDO adapter already present: " + adapter);
@@ -249,7 +249,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     CDOUtil.addResourceFactory(resourceSet);
   }
 
-  private CDOAdapterImpl attach(ResourceSet resourceSet, CDOAdapterImpl adapter)
+  private CDOViewImpl attach(ResourceSet resourceSet, CDOViewImpl adapter)
   {
     synchronized (adapters)
     {
@@ -264,12 +264,12 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
   /**
    * @author Eike Stepper
    */
-  private static class CDOSessionAdaptersEventImpl extends SingleDeltaContainerEvent<CDOAdapter> implements
+  private static class CDOSessionAdaptersEventImpl extends SingleDeltaContainerEvent<CDOView> implements
       CDOSessionAdaptersEvent
   {
     private static final long serialVersionUID = 1L;
 
-    public CDOSessionAdaptersEventImpl(CDOSession session, CDOAdapter adapter, Kind kind)
+    public CDOSessionAdaptersEventImpl(CDOSession session, CDOView adapter, Kind kind)
     {
       super(session, adapter, kind);
     }
@@ -279,7 +279,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
       return (CDOSession)getContainer();
     }
 
-    public CDOAdapter getAdapter()
+    public CDOView getAdapter()
     {
       return getDeltaElement();
     }

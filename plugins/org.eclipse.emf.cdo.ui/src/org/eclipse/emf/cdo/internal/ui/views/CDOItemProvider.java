@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.views;
 
-import org.eclipse.emf.cdo.CDOAdapter;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
@@ -58,15 +58,15 @@ public class CDOItemProvider extends ContainerItemProvider
       return SharedIcons.getImage(SharedIcons.OBJ_SESSION);
     }
 
-    if (obj instanceof CDOAdapter)
+    if (obj instanceof CDOView)
     {
-      CDOAdapter adapter = (CDOAdapter)obj;
-      if (adapter.isHistorical())
+      CDOView view = (CDOView)obj;
+      if (view.isHistorical())
       {
         return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_HISTORICAL);
       }
 
-      if (adapter.isReadOnly())
+      if (view.isReadOnly())
       {
         return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_READONLY);
       }
@@ -90,27 +90,27 @@ public class CDOItemProvider extends ContainerItemProvider
         manager.add(new OpenEditorAction("Open Editor", "Open a CDO editor", session)
         {
           @Override
-          protected CDOAdapter createAdapter()
+          protected CDOView createView()
           {
-            return getSession().attach(new ResourceSetImpl());
+            return getSession().openView(new ResourceSetImpl());
           }
         });
 
         manager.add(new OpenEditorAction("Open Read-Only Editor", "Open a read-only CDO editor", session)
         {
           @Override
-          protected CDOAdapter createAdapter()
+          protected CDOView createView()
           {
-            return getSession().attach(new ResourceSetImpl(), true);
+            return getSession().openView(new ResourceSetImpl(), true);
           }
         });
 
         manager.add(new OpenEditorAction("Open Historical Editor", "Open a historical CDO editor", session)
         {
           @Override
-          protected CDOAdapter createAdapter()
+          protected CDOView createView()
           {
-            return getSession().attach(new ResourceSetImpl(), System.currentTimeMillis());
+            return getSession().openView(new ResourceSetImpl(), System.currentTimeMillis());
           }
         });
       }
@@ -144,7 +144,7 @@ public class CDOItemProvider extends ContainerItemProvider
     protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
     {
       final Exception[] exception = new Exception[1];
-      final CDOAdapter adapter = createAdapter();
+      final CDOView view = createView();
       final IWorkbenchPart part = page.getActivePart();
       getDisplay().asyncExec(new Runnable()
       {
@@ -154,10 +154,10 @@ public class CDOItemProvider extends ContainerItemProvider
           {
             if (part instanceof ISetSelectionTarget)
             {
-              ((ISetSelectionTarget)part).selectReveal(new StructuredSelection(adapter));
+              ((ISetSelectionTarget)part).selectReveal(new StructuredSelection(view));
             }
 
-            CDOEditor.open(page, adapter, "/res/test");
+            CDOEditor.open(page, view, "/res/test");
           }
           catch (Exception ex)
           {
@@ -172,7 +172,7 @@ public class CDOItemProvider extends ContainerItemProvider
       }
     }
 
-    protected abstract CDOAdapter createAdapter();
+    protected abstract CDOView createView();
   }
 
   protected Display getDisplay()

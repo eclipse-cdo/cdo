@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOAdapter;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
@@ -51,7 +51,7 @@ public final class CDOStore implements EStore
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
     CDOID id = revision.getContainerID();
-    return (InternalEObject)convertToObject(cdoObject.cdoAdapter(), id);
+    return (InternalEObject)convertToObject(cdoObject.cdoView(), id);
   }
 
   public int getContainingFeatureID(InternalEObject eObject)
@@ -74,7 +74,7 @@ public final class CDOStore implements EStore
       TRACER.format("setContainer({0}, {1}, {2})", cdoObject, newContainer, newContainerFeatureID);
     }
 
-    CDOID containerID = (CDOID)convertToID(cdoObject.cdoAdapter(), newContainer);
+    CDOID containerID = (CDOID)convertToID(cdoObject.cdoView(), newContainer);
 
     CDORevisionImpl revision = getRevisionForWriting(cdoObject);
     revision.setContainerID(containerID);
@@ -99,7 +99,7 @@ public final class CDOStore implements EStore
     Object result = revision.get(cdoFeature, index);
     if (cdoFeature.isReference())
     {
-      result = convertToObject(cdoObject.cdoAdapter(), result);
+      result = convertToObject(cdoObject.cdoView(), result);
     }
 
     return result;
@@ -155,7 +155,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      value = convertToID(cdoObject.cdoAdapter(), value);
+      value = convertToID(cdoObject.cdoView(), value);
     }
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
@@ -173,7 +173,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      value = convertToID(cdoObject.cdoAdapter(), value);
+      value = convertToID(cdoObject.cdoView(), value);
     }
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
@@ -191,7 +191,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      value = convertToID(cdoObject.cdoAdapter(), value);
+      value = convertToID(cdoObject.cdoView(), value);
     }
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
@@ -226,7 +226,7 @@ public final class CDOStore implements EStore
     {
       for (int i = 0; i < result.length; i++)
       {
-        result[i] = convertToObject(cdoObject.cdoAdapter(), result[i]);
+        result[i] = convertToObject(cdoObject.cdoView(), result[i]);
       }
     }
 
@@ -255,14 +255,14 @@ public final class CDOStore implements EStore
         handleContainmentAdd(cdoObject, cdoFeature, value);
       }
 
-      value = convertToID(cdoObject.cdoAdapter(), value);
+      value = convertToID(cdoObject.cdoView(), value);
     }
 
     CDORevisionImpl revision = getRevisionForWriting(cdoObject);
     Object result = revision.set(cdoFeature, index, value);
     if (cdoFeature.isReference())
     {
-      result = convertToObject(cdoObject.cdoAdapter(), result);
+      result = convertToObject(cdoObject.cdoView(), result);
     }
 
     return result;
@@ -297,7 +297,7 @@ public final class CDOStore implements EStore
         handleContainmentAdd(cdoObject, cdoFeature, value);
       }
 
-      value = convertToID(cdoObject.cdoAdapter(), value);
+      value = convertToID(cdoObject.cdoView(), value);
     }
 
     CDORevisionImpl revision = getRevisionForWriting(cdoObject);
@@ -317,7 +317,7 @@ public final class CDOStore implements EStore
     Object result = revision.remove(cdoFeature, index);
     if (cdoFeature.isReference())
     {
-      result = convertToObject(cdoObject.cdoAdapter(), result);
+      result = convertToObject(cdoObject.cdoView(), result);
     }
 
     return result;
@@ -349,7 +349,7 @@ public final class CDOStore implements EStore
     Object result = revision.move(cdoFeature, target, source);
     if (cdoFeature.isReference())
     {
-      result = convertToObject(cdoObject.cdoAdapter(), result);
+      result = convertToObject(cdoObject.cdoView(), result);
     }
 
     return result;
@@ -366,12 +366,12 @@ public final class CDOStore implements EStore
     return "PersistentStore";
   }
 
-  public static Object convertToID(CDOAdapter adapter, Object potentialObject)
+  public static Object convertToID(CDOView adapter, Object potentialObject)
   {
     if (potentialObject instanceof CDOObject)
     {
       CDOObject object = (CDOObject)potentialObject;
-      if (object.cdoAdapter() == adapter)
+      if (object.cdoView() == adapter)
       {
         return object.cdoID();
       }
@@ -388,7 +388,7 @@ public final class CDOStore implements EStore
   /**
    * TODO Move to adapter
    */
-  public static Object convertToObject(CDOAdapter adapter, Object potentialID)
+  public static Object convertToObject(CDOView adapter, Object potentialID)
   {
     if (potentialID instanceof CDOID)
     {
@@ -398,7 +398,7 @@ public final class CDOStore implements EStore
       }
 
       CDOID id = (CDOID)potentialID;
-      CDOObject result = ((CDOAdapterImpl)adapter).lookupObject(id);
+      CDOObject result = ((CDOViewImpl)adapter).lookupObject(id);
       if (result == null)
       {
         throw new ImplementationError("ID not registered: " + id);
@@ -437,8 +437,8 @@ public final class CDOStore implements EStore
   {
     CDOObjectImpl container = cdoObject;
     CDOObjectImpl contained = (CDOObjectImpl)value;
-    CDOAdapterImpl containerAdapter = cdoObject.cdoAdapter();
-    CDOAdapterImpl containedAdapter = contained.cdoAdapter();
+    CDOViewImpl containerAdapter = cdoObject.cdoView();
+    CDOViewImpl containedAdapter = contained.cdoView();
     if (containedAdapter != containerAdapter)
     {
       if (containedAdapter != null)

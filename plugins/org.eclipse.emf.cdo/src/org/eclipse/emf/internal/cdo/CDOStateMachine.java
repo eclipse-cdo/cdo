@@ -60,7 +60,7 @@ public final class CDOStateMachine
     }
   }
 
-  public void attach(CDOObjectImpl object, CDOResourceImpl resource, CDOAdapterImpl adapter)
+  public void attach(CDOObjectImpl object, CDOResourceImpl resource, CDOViewImpl adapter)
   {
     if (TRACER.isEnabled())
     {
@@ -79,7 +79,7 @@ public final class CDOStateMachine
     INSTANCE.processEvent(object, Event.FINALIZE_ATTACH, resource, adapter);
   }
 
-  public void detach(CDOObjectImpl object, CDOResourceImpl resource, CDOAdapterImpl adapter)
+  public void detach(CDOObjectImpl object, CDOResourceImpl resource, CDOViewImpl adapter)
   {
     // TODO Implement method CDOStateMachine.detach()
     throw new UnsupportedOperationException("Not yet implemented");
@@ -223,7 +223,7 @@ public final class CDOStateMachine
     transition.execute(object, event, data1, data2);
   }
 
-  private static CDOTransactionImpl getTransaction(CDOAdapterImpl adapter)
+  private static CDOTransactionImpl getTransaction(CDOViewImpl adapter)
   {
     CDOTransactionImpl transaction = adapter.getTransaction();
     if (transaction == null)
@@ -301,7 +301,7 @@ public final class CDOStateMachine
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
       CDOResourceImpl resource = (CDOResourceImpl)data1;
-      CDOAdapterImpl adapter = (CDOAdapterImpl)data2;
+      CDOViewImpl adapter = (CDOViewImpl)data2;
       CDOTransactionImpl transaction = getTransaction(adapter);
 
       // Create new revision
@@ -374,7 +374,7 @@ public final class CDOStateMachine
   {
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
-      CDOAdapterImpl adapter = object.cdoAdapter();
+      CDOViewImpl adapter = object.cdoView();
       CommitTransactionResult result = (CommitTransactionResult)data1;
       Map<CDOID, CDOID> idMappings = result.getIdMappings();
 
@@ -409,7 +409,7 @@ public final class CDOStateMachine
       CDORevisionImpl revision = object.copyRevision();
       revision.increaseVersion();
 
-      CDOAdapterImpl adapter = object.cdoAdapter();
+      CDOViewImpl adapter = object.cdoView();
       CDOTransactionImpl transaction = getTransaction(adapter);
       transaction.registerDirty(object);
 
@@ -445,9 +445,8 @@ public final class CDOStateMachine
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
       CDOID id = object.cdoID();
-      CDOAdapterImpl adapter = object.cdoAdapter();
-      CDOViewImpl view = adapter.getView();
-      CDORevisionImpl revision = view.resolve(id);
+      CDOViewImpl adapter = object.cdoView();
+      CDORevisionImpl revision = adapter.resolve(id);
       object.setRevision(revision);
       object.setState(CDOState.CLEAN);
 
@@ -466,7 +465,7 @@ public final class CDOStateMachine
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
       CDOResourceImpl resource = (CDOResourceImpl)data1;
-      CDOAdapterImpl adapter = (CDOAdapterImpl)data2;
+      CDOViewImpl adapter = (CDOViewImpl)data2;
       CDOID id = requestID(resource, adapter);
       if (id == CDOID.NULL)
       {
@@ -483,7 +482,7 @@ public final class CDOStateMachine
       adapter.registerObject(object);
     }
 
-    private CDOID requestID(CDOResourceImpl resource, CDOAdapterImpl adapter)
+    private CDOID requestID(CDOResourceImpl resource, CDOViewImpl adapter)
     {
       String path = CDOUtil.extractPath(resource.getURI());
       ResourceIDRequest signal = new ResourceIDRequest(adapter.getSession().getChannel(), path);

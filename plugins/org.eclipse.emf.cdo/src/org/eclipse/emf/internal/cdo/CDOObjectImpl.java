@@ -73,9 +73,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     return state;
   }
 
-  public CDOAdapterImpl cdoAdapter()
+  public CDOViewImpl cdoView()
   {
-    return resource != null ? resource.cdoAdapter() : null;
+    return resource != null ? resource.cdoView() : null;
   }
 
   public CDOResourceImpl cdoResource()
@@ -127,7 +127,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     }
   }
 
-  void setAdapter(CDOAdapterImpl adapter)
+  void setAdapter(CDOViewImpl adapter)
   {
     if (this instanceof CDOResourceImpl)
     {
@@ -207,7 +207,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
       TRACER.format("Finalizing revision for {0}", this);
     }
 
-    CDOAdapterImpl adapter = cdoAdapter();
+    CDOViewImpl adapter = cdoView();
     revision.setVersion(1);
     revision.setContainerID(eContainer == null ? CDOID.NULL : ((CDOObjectImpl)eContainer).cdoID());
     revision.setContainingFeature(eContainerFeatureID);
@@ -226,7 +226,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     }
   }
 
-  private void finalizeRevisionFeature(CDOAdapterImpl adapter, CDORevisionImpl revision, int i, Object setting,
+  private void finalizeRevisionFeature(CDOViewImpl adapter, CDORevisionImpl revision, int i, Object setting,
       EStructuralFeature eFeature)
   {
     CDOFeatureImpl cdoFeature = EMFUtil.getCDOFeature(eFeature);

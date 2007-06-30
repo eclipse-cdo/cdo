@@ -15,9 +15,9 @@ import org.eclipse.net4j.util.container.IContainerEvent;
 /**
  * @author Eike Stepper
  */
-public interface CDOSessionAdaptersEvent extends IContainerEvent<CDOAdapter>
+public interface CDOSessionAdaptersEvent extends IContainerEvent<CDOView>
 {
   public CDOSession getSession();
 
-  public CDOAdapter getAdapter();
+  public CDOView getAdapter();
 }

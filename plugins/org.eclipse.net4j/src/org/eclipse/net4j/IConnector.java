@@ -60,6 +60,8 @@ import org.eclipse.internal.net4j.Connector;
  */
 public interface IConnector extends IContainer<IChannel>
 {
+  public String getURL();
+
   /**
    * Indicates which role this connector has played during the establishment of
    * the physical connection.

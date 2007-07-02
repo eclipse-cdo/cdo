@@ -16,6 +16,7 @@ import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.tcp.ITCPConnector;
+import org.eclipse.net4j.tcp.ITCPConstants;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelectorListener;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -99,11 +100,17 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     this.socketChannel = socketChannel;
   }
 
+  public String getURL()
+  {
+    return ITCPConstants.TYPE + "://" + host + ":" + port;
+  }
+
   /**
    * Called by {@link Channel} each time a new buffer is available for
    * multiplexing. This or another buffer can be dequeued from the outputQueue
    * of the {@link Channel}.
    */
+  @Override
   public void multiplexBuffer(IChannel channel)
   {
     checkSelectionKey();

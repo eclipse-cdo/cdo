@@ -32,8 +32,6 @@ public final class CDO
 
   public static final OMTracer DEBUG_SESSION = DEBUG.tracer("session"); //$NON-NLS-1$
 
-  public static final OMTracer DEBUG_ADAPTER = DEBUG.tracer("adapter"); //$NON-NLS-1$
-
   public static final OMTracer DEBUG_VIEW = DEBUG.tracer("view"); //$NON-NLS-1$
 
   public static final OMTracer DEBUG_TRANSCTION = DEBUG.tracer("transaction"); //$NON-NLS-1$

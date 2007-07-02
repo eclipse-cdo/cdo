@@ -34,7 +34,7 @@ public class CDOTransactionImpl
 
   private long nextTemporaryID = INITIAL_TEMPORARY_ID;
 
-  private CDOViewImpl adapter;
+  private CDOViewImpl view;
 
   private Map<CDOID, CDOResourceImpl> newResources = new HashMap();
 
@@ -42,14 +42,14 @@ public class CDOTransactionImpl
 
   private Map<CDOID, CDOObjectImpl> dirtyObjects = new HashMap();
 
-  public CDOTransactionImpl(CDOViewImpl adapter)
+  public CDOTransactionImpl(CDOViewImpl view)
   {
-    this.adapter = adapter;
+    this.view = view;
   }
 
-  public CDOViewImpl getAdapter()
+  public CDOViewImpl getView()
   {
-    return adapter;
+    return view;
   }
 
   public Map<CDOID, CDOResourceImpl> getNewResources()
@@ -86,14 +86,14 @@ public class CDOTransactionImpl
 
     try
     {
-      CDOSessionImpl session = adapter.getSession();
+      CDOSessionImpl session = view.getSession();
       CommitTransactionRequest signal = new CommitTransactionRequest(session.getChannel(), this);
       CommitTransactionResult result = signal.send();
 
       postCommit(newResources, result);
       postCommit(newObjects, result);
       postCommit(dirtyObjects, result);
-      session.notifyInvalidation(result.getTimeStamp(), dirtyObjects.keySet(), adapter);
+      session.notifyInvalidation(result.getTimeStamp(), dirtyObjects.keySet(), view);
 
       newResources.clear();
       newObjects.clear();

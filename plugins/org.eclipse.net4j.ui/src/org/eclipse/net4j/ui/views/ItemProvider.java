@@ -35,7 +35,7 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
   {
   }
 
-  public Object[] getElements(Object parent)
+  public final Object[] getElements(Object parent)
   {
     return getChildren(parent);
   }

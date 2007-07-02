@@ -10,17 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.internal.protocol.event.CDOEventImpl;
-import org.eclipse.emf.cdo.internal.protocol.event.CDOEventSourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.event.CDOInvalidationEvent;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.protocol.util.ImplementationError;
@@ -47,9 +44,9 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOViewImpl extends CDOEventSourceImpl implements CDOView, Adapter.Internal
+public class CDOViewImpl implements CDOView, Adapter.Internal
 {
-  private static final ContextTracer TRACER = new ContextTracer(CDO.DEBUG_ADAPTER, CDOViewImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(CDO.DEBUG_VIEW, CDOViewImpl.class);
 
   private CDOSessionImpl session;
 
@@ -169,6 +166,7 @@ public class CDOViewImpl extends CDOEventSourceImpl implements CDOView, Adapter.
       resourceObject.setResource(resource);
       resourceObject.setState(CDOState.PROXY);
 
+      resources.add(resource);
       return resource;
     }
     catch (Exception ex)
@@ -261,8 +259,6 @@ public class CDOViewImpl extends CDOEventSourceImpl implements CDOView, Adapter.
         CDOStateMachine.INSTANCE.invalidate(object, timeStamp);
       }
     }
-
-    fireObjectEvent(new CDOInvalidationEventImpl(timeStamp, dirtyOIDs));
   }
 
   public void commit()
@@ -279,14 +275,14 @@ public class CDOViewImpl extends CDOEventSourceImpl implements CDOView, Adapter.
 
   public void close()
   {
-    session.adapterDetached(this);
+    session.viewDetached(this);
   }
 
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOView({0}, {1})", isHistorical() ? new Date(timeStamp) : (isReadOnly() ? "readOnly"
-        : "readWrite"));
+    return MessageFormat.format("CDOView({0})", isHistorical() ? new Date(timeStamp) : isReadOnly() ? "readOnly"
+        : "readWrite");
   }
 
   public boolean isAdapterForType(Object type)
@@ -313,7 +309,7 @@ public class CDOViewImpl extends CDOEventSourceImpl implements CDOView, Adapter.
       if (resource instanceof CDOResourceImpl)
       {
         CDOResourceImpl cdoResource = (CDOResourceImpl)resource;
-        CDOStateMachine.INSTANCE.attach(cdoResource, cdoResource, this);
+        notifyAdd(cdoResource);
       }
     }
   }
@@ -326,7 +322,7 @@ public class CDOViewImpl extends CDOEventSourceImpl implements CDOView, Adapter.
       if (resource instanceof CDOResourceImpl)
       {
         CDOResourceImpl cdoResource = (CDOResourceImpl)resource;
-        CDOStateMachine.INSTANCE.detach(cdoResource, cdoResource, this);
+        notifyRemove(cdoResource);
       }
     }
 
@@ -367,8 +363,7 @@ public class CDOViewImpl extends CDOEventSourceImpl implements CDOView, Adapter.
   {
     if (msg.getNewValue() instanceof CDOResourceImpl)
     {
-      CDOResourceImpl cdoResource = (CDOResourceImpl)msg.getNewValue();
-      CDOStateMachine.INSTANCE.attach(cdoResource, cdoResource, this);
+      notifyAdd((CDOResourceImpl)msg.getNewValue());
     }
   }
 
@@ -382,19 +377,22 @@ public class CDOViewImpl extends CDOEventSourceImpl implements CDOView, Adapter.
       {
         if (!oldResources.contains(newResource))
         {
-          CDOResourceImpl cdoResource = (CDOResourceImpl)newResource;
-          CDOStateMachine.INSTANCE.attach(cdoResource, cdoResource, this);
+          notifyAdd((CDOResourceImpl)newResource);
         }
       }
     }
+  }
+
+  private void notifyAdd(CDOResourceImpl cdoResource)
+  {
+    CDOStateMachine.INSTANCE.attach(cdoResource, cdoResource, this);
   }
 
   private void notifyRemove(Notification msg)
   {
     if (msg.getOldValue() instanceof CDOResourceImpl)
     {
-      CDOResourceImpl cdoResource = (CDOResourceImpl)msg.getOldValue();
-      CDOStateMachine.INSTANCE.detach(cdoResource, cdoResource, this);
+      notifyRemove((CDOResourceImpl)msg.getOldValue());
     }
   }
 
@@ -408,11 +406,15 @@ public class CDOViewImpl extends CDOEventSourceImpl implements CDOView, Adapter.
       {
         if (!newResources.contains(oldResource))
         {
-          CDOResourceImpl cdoResource = (CDOResourceImpl)oldResource;
-          CDOStateMachine.INSTANCE.detach(cdoResource, cdoResource, this);
+          notifyRemove((CDOResourceImpl)oldResource);
         }
       }
     }
+  }
+
+  private void notifyRemove(CDOResourceImpl cdoResource)
+  {
+    CDOStateMachine.INSTANCE.detach(cdoResource, cdoResource, this);
   }
 
   private CDOObjectImpl createObjectFromView(CDOID id)
@@ -447,36 +449,39 @@ public class CDOViewImpl extends CDOEventSourceImpl implements CDOView, Adapter.
   {
     if (isReadOnly())
     {
-      throw new IllegalStateException("CDO adapter is read only");
+      throw new IllegalStateException("CDO view is read only");
     }
   }
 
-  public static class CDOInvalidationEventImpl extends CDOEventImpl implements CDOInvalidationEvent
-  {
-    private long timeStamp;
-
-    private Set<CDOID> dirtyOIDs;
-
-    public CDOInvalidationEventImpl(long timeStamp, Set<CDOID> dirtyOIDs)
-    {
-      this.timeStamp = timeStamp;
-      this.dirtyOIDs = dirtyOIDs;
-    }
-
-    public long getTimeStamp()
-    {
-      return timeStamp;
-    }
-
-    public Set<CDOID> getDirtyOIDs()
-    {
-      return dirtyOIDs;
-    }
-
-    @Override
-    public String toString()
-    {
-      return "CDOInvalidationEvent" + dirtyOIDs;
-    }
-  }
+  // public final class HistoryEntryImpl implements HistoryEntry, Comparable
+  // {
+  // private String resourcePath;
+  //
+  // private HistoryEntryImpl(String resourcePath)
+  // {
+  // this.resourcePath = resourcePath;
+  // }
+  //
+  // public CDOView getView()
+  // {
+  // return CDOViewImpl.this;
+  // }
+  //
+  // public String getResourcePath()
+  // {
+  // return resourcePath;
+  // }
+  //
+  // public int compareTo(Object o)
+  // {
+  // HistoryEntry that = (HistoryEntry)o;
+  // return resourcePath.compareTo(that.getResourcePath());
+  // }
+  //
+  // @Override
+  // public String toString()
+  // {
+  // return resourcePath;
+  // }
+  // }
 }

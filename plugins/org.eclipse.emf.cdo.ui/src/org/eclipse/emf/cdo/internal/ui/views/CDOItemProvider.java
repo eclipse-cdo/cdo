@@ -10,11 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.views;
 
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.internal.ui.ResourceHistory;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
-import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 
+import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.ui.actions.LongRunningAction;
 import org.eclipse.net4j.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.ui.views.IElementFilter;
@@ -25,12 +26,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.part.ISetSelectionTarget;
+
+import java.util.Date;
 
 /**
  * @author Eike Stepper
@@ -48,6 +48,39 @@ public class CDOItemProvider extends ContainerItemProvider
   {
     super(rootElementFilter);
     this.page = page;
+  }
+
+  @Override
+  public Object[] getChildren(Object element)
+  {
+    if (element instanceof CDOView)
+    {
+      CDOView view = (CDOView)element;
+      return getResources(view);
+    }
+
+    return super.getChildren(element);
+  }
+
+  @Override
+  public String getText(Object obj)
+  {
+    if (obj instanceof CDOSession)
+    {
+      CDOSession session = (CDOSession)obj;
+      IConnector connector = session.getChannel().getConnector();
+      String repositoryName = session.getRepositoryName();
+      return connector.getURL() + "/" + repositoryName;
+    }
+
+    if (obj instanceof CDOView)
+    {
+      CDOView view = (CDOView)obj;
+      return view.isHistorical() ? new Date(view.getTimeStamp()).toString() : view.isReadOnly() ? "readOnly"
+          : "readWrite";
+    }
+
+    return super.getText(obj);
   }
 
   @Override
@@ -87,7 +120,7 @@ public class CDOItemProvider extends ContainerItemProvider
       if (object instanceof CDOSession)
       {
         CDOSession session = (CDOSession)object;
-        manager.add(new OpenEditorAction("Open Editor", "Open a CDO editor", session)
+        manager.add(new OpenViewAction("Open View", "Open a CDO view", session)
         {
           @Override
           protected CDOView createView()
@@ -96,7 +129,7 @@ public class CDOItemProvider extends ContainerItemProvider
           }
         });
 
-        manager.add(new OpenEditorAction("Open Read-Only Editor", "Open a read-only CDO editor", session)
+        manager.add(new OpenViewAction("Open Read-Only View", "Open a read-only CDO view", session)
         {
           @Override
           protected CDOView createView()
@@ -105,7 +138,7 @@ public class CDOItemProvider extends ContainerItemProvider
           }
         });
 
-        manager.add(new OpenEditorAction("Open Historical Editor", "Open a historical CDO editor", session)
+        manager.add(new OpenViewAction("Open Historical View", "Open a historical CDO view", session)
         {
           @Override
           protected CDOView createView()
@@ -125,11 +158,11 @@ public class CDOItemProvider extends ContainerItemProvider
   /**
    * @author Eike Stepper
    */
-  private abstract class OpenEditorAction extends LongRunningAction
+  private abstract class OpenViewAction extends LongRunningAction
   {
     private CDOSession session;
 
-    public OpenEditorAction(String text, String toolTipText, CDOSession session)
+    public OpenViewAction(String text, String toolTipText, CDOSession session)
     {
       super(page, text, toolTipText, getOpenEditorImageDescriptor());
       this.session = session;
@@ -143,38 +176,41 @@ public class CDOItemProvider extends ContainerItemProvider
     @Override
     protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
     {
-      final Exception[] exception = new Exception[1];
-      final CDOView view = createView();
-      final IWorkbenchPart part = page.getActivePart();
-      getDisplay().asyncExec(new Runnable()
-      {
-        public void run()
-        {
-          try
-          {
-            if (part instanceof ISetSelectionTarget)
-            {
-              ((ISetSelectionTarget)part).selectReveal(new StructuredSelection(view));
-            }
-
-            CDOEditor.open(page, view, "/res/test");
-          }
-          catch (Exception ex)
-          {
-            exception[0] = ex;
-          }
-        }
-      });
-
-      if (exception[0] != null)
-      {
-        throw exception[0];
-      }
+      // final Exception[] exception = new Exception[1];
+      // final CDOView view =
+      createView();
+      // final IWorkbenchPart part = page.getActivePart();
+      // getDisplay().asyncExec(new Runnable()
+      // {
+      // public void run()
+      // {
+      // try
+      // {
+      // if (part instanceof ISetSelectionTarget)
+      // {
+      // ((ISetSelectionTarget)part).selectReveal(new
+      // StructuredSelection(view));
+      // }
+      //
+      // CDOEditor.open(page, view, "/res/test");
+      // }
+      // catch (Exception ex)
+      // {
+      // exception[0] = ex;
+      // }
+      // }
+      // });
+      //
+      // if (exception[0] != null)
+      // {
+      // throw exception[0];
+      // }
     }
 
     protected abstract CDOView createView();
   }
 
+  @Override
   protected Display getDisplay()
   {
     Display display = getViewer().getControl().getDisplay();
@@ -194,5 +230,10 @@ public class CDOItemProvider extends ContainerItemProvider
     }
 
     return display;
+  }
+
+  protected Object[] getResources(CDOView view)
+  {
+    return ResourceHistory.INSTANCE.getEntries(view);
   }
 }

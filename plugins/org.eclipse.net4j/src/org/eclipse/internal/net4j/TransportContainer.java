@@ -12,7 +12,7 @@ package org.eclipse.internal.net4j;
 
 import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.ITransportContainer;
-import org.eclipse.net4j.TransportUtil;
+import org.eclipse.net4j.BufferUtil;
 import org.eclipse.net4j.internal.util.concurrent.NamedExecutorService;
 import org.eclipse.net4j.internal.util.container.ManagedContainer;
 import org.eclipse.net4j.util.container.IElementProcessor;
@@ -74,7 +74,7 @@ public class TransportContainer extends ManagedContainer implements ITransportCo
 
   protected IBufferProvider createBufferProvider()
   {
-    return TransportUtil.createBufferPool(getBufferCapacity());
+    return BufferUtil.createBufferPool(getBufferCapacity());
   }
 
   protected ExecutorService createExecutorService()

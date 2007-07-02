@@ -17,11 +17,11 @@ import org.eclipse.internal.net4j.BufferPool;
  * @author Eike Stepper
  * @since 0.8.0
  */
-public final class TransportUtil
+public final class BufferUtil
 {
   public static final short DEFAULT_BUFFER_CAPACITY = 4096;
 
-  private TransportUtil()
+  private BufferUtil()
   {
   }
 

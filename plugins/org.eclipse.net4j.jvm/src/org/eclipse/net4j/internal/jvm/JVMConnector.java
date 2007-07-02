@@ -14,6 +14,7 @@ import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IProtocol;
+import org.eclipse.net4j.jvm.IJVMConstants;
 
 import org.eclipse.internal.net4j.Channel;
 import org.eclipse.internal.net4j.Connector;
@@ -55,6 +56,27 @@ public abstract class JVMConnector extends Connector
     this.peer = peer;
   }
 
+  public String getURL()
+  {
+    return IJVMConstants.TYPE + "://" + name;
+  }
+
+  @Override
+  public void multiplexBuffer(IChannel localChannel)
+  {
+    short channelIndex = localChannel.getChannelIndex();
+    Channel peerChannel = peer.getChannel(channelIndex);
+    if (peerChannel == null)
+    {
+      throw new IllegalStateException("peerChannel == null"); //$NON-NLS-1$
+    }
+
+    Queue<IBuffer> localQueue = ((Channel)localChannel).getSendQueue();
+    IBuffer buffer = localQueue.poll();
+    buffer.flip();
+    peerChannel.handleBufferFromMultiplexer(buffer);
+  }
+
   @Override
   protected void registerChannelWithPeer(short channelIndex, IProtocol protocol) throws ConnectorException
   {
@@ -76,21 +98,6 @@ public abstract class JVMConnector extends Connector
     {
       throw new ConnectorException(ex);
     }
-  }
-
-  public void multiplexBuffer(IChannel localChannel)
-  {
-    short channelIndex = localChannel.getChannelIndex();
-    Channel peerChannel = peer.getChannel(channelIndex);
-    if (peerChannel == null)
-    {
-      throw new IllegalStateException("peerChannel == null"); //$NON-NLS-1$
-    }
-
-    Queue<IBuffer> localQueue = ((Channel)localChannel).getSendQueue();
-    IBuffer buffer = localQueue.poll();
-    buffer.flip();
-    peerChannel.handleBufferFromMultiplexer(buffer);
   }
 
   @Override

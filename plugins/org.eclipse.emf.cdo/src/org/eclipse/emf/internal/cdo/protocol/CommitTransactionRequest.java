@@ -54,7 +54,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
       {
         try
         {
-          CDOID id = (CDOID)CDOStore.convertToID(transaction.getAdapter(), object);
+          CDOID id = (CDOID)CDOStore.convertToID(transaction.getView(), object);
           if (PROTOCOL.isEnabled())
           {
             PROTOCOL.format("Converted dangling reference: {0} --> {1}", object, id);

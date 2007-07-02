@@ -10,8 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOSessionAdaptersEvent;
+import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -20,6 +21,7 @@ import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.internal.util.container.SingleDeltaContainerEvent;
+import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.container.IContainerDelta;
@@ -60,7 +62,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   private CDORevisionManagerImpl revisionManager;
 
-  private Map<ResourceSet, CDOViewImpl> adapters = new HashMap();
+  private Map<ResourceSet, CDOViewImpl> views = new HashMap();
 
   private IListener channelListener = new LifecycleEventAdapter()
   {
@@ -159,9 +161,9 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
   public CDOViewImpl[] getViews()
   {
     Collection<CDOViewImpl> values;
-    synchronized (adapters)
+    synchronized (views)
     {
-      values = adapters.values();
+      values = views.values();
     }
     return values.toArray(new CDOViewImpl[values.size()]);
   }
@@ -173,34 +175,36 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   public boolean isEmpty()
   {
-    return adapters.isEmpty();
+    return views.isEmpty();
   }
 
-  public void adapterDetached(CDOViewImpl adapter)
+  public void viewDetached(CDOViewImpl view)
   {
-    synchronized (adapters)
+    synchronized (views)
     {
-      adapters.remove(adapter.getResourceSet());
-      fireEvent(new CDOSessionAdaptersEventImpl(this, adapter, IContainerDelta.Kind.REMOVED));
+      views.remove(view.getResourceSet());
+      fireEvent(new ViewsEvent(view, IContainerDelta.Kind.REMOVED));
     }
   }
 
-  public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs, CDOViewImpl excludedAdapter)
+  public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs, CDOViewImpl excludedView)
   {
     CDOViewImpl[] values;
-    synchronized (adapters)
+    synchronized (views)
     {
-      values = adapters.values().toArray(new CDOViewImpl[adapters.size()]);
+      values = views.values().toArray(new CDOViewImpl[views.size()]);
     }
 
     Set<CDOID> unmodifiableSet = Collections.unmodifiableSet(dirtyOIDs);
-    for (CDOViewImpl adapter : values)
+    for (CDOViewImpl view : values)
     {
-      if (adapter != excludedAdapter)
+      if (view != excludedView)
       {
-        adapter.notifyInvalidation(timeStamp, unmodifiableSet);
+        view.notifyInvalidation(timeStamp, unmodifiableSet);
       }
     }
+
+    fireEvent(new InvalidationEvent(excludedView, timeStamp, unmodifiableSet));
   }
 
   @Override
@@ -245,38 +249,37 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   private void prepare(ResourceSet resourceSet)
   {
-    CDOView adapter = CDOUtil.getView(resourceSet);
-    if (adapter != null)
+    CDOView view = CDOUtil.getView(resourceSet);
+    if (view != null)
     {
-      throw new IllegalStateException("CDO adapter already present: " + adapter);
+      throw new IllegalStateException("CDO view already present: " + view);
     }
 
     CDOUtil.addResourceFactory(resourceSet);
   }
 
-  private CDOViewImpl attach(ResourceSet resourceSet, CDOViewImpl adapter)
+  private CDOViewImpl attach(ResourceSet resourceSet, CDOViewImpl view)
   {
-    synchronized (adapters)
+    synchronized (views)
     {
-      resourceSet.eAdapters().add(adapter);
-      adapters.put(resourceSet, adapter);
-      fireEvent(new CDOSessionAdaptersEventImpl(this, adapter, IContainerDelta.Kind.ADDED));
+      resourceSet.eAdapters().add(view);
+      views.put(resourceSet, view);
+      fireEvent(new ViewsEvent(view, IContainerDelta.Kind.ADDED));
     }
 
-    return adapter;
+    return view;
   }
 
   /**
    * @author Eike Stepper
    */
-  private static class CDOSessionAdaptersEventImpl extends SingleDeltaContainerEvent<CDOView> implements
-      CDOSessionAdaptersEvent
+  private final class ViewsEvent extends SingleDeltaContainerEvent<CDOView> implements CDOSessionViewsEvent
   {
     private static final long serialVersionUID = 1L;
 
-    public CDOSessionAdaptersEventImpl(CDOSession session, CDOView adapter, Kind kind)
+    public ViewsEvent(CDOView view, Kind kind)
     {
-      super(session, adapter, kind);
+      super(CDOSessionImpl.this, view, kind);
     }
 
     public CDOSession getSession()
@@ -284,9 +287,54 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
       return (CDOSession)getContainer();
     }
 
-    public CDOView getAdapter()
+    public CDOView getView()
     {
       return getDeltaElement();
+    }
+  }
+
+  private final class InvalidationEvent extends Event implements CDOSessionInvalidationEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private CDOViewImpl view;
+
+    private long timeStamp;
+
+    private Set<CDOID> dirtyOIDs;
+
+    public InvalidationEvent(CDOViewImpl view, long timeStamp, Set<CDOID> dirtyOIDs)
+    {
+      super(CDOSessionImpl.this);
+      this.view = view;
+      this.timeStamp = timeStamp;
+      this.dirtyOIDs = dirtyOIDs;
+    }
+
+    public CDOSession getSession()
+    {
+      return CDOSessionImpl.this;
+    }
+
+    public CDOViewImpl getView()
+    {
+      return view;
+    }
+
+    public long getTimeStamp()
+    {
+      return timeStamp;
+    }
+
+    public Set<CDOID> getDirtyOIDs()
+    {
+      return dirtyOIDs;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "CDOSessionInvalidationEvent" + dirtyOIDs;
     }
   }
 }

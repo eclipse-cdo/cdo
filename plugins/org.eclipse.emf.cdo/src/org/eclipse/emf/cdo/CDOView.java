@@ -12,17 +12,15 @@ package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.event.CDOEventSource;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * @author Eike Stepper
  */
-public interface CDOView extends CDOEventSource, Adapter
+public interface CDOView
 {
   public static final long UNSPECIFIED_DATE = CDORevision.UNSPECIFIED_DATE;
 
@@ -48,6 +46,8 @@ public interface CDOView extends CDOEventSource, Adapter
    */
   public CDOResource getResource(String path);
 
+  public CDORevision resolve(CDOID id);
+
   /**
    * @see CDOTransaction#commit()
    */
@@ -59,6 +59,4 @@ public interface CDOView extends CDOEventSource, Adapter
   public void rollback();
 
   public void close();
-
-  public CDORevision resolve(CDOID id);
 }

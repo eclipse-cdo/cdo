@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.CDOViewResourcesEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
@@ -24,6 +25,7 @@ import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -44,7 +46,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOViewImpl implements CDOView, Adapter.Internal
+public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier implements CDOView, Adapter.Internal
 {
   private static final ContextTracer TRACER = new ContextTracer(CDO.DEBUG_VIEW, CDOViewImpl.class);
 
@@ -377,6 +379,7 @@ public class CDOViewImpl implements CDOView, Adapter.Internal
       {
         if (!oldResources.contains(newResource))
         {
+          // TODO Optimize event notification with IContainerEvent
           notifyAdd((CDOResourceImpl)newResource);
         }
       }
@@ -386,6 +389,7 @@ public class CDOViewImpl implements CDOView, Adapter.Internal
   private void notifyAdd(CDOResourceImpl cdoResource)
   {
     CDOStateMachine.INSTANCE.attach(cdoResource, cdoResource, this);
+    fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.ADDED));
   }
 
   private void notifyRemove(Notification msg)
@@ -406,6 +410,7 @@ public class CDOViewImpl implements CDOView, Adapter.Internal
       {
         if (!newResources.contains(oldResource))
         {
+          // TODO Optimize event notification with IContainerEvent
           notifyRemove((CDOResourceImpl)oldResource);
         }
       }
@@ -415,6 +420,7 @@ public class CDOViewImpl implements CDOView, Adapter.Internal
   private void notifyRemove(CDOResourceImpl cdoResource)
   {
     CDOStateMachine.INSTANCE.detach(cdoResource, cdoResource, this);
+    fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.REMOVED));
   }
 
   private CDOObjectImpl createObject(CDOID id)
@@ -484,4 +490,44 @@ public class CDOViewImpl implements CDOView, Adapter.Internal
   // return resourcePath;
   // }
   // }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ResourcesEvent extends Event implements CDOViewResourcesEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private String resourcePath;
+
+    private Kind kind;
+
+    public ResourcesEvent(String resourcePath, Kind kind)
+    {
+      super(CDOViewImpl.this);
+      this.resourcePath = resourcePath;
+      this.kind = kind;
+    }
+
+    public CDOViewImpl getView()
+    {
+      return CDOViewImpl.this;
+    }
+
+    public String getResourcePath()
+    {
+      return resourcePath;
+    }
+
+    public Kind getKind()
+    {
+      return kind;
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("CDOViewResourcesEvent[{0}, {1}, {2}]", getView(), resourcePath, kind);
+    }
+  }
 }

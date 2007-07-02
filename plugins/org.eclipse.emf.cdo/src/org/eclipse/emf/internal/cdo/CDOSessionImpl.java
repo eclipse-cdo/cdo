@@ -284,7 +284,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
     public CDOSession getSession()
     {
-      return (CDOSession)getContainer();
+      return CDOSessionImpl.this;
     }
 
     public CDOView getView()

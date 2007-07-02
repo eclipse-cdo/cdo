@@ -14,13 +14,15 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
+import org.eclipse.net4j.util.event.INotifier;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * @author Eike Stepper
  */
-public interface CDOView
+public interface CDOView extends INotifier
 {
   public static final long UNSPECIFIED_DATE = CDORevision.UNSPECIFIED_DATE;
 

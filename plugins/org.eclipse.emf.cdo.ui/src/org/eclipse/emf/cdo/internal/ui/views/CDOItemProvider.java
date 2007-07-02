@@ -155,6 +155,33 @@ public class CDOItemProvider extends ContainerItemProvider
     return SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_EDITOR);
   }
 
+  @Override
+  protected Display getDisplay()
+  {
+    Display display = getViewer().getControl().getDisplay();
+    if (display == null)
+    {
+      display = Display.getCurrent();
+    }
+
+    if (display == null)
+    {
+      display = Display.getDefault();
+    }
+
+    if (display == null)
+    {
+      throw new IllegalStateException("display == null");
+    }
+
+    return display;
+  }
+
+  protected Object[] getResources(CDOView view)
+  {
+    return ResourceHistory.INSTANCE.getEntries(view);
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -208,32 +235,5 @@ public class CDOItemProvider extends ContainerItemProvider
     }
 
     protected abstract CDOView createView();
-  }
-
-  @Override
-  protected Display getDisplay()
-  {
-    Display display = getViewer().getControl().getDisplay();
-    if (display == null)
-    {
-      display = Display.getCurrent();
-    }
-
-    if (display == null)
-    {
-      display = Display.getDefault();
-    }
-
-    if (display == null)
-    {
-      throw new IllegalStateException("display == null");
-    }
-
-    return display;
-  }
-
-  protected Object[] getResources(CDOView view)
-  {
-    return ResourceHistory.INSTANCE.getEntries(view);
   }
 }

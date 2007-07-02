@@ -9,26 +9,28 @@ package org.eclipse.emf.cdo.eresource;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource</b></em>'.
  * <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getResourceSet <em>Resource Set</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getURI <em>URI</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getContents <em>Contents</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isModified <em>Modified</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded <em>Loaded</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification <em>Tracking Modification</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getErrors <em>Errors</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getWarnings <em>Warnings</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getResourceSet <em>Resource Set</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getURI <em>URI</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getContents <em>Contents</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isModified <em>Modified</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded <em>Loaded</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification <em>Tracking Modification</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getErrors <em>Errors</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getWarnings <em>Warnings</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource()
  * @model
  * @extends EresourceObject
@@ -37,13 +39,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 public interface CDOResource extends EresourceObject
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  String copyright = "";
-
-  /**
    * Returns the value of the '<em><b>Resource Set</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
@@ -51,22 +46,18 @@ public interface CDOResource extends EresourceObject
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Resource Set</em>' attribute.
    * @see #setResourceSet(ResourceSet)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_ResourceSet()
-   * @model dataType="org.eclipse.emf.cdo.eresource.ResourceSet"
-   *        transient="true"
+   * @model dataType="org.eclipse.emf.cdo.eresource.ResourceSet" transient="true"
    * @generated
    */
   ResourceSet getResourceSet();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#getResourceSet <em>Resource Set</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Resource Set</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#getResourceSet <em>Resource Set</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Resource Set</em>' attribute.
    * @see #getResourceSet()
    * @generated
    */
@@ -90,30 +81,26 @@ public interface CDOResource extends EresourceObject
   URI getURI();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#getURI <em>URI</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>URI</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#getURI <em>URI</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>URI</em>' attribute.
    * @see #getURI()
    * @generated
    */
   void setURI(URI value);
 
   /**
-   * Returns the value of the '<em><b>Contents</b></em>' containment
-   * reference list. The list contents are of type
-   * {@link org.eclipse.emf.ecore.EObject}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Contents</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Contents</em>' containment reference list
    * isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
-   * @return the value of the '<em>Contents</em>' containment reference
-   *         list.
+   * @return the value of the '<em>Contents</em>' containment reference list.
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Contents()
-   * @model type="org.eclipse.emf.ecore.EObject" containment="true"
+   * @model containment="true"
    * @generated
    */
   EList<EObject> getContents();
@@ -136,11 +123,9 @@ public interface CDOResource extends EresourceObject
   boolean isModified();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#isModified <em>Modified</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Modified</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#isModified <em>Modified</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Modified</em>' attribute.
    * @see #isModified()
    * @generated
    */
@@ -164,25 +149,22 @@ public interface CDOResource extends EresourceObject
   boolean isLoaded();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded <em>Loaded</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Loaded</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded <em>Loaded</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Loaded</em>' attribute.
    * @see #isLoaded()
    * @generated
    */
   void setLoaded(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Tracking Modification</b></em>'
-   * attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Tracking Modification</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Tracking Modification</em>' attribute isn't
    * clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Tracking Modification</em>' attribute.
    * @see #setTrackingModification(boolean)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_TrackingModification()
@@ -192,12 +174,9 @@ public interface CDOResource extends EresourceObject
   boolean isTrackingModification();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification <em>Tracking Modification</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Tracking Modification</em>'
-   *          attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification <em>Tracking Modification</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Tracking Modification</em>' attribute.
    * @see #isTrackingModification()
    * @generated
    */
@@ -259,11 +238,9 @@ public interface CDOResource extends EresourceObject
   String getPath();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Path</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Path</em>' attribute.
    * @see #getPath()
    * @generated
    */

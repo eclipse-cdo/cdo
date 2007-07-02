@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -47,29 +48,22 @@ import java.util.Map;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getResourceSet <em>Resource Set</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getURI <em>URI</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getContents <em>Contents</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isModified <em>Modified</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isLoaded <em>Loaded</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isTrackingModification <em>Tracking Modification</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getErrors <em>Errors</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getWarnings <em>Warnings</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getPath <em>Path</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getResourceSet <em>Resource Set</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getURI <em>URI</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getContents <em>Contents</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isModified <em>Modified</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isLoaded <em>Loaded</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isTrackingModification <em>Tracking Modification</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getErrors <em>Errors</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getWarnings <em>Warnings</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getPath <em>Path</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 {
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "";
-
   /**
    * @ADDED
    */
@@ -87,7 +81,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOResourceImpl()
@@ -97,7 +90,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -107,8 +99,18 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected int eStaticFeatureCount()
+  {
+    return 0;
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ResourceSet getResourceSet()
@@ -118,7 +120,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setResourceSet(ResourceSet newResourceSet)
@@ -128,7 +129,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public URI getURI()
@@ -171,7 +171,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isModified()
@@ -181,7 +180,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setModified(boolean newModified)
@@ -191,7 +189,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isLoaded()
@@ -201,7 +198,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setLoaded(boolean newLoaded)
@@ -211,7 +207,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isTrackingModification()
@@ -221,7 +216,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTrackingModification(boolean newTrackingModification)
@@ -231,9 +225,9 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
+  @SuppressWarnings("unchecked")
   public EList<Diagnostic> getErrors()
   {
     return (EList<Diagnostic>)eGet(EresourcePackage.Literals.CDO_RESOURCE__ERRORS, true);
@@ -241,9 +235,9 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
+  @SuppressWarnings("unchecked")
   public EList<Diagnostic> getWarnings()
   {
     return (EList<Diagnostic>)eGet(EresourcePackage.Literals.CDO_RESOURCE__WARNINGS, true);
@@ -251,7 +245,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getPath()

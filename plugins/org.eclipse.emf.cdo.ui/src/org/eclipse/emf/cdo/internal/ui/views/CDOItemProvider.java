@@ -230,8 +230,9 @@ public class CDOItemProvider extends ContainerItemProvider
         @Override
         protected void preRun(IWorkbenchPage page) throws Exception
         {
+          int number = (int)(Math.random() * 10000000.0);
           InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Create Resource",
-              "Enter resource path:", "/res" + (int)Math.random(), null);
+              "Enter resource path:", "/res" + number, null);
           if (dialog.open() == InputDialog.OK)
           {
             resourcePath = dialog.getValue();

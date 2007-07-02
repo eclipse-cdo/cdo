@@ -76,8 +76,8 @@ public class CDOItemProvider extends ContainerItemProvider
     if (obj instanceof CDOView)
     {
       CDOView view = (CDOView)obj;
-      return view.isHistorical() ? new Date(view.getTimeStamp()).toString() : view.isReadOnly() ? "readOnly"
-          : "readWrite";
+      return view.isHistorical() ? new Date(view.getTimeStamp()).toString() : view.isReadOnly() ? "View"
+          : "Transaction";
     }
 
     return super.getText(obj);
@@ -120,7 +120,7 @@ public class CDOItemProvider extends ContainerItemProvider
       if (object instanceof CDOSession)
       {
         CDOSession session = (CDOSession)object;
-        manager.add(new OpenViewAction("Open View", "Open a CDO view", session)
+        manager.add(new OpenViewAction("Open Transaction", "Open a CDO transaction", session)
         {
           @Override
           protected CDOView createView()
@@ -129,7 +129,7 @@ public class CDOItemProvider extends ContainerItemProvider
           }
         });
 
-        manager.add(new OpenViewAction("Open Read-Only View", "Open a read-only CDO view", session)
+        manager.add(new OpenViewAction("Open View", "Open a read-only CDO view", session)
         {
           @Override
           protected CDOView createView()

@@ -185,7 +185,7 @@ public class CDOViewImpl implements CDOView, Adapter.Internal
     CDOObjectImpl object = objects.get(id);
     if (object == null)
     {
-      object = createObjectFromView(id);
+      object = createObject(id);
       registerObject(object);
     }
 
@@ -417,7 +417,7 @@ public class CDOViewImpl implements CDOView, Adapter.Internal
     CDOStateMachine.INSTANCE.detach(cdoResource, cdoResource, this);
   }
 
-  private CDOObjectImpl createObjectFromView(CDOID id)
+  private CDOObjectImpl createObject(CDOID id)
   {
     if (TRACER.isEnabled())
     {

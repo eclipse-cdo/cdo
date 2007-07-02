@@ -103,7 +103,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public boolean isReadWrite()
   {
-    return timeStamp == CDOView.UNSPECIFIED_DATE;
+    return transaction != null;
   }
 
   public boolean isReadOnly()

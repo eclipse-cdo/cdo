@@ -55,7 +55,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
       Node node = getNode(element);
       return !node.getChildren().isEmpty();
     }
-    catch (RuntimeException ex)
+    catch (Exception ex)
     {
       return false;
     }
@@ -117,6 +117,14 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
     root.dispose();
     root = null;
     nodes.clear();
+  }
+
+  protected void elementAdded(Object element, Object parent)
+  {
+  }
+
+  protected void elementRemoved(Object element, Object parent)
+  {
   }
 
   protected ContainerNode getRoot()
@@ -246,7 +254,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
       {
         if (container == ContainerNode.this.container)
         {
-          elementAdded(element);
+          Node node = addChild(getChildren(), element);
+          if (node != null)
+          {
+            refreshElement(container, false);
+            elementAdded(element, container);
+          }
         }
       }
 
@@ -255,7 +268,14 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
       {
         if (container == ContainerNode.this.container)
         {
-          elementRemoved(element);
+          Node node = nodes.remove(element);
+          if (node != null)
+          {
+            getChildren().remove(node);
+            node.dispose();
+            refreshElement(container, false);
+            elementRemoved(element, container);
+          }
         }
       }
     };
@@ -266,6 +286,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
       this.container = container;
     }
 
+    @Override
     public void dispose()
     {
       container.removeListener(containerListener);
@@ -309,34 +330,6 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
       }
 
       return null;
-    }
-
-    protected void elementAdded(final Object element)
-    {
-      if (addChild(getChildren(), element) != null)
-      {
-        refreshElement(getElement(), false);
-      }
-    }
-
-    protected void elementRemoved(Object element)
-    {
-      Node node = nodes.remove(element);
-      if (node != null)
-      {
-        Object parentElement = node.getParent().getElement();
-        getChildren().remove(node);
-        node.dispose();
-
-        if (parentElement == null)
-        {
-          refreshElement(root, false);
-        }
-        else
-        {
-          refreshElement(parentElement, false);
-        }
-      }
     }
   }
 

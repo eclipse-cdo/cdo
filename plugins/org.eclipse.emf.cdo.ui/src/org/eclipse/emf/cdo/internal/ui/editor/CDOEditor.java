@@ -896,41 +896,49 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   public void createModel()
   {
-    CDOEditorInput input = (CDOEditorInput)getEditorInput();
-    adapter = input.getView();
-    URI resourceURI = CDOUtil.createURI(input.getResourcePath());
-
-    BasicCommandStack commandStack = new BasicCommandStack();
-    commandStack.addCommandStackListener(new CommandStackListener()
+    try
     {
-      public void commandStackChanged(final EventObject event)
+      CDOEditorInput input = (CDOEditorInput)getEditorInput();
+      adapter = input.getView();
+      URI resourceURI = CDOUtil.createURI(input.getResourcePath());
+
+      BasicCommandStack commandStack = new BasicCommandStack();
+      commandStack.addCommandStackListener(new CommandStackListener()
       {
-        getContainer().getDisplay().asyncExec(new Runnable()
+        public void commandStackChanged(final EventObject event)
         {
-          public void run()
+          getContainer().getDisplay().asyncExec(new Runnable()
           {
-            firePropertyChange(IEditorPart.PROP_DIRTY);
-
-            Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
-            if (mostRecentCommand != null)
+            public void run()
             {
-              setSelectionToViewer(mostRecentCommand.getAffectedObjects());
-            }
-            if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
-            {
-              propertySheetPage.refresh();
-            }
-          }
-        });
-      }
-    });
+              firePropertyChange(IEditorPart.PROP_DIRTY);
 
-    ResourceSet resourceSet = adapter.getResourceSet();
-    editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, resourceSet);
-    editingDomain.setResourceToReadOnlyMap(new HashMap<Resource, Boolean>());
+              Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
+              if (mostRecentCommand != null)
+              {
+                setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+              }
+              if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
+              {
+                propertySheetPage.refresh();
+              }
+            }
+          });
+        }
+      });
 
-    resourceSet.getResource(resourceURI, true);
-    resourceSet.eAdapters().add(problemIndicationAdapter);
+      ResourceSet resourceSet = adapter.getResourceSet();
+      editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, resourceSet);
+      editingDomain.setResourceToReadOnlyMap(new HashMap<Resource, Boolean>());
+
+      resourceSet.getResource(resourceURI, true);
+      resourceSet.eAdapters().add(problemIndicationAdapter);
+    }
+    catch (RuntimeException ex)
+    {
+      ex.printStackTrace();
+      throw ex;
+    }
   }
 
   /**
@@ -965,7 +973,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * This is the method used by the framework to install your own controls. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   @Override
   public void createPages()
@@ -976,28 +984,29 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     // Only creates the other pages if there is something that can be edited
     //
-    if (!getEditingDomain().getResourceSet().getResources().isEmpty()
-        && !(getEditingDomain().getResourceSet().getResources().get(0)).getContents().isEmpty())
-    {
-      // Create a page for the selection tree view.
-      //
-      Tree tree = new Tree(getContainer(), SWT.MULTI);
-      selectionViewer = new TreeViewer(tree);
-      setCurrentViewer(selectionViewer);
+    // if (!getEditingDomain().getResourceSet().getResources().isEmpty()
+    // &&
+    // !getEditingDomain().getResourceSet().getResources().get(0).getContents().isEmpty())
+    // {
+    // Create a page for the selection tree view.
+    //
+    Tree tree = new Tree(getContainer(), SWT.MULTI);
+    selectionViewer = new TreeViewer(tree);
+    setCurrentViewer(selectionViewer);
 
-      selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-      selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-      selectionViewer.setInput(editingDomain.getResourceSet());
-      selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
+    selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+    selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+    selectionViewer.setInput(editingDomain.getResourceSet());
+    selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
 
-      new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
+    new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
 
-      createContextMenuFor(selectionViewer);
-      int pageIndex = addPage(tree);
-      setPageText(pageIndex, getString("_UI_SelectionPage_label"));
+    createContextMenuFor(selectionViewer);
+    int pageIndex = addPage(tree);
+    setPageText(pageIndex, getString("_UI_SelectionPage_label"));
 
-      setActivePage(0);
-    }
+    setActivePage(0);
+    // }
 
     // Ensures that this editor will only display the page's tab
     // area if there are more than one page
@@ -1387,7 +1396,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected void doSaveAs(URI uri, IEditorInput editorInput)
   {
-    (editingDomain.getResourceSet().getResources().get(0)).setURI(uri);
+    editingDomain.getResourceSet().getResources().get(0).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()
@@ -1659,17 +1668,22 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  public static CDOEditor open(IWorkbenchPage page, CDOView adapter, String resourcePath)
+  public static CDOEditor open(IWorkbenchPage page, CDOView view, String resourcePath)
   {
     try
     {
-      IEditorInput input = new CDOEditorInput(adapter, resourcePath);
-      return (CDOEditor)page.openEditor(input, EDITOR_ID);
+      IEditorInput input = new CDOEditorInput(view, resourcePath);
+      IEditorPart editor = page.openEditor(input, EDITOR_ID);
+      if (editor instanceof CDOEditor)
+      {
+        return (CDOEditor)editor;
+      }
     }
     catch (Exception ex)
     {
       CDOUI.LOG.error(ex);
-      return null;
     }
+
+    return null;
   }
 }

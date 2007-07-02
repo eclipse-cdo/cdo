@@ -12,6 +12,7 @@ package org.eclipse.net4j.ui.actions;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.internal.net4j.bundle.OM;
@@ -26,6 +27,8 @@ public abstract class LongRunningAction extends SafeAction
   private IWorkbenchPage page;
 
   private IStatus status;
+
+  private int totalWork;
 
   public LongRunningAction(IWorkbenchPage page)
   {
@@ -50,31 +53,60 @@ public abstract class LongRunningAction extends SafeAction
     this.page = page;
   }
 
-  protected void setStatus(IStatus status)
+  protected final int getTotalWork()
+  {
+    return totalWork;
+  }
+
+  protected final void setTotalWork(int totalWork)
+  {
+    this.totalWork = totalWork;
+  }
+
+  protected final void cancel()
+  {
+    totalWork = 0;
+  }
+
+  protected final void setStatus(IStatus status)
   {
     this.status = status;
   }
 
   @Override
-  protected void doRun() throws Exception
+  protected final void doRun() throws Exception
   {
-    new Job(getText())
+    totalWork = IProgressMonitor.UNKNOWN;
+    preRun(page);
+    if (totalWork != 0)
     {
-      @Override
-      protected IStatus run(IProgressMonitor monitor)
+      new Job(getText())
       {
-        try
+        @Override
+        protected IStatus run(IProgressMonitor monitor)
         {
-          setStatus(Status.OK_STATUS);
-          doRun(page, monitor);
-          return status;
+          monitor.beginTask("", totalWork);
+          try
+          {
+            setStatus(Status.OK_STATUS);
+            doRun(page, monitor);
+            return status;
+          }
+          catch (Exception ex)
+          {
+            return handleException(ex);
+          }
+          finally
+          {
+            monitor.done();
+          }
         }
-        catch (Exception ex)
-        {
-          return handleException(ex);
-        }
-      }
-    }.schedule();
+      }.schedule();
+    }
+  }
+
+  protected void preRun(IWorkbenchPage page) throws Exception
+  {
   }
 
   protected abstract void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception;
@@ -82,5 +114,13 @@ public abstract class LongRunningAction extends SafeAction
   protected IStatus handleException(Exception ex)
   {
     return new Status(IStatus.ERROR, OM.BUNDLE_ID, "An error has occured.", ex);
+  }
+
+  protected final void checkCancelation(IProgressMonitor monitor)
+  {
+    if (monitor.isCanceled())
+    {
+      throw new OperationCanceledException();
+    }
   }
 }

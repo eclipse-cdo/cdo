@@ -10,6 +10,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.net4j.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -1601,10 +1602,18 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * the context menus with contributions from the Edit menu. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   public void menuAboutToShow(IMenuManager menuManager)
   {
+    menuManager.add(new LongRunningAction(getEditorSite().getPage(), "New Root", "Create and add a new root object")
+    {
+      @Override
+      protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+      {
+      }
+    });
+
     ((IMenuListener)getEditorSite().getActionBarContributor()).menuAboutToShow(menuManager);
   }
 

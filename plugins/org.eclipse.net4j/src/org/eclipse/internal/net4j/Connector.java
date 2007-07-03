@@ -391,7 +391,10 @@ public abstract class Connector extends Lifecycle implements IConnector
   {
     try
     {
-      return channels.get(channelIndex);
+      synchronized (channels)
+      {
+        return channels.get(channelIndex);
+      }
     }
     catch (IndexOutOfBoundsException ex)
     {
@@ -544,16 +547,20 @@ public abstract class Connector extends Lifecycle implements IConnector
   protected void doDeactivate() throws Exception
   {
     setState(ConnectorState.DISCONNECTED);
-    for (short i = 0; i < channels.size(); i++)
+    synchronized (channels)
     {
-      Channel channel = channels.get(i);
-      if (channel != null)
+      for (short i = 0; i < channels.size(); i++)
       {
-        LifecycleUtil.deactivate(channel);
+        Channel channel = channels.get(i);
+        if (channel != null)
+        {
+          LifecycleUtil.deactivate(channel);
+        }
       }
+
+      channels.clear();
     }
 
-    channels.clear();
     super.doDeactivate();
   }
 

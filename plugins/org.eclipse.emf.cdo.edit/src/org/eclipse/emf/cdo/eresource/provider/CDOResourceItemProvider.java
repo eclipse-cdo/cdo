@@ -14,7 +14,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -63,31 +62,13 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
     {
       super.getPropertyDescriptors(object);
 
-      addResourceSetPropertyDescriptor(object);
       addURIPropertyDescriptor(object);
       addModifiedPropertyDescriptor(object);
       addLoadedPropertyDescriptor(object);
       addTrackingModificationPropertyDescriptor(object);
-      addErrorsPropertyDescriptor(object);
-      addWarningsPropertyDescriptor(object);
       addPathPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
-  }
-
-  /**
-   * This adds a property descriptor for the Resource Set feature. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  protected void addResourceSetPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_CDOResource_resourceSet_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_CDOResource_resourceSet_feature", "_UI_CDOResource_type"),
-        EresourcePackage.Literals.CDO_RESOURCE__RESOURCE_SET, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -101,7 +82,7 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
         .getRootAdapterFactory(), getResourceLocator(), getString("_UI_CDOResource_uRI_feature"), getString(
         "_UI_PropertyDescriptor_description", "_UI_CDOResource_uRI_feature", "_UI_CDOResource_type"),
-        EresourcePackage.Literals.CDO_RESOURCE__URI, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        EresourcePackage.Literals.CDO_RESOURCE__URI, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
   }
 
@@ -116,7 +97,7 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
         .getRootAdapterFactory(), getResourceLocator(), getString("_UI_CDOResource_modified_feature"), getString(
         "_UI_PropertyDescriptor_description", "_UI_CDOResource_modified_feature", "_UI_CDOResource_type"),
-        EresourcePackage.Literals.CDO_RESOURCE__MODIFIED, true, false, false,
+        EresourcePackage.Literals.CDO_RESOURCE__MODIFIED, false, false, false,
         ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
@@ -131,8 +112,8 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
         .getRootAdapterFactory(), getResourceLocator(), getString("_UI_CDOResource_loaded_feature"), getString(
         "_UI_PropertyDescriptor_description", "_UI_CDOResource_loaded_feature", "_UI_CDOResource_type"),
-        EresourcePackage.Literals.CDO_RESOURCE__LOADED, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-        null, null));
+        EresourcePackage.Literals.CDO_RESOURCE__LOADED, false, false, false,
+        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -151,36 +132,6 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
   }
 
   /**
-   * This adds a property descriptor for the Errors feature. <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  protected void addErrorsPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_CDOResource_errors_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_CDOResource_errors_feature", "_UI_CDOResource_type"),
-        EresourcePackage.Literals.CDO_RESOURCE__ERRORS, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Warnings feature. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  protected void addWarningsPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_CDOResource_warnings_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_CDOResource_warnings_feature", "_UI_CDOResource_type"),
-        EresourcePackage.Literals.CDO_RESOURCE__WARNINGS, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
    * This adds a property descriptor for the Path feature. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
    * 
@@ -191,7 +142,7 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
         .getRootAdapterFactory(), getResourceLocator(), getString("_UI_CDOResource_path_feature"), getString(
         "_UI_PropertyDescriptor_description", "_UI_CDOResource_path_feature", "_UI_CDOResource_type"),
-        EresourcePackage.Literals.CDO_RESOURCE__PATH, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        EresourcePackage.Literals.CDO_RESOURCE__PATH, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
   }
 
@@ -292,54 +243,12 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
    * describing the children that can be created under this object. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   @Override
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createEObject()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createEAttribute()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createEAnnotation()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createEClass()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createEDataType()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createEEnum()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createEEnumLiteral()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createEFactory()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createEOperation()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createEPackage()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createEParameter()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createEReference()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createEGenericType()));
-
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS,
-        EcoreFactory.eINSTANCE.createETypeParameter()));
   }
 
   /**

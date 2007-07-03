@@ -15,15 +15,15 @@
     <genDataTypes ecoreDataType="eresource.ecore#//URI"/>
     <genDataTypes ecoreDataType="eresource.ecore#//Diagnostic"/>
     <genClasses ecoreClass="eresource.ecore#//CDOResource">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/resourceSet"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/uRI"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/resourceSet"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/uRI"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eresource.ecore#//CDOResource/contents"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/modified"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/loaded"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/modified"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/loaded"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/trackingModification"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/errors"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/warnings"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/path"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/errors"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/warnings"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/path"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

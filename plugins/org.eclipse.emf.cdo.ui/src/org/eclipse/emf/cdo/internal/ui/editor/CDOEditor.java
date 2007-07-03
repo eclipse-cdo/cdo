@@ -8,6 +8,9 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.ui.actions.LongRunningAction;
@@ -1606,15 +1609,46 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   public void menuAboutToShow(IMenuManager menuManager)
   {
-    menuManager.add(new LongRunningAction(getEditorSite().getPage(), "New Root", "Create and add a new root object")
+    MenuManager submenuManager = new MenuManager("New Root");
+    populateManager(submenuManager);
+    try
     {
-      @Override
-      protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
-      {
-      }
-    });
+      menuManager.insertBefore("edit", submenuManager);
+    }
+    catch (IllegalArgumentException ex)
+    {
+      menuManager.add(submenuManager);
+    }
 
     ((IMenuListener)getEditorSite().getActionBarContributor()).menuAboutToShow(menuManager);
+  }
+
+  /**
+   * @ADDED
+   */
+  private void populateManager(MenuManager menuManager)
+  {
+    CDOPackage[] cdoPackages = CDOPackageManager.INSTANCE.getPackages();
+    for (CDOPackage cdoPackage : cdoPackages)
+    {
+      CDOClass[] cdoClasses = cdoPackage.getConcreteClasses();
+      if (cdoClasses.length != 0)
+      {
+        MenuManager submenuManager = new MenuManager(cdoPackage.getPackageURI());
+        for (CDOClass cdoClass : cdoClasses)
+        {
+          submenuManager.add(new LongRunningAction(getEditorSite().getPage(), cdoClass.getName())
+          {
+            @Override
+            protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+            {
+            }
+          });
+        }
+
+        menuManager.add(submenuManager);
+      }
+    }
   }
 
   /**

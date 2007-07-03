@@ -44,6 +44,8 @@ public final class CDO
 
   public static final OMLogger LOG = BUNDLE.logger();
 
+  public static final String PERSISTENT_PACKAGE_EXT_POINT = "persistent_package";
+
   private CDO()
   {
   }

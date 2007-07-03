@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+   <extension-point id="persistent_package" name="CDO Persistent Package" schema="schema/persistent_package.exsd"/>
 
    <extension
          point="org.eclipse.net4j.util.factories">

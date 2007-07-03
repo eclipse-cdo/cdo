@@ -1,6 +1,8 @@
 package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.IPluginTransportContainer;
@@ -13,6 +15,7 @@ import org.eclipse.net4j.ui.views.IElementFilter;
 import org.eclipse.emf.internal.cdo.CDOSessionFactory;
 
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.ui.IWorkbenchPage;
 
 public class CDOSessionsView extends ContainerView
 {
@@ -50,11 +53,15 @@ public class CDOSessionsView extends ContainerView
   @Override
   protected void doubleClicked(Object object)
   {
-    // if (object instanceof CDOView)
-    // {
-    // openEditor((CDOView)object);
-    // }
-    // else
+    if (object instanceof CDOViewHistory.Entry)
+    {
+      CDOViewHistory.Entry entry = (CDOViewHistory.Entry)object;
+      IWorkbenchPage page = getViewSite().getPage();
+      CDOView view = entry.getView();
+      String resourcePath = entry.getResourcePath();
+      CDOEditor.open(page, view, resourcePath);
+    }
+    else
     {
       super.doubleClicked(object);
     }

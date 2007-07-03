@@ -7,8 +7,11 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
 import org.eclipse.emf.cdo.util.CDOUtil;
+
+import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -82,11 +85,13 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
@@ -133,7 +138,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  private CDOView adapter;
+  private CDOView view;
+
+  /**
+   * @ADDED
+   */
+  private CDOResource resource;
 
   /**
    * This keeps track of the editing domain that is used to track all changes to
@@ -144,7 +154,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   protected AdapterFactoryEditingDomain editingDomain;
 
   /**
-   * This is the one adapter factory used for providing views of the model. <!--
+   * This is the one view factory used for providing views of the model. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -882,9 +892,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  public CDOView getAdapter()
+  public CDOView getView()
   {
-    return adapter;
+    return view;
   }
 
   /**
@@ -899,7 +909,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     try
     {
       CDOEditorInput input = (CDOEditorInput)getEditorInput();
-      adapter = input.getView();
+      view = input.getView();
       URI resourceURI = CDOUtil.createURI(input.getResourcePath());
 
       BasicCommandStack commandStack = new BasicCommandStack();
@@ -927,11 +937,11 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
       });
 
-      ResourceSet resourceSet = adapter.getResourceSet();
+      ResourceSet resourceSet = view.getResourceSet();
       editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, resourceSet);
       editingDomain.setResourceToReadOnlyMap(new HashMap<Resource, Boolean>());
 
-      resourceSet.getResource(resourceURI, true);
+      resource = (CDOResource)resourceSet.getResource(resourceURI, true);
       resourceSet.eAdapters().add(problemIndicationAdapter);
     }
     catch (RuntimeException ex)
@@ -996,8 +1006,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
     selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-    selectionViewer.setInput(editingDomain.getResourceSet());
-    selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
+    selectionViewer.setInput(resource);
+    selectionViewer.setSelection(new StructuredSelection(resource), true);
 
     new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
 
@@ -1359,12 +1369,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * This always returns true because it is not currently supported. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   @Override
   public boolean isSaveAsAllowed()
   {
-    return true;
+    return false;
   }
 
   /**
@@ -1668,20 +1678,62 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  public static CDOEditor open(IWorkbenchPage page, CDOView view, String resourcePath)
+  public static void open(final IWorkbenchPage page, final CDOView view, final String resourcePath)
   {
-    try
+    IEditorReference reference = find(page, view, resourcePath);
+    if (reference != null)
     {
-      IEditorInput input = new CDOEditorInput(view, resourcePath);
-      IEditorPart editor = page.openEditor(input, EDITOR_ID);
-      if (editor instanceof CDOEditor)
-      {
-        return (CDOEditor)editor;
-      }
+      IEditorPart editor = reference.getEditor(true);
+      page.activate(editor);
     }
-    catch (Exception ex)
+    else
     {
-      CDOUI.LOG.error(ex);
+      Display display = page.getWorkbenchWindow().getShell().getDisplay();
+      display.asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            IEditorInput input = new CDOEditorInput(view, resourcePath);
+            page.openEditor(input, EDITOR_ID);
+          }
+          catch (Exception ex)
+          {
+            CDOUI.LOG.error(ex);
+          }
+        }
+      });
+    }
+  }
+
+  /**
+   * @ADDED
+   */
+  public static IEditorReference find(IWorkbenchPage page, CDOView view, String resourcePath)
+  {
+    IEditorReference[] editorReferences = page.getEditorReferences();
+    for (IEditorReference editorReference : editorReferences)
+    {
+      try
+      {
+        if (ObjectUtil.equals(editorReference.getId(), EDITOR_ID))
+        {
+          IEditorInput editorInput = editorReference.getEditorInput();
+          if (editorInput instanceof CDOEditorInput)
+          {
+            CDOEditorInput cdoInput = (CDOEditorInput)editorInput;
+            if (cdoInput.getView() == view && ObjectUtil.equals(cdoInput.getResourcePath(), resourcePath))
+            {
+              return editorReference;
+            }
+          }
+        }
+      }
+      catch (PartInitException ex)
+      {
+        ex.printStackTrace();
+      }
     }
 
     return null;

@@ -31,12 +31,8 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.part.ISetSelectionTarget;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -246,33 +242,8 @@ public class CDOItemProvider extends ContainerItemProvider
         @Override
         protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
         {
-          final Exception[] exception = new Exception[1];
           view.createResource(resourcePath);
-          final IWorkbenchPart part = page.getActivePart();
-          getDisplay().asyncExec(new Runnable()
-          {
-            public void run()
-            {
-              try
-              {
-                if (part instanceof ISetSelectionTarget)
-                {
-                  ((ISetSelectionTarget)part).selectReveal(new StructuredSelection(view));
-                }
-
-                CDOEditor.open(page, view, resourcePath);
-              }
-              catch (Exception ex)
-              {
-                exception[0] = ex;
-              }
-            }
-          });
-
-          if (exception[0] != null)
-          {
-            throw exception[0];
-          }
+          CDOEditor.open(page, view, resourcePath);
         }
       });
     }
@@ -282,27 +253,27 @@ public class CDOItemProvider extends ContainerItemProvider
   {
   }
 
-  @Override
-  protected Display getDisplay()
-  {
-    Display display = getViewer().getControl().getDisplay();
-    if (display == null)
-    {
-      display = Display.getCurrent();
-    }
-
-    if (display == null)
-    {
-      display = Display.getDefault();
-    }
-
-    if (display == null)
-    {
-      throw new IllegalStateException("display == null");
-    }
-
-    return display;
-  }
+  // @Override
+  // protected Display getDisplay()
+  // {
+  // Display display = getViewer().getControl().getDisplay();
+  // if (display == null)
+  // {
+  // display = Display.getCurrent();
+  // }
+  //
+  // if (display == null)
+  // {
+  // display = Display.getDefault();
+  // }
+  //
+  // if (display == null)
+  // {
+  // throw new IllegalStateException("display == null");
+  // }
+  //
+  // return display;
+  // }
 
   @Override
   protected void elementAdded(Object element, Object parent)

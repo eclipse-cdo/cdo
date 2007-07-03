@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.emf.cdo.edit; singleton:=true
+Bundle-Version: 0.8.0.qualifier
+Bundle-ClassPath: .
+Bundle-Activator: org.eclipse.emf.cdo.eresource.provider.EresourceEditPlugin$Implementation
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.eclipse.emf.cdo.eresource.provider
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.edit;visibility:=reexport,
+ org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.emf.ecore.edit;visibility:=reexport,
+ org.eclipse.emf.cdo;visibility:=reexport
+Eclipse-LazyStart: true

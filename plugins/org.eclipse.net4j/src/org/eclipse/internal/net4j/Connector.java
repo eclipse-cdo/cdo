@@ -458,7 +458,7 @@ public abstract class Connector extends Lifecycle implements IConnector
     synchronized (channels)
     {
       int channelIndex = channel.getChannelIndex();
-      if (channels.get(channelIndex) == channel)
+      if (channelIndex < channels.size() && channels.get(channelIndex) == channel)
       {
         channel.removeListener(channelListener);
         if (TRACER.isEnabled())

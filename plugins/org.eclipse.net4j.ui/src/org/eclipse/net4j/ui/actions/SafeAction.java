@@ -20,6 +20,17 @@ public abstract class SafeAction extends Action
     setToolTipText(toolTipText);
   }
 
+  public SafeAction(String text, String toolTipText)
+  {
+    super(text, null);
+    setToolTipText(toolTipText);
+  }
+
+  public SafeAction(String text, ImageDescriptor image)
+  {
+    super(text, image);
+  }
+
   public SafeAction(String text, int style)
   {
     super(text, style);
@@ -30,6 +41,7 @@ public abstract class SafeAction extends Action
     super(text);
   }
 
+  @Override
   public final void run()
   {
     try

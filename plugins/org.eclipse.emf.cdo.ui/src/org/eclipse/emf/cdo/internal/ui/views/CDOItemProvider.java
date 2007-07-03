@@ -194,7 +194,7 @@ public class CDOItemProvider extends ContainerItemProvider
   {
     if (view.isReadWrite())
     {
-      manager.add(new LongRunningAction(page, "Create Resource", "Create a CDO resource", null)
+      manager.add(new LongRunningAction(page, "Create Resource", "Create a CDO resource")
       {
         private String resourcePath;
 
@@ -223,7 +223,7 @@ public class CDOItemProvider extends ContainerItemProvider
       });
     }
 
-    manager.add(new LongRunningAction(page, "Open", "Open a CDO editor", null)
+    manager.add(new LongRunningAction(page, "Show Editor", "Show a CDO editor")
     {
       @Override
       protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception

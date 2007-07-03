@@ -41,6 +41,18 @@ public abstract class LongRunningAction extends SafeAction
     this.page = page;
   }
 
+  public LongRunningAction(IWorkbenchPage page, String text, ImageDescriptor image)
+  {
+    super(text, image);
+    this.page = page;
+  }
+
+  public LongRunningAction(IWorkbenchPage page, String text, String toolTipText)
+  {
+    super(text, toolTipText);
+    this.page = page;
+  }
+
   public LongRunningAction(IWorkbenchPage page, String text, int style)
   {
     super(text, style);

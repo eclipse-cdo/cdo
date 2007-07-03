@@ -28,6 +28,7 @@ import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -50,6 +51,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
+import org.eclipse.emf.internal.cdo.util.EMFUtil;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -136,7 +138,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  public static final String EDITOR_ID = "org.eclipse.emf.cdo.ui.CDOEditor";
+  public static final String EDITOR_ID = CDOUI.BUNDLE_ID + ".CDOEditor";
 
   /**
    * @ADDED
@@ -1637,13 +1639,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         MenuManager submenuManager = new MenuManager(cdoPackage.getPackageURI());
         for (CDOClass cdoClass : cdoClasses)
         {
-          submenuManager.add(new LongRunningAction(getEditorSite().getPage(), cdoClass.getName())
-          {
-            @Override
-            protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
-            {
-            }
-          });
+          submenuManager.add(new CreateRootAction(cdoClass));
         }
 
         menuManager.add(submenuManager);
@@ -1788,5 +1784,52 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     }
 
     return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class CreateRootAction extends LongRunningAction
+  {
+    private CDOClass cdoClass;
+
+    private CreateRootAction(CDOClass cdoClass)
+    {
+      super(getEditorSite().getPage(), cdoClass.getName());
+      this.cdoClass = cdoClass;
+    }
+
+    @Override
+    protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+    {
+      Resource resource = null;
+      IStructuredSelection ssel = (IStructuredSelection)editorSelection;
+      if (ssel.isEmpty())
+      {
+        if (viewerInput instanceof Resource)
+        {
+          resource = (Resource)viewerInput;
+        }
+      }
+      else if (ssel.size() == 1)
+      {
+        Object element = ssel.getFirstElement();
+        if (element instanceof Resource)
+        {
+          resource = (Resource)element;
+        }
+        else if (element instanceof EObject)
+        {
+          resource = ((EObject)element).eResource();
+        }
+      }
+
+      if (resource != null)
+      {
+        EClass eClass = EMFUtil.getEClass(cdoClass);
+        EObject object = EcoreUtil.create(eClass);
+        resource.getContents().add(object);
+      }
+    }
   }
 }

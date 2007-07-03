@@ -125,6 +125,7 @@ public abstract class LongRunningAction extends SafeAction
 
   protected IStatus handleException(Exception ex)
   {
+    ex.printStackTrace();
     return new Status(IStatus.ERROR, OM.BUNDLE_ID, "An error has occured.", ex);
   }
 

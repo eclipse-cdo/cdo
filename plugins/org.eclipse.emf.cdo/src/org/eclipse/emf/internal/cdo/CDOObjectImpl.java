@@ -212,15 +212,18 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     revision.setContainerID(eContainer == null ? CDOID.NULL : ((CDOObjectImpl)eContainer).cdoID());
     revision.setContainingFeature(eContainerFeatureID);
 
-    for (int i = 0; i < eClass().getFeatureCount(); i++)
+    if (eSettings != null)
     {
-      Object setting = eSettings[i];
-      if (setting != null)
+      for (int i = 0; i < eClass().getFeatureCount(); i++)
       {
-        EStructuralFeature eFeature = eDynamicFeature(i);
-        if (!eFeature.isTransient())
+        Object setting = eSettings[i];
+        if (setting != null)
         {
-          finalizeRevisionFeature(adapter, revision, i, setting, eFeature);
+          EStructuralFeature eFeature = eDynamicFeature(i);
+          if (!eFeature.isTransient())
+          {
+            finalizeRevisionFeature(adapter, revision, i, setting, eFeature);
+          }
         }
       }
     }

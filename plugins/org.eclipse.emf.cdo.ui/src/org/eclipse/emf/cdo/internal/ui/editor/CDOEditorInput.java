@@ -11,18 +11,20 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.internal.ui.LabelUtil;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 
+import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 
-import java.text.MessageFormat;
+import java.util.Date;
 
 /**
  * @author Eike Stepper
  */
-public class CDOEditorInput implements IEditorInput
+public class CDOEditorInput extends PlatformObject implements IEditorInput
 {
   private CDOView view;
 
@@ -66,7 +68,14 @@ public class CDOEditorInput implements IEditorInput
 
   public String getName()
   {
-    return resourcePath;
+    StringBuilder builder = new StringBuilder();
+    builder.append(view.getSession().getRepositoryName());
+    if (resourcePath != null)
+    {
+      builder.append(resourcePath);
+    }
+
+    return builder.toString();
   }
 
   public IPersistableElement getPersistable()
@@ -76,21 +85,25 @@ public class CDOEditorInput implements IEditorInput
 
   public String getToolTipText()
   {
+    StringBuilder builder = new StringBuilder();
+    builder.append(LabelUtil.getText(view.getSession()));
+    if (resourcePath != null)
+    {
+      builder.append(resourcePath);
+    }
+
     if (view.isHistorical())
     {
-      return MessageFormat.format("{0} ({1,D})", resourcePath, view.getTimeStamp());
+      builder.append(" (");
+      builder.append(new Date(view.getTimeStamp()));
+      builder.append(")");
     }
 
     if (view.isReadOnly())
     {
-      return MessageFormat.format("{0} (read only)", resourcePath);
+      builder.append(" (readonly)");
     }
 
-    return resourcePath;
-  }
-
-  public Object getAdapter(Class adapter)
-  {
-    return null;
+    return builder.toString();
   }
 }

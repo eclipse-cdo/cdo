@@ -12,12 +12,12 @@ package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.internal.ui.LabelUtil;
 import org.eclipse.emf.cdo.internal.ui.ResourceHistory;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 
-import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.ui.actions.LongRunningAction;
 import org.eclipse.net4j.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.ui.views.IElementFilter;
@@ -34,7 +34,6 @@ import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkbenchPage;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,49 +117,25 @@ public class CDOItemProvider extends ContainerItemProvider
   @Override
   public String getText(Object obj)
   {
-    if (obj instanceof CDOSession)
+    String text = LabelUtil.getText(obj);
+    if (text == null)
     {
-      CDOSession session = (CDOSession)obj;
-      IConnector connector = session.getChannel().getConnector();
-      String repositoryName = session.getRepositoryName();
-      return connector.getURL() + "/" + repositoryName;
+      text = super.getText(obj);
     }
 
-    if (obj instanceof CDOView)
-    {
-      CDOView view = (CDOView)obj;
-      return view.isHistorical() ? new Date(view.getTimeStamp()).toString() : view.isReadOnly() ? "View"
-          : "Transaction";
-    }
-
-    return super.getText(obj);
+    return text;
   }
 
   @Override
   public Image getImage(Object obj)
   {
-    if (obj instanceof CDOSession)
+    Image image = LabelUtil.getImage(obj);
+    if (image == null)
     {
-      return SharedIcons.getImage(SharedIcons.OBJ_SESSION);
+      image = super.getImage(obj);
     }
 
-    if (obj instanceof CDOView)
-    {
-      CDOView view = (CDOView)obj;
-      if (view.isHistorical())
-      {
-        return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_HISTORICAL);
-      }
-
-      if (view.isReadOnly())
-      {
-        return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_READONLY);
-      }
-
-      return SharedIcons.getImage(SharedIcons.OBJ_EDITOR);
-    }
-
-    return super.getImage(obj);
+    return image;
   }
 
   @Override
@@ -247,6 +222,15 @@ public class CDOItemProvider extends ContainerItemProvider
         }
       });
     }
+
+    manager.add(new LongRunningAction(page, "Open", "Open a CDO editor", null)
+    {
+      @Override
+      protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+      {
+        CDOEditor.open(page, view, null);
+      }
+    });
   }
 
   protected void fillHistoryEntry(IMenuManager manager, Entry entry)

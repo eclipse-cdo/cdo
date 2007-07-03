@@ -7,7 +7,6 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -143,7 +142,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  private CDOResource resource;
+  private Object viewerInput;
 
   /**
    * This keeps track of the editing domain that is used to track all changes to
@@ -236,7 +235,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   protected ISelection editorSelection = StructuredSelection.EMPTY;
 
   /**
-   * The MarkerHelper is responsible for creating workspace resource markers
+   * The MarkerHelper is responsible for creating workspace viewerInput markers
    * presented in Eclipse's Problems View. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
@@ -323,8 +322,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   protected Collection<Resource> savedResources = new ArrayList<Resource>();
 
   /**
-   * Map to store the diagnostic associated with a resource. <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
+   * Map to store the diagnostic associated with a viewerInput. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    */
@@ -898,8 +897,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This is the method called to load a resource into the editing domain's
-   * resource set based on the editor's input. <!-- begin-user-doc --> <!--
+   * This is the method called to load a viewerInput into the editing domain's
+   * viewerInput set based on the editor's input. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
    * @generated NOT
@@ -908,9 +907,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     try
     {
-      CDOEditorInput input = (CDOEditorInput)getEditorInput();
-      view = input.getView();
-      URI resourceURI = CDOUtil.createURI(input.getResourcePath());
+      CDOEditorInput editorInput = (CDOEditorInput)getEditorInput();
+      view = editorInput.getView();
 
       BasicCommandStack commandStack = new BasicCommandStack();
       commandStack.addCommandStackListener(new CommandStackListener()
@@ -941,7 +939,17 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, resourceSet);
       editingDomain.setResourceToReadOnlyMap(new HashMap<Resource, Boolean>());
 
-      resource = (CDOResource)resourceSet.getResource(resourceURI, true);
+      String resourcePath = editorInput.getResourcePath();
+      if (resourcePath == null)
+      {
+        viewerInput = resourceSet;
+      }
+      else
+      {
+        URI resourceURI = CDOUtil.createURI(resourcePath);
+        viewerInput = resourceSet.getResource(resourceURI, true);
+      }
+
       resourceSet.eAdapters().add(problemIndicationAdapter);
     }
     catch (RuntimeException ex)
@@ -953,8 +961,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * Returns a dignostic describing the errors and warnings listed in the
-   * resource and the specified exception (if any). <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * viewerInput and the specified exception (if any). <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * 
    * @generated
    */
@@ -1006,8 +1014,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
     selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-    selectionViewer.setInput(resource);
-    selectionViewer.setSelection(new StructuredSelection(resource), true);
+    selectionViewer.setInput(viewerInput);
+    // selectionViewer.setSelection(new StructuredSelection(viewerInput), true);
 
     new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
 
@@ -1340,9 +1348,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * This returns wether something has been persisted to the URI of the
-   * specified resource. The implementation uses the URI converter from the
-   * editor's resource set to try to open an input stream. <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
+   * specified viewerInput. The implementation uses the URI converter from the
+   * editor's viewerInput set to try to open an input stream. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    */
@@ -1680,31 +1688,31 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   public static void open(final IWorkbenchPage page, final CDOView view, final String resourcePath)
   {
-    IEditorReference reference = find(page, view, resourcePath);
-    if (reference != null)
+    Display display = page.getWorkbenchWindow().getShell().getDisplay();
+    display.asyncExec(new Runnable()
     {
-      IEditorPart editor = reference.getEditor(true);
-      page.activate(editor);
-    }
-    else
-    {
-      Display display = page.getWorkbenchWindow().getShell().getDisplay();
-      display.asyncExec(new Runnable()
+      public void run()
       {
-        public void run()
+        try
         {
-          try
+          IEditorReference reference = find(page, view, resourcePath);
+          if (reference != null)
+          {
+            IEditorPart editor = reference.getEditor(true);
+            page.activate(editor);
+          }
+          else
           {
             IEditorInput input = new CDOEditorInput(view, resourcePath);
             page.openEditor(input, EDITOR_ID);
           }
-          catch (Exception ex)
-          {
-            CDOUI.LOG.error(ex);
-          }
         }
-      });
-    }
+        catch (Exception ex)
+        {
+          CDOUI.LOG.error(ex);
+        }
+      }
+    });
   }
 
   /**

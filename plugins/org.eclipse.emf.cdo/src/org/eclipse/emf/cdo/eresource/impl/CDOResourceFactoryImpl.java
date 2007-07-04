@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.eresource.impl;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
-import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -42,25 +41,29 @@ public class CDOResourceFactoryImpl implements Resource.Factory, CDOResourceFact
 
   private boolean isExistingResource()
   {
+    boolean inResourceSet = false;
     StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-    if (elements.length >= 6)
+    for (int i = 3; i < elements.length; i++)
     {
-      if (isResourceSetMethod(elements[6], "getResource"))
+      StackTraceElement element = elements[i];
+      if (RESOURCE_SET_CLASS_NAME.equals(element.getClassName()))
+      {
+        inResourceSet = true;
+      }
+      else
+      {
+        if (inResourceSet)
+        {
+          break;
+        }
+      }
+
+      if (inResourceSet && "getResource".equals(element.getMethodName()))
       {
         return true;
       }
-
-      if (isResourceSetMethod(elements[4], "createResource"))
-      {
-        return false;
-      }
     }
 
-    throw new ImplementationError("Call stack is in unexpected state");
-  }
-
-  private boolean isResourceSetMethod(StackTraceElement element, String methodName)
-  {
-    return methodName.equals(element.getMethodName()) && RESOURCE_SET_CLASS_NAME.equals(element.getClassName());
+    return false;
   }
 }

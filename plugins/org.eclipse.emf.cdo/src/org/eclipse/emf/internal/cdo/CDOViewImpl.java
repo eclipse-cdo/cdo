@@ -35,6 +35,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.internal.cdo.bundle.CDO;
+import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.ResourcePathRequest;
 
 import java.text.MessageFormat;
@@ -187,10 +188,10 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       return lastLookupObject;
     }
 
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Looking up object {0}", id);
-    }
+    // if (TRACER.isEnabled())
+    // {
+    // TRACER.format("Looking up object {0}", id);
+    // }
 
     lastLookupID = id;
     lastLookupObject = objects.get(id);
@@ -280,7 +281,15 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   public void commit()
   {
     checkWritable();
-    transaction.commit();
+    CommitTransactionResult result = transaction.commit();
+    if (result != null)
+    {
+      Map<CDOID, CDOID> idMappings = result.getIdMappings();
+      if (idMappings != null && !idMappings.isEmpty())
+      {
+        fireEvent(new CommittedEvent(idMappings));
+      }
+    }
   }
 
   public void rollback()
@@ -542,6 +551,29 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     public String toString()
     {
       return MessageFormat.format("CDOViewResourcesEvent[{0}, {1}, {2}]", getView(), resourcePath, kind);
+    }
+  }
+
+  private final class CommittedEvent extends Event implements CDOViewCommitedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private Map<CDOID, CDOID> idMappings;
+
+    private CommittedEvent(Map<CDOID, CDOID> idMappings)
+    {
+      super(CDOViewImpl.this);
+      this.idMappings = idMappings;
+    }
+
+    public CDOView getView()
+    {
+      return CDOViewImpl.this;
+    }
+
+    public Map<CDOID, CDOID> getIDMappings()
+    {
+      return idMappings;
     }
   }
 }

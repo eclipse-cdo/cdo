@@ -6,9 +6,12 @@
  */
 package org.eclipse.emf.cdo.internal.ui.editor;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
@@ -54,6 +57,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
+import org.eclipse.emf.internal.cdo.CDOViewCommitedEvent;
 import org.eclipse.emf.internal.cdo.util.EMFUtil;
 
 import org.eclipse.core.resources.IFile;
@@ -123,10 +127,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * This is an example of a CDO model editor. <!-- begin-user-doc --> <!--
@@ -161,25 +167,38 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       if (event instanceof CDOSessionInvalidationEvent)
       {
-        try
+        Set<CDOID> dirtyOIDs = ((CDOSessionInvalidationEvent)event).getDirtyOIDs();
+        new ItemsProcessor()
         {
-          selectionViewer.getTree().getDisplay().asyncExec(new Runnable()
+          @Override
+          protected void processCDOObject(TreeViewer viewer, CDOObject cdoObject)
           {
-            public void run()
-            {
-              try
-              {
-                selectionViewer.refresh();
-              }
-              catch (Exception ignore)
-              {
-              }
-            }
-          });
-        }
-        catch (Exception ignore)
+            viewer.refresh(cdoObject, true);
+          }
+        }.processCDOObjects(selectionViewer, dirtyOIDs);
+      }
+    }
+  };
+
+  /**
+   * @ADDED
+   */
+  private IListener viewListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDOViewCommitedEvent)
+      {
+        Map<CDOID, CDOID> idMappings = ((CDOViewCommitedEvent)event).getIDMappings();
+        HashSet newOIDs = new HashSet(idMappings.values());
+        new ItemsProcessor()
         {
-        }
+          @Override
+          protected void processCDOObject(TreeViewer viewer, CDOObject cdoObject)
+          {
+            viewer.update(cdoObject, null);
+          }
+        }.processCDOObjects(selectionViewer, newOIDs);
       }
     }
   };
@@ -1054,7 +1073,19 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     setCurrentViewer(selectionViewer);
 
     selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-    selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+    selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory)
+    {
+      @Override
+      public String getColumnText(Object object, int columnIndex)
+      {
+        if (object instanceof CDOObject)
+        {
+          return super.getColumnText(object, columnIndex) + " [" + ((CDOObject)object).cdoID() + "]";
+        }
+
+        return super.getColumnText(object, columnIndex);
+      }
+    });
     selectionViewer.setInput(viewerInput);
     // selectionViewer.setSelection(new StructuredSelection(viewerInput), true);
 
@@ -1088,6 +1119,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     updateProblemIndication();
     view.getSession().addListener(sessionListener);
+    view.addListener(viewListener);
   }
 
   /**
@@ -1718,6 +1750,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   public void dispose()
   {
     updateProblemIndication = false;
+    view.removeListener(viewListener);
     view.getSession().removeListener(sessionListener);
     getSite().getPage().removePartListener(partListener);
     adapterFactory.dispose();

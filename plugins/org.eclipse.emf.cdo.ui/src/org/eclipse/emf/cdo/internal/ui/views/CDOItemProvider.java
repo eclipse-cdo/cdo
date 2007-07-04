@@ -194,35 +194,35 @@ public class CDOItemProvider extends ContainerItemProvider
 
   protected void fillView(IMenuManager manager, final CDOView view)
   {
+    manager.add(new LongRunningAction(page, "Load Resource", "Load a CDO resource")
+    {
+      private String resourcePath;
+
+      @Override
+      protected void preRun(IWorkbenchPage page) throws Exception
+      {
+        String uri = lastNumber == -1 ? "" : "/res" + lastNumber;
+        InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Load Resource",
+            "Enter resource path:", uri, null);
+        if (dialog.open() == InputDialog.OK)
+        {
+          resourcePath = dialog.getValue();
+        }
+        else
+        {
+          cancel();
+        }
+      }
+
+      @Override
+      protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+      {
+        CDOEditor.open(page, view, resourcePath);
+      }
+    });
+
     if (view.isReadWrite())
     {
-      manager.add(new LongRunningAction(page, "Load Resource", "Load a CDO resource")
-      {
-        private String resourcePath;
-
-        @Override
-        protected void preRun(IWorkbenchPage page) throws Exception
-        {
-          String uri = lastNumber == -1 ? "" : "/res" + lastNumber;
-          InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Load Resource",
-              "Enter resource path:", uri, null);
-          if (dialog.open() == InputDialog.OK)
-          {
-            resourcePath = dialog.getValue();
-          }
-          else
-          {
-            cancel();
-          }
-        }
-
-        @Override
-        protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
-        {
-          CDOEditor.open(page, view, resourcePath);
-        }
-      });
-
       manager.add(new LongRunningAction(page, "Create Resource", "Create a CDO resource")
       {
         private String resourcePath;

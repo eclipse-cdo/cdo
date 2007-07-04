@@ -84,46 +84,53 @@ public class CDOTransactionImpl
     nextTemporaryID = INITIAL_TEMPORARY_ID;
   }
 
-  public void commit()
+  /**
+   * @return
+   * @return A set of the ids that have changed due to object creation
+   */
+  public CommitTransactionResult commit()
   {
-    if (!dirty)
+    if (dirty)
     {
-      return;
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("commit()");
-    }
-
-    try
-    {
-      CDOSessionImpl session = view.getSession();
-      CommitTransactionRequest signal = new CommitTransactionRequest(session.getChannel(), this);
-      CommitTransactionResult result = signal.send();
-
-      postCommit(newResources, result);
-      postCommit(newObjects, result);
-      postCommit(dirtyObjects, result);
-      if (!dirtyObjects.isEmpty())
+      if (TRACER.isEnabled())
       {
-        session.notifyInvalidation(result.getTimeStamp(), dirtyObjects.keySet(), view);
+        TRACER.trace("commit()");
       }
 
-      newResources.clear();
-      newObjects.clear();
-      dirtyObjects.clear();
-      dirty = false;
-      nextTemporaryID = INITIAL_TEMPORARY_ID;
+      try
+      {
+        CDOSessionImpl session = view.getSession();
+        CommitTransactionRequest signal = new CommitTransactionRequest(session.getChannel(), this);
+        CommitTransactionResult result = signal.send();
+
+        postCommit(newResources, result);
+        postCommit(newObjects, result);
+        postCommit(dirtyObjects, result);
+
+        if (!dirtyObjects.isEmpty())
+        {
+          session.notifyInvalidation(result.getTimeStamp(), dirtyObjects.keySet(), view);
+        }
+
+        newResources.clear();
+        newObjects.clear();
+        dirtyObjects.clear();
+        dirty = false;
+        nextTemporaryID = INITIAL_TEMPORARY_ID;
+        return result;
+      }
+      catch (RuntimeException ex)
+      {
+        throw ex;
+      }
+      catch (Exception ex)
+      {
+        // TODO Better exception handling
+        throw new RuntimeException(ex);
+      }
     }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new RuntimeException(ex);
-    }
+
+    return null;
   }
 
   public void rollback()
@@ -177,9 +184,12 @@ public class CDOTransactionImpl
 
   private void postCommit(Map objects, CommitTransactionResult result)
   {
-    for (Object object : objects.values())
+    if (!objects.isEmpty())
     {
-      CDOStateMachine.INSTANCE.commit((CDOObjectImpl)object, result);
+      for (Object object : objects.values())
+      {
+        CDOStateMachine.INSTANCE.commit((CDOObjectImpl)object, result);
+      }
     }
   }
 }

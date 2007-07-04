@@ -182,14 +182,14 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public CDOObject lookupObject(CDOID id)
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Looking up object {0}", id);
-    }
-
     if (id.equals(lastLookupID))
     {
       return lastLookupObject;
+    }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Looking up object {0}", id);
     }
 
     lastLookupID = id;

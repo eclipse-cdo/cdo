@@ -6,6 +6,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui.editor;
 
+import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -15,6 +16,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -148,6 +151,38 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * @ADDED
    */
   private Object viewerInput;
+
+  /**
+   * @ADDED
+   */
+  private IListener sessionListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDOSessionInvalidationEvent)
+      {
+        try
+        {
+          selectionViewer.getTree().getDisplay().asyncExec(new Runnable()
+          {
+            public void run()
+            {
+              try
+              {
+                selectionViewer.refresh();
+              }
+              catch (Exception ignore)
+              {
+              }
+            }
+          });
+        }
+        catch (Exception ignore)
+        {
+        }
+      }
+    }
+  };
 
   /**
    * This keeps track of the editing domain that is used to track all changes to
@@ -1052,6 +1087,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     });
 
     updateProblemIndication();
+    view.getSession().addListener(sessionListener);
   }
 
   /**
@@ -1470,8 +1506,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     setPartName(editorInput.getName());
     site.setSelectionProvider(this);
     site.getPage().addPartListener(partListener);
-    // ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener,
-    // IResourceChangeEvent.POST_CHANGE);
     setInputWithNotify(editorInput);
   }
 
@@ -1684,11 +1718,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   public void dispose()
   {
     updateProblemIndication = false;
-
-    // ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
-
+    view.getSession().removeListener(sessionListener);
     getSite().getPage().removePartListener(partListener);
-
     adapterFactory.dispose();
 
     if (getActionBarContributor().getActiveEditor() == this)

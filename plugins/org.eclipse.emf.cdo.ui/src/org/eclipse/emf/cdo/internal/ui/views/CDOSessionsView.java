@@ -19,7 +19,9 @@ import org.eclipse.ui.IWorkbenchPage;
 
 public class CDOSessionsView extends ContainerView
 {
-  private OpenSessionAction openSessionAction = new OpenSessionAction();
+  private OpenSessionAction openSessionAction2036 = new OpenSessionAction(2036);
+
+  private OpenSessionAction openSessionAction2037 = new OpenSessionAction(2037);
 
   public CDOSessionsView()
   {
@@ -46,7 +48,8 @@ public class CDOSessionsView extends ContainerView
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
-    manager.add(openSessionAction);
+    manager.add(openSessionAction2036);
+    manager.add(openSessionAction2037);
     super.fillLocalToolBar(manager);
   }
 
@@ -72,16 +75,19 @@ public class CDOSessionsView extends ContainerView
    */
   private static final class OpenSessionAction extends SafeAction
   {
-    private OpenSessionAction()
+    private int port;
+
+    private OpenSessionAction(int port)
     {
-      super("Open Session", "Open a CDO session", getAddImageDescriptor());
+      super("Open Session " + port, "Open a CDO session on port " + port, getAddImageDescriptor());
+      this.port = port;
     }
 
     @Override
     protected void doRun() throws Exception
     {
       IPluginTransportContainer.INSTANCE.getElement(CDOSessionFactory.SESSION_GROUP,
-          CDOProtocolConstants.PROTOCOL_NAME, "tcp://127.0.0.1:2036/repo1");
+          CDOProtocolConstants.PROTOCOL_NAME, "tcp://127.0.0.1:" + port + "/repo1");
     }
   }
 }

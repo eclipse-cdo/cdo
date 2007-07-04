@@ -56,6 +56,8 @@ public class CDOItemProvider extends ContainerItemProvider
     }
   };
 
+  private static int lastNumber = -1;
+
   public CDOItemProvider(IWorkbenchPage page, IElementFilter rootElementFilter)
   {
     super(rootElementFilter);
@@ -194,6 +196,33 @@ public class CDOItemProvider extends ContainerItemProvider
   {
     if (view.isReadWrite())
     {
+      manager.add(new LongRunningAction(page, "Load Resource", "Load a CDO resource")
+      {
+        private String resourcePath;
+
+        @Override
+        protected void preRun(IWorkbenchPage page) throws Exception
+        {
+          String uri = lastNumber == -1 ? "" : "/res" + lastNumber;
+          InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Load Resource",
+              "Enter resource path:", uri, null);
+          if (dialog.open() == InputDialog.OK)
+          {
+            resourcePath = dialog.getValue();
+          }
+          else
+          {
+            cancel();
+          }
+        }
+
+        @Override
+        protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+        {
+          CDOEditor.open(page, view, resourcePath);
+        }
+      });
+
       manager.add(new LongRunningAction(page, "Create Resource", "Create a CDO resource")
       {
         private String resourcePath;
@@ -201,9 +230,9 @@ public class CDOItemProvider extends ContainerItemProvider
         @Override
         protected void preRun(IWorkbenchPage page) throws Exception
         {
-          int number = (int)(Math.random() * 10000000.0);
+          lastNumber = (int)(Math.random() * 10000000.0);
           InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Create Resource",
-              "Enter resource path:", "/res" + number, null);
+              "Enter resource path:", "/res" + lastNumber, null);
           if (dialog.open() == InputDialog.OK)
           {
             resourcePath = dialog.getValue();

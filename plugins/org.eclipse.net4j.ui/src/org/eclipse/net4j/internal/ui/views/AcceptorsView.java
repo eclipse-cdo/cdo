@@ -13,12 +13,23 @@ import org.eclipse.jface.action.IToolBarManager;
 
 public class AcceptorsView extends ContainerView
 {
-  private Action addAcceptorAction = new SafeAction("Add Acceptor", "Add an acceptor", getAddImageDescriptor())
+  private Action addAcceptorAction2036 = new SafeAction("Add Acceptor 2036", "Add an acceptor for port 2036",
+      getAddImageDescriptor())
   {
     @Override
     protected void doRun() throws Exception
     {
       IPluginTransportContainer.INSTANCE.getAcceptor("tcp", "0.0.0.0:2036");
+    }
+  };
+
+  private Action addAcceptorAction2037 = new SafeAction("Add Acceptor 2037", "Add an acceptor for port 2037",
+      getAddImageDescriptor())
+  {
+    @Override
+    protected void doRun() throws Exception
+    {
+      IPluginTransportContainer.INSTANCE.getAcceptor("tcp", "0.0.0.0:2037");
     }
   };
 
@@ -47,7 +58,8 @@ public class AcceptorsView extends ContainerView
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
-    manager.add(addAcceptorAction);
+    manager.add(addAcceptorAction2036);
+    manager.add(addAcceptorAction2037);
     super.fillLocalToolBar(manager);
   }
 }

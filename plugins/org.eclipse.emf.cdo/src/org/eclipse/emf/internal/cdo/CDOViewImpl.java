@@ -263,6 +263,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
   }
 
+  public boolean isDirty()
+  {
+    return transaction == null ? false : transaction.isDirty();
+  }
+
   public void commit()
   {
     checkWritable();

@@ -24,14 +24,13 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
+import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.bundle.CDO;
 
 import java.io.IOException;
@@ -48,18 +47,18 @@ import java.util.Map;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getResourceSet <em>Resource Set</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getURI <em>URI</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getContents <em>Contents</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isModified <em>Modified</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isLoaded <em>Loaded</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isTrackingModification <em>Tracking Modification</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getErrors <em>Errors</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getWarnings <em>Warnings</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getPath <em>Path</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getResourceSet <em>Resource Set</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getURI <em>URI</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getContents <em>Contents</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isModified <em>Modified</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isLoaded <em>Loaded</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isTrackingModification <em>Tracking Modification</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getErrors <em>Errors</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getWarnings <em>Warnings</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getPath <em>Path</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
@@ -72,7 +71,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   /**
    * @ADDED
    */
-  private CDOViewImpl adapter;
+  private CDOViewImpl view;
 
   /**
    * @ADDED
@@ -81,6 +80,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected CDOResourceImpl()
@@ -90,6 +90,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -99,8 +100,8 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -111,6 +112,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ResourceSet getResourceSet()
@@ -120,6 +122,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setResourceSet(ResourceSet newResourceSet)
@@ -129,6 +132,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public URI getURI()
@@ -171,6 +175,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public boolean isModified()
@@ -180,6 +185,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setModified(boolean newModified)
@@ -189,6 +195,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public boolean isLoaded()
@@ -198,6 +205,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setLoaded(boolean newLoaded)
@@ -207,6 +215,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public boolean isTrackingModification()
@@ -216,6 +225,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTrackingModification(boolean newTrackingModification)
@@ -225,6 +235,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -235,6 +246,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -245,6 +257,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getPath()
@@ -320,7 +333,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void save(Map<?, ?> options) throws IOException
   {
-    // Do nothing
+    view.commit();
   }
 
   /**
@@ -423,20 +436,20 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   @Override
   public CDOViewImpl cdoView()
   {
-    return adapter;
+    return view;
   }
 
   /**
    * @ADDED
    */
-  public void cdoSetAdapter(CDOViewImpl adapter)
+  public void cdoSetView(CDOViewImpl view)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting adpter: {0}", adapter);
+      TRACER.format("Setting view: {0}", view);
     }
 
-    this.adapter = adapter;
+    this.view = view;
   }
 
   /**

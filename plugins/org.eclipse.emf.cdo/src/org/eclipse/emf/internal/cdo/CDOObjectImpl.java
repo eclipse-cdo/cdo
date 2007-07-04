@@ -131,7 +131,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
   {
     if (this instanceof CDOResourceImpl)
     {
-      ((CDOResourceImpl)this).cdoSetAdapter(adapter);
+      ((CDOResourceImpl)this).cdoSetView(adapter);
     }
   }
 
@@ -263,7 +263,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
       revision.set(cdoFeature, 0, setting);
     }
 
-    eSettings[i] = null;
+    if (eSettings != null)
+    {
+      eSettings[i] = null;
+    }
   }
 
   public CDORevisionImpl copyRevision()
@@ -301,6 +304,11 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
   {
     if (cdoTransient())
     {
+      if (eSettings == null)
+      {
+        return null;
+      }
+
       return eSettings[dynamicFeatureID];
     }
 
@@ -313,6 +321,11 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     if (cdoTransient())
     {
       // TODO What about defaultValues != null?
+      if (eSettings == null)
+      {
+        return false;
+      }
+
       return eSettings[eDynamicFeatureID(feature)] != null;
     }
 
@@ -324,11 +337,13 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
   {
     if (cdoTransient())
     {
+      eSettings(); // Important to create eSettings array if necessary
       eSettings[dynamicFeatureID] = value;
-      return;
     }
-
-    super.dynamicSet(dynamicFeatureID, value);
+    else
+    {
+      super.dynamicSet(dynamicFeatureID, value);
+    }
   }
 
   @Override
@@ -336,11 +351,15 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
   {
     if (cdoTransient())
     {
-      eSettings[dynamicFeatureID] = null;
-      return;
+      if (eSettings != null)
+      {
+        eSettings[dynamicFeatureID] = null;
+      }
     }
-
-    super.dynamicUnset(dynamicFeatureID);
+    else
+    {
+      super.dynamicUnset(dynamicFeatureID);
+    }
   }
 
   @Override

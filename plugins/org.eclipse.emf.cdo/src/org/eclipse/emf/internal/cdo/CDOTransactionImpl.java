@@ -42,6 +42,8 @@ public class CDOTransactionImpl
 
   private Map<CDOID, CDOObjectImpl> dirtyObjects = new HashMap();
 
+  private boolean dirty;
+
   public CDOTransactionImpl(CDOViewImpl view)
   {
     this.view = view;
@@ -50,6 +52,11 @@ public class CDOTransactionImpl
   public CDOViewImpl getView()
   {
     return view;
+  }
+
+  public boolean isDirty()
+  {
+    return dirty;
   }
 
   public Map<CDOID, CDOResourceImpl> getNewResources()
@@ -79,6 +86,11 @@ public class CDOTransactionImpl
 
   public void commit()
   {
+    if (!dirty)
+    {
+      return;
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.trace("commit()");
@@ -98,6 +110,7 @@ public class CDOTransactionImpl
       newResources.clear();
       newObjects.clear();
       dirtyObjects.clear();
+      dirty = false;
       nextTemporaryID = INITIAL_TEMPORARY_ID;
     }
     catch (RuntimeException ex)
@@ -155,6 +168,8 @@ public class CDOTransactionImpl
     {
       throw new ImplementationError("Duplicate ID: " + object);
     }
+
+    dirty = true;
   }
 
   private void postCommit(Map objects, CommitTransactionResult result)

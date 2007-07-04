@@ -50,6 +50,8 @@ public interface CDOView extends INotifier
 
   public CDORevision resolve(CDOID id);
 
+  public boolean isDirty();
+
   /**
    * @see CDOTransaction#commit()
    */

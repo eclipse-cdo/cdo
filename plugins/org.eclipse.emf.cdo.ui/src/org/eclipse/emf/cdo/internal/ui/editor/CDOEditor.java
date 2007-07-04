@@ -120,7 +120,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -943,7 +942,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       ResourceSet resourceSet = view.getResourceSet();
       editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, resourceSet);
-      editingDomain.setResourceToReadOnlyMap(new HashMap<Resource, Boolean>());
+      // editingDomain.setResourceToReadOnlyMap(new HashMap<Resource,
+      // Boolean>());
 
       String resourcePath = editorInput.getResourcePath();
       if (resourcePath == null)
@@ -1611,25 +1611,20 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   public void menuAboutToShow(IMenuManager menuManager)
   {
+    ((IMenuListener)getEditorSite().getActionBarContributor()).menuAboutToShow(menuManager);
     MenuManager submenuManager = new MenuManager("New Root");
-    populateManager(submenuManager);
-    try
+    if (populateManager(submenuManager))
     {
       menuManager.insertBefore("edit", submenuManager);
     }
-    catch (IllegalArgumentException ex)
-    {
-      menuManager.add(submenuManager);
-    }
-
-    ((IMenuListener)getEditorSite().getActionBarContributor()).menuAboutToShow(menuManager);
   }
 
   /**
    * @ADDED
    */
-  private void populateManager(MenuManager menuManager)
+  private boolean populateManager(MenuManager menuManager)
   {
+    boolean populated = false;
     CDOPackage[] cdoPackages = CDOPackageManager.INSTANCE.getPackages();
     for (CDOPackage cdoPackage : cdoPackages)
     {
@@ -1640,11 +1635,14 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         for (CDOClass cdoClass : cdoClasses)
         {
           submenuManager.add(new CreateRootAction(cdoClass));
+          populated = true;
         }
 
         menuManager.add(submenuManager);
       }
     }
+
+    return populated;
   }
 
   /**

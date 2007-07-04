@@ -105,7 +105,10 @@ public class CDOTransactionImpl
       postCommit(newResources, result);
       postCommit(newObjects, result);
       postCommit(dirtyObjects, result);
-      session.notifyInvalidation(result.getTimeStamp(), dirtyObjects.keySet(), view);
+      if (!dirtyObjects.isEmpty())
+      {
+        session.notifyInvalidation(result.getTimeStamp(), dirtyObjects.keySet(), view);
+      }
 
       newResources.clear();
       newObjects.clear();

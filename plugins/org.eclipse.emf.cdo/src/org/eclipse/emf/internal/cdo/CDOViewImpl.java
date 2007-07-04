@@ -60,6 +60,10 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private Map<CDOID, CDOObjectImpl> objects = new HashMap();
 
+  private CDOID lastLookupID;
+
+  private CDOObjectImpl lastLookupObject;
+
   public CDOViewImpl(CDOSessionImpl session, boolean readOnly)
   {
     this.session = session;
@@ -168,7 +172,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       resourceObject.setResource(resource);
       resourceObject.setState(CDOState.PROXY);
 
-      resources.add(resource);
       return resource;
     }
     catch (Exception ex)
@@ -184,14 +187,20 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       TRACER.format("Looking up object {0}", id);
     }
 
-    CDOObjectImpl object = objects.get(id);
-    if (object == null)
+    if (id.equals(lastLookupID))
     {
-      object = createObject(id);
-      registerObject(object);
+      return lastLookupObject;
     }
 
-    return object;
+    lastLookupID = id;
+    lastLookupObject = objects.get(id);
+    if (lastLookupObject == null)
+    {
+      lastLookupObject = createObject(id);
+      registerObject(lastLookupObject);
+    }
+
+    return lastLookupObject;
   }
 
   public void registerObject(CDOObjectImpl object)

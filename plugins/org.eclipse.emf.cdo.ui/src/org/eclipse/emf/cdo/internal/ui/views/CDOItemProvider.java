@@ -214,123 +214,26 @@ public class CDOItemProvider extends ContainerItemProvider
     }
   }
 
-  protected void fillSession(IMenuManager manager, final CDOSession session)
+  protected void fillSession(IMenuManager manager, CDOSession session)
   {
-    manager.add(new OpenViewAction("Open Transaction", "Open a CDO transaction", session)
-    {
-      @Override
-      protected CDOView createView()
-      {
-        return getSession().openView(new ResourceSetImpl());
-      }
-    });
-
-    manager.add(new OpenViewAction("Open View", "Open a read-only CDO view", session)
-    {
-      @Override
-      protected CDOView createView()
-      {
-        return getSession().openView(new ResourceSetImpl(), true);
-      }
-    });
-
-    manager.add(new OpenViewAction("Open Historical View", "Open a historical CDO view", session)
-    {
-      @Override
-      protected CDOView createView()
-      {
-        return getSession().openView(new ResourceSetImpl(), System.currentTimeMillis());
-      }
-    });
-
+    manager.add(new OpenTransactionAction(page, session));
+    manager.add(new OpenViewAction(page, session));
+    manager.add(new OpenHistoricalViewAction(page, session));
     manager.add(new Separator());
-    manager.add(new LongRunningAction(page, "Close", "Close the CDO session")
-    {
-      @Override
-      protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
-      {
-        session.close();
-      }
-    });
+    manager.add(new CloseSessionAction(page, session));
   }
 
-  protected void fillView(IMenuManager manager, final CDOView view)
+  protected void fillView(IMenuManager manager, CDOView view)
   {
-    manager.add(new LongRunningAction(page, "Load Resource", "Load a CDO resource")
-    {
-      private String resourcePath;
-
-      @Override
-      protected void preRun(IWorkbenchPage page) throws Exception
-      {
-        String uri = lastResourceNumber == 0 ? "" : "/res" + lastResourceNumber;
-        InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Load Resource",
-            "Enter resource path:", uri, null);
-        if (dialog.open() == InputDialog.OK)
-        {
-          resourcePath = dialog.getValue();
-        }
-        else
-        {
-          cancel();
-        }
-      }
-
-      @Override
-      protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
-      {
-        CDOEditor.open(page, view, resourcePath);
-      }
-    });
-
+    manager.add(new LoadResourceAction(page, view));
     if (view.isReadWrite())
     {
-      manager.add(new LongRunningAction(page, "Create Resource", "Create a CDO resource")
-      {
-        private String resourcePath;
-
-        @Override
-        protected void preRun(IWorkbenchPage page) throws Exception
-        {
-          InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Create Resource",
-              "Enter resource path:", "/res" + (lastResourceNumber + 1), null);
-          if (dialog.open() == InputDialog.OK)
-          {
-            ++lastResourceNumber;
-            resourcePath = dialog.getValue();
-          }
-          else
-          {
-            cancel();
-          }
-        }
-
-        @Override
-        protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
-        {
-          view.createResource(resourcePath);
-          CDOEditor.open(page, view, resourcePath);
-        }
-      });
+      manager.add(new CreateResourceAction(page, view));
     }
 
-    manager.add(new LongRunningAction(page, "Show Editor", "Show a CDO editor")
-    {
-      @Override
-      protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
-      {
-        CDOEditor.open(page, view, null);
-      }
-    });
+    manager.add(new ShowViewAction(page, view));
     manager.add(new Separator());
-    manager.add(new LongRunningAction(page, "Close", "Close the CDO view")
-    {
-      @Override
-      protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
-      {
-        view.close();
-      }
-    });
+    manager.add(new CloseViewAction(page, view));
   }
 
   protected void fillHistoryEntry(IMenuManager manager, Entry entry)
@@ -397,13 +300,13 @@ public class CDOItemProvider extends ContainerItemProvider
   /**
    * @author Eike Stepper
    */
-  private abstract class OpenViewAction extends LongRunningAction
+  public static abstract class SessionAction extends LongRunningAction
   {
     private CDOSession session;
 
-    public OpenViewAction(String text, String toolTipText, CDOSession session)
+    public SessionAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image, CDOSession session)
     {
-      super(page, text, toolTipText, getOpenEditorImageDescriptor());
+      super(page, text, toolTipText, image);
       this.session = session;
     }
 
@@ -411,41 +314,237 @@ public class CDOItemProvider extends ContainerItemProvider
     {
       return session;
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class OpenTransactionAction extends SessionAction
+  {
+    public OpenTransactionAction(IWorkbenchPage page, CDOSession session)
+    {
+      super(page, "Open Transaction", "Open a CDO transaction", getOpenEditorImageDescriptor(), session);
+    }
+
+    @Override
+    protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+    {
+      getSession().openView(new ResourceSetImpl());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class OpenViewAction extends SessionAction
+  {
+    public OpenViewAction(IWorkbenchPage page, CDOSession session)
+    {
+      super(page, "Open View", "Open a CDO view", getOpenEditorImageDescriptor(), session);
+    }
+
+    @Override
+    protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+    {
+      getSession().openView(new ResourceSetImpl(), true);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class OpenHistoricalViewAction extends SessionAction
+  {
+    public OpenHistoricalViewAction(IWorkbenchPage page, CDOSession session)
+    {
+      super(page, "Open Historical View", "Open a historical CDO view", getOpenEditorImageDescriptor(), session);
+    }
+
+    @Override
+    protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+    {
+      getSession().openView(new ResourceSetImpl(), System.currentTimeMillis());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class CloseSessionAction extends SessionAction
+  {
+    public CloseSessionAction(IWorkbenchPage page, CDOSession session)
+    {
+      super(page, "Close", "Close the CDO session", null, session);
+    }
 
     @Override
     protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
     {
-      // final Exception[] exception = new Exception[1];
-      // final CDOView view =
-      createView();
-      // final IWorkbenchPart part = page.getActivePart();
-      // getDisplay().syncExec(new Runnable()
-      // {
-      // public void run()
-      // {
-      // try
-      // {
-      // if (part instanceof ISetSelectionTarget)
-      // {
-      // ((ISetSelectionTarget)part).selectReveal(new
-      // StructuredSelection(view));
-      // }
-      //
-      // CDOEditor.open(page, view, "/res/test");
-      // }
-      // catch (Exception ex)
-      // {
-      // exception[0] = ex;
-      // }
-      // }
-      // });
-      //
-      // if (exception[0] != null)
-      // {
-      // throw exception[0];
-      // }
+      getSession().close();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class ViewAction extends LongRunningAction
+  {
+    private CDOView view;
+
+    public ViewAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image, CDOView view)
+    {
+      super(page, text, toolTipText, image);
+      this.view = view;
     }
 
-    protected abstract CDOView createView();
+    public CDOView getView()
+    {
+      return view;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class LoadResourceAction extends ViewAction
+  {
+    private String resourcePath;
+
+    public LoadResourceAction(IWorkbenchPage page, CDOView view)
+    {
+      super(page, "Load Resource", "Load a CDO resource", null, view);
+    }
+
+    @Override
+    protected void preRun(IWorkbenchPage page) throws Exception
+    {
+      String uri = lastResourceNumber == 0 ? "" : "/res" + lastResourceNumber;
+      InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Load Resource",
+          "Enter resource path:", uri, null);
+      if (dialog.open() == InputDialog.OK)
+      {
+        resourcePath = dialog.getValue();
+      }
+      else
+      {
+        cancel();
+      }
+    }
+
+    @Override
+    protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+    {
+      CDOEditor.open(page, getView(), resourcePath);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class CreateResourceAction extends ViewAction
+  {
+    private String resourcePath;
+
+    public CreateResourceAction(IWorkbenchPage page, CDOView view)
+    {
+      super(page, "Create Resource", "Create a CDO resource", null, view);
+    }
+
+    @Override
+    protected void preRun(IWorkbenchPage page) throws Exception
+    {
+      InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Create Resource",
+          "Enter resource path:", "/res" + (lastResourceNumber + 1), null);
+      if (dialog.open() == InputDialog.OK)
+      {
+        ++lastResourceNumber;
+        resourcePath = dialog.getValue();
+      }
+      else
+      {
+        cancel();
+      }
+    }
+
+    @Override
+    protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+    {
+      getView().createResource(resourcePath);
+      CDOEditor.open(page, getView(), resourcePath);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class ShowViewAction extends ViewAction
+  {
+    public ShowViewAction(IWorkbenchPage page, CDOView view)
+    {
+      super(page, "Show Editor", "Show a CDO editor", null, view);
+    }
+
+    @Override
+    protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+    {
+      CDOEditor.open(page, getView(), null);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class CloseViewAction extends ViewAction
+  {
+    public CloseViewAction(IWorkbenchPage page, CDOView view)
+    {
+      super(page, "Close", "Close the CDO view", null, view);
+    }
+
+    @Override
+    protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+    {
+      getView().close();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class EntryAction extends LongRunningAction
+  {
+    private CDOViewHistory.Entry entry;
+
+    public EntryAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
+        CDOViewHistory.Entry entry)
+    {
+      super(page, text, toolTipText, image);
+      this.entry = entry;
+    }
+
+    public CDOViewHistory.Entry getEntry()
+    {
+      return entry;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class ShowEntryAction extends EntryAction
+  {
+    public ShowEntryAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
+        CDOViewHistory.Entry entry)
+    {
+      super(page, "Show Editor", "Show a CDO editor", null, entry);
+    }
+
+    @Override
+    protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+    {
+      CDOView view = getEntry().getView();
+      String resourcePath = getEntry().getResourcePath();
+      CDOEditor.open(page, view, resourcePath);
+    }
   }
 }

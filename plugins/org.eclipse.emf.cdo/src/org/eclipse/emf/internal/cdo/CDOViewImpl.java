@@ -418,8 +418,24 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private void notifyAdd(CDOResourceImpl cdoResource)
   {
-    CDOStateMachine.INSTANCE.attach(cdoResource, cdoResource, this);
-    fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.ADDED));
+    try
+    {
+      CDOStateMachine.INSTANCE.attach(cdoResource, cdoResource, this);
+      fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.ADDED));
+    }
+    catch (RuntimeException ex)
+    {
+      try
+      {
+        ((CDOObjectImpl)cdoResource).setState(CDOState.NEW);
+        resourceSet.getResources().remove(cdoResource);
+      }
+      catch (RuntimeException ignore)
+      {
+      }
+
+      throw ex;
+    }
   }
 
   private void notifyRemove(Notification msg)

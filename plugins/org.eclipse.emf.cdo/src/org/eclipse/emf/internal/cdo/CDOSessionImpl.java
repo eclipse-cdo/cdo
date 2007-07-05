@@ -237,6 +237,14 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
   @Override
   protected void doDeactivate() throws Exception
   {
+    synchronized (views)
+    {
+      for (CDOViewImpl view : getViews())
+      {
+        view.close();
+      }
+    }
+
     EventUtil.removeListener(channel, channelListener);
     channel.close();
     super.doDeactivate();

@@ -60,26 +60,26 @@ public final class CDOStateMachine
     }
   }
 
-  public void attach(CDOObjectImpl object, CDOResourceImpl resource, CDOViewImpl adapter)
+  public void attach(CDOObjectImpl object, CDOResourceImpl resource, CDOViewImpl view)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("ATTACH: {0} --> {1}", object, adapter);
+      TRACER.format("ATTACH: {0} --> {1}", object, view);
     }
 
     // TRANSIENT --> PREPARED_ATTACH
-    INSTANCE.processEvent(object, Event.ATTACH, resource, adapter);
+    INSTANCE.processEvent(object, Event.ATTACH, resource, view);
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("FINALIZE_ATTACH: {0} --> {1}", object, adapter);
+      TRACER.format("FINALIZE_ATTACH: {0} --> {1}", object, view);
     }
 
     // PREPARED_ATTACH --> NEW
-    INSTANCE.processEvent(object, Event.FINALIZE_ATTACH, resource, adapter);
+    INSTANCE.processEvent(object, Event.FINALIZE_ATTACH, resource, view);
   }
 
-  public void detach(CDOObjectImpl object, CDOResourceImpl resource, CDOViewImpl adapter)
+  public void detach(CDOObjectImpl object, CDOResourceImpl resource, CDOViewImpl view)
   {
     // TODO Implement method CDOStateMachine.detach()
     throw new UnsupportedOperationException("Not yet implemented");
@@ -223,9 +223,9 @@ public final class CDOStateMachine
     transition.execute(object, event, data1, data2);
   }
 
-  private static CDOTransactionImpl getTransaction(CDOViewImpl adapter)
+  private static CDOTransactionImpl getTransaction(CDOViewImpl view)
   {
-    CDOTransactionImpl transaction = adapter.getTransaction();
+    CDOTransactionImpl transaction = view.getTransaction();
     if (transaction == null)
     {
       throw new IllegalStateException("transaction == null");
@@ -276,6 +276,7 @@ public final class CDOStateMachine
       return "Ignoring event {0} in state {1} for {2}";
     }
 
+    @Override
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
     }
@@ -286,6 +287,7 @@ public final class CDOStateMachine
    */
   private static final class FailTransition extends Transition
   {
+    @Override
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
       throw new IllegalStateException("Event " + event + " not allowed in state " + object.cdoState() + " for "
@@ -298,11 +300,12 @@ public final class CDOStateMachine
    */
   private static final class AttachTransition extends Transition
   {
+    @Override
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
       CDOResourceImpl resource = (CDOResourceImpl)data1;
-      CDOViewImpl adapter = (CDOViewImpl)data2;
-      CDOTransactionImpl transaction = getTransaction(adapter);
+      CDOViewImpl view = (CDOViewImpl)data2;
+      CDOTransactionImpl transaction = getTransaction(view);
 
       // Create new revision
       CDOID id = CDOIDImpl.create(transaction.getNextTemporaryID());
@@ -313,14 +316,14 @@ public final class CDOStateMachine
       object.setID(id);
       object.setRevision(revision);
       object.setResource(resource);
-      object.setAdapter(adapter);
+      object.setAdapter(view);
       object.setState(CDOState.PREPARED_ATTACH);
 
       // Adjust revision
       revision.setResourceID(resource.cdoID());
 
       // Register object
-      adapter.registerObject(object);
+      view.registerObject(object);
       transaction.registerNew(object);
 
       // Prepare content tree
@@ -328,7 +331,7 @@ public final class CDOStateMachine
       {
         if (content instanceof CDOObjectImpl)
         {
-          INSTANCE.processEvent((CDOObjectImpl)content, Event.ATTACH, resource, adapter);
+          INSTANCE.processEvent((CDOObjectImpl)content, Event.ATTACH, resource, view);
         }
       }
     }
@@ -339,6 +342,7 @@ public final class CDOStateMachine
    */
   private static final class FinalizeAttachTransition extends Transition
   {
+    @Override
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
       object.finalizeRevision();
@@ -360,6 +364,7 @@ public final class CDOStateMachine
    */
   private static final class DetachTransition extends Transition
   {
+    @Override
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
       // TODO Implement method DetachTransition.execute()
@@ -372,9 +377,10 @@ public final class CDOStateMachine
    */
   private static final class CommitTransition extends Transition
   {
+    @Override
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
-      CDOViewImpl adapter = object.cdoView();
+      CDOViewImpl view = object.cdoView();
       CommitTransactionResult result = (CommitTransactionResult)data1;
       Map<CDOID, CDOID> idMappings = result.getIdMappings();
 
@@ -384,7 +390,7 @@ public final class CDOStateMachine
       if (newID != null)
       {
         object.setID(newID);
-        adapter.remapObject(id);
+        view.remapObject(id);
         id = newID;
       }
 
@@ -393,7 +399,7 @@ public final class CDOStateMachine
       revision.setID(id);
       revision.setCreated(result.getTimeStamp());
       revision.adjustReferences(idMappings);
-      adapter.getSession().getRevisionManager().addRevision(revision);
+      view.getSession().getRevisionManager().addRevision(revision);
 
       object.setState(CDOState.CLEAN);
     }
@@ -404,13 +410,14 @@ public final class CDOStateMachine
    */
   private static final class WriteTransition extends Transition
   {
+    @Override
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
       CDORevisionImpl revision = object.copyRevision();
       revision.increaseVersion();
 
-      CDOViewImpl adapter = object.cdoView();
-      CDOTransactionImpl transaction = getTransaction(adapter);
+      CDOViewImpl view = object.cdoView();
+      CDOTransactionImpl transaction = getTransaction(view);
       transaction.registerDirty(object);
 
       object.setState(CDOState.DIRTY);
@@ -422,6 +429,7 @@ public final class CDOStateMachine
    */
   private static final class InvalidateTransition extends Transition
   {
+    @Override
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
       long timeStamp = (Long)data1;
@@ -442,11 +450,12 @@ public final class CDOStateMachine
       this.forWrite = forWrite;
     }
 
+    @Override
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
       CDOID id = object.cdoID();
-      CDOViewImpl adapter = object.cdoView();
-      CDORevisionImpl revision = adapter.resolve(id);
+      CDOViewImpl view = object.cdoView();
+      CDORevisionImpl revision = view.resolve(id);
       object.setRevision(revision);
       object.setState(CDOState.CLEAN);
 
@@ -462,11 +471,12 @@ public final class CDOStateMachine
    */
   private static final class LoadResourceTransition extends Transition
   {
+    @Override
     protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
     {
       CDOResourceImpl resource = (CDOResourceImpl)data1;
-      CDOViewImpl adapter = (CDOViewImpl)data2;
-      CDOID id = requestID(resource, adapter);
+      CDOViewImpl view = (CDOViewImpl)data2;
+      CDOID id = requestID(resource, view);
       if (id == CDOID.NULL)
       {
         throw new ServerException("Resource not available: " + resource.getPath());
@@ -476,16 +486,16 @@ public final class CDOStateMachine
       object.setID(id);
       // object.setRevision(revision);
       object.setResource(resource);
-      object.setAdapter(adapter);
+      object.setAdapter(view);
 
       // Register object
-      adapter.registerObject(object);
+      view.registerObject(object);
     }
 
-    private CDOID requestID(CDOResourceImpl resource, CDOViewImpl adapter)
+    private CDOID requestID(CDOResourceImpl resource, CDOViewImpl view)
     {
       String path = CDOUtil.extractPath(resource.getURI());
-      ResourceIDRequest signal = new ResourceIDRequest(adapter.getSession().getChannel(), path);
+      ResourceIDRequest signal = new ResourceIDRequest(view.getSession().getChannel(), path);
 
       try
       {

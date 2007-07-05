@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ITreeSelection;
@@ -213,7 +214,7 @@ public class CDOItemProvider extends ContainerItemProvider
     }
   }
 
-  protected void fillSession(IMenuManager manager, CDOSession session)
+  protected void fillSession(IMenuManager manager, final CDOSession session)
   {
     manager.add(new OpenViewAction("Open Transaction", "Open a CDO transaction", session)
     {
@@ -239,6 +240,16 @@ public class CDOItemProvider extends ContainerItemProvider
       protected CDOView createView()
       {
         return getSession().openView(new ResourceSetImpl(), System.currentTimeMillis());
+      }
+    });
+
+    manager.add(new Separator());
+    manager.add(new LongRunningAction(page, "Close", "Close the CDO session")
+    {
+      @Override
+      protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+      {
+        session.close();
       }
     });
   }
@@ -309,6 +320,15 @@ public class CDOItemProvider extends ContainerItemProvider
       protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
       {
         CDOEditor.open(page, view, null);
+      }
+    });
+    manager.add(new Separator());
+    manager.add(new LongRunningAction(page, "Close", "Close the CDO view")
+    {
+      @Override
+      protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+      {
+        view.close();
       }
     });
   }

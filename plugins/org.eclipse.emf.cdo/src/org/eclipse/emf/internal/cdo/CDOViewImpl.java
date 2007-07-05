@@ -34,6 +34,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.internal.cdo.bundle.CDO;
@@ -131,12 +132,14 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public CDOResource createResource(String path)
   {
-    return (CDOResource)getResourceSet().createResource(CDOUtil.createURI(path));
+    URI createURI = CDOUtil.createURI(path);
+    return (CDOResource)getResourceSet().createResource(createURI);
   }
 
   public CDOResource getResource(String path)
   {
-    return (CDOResource)getResourceSet().getResource(CDOUtil.createURI(path), true);
+    URI uri = CDOUtil.createURI(path);
+    return (CDOResource)getResourceSet().getResource(uri, true);
   }
 
   public CDOResourceImpl getResource(CDOID resourceID)

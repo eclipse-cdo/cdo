@@ -7,6 +7,7 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewCommittedEvent;
 import org.eclipse.emf.cdo.CDOViewDirtyEvent;
@@ -19,8 +20,10 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -159,6 +162,56 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * @ADDED
    */
   private CDOEventHandler eventHandler;
+
+  /**
+   * @ADDED
+   */
+  private IListener sessionListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDOSessionViewsEvent)
+      {
+        CDOSessionViewsEvent e = (CDOSessionViewsEvent)event;
+        if (e.getView() == view && e.getDeltaKind() == IContainerDelta.Kind.REMOVED)
+        {
+          closeEditor();
+        }
+      }
+      else if (event instanceof ILifecycleEvent)
+      {
+        ILifecycleEvent e = (ILifecycleEvent)event;
+        if (e.getKind() == ILifecycleEvent.Kind.DEACTIVATED)
+        {
+          closeEditor();
+        }
+      }
+    }
+
+    private void closeEditor()
+    {
+      try
+      {
+        getSite().getShell().getDisplay().syncExec(new Runnable()
+        {
+          public void run()
+          {
+            try
+            {
+              getSite().getPage().closeEditor(CDOEditor.this, false);
+              CDOEditor.this.dispose();
+            }
+            catch (Exception ignore)
+            {
+            }
+          }
+        });
+      }
+      catch (Exception ignore)
+      {
+      }
+    }
+  };
 
   /**
    * @ADDED
@@ -1109,6 +1162,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     updateProblemIndication();
     eventHandler = new CDOEventHandler(view, selectionViewer);
+    view.getSession().addListener(sessionListener);
     view.addListener(viewListener);
   }
 
@@ -1743,8 +1797,11 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   public void dispose()
   {
     updateProblemIndication = false;
+
     view.removeListener(viewListener);
+    view.getSession().removeListener(sessionListener);
     eventHandler.dispose();
+
     getSite().getPage().removePartListener(partListener);
     adapterFactory.dispose();
 

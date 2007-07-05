@@ -179,7 +179,11 @@ public class CDOTransactionImpl
       throw new ImplementationError("Duplicate ID: " + object);
     }
 
-    dirty = true;
+    if (!dirty)
+    {
+      dirty = true;
+      view.fireDirtyEvent();
+    }
   }
 
   private void postCommit(Map objects, CommitTransactionResult result)

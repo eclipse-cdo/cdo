@@ -42,6 +42,7 @@ public abstract class ItemsProcessor
         {
           try
           {
+            processCDOObject(viewer, ids, viewer.getInput());
             processItems(viewer, ids, viewer.getTree().getItems());
           }
           catch (Exception ex)
@@ -64,22 +65,26 @@ public abstract class ItemsProcessor
     for (TreeItem item : items)
     {
       Object object = item.getData();
-      if (object instanceof CDOObject)
-      {
-        CDOObject cdoObject = (CDOObject)object;
-        if (ids == null)
-        {
-          processCDOObject(viewer, cdoObject);
-        }
-        else if (ids.contains(cdoObject.cdoID()))
-        {
-          processCDOObject(viewer, cdoObject);
-        }
-      }
-
+      processCDOObject(viewer, ids, object);
       if (item.getItemCount() != 0)
       {
         processItems(viewer, ids, item.getItems());
+      }
+    }
+  }
+
+  private void processCDOObject(TreeViewer viewer, Set<CDOID> ids, Object object)
+  {
+    if (object instanceof CDOObject)
+    {
+      CDOObject cdoObject = (CDOObject)object;
+      if (ids == null)
+      {
+        processCDOObject(viewer, cdoObject);
+      }
+      else if (ids.contains(cdoObject.cdoID()))
+      {
+        processCDOObject(viewer, cdoObject);
       }
     }
   }

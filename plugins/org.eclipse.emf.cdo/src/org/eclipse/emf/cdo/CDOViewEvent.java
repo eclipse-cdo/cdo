@@ -8,21 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.internal.cdo;
+package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.protocol.CDOID;
-
-import org.eclipse.net4j.util.event.IEvent;
-
-import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public interface CDOViewCommitedEvent extends IEvent
+public interface CDOViewEvent extends CDOEvent
 {
   public CDOView getView();
-
-  public Map<CDOID, CDOID> getIDMappings();
 }

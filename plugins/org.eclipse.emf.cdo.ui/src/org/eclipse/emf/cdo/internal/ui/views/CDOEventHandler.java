@@ -13,13 +13,13 @@ package org.eclipse.emf.cdo.internal.ui.views;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.CDOViewCommittedEvent;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 import org.eclipse.emf.cdo.protocol.CDOID;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
-import org.eclipse.emf.internal.cdo.CDOViewCommitedEvent;
 
 import org.eclipse.jface.viewers.TreeViewer;
 
@@ -59,9 +59,9 @@ public class CDOEventHandler
   {
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof CDOViewCommitedEvent)
+      if (event instanceof CDOViewCommittedEvent)
       {
-        Map<CDOID, CDOID> idMappings = ((CDOViewCommitedEvent)event).getIDMappings();
+        Map<CDOID, CDOID> idMappings = ((CDOViewCommittedEvent)event).getIDMappings();
         HashSet newOIDs = new HashSet(idMappings.values());
         new ItemsProcessor()
         {

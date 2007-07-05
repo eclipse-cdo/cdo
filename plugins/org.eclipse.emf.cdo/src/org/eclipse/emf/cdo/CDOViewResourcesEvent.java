@@ -10,15 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
-import org.eclipse.net4j.util.event.IEvent;
 
 /**
  * @author Eike Stepper
  */
-public interface CDOViewResourcesEvent extends IEvent
+public interface CDOViewResourcesEvent extends CDOViewEvent
 {
-  public CDOView getView();
-
   public String getResourcePath();
 
   public Kind getKind();

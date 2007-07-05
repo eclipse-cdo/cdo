@@ -13,6 +13,9 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.CDOViewCommittedEvent;
+import org.eclipse.emf.cdo.CDOViewDirtyEvent;
+import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.CDOViewResourcesEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
@@ -25,7 +28,6 @@ import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -362,6 +364,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
   }
 
+  public void fireDirtyEvent()
+  {
+    fireEvent(new DirtyEvent());
+  }
+
   public void notifyChanged(Notification msg)
   {
     switch (msg.getEventType())
@@ -517,6 +524,24 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   /**
    * @author Eike Stepper
    */
+  private abstract class Event extends org.eclipse.net4j.internal.util.event.Event implements CDOViewEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    public Event()
+    {
+      super(CDOViewImpl.this);
+    }
+
+    public CDOViewImpl getView()
+    {
+      return CDOViewImpl.this;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private final class ResourcesEvent extends Event implements CDOViewResourcesEvent
   {
     private static final long serialVersionUID = 1L;
@@ -527,14 +552,8 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
     public ResourcesEvent(String resourcePath, Kind kind)
     {
-      super(CDOViewImpl.this);
       this.resourcePath = resourcePath;
       this.kind = kind;
-    }
-
-    public CDOViewImpl getView()
-    {
-      return CDOViewImpl.this;
     }
 
     public String getResourcePath()
@@ -554,7 +573,22 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
   }
 
-  private final class CommittedEvent extends Event implements CDOViewCommitedEvent
+  /**
+   * @author Eike Stepper
+   */
+  private final class DirtyEvent extends Event implements CDOViewDirtyEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private DirtyEvent()
+    {
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class CommittedEvent extends Event implements CDOViewCommittedEvent
   {
     private static final long serialVersionUID = 1L;
 
@@ -562,13 +596,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
     private CommittedEvent(Map<CDOID, CDOID> idMappings)
     {
-      super(CDOViewImpl.this);
       this.idMappings = idMappings;
-    }
-
-    public CDOView getView()
-    {
-      return CDOViewImpl.this;
     }
 
     public Map<CDOID, CDOID> getIDMappings()

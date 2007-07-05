@@ -12,17 +12,13 @@ package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.protocol.CDOID;
 
-import org.eclipse.net4j.util.event.IEvent;
-
 import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public interface CDOSessionInvalidationEvent extends IEvent
+public interface CDOSessionInvalidationEvent extends CDOSessionEvent
 {
-  public CDOSession getSession();
-
   public CDOView getView();
 
   public long getTimeStamp();

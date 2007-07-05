@@ -8,6 +8,8 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.CDOViewCommittedEvent;
+import org.eclipse.emf.cdo.CDOViewDirtyEvent;
 import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
 import org.eclipse.emf.cdo.internal.ui.views.CDOEventHandler;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -17,6 +19,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -155,6 +159,24 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * @ADDED
    */
   private CDOEventHandler eventHandler;
+
+  /**
+   * @ADDED
+   */
+  private IListener viewListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDOViewDirtyEvent)
+      {
+        firePropertyChange(IEditorPart.PROP_DIRTY);
+      }
+      else if (event instanceof CDOViewCommittedEvent)
+      {
+        firePropertyChange(IEditorPart.PROP_DIRTY);
+      }
+    }
+  };
 
   /**
    * This keeps track of the editing domain that is used to track all changes to
@@ -1072,6 +1094,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     updateProblemIndication();
     eventHandler = new CDOEventHandler(view, selectionViewer);
+    view.addListener(viewListener);
   }
 
   /**
@@ -1300,12 +1323,14 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * This is for implementing {@link IEditorPart} and simply tests the command
    * stack. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   @Override
   public boolean isDirty()
   {
-    return ((BasicCommandStack)editingDomain.getCommandStack()).isSaveNeeded();
+    // return
+    // ((BasicCommandStack)editingDomain.getCommandStack()).isSaveNeeded();
+    return view.isDirty();
   }
 
   /**
@@ -1703,6 +1728,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   public void dispose()
   {
     updateProblemIndication = false;
+    view.removeListener(viewListener);
     eventHandler.dispose();
     getSite().getPage().removePartListener(partListener);
     adapterFactory.dispose();

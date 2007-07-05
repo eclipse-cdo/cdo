@@ -12,7 +12,7 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.bundle.CDOProtocol;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDODanglingReferenceConverter;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDOReferenceConverter;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
@@ -42,13 +42,13 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   private CDOTransactionImpl transaction;
 
-  private CDODanglingReferenceConverter converter;
+  private CDOReferenceConverter converter;
 
   public CommitTransactionRequest(IChannel channel, final CDOTransactionImpl transaction)
   {
     super(channel, CDOProtocolConstants.COMMIT_TRANSACTION_SIGNAL);
     this.transaction = transaction;
-    converter = new CDODanglingReferenceConverter()
+    converter = new CDOReferenceConverter()
     {
       public CDOID convertToID(Object object)
       {

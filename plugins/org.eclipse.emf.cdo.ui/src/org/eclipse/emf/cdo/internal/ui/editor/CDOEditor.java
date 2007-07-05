@@ -7,11 +7,9 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
-import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.internal.ui.views.CDOEventHandler;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
@@ -19,8 +17,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -57,7 +53,6 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
-import org.eclipse.emf.internal.cdo.CDOViewCommitedEvent;
 import org.eclipse.emf.internal.cdo.util.EMFUtil;
 
 import org.eclipse.core.resources.IFile;
@@ -127,12 +122,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * This is an example of a CDO model editor. <!-- begin-user-doc --> <!--
@@ -161,47 +154,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  private IListener sessionListener = new IListener()
-  {
-    public void notifyEvent(IEvent event)
-    {
-      if (event instanceof CDOSessionInvalidationEvent)
-      {
-        Set<CDOID> dirtyOIDs = ((CDOSessionInvalidationEvent)event).getDirtyOIDs();
-        new ItemsProcessor()
-        {
-          @Override
-          protected void processCDOObject(TreeViewer viewer, CDOObject cdoObject)
-          {
-            viewer.refresh(cdoObject, true);
-          }
-        }.processCDOObjects(selectionViewer, dirtyOIDs);
-      }
-    }
-  };
-
-  /**
-   * @ADDED
-   */
-  private IListener viewListener = new IListener()
-  {
-    public void notifyEvent(IEvent event)
-    {
-      if (event instanceof CDOViewCommitedEvent)
-      {
-        Map<CDOID, CDOID> idMappings = ((CDOViewCommitedEvent)event).getIDMappings();
-        HashSet newOIDs = new HashSet(idMappings.values());
-        new ItemsProcessor()
-        {
-          @Override
-          protected void processCDOObject(TreeViewer viewer, CDOObject cdoObject)
-          {
-            viewer.update(cdoObject, null);
-          }
-        }.processCDOObjects(selectionViewer, newOIDs);
-      }
-    }
-  };
+  private CDOEventHandler eventHandler;
 
   /**
    * This keeps track of the editing domain that is used to track all changes to
@@ -1118,8 +1071,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     });
 
     updateProblemIndication();
-    view.getSession().addListener(sessionListener);
-    view.addListener(viewListener);
+    eventHandler = new CDOEventHandler(view, selectionViewer);
   }
 
   /**
@@ -1390,6 +1342,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
             }
             catch (Exception exception)
             {
+              exception.printStackTrace();
               resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
             }
             first = false;
@@ -1750,8 +1703,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   public void dispose()
   {
     updateProblemIndication = false;
-    view.removeListener(viewListener);
-    view.getSession().removeListener(sessionListener);
+    eventHandler.dispose();
     getSite().getPage().removePartListener(partListener);
     adapterFactory.dispose();
 

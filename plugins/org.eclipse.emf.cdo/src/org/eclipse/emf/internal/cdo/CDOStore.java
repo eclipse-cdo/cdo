@@ -437,16 +437,16 @@ public final class CDOStore implements EStore
   {
     CDOObjectImpl container = cdoObject;
     CDOObjectImpl contained = (CDOObjectImpl)value;
-    CDOViewImpl containerAdapter = cdoObject.cdoView();
-    CDOViewImpl containedAdapter = contained.cdoView();
-    if (containedAdapter != containerAdapter)
+    CDOViewImpl containerView = container.cdoView();
+    CDOViewImpl containedView = contained.cdoView();
+    if (containedView != containerView)
     {
-      if (containedAdapter != null)
+      if (containedView != null)
       {
-        CDOStateMachine.INSTANCE.detach(contained, contained.cdoResource(), containedAdapter);
+        CDOStateMachine.INSTANCE.detach(contained, contained.cdoResource(), containedView);
       }
 
-      CDOStateMachine.INSTANCE.attach(contained, container.cdoResource(), containerAdapter);
+      CDOStateMachine.INSTANCE.attach(contained, container.cdoResource(), containerView);
     }
   }
 }

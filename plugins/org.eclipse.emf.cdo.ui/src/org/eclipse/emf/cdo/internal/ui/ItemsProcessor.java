@@ -36,7 +36,7 @@ public abstract class ItemsProcessor
   {
     try
     {
-      viewer.getControl().getDisplay().asyncExec(new Runnable()
+      viewer.getControl().getDisplay().syncExec(new Runnable()
       {
         public void run()
         {

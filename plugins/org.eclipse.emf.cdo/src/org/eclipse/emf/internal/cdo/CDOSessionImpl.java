@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -165,6 +165,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     {
       values = views.values();
     }
+
     return values.toArray(new CDOViewImpl[values.size()]);
   }
 
@@ -189,22 +190,16 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs, CDOViewImpl excludedView)
   {
-    CDOViewImpl[] values;
-    synchronized (views)
-    {
-      values = views.values().toArray(new CDOViewImpl[views.size()]);
-    }
-
-    Set<CDOID> unmodifiableSet = Collections.unmodifiableSet(dirtyOIDs);
-    for (CDOViewImpl view : values)
+    dirtyOIDs = Collections.unmodifiableSet(dirtyOIDs);
+    for (CDOViewImpl view : getViews())
     {
       if (view != excludedView)
       {
-        view.notifyInvalidation(timeStamp, unmodifiableSet);
+        view.notifyInvalidation(timeStamp, dirtyOIDs);
       }
     }
 
-    fireEvent(new InvalidationEvent(excludedView, timeStamp, unmodifiableSet));
+    fireEvent(new InvalidationEvent(excludedView, timeStamp, dirtyOIDs));
   }
 
   @Override

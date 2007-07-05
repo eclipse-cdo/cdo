@@ -52,12 +52,13 @@ public class CDOItemProvider extends ContainerItemProvider
       if (event instanceof CDOViewHistoryEvent)
       {
         CDOViewHistoryEvent e = (CDOViewHistoryEvent)event;
-        CDOViewHistory history = e.getViewHistory();
-        CDOView view = history.getView();
+        CDOView view = e.getViewHistory().getView();
         refreshElement(view, false);
-        if (e.getAddedEntry() != null)
+
+        Entry addedEntry = e.getAddedEntry();
+        if (addedEntry != null)
         {
-          revealElement(e.getAddedEntry());
+          revealElement(addedEntry);
         }
       }
     }

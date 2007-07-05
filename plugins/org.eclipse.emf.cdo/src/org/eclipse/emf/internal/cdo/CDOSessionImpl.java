@@ -195,7 +195,14 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     {
       if (view != excludedView)
       {
-        view.notifyInvalidation(timeStamp, dirtyOIDs);
+        try
+        {
+          view.notifyInvalidation(timeStamp, dirtyOIDs);
+        }
+        catch (RuntimeException ex)
+        {
+          CDO.LOG.error(ex);
+        }
       }
     }
 

@@ -287,10 +287,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     if (result != null)
     {
       Map<CDOID, CDOID> idMappings = result.getIdMappings();
-      if (idMappings != null && !idMappings.isEmpty())
-      {
-        fireEvent(new CommittedEvent(idMappings));
-      }
+      fireEvent(new CommittedEvent(idMappings));
     }
   }
 

@@ -167,13 +167,27 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof CDOViewDirtyEvent)
+      if (event instanceof CDOViewDirtyEvent || event instanceof CDOViewCommittedEvent)
       {
-        firePropertyChange(IEditorPart.PROP_DIRTY);
-      }
-      else if (event instanceof CDOViewCommittedEvent)
-      {
-        firePropertyChange(IEditorPart.PROP_DIRTY);
+        try
+        {
+          getSite().getShell().getDisplay().syncExec(new Runnable()
+          {
+            public void run()
+            {
+              try
+              {
+                firePropertyChange(IEditorPart.PROP_DIRTY);
+              }
+              catch (Exception ignore)
+              {
+              }
+            }
+          });
+        }
+        catch (Exception ignore)
+        {
+        }
       }
     }
   };
@@ -944,6 +958,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       CDOEditorInput editorInput = (CDOEditorInput)getEditorInput();
       view = editorInput.getView();
 
+      // TODO Check if a CommandStack is needed
       BasicCommandStack commandStack = new BasicCommandStack();
       commandStack.addCommandStackListener(new CommandStackListener()
       {
@@ -953,7 +968,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           {
             public void run()
             {
-              firePropertyChange(IEditorPart.PROP_DIRTY);
+              // firePropertyChange(IEditorPart.PROP_DIRTY);
 
               Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
               if (mostRecentCommand != null)
@@ -1386,7 +1401,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       // Refresh the necessary state.
       //
       ((BasicCommandStack)editingDomain.getCommandStack()).saveIsDone();
-      firePropertyChange(IEditorPart.PROP_DIRTY);
+      // firePropertyChange(IEditorPart.PROP_DIRTY);
     }
     catch (Exception exception)
     {

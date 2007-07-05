@@ -258,6 +258,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
           if (node != null)
           {
             refreshElement(container, false);
+            revealElement(element);
             elementAdded(element, container);
           }
         }

@@ -119,6 +119,29 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
     }
   }
 
+  protected void revealElement(final Object element)
+  {
+    try
+    {
+      getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            viewer.reveal(element);
+          }
+          catch (Exception ignore)
+          {
+          }
+        }
+      });
+    }
+    catch (Exception ignore)
+    {
+    }
+  }
+
   protected Display getDisplay()
   {
     Display display = viewer.getControl().getDisplay();

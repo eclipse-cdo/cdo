@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewResourcesEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 
-import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.event.Notifier;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -101,7 +100,7 @@ public final class CDOViewHistory extends Notifier
 
     if (changed)
     {
-      fireEvent(new Event(this));
+      fireEvent(new Event(null));
     }
   }
 
@@ -116,7 +115,33 @@ public final class CDOViewHistory extends Notifier
 
     if (changed)
     {
-      fireEvent(new Event(this));
+      fireEvent(new Event(entry));
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class Event extends org.eclipse.net4j.internal.util.event.Event implements CDOViewHistoryEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    Entry addedEntry;
+
+    public Event(Entry addedEntry)
+    {
+      super(CDOViewHistory.this);
+      this.addedEntry = addedEntry;
+    }
+
+    public CDOViewHistory getViewHistory()
+    {
+      return CDOViewHistory.this;
+    }
+
+    public Entry getAddedEntry()
+    {
+      return addedEntry;
     }
   }
 

@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.internal.ui.views;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.LabelUtil;
-import org.eclipse.emf.cdo.internal.ui.ResourceHistory;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
@@ -50,13 +49,21 @@ public class CDOItemProvider extends ContainerItemProvider
   {
     public void notifyEvent(IEvent event)
     {
-      CDOViewHistory history = (CDOViewHistory)event.getSource();
-      CDOView view = history.getView();
-      refreshElement(view, false);
+      if (event instanceof CDOViewHistoryEvent)
+      {
+        CDOViewHistoryEvent e = (CDOViewHistoryEvent)event;
+        CDOViewHistory history = e.getViewHistory();
+        CDOView view = history.getView();
+        refreshElement(view, false);
+        if (e.getAddedEntry() != null)
+        {
+          revealElement(e.getAddedEntry());
+        }
+      }
     }
   };
 
-  private static int lastNumber = -1;
+  private static int lastResourceNumber = 0;
 
   public CDOItemProvider(IWorkbenchPage page, IElementFilter rootElementFilter)
   {
@@ -201,7 +208,7 @@ public class CDOItemProvider extends ContainerItemProvider
       @Override
       protected void preRun(IWorkbenchPage page) throws Exception
       {
-        String uri = lastNumber == -1 ? "" : "/res" + lastNumber;
+        String uri = lastResourceNumber == 0 ? "" : "/res" + lastResourceNumber;
         InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Load Resource",
             "Enter resource path:", uri, null);
         if (dialog.open() == InputDialog.OK)
@@ -230,11 +237,11 @@ public class CDOItemProvider extends ContainerItemProvider
         @Override
         protected void preRun(IWorkbenchPage page) throws Exception
         {
-          lastNumber = (int)(Math.random() * 10000000.0);
           InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Create Resource",
-              "Enter resource path:", "/res" + lastNumber, null);
+              "Enter resource path:", "/res" + (lastResourceNumber + 1), null);
           if (dialog.open() == InputDialog.OK)
           {
+            ++lastResourceNumber;
             resourcePath = dialog.getValue();
           }
           else
@@ -314,11 +321,6 @@ public class CDOItemProvider extends ContainerItemProvider
     }
   }
 
-  protected Object[] getResources(CDOView view)
-  {
-    return ResourceHistory.INSTANCE.getEntries(view);
-  }
-
   public static ImageDescriptor getOpenEditorImageDescriptor()
   {
     return SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_EDITOR);
@@ -349,7 +351,7 @@ public class CDOItemProvider extends ContainerItemProvider
       // final CDOView view =
       createView();
       // final IWorkbenchPart part = page.getActivePart();
-      // getDisplay().asyncExec(new Runnable()
+      // getDisplay().syncExec(new Runnable()
       // {
       // public void run()
       // {

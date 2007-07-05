@@ -12,6 +12,9 @@ package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.CDOViewCommittedEvent;
+import org.eclipse.emf.cdo.CDOViewDirtyEvent;
+import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.internal.ui.LabelUtil;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
@@ -44,6 +47,37 @@ public class CDOItemProvider extends ContainerItemProvider
   private IWorkbenchPage page;
 
   private Map<CDOView, CDOViewHistory> viewHistories = new HashMap();
+
+  private IListener viewListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDOViewDirtyEvent || event instanceof CDOViewCommittedEvent)
+      {
+        try
+        {
+          CDOViewEvent e = (CDOViewEvent)event;
+          final CDOView view = e.getView();
+          getViewer().getControl().getDisplay().syncExec(new Runnable()
+          {
+            public void run()
+            {
+              try
+              {
+                fireLabelProviderChanged(view);
+              }
+              catch (Exception ignore)
+              {
+              }
+            }
+          });
+        }
+        catch (Exception ignore)
+        {
+        }
+      }
+    }
+  };
 
   private IListener historyListener = new IListener()
   {
@@ -131,6 +165,15 @@ public class CDOItemProvider extends ContainerItemProvider
     if (text == null)
     {
       text = super.getText(obj);
+    }
+
+    if (obj instanceof CDOView && text != null)
+    {
+      CDOView view = (CDOView)obj;
+      if (view.isDirty())
+      {
+        text = "*" + text;
+      }
     }
 
     return text;
@@ -303,6 +346,8 @@ public class CDOItemProvider extends ContainerItemProvider
     if (element instanceof CDOView)
     {
       CDOView view = (CDOView)element;
+      view.addListener(viewListener);
+
       CDOViewHistory history = new CDOViewHistory(view);
       history.addListener(historyListener);
       viewHistories.put(view, history);
@@ -316,6 +361,8 @@ public class CDOItemProvider extends ContainerItemProvider
     if (element instanceof CDOView)
     {
       CDOView view = (CDOView)element;
+      view.removeListener(viewListener);
+
       CDOViewHistory history = viewHistories.remove(view);
       history.removeListener(historyListener);
       history.dispose();

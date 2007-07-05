@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.ui.views;
 
+import org.eclipse.net4j.internal.ui.bundle.Net4jUI;
 import org.eclipse.net4j.ui.StructuredContentProvider;
 
 import org.eclipse.jface.action.IMenuManager;
@@ -17,6 +18,7 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -61,17 +63,69 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
     return true;
   }
 
+  public ILabelProviderListener[] getListeners()
+  {
+    synchronized (listeners)
+    {
+      return listeners.toArray(new ILabelProviderListener[listeners.size()]);
+    }
+  }
+
   public void addListener(ILabelProviderListener listener)
   {
-    listeners.add(listener);
+    synchronized (listeners)
+    {
+      listeners.add(listener);
+    }
   }
 
   public void removeListener(ILabelProviderListener listener)
   {
-    listeners.remove(listener);
+    synchronized (listeners)
+    {
+      listeners.remove(listener);
+    }
   }
 
   protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
+  }
+
+  protected void fireLabelProviderChanged()
+  {
+    fireLabelProviderChanged(new LabelProviderChangedEvent(this));
+  }
+
+  protected void fireLabelProviderChanged(Object element)
+  {
+    fireLabelProviderChanged(new LabelProviderChangedEvent(this, element));
+  }
+
+  protected void fireLabelProviderChanged(Object[] elements)
+  {
+    fireLabelProviderChanged(new LabelProviderChangedEvent(this, elements));
+  }
+
+  /**
+   * Fires a label provider changed event to all registered listeners Only
+   * listeners registered at the time this method is called are notified.
+   * 
+   * @param event
+   *          a label provider changed event
+   * @see ILabelProviderListener#labelProviderChanged
+   */
+  private void fireLabelProviderChanged(LabelProviderChangedEvent event)
+  {
+    for (ILabelProviderListener listener : getListeners())
+    {
+      try
+      {
+        listener.labelProviderChanged(event);
+      }
+      catch (Exception ex)
+      {
+        Net4jUI.LOG.error(ex);
+      }
+    }
   }
 }

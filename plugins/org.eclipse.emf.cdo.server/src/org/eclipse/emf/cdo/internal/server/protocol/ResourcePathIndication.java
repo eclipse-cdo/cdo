@@ -45,7 +45,7 @@ public class ResourcePathIndication extends CDOServerIndication
       PROTOCOL.format("Read ID: {0}", id);
     }
 
-    path = getResourceManager().getActualResourcePath(id);
+    path = getResourceManager().getResourcePath(id);
   }
 
   @Override

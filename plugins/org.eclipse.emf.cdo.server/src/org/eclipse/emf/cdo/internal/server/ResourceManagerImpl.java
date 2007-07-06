@@ -42,24 +42,24 @@ public class ResourceManagerImpl implements ResourceManager
     return repository;
   }
 
-  public CDOID getActualResourceID(String path)
+  public CDOID getResourceID(String path)
   {
     CDOID id = pathToIDMap.get(path);
     if (id == null)
     {
-      id = loadActualID(path);
+      id = loadID(path);
       registerResource(id, path);
     }
 
     return id;
   }
 
-  public String getActualResourcePath(CDOID id)
+  public String getResourcePath(CDOID id)
   {
     String path = idToPathMap.get(id);
     if (path == null)
     {
-      path = loadActualPath(id);
+      path = loadPath(id);
       registerResource(id, path);
     }
 
@@ -80,13 +80,13 @@ public class ResourceManagerImpl implements ResourceManager
     }
   }
 
-  private CDOID loadActualID(String path)
+  private CDOID loadID(String path)
   {
     // TODO Implement method ResourceManagerImpl.loadID()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
-  private String loadActualPath(CDOID id)
+  private String loadPath(CDOID id)
   {
     // TODO Implement method ResourceManagerImpl.loadPath()
     throw new UnsupportedOperationException("Not yet implemented");

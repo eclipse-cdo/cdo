@@ -49,7 +49,7 @@ public class ResourceIDIndication extends CDOServerIndication
 
     try
     {
-      id = getResourceManager().getActualResourceID(path);
+      id = getResourceManager().getResourceID(path);
     }
     catch (Exception ex)
     {

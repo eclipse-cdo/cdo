@@ -45,16 +45,16 @@ public class RevisionManagerImpl extends CDORevisionResolverImpl implements Revi
   }
 
   @Override
-  protected CDORevisionImpl loadActual(CDOID id)
+  protected CDORevisionImpl loadRevision(CDOID id)
   {
-    // TODO Implement method RevisionManagerImpl.loadActual()
+    // TODO Implement method RevisionManagerImpl.loadRevision()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
   @Override
-  protected CDORevisionImpl loadHistorical(CDOID id, long timeStamp)
+  protected CDORevisionImpl loadRevision(CDOID id, long timeStamp)
   {
-    // TODO Implement method RevisionManagerImpl.loadHistorical()
+    // TODO Implement method RevisionManagerImpl.loadRevision()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 }

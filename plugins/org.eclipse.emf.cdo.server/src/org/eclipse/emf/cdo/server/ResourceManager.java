@@ -20,7 +20,7 @@ public interface ResourceManager
 {
   public RepositoryImpl getRepository();
 
-  public CDOID getActualResourceID(String path);
+  public CDOID getResourceID(String path);
 
-  public String getActualResourcePath(CDOID id);
+  public String getResourcePath(CDOID id);
 }

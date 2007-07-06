@@ -59,7 +59,7 @@ public class OpenSessionIndication extends IndicationWithResponse
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    RepositoryImpl repository = RepositoryManagerImpl.INSTANCE.getRepository(repositoryName);
+    RepositoryImpl repository = RepositoryManagerImpl.INSTANCE.getRepository(repositoryName, true);
     if (repository == null)
     {
       if (PROTOCOL.isEnabled())
@@ -85,7 +85,7 @@ public class OpenSessionIndication extends IndicationWithResponse
       return;
     }
 
-    (serverProtocol).setSession(session);
+    serverProtocol.setSession(session);
     writeSessionID(out, session);
     writeRepositoryUUID(out, repository);
   }

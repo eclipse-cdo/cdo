@@ -34,16 +34,11 @@ public final class RepositoryManagerImpl implements RepositoryManager
     RepositoryImpl repository = repositories.get(name);
     if (repository == null && createOnDemand)
     {
-      repository = openRepository(name);
+      repository = new RepositoryImpl(name);
       repositories.put(name, repository);
     }
 
     return repository;
-  }
-
-  private RepositoryImpl openRepository(String name)
-  {
-    return new RepositoryImpl(name);
   }
 
   public boolean isEmpty()

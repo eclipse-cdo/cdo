@@ -19,5 +19,5 @@ public interface RepositoryManager
 {
   public static final RepositoryManager INSTANCE = RepositoryManagerImpl.INSTANCE;
 
-  public Repository getRepository(String name);
+  public Repository getRepository(String name, boolean createOnDemand);
 }

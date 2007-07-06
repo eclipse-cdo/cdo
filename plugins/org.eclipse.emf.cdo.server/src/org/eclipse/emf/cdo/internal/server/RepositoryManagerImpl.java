@@ -18,21 +18,21 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class RepositoryManagerImpl implements RepositoryManager
+public final class RepositoryManagerImpl implements RepositoryManager
 {
   // @Singleton
   public static final RepositoryManagerImpl INSTANCE = new RepositoryManagerImpl();
 
   private Map<String, RepositoryImpl> repositories = new HashMap();
 
-  public RepositoryManagerImpl()
+  private RepositoryManagerImpl()
   {
   }
 
-  public RepositoryImpl getRepository(String name)
+  public RepositoryImpl getRepository(String name, boolean createOnDemand)
   {
     RepositoryImpl repository = repositories.get(name);
-    if (repository == null)
+    if (repository == null && createOnDemand)
     {
       repository = openRepository(name);
       repositories.put(name, repository);

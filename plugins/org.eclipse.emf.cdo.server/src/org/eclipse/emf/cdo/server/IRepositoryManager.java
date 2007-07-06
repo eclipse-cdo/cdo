@@ -10,14 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.internal.server.RepositoryManagerImpl;
+import org.eclipse.emf.cdo.internal.server.RepositoryManager;
 
 /**
  * @author Eike Stepper
  */
-public interface RepositoryManager
+public interface IRepositoryManager
 {
-  public static final RepositoryManager INSTANCE = RepositoryManagerImpl.INSTANCE;
+  public static final IRepositoryManager INSTANCE = RepositoryManager.INSTANCE;
 
-  public Repository getRepository(String name, boolean createOnDemand);
+  public IRepository getRepository(String name, boolean createOnDemand);
 }

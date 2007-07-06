@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.CDOServer;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
-import org.eclipse.emf.cdo.server.SessionManager;
+import org.eclipse.emf.cdo.server.ISessionManager;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -23,35 +23,35 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class SessionManagerImpl implements SessionManager
+public class SessionManager implements ISessionManager
 {
-  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_SESSION, SessionManagerImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_SESSION, SessionManager.class);
 
-  private RepositoryImpl repository;
+  private Repository repository;
 
-  private Map<Integer, SessionImpl> sessions = new HashMap();
+  private Map<Integer, Session> sessions = new HashMap();
 
   private int lastSessionID;
 
-  public SessionManagerImpl(RepositoryImpl repository)
+  public SessionManager(Repository repository)
   {
     this.repository = repository;
   }
 
-  public RepositoryImpl getRepository()
+  public Repository getRepository()
   {
     return repository;
   }
 
-  public SessionImpl[] getSessions()
+  public Session[] getSessions()
   {
     synchronized (sessions)
     {
-      return sessions.values().toArray(new SessionImpl[sessions.size()]);
+      return sessions.values().toArray(new Session[sessions.size()]);
     }
   }
 
-  public SessionImpl openSession(CDOServerProtocol protocol)
+  public Session openSession(CDOServerProtocol protocol)
   {
     int id = ++lastSessionID;
     if (TRACER.isEnabled())
@@ -59,7 +59,7 @@ public class SessionManagerImpl implements SessionManager
       TRACER.trace("Opening session " + id);
     }
 
-    SessionImpl session = new SessionImpl(this, protocol, id);
+    Session session = new Session(this, protocol, id);
     synchronized (sessions)
     {
       sessions.put(id, session);
@@ -68,13 +68,13 @@ public class SessionManagerImpl implements SessionManager
     return session;
   }
 
-  public void sessionClosed(SessionImpl session)
+  public void sessionClosed(Session session)
   {
   }
 
-  public void notifyInvalidation(long timeStamp, CDORevisionImpl[] dirtyObjects, SessionImpl excludedSession)
+  public void notifyInvalidation(long timeStamp, CDORevisionImpl[] dirtyObjects, Session excludedSession)
   {
-    for (SessionImpl session : getSessions())
+    for (Session session : getSessions())
     {
       if (session != excludedSession)
       {

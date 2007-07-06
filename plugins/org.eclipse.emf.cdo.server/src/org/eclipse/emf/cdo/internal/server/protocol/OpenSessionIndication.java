@@ -11,13 +11,13 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.bundle.CDOProtocol;
-import org.eclipse.emf.cdo.internal.server.RepositoryImpl;
-import org.eclipse.emf.cdo.internal.server.RepositoryManagerImpl;
-import org.eclipse.emf.cdo.internal.server.SessionImpl;
-import org.eclipse.emf.cdo.internal.server.SessionManagerImpl;
+import org.eclipse.emf.cdo.internal.server.Repository;
+import org.eclipse.emf.cdo.internal.server.RepositoryManager;
+import org.eclipse.emf.cdo.internal.server.Session;
+import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.Repository;
-import org.eclipse.emf.cdo.server.Session;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.ISession;
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -59,12 +59,12 @@ public class OpenSessionIndication extends IndicationWithResponse
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    RepositoryImpl repository = RepositoryManagerImpl.INSTANCE.getRepository(repositoryName, true);
+    Repository repository = RepositoryManager.INSTANCE.getRepository(repositoryName, true);
     if (repository == null)
     {
       if (PROTOCOL.isEnabled())
       {
-        PROTOCOL.format("Repository {0} not found", repositoryName);
+        PROTOCOL.format("IRepository {0} not found", repositoryName);
       }
 
       out.writeInt(CDOProtocolConstants.ERROR_REPOSITORY_NOT_FOUND);
@@ -72,8 +72,8 @@ public class OpenSessionIndication extends IndicationWithResponse
     }
 
     CDOServerProtocol serverProtocol = (CDOServerProtocol)getProtocol();
-    SessionManagerImpl sessionManager = repository.getSessionManager();
-    SessionImpl session = sessionManager.openSession(serverProtocol);
+    SessionManager sessionManager = repository.getSessionManager();
+    Session session = sessionManager.openSession(serverProtocol);
     if (session == null)
     {
       if (PROTOCOL.isEnabled())
@@ -90,7 +90,7 @@ public class OpenSessionIndication extends IndicationWithResponse
     writeRepositoryUUID(out, repository);
   }
 
-  private void writeSessionID(ExtendedDataOutputStream out, Session session) throws IOException
+  private void writeSessionID(ExtendedDataOutputStream out, ISession session) throws IOException
   {
     if (PROTOCOL.isEnabled())
     {
@@ -100,7 +100,7 @@ public class OpenSessionIndication extends IndicationWithResponse
     out.writeInt(session.getSessionID());
   }
 
-  private void writeRepositoryUUID(ExtendedDataOutputStream out, Repository repository) throws IOException
+  private void writeRepositoryUUID(ExtendedDataOutputStream out, IRepository repository) throws IOException
   {
     if (PROTOCOL.isEnabled())
     {

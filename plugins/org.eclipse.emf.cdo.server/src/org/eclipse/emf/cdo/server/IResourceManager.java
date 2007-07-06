@@ -10,15 +10,15 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.internal.server.RepositoryImpl;
+import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.protocol.CDOID;
 
 /**
  * @author Eike Stepper
  */
-public interface ResourceManager
+public interface IResourceManager
 {
-  public RepositoryImpl getRepository();
+  public Repository getRepository();
 
   public CDOID getResourceID(String path);
 

@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.bundle.CDOProtocol;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.server.RevisionManagerImpl;
+import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
@@ -63,7 +63,7 @@ public class LoadObjectIndication extends CDOServerIndication
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    RevisionManagerImpl rm = getRevisionManager();
+    RevisionManager rm = getRevisionManager();
     CDORevisionImpl revision = timeStamp != null ? rm.getRevision(id, timeStamp) : rm.getRevision(id);
     revision.write(out, null);
   }

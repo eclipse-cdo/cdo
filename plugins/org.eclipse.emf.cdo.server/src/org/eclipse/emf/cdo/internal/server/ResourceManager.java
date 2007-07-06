@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.server.bundle.CDOServer;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.server.ResourceManager;
+import org.eclipse.emf.cdo.server.IResourceManager;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -22,22 +22,22 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class ResourceManagerImpl implements ResourceManager
+public class ResourceManager implements IResourceManager
 {
-  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_SESSION, SessionManagerImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_SESSION, SessionManager.class);
 
-  private RepositoryImpl repository;
+  private Repository repository;
 
   private Map<CDOID, String> idToPathMap = new HashMap();
 
   private Map<String, CDOID> pathToIDMap = new HashMap();
 
-  public ResourceManagerImpl(RepositoryImpl repository)
+  public ResourceManager(Repository repository)
   {
     this.repository = repository;
   }
 
-  public RepositoryImpl getRepository()
+  public Repository getRepository()
   {
     return repository;
   }
@@ -82,13 +82,13 @@ public class ResourceManagerImpl implements ResourceManager
 
   private CDOID loadID(String path)
   {
-    // TODO Implement method ResourceManagerImpl.loadID()
+    // TODO Implement method ResourceManager.loadID()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
   private String loadPath(CDOID id)
   {
-    // TODO Implement method ResourceManagerImpl.loadPath()
+    // TODO Implement method ResourceManager.loadPath()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 }

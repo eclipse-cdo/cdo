@@ -14,27 +14,27 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.CDOServer;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.internal.server.protocol.InvalidationRequest;
-import org.eclipse.emf.cdo.server.Session;
+import org.eclipse.emf.cdo.server.ISession;
 
 /**
  * @author Eike Stepper
  */
-public class SessionImpl implements Session
+public class Session implements ISession
 {
-  private SessionManagerImpl sessionManager;
+  private SessionManager sessionManager;
 
   private CDOServerProtocol protocol;
 
   private int sessionID;
 
-  public SessionImpl(SessionManagerImpl sessionManager, CDOServerProtocol protocol, int sessionID)
+  public Session(SessionManager sessionManager, CDOServerProtocol protocol, int sessionID)
   {
     this.sessionManager = sessionManager;
     this.protocol = protocol;
     this.sessionID = sessionID;
   }
 
-  public SessionManagerImpl getSessionManager()
+  public SessionManager getSessionManager()
   {
     return sessionManager;
   }

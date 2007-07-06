@@ -10,11 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.server.RepositoryImpl;
-import org.eclipse.emf.cdo.internal.server.ResourceManagerImpl;
-import org.eclipse.emf.cdo.internal.server.RevisionManagerImpl;
-import org.eclipse.emf.cdo.internal.server.SessionImpl;
-import org.eclipse.emf.cdo.internal.server.SessionManagerImpl;
+import org.eclipse.emf.cdo.internal.server.Repository;
+import org.eclipse.emf.cdo.internal.server.ResourceManager;
+import org.eclipse.emf.cdo.internal.server.RevisionManager;
+import org.eclipse.emf.cdo.internal.server.Session;
+import org.eclipse.emf.cdo.internal.server.SessionManager;
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
 
@@ -36,27 +36,27 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     return signalID;
   }
 
-  protected SessionManagerImpl getSessionManager()
+  protected SessionManager getSessionManager()
   {
     return getSession().getSessionManager();
   }
 
-  protected RevisionManagerImpl getRevisionManager()
+  protected RevisionManager getRevisionManager()
   {
     return getRepository().getRevisionManager();
   }
 
-  protected ResourceManagerImpl getResourceManager()
+  protected ResourceManager getResourceManager()
   {
     return getRepository().getResourceManager();
   }
 
-  protected RepositoryImpl getRepository()
+  protected Repository getRepository()
   {
     return getSessionManager().getRepository();
   }
 
-  protected SessionImpl getSession()
+  protected Session getSession()
   {
     return getProtocol().getSession();
   }

@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.bundle.CDOProtocol;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.server.RevisionManagerImpl;
+import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
@@ -125,7 +125,7 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   private void addRevisions(CDORevisionImpl[] revisions)
   {
-    RevisionManagerImpl revisionManager = getRevisionManager();
+    RevisionManager revisionManager = getRevisionManager();
     for (CDORevisionImpl revision : revisions)
     {
       revision.setCreated(timeStamp);

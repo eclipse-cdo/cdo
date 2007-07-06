@@ -14,21 +14,21 @@ import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOPathFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.server.RevisionManager;
+import org.eclipse.emf.cdo.server.IRevisionManager;
 
 /**
  * @author Eike Stepper
  */
-public class RevisionManagerImpl extends CDORevisionResolverImpl implements RevisionManager
+public class RevisionManager extends CDORevisionResolverImpl implements IRevisionManager
 {
-  private RepositoryImpl repository;
+  private Repository repository;
 
-  public RevisionManagerImpl(RepositoryImpl repository)
+  public RevisionManager(Repository repository)
   {
     this.repository = repository;
   }
 
-  public RepositoryImpl getRepository()
+  public Repository getRepository()
   {
     return repository;
   }
@@ -47,14 +47,14 @@ public class RevisionManagerImpl extends CDORevisionResolverImpl implements Revi
   @Override
   protected CDORevisionImpl loadRevision(CDOID id)
   {
-    // TODO Implement method RevisionManagerImpl.loadRevision()
+    // TODO Implement method RevisionManager.loadRevision()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
   @Override
   protected CDORevisionImpl loadRevision(CDOID id, long timeStamp)
   {
-    // TODO Implement method RevisionManagerImpl.loadRevision()
+    // TODO Implement method RevisionManager.loadRevision()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 }

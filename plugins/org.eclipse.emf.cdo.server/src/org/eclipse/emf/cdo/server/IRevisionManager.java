@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
 /**
  * @author Eike Stepper
  */
-public interface RevisionManager extends CDORevisionResolver
+public interface IRevisionManager extends CDORevisionResolver
 {
-  public Repository getRepository();
+  public IRepository getRepository();
 }

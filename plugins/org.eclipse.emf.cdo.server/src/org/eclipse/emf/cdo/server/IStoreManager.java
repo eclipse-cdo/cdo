@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004-2007 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,15 +13,16 @@ package org.eclipse.emf.cdo.server;
 /**
  * @author Eike Stepper
  */
-public interface Repository
+public interface IStoreManager
 {
-  public String getName();
+  public String getStoreType();
 
-  public String getUUID();
+  public String getInstanceID();
 
-  public SessionManager getSessionManager();
+  public IStoreTransaction startTransaction();
 
-  public ResourceManager getResourceManager();
+  public void commitTransaction(IStoreTransaction transaction);
 
-  public RevisionManager getRevisionManager();
+  public void rollbackTransaction(IStoreTransaction transaction);
+
 }

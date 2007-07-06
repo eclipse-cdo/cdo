@@ -12,14 +12,15 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.server.Repository;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IStoreManager;
 
 import java.util.UUID;
 
 /**
  * @author Eike Stepper
  */
-public class RepositoryImpl implements Repository
+public class Repository implements IRepository
 {
   private static final long INITIAL_OID_VALUE = 1;
 
@@ -27,21 +28,23 @@ public class RepositoryImpl implements Repository
 
   private String uuid;
 
-  private SessionManagerImpl sessionManager;
+  private SessionManager sessionManager;
 
-  private ResourceManagerImpl resourceManager;
+  private ResourceManager resourceManager;
 
-  private RevisionManagerImpl revisionManager;
+  private RevisionManager revisionManager;
+
+  private IStoreManager storeManager;
 
   private long nextOIDValue = INITIAL_OID_VALUE;
 
-  public RepositoryImpl(String name)
+  public Repository(String name)
   {
     this.name = name;
     this.uuid = UUID.randomUUID().toString();
-    sessionManager = new SessionManagerImpl(this);
-    resourceManager = new ResourceManagerImpl(this);
-    revisionManager = new RevisionManagerImpl(this);
+    sessionManager = new SessionManager(this);
+    resourceManager = new ResourceManager(this);
+    revisionManager = new RevisionManager(this);
   }
 
   public String getName()
@@ -54,19 +57,24 @@ public class RepositoryImpl implements Repository
     return uuid;
   }
 
-  public SessionManagerImpl getSessionManager()
+  public SessionManager getSessionManager()
   {
     return sessionManager;
   }
 
-  public ResourceManagerImpl getResourceManager()
+  public ResourceManager getResourceManager()
   {
     return resourceManager;
   }
 
-  public RevisionManagerImpl getRevisionManager()
+  public RevisionManager getRevisionManager()
   {
     return revisionManager;
+  }
+
+  public IStoreManager getStoreManager()
+  {
+    return storeManager;
   }
 
   public CDOID getNextCDOID()

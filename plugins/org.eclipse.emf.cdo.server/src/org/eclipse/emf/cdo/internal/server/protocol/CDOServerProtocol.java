@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.server.SessionImpl;
+import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.signal.SignalProtocol;
@@ -21,7 +21,7 @@ import org.eclipse.net4j.signal.SignalReactor;
  */
 public class CDOServerProtocol extends SignalProtocol
 {
-  private SessionImpl session;
+  private Session session;
 
   public CDOServerProtocol()
   {
@@ -32,12 +32,12 @@ public class CDOServerProtocol extends SignalProtocol
     return CDOProtocolConstants.PROTOCOL_NAME;
   }
 
-  public SessionImpl getSession()
+  public Session getSession()
   {
     return session;
   }
 
-  public void setSession(SessionImpl session)
+  public void setSession(Session session)
   {
     this.session = session;
   }

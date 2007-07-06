@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.server.RepositoryManager;
+import org.eclipse.emf.cdo.server.IRepositoryManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,23 +18,23 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public final class RepositoryManagerImpl implements RepositoryManager
+public final class RepositoryManager implements IRepositoryManager
 {
   // @Singleton
-  public static final RepositoryManagerImpl INSTANCE = new RepositoryManagerImpl();
+  public static final RepositoryManager INSTANCE = new RepositoryManager();
 
-  private Map<String, RepositoryImpl> repositories = new HashMap();
+  private Map<String, Repository> repositories = new HashMap();
 
-  private RepositoryManagerImpl()
+  private RepositoryManager()
   {
   }
 
-  public RepositoryImpl getRepository(String name, boolean createOnDemand)
+  public Repository getRepository(String name, boolean createOnDemand)
   {
-    RepositoryImpl repository = repositories.get(name);
+    Repository repository = repositories.get(name);
     if (repository == null && createOnDemand)
     {
-      repository = new RepositoryImpl(name);
+      repository = new Repository(name);
       repositories.put(name, repository);
     }
 

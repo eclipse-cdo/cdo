@@ -23,15 +23,8 @@ import org.eclipse.net4j.util.container.IContainerEvent;
  * @author Eike Stepper
  * @since 0.8.0
  */
-public interface IConnectorChannelsEvent extends IContainerEvent<IChannel>
+public interface IConnectorChannelsEvent extends IConnectorEvent, IContainerEvent<IChannel>
 {
-  /**
-   * The {@link IConnector} that sent this event.
-   * 
-   * @see IContainerEvent#getContainer()
-   */
-  public IConnector getConnector();
-
   /**
    * The {@link IChannel} of the first {@link IContainerDelta} of this event.
    * 

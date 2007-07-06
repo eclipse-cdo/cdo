@@ -10,23 +10,21 @@
  **************************************************************************/
 package org.eclipse.net4j;
 
+import org.eclipse.net4j.util.container.IContainerEvent;
+import org.eclipse.net4j.util.event.IEvent;
 
 /**
- * An event that is fired by an {@link IConnector} to indicate that its state
- * has changed.
+ * An event that is fired by an {@link IConnector}.
  * 
  * @author Eike Stepper
  * @since 0.8.0
  */
-public interface IConnectorStateEvent extends IConnectorEvent
+public interface IConnectorEvent extends IEvent
 {
   /**
-   * The old state of the {@link IConnector} that sent this event.
+   * The {@link IConnector} that sent this event.
+   * 
+   * @see IContainerEvent#getContainer()
    */
-  public ConnectorState getOldState();
-
-  /**
-   * The new state of the {@link IConnector} that sent this event.
-   */
-  public ConnectorState getNewState();
+  public IConnector getConnector();
 }

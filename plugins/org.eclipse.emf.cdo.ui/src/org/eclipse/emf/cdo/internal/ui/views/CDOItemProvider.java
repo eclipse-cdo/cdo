@@ -57,8 +57,7 @@ public class CDOItemProvider extends ContainerItemProvider
       {
         try
         {
-          CDOViewEvent e = (CDOViewEvent)event;
-          final CDOView view = e.getView();
+          final CDOView view = ((CDOViewEvent)event).getView();
           getViewer().getControl().getDisplay().syncExec(new Runnable()
           {
             public void run()

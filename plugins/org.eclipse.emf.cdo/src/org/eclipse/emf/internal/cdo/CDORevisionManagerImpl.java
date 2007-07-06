@@ -48,4 +48,18 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
       throw new TransportException(ex);
     }
   }
+
+  @Override
+  protected CDORevisionImpl loadHistorical(CDOID id, long timeStamp)
+  {
+    try
+    {
+      LoadObjectRequest signal = new LoadObjectRequest(session.getChannel(), id, timeStamp);
+      return signal.send();
+    }
+    catch (Exception ex)
+    {
+      throw new TransportException(ex);
+    }
+  }
 }

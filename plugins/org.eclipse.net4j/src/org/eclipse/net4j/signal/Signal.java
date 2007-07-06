@@ -24,6 +24,7 @@ import java.util.concurrent.TimeoutException;
  */
 public abstract class Signal implements Runnable
 {
+  @SuppressWarnings("unused")
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Signal.class);
 
   private SignalProtocol protocol;
@@ -67,10 +68,6 @@ public abstract class Signal implements Runnable
     catch (Exception ex)
     {
       OM.LOG.error(ex);
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(ex);
-      }
     }
   }
 

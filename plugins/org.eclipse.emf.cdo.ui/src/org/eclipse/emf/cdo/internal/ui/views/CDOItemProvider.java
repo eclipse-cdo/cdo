@@ -184,7 +184,7 @@ public class CDOItemProvider extends ContainerItemProvider
       CDOView view = (CDOView)obj;
       return (view.isDirty() ? "*" : "")
           + (view.isHistorical() ? new Date(view.getTimeStamp()).toString() : view.isReadOnly() ? "View"
-              : "Transaction") + "[" + view.getID() + "]";
+              : "Transaction") + " [" + view.getID() + "]";
     }
 
     if (obj instanceof CDOViewHistory.Entry)

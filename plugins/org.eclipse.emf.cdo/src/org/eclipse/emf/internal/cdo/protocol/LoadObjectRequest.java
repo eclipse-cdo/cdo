@@ -32,9 +32,7 @@ public class LoadObjectRequest extends CDOClientRequest<CDORevisionImpl>
 
   private CDOID id;
 
-  private boolean historical;
-
-  private long timeStamp;
+  private Long timeStamp;
 
   public LoadObjectRequest(IChannel channel, CDOID id)
   {
@@ -46,7 +44,6 @@ public class LoadObjectRequest extends CDOClientRequest<CDORevisionImpl>
   {
     this(channel, id);
     this.timeStamp = timeStamp;
-    historical = true;
   }
 
   @Override
@@ -58,15 +55,19 @@ public class LoadObjectRequest extends CDOClientRequest<CDORevisionImpl>
     }
 
     CDOIDImpl.write(out, id);
-    out.writeBoolean(historical);
-    if (historical)
+    if (timeStamp != null)
     {
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("Writing timeStamp: {0}", timeStamp);
       }
 
+      out.writeBoolean(true);
       out.writeLong(timeStamp);
+    }
+    else
+    {
+      out.writeBoolean(false);
     }
   }
 

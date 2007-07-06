@@ -33,9 +33,7 @@ public class LoadObjectIndication extends CDOServerIndication
 
   private CDOID id;
 
-  private boolean historical;
-
-  private long timeStamp;
+  private Long timeStamp;
 
   public LoadObjectIndication()
   {
@@ -51,7 +49,7 @@ public class LoadObjectIndication extends CDOServerIndication
       PROTOCOL.format("Read ID: {0}", id);
     }
 
-    historical = in.readBoolean();
+    boolean historical = in.readBoolean();
     if (historical)
     {
       timeStamp = in.readLong();
@@ -66,7 +64,7 @@ public class LoadObjectIndication extends CDOServerIndication
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
     RevisionManagerImpl rm = getRevisionManager();
-    CDORevisionImpl revision = historical ? rm.getHistoricalRevision(id, timeStamp) : rm.getActualRevision(id);
+    CDORevisionImpl revision = timeStamp != null ? rm.getHistoricalRevision(id, timeStamp) : rm.getActualRevision(id);
     revision.write(out, null);
   }
 }

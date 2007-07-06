@@ -10,10 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.editor;
 
+import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.internal.ui.LabelUtil;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 
+import org.eclipse.net4j.IConnector;
+
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
@@ -68,14 +71,12 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
 
   public String getName()
   {
-    StringBuilder builder = new StringBuilder();
-    builder.append(view.getSession().getRepositoryName());
     if (resourcePath != null)
     {
-      builder.append(resourcePath);
+      return new Path(resourcePath).lastSegment();
     }
 
-    return builder.toString();
+    return view.getSession().getRepositoryName();
   }
 
   public IPersistableElement getPersistable()
@@ -85,23 +86,33 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
 
   public String getToolTipText()
   {
+    CDOSession session = view.getSession();
+    IConnector connector = session.getChannel().getConnector();
+    String repositoryName = session.getRepositoryName();
+
     StringBuilder builder = new StringBuilder();
-    builder.append(LabelUtil.getText(view.getSession()));
+    builder.append(connector.getURL());
+    builder.append("/");
+    builder.append(repositoryName);
     if (resourcePath != null)
     {
       builder.append(resourcePath);
     }
 
+    builder.append(" [");
+    builder.append(session.getSessionID());
+    builder.append(":");
+    builder.append(view.getID());
+    builder.append("]");
+
     if (view.isHistorical())
     {
-      builder.append(" (");
+      builder.append(" ");
       builder.append(new Date(view.getTimeStamp()));
-      builder.append(")");
     }
-
-    if (view.isReadOnly())
+    else if (view.isReadOnly())
     {
-      builder.append(" (readonly)");
+      builder.append(" readonly");
     }
 
     return builder.toString();

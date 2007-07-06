@@ -15,11 +15,11 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewCommittedEvent;
 import org.eclipse.emf.cdo.CDOViewDirtyEvent;
 import org.eclipse.emf.cdo.CDOViewEvent;
-import org.eclipse.emf.cdo.internal.ui.LabelUtil;
 import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 
+import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.ui.actions.LongRunningAction;
 import org.eclipse.net4j.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.ui.views.IElementFilter;
@@ -37,6 +37,7 @@ import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkbenchPage;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +66,15 @@ public class CDOItemProvider extends ContainerItemProvider
               try
               {
                 fireLabelProviderChanged(view);
+                CDOViewHistory history = viewHistories.get(view);
+                if (history != null)
+                {
+                  Entry[] entries = history.getEntries();
+                  if (entries != null && entries.length != 0)
+                  {
+                    fireLabelProviderChanged(entries);
+                  }
+                }
               }
               catch (Exception ignore)
               {
@@ -161,34 +171,56 @@ public class CDOItemProvider extends ContainerItemProvider
   @Override
   public String getText(Object obj)
   {
-    String text = LabelUtil.getText(obj);
-    if (text == null)
+    if (obj instanceof CDOSession)
     {
-      text = super.getText(obj);
+      CDOSession session = (CDOSession)obj;
+      IConnector connector = session.getChannel().getConnector();
+      String repositoryName = session.getRepositoryName();
+      return connector.getURL() + "/" + repositoryName + " [" + session.getSessionID() + "]";
     }
 
-    if (obj instanceof CDOView && text != null)
+    if (obj instanceof CDOView)
     {
       CDOView view = (CDOView)obj;
-      if (view.isDirty())
-      {
-        text = "*" + text;
-      }
+      return (view.isDirty() ? "*" : "")
+          + (view.isHistorical() ? new Date(view.getTimeStamp()).toString() : view.isReadOnly() ? "View"
+              : "Transaction") + "[" + view.getID() + "]";
     }
 
-    return text;
+    if (obj instanceof CDOViewHistory.Entry)
+    {
+      CDOViewHistory.Entry entry = (CDOViewHistory.Entry)obj;
+      return (entry.getView().isDirty() ? "*" : "") + entry.getResourcePath();
+    }
+
+    return super.getText(obj);
   }
 
   @Override
   public Image getImage(Object obj)
   {
-    Image image = LabelUtil.getImage(obj);
-    if (image == null)
+    if (obj instanceof CDOSession)
     {
-      image = super.getImage(obj);
+      return SharedIcons.getImage(SharedIcons.OBJ_SESSION);
     }
 
-    return image;
+    if (obj instanceof CDOView)
+    {
+      CDOView view = (CDOView)obj;
+      if (view.isHistorical())
+      {
+        return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_HISTORICAL);
+      }
+
+      if (view.isReadOnly())
+      {
+        return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_READONLY);
+      }
+
+      return SharedIcons.getImage(SharedIcons.OBJ_EDITOR);
+    }
+
+    return super.getImage(obj);
   }
 
   @Override

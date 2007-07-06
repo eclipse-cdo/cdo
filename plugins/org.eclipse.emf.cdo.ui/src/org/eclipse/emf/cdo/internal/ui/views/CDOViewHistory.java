@@ -180,7 +180,13 @@ public final class CDOViewHistory extends Notifier
     @Override
     public boolean equals(Object obj)
     {
-      return resourcePath.equals(obj);
+      if (obj instanceof Entry)
+      {
+        Entry that = (Entry)obj;
+        return view == that.getView() && resourcePath.equals(that.resourcePath);
+      }
+
+      return false;
     }
 
     @Override

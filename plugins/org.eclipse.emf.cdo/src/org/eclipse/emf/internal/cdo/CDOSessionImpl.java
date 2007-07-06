@@ -64,6 +64,8 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   private Map<ResourceSet, CDOViewImpl> views = new HashMap();
 
+  private int lastViewID = 0;
+
   private IListener channelListener = new LifecycleEventAdapter()
   {
     @Override
@@ -149,13 +151,13 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
   public CDOViewImpl openView(ResourceSet resourceSet, boolean readOnly)
   {
     prepare(resourceSet);
-    return attach(resourceSet, new CDOViewImpl(this, readOnly));
+    return attach(resourceSet, new CDOViewImpl(++lastViewID, this, readOnly));
   }
 
   public CDOViewImpl openView(ResourceSet resourceSet, long timeStamp)
   {
     prepare(resourceSet);
-    return attach(resourceSet, new CDOViewImpl(this, timeStamp));
+    return attach(resourceSet, new CDOViewImpl(++lastViewID, this, timeStamp));
   }
 
   public CDOViewImpl[] getViews()

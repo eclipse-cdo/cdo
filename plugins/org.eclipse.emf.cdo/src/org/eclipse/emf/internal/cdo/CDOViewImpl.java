@@ -54,6 +54,8 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 {
   private static final ContextTracer TRACER = new ContextTracer(CDO.DEBUG_VIEW, CDOViewImpl.class);
 
+  private int id;
+
   private CDOSessionImpl session;
 
   private ResourceSet resourceSet;
@@ -68,8 +70,9 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private CDOObjectImpl lastLookupObject;
 
-  public CDOViewImpl(CDOSessionImpl session, boolean readOnly)
+  public CDOViewImpl(int id, CDOSessionImpl session, boolean readOnly)
   {
+    this.id = id;
     this.session = session;
     timeStamp = UNSPECIFIED_DATE;
     if (!readOnly)
@@ -78,10 +81,16 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
   }
 
-  public CDOViewImpl(CDOSessionImpl session, long timeStamp)
+  public CDOViewImpl(int id, CDOSessionImpl session, long timeStamp)
   {
+    this.id = id;
     this.session = session;
     this.timeStamp = timeStamp;
+  }
+
+  public int getID()
+  {
+    return id;
   }
 
   public ResourceSet getResourceSet()

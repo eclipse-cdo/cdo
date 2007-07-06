@@ -458,6 +458,7 @@ public abstract class Connector extends Lifecycle implements IConnector
 
   protected boolean removeChannel(Channel channel, boolean actively)
   {
+    // TODO Can cause deadlock on shutdown
     synchronized (channels)
     {
       int channelIndex = channel.getChannelIndex();

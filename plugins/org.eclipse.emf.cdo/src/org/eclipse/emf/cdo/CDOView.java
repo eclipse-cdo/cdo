@@ -26,9 +26,11 @@ public interface CDOView extends INotifier
 {
   public static final long UNSPECIFIED_DATE = CDORevision.UNSPECIFIED_DATE;
 
-  public ResourceSet getResourceSet();
+  public int getID();
 
   public CDOSession getSession();
+
+  public ResourceSet getResourceSet();
 
   public long getTimeStamp();
 

@@ -133,10 +133,10 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     CDORevisionResolver revisionManager = session.getRevisionManager();
     if (isReadWrite())
     {
-      return (CDORevisionImpl)revisionManager.getActualRevision(id);
+      return (CDORevisionImpl)revisionManager.getRevision(id);
     }
 
-    return (CDORevisionImpl)revisionManager.getHistoricalRevision(id, timeStamp);
+    return (CDORevisionImpl)revisionManager.getRevision(id, timeStamp);
   }
 
   public CDOResource createResource(String path)

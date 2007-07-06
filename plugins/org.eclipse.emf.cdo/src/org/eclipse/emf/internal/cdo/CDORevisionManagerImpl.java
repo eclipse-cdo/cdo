@@ -36,7 +36,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   }
 
   @Override
-  protected CDORevisionImpl loadActual(CDOID id)
+  protected CDORevisionImpl loadRevision(CDOID id)
   {
     try
     {
@@ -50,7 +50,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   }
 
   @Override
-  protected CDORevisionImpl loadHistorical(CDOID id, long timeStamp)
+  protected CDORevisionImpl loadRevision(CDOID id, long timeStamp)
   {
     try
     {

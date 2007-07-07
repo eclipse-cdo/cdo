@@ -50,7 +50,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory.Descriptor.Registry;
+import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
 import org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTreeEditor;
 import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
@@ -58,7 +60,9 @@ import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
+import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 import org.eclipse.emf.internal.cdo.util.EMFUtil;
 
@@ -129,6 +133,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -336,7 +341,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   protected ISelection editorSelection = StructuredSelection.EMPTY;
 
   /**
-   * The MarkerHelper is responsible for creating workspace viewerInput markers
+   * The MarkerHelper is responsible for creating workspace resource markers
    * presented in Eclipse's Problems View. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
@@ -760,17 +765,72 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * This creates a model editor. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated NOT
+   * @generated
    */
   public CDOEditor()
   {
-    initAdapterFactory();
+    super();
+    initializeEditingDomain();
+  }
+
+  /**
+   * This sets up the editing domain for the model editor. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  protected void initializeEditingDomainGen()
+  {
+    // Create an adapter factory that yields item providers.
+    //
+    adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+
+    adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+    adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+
+    // Create the command stack that will notify this editor as commands are
+    // executed.
+    //
+    BasicCommandStack commandStack = new BasicCommandStack();
+
+    // Add a listener to set the most recent command's affected objects to be
+    // the selection of the viewer with focus.
+    //
+    commandStack.addCommandStackListener(new CommandStackListener()
+    {
+      public void commandStackChanged(final EventObject event)
+      {
+        getContainer().getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            firePropertyChange(IEditorPart.PROP_DIRTY);
+
+            // Try to select the affected objects.
+            //
+            Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
+            if (mostRecentCommand != null)
+            {
+              setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+            }
+            if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
+            {
+              propertySheetPage.refresh();
+            }
+          }
+        });
+      }
+    });
+
+    // Create the editing domain with a special command stack.
+    //
+    editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
   }
 
   /**
    * @ADDED
    */
-  protected void initAdapterFactory()
+  protected void initializeEditingDomain()
   {
     Registry regsitry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
     adapterFactory = new ComposedAdapterFactory(regsitry);
@@ -981,7 +1041,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     contextMenu.addMenuListener(this);
     Menu menu = contextMenu.createContextMenu(viewer.getControl());
     viewer.getControl().setMenu(menu);
-    getSite().registerContextMenu(contextMenu, viewer);
+    getSite().registerContextMenu(contextMenu, new UnwrappingSelectionProvider(viewer));
 
     int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
     Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
@@ -998,11 +1058,39 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This is the method called to load a viewerInput into the editing domain's
-   * viewerInput set based on the editor's input. <!-- begin-user-doc --> <!--
+   * This is the method called to load a resource into the editing domain's
+   * resource set based on the editor's input. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
-   * @generated NOT
+   * @generated
+   */
+  public void createModelGen()
+  {
+    URI resourceURI = EditUIUtil.getURI(getEditorInput());
+    Exception exception = null;
+    Resource resource = null;
+    try
+    {
+      // Load the resource through the editing domain.
+      //
+      resource = editingDomain.getResourceSet().getResource(resourceURI, true);
+    }
+    catch (Exception e)
+    {
+      exception = e;
+      resource = editingDomain.getResourceSet().getResource(resourceURI, false);
+    }
+
+    Diagnostic diagnostic = analyzeResourceProblems(resource, exception);
+    if (diagnostic.getSeverity() != Diagnostic.OK)
+    {
+      resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
+    }
+    editingDomain.getResourceSet().eAdapters().add(problemIndicationAdapter);
+  }
+
+  /**
+   * @ADDED
    */
   public void createModel()
   {
@@ -1021,8 +1109,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           {
             public void run()
             {
-              // firePropertyChange(IEditorPart.PROP_DIRTY);
-
               Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
               if (mostRecentCommand != null)
               {
@@ -1039,8 +1125,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       ResourceSet resourceSet = view.getResourceSet();
       editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, resourceSet);
-      // editingDomain.setResourceToReadOnlyMap(new HashMap<Resource,
-      // Boolean>());
 
       String resourcePath = editorInput.getResourcePath();
       if (resourcePath == null)
@@ -1063,9 +1147,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * Returns a dignostic describing the errors and warnings listed in the
-   * viewerInput and the specified exception (if any). <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns a diagnostic describing the errors and warnings listed in the
+   * resource and the specified exception (if any). <!-- begin-user-doc --> <!--
+   * end-user-doc -->
    * 
    * @generated
    */
@@ -1094,7 +1178,75 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * This is the method used by the framework to install your own controls. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated NOT
+   * @generated
+   */
+  public void createPagesGen()
+  {
+    // Creates the model from the editor input
+    //
+    createModel();
+
+    // Only creates the other pages if there is something that can be edited
+    //
+    if (!getEditingDomain().getResourceSet().getResources().isEmpty()
+        && !getEditingDomain().getResourceSet().getResources().get(0).getContents().isEmpty())
+    {
+      // Create a page for the selection tree view.
+      //
+      Tree tree = new Tree(getContainer(), SWT.MULTI);
+      selectionViewer = new TreeViewer(tree);
+      setCurrentViewer(selectionViewer);
+
+      selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+      selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+      selectionViewer.setInput(editingDomain.getResourceSet());
+      selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
+
+      new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
+
+      createContextMenuFor(selectionViewer);
+      int pageIndex = addPage(tree);
+      setPageText(pageIndex, getString("_UI_SelectionPage_label"));
+
+      getSite().getShell().getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          setActivePage(0);
+        }
+      });
+    }
+
+    // Ensures that this editor will only display the page's tab
+    // area if there are more than one page
+    //
+    getContainer().addControlListener(new ControlAdapter()
+    {
+      boolean guard = false;
+
+      @Override
+      public void controlResized(ControlEvent event)
+      {
+        if (!guard)
+        {
+          guard = true;
+          hideTabs();
+          guard = false;
+        }
+      }
+    });
+
+    getSite().getShell().getDisplay().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        updateProblemIndication();
+      }
+    });
+  }
+
+  /**
+   * @ADDED
    */
   @Override
   public void createPages()
@@ -1103,12 +1255,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     //
     createModel();
 
-    // Only creates the other pages if there is something that can be edited
-    //
-    // if (!getEditingDomain().getResourceSet().getResources().isEmpty()
-    // &&
-    // !getEditingDomain().getResourceSet().getResources().get(0).getContents().isEmpty())
-    // {
     // Create a page for the selection tree view.
     //
     Tree tree = new Tree(getContainer(), SWT.MULTI);
@@ -1139,7 +1285,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     setPageText(pageIndex, getString("_UI_SelectionPage_label"));
 
     setActivePage(0);
-    // }
 
     // Ensures that this editor will only display the page's tab
     // area if there are more than one page
@@ -1408,9 +1553,13 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * 
    * @generated
    */
-  @Override
-  public void doSave(IProgressMonitor progressMonitor)
+  public void doSaveGen(IProgressMonitor progressMonitor)
   {
+    // Save only resources that have actually changed.
+    //
+    final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
+    saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
+
     // Do the work within an operation because this is a long running activity
     // that modifies the workbench.
     //
@@ -1432,11 +1581,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
             try
             {
               savedResources.add(resource);
-              resource.save(Collections.EMPTY_MAP);
+              resource.save(saveOptions);
             }
             catch (Exception exception)
             {
-              exception.printStackTrace();
               resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
             }
             first = false;
@@ -1455,7 +1603,72 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       // Refresh the necessary state.
       //
       ((BasicCommandStack)editingDomain.getCommandStack()).saveIsDone();
-      // firePropertyChange(IEditorPart.PROP_DIRTY);
+      firePropertyChange(IEditorPart.PROP_DIRTY);
+    }
+    catch (Exception exception)
+    {
+      // Something went wrong that shouldn't.
+      //
+      PluginDelegator.INSTANCE.log(exception);
+    }
+    updateProblemIndication = true;
+    updateProblemIndication();
+  }
+
+  /**
+   * @ADDED
+   */
+  @Override
+  public void doSave(IProgressMonitor progressMonitor)
+  {
+    // Save only resources that have actually changed.
+    //
+    final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
+    saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
+
+    // Do the work within an operation because this is a long running activity
+    // that modifies the workbench.
+    //
+    WorkspaceModifyOperation operation = new WorkspaceModifyOperation()
+    {
+      // This is the method that gets invoked when the operation runs.
+      //
+      @Override
+      public void execute(IProgressMonitor monitor)
+      {
+        // Save the resources to the file system.
+        //
+        boolean first = true;
+        for (Resource resource : editingDomain.getResourceSet().getResources())
+        {
+          if ((first || !resource.getContents().isEmpty() || isPersisted(resource))
+              && !editingDomain.isReadOnly(resource))
+          {
+            try
+            {
+              savedResources.add(resource);
+              resource.save(saveOptions);
+            }
+            catch (Exception exception)
+            {
+              resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
+            }
+            first = false;
+          }
+        }
+      }
+    };
+
+    updateProblemIndication = false;
+    try
+    {
+      // This runs the options, and shows progress.
+      //
+      new ProgressMonitorDialog(getSite().getShell()).run(true, false, operation);
+
+      // Refresh the necessary state.
+      //
+      ((BasicCommandStack)editingDomain.getCommandStack()).saveIsDone();
     }
     catch (Exception exception)
     {
@@ -1498,7 +1711,15 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * This always returns true because it is not currently supported. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated NOT
+   * @generated
+   */
+  public boolean isSaveAsAllowedGen()
+  {
+    return true;
+  }
+
+  /**
+   * @ADDED
    */
   @Override
   public boolean isSaveAsAllowed()
@@ -1576,7 +1797,20 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * This is called during startup. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
    * 
-   * @generated NOT
+   * @generated
+   */
+  public void initGen(IEditorSite site, IEditorInput editorInput)
+  {
+    setSite(site);
+    setInputWithNotify(editorInput);
+    setPartName(editorInput.getName());
+    site.setSelectionProvider(this);
+    site.getPage().addPartListener(partListener);
+    ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener, IResourceChangeEvent.POST_CHANGE);
+  }
+
+  /**
+   * @ADDED
    */
   @Override
   public void init(IEditorSite site, IEditorInput editorInput)
@@ -1720,7 +1954,15 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * the context menus with contributions from the Edit menu. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated NOT
+   * @generated
+   */
+  public void menuAboutToShowGen(IMenuManager menuManager)
+  {
+    ((IMenuListener)getEditorSite().getActionBarContributor()).menuAboutToShow(menuManager);
+  }
+
+  /**
+   * @ADDED
    */
   public void menuAboutToShow(IMenuManager menuManager)
   {
@@ -1791,7 +2033,38 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated NOT
+   * @generated
+   */
+  public void disposeGen()
+  {
+    updateProblemIndication = false;
+
+    ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
+
+    getSite().getPage().removePartListener(partListener);
+
+    adapterFactory.dispose();
+
+    if (getActionBarContributor().getActiveEditor() == this)
+    {
+      getActionBarContributor().setActiveEditor(null);
+    }
+
+    if (propertySheetPage != null)
+    {
+      propertySheetPage.dispose();
+    }
+
+    if (contentOutlinePage != null)
+    {
+      contentOutlinePage.dispose();
+    }
+
+    super.dispose();
+  }
+
+  /**
+   * @ADDED
    */
   @Override
   public void dispose()
@@ -1900,6 +2173,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * @author Eike Stepper
+   * @ADDED
    */
   private final class CreateRootAction extends LongRunningAction
   {

@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.bundle;
 
+import org.eclipse.emf.cdo.internal.server.RepositoryManager;
+
 import org.eclipse.net4j.internal.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMLogger;
@@ -47,6 +49,22 @@ public final class OM
     protected OMBundle getOMBundle()
     {
       return BUNDLE;
+    }
+
+    @Override
+    protected void start() throws Exception
+    {
+      RepositoryManager.INSTANCE.activate();
+    }
+
+    @Override
+    protected void stop() throws Exception
+    {
+      Exception exception = RepositoryManager.INSTANCE.deactivate();
+      if (exception != null)
+      {
+        LOG.warn(exception);
+      }
     }
   }
 }

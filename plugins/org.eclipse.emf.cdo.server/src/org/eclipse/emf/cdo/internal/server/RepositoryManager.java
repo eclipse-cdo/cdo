@@ -12,13 +12,15 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.server.IRepositoryManager;
 
+import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public final class RepositoryManager implements IRepositoryManager
+public final class RepositoryManager extends Lifecycle implements IRepositoryManager
 {
   // @Singleton
   public static final RepositoryManager INSTANCE = new RepositoryManager();
@@ -49,5 +51,17 @@ public final class RepositoryManager implements IRepositoryManager
   public void clear()
   {
     repositories.clear();
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    super.doDeactivate();
   }
 }

@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.db;
 
-import org.eclipse.net4j.db.IField;
-import org.eclipse.net4j.db.IIndex;
-import org.eclipse.net4j.db.ITable;
-import org.eclipse.net4j.db.IIndex.Type;
+import org.eclipse.net4j.db.IDBField;
+import org.eclipse.net4j.db.IDBIndex;
+import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.db.IDBIndex.Type;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,23 +22,23 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class Table implements ITable
+public class DBTable implements IDBTable
 {
-  private Schema schema;
+  private DBSchema schema;
 
   private String name;
 
-  private List<Field> fields = new ArrayList();
+  private List<DBField> fields = new ArrayList();
 
-  private List<Index> indices = new ArrayList();
+  private List<DBIndex> indices = new ArrayList();
 
-  public Table(Schema schema, String name)
+  public DBTable(DBSchema schema, String name)
   {
     this.schema = schema;
     this.name = name;
   }
 
-  public Schema getSchema()
+  public DBSchema getSchema()
   {
     return schema;
   }
@@ -48,47 +48,47 @@ public class Table implements ITable
     return name;
   }
 
-  public Field addField(String name, IField.Type type)
+  public DBField addField(String name, IDBField.Type type)
   {
-    return addField(name, type, IField.DEFAULT, IField.DEFAULT, false);
+    return addField(name, type, IDBField.DEFAULT, IDBField.DEFAULT, false);
   }
 
-  public Field addField(String name, IField.Type type, boolean notNull)
+  public DBField addField(String name, IDBField.Type type, boolean notNull)
   {
-    return addField(name, type, IField.DEFAULT, IField.DEFAULT, notNull);
+    return addField(name, type, IDBField.DEFAULT, IDBField.DEFAULT, notNull);
   }
 
-  public Field addField(String name, IField.Type type, int precision)
+  public DBField addField(String name, IDBField.Type type, int precision)
   {
-    return addField(name, type, precision, IField.DEFAULT, false);
+    return addField(name, type, precision, IDBField.DEFAULT, false);
   }
 
-  public Field addField(String name, IField.Type type, int precision, boolean notNull)
+  public DBField addField(String name, IDBField.Type type, int precision, boolean notNull)
   {
-    return addField(name, type, precision, IField.DEFAULT, notNull);
+    return addField(name, type, precision, IDBField.DEFAULT, notNull);
   }
 
-  public Field addField(String name, IField.Type type, int precision, int scale)
+  public DBField addField(String name, IDBField.Type type, int precision, int scale)
   {
     return addField(name, type, precision, scale, false);
   }
 
-  public Field addField(String name, IField.Type type, int precision, int scale, boolean notNull)
+  public DBField addField(String name, IDBField.Type type, int precision, int scale, boolean notNull)
   {
     schema.assertUnlocked();
     if (getField(name) != null)
     {
-      throw new IllegalStateException("Field exists: " + name);
+      throw new IllegalStateException("DBField exists: " + name);
     }
 
-    Field field = new Field(this, name, type, precision, scale, notNull, fields.size());
+    DBField field = new DBField(this, name, type, precision, scale, notNull, fields.size());
     fields.add(field);
     return field;
   }
 
-  public Field getField(String name)
+  public DBField getField(String name)
   {
-    for (Field field : fields)
+    for (DBField field : fields)
     {
       if (name.equals(field.getName()))
       {
@@ -99,7 +99,7 @@ public class Table implements ITable
     return null;
   }
 
-  public Field getField(int index)
+  public DBField getField(int index)
   {
     return fields.get(index);
   }
@@ -109,21 +109,21 @@ public class Table implements ITable
     return fields.size();
   }
 
-  public Field[] getFields()
+  public DBField[] getFields()
   {
-    return fields.toArray(new Field[fields.size()]);
+    return fields.toArray(new DBField[fields.size()]);
   }
 
-  public Index addIndex(Type type, IField field)
+  public DBIndex addIndex(Type type, IDBField field)
   {
-    IField[] fields = { field };
+    IDBField[] fields = { field };
     return addIndex(type, fields);
   }
 
-  public Index addIndex(Type type, IField[] fields)
+  public DBIndex addIndex(Type type, IDBField[] fields)
   {
     schema.assertUnlocked();
-    Index index = new Index(this, type, fields, indices.size());
+    DBIndex index = new DBIndex(this, type, fields, indices.size());
     indices.add(index);
     return index;
   }
@@ -133,16 +133,16 @@ public class Table implements ITable
     return indices.size();
   }
 
-  public Index[] getIndices()
+  public DBIndex[] getIndices()
   {
-    return indices.toArray(new Index[indices.size()]);
+    return indices.toArray(new DBIndex[indices.size()]);
   }
 
-  public IIndex getPrimaryKeyIndex()
+  public IDBIndex getPrimaryKeyIndex()
   {
-    for (IIndex index : indices)
+    for (IDBIndex index : indices)
     {
-      if (index.geType() == IIndex.Type.PRIMARY_KEY)
+      if (index.geType() == IDBIndex.Type.PRIMARY_KEY)
       {
         return index;
       }
@@ -156,7 +156,7 @@ public class Table implements ITable
     try
     {
       boolean first = true;
-      for (Field field : fields)
+      for (DBField field : fields)
       {
         if (first)
         {
@@ -181,7 +181,7 @@ public class Table implements ITable
     {
       for (int i = 0; i < fields.size(); i++)
       {
-        Field field = fields.get(i);
+        DBField field = fields.get(i);
         if (i != 0)
         {
           appendable.append(", ");

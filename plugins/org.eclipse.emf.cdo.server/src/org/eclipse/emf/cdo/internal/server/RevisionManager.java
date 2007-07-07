@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.IRevisionManager;
+import org.eclipse.emf.cdo.server.StoreUtil;
 
 /**
  * @author Eike Stepper
@@ -47,14 +48,12 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   @Override
   protected CDORevisionImpl loadRevision(CDOID id)
   {
-    // TODO Implement method RevisionManager.loadRevision()
-    throw new UnsupportedOperationException("Not yet implemented");
+    return StoreUtil.getTransaction().loadRevision(id);
   }
 
   @Override
   protected CDORevisionImpl loadRevision(CDOID id, long timeStamp)
   {
-    // TODO Implement method RevisionManager.loadRevision()
-    throw new UnsupportedOperationException("Not yet implemented");
+    return StoreUtil.getTransaction().loadRevision(id, timeStamp);
   }
 }

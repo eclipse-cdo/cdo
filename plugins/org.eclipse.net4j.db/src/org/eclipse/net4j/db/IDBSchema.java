@@ -8,24 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.server;
+package org.eclipse.net4j.db;
 
-import org.eclipse.emf.cdo.server.IStoreTransaction;
+import javax.sql.DataSource;
 
 /**
  * @author Eike Stepper
  */
-public abstract class StoreTransaction implements IStoreTransaction
+public interface IDBSchema
 {
-  private StoreManager store;
+  public String getName();
 
-  public StoreTransaction(StoreManager store)
-  {
-    this.store = store;
-  }
+  public IDBTable addTable(String name);
 
-  public StoreManager getStore()
-  {
-    return store;
-  }
+  public IDBTable getTable(String name);
+
+  public IDBTable[] getTables();
+
+  public void create(IDBAdapter dbAdapter, DataSource dataSource);
 }

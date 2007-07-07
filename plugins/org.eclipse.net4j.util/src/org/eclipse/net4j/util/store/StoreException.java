@@ -8,32 +8,31 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db;
+package org.eclipse.net4j.util.store;
 
 /**
  * @author Eike Stepper
  */
-public interface IIndex
+public class StoreException extends RuntimeException
 {
-  public ITable geTable();
+  private static final long serialVersionUID = 1L;
 
-  public Type geType();
-
-  public IField getField(int index);
-
-  public int getFieldCount();
-
-  public IField[] getFields();
-
-  public int getPosition();
-
-  public String getName();
-
-  /**
-   * @author Eike Stepper
-   */
-  public enum Type
+  public StoreException()
   {
-    PRIMARY_KEY, UNIQUE, NON_UNIQUE
+  }
+
+  public StoreException(String message)
+  {
+    super(message);
+  }
+
+  public StoreException(Throwable cause)
+  {
+    super(cause);
+  }
+
+  public StoreException(String message, Throwable cause)
+  {
+    super(message, cause);
   }
 }

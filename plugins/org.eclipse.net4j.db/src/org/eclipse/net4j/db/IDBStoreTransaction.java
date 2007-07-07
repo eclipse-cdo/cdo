@@ -10,25 +10,14 @@
  **************************************************************************/
 package org.eclipse.net4j.db;
 
-import org.eclipse.net4j.internal.db.DBAdapterRegistry;
-import org.eclipse.net4j.internal.db.DBTable;
-import org.eclipse.net4j.util.registry.IRegistry;
+import org.eclipse.net4j.util.store.IStoreTransaction;
 
-import java.sql.Driver;
-import java.sql.Statement;
+import java.sql.Connection;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBAdapter
+public interface IDBStoreTransaction extends IStoreTransaction
 {
-  public static final IRegistry<String, IDBAdapter> REGISTRY = DBAdapterRegistry.INSTANCE;
-
-  public String getName();
-
-  public String getVersion();
-
-  public Driver getJDBCDriver();
-
-  public void createTable(DBTable table, Statement statement);
+  public Connection getConnection();
 }

@@ -63,8 +63,16 @@ public class LoadObjectIndication extends CDOServerIndication
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    RevisionManager rm = getRevisionManager();
-    CDORevisionImpl revision = timeStamp != null ? rm.getRevision(id, timeStamp) : rm.getRevision(id);
-    revision.write(out, null);
+    final CDORevisionImpl[] revision = new CDORevisionImpl[1];
+    transact(new Runnable()
+    {
+      public void run()
+      {
+        RevisionManager rm = getRevisionManager();
+        revision[0] = timeStamp != null ? rm.getRevision(id, timeStamp) : rm.getRevision(id);
+      }
+    });
+
+    revision[0].write(out, null);
   }
 }

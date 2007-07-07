@@ -10,20 +10,24 @@
  **************************************************************************/
 package org.eclipse.net4j.db;
 
+import org.eclipse.net4j.util.store.IStoreManager;
+
 import javax.sql.DataSource;
+
+import java.sql.Connection;
 
 /**
  * @author Eike Stepper
  */
-public interface ISchema
+public interface IDBStoreManager<TRANSACTION extends IDBStoreTransaction> extends IStoreManager<TRANSACTION>
 {
-  public String getName();
+  public static final String STORE_TYPE = "JDBC";
 
-  public ITable addTable(String name);
+  public IDBAdapter getDBAdapter();
 
-  public ITable getTable(String name);
+  public DataSource getDataSource();
 
-  public ITable[] getTables();
+  public Connection getConnection();
 
-  public void create(IDBAdapter dbAdapter, DataSource dataSource);
+  public void initDatabase();
 }

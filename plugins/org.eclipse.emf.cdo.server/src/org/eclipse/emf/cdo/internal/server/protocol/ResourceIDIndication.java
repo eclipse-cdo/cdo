@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.bundle.CDOProtocol;
-import org.eclipse.emf.cdo.internal.server.bundle.CDOServer;
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
@@ -41,7 +41,7 @@ public class ResourceIDIndication extends CDOServerIndication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     // TODO Optimize transfer of URIs/paths
-    String path = in.readString();
+    final String path = in.readString();
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Read path: {0}", path);
@@ -49,11 +49,17 @@ public class ResourceIDIndication extends CDOServerIndication
 
     try
     {
-      id = getResourceManager().getResourceID(path);
+      transact(new Runnable()
+      {
+        public void run()
+        {
+          id = getResourceManager().getResourceID(path);
+        }
+      });
     }
     catch (Exception ex)
     {
-      CDOServer.LOG.error(ex);
+      OM.LOG.error(ex);
       id = CDOID.NULL;
     }
   }

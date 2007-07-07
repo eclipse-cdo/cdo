@@ -12,7 +12,7 @@ package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.ISchema;
+import org.eclipse.net4j.db.IDBSchema;
 
 import javax.sql.DataSource;
 
@@ -25,15 +25,15 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class Schema implements ISchema
+public class DBSchema implements IDBSchema
 {
   private String name;
 
-  private Map<String, Table> tables = new HashMap();
+  private Map<String, DBTable> tables = new HashMap();
 
   private boolean locked;
 
-  public Schema(String name)
+  public DBSchema(String name)
   {
     this.name = name;
   }
@@ -43,27 +43,27 @@ public class Schema implements ISchema
     return name;
   }
 
-  public Table addTable(String name)
+  public DBTable addTable(String name)
   {
     assertUnlocked();
     if (tables.containsKey(name))
     {
-      throw new IllegalStateException("Table exists: " + name);
+      throw new IllegalStateException("DBTable exists: " + name);
     }
 
-    Table table = new Table(this, name);
+    DBTable table = new DBTable(this, name);
     tables.put(name, table);
     return table;
   }
 
-  public Table getTable(String name)
+  public DBTable getTable(String name)
   {
     return tables.get(name);
   }
 
-  public Table[] getTables()
+  public DBTable[] getTables()
   {
-    return tables.values().toArray(new Table[tables.size()]);
+    return tables.values().toArray(new DBTable[tables.size()]);
   }
 
   public boolean isLocked()
@@ -82,7 +82,7 @@ public class Schema implements ISchema
     {
       Connection connection = dataSource.getConnection();
       Statement statement = connection.createStatement();
-      for (Table table : tables.values())
+      for (DBTable table : tables.values())
       {
         dbAdapter.createTable(table, statement);
       }
@@ -103,7 +103,7 @@ public class Schema implements ISchema
   {
     if (locked)
     {
-      throw new IllegalStateException("Schema locked: " + name);
+      throw new IllegalStateException("DBSchema locked: " + name);
     }
   }
 }

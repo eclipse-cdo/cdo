@@ -10,16 +10,16 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.db;
 
-import org.eclipse.net4j.db.IField;
+import org.eclipse.net4j.db.IDBField;
 
 /**
  * @author Eike Stepper
  */
-public class Field implements IField
+public class DBField implements IDBField
 {
   private static final int DEFAULT_PRECISION = 255;
 
-  private Table table;
+  private DBTable table;
 
   private String name;
 
@@ -33,7 +33,7 @@ public class Field implements IField
 
   private int position;
 
-  public Field(Table table, String name, Type type, int precision, int scale, boolean notNull, int position)
+  public DBField(DBTable table, String name, Type type, int precision, int scale, boolean notNull, int position)
   {
     this.table = table;
     this.name = name;
@@ -44,7 +44,7 @@ public class Field implements IField
     this.position = position;
   }
 
-  public Table geTable()
+  public DBTable geTable()
   {
     return table;
   }

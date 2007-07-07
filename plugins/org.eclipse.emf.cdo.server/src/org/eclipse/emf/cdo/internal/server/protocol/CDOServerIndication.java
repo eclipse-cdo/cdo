@@ -15,8 +15,12 @@ import org.eclipse.emf.cdo.internal.server.ResourceManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
+import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.StoreUtil;
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.util.store.IStoreManager;
+import org.eclipse.net4j.util.store.StoreException;
 
 /**
  * @author Eike Stepper
@@ -51,6 +55,11 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     return getRepository().getResourceManager();
   }
 
+  protected IStoreManager<ITransaction> getStoreManager()
+  {
+    return getRepository().getStoreManager();
+  }
+
   protected Repository getRepository()
   {
     return getSessionManager().getRepository();
@@ -61,8 +70,14 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     return getProtocol().getSession();
   }
 
+  @Override
   protected CDOServerProtocol getProtocol()
   {
     return (CDOServerProtocol)super.getProtocol();
+  }
+
+  protected void transact(Runnable runnable) throws StoreException
+  {
+    StoreUtil.transact(getStoreManager(), runnable);
   }
 }

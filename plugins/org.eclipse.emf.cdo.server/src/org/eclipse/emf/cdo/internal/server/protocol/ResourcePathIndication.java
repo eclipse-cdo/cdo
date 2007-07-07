@@ -39,13 +39,19 @@ public class ResourcePathIndication extends CDOServerIndication
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    CDOID id = CDOIDImpl.read(in);
+    final CDOID id = CDOIDImpl.read(in);
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Read ID: {0}", id);
     }
 
-    path = getResourceManager().getResourcePath(id);
+    transact(new Runnable()
+    {
+      public void run()
+      {
+        path = getResourceManager().getResourcePath(id);
+      }
+    });
   }
 
   @Override

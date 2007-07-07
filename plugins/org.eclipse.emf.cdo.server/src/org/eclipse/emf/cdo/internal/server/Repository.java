@@ -13,7 +13,9 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IStoreManager;
+import org.eclipse.emf.cdo.server.ITransaction;
+
+import org.eclipse.net4j.util.store.IStoreManager;
 
 import java.util.UUID;
 
@@ -34,7 +36,7 @@ public class Repository implements IRepository
 
   private RevisionManager revisionManager;
 
-  private IStoreManager storeManager;
+  private IStoreManager<ITransaction> storeManager;
 
   private long nextOIDValue = INITIAL_OID_VALUE;
 
@@ -45,6 +47,7 @@ public class Repository implements IRepository
     sessionManager = new SessionManager(this);
     resourceManager = new ResourceManager(this);
     revisionManager = new RevisionManager(this);
+    storeManager = new EmptyStoreManager();
   }
 
   public String getName()
@@ -72,7 +75,7 @@ public class Repository implements IRepository
     return revisionManager;
   }
 
-  public IStoreManager getStoreManager()
+  public IStoreManager<ITransaction> getStoreManager()
   {
     return storeManager;
   }

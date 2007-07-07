@@ -10,9 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.server.bundle.CDOServer;
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.IResourceManager;
+import org.eclipse.emf.cdo.server.StoreUtil;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -24,7 +25,7 @@ import java.util.Map;
  */
 public class ResourceManager implements IResourceManager
 {
-  private static final ContextTracer TRACER = new ContextTracer(CDOServer.DEBUG_SESSION, SessionManager.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, SessionManager.class);
 
   private Repository repository;
 
@@ -82,13 +83,11 @@ public class ResourceManager implements IResourceManager
 
   private CDOID loadID(String path)
   {
-    // TODO Implement method ResourceManager.loadID()
-    throw new UnsupportedOperationException("Not yet implemented");
+    return StoreUtil.getTransaction().loadResourceID(path);
   }
 
   private String loadPath(CDOID id)
   {
-    // TODO Implement method ResourceManager.loadPath()
-    throw new UnsupportedOperationException("Not yet implemented");
+    return StoreUtil.getTransaction().loadResourcePath(id);
   }
 }

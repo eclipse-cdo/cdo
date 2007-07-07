@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.db;
 
-import org.eclipse.net4j.internal.db.Schema;
+import org.eclipse.net4j.internal.db.DBSchema;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
 
@@ -27,9 +27,9 @@ public final class DBUtil
   {
   }
 
-  public static ISchema createSchema(String name)
+  public static IDBSchema createSchema(String name)
   {
-    return new Schema(name);
+    return new DBSchema(name);
   }
 
   public static DataSource createDataSource(Map<Object, Object> properties)

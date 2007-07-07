@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.jms.server.internal.jdbc;
+package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBIndex;
@@ -18,9 +18,9 @@ import org.eclipse.net4j.internal.db.DBSchema;
 /**
  * @author Eike Stepper
  */
-public class JMSSchema extends DBSchema
+public class CDODBSchema extends DBSchema
 {
-  public static final JMSSchema INSTANCE = new JMSSchema();
+  public static final CDODBSchema INSTANCE = new CDODBSchema();
 
   /**
    * DBTable Destinations
@@ -60,7 +60,7 @@ public class JMSSchema extends DBSchema
       + " FROM " + DESTINATIONS + ", " + MESSAGES + " WHERE " + DESTINATIONS_NAME + "=" + MESSAGES_DESTINATION
       + " AND " + DESTINATIONS_NAME + "=?";
 
-  private JMSSchema()
+  private CDODBSchema()
   {
     super("JMS");
   }

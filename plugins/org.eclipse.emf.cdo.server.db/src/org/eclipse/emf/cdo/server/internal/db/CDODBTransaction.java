@@ -8,23 +8,26 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.server;
+package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.ITransaction;
 
-import org.eclipse.net4j.internal.util.store.StoreTransaction;
+import org.eclipse.net4j.internal.db.DBStoreTransaction;
 import org.eclipse.net4j.util.store.IStoreManager;
+import org.eclipse.net4j.util.store.IStoreTransaction;
+
+import java.sql.Connection;
 
 /**
  * @author Eike Stepper
  */
-public class EmptyStoreTransaction extends StoreTransaction implements ITransaction
+public class CDODBTransaction extends DBStoreTransaction implements ITransaction
 {
-  public EmptyStoreTransaction(IStoreManager<ITransaction> storeManager)
+  public CDODBTransaction(IStoreManager<? extends IStoreTransaction> storeManager, Connection connection)
   {
-    super(storeManager);
+    super(storeManager, connection);
   }
 
   public CDOID loadResourceID(String path)
@@ -37,12 +40,12 @@ public class EmptyStoreTransaction extends StoreTransaction implements ITransact
     return null;
   }
 
-  public CDORevisionImpl loadRevision(CDOID id, long timeStamp)
+  public CDORevisionImpl loadRevision(CDOID id)
   {
     return null;
   }
 
-  public CDORevisionImpl loadRevision(CDOID id)
+  public CDORevisionImpl loadRevision(CDOID id, long timeStamp)
   {
     return null;
   }

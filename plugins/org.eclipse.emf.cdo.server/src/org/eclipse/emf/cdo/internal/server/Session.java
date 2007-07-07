@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.server.bundle.CDOServer;
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.internal.server.protocol.InvalidationRequest;
 import org.eclipse.emf.cdo.server.ISession;
@@ -57,7 +57,7 @@ public class Session implements ISession
     }
     catch (Exception ex)
     {
-      CDOServer.LOG.error(ex);
+      OM.LOG.error(ex);
     }
   }
 }

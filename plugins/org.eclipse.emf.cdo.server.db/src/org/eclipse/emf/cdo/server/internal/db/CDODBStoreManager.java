@@ -8,38 +8,28 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.server;
+package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.server.IStoreManager;
+import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.internal.db.DBStoreManager;
 
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import javax.sql.DataSource;
+
+import java.sql.Connection;
 
 /**
  * @author Eike Stepper
  */
-public abstract class StoreManager extends Lifecycle implements IStoreManager
+public class CDODBStoreManager extends DBStoreManager<CDODBTransaction>
 {
-  private String storeType;
-
-  private String instanceID;
-
-  public StoreManager(String storeType)
+  public CDODBStoreManager(IDBAdapter dbAdapter, DataSource dataSource)
   {
-    this.storeType = storeType;
+    super(CDODBSchema.INSTANCE, dbAdapter, dataSource);
   }
 
-  public String getStoreType()
+  @Override
+  protected CDODBTransaction createTransaction(Connection connection)
   {
-    return storeType;
-  }
-
-  public String getInstanceID()
-  {
-    return instanceID;
-  }
-
-  public void setInstanceID(String instanceID)
-  {
-    this.instanceID = instanceID;
+    return new CDODBTransaction(this, connection);
   }
 }

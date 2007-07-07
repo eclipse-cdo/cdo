@@ -112,11 +112,17 @@ public class CommitTransactionIndication extends CDOServerIndication
     timeStamp = System.currentTimeMillis();
     out.writeLong(timeStamp);
 
-    addRevisions(newResources);
-    addRevisions(newObjects);
-    addRevisions(dirtyObjects);
-    writeIDMappings(out);
+    transact(new Runnable()
+    {
+      public void run()
+      {
+        addRevisions(newResources);
+        addRevisions(newObjects);
+        addRevisions(dirtyObjects);
+      }
+    });
 
+    writeIDMappings(out);
     if (dirtyObjects.length > 0)
     {
       getSessionManager().notifyInvalidation(timeStamp, dirtyObjects, getSession());

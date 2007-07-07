@@ -8,31 +8,23 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.server;
+package org.eclipse.emf.cdo.server;
+
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.protocol.CDOID;
+
+import org.eclipse.net4j.util.store.IStoreTransaction;
 
 /**
  * @author Eike Stepper
  */
-public class StoreException extends RuntimeException
+public interface ITransaction extends IStoreTransaction
 {
-  private static final long serialVersionUID = 1L;
+  public CDOID loadResourceID(String path);
 
-  public StoreException()
-  {
-  }
+  public String loadResourcePath(CDOID id);
 
-  public StoreException(String message)
-  {
-    super(message);
-  }
+  public CDORevisionImpl loadRevision(CDOID id);
 
-  public StoreException(Throwable cause)
-  {
-    super(cause);
-  }
-
-  public StoreException(String message, Throwable cause)
-  {
-    super(message, cause);
-  }
+  public CDORevisionImpl loadRevision(CDOID id, long timeStamp);
 }

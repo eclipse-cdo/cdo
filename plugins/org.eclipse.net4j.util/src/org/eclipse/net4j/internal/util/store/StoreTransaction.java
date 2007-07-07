@@ -8,12 +8,25 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server;
+package org.eclipse.net4j.internal.util.store;
+
+import org.eclipse.net4j.util.store.IStoreManager;
+import org.eclipse.net4j.util.store.IStoreTransaction;
 
 /**
  * @author Eike Stepper
  */
-public interface IStoreTransaction
+public abstract class StoreTransaction implements IStoreTransaction
 {
+  private IStoreManager<? extends IStoreTransaction> storeManager;
 
+  public StoreTransaction(IStoreManager<? extends IStoreTransaction> storeManager)
+  {
+    this.storeManager = storeManager;
+  }
+
+  public IStoreManager<? extends IStoreTransaction> getStoreManager()
+  {
+    return storeManager;
+  }
 }

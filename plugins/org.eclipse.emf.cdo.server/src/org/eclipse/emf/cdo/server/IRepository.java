@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.net4j.util.store.IStoreManager;
+
 /**
  * @author Eike Stepper
  */
@@ -25,5 +27,5 @@ public interface IRepository
 
   public IRevisionManager getRevisionManager();
 
-  public IStoreManager getStoreManager();
+  public IStoreManager<ITransaction> getStoreManager();
 }

@@ -13,11 +13,11 @@ package org.eclipse.net4j.db;
 /**
  * @author Eike Stepper
  */
-public interface IField
+public interface IDBField
 {
   public static final int DEFAULT = -1;
 
-  public ITable geTable();
+  public IDBTable geTable();
 
   public String getName();
 

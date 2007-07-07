@@ -12,7 +12,7 @@ package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.IField.Type;
+import org.eclipse.net4j.db.IDBField.Type;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -22,13 +22,13 @@ import java.sql.Statement;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractDBAdapter implements IDBAdapter
+public abstract class DBAdapter implements IDBAdapter
 {
   private String name;
 
   private String version;
 
-  public AbstractDBAdapter(String name, String version)
+  public DBAdapter(String name, String version)
   {
     this.name = name;
     this.version = version;
@@ -44,7 +44,7 @@ public abstract class AbstractDBAdapter implements IDBAdapter
     return version;
   }
 
-  public void createTable(Table table, Statement statement)
+  public void createTable(DBTable table, Statement statement)
   {
     try
     {
@@ -64,7 +64,7 @@ public abstract class AbstractDBAdapter implements IDBAdapter
     return getName() + "-" + getVersion();
   }
 
-  protected void doCreateTable(Table table, Statement statement) throws SQLException
+  protected void doCreateTable(DBTable table, Statement statement) throws SQLException
   {
     StringBuilder builder = new StringBuilder();
     builder.append("CREATE TABLE ");
@@ -84,17 +84,17 @@ public abstract class AbstractDBAdapter implements IDBAdapter
     statement.execute(sql);
   }
 
-  protected String createConstraints(Table table)
+  protected String createConstraints(DBTable table)
   {
     return null;
   }
 
-  protected String createFieldDefinition(Field field)
+  protected String createFieldDefinition(DBField field)
   {
     return getTypeName(field) + (field.isNotNull() ? " NOT NULL" : "");
   }
 
-  protected String getTypeName(Field field)
+  protected String getTypeName(DBField field)
   {
     Type type = field.getType();
     switch (type)
@@ -131,7 +131,7 @@ public abstract class AbstractDBAdapter implements IDBAdapter
     throw new IllegalArgumentException("Unknown type: " + type);
   }
 
-  protected void validateTable(Table table, Statement statement)
+  protected void validateTable(DBTable table, Statement statement)
   {
     try
     {
@@ -147,18 +147,18 @@ public abstract class AbstractDBAdapter implements IDBAdapter
       int columnCount = metaData.getColumnCount();
       if (columnCount != table.getFieldCount())
       {
-        throw new DBException("Table " + table.getName() + " has " + columnCount + " columns instead of "
+        throw new DBException("DBTable " + table.getName() + " has " + columnCount + " columns instead of "
             + table.getFieldCount());
       }
 
       for (int i = 0; i < columnCount; i++)
       {
         int existingCode = metaData.getColumnType(i + 1);
-        Field field = table.getField(i);
+        DBField field = table.getField(i);
         int code = field.getType().getCode();
         if (code != existingCode)
         {
-          throw new DBException("Field " + field.getFullName() + " has type " + existingCode + " instead of " + code
+          throw new DBException("DBField " + field.getFullName() + " has type " + existingCode + " instead of " + code
               + " (" + field.getType() + ")");
         }
       }
@@ -169,15 +169,15 @@ public abstract class AbstractDBAdapter implements IDBAdapter
     }
   }
 
-  private String[] createFieldDefinitions(Table table)
+  private String[] createFieldDefinitions(DBTable table)
   {
-    Field[] fields = table.getFields();
+    DBField[] fields = table.getFields();
     int fieldCount = fields.length;
 
     String[] result = new String[fieldCount];
     for (int i = 0; i < fieldCount; i++)
     {
-      Field field = fields[i];
+      DBField field = fields[i];
       result[i] = createFieldDefinition(field);
     }
 

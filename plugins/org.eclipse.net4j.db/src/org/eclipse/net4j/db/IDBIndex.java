@@ -10,25 +10,30 @@
  **************************************************************************/
 package org.eclipse.net4j.db;
 
-import org.eclipse.net4j.internal.db.DBAdapterRegistry;
-import org.eclipse.net4j.internal.db.DBTable;
-import org.eclipse.net4j.util.registry.IRegistry;
-
-import java.sql.Driver;
-import java.sql.Statement;
-
 /**
  * @author Eike Stepper
  */
-public interface IDBAdapter
+public interface IDBIndex
 {
-  public static final IRegistry<String, IDBAdapter> REGISTRY = DBAdapterRegistry.INSTANCE;
+  public IDBTable geTable();
+
+  public Type geType();
+
+  public IDBField getField(int index);
+
+  public int getFieldCount();
+
+  public IDBField[] getFields();
+
+  public int getPosition();
 
   public String getName();
 
-  public String getVersion();
-
-  public Driver getJDBCDriver();
-
-  public void createTable(DBTable table, Statement statement);
+  /**
+   * @author Eike Stepper
+   */
+  public enum Type
+  {
+    PRIMARY_KEY, UNIQUE, NON_UNIQUE
+  }
 }

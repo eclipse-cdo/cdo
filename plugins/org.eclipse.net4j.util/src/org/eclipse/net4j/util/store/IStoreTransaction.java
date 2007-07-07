@@ -8,21 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server;
+package org.eclipse.net4j.util.store;
 
 /**
  * @author Eike Stepper
  */
-public interface IStoreManager
+public interface IStoreTransaction
 {
-  public String getStoreType();
-
-  public String getInstanceID();
-
-  public IStoreTransaction startTransaction();
-
-  public void commitTransaction(IStoreTransaction transaction);
-
-  public void rollbackTransaction(IStoreTransaction transaction);
-
+  public IStoreManager<? extends IStoreTransaction> getStoreManager();
 }

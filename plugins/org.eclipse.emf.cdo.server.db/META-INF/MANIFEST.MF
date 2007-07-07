@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.emf.cdo.server.db
+Bundle-Version: 0.8.0.qualifier
+Bundle-Activator: org.eclipse.emf.cdo.server.internal.db.bundle.OM$Activator
+Bundle-Vendor: %providerName
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.net4j.db;visibility:=reexport,
+ org.eclipse.emf.cdo.server;visibility:=reexport
+Eclipse-LazyStart: true

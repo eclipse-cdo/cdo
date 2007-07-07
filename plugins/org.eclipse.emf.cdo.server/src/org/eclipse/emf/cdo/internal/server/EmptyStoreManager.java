@@ -10,12 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.server.IStoreTransaction;
+import org.eclipse.emf.cdo.server.ITransaction;
+
+import org.eclipse.net4j.internal.util.store.StoreManager;
 
 /**
  * @author Eike Stepper
  */
-public class EmptyStoreManager extends StoreManager
+public class EmptyStoreManager extends StoreManager<ITransaction>
 {
   private static final String STORE_TYPE = "EMPTY";
 
@@ -25,16 +27,16 @@ public class EmptyStoreManager extends StoreManager
     setInstanceID(STORE_TYPE);
   }
 
-  public IStoreTransaction startTransaction()
+  public ITransaction startTransaction()
   {
     return new EmptyStoreTransaction(this);
   }
 
-  public void commitTransaction(IStoreTransaction transaction)
+  public void commitTransaction(ITransaction transaction)
   {
   }
 
-  public void rollbackTransaction(IStoreTransaction transaction)
+  public void rollbackTransaction(ITransaction transaction)
   {
   }
 }

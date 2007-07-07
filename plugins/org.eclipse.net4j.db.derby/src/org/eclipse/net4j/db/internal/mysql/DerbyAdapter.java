@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.db.internal.mysql;
 
-import org.eclipse.net4j.internal.db.AbstractDBAdapter;
+import org.eclipse.net4j.internal.db.DBAdapter;
 
 import org.apache.derby.jdbc.EmbeddedDriver;
 
@@ -19,7 +19,7 @@ import java.sql.Driver;
 /**
  * @author Eike Stepper
  */
-public class DerbyAdapter extends AbstractDBAdapter
+public class DerbyAdapter extends DBAdapter
 {
   public DerbyAdapter()
   {

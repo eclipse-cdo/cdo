@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.bundle;
 
+import org.eclipse.net4j.internal.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMLogger;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -18,11 +19,11 @@ import org.eclipse.net4j.util.om.OMTracer;
 /**
  * @author Eike Stepper
  */
-public final class CDOServer
+public final class OM
 {
   public static final String BUNDLE_ID = "org.eclipse.emf.cdo.server"; //$NON-NLS-1$
 
-  public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, CDOServer.class);
+  public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, OM.class);
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
@@ -36,7 +37,16 @@ public final class CDOServer
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  private CDOServer()
+  private OM()
   {
+  }
+
+  public static final class Activator extends OSGiActivator
+  {
+    @Override
+    protected OMBundle getOMBundle()
+    {
+      return BUNDLE;
+    }
   }
 }

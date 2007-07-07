@@ -10,23 +10,23 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.db;
 
-import org.eclipse.net4j.db.IField;
-import org.eclipse.net4j.db.IIndex;
+import org.eclipse.net4j.db.IDBField;
+import org.eclipse.net4j.db.IDBIndex;
 
 /**
  * @author Eike Stepper
  */
-public class Index implements IIndex
+public class DBIndex implements IDBIndex
 {
-  private Table table;
+  private DBTable table;
 
   private Type type;
 
-  private IField[] fields;
+  private IDBField[] fields;
 
   public int position;
 
-  public Index(Table table, Type type, IField[] fields, int position)
+  public DBIndex(DBTable table, Type type, IDBField[] fields, int position)
   {
     this.table = table;
     this.type = type;
@@ -34,7 +34,7 @@ public class Index implements IIndex
     this.position = position;
   }
 
-  public Table geTable()
+  public DBTable geTable()
   {
     return table;
   }
@@ -44,7 +44,7 @@ public class Index implements IIndex
     return type;
   }
 
-  public IField getField(int index)
+  public IDBField getField(int index)
   {
     return fields[index];
   }
@@ -54,7 +54,7 @@ public class Index implements IIndex
     return fields.length;
   }
 
-  public IField[] getFields()
+  public IDBField[] getFields()
   {
     return fields;
   }

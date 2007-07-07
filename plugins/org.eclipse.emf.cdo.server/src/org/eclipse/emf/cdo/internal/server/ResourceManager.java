@@ -77,17 +77,18 @@ public class ResourceManager implements IResourceManager
         TRACER.format("Registering resource: {0} --> {1}", id, path);
       }
 
+      StoreUtil.getTransaction().registerResource(id, path);
       pathToIDMap.put(path, id);
     }
   }
 
   private CDOID loadID(String path)
   {
-    return StoreUtil.getTransaction().loadResourceID(path);
+    return StoreUtil.getTransaction().getResourceID(path);
   }
 
   private String loadPath(CDOID id)
   {
-    return StoreUtil.getTransaction().loadResourcePath(id);
+    return StoreUtil.getTransaction().getResourcePath(id);
   }
 }

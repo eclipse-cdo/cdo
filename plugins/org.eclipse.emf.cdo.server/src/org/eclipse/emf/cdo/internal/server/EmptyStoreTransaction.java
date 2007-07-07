@@ -27,22 +27,30 @@ public class EmptyStoreTransaction extends StoreTransaction implements ITransact
     super(storeManager);
   }
 
-  public CDOID loadResourceID(String path)
+  public void registerResource(CDOID id, String path)
+  {
+  }
+
+  public CDOID getResourceID(String path)
   {
     return null;
   }
 
-  public String loadResourcePath(CDOID id)
+  public String getResourcePath(CDOID id)
   {
     return null;
   }
 
-  public CDORevisionImpl loadRevision(CDOID id, long timeStamp)
+  public void addRevision(CDORevisionImpl revision)
+  {
+  }
+
+  public CDORevisionImpl getRevision(CDOID id, long timeStamp)
   {
     return null;
   }
 
-  public CDORevisionImpl loadRevision(CDOID id)
+  public CDORevisionImpl getRevision(CDOID id)
   {
     return null;
   }

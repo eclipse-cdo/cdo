@@ -20,11 +20,15 @@ import org.eclipse.net4j.util.store.IStoreTransaction;
  */
 public interface ITransaction extends IStoreTransaction
 {
-  public CDOID loadResourceID(String path);
+  public void registerResource(CDOID id, String path);
 
-  public String loadResourcePath(CDOID id);
+  public CDOID getResourceID(String path);
 
-  public CDORevisionImpl loadRevision(CDOID id);
+  public String getResourcePath(CDOID id);
 
-  public CDORevisionImpl loadRevision(CDOID id, long timeStamp);
+  public void addRevision(CDORevisionImpl revision);
+
+  public CDORevisionImpl getRevision(CDOID id);
+
+  public CDORevisionImpl getRevision(CDOID id, long timeStamp);
 }

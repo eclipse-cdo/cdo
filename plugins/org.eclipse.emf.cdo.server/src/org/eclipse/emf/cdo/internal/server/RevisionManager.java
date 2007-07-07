@@ -37,6 +37,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   @Override
   public void addRevision(CDORevisionImpl revision)
   {
+    StoreUtil.getTransaction().addRevision(revision);
     super.addRevision(revision);
     if (revision.isResource())
     {
@@ -48,12 +49,12 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   @Override
   protected CDORevisionImpl loadRevision(CDOID id)
   {
-    return StoreUtil.getTransaction().loadRevision(id);
+    return StoreUtil.getTransaction().getRevision(id);
   }
 
   @Override
   protected CDORevisionImpl loadRevision(CDOID id, long timeStamp)
   {
-    return StoreUtil.getTransaction().loadRevision(id, timeStamp);
+    return StoreUtil.getTransaction().getRevision(id, timeStamp);
   }
 }

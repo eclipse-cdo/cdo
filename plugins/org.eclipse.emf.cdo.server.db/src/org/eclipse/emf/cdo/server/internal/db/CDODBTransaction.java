@@ -30,22 +30,30 @@ public class CDODBTransaction extends DBStoreTransaction implements ITransaction
     super(storeManager, connection);
   }
 
-  public CDOID loadResourceID(String path)
+  public void registerResource(CDOID id, String path)
+  {
+  }
+
+  public CDOID getResourceID(String path)
   {
     return null;
   }
 
-  public String loadResourcePath(CDOID id)
+  public String getResourcePath(CDOID id)
   {
     return null;
   }
 
-  public CDORevisionImpl loadRevision(CDOID id)
+  public void addRevision(CDORevisionImpl revision)
+  {
+  }
+
+  public CDORevisionImpl getRevision(CDOID id)
   {
     return null;
   }
 
-  public CDORevisionImpl loadRevision(CDOID id, long timeStamp)
+  public CDORevisionImpl getRevision(CDOID id, long timeStamp)
   {
     return null;
   }

@@ -55,6 +55,17 @@ public class CustomerImpl extends CDOObjectImpl implements Customer
    * 
    * @generated
    */
+  @Override
+  protected int eStaticFeatureCount()
+  {
+    return 0;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public String getName()
   {
     return (String)eGet(Model1Package.Literals.CUSTOMER__NAME, true);
@@ -75,6 +86,7 @@ public class CustomerImpl extends CDOObjectImpl implements Customer
    * 
    * @generated
    */
+  @SuppressWarnings("unchecked")
   public EList<SalesOrder> getSalesOrders()
   {
     return (EList<SalesOrder>)eGet(Model1Package.Literals.CUSTOMER__SALES_ORDERS, true);

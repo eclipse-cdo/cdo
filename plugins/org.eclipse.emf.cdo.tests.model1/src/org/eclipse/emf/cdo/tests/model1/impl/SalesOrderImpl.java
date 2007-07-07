@@ -54,6 +54,17 @@ public class SalesOrderImpl extends CDOObjectImpl implements SalesOrder
    * 
    * @generated
    */
+  @Override
+  protected int eStaticFeatureCount()
+  {
+    return 0;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public int getId()
   {
     return ((Integer)eGet(Model1Package.Literals.SALES_ORDER__ID, true)).intValue();

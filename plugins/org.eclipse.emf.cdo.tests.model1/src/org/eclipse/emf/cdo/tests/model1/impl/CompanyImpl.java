@@ -62,6 +62,18 @@ public class CompanyImpl extends CDOObjectImpl implements Company
    * 
    * @generated
    */
+  @Override
+  protected int eStaticFeatureCount()
+  {
+    return 0;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @SuppressWarnings("unchecked")
   public EList<Category> getCategories()
   {
     return (EList<Category>)eGet(Model1Package.Literals.COMPANY__CATEGORIES, true);
@@ -72,6 +84,7 @@ public class CompanyImpl extends CDOObjectImpl implements Company
    * 
    * @generated
    */
+  @SuppressWarnings("unchecked")
   public EList<Supplier> getSuppliers()
   {
     return (EList<Supplier>)eGet(Model1Package.Literals.COMPANY__SUPPLIERS, true);
@@ -82,6 +95,7 @@ public class CompanyImpl extends CDOObjectImpl implements Company
    * 
    * @generated
    */
+  @SuppressWarnings("unchecked")
   public EList<PurchaseOrder> getPurchaseOrders()
   {
     return (EList<PurchaseOrder>)eGet(Model1Package.Literals.COMPANY__PURCHASE_ORDERS, true);
@@ -92,6 +106,7 @@ public class CompanyImpl extends CDOObjectImpl implements Company
    * 
    * @generated
    */
+  @SuppressWarnings("unchecked")
   public EList<Customer> getCustomers()
   {
     return (EList<Customer>)eGet(Model1Package.Literals.COMPANY__CUSTOMERS, true);
@@ -102,6 +117,7 @@ public class CompanyImpl extends CDOObjectImpl implements Company
    * 
    * @generated
    */
+  @SuppressWarnings("unchecked")
   public EList<SalesOrder> getSalesOrders()
   {
     return (EList<SalesOrder>)eGet(Model1Package.Literals.COMPANY__SALES_ORDERS, true);

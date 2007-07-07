@@ -52,6 +52,17 @@ public class SupplierImpl extends CDOObjectImpl implements Supplier
    * 
    * @generated
    */
+  @Override
+  protected int eStaticFeatureCount()
+  {
+    return 0;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public String getName()
   {
     return (String)eGet(Model1Package.Literals.SUPPLIER__NAME, true);

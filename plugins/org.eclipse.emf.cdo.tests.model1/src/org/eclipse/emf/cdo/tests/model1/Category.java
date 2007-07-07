@@ -70,7 +70,7 @@ public interface Category extends CDOObject
    * @return the value of the '<em>Categories</em>' containment reference
    *         list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCategory_Categories()
-   * @model type="org.eclipse.emf.cdo.tests.model1.Category" containment="true"
+   * @model containment="true"
    * @generated
    */
   EList<Category> getCategories();
@@ -88,7 +88,7 @@ public interface Category extends CDOObject
    * @return the value of the '<em>Products</em>' containment reference
    *         list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCategory_Products()
-   * @model type="org.eclipse.emf.cdo.tests.model1.Product" containment="true"
+   * @model containment="true"
    * @generated
    */
   EList<Product> getProducts();

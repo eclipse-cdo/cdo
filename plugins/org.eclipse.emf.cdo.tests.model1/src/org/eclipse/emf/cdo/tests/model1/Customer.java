@@ -71,8 +71,7 @@ public interface Customer extends CDOObject
    * @return the value of the '<em>Sales Orders</em>' reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCustomer_SalesOrders()
    * @see org.eclipse.emf.cdo.tests.model1.SalesOrder#getCustomer
-   * @model type="org.eclipse.emf.cdo.tests.model1.SalesOrder"
-   *        opposite="customer"
+   * @model opposite="customer"
    * @generated
    */
   EList<SalesOrder> getSalesOrders();

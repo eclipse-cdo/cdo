@@ -56,6 +56,17 @@ public class CategoryImpl extends CDOObjectImpl implements Category
    * 
    * @generated
    */
+  @Override
+  protected int eStaticFeatureCount()
+  {
+    return 0;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public String getName()
   {
     return (String)eGet(Model1Package.Literals.CATEGORY__NAME, true);
@@ -76,6 +87,7 @@ public class CategoryImpl extends CDOObjectImpl implements Category
    * 
    * @generated
    */
+  @SuppressWarnings("unchecked")
   public EList<Category> getCategories()
   {
     return (EList<Category>)eGet(Model1Package.Literals.CATEGORY__CATEGORIES, true);
@@ -86,6 +98,7 @@ public class CategoryImpl extends CDOObjectImpl implements Category
    * 
    * @generated
    */
+  @SuppressWarnings("unchecked")
   public EList<Product> getProducts()
   {
     return (EList<Product>)eGet(Model1Package.Literals.CATEGORY__PRODUCTS, true);

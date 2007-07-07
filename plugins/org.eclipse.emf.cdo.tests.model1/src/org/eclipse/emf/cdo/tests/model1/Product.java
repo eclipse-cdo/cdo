@@ -71,8 +71,7 @@ public interface Product extends CDOObject
    * @return the value of the '<em>Order Details</em>' reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getProduct_OrderDetails()
    * @see org.eclipse.emf.cdo.tests.model1.OrderDetail#getProduct
-   * @model type="org.eclipse.emf.cdo.tests.model1.OrderDetail"
-   *        opposite="product"
+   * @model opposite="product"
    * @generated
    */
   EList<OrderDetail> getOrderDetails();

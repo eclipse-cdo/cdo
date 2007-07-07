@@ -56,6 +56,17 @@ public class PurchaseOrderImpl extends CDOObjectImpl implements PurchaseOrder
    * 
    * @generated
    */
+  @Override
+  protected int eStaticFeatureCount()
+  {
+    return 0;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public Date getDate()
   {
     return (Date)eGet(Model1Package.Literals.PURCHASE_ORDER__DATE, true);

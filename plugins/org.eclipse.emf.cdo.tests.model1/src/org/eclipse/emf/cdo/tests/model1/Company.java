@@ -44,7 +44,7 @@ public interface Company extends CDOObject
    * @return the value of the '<em>Categories</em>' containment reference
    *         list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_Categories()
-   * @model type="org.eclipse.emf.cdo.tests.model1.Category" containment="true"
+   * @model containment="true"
    * @generated
    */
   EList<Category> getCategories();
@@ -62,7 +62,7 @@ public interface Company extends CDOObject
    * @return the value of the '<em>Suppliers</em>' containment reference
    *         list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_Suppliers()
-   * @model type="org.eclipse.emf.cdo.tests.model1.Supplier" containment="true"
+   * @model containment="true"
    * @generated
    */
   EList<Supplier> getSuppliers();
@@ -100,7 +100,7 @@ public interface Company extends CDOObject
    * @return the value of the '<em>Customers</em>' containment reference
    *         list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_Customers()
-   * @model type="org.eclipse.emf.cdo.tests.model1.Customer" containment="true"
+   * @model containment="true"
    * @generated
    */
   EList<Customer> getCustomers();
@@ -119,8 +119,7 @@ public interface Company extends CDOObject
    * @return the value of the '<em>Sales Orders</em>' containment reference
    *         list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_SalesOrders()
-   * @model type="org.eclipse.emf.cdo.tests.model1.SalesOrder"
-   *        containment="true"
+   * @model containment="true"
    * @generated
    */
   EList<SalesOrder> getSalesOrders();

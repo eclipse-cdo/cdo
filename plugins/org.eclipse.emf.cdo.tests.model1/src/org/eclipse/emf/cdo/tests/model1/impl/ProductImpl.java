@@ -55,6 +55,17 @@ public class ProductImpl extends CDOObjectImpl implements Product
    * 
    * @generated
    */
+  @Override
+  protected int eStaticFeatureCount()
+  {
+    return 0;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public String getName()
   {
     return (String)eGet(Model1Package.Literals.PRODUCT__NAME, true);
@@ -75,6 +86,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    * 
    * @generated
    */
+  @SuppressWarnings("unchecked")
   public EList<OrderDetail> getOrderDetails()
   {
     return (EList<OrderDetail>)eGet(Model1Package.Literals.PRODUCT__ORDER_DETAILS, true);

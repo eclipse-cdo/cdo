@@ -54,6 +54,17 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * 
    * @generated
    */
+  @Override
+  protected int eStaticFeatureCount()
+  {
+    return 0;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public Product getProduct()
   {
     return (Product)eGet(Model1Package.Literals.ORDER_DETAIL__PRODUCT, true);

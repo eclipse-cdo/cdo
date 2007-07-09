@@ -11,7 +11,7 @@ import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewCommittedEvent;
 import org.eclipse.emf.cdo.CDOViewDirtyEvent;
-import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.views.CDOEventHandler;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
@@ -151,7 +151,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  public static final String EDITOR_ID = CDOUI.BUNDLE_ID + ".CDOEditor";
+  public static final String EDITOR_ID = OM.BUNDLE_ID + ".CDOEditor";
 
   /**
    * @ADDED
@@ -2133,7 +2133,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
         catch (Exception ex)
         {
-          CDOUI.LOG.error(ex);
+          OM.LOG.error(ex);
         }
       }
     });

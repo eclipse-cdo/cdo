@@ -10,9 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IRepositoryManager;
+import org.eclipse.emf.cdo.server.ITransaction;
 
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.store.IStoreManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,26 +35,73 @@ public final class RepositoryManager extends Lifecycle implements IRepositoryMan
   {
   }
 
-  public Repository getRepository(String name, boolean createOnDemand)
+  public String[] getRepositoryNames()
   {
-    Repository repository = repositories.get(name);
-    if (repository == null && createOnDemand)
+    synchronized (repositories)
     {
-      repository = new Repository(name);
-      repositories.put(name, repository);
+      return repositories.keySet().toArray(new String[repositories.size()]);
     }
-
-    return repository;
   }
 
-  public boolean isEmpty()
+  public Repository[] getRepositories()
   {
-    return repositories.isEmpty();
+    synchronized (repositories)
+    {
+      return repositories.values().toArray(new Repository[repositories.size()]);
+    }
+  }
+
+  public Repository getRepository(String name)
+  {
+    synchronized (repositories)
+    {
+      Repository repository = repositories.get(name);
+      if (repository == null)
+      {
+        throw new RuntimeException("Repository not found: " + name);
+      }
+      return repository;
+    }
+  }
+
+  public Repository addRepository(String name, IStoreManager<ITransaction> storeManager)
+  {
+    synchronized (repositories)
+    {
+      Repository repository = repositories.get(name);
+      if (repository != null)
+      {
+        throw new RuntimeException("Repository already exists: " + name);
+      }
+      repository = new Repository(name, storeManager);
+      LifecycleUtil.activate(repository);
+      repositories.put(name, repository);
+      return repository;
+    }
   }
 
   public void clear()
   {
-    repositories.clear();
+    synchronized (repositories)
+    {
+      repositories.clear();
+    }
+  }
+
+  public boolean isEmpty()
+  {
+    synchronized (repositories)
+    {
+      return repositories.isEmpty();
+    }
+  }
+
+  public int size()
+  {
+    synchronized (repositories)
+    {
+      return repositories.size();
+    }
   }
 
   @Override
@@ -62,6 +113,18 @@ public final class RepositoryManager extends Lifecycle implements IRepositoryMan
   @Override
   protected void doDeactivate() throws Exception
   {
+    for (Repository repository : getRepositories())
+    {
+      try
+      {
+        LifecycleUtil.deactivate(repository);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.warn(ex);
+      }
+    }
+
     super.doDeactivate();
   }
 }

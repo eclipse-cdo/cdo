@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ITransaction;
 
+import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.store.IStoreManager;
 
 import java.util.UUID;
@@ -22,7 +23,7 @@ import java.util.UUID;
 /**
  * @author Eike Stepper
  */
-public class Repository implements IRepository
+public class Repository extends Lifecycle implements IRepository
 {
   private static final long INITIAL_OID_VALUE = 1;
 
@@ -40,14 +41,14 @@ public class Repository implements IRepository
 
   private long nextOIDValue = INITIAL_OID_VALUE;
 
-  public Repository(String name)
+  public Repository(String name, IStoreManager<ITransaction> storeManager)
   {
     this.name = name;
     this.uuid = UUID.randomUUID().toString();
     sessionManager = new SessionManager(this);
     resourceManager = new ResourceManager(this);
     revisionManager = new RevisionManager(this);
-    storeManager = new EmptyStoreManager();
+    this.storeManager = storeManager;
   }
 
   public String getName()

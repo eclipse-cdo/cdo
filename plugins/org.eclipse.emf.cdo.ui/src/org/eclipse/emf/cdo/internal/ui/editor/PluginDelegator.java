@@ -6,7 +6,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui.editor;
 
-import org.eclipse.emf.cdo.internal.ui.bundle.CDOUI;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.ui.EclipseUIPlugin;
@@ -52,11 +52,11 @@ public final class PluginDelegator extends EMFPlugin
   {
     if (logEntry instanceof Throwable)
     {
-      CDOUI.LOG.error((Throwable)logEntry);
+      OM.LOG.error((Throwable)logEntry);
     }
     else
     {
-      CDOUI.LOG.info(logEntry.toString());
+      OM.LOG.info(logEntry.toString());
     }
   }
 

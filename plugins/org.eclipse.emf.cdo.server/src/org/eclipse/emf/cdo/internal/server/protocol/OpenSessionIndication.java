@@ -59,12 +59,12 @@ public class OpenSessionIndication extends IndicationWithResponse
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    Repository repository = RepositoryManager.INSTANCE.getRepository(repositoryName, true);
+    Repository repository = RepositoryManager.INSTANCE.getRepository(repositoryName);
     if (repository == null)
     {
       if (PROTOCOL.isEnabled())
       {
-        PROTOCOL.format("IRepository {0} not found", repositoryName);
+        PROTOCOL.format("Repository {0} not found", repositoryName);
       }
 
       out.writeInt(CDOProtocolConstants.ERROR_REPOSITORY_NOT_FOUND);

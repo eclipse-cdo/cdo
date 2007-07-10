@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.IResourceManager;
-import org.eclipse.emf.cdo.server.StoreUtil;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -69,26 +68,21 @@ public class ResourceManager implements IResourceManager
 
   public void registerResource(CDOID id, String path)
   {
-    final String oldPath = idToPathMap.put(id, path);
-    if (oldPath != path)
+    if (TRACER.isEnabled())
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Registering resource: {0} --> {1}", id, path);
-      }
-
-      StoreUtil.getTransaction().registerResource(id, path);
-      pathToIDMap.put(path, id);
+      TRACER.format("Registering resource: {0} --> {1}", id, path);
     }
+
+    repository.getStore().registerResource(id, path, idToPathMap, pathToIDMap);
   }
 
   private CDOID loadID(String path)
   {
-    return StoreUtil.getTransaction().getResourceID(path);
+    return repository.getStore().loadResourceID(path);
   }
 
   private String loadPath(CDOID id)
   {
-    return StoreUtil.getTransaction().getResourcePath(id);
+    return repository.getStore().loadResourcePath(id);
   }
 }

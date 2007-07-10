@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 
-import org.eclipse.net4j.util.store.IStoreTransaction;
+import org.eclipse.net4j.util.transaction.IStoreTransaction;
 
 /**
  * @author Eike Stepper

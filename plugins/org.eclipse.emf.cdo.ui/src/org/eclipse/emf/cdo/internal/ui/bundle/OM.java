@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.bundle;
 
-import org.eclipse.emf.cdo.internal.server.EmptyStoreManager;
+import org.eclipse.emf.cdo.internal.server.store.NOOPStore;
 import org.eclipse.emf.cdo.server.IRepositoryManager;
 
 import org.eclipse.net4j.internal.util.om.OSGiActivator;
@@ -50,7 +50,7 @@ public final class OM
     @Override
     protected void start() throws Exception
     {
-      IRepositoryManager.INSTANCE.addRepository("repo1", new EmptyStoreManager());
+      IRepositoryManager.INSTANCE.addRepository("repo1", new NOOPStore());
       // Properties properties = BUNDLE.getConfigProperties();
       // String repositories = properties.getProperty("repositories");
       // if (repositories != null)

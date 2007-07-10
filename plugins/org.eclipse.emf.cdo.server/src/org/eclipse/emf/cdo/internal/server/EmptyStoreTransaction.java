@@ -14,8 +14,8 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.ITransaction;
 
-import org.eclipse.net4j.internal.util.store.StoreTransaction;
-import org.eclipse.net4j.util.store.IStoreManager;
+import org.eclipse.net4j.internal.util.transaction.StoreTransaction;
+import org.eclipse.net4j.util.transaction.IStoreManager;
 
 /**
  * @author Eike Stepper

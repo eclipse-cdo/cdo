@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.ITransaction;
 
 import org.eclipse.net4j.internal.db.DBStoreTransaction;
-import org.eclipse.net4j.util.store.IStoreManager;
-import org.eclipse.net4j.util.store.IStoreTransaction;
+import org.eclipse.net4j.util.transaction.IStoreManager;
+import org.eclipse.net4j.util.transaction.IStoreTransaction;
 
 import java.sql.Connection;
 

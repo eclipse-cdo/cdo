@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
+ * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,26 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db;
-
-import org.eclipse.net4j.util.transaction.IStoreManager;
-
-import javax.sql.DataSource;
-
-import java.sql.Connection;
+package org.eclipse.net4j.util.transaction;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBStoreManager<TRANSACTION extends IDBStoreTransaction> extends IStoreManager<TRANSACTION>
+public interface ITransactionalOperation<T extends ITransaction, R>
 {
-  public static final String STORE_TYPE = "JDBC";
+  public R prepare(T transaction) throws Exception;
 
-  public IDBAdapter getDBAdapter();
+  public void onCommit(T transaction);
 
-  public DataSource getDataSource();
-
-  public Connection getConnection();
-
-  public void initDatabase();
+  public void onRollback(T transaction);
 }

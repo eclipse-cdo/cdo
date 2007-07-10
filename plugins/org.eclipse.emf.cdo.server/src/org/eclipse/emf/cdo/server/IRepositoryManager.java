@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.internal.server.RepositoryManager;
 
-import org.eclipse.net4j.util.store.IStoreManager;
-
 /**
  * @author Eike Stepper
  */
@@ -27,7 +25,7 @@ public interface IRepositoryManager
 
   public IRepository getRepository(String name);
 
-  public IRepository addRepository(String name, IStoreManager<ITransaction> storeManager);
+  public IRepository addRepository(String name, IStore store);
 
   public void clear();
 

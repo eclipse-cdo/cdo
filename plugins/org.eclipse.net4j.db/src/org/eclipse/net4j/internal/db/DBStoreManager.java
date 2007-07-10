@@ -13,8 +13,8 @@ package org.eclipse.net4j.internal.db;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBStoreManager;
 import org.eclipse.net4j.db.IDBSchema;
-import org.eclipse.net4j.internal.util.store.StoreManager;
-import org.eclipse.net4j.util.store.StoreException;
+import org.eclipse.net4j.internal.util.transaction.StoreManager;
+import org.eclipse.net4j.util.transaction.StoreException;
 
 import javax.sql.DataSource;
 

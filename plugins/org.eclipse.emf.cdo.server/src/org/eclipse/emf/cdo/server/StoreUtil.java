@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.net4j.util.store.IStoreManager;
-import org.eclipse.net4j.util.store.StoreException;
-import org.eclipse.net4j.util.store.IStoreManager.TransactedOperation;
+import org.eclipse.net4j.util.transaction.IStoreManager;
+import org.eclipse.net4j.util.transaction.StoreException;
+import org.eclipse.net4j.util.transaction.IStoreManager.TransactedOperation;
 
 /**
  * @author Eike Stepper

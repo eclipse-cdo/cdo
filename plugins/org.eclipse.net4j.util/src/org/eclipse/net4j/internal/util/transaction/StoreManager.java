@@ -8,12 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.store;
+package org.eclipse.net4j.internal.util.transaction;
 
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.util.store.IStoreManager;
-import org.eclipse.net4j.util.store.IStoreTransaction;
-import org.eclipse.net4j.util.store.StoreException;
+import org.eclipse.net4j.util.transaction.IStoreManager;
+import org.eclipse.net4j.util.transaction.IStoreTransaction;
+import org.eclipse.net4j.util.transaction.StoreException;
 
 /**
  * @author Eike Stepper

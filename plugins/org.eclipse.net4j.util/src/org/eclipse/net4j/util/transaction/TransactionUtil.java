@@ -8,26 +8,21 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db;
+package org.eclipse.net4j.util.transaction;
 
-import org.eclipse.net4j.util.transaction.IStoreManager;
-
-import javax.sql.DataSource;
-
-import java.sql.Connection;
+import org.eclipse.net4j.internal.util.transaction.Transaction;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBStoreManager<TRANSACTION extends IDBStoreTransaction> extends IStoreManager<TRANSACTION>
+public final class TransactionUtil
 {
-  public static final String STORE_TYPE = "JDBC";
+  private TransactionUtil()
+  {
+  }
 
-  public IDBAdapter getDBAdapter();
-
-  public DataSource getDataSource();
-
-  public Connection getConnection();
-
-  public void initDatabase();
+  public static ITransaction createTransaction()
+  {
+    return new Transaction();
+  }
 }

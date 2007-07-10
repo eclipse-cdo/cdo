@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.db;
 
-import org.eclipse.net4j.util.store.IStoreTransaction;
+import org.eclipse.net4j.util.transaction.IStoreTransaction;
 
 import java.sql.Connection;
 

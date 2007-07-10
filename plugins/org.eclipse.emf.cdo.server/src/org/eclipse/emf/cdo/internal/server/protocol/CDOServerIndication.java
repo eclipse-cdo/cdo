@@ -15,12 +15,11 @@ import org.eclipse.emf.cdo.internal.server.ResourceManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
-import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.IStore;
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
-import org.eclipse.net4j.util.store.IStoreManager;
-import org.eclipse.net4j.util.store.StoreException;
+import org.eclipse.net4j.util.transaction.TX;
+import org.eclipse.net4j.util.transaction.TransactionException;
 
 /**
  * @author Eike Stepper
@@ -55,9 +54,9 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     return getRepository().getResourceManager();
   }
 
-  protected IStoreManager<ITransaction> getStoreManager()
+  protected IStore getStore()
   {
-    return getRepository().getStoreManager();
+    return getRepository().getStore();
   }
 
   protected Repository getRepository()
@@ -76,8 +75,19 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     return (CDOServerProtocol)super.getProtocol();
   }
 
-  protected void transact(Runnable runnable) throws StoreException
+  protected void transact(Runnable runnable) throws TransactionException
   {
-    StoreUtil.transact(getStoreManager(), runnable);
+    TX.begin(getStore().createTransaction());
+
+    try
+    {
+      runnable.run();
+      TX.commit();
+    }
+    catch (RuntimeException ex)
+    {
+      ex.printStackTrace();
+      TX.rollback();
+    }
   }
 }

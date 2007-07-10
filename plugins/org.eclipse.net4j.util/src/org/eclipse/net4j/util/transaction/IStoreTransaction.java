@@ -8,31 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.store;
+package org.eclipse.net4j.util.transaction;
 
 /**
  * @author Eike Stepper
  */
-public class StoreException extends RuntimeException
+public interface IStoreTransaction
 {
-  private static final long serialVersionUID = 1L;
-
-  public StoreException()
-  {
-  }
-
-  public StoreException(String message)
-  {
-    super(message);
-  }
-
-  public StoreException(Throwable cause)
-  {
-    super(cause);
-  }
-
-  public StoreException(String message, Throwable cause)
-  {
-    super(message, cause);
-  }
+  public IStoreManager<? extends IStoreTransaction> getStoreManager();
 }

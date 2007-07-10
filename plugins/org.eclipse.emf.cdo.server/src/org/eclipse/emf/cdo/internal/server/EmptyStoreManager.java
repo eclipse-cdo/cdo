@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.server.ITransaction;
 
-import org.eclipse.net4j.internal.util.store.StoreManager;
+import org.eclipse.net4j.internal.util.transaction.StoreManager;
 
 /**
  * @author Eike Stepper

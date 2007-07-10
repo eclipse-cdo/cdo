@@ -11,9 +11,9 @@
 package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.IDBStoreTransaction;
-import org.eclipse.net4j.internal.util.store.StoreTransaction;
-import org.eclipse.net4j.util.store.IStoreManager;
-import org.eclipse.net4j.util.store.IStoreTransaction;
+import org.eclipse.net4j.internal.util.transaction.StoreTransaction;
+import org.eclipse.net4j.util.transaction.IStoreManager;
+import org.eclipse.net4j.util.transaction.IStoreTransaction;
 
 import java.sql.Connection;
 

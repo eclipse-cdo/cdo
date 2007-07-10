@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.IRevisionManager;
-import org.eclipse.emf.cdo.server.StoreUtil;
 
 /**
  * @author Eike Stepper
@@ -37,8 +36,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   @Override
   public void addRevision(CDORevisionImpl revision)
   {
-    StoreUtil.getTransaction().addRevision(revision);
-    super.addRevision(revision);
+    repository.getStore().addRevision(this, revision);
     if (revision.isResource())
     {
       String path = (String)revision.getData().get(CDOPathFeatureImpl.INSTANCE, -1);
@@ -46,15 +44,20 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     }
   }
 
+  public void addRevisionToCache(CDORevisionImpl revision)
+  {
+    super.addRevision(revision);
+  }
+
   @Override
   protected CDORevisionImpl loadRevision(CDOID id)
   {
-    return StoreUtil.getTransaction().getRevision(id);
+    return repository.getStore().loadRevision(id);
   }
 
   @Override
   protected CDORevisionImpl loadRevision(CDOID id, long timeStamp)
   {
-    return StoreUtil.getTransaction().getRevision(id, timeStamp);
+    return repository.getStore().loadHistoricalRevision(id, timeStamp);
   }
 }

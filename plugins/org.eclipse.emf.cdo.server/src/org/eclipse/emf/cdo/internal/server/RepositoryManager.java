@@ -12,11 +12,10 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IRepositoryManager;
-import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.IStore;
 
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.store.IStoreManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,7 +63,7 @@ public final class RepositoryManager extends Lifecycle implements IRepositoryMan
     }
   }
 
-  public Repository addRepository(String name, IStoreManager<ITransaction> storeManager)
+  public Repository addRepository(String name, IStore store)
   {
     synchronized (repositories)
     {
@@ -73,7 +72,7 @@ public final class RepositoryManager extends Lifecycle implements IRepositoryMan
       {
         throw new RuntimeException("Repository already exists: " + name);
       }
-      repository = new Repository(name, storeManager);
+      repository = new Repository(name, store);
       LifecycleUtil.activate(repository);
       repositories.put(name, repository);
       return repository;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="org/eclipse/emf/cdo/server/ModelManager.java|org/eclipse/emf/cdo/server/Model.java|org/eclipse/emf/cdo/internal/server/ModelManagerImpl.java|org/eclipse/emf/cdo/internal/server/protocol/LoadResourcePathIndication.java|org/eclipse/emf/cdo/internal/server/protocol/AddModelsIndication.java" kind="src" path="src"/>
+	<classpathentry excluding="org/eclipse/emf/cdo/server/ModelManager.java|org/eclipse/emf/cdo/server/Model.java|org/eclipse/emf/cdo/internal/server/ModelManagerImpl.java|org/eclipse/emf/cdo/internal/server/protocol/LoadResourcePathIndication.java|org/eclipse/emf/cdo/internal/server/protocol/AddModelsIndication.java|org/eclipse/emf/cdo/server/ITransaction.java|org/eclipse/emf/cdo/server/StoreUtil.java|org/eclipse/emf/cdo/internal/server/EmptyStoreManager.java|org/eclipse/emf/cdo/internal/server/EmptyStoreTransaction.java" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="output" path="bin"/>

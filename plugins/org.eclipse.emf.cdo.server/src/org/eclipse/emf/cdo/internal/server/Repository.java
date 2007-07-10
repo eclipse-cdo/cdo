@@ -13,10 +13,9 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.IStore;
 
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.util.store.IStoreManager;
 
 import java.util.UUID;
 
@@ -29,6 +28,8 @@ public class Repository extends Lifecycle implements IRepository
 
   private String name;
 
+  private IStore store;
+
   private String uuid;
 
   private SessionManager sessionManager;
@@ -37,23 +38,26 @@ public class Repository extends Lifecycle implements IRepository
 
   private RevisionManager revisionManager;
 
-  private IStoreManager<ITransaction> storeManager;
-
   private long nextOIDValue = INITIAL_OID_VALUE;
 
-  public Repository(String name, IStoreManager<ITransaction> storeManager)
+  public Repository(String name, IStore store)
   {
     this.name = name;
+    this.store = store;
     this.uuid = UUID.randomUUID().toString();
     sessionManager = new SessionManager(this);
     resourceManager = new ResourceManager(this);
     revisionManager = new RevisionManager(this);
-    this.storeManager = storeManager;
   }
 
   public String getName()
   {
     return name;
+  }
+
+  public IStore getStore()
+  {
+    return store;
   }
 
   public String getUUID()
@@ -74,11 +78,6 @@ public class Repository extends Lifecycle implements IRepository
   public RevisionManager getRevisionManager()
   {
     return revisionManager;
-  }
-
-  public IStoreManager<ITransaction> getStoreManager()
-  {
-    return storeManager;
   }
 
   public CDOID getNextCDOID()

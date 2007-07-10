@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.store;
+package org.eclipse.net4j.util.transaction;
 
 /**
  * @author Eike Stepper

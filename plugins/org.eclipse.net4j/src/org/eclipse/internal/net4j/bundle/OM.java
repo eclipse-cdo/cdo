@@ -49,22 +49,19 @@ public final class OM
   {
   }
 
+  public static void stop() throws Exception
+  {
+    PluginTransportContainer.dispose();
+  }
+
   /**
    * @author Eike Stepper
    */
   public static final class Activator extends OSGiActivator
   {
-    @Override
-    protected OMBundle getOMBundle()
+    public Activator()
     {
-      return BUNDLE;
-    }
-
-    @Override
-    protected void stop() throws Exception
-    {
-      PluginTransportContainer.dispose();
-      super.stop();
+      super(BUNDLE);
     }
   }
 }

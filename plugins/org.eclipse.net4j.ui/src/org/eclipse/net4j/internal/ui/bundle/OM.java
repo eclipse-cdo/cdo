@@ -44,10 +44,9 @@ public final class OM
    */
   public static class Activator extends OSGiActivator
   {
-    @Override
-    protected OMBundle getOMBundle()
+    public Activator()
     {
-      return BUNDLE;
+      super(BUNDLE);
     }
   }
 }

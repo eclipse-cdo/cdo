@@ -36,43 +36,40 @@ public final class OM
   {
   }
 
+  public static void start() throws Exception
+  {
+    IRepositoryManager.INSTANCE.addRepository("repo1", new NOOPStore());
+    // Properties properties = BUNDLE.getConfigProperties();
+    // String repositories = properties.getProperty("repositories");
+    // if (repositories != null)
+    // {
+    // StringTokenizer tokenizer = new StringTokenizer(repositories, ",");
+    // while (tokenizer.hasMoreTokens())
+    // {
+    // String repositoryName = tokenizer.nextToken().trim();
+    // String storeType = properties.getProperty(repositoryName + ".type");
+    // IDBAdapter adapter = DBUtil.getDBAdapter("derby");
+    // DataSource dataSource = DBUtil.createDataSource(properties,
+    // repositoryName + ".dataSource");
+    // CDODBStoreManager storeManager = new CDODBStoreManager(adapter,
+    // dataSource);
+    // IRepositoryManager.INSTANCE.addRepository("repo1", storeManager);
+    // }
+    // }
+  }
+
+  public static void stop() throws Exception
+  {
+  }
+
   /**
    * @author Eike Stepper
    */
   public static class Activator extends OSGiActivator
   {
-    @Override
-    protected OMBundle getOMBundle()
+    public Activator()
     {
-      return BUNDLE;
-    }
-
-    @Override
-    protected void start() throws Exception
-    {
-      IRepositoryManager.INSTANCE.addRepository("repo1", new NOOPStore());
-      // Properties properties = BUNDLE.getConfigProperties();
-      // String repositories = properties.getProperty("repositories");
-      // if (repositories != null)
-      // {
-      // StringTokenizer tokenizer = new StringTokenizer(repositories, ",");
-      // while (tokenizer.hasMoreTokens())
-      // {
-      // String repositoryName = tokenizer.nextToken().trim();
-      // String storeType = properties.getProperty(repositoryName + ".type");
-      // IDBAdapter adapter = DBUtil.getDBAdapter("derby");
-      // DataSource dataSource = DBUtil.createDataSource(properties,
-      // repositoryName + ".dataSource");
-      // CDODBStoreManager storeManager = new CDODBStoreManager(adapter,
-      // dataSource);
-      // IRepositoryManager.INSTANCE.addRepository("repo1", storeManager);
-      // }
-      // }
-    }
-
-    @Override
-    protected void stop() throws Exception
-    {
+      super(BUNDLE);
     }
   }
 }

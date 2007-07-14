@@ -43,28 +43,28 @@ public final class OM
   {
   }
 
+  public static void start() throws Exception
+  {
+    RepositoryManager.INSTANCE.activate();
+  }
+
+  public static void stop() throws Exception
+  {
+    Exception exception = RepositoryManager.INSTANCE.deactivate();
+    if (exception != null)
+    {
+      LOG.warn(exception);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static final class Activator extends OSGiActivator
   {
-    @Override
-    protected OMBundle getOMBundle()
+    public Activator()
     {
-      return BUNDLE;
-    }
-
-    @Override
-    protected void start() throws Exception
-    {
-      RepositoryManager.INSTANCE.activate();
-    }
-
-    @Override
-    protected void stop() throws Exception
-    {
-      Exception exception = RepositoryManager.INSTANCE.deactivate();
-      if (exception != null)
-      {
-        LOG.warn(exception);
-      }
+      super(BUNDLE);
     }
   }
 }

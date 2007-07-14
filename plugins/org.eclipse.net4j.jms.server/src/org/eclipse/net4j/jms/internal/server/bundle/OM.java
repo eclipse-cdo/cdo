@@ -38,24 +38,24 @@ public final class OM
   {
   }
 
+  public static void start() throws Exception
+  {
+    Server.INSTANCE.activate();
+  }
+
+  public static void stop() throws Exception
+  {
+    Server.INSTANCE.deactivate();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static final class Activator extends OSGiActivator
   {
-    @Override
-    protected OMBundle getOMBundle()
+    public Activator()
     {
-      return BUNDLE;
-    }
-
-    @Override
-    protected void start() throws Exception
-    {
-      Server.INSTANCE.activate();
-    }
-
-    @Override
-    protected void stop() throws Exception
-    {
-      Server.INSTANCE.deactivate();
+      super(BUNDLE);
     }
   }
 }

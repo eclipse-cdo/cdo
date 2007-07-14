@@ -38,10 +38,9 @@ public final class JVM
    */
   public static class Activator extends OSGiActivator
   {
-    @Override
-    protected OMBundle getOMBundle()
+    public Activator()
     {
-      return BUNDLE;
+      super(BUNDLE);
     }
   }
 }

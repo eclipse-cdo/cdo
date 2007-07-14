@@ -23,6 +23,8 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.HashMap;
@@ -310,6 +312,16 @@ public abstract class AbstractOMBundle implements OMBundle
     return MessageFormat.format(getString(key, translate), args);
   }
 
+  public void start() throws Exception
+  {
+    invokeMethod("start");
+  }
+
+  public void stop() throws Exception
+  {
+    invokeMethod("stop");
+  }
+
   protected OMTracer createTracer(String name)
   {
     return new Tracer(this, name);
@@ -323,5 +335,33 @@ public abstract class AbstractOMBundle implements OMBundle
   protected String getConfigFileName()
   {
     return bundleID + ".properties";
+  }
+
+  private void invokeMethod(String name) throws Exception
+  {
+    Method method = accessor.getMethod(name, ReflectUtil.NO_PARAMETERS);
+    if (method != null)
+    {
+      try
+      {
+        method.invoke(null, ReflectUtil.NO_ARGUMENTS);
+      }
+      catch (InvocationTargetException ex)
+      {
+        Throwable targetException = ex.getTargetException();
+        if (targetException instanceof Exception)
+        {
+          throw (Exception)targetException;
+        }
+        else if (targetException instanceof Error)
+        {
+          throw (Error)targetException;
+        }
+        else
+        {
+          OM.LOG.error(targetException);
+        }
+      }
+    }
   }
 }

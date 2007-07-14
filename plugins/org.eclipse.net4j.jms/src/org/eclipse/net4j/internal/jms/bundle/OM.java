@@ -37,19 +37,19 @@ public final class OM
   {
   }
 
+  public static void start() throws Exception
+  {
+    JMSUtil.setTransportContainer(IPluginTransportContainer.INSTANCE);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static final class Activator extends OSGiActivator
   {
-    @Override
-    protected OMBundle getOMBundle()
+    public Activator()
     {
-      return BUNDLE;
-    }
-
-    @Override
-    protected void start() throws Exception
-    {
-      super.start();
-      JMSUtil.setTransportContainer(IPluginTransportContainer.INSTANCE);
+      super(BUNDLE);
     }
   }
 }

@@ -45,43 +45,44 @@ public final class OM
   {
   }
 
+  public static void start() throws Exception
+  {
+    IExtensionRegistry registry = Platform.getExtensionRegistry();
+    IConfigurationElement[] elements = registry.getConfigurationElementsFor(BUNDLE_ID, EXT_POINT);
+    for (final IConfigurationElement element : elements)
+    {
+      if ("dbAdapter".equals(element.getName()))
+      {
+        DBAdapterDescriptor descriptor = new DBAdapterDescriptor(element.getAttribute("name"))
+        {
+          @Override
+          public IDBAdapter createDBAdapter()
+          {
+            try
+            {
+              return (IDBAdapter)element.createExecutableExtension("class");
+            }
+            catch (CoreException ex)
+            {
+              OM.LOG.error(ex);
+              return null;
+            }
+          }
+        };
+
+        DBAdapterRegistry.INSTANCE.addDescriptor(descriptor);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static final class Activator extends OSGiActivator
   {
-    @Override
-    protected OMBundle getOMBundle()
+    public Activator()
     {
-      return BUNDLE;
-    }
-
-    @Override
-    protected void start() throws Exception
-    {
-      IExtensionRegistry registry = Platform.getExtensionRegistry();
-      IConfigurationElement[] elements = registry.getConfigurationElementsFor(BUNDLE_ID, EXT_POINT);
-      for (final IConfigurationElement element : elements)
-      {
-        if ("dbAdapter".equals(element.getName()))
-        {
-          DBAdapterDescriptor descriptor = new DBAdapterDescriptor(element.getAttribute("name"))
-          {
-            @Override
-            public IDBAdapter createDBAdapter()
-            {
-              try
-              {
-                return (IDBAdapter)element.createExecutableExtension("class");
-              }
-              catch (CoreException ex)
-              {
-                OM.LOG.error(ex);
-                return null;
-              }
-            }
-          };
-
-          DBAdapterRegistry.INSTANCE.addDescriptor(descriptor);
-        }
-      }
+      super(BUNDLE);
     }
   }
 }

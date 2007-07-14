@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om;
 
+import org.eclipse.net4j.internal.util.bundle.AbstractOMBundle;
 import org.eclipse.net4j.internal.util.bundle.OM;
 
 import org.osgi.framework.BundleActivator;
@@ -20,59 +21,69 @@ import org.osgi.framework.BundleContext;
  */
 public abstract class OSGiActivator implements BundleActivator
 {
-  public OSGiActivator()
+  private OMBundle omBundle;
+
+  public OSGiActivator(OMBundle omBundle)
   {
+    this.omBundle = omBundle;
+  }
+
+  public OMBundle getOMBundle()
+  {
+    return omBundle;
   }
 
   public final void start(BundleContext context) throws Exception
   {
+    OM.Activator.traceStart(context);
+    AbstractOMBundle bundle = (AbstractOMBundle)getOMBundle();
+    if (bundle == null)
+    {
+      throw new IllegalStateException("bundle == null");
+    }
+
     try
     {
-      getOMBundle().setBundleContext(context);
-      OM.Activator.traceStart(context);
-      start();
+      bundle.setBundleContext(context);
+      bundle.start();
     }
     catch (Error error)
     {
-      getOMBundle().logger().error(error);
+      bundle.logger().error(error);
       throw error;
     }
     catch (Exception ex)
     {
-      getOMBundle().logger().error(ex);
+      bundle.logger().error(ex);
       throw ex;
     }
   }
 
   public final void stop(BundleContext context) throws Exception
   {
+    OM.Activator.traceStop(context);
+    AbstractOMBundle bundle = (AbstractOMBundle)getOMBundle();
+    if (bundle == null)
+    {
+      throw new IllegalStateException("bundle == null");
+    }
+
     try
     {
-      OM.Activator.traceStop(context);
-      stop();
-      getOMBundle().setBundleContext(null);
+      bundle.stop();
+      bundle.setBundleContext(null);
     }
     catch (Error error)
     {
-      getOMBundle().logger().error(error);
+      bundle.logger().error(error);
       throw error;
     }
     catch (Exception ex)
     {
-      getOMBundle().logger().error(ex);
+      bundle.logger().error(ex);
       throw ex;
     }
   }
-
-  protected void start() throws Exception
-  {
-  }
-
-  protected void stop() throws Exception
-  {
-  }
-
-  protected abstract OMBundle getOMBundle();
 
   @Override
   protected final Object clone() throws CloneNotSupportedException

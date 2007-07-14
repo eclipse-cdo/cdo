@@ -13,20 +13,20 @@ import java.util.Date;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Purchase Order</b></em>'.
  * <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getDate <em>Date</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSupplier <em>Supplier</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getDate <em>Date</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSupplier <em>Supplier</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getPurchaseOrder()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface PurchaseOrder extends CDOObject
+public interface PurchaseOrder extends Order
 {
   /**
    * Returns the value of the '<em><b>Date</b></em>' attribute. <!--
@@ -46,11 +46,9 @@ public interface PurchaseOrder extends CDOObject
   Date getDate();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getDate <em>Date</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Date</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getDate <em>Date</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Date</em>' attribute.
    * @see #getDate()
    * @generated
    */
@@ -74,11 +72,9 @@ public interface PurchaseOrder extends CDOObject
   Supplier getSupplier();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSupplier <em>Supplier</em>}'
-   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Supplier</em>' reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSupplier <em>Supplier</em>}' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Supplier</em>' reference.
    * @see #getSupplier()
    * @generated
    */

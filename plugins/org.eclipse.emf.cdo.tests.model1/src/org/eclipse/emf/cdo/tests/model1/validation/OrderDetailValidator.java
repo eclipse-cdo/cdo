@@ -6,6 +6,7 @@
  */
 package org.eclipse.emf.cdo.tests.model1.validation;
 
+import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.Product;
 
 /**
@@ -19,6 +20,8 @@ import org.eclipse.emf.cdo.tests.model1.Product;
 public interface OrderDetailValidator
 {
   boolean validate();
+
+  boolean validateOrder(Order value);
 
   boolean validateProduct(Product value);
 

@@ -13,23 +13,23 @@ package org.eclipse.emf.internal.cdo.util;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.protocol.bundle.CDOProtocol;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.core.CDOCorePackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.core.CDOObjectClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOContentsFeatureImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOPathFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOResourceClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOResourcePackageImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
@@ -45,7 +45,7 @@ import java.util.List;
  */
 public final class EMFUtil
 {
-  private static final CDOPackageManagerImpl PACKAGE_MANAGER = CDOPackageManagerImpl.INSTANCE;
+  public static final CDOPackageManagerImpl PACKAGE_MANAGER = new CDOPackageManagerImpl();
 
   @SuppressWarnings("unused")
   private static final ContextTracer TRACER = new ContextTracer(CDOProtocol.DEBUG_MODEL, EMFUtil.class);
@@ -80,10 +80,10 @@ public final class EMFUtil
     return result;
   }
 
-  public static List<EStructuralFeature> getPersistentFeatures(EClass eClass)
+  public static List<EStructuralFeature> getPersistentFeatures(EList<EStructuralFeature> eFeatues)
   {
     List<EStructuralFeature> result = new ArrayList();
-    for (EStructuralFeature feature : eClass.getEStructuralFeatures())
+    for (EStructuralFeature feature : eFeatues)
     {
       if (!feature.isTransient())
       {
@@ -152,28 +152,28 @@ public final class EMFUtil
     return CDOTypeImpl.STRING;
   }
 
-  public static CDOPackageImpl getCDOPackage(EPackage ePackage)
+  public static CDOPackageImpl getCDOPackage(EPackage ePackage, CDOPackageManagerImpl packageManager)
   {
     String packageURI = ePackage.getNsURI();
-    CDOPackageImpl cdoPackage = PACKAGE_MANAGER.lookupPackage(packageURI);
+    CDOPackageImpl cdoPackage = packageManager.lookupPackage(packageURI);
     if (cdoPackage == null)
     {
-      cdoPackage = convertPackage(ePackage);
-      PACKAGE_MANAGER.addPackage(cdoPackage);
+      cdoPackage = convertPackage(ePackage, packageManager);
+      packageManager.addPackage(cdoPackage);
     }
 
     return cdoPackage;
   }
 
-  public static CDOClassImpl getCDOClass(EClass eClass)
+  public static CDOClassImpl getCDOClass(EClass eClass, CDOPackageManagerImpl packageManager)
   {
-    CDOPackageImpl cdoPackage = getCDOPackage(eClass.getEPackage());
+    CDOPackageImpl cdoPackage = getCDOPackage(eClass.getEPackage(), packageManager);
     return cdoPackage.lookupClass(eClass.getClassifierID());
   }
 
-  public static CDOFeatureImpl getCDOFeature(EStructuralFeature eFeature)
+  public static CDOFeatureImpl getCDOFeature(EStructuralFeature eFeature, CDOPackageManagerImpl packageManager)
   {
-    CDOClassImpl cdoClass = getCDOClass(eFeature.getEContainingClass());
+    CDOClassImpl cdoClass = getCDOClass(eFeature.getEContainingClass(), packageManager);
     return cdoClass.lookupFeature(eFeature.getFeatureID());
   }
 
@@ -192,74 +192,89 @@ public final class EMFUtil
     return (EStructuralFeature)cdoFeature.getClientInfo();
   }
 
-  public static void addModelInfos()
+  public static void addModelInfos(CDOPackageManagerImpl packageManager)
   {
     // Ecore
-    CDOCorePackageImpl.INSTANCE.setClientInfo(EcorePackage.eINSTANCE);
-    CDOObjectClassImpl.INSTANCE.setClientInfo(EcorePackage.eINSTANCE.getEObject());
+    CDOCorePackageImpl corePackage = packageManager.getCDOCorePackage();
+    corePackage.setClientInfo(EcorePackage.eINSTANCE);
+    corePackage.getCDOObjectClass().setClientInfo(EcorePackage.eINSTANCE.getEObject());
 
     // Eresource
-    CDOResourcePackageImpl.INSTANCE.setClientInfo(EresourcePackage.eINSTANCE);
-    CDOResourceClassImpl.INSTANCE.setClientInfo(EresourcePackage.eINSTANCE.getCDOResource());
-    CDOContentsFeatureImpl.INSTANCE.setClientInfo(EresourcePackage.eINSTANCE.getCDOResource_Contents());
-    CDOPathFeatureImpl.INSTANCE.setClientInfo(EresourcePackage.eINSTANCE.getCDOResource_Path());
+    CDOResourcePackageImpl resourcePackage = packageManager.getCDOResourcePackage();
+    resourcePackage.setClientInfo(EresourcePackage.eINSTANCE);
+    CDOResourceClassImpl resourceClass = resourcePackage.getCDOResourceClass();
+    resourceClass.setClientInfo(EresourcePackage.eINSTANCE.getCDOResource());
+    resourceClass.getCDOContentsFeature().setClientInfo(EresourcePackage.eINSTANCE.getCDOResource_Contents());
+    resourceClass.getCDOPathFeature().setClientInfo(EresourcePackage.eINSTANCE.getCDOResource_Path());
   }
 
-  public static void removeModelInfos()
+  public static void removeModelInfos(CDOPackageManagerImpl packageManager)
   {
     // Ecore
-    CDOCorePackageImpl.INSTANCE.setClientInfo(null);
-    CDOObjectClassImpl.INSTANCE.setClientInfo(null);
+    CDOCorePackageImpl corePackage = packageManager.getCDOCorePackage();
+    corePackage.setClientInfo(null);
+    corePackage.getCDOObjectClass().setClientInfo(null);
 
     // Eresource
-    CDOResourcePackageImpl.INSTANCE.setClientInfo(null);
-    CDOResourceClassImpl.INSTANCE.setClientInfo(null);
-    CDOContentsFeatureImpl.INSTANCE.setClientInfo(null);
-    CDOPathFeatureImpl.INSTANCE.setClientInfo(null);
+    CDOResourcePackageImpl resourcePackage = packageManager.getCDOResourcePackage();
+    resourcePackage.setClientInfo(null);
+    CDOResourceClassImpl resourceClass = resourcePackage.getCDOResourceClass();
+    resourceClass.setClientInfo(null);
+    resourceClass.getCDOContentsFeature().setClientInfo(null);
+    resourceClass.getCDOPathFeature().setClientInfo(null);
   }
 
-  private static CDOPackageImpl convertPackage(EPackage ePackage)
+  private static CDOPackageImpl convertPackage(EPackage ePackage, CDOPackageManagerImpl packageManager)
   {
-    CDOPackageImpl cdoPackage = new CDOPackageImpl(ePackage.getNsURI(), ePackage.getName());
+    CDOPackageImpl cdoPackage = new CDOPackageImpl(packageManager, ePackage.getNsURI(), ePackage.getName());
     cdoPackage.setClientInfo(ePackage);
     for (EClass eClass : getPersistentClasses(ePackage))
     {
-      CDOClassImpl cdoClass = convertClass(eClass);
+      CDOClassImpl cdoClass = convertClass(eClass, packageManager);
       cdoPackage.addClass(cdoClass);
     }
 
     return cdoPackage;
   }
 
-  private static CDOClassImpl convertClass(EClass eClass)
+  private static CDOClassImpl convertClass(EClass eClass, CDOPackageManagerImpl packageManager)
   {
     CDOClassImpl cdoClass = new CDOClassImpl(eClass.getClassifierID(), eClass.getName(), eClass.isAbstract());
     cdoClass.setClientInfo(eClass);
-    for (EStructuralFeature eFeature : getPersistentFeatures(eClass))
+
+    for (EClass superEClass : eClass.getESuperTypes())
     {
-      CDOFeatureImpl cdoFeature = convertFeature(eFeature);
+      CDOClassRefImpl classRef = createClassRef(superEClass);
+      cdoClass.addSuperType(classRef);
+    }
+
+    for (EStructuralFeature eFeature : getPersistentFeatures(eClass.getEStructuralFeatures()))
+    {
+      CDOFeatureImpl cdoFeature = convertFeature(eFeature, packageManager);
       cdoClass.addFeature(cdoFeature);
     }
 
+    initAllSuperTypes(cdoClass, packageManager);
+    initAllFeatures(cdoClass, packageManager);
     return cdoClass;
   }
 
-  private static CDOFeatureImpl convertFeature(EStructuralFeature eFeature)
+  private static CDOFeatureImpl convertFeature(EStructuralFeature eFeature, CDOPackageManagerImpl packageManager)
   {
-    CDOFeatureImpl cdoFeature = // 
-    isReference(eFeature) ? convertReference(eFeature) : convertAttribute(eFeature);
+    CDOFeatureImpl cdoFeature = isReference(eFeature) ? convertReference(eFeature, packageManager)
+        : convertAttribute(eFeature);
     cdoFeature.setClientInfo(eFeature);
     return cdoFeature;
   }
 
-  private static CDOFeatureImpl convertReference(EStructuralFeature eFeature)
+  private static CDOFeatureImpl convertReference(EStructuralFeature eFeature, CDOPackageManagerImpl packageManager)
   {
     int featureID = eFeature.getFeatureID();
     String name = eFeature.getName();
     CDOClassRefImpl classRef = createClassRef(eFeature.getEType());
     boolean many = eFeature.isMany();
     boolean containment = isContainment(eFeature);
-    return new CDOFeatureImpl(featureID, name, classRef, many, containment);
+    return new CDOFeatureImpl(featureID, name, new CDOClassProxy(classRef, packageManager), many, containment);
   }
 
   private static CDOFeatureImpl convertAttribute(EStructuralFeature eFeature)
@@ -269,6 +284,43 @@ public final class EMFUtil
     CDOTypeImpl type = getCDOType(eFeature);
     boolean many = isMany(eFeature);
     return new CDOFeatureImpl(featureID, name, type, many);
+  }
+
+  private static void initAllSuperTypes(CDOClassImpl cdoClass, CDOPackageManagerImpl packageManager)
+  {
+    EClass eClass = getEClass(cdoClass);
+    EList<EClass> eClasses = eClass.getEAllSuperTypes();
+    CDOClassImpl[] allSuperTypes = new CDOClassImpl[eClasses.size()];
+
+    int i = 0;
+    for (EClass superEClass : eClasses)
+    {
+      CDOClassImpl superType = getCDOClass(superEClass, packageManager);
+      allSuperTypes[i++] = superType;
+    }
+
+    cdoClass.setAllSuperTypes(allSuperTypes);
+  }
+
+  private static void initAllFeatures(CDOClassImpl cdoClass, CDOPackageManagerImpl packageManager)
+  {
+    EClass eClass = getEClass(cdoClass);
+    List<EStructuralFeature> eFeatures = getPersistentFeatures(eClass.getEAllStructuralFeatures());
+    CDOFeatureImpl[] allFeatures = new CDOFeatureImpl[eFeatures.size()];
+
+    int i = 0;
+    for (EStructuralFeature eFeature : eFeatures)
+    {
+      CDOFeatureImpl cdoFeature = getCDOFeature(eFeature, packageManager);
+      if (cdoFeature.getFeatureID() != i)
+      {
+        throw new ImplementationError("Wrong featureID: " + cdoFeature);
+      }
+
+      allFeatures[i++] = cdoFeature;
+    }
+
+    cdoClass.setAllFeatures(allFeatures);
   }
 
   // public static List<Change> analyzeListDifferences(CDORevisionImpl

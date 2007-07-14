@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 
 /**
  * @author Eike Stepper
@@ -21,6 +22,8 @@ public interface IRepository
   public IStore getStore();
 
   public String getUUID();
+
+  public CDOPackageManager getPackageManager();
 
   public ISessionManager getSessionManager();
 

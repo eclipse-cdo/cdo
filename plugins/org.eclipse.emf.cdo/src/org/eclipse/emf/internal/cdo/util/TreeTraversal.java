@@ -15,7 +15,7 @@ public class TreeTraversal
 {
   private CDOObjectImpl root;
 
-  private List<CDOObjectImpl> objects = new ArrayList();
+  private List<CDOObjectImpl> objects = new ArrayList(0);
 
   public TreeTraversal(CDOObjectImpl root)
   {

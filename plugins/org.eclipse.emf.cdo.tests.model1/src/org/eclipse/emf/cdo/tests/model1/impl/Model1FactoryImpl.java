@@ -6,6 +6,7 @@
  */
 package org.eclipse.emf.cdo.tests.model1.impl;
 
+import org.eclipse.emf.cdo.tests.model1.*;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -26,23 +27,21 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!--
  * end-user-doc -->
- * 
  * @generated
  */
 public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!--
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   public static Model1Factory init()
   {
     try
     {
-      Model1Factory theModel1Factory = (Model1Factory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/model1/1.0.0");
+      Model1Factory theModel1Factory = (Model1Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/emf/CDO/tests/model1/1.0.0"); 
       if (theModel1Factory != null)
       {
         return theModel1Factory;
@@ -56,9 +55,9 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!--
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   public Model1FactoryImpl()
@@ -68,7 +67,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -76,30 +74,34 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   {
     switch (eClass.getClassifierID())
     {
-    case Model1Package.SUPPLIER:
-      return (EObject)createSupplier();
-    case Model1Package.PURCHASE_ORDER:
-      return (EObject)createPurchaseOrder();
-    case Model1Package.ORDER_DETAIL:
-      return (EObject)createOrderDetail();
-    case Model1Package.PRODUCT:
-      return (EObject)createProduct();
-    case Model1Package.CATEGORY:
-      return (EObject)createCategory();
-    case Model1Package.COMPANY:
-      return (EObject)createCompany();
-    case Model1Package.CUSTOMER:
-      return (EObject)createCustomer();
-    case Model1Package.SALES_ORDER:
-      return (EObject)createSalesOrder();
-    default:
-      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+      case Model1Package.ADDRESS: return (EObject)createAddress();
+      case Model1Package.COMPANY: return (EObject)createCompany();
+      case Model1Package.SUPPLIER: return (EObject)createSupplier();
+      case Model1Package.CUSTOMER: return (EObject)createCustomer();
+      case Model1Package.ORDER: return (EObject)createOrder();
+      case Model1Package.ORDER_DETAIL: return (EObject)createOrderDetail();
+      case Model1Package.PURCHASE_ORDER: return (EObject)createPurchaseOrder();
+      case Model1Package.SALES_ORDER: return (EObject)createSalesOrder();
+      case Model1Package.CATEGORY: return (EObject)createCategory();
+      case Model1Package.PRODUCT: return (EObject)createProduct();
+      default:
+        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Address createAddress()
+  {
+    AddressImpl address = new AddressImpl();
+    return address;
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Supplier createSupplier()
@@ -110,7 +112,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public PurchaseOrder createPurchaseOrder()
@@ -121,7 +122,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public OrderDetail createOrderDetail()
@@ -132,7 +132,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Product createProduct()
@@ -143,7 +142,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Category createCategory()
@@ -154,7 +152,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Company createCompany()
@@ -165,7 +162,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Customer createCustomer()
@@ -175,8 +171,18 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Order createOrder()
+  {
+    OrderImpl order = new OrderImpl();
+    return order;
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public SalesOrder createSalesOrder()
@@ -187,7 +193,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Model1Package getModel1Package()
@@ -197,7 +202,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

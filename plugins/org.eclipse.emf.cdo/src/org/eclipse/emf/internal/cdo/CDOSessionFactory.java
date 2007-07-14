@@ -35,7 +35,7 @@ public class CDOSessionFactory extends Factory<CDOSession>
 
   public CDOSession create(String description)
   {
-    CDOSessionImpl session = new CDOSessionImpl();
+    CDOSessionImpl session = new CDOSessionImpl(null);
     session.setRepositoryName(getRepositoryName(description));
     return session;
   }

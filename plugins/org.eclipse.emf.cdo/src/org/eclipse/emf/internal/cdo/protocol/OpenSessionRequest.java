@@ -22,6 +22,8 @@ import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -82,6 +84,19 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
       PROTOCOL.format("Read repositoryUUID: {0}", repositoryUUID);
     }
 
-    return new OpenSessionResult(sessionID, repositoryUUID);
+    Set<String> packageURIs = new HashSet();
+    int size = in.readInt();
+    for (int i = 0; i < size; i++)
+    {
+      String packageURI = in.readString();
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Read package URI: {0}", packageURI);
+      }
+
+      packageURIs.add(packageURI);
+    }
+
+    return new OpenSessionResult(sessionID, repositoryUUID, packageURIs);
   }
 }

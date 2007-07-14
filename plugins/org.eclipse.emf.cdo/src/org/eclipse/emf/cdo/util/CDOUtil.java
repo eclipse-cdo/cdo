@@ -10,14 +10,15 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 
 import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.IConnector;
@@ -27,6 +28,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -40,17 +42,26 @@ import java.util.Map;
  */
 public final class CDOUtil
 {
+  public static final CDOPackageManager PACKAGE_MANAGER = EMFUtil.PACKAGE_MANAGER;
+
   private CDOUtil()
   {
   }
 
-  public static CDOSession openSession(IConnector connector, String repositoryName) throws ConnectorException
+  @Deprecated
+  public static CDOSession openSession(IConnector connector, String repositoryName, EPackage.Registry ePackageRegistry)
+      throws ConnectorException
   {
-    CDOSessionImpl session = new CDOSessionImpl();
+    CDOSessionImpl session = new CDOSessionImpl(ePackageRegistry);
     session.setConnector(connector);
     session.setRepositoryName(repositoryName);
     LifecycleUtil.activate(session);
     return session;
+  }
+
+  public static CDOSession openSession(IConnector connector, String repositoryName) throws ConnectorException
+  {
+    return openSession(connector, repositoryName, null);
   }
 
   public static CDOView getView(ResourceSet resourceSet)

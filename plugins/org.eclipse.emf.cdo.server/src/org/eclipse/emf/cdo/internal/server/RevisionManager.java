@@ -23,9 +23,12 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
 {
   private Repository repository;
 
+  private CDOPathFeatureImpl cdoPathFeature;
+
   public RevisionManager(Repository repository)
   {
     this.repository = repository;
+    cdoPathFeature = repository.getPackageManager().getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
   }
 
   public Repository getRepository()
@@ -39,7 +42,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     repository.getStore().addRevision(this, revision);
     if (revision.isResource())
     {
-      String path = (String)revision.getData().get(CDOPathFeatureImpl.INSTANCE, -1);
+      String path = (String)revision.getData().get(cdoPathFeature, -1);
       repository.getResourceManager().registerResource(revision.getID(), path);
     }
   }

@@ -6,6 +6,9 @@
  */
 package org.eclipse.emf.cdo.tests.model1.validation;
 
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.common.util.EList;
+
 /**
  * A sample validator interface for
  * {@link org.eclipse.emf.cdo.tests.model1.Supplier}. This doesn't really do
@@ -17,6 +20,8 @@ package org.eclipse.emf.cdo.tests.model1.validation;
 public interface SupplierValidator
 {
   boolean validate();
+
+  boolean validatePurchaseOrders(EList<PurchaseOrder> value);
 
   boolean validateName(String value);
 }

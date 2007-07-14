@@ -60,7 +60,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
 
   public CDOClassImpl cdoClass()
   {
-    return EMFUtil.getCDOClass(eClass());
+    return EMFUtil.getCDOClass(eClass(), cdoView().getSession().getPackageManager());
   }
 
   public CDOID cdoID()
@@ -127,11 +127,11 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     }
   }
 
-  void setAdapter(CDOViewImpl adapter)
+  void setAdapter(CDOViewImpl view)
   {
     if (this instanceof CDOResourceImpl)
     {
-      ((CDOResourceImpl)this).cdoSetView(adapter);
+      ((CDOResourceImpl)this).cdoSetView(view);
     }
   }
 
@@ -207,7 +207,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
       TRACER.format("Finalizing revision for {0}", this);
     }
 
-    CDOViewImpl adapter = cdoView();
+    CDOViewImpl view = cdoView();
     revision.setVersion(1);
     revision.setContainerID(eContainer == null ? CDOID.NULL : ((CDOObjectImpl)eContainer).cdoID());
     revision.setContainingFeature(eContainerFeatureID);
@@ -222,17 +222,17 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
           EStructuralFeature eFeature = eDynamicFeature(i);
           if (!eFeature.isTransient())
           {
-            finalizeRevisionFeature(adapter, revision, i, setting, eFeature);
+            finalizeRevisionFeature(view, revision, i, setting, eFeature);
           }
         }
       }
     }
   }
 
-  private void finalizeRevisionFeature(CDOViewImpl adapter, CDORevisionImpl revision, int i, Object setting,
+  private void finalizeRevisionFeature(CDOViewImpl view, CDORevisionImpl revision, int i, Object setting,
       EStructuralFeature eFeature)
   {
-    CDOFeatureImpl cdoFeature = EMFUtil.getCDOFeature(eFeature);
+    CDOFeatureImpl cdoFeature = EMFUtil.getCDOFeature(eFeature, cdoView().getSession().getPackageManager());
     if (TRACER.isEnabled())
     {
       TRACER.format("Finalizing feature {0}", cdoFeature);
@@ -247,7 +247,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
       {
         if (isReference)
         {
-          value = CDOStore.convertToID(adapter, value);
+          value = CDOStore.convertToID(view, value);
         }
 
         revision.add(cdoFeature, index++, value);
@@ -257,7 +257,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     {
       if (isReference)
       {
-        setting = CDOStore.convertToID(adapter, setting);
+        setting = CDOStore.convertToID(view, setting);
       }
 
       revision.set(cdoFeature, 0, setting);

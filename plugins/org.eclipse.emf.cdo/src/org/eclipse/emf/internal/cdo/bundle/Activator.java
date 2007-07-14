@@ -48,7 +48,7 @@ public final class Activator extends EMFPlugin
     {
       super.start(context);
       CDO.BUNDLE.setBundleContext(context);
-      EMFUtil.addModelInfos();
+      EMFUtil.addModelInfos(EMFUtil.PACKAGE_MANAGER);
       IExtensionRegistry registry = Platform.getExtensionRegistry();
       IConfigurationElement[] elements = registry.getConfigurationElementsFor(CDO.BUNDLE_ID,
           CDO.PERSISTENT_PACKAGE_EXT_POINT);
@@ -59,7 +59,7 @@ public final class Activator extends EMFPlugin
         EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(uri);
         if (ePackage != null)
         {
-          EMFUtil.getCDOPackage(ePackage);
+          EMFUtil.getCDOPackage(ePackage, EMFUtil.PACKAGE_MANAGER);
         }
         else
         {
@@ -75,8 +75,7 @@ public final class Activator extends EMFPlugin
     {
       IExtensionRegistry registry = Platform.getExtensionRegistry();
       registry.removeRegistryChangeListener(this);
-      // TODO Clear CDOPackageManager
-      EMFUtil.removeModelInfos();
+      EMFUtil.removeModelInfos(EMFUtil.PACKAGE_MANAGER);
       plugin = null;
       CDO.BUNDLE.setBundleContext(null);
       super.stop(context);

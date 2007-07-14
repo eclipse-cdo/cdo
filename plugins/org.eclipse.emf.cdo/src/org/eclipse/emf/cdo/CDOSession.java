@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
+import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
+
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.util.container.IContainer;
 
@@ -30,6 +32,8 @@ public interface CDOSession extends IContainer<CDOView>
 
   public String getRepositoryUUID();
 
+  public CDOPackageManager getPackageManager();
+
   public CDORevisionManager getRevisionManager();
 
   public CDOView[] getViews();
@@ -39,6 +43,12 @@ public interface CDOSession extends IContainer<CDOView>
   public CDOView openView(ResourceSet resourceSet, boolean readOnly);
 
   public CDOView openView(ResourceSet resourceSet);
+
+  public CDOView openView(long timeStamp);
+
+  public CDOView openView(boolean readOnly);
+
+  public CDOView openView();
 
   public void close();
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="org/eclipse/emf/internal/cdo/CDOModelManagerImpl.java|org/eclipse/emf/cdo/CDOResource.java|org/eclipse/emf/cdo/CDOLocal.java|org/eclipse/emf/internal/cdo/CDOLocalInternal.java|org/eclipse/emf/internal/cdo/util/ResourceUtil.java|org/eclipse/emf/internal/cdo/util/TransientStore.java|org/eclipse/emf/cdo/CDOResourceManager.java|org/eclipse/emf/internal/cdo/CDOResourceManagerImpl.java|org/eclipse/emf/internal/cdo/protocol/LoadResourcePathRequest.java|org/eclipse/emf/internal/cdo/protocol/AddModelsRequest.java|org/eclipse/emf/internal/cdo/CDOResourceImpl.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="output" path="bin"/>

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.bundle.CDOProtocol;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -96,10 +97,11 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   private CDORevisionImpl[] readRevisions(ExtendedDataInputStream in, int size) throws IOException
   {
+    CDOPackageManagerImpl packageManager = getRepository().getPackageManager();
     CDORevisionImpl[] revisions = new CDORevisionImpl[size];
     for (int i = 0; i < size; i++)
     {
-      revisions[i] = new CDORevisionImpl(in);
+      revisions[i] = new CDORevisionImpl(packageManager, in);
       mapTemporaryID(revisions[i]);
     }
 

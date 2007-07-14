@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.views.CDOEventHandler;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
-import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.ui.actions.LongRunningAction;
@@ -1980,7 +1979,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   private boolean populateManager(MenuManager menuManager)
   {
     boolean populated = false;
-    CDOPackage[] cdoPackages = CDOPackageManager.INSTANCE.getPackages();
+    CDOPackage[] cdoPackages = view.getSession().getPackageManager().getPackages();
     for (CDOPackage cdoPackage : cdoPackages)
     {
       CDOClass[] cdoClasses = cdoPackage.getConcreteClasses();

@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
@@ -19,10 +21,13 @@ public final class OpenSessionResult
 
   private String repositoryUUID;
 
-  public OpenSessionResult(int sessionID, String repositoryUUID)
+  private Set<String> packageURIs;
+
+  public OpenSessionResult(int sessionID, String repositoryUUID, Set<String> packageURIs)
   {
     this.sessionID = sessionID;
     this.repositoryUUID = repositoryUUID;
+    this.packageURIs = packageURIs;
   }
 
   public int getSessionID()
@@ -33,5 +38,10 @@ public final class OpenSessionResult
   public String getRepositoryUUID()
   {
     return repositoryUUID;
+  }
+
+  public Set<String> getPackageURIs()
+  {
+    return packageURIs;
   }
 }

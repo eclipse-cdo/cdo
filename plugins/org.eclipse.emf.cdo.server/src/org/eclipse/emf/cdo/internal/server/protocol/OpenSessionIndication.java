@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.internal.server.RepositoryManager;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 
@@ -88,6 +90,7 @@ public class OpenSessionIndication extends IndicationWithResponse
     serverProtocol.setSession(session);
     writeSessionID(out, session);
     writeRepositoryUUID(out, repository);
+    writePackageURIs(out, repository.getPackageManager());
   }
 
   private void writeSessionID(ExtendedDataOutputStream out, ISession session) throws IOException
@@ -108,5 +111,20 @@ public class OpenSessionIndication extends IndicationWithResponse
     }
 
     out.writeString(repository.getUUID());
+  }
+
+  private void writePackageURIs(ExtendedDataOutputStream out, CDOPackageManager packageManager) throws IOException
+  {
+    CDOPackage[] packages = packageManager.getPackages();
+    out.writeInt(packages.length);
+    for (CDOPackage p : packages)
+    {
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Writing package URI: {0}", p.getPackageURI());
+      }
+
+      out.writeString(p.getPackageURI());
+    }
   }
 }

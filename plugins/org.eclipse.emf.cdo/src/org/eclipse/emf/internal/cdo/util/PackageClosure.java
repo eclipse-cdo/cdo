@@ -29,13 +29,17 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * TODO Handle generic types and type parameters
+ * 
  * @author Eike Stepper
  */
-public final class LinearPackageHull
+public final class PackageClosure
 {
-  private static final ContextTracer TRACER = new ContextTracer(CDOProtocol.DEBUG_MODEL, LinearPackageHull.class);
+  private static final ContextTracer TRACER = new ContextTracer(CDOProtocol.DEBUG_MODEL, PackageClosure.class);
 
-  private LinearPackageHull()
+  private static final Set<EPackage> EMPTY_CLOSURE = Collections.emptySet();
+
+  private PackageClosure()
   {
   }
 
@@ -44,20 +48,20 @@ public final class LinearPackageHull
     // Optimize no packages
     if (ePackages.isEmpty())
     {
-      return Collections.EMPTY_SET;
+      return EMPTY_CLOSURE;
     }
 
     // Optimize 1 package
     if (ePackages.size() == 1)
     {
-      return LinearPackageHull.calculate(ePackages.iterator().next());
+      return calculate(ePackages.iterator().next());
     }
 
     // Handle >1 packages
     Set<EPackage> result = new HashSet();
     for (EPackage ePackage : ePackages)
     {
-      Set<EPackage> packages = LinearPackageHull.calculate(ePackage);
+      Set<EPackage> packages = calculate(ePackage);
       result.addAll(packages);
     }
 
@@ -71,7 +75,7 @@ public final class LinearPackageHull
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Linear package hull for " + ePackage.getNsURI());
+      TRACER.trace("Package closure for " + ePackage.getNsURI());
     }
 
     Set<EClass> visited = new HashSet();
@@ -170,5 +174,4 @@ public final class LinearPackageHull
       handleEClassifier(superType, visited);
     }
   }
-
 }

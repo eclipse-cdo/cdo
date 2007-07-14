@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -31,11 +32,15 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.internal.cdo.bundle.CDO;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
+import org.eclipse.emf.internal.cdo.util.EMFUtil;
 
 import java.text.MessageFormat;
 import java.util.Collection;
@@ -60,6 +65,12 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   private String repositoryUUID;
 
+  private Set<String> packageURIs;
+
+  private EPackage.Registry ePackageRegistry;
+
+  private CDOPackageManagerImpl packageManager;
+
   private CDORevisionManagerImpl revisionManager;
 
   private Map<ResourceSet, CDOViewImpl> views = new HashMap();
@@ -75,8 +86,19 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     }
   };
 
-  public CDOSessionImpl()
+  public CDOSessionImpl(EPackage.Registry ePackageRegistry)
   {
+    if (ePackageRegistry == null)
+    {
+      ePackageRegistry = EPackage.Registry.INSTANCE;
+      packageManager = EMFUtil.PACKAGE_MANAGER;
+    }
+    else
+    {
+      this.ePackageRegistry = ePackageRegistry;
+      packageManager = new CDOPackageManagerImpl();
+    }
+
     revisionManager = new CDORevisionManagerImpl(this);
   }
 
@@ -128,6 +150,11 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     return repositoryUUID;
   }
 
+  public Set<String> getPackageURIs()
+  {
+    return packageURIs;
+  }
+
   public boolean isOpen()
   {
     return channel != null;
@@ -136,6 +163,16 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
   public void close()
   {
     deactivate();
+  }
+
+  public EPackage.Registry getEPackageRegistry()
+  {
+    return ePackageRegistry;
+  }
+
+  public CDOPackageManagerImpl getPackageManager()
+  {
+    return packageManager;
   }
 
   public CDORevisionManagerImpl getRevisionManager()
@@ -158,6 +195,21 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
   {
     prepare(resourceSet);
     return attach(resourceSet, new CDOViewImpl(++lastViewID, this, timeStamp));
+  }
+
+  public CDOView openView(boolean readOnly)
+  {
+    return openView(createResourceSet(), readOnly);
+  }
+
+  public CDOView openView(long timeStamp)
+  {
+    return openView(createResourceSet(), timeStamp);
+  }
+
+  public CDOView openView()
+  {
+    return openView(createResourceSet());
   }
 
   public CDOViewImpl[] getViews()
@@ -241,6 +293,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     OpenSessionResult result = request.send();
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
+    packageURIs = result.getPackageURIs();
   }
 
   @Override
@@ -259,14 +312,20 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     super.doDeactivate();
   }
 
+  private ResourceSet createResourceSet()
+  {
+    return new ResourceSetImpl();
+  }
+
   private void prepare(ResourceSet resourceSet)
   {
     CDOView view = CDOUtil.getView(resourceSet);
     if (view != null)
     {
-      throw new IllegalStateException("CDO view already present: " + view);
+      throw new IllegalStateException("CDO view already open: " + view);
     }
 
+    resourceSet.setPackageRegistry(new EPackageRegistryImpl(ePackageRegistry));
     CDOUtil.addResourceFactory(resourceSet);
   }
 

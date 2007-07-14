@@ -12,8 +12,8 @@ package org.eclipse.net4j.stream;
 
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferHandler;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.HexUtil;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 

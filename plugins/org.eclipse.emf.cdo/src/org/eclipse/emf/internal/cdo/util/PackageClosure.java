@@ -12,7 +12,7 @@ package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.internal.protocol.bundle.CDOProtocol;
 
-import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;

@@ -15,8 +15,8 @@ import org.eclipse.net4j.internal.jms.MessageImpl;
 import org.eclipse.net4j.internal.jms.util.MessageUtil;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
-import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
 import java.util.List;

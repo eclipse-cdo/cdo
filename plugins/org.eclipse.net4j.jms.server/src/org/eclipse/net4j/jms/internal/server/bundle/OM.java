@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.jms.internal.server.bundle;
 
-import org.eclipse.net4j.internal.util.om.OSGiActivator;
 import org.eclipse.net4j.jms.internal.server.Server;
 import org.eclipse.net4j.util.om.OMBundle;
-import org.eclipse.net4j.util.om.OMLogger;
 import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.OMTracer;
+import org.eclipse.net4j.util.om.OSGiActivator;
+import org.eclipse.net4j.util.om.log.OMLogger;
+import org.eclipse.net4j.util.om.trace.OMTracer;
 
 /**
  * @author Eike Stepper

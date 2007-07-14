@@ -11,11 +11,11 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelectorListener;
 import org.eclipse.net4j.tcp.ITCPSelectorListener.Active;
 import org.eclipse.net4j.tcp.ITCPSelectorListener.Passive;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 

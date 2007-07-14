@@ -10,15 +10,15 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.bundle;
 
-import org.eclipse.net4j.util.IOUtil;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMBundle;
-import org.eclipse.net4j.util.om.OMLogHandler;
-import org.eclipse.net4j.util.om.OMLogger;
 import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.OMTraceHandler;
-import org.eclipse.net4j.util.om.OMLogger.Level;
-import org.eclipse.net4j.util.om.OMTraceHandler.Event;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.om.log.OMLogHandler;
+import org.eclipse.net4j.util.om.log.OMLogger;
+import org.eclipse.net4j.util.om.log.OMLogger.Level;
+import org.eclipse.net4j.util.om.trace.OMTraceHandler;
+import org.eclipse.net4j.util.om.trace.OMTraceHandlerEvent;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -160,7 +160,7 @@ public abstract class AbstractOMPlatform implements OMPlatform
     }
   }
 
-  protected void log(OMLogger logger, Level level, String msg, Throwable t)
+  public void log(OMLogger logger, Level level, String msg, Throwable t)
   {
     for (OMLogHandler logHandler : logHandlers)
     {
@@ -178,7 +178,7 @@ public abstract class AbstractOMPlatform implements OMPlatform
     }
   }
 
-  protected void trace(Event event)
+  public void trace(OMTraceHandlerEvent event)
   {
     for (OMTraceHandler traceHandler : traceHandlers)
     {
@@ -194,6 +194,11 @@ public abstract class AbstractOMPlatform implements OMPlatform
         }
       }
     }
+  }
+
+  protected Map<String, AbstractOMBundle> getBundles()
+  {
+    return bundles;
   }
 
   protected abstract OMBundle createBundle(String bundleID, Class accessor);

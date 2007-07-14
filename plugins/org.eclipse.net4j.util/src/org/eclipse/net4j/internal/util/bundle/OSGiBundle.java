@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.bundle;
 
-import org.eclipse.net4j.util.IOUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;

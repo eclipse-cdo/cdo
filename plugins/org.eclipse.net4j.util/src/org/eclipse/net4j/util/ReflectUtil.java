@@ -12,6 +12,7 @@ package org.eclipse.net4j.util;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.PrintStream;
 import java.lang.annotation.ElementType;

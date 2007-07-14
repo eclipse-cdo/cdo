@@ -13,7 +13,7 @@ package org.eclipse.net4j.internal.jms.protocol;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.signal.Request;
-import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
 

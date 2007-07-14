@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.ui.views;
 
-import org.eclipse.net4j.internal.ui.bundle.Net4jUI;
+import org.eclipse.net4j.internal.ui.bundle.OM;
 import org.eclipse.net4j.ui.StructuredContentProvider;
 
 import org.eclipse.jface.action.IMenuManager;
@@ -124,7 +124,7 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
       }
       catch (Exception ex)
       {
-        Net4jUI.LOG.error(ex);
+        OM.LOG.error(ex);
       }
     }
   }

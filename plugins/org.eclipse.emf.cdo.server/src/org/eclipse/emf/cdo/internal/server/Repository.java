@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
@@ -33,7 +32,7 @@ public class Repository extends Lifecycle implements IRepository
 
   private String uuid;
 
-  private CDOPackageManagerImpl packageManager;
+  private RepositoryPackageManager packageManager;
 
   private SessionManager sessionManager;
 
@@ -48,7 +47,7 @@ public class Repository extends Lifecycle implements IRepository
     this.name = name;
     this.store = store;
     this.uuid = UUID.randomUUID().toString();
-    packageManager = new CDOPackageManagerImpl();
+    packageManager = new RepositoryPackageManager(this);
     sessionManager = new SessionManager(this);
     resourceManager = new ResourceManager(this);
     revisionManager = new RevisionManager(this);
@@ -69,7 +68,7 @@ public class Repository extends Lifecycle implements IRepository
     return uuid;
   }
 
-  public CDOPackageManagerImpl getPackageManager()
+  public RepositoryPackageManager getPackageManager()
   {
     return packageManager;
   }

@@ -11,8 +11,8 @@
 package org.eclipse.net4j.internal.jms;
 
 import org.eclipse.net4j.internal.jms.bundle.OM;
-import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
-import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import javax.jms.JMSException;
 import javax.jms.Message;

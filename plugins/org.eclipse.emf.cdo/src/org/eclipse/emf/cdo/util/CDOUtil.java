@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 
 import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.IConnector;
@@ -27,8 +26,12 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -42,8 +45,6 @@ import java.util.Map;
  */
 public final class CDOUtil
 {
-  public static final CDOPackageManager PACKAGE_MANAGER = EMFUtil.PACKAGE_MANAGER;
-
   private CDOUtil()
   {
   }
@@ -154,5 +155,51 @@ public final class CDOUtil
   {
     EClass eClass = EMFUtil.getEClass(cdoClass);
     return (CDOObject)EcoreUtil.create(eClass);
+  }
+
+  public static void prepareEPackage(EPackage ePackage)
+  {
+    ePackage.setEFactoryInstance(new CDOFactoryImpl(ePackage));
+  }
+
+  public static EPackage createEPackage(String name, String nsPrefix, String nsURI)
+  {
+    EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
+    ePackage.setName(name);
+    ePackage.setNsPrefix(nsPrefix);
+    ePackage.setNsURI(nsURI);
+    prepareEPackage(ePackage);
+    return ePackage;
+  }
+
+  public static EClass createEClass(EPackage ePackage, String name, boolean isAbstract, boolean isInterface)
+  {
+    EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+    eClass.setName(name);
+    eClass.setAbstract(isAbstract);
+    eClass.setInterface(isInterface);
+    ePackage.getEClassifiers().add(eClass);
+    return eClass;
+  }
+
+  public static EAttribute createEAttribute(EClass eClass, String name, EClassifier type)
+  {
+    EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+    eAttribute.setName(name);
+    eAttribute.setEType(type);
+    eClass.getEStructuralFeatures().add(eAttribute);
+    return eAttribute;
+  }
+
+  public static EReference createEReference(EClass eClass, String name, EClassifier type, boolean isRequired,
+      boolean isMany)
+  {
+    EReference eReference = EcoreFactory.eINSTANCE.createEReference();
+    eReference.setName(name);
+    eReference.setEType(type);
+    eReference.setLowerBound(isRequired ? 1 : 0);
+    eReference.setUpperBound(isMany ? -1 : 0);
+    eClass.getEStructuralFeatures().add(eReference);
+    return eReference;
   }
 }

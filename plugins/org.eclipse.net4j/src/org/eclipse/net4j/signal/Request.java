@@ -11,11 +11,11 @@
 package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.BufferOutputStream;
 import org.eclipse.net4j.util.ReflectUtil;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import org.eclipse.internal.net4j.bundle.OM;
 

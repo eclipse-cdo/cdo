@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.IResourceManager;
 
-import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.util.HashMap;
 import java.util.Map;

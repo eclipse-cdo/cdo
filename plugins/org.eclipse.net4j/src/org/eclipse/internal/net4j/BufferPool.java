@@ -13,8 +13,8 @@ package org.eclipse.internal.net4j;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferPool;
 import org.eclipse.net4j.IBufferProvider;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 

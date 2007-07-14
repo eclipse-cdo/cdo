@@ -12,9 +12,9 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferProvider;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.BufferUtil;
 import org.eclipse.internal.net4j.Protocol;

@@ -12,7 +12,7 @@ package org.eclipse.net4j.util.lifecycle;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;

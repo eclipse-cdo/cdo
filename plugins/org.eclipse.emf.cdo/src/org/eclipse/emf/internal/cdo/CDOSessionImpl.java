@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -25,12 +24,12 @@ import org.eclipse.net4j.internal.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
@@ -40,7 +39,6 @@ import org.eclipse.emf.internal.cdo.bundle.CDO;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
-import org.eclipse.emf.internal.cdo.util.EMFUtil;
 
 import java.text.MessageFormat;
 import java.util.Collection;
@@ -69,7 +67,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   private EPackage.Registry ePackageRegistry;
 
-  private CDOPackageManagerImpl packageManager;
+  private CDOSessionPackageManager packageManager;
 
   private CDORevisionManagerImpl revisionManager;
 
@@ -91,14 +89,13 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     if (ePackageRegistry == null)
     {
       ePackageRegistry = EPackage.Registry.INSTANCE;
-      packageManager = EMFUtil.PACKAGE_MANAGER;
     }
     else
     {
       this.ePackageRegistry = ePackageRegistry;
-      packageManager = new CDOPackageManagerImpl();
     }
 
+    packageManager = new CDOSessionPackageManager(this);
     revisionManager = new CDORevisionManagerImpl(this);
   }
 
@@ -170,7 +167,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     return ePackageRegistry;
   }
 
-  public CDOPackageManagerImpl getPackageManager()
+  public CDOSessionPackageManager getPackageManager()
   {
     return packageManager;
   }

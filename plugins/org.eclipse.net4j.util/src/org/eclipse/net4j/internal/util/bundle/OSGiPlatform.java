@@ -45,6 +45,7 @@ public class OSGiPlatform extends AbstractOMPlatform
     return new OSGiBundle(this, bundleID, accessor);
   }
 
+  @Override
   protected String getDebugOption(String bundleID, String option)
   {
     try
@@ -58,6 +59,7 @@ public class OSGiPlatform extends AbstractOMPlatform
     }
   }
 
+  @Override
   protected void setDebugOption(String bundleID, String option, String value)
   {
     try

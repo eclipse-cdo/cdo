@@ -13,10 +13,10 @@ package org.eclipse.net4j.tests;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferPool;
 import org.eclipse.net4j.BufferUtil;
+import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import java.util.ArrayList;
 import java.util.Collection;

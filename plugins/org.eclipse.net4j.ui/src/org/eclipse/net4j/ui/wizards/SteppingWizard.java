@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.ui.wizards;
 
-import org.eclipse.net4j.internal.ui.bundle.Net4jUI;
+import org.eclipse.net4j.internal.ui.bundle.OM;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -199,7 +199,7 @@ public abstract class SteppingWizard extends Wizard
 
   private void handleFinishException(Exception ex)
   {
-    Net4jUI.LOG.error(ex);
+    OM.LOG.error(ex);
     MessageDialog.openError(getShell(), getWindowTitle(), ex.getMessage());
   }
 }

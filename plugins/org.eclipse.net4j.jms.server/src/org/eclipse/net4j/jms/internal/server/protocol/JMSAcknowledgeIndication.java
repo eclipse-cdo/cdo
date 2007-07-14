@@ -15,7 +15,7 @@ import org.eclipse.net4j.jms.internal.server.ServerConnection;
 import org.eclipse.net4j.jms.internal.server.ServerSession;
 import org.eclipse.net4j.jms.internal.server.bundle.OM;
 import org.eclipse.net4j.signal.Indication;
-import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
 import java.io.IOException;
 

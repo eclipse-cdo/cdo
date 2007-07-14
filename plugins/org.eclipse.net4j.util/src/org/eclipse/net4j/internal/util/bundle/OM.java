@@ -10,14 +10,14 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.bundle;
 
+import org.eclipse.net4j.internal.util.om.log.EclipseLoggingBridge;
+import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
 import org.eclipse.net4j.util.om.OMBundle;
-import org.eclipse.net4j.util.om.OMLogger;
 import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.OMTracer;
-import org.eclipse.net4j.util.om.log.EclipseLoggingBridge;
-import org.eclipse.net4j.util.om.log.PrintLogHandler;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
+import org.eclipse.net4j.util.om.log.OMLogger;
+import org.eclipse.net4j.util.om.trace.OMTracer;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

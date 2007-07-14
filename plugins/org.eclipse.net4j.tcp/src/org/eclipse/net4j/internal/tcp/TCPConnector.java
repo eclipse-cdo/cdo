@@ -15,11 +15,11 @@ import org.eclipse.net4j.ConnectorState;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IProtocol;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.ITCPConstants;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelectorListener;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.Channel;
 import org.eclipse.internal.net4j.Connector;

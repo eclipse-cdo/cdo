@@ -15,8 +15,8 @@ import org.eclipse.net4j.jms.server.IDestination;
 import org.eclipse.net4j.jms.server.IServer;
 import org.eclipse.net4j.jms.server.IDestination.Type;
 import org.eclipse.net4j.signal.IndicationWithResponse;
-import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
-import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
 

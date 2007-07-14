@@ -13,9 +13,9 @@ package org.eclipse.internal.net4j;
 import org.eclipse.net4j.BufferState;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferProvider;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ReflectUtil;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.bundle;
 
+import org.eclipse.net4j.internal.util.om.pref.Preferences;
 import org.eclipse.net4j.util.om.OMBundle;
 
 import java.util.Map;
@@ -24,6 +25,26 @@ public class LegacyPlatform extends AbstractOMPlatform
 
   public LegacyPlatform()
   {
+  }
+
+  public synchronized void start()
+  {
+  }
+
+  public synchronized void stop()
+  {
+    for (AbstractOMBundle bundle : getBundles().values())
+    {
+      try
+      {
+        Preferences preferences = bundle.preferences();
+        preferences.save();
+      }
+      catch (RuntimeException ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
   }
 
   @Override

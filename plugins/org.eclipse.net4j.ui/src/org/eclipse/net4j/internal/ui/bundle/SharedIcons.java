@@ -76,7 +76,7 @@ public class SharedIcons
 
   private static ImageDescriptor createDescriptor(String key)
   {
-    ImageDescriptor descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(Net4jUI.BUNDLE_ID, key);
+    ImageDescriptor descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(OM.BUNDLE_ID, key);
     if (descriptor != null)
     {
       REGISTRY.put(key, descriptor);

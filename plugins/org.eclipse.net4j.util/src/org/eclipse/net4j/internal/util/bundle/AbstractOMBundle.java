@@ -10,12 +10,15 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.bundle;
 
-import org.eclipse.net4j.util.IOUtil;
+import org.eclipse.net4j.internal.util.om.log.Logger;
+import org.eclipse.net4j.internal.util.om.pref.Preferences;
+import org.eclipse.net4j.internal.util.om.trace.Tracer;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMBundle;
-import org.eclipse.net4j.util.om.OMLogger;
 import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.OMTracer;
+import org.eclipse.net4j.util.om.log.OMLogger;
+import org.eclipse.net4j.util.om.trace.OMTracer;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,19 +50,21 @@ public abstract class AbstractOMBundle implements OMBundle
 
   private boolean debuggingInitialized;
 
-  private Map<String, OMTracerImpl> tracers = new ConcurrentHashMap(0);
+  private Map<String, Tracer> tracers = new ConcurrentHashMap(0);
 
   private OMLogger logger;
 
-  public ResourceBundle resourceBundle;
+  private Preferences preferences;
 
-  public ResourceBundle untranslatedResourceBundle;
+  private ResourceBundle resourceBundle;
 
-  public Map<String, String> strings = new HashMap(0);
+  private ResourceBundle untranslatedResourceBundle;
 
-  public Map<String, String> untranslatedStrings = new HashMap(0);
+  private Map<String, String> strings = new HashMap(0);
 
-  public boolean shouldTranslate = true;
+  private Map<String, String> untranslatedStrings = new HashMap(0);
+
+  private boolean shouldTranslate = true;
 
   public AbstractOMBundle(AbstractOMPlatform platform, String bundleID, Class accessor)
   {
@@ -190,6 +195,16 @@ public abstract class AbstractOMBundle implements OMBundle
     return platform.getConfigProperties(getConfigFileName());
   }
 
+  public synchronized Preferences preferences()
+  {
+    if (preferences == null)
+    {
+      preferences = new Preferences(this);
+    }
+
+    return preferences;
+  }
+
   public InputStream getInputStream(String path) throws IOException
   {
     URL url = new URL(getBaseURL().toString() + ".options"); //$NON-NLS-1$
@@ -297,12 +312,12 @@ public abstract class AbstractOMBundle implements OMBundle
 
   protected OMTracer createTracer(String name)
   {
-    return new OMTracerImpl(this, name);
+    return new Tracer(this, name);
   }
 
   protected OMLogger createLogger()
   {
-    return new OMLoggerImpl(this);
+    return new Logger(this);
   }
 
   protected String getConfigFileName()

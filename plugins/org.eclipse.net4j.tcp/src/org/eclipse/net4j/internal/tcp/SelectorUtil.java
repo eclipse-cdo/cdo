@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 

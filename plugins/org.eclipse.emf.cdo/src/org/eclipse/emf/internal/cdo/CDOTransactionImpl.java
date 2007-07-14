@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
 import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.internal.cdo.bundle.CDO;

@@ -27,7 +27,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
-import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -45,8 +45,6 @@ import java.util.List;
  */
 public final class EMFUtil
 {
-  public static final CDOPackageManagerImpl PACKAGE_MANAGER = new CDOPackageManagerImpl();
-
   @SuppressWarnings("unused")
   private static final ContextTracer TRACER = new ContextTracer(CDOProtocol.DEBUG_MODEL, EMFUtil.class);
 

@@ -13,11 +13,11 @@ package org.eclipse.net4j.internal.db.bundle;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.internal.db.DBAdapterDescriptor;
 import org.eclipse.net4j.internal.db.DBAdapterRegistry;
-import org.eclipse.net4j.internal.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.OMBundle;
-import org.eclipse.net4j.util.om.OMLogger;
 import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.OMTracer;
+import org.eclipse.net4j.util.om.OSGiActivator;
+import org.eclipse.net4j.util.om.log.OMLogger;
+import org.eclipse.net4j.util.om.trace.OMTracer;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;

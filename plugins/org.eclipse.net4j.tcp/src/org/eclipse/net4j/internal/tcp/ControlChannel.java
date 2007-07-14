@@ -13,8 +13,8 @@ package org.eclipse.net4j.internal.tcp;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.internal.util.concurrent.SynchronizingCorrelator;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.BufferUtil;
 import org.eclipse.internal.net4j.Channel;

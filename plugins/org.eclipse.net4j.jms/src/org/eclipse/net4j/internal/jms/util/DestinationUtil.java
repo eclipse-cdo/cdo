@@ -14,8 +14,8 @@ import org.eclipse.net4j.internal.jms.DestinationImpl;
 import org.eclipse.net4j.internal.jms.QueueImpl;
 import org.eclipse.net4j.internal.jms.TopicImpl;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
-import org.eclipse.net4j.util.stream.ExtendedDataInputStream;
-import org.eclipse.net4j.util.stream.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;

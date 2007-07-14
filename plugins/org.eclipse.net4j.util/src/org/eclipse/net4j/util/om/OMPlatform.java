@@ -11,6 +11,8 @@
 package org.eclipse.net4j.util.om;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractOMPlatform;
+import org.eclipse.net4j.util.om.log.OMLogHandler;
+import org.eclipse.net4j.util.om.trace.OMTraceHandler;
 
 import java.io.File;
 import java.util.Properties;

@@ -10,6 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om;
 
+import org.eclipse.net4j.util.om.log.OMLogger;
+import org.eclipse.net4j.util.om.pref.OMPreferences;
+import org.eclipse.net4j.util.om.trace.OMTracer;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,6 +60,8 @@ public interface OMBundle
   public Properties getConfigProperties();
 
   public String getStateLocation();
+
+  public OMPreferences preferences();
 
   public InputStream getInputStream(String path) throws IOException;
 

@@ -1,6 +1,6 @@
 package org.eclipse.net4j.ui.actions;
 
-import org.eclipse.net4j.internal.ui.bundle.Net4jUI;
+import org.eclipse.net4j.internal.ui.bundle.OM;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -50,7 +50,7 @@ public abstract class SafeAction extends Action
     }
     catch (Exception ex)
     {
-      Net4jUI.LOG.error(ex);
+      OM.LOG.error(ex);
     }
   }
 

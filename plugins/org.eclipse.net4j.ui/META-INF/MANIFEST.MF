@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.ui;singleton:=true
 Bundle-Version: 0.8.0.qualifier
-Bundle-Activator: org.eclipse.net4j.internal.ui.bundle.Net4jUI$Activator
+Bundle-Activator: org.eclipse.net4j.internal.ui.bundle.OM$Activator
 Bundle-Vendor: %providerName
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui;visibility:=reexport,

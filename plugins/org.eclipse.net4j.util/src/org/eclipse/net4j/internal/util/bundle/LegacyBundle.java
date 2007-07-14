@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.bundle;
 
-import org.eclipse.net4j.util.IOUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

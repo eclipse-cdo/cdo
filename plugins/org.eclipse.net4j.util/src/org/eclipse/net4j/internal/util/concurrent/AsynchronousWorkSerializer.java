@@ -11,8 +11,8 @@
 package org.eclipse.net4j.internal.util.concurrent;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;

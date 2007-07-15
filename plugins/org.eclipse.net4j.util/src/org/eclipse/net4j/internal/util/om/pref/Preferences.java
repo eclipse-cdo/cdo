@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.pref;
 
-import org.eclipse.net4j.internal.util.bundle.AbstractOMBundle;
+import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
 import org.eclipse.net4j.internal.util.event.Notifier;
 import org.eclipse.net4j.util.io.IORunnable;
 import org.eclipse.net4j.util.io.IORuntimeException;
@@ -43,7 +43,7 @@ public class Preferences extends Notifier implements OMPreferences
 
   public static final String DEFAULT_STRING = "";
 
-  private AbstractOMBundle bundle;
+  private AbstractBundle bundle;
 
   private Map<String, Preference> prefs = new HashMap();
 
@@ -51,13 +51,12 @@ public class Preferences extends Notifier implements OMPreferences
 
   private boolean dirty;
 
-  public Preferences(AbstractOMBundle bundle)
+  public Preferences(AbstractBundle bundle)
   {
     this.bundle = bundle;
-    load();
   }
 
-  public AbstractOMBundle getBundle()
+  public AbstractBundle getBundle()
   {
     return bundle;
   }
@@ -82,10 +81,10 @@ public class Preferences extends Notifier implements OMPreferences
         for (Preference preference : prefs.values())
         {
           String name = preference.getName();
-          String property = properties.getProperty(name);
-          if (property != null)
+          String value = properties.getProperty(name);
+          if (value != null)
           {
-            preference.init(property);
+            preference.init(value);
           }
         }
       }
@@ -97,14 +96,34 @@ public class Preferences extends Notifier implements OMPreferences
     if (dirty)
     {
       final Properties properties = new Properties();
-      File file = getFile();
-      IOUtil.output(file, new IORunnable<FileOutputStream>()
+      for (Preference preference : prefs.values())
       {
-        public void run(FileOutputStream io) throws IOException
+        if (preference.isSet())
         {
-          properties.store(io, "Preferences of " + bundle.getBundleID());
+          String name = preference.getName();
+          String value = preference.getString();
+          properties.put(name, value);
         }
-      });
+      }
+
+      File file = getFile();
+      if (properties.isEmpty())
+      {
+        if (file.exists())
+        {
+          file.delete();
+        }
+      }
+      else
+      {
+        IOUtil.output(file, new IORunnable<FileOutputStream>()
+        {
+          public void run(FileOutputStream io) throws IOException
+          {
+            properties.store(io, "Preferences of " + bundle.getBundleID());
+          }
+        });
+      }
 
       dirty = false;
     }
@@ -213,7 +232,7 @@ public class Preferences extends Notifier implements OMPreferences
   private File getFile()
   {
     File file = new File(bundle.getStateLocation(), ".prefs");
-    if (!file.isFile())
+    if (file.exists() && !file.isFile())
     {
       throw new IORuntimeException("Not a file: " + file.getAbsolutePath());
     }

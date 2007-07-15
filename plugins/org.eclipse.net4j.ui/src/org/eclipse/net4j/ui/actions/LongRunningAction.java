@@ -10,12 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j.ui.actions;
 
+import org.eclipse.net4j.internal.ui.bundle.OM;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.internal.net4j.bundle.OM;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 

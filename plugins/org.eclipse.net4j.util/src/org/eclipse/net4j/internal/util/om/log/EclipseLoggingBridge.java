@@ -11,7 +11,7 @@
 package org.eclipse.net4j.internal.util.om.log;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.internal.util.bundle.OSGiBundle;
+import org.eclipse.net4j.internal.util.om.OSGiBundle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.log.OMLogHandler;
 import org.eclipse.net4j.util.om.log.OMLogger;

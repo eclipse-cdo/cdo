@@ -8,8 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.bundle;
+package org.eclipse.net4j.internal.util.om;
 
+import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
+import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -25,11 +27,11 @@ import java.util.Map.Entry;
 /**
  * @author Eike Stepper
  */
-public class LegacyBundle extends AbstractOMBundle
+public class LegacyBundle extends AbstractBundle
 {
   private URL baseURL;
 
-  public LegacyBundle(AbstractOMPlatform platform, String bundleID, Class accessor)
+  public LegacyBundle(AbstractPlatform platform, String bundleID, Class accessor)
   {
     super(platform, bundleID, accessor);
 

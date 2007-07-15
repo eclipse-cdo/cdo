@@ -32,7 +32,7 @@ public abstract class OM
   /**
    * @author Eike Stepper
    */
-  static class Activator extends OSGiActivator
+  public static final class Activator extends OSGiActivator
   {
     public Activator()
     {

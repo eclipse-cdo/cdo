@@ -13,14 +13,12 @@ package org.eclipse.internal.net4j;
 import org.eclipse.net4j.IAcceptor;
 import org.eclipse.net4j.internal.util.factory.Factory;
 
-import org.eclipse.internal.net4j.bundle.OM;
-
 /**
  * @author Eike Stepper
  */
 public abstract class AcceptorFactory<PRODUCT extends IAcceptor> extends Factory<PRODUCT>
 {
-  public static final String ACCEPTOR_GROUP = OM.BUNDLE_ID + ".acceptors";
+  public static final String ACCEPTOR_GROUP = "org.eclipse.net4j.acceptors";
 
   public AcceptorFactory(String type)
   {

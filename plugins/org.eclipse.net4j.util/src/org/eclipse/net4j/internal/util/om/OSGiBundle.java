@@ -8,8 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.bundle;
+package org.eclipse.net4j.internal.util.om;
 
+import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
+import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -24,9 +26,9 @@ import java.net.URL;
 /**
  * @author Eike Stepper
  */
-public class OSGiBundle extends AbstractOMBundle
+public class OSGiBundle extends AbstractBundle
 {
-  public OSGiBundle(AbstractOMPlatform platform, String bundleID, Class accessor)
+  public OSGiBundle(AbstractPlatform platform, String bundleID, Class accessor)
   {
     super(platform, bundleID, accessor);
   }

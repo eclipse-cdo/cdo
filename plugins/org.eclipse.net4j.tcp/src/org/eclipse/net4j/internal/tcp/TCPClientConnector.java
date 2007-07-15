@@ -11,8 +11,7 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.ConnectorLocation;
-
-import org.eclipse.internal.net4j.bundle.OM;
+import org.eclipse.net4j.internal.tcp.bundle.OM;
 
 import java.io.IOException;
 import java.net.InetAddress;

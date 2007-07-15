@@ -13,14 +13,12 @@ package org.eclipse.net4j.internal.tcp;
 import org.eclipse.net4j.internal.util.factory.Factory;
 import org.eclipse.net4j.tcp.ITCPConstants;
 
-import org.eclipse.internal.net4j.bundle.OM;
-
 /**
  * @author Eike Stepper
  */
 public class TCPSelectorFactory extends Factory<TCPSelector>
 {
-  public static final String SELECTOR_GROUP = OM.BUNDLE_ID + ".selectors";
+  public static final String SELECTOR_GROUP = "org.eclipse.net4j.selectors";
 
   public TCPSelectorFactory()
   {

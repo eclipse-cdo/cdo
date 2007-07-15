@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om;
 
-import org.eclipse.net4j.internal.util.bundle.AbstractOMBundle;
+import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
 import org.eclipse.net4j.internal.util.bundle.OM;
 
 import org.osgi.framework.BundleActivator;
@@ -36,7 +36,7 @@ public abstract class OSGiActivator implements BundleActivator
   public final void start(BundleContext context) throws Exception
   {
     OM.Activator.traceStart(context);
-    AbstractOMBundle bundle = (AbstractOMBundle)getOMBundle();
+    AbstractBundle bundle = (AbstractBundle)getOMBundle();
     if (bundle == null)
     {
       throw new IllegalStateException("bundle == null");
@@ -62,7 +62,7 @@ public abstract class OSGiActivator implements BundleActivator
   public final void stop(BundleContext context) throws Exception
   {
     OM.Activator.traceStop(context);
-    AbstractOMBundle bundle = (AbstractOMBundle)getOMBundle();
+    AbstractBundle bundle = (AbstractBundle)getOMBundle();
     if (bundle == null)
     {
       throw new IllegalStateException("bundle == null");

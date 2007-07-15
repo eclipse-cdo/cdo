@@ -12,8 +12,6 @@ package org.eclipse.net4j;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 
-import org.eclipse.internal.net4j.bundle.OM;
-
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -22,9 +20,9 @@ import java.util.concurrent.ExecutorService;
  */
 public interface ITransportContainer extends IManagedContainer
 {
-  public static final String EXECUTOR_SERVICE_GROUP = OM.BUNDLE_ID + ".executorServices";
+  public static final String EXECUTOR_SERVICE_GROUP = "org.eclipse.net4j.executorServices";
 
-  public static final String BUFFER_PROVIDER_GROUP = OM.BUNDLE_ID + ".bufferProviders";
+  public static final String BUFFER_PROVIDER_GROUP = "org.eclipse.net4j.bufferProviders";
 
   public static final short DEFAULT_BUFFER_CAPACITY = 4096;
 

@@ -30,6 +30,8 @@ public abstract class OM
 
   public static final OMTracer DEBUG_MODEL = DEBUG.tracer("model"); //$NON-NLS-1$
 
+  public static final OMTracer DEBUG_PROTOCOL = DEBUG.tracer("protocol"); //$NON-NLS-1$
+
   public static final OMTracer DEBUG_REPOSITORY = DEBUG.tracer("repository"); //$NON-NLS-1$
 
   public static final OMTracer DEBUG_SESSION = DEBUG.tracer("session"); //$NON-NLS-1$

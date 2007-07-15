@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om;
 
-import org.eclipse.net4j.internal.util.bundle.LegacyPlatform;
+import org.eclipse.net4j.internal.util.om.LegacyBundle;
 
 /**
  * @author Eike Stepper
@@ -21,15 +21,19 @@ public final class LegacyUtil
   {
   }
 
-  public static void startPlatform()
+  public static void start(OMBundle[] bundles) throws Exception
   {
-    LegacyPlatform platform = (LegacyPlatform)OMPlatform.INSTANCE;
-    platform.start();
+    for (int i = 0; i < bundles.length; i++)
+    {
+      ((LegacyBundle)bundles[i]).start();
+    }
   }
 
-  public static void stopPlatform()
+  public static void stop(OMBundle[] bundles) throws Exception
   {
-    LegacyPlatform platform = (LegacyPlatform)OMPlatform.INSTANCE;
-    platform.stop();
+    for (int i = bundles.length - 1; i >= 0; i--)
+    {
+      ((LegacyBundle)bundles[i]).stop();
+    }
   }
 }

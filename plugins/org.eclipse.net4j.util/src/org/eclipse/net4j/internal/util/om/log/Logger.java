@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.log;
 
-import org.eclipse.net4j.internal.util.bundle.AbstractOMPlatform;
+import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.log.OMLogger;
 
@@ -33,7 +33,7 @@ public class Logger implements OMLogger
 
   public void log(Level level, String msg, Throwable t)
   {
-    ((AbstractOMPlatform)bundle.getPlatform()).log(this, level, msg, t);
+    ((AbstractPlatform)bundle.getPlatform()).log(this, level, msg, t);
   }
 
   public void error(String msg, Throwable t)

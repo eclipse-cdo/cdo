@@ -10,7 +10,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.net4j;visibility:=reexport
 Import-Package: javax.jms;version="1.1.0"
 Export-Package: org.eclipse.net4j.internal.jms;version="0.8.0",
- org.eclipse.net4j.internal.jms.bundle;version="0.8.0",
  org.eclipse.net4j.internal.jms.protocol;version="0.8.0",
  org.eclipse.net4j.internal.jms.util;version="0.8.0",
  org.eclipse.net4j.jms;version="0.8.0"

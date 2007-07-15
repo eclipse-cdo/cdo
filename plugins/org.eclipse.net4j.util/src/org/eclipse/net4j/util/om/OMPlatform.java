@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om;
 
-import org.eclipse.net4j.internal.util.bundle.AbstractOMPlatform;
+import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.om.log.OMLogHandler;
 import org.eclipse.net4j.util.om.trace.OMTraceHandler;
 
@@ -23,7 +23,7 @@ import java.util.Properties;
 public interface OMPlatform
 {
   // @Singleton
-  public static final OMPlatform INSTANCE = AbstractOMPlatform.createPlatform();
+  public static final OMPlatform INSTANCE = AbstractPlatform.createPlatform();
 
   public OMBundle bundle(String bundleID, Class accessor);
 

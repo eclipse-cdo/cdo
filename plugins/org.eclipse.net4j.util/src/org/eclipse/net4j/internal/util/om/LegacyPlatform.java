@@ -8,9 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.bundle;
+package org.eclipse.net4j.internal.util.om;
 
-import org.eclipse.net4j.internal.util.om.pref.Preferences;
+import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.om.OMBundle;
 
 import java.util.Map;
@@ -19,32 +19,12 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Eike Stepper
  */
-public class LegacyPlatform extends AbstractOMPlatform
+public class LegacyPlatform extends AbstractPlatform
 {
   private Map<String, String> debugOptions = new ConcurrentHashMap(0);
 
   public LegacyPlatform()
   {
-  }
-
-  public synchronized void start()
-  {
-  }
-
-  public synchronized void stop()
-  {
-    for (AbstractOMBundle bundle : getBundles().values())
-    {
-      try
-      {
-        Preferences preferences = bundle.preferences();
-        preferences.save();
-      }
-      catch (RuntimeException ex)
-      {
-        OM.LOG.error(ex);
-      }
-    }
   }
 
   @Override

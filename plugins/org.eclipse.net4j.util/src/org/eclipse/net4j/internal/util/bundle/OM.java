@@ -54,16 +54,16 @@ public abstract class OM
   {
     public void start(BundleContext context) throws Exception
     {
-      AbstractOMPlatform.systemContext = context;
+      AbstractPlatform.systemContext = context;
       OM.BUNDLE.setBundleContext(context);
 
       PrintTraceHandler.CONSOLE.setPattern("{6} [{0}] {5}");
-      AbstractOMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
-      AbstractOMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+      AbstractPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
+      AbstractPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
 
       try
       {
-        AbstractOMPlatform.INSTANCE.addLogHandler(EclipseLoggingBridge.INSTANCE);
+        AbstractPlatform.INSTANCE.addLogHandler(EclipseLoggingBridge.INSTANCE);
       }
       catch (Exception ignore)
       {
@@ -76,7 +76,7 @@ public abstract class OM
     {
       traceStop(context);
       OM.BUNDLE.setBundleContext(null);
-      AbstractOMPlatform.systemContext = null;
+      AbstractPlatform.systemContext = null;
     }
 
     public static void traceStart(BundleContext context)

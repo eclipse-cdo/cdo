@@ -14,7 +14,6 @@ Export-Package: org.eclipse.emf.cdo;version="0.8.0",
  org.eclipse.emf.cdo.eresource.util;version="0.8.0",
  org.eclipse.emf.cdo.util;version="0.8.0",
  org.eclipse.emf.internal.cdo;version="0.8.0",
- org.eclipse.emf.internal.cdo.bundle;version="0.8.0",
  org.eclipse.emf.internal.cdo.protocol;version="0.8.0",
  org.eclipse.emf.internal.cdo.util;version="0.8.0"
 Require-Bundle: org.eclipse.core.runtime,

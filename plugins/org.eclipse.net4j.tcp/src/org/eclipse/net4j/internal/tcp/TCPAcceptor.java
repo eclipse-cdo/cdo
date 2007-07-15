@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
+import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.ITCPSelector;
@@ -17,7 +18,6 @@ import org.eclipse.net4j.tcp.ITCPSelectorListener;
 import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.internal.net4j.Acceptor;
-import org.eclipse.internal.net4j.bundle.OM;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -34,7 +34,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorListener.Passive
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_ACCEPTOR, TCPAcceptor.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TCPAcceptor.class);
 
   private TCPSelector selector;
 

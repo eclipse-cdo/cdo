@@ -11,7 +11,6 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.bundle.OM;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDOReferenceConverter;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -25,6 +24,7 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOStore;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.io.IOException;
 import java.util.Collection;

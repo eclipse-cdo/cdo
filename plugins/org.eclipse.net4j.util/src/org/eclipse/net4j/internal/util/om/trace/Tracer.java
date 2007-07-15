@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.trace;
 
-import org.eclipse.net4j.internal.util.bundle.AbstractOMPlatform;
+import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.trace.OMTraceHandlerEvent;
 import org.eclipse.net4j.util.om.trace.OMTracer;
@@ -77,7 +77,7 @@ public class Tracer implements OMTracer
 
   public void trace(OMTraceHandlerEvent event)
   {
-    ((AbstractOMPlatform)bundle.getPlatform()).trace(event);
+    ((AbstractPlatform)bundle.getPlatform()).trace(event);
   }
 
   public OMTraceHandlerEvent trace(Class context, String msg, Throwable t)

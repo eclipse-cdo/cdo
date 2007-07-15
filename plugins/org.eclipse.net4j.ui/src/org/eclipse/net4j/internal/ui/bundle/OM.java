@@ -33,12 +33,12 @@ public abstract class OM
 
   public static final OMPreferences PREFS = BUNDLE.preferences();
 
-  public static final OMPreference<Boolean> PREF_ACTIVE = PREFS.init("active", false);
+  public static final OMPreference<String> PREF_TEXT = PREFS.initString("text");
 
   /**
    * @author Eike Stepper
    */
-  static class Activator extends OSGiActivator
+  public static final class Activator extends OSGiActivator
   {
     public Activator()
     {

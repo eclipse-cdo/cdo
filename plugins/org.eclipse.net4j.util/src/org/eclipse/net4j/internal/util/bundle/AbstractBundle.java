@@ -38,9 +38,9 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractOMBundle implements OMBundle
+public abstract class AbstractBundle implements OMBundle
 {
-  private AbstractOMPlatform platform;
+  private AbstractPlatform platform;
 
   private String bundleID;
 
@@ -68,7 +68,7 @@ public abstract class AbstractOMBundle implements OMBundle
 
   private boolean shouldTranslate = true;
 
-  public AbstractOMBundle(AbstractOMPlatform platform, String bundleID, Class accessor)
+  public AbstractBundle(AbstractPlatform platform, String bundleID, Class accessor)
   {
     this.platform = platform;
     this.bundleID = bundleID;
@@ -319,6 +319,18 @@ public abstract class AbstractOMBundle implements OMBundle
 
   public void stop() throws Exception
   {
+    try
+    {
+      if (preferences != null)
+      {
+        preferences.save();
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      OM.LOG.error(ex);
+    }
+
     invokeMethod("stop");
   }
 
@@ -339,28 +351,28 @@ public abstract class AbstractOMBundle implements OMBundle
 
   private void invokeMethod(String name) throws Exception
   {
-    Method method = accessor.getMethod(name, ReflectUtil.NO_PARAMETERS);
-    if (method != null)
+    try
     {
-      try
+      Method method = accessor.getMethod(name, ReflectUtil.NO_PARAMETERS);
+      method.invoke(null, ReflectUtil.NO_ARGUMENTS);
+    }
+    catch (NoSuchMethodException ignore)
+    {
+    }
+    catch (InvocationTargetException ex)
+    {
+      Throwable targetException = ex.getTargetException();
+      if (targetException instanceof Exception)
       {
-        method.invoke(null, ReflectUtil.NO_ARGUMENTS);
+        throw (Exception)targetException;
       }
-      catch (InvocationTargetException ex)
+      else if (targetException instanceof Error)
       {
-        Throwable targetException = ex.getTargetException();
-        if (targetException instanceof Exception)
-        {
-          throw (Exception)targetException;
-        }
-        else if (targetException instanceof Error)
-        {
-          throw (Error)targetException;
-        }
-        else
-        {
-          OM.LOG.error(targetException);
-        }
+        throw (Error)targetException;
+      }
+      else
+      {
+        OM.LOG.error(targetException);
       }
     }
   }

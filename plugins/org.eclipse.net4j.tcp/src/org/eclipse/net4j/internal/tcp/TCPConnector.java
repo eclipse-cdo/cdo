@@ -15,6 +15,7 @@ import org.eclipse.net4j.ConnectorState;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IProtocol;
+import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.ITCPConstants;
@@ -23,7 +24,6 @@ import org.eclipse.net4j.tcp.ITCPSelectorListener;
 
 import org.eclipse.internal.net4j.Channel;
 import org.eclipse.internal.net4j.Connector;
-import org.eclipse.internal.net4j.bundle.OM;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
@@ -37,7 +37,7 @@ import java.util.Queue;
  */
 public abstract class TCPConnector extends Connector implements ITCPConnector, ITCPSelectorListener.Active
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONNECTOR, TCPConnector.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TCPConnector.class);
 
   private SocketChannel socketChannel;
 

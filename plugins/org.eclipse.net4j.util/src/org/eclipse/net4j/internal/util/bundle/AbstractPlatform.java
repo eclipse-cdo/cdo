@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.bundle;
 
+import org.eclipse.net4j.internal.util.om.LegacyPlatform;
+import org.eclipse.net4j.internal.util.om.OSGiPlatform;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMBundle;
@@ -32,7 +34,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractOMPlatform implements OMPlatform
+public abstract class AbstractPlatform implements OMPlatform
 {
   public static final String SYSTEM_PROPERTY_NET4J_CONFIG = "net4j.config"; //$NON-NLS-1$
 
@@ -40,7 +42,7 @@ public abstract class AbstractOMPlatform implements OMPlatform
 
   private static ContextTracer __TRACER__;
 
-  private Map<String, AbstractOMBundle> bundles = new ConcurrentHashMap(0);
+  private Map<String, AbstractBundle> bundles = new ConcurrentHashMap(0);
 
   private Queue<OMLogHandler> logHandlers = new ConcurrentLinkedQueue();
 
@@ -48,7 +50,7 @@ public abstract class AbstractOMPlatform implements OMPlatform
 
   private boolean debugging;
 
-  protected AbstractOMPlatform()
+  protected AbstractPlatform()
   {
     debugging = Boolean.parseBoolean(System.getProperty("debug", "false")); //$NON-NLS-1$ //$NON-NLS-2$
   }
@@ -196,7 +198,7 @@ public abstract class AbstractOMPlatform implements OMPlatform
     }
   }
 
-  protected Map<String, AbstractOMBundle> getBundles()
+  protected Map<String, AbstractBundle> getBundles()
   {
     return bundles;
   }
@@ -236,7 +238,7 @@ public abstract class AbstractOMPlatform implements OMPlatform
   {
     if (__TRACER__ == null)
     {
-      __TRACER__ = new ContextTracer(OM.DEBUG_OM, AbstractOMPlatform.class);
+      __TRACER__ = new ContextTracer(OM.DEBUG_OM, AbstractPlatform.class);
     }
 
     return __TRACER__;

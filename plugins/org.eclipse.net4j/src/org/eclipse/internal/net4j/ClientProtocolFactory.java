@@ -13,14 +13,12 @@ package org.eclipse.internal.net4j;
 import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.internal.util.factory.Factory;
 
-import org.eclipse.internal.net4j.bundle.OM;
-
 /**
  * @author Eike Stepper
  */
 public abstract class ClientProtocolFactory<PRODUCT extends IProtocol> extends Factory<PRODUCT>
 {
-  public static final String CLIENT_PROTOCOL_GROUP = OM.BUNDLE_ID + ".clientProtocols";
+  public static final String CLIENT_PROTOCOL_GROUP = "org.eclipse.net4j.clientProtocols";
 
   public ClientProtocolFactory(String type)
   {

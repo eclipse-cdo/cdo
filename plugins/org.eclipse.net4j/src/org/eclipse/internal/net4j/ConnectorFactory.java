@@ -13,14 +13,12 @@ package org.eclipse.internal.net4j;
 import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.internal.util.factory.Factory;
 
-import org.eclipse.internal.net4j.bundle.OM;
-
 /**
  * @author Eike Stepper
  */
 public abstract class ConnectorFactory<PRODUCT extends IConnector> extends Factory<PRODUCT>
 {
-  public static final String CONNECTOR_GROUP = OM.BUNDLE_ID + ".connectors";
+  public static final String CONNECTOR_GROUP = "org.eclipse.net4j.connectors";
 
   public ConnectorFactory(String type)
   {

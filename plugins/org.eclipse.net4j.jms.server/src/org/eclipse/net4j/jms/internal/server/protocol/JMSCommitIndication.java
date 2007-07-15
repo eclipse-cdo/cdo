@@ -11,11 +11,11 @@
 package org.eclipse.net4j.jms.internal.server.protocol;
 
 import org.eclipse.net4j.internal.jms.MessageImpl;
-import org.eclipse.net4j.internal.jms.bundle.OM;
 import org.eclipse.net4j.internal.jms.util.MessageUtil;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.jms.internal.server.ServerConnection;
 import org.eclipse.net4j.jms.internal.server.ServerSession;
+import org.eclipse.net4j.jms.internal.server.bundle.OM;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;

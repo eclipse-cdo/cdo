@@ -8,8 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.bundle;
+package org.eclipse.net4j.internal.util.om;
 
+import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.om.OMBundle;
 
 import org.eclipse.core.runtime.Platform;
@@ -21,7 +22,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Eike Stepper
  */
-public class OSGiPlatform extends AbstractOMPlatform
+public class OSGiPlatform extends AbstractPlatform
 {
   BundleContext systemContext;
 

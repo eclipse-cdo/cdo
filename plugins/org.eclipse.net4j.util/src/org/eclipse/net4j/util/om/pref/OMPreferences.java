@@ -36,6 +36,18 @@ public interface OMPreferences extends INotifier
 
   public OMPreference<String> init(String name, String defaultValue);
 
+  public OMPreference<Boolean> initBoolean(String name);
+
+  public OMPreference<Integer> initInteger(String name);
+
+  public OMPreference<Long> initLong(String name);
+
+  public OMPreference<Float> initFloat(String name);
+
+  public OMPreference<Double> initDouble(String name);
+
+  public OMPreference<String> initString(String name);
+
   public OMPreference<Boolean> getBoolean(String name);
 
   public OMPreference<Integer> getInteger(String name);

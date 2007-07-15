@@ -158,7 +158,7 @@ public class Server extends QueueWorker<MessageImpl> implements IServer
         return null;
       }
 
-      messageIDs[i] = "ID:NET4J:" + HexUtil.formatLong(messageIDCounter.increment());
+      messageIDs[i] = "ID:NET4J:" + HexUtil.longToHex(messageIDCounter.increment());
       message.setJMSMessageID(messageIDs[i]);
     }
 

@@ -43,6 +43,8 @@ public class Preferences extends Notifier implements OMPreferences
 
   public static final String DEFAULT_STRING = "";
 
+  public static final String[] DEFAULT_ARRAY = {};
+
   private AbstractBundle bundle;
 
   private Map<String, Preference> prefs = new HashMap();
@@ -102,7 +104,10 @@ public class Preferences extends Notifier implements OMPreferences
         {
           String name = preference.getName();
           String value = preference.getString();
-          properties.put(name, value);
+          if (value != null)
+          {
+            properties.put(name, value);
+          }
         }
       }
 
@@ -164,6 +169,11 @@ public class Preferences extends Notifier implements OMPreferences
     return init(new StringPreference(this, name, defaultValue));
   }
 
+  public OMPreference<String[]> init(String name, String[] defaultValue)
+  {
+    return init(new ArrayPreference(this, name, defaultValue));
+  }
+
   public OMPreference<Boolean> initBoolean(String name)
   {
     return init(name, DEFAULT_BOOLEAN);
@@ -192,6 +202,11 @@ public class Preferences extends Notifier implements OMPreferences
   public OMPreference<String> initString(String name)
   {
     return init(name, DEFAULT_STRING);
+  }
+
+  public OMPreference<String[]> initArray(String name)
+  {
+    return init(name, DEFAULT_ARRAY);
   }
 
   public OMPreference<Boolean> getBoolean(String name)

@@ -31,20 +31,6 @@ import java.util.Properties;
  */
 public class Preferences extends Notifier implements OMPreferences
 {
-  public static final boolean DEFAULT_BOOLEAN = false;
-
-  public static final int DEFAULT_INTEGER = 0;
-
-  public static final long DEFAULT_LONG = 0L;
-
-  public static final float DEFAULT_FLOAT = 0.0f;
-
-  public static final double DEFAULT_DOUBLE = 0.0d;
-
-  public static final String DEFAULT_STRING = "";
-
-  public static final String[] DEFAULT_ARRAY = {};
-
   private AbstractBundle bundle;
 
   private Map<String, Preference> prefs = new HashMap();
@@ -174,6 +160,11 @@ public class Preferences extends Notifier implements OMPreferences
     return init(new ArrayPreference(this, name, defaultValue));
   }
 
+  public OMPreference<byte[]> init(String name, byte[] defaultValue)
+  {
+    return init(new BytesPreference(this, name, defaultValue));
+  }
+
   public OMPreference<Boolean> initBoolean(String name)
   {
     return init(name, DEFAULT_BOOLEAN);
@@ -207,6 +198,11 @@ public class Preferences extends Notifier implements OMPreferences
   public OMPreference<String[]> initArray(String name)
   {
     return init(name, DEFAULT_ARRAY);
+  }
+
+  public OMPreference<byte[]> initBytes(String name)
+  {
+    return init(name, DEFAULT_BYTES);
   }
 
   public OMPreference<Boolean> getBoolean(String name)

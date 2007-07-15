@@ -10,6 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.util;
 
+import org.eclipse.net4j.util.io.IORuntimeException;
+
+import java.io.IOException;
+
 /**
  * @author Eike Stepper
  */
@@ -21,7 +25,114 @@ public final class HexUtil
   {
   }
 
-  public static String formatLong(long v)
+  /**
+   * Converts a byte array into a string of lower case hex chars.
+   * 
+   * @param bs
+   *          A byte array
+   * @param off
+   *          The index of the first byte to read
+   * @param length
+   *          The number of bytes to read.
+   * @return the string of hex chars.
+   */
+  public static final String bytesToHex(byte[] bs, int off, int length)
+  {
+    if (bs.length <= off || bs.length < off + length)
+    {
+      throw new IllegalArgumentException();
+    }
+
+    StringBuilder sb = new StringBuilder(length * 2);
+    bytesToHexAppend(bs, off, length, sb);
+    return sb.toString();
+  }
+
+  public static final void bytesToHexAppend(byte[] bs, int off, int length, Appendable appendable)
+  {
+    if (bs.length <= off || bs.length < off + length)
+    {
+      throw new IllegalArgumentException();
+    }
+
+    if (appendable instanceof StringBuffer)
+    {
+      StringBuffer buffer = (StringBuffer)appendable;
+      buffer.ensureCapacity(buffer.length() + length * 2);
+    }
+
+    try
+    {
+      for (int i = off; i < off + length; i++)
+      {
+        appendable.append(Character.forDigit(bs[i] >>> 4 & 0xf, 16));
+        appendable.append(Character.forDigit(bs[i] & 0xf, 16));
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  public static final String bytesToHex(byte[] bs)
+  {
+    return bytesToHex(bs, 0, bs.length);
+  }
+
+  public static final byte[] hexToBytes(String s)
+  {
+    return hexToBytes(s, 0);
+  }
+
+  public static final byte[] hexToBytes(String s, int off)
+  {
+    byte[] bs = new byte[off + (1 + s.length()) / 2];
+    hexToBytes(s, bs, off);
+    return bs;
+  }
+
+  /**
+   * Converts a String of hex characters into an array of bytes.
+   * 
+   * @param s
+   *          A string of hex characters (upper case or lower) of even length.
+   * @param out
+   *          A byte array of length at least s.length()/2 + off
+   * @param off
+   *          The first byte to write of the array
+   */
+  public static final void hexToBytes(String s, byte[] out, int off) throws NumberFormatException,
+      IndexOutOfBoundsException
+  {
+    int slen = s.length();
+    if (slen % 2 != 0)
+    {
+      s = '0' + s;
+    }
+
+    if (out.length < off + slen / 2)
+    {
+      throw new IndexOutOfBoundsException("Output buffer too small for input (" + out.length + '<' + off + slen / 2
+          + ')');
+    }
+
+    // Safe to assume the string is even length
+    byte b1, b2;
+    for (int i = 0; i < slen; i += 2)
+    {
+      b1 = (byte)Character.digit(s.charAt(i), 16);
+      b2 = (byte)Character.digit(s.charAt(i + 1), 16);
+      if (b1 < 0 || b2 < 0)
+      {
+        throw new NumberFormatException();
+      }
+
+      out[off + i / 2] = (byte)(b1 << 4 | b2);
+    }
+  }
+
+  public static String longToHex(long v)
   {
     final String hex = Long.toHexString(v);
     if (hex.length() < 8)
@@ -32,12 +143,26 @@ public final class HexUtil
     return hex;
   }
 
+  @Deprecated
   public static String formatByte(int b)
   {
     assertByte(b);
     return "" + DIGITS[b >> 4] + DIGITS[b & 0xf]; //$NON-NLS-1$
   }
 
+  @Deprecated
+  public static String formatBytes(byte[] bytes)
+  {
+    StringBuilder builder = new StringBuilder();
+    for (byte b : bytes)
+    {
+      appendHex(builder, b - Byte.MIN_VALUE);
+    }
+
+    return builder.toString();
+  }
+
+  @Deprecated
   public static void appendHex(StringBuilder builder, int b)
   {
     assertByte(b);
@@ -45,11 +170,12 @@ public final class HexUtil
     builder.append(DIGITS[b & 0xf]);
   }
 
+  @Deprecated
   private static void assertByte(int b)
   {
     if (b < 0 || b > 255)
     {
-      throw new IllegalArgumentException("b < 0 || b > 255"); //$NON-NLS-1$
+      throw new IllegalArgumentException("b=" + b); //$NON-NLS-1$
     }
   }
 }

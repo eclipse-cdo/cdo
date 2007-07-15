@@ -36,6 +36,6 @@ public interface OMPreference<T>
    */
   public enum Type
   {
-    BOOLEAN, INTEGER, LONG, FLOAT, DOUBLE, STRING
+    BOOLEAN, INTEGER, LONG, FLOAT, DOUBLE, STRING, ARRAY, BYTES
   }
 }

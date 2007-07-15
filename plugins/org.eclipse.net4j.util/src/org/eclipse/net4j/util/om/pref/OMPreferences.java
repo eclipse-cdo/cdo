@@ -18,6 +18,22 @@ import org.eclipse.net4j.util.om.OMBundle;
  */
 public interface OMPreferences extends INotifier
 {
+  public static final boolean DEFAULT_BOOLEAN = false;
+
+  public static final int DEFAULT_INTEGER = 0;
+
+  public static final long DEFAULT_LONG = 0L;
+
+  public static final float DEFAULT_FLOAT = 0.0f;
+
+  public static final double DEFAULT_DOUBLE = 0.0d;
+
+  public static final String DEFAULT_STRING = "";
+
+  public static final String[] DEFAULT_ARRAY = {};
+
+  public static final byte[] DEFAULT_BYTES = {};
+
   public OMBundle getBundle();
 
   public boolean isDirty();
@@ -36,6 +52,10 @@ public interface OMPreferences extends INotifier
 
   public OMPreference<String> init(String name, String defaultValue);
 
+  public OMPreference<String[]> init(String name, String[] defaultValue);
+
+  public OMPreference<byte[]> init(String name, byte[] defaultValue);
+
   public OMPreference<Boolean> initBoolean(String name);
 
   public OMPreference<Integer> initInteger(String name);
@@ -47,6 +67,10 @@ public interface OMPreferences extends INotifier
   public OMPreference<Double> initDouble(String name);
 
   public OMPreference<String> initString(String name);
+
+  public OMPreference<String[]> initArray(String name);
+
+  public OMPreference<byte[]> initBytes(String name);
 
   public OMPreference<Boolean> getBoolean(String name);
 

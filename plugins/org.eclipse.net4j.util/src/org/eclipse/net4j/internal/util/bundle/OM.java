@@ -43,8 +43,6 @@ public abstract class OM
 
   public static final OMTracer DEBUG_OM = DEBUG.tracer("om"); //$NON-NLS-1$
 
-  public static final OMTracer PERF = BUNDLE.tracer("perf"); //$NON-NLS-1$
-
   public static final OMLogger LOG = BUNDLE.logger();
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OM, OM.class);

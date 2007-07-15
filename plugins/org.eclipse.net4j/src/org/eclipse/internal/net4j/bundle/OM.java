@@ -41,8 +41,6 @@ public abstract class OM
 
   public static final OMTracer DEBUG_SIGNAL = DEBUG.tracer("signal"); //$NON-NLS-1$
 
-  public static final OMTracer PERF = BUNDLE.tracer("perf"); //$NON-NLS-1$
-
   public static final OMLogger LOG = BUNDLE.logger();
 
   static void stop() throws Exception

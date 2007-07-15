@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.bundle;
 
+import org.eclipse.net4j.internal.util.om.OSGiBundle;
 import org.eclipse.net4j.internal.util.om.log.EclipseLoggingBridge;
 import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -56,6 +57,7 @@ public abstract class OM
     {
       AbstractPlatform.systemContext = context;
       OM.BUNDLE.setBundleContext(context);
+      ((OSGiBundle)OM.BUNDLE).start();
 
       PrintTraceHandler.CONSOLE.setPattern("{6} [{0}] {5}");
       AbstractPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
@@ -75,6 +77,7 @@ public abstract class OM
     public void stop(BundleContext context) throws Exception
     {
       traceStop(context);
+      ((OSGiBundle)OM.BUNDLE).stop();
       OM.BUNDLE.setBundleContext(null);
       AbstractPlatform.systemContext = null;
     }

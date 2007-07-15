@@ -13,7 +13,7 @@ package org.eclipse.net4j.internal.ui.views;
 import org.eclipse.net4j.IAcceptor;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.internal.ui.bundle.SharedIcons;
+import org.eclipse.net4j.internal.ui.SharedIcons;
 import org.eclipse.net4j.ui.actions.SafeAction;
 import org.eclipse.net4j.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.ui.views.ContainerView;

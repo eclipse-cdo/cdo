@@ -1,7 +1,7 @@
 package org.eclipse.net4j.ui.views;
 
 import org.eclipse.net4j.ITransportContainer;
-import org.eclipse.net4j.internal.ui.bundle.SharedIcons;
+import org.eclipse.net4j.internal.ui.SharedIcons;
 import org.eclipse.net4j.ui.actions.SafeAction;
 
 import org.eclipse.jface.action.Action;

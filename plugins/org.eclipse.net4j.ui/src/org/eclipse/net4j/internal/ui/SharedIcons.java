@@ -8,7 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.ui.bundle;
+package org.eclipse.net4j.internal.ui;
+
+import org.eclipse.net4j.internal.ui.bundle.OM;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
@@ -27,27 +29,27 @@ public class SharedIcons
 
   private static final String OBJ = "obj16/";
 
-  private static final String VIEW = "view16/";
+  public static final String OBJ_ACCEPTOR = OBJ + "acceptor";
 
-  public static final String ETOOL_OPEN_SESSION = ETOOL + "open_session";
+  public static final String OBJ_ADAPTER = OBJ + "adapter";
 
-  public static final String ETOOL_OPEN_EDITOR = ETOOL + "open_editor";
+  public static final String OBJ_CHANNEL = OBJ + "channel";
 
-  public static final String OBJ_SESSION = OBJ + "cdo_session";
+  public static final String OBJ_CONNECTOR = OBJ + "connector";
 
-  public static final String OBJ_EDITOR = OBJ + "cdo_editor";
+  public static final String OBJ_FACTORY = OBJ + "factory";
 
-  public static final String OBJ_EDITOR_READWRITE = OBJ + "cdo_editor_readwrite";
+  public static final String OBJ_FOLDER = OBJ + "folder";
 
-  public static final String OBJ_EDITOR_READONLY = OBJ + "cdo_editor_readonly";
+  public static final String ETOOL_ADD_ACCEPTOR = ETOOL + "add_acceptor";
 
-  public static final String OBJ_EDITOR_HISTORICAL = OBJ + "cdo_editor_historical";
+  public static final String ETOOL_ADD_CONNECTOR = ETOOL + "add_connector";
 
-  public static final String OBJ_EPACKAGE = OBJ + "EPackage";
+  public static final String ETOOL_ADD = ETOOL + "add";
 
-  public static final String OBJ_ECLASS = OBJ + "EClass";
+  public static final String ETOOL_DELETE = ETOOL + "delete";
 
-  public static final String VIEW_SESSIONS = VIEW + "cdo_sessions";
+  public static final String ETOOL_REFRESH = ETOOL + "refresh";
 
   public static Image getImage(String key)
   {

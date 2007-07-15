@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewCommittedEvent;
 import org.eclipse.emf.cdo.CDOViewDirtyEvent;
 import org.eclipse.emf.cdo.CDOViewEvent;
-import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
+import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 

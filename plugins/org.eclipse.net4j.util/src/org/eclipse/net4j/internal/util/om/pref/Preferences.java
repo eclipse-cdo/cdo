@@ -136,62 +136,62 @@ public class Preferences extends Notifier implements OMPreferences
 
   public OMPreference<Boolean> init(String name, boolean defaultValue)
   {
-    return new BooleanPreference(this, name, defaultValue);
+    return init(new BooleanPreference(this, name, defaultValue));
   }
 
   public OMPreference<Integer> init(String name, int defaultValue)
   {
-    return new IntegerPreference(this, name, defaultValue);
+    return init(new IntegerPreference(this, name, defaultValue));
   }
 
   public OMPreference<Long> init(String name, long defaultValue)
   {
-    return new LongPreference(this, name, defaultValue);
+    return init(new LongPreference(this, name, defaultValue));
   }
 
   public OMPreference<Float> init(String name, float defaultValue)
   {
-    return new FloatPreference(this, name, defaultValue);
+    return init(new FloatPreference(this, name, defaultValue));
   }
 
   public OMPreference<Double> init(String name, double defaultValue)
   {
-    return new DoublePreference(this, name, defaultValue);
+    return init(new DoublePreference(this, name, defaultValue));
   }
 
   public OMPreference<String> init(String name, String defaultValue)
   {
-    return new StringPreference(this, name, defaultValue);
+    return init(new StringPreference(this, name, defaultValue));
   }
 
   public OMPreference<Boolean> initBoolean(String name)
   {
-    return new BooleanPreference(this, name, DEFAULT_BOOLEAN);
+    return init(name, DEFAULT_BOOLEAN);
   }
 
   public OMPreference<Integer> initInteger(String name)
   {
-    return new IntegerPreference(this, name, DEFAULT_INTEGER);
+    return init(name, DEFAULT_INTEGER);
   }
 
   public OMPreference<Long> initLong(String name)
   {
-    return new LongPreference(this, name, DEFAULT_LONG);
+    return init(name, DEFAULT_LONG);
   }
 
   public OMPreference<Float> initFloat(String name)
   {
-    return new FloatPreference(this, name, DEFAULT_FLOAT);
+    return init(name, DEFAULT_FLOAT);
   }
 
   public OMPreference<Double> initDouble(String name)
   {
-    return new DoublePreference(this, name, DEFAULT_DOUBLE);
+    return init(name, DEFAULT_DOUBLE);
   }
 
   public OMPreference<String> initString(String name)
   {
-    return new StringPreference(this, name, DEFAULT_STRING);
+    return init(name, DEFAULT_STRING);
   }
 
   public OMPreference<Boolean> getBoolean(String name)
@@ -226,7 +226,20 @@ public class Preferences extends Notifier implements OMPreferences
 
   public <T> void fireChangeEvent(Preference<T> preference, T oldValue, T newValue)
   {
+    dirty = true;
     fireEvent(new PreferencesChangeEvent<T>(preference, oldValue, newValue));
+  }
+
+  private <T> OMPreference<T> init(Preference<T> preference)
+  {
+    String name = preference.getName();
+    if (prefs.containsKey(name))
+    {
+      throw new IllegalArgumentException("Duplicate name: " + name);
+    }
+
+    prefs.put(name, preference);
+    return preference;
   }
 
   private File getFile()

@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.internal.ui.bundle.SharedIcons;
+import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 
 import org.eclipse.net4j.IConnector;
 

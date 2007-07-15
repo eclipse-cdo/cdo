@@ -312,6 +312,12 @@ public abstract class AbstractBundle implements OMBundle
     return MessageFormat.format(getString(key, translate), args);
   }
 
+  @Override
+  public String toString()
+  {
+    return bundleID;
+  }
+
   public void start() throws Exception
   {
     invokeMethod("start");

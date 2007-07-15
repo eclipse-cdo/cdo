@@ -279,11 +279,7 @@ public class ConnectionImpl extends Lifecycle implements Connection, IContainer<
     {
       for (SessionImpl session : getSessions())
       {
-        Exception ex = session.deactivate();
-        if (ex != null)
-        {
-          OM.LOG.error(ex);
-        }
+        session.deactivate();
       }
 
       stopped = true;

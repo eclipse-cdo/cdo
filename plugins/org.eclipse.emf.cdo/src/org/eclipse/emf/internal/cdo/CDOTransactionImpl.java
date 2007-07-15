@@ -22,7 +22,7 @@ import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.internal.cdo.bundle.CDO;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionRequest;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.RegisterPackagesRequest;
@@ -39,7 +39,7 @@ import java.util.Set;
  */
 public class CDOTransactionImpl
 {
-  private static final ContextTracer TRACER = new ContextTracer(CDO.DEBUG_TRANSCTION, CDOTransactionImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSCTION, CDOTransactionImpl.class);
 
   private static final long INITIAL_TEMPORARY_ID = -1L;
 

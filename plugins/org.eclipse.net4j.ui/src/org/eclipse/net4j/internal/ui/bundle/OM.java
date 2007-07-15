@@ -21,7 +21,7 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 /**
  * @author Eike Stepper
  */
-public final class OM
+public abstract class OM
 {
   public static final String BUNDLE_ID = "org.eclipse.net4j.ui"; //$NON-NLS-1$
 
@@ -35,14 +35,10 @@ public final class OM
 
   public static final OMPreference<Boolean> PREF_ACTIVE = PREFS.init("active", false);
 
-  private OM()
-  {
-  }
-
   /**
    * @author Eike Stepper
    */
-  public static class Activator extends OSGiActivator
+  static class Activator extends OSGiActivator
   {
     public Activator()
     {

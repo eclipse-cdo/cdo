@@ -21,7 +21,7 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 /**
  * @author Eike Stepper
  */
-public final class OM
+public abstract class OM
 {
   public static final String BUNDLE_ID = "org.eclipse.net4j.jms"; //$NON-NLS-1$
 
@@ -33,11 +33,7 @@ public final class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  private OM()
-  {
-  }
-
-  public static void start() throws Exception
+  static void start() throws Exception
   {
     JMSUtil.setTransportContainer(IPluginTransportContainer.INSTANCE);
   }
@@ -45,7 +41,7 @@ public final class OM
   /**
    * @author Eike Stepper
    */
-  public static final class Activator extends OSGiActivator
+  static final class Activator extends OSGiActivator
   {
     public Activator()
     {

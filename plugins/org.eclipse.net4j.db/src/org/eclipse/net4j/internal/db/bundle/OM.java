@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.Platform;
 /**
  * @author Eike Stepper
  */
-public final class OM
+public abstract class OM
 {
   public static final String BUNDLE_ID = "org.eclipse.net4j.db"; //$NON-NLS-1$
 
@@ -41,11 +41,7 @@ public final class OM
 
   public static final String EXT_POINT = "dbAdapters";
 
-  private OM()
-  {
-  }
-
-  public static void start() throws Exception
+  static void start() throws Exception
   {
     IExtensionRegistry registry = Platform.getExtensionRegistry();
     IConfigurationElement[] elements = registry.getConfigurationElementsFor(BUNDLE_ID, EXT_POINT);
@@ -78,7 +74,7 @@ public final class OM
   /**
    * @author Eike Stepper
    */
-  public static final class Activator extends OSGiActivator
+  static final class Activator extends OSGiActivator
   {
     public Activator()
     {

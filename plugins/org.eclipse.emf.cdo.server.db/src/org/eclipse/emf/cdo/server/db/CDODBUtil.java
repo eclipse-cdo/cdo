@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
-
 /**
  * @author Eike Stepper
  */

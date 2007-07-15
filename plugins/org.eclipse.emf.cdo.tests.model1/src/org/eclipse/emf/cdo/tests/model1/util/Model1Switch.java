@@ -6,10 +6,12 @@
  */
 package org.eclipse.emf.cdo.tests.model1.util;
 
+import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
@@ -20,7 +22,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.List;
-import org.eclipse.emf.cdo.tests.model1.*;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance
@@ -29,22 +30,23 @@ import org.eclipse.emf.cdo.tests.model1.*;
  * starting with the actual class of the object and proceeding up the
  * inheritance hierarchy until a non-null result is returned, which is the
  * result of the switch. <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package
  * @generated
  */
 public class Model1Switch<T>
 {
   /**
-   * The cached model package
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected static Model1Package modelPackage;
 
   /**
-   * Creates an instance of the switch.
-   * <!-- begin-user-doc --> <!--
+   * Creates an instance of the switch. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   public Model1Switch()
@@ -56,10 +58,12 @@ public class Model1Switch<T>
   }
 
   /**
-   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc --> <!--
+   * Calls <code>caseXXX</code> for each class of the model until one returns
+   * a non null result; it yields that result. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * @return the first non-null result returned by a <code>caseXXX</code> call.
+   * 
+   * @return the first non-null result returned by a <code>caseXXX</code>
+   *         call.
    * @generated
    */
   public T doSwitch(EObject theEObject)
@@ -68,10 +72,12 @@ public class Model1Switch<T>
   }
 
   /**
-   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc --> <!--
+   * Calls <code>caseXXX</code> for each class of the model until one returns
+   * a non null result; it yields that result. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * @return the first non-null result returned by a <code>caseXXX</code> call.
+   * 
+   * @return the first non-null result returned by a <code>caseXXX</code>
+   *         call.
    * @generated
    */
   protected T doSwitch(EClass theEClass, EObject theEObject)
@@ -83,110 +89,125 @@ public class Model1Switch<T>
     else
     {
       List<EClass> eSuperTypes = theEClass.getESuperTypes();
-      return
-        eSuperTypes.isEmpty() ?
-          defaultCase(theEObject) :
-          doSwitch(eSuperTypes.get(0), theEObject);
+      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
     }
   }
 
   /**
-   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc --> <!--
+   * Calls <code>caseXXX</code> for each class of the model until one returns
+   * a non null result; it yields that result. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * @return the first non-null result returned by a <code>caseXXX</code> call.
+   * 
+   * @return the first non-null result returned by a <code>caseXXX</code>
+   *         call.
    * @generated
    */
   protected T doSwitch(int classifierID, EObject theEObject)
   {
     switch (classifierID)
     {
-      case Model1Package.ADDRESS:
-      {
-        Address address = (Address)theEObject;
-        T result = caseAddress(address);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Model1Package.COMPANY:
-      {
-        Company company = (Company)theEObject;
-        T result = caseCompany(company);
-        if (result == null) result = caseAddress(company);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Model1Package.SUPPLIER:
-      {
-        Supplier supplier = (Supplier)theEObject;
-        T result = caseSupplier(supplier);
-        if (result == null) result = caseAddress(supplier);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Model1Package.CUSTOMER:
-      {
-        Customer customer = (Customer)theEObject;
-        T result = caseCustomer(customer);
-        if (result == null) result = caseAddress(customer);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Model1Package.ORDER:
-      {
-        Order order = (Order)theEObject;
-        T result = caseOrder(order);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Model1Package.ORDER_DETAIL:
-      {
-        OrderDetail orderDetail = (OrderDetail)theEObject;
-        T result = caseOrderDetail(orderDetail);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Model1Package.PURCHASE_ORDER:
-      {
-        PurchaseOrder purchaseOrder = (PurchaseOrder)theEObject;
-        T result = casePurchaseOrder(purchaseOrder);
-        if (result == null) result = caseOrder(purchaseOrder);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Model1Package.SALES_ORDER:
-      {
-        SalesOrder salesOrder = (SalesOrder)theEObject;
-        T result = caseSalesOrder(salesOrder);
-        if (result == null) result = caseOrder(salesOrder);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Model1Package.CATEGORY:
-      {
-        Category category = (Category)theEObject;
-        T result = caseCategory(category);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Model1Package.PRODUCT:
-      {
-        Product product = (Product)theEObject;
-        T result = caseProduct(product);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      default: return defaultCase(theEObject);
+    case Model1Package.ADDRESS:
+    {
+      Address address = (Address)theEObject;
+      T result = caseAddress(address);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model1Package.COMPANY:
+    {
+      Company company = (Company)theEObject;
+      T result = caseCompany(company);
+      if (result == null)
+        result = caseAddress(company);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model1Package.SUPPLIER:
+    {
+      Supplier supplier = (Supplier)theEObject;
+      T result = caseSupplier(supplier);
+      if (result == null)
+        result = caseAddress(supplier);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model1Package.CUSTOMER:
+    {
+      Customer customer = (Customer)theEObject;
+      T result = caseCustomer(customer);
+      if (result == null)
+        result = caseAddress(customer);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model1Package.ORDER:
+    {
+      Order order = (Order)theEObject;
+      T result = caseOrder(order);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model1Package.ORDER_DETAIL:
+    {
+      OrderDetail orderDetail = (OrderDetail)theEObject;
+      T result = caseOrderDetail(orderDetail);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model1Package.PURCHASE_ORDER:
+    {
+      PurchaseOrder purchaseOrder = (PurchaseOrder)theEObject;
+      T result = casePurchaseOrder(purchaseOrder);
+      if (result == null)
+        result = caseOrder(purchaseOrder);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model1Package.SALES_ORDER:
+    {
+      SalesOrder salesOrder = (SalesOrder)theEObject;
+      T result = caseSalesOrder(salesOrder);
+      if (result == null)
+        result = caseOrder(salesOrder);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model1Package.CATEGORY:
+    {
+      Category category = (Category)theEObject;
+      T result = caseCategory(category);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model1Package.PRODUCT:
+    {
+      Product product = (Product)theEObject;
+      T result = caseProduct(product);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    default:
+      return defaultCase(theEObject);
     }
   }
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Address</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * <!-- begin-user-doc --> This implementation returns null; returning a
+   * non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Address</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -200,7 +221,9 @@ public class Model1Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Supplier</em>'.
    * <!-- begin-user-doc --> This implementation returns null; returning a
    * non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Supplier</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -214,7 +237,9 @@ public class Model1Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Purchase Order</em>'.
    * <!-- begin-user-doc --> This implementation returns null; returning a
    * non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Purchase Order</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -228,7 +253,9 @@ public class Model1Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Order Detail</em>'.
    * <!-- begin-user-doc --> This implementation returns null; returning a
    * non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Order Detail</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -242,7 +269,9 @@ public class Model1Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Product</em>'.
    * <!-- begin-user-doc --> This implementation returns null; returning a
    * non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Product</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -256,7 +285,9 @@ public class Model1Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Category</em>'.
    * <!-- begin-user-doc --> This implementation returns null; returning a
    * non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Category</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -270,7 +301,9 @@ public class Model1Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Company</em>'.
    * <!-- begin-user-doc --> This implementation returns null; returning a
    * non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Company</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -284,7 +317,9 @@ public class Model1Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Customer</em>'.
    * <!-- begin-user-doc --> This implementation returns null; returning a
    * non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Customer</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -296,11 +331,11 @@ public class Model1Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Order</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * <!-- begin-user-doc --> This implementation returns null; returning a
+   * non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Order</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -314,7 +349,9 @@ public class Model1Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Sales Order</em>'.
    * <!-- begin-user-doc --> This implementation returns null; returning a
    * non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Sales Order</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -329,7 +366,9 @@ public class Model1Switch<T>
    * <!-- begin-user-doc --> This implementation returns null; returning a
    * non-null result will terminate the switch, but this is the last case
    * anyway. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated

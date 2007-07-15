@@ -25,7 +25,7 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Eike Stepper
  */
-public final class OM
+public abstract class OM
 {
   public static final String BUNDLE_ID = "org.eclipse.net4j.util"; //$NON-NLS-1$
 
@@ -48,10 +48,6 @@ public final class OM
   public static final OMLogger LOG = BUNDLE.logger();
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OM, OM.class);
-
-  private OM()
-  {
-  }
 
   /**
    * @author Eike Stepper

@@ -71,6 +71,7 @@ public class Lifecycle extends Notifier implements ILifecycle
       }
       catch (Exception ex)
       {
+        OM.LOG.error(ex);
         if (TRACER.isEnabled())
         {
           TRACER.trace(ex);

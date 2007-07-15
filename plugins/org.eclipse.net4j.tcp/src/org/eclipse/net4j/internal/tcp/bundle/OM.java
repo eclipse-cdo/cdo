@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.bundle;
+package org.eclipse.net4j.internal.tcp.bundle;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -21,7 +21,7 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
  */
 public abstract class OM
 {
-  public static final String BUNDLE_ID = "org.eclipse.emf.cdo.server.db"; //$NON-NLS-1$
+  public static final String BUNDLE_ID = "org.eclipse.net4j.tcp"; //$NON-NLS-1$
 
   public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, OM.class);
 
@@ -32,7 +32,7 @@ public abstract class OM
   /**
    * @author Eike Stepper
    */
-  static final class Activator extends OSGiActivator
+  static class Activator extends OSGiActivator
   {
     public Activator()
     {

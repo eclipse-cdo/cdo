@@ -1,4 +1,5 @@
 org.eclipse.emf.cdo.server/debug = true
+org.eclipse.emf.cdo.server/debug.protocol = true
 org.eclipse.emf.cdo.server/debug.repository = true
 org.eclipse.emf.cdo.server/debug.session = true
 org.eclipse.emf.cdo.server/debug.revision = true

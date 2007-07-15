@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
-import org.eclipse.emf.cdo.internal.protocol.bundle.CDOProtocol;
-
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -20,7 +18,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.internal.cdo.bundle.CDO;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -35,7 +33,7 @@ import java.util.Set;
  */
 public final class PackageClosure
 {
-  private static final ContextTracer TRACER = new ContextTracer(CDOProtocol.DEBUG_MODEL, PackageClosure.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_MODEL, PackageClosure.class);
 
   private static final Set<EPackage> EMPTY_CLOSURE = Collections.emptySet();
 
@@ -103,7 +101,7 @@ public final class PackageClosure
       else
       {
         String msg = "Package == null for " + eClass.getName();
-        CDO.LOG.warn(msg);
+        OM.LOG.warn(msg);
         if (TRACER.isEnabled())
         {
           TRACER.trace(msg);

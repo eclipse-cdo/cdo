@@ -17,23 +17,22 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Order</b></em>'.
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Order</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderImpl#getOrderDetails <em>Order Details</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderImpl#getOrderDetails <em>Order Details</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class OrderImpl extends CDOObjectImpl implements Order
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected OrderImpl()
@@ -42,8 +41,8 @@ public class OrderImpl extends CDOObjectImpl implements Order
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -53,8 +52,8 @@ public class OrderImpl extends CDOObjectImpl implements Order
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -64,8 +63,8 @@ public class OrderImpl extends CDOObjectImpl implements Order
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -74,4 +73,4 @@ public class OrderImpl extends CDOObjectImpl implements Order
     return (EList<OrderDetail>)eGet(Model1Package.Literals.ORDER__ORDER_DETAILS, true);
   }
 
-} //OrderImpl
+} // OrderImpl

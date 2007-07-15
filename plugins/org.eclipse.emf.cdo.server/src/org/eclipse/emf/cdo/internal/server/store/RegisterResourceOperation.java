@@ -29,7 +29,7 @@ public abstract class RegisterResourceOperation<T extends ITransaction> implemen
     this.pathToIDMap = pathToIDMap;
   }
 
-public Object prepare(T transaction) throws Exception
+  public Object prepare(T transaction) throws Exception
   {
     update(transaction, id, path);
     idToPathMap.put(id, path);

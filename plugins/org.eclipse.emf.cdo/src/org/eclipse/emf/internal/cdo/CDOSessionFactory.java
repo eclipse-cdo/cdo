@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.net4j.internal.util.factory.Factory;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.internal.cdo.bundle.CDO;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.Path;
  */
 public class CDOSessionFactory extends Factory<CDOSession>
 {
-  public static final String SESSION_GROUP = CDO.BUNDLE_ID + ".sessions";
+  public static final String SESSION_GROUP = OM.BUNDLE_ID + ".sessions";
 
   public CDOSessionFactory()
   {

@@ -18,15 +18,17 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 /**
  * @author Eike Stepper
  */
-public final class CDO
+public abstract class OM
 {
   public static final String BUNDLE_ID = "org.eclipse.emf.cdo"; //$NON-NLS-1$
 
-  public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, CDO.class);
+  public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, OM.class);
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
   public static final OMTracer DEBUG_UTIL = DEBUG.tracer("util"); //$NON-NLS-1$
+
+  public static final OMTracer DEBUG_MODEL = DEBUG.tracer("model"); //$NON-NLS-1$
 
   public static final OMTracer DEBUG_REPOSITORY = DEBUG.tracer("repository"); //$NON-NLS-1$
 
@@ -45,8 +47,4 @@ public final class CDO
   public static final OMLogger LOG = BUNDLE.logger();
 
   public static final String PERSISTENT_PACKAGE_EXT_POINT = "persistent_package";
-
-  private CDO()
-  {
-  }
 }

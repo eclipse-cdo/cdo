@@ -4,7 +4,7 @@ Bundle-SymbolicName: org.eclipse.net4j.debug; singleton:=true
 Bundle-Version: 0.8.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
-Bundle-Activator: org.eclipse.net4j.internal.debug.bundle.Activator
+Bundle-Activator: org.eclipse.net4j.internal.debug.bundle.OM$Activator
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.core.runtime,

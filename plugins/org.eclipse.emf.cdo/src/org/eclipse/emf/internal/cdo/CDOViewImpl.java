@@ -37,7 +37,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.internal.cdo.bundle.CDO;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.ResourcePathRequest;
 
@@ -52,7 +52,7 @@ import java.util.Set;
  */
 public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier implements CDOView, Adapter.Internal
 {
-  private static final ContextTracer TRACER = new ContextTracer(CDO.DEBUG_VIEW, CDOViewImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
   private int id;
 

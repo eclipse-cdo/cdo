@@ -19,7 +19,7 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 /**
  * @author Eike Stepper
  */
-public final class OM
+public abstract class OM
 {
   public static final String BUNDLE_ID = "org.eclipse.net4j.jms.server.jdbc"; //$NON-NLS-1$
 
@@ -29,14 +29,10 @@ public final class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  private OM()
-  {
-  }
-
   /**
    * @author Eike Stepper
    */
-  public static final class Activator extends OSGiActivator
+  static final class Activator extends OSGiActivator
   {
     public Activator()
     {

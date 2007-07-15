@@ -9,19 +9,17 @@ package org.eclipse.emf.cdo.tests.model1;
 import org.eclipse.emf.cdo.CDOObject;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Address</b></em>'.
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Address</b></em>'.
  * <!-- end-user-doc -->
- *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.Address#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.Address#getStreet <em>Street</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.Address#getCity <em>City</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.Address#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.Address#getStreet <em>Street</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.Address#getCity <em>City</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getAddress()
  * @model
  * @extends CDOObject
@@ -30,13 +28,14 @@ import org.eclipse.emf.cdo.CDOObject;
 public interface Address extends CDOObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute. <!--
+   * begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Name</em>' attribute isn't clear, there
+   * really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getAddress_Name()
@@ -46,23 +45,25 @@ public interface Address extends CDOObject
   String getName();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Address#getName <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Address#getName <em>Name</em>}'
+   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
    * @generated
    */
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Street</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Street</b></em>' attribute. <!--
+   * begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Street</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Street</em>' attribute isn't clear, there
+   * really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Street</em>' attribute.
    * @see #setStreet(String)
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getAddress_Street()
@@ -72,23 +73,25 @@ public interface Address extends CDOObject
   String getStreet();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Address#getStreet <em>Street</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Street</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Address#getStreet <em>Street</em>}'
+   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Street</em>' attribute.
    * @see #getStreet()
    * @generated
    */
   void setStreet(String value);
 
   /**
-   * Returns the value of the '<em><b>City</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>City</b></em>' attribute. <!--
+   * begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>City</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>City</em>' attribute isn't clear, there
+   * really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>City</em>' attribute.
    * @see #setCity(String)
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getAddress_City()
@@ -98,10 +101,11 @@ public interface Address extends CDOObject
   String getCity();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Address#getCity <em>City</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>City</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Address#getCity <em>City</em>}'
+   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>City</em>' attribute.
    * @see #getCity()
    * @generated
    */

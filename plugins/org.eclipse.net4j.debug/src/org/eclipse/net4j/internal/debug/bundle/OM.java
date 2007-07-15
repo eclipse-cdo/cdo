@@ -8,8 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.jvm.bundle;
+package org.eclipse.net4j.internal.debug.bundle;
 
+import org.eclipse.net4j.internal.debug.RemoteTraceManager;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
@@ -19,24 +20,30 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 /**
  * @author Eike Stepper
  */
-public final class JVM
+public abstract class OM
 {
-  public static final String BUNDLE_ID = "org.eclipse.net4j.jvm"; //$NON-NLS-1$
+  public static final String BUNDLE_ID = "org.eclipse.net4j.debug"; //$NON-NLS-1$
 
-  public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, JVM.class);
+  public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, OM.class);
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  private JVM()
+  static void start() throws Exception
   {
+    RemoteTraceManager.INSTANCE.activate();
+  }
+
+  static void stop() throws Exception
+  {
+    RemoteTraceManager.INSTANCE.deactivate();
   }
 
   /**
    * @author Eike Stepper
    */
-  public static class Activator extends OSGiActivator
+  static final class Activator extends OSGiActivator
   {
     public Activator()
     {

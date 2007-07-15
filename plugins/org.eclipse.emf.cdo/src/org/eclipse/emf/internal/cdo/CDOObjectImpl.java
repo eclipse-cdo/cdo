@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
-import org.eclipse.emf.internal.cdo.bundle.CDO;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.EMFUtil;
 
 /**
@@ -37,7 +37,7 @@ import org.eclipse.emf.internal.cdo.util.EMFUtil;
  */
 public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
 {
-  private static final ContextTracer TRACER = new ContextTracer(CDO.DEBUG_OBJECT, CDOObjectImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOObjectImpl.class);
 
   private CDOID id;
 

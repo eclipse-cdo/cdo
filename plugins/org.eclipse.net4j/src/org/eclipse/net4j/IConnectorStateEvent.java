@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j;
 
-
 /**
  * An event that is fired by an {@link IConnector} to indicate that its state
  * has changed.

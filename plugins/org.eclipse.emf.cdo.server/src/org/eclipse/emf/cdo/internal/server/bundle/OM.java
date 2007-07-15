@@ -21,13 +21,15 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 /**
  * @author Eike Stepper
  */
-public final class OM
+public abstract class OM
 {
   public static final String BUNDLE_ID = "org.eclipse.emf.cdo.server"; //$NON-NLS-1$
 
   public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, OM.class);
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
+
+  public static final OMTracer DEBUG_PROTOCOL = DEBUG.tracer("protocol"); //$NON-NLS-1$
 
   public static final OMTracer DEBUG_REPOSITORY = DEBUG.tracer("repository"); //$NON-NLS-1$
 
@@ -39,28 +41,20 @@ public final class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  private OM()
-  {
-  }
-
-  public static void start() throws Exception
+  static void start() throws Exception
   {
     RepositoryManager.INSTANCE.activate();
   }
 
-  public static void stop() throws Exception
+  static void stop() throws Exception
   {
-    Exception exception = RepositoryManager.INSTANCE.deactivate();
-    if (exception != null)
-    {
-      LOG.warn(exception);
-    }
+    RepositoryManager.INSTANCE.deactivate();
   }
 
   /**
    * @author Eike Stepper
    */
-  public static final class Activator extends OSGiActivator
+  static final class Activator extends OSGiActivator
   {
     public Activator()
     {

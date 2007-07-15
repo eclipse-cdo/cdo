@@ -1,5 +1,6 @@
 org.eclipse.emf.cdo/debug = true
 org.eclipse.emf.cdo/debug.util = true
+org.eclipse.emf.cdo/debug.model = true
 org.eclipse.emf.cdo/debug.repository = true
 org.eclipse.emf.cdo/debug.session = true
 org.eclipse.emf.cdo/debug.adapter = true

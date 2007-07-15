@@ -20,18 +20,19 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getCategories <em>Categories</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getProducts <em>Products</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getCategories <em>Categories</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getProducts <em>Products</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class CategoryImpl extends CDOObjectImpl implements Category
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected CategoryImpl()
@@ -41,6 +42,7 @@ public class CategoryImpl extends CDOObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -51,6 +53,7 @@ public class CategoryImpl extends CDOObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -61,6 +64,7 @@ public class CategoryImpl extends CDOObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -70,6 +74,7 @@ public class CategoryImpl extends CDOObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -79,6 +84,7 @@ public class CategoryImpl extends CDOObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -89,6 +95,7 @@ public class CategoryImpl extends CDOObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

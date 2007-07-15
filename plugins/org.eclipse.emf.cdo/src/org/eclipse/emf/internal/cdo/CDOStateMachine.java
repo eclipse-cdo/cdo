@@ -12,7 +12,7 @@ import org.eclipse.emf.cdo.util.ServerException;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.internal.cdo.bundle.CDO;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.ResourceIDRequest;
 
@@ -26,7 +26,7 @@ public final class CDOStateMachine
   // @Singleton
   public static final CDOStateMachine INSTANCE = new CDOStateMachine();
 
-  private static final ContextTracer TRACER = new ContextTracer(CDO.DEBUG_OBJECT, CDOStateMachine.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOStateMachine.class);
 
   private static Transition IGNORE;
 

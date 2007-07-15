@@ -11,7 +11,7 @@
 package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.internal.protocol.bundle.CDOProtocol;
+import org.eclipse.emf.cdo.internal.protocol.bundle.OM;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
@@ -46,7 +46,7 @@ import java.util.List;
 public final class EMFUtil
 {
   @SuppressWarnings("unused")
-  private static final ContextTracer TRACER = new ContextTracer(CDOProtocol.DEBUG_MODEL, EMFUtil.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_MODEL, EMFUtil.class);
 
   private EMFUtil()
   {

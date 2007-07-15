@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.bundle.CDOProtocol;
+import org.eclipse.emf.cdo.internal.protocol.bundle.OM;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
@@ -33,11 +33,9 @@ import java.util.Map.Entry;
 @SuppressWarnings("unused")
 public class CommitTransactionIndication extends CDOServerIndication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(CDOProtocol.DEBUG_PROTOCOL,
-      CommitTransactionIndication.class);
+  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, CommitTransactionIndication.class);
 
-  private static final ContextTracer TRACER = new ContextTracer(CDOProtocol.DEBUG_REVISION,
-      CommitTransactionIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CommitTransactionIndication.class);
 
   private CDORevisionImpl[] newResources;
 

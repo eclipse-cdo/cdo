@@ -316,11 +316,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
 
   public void close()
   {
-    Exception ex = deactivate();
-    if (ex != null)
-    {
-      OM.LOG.error(ex);
-    }
+    deactivate();
   }
 
   public void run()

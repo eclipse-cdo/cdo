@@ -35,7 +35,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.internal.cdo.bundle.CDO;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
@@ -53,7 +53,7 @@ import java.util.Set;
 public class CDOSessionImpl extends Lifecycle implements CDOSession
 {
   @SuppressWarnings("unused")
-  private static final ContextTracer TRACER = new ContextTracer(CDO.DEBUG_SESSION, CDOSessionImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
   private int sessionID;
 
@@ -252,7 +252,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
         }
         catch (RuntimeException ex)
         {
-          CDO.LOG.error(ex);
+          OM.LOG.error(ex);
         }
       }
     }

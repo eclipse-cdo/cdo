@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
-import org.eclipse.emf.internal.cdo.bundle.CDO;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.EMFUtil;
 
 /**
@@ -36,7 +36,7 @@ public final class CDOStore implements EStore
   // @Singleton
   public static final CDOStore INSTANCE = new CDOStore();
 
-  private static final ContextTracer TRACER = new ContextTracer(CDO.DEBUG_OBJECT, CDOStore.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOStore.class);
 
   private CDOStore()
   {

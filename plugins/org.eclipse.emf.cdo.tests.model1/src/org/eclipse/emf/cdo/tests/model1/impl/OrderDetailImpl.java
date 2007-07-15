@@ -20,18 +20,19 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderDetailImpl#getOrder <em>Order</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderDetailImpl#getProduct <em>Product</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderDetailImpl#getPrice <em>Price</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderDetailImpl#getOrder <em>Order</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderDetailImpl#getProduct <em>Product</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderDetailImpl#getPrice <em>Price</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected OrderDetailImpl()
@@ -41,6 +42,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -51,6 +53,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -60,8 +63,8 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Order getOrder()
@@ -70,8 +73,8 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setOrder(Order newOrder)
@@ -81,6 +84,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Product getProduct()
@@ -90,6 +94,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setProduct(Product newProduct)
@@ -99,6 +104,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public float getPrice()
@@ -108,6 +114,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setPrice(float newPrice)

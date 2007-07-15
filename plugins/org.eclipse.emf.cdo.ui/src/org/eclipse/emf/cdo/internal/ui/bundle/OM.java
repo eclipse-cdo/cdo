@@ -22,7 +22,7 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 /**
  * @author Eike Stepper
  */
-public final class OM
+public abstract class OM
 {
   public static final String BUNDLE_ID = "org.eclipse.emf.cdo.ui"; //$NON-NLS-1$
 
@@ -32,11 +32,7 @@ public final class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  private OM()
-  {
-  }
-
-  public static void start() throws Exception
+  static void start() throws Exception
   {
     IRepositoryManager.INSTANCE.addRepository("repo1", new NOOPStore());
     // Properties properties = BUNDLE.getConfigProperties();
@@ -58,14 +54,10 @@ public final class OM
     // }
   }
 
-  public static void stop() throws Exception
-  {
-  }
-
   /**
    * @author Eike Stepper
    */
-  public static class Activator extends OSGiActivator
+  static class Activator extends OSGiActivator
   {
     public Activator()
     {

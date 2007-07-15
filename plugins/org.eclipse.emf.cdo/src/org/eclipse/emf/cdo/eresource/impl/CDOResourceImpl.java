@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
-import org.eclipse.emf.internal.cdo.bundle.CDO;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,7 +66,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   /**
    * @ADDED
    */
-  private static final ContextTracer TRACER = new ContextTracer(CDO.DEBUG_OBJECT, CDOResourceImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOResourceImpl.class);
 
   /**
    * @ADDED

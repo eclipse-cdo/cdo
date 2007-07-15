@@ -11,7 +11,6 @@ import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Sales Order</b></em>'.
@@ -19,17 +18,18 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SalesOrderImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SalesOrderImpl#getCustomer <em>Customer</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SalesOrderImpl#getId <em>Id</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SalesOrderImpl#getCustomer <em>Customer</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class SalesOrderImpl extends OrderImpl implements SalesOrder
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected SalesOrderImpl()
@@ -39,6 +39,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -49,6 +50,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getId()
@@ -58,6 +60,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setId(int newId)
@@ -67,6 +70,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Customer getCustomer()
@@ -76,6 +80,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setCustomer(Customer newCustomer)

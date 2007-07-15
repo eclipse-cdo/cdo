@@ -12,7 +12,6 @@ package org.eclipse.net4j.util.om.trace;
 
 import org.eclipse.net4j.util.om.OMBundle;
 
-
 /**
  * @author Eike Stepper
  */

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.jvm;singleton:=true
 Bundle-Version: 0.8.0.qualifier
-Bundle-Activator: org.eclipse.net4j.internal.jvm.bundle.JVM$Activator
+Bundle-Activator: org.eclipse.net4j.internal.jvm.bundle.OM$Activator
 Bundle-Vendor: %providerName
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.core.runtime;resolution:=optional,

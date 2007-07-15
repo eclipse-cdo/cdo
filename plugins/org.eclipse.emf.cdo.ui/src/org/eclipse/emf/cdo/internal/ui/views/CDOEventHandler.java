@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
-
 import org.eclipse.jface.viewers.TreeViewer;
 
 import java.util.HashSet;

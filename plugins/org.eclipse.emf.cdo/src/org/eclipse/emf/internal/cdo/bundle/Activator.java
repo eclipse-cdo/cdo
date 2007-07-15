@@ -40,7 +40,7 @@ public final class Activator extends EMFPlugin
     public void start(BundleContext context) throws Exception
     {
       super.start(context);
-      CDO.BUNDLE.setBundleContext(context);
+      OM.BUNDLE.setBundleContext(context);
       // EMFUtil.addModelInfos(EMFUtil.PACKAGE_MANAGER);
       // IExtensionRegistry registry = Platform.getExtensionRegistry();
       // IConfigurationElement[] elements =
@@ -71,7 +71,7 @@ public final class Activator extends EMFPlugin
       // registry.removeRegistryChangeListener(this);
       // EMFUtil.removeModelInfos(EMFUtil.PACKAGE_MANAGER);
       plugin = null;
-      CDO.BUNDLE.setBundleContext(null);
+      OM.BUNDLE.setBundleContext(null);
       super.stop(context);
     }
 

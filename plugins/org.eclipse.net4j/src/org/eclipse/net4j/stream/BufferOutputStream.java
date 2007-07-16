@@ -62,6 +62,7 @@ public class BufferOutputStream extends OutputStream
     this(bufferHandler, extractBufferProvider(bufferHandler), channelIndex);
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public void write(int b) throws IOException
   {

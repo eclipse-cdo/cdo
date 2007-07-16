@@ -51,6 +51,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     buffers.add(buffer);
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public int read() throws IOException
   {

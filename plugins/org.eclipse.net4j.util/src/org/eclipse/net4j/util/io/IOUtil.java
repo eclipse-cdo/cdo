@@ -25,29 +25,23 @@ import java.io.PrintStream;
  */
 public final class IOUtil
 {
-  private static final InputStream IN = System.in;
-
-  private static final PrintStream OUT = System.out;
-
-  private static final PrintStream ERR = System.err;
-
   private IOUtil()
   {
   }
 
   public static InputStream IN()
   {
-    return IN;
+    return System.in;
   }
 
   public static PrintStream OUT()
   {
-    return OUT;
+    return System.out;
   }
 
   public static PrintStream ERR()
   {
-    return ERR;
+    return System.err;
   }
 
   public static void print(Throwable t, PrintStream stream)
@@ -57,7 +51,7 @@ public final class IOUtil
 
   public static void print(Throwable t)
   {
-    print(t, ERR);
+    print(t, System.err);
   }
 
   public static IOException closeSilent(Closeable closeable)

@@ -283,6 +283,7 @@ public class Buffer implements IBuffer
     return "Buffer@" + ReflectUtil.getID(this); //$NON-NLS-1$
   }
 
+  @SuppressWarnings("deprecation")
   public String formatContent()
   {
     final int oldPosition = byteBuffer.position();

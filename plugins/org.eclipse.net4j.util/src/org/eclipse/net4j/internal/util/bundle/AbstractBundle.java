@@ -359,10 +359,18 @@ public abstract class AbstractBundle implements OMBundle
   {
     try
     {
-      Method method = accessor.getMethod(name, ReflectUtil.NO_PARAMETERS);
+      Method method = accessor.getDeclaredMethod(name, ReflectUtil.NO_PARAMETERS);
+      if (!method.isAccessible())
+      {
+        method.setAccessible(true);
+      }
+
       method.invoke(null, ReflectUtil.NO_ARGUMENTS);
     }
     catch (NoSuchMethodException ignore)
+    {
+    }
+    catch (IllegalAccessException ignore)
     {
     }
     catch (InvocationTargetException ex)

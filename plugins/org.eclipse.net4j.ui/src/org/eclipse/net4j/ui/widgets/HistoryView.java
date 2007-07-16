@@ -26,6 +26,7 @@ import org.eclipse.ui.part.ViewPart;
 /**
  * @author Eike Stepper
  */
+@Deprecated
 public class HistoryView extends ViewPart
 {
   public static final IHistory<String> HISTORY = HistoryUtil.createPreferenceHistory(OM.PREF_HISTORY);

@@ -23,7 +23,10 @@ public interface IRepositoryManager
 
   public IRepository[] getRepositories();
 
-  public IRepository getRepository(String name);
+  /**
+   * @return Never <code>null</code>
+   */
+  public IRepository getRepository(String name) throws RepositoryNotFoundException;
 
   public IRepository addRepository(String name, IStore store);
 

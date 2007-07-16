@@ -10,19 +10,28 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
+import org.eclipse.emf.cdo.protocol.util.CDOException;
 
 /**
  * @author Eike Stepper
  */
-public interface ISessionManager
+public class RepositoryNotFoundException extends CDOException
 {
-  public IRepository getRepository();
+  private static final long serialVersionUID = 1L;
 
-  public ISession[] getSessions();
+  public RepositoryNotFoundException(String repositoryName)
+  {
+    super(repositoryName);
+  }
 
-  /**
-   * @return Never <code>null</code>
-   */
-  public ISession openSession(CDOServerProtocol protocol) throws SessionCreationException;
+  public String getRepositoryName()
+  {
+    return super.getMessage();
+  }
+
+  @Override
+  public String getMessage()
+  {
+    return "Repository not found: " + getRepositoryName();
+  }
 }

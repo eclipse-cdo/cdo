@@ -81,6 +81,10 @@ public abstract class Signal implements Runnable
     {
       throw new TimeoutException("Timeout");
     }
+    catch (Exception ex)
+    {
+      throw ex;
+    }
     finally
     {
       getProtocol().stopSignal(this);

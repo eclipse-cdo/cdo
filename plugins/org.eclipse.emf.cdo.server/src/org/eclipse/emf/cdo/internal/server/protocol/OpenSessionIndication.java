@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
+import org.eclipse.emf.cdo.server.SessionCreationException;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.IndicationWithResponse;
@@ -60,8 +62,20 @@ public class OpenSessionIndication extends IndicationWithResponse
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    Repository repository = RepositoryManager.INSTANCE.getRepository(repositoryName);
-    if (repository == null)
+    try
+    {
+      Repository repository = RepositoryManager.INSTANCE.getRepository(repositoryName);
+      SessionManager sessionManager = repository.getSessionManager();
+
+      CDOServerProtocol serverProtocol = (CDOServerProtocol)getProtocol();
+      Session session = sessionManager.openSession(serverProtocol);
+      serverProtocol.setSession(session);
+
+      writeSessionID(out, session);
+      writeRepositoryUUID(out, repository);
+      writePackageURIs(out, repository.getPackageManager());
+    }
+    catch (RepositoryNotFoundException ex)
     {
       if (PROTOCOL.isEnabled())
       {
@@ -69,13 +83,8 @@ public class OpenSessionIndication extends IndicationWithResponse
       }
 
       out.writeInt(CDOProtocolConstants.ERROR_REPOSITORY_NOT_FOUND);
-      return;
     }
-
-    CDOServerProtocol serverProtocol = (CDOServerProtocol)getProtocol();
-    SessionManager sessionManager = repository.getSessionManager();
-    Session session = sessionManager.openSession(serverProtocol);
-    if (session == null)
+    catch (SessionCreationException ex)
     {
       if (PROTOCOL.isEnabled())
       {
@@ -85,11 +94,6 @@ public class OpenSessionIndication extends IndicationWithResponse
       out.writeInt(CDOProtocolConstants.ERROR_NO_SESSION);
       return;
     }
-
-    serverProtocol.setSession(session);
-    writeSessionID(out, session);
-    writeRepositoryUUID(out, repository);
-    writePackageURIs(out, repository.getPackageManager());
   }
 
   private void writeSessionID(ExtendedDataOutputStream out, ISession session) throws IOException

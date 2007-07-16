@@ -10,19 +10,31 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
+import org.eclipse.emf.cdo.protocol.util.CDOException;
 
 /**
  * @author Eike Stepper
  */
-public interface ISessionManager
+public class SessionCreationException extends CDOException
 {
-  public IRepository getRepository();
+  private static final long serialVersionUID = 1L;
 
-  public ISession[] getSessions();
+  public SessionCreationException()
+  {
+  }
 
-  /**
-   * @return Never <code>null</code>
-   */
-  public ISession openSession(CDOServerProtocol protocol) throws SessionCreationException;
+  public SessionCreationException(String message)
+  {
+    super(message);
+  }
+
+  public SessionCreationException(String message, Throwable cause)
+  {
+    super(message, cause);
+  }
+
+  public SessionCreationException(Throwable cause)
+  {
+    super(cause);
+  }
 }

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.server.ISessionManager;
+import org.eclipse.emf.cdo.server.SessionCreationException;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
@@ -51,7 +52,7 @@ public class SessionManager implements ISessionManager
     }
   }
 
-  public Session openSession(CDOServerProtocol protocol)
+  public Session openSession(CDOServerProtocol protocol) throws SessionCreationException
   {
     int id = ++lastSessionID;
     if (TRACER.isEnabled())

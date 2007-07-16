@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IRepositoryManager;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
 
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -50,15 +51,16 @@ public final class RepositoryManager extends Lifecycle implements IRepositoryMan
     }
   }
 
-  public Repository getRepository(String name)
+  public Repository getRepository(String name) throws RepositoryNotFoundException
   {
     synchronized (repositories)
     {
       Repository repository = repositories.get(name);
       if (repository == null)
       {
-        throw new RuntimeException("Repository not found: " + name);
+        throw new RepositoryNotFoundException(name);
       }
+
       return repository;
     }
   }
@@ -72,6 +74,7 @@ public final class RepositoryManager extends Lifecycle implements IRepositoryMan
       {
         throw new RuntimeException("Repository already exists: " + name);
       }
+
       repository = new Repository(name, store);
       LifecycleUtil.activate(repository);
       repositories.put(name, repository);

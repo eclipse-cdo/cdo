@@ -3,6 +3,7 @@ package org.eclipse.net4j.ui.actions;
 import org.eclipse.net4j.internal.ui.bundle.OM;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
@@ -51,6 +52,7 @@ public abstract class SafeAction extends Action
     catch (Exception ex)
     {
       OM.LOG.error(ex);
+      MessageDialog.openError(null, getText(), ex.getMessage() + "\nSee the Error log for details.");
     }
   }
 

@@ -119,33 +119,47 @@ public class History<T> extends Notifier implements IHistory<T>
     return true;
   }
 
+  public T getMostRecent()
+  {
+    if (isEmpty())
+    {
+      return null;
+    }
+
+    return elements.get(0).getData();
+  }
+
+  public <D> D[] getData(D[] a)
+  {
+    int size = elements.size();
+    if (a.length < size)
+    {
+      a = (D[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+    }
+
+    for (int i = 0; i < size; i++)
+    {
+      a[i] = (D)elements.get(i).getData();
+    }
+
+    if (a.length > size)
+    {
+      a[size] = null;
+    }
+
+    return a;
+  }
+
   public IHistoryElement<T>[] toArray()
   {
     lazyLoad();
     return elements.toArray(new IHistoryElement[elements.size()]);
   }
 
-  public T[] getData()
-  {
-    int size = elements.size();
-    Object[] array = new Object[size];
-    for (int i = 0; i < size; i++)
-    {
-      array[i] = elements.get(i).getData();
-    }
-
-    return (T[])array;
-  }
-
   public Iterator<IHistoryElement<T>> iterator()
   {
     lazyLoad();
     return elements.iterator();
-  }
-
-  public void dispose()
-  {
-    elements.clear();
   }
 
   protected IHistoryElement<T> createElement(T data)

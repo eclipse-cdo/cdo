@@ -100,7 +100,14 @@ public abstract class Preference<T> implements OMPreference<T>
 
   protected void init(String value)
   {
-    this.value = convert(value);
+    if (value == null)
+    {
+      this.value = defaultValue;
+    }
+    else
+    {
+      this.value = convert(value);
+    }
   }
 
   protected abstract T convert(String value);

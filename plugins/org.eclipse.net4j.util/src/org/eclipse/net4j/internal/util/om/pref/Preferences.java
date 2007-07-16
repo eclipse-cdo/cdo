@@ -54,10 +54,11 @@ public class Preferences extends Notifier implements OMPreferences
     if (!loaded)
     {
       loaded = true;
+      final Properties properties = new Properties();
+
       File file = getFile();
       if (file.exists())
       {
-        final Properties properties = new Properties();
         IOUtil.input(file, new IORunnable<FileInputStream>()
         {
           public void run(FileInputStream io) throws IOException
@@ -65,16 +66,13 @@ public class Preferences extends Notifier implements OMPreferences
             properties.load(io);
           }
         });
+      }
 
-        for (Preference preference : prefs.values())
-        {
-          String name = preference.getName();
-          String value = properties.getProperty(name);
-          if (value != null)
-          {
-            preference.init(value);
-          }
-        }
+      for (Preference preference : prefs.values())
+      {
+        String name = preference.getName();
+        String value = properties.getProperty(name);
+        preference.init(value);
       }
     }
   }

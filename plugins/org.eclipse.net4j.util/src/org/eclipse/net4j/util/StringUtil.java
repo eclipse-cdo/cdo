@@ -103,6 +103,17 @@ public final class StringUtil
     return count;
   }
 
+  public static int occurrences(String str, String c)
+  {
+    int count = 0;
+    for (int i = 0; (i = str.indexOf(c, i)) != -1; i += c.length())
+    {
+      ++count;
+    }
+
+    return count;
+  }
+
   public static boolean isEmpty(String str)
   {
     return str == null || str.length() == 0;

@@ -31,9 +31,9 @@ public interface IHistory<T> extends INotifier, Iterable<IHistoryElement<T>>
 
   public IHistoryElement<T> get(int index);
 
+  public T getMostRecent();
+
+  public <D> D[] getData(D[] a);
+
   public IHistoryElement<T>[] toArray();
-
-  public T[] getData();
-
-  public void dispose();
 }

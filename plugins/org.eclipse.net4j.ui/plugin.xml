@@ -11,16 +11,22 @@
       </category>
       <view
             category="org.eclipse.net4j.ui"
+            class="org.eclipse.net4j.ui.widgets.HistoryView"
+            id="org.eclipse.net4j.ui.views.HistoryView"
+            name="History">
+      </view>
+      <view
+            category="org.eclipse.net4j.ui"
             class="org.eclipse.net4j.internal.ui.views.AcceptorsView"
             icon="icons/full/view16/acceptors.gif"
-            id="org.eclipse.net4j.internal.ui.views.AcceptorsView"
+            id="org.eclipse.net4j.ui.AcceptorsView"
             name="Acceptors">
       </view>
       <view
             category="org.eclipse.net4j.ui"
             class="org.eclipse.net4j.internal.ui.views.ConnectorsView"
             icon="icons/full/view16/connectors.gif"
-            id="org.eclipse.net4j.internal.ui.views.ConnectorsView"
+            id="org.eclipse.net4j.ui.ConnectorsView"
             name="Connectors">
       </view>
    </extension>

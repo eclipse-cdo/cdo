@@ -32,7 +32,8 @@ public class PreferenceHistory extends History<String>
   @Override
   protected void load()
   {
-    for (String data : preference.getValue())
+    String[] value = preference.getValue();
+    for (String data : value)
     {
       internalAdd(data);
     }
@@ -41,6 +42,7 @@ public class PreferenceHistory extends History<String>
   @Override
   protected void save()
   {
-    preference.setValue(getData());
+    String[] array = getData(new String[size()]);
+    preference.setValue(array);
   }
 }

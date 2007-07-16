@@ -8,36 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.container;
+package org.eclipse.net4j.util.collection;
+
+import org.eclipse.net4j.util.event.IEvent;
 
 /**
  * @author Eike Stepper
  */
-public final class ContainerUtil
+public interface IHistoryChangeEvent extends IEvent
 {
-  private static final Object[] NO_ELEMENTS = new Object[0];
-
-  private ContainerUtil()
-  {
-  }
-
-  public static boolean isEmpty(Object container)
-  {
-    if (container instanceof IContainer)
-    {
-      return ((IContainer)container).isEmpty();
-    }
-
-    return true;
-  }
-
-  public static Object[] getElements(Object container)
-  {
-    if (container instanceof IContainer)
-    {
-      return ((IContainer)container).getElements();
-    }
-
-    return NO_ELEMENTS;
-  }
 }

@@ -8,36 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.container;
+package org.eclipse.net4j.util.collection;
 
 /**
  * @author Eike Stepper
  */
-public final class ContainerUtil
+public interface IHistoryElement<T>
 {
-  private static final Object[] NO_ELEMENTS = new Object[0];
+  public IHistory getHistory();
 
-  private ContainerUtil()
-  {
-  }
+  public T getData();
 
-  public static boolean isEmpty(Object container)
-  {
-    if (container instanceof IContainer)
-    {
-      return ((IContainer)container).isEmpty();
-    }
-
-    return true;
-  }
-
-  public static Object[] getElements(Object container)
-  {
-    if (container instanceof IContainer)
-    {
-      return ((IContainer)container).getElements();
-    }
-
-    return NO_ELEMENTS;
-  }
+  public String getText();
 }

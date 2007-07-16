@@ -51,14 +51,14 @@ import org.eclipse.swt.widgets.Shell;
 /**
  * @author Eike Stepper
  */
-public class HistoryText extends Composite
+public class HistoryCombo extends Composite
 {
   private CCombo combo;
 
-  public HistoryText(Composite parent, int style)
+  public HistoryCombo(Composite parent, int comboStyle)
   {
     super(parent, SWT.NONE);
-    combo = new CCombo(this, style);
+    combo = new CCombo(this, comboStyle);
   }
 
   public CCombo getCombo()

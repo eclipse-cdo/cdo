@@ -8,36 +8,39 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.container;
+package org.eclipse.net4j.internal.util.collection;
+
+import org.eclipse.net4j.util.om.pref.OMPreference;
 
 /**
  * @author Eike Stepper
  */
-public final class ContainerUtil
+public class PreferenceHistory extends History<String>
 {
-  private static final Object[] NO_ELEMENTS = new Object[0];
+  private OMPreference<String[]> preference;
 
-  private ContainerUtil()
+  public PreferenceHistory(OMPreference<String[]> preference)
   {
+    this.preference = preference;
   }
 
-  public static boolean isEmpty(Object container)
+  public OMPreference<String[]> getPreference()
   {
-    if (container instanceof IContainer)
-    {
-      return ((IContainer)container).isEmpty();
-    }
-
-    return true;
+    return preference;
   }
 
-  public static Object[] getElements(Object container)
+  @Override
+  protected void load()
   {
-    if (container instanceof IContainer)
+    for (String data : preference.getValue())
     {
-      return ((IContainer)container).getElements();
+      internalAdd(data);
     }
+  }
 
-    return NO_ELEMENTS;
+  @Override
+  protected void save()
+  {
+    preference.setValue(getData());
   }
 }

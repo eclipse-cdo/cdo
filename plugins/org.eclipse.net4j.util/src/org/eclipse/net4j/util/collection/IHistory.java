@@ -8,36 +8,32 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.container;
+package org.eclipse.net4j.util.collection;
+
+import org.eclipse.net4j.util.event.INotifier;
 
 /**
  * @author Eike Stepper
  */
-public final class ContainerUtil
+public interface IHistory<T> extends INotifier, Iterable<IHistoryElement<T>>
 {
-  private static final Object[] NO_ELEMENTS = new Object[0];
+  public boolean isEmpty();
 
-  private ContainerUtil()
-  {
-  }
+  public int size();
 
-  public static boolean isEmpty(Object container)
-  {
-    if (container instanceof IContainer)
-    {
-      return ((IContainer)container).isEmpty();
-    }
+  public boolean clear();
 
-    return true;
-  }
+  public int indexOf(T data);
 
-  public static Object[] getElements(Object container)
-  {
-    if (container instanceof IContainer)
-    {
-      return ((IContainer)container).getElements();
-    }
+  public boolean add(T data);
 
-    return NO_ELEMENTS;
-  }
+  public IHistoryElement<T> remove(int index);
+
+  public IHistoryElement<T> get(int index);
+
+  public IHistoryElement<T>[] toArray();
+
+  public T[] getData();
+
+  public void dispose();
 }

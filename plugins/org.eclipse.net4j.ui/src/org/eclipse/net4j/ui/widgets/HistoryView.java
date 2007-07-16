@@ -41,10 +41,10 @@ public class HistoryView extends ViewPart
   {
     Composite composite = UIUtil.createGridComposite(parent, 2);
     control = new HistoryText(composite, SWT.NONE, HISTORY);
-    control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
+    control.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
     Button button = new Button(composite, SWT.PUSH);
     button.setText("Use");
-    button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
+    button.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
     button.addSelectionListener(new SelectionAdapter()
     {
       @Override

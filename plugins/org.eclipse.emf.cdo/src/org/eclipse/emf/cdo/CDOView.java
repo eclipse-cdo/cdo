@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.net4j.util.event.INotifier;
@@ -52,6 +53,8 @@ public interface CDOView extends INotifier
   public CDOResource getResource(String path);
 
   public CDOObject newInstance(EClass eClass);
+
+  public CDOObject newInstance(CDOClass cdoClass);
 
   public CDORevision getRevision(CDOID id);
 

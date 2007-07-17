@@ -36,7 +36,6 @@ import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -63,7 +62,6 @@ import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
-import org.eclipse.emf.internal.cdo.util.EMFUtil;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -2211,8 +2209,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       if (resource != null)
       {
-        EClass eClass = EMFUtil.getEClass(cdoClass);
-        EObject object = EcoreUtil.create(eClass);
+        CDOObject object = view.newInstance(cdoClass);
         resource.getContents().add(object);
       }
     }

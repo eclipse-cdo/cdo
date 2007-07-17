@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 
 import org.eclipse.emf.internal.cdo.protocol.LoadPackageRequest;
-import org.eclipse.emf.internal.cdo.util.EMFUtil;
+import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.util.Collection;
 
@@ -29,7 +29,7 @@ public class CDOSessionPackageManager extends CDOPackageManagerImpl
   public CDOSessionPackageManager(CDOSessionImpl session)
   {
     this.session = session;
-    EMFUtil.addModelInfos(this);
+    ModelUtil.addModelInfos(this);
   }
 
   public CDOSessionImpl getSession()

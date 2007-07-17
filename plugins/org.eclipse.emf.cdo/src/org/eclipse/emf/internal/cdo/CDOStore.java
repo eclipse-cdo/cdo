@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.util.EMFUtil;
+import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 /**
  * @author Eike Stepper
@@ -420,7 +420,7 @@ public final class CDOStore implements EStore
     }
 
     CDOPackageManagerImpl packageManager = view.getSession().getPackageManager();
-    return EMFUtil.getCDOFeature(eFeature, packageManager);
+    return ModelUtil.getCDOFeature(eFeature, packageManager);
   }
 
   private static CDORevisionImpl getRevisionForReading(CDOObjectImpl cdoObject)

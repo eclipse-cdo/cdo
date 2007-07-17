@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.util.EMFUtil;
+import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 /**
  * @author Eike Stepper
@@ -63,7 +63,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     }
 
     CDOSessionPackageManager packageManager = view.getSession().getPackageManager();
-    return EMFUtil.getCDOClass(eClass(), packageManager);
+    return ModelUtil.getCDOClass(eClass(), packageManager);
   }
 
   public CDOID cdoID()
@@ -235,7 +235,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
   private void finalizeRevisionFeature(CDOViewImpl view, CDORevisionImpl revision, int i, Object setting,
       EStructuralFeature eFeature)
   {
-    CDOFeatureImpl cdoFeature = EMFUtil.getCDOFeature(eFeature, cdoView().getSession().getPackageManager());
+    CDOFeatureImpl cdoFeature = ModelUtil.getCDOFeature(eFeature, cdoView().getSession().getPackageManager());
     if (TRACER.isEnabled())
     {
       TRACER.format("Finalizing feature {0}", cdoFeature);

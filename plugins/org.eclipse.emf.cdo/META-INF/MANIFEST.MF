@@ -18,5 +18,6 @@ Export-Package: org.eclipse.emf.cdo;version="0.8.0",
  org.eclipse.emf.internal.cdo.util;version="0.8.0"
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.emf.ecore.xmi,
  org.eclipse.emf.cdo.protocol;bundle-version="0.8.0";visibility:=reexport
 Eclipse-LazyStart: true

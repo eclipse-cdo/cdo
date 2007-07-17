@@ -12,18 +12,15 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
-
-import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.util.EMFUtil;
+import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
-import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
@@ -62,13 +59,12 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   public Object put(String key, Object value)
   {
     EPackage ePackage = (EPackage)value;
-    if (isDynamicPackage(ePackage))
+    if (EMFUtil.isDynamicPackage(ePackage))
     {
       EPackageImpl copy = (EPackageImpl)EcoreUtil.copy(ePackage);
-      copy.setEFactoryInstance(createCDOFactory(copy));
-      fixEClassifiers(copy);
+      ModelUtil.prepareEPackage(copy);
 
-      CDOPackageImpl cdoPackage = EMFUtil.getCDOPackage(copy, session.getPackageManager());
+      CDOPackageImpl cdoPackage = ModelUtil.getCDOPackage(copy, session.getPackageManager());
       cdoPackage.setPersistent(false);
 
       ePackage = copy;
@@ -86,33 +82,5 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   public void putAll(Map<? extends String, ? extends Object> m)
   {
     throw new UnsupportedOperationException();
-  }
-
-  protected CDOFactoryImpl createCDOFactory(EPackage ePackage)
-  {
-    return new CDOFactoryImpl(ePackage);
-  }
-
-  private static boolean isDynamicPackage(EPackage ePackage)
-  {
-    return ePackage.getClass() == EPackageImpl.class;
-  }
-
-  private static void fixEClassifiers(EPackageImpl ePackage)
-  {
-    try
-    {
-      Method method = EPackageImpl.class.getDeclaredMethod("fixEClassifiers", ReflectUtil.NO_PARAMETERS);
-      if (!method.isAccessible())
-      {
-        method.setAccessible(true);
-      }
-
-      method.invoke(ePackage, ReflectUtil.NO_ARGUMENTS);
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-    }
   }
 }

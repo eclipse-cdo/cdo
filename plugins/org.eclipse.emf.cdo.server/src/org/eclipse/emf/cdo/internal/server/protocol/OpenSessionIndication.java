@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RepositoryManager;
 import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
@@ -18,6 +17,7 @@ import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
@@ -119,8 +119,8 @@ public class OpenSessionIndication extends IndicationWithResponse
   private void writePackageURIs(ExtendedDataOutputStream out, RepositoryPackageManager packageManager)
       throws IOException
   {
-    CDOPackageImpl[] packages = packageManager.getPackages();
-    for (CDOPackageImpl p : packages)
+    CDOPackage[] packages = packageManager.getPackages();
+    for (CDOPackage p : packages)
     {
       if (!p.isSystem())
       {

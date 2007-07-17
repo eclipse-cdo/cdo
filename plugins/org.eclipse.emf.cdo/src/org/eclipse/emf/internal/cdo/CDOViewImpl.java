@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.CDOViewResourcesEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -42,7 +43,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.ResourcePathRequest;
-import org.eclipse.emf.internal.cdo.util.EMFUtil;
+import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.text.MessageFormat;
 import java.util.Date;
@@ -198,7 +199,12 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public CDOObjectImpl newInstance(CDOClass cdoClass)
   {
-    EClass eClass = EMFUtil.getEClass(cdoClass);
+    EClass eClass = ModelUtil.getEClass((CDOClassImpl)cdoClass, session.getPackageRegistry());
+    if (eClass == null)
+    {
+      throw new IllegalStateException("No EClass for " + cdoClass);
+    }
+
     return newInstance(eClass);
   }
 
@@ -219,11 +225,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       return lastLookupObject;
     }
-
-    // if (TRACER.isEnabled())
-    // {
-    // TRACER.format("Looking up object {0}", id);
-    // }
 
     lastLookupID = id;
     lastLookupObject = objects.get(id);
@@ -504,7 +505,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
 
     CDORevisionImpl revision = getRevision(id);
-    CDOClass cdoClass = revision.getCDOClass();
+    CDOClassImpl cdoClass = revision.getCDOClass();
     CDOID resourceID = revision.getResourceID();
 
     CDOObjectImpl object = newInstance(cdoClass);

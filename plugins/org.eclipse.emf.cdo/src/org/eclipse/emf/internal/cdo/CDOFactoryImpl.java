@@ -10,24 +10,18 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.util.CDOPackageRegistry;
+import org.eclipse.emf.cdo.util.CDOFactory;
 
-import org.eclipse.emf.ecore.EPackage.Registry;
-import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 /**
  * @author Eike Stepper
  */
-public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOPackageRegistry
+public class CDOFactoryImpl extends EFactoryImpl implements CDOFactory
 {
-  private static final long serialVersionUID = 1L;
-
-  public CDOPackageRegistryImpl()
+  public CDOFactoryImpl(EPackage ePackage)
   {
-  }
-
-  public CDOPackageRegistryImpl(Registry delegateRegistry)
-  {
-    super(delegateRegistry);
+    this.ePackage = ePackage;
   }
 }

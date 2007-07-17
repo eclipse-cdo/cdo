@@ -10,16 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.impl.EFactoryImpl;
+import org.eclipse.emf.ecore.EFactory;
 
 /**
  * @author Eike Stepper
  */
-public class CDOFactoryImpl extends EFactoryImpl
+public interface CDOFactory extends EFactory
 {
-  public CDOFactoryImpl(EPackage ePackage)
-  {
-    this.ePackage = ePackage;
-  }
 }

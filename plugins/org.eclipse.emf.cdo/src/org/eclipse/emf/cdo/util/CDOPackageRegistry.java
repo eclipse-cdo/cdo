@@ -8,26 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.internal.cdo;
+package org.eclipse.emf.cdo.util;
 
-import org.eclipse.emf.cdo.util.CDOPackageRegistry;
-
-import org.eclipse.emf.ecore.EPackage.Registry;
-import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.emf.ecore.EPackage;
 
 /**
  * @author Eike Stepper
  */
-public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOPackageRegistry
+public interface CDOPackageRegistry extends EPackage.Registry
 {
-  private static final long serialVersionUID = 1L;
-
-  public CDOPackageRegistryImpl()
-  {
-  }
-
-  public CDOPackageRegistryImpl(Registry delegateRegistry)
-  {
-    super(delegateRegistry);
-  }
 }

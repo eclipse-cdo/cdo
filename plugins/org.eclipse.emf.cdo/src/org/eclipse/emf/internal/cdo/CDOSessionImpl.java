@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.ConnectorException;
@@ -65,7 +66,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   private Set<String> packageURIs;
 
-  private EPackage.Registry ePackageRegistry;
+  private CDOPackageRegistryImpl packageRegistry;
 
   private CDOSessionPackageManager packageManager;
 
@@ -90,11 +91,8 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     {
       ePackageRegistry = EPackage.Registry.INSTANCE;
     }
-    else
-    {
-      this.ePackageRegistry = ePackageRegistry;
-    }
 
+    this.packageRegistry = new CDOPackageRegistryImpl(ePackageRegistry);
     packageManager = new CDOSessionPackageManager(this);
     revisionManager = new CDORevisionManagerImpl(this);
   }
@@ -162,9 +160,9 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     deactivate();
   }
 
-  public EPackage.Registry getEPackageRegistry()
+  public CDOPackageRegistry getPackageRegistry()
   {
-    return ePackageRegistry;
+    return packageRegistry;
   }
 
   public CDOSessionPackageManager getPackageManager()
@@ -322,7 +320,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
       throw new IllegalStateException("CDO view already open: " + view);
     }
 
-    resourceSet.setPackageRegistry(new EPackageRegistryImpl(ePackageRegistry));
+    resourceSet.setPackageRegistry(new EPackageRegistryImpl(packageRegistry));
     CDOUtil.addResourceFactory(resourceSet);
   }
 

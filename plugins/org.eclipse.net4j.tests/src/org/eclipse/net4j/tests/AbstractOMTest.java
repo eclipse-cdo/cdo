@@ -28,7 +28,7 @@ public abstract class AbstractOMTest extends TestCase
   }
 
   @Override
-  protected void setUp() throws Exception
+  public final void setUp() throws Exception
   {
     super.setUp();
     System.out.println("************************************************");
@@ -39,12 +39,20 @@ public abstract class AbstractOMTest extends TestCase
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     OMPlatform.INSTANCE.setDebugging(true);
     enableConsole();
+
+    doSetUp();
+    System.out.println();
+    System.out.println("------------------------ START ------------------------");
   }
 
   @Override
-  protected void tearDown() throws Exception
+  public final void tearDown() throws Exception
   {
-    Thread.sleep(20);
+    Thread.sleep(200);
+    System.out.println("------------------------ END --------------------------");
+    System.out.println();
+
+    doTearDown();
     super.tearDown();
     System.out.println();
     System.out.println();
@@ -81,5 +89,13 @@ public abstract class AbstractOMTest extends TestCase
       System.out.println();
       System.out.println("--> " + m);
     }
+  }
+
+  protected void doSetUp() throws Exception
+  {
+  }
+
+  protected void doTearDown() throws Exception
+  {
   }
 }

@@ -29,12 +29,15 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.util.EMFUtil;
 
@@ -159,7 +162,11 @@ public final class CDOUtil
 
   public static void prepareEPackage(EPackage ePackage)
   {
-    ePackage.setEFactoryInstance(new CDOFactoryImpl(ePackage));
+    EFactory factory = ePackage.getEFactoryInstance();
+    if (factory == null || factory.getClass() == EFactoryImpl.class)
+    {
+      ePackage.setEFactoryInstance(new CDOFactoryImpl(ePackage));
+    }
   }
 
   public static EPackage createEPackage(String name, String nsPrefix, String nsURI)

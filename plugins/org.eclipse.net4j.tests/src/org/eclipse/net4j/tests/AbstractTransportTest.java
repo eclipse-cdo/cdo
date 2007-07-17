@@ -35,37 +35,27 @@ public abstract class AbstractTransportTest extends AbstractOMTest
   private Connector connector;
 
   @Override
-  protected void setUp() throws Exception
+  protected void doSetUp() throws Exception
   {
-    super.setUp();
+    super.doSetUp();
     container = createContainer();
     LifecycleUtil.activate(container);
-
-    System.out.println();
-    System.out.println("---------------- START ----------------");
   }
 
   @Override
-  protected void tearDown() throws Exception
+  protected void doTearDown() throws Exception
   {
-    Thread.sleep(200);
-    System.out.println();
-    System.out.println("---------------- END ------------------");
-
     try
     {
+      Thread.sleep(20);
       LifecycleUtil.deactivate(container);
-    }
-    catch (Exception ex)
-    {
-      ex.printStackTrace();
     }
     finally
     {
       connector = null;
       acceptor = null;
       container = null;
-      super.tearDown();
+      super.doTearDown();
     }
   }
 

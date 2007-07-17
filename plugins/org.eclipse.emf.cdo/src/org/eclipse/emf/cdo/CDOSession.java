@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
+import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.util.container.IContainer;
@@ -31,6 +32,8 @@ public interface CDOSession extends IContainer<CDOView>
   public String getRepositoryName();
 
   public String getRepositoryUUID();
+
+  public CDOPackageRegistry getPackageRegistry();
 
   public CDOPackageManager getPackageManager();
 

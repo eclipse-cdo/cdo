@@ -82,14 +82,6 @@ public final class RepositoryManager extends Lifecycle implements IRepositoryMan
     }
   }
 
-  public void clear()
-  {
-    synchronized (repositories)
-    {
-      repositories.clear();
-    }
-  }
-
   public boolean isEmpty()
   {
     synchronized (repositories)
@@ -115,16 +107,21 @@ public final class RepositoryManager extends Lifecycle implements IRepositoryMan
   @Override
   protected void doDeactivate() throws Exception
   {
-    for (Repository repository : getRepositories())
+    synchronized (repositories)
     {
-      try
+      for (Repository repository : getRepositories())
       {
-        LifecycleUtil.deactivate(repository);
+        try
+        {
+          LifecycleUtil.deactivate(repository);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.warn(ex);
+        }
       }
-      catch (Exception ex)
-      {
-        OM.LOG.warn(ex);
-      }
+
+      repositories.clear();
     }
 
     super.doDeactivate();

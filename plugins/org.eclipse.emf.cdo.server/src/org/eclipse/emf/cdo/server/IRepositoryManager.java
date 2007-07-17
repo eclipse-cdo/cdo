@@ -30,8 +30,6 @@ public interface IRepositoryManager
 
   public IRepository addRepository(String name, IStore store);
 
-  public void clear();
-
   public boolean isEmpty();
 
   public int size();

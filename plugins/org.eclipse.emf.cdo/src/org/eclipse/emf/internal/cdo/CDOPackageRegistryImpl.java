@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.util.Map;
@@ -58,19 +57,16 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   @Override
   public Object put(String key, Object value)
   {
-    EPackage ePackage = (EPackage)value;
-    if (EMFUtil.isDynamicPackage(ePackage))
+    if (EMFUtil.isDynamicEPackage(value))
     {
-      EPackageImpl copy = (EPackageImpl)EcoreUtil.copy(ePackage);
-      ModelUtil.prepareEPackage(copy);
-
-      CDOPackageImpl cdoPackage = ModelUtil.getCDOPackage(copy, session.getPackageManager());
+      EPackageImpl ePackage = (EPackageImpl)value;
+      ModelUtil.prepareEPackage(ePackage);
+      CDOPackageImpl cdoPackage = ModelUtil.getCDOPackage(ePackage, session.getPackageManager());
       cdoPackage.setPersistent(false);
-
-      ePackage = copy;
+      value = ePackage;
     }
 
-    return internalPut(key, ePackage);
+    return internalPut(key, value);
   }
 
   public Object internalPut(String key, Object value)

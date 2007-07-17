@@ -115,7 +115,7 @@ public final class ModelUtil
   private static CDOPackageImpl createCDOPackage(EPackage ePackage, CDOPackageManagerImpl packageManager)
   {
     String ecore = null;
-    if (EMFUtil.isDynamicPackage(ePackage))
+    if (EMFUtil.isDynamicEPackage(ePackage))
     {
       ByteArrayOutputStream stream = new ByteArrayOutputStream();
       XMIResource resource = new XMIResourceImpl();
@@ -178,8 +178,8 @@ public final class ModelUtil
   private static CDOFeatureImpl createCDOFeature(CDOClassImpl containingClass, EStructuralFeature eFeature,
       CDOPackageManagerImpl packageManager)
   {
-    CDOFeatureImpl cdoFeature = EMFUtil.isReference(eFeature) ? createCDOReference(containingClass, eFeature, packageManager)
-        : createCDOAttribute(containingClass, eFeature);
+    CDOFeatureImpl cdoFeature = EMFUtil.isReference(eFeature) ? createCDOReference(containingClass, eFeature,
+        packageManager) : createCDOAttribute(containingClass, eFeature);
     cdoFeature.setClientInfo(eFeature);
     return cdoFeature;
   }

@@ -25,7 +25,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * @author Eike Stepper
  */
@@ -45,7 +44,7 @@ public final class EMFUtil
         result.add((EClass)classifier);
       }
     }
-  
+
     return result;
   }
 
@@ -59,13 +58,13 @@ public final class EMFUtil
         result.add(feature);
       }
     }
-  
+
     return result;
   }
 
-  public static boolean isDynamicPackage(EPackage ePackage)
+  public static boolean isDynamicEPackage(Object value)
   {
-    return ePackage.getClass() == EPackageImpl.class;
+    return value.getClass() == EPackageImpl.class;
   }
 
   public static boolean isMany(EStructuralFeature eFeature)
@@ -85,7 +84,7 @@ public final class EMFUtil
       EReference ref = (EReference)eFeature;
       return ref.isContainment();
     }
-  
+
     return false;
   }
 
@@ -101,7 +100,7 @@ public final class EMFUtil
       {
         method.setAccessible(true);
       }
-  
+
       method.invoke(ePackage, ReflectUtil.NO_ARGUMENTS);
     }
     catch (Exception ex)

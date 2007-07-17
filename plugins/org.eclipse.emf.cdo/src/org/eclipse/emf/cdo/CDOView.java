@@ -53,7 +53,7 @@ public interface CDOView extends INotifier
 
   public CDOObject newInstance(EClass eClass);
 
-  public CDORevision resolve(CDOID id);
+  public CDORevision getRevision(CDOID id);
 
   public boolean isDirty();
 

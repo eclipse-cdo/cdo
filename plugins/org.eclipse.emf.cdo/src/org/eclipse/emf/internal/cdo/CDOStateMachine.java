@@ -453,7 +453,7 @@ public final class CDOStateMachine
     {
       CDOID id = object.cdoID();
       CDOViewImpl view = object.cdoView();
-      CDORevisionImpl revision = view.resolve(id);
+      CDORevisionImpl revision = view.getRevision(id);
       object.setRevision(revision);
       object.setState(CDOState.CLEAN);
 
@@ -498,6 +498,10 @@ public final class CDOStateMachine
       try
       {
         return signal.send();
+      }
+      catch (RuntimeException ex)
+      {
+        throw ex;
       }
       catch (Exception ex)
       {

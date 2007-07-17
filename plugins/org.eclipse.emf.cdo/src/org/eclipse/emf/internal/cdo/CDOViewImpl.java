@@ -36,7 +36,6 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -182,6 +181,10 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
       return resource;
     }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
     catch (Exception ex)
     {
       throw new TransportException(ex);
@@ -199,7 +202,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return newInstance(eClass);
   }
 
-  public CDORevisionImpl resolve(CDOID id)
+  public CDORevisionImpl getRevision(CDOID id)
   {
     CDORevisionResolver revisionManager = session.getRevisionManager();
     if (isReadWrite())
@@ -500,7 +503,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       TRACER.format("Creating object from view: ID={0}", id);
     }
 
-    CDORevisionImpl revision = resolve(id);
+    CDORevisionImpl revision = getRevision(id);
     CDOClass cdoClass = revision.getCDOClass();
     CDOID resourceID = revision.getResourceID();
 

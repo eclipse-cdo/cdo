@@ -48,7 +48,6 @@ public final class CDOUtil
   {
   }
 
-  @Deprecated
   public static CDOSession openSession(IConnector connector, String repositoryName, EPackage.Registry delegate)
       throws ConnectorException
   {

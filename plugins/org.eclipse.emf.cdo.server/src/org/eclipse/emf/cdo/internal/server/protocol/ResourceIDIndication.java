@@ -32,7 +32,7 @@ public class ResourceIDIndication extends CDOServerIndication
 
   public ResourceIDIndication()
   {
-    super(CDOProtocolConstants.RESOURCE_ID_SIGNAL);
+    super(CDOProtocolConstants.SIGNAL_RESOURCE_ID);
   }
 
   @Override

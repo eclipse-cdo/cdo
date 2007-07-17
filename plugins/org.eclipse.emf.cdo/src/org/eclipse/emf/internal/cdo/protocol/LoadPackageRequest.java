@@ -18,42 +18,30 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public class RegisterPackagesRequest extends CDOClientRequest
+public class LoadPackageRequest extends CDOClientRequest
 {
-  private Collection<CDOPackageImpl> newPackages;
+  private CDOPackageImpl cdoPackage;
 
-  public RegisterPackagesRequest(IChannel channel, Collection<CDOPackageImpl> newPackages)
+  public LoadPackageRequest(IChannel channel, CDOPackageImpl cdoPackage)
   {
-    super(channel, CDOProtocolConstants.REGISTER_PACKAGES_SIGNAL);
-    this.newPackages = newPackages;
+    super(channel, CDOProtocolConstants.SIGNAL_LOAD_PACKAGE);
+    this.cdoPackage = cdoPackage;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    out.writeInt(newPackages.size());
-    for (CDOPackageImpl newPackage : newPackages)
-    {
-      newPackage.write(out);
-    }
+    out.writeString(cdoPackage.getPackageURI());
   }
 
   @Override
   protected Object confirming(ExtendedDataInputStream in) throws IOException
   {
-    in.readBoolean();
-    Set<String> knownPackages = getSession().getPackageURIs();
-    for (CDOPackageImpl newPackage : newPackages)
-    {
-      knownPackages.add(newPackage.getPackageURI());
-    }
-
+    cdoPackage.read(in);
     return null;
   }
 }

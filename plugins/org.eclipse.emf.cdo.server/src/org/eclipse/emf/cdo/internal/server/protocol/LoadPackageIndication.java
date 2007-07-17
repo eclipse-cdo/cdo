@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -23,34 +24,30 @@ import java.io.IOException;
  * @author Eike Stepper
  */
 @SuppressWarnings("unused")
-public class RegisterPackagesIndication extends CDOServerIndication
+public class LoadPackageIndication extends CDOServerIndication
 {
-  public RegisterPackagesIndication()
+  private CDOPackageImpl cdoPackage;
+
+  public LoadPackageIndication()
   {
-    super(CDOProtocolConstants.REGISTER_PACKAGES_SIGNAL);
+    super(CDOProtocolConstants.SIGNAL_LOAD_PACKAGE);
   }
 
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
+    String packageURI = in.readString();
     RepositoryPackageManager packageManager = getPackageManager();
-    int size = in.readInt();
-    CDOPackageImpl[] newPackages = new CDOPackageImpl[size];
-    for (int i = 0; i < size; i++)
+    cdoPackage = packageManager.lookupPackage(packageURI);
+    if (cdoPackage == null)
     {
-      newPackages[i] = new CDOPackageImpl(packageManager, in);
-      packageManager.addPackage(newPackages[i]);
-    }
-
-    for (int i = 0; i < size; i++)
-    {
-      newPackages[i].initialize();
+      throw new ImplementationError("CDO package not found: " + packageURI);
     }
   }
 
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    out.writeBoolean(true);
+    cdoPackage.write(out);
   }
 }

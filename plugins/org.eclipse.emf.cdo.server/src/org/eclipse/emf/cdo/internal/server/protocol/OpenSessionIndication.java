@@ -10,14 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RepositoryManager;
+import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
-import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
@@ -46,7 +46,7 @@ public class OpenSessionIndication extends IndicationWithResponse
   @Override
   protected short getSignalID()
   {
-    return CDOProtocolConstants.OPEN_SESSION_SIGNAL;
+    return CDOProtocolConstants.SIGNAL_OPEN_SESSION;
   }
 
   @Override
@@ -116,18 +116,23 @@ public class OpenSessionIndication extends IndicationWithResponse
     out.writeString(repository.getUUID());
   }
 
-  private void writePackageURIs(ExtendedDataOutputStream out, CDOPackageManager packageManager) throws IOException
+  private void writePackageURIs(ExtendedDataOutputStream out, RepositoryPackageManager packageManager)
+      throws IOException
   {
-    CDOPackage[] packages = packageManager.getPackages();
-    out.writeInt(packages.length);
-    for (CDOPackage p : packages)
+    CDOPackageImpl[] packages = packageManager.getPackages();
+    for (CDOPackageImpl p : packages)
     {
-      if (PROTOCOL.isEnabled())
+      if (!p.isSystem())
       {
-        PROTOCOL.format("Writing package URI: {0}", p.getPackageURI());
-      }
+        if (PROTOCOL.isEnabled())
+        {
+          PROTOCOL.format("Writing package URI: {0}", p.getPackageURI());
+        }
 
-      out.writeString(p.getPackageURI());
+        out.writeString(p.getPackageURI());
+      }
     }
+
+    out.writeString(null);
   }
 }

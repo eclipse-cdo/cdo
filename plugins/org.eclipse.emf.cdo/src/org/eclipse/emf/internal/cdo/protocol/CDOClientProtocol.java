@@ -48,7 +48,7 @@ public class CDOClientProtocol extends SignalProtocol
   {
     switch (signalID)
     {
-    case CDOProtocolConstants.INVALIDATION_SIGNAL:
+    case CDOProtocolConstants.SIGNAL_INVALIDATION:
       return new InvalidationIndication();
     }
 

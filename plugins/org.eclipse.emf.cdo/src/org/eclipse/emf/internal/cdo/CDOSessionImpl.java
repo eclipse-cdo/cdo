@@ -63,8 +63,6 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   private String repositoryUUID;
 
-  private Set<String> packageURIs;
-
   private CDOPackageRegistryImpl packageRegistry;
 
   private CDOSessionPackageManager packageManager;
@@ -86,12 +84,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   public CDOSessionImpl(EPackage.Registry delegate)
   {
-    if (delegate == null)
-    {
-      delegate = EPackage.Registry.INSTANCE;
-    }
-
-    this.packageRegistry = new CDOPackageRegistryImpl(delegate);
+    this.packageRegistry = new CDOPackageRegistryImpl(this, delegate);
     packageManager = new CDOSessionPackageManager(this);
     revisionManager = new CDORevisionManagerImpl(this);
   }
@@ -142,11 +135,6 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
   public String getRepositoryUUID()
   {
     return repositoryUUID;
-  }
-
-  public Set<String> getPackageURIs()
-  {
-    return packageURIs;
   }
 
   public boolean isOpen()
@@ -287,7 +275,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     OpenSessionResult result = request.send();
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
-    packageURIs = result.getPackageURIs();
+    packageManager.addPackageProxies(result.getPackageURIs());
   }
 
   @Override

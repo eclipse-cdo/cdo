@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -37,6 +39,8 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CommitTransactionIndication.class);
 
+  private CDOPackageImpl[] newPackages;
+
   private CDORevisionImpl[] newResources;
 
   private CDORevisionImpl[] newObjects;
@@ -49,15 +53,35 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   public CommitTransactionIndication()
   {
-    super(CDOProtocolConstants.COMMIT_TRANSACTION_SIGNAL);
+    super(CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION);
   }
 
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
+    newPackages = readNewPackages(in);
     newResources = readNewResources(in);
     newObjects = readNewObjects(in);
     dirtyObjects = readDirtyObjects(in);
+  }
+
+  private CDOPackageImpl[] readNewPackages(ExtendedDataInputStream in) throws IOException
+  {
+    int size = in.readInt();
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Reading {0} new packages", size);
+    }
+
+    RepositoryPackageManager packageManager = getPackageManager();
+    CDOPackageImpl[] packages = new CDOPackageImpl[size];
+    for (int i = 0; i < size; i++)
+    {
+      packages[i] = new CDOPackageImpl(packageManager, in);
+      packageManager.addPackage(packages[i]);
+    }
+
+    return packages;
   }
 
   private CDORevisionImpl[] readNewResources(ExtendedDataInputStream in) throws IOException

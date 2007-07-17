@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.net4j.util.ReflectUtil;
@@ -20,6 +21,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.util.EMFUtil;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -31,18 +33,29 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
 {
   private static final long serialVersionUID = 1L;
 
-  public CDOPackageRegistryImpl()
+  private CDOSessionImpl session;
+
+  public CDOPackageRegistryImpl(CDOSessionImpl session)
   {
+    this.session = session;
   }
 
-  public CDOPackageRegistryImpl(Registry delegateRegistry)
+  public CDOPackageRegistryImpl(CDOSessionImpl session, Registry delegateRegistry)
   {
     super(delegateRegistry);
+    this.session = session;
+  }
+
+  public CDOSessionImpl getSession()
+  {
+    return session;
   }
 
   public EPackage putEPackage(EPackage ePackage)
   {
-    return (EPackage)put(ePackage.getNsURI(), ePackage);
+    String uri = ePackage.getNsURI();
+    put(uri, ePackage);
+    return getEPackage(uri);
   }
 
   @Override
@@ -54,11 +67,19 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
       EPackageImpl copy = (EPackageImpl)EcoreUtil.copy(ePackage);
       copy.setEFactoryInstance(createCDOFactory(copy));
       fixEClassifiers(copy);
+
+      CDOPackageImpl cdoPackage = EMFUtil.getCDOPackage(copy, session.getPackageManager());
+      cdoPackage.setPersistent(false);
+
       ePackage = copy;
     }
 
-    super.put(key, ePackage);
-    return ePackage;
+    return internalPut(key, ePackage);
+  }
+
+  public Object internalPut(String key, Object value)
+  {
+    return super.put(key, value);
   }
 
   @Override

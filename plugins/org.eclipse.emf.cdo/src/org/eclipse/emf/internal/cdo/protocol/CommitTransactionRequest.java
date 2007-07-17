@@ -11,6 +11,7 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDOReferenceConverter;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -30,6 +31,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,7 +47,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   public CommitTransactionRequest(IChannel channel, final CDOTransactionImpl transaction)
   {
-    super(channel, CDOProtocolConstants.COMMIT_TRANSACTION_SIGNAL);
+    super(channel, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION);
     this.transaction = transaction;
     converter = new CDOReferenceConverter()
     {
@@ -72,9 +74,25 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
+    writeNewPackages(out);
     writeNewResources(out);
     writeNewObjects(out);
     writeDirtyObjects(out);
+  }
+
+  private void writeNewPackages(ExtendedDataOutputStream out) throws IOException
+  {
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing {0} new packages", transaction.getNewResources().size());
+    }
+
+    List<CDOPackageImpl> newPackages = transaction.getNewPackages();
+    out.writeInt(newPackages.size());
+    for (CDOPackageImpl newPackage : newPackages)
+    {
+      newPackage.write(out);
+    }
   }
 
   private void writeNewResources(ExtendedDataOutputStream out) throws IOException

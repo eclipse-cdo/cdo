@@ -32,7 +32,7 @@ public class ResourcePathIndication extends CDOServerIndication
 
   public ResourcePathIndication()
   {
-    super(CDOProtocolConstants.RESOURCE_PATH_SIGNAL);
+    super(CDOProtocolConstants.SIGNAL_RESOURCE_PATH);
   }
 
   @Override

@@ -44,7 +44,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
   @Override
   protected short getSignalID()
   {
-    return CDOProtocolConstants.OPEN_SESSION_SIGNAL;
+    return CDOProtocolConstants.SIGNAL_OPEN_SESSION;
   }
 
   @Override
@@ -86,10 +86,14 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
     }
 
     Set<String> packageURIs = new HashSet();
-    int size = in.readInt();
-    for (int i = 0; i < size; i++)
+    for (;;)
     {
       String packageURI = in.readString();
+      if (packageURI == null)
+      {
+        break;
+      }
+
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("Read package URI: {0}", packageURI);

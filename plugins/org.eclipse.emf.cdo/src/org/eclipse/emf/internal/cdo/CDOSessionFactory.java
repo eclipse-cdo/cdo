@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.net4j.internal.util.factory.Factory;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.core.runtime.IPath;
@@ -35,7 +36,7 @@ public class CDOSessionFactory extends Factory<CDOSession>
 
   public CDOSession create(String description)
   {
-    CDOSessionImpl session = new CDOSessionImpl(null);
+    CDOSessionImpl session = new CDOSessionImpl(EPackage.Registry.INSTANCE);
     session.setRepositoryName(getRepositoryName(description));
     return session;
   }

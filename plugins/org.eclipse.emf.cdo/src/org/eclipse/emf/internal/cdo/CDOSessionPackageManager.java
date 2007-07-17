@@ -12,8 +12,12 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
+import org.eclipse.emf.cdo.protocol.util.TransportException;
 
+import org.eclipse.emf.internal.cdo.protocol.LoadPackageRequest;
 import org.eclipse.emf.internal.cdo.util.EMFUtil;
+
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -33,9 +37,29 @@ public class CDOSessionPackageManager extends CDOPackageManagerImpl
     return session;
   }
 
-  @Override
-  protected CDOPackageImpl resolve(String packageURI)
+  public void addPackageProxies(Collection<String> packageURIs)
   {
-    return null;
+    for (String packageURI : packageURIs)
+    {
+      CDOPackageImpl proxy = new CDOPackageImpl(this, packageURI);
+      addPackage(proxy);
+    }
+  }
+
+  @Override
+  protected void resolve(CDOPackageImpl cdoPackage)
+  {
+    try
+    {
+      new LoadPackageRequest(session.getChannel(), cdoPackage).send();
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new TransportException(ex);
+    }
   }
 }

@@ -34,7 +34,7 @@ public class ResourceIDRequest extends CDOClientRequest<CDOID>
 
   public ResourceIDRequest(IChannel channel, String path)
   {
-    super(channel, CDOProtocolConstants.RESOURCE_ID_SIGNAL);
+    super(channel, CDOProtocolConstants.SIGNAL_RESOURCE_ID);
     this.path = path;
   }
 

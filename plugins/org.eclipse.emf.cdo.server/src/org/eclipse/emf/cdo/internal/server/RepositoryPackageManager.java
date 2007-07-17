@@ -31,8 +31,9 @@ public class RepositoryPackageManager extends CDOPackageManagerImpl
   }
 
   @Override
-  protected CDOPackageImpl resolve(String packageURI)
+  protected void resolve(CDOPackageImpl cdoPackage)
   {
-    return null;
+    // TODO Implement method RepositoryPackageManager.resolve()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 }

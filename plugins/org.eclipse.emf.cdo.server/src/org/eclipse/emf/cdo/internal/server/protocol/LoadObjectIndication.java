@@ -36,7 +36,7 @@ public class LoadObjectIndication extends CDOServerIndication
 
   public LoadObjectIndication()
   {
-    super(CDOProtocolConstants.LOAD_OBJECT_SIGNAL);
+    super(CDOProtocolConstants.SIGNAL_LOAD_OBJECT);
   }
 
   @Override

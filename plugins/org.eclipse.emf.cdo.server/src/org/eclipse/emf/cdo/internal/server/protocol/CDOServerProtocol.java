@@ -47,22 +47,22 @@ public class CDOServerProtocol extends SignalProtocol
   {
     switch (signalID)
     {
-    case CDOProtocolConstants.OPEN_SESSION_SIGNAL:
+    case CDOProtocolConstants.SIGNAL_OPEN_SESSION:
       return new OpenSessionIndication();
 
-    case CDOProtocolConstants.RESOURCE_ID_SIGNAL:
+    case CDOProtocolConstants.SIGNAL_RESOURCE_ID:
       return new ResourceIDIndication();
 
-    case CDOProtocolConstants.RESOURCE_PATH_SIGNAL:
+    case CDOProtocolConstants.SIGNAL_RESOURCE_PATH:
       return new ResourcePathIndication();
 
-    case CDOProtocolConstants.LOAD_OBJECT_SIGNAL:
+    case CDOProtocolConstants.SIGNAL_LOAD_PACKAGE:
+      return new LoadPackageIndication();
+
+    case CDOProtocolConstants.SIGNAL_LOAD_OBJECT:
       return new LoadObjectIndication();
 
-    case CDOProtocolConstants.REGISTER_PACKAGES_SIGNAL:
-      return new RegisterPackagesIndication();
-
-    case CDOProtocolConstants.COMMIT_TRANSACTION_SIGNAL:
+    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION:
       return new CommitTransactionIndication();
     }
 

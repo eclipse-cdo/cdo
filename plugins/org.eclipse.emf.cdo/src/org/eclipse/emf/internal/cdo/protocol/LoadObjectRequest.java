@@ -37,7 +37,7 @@ public class LoadObjectRequest extends CDOClientRequest<CDORevisionImpl>
 
   public LoadObjectRequest(IChannel channel, CDOID id)
   {
-    super(channel, CDOProtocolConstants.LOAD_OBJECT_SIGNAL);
+    super(channel, CDOProtocolConstants.SIGNAL_LOAD_OBJECT);
     this.id = id;
   }
 

@@ -39,7 +39,7 @@ public class InvalidationIndication extends Indication
   @Override
   protected short getSignalID()
   {
-    return CDOProtocolConstants.INVALIDATION_SIGNAL;
+    return CDOProtocolConstants.SIGNAL_INVALIDATION;
   }
 
   @Override

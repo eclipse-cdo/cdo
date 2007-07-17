@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
+import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
 import org.eclipse.emf.cdo.internal.server.ResourceManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.Session;
@@ -40,7 +40,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     return signalID;
   }
 
-  protected CDOPackageManagerImpl getPackageManager()
+  protected RepositoryPackageManager getPackageManager()
   {
     return getRepository().getPackageManager();
   }

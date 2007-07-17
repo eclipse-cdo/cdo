@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
+import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -33,7 +33,7 @@ public class RegisterPackagesIndication extends CDOServerIndication
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    CDOPackageManagerImpl packageManager = getPackageManager();
+    RepositoryPackageManager packageManager = getPackageManager();
     int size = in.readInt();
     CDOPackageImpl[] newPackages = new CDOPackageImpl[size];
     for (int i = 0; i < size; i++)
@@ -51,5 +51,6 @@ public class RegisterPackagesIndication extends CDOServerIndication
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
+    out.writeBoolean(true);
   }
 }

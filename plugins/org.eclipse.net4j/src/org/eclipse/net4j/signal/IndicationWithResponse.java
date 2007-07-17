@@ -52,5 +52,10 @@ public abstract class IndicationWithResponse extends SignalReactor
 
   protected abstract void indicating(ExtendedDataInputStream in) throws IOException;
 
+  /**
+   * <b>Important Note:</b> The response must not be empty, i.e. the stream
+   * must be used at least to write a <code>boolean</code>. Otherwise
+   * synchronization problems will result!
+   */
   protected abstract void responding(ExtendedDataOutputStream out) throws IOException;
 }

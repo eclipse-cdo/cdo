@@ -47,6 +47,7 @@ public class RegisterPackagesRequest extends CDOClientRequest
   @Override
   protected Object confirming(ExtendedDataInputStream in) throws IOException
   {
+    in.readBoolean();
     Set<String> knownPackages = getSession().getPackageURIs();
     for (CDOPackageImpl newPackage : newPackages)
     {

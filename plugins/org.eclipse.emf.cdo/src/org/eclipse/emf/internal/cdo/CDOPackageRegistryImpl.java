@@ -72,12 +72,12 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     return new CDOFactoryImpl(ePackage);
   }
 
-  private boolean isDynamicPackage(EPackage ePackage)
+  private static boolean isDynamicPackage(EPackage ePackage)
   {
     return ePackage.getClass() == EPackageImpl.class;
   }
 
-  private void fixEClassifiers(EPackageImpl ePackage)
+  private static void fixEClassifiers(EPackageImpl ePackage)
   {
     try
     {

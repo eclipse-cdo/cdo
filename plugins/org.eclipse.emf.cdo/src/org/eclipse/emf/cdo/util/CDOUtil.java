@@ -10,14 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
 
 import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.IConnector;
@@ -36,10 +34,8 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.util.EMFUtil;
 
 import java.util.Map;
 
@@ -53,10 +49,10 @@ public final class CDOUtil
   }
 
   @Deprecated
-  public static CDOSession openSession(IConnector connector, String repositoryName, EPackage.Registry ePackageRegistry)
+  public static CDOSession openSession(IConnector connector, String repositoryName, EPackage.Registry delegate)
       throws ConnectorException
   {
-    CDOSessionImpl session = new CDOSessionImpl(ePackageRegistry);
+    CDOSessionImpl session = new CDOSessionImpl(delegate);
     session.setConnector(connector);
     session.setRepositoryName(repositoryName);
     LifecycleUtil.activate(session);
@@ -152,12 +148,6 @@ public final class CDOUtil
   public static URI createURI(String path)
   {
     return URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":" + path);
-  }
-
-  public static CDOObject createObject(CDOClass cdoClass)
-  {
-    EClass eClass = EMFUtil.getEClass(cdoClass);
-    return (CDOObject)EcoreUtil.create(eClass);
   }
 
   public static void prepareEPackage(EPackage ePackage)

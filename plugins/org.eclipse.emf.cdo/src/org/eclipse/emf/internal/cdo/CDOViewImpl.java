@@ -35,11 +35,15 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.ResourcePathRequest;
+import org.eclipse.emf.internal.cdo.util.EMFUtil;
 
 import java.text.MessageFormat;
 import java.util.Date;
@@ -128,17 +132,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return transaction == null;
   }
 
-  public CDORevisionImpl resolve(CDOID id)
-  {
-    CDORevisionResolver revisionManager = session.getRevisionManager();
-    if (isReadWrite())
-    {
-      return (CDORevisionImpl)revisionManager.getRevision(id);
-    }
-
-    return (CDORevisionImpl)revisionManager.getRevision(id, timeStamp);
-  }
-
   public CDOResource createResource(String path)
   {
     URI createURI = CDOUtil.createURI(path);
@@ -193,6 +186,28 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       throw new TransportException(ex);
     }
+  }
+
+  public CDOObjectImpl newInstance(EClass eClass)
+  {
+    return (CDOObjectImpl)EcoreUtil.create(eClass);
+  }
+
+  public CDOObjectImpl newInstance(CDOClass cdoClass)
+  {
+    EClass eClass = EMFUtil.getEClass(cdoClass);
+    return newInstance(eClass);
+  }
+
+  public CDORevisionImpl resolve(CDOID id)
+  {
+    CDORevisionResolver revisionManager = session.getRevisionManager();
+    if (isReadWrite())
+    {
+      return (CDORevisionImpl)revisionManager.getRevision(id);
+    }
+
+    return (CDORevisionImpl)revisionManager.getRevision(id, timeStamp);
   }
 
   public CDOObject lookupObject(CDOID id)
@@ -489,7 +504,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     CDOClass cdoClass = revision.getCDOClass();
     CDOID resourceID = revision.getResourceID();
 
-    CDOObjectImpl object = (CDOObjectImpl)CDOUtil.createObject(cdoClass);
+    CDOObjectImpl object = newInstance(cdoClass);
     if (object instanceof CDOResourceImpl)
     {
       object.setResource((CDOResourceImpl)object);

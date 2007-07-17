@@ -234,11 +234,11 @@ public final class EMFUtil
     CDOClassImpl cdoClass = new CDOClassImpl(eClass.getClassifierID(), eClass.getName(), eClass.isAbstract());
     cdoClass.setClientInfo(eClass);
 
-    for (EClass superEClass : eClass.getESuperTypes())
-    {
-      CDOClassRefImpl classRef = createClassRef(superEClass);
-      cdoClass.addSuperType(classRef);
-    }
+    // XXX for (EClass superEClass : eClass.getESuperTypes())
+    // {
+    // CDOClassRefImpl classRef = createClassRef(superEClass);
+    // cdoClass.addSuperType(classRef);
+    // }
 
     for (EStructuralFeature eFeature : getPersistentFeatures(eClass.getEStructuralFeatures()))
     {
@@ -246,8 +246,8 @@ public final class EMFUtil
       cdoClass.addFeature(cdoFeature);
     }
 
-    initAllSuperTypes(cdoClass, packageManager);
-    initAllFeatures(cdoClass, packageManager);
+    // XXX initAllSuperTypes(cdoClass, packageManager);
+    // XXX initAllFeatures(cdoClass, packageManager);
     return cdoClass;
   }
 

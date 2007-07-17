@@ -12,6 +12,8 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.util.CDOFactory;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
@@ -23,5 +25,11 @@ public class CDOFactoryImpl extends EFactoryImpl implements CDOFactory
   public CDOFactoryImpl(EPackage ePackage)
   {
     this.ePackage = ePackage;
+  }
+
+  @Override
+  protected EObject basicCreate(EClass eClass)
+  {
+    return new DynamicCDOObjectImpl(eClass);
   }
 }

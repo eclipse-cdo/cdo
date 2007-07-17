@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.ConnectorException;
@@ -85,14 +84,14 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     }
   };
 
-  public CDOSessionImpl(EPackage.Registry ePackageRegistry)
+  public CDOSessionImpl(EPackage.Registry delegate)
   {
-    if (ePackageRegistry == null)
+    if (delegate == null)
     {
-      ePackageRegistry = EPackage.Registry.INSTANCE;
+      delegate = EPackage.Registry.INSTANCE;
     }
 
-    this.packageRegistry = new CDOPackageRegistryImpl(ePackageRegistry);
+    this.packageRegistry = new CDOPackageRegistryImpl(delegate);
     packageManager = new CDOSessionPackageManager(this);
     revisionManager = new CDORevisionManagerImpl(this);
   }
@@ -160,7 +159,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     deactivate();
   }
 
-  public CDOPackageRegistry getPackageRegistry()
+  public CDOPackageRegistryImpl getPackageRegistry()
   {
     return packageRegistry;
   }

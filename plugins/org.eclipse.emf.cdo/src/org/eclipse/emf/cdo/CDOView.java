@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.net4j.util.event.INotifier;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
@@ -49,6 +50,8 @@ public interface CDOView extends INotifier
    * @see ResourceSet#getResource(URI, boolean)
    */
   public CDOResource getResource(String path);
+
+  public CDOObject newInstance(EClass eClass);
 
   public CDORevision resolve(CDOID id);
 

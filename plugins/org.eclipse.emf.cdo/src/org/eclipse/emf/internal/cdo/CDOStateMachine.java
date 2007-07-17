@@ -307,20 +307,18 @@ public final class CDOStateMachine
       CDOViewImpl view = (CDOViewImpl)data2;
       CDOTransactionImpl transaction = getTransaction(view);
 
-      // Create new revision
-      CDOID id = CDOIDImpl.create(transaction.getNextTemporaryID());
-      CDORevisionImpl revision = new CDORevisionImpl(object.cdoClass(), id);
-      revision.setVersion(1);
-
       // Prepare object
+      CDOID id = CDOIDImpl.create(transaction.getNextTemporaryID());
       object.setID(id);
-      object.setRevision(revision);
       object.setResource(resource);
       object.setAdapter(view);
       object.setState(CDOState.PREPARED_ATTACH);
 
-      // Adjust revision
+      // Create new revision
+      CDORevisionImpl revision = new CDORevisionImpl(object.cdoClass(), id);
+      revision.setVersion(1);
       revision.setResourceID(resource.cdoID());
+      object.setRevision(revision);
 
       // Register object
       view.registerObject(object);

@@ -21,8 +21,8 @@ import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CreateResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.LoadResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenHistoricalViewAction;
-import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenViewAction;
+import org.eclipse.emf.cdo.internal.ui.actions.OpenReadOnlyViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ShowViewAction;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 
@@ -248,8 +248,8 @@ public class CDOItemProvider extends ContainerItemProvider
 
   protected void fillSession(IMenuManager manager, CDOSession session)
   {
-    manager.add(new OpenTransactionAction(page, session));
     manager.add(new OpenViewAction(page, session));
+    manager.add(new OpenReadOnlyViewAction(page, session));
     manager.add(new OpenHistoricalViewAction(page, session));
     manager.add(new Separator());
     manager.add(new CloseSessionAction(page, session));

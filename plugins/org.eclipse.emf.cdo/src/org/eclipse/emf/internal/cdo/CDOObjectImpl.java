@@ -52,15 +52,18 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     super(CDOStore.INSTANCE);
     state = CDOState.TRANSIENT;
     eContainer = null;
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Creating object: {0}", cdoClass());
-    }
   }
 
   public CDOClassImpl cdoClass()
   {
-    return EMFUtil.getCDOClass(eClass(), cdoView().getSession().getPackageManager());
+    CDOViewImpl view = cdoView();
+    if (view == null)
+    {
+      System.out.println(eClass());
+    }
+
+    CDOSessionPackageManager packageManager = view.getSession().getPackageManager();
+    return EMFUtil.getCDOClass(eClass(), packageManager);
   }
 
   public CDOID cdoID()

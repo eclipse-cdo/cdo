@@ -17,4 +17,5 @@ import org.eclipse.emf.ecore.EPackage;
  */
 public interface CDOPackageRegistry extends EPackage.Registry
 {
+  public EPackage putEPackage(EPackage ePackage);
 }

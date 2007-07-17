@@ -10,32 +10,36 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
-
-import org.eclipse.emf.internal.cdo.util.EMFUtil;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Eike Stepper
  */
-public class CDOSessionPackageManager extends CDOPackageManagerImpl
+public class DynamicCDOObjectImpl extends CDOObjectImpl implements EStructuralFeature.Internal.DynamicValueHolder
 {
-  private CDOSessionImpl session;
+  private EClass eClass;
 
-  public CDOSessionPackageManager(CDOSessionImpl session)
+  public DynamicCDOObjectImpl(EClass eClass)
   {
-    this.session = session;
-    EMFUtil.addModelInfos(this);
-  }
-
-  public CDOSessionImpl getSession()
-  {
-    return session;
+    this.eClass = eClass;
   }
 
   @Override
-  protected CDOPackageImpl resolve(String packageURI)
+  public EClass eClass()
   {
-    return null;
+    return eClass;
+  }
+
+  @Override
+  public void eSetClass(EClass eClass)
+  {
+    this.eClass = eClass;
+  }
+
+  @Override
+  protected EClass eDynamicClass()
+  {
+    return eClass;
   }
 }

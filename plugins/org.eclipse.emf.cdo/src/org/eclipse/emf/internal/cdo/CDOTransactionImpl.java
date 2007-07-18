@@ -96,10 +96,6 @@ public class CDOTransactionImpl
     nextTemporaryID = INITIAL_TEMPORARY_ID;
   }
 
-  /**
-   * @return
-   * @return A set of the ids that have changed due to object creation
-   */
   public CommitTransactionResult commit()
   {
     if (dirty)

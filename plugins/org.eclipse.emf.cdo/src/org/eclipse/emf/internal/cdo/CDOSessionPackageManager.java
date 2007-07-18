@@ -45,6 +45,7 @@ public class CDOSessionPackageManager extends CDOPackageManagerImpl
     {
       CDOPackageImpl proxy = new CDOPackageImpl(this, packageURI);
       addPackage(proxy);
+      session.getPackageRegistry().putPackageDescriptor(proxy);
     }
   }
 

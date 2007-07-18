@@ -14,12 +14,14 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
+import java.text.MessageFormat;
 import java.util.Map;
 
 /**
@@ -47,6 +49,13 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     return session;
   }
 
+  public void putPackageDescriptor(CDOPackageImpl cdoPackage)
+  {
+    EPackage.Descriptor descriptor = new CDOPackageDescriptor(cdoPackage);
+    String uri = cdoPackage.getPackageURI();
+    put(uri, descriptor);
+  }
+
   public EPackage putEPackage(EPackage ePackage)
   {
     String uri = ePackage.getNsURI();
@@ -57,20 +66,24 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   @Override
   public Object put(String key, Object value)
   {
-    if (EMFUtil.isDynamicEPackage(value))
+    Object oldValue = super.get(key);
+    if (oldValue instanceof EPackageImpl)
     {
-      EPackageImpl ePackage = (EPackageImpl)value;
-      ModelUtil.prepareEPackage(ePackage);
-      CDOPackageImpl cdoPackage = ModelUtil.getCDOPackage(ePackage, session.getPackageManager());
-      cdoPackage.setPersistent(false);
-      value = ePackage;
+      throw new IllegalArgumentException("Duplicate key: " + key);
     }
 
-    return internalPut(key, value);
-  }
+    if (value instanceof EPackageImpl)
+    {
+      EPackageImpl ePackage = (EPackageImpl)value;
+      if (EMFUtil.isDynamicEPackage(ePackage))
+      {
+        ModelUtil.prepareEPackage(ePackage);
+      }
 
-  public Object internalPut(String key, Object value)
-  {
+      CDOPackageImpl cdoPackage = ModelUtil.getCDOPackage(ePackage, session.getPackageManager());
+      cdoPackage.setPersistent(false);
+    }
+
     return super.put(key, value);
   }
 
@@ -78,5 +91,35 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   public void putAll(Map<? extends String, ? extends Object> m)
   {
     throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class CDOPackageDescriptor implements EPackage.Descriptor
+  {
+    private CDOPackageImpl cdoPackage;
+
+    private CDOPackageDescriptor(CDOPackageImpl cdoPackage)
+    {
+      this.cdoPackage = cdoPackage;
+    }
+
+    public EFactory getEFactory()
+    {
+      // TODO Implement method CDOPackageDescriptor.getEFactory()
+      throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public EPackage getEPackage()
+    {
+      return ModelUtil.createEPackage(cdoPackage);
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("CDOPackageDescriptor[{0}]", cdoPackage.getPackageURI());
+    }
   }
 }

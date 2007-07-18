@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDOReferenceConverter;
@@ -82,12 +83,12 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   private void writeNewPackages(ExtendedDataOutputStream out) throws IOException
   {
+    List<CDOPackageImpl> newPackages = transaction.getNewPackages();
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Writing {0} new packages", transaction.getNewResources().size());
+      PROTOCOL.format("Writing {0} new packages", newPackages.size());
     }
 
-    List<CDOPackageImpl> newPackages = transaction.getNewPackages();
     out.writeInt(newPackages.size());
     for (CDOPackageImpl newPackage : newPackages)
     {
@@ -97,32 +98,35 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   private void writeNewResources(ExtendedDataOutputStream out) throws IOException
   {
+    Collection<CDOResourceImpl> newResources = transaction.getNewResources().values();
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Writing {0} new resources", transaction.getNewResources().size());
+      PROTOCOL.format("Writing {0} new resources", newResources.size());
     }
 
-    writeRevisions(out, transaction.getNewResources().values());
+    writeRevisions(out, newResources);
   }
 
   private void writeNewObjects(ExtendedDataOutputStream out) throws IOException
   {
+    Collection<CDOObjectImpl> newObjects = transaction.getNewObjects().values();
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Writing {0} new objects", transaction.getNewObjects().size());
+      PROTOCOL.format("Writing {0} new objects", newObjects.size());
     }
 
-    writeRevisions(out, transaction.getNewObjects().values());
+    writeRevisions(out, newObjects);
   }
 
   private void writeDirtyObjects(ExtendedDataOutputStream out) throws IOException
   {
+    Collection<CDOObjectImpl> dirtyObjects = transaction.getDirtyObjects().values();
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Writing {0} dirty objects", transaction.getDirtyObjects().size());
+      PROTOCOL.format("Writing {0} dirty objects", dirtyObjects.size());
     }
 
-    writeRevisions(out, transaction.getDirtyObjects().values());
+    writeRevisions(out, dirtyObjects);
   }
 
   private void writeRevisions(ExtendedDataOutputStream out, Collection objects) throws IOException

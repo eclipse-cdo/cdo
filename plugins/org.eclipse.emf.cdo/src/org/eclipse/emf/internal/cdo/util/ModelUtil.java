@@ -177,8 +177,14 @@ public final class ModelUtil
     EPackage ePackage = (EPackage)cdoPackage.getClientInfo();
     if (ePackage == null)
     {
-      ePackage = createEPackage(cdoPackage);
-      packageRegistry.internalPut(ePackage.getNsURI(), ePackage);
+      String uri = cdoPackage.getPackageURI();
+      ePackage = packageRegistry.getEPackage(uri);
+      if (ePackage == null)
+      {
+        ePackage = createEPackage(cdoPackage);
+        packageRegistry.put(uri, ePackage);
+      }
+
       cdoPackage.setClientInfo(ePackage);
     }
 
@@ -211,7 +217,26 @@ public final class ModelUtil
     return eFeature;
   }
 
-  private static EPackage createEPackage(CDOPackageImpl cdoPackage)
+  public static EPackage createEPackage(CDOPackageImpl cdoPackage)
+  {
+    if (!cdoPackage.isDynamic())
+    {
+      EPackage ePackage = createGeneratedEPackage(cdoPackage.getPackageURI());
+      if (ePackage != null)
+      {
+        return ePackage;
+      }
+    }
+
+    return createDynamicEPackage(cdoPackage);
+  }
+
+  public static EPackage createGeneratedEPackage(String packageURI)
+  {
+    return EPackage.Registry.INSTANCE.getEPackage(packageURI);
+  }
+
+  public static EPackageImpl createDynamicEPackage(CDOPackageImpl cdoPackage)
   {
     String ecore = cdoPackage.getEcore();
     EPackageImpl ePackage = (EPackageImpl)EMFUtil.ePackageFromString(ecore);

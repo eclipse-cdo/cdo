@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
+import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
 /**
  * @author Eike Stepper
@@ -35,5 +36,11 @@ public class RepositoryPackageManager extends CDOPackageManagerImpl
   {
     // TODO Implement method RepositoryPackageManager.resolve()
     throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  @Override
+  protected String provideEcore(CDOPackageImpl cdoPackage)
+  {
+    throw new ImplementationError("No generated model on server side");
   }
 }

@@ -23,8 +23,6 @@ import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOResourceClassImpl
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOResourcePackageImpl;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
-import org.eclipse.net4j.util.io.IORuntimeException;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
@@ -32,14 +30,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecore.xmi.XMIResource;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.CDOPackageRegistryImpl;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -114,33 +106,12 @@ public final class ModelUtil
 
   private static CDOPackageImpl createCDOPackage(EPackage ePackage, CDOPackageManagerImpl packageManager)
   {
-    String ecore = null;
-    if (EMFUtil.isDynamicEPackage(ePackage))
-    {
-      ByteArrayOutputStream stream = new ByteArrayOutputStream();
-      XMIResource resource = new XMIResourceImpl();
-      resource.getContents().add(ePackage);
+    String packageURI = ePackage.getNsURI();
+    String name = ePackage.getName();
+    boolean dynamic = EMFUtil.isDynamicEPackage(ePackage);
+    String ecore = dynamic ? EMFUtil.ePackageToString(ePackage) : null;
 
-      try
-      {
-        resource.save(stream, null);
-        ecore = stream.toString();
-      }
-      catch (RuntimeException ex)
-      {
-        throw ex;
-      }
-      catch (IOException ex)
-      {
-        throw new IORuntimeException(ex);
-      }
-      finally
-      {
-        resource.getContents().clear();
-      }
-    }
-
-    CDOPackageImpl cdoPackage = new CDOPackageImpl(packageManager, ePackage.getNsURI(), ePackage.getName(), ecore);
+    CDOPackageImpl cdoPackage = new CDOPackageImpl(packageManager, packageURI, name, ecore, dynamic);
     cdoPackage.setClientInfo(ePackage);
     for (EClass eClass : EMFUtil.getPersistentClasses(ePackage))
     {
@@ -246,25 +217,10 @@ public final class ModelUtil
 
   private static EPackage createEPackage(CDOPackageImpl cdoPackage)
   {
-    byte[] ecore = cdoPackage.getEcore().getBytes();// TODO Use ASCII charset?
-    ByteArrayInputStream stream = new ByteArrayInputStream(ecore);
-    XMIResource resource = new XMIResourceImpl();
-
-    try
-    {
-      resource.load(stream, null);
-      EPackageImpl ePackage = (EPackageImpl)resource.getContents().get(0);
-      prepareEPackage(ePackage);
-      return ePackage;
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
+    String ecore = cdoPackage.getEcore();
+    EPackageImpl ePackage = (EPackageImpl)EMFUtil.ePackageFromString(ecore);
+    prepareEPackage(ePackage);
+    return ePackage;
   }
 
   public static void prepareEPackage(EPackageImpl ePackage)

@@ -13,7 +13,9 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
+import org.eclipse.emf.cdo.util.EMFUtil;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.internal.cdo.protocol.LoadPackageRequest;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
@@ -61,5 +63,12 @@ public class CDOSessionPackageManager extends CDOPackageManagerImpl
     {
       throw new TransportException(ex);
     }
+  }
+
+  @Override
+  protected String provideEcore(CDOPackageImpl cdoPackage)
+  {
+    EPackage ePackage = ModelUtil.getEPackage(cdoPackage, session.getPackageRegistry());
+    return EMFUtil.ePackageToString(ePackage);
   }
 }

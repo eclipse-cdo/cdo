@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.util;
 
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -19,8 +20,13 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +36,8 @@ import java.util.List;
  */
 public final class EMFUtil
 {
+  private static final String ECORE_ENCODING = "ASCII";
+
   private EMFUtil()
   {
   }
@@ -86,6 +94,50 @@ public final class EMFUtil
     }
 
     return false;
+  }
+
+  public static EPackage ePackageFromString(String ecore)
+  {
+    try
+    {
+      ByteArrayInputStream stream = new ByteArrayInputStream(ecore.getBytes(ECORE_ENCODING));
+      XMIResource resource = new XMIResourceImpl();
+      resource.load(stream, null);
+      return (EPackage)resource.getContents().get(0);
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  public static String ePackageToString(EPackage ePackage)
+  {
+    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+    XMIResource resource = new XMIResourceImpl();
+
+    try
+    {
+      resource.getContents().add(ePackage);
+      resource.save(stream, null);
+      return stream.toString(ECORE_ENCODING);
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+    finally
+    {
+      resource.getContents().clear();
+    }
   }
 
   /**

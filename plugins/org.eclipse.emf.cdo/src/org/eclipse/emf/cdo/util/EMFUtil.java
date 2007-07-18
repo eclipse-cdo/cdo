@@ -10,25 +10,25 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
-import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.EClassifierImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
-import org.eclipse.emf.internal.cdo.bundle.OM;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -145,20 +145,49 @@ public final class EMFUtil
    */
   public static void fixEClassifiers(EPackageImpl ePackage)
   {
-    try
+    int id = 0;
+    for (Iterator<EClassifier> i = ePackage.getEClassifiers().iterator(); i.hasNext();)
     {
-      Method method = EPackageImpl.class.getDeclaredMethod("fixEClassifiers", ReflectUtil.NO_PARAMETERS);
-      if (!method.isAccessible())
+      EClassifierImpl eClassifier = (EClassifierImpl)i.next();
+      if (eClassifier instanceof EClass)
       {
-        method.setAccessible(true);
+        eClassifier.setClassifierID(id++);
       }
+    }
 
-      method.invoke(ePackage, ReflectUtil.NO_ARGUMENTS);
-    }
-    catch (Exception ex)
+    for (Iterator<EClassifier> i = ePackage.getEClassifiers().iterator(); i.hasNext();)
     {
-      OM.LOG.error(ex);
+      EClassifierImpl eClassifier = (EClassifierImpl)i.next();
+      if (eClassifier.getClassifierID() == -1 && eClassifier instanceof EEnum)
+      {
+        eClassifier.setClassifierID(id++);
+      }
     }
+
+    for (Iterator<EClassifier> i = ePackage.getEClassifiers().iterator(); i.hasNext();)
+    {
+      EClassifierImpl eClassifier = (EClassifierImpl)i.next();
+      if (eClassifier.getClassifierID() == -1 && eClassifier instanceof EDataType)
+      {
+        eClassifier.setClassifierID(id++);
+      }
+    }
+
+    // try
+    // {
+    // Method method = EPackageImpl.class.getDeclaredMethod("fixEClassifiers",
+    // ReflectUtil.NO_PARAMETERS);
+    // if (!method.isAccessible())
+    // {
+    // method.setAccessible(true);
+    // }
+    //
+    // method.invoke(ePackage, ReflectUtil.NO_ARGUMENTS);
+    // }
+    // catch (Exception ex)
+    // {
+    // OM.LOG.error(ex);
+    // }
   }
 
   // public static List<Change> analyzeListDifferences(CDORevisionImpl

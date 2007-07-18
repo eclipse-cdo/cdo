@@ -115,49 +115,45 @@ public final class ModelUtil
     cdoPackage.setClientInfo(ePackage);
     for (EClass eClass : EMFUtil.getPersistentClasses(ePackage))
     {
-      CDOClassImpl cdoClass = createCDOClass(cdoPackage, eClass, packageManager);
+      CDOClassImpl cdoClass = createCDOClass(eClass, cdoPackage);
       cdoPackage.addClass(cdoClass);
     }
 
     return cdoPackage;
   }
 
-  private static CDOClassImpl createCDOClass(CDOPackageImpl containingPackage, EClass eClass,
-      CDOPackageManagerImpl packageManager)
+  private static CDOClassImpl createCDOClass(EClass eClass, CDOPackageImpl containingPackage)
   {
     CDOClassImpl cdoClass = new CDOClassImpl(containingPackage, eClass.getClassifierID(), eClass.getName(), eClass
         .isAbstract());
     cdoClass.setClientInfo(eClass);
 
-    // XXX for (EClass superEClass : eClass.getESuperTypes())
-    // {
-    // CDOClassRefImpl classRef = createClassRef(superEClass);
-    // cdoClass.addSuperType(classRef);
-    // }
+    for (EClass superType : eClass.getESuperTypes())
+    {
+      CDOClassRefImpl classRef = createClassRef(superType);
+      cdoClass.addSuperType(classRef);
+    }
 
     for (EStructuralFeature eFeature : EMFUtil.getPersistentFeatures(eClass.getEStructuralFeatures()))
     {
-      CDOFeatureImpl cdoFeature = createCDOFeature(cdoClass, eFeature, packageManager);
+      CDOFeatureImpl cdoFeature = createCDOFeature(eFeature, cdoClass);
       cdoClass.addFeature(cdoFeature);
     }
 
-    // XXX initAllSuperTypes(cdoClass, packageManager);
-    // XXX initAllFeatures(cdoClass, packageManager);
     return cdoClass;
   }
 
-  private static CDOFeatureImpl createCDOFeature(CDOClassImpl containingClass, EStructuralFeature eFeature,
-      CDOPackageManagerImpl packageManager)
+  private static CDOFeatureImpl createCDOFeature(EStructuralFeature eFeature, CDOClassImpl containingClass)
   {
-    CDOFeatureImpl cdoFeature = EMFUtil.isReference(eFeature) ? createCDOReference(containingClass, eFeature,
-        packageManager) : createCDOAttribute(containingClass, eFeature);
+    CDOFeatureImpl cdoFeature = EMFUtil.isReference(eFeature) ? createCDOReference(eFeature, containingClass)
+        : createCDOAttribute(eFeature, containingClass);
     cdoFeature.setClientInfo(eFeature);
     return cdoFeature;
   }
 
-  private static CDOFeatureImpl createCDOReference(CDOClassImpl containingClass, EStructuralFeature eFeature,
-      CDOPackageManagerImpl packageManager)
+  private static CDOFeatureImpl createCDOReference(EStructuralFeature eFeature, CDOClassImpl containingClass)
   {
+    CDOPackageManagerImpl packageManager = containingClass.getPackageManager();
     int featureID = eFeature.getFeatureID();
     String name = eFeature.getName();
     CDOClassRefImpl classRef = createClassRef(eFeature.getEType());
@@ -167,7 +163,7 @@ public final class ModelUtil
         containment);
   }
 
-  private static CDOFeatureImpl createCDOAttribute(CDOClassImpl containingClass, EStructuralFeature eFeature)
+  private static CDOFeatureImpl createCDOAttribute(EStructuralFeature eFeature, CDOClassImpl containingClass)
   {
     int featureID = eFeature.getFeatureID();
     String name = eFeature.getName();
@@ -272,44 +268,4 @@ public final class ModelUtil
     resourceClass.getCDOContentsFeature().setClientInfo(null);
     resourceClass.getCDOPathFeature().setClientInfo(null);
   }
-
-  // private static void initAllSuperTypes(CDOClassImpl cdoClass,
-  // CDOPackageManagerImpl packageManager)
-  // {
-  // EClass eClass = getEClass(cdoClass);
-  // EList<EClass> eClasses = eClass.getEAllSuperTypes();
-  // CDOClassImpl[] allSuperTypes = new CDOClassImpl[eClasses.size()];
-  //
-  // int i = 0;
-  // for (EClass superEClass : eClasses)
-  // {
-  // CDOClassImpl superType = getCDOClass(superEClass, packageManager);
-  // allSuperTypes[i++] = superType;
-  // }
-  //
-  // cdoClass.setAllSuperTypes(allSuperTypes);
-  // }
-
-  // private static void initAllFeatures(CDOClassImpl cdoClass,
-  // CDOPackageManagerImpl packageManager)
-  // {
-  // EClass eClass = getEClass(cdoClass);
-  // List<EStructuralFeature> eFeatures =
-  // getPersistentFeatures(eClass.getEAllStructuralFeatures());
-  // CDOFeatureImpl[] allFeatures = new CDOFeatureImpl[eFeatures.size()];
-  //
-  // int i = 0;
-  // for (EStructuralFeature eFeature : eFeatures)
-  // {
-  // CDOFeatureImpl cdoFeature = getCDOFeature(eFeature, packageManager);
-  // if (cdoFeature.getFeatureID() != i)
-  // {
-  // throw new ImplementationError("Wrong featureID: " + cdoFeature);
-  // }
-  //
-  // allFeatures[i++] = cdoFeature;
-  // }
-  //
-  // cdoClass.setAllFeatures(allFeatures);
-  // }
 }

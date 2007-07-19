@@ -17,10 +17,13 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
+
 /**
  * @author Eike Stepper
  */
-public interface InternalCDOObject extends CDOObject
+public interface InternalCDOObject extends CDOObject, InternalEObject
 {
   public void cdoInternalSetID(CDOID id);
 
@@ -32,7 +35,7 @@ public interface InternalCDOObject extends CDOObject
 
   public void cdoInternalSetRevision(CDORevision revision);
 
-  public CDORevision cdoInternalCopyRevision();
-
   public void cdoInternalFinalizeRevision();
+
+  public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID);
 }

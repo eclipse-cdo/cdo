@@ -25,6 +25,8 @@ import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -56,18 +58,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     eContainer = null;
   }
 
-  public CDOClassImpl cdoClass()
-  {
-    CDOViewImpl view = cdoView();
-    if (view == null)
-    {
-      System.out.println(eClass());
-    }
-
-    CDOSessionPackageManager packageManager = view.getSession().getPackageManager();
-    return ModelUtil.getCDOClass(eClass(), packageManager);
-  }
-
   public CDOID cdoID()
   {
     return id;
@@ -78,9 +68,19 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return state;
   }
 
+  public CDORevisionImpl cdoRevision()
+  {
+    return revision;
+  }
+
+  public CDOClassImpl cdoClass()
+  {
+    return getCDOClass(this);
+  }
+
   public CDOViewImpl cdoView()
   {
-    return resource != null ? resource.cdoView() : null;
+    return getCDOView(this);
   }
 
   public CDOResourceImpl cdoResource()
@@ -93,15 +93,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return resource;
   }
 
-  public CDORevisionImpl cdoRevision()
-  {
-    return revision;
-  }
-
   public boolean cdoTransient()
   {
-    final CDOState cdoState = cdoState();
-    return cdoState == CDOState.TRANSIENT || cdoState == CDOState.PREPARED_ATTACH;
+    return isCDOTransient(this);
   }
 
   public void cdoInternalSetID(CDOID id)
@@ -132,6 +126,16 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
   }
 
+  public void cdoInternalSetRevision(CDORevision revision)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Setting revision: {0}", revision);
+    }
+
+    this.revision = (CDORevisionImpl)revision;
+  }
+
   public void cdoInternalSetView(CDOView view)
   {
     if (this instanceof CDOResourceImpl)
@@ -155,16 +159,17 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     this.resource = (CDOResourceImpl)resource;
   }
 
-  public void cdoInternalSetRevision(CDORevision revision)
+  public void cdoInternalFinalizeRevision()
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Setting revision: {0}", revision);
-    }
-
-    this.revision = (CDORevisionImpl)revision;
+    finalizeCDORevision(this, eContainer, eContainerFeatureID, eSettings);
   }
 
+  public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
+  {
+    return eDynamicFeature(dynamicFeatureID);
+  }
+
+  @Deprecated
   void initializeContainer(InternalEObject container, EStructuralFeature eContainingFeature)
   {
     eContainer = container;
@@ -203,80 +208,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         revision.setContainerID(CDOID.NULL);
       }
     }
-  }
-
-  public void cdoInternalFinalizeRevision()
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Finalizing revision for {0}", this);
-    }
-
-    CDOViewImpl view = cdoView();
-    revision.setVersion(1);
-    revision.setContainerID(eContainer == null ? CDOID.NULL : ((CDOObjectImpl)eContainer).cdoID());
-    revision.setContainingFeature(eContainerFeatureID);
-
-    if (eSettings != null)
-    {
-      for (int i = 0; i < eClass().getFeatureCount(); i++)
-      {
-        Object setting = eSettings[i];
-        if (setting != null)
-        {
-          EStructuralFeature eFeature = eDynamicFeature(i);
-          if (!eFeature.isTransient())
-          {
-            finalizeRevisionFeature(view, revision, i, setting, eFeature);
-          }
-        }
-      }
-    }
-  }
-
-  private void finalizeRevisionFeature(CDOViewImpl view, CDORevisionImpl revision, int i, Object setting,
-      EStructuralFeature eFeature)
-  {
-    CDOFeatureImpl cdoFeature = ModelUtil.getCDOFeature(eFeature, cdoView().getSession().getPackageManager());
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Finalizing feature {0}", cdoFeature);
-    }
-
-    boolean isReference = cdoFeature.isReference();
-    if (cdoFeature.isMany())
-    {
-      int index = 0;
-      EList<Object> list = (EList<Object>)setting;
-      for (Object value : list)
-      {
-        if (isReference)
-        {
-          value = CDOStore.convertToID(view, value);
-        }
-
-        revision.add(cdoFeature, index++, value);
-      }
-    }
-    else
-    {
-      if (isReference)
-      {
-        setting = CDOStore.convertToID(view, setting);
-      }
-
-      revision.set(cdoFeature, 0, setting);
-    }
-
-    if (eSettings != null)
-    {
-      eSettings[i] = null;
-    }
-  }
-
-  public CDORevisionImpl cdoInternalCopyRevision()
-  {
-    return revision = new CDORevisionImpl(revision);
   }
 
   @Override
@@ -439,5 +370,96 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     return eClass().getName() + "@" + id;
+  }
+
+  static CDOClassImpl getCDOClass(InternalCDOObject cdoObject)
+  {
+    CDOViewImpl view = (CDOViewImpl)cdoObject.cdoView();
+    CDOSessionPackageManager packageManager = view.getSession().getPackageManager();
+    return ModelUtil.getCDOClass(cdoObject.eClass(), packageManager);
+  }
+
+  static CDOViewImpl getCDOView(InternalCDOObject cdoObject)
+  {
+    CDOResource resource = cdoObject.cdoResource();
+    return resource != null ? (CDOViewImpl)cdoObject.cdoResource().cdoView() : null;
+  }
+
+  static boolean isCDOTransient(InternalCDOObject cdoObject)
+  {
+    final CDOState cdoState = cdoObject.cdoState();
+    return cdoState == CDOState.TRANSIENT || cdoState == CDOState.PREPARED_ATTACH;
+  }
+
+  static void finalizeCDORevision(InternalCDOObject cdoObject, EObject eContainer, int eContainerFeatureID,
+      Object[] eSettings)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Finalizing revision for {0}", cdoObject);
+    }
+
+    CDOViewImpl view = (CDOViewImpl)cdoObject.cdoView();
+    CDORevisionImpl revision = (CDORevisionImpl)cdoObject.cdoRevision();
+    revision.setVersion(1);
+    revision.setContainerID(eContainer == null ? CDOID.NULL : ((CDOObjectImpl)eContainer).cdoID());
+    revision.setContainingFeature(eContainerFeatureID);
+
+    if (eSettings != null)
+    {
+      EClass eClass = cdoObject.eClass();
+      for (int i = 0; i < eClass.getFeatureCount(); i++)
+      {
+        Object setting = eSettings[i];
+        if (setting != null)
+        {
+          EStructuralFeature eFeature = cdoObject.cdoInternalDynamicFeature(i);
+          if (!eFeature.isTransient())
+          {
+            finalizeRevisionFeature(view, revision, i, setting, eFeature, eSettings);
+          }
+        }
+      }
+    }
+  }
+
+  private static void finalizeRevisionFeature(CDOViewImpl view, CDORevisionImpl revision, int i, Object setting,
+      EStructuralFeature eFeature, Object[] eSettings)
+  {
+    CDOFeatureImpl cdoFeature = ModelUtil.getCDOFeature(eFeature, view.getSession().getPackageManager());
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Finalizing feature {0}", cdoFeature);
+    }
+
+    boolean isReference = cdoFeature.isReference();
+    if (cdoFeature.isMany())
+    {
+      int index = 0;
+      EList<Object> list = (EList<Object>)setting;
+      for (Object value : list)
+      {
+        if (isReference)
+        {
+          value = CDOStore.convertToID(view, value);
+        }
+
+        revision.add(cdoFeature, index++, value);
+      }
+    }
+    else
+    {
+      if (isReference)
+      {
+        setting = CDOStore.convertToID(view, setting);
+      }
+
+      revision.set(cdoFeature, 0, setting);
+    }
+
+    if (eSettings != null)
+    {
+      eSettings[i] = null;
+    }
   }
 }

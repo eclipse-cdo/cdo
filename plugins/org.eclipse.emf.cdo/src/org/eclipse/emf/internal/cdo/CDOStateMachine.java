@@ -413,7 +413,9 @@ public final class CDOStateMachine
     @Override
     protected void doExecute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
-      CDORevisionImpl revision = (CDORevisionImpl)object.cdoInternalCopyRevision();
+      // Copy revision
+      CDORevisionImpl revision = new CDORevisionImpl((CDORevisionImpl)object.cdoRevision());
+      object.cdoInternalSetRevision(revision);
       revision.increaseVersion();
 
       CDOViewImpl view = (CDOViewImpl)object.cdoView();

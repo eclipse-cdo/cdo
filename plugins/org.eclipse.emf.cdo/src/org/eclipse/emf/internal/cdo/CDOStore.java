@@ -44,7 +44,7 @@ public final class CDOStore implements EStore
 
   public InternalEObject getContainer(InternalEObject eObject)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     if (TRACER.isEnabled())
     {
       TRACER.format("getContainer({0})", cdoObject);
@@ -57,7 +57,7 @@ public final class CDOStore implements EStore
 
   public int getContainingFeatureID(InternalEObject eObject)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     if (TRACER.isEnabled())
     {
       TRACER.format("getContainingFeatureID({0})", cdoObject);
@@ -69,7 +69,7 @@ public final class CDOStore implements EStore
 
   public void setContainer(InternalEObject eObject, InternalEObject newContainer, int newContainerFeatureID)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     if (TRACER.isEnabled())
     {
       TRACER.format("setContainer({0}, {1}, {2})", cdoObject, newContainer, newContainerFeatureID);
@@ -89,7 +89,7 @@ public final class CDOStore implements EStore
 
   public Object get(InternalEObject eObject, EStructuralFeature eFeature, int index)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -108,7 +108,7 @@ public final class CDOStore implements EStore
 
   public boolean isSet(InternalEObject eObject, EStructuralFeature eFeature)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -121,7 +121,7 @@ public final class CDOStore implements EStore
 
   public int size(InternalEObject eObject, EStructuralFeature eFeature)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -134,7 +134,7 @@ public final class CDOStore implements EStore
 
   public boolean isEmpty(InternalEObject eObject, EStructuralFeature eFeature)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -147,7 +147,7 @@ public final class CDOStore implements EStore
 
   public boolean contains(InternalEObject eObject, EStructuralFeature eFeature, Object value)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -165,7 +165,7 @@ public final class CDOStore implements EStore
 
   public int indexOf(InternalEObject eObject, EStructuralFeature eFeature, Object value)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -183,7 +183,7 @@ public final class CDOStore implements EStore
 
   public int lastIndexOf(InternalEObject eObject, EStructuralFeature eFeature, Object value)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -201,7 +201,7 @@ public final class CDOStore implements EStore
 
   public int hashCode(InternalEObject eObject, EStructuralFeature eFeature)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -214,7 +214,7 @@ public final class CDOStore implements EStore
 
   public Object[] toArray(InternalEObject eObject, EStructuralFeature eFeature)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -242,7 +242,7 @@ public final class CDOStore implements EStore
 
   public Object set(InternalEObject eObject, EStructuralFeature eFeature, int index, Object value)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -271,7 +271,7 @@ public final class CDOStore implements EStore
 
   public void unset(InternalEObject eObject, EStructuralFeature eFeature)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -284,7 +284,7 @@ public final class CDOStore implements EStore
 
   public void add(InternalEObject eObject, EStructuralFeature eFeature, int index, Object value)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -307,7 +307,7 @@ public final class CDOStore implements EStore
 
   public Object remove(InternalEObject eObject, EStructuralFeature eFeature, int index)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -326,7 +326,7 @@ public final class CDOStore implements EStore
 
   public void clear(InternalEObject eObject, EStructuralFeature eFeature)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -339,7 +339,7 @@ public final class CDOStore implements EStore
 
   public Object move(InternalEObject eObject, EStructuralFeature eFeature, int target, int source)
   {
-    CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
+    InternalCDOObject cdoObject = (InternalCDOObject)eObject;
     CDOFeatureImpl cdoFeature = getCDOFeature(cdoObject, eFeature);
     if (TRACER.isEnabled())
     {
@@ -411,9 +411,9 @@ public final class CDOStore implements EStore
     return potentialID;
   }
 
-  private static CDOFeatureImpl getCDOFeature(CDOObjectImpl cdoObject, EStructuralFeature eFeature)
+  private static CDOFeatureImpl getCDOFeature(InternalCDOObject cdoObject, EStructuralFeature eFeature)
   {
-    CDOViewImpl view = cdoObject.cdoView();
+    CDOViewImpl view = (CDOViewImpl)cdoObject.cdoView();
     if (view == null)
     {
       throw new IllegalStateException("view == null");
@@ -423,21 +423,21 @@ public final class CDOStore implements EStore
     return ModelUtil.getCDOFeature(eFeature, packageManager);
   }
 
-  private static CDORevisionImpl getRevisionForReading(CDOObjectImpl cdoObject)
+  private static CDORevisionImpl getRevisionForReading(InternalCDOObject cdoObject)
   {
     CDOStateMachine.INSTANCE.read(cdoObject);
     return getRevision(cdoObject);
   }
 
-  private static CDORevisionImpl getRevisionForWriting(CDOObjectImpl cdoObject)
+  private static CDORevisionImpl getRevisionForWriting(InternalCDOObject cdoObject)
   {
     CDOStateMachine.INSTANCE.write(cdoObject);
     return getRevision(cdoObject);
   }
 
-  private static CDORevisionImpl getRevision(CDOObjectImpl cdoObject)
+  private static CDORevisionImpl getRevision(InternalCDOObject cdoObject)
   {
-    CDORevisionImpl revision = cdoObject.cdoRevision();
+    CDORevisionImpl revision = (CDORevisionImpl)cdoObject.cdoRevision();
     if (revision == null)
     {
       throw new IllegalStateException("revision == null");
@@ -446,12 +446,12 @@ public final class CDOStore implements EStore
     return revision;
   }
 
-  private static void handleContainmentAdd(CDOObjectImpl cdoObject, CDOFeatureImpl cdoFeature, Object value)
+  private static void handleContainmentAdd(InternalCDOObject cdoObject, CDOFeatureImpl cdoFeature, Object value)
   {
-    CDOObjectImpl container = cdoObject;
-    CDOObjectImpl contained = (CDOObjectImpl)value;
-    CDOViewImpl containerView = container.cdoView();
-    CDOViewImpl containedView = contained.cdoView();
+    InternalCDOObject container = cdoObject;
+    InternalCDOObject contained = (InternalCDOObject)value;
+    CDOViewImpl containerView = (CDOViewImpl)container.cdoView();
+    CDOViewImpl containedView = (CDOViewImpl)contained.cdoView();
     if (containedView != containerView)
     {
       if (containedView != null)

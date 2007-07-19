@@ -1,8 +1,10 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
@@ -60,7 +62,7 @@ public final class CDOStateMachine
     }
   }
 
-  public void attach(CDOObjectImpl object, CDOResourceImpl resource, CDOViewImpl view)
+  public void attach(InternalCDOObject object, CDOResource resource, CDOViewImpl view)
   {
     if (TRACER.isEnabled())
     {
@@ -79,13 +81,13 @@ public final class CDOStateMachine
     INSTANCE.processEvent(object, Event.FINALIZE_ATTACH, resource, view);
   }
 
-  public void detach(CDOObjectImpl object, CDOResourceImpl resource, CDOViewImpl view)
+  public void detach(InternalCDOObject object, CDOResource resource, CDOViewImpl view)
   {
     // TODO Implement method CDOStateMachine.detach()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
-  public void read(CDOObjectImpl object)
+  public void read(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
     {
@@ -95,7 +97,7 @@ public final class CDOStateMachine
     INSTANCE.processEvent(object, Event.READ, null, null);
   }
 
-  public void write(CDOObjectImpl object)
+  public void write(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
     {
@@ -105,7 +107,7 @@ public final class CDOStateMachine
     INSTANCE.processEvent(object, Event.WRITE, null, null);
   }
 
-  public void invalidate(CDOObjectImpl object, long timeStamp)
+  public void invalidate(InternalCDOObject object, long timeStamp)
   {
     if (TRACER.isEnabled())
     {
@@ -115,7 +117,7 @@ public final class CDOStateMachine
     INSTANCE.processEvent(object, Event.INVALIDATE, timeStamp, null);
   }
 
-  public void commit(CDOObjectImpl object, CommitTransactionResult result)
+  public void commit(InternalCDOObject object, CommitTransactionResult result)
   {
     if (TRACER.isEnabled())
     {
@@ -125,7 +127,7 @@ public final class CDOStateMachine
     INSTANCE.processEvent(object, Event.COMMIT, result, null);
   }
 
-  public void rollback(CDOObjectImpl object)
+  public void rollback(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
     {
@@ -213,7 +215,7 @@ public final class CDOStateMachine
     transitions[stateIndex][eventIndex] = transition;
   }
 
-  private void processEvent(CDOObjectImpl object, Event event, Object data1, Object data2)
+  private void processEvent(InternalCDOObject object, Event event, Object data1, Object data2)
   {
     CDOState state = object.cdoState();
     int stateIndex = state.ordinal();
@@ -247,7 +249,7 @@ public final class CDOStateMachine
    */
   private static abstract class Transition
   {
-    public void execute(CDOObjectImpl object, Event event, Object data1, Object data2)
+    public void execute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
       if (TRACER.isEnabled())
       {
@@ -262,7 +264,7 @@ public final class CDOStateMachine
       return "Processing event {0} in state {1} for {2}";
     }
 
-    protected abstract void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2);
+    protected abstract void doExecute(InternalCDOObject object, Event event, Object data1, Object data2);
   }
 
   /**
@@ -277,7 +279,7 @@ public final class CDOStateMachine
     }
 
     @Override
-    protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
+    protected void doExecute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
     }
   }
@@ -288,7 +290,7 @@ public final class CDOStateMachine
   private static final class FailTransition extends Transition
   {
     @Override
-    protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
+    protected void doExecute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
       throw new IllegalStateException("Event " + event + " not allowed in state " + object.cdoState() + " for "
           + object);
@@ -301,7 +303,7 @@ public final class CDOStateMachine
   private static final class AttachTransition extends Transition
   {
     @Override
-    protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
+    protected void doExecute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
       CDOResourceImpl resource = (CDOResourceImpl)data1;
       CDOViewImpl view = (CDOViewImpl)data2;
@@ -315,7 +317,7 @@ public final class CDOStateMachine
       object.setState(CDOState.PREPARED_ATTACH);
 
       // Create new revision
-      CDORevisionImpl revision = new CDORevisionImpl(object.cdoClass(), id);
+      CDORevisionImpl revision = new CDORevisionImpl((CDOClassImpl)object.cdoClass(), id);
       revision.setVersion(1);
       revision.setResourceID(resource.cdoID());
       object.setRevision(revision);
@@ -327,9 +329,9 @@ public final class CDOStateMachine
       // Prepare content tree
       for (EObject content : object.eContents())
       {
-        if (content instanceof CDOObjectImpl)
+        if (content instanceof InternalCDOObject)
         {
-          INSTANCE.processEvent((CDOObjectImpl)content, Event.ATTACH, resource, view);
+          INSTANCE.processEvent((InternalCDOObject)content, Event.ATTACH, resource, view);
         }
       }
     }
@@ -341,7 +343,7 @@ public final class CDOStateMachine
   private static final class FinalizeAttachTransition extends Transition
   {
     @Override
-    protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
+    protected void doExecute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
       object.finalizeRevision();
       object.setState(CDOState.NEW);
@@ -349,9 +351,9 @@ public final class CDOStateMachine
       // Prepare content tree
       for (EObject content : object.eContents())
       {
-        if (content instanceof CDOObjectImpl)
+        if (content instanceof InternalCDOObject)
         {
-          INSTANCE.processEvent((CDOObjectImpl)content, Event.FINALIZE_ATTACH, null, null);
+          INSTANCE.processEvent((InternalCDOObject)content, Event.FINALIZE_ATTACH, null, null);
         }
       }
     }
@@ -363,7 +365,7 @@ public final class CDOStateMachine
   private static final class DetachTransition extends Transition
   {
     @Override
-    protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
+    protected void doExecute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
       // TODO Implement method DetachTransition.execute()
       throw new UnsupportedOperationException("Not yet implemented");
@@ -376,9 +378,9 @@ public final class CDOStateMachine
   private static final class CommitTransition extends Transition
   {
     @Override
-    protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
+    protected void doExecute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
-      CDOViewImpl view = object.cdoView();
+      CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CommitTransactionResult result = (CommitTransactionResult)data1;
       Map<CDOID, CDOID> idMappings = result.getIdMappings();
 
@@ -393,7 +395,7 @@ public final class CDOStateMachine
       }
 
       // Adjust revision
-      CDORevisionImpl revision = object.cdoRevision();
+      CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
       revision.setID(id);
       revision.setCreated(result.getTimeStamp());
       revision.adjustReferences(idMappings);
@@ -409,12 +411,12 @@ public final class CDOStateMachine
   private static final class WriteTransition extends Transition
   {
     @Override
-    protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
+    protected void doExecute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
       CDORevisionImpl revision = object.copyRevision();
       revision.increaseVersion();
 
-      CDOViewImpl view = object.cdoView();
+      CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDOTransactionImpl transaction = getTransaction(view);
       transaction.registerDirty(object);
 
@@ -428,10 +430,10 @@ public final class CDOStateMachine
   private static final class InvalidateTransition extends Transition
   {
     @Override
-    protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
+    protected void doExecute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
       long timeStamp = (Long)data1;
-      object.cdoRevision().setRevised(timeStamp - 1);
+      ((CDORevisionImpl)object.cdoRevision()).setRevised(timeStamp - 1);
       object.setState(CDOState.PROXY);
     }
   }
@@ -449,10 +451,10 @@ public final class CDOStateMachine
     }
 
     @Override
-    protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
+    protected void doExecute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
       CDOID id = object.cdoID();
-      CDOViewImpl view = object.cdoView();
+      CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDORevisionImpl revision = view.getRevision(id);
       object.setRevision(revision);
       object.setState(CDOState.CLEAN);
@@ -470,7 +472,7 @@ public final class CDOStateMachine
   private static final class LoadResourceTransition extends Transition
   {
     @Override
-    protected void doExecute(CDOObjectImpl object, Event event, Object data1, Object data2)
+    protected void doExecute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
       CDOResourceImpl resource = (CDOResourceImpl)data1;
       CDOViewImpl view = (CDOViewImpl)data2;

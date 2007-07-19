@@ -68,11 +68,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private CDOTransactionImpl transaction;
 
-  private Map<CDOID, CDOObjectImpl> objects = new HashMap();
+  private Map<CDOID, InternalCDOObject> objects = new HashMap();
 
   private CDOID lastLookupID;
 
-  private CDOObjectImpl lastLookupObject;
+  private InternalCDOObject lastLookupObject;
 
   public CDOViewImpl(int id, CDOSessionImpl session, boolean readOnly)
   {
@@ -174,7 +174,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       resource.setResourceSet(resourceSet);
       resource.setPath(path);
 
-      CDOObjectImpl resourceObject = resource;
+      InternalCDOObject resourceObject = resource;
       resourceObject.setID(resourceID);
       resourceObject.setAdapter(this);
       resourceObject.setResource(resource);
@@ -192,12 +192,12 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
   }
 
-  public CDOObjectImpl newInstance(EClass eClass)
+  public InternalCDOObject newInstance(EClass eClass)
   {
-    return (CDOObjectImpl)EcoreUtil.create(eClass);
+    return (InternalCDOObject)EcoreUtil.create(eClass);
   }
 
-  public CDOObjectImpl newInstance(CDOClass cdoClass)
+  public InternalCDOObject newInstance(CDOClass cdoClass)
   {
     EClass eClass = ModelUtil.getEClass((CDOClassImpl)cdoClass, session.getPackageRegistry());
     if (eClass == null)
@@ -237,28 +237,28 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return lastLookupObject;
   }
 
-  public void registerObject(CDOObjectImpl object)
+  public void registerObject(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Registering object {0}", object);
     }
 
-    CDOObjectImpl old = objects.put(object.cdoID(), object);
+    InternalCDOObject old = objects.put(object.cdoID(), object);
     if (old != null)
     {
       throw new IllegalStateException("Duplicate ID: " + object);
     }
   }
 
-  public void deregisterObject(CDOObjectImpl object)
+  public void deregisterObject(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Deregistering object {0}", object);
     }
 
-    CDOObjectImpl old = objects.remove(object.cdoID());
+    InternalCDOObject old = objects.remove(object.cdoID());
     if (old == null)
     {
       throw new IllegalStateException("Unknown ID: " + object);
@@ -267,7 +267,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public void remapObject(CDOID oldID)
   {
-    CDOObjectImpl object = objects.remove(oldID);
+    InternalCDOObject object = objects.remove(oldID);
     CDOID newID = object.cdoID();
     objects.put(newID, object);
     if (TRACER.isEnabled())
@@ -298,7 +298,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   {
     for (CDOID dirtyOID : dirtyOIDs)
     {
-      CDOObjectImpl object = objects.get(dirtyOID);
+      InternalCDOObject object = objects.get(dirtyOID);
       if (object != null)
       {
         CDOStateMachine.INSTANCE.invalidate(object, timeStamp);
@@ -455,7 +455,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       try
       {
-        ((CDOObjectImpl)cdoResource).setState(CDOState.NEW);
+        ((InternalCDOObject)cdoResource).setState(CDOState.NEW);
         resourceSet.getResources().remove(cdoResource);
       }
       catch (RuntimeException ignore)
@@ -497,7 +497,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.REMOVED));
   }
 
-  private CDOObjectImpl createObject(CDOID id)
+  private InternalCDOObject createObject(CDOID id)
   {
     if (TRACER.isEnabled())
     {
@@ -508,7 +508,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     CDOClassImpl cdoClass = revision.getCDOClass();
     CDOID resourceID = revision.getResourceID();
 
-    CDOObjectImpl object = newInstance(cdoClass);
+    InternalCDOObject object = newInstance(cdoClass);
     if (object instanceof CDOResourceImpl)
     {
       object.setResource((CDOResourceImpl)object);

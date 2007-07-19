@@ -45,9 +45,9 @@ public class CDOTransactionImpl
 
   private Map<CDOID, CDOResourceImpl> newResources = new HashMap();
 
-  private Map<CDOID, CDOObjectImpl> newObjects = new HashMap();
+  private Map<CDOID, InternalCDOObject> newObjects = new HashMap();
 
-  private Map<CDOID, CDOObjectImpl> dirtyObjects = new HashMap();
+  private Map<CDOID, InternalCDOObject> dirtyObjects = new HashMap();
 
   private boolean dirty;
 
@@ -76,12 +76,12 @@ public class CDOTransactionImpl
     return newResources;
   }
 
-  public Map<CDOID, CDOObjectImpl> getNewObjects()
+  public Map<CDOID, InternalCDOObject> getNewObjects()
   {
     return newObjects;
   }
 
-  public Map<CDOID, CDOObjectImpl> getDirtyObjects()
+  public Map<CDOID, InternalCDOObject> getDirtyObjects()
   {
     return dirtyObjects;
   }
@@ -166,7 +166,7 @@ public class CDOTransactionImpl
     }
   }
 
-  public void registerNew(CDOObjectImpl object)
+  public void registerNew(InternalCDOObject object)
   {
     if (object instanceof CDOResourceImpl)
     {
@@ -188,7 +188,7 @@ public class CDOTransactionImpl
     }
   }
 
-  public void registerDirty(CDOObjectImpl object)
+  public void registerDirty(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
     {
@@ -198,7 +198,7 @@ public class CDOTransactionImpl
     register(dirtyObjects, object);
   }
 
-  private void register(Map map, CDOObjectImpl object)
+  private void register(Map map, InternalCDOObject object)
   {
     Object old = map.put(object.cdoID(), object);
     if (old != null)
@@ -219,7 +219,7 @@ public class CDOTransactionImpl
     {
       for (Object object : objects.values())
       {
-        CDOStateMachine.INSTANCE.commit((CDOObjectImpl)object, result);
+        CDOStateMachine.INSTANCE.commit((InternalCDOObject)object, result);
       }
     }
   }
@@ -236,7 +236,7 @@ public class CDOTransactionImpl
   //
   // Set<String> knownPackages = session.getPackageURIs();
   // Map<String, CDOPackageImpl> newPackages = new HashMap();
-  // for (CDOObjectImpl cdoObject : newObjects.values())
+  // for (InternalCDOObject cdoObject : newObjects.values())
   // {
   // CDOPackageImpl cdoPackage = cdoObject.cdoClass().getContainingPackage();
   // String uri = cdoPackage.getPackageURI();

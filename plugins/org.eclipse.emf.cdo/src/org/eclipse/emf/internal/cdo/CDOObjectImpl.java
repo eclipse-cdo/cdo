@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -35,7 +36,7 @@ import org.eclipse.emf.internal.cdo.util.ModelUtil;
 /**
  * @author Eike Stepper
  */
-public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
+public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObject
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOObjectImpl.class);
 
@@ -102,7 +103,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     return cdoState == CDOState.TRANSIENT || cdoState == CDOState.PREPARED_ATTACH;
   }
 
-  void setID(CDOID id)
+  public void setID(CDOID id)
   {
     if (id == null)
     {
@@ -117,7 +118,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     this.id = id;
   }
 
-  void setState(CDOState state)
+  public void setState(CDOState state)
   {
     if (this.state != state)
     {
@@ -130,7 +131,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     }
   }
 
-  void setAdapter(CDOViewImpl view)
+  public void setAdapter(CDOViewImpl view)
   {
     if (this instanceof CDOResourceImpl)
     {
@@ -138,7 +139,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     }
   }
 
-  void setResource(CDOResourceImpl resource)
+  public void setResource(CDOResource resource)
   {
     if (this instanceof CDOResourceImpl)
     {
@@ -150,17 +151,17 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
       TRACER.format("Setting resource: {0}", resource);
     }
 
-    this.resource = resource;
+    this.resource = (CDOResourceImpl)resource;
   }
 
-  void setRevision(CDORevisionImpl revision)
+  public void setRevision(CDORevision revision)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Setting revision: {0}", revision);
     }
 
-    this.revision = revision;
+    this.revision = (CDORevisionImpl)revision;
   }
 
   void initializeContainer(InternalEObject container, EStructuralFeature eContainingFeature)
@@ -203,7 +204,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements CDOObject
     }
   }
 
-  void finalizeRevision()
+  public void finalizeRevision()
   {
     if (TRACER.isEnabled())
     {

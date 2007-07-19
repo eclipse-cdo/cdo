@@ -2,7 +2,7 @@ package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.internal.cdo.CDOObjectImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,22 +13,22 @@ import java.util.List;
 @Deprecated
 public class TreeTraversal
 {
-  private CDOObjectImpl root;
+  private InternalCDOObject root;
 
-  private List<CDOObjectImpl> objects = new ArrayList(0);
+  private List<InternalCDOObject> objects = new ArrayList(0);
 
-  public TreeTraversal(CDOObjectImpl root)
+  public TreeTraversal(InternalCDOObject root)
   {
     this.root = root;
     collectContents();
   }
 
-  public CDOObjectImpl getRoot()
+  public InternalCDOObject getRoot()
   {
     return root;
   }
 
-  public List<CDOObjectImpl> getObjects()
+  public List<InternalCDOObject> getObjects()
   {
     return objects;
   }
@@ -55,9 +55,9 @@ public class TreeTraversal
     for (TreeIterator<EObject> it = root.eAllContents(); it.hasNext();)
     {
       Object content = it.next();
-      if (content instanceof CDOObjectImpl)
+      if (content instanceof InternalCDOObject)
       {
-        objects.add(((CDOObjectImpl)content));
+        objects.add(((InternalCDOObject)content));
       }
     }
   }
@@ -67,6 +67,6 @@ public class TreeTraversal
    */
   public interface ObjectHandler
   {
-    public void handleObject(final CDOObjectImpl object);
+    public void handleObject(final InternalCDOObject object);
   }
 }

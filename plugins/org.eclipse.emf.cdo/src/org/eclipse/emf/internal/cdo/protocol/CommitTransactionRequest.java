@@ -23,9 +23,9 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOStore;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.io.IOException;
@@ -109,7 +109,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   private void writeNewObjects(ExtendedDataOutputStream out) throws IOException
   {
-    Collection<CDOObjectImpl> newObjects = transaction.getNewObjects().values();
+    Collection<InternalCDOObject> newObjects = transaction.getNewObjects().values();
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Writing {0} new objects", newObjects.size());
@@ -120,7 +120,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   private void writeDirtyObjects(ExtendedDataOutputStream out) throws IOException
   {
-    Collection<CDOObjectImpl> dirtyObjects = transaction.getDirtyObjects().values();
+    Collection<InternalCDOObject> dirtyObjects = transaction.getDirtyObjects().values();
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Writing {0} dirty objects", dirtyObjects.size());
@@ -134,8 +134,8 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     out.writeInt(objects.size());
     for (Iterator it = objects.iterator(); it.hasNext();)
     {
-      CDOObjectImpl object = (CDOObjectImpl)it.next();
-      CDORevisionImpl revision = object.cdoRevision();
+      InternalCDOObject object = (InternalCDOObject)it.next();
+      CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
       revision.write(out, converter);
     }
   }

@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
@@ -103,7 +104,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return cdoState == CDOState.TRANSIENT || cdoState == CDOState.PREPARED_ATTACH;
   }
 
-  public void setID(CDOID id)
+  public void cdoInternalSetID(CDOID id)
   {
     if (id == null)
     {
@@ -118,7 +119,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     this.id = id;
   }
 
-  public void setState(CDOState state)
+  public void cdoInternalSetState(CDOState state)
   {
     if (this.state != state)
     {
@@ -131,15 +132,15 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
   }
 
-  public void setAdapter(CDOViewImpl view)
+  public void cdoInternalSetView(CDOView view)
   {
     if (this instanceof CDOResourceImpl)
     {
-      ((CDOResourceImpl)this).cdoSetView(view);
+      ((CDOResourceImpl)this).cdoSetView((CDOViewImpl)view);
     }
   }
 
-  public void setResource(CDOResource resource)
+  public void cdoInternalSetResource(CDOResource resource)
   {
     if (this instanceof CDOResourceImpl)
     {
@@ -154,7 +155,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     this.resource = (CDOResourceImpl)resource;
   }
 
-  public void setRevision(CDORevision revision)
+  public void cdoInternalSetRevision(CDORevision revision)
   {
     if (TRACER.isEnabled())
     {
@@ -204,7 +205,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
   }
 
-  public void finalizeRevision()
+  public void cdoInternalFinalizeRevision()
   {
     if (TRACER.isEnabled())
     {
@@ -273,7 +274,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
   }
 
-  public CDORevisionImpl copyRevision()
+  public CDORevisionImpl cdoInternalCopyRevision()
   {
     return revision = new CDORevisionImpl(revision);
   }

@@ -311,16 +311,16 @@ public final class CDOStateMachine
 
       // Prepare object
       CDOID id = CDOIDImpl.create(transaction.getNextTemporaryID());
-      object.setID(id);
-      object.setResource(resource);
-      object.setAdapter(view);
-      object.setState(CDOState.PREPARED_ATTACH);
+      object.cdoInternalSetID(id);
+      object.cdoInternalSetResource(resource);
+      object.cdoInternalSetView(view);
+      object.cdoInternalSetState(CDOState.PREPARED_ATTACH);
 
       // Create new revision
       CDORevisionImpl revision = new CDORevisionImpl((CDOClassImpl)object.cdoClass(), id);
       revision.setVersion(1);
       revision.setResourceID(resource.cdoID());
-      object.setRevision(revision);
+      object.cdoInternalSetRevision(revision);
 
       // Register object
       view.registerObject(object);
@@ -345,8 +345,8 @@ public final class CDOStateMachine
     @Override
     protected void doExecute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
-      object.finalizeRevision();
-      object.setState(CDOState.NEW);
+      object.cdoInternalFinalizeRevision();
+      object.cdoInternalSetState(CDOState.NEW);
 
       // Prepare content tree
       for (EObject content : object.eContents())
@@ -389,7 +389,7 @@ public final class CDOStateMachine
       CDOID newID = idMappings.get(id);
       if (newID != null)
       {
-        object.setID(newID);
+        object.cdoInternalSetID(newID);
         view.remapObject(id);
         id = newID;
       }
@@ -401,7 +401,7 @@ public final class CDOStateMachine
       revision.adjustReferences(idMappings);
       view.getSession().getRevisionManager().addRevision(revision);
 
-      object.setState(CDOState.CLEAN);
+      object.cdoInternalSetState(CDOState.CLEAN);
     }
   }
 
@@ -413,14 +413,14 @@ public final class CDOStateMachine
     @Override
     protected void doExecute(InternalCDOObject object, Event event, Object data1, Object data2)
     {
-      CDORevisionImpl revision = object.copyRevision();
+      CDORevisionImpl revision = (CDORevisionImpl)object.cdoInternalCopyRevision();
       revision.increaseVersion();
 
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDOTransactionImpl transaction = getTransaction(view);
       transaction.registerDirty(object);
 
-      object.setState(CDOState.DIRTY);
+      object.cdoInternalSetState(CDOState.DIRTY);
     }
   }
 
@@ -434,7 +434,7 @@ public final class CDOStateMachine
     {
       long timeStamp = (Long)data1;
       ((CDORevisionImpl)object.cdoRevision()).setRevised(timeStamp - 1);
-      object.setState(CDOState.PROXY);
+      object.cdoInternalSetState(CDOState.PROXY);
     }
   }
 
@@ -456,8 +456,8 @@ public final class CDOStateMachine
       CDOID id = object.cdoID();
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDORevisionImpl revision = view.getRevision(id);
-      object.setRevision(revision);
-      object.setState(CDOState.CLEAN);
+      object.cdoInternalSetRevision(revision);
+      object.cdoInternalSetState(CDOState.CLEAN);
 
       if (forWrite)
       {
@@ -483,10 +483,10 @@ public final class CDOStateMachine
       }
 
       // Prepare object
-      object.setID(id);
+      object.cdoInternalSetID(id);
       // object.setRevision(revision);
-      object.setResource(resource);
-      object.setAdapter(view);
+      object.cdoInternalSetResource(resource);
+      object.cdoInternalSetView(view);
 
       // Register object
       view.registerObject(object);

@@ -175,10 +175,10 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       resource.setPath(path);
 
       InternalCDOObject resourceObject = resource;
-      resourceObject.setID(resourceID);
-      resourceObject.setAdapter(this);
-      resourceObject.setResource(resource);
-      resourceObject.setState(CDOState.PROXY);
+      resourceObject.cdoInternalSetID(resourceID);
+      resourceObject.cdoInternalSetView(this);
+      resourceObject.cdoInternalSetResource(resource);
+      resourceObject.cdoInternalSetState(CDOState.PROXY);
 
       return resource;
     }
@@ -455,7 +455,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       try
       {
-        ((InternalCDOObject)cdoResource).setState(CDOState.NEW);
+        ((InternalCDOObject)cdoResource).cdoInternalSetState(CDOState.NEW);
         resourceSet.getResources().remove(cdoResource);
       }
       catch (RuntimeException ignore)
@@ -511,17 +511,17 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     InternalCDOObject object = newInstance(cdoClass);
     if (object instanceof CDOResourceImpl)
     {
-      object.setResource((CDOResourceImpl)object);
+      object.cdoInternalSetResource((CDOResourceImpl)object);
     }
     else
     {
       CDOResourceImpl resource = getResource(resourceID);
-      object.setResource(resource);
+      object.cdoInternalSetResource(resource);
     }
 
-    object.setRevision(revision);
-    object.setID(revision.getID());
-    object.setState(CDOState.CLEAN);
+    object.cdoInternalSetRevision(revision);
+    object.cdoInternalSetID(revision.getID());
+    object.cdoInternalSetState(CDOState.CLEAN);
     return object;
   }
 

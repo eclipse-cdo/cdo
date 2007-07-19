@@ -103,6 +103,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
         }
         catch (ClassCastException ex)
         {
+          ex.printStackTrace();
           throw new IllegalStateException("Dangling reference: " + object);
         }
       }

@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.lang.reflect.Field;
@@ -60,6 +61,7 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
 
   public CDOObjectAdapter()
   {
+    state = CDOState.TRANSIENT;
   }
 
   @Override
@@ -71,7 +73,7 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
   @Override
   public boolean isAdapterForType(Object type)
   {
-    return type instanceof InternalEObject;
+    return type == CDOObjectAdapter.class;
   }
 
   @Override
@@ -178,7 +180,65 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
     }
 
     this.revision = (CDORevisionImpl)revision;
-    transferRevisionToTarget();
+    transferTargetToRevision();
+  }
+
+  public void cdoInternalSetView(CDOView view)
+  {
+    // Do nothing since target will never be a CDOResource
+  }
+
+  public void cdoInternalSetResource(CDOResource resource)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Setting resource: {0}", resource);
+    }
+
+    this.resource = (CDOResourceImpl)resource;
+  }
+
+  public void cdoInternalFinalizeRevision()
+  {
+    // InternalEObject target = getTarget();
+    // EObject eContainer = target.eContainer();
+    // int eContainerFeatureID = target.eContainerFeatureID();
+    // // Setting setting = target.eSetting(null);
+    // CDOObjectImpl.finalizeCDORevision(this, eContainer, eContainerFeatureID,
+    // null);
+  }
+
+  public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
+  {
+    // TODO Implement method CDOObjectAdapter.cdoInternalDynamicFeature()
+    throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  private void transferTargetToRevision()
+  {
+    InternalEObject target = getTarget();
+    CDOViewImpl view = (CDOViewImpl)cdoView();
+
+    CDOClassImpl cdoClass = revision.getCDOClass();
+    System.out.println("TRANSFER " + cdoClass);
+
+    CDOFeatureImpl[] features = cdoClass.getAllFeatures();
+    for (int i = 0; i < features.length; i++)
+    {
+      CDOFeatureImpl feature = features[i];
+      Object value = revision.getValue(feature);
+      if (feature.isMany())
+      {
+        EList list = (EList)getTargetValue(target, feature);
+        dumpSetting(feature, list);
+      }
+      else
+      {
+        value = view.convertToObject(value);
+        dumpSetting(feature, value);
+        setTargetValue(target, feature, value);
+      }
+    }
   }
 
   private void transferRevisionToTarget()
@@ -196,18 +256,42 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
       Object value = revision.getValue(feature);
       if (feature.isMany())
       {
-        Field field = getField(target.getClass(), feature.getName());
-        System.out.println(field.getType().getName() + " --> " + field);
+        EList list = (EList)getTargetValue(target, feature);
+        dumpSetting(feature, list);
       }
       else
       {
         value = view.convertToObject(value);
-        transferValueToTarget(target, feature, value);
+        dumpSetting(feature, value);
+        setTargetValue(target, feature, value);
       }
     }
   }
 
-  private static void transferValueToTarget(InternalEObject target, CDOFeatureImpl feature, Object value)
+  private void dumpSetting(CDOFeatureImpl feature, Object value)
+  {
+    System.out.println(feature.getName() + " --> " + (value == null ? "null" : value.getClass().getName()));
+  }
+
+  private static Object getTargetValue(InternalEObject target, CDOFeatureImpl feature)
+  {
+    Field field = getField(target.getClass(), feature.getName());
+    if (!field.isAccessible())
+    {
+      field.setAccessible(true);
+    }
+
+    try
+    {
+      return field.get(target);
+    }
+    catch (IllegalAccessException ex)
+    {
+      throw new ImplementationError(ex);
+    }
+  }
+
+  private static void setTargetValue(InternalEObject target, CDOFeatureImpl feature, Object value)
   {
     Field field = getField(target.getClass(), feature.getName());
     if (!field.isAccessible())
@@ -229,17 +313,20 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
   {
     try
     {
-      Field field = c.getDeclaredField(fieldName);
-      if (field == null)
+      try
+      {
+        return c.getDeclaredField(fieldName);
+      }
+      catch (NoSuchFieldException ex)
       {
         Class<?> superclass = c.getSuperclass();
         if (superclass != null)
         {
-          field = getField(superclass, fieldName);
+          return getField(superclass, fieldName);
         }
-      }
 
-      return field;
+        throw new NoSuchFieldException(fieldName);
+      }
     }
     catch (RuntimeException ex)
     {
@@ -249,35 +336,6 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
     {
       throw new ImplementationError(ex);
     }
-  }
-
-  public void cdoInternalSetView(CDOView view)
-  {
-    // Do nothing since target will never be a CDOResource
-  }
-
-  public void cdoInternalSetResource(CDOResource resource)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Setting resource: {0}", resource);
-    }
-
-    this.resource = (CDOResourceImpl)resource;
-  }
-
-  public void cdoInternalFinalizeRevision()
-  {
-    CDOObjectImpl.finalizeCDORevision(this, null, 0, null);
-
-    // TODO Implement method CDOObjectAdapter.cdoInternalFinalizeRevision()
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
-
-  public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
-  {
-    // TODO Implement method CDOObjectAdapter.cdoInternalDynamicFeature()
-    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   public EList<Adapter> eAdapters()
@@ -501,5 +559,18 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
   public String eURIFragmentSegment(EStructuralFeature feature, EObject object)
   {
     return getTarget().eURIFragmentSegment(feature, object);
+  }
+
+  public static CDOObjectAdapter getFor(InternalEObject eObject)
+  {
+    EList<Adapter> adapters = eObject.eAdapters();
+    CDOObjectAdapter adapter = (CDOObjectAdapter)EcoreUtil.getAdapter(adapters, CDOObjectAdapter.class);
+    if (adapter == null)
+    {
+      adapter = new CDOObjectAdapter();
+      adapters.add(adapter);
+    }
+
+    return adapter;
   }
 }

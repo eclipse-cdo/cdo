@@ -93,7 +93,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       {
         try
         {
-          CDOID id = (CDOID)CDOStore.convertToID(CDOViewImpl.this, object);
+          CDOID id = (CDOID)CDOViewImpl.this.convertToID(object);
           if (TRACER.isEnabled())
           {
             TRACER.format("Converted dangling reference: {0} --> {1}", object, id);
@@ -303,6 +303,111 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   public CDOReferenceConverter getReferenceConverter()
   {
     return referenceConverter;
+  }
+
+  // public final class HistoryEntryImpl implements HistoryEntry, Comparable
+  // {
+  // private String resourcePath;
+  //
+  // private HistoryEntryImpl(String resourcePath)
+  // {
+  // this.resourcePath = resourcePath;
+  // }
+  //
+  // public CDOView getView()
+  // {
+  // return CDOViewImpl.this;
+  // }
+  //
+  // public String getResourcePath()
+  // {
+  // return resourcePath;
+  // }
+  //
+  // public int compareTo(Object o)
+  // {
+  // HistoryEntry that = (HistoryEntry)o;
+  // return resourcePath.compareTo(that.getResourcePath());
+  // }
+  //
+  // @Override
+  // public String toString()
+  // {
+  // return resourcePath;
+  // }
+  // }
+
+  // public final class HistoryEntryImpl implements HistoryEntry, Comparable
+  // {
+  // private String resourcePath;
+  //
+  // private HistoryEntryImpl(String resourcePath)
+  // {
+  // this.resourcePath = resourcePath;
+  // }
+  //
+  // public CDOView getView()
+  // {
+  // return CDOViewImpl.this;
+  // }
+  //
+  // public String getResourcePath()
+  // {
+  // return resourcePath;
+  // }
+  //
+  // public int compareTo(Object o)
+  // {
+  // HistoryEntry that = (HistoryEntry)o;
+  // return resourcePath.compareTo(that.getResourcePath());
+  // }
+  //
+  // @Override
+  // public String toString()
+  // {
+  // return resourcePath;
+  // }
+  // }
+
+  public Object convertToID(Object potentialObject)
+  {
+    if (potentialObject instanceof CDOObject)
+    {
+      CDOObject object = (CDOObject)potentialObject;
+      if (object.cdoView() == this)
+      {
+        return object.cdoID();
+      }
+    }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Dangling reference: {0}", potentialObject);
+    }
+
+    return potentialObject;
+  }
+
+  public Object convertToObject(Object potentialID)
+  {
+    if (potentialID instanceof CDOID)
+    {
+      if (potentialID == CDOID.NULL)
+      {
+        return null;
+      }
+
+      CDOID id = (CDOID)potentialID;
+      CDOObject result = lookupObject(id);
+      if (result == null)
+      {
+        throw new ImplementationError("ID not registered: " + id);
+      }
+
+      return result;
+    }
+
+    return potentialID;
   }
 
   /**

@@ -10,13 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
@@ -36,7 +33,7 @@ public final class CDOStore implements EStore
   // @Singleton
   public static final CDOStore INSTANCE = new CDOStore();
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOStore.class);
+  private final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOStore.class);
 
   private CDOStore()
   {
@@ -52,7 +49,7 @@ public final class CDOStore implements EStore
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
     CDOID id = revision.getContainerID();
-    return (InternalEObject)convertToObject(cdoObject.cdoView(), id);
+    return (InternalEObject)((CDOViewImpl)cdoObject.cdoView()).convertToObject(id);
   }
 
   public int getContainingFeatureID(InternalEObject eObject)
@@ -75,7 +72,7 @@ public final class CDOStore implements EStore
       TRACER.format("setContainer({0}, {1}, {2})", cdoObject, newContainer, newContainerFeatureID);
     }
 
-    CDOID containerID = (CDOID)convertToID(cdoObject.cdoView(), newContainer);
+    CDOID containerID = (CDOID)((CDOViewImpl)cdoObject.cdoView()).convertToID(newContainer);
 
     CDORevisionImpl revision = getRevisionForWriting(cdoObject);
     revision.setContainerID(containerID);
@@ -100,7 +97,7 @@ public final class CDOStore implements EStore
     Object result = revision.get(cdoFeature, index);
     if (cdoFeature.isReference())
     {
-      result = convertToObject(cdoObject.cdoView(), result);
+      result = ((CDOViewImpl)cdoObject.cdoView()).convertToObject(result);
     }
 
     return result;
@@ -156,7 +153,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      value = convertToID(cdoObject.cdoView(), value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertToID(value);
     }
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
@@ -174,7 +171,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      value = convertToID(cdoObject.cdoView(), value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertToID(value);
     }
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
@@ -192,7 +189,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      value = convertToID(cdoObject.cdoView(), value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertToID(value);
     }
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
@@ -227,7 +224,7 @@ public final class CDOStore implements EStore
     {
       for (int i = 0; i < result.length; i++)
       {
-        result[i] = convertToObject(cdoObject.cdoView(), result[i]);
+        result[i] = ((CDOViewImpl)cdoObject.cdoView()).convertToObject(result[i]);
       }
     }
 
@@ -256,14 +253,14 @@ public final class CDOStore implements EStore
         handleContainmentAdd(cdoObject, cdoFeature, value);
       }
 
-      value = convertToID(cdoObject.cdoView(), value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertToID(value);
     }
 
     CDORevisionImpl revision = getRevisionForWriting(cdoObject);
     Object result = revision.set(cdoFeature, index, value);
     if (cdoFeature.isReference())
     {
-      result = convertToObject(cdoObject.cdoView(), result);
+      result = ((CDOViewImpl)cdoObject.cdoView()).convertToObject(result);
     }
 
     return result;
@@ -298,7 +295,7 @@ public final class CDOStore implements EStore
         handleContainmentAdd(cdoObject, cdoFeature, value);
       }
 
-      value = convertToID(cdoObject.cdoView(), value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertToID(value);
     }
 
     CDORevisionImpl revision = getRevisionForWriting(cdoObject);
@@ -318,7 +315,7 @@ public final class CDOStore implements EStore
     Object result = revision.remove(cdoFeature, index);
     if (cdoFeature.isReference())
     {
-      result = convertToObject(cdoObject.cdoView(), result);
+      result = ((CDOViewImpl)cdoObject.cdoView()).convertToObject(result);
     }
 
     return result;
@@ -350,7 +347,7 @@ public final class CDOStore implements EStore
     Object result = revision.move(cdoFeature, target, source);
     if (cdoFeature.isReference())
     {
-      result = convertToObject(cdoObject.cdoView(), result);
+      result = ((CDOViewImpl)cdoObject.cdoView()).convertToObject(result);
     }
 
     return result;
@@ -365,50 +362,6 @@ public final class CDOStore implements EStore
   public String toString()
   {
     return "PersistentStore";
-  }
-
-  public static Object convertToID(CDOView adapter, Object potentialObject)
-  {
-    if (potentialObject instanceof CDOObject)
-    {
-      CDOObject object = (CDOObject)potentialObject;
-      if (object.cdoView() == adapter)
-      {
-        return object.cdoID();
-      }
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Dangling reference: {0}", potentialObject);
-    }
-
-    return potentialObject;
-  }
-
-  /**
-   * TODO Move to adapter
-   */
-  public static Object convertToObject(CDOView adapter, Object potentialID)
-  {
-    if (potentialID instanceof CDOID)
-    {
-      if (potentialID == CDOID.NULL)
-      {
-        return null;
-      }
-
-      CDOID id = (CDOID)potentialID;
-      CDOObject result = ((CDOViewImpl)adapter).lookupObject(id);
-      if (result == null)
-      {
-        throw new ImplementationError("ID not registered: " + id);
-      }
-
-      return result;
-    }
-
-    return potentialID;
   }
 
   private static CDOFeatureImpl getCDOFeature(InternalCDOObject cdoObject, EStructuralFeature eFeature)

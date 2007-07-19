@@ -441,7 +441,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       {
         if (isReference)
         {
-          value = CDOStore.convertToID(view, value);
+          value = view.convertToID(value);
         }
 
         revision.add(cdoFeature, index++, value);
@@ -451,7 +451,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       if (isReference)
       {
-        setting = CDOStore.convertToID(view, setting);
+        setting = view.convertToID(setting);
       }
 
       revision.set(cdoFeature, 0, setting);

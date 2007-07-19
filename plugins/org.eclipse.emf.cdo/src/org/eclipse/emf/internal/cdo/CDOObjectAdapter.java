@@ -183,13 +183,18 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
   private void transferRevisionToTarget()
   {
     InternalEObject target = getTarget();
-    CDOReferenceConverter converter = ((CDOViewImpl)cdoView()).getReferenceConverter();
+    CDOViewImpl view = (CDOViewImpl)cdoView();
+    CDOPackageRegistryImpl packageRegistry = view.getSession().getPackageRegistry();
+    CDOReferenceConverter converter = view.getReferenceConverter();
 
     CDOClassImpl cdoClass = revision.getCDOClass();
     CDOFeatureImpl[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
     {
       CDOFeatureImpl feature = features[i];
+      // EStructuralFeature eFeature = ModelUtil.getEFeature(feature,
+      // packageRegistry);
+
       CDOTypeImpl type = feature.getType();
       Object value = revision.getValue(feature);
       if (feature.isMany())
@@ -197,6 +202,12 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
       }
       else
       {
+        if (feature.isReference())
+        {
+        }
+        else
+        {
+        }
       }
     }
   }

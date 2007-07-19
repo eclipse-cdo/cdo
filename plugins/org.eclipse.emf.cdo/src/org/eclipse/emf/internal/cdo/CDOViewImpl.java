@@ -94,7 +94,13 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       {
         try
         {
-          CDOID id = (CDOID)CDOViewImpl.this.convertToID(object);
+          Object converted = CDOViewImpl.this.convertToID(object);
+          if (!(converted instanceof CDOID))
+          {
+            System.out.println(object);
+          }
+
+          CDOID id = (CDOID)converted;
           if (TRACER.isEnabled())
           {
             TRACER.format("Converted dangling reference: {0} --> {1}", object, id);
@@ -309,6 +315,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public Object convertToID(Object potentialObject)
   {
+    if (potentialObject == null)
+    {
+      throw new ImplementationError();
+    }
+
     if (!(potentialObject instanceof InternalCDOObject))
     {
       if (potentialObject instanceof InternalEObject)

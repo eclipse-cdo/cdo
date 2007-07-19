@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDOReferenceConverter;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -74,6 +75,8 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private InternalCDOObject lastLookupObject;
 
+  private CDOReferenceConverter referenceConverter;
+
   public CDOViewImpl(int id, CDOSessionImpl session, boolean readOnly)
   {
     this.id = id;
@@ -83,6 +86,27 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       transaction = new CDOTransactionImpl(this);
     }
+
+    referenceConverter = new CDOReferenceConverter()
+    {
+      public CDOID convertToID(Object object)
+      {
+        try
+        {
+          CDOID id = (CDOID)CDOStore.convertToID(CDOViewImpl.this, object);
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Converted dangling reference: {0} --> {1}", object, id);
+          }
+
+          return id;
+        }
+        catch (ClassCastException ex)
+        {
+          throw new IllegalStateException("Dangling reference: " + object);
+        }
+      }
+    };
   }
 
   public CDOViewImpl(int id, CDOSessionImpl session, long timeStamp)
@@ -274,6 +298,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       TRACER.format("Remapping object: {0} --> {1}", oldID, newID);
     }
+  }
+
+  public CDOReferenceConverter getReferenceConverter()
+  {
+    return referenceConverter;
   }
 
   /**

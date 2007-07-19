@@ -14,6 +14,10 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDOReferenceConverter;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -24,6 +28,7 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -54,6 +59,51 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
 
   public CDOObjectAdapter()
   {
+  }
+
+  @Override
+  public InternalEObject getTarget()
+  {
+    return (InternalEObject)super.getTarget();
+  }
+
+  @Override
+  public boolean isAdapterForType(Object type)
+  {
+    return type instanceof InternalEObject;
+  }
+
+  @Override
+  public void notifyChanged(Notification msg)
+  {
+    // TODO Implement method CDOObjectAdapter.notifyChanged()
+    throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  @Override
+  public void setTarget(Notifier newTarget)
+  {
+    if (newTarget instanceof InternalEObject)
+    {
+      super.setTarget(newTarget);
+    }
+    else
+    {
+      throw new IllegalArgumentException("Not an InternalEObject: " + newTarget.getClass().getName());
+    }
+  }
+
+  @Override
+  public void unsetTarget(Notifier oldTarget)
+  {
+    if (oldTarget instanceof InternalEObject)
+    {
+      super.unsetTarget(oldTarget);
+    }
+    else
+    {
+      throw new IllegalArgumentException("Not an InternalEObject: " + oldTarget.getClass().getName());
+    }
   }
 
   public CDOID cdoID()
@@ -127,20 +177,33 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
     }
 
     this.revision = (CDORevisionImpl)revision;
-    revisionToEObject();
+    transferRevisionToTarget();
   }
 
-  private void revisionToEObject()
+  private void transferRevisionToTarget()
   {
-    InternalEObject eObject = getEObject();
+    InternalEObject target = getTarget();
+    CDOReferenceConverter converter = ((CDOViewImpl)cdoView()).getReferenceConverter();
 
-    // TODO Implement method CDOObjectAdapter.revisionToEObject()
-    throw new UnsupportedOperationException("Not yet implemented");
+    CDOClassImpl cdoClass = revision.getCDOClass();
+    CDOFeatureImpl[] features = cdoClass.getAllFeatures();
+    for (int i = 0; i < features.length; i++)
+    {
+      CDOFeatureImpl feature = features[i];
+      CDOTypeImpl type = feature.getType();
+      Object value = revision.getValue(feature);
+      if (feature.isMany())
+      {
+      }
+      else
+      {
+      }
+    }
   }
 
   public void cdoInternalSetView(CDOView view)
   {
-    // Do nothing since getEObject() will never deliver a CDOResource
+    // Do nothing since target will never be a CDOResource
   }
 
   public void cdoInternalSetResource(CDOResource resource)
@@ -167,231 +230,226 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
-  public InternalEObject getEObject()
-  {
-    return (InternalEObject)target;
-  }
-
   public EList<Adapter> eAdapters()
   {
-    return getEObject().eAdapters();
+    return getTarget().eAdapters();
   }
 
   public TreeIterator<EObject> eAllContents()
   {
-    return getEObject().eAllContents();
+    return getTarget().eAllContents();
   }
 
   public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
   {
-    return getEObject().eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    return getTarget().eBaseStructuralFeatureID(derivedFeatureID, baseClass);
   }
 
   public NotificationChain eBasicRemoveFromContainer(NotificationChain notifications)
   {
-    return getEObject().eBasicRemoveFromContainer(notifications);
+    return getTarget().eBasicRemoveFromContainer(notifications);
   }
 
   public NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID,
       NotificationChain notifications)
   {
-    return getEObject().eBasicSetContainer(newContainer, newContainerFeatureID, notifications);
+    return getTarget().eBasicSetContainer(newContainer, newContainerFeatureID, notifications);
   }
 
   public EClass eClass()
   {
-    return getEObject().eClass();
+    return getTarget().eClass();
   }
 
   public EObject eContainer()
   {
-    return getEObject().eContainer();
+    return getTarget().eContainer();
   }
 
   public int eContainerFeatureID()
   {
-    return getEObject().eContainerFeatureID();
+    return getTarget().eContainerFeatureID();
   }
 
   public EStructuralFeature eContainingFeature()
   {
-    return getEObject().eContainingFeature();
+    return getTarget().eContainingFeature();
   }
 
   public EReference eContainmentFeature()
   {
-    return getEObject().eContainmentFeature();
+    return getTarget().eContainmentFeature();
   }
 
   public EList<EObject> eContents()
   {
-    return getEObject().eContents();
+    return getTarget().eContents();
   }
 
   public EList<EObject> eCrossReferences()
   {
-    return getEObject().eCrossReferences();
+    return getTarget().eCrossReferences();
   }
 
   public boolean eDeliver()
   {
-    return getEObject().eDeliver();
+    return getTarget().eDeliver();
   }
 
   public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
   {
-    return getEObject().eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    return getTarget().eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
   public Resource.Internal eDirectResource()
   {
-    return getEObject().eDirectResource();
+    return getTarget().eDirectResource();
   }
 
   public Object eGet(EStructuralFeature feature, boolean resolve, boolean coreType)
   {
-    return getEObject().eGet(feature, resolve, coreType);
+    return getTarget().eGet(feature, resolve, coreType);
   }
 
   public Object eGet(EStructuralFeature feature, boolean resolve)
   {
-    return getEObject().eGet(feature, resolve);
+    return getTarget().eGet(feature, resolve);
   }
 
   public Object eGet(EStructuralFeature feature)
   {
-    return getEObject().eGet(feature);
+    return getTarget().eGet(feature);
   }
 
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    return getEObject().eGet(featureID, resolve, coreType);
+    return getTarget().eGet(featureID, resolve, coreType);
   }
 
   public InternalEObject eInternalContainer()
   {
-    return getEObject().eInternalContainer();
+    return getTarget().eInternalContainer();
   }
 
   public Resource.Internal eInternalResource()
   {
-    return getEObject().eInternalResource();
+    return getTarget().eInternalResource();
   }
 
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, Class<?> baseClass,
       NotificationChain notifications)
   {
-    return getEObject().eInverseAdd(otherEnd, featureID, baseClass, notifications);
+    return getTarget().eInverseAdd(otherEnd, featureID, baseClass, notifications);
   }
 
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class<?> baseClass,
       NotificationChain notifications)
   {
-    return getEObject().eInverseRemove(otherEnd, featureID, baseClass, notifications);
+    return getTarget().eInverseRemove(otherEnd, featureID, baseClass, notifications);
   }
 
   public boolean eIsProxy()
   {
-    return getEObject().eIsProxy();
+    return getTarget().eIsProxy();
   }
 
   public boolean eIsSet(EStructuralFeature feature)
   {
-    return getEObject().eIsSet(feature);
+    return getTarget().eIsSet(feature);
   }
 
   public boolean eIsSet(int featureID)
   {
-    return getEObject().eIsSet(featureID);
+    return getTarget().eIsSet(featureID);
   }
 
   public boolean eNotificationRequired()
   {
-    return getEObject().eNotificationRequired();
+    return getTarget().eNotificationRequired();
   }
 
   public void eNotify(Notification notification)
   {
-    getEObject().eNotify(notification);
+    getTarget().eNotify(notification);
   }
 
   public EObject eObjectForURIFragmentSegment(String uriFragmentSegment)
   {
-    return getEObject().eObjectForURIFragmentSegment(uriFragmentSegment);
+    return getTarget().eObjectForURIFragmentSegment(uriFragmentSegment);
   }
 
   public URI eProxyURI()
   {
-    return getEObject().eProxyURI();
+    return getTarget().eProxyURI();
   }
 
   public EObject eResolveProxy(InternalEObject proxy)
   {
-    return getEObject().eResolveProxy(proxy);
+    return getTarget().eResolveProxy(proxy);
   }
 
   public Resource eResource()
   {
-    return getEObject().eResource();
+    return getTarget().eResource();
   }
 
   public void eSet(EStructuralFeature feature, Object newValue)
   {
-    getEObject().eSet(feature, newValue);
+    getTarget().eSet(feature, newValue);
   }
 
   public void eSet(int featureID, Object newValue)
   {
-    getEObject().eSet(featureID, newValue);
+    getTarget().eSet(featureID, newValue);
   }
 
   public void eSetClass(EClass class1)
   {
-    getEObject().eSetClass(class1);
+    getTarget().eSetClass(class1);
   }
 
   public void eSetDeliver(boolean deliver)
   {
-    getEObject().eSetDeliver(deliver);
+    getTarget().eSetDeliver(deliver);
   }
 
   public void eSetProxyURI(URI uri)
   {
-    getEObject().eSetProxyURI(uri);
+    getTarget().eSetProxyURI(uri);
   }
 
   public NotificationChain eSetResource(Resource.Internal resource, NotificationChain notifications)
   {
-    return getEObject().eSetResource(resource, notifications);
+    return getTarget().eSetResource(resource, notifications);
   }
 
   public void eSetStore(EStore store)
   {
-    getEObject().eSetStore(store);
+    getTarget().eSetStore(store);
   }
 
   public Setting eSetting(EStructuralFeature feature)
   {
-    return getEObject().eSetting(feature);
+    return getTarget().eSetting(feature);
   }
 
   public EStore eStore()
   {
-    return getEObject().eStore();
+    return getTarget().eStore();
   }
 
   public void eUnset(EStructuralFeature feature)
   {
-    getEObject().eUnset(feature);
+    getTarget().eUnset(feature);
   }
 
   public void eUnset(int featureID)
   {
-    getEObject().eUnset(featureID);
+    getTarget().eUnset(featureID);
   }
 
   public String eURIFragmentSegment(EStructuralFeature feature, EObject object)
   {
-    return getEObject().eURIFragmentSegment(feature, object);
+    return getTarget().eURIFragmentSegment(feature, object);
   }
 }

@@ -23,7 +23,6 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import org.eclipse.emf.internal.cdo.CDOStore;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -44,32 +43,10 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   private CDOTransactionImpl transaction;
 
-  private CDOReferenceConverter converter;
-
   public CommitTransactionRequest(IChannel channel, final CDOTransactionImpl transaction)
   {
     super(channel, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION);
     this.transaction = transaction;
-    converter = new CDOReferenceConverter()
-    {
-      public CDOID convertToID(Object object)
-      {
-        try
-        {
-          CDOID id = (CDOID)CDOStore.convertToID(transaction.getView(), object);
-          if (PROTOCOL.isEnabled())
-          {
-            PROTOCOL.format("Converted dangling reference: {0} --> {1}", object, id);
-          }
-
-          return id;
-        }
-        catch (ClassCastException ex)
-        {
-          throw new IllegalStateException("Encountered unconvertable dangling reference during commit: " + object);
-        }
-      }
-    };
   }
 
   @Override
@@ -131,6 +108,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   private void writeRevisions(ExtendedDataOutputStream out, Collection objects) throws IOException
   {
+    CDOReferenceConverter converter = transaction.getView().getReferenceConverter();
     out.writeInt(objects.size());
     for (Iterator it = objects.iterator(); it.hasNext();)
     {

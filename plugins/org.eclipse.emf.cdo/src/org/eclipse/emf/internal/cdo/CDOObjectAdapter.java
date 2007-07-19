@@ -242,6 +242,10 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
     {
       CDOFeatureImpl feature = features[i];
       System.out.println("FEATURE " + feature);
+      if (feature.getName().equals("eClassifier") && feature.getContainingClass().getName().equals("EGenericType"))
+      {
+        System.out.println("EGenericType.eClassifier");
+      }
 
       Object targetValue = getTargetValue(target, feature, view);
       if (feature.isMany())

@@ -16,12 +16,11 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDOReferenceConverter;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
@@ -41,6 +40,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+
+import java.lang.reflect.Field;
 
 /**
  * @author Eike Stepper
@@ -184,31 +185,69 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
   {
     InternalEObject target = getTarget();
     CDOViewImpl view = (CDOViewImpl)cdoView();
-    CDOPackageRegistryImpl packageRegistry = view.getSession().getPackageRegistry();
-    CDOReferenceConverter converter = view.getReferenceConverter();
 
     CDOClassImpl cdoClass = revision.getCDOClass();
+    System.out.println("TRANSFER " + cdoClass);
+
     CDOFeatureImpl[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
     {
       CDOFeatureImpl feature = features[i];
-      // EStructuralFeature eFeature = ModelUtil.getEFeature(feature,
-      // packageRegistry);
-
-      CDOTypeImpl type = feature.getType();
       Object value = revision.getValue(feature);
       if (feature.isMany())
       {
+        Field field = getField(target.getClass(), feature.getName());
+        System.out.println(field.getType().getName() + " --> " + field);
       }
       else
       {
-        if (feature.isReference())
+        value = view.convertToObject(value);
+        transferValueToTarget(target, feature, value);
+      }
+    }
+  }
+
+  private static void transferValueToTarget(InternalEObject target, CDOFeatureImpl feature, Object value)
+  {
+    Field field = getField(target.getClass(), feature.getName());
+    if (!field.isAccessible())
+    {
+      field.setAccessible(true);
+    }
+
+    try
+    {
+      field.set(target, value);
+    }
+    catch (IllegalAccessException ex)
+    {
+      throw new ImplementationError(ex);
+    }
+  }
+
+  private static Field getField(Class<?> c, String fieldName)
+  {
+    try
+    {
+      Field field = c.getDeclaredField(fieldName);
+      if (field == null)
+      {
+        Class<?> superclass = c.getSuperclass();
+        if (superclass != null)
         {
-        }
-        else
-        {
+          field = getField(superclass, fieldName);
         }
       }
+
+      return field;
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new ImplementationError(ex);
     }
   }
 

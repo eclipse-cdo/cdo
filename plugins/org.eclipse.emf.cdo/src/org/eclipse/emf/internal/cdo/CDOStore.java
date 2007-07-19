@@ -365,7 +365,7 @@ public final class CDOStore implements EStore
     return "PersistentStore";
   }
 
-  private static InternalCDOObject getCDOObject(Object object)
+  public static InternalCDOObject getCDOObject(Object object)
   {
     if (object instanceof InternalCDOObject)
     {
@@ -374,13 +374,13 @@ public final class CDOStore implements EStore
 
     if (object instanceof InternalEObject)
     {
-      return CDOObjectAdapter.getFor((InternalEObject)object);
+      return CDOObjectAdapter.getOrCreate((InternalEObject)object);
     }
 
     throw new ImplementationError("Neither InternalCDOObject nor InternalEObject: " + object.getClass().getName());
   }
 
-  private static CDOFeatureImpl getCDOFeature(InternalCDOObject cdoObject, EStructuralFeature eFeature)
+  public static CDOFeatureImpl getCDOFeature(InternalCDOObject cdoObject, EStructuralFeature eFeature)
   {
     CDOViewImpl view = (CDOViewImpl)cdoObject.cdoView();
     if (view == null)

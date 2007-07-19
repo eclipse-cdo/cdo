@@ -329,10 +329,8 @@ public final class CDOStateMachine
       // Prepare content tree
       for (EObject content : object.eContents())
       {
-        if (content instanceof InternalCDOObject)
-        {
-          INSTANCE.processEvent((InternalCDOObject)content, Event.ATTACH, resource, view);
-        }
+        InternalCDOObject objectOrAdapter = CDOStore.getCDOObject(content);
+        INSTANCE.processEvent(objectOrAdapter, Event.ATTACH, resource, view);
       }
     }
   }
@@ -351,10 +349,8 @@ public final class CDOStateMachine
       // Prepare content tree
       for (EObject content : object.eContents())
       {
-        if (content instanceof InternalCDOObject)
-        {
-          INSTANCE.processEvent((InternalCDOObject)content, Event.FINALIZE_ATTACH, null, null);
-        }
+        InternalCDOObject objectOrAdapter = CDOStore.getCDOObject(content);
+        INSTANCE.processEvent(objectOrAdapter, Event.FINALIZE_ATTACH, null, null);
       }
     }
   }

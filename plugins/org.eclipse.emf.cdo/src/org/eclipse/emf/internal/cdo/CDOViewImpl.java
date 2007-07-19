@@ -38,6 +38,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -306,75 +307,23 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return referenceConverter;
   }
 
-  // public final class HistoryEntryImpl implements HistoryEntry, Comparable
-  // {
-  // private String resourcePath;
-  //
-  // private HistoryEntryImpl(String resourcePath)
-  // {
-  // this.resourcePath = resourcePath;
-  // }
-  //
-  // public CDOView getView()
-  // {
-  // return CDOViewImpl.this;
-  // }
-  //
-  // public String getResourcePath()
-  // {
-  // return resourcePath;
-  // }
-  //
-  // public int compareTo(Object o)
-  // {
-  // HistoryEntry that = (HistoryEntry)o;
-  // return resourcePath.compareTo(that.getResourcePath());
-  // }
-  //
-  // @Override
-  // public String toString()
-  // {
-  // return resourcePath;
-  // }
-  // }
-
-  // public final class HistoryEntryImpl implements HistoryEntry, Comparable
-  // {
-  // private String resourcePath;
-  //
-  // private HistoryEntryImpl(String resourcePath)
-  // {
-  // this.resourcePath = resourcePath;
-  // }
-  //
-  // public CDOView getView()
-  // {
-  // return CDOViewImpl.this;
-  // }
-  //
-  // public String getResourcePath()
-  // {
-  // return resourcePath;
-  // }
-  //
-  // public int compareTo(Object o)
-  // {
-  // HistoryEntry that = (HistoryEntry)o;
-  // return resourcePath.compareTo(that.getResourcePath());
-  // }
-  //
-  // @Override
-  // public String toString()
-  // {
-  // return resourcePath;
-  // }
-  // }
-
   public Object convertToID(Object potentialObject)
   {
-    if (potentialObject instanceof CDOObject)
+    if (!(potentialObject instanceof InternalCDOObject))
     {
-      CDOObject object = (CDOObject)potentialObject;
+      if (potentialObject instanceof InternalEObject)
+      {
+        CDOObjectAdapter adapter = CDOObjectAdapter.get((InternalEObject)potentialObject);
+        if (adapter != null)
+        {
+          potentialObject = adapter;
+        }
+      }
+    }
+
+    if (potentialObject instanceof InternalCDOObject)
+    {
+      InternalCDOObject object = (InternalCDOObject)potentialObject;
       if (object.cdoView() == this)
       {
         return object.cdoID();
@@ -490,7 +439,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     ResourceSet resourceSet = (ResourceSet)newTarget;
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Attaching CDO adapter to " + resourceSet);
+      TRACER.trace("Attaching CDO view to " + resourceSet);
     }
 
     this.resourceSet = resourceSet;
@@ -518,7 +467,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Detaching CDO adapter from " + resourceSet);
+      TRACER.trace("Detaching CDO view from " + resourceSet);
     }
 
     if (resourceSet == oldTarget)

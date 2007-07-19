@@ -161,6 +161,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public void cdoInternalFinalizeRevision()
   {
+    // TODO Inline
     finalizeCDORevision(this, eContainer, eContainerFeatureID, eSettings);
   }
 
@@ -391,6 +392,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return cdoState == CDOState.TRANSIENT || cdoState == CDOState.PREPARED_ATTACH;
   }
 
+  /**
+   * TODO Inline
+   */
+  @Deprecated
   static void finalizeCDORevision(InternalCDOObject cdoObject, EObject eContainer, int eContainerFeatureID,
       Object[] eSettings)
   {

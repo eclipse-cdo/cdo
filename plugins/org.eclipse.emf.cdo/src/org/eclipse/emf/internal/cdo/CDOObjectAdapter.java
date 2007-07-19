@@ -29,6 +29,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -43,6 +44,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -180,7 +182,6 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
     }
 
     this.revision = (CDORevisionImpl)revision;
-    transferTargetToRevision();
   }
 
   public void cdoInternalSetView(CDOView view)
@@ -200,18 +201,24 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
 
   public void cdoInternalFinalizeRevision()
   {
-    // InternalEObject target = getTarget();
-    // EObject eContainer = target.eContainer();
-    // int eContainerFeatureID = target.eContainerFeatureID();
-    // // Setting setting = target.eSetting(null);
-    // CDOObjectImpl.finalizeCDORevision(this, eContainer, eContainerFeatureID,
-    // null);
+    transferTargetToRevision();
   }
 
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
   {
     // TODO Implement method CDOObjectAdapter.cdoInternalDynamicFeature()
     throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  @Override
+  public String toString()
+  {
+    if (id == null)
+    {
+      return eClass().getName() + "?";
+    }
+
+    return eClass().getName() + "@" + id;
   }
 
   private void transferTargetToRevision()
@@ -226,17 +233,37 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
     for (int i = 0; i < features.length; i++)
     {
       CDOFeatureImpl feature = features[i];
-      Object value = revision.getValue(feature);
+      System.out.println("FEATURE " + feature);
+
+      Object targetValue = getTargetValue(target, feature);
       if (feature.isMany())
       {
-        EList list = (EList)getTargetValue(target, feature);
-        dumpSetting(feature, list);
+        List revisionList = revision.getList(feature);
+        revisionList.clear();
+
+        BasicEList targetList = (BasicEList)targetValue;
+        Object[] data = targetList.data();
+        if (data != null)
+        {
+          for (Object targetElement : data)
+          {
+            if (feature.isReference())
+            {
+              targetElement = view.convertToID(targetElement);
+            }
+
+            revisionList.add(targetElement);
+          }
+        }
       }
       else
       {
-        value = view.convertToObject(value);
-        dumpSetting(feature, value);
-        setTargetValue(target, feature, value);
+        if (feature.isReference())
+        {
+          targetValue = view.convertToID(targetValue);
+        }
+
+        revision.setValue(feature, targetValue);
       }
     }
   }
@@ -561,7 +588,13 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
     return getTarget().eURIFragmentSegment(feature, object);
   }
 
-  public static CDOObjectAdapter getFor(InternalEObject eObject)
+  public static CDOObjectAdapter get(InternalEObject eObject)
+  {
+    EList<Adapter> adapters = eObject.eAdapters();
+    return (CDOObjectAdapter)EcoreUtil.getAdapter(adapters, CDOObjectAdapter.class);
+  }
+
+  public static CDOObjectAdapter getOrCreate(InternalEObject eObject)
   {
     EList<Adapter> adapters = eObject.eAdapters();
     CDOObjectAdapter adapter = (CDOObjectAdapter)EcoreUtil.getAdapter(adapters, CDOObjectAdapter.class);

@@ -60,6 +60,15 @@ public class CommitTransactionIndication extends CDOServerIndication
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
+    // try
+    // {
+    // Thread.sleep(100000000000L);
+    // }
+    // catch (InterruptedException ex)
+    // {
+    // throw new IOException(ex.getMessage());
+    // }
+
     newPackages = readNewPackages(in);
     newResources = readNewResources(in);
     newObjects = readNewObjects(in);

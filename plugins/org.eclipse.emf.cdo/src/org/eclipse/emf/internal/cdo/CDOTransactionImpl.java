@@ -11,6 +11,7 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -35,9 +36,9 @@ public class CDOTransactionImpl
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSCTION, CDOTransactionImpl.class);
 
-  private static final long INITIAL_TEMPORARY_ID = -1L;
+  private static final long INITIAL_TEMPORARY_ID = -2L;
 
-  private long nextTemporaryID = INITIAL_TEMPORARY_ID;
+  private transient long nextTemporaryID = INITIAL_TEMPORARY_ID;
 
   private CDOViewImpl view;
 
@@ -86,14 +87,12 @@ public class CDOTransactionImpl
     return dirtyObjects;
   }
 
-  public long getNextTemporaryID()
+  public CDOID getNextTemporaryID()
   {
-    return nextTemporaryID--;
-  }
-
-  public void resetTemporaryCDOID()
-  {
-    nextTemporaryID = INITIAL_TEMPORARY_ID;
+    long id = nextTemporaryID;
+    --nextTemporaryID;
+    --nextTemporaryID;
+    return CDOIDImpl.create(id);
   }
 
   public CommitTransactionResult commit()

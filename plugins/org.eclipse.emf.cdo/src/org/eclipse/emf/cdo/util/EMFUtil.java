@@ -13,10 +13,12 @@ package org.eclipse.emf.cdo.util;
 import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -40,6 +42,17 @@ public final class EMFUtil
 
   private EMFUtil()
   {
+  }
+
+  public static int countAllContents(EObject eObject)
+  {
+    int count = 0;
+    for (TreeIterator<EObject> it = eObject.eAllContents(); it.hasNext(); it.next())
+    {
+      ++count;
+    }
+
+    return count;
   }
 
   public static List<EClass> getPersistentClasses(EPackage ePackage)

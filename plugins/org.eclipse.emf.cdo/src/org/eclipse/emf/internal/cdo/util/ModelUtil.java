@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.core.CDOCorePackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOResourceClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOResourcePackageImpl;
+import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
@@ -33,6 +34,8 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.CDOPackageRegistryImpl;
+import org.eclipse.emf.internal.cdo.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.CDOSessionPackageManager;
 
 /**
  * @author Eike Stepper
@@ -87,7 +90,7 @@ public final class ModelUtil
     return CDOTypeImpl.STRING;
   }
 
-  public static CDOPackageImpl getCDOPackage(EPackage ePackage, CDOPackageManagerImpl packageManager)
+  public static CDOPackageImpl getCDOPackage(EPackage ePackage, CDOSessionPackageManager packageManager)
   {
     String packageURI = ePackage.getNsURI();
     CDOPackageImpl cdoPackage = packageManager.lookupPackage(packageURI);
@@ -100,26 +103,27 @@ public final class ModelUtil
     return cdoPackage;
   }
 
-  public static CDOClassImpl getCDOClass(EClass eClass, CDOPackageManagerImpl packageManager)
+  public static CDOClassImpl getCDOClass(EClass eClass, CDOSessionPackageManager packageManager)
   {
     CDOPackageImpl cdoPackage = getCDOPackage(eClass.getEPackage(), packageManager);
     return cdoPackage.lookupClass(eClass.getClassifierID());
   }
 
-  public static CDOFeatureImpl getCDOFeature(EStructuralFeature eFeature, CDOPackageManagerImpl packageManager)
+  public static CDOFeatureImpl getCDOFeature(EStructuralFeature eFeature, CDOSessionPackageManager packageManager)
   {
     CDOClassImpl cdoClass = getCDOClass(eFeature.getEContainingClass(), packageManager);
     return cdoClass.lookupFeature(eFeature.getFeatureID());
   }
 
-  private static CDOPackageImpl createCDOPackage(EPackage ePackage, CDOPackageManagerImpl packageManager)
+  private static CDOPackageImpl createCDOPackage(EPackage ePackage, CDOSessionPackageManager packageManager)
   {
     String packageURI = ePackage.getNsURI();
     String name = ePackage.getName();
     boolean dynamic = EMFUtil.isDynamicEPackage(ePackage);
     String ecore = dynamic ? EMFUtil.ePackageToString(ePackage) : null;
+    CDOIDRange idRange = packageManager.getSession().registerEPackage(ePackage);
 
-    CDOPackageImpl cdoPackage = new CDOPackageImpl(packageManager, packageURI, name, ecore, dynamic);
+    CDOPackageImpl cdoPackage = new CDOPackageImpl(packageManager, packageURI, name, ecore, dynamic, idRange);
     cdoPackage.setClientInfo(ePackage);
     for (EClass eClass : EMFUtil.getPersistentClasses(ePackage))
     {
@@ -270,7 +274,7 @@ public final class ModelUtil
     return null;
   }
 
-  public static void addModelInfos(CDOPackageManagerImpl packageManager)
+  public static void addModelInfos(CDOSessionPackageManager packageManager)
   {
     // Ecore
     CDOCorePackageImpl corePackage = packageManager.getCDOCorePackage();
@@ -286,7 +290,7 @@ public final class ModelUtil
     resourceClass.getCDOPathFeature().setClientInfo(EresourcePackage.eINSTANCE.getCDOResource_Path());
   }
 
-  public static void removeModelInfos(CDOPackageManagerImpl packageManager)
+  public static void removeModelInfos(CDOSessionPackageManager packageManager)
   {
     // Ecore
     CDOCorePackageImpl corePackage = packageManager.getCDOCorePackage();

@@ -56,7 +56,9 @@ public interface CDOView extends INotifier
 
   public CDOObject newInstance(CDOClass cdoClass);
 
-  public CDORevision getRevision(CDOID id);
+  public CDOObject lookupInstance(CDOID id);
+
+  public CDORevision lookupRevision(CDOID id);
 
   public boolean isDirty();
 

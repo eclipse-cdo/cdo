@@ -3,7 +3,6 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -310,7 +309,7 @@ public final class CDOStateMachine
       CDOTransactionImpl transaction = getTransaction(view);
 
       // Prepare object
-      CDOID id = CDOIDImpl.create(transaction.getNextTemporaryID());
+      CDOID id = transaction.getNextTemporaryID();
       object.cdoInternalSetID(id);
       object.cdoInternalSetResource(resource);
       object.cdoInternalSetView(view);
@@ -453,7 +452,7 @@ public final class CDOStateMachine
     {
       CDOID id = object.cdoID();
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
-      CDORevisionImpl revision = view.getRevision(id);
+      CDORevisionImpl revision = view.lookupRevision(id);
       object.cdoInternalSetRevision(revision);
       object.cdoInternalSetState(CDOState.CLEAN);
 

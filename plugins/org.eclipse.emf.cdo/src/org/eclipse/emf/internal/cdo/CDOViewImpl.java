@@ -92,20 +92,13 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       public CDOID convertToID(Object object)
       {
-        try
+        CDOID id = (CDOID)CDOViewImpl.this.convertToID(object);
+        if (TRACER.isEnabled())
         {
-          CDOID id = (CDOID)CDOViewImpl.this.convertToID(object);
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("Converted dangling reference: {0} --> {1}", object, id);
-          }
+          TRACER.format("Converted dangling reference: {0} --> {1}", object, id);
+        }
 
-          return id;
-        }
-        catch (ClassCastException ex)
-        {
-          throw new IllegalStateException("Dangling reference: " + object, ex);
-        }
+        return id;
       }
     };
   }
@@ -233,7 +226,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return newInstance(eClass);
   }
 
-  public CDORevisionImpl getRevision(CDOID id)
+  public CDORevisionImpl lookupRevision(CDOID id)
   {
     CDORevisionResolver revisionManager = session.getRevisionManager();
     if (isReadWrite())
@@ -244,7 +237,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return (CDORevisionImpl)revisionManager.getRevision(id, timeStamp);
   }
 
-  public CDOObject lookupObject(CDOID id)
+  public InternalCDOObject lookupInstance(CDOID id)
   {
     if (id.equals(lastLookupID))
     {
@@ -255,7 +248,20 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     lastLookupObject = objects.get(id);
     if (lastLookupObject == null)
     {
-      lastLookupObject = createObject(id);
+      if (id.isMeta())
+      {
+        InternalEObject metaObject = session.lookupMetaInstance(id);
+        CDOObjectAdapter adapter = CDOObjectAdapter.getOrCreate(metaObject);
+        adapter.cdoInternalSetID(id);
+        adapter.cdoInternalSetState(CDOState.CLEAN);
+        adapter.cdoInternalSetView(this);
+        lastLookupObject = adapter;
+      }
+      else
+      {
+        lastLookupObject = createObject(id);
+      }
+
       registerObject(lastLookupObject);
     }
 
@@ -317,7 +323,23 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       if (potentialObject instanceof InternalEObject)
       {
-        CDOObjectAdapter adapter = CDOObjectAdapter.get((InternalEObject)potentialObject);
+        InternalEObject eObject = (InternalEObject)potentialObject;
+        CDOObjectAdapter adapter = CDOObjectAdapter.get(eObject);
+        if (adapter == null)
+        {
+          eObject = (InternalEObject)EcoreUtil.resolve(eObject, resourceSet);
+          CDOID id = session.lookupMetaInstanceID(eObject);
+          if (id != null)
+          {
+            if (id.getValue() == -777)
+            {
+              System.out.println(id);
+            }
+
+            adapter = (CDOObjectAdapter)lookupInstance(id);
+          }
+        }
+
         if (adapter != null)
         {
           potentialObject = adapter;
@@ -352,7 +374,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       }
 
       CDOID id = (CDOID)potentialID;
-      CDOObject result = lookupObject(id);
+      CDOObject result = lookupInstance(id);
       if (result == null)
       {
         throw new ImplementationError("ID not registered: " + id);
@@ -592,7 +614,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       TRACER.format("Creating object from view: ID={0}", id);
     }
 
-    CDORevisionImpl revision = getRevision(id);
+    CDORevisionImpl revision = lookupRevision(id);
     CDOClassImpl cdoClass = revision.getCDOClass();
     CDOID resourceID = revision.getResourceID();
 

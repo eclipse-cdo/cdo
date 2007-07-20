@@ -14,7 +14,10 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.ConnectorException;
@@ -31,7 +34,10 @@ import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -55,6 +61,10 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
   @SuppressWarnings("unused")
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
+  private static final long INITIAL_TEMPORARY_ID = -1L;
+
+  private transient long nextTemporaryID = INITIAL_TEMPORARY_ID;
+
   private int sessionID;
 
   private IChannel channel;
@@ -69,9 +79,13 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   private CDORevisionManagerImpl revisionManager;
 
+  private Map<CDOID, InternalEObject> idToMetaInstanceMap = new HashMap();
+
+  private Map<InternalEObject, CDOID> metaInstanceToIDMap = new HashMap();
+
   private Map<ResourceSet, CDOViewImpl> views = new HashMap();
 
-  private int lastViewID = 0;
+  private transient int lastViewID = 0;
 
   private IListener channelListener = new LifecycleEventAdapter()
   {
@@ -222,6 +236,49 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
       views.remove(view.getResourceSet());
       fireEvent(new ViewsEvent(view, IContainerDelta.Kind.REMOVED));
     }
+  }
+
+  public CDOIDRange getTemporaryIDRange(long count)
+  {
+    long id1 = nextTemporaryID;
+    nextTemporaryID -= count + count;
+    long id2 = nextTemporaryID + 2;
+    return CDOIDRangeImpl.create(id1, id2);
+  }
+
+  public InternalEObject lookupMetaInstance(CDOID id)
+  {
+    return idToMetaInstanceMap.get(id);
+  }
+
+  public CDOID lookupMetaInstanceID(InternalEObject metaInstance)
+  {
+    return metaInstanceToIDMap.get(metaInstance);
+  }
+
+  public CDOIDRange registerEPackage(EPackage ePackage)
+  {
+    long lowerBound = nextTemporaryID;
+    registerMetaInstance((InternalEObject)ePackage);
+    for (TreeIterator<EObject> it = ePackage.eAllContents(); it.hasNext();)
+    {
+      InternalEObject metaInstance = (InternalEObject)it.next();
+      registerMetaInstance(metaInstance);
+    }
+
+    return CDOIDRangeImpl.create(lowerBound, nextTemporaryID + 2);
+  }
+
+  private void registerMetaInstance(InternalEObject metaInstance)
+  {
+    CDOID id = CDOIDImpl.create(nextTemporaryID);
+    idToMetaInstanceMap.put(id, metaInstance);
+    metaInstanceToIDMap.put(metaInstance, id);
+    --nextTemporaryID;
+    --nextTemporaryID;
+
+    CDOObjectAdapter adapter = CDOObjectAdapter.getOrCreate(metaInstance);
+    adapter.cdoInternalSetID(id);
   }
 
   public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs, CDOViewImpl excludedView)

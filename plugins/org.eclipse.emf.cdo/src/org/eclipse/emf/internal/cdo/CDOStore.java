@@ -11,7 +11,6 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.util.ImplementationError;
@@ -388,7 +387,7 @@ public final class CDOStore implements EStore
       throw new IllegalStateException("view == null");
     }
 
-    CDOPackageManagerImpl packageManager = view.getSession().getPackageManager();
+    CDOSessionPackageManager packageManager = view.getSession().getPackageManager();
     return ModelUtil.getCDOFeature(eFeature, packageManager);
   }
 

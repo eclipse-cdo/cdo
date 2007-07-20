@@ -108,7 +108,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   private void writeRevisions(ExtendedDataOutputStream out, Collection objects) throws IOException
   {
-    CDOReferenceConverter converter = transaction.getView().getReferenceConverter();
+    CDOReferenceConverter converter = transaction.getView();
     out.writeInt(objects.size());
     for (Iterator it = objects.iterator(); it.hasNext();)
     {

@@ -276,9 +276,6 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     metaInstanceToIDMap.put(metaInstance, id);
     --nextTemporaryID;
     --nextTemporaryID;
-
-    CDOObjectAdapter adapter = CDOObjectAdapter.getOrCreate(metaInstance);
-    adapter.cdoInternalSetID(id);
   }
 
   public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs, CDOViewImpl excludedView)

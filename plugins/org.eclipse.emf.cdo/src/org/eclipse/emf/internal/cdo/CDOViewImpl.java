@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewCommittedEvent;
@@ -38,7 +37,6 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -56,7 +54,8 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier implements CDOView, Adapter.Internal
+public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier implements CDOView,
+    CDOReferenceConverter, Adapter.Internal
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
@@ -76,8 +75,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private InternalCDOObject lastLookupObject;
 
-  private CDOReferenceConverter referenceConverter;
-
   public CDOViewImpl(int id, CDOSessionImpl session, boolean readOnly)
   {
     this.id = id;
@@ -87,20 +84,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       transaction = new CDOTransactionImpl(this);
     }
-
-    referenceConverter = new CDOReferenceConverter()
-    {
-      public CDOID convertToID(Object object)
-      {
-        CDOID id = (CDOID)CDOViewImpl.this.convertToID(object);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Converted dangling reference: {0} --> {1}", object, id);
-        }
-
-        return id;
-      }
-    };
   }
 
   public CDOViewImpl(int id, CDOSessionImpl session, long timeStamp)
@@ -248,16 +231,16 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     lastLookupObject = objects.get(id);
     if (lastLookupObject == null)
     {
-      if (id.isMeta())
-      {
-        InternalEObject metaObject = session.lookupMetaInstance(id);
-        CDOObjectAdapter adapter = CDOObjectAdapter.getOrCreate(metaObject);
-        adapter.cdoInternalSetID(id);
-        adapter.cdoInternalSetState(CDOState.CLEAN);
-        adapter.cdoInternalSetView(this);
-        lastLookupObject = adapter;
-      }
-      else
+      // if (id.isMeta())
+      // {
+      // InternalEObject metaObject = session.lookupMetaInstance(id);
+      // CDOObjectAdapter adapter = CDOObjectAdapter.getOrCreate(metaObject);
+      // adapter.cdoInternalSetID(id);
+      // adapter.cdoInternalSetState(CDOState.CLEAN);
+      // adapter.cdoInternalSetView(this);
+      // lastLookupObject = adapter;
+      // }
+      // else
       {
         lastLookupObject = createObject(id);
       }
@@ -266,6 +249,151 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
 
     return lastLookupObject;
+  }
+
+  // public final class HistoryEntryImpl implements HistoryEntry, Comparable
+  // {
+  // private String resourcePath;
+  //
+  // private HistoryEntryImpl(String resourcePath)
+  // {
+  // this.resourcePath = resourcePath;
+  // }
+  //
+  // public CDOView getView()
+  // {
+  // return CDOViewImpl.this;
+  // }
+  //
+  // public String getResourcePath()
+  // {
+  // return resourcePath;
+  // }
+  //
+  // public int compareTo(Object o)
+  // {
+  // HistoryEntry that = (HistoryEntry)o;
+  // return resourcePath.compareTo(that.getResourcePath());
+  // }
+  //
+  // @Override
+  // public String toString()
+  // {
+  // return resourcePath;
+  // }
+  // }
+
+  public CDOID convertReference(Object idOrObject)
+  {
+    CDOID id = (CDOID)getCDOID_IfPossible(idOrObject);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Converted dangling reference: {0} --> {1}", idOrObject, id);
+    }
+
+    return id;
+  }
+
+  // public final class HistoryEntryImpl implements HistoryEntry, Comparable
+  // {
+  // private String resourcePath;
+  //
+  // private HistoryEntryImpl(String resourcePath)
+  // {
+  // this.resourcePath = resourcePath;
+  // }
+  //
+  // public CDOView getView()
+  // {
+  // return CDOViewImpl.this;
+  // }
+  //
+  // public String getResourcePath()
+  // {
+  // return resourcePath;
+  // }
+  //
+  // public int compareTo(Object o)
+  // {
+  // HistoryEntry that = (HistoryEntry)o;
+  // return resourcePath.compareTo(that.getResourcePath());
+  // }
+  //
+  // @Override
+  // public String toString()
+  // {
+  // return resourcePath;
+  // }
+  // }
+
+  public Object getCDOID_IfPossible(Object potentialObject)
+  {
+    if (potentialObject == null)
+    {
+      throw new ImplementationError();
+    }
+
+    // if (!(potentialObject instanceof InternalCDOObject))
+    // {
+    // if (potentialObject instanceof InternalEObject)
+    // {
+    // InternalEObject eObject = (InternalEObject)potentialObject;
+    // CDOObjectAdapter adapter = CDOObjectAdapter.get(eObject);
+    // if (adapter == null)
+    // {
+    // eObject = (InternalEObject)EcoreUtil.resolve(eObject, resourceSet);
+    // CDOID id = session.lookupMetaInstanceID(eObject);
+    // if (id != null)
+    // {
+    // adapter = (CDOObjectAdapter)lookupInstance(id);
+    // }
+    // }
+    //
+    // if (adapter != null)
+    // {
+    // potentialObject = adapter;
+    // }
+    // }
+    // }
+
+    if (potentialObject instanceof InternalCDOObject)
+    {
+      InternalCDOObject object = (InternalCDOObject)potentialObject;
+      CDOView view = object.cdoView();
+      if (view == this)
+      {
+        return object.cdoID();
+      }
+    }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Dangling reference: {0}", potentialObject);
+    }
+
+    return potentialObject;
+  }
+
+  public Object getCDOObject_IfPossible(Object potentialID)
+  {
+    if (potentialID instanceof CDOID)
+    {
+      if (potentialID == CDOID.NULL)
+      {
+        return null;
+      }
+
+      CDOID id = (CDOID)potentialID;
+      InternalCDOObject result = lookupInstance(id);
+      if (result == null)
+      {
+        throw new ImplementationError("ID not registered: " + id);
+      }
+
+      return result;
+    }
+
+    return potentialID;
   }
 
   public void registerObject(InternalCDOObject object)
@@ -307,84 +435,37 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
   }
 
-  public CDOReferenceConverter getReferenceConverter()
-  {
-    return referenceConverter;
-  }
-
-  public Object convertToID(Object potentialObject)
-  {
-    if (potentialObject == null)
-    {
-      throw new ImplementationError();
-    }
-
-    if (!(potentialObject instanceof InternalCDOObject))
-    {
-      if (potentialObject instanceof InternalEObject)
-      {
-        InternalEObject eObject = (InternalEObject)potentialObject;
-        CDOObjectAdapter adapter = CDOObjectAdapter.get(eObject);
-        if (adapter == null)
-        {
-          eObject = (InternalEObject)EcoreUtil.resolve(eObject, resourceSet);
-          CDOID id = session.lookupMetaInstanceID(eObject);
-          if (id != null)
-          {
-            if (id.getValue() == -777)
-            {
-              System.out.println(id);
-            }
-
-            adapter = (CDOObjectAdapter)lookupInstance(id);
-          }
-        }
-
-        if (adapter != null)
-        {
-          potentialObject = adapter;
-        }
-      }
-    }
-
-    if (potentialObject instanceof InternalCDOObject)
-    {
-      InternalCDOObject object = (InternalCDOObject)potentialObject;
-      if (object.cdoView() == this)
-      {
-        return object.cdoID();
-      }
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Dangling reference: {0}", potentialObject);
-    }
-
-    return potentialObject;
-  }
-
-  public Object convertToObject(Object potentialID)
-  {
-    if (potentialID instanceof CDOID)
-    {
-      if (potentialID == CDOID.NULL)
-      {
-        return null;
-      }
-
-      CDOID id = (CDOID)potentialID;
-      CDOObject result = lookupInstance(id);
-      if (result == null)
-      {
-        throw new ImplementationError("ID not registered: " + id);
-      }
-
-      return result;
-    }
-
-    return potentialID;
-  }
+  // public final class HistoryEntryImpl implements HistoryEntry, Comparable
+  // {
+  // private String resourcePath;
+  //
+  // private HistoryEntryImpl(String resourcePath)
+  // {
+  // this.resourcePath = resourcePath;
+  // }
+  //
+  // public CDOView getView()
+  // {
+  // return CDOViewImpl.this;
+  // }
+  //
+  // public String getResourcePath()
+  // {
+  // return resourcePath;
+  // }
+  //
+  // public int compareTo(Object o)
+  // {
+  // HistoryEntry that = (HistoryEntry)o;
+  // return resourcePath.compareTo(that.getResourcePath());
+  // }
+  //
+  // @Override
+  // public String toString()
+  // {
+  // return resourcePath;
+  // }
+  // }
 
   /**
    * Turns registered objects into proxies and synchronously delivers

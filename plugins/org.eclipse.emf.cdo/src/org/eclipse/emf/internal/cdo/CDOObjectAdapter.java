@@ -163,7 +163,7 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting ID: {0}", id);
+      TRACER.format("Setting ID: {0} for {1}", id, getTarget());
     }
 
     this.id = id;
@@ -235,7 +235,7 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
     CDOViewImpl view = (CDOViewImpl)cdoView();
 
     CDOClassImpl cdoClass = revision.getCDOClass();
-    System.out.println("TRANSFER " + cdoClass.getName());
+    System.out.println("TRANSFER " + cdoClass.getName() + ": " + target);
 
     CDOFeatureImpl[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)

@@ -94,13 +94,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       {
         try
         {
-          Object converted = CDOViewImpl.this.convertToID(object);
-          if (!(converted instanceof CDOID))
-          {
-            System.out.println(object);
-          }
-
-          CDOID id = (CDOID)converted;
+          CDOID id = (CDOID)CDOViewImpl.this.convertToID(object);
           if (TRACER.isEnabled())
           {
             TRACER.format("Converted dangling reference: {0} --> {1}", object, id);
@@ -110,8 +104,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
         }
         catch (ClassCastException ex)
         {
-          ex.printStackTrace();
-          throw new IllegalStateException("Dangling reference: " + object);
+          throw new IllegalStateException("Dangling reference: " + object, ex);
         }
       }
     };

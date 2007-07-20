@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.core.CDOCorePackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOResourceClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOResourcePackageImpl;
+import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.ecore.EClass;
@@ -46,7 +47,8 @@ public final class ModelUtil
   {
     if (eFeature instanceof EReference)
     {
-      return CDOTypeImpl.OBJECT;
+      throw new ImplementationError("Should only be called for attributes");
+      // return CDOTypeImpl.OBJECT;
     }
 
     EClassifier classifier = eFeature.getEType();
@@ -72,7 +74,13 @@ public final class ModelUtil
       case EcorePackage.ELONG_OBJECT:
       case EcorePackage.ESHORT:
       case EcorePackage.ESHORT_OBJECT:
-        return CDOTypeImpl.getType(classifierID);
+        CDOTypeImpl type = CDOTypeImpl.getType(classifierID);
+        if (type == CDOTypeImpl.OBJECT)
+        {
+          throw new ImplementationError("Attributes can not be of type OBJECT");
+        }
+
+        return type;
       }
     }
 

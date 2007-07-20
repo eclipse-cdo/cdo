@@ -251,38 +251,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return lastLookupObject;
   }
 
-  // public final class HistoryEntryImpl implements HistoryEntry, Comparable
-  // {
-  // private String resourcePath;
-  //
-  // private HistoryEntryImpl(String resourcePath)
-  // {
-  // this.resourcePath = resourcePath;
-  // }
-  //
-  // public CDOView getView()
-  // {
-  // return CDOViewImpl.this;
-  // }
-  //
-  // public String getResourcePath()
-  // {
-  // return resourcePath;
-  // }
-  //
-  // public int compareTo(Object o)
-  // {
-  // HistoryEntry that = (HistoryEntry)o;
-  // return resourcePath.compareTo(that.getResourcePath());
-  // }
-  //
-  // @Override
-  // public String toString()
-  // {
-  // return resourcePath;
-  // }
-  // }
-
   public CDOID convertReference(Object idOrObject)
   {
     Object shouldBeCDOID = getCDOID_IfPossible(idOrObject);
@@ -299,38 +267,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
     throw new ImplementationError("Not a CDOID: " + shouldBeCDOID);
   }
-
-  // public final class HistoryEntryImpl implements HistoryEntry, Comparable
-  // {
-  // private String resourcePath;
-  //
-  // private HistoryEntryImpl(String resourcePath)
-  // {
-  // this.resourcePath = resourcePath;
-  // }
-  //
-  // public CDOView getView()
-  // {
-  // return CDOViewImpl.this;
-  // }
-  //
-  // public String getResourcePath()
-  // {
-  // return resourcePath;
-  // }
-  //
-  // public int compareTo(Object o)
-  // {
-  // HistoryEntry that = (HistoryEntry)o;
-  // return resourcePath.compareTo(that.getResourcePath());
-  // }
-  //
-  // @Override
-  // public String toString()
-  // {
-  // return resourcePath;
-  // }
-  // }
 
   public Object getCDOID_IfPossible(Object potentialObject)
   {

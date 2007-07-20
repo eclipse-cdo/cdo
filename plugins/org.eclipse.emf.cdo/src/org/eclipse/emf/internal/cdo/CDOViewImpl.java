@@ -285,13 +285,19 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public CDOID convertReference(Object idOrObject)
   {
-    CDOID id = (CDOID)getCDOID_IfPossible(idOrObject);
-    if (TRACER.isEnabled())
+    Object shouldBeCDOID = getCDOID_IfPossible(idOrObject);
+    if (shouldBeCDOID instanceof CDOID)
     {
-      TRACER.format("Converted dangling reference: {0} --> {1}", idOrObject, id);
+      CDOID id = (CDOID)shouldBeCDOID;
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Converted dangling reference: {0} --> {1}", idOrObject, id);
+      }
+
+      return id;
     }
 
-    return id;
+    throw new ImplementationError("Not a CDOID: " + shouldBeCDOID);
   }
 
   // public final class HistoryEntryImpl implements HistoryEntry, Comparable

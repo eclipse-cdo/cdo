@@ -373,7 +373,7 @@ public final class CDOStore implements EStore
 
     if (object instanceof InternalEObject)
     {
-      return CDOObjectAdapter.getOrCreate((InternalEObject)object);
+      return CDOAdapterImpl.getOrCreate((InternalEObject)object);
     }
 
     throw new ImplementationError("Neither InternalCDOObject nor InternalEObject: " + object.getClass().getName());

@@ -234,7 +234,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       // if (id.isMeta())
       // {
       // InternalEObject metaObject = session.lookupMetaInstance(id);
-      // CDOObjectAdapter adapter = CDOObjectAdapter.getOrCreate(metaObject);
+      // CDOAdapterImpl adapter = CDOAdapterImpl.getOrCreate(metaObject);
       // adapter.cdoInternalSetID(id);
       // adapter.cdoInternalSetState(CDOState.CLEAN);
       // adapter.cdoInternalSetView(this);
@@ -280,14 +280,14 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     // if (potentialObject instanceof InternalEObject)
     // {
     // InternalEObject eObject = (InternalEObject)potentialObject;
-    // CDOObjectAdapter adapter = CDOObjectAdapter.get(eObject);
+    // CDOAdapterImpl adapter = CDOAdapterImpl.get(eObject);
     // if (adapter == null)
     // {
     // eObject = (InternalEObject)EcoreUtil.resolve(eObject, resourceSet);
     // CDOID id = session.lookupMetaInstanceID(eObject);
     // if (id != null)
     // {
-    // adapter = (CDOObjectAdapter)lookupInstance(id);
+    // adapter = (CDOAdapterImpl)lookupInstance(id);
     // }
     // }
     //

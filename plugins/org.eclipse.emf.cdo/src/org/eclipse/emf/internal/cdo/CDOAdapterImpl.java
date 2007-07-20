@@ -57,9 +57,9 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
+public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOObjectAdapter.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOAdapterImpl.class);
 
   private CDOID id;
 
@@ -69,7 +69,7 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
 
   private CDORevisionImpl revision;
 
-  public CDOObjectAdapter()
+  public CDOAdapterImpl()
   {
     state = CDOState.TRANSIENT;
   }
@@ -83,13 +83,13 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
   @Override
   public boolean isAdapterForType(Object type)
   {
-    return type == CDOObjectAdapter.class;
+    return type == CDOAdapterImpl.class;
   }
 
   @Override
   public void notifyChanged(Notification msg)
   {
-    // TODO Implement method CDOObjectAdapter.notifyChanged()
+    // TODO Implement method CDOAdapterImpl.notifyChanged()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
@@ -214,7 +214,7 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
 
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
   {
-    // TODO Implement method CDOObjectAdapter.cdoInternalDynamicFeature()
+    // TODO Implement method CDOAdapterImpl.cdoInternalDynamicFeature()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
@@ -298,7 +298,7 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
 
   private void transferRevisionToTarget()
   {
-    // TODO Implement method CDOObjectAdapter.transferRevisionToTarget()
+    // TODO Implement method CDOAdapterImpl.transferRevisionToTarget()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
@@ -658,19 +658,19 @@ public class CDOObjectAdapter extends AdapterImpl implements InternalCDOObject
     return getTarget().eURIFragmentSegment(feature, object);
   }
 
-  public static CDOObjectAdapter get(InternalEObject eObject)
+  public static CDOAdapterImpl get(InternalEObject eObject)
   {
     EList<Adapter> adapters = eObject.eAdapters();
-    return (CDOObjectAdapter)EcoreUtil.getAdapter(adapters, CDOObjectAdapter.class);
+    return (CDOAdapterImpl)EcoreUtil.getAdapter(adapters, CDOAdapterImpl.class);
   }
 
-  public static CDOObjectAdapter getOrCreate(InternalEObject eObject)
+  public static CDOAdapterImpl getOrCreate(InternalEObject eObject)
   {
     EList<Adapter> adapters = eObject.eAdapters();
-    CDOObjectAdapter adapter = (CDOObjectAdapter)EcoreUtil.getAdapter(adapters, CDOObjectAdapter.class);
+    CDOAdapterImpl adapter = (CDOAdapterImpl)EcoreUtil.getAdapter(adapters, CDOAdapterImpl.class);
     if (adapter == null)
     {
-      adapter = new CDOObjectAdapter();
+      adapter = new CDOAdapterImpl();
       adapters.add(adapter);
     }
 

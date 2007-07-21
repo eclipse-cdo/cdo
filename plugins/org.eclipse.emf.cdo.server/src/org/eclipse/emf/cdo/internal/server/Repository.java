@@ -24,7 +24,7 @@ import java.util.UUID;
  */
 public class Repository extends Lifecycle implements IRepository
 {
-  private static final long INITIAL_OID_VALUE = 1;
+  private static final long INITIAL_OID_VALUE = 2;
 
   private String name;
 
@@ -90,6 +90,9 @@ public class Repository extends Lifecycle implements IRepository
 
   public CDOID getNextCDOID()
   {
-    return CDOIDImpl.create(nextOIDValue++);
+    CDOID id = CDOIDImpl.create(nextOIDValue);
+    ++nextOIDValue;
+    ++nextOIDValue;
+    return id;
   }
 }

@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDOReferenceConverter;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDOIDProvider;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -37,6 +37,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -54,8 +55,8 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier implements CDOView,
-    CDOReferenceConverter, Adapter.Internal
+public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier implements CDOView, CDOIDProvider,
+    Adapter.Internal
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
@@ -231,29 +232,55 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     lastLookupObject = objects.get(id);
     if (lastLookupObject == null)
     {
-      // if (id.isMeta())
-      // {
-      // InternalEObject metaObject = session.lookupMetaInstance(id);
-      // CDOAdapterImpl adapter = CDOAdapterImpl.getOrCreate(metaObject);
-      // adapter.cdoInternalSetID(id);
-      // adapter.cdoInternalSetState(CDOState.CLEAN);
-      // adapter.cdoInternalSetView(this);
-      // lastLookupObject = adapter;
-      // }
-      // else
-      {
-        lastLookupObject = createObject(id);
-      }
-
+      lastLookupObject = createInstance(id);
       registerObject(lastLookupObject);
     }
 
     return lastLookupObject;
   }
 
-  public CDOID convertReference(Object idOrObject)
+  private InternalCDOObject createInstance(CDOID id)
   {
-    Object shouldBeCDOID = getCDOID_IfPossible(idOrObject);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Creating view instance: ID={0}", id);
+    }
+
+    if (id.isMeta())
+    {
+      InternalEObject metaInstance = session.lookupMetaInstance(id);
+      if (metaInstance == null)
+      {
+        throw new IllegalArgumentException("No meta instance for " + id);
+      }
+
+      return new CDOMetaImpl(this, metaInstance, id);
+    }
+
+    CDORevisionImpl revision = lookupRevision(id);
+    CDOClassImpl cdoClass = revision.getCDOClass();
+    CDOID resourceID = revision.getResourceID();
+
+    InternalCDOObject object = newInstance(cdoClass);
+    if (object instanceof CDOResourceImpl)
+    {
+      object.cdoInternalSetResource((CDOResourceImpl)object);
+    }
+    else
+    {
+      CDOResourceImpl resource = getResource(resourceID);
+      object.cdoInternalSetResource(resource);
+    }
+
+    object.cdoInternalSetRevision(revision);
+    object.cdoInternalSetID(revision.getID());
+    object.cdoInternalSetState(CDOState.CLEAN);
+    return object;
+  }
+
+  public CDOID provideCDOID(Object idOrObject)
+  {
+    Object shouldBeCDOID = convertObjectToID(idOrObject);
     if (shouldBeCDOID instanceof CDOID)
     {
       CDOID id = (CDOID)shouldBeCDOID;
@@ -268,41 +295,29 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     throw new ImplementationError("Not a CDOID: " + shouldBeCDOID);
   }
 
-  public Object getCDOID_IfPossible(Object potentialObject)
+  public Object convertObjectToID(Object potentialObject)
   {
     if (potentialObject == null)
     {
       throw new ImplementationError();
     }
 
-    // if (!(potentialObject instanceof InternalCDOObject))
-    // {
-    // if (potentialObject instanceof InternalEObject)
-    // {
-    // InternalEObject eObject = (InternalEObject)potentialObject;
-    // CDOAdapterImpl adapter = CDOAdapterImpl.get(eObject);
-    // if (adapter == null)
-    // {
-    // eObject = (InternalEObject)EcoreUtil.resolve(eObject, resourceSet);
-    // CDOID id = session.lookupMetaInstanceID(eObject);
-    // if (id != null)
-    // {
-    // adapter = (CDOAdapterImpl)lookupInstance(id);
-    // }
-    // }
-    //
-    // if (adapter != null)
-    // {
-    // potentialObject = adapter;
-    // }
-    // }
-    // }
+    if (potentialObject instanceof InternalEObject && !(potentialObject instanceof InternalCDOObject))
+    {
+      InternalEObject eObject = (InternalEObject)potentialObject;
+      CDOAdapterImpl adapter = CDOAdapterImpl.get(eObject);
+      if (adapter == null)
+      {
+        throw new ImplementationError("No adapter for " + eObject);
+      }
+
+      potentialObject = adapter;
+    }
 
     if (potentialObject instanceof InternalCDOObject)
     {
       InternalCDOObject object = (InternalCDOObject)potentialObject;
-      CDOView view = object.cdoView();
-      if (view == this)
+      if (object.cdoView() == this)
       {
         return object.cdoID();
       }
@@ -316,7 +331,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return potentialObject;
   }
 
-  public Object getCDOObject_IfPossible(Object potentialID)
+  public Object convertIDToObject(Object potentialID)
   {
     if (potentialID instanceof CDOID)
     {
@@ -628,34 +643,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   {
     CDOStateMachine.INSTANCE.detach(cdoResource, cdoResource, this);
     fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.REMOVED));
-  }
-
-  private InternalCDOObject createObject(CDOID id)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Creating object from view: ID={0}", id);
-    }
-
-    CDORevisionImpl revision = lookupRevision(id);
-    CDOClassImpl cdoClass = revision.getCDOClass();
-    CDOID resourceID = revision.getResourceID();
-
-    InternalCDOObject object = newInstance(cdoClass);
-    if (object instanceof CDOResourceImpl)
-    {
-      object.cdoInternalSetResource((CDOResourceImpl)object);
-    }
-    else
-    {
-      CDOResourceImpl resource = getResource(resourceID);
-      object.cdoInternalSetResource(resource);
-    }
-
-    object.cdoInternalSetRevision(revision);
-    object.cdoInternalSetID(revision.getID());
-    object.cdoInternalSetState(CDOState.CLEAN);
-    return object;
   }
 
   private void checkWritable()

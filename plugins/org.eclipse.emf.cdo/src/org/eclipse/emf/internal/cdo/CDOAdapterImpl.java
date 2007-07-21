@@ -266,7 +266,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
                 Object targetElement = data[j];
                 if (targetElement != null && feature.isReference())
                 {
-                  targetElement = view.getCDOID_IfPossible(targetElement);
+                  targetElement = view.convertObjectToID(targetElement);
                 }
 
                 revisionList.add(targetElement);
@@ -278,7 +278,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
         {
           if (targetValue != null && feature.isReference())
           {
-            targetValue = view.getCDOID_IfPossible(targetValue);
+            targetValue = view.convertObjectToID(targetValue);
           }
 
           revisionList.add(targetValue);
@@ -288,7 +288,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
       {
         if (targetValue != null && feature.isReference())
         {
-          targetValue = view.getCDOID_IfPossible(targetValue);
+          targetValue = view.convertObjectToID(targetValue);
         }
 
         revision.setValue(feature, targetValue);

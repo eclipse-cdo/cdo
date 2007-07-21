@@ -272,6 +272,11 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
   private void registerMetaInstance(InternalEObject metaInstance)
   {
     CDOID id = CDOIDImpl.create(nextTemporaryID);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Registering meta instance: {0} <-> {1}", id, metaInstance);
+    }
+
     idToMetaInstanceMap.put(id, metaInstance);
     metaInstanceToIDMap.put(metaInstance, id);
     --nextTemporaryID;

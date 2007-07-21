@@ -13,7 +13,7 @@ package org.eclipse.emf.internal.cdo.protocol;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDOReferenceConverter;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDOIDProvider;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
@@ -108,13 +108,13 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   private void writeRevisions(ExtendedDataOutputStream out, Collection objects) throws IOException
   {
-    CDOReferenceConverter converter = transaction.getView();
+    CDOIDProvider idProvider = transaction.getView();
     out.writeInt(objects.size());
     for (Iterator it = objects.iterator(); it.hasNext();)
     {
       InternalCDOObject object = (InternalCDOObject)it.next();
       CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
-      revision.write(out, converter);
+      revision.write(out, idProvider);
     }
   }
 

@@ -49,7 +49,7 @@ public final class CDOStore implements EStore
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
     CDOID id = revision.getContainerID();
-    return (InternalEObject)((CDOViewImpl)cdoObject.cdoView()).getCDOObject_IfPossible(id);
+    return (InternalEObject)((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(id);
   }
 
   public int getContainingFeatureID(InternalEObject eObject)
@@ -72,7 +72,7 @@ public final class CDOStore implements EStore
       TRACER.format("setContainer({0}, {1}, {2})", cdoObject, newContainer, newContainerFeatureID);
     }
 
-    CDOID containerID = (CDOID)((CDOViewImpl)cdoObject.cdoView()).getCDOID_IfPossible(newContainer);
+    CDOID containerID = (CDOID)((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(newContainer);
 
     CDORevisionImpl revision = getRevisionForWriting(cdoObject);
     revision.setContainerID(containerID);
@@ -97,7 +97,7 @@ public final class CDOStore implements EStore
     Object result = revision.get(cdoFeature, index);
     if (cdoFeature.isReference())
     {
-      result = ((CDOViewImpl)cdoObject.cdoView()).getCDOObject_IfPossible(result);
+      result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
     }
 
     return result;
@@ -153,7 +153,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      value = ((CDOViewImpl)cdoObject.cdoView()).getCDOID_IfPossible(value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
     }
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
@@ -171,7 +171,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      value = ((CDOViewImpl)cdoObject.cdoView()).getCDOID_IfPossible(value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
     }
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
@@ -189,7 +189,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      value = ((CDOViewImpl)cdoObject.cdoView()).getCDOID_IfPossible(value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
     }
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
@@ -224,7 +224,7 @@ public final class CDOStore implements EStore
     {
       for (int i = 0; i < result.length; i++)
       {
-        result[i] = ((CDOViewImpl)cdoObject.cdoView()).getCDOObject_IfPossible(result[i]);
+        result[i] = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result[i]);
       }
     }
 
@@ -253,14 +253,14 @@ public final class CDOStore implements EStore
         handleContainmentAdd(cdoObject, cdoFeature, value);
       }
 
-      value = ((CDOViewImpl)cdoObject.cdoView()).getCDOID_IfPossible(value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
     }
 
     CDORevisionImpl revision = getRevisionForWriting(cdoObject);
     Object result = revision.set(cdoFeature, index, value);
     if (cdoFeature.isReference())
     {
-      result = ((CDOViewImpl)cdoObject.cdoView()).getCDOObject_IfPossible(result);
+      result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
     }
 
     return result;
@@ -295,7 +295,7 @@ public final class CDOStore implements EStore
         handleContainmentAdd(cdoObject, cdoFeature, value);
       }
 
-      value = ((CDOViewImpl)cdoObject.cdoView()).getCDOID_IfPossible(value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
     }
 
     CDORevisionImpl revision = getRevisionForWriting(cdoObject);
@@ -315,7 +315,7 @@ public final class CDOStore implements EStore
     Object result = revision.remove(cdoFeature, index);
     if (cdoFeature.isReference())
     {
-      result = ((CDOViewImpl)cdoObject.cdoView()).getCDOObject_IfPossible(result);
+      result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
     }
 
     return result;
@@ -347,7 +347,7 @@ public final class CDOStore implements EStore
     Object result = revision.move(cdoFeature, target, source);
     if (cdoFeature.isReference())
     {
-      result = ((CDOViewImpl)cdoObject.cdoView()).getCDOObject_IfPossible(result);
+      result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
     }
 
     return result;

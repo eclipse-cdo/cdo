@@ -42,11 +42,9 @@ public class CDOMetaImpl implements InternalCDOObject
 
   private CDOID id;
 
-  public CDOMetaImpl(CDOViewImpl view, InternalEObject metaInstance, CDOID id)
+  public CDOMetaImpl(InternalEObject metaInstance)
   {
-    this.view = view;
     this.metaInstance = metaInstance;
-    this.id = id;
   }
 
   public CDOViewImpl getView()
@@ -81,8 +79,7 @@ public class CDOMetaImpl implements InternalCDOObject
 
   public CDOClass cdoClass()
   {
-    // TODO Implement method CDOMetaImpl.cdoClass()
-    throw new UnsupportedOperationException("Not yet implemented");
+    throw new UnsupportedOperationException();
   }
 
   public CDOViewImpl cdoView()
@@ -97,7 +94,7 @@ public class CDOMetaImpl implements InternalCDOObject
 
   public void cdoInternalSetID(CDOID id)
   {
-    throw new UnsupportedOperationException();
+    this.id = id;
   }
 
   public void cdoInternalSetState(CDOState state)
@@ -112,7 +109,7 @@ public class CDOMetaImpl implements InternalCDOObject
 
   public void cdoInternalSetView(CDOView view)
   {
-    throw new UnsupportedOperationException();
+    this.view = (CDOViewImpl)view;
   }
 
   public void cdoInternalSetResource(CDOResource resource)

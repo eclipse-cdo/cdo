@@ -6,13 +6,20 @@ import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ServerException;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.ResourceIDRequest;
@@ -224,6 +231,34 @@ public final class CDOStateMachine
     transition.execute(object, event, data1, data2);
   }
 
+  public static InternalCDOObject adapt(Object object)
+  {
+    if (object instanceof InternalCDOObject)
+    {
+      return (InternalCDOObject)object;
+    }
+
+    if (object instanceof EModelElement || object instanceof EGenericType)
+    {
+      return new CDOMetaImpl((InternalEObject)object);
+    }
+
+    if (object instanceof InternalEObject)
+    {
+      EList<Adapter> adapters = ((InternalEObject)object).eAdapters();
+      CDOAdapterImpl adapter = (CDOAdapterImpl)EcoreUtil.getAdapter(adapters, CDOAdapterImpl.class);
+      if (adapter == null)
+      {
+        adapter = new CDOAdapterImpl();
+        adapters.add(adapter);
+      }
+
+      return adapter;
+    }
+
+    throw new ImplementationError("Neither InternalCDOObject nor InternalEObject: " + object.getClass().getName());
+  }
+
   private static CDOTransactionImpl getTransaction(CDOViewImpl view)
   {
     CDOTransactionImpl transaction = view.getTransaction();
@@ -328,7 +363,7 @@ public final class CDOStateMachine
       // Prepare content tree
       for (EObject content : object.eContents())
       {
-        InternalCDOObject objectOrAdapter = CDOStore.getCDOObject(content);
+        InternalCDOObject objectOrAdapter = adapt(content);
         INSTANCE.processEvent(objectOrAdapter, Event.ATTACH, resource, view);
       }
     }
@@ -348,7 +383,7 @@ public final class CDOStateMachine
       // Prepare content tree
       for (EObject content : object.eContents())
       {
-        InternalCDOObject objectOrAdapter = CDOStore.getCDOObject(content);
+        InternalCDOObject objectOrAdapter = adapt(content);
         INSTANCE.processEvent(objectOrAdapter, Event.FINALIZE_ATTACH, null, null);
       }
     }

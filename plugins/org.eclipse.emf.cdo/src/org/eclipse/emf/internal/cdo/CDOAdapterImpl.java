@@ -663,17 +663,4 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     EList<Adapter> adapters = eObject.eAdapters();
     return (CDOAdapterImpl)EcoreUtil.getAdapter(adapters, CDOAdapterImpl.class);
   }
-
-  public static CDOAdapterImpl getOrCreate(InternalEObject eObject)
-  {
-    EList<Adapter> adapters = eObject.eAdapters();
-    CDOAdapterImpl adapter = (CDOAdapterImpl)EcoreUtil.getAdapter(adapters, CDOAdapterImpl.class);
-    if (adapter == null)
-    {
-      adapter = new CDOAdapterImpl();
-      adapters.add(adapter);
-    }
-
-    return adapter;
-  }
 }

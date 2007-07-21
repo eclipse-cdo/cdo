@@ -232,29 +232,33 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     lastLookupObject = objects.get(id);
     if (lastLookupObject == null)
     {
-      lastLookupObject = createInstance(id);
+      lastLookupObject = createObject(id);
       registerObject(lastLookupObject);
     }
 
     return lastLookupObject;
   }
 
-  private InternalCDOObject createInstance(CDOID id)
+  private InternalCDOObject createObject(CDOID id)
   {
+    // if (id.isMeta())
+    // {
+    // if (TRACER.isEnabled())
+    // {
+    // TRACER.format("Creating meta: ID={0}", id);
+    // }
+    //
+    // InternalEObject metaInstance = session.lookupMetaInstance(id);
+    // if (metaInstance == null)
+    // {
+    // throw new IllegalArgumentException("No meta instance for " + id);
+    // }
+    //
+    // }
+
     if (TRACER.isEnabled())
     {
-      TRACER.format("Creating view instance: ID={0}", id);
-    }
-
-    if (id.isMeta())
-    {
-      InternalEObject metaInstance = session.lookupMetaInstance(id);
-      if (metaInstance == null)
-      {
-        throw new IllegalArgumentException("No meta instance for " + id);
-      }
-
-      return new CDOMetaImpl(this, metaInstance, id);
+      TRACER.format("Creating object: ID={0}", id);
     }
 
     CDORevisionImpl revision = lookupRevision(id);
@@ -292,7 +296,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       return id;
     }
 
-    throw new ImplementationError("Not a CDOID: " + shouldBeCDOID);
+    throw new ImplementationError("Not a CDOID: " + shouldBeCDOID.getClass().getName());
   }
 
   public Object convertObjectToID(Object potentialObject)
@@ -305,12 +309,13 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     if (potentialObject instanceof InternalEObject && !(potentialObject instanceof InternalCDOObject))
     {
       InternalEObject eObject = (InternalEObject)potentialObject;
-      CDOAdapterImpl adapter = CDOAdapterImpl.get(eObject);
-      if (adapter == null)
+      CDOID id = session.lookupMetaInstanceID(eObject);
+      if (id != null)
       {
-        throw new ImplementationError("No adapter for " + eObject);
+        return id;
       }
 
+      InternalCDOObject adapter = CDOStateMachine.adapt(eObject);
       potentialObject = adapter;
     }
 

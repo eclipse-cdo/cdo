@@ -30,6 +30,14 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
+enum CDOEvent
+{
+  ATTACH, DETACH, READ, WRITE, COMMIT, ROLLBACK, INVALIDATE, FINALIZE_ATTACH
+}
+
+/**
+ * @author Eike Stepper
+ */
 public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent, InternalCDOObject>
 {
   // @Singleton

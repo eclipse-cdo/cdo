@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.views;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.CDOViewCommittedEvent;
+import org.eclipse.emf.cdo.CDOTransactionCommittedEvent;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 import org.eclipse.emf.cdo.protocol.CDOID;
 
@@ -58,9 +58,9 @@ public class CDOEventHandler
   {
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof CDOViewCommittedEvent)
+      if (event instanceof CDOTransactionCommittedEvent)
       {
-        Map<CDOID, CDOID> idMappings = ((CDOViewCommittedEvent)event).getIDMappings();
+        Map<CDOID, CDOID> idMappings = ((CDOTransactionCommittedEvent)event).getIDMappings();
         HashSet newOIDs = new HashSet(idMappings.values());
         new ItemsProcessor()
         {

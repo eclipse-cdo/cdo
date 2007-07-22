@@ -226,17 +226,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     return object.cdoState();
   }
 
-  private static CDOTransactionImpl getTransaction(CDOViewImpl view)
-  {
-    CDOTransactionImpl transaction = view.getTransaction();
-    if (transaction == null)
-    {
-      throw new IllegalStateException("transaction == null");
-    }
-
-    return transaction;
-  }
-
   /**
    * @author Eike Stepper
    */
@@ -255,7 +244,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, ResourceAndView data)
     {
-      CDOTransactionImpl transaction = getTransaction(data.view);
+      CDOTransactionImpl transaction = data.view.toTransaction();
 
       // Prepare object
       CDOID id = transaction.getNextTemporaryID();
@@ -360,7 +349,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       revision.increaseVersion();
 
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
-      CDOTransactionImpl transaction = getTransaction(view);
+      CDOTransactionImpl transaction = view.toTransaction();
       transaction.registerDirty(object);
 
       object.cdoInternalSetState(CDOState.DIRTY);

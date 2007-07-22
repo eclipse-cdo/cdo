@@ -10,6 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.CDOTransactionCommittedEvent;
+import org.eclipse.emf.cdo.CDOTransactionDirtyEvent;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
@@ -25,6 +28,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionRequest;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,15 +36,13 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class CDOTransactionImpl
+public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSCTION, CDOTransactionImpl.class);
 
   private static final long INITIAL_TEMPORARY_ID = -2L;
 
   private transient long nextTemporaryID = INITIAL_TEMPORARY_ID;
-
-  private CDOViewImpl view;
 
   private List<CDOPackageImpl> newPackages;
 
@@ -52,19 +54,20 @@ public class CDOTransactionImpl
 
   private boolean dirty;
 
-  public CDOTransactionImpl(CDOViewImpl view)
+  public CDOTransactionImpl(int id, CDOSessionImpl session)
   {
-    this.view = view;
-  }
-
-  public CDOViewImpl getView()
-  {
-    return view;
+    super(id, session);
   }
 
   public boolean isDirty()
   {
     return dirty;
+  }
+
+  @Override
+  public boolean isReadOnly()
+  {
+    return false;
   }
 
   public List<CDOPackageImpl> getNewPackages()
@@ -95,8 +98,9 @@ public class CDOTransactionImpl
     return CDOIDImpl.create(id);
   }
 
-  public CommitTransactionResult commit()
+  public void commit()
   {
+    checkWritable();
     if (dirty)
     {
       if (TRACER.isEnabled())
@@ -106,7 +110,7 @@ public class CDOTransactionImpl
 
       try
       {
-        CDOSessionImpl session = view.getSession();
+        CDOSessionImpl session = getSession();
         CDOPackageManagerImpl packageManager = session.getPackageManager();
         newPackages = packageManager.getTransientPackages();
 
@@ -119,7 +123,7 @@ public class CDOTransactionImpl
 
         if (!dirtyObjects.isEmpty())
         {
-          session.notifyInvalidation(result.getTimeStamp(), dirtyObjects.keySet(), view);
+          session.notifyInvalidation(result.getTimeStamp(), dirtyObjects.keySet(), this);
         }
 
         for (CDOPackageImpl newPackage : newPackages)
@@ -133,7 +137,9 @@ public class CDOTransactionImpl
         dirtyObjects.clear();
         dirty = false;
         nextTemporaryID = INITIAL_TEMPORARY_ID;
-        return result;
+
+        Map<CDOID, CDOID> idMappings = result.getIdMappings();
+        fireEvent(new CommittedEvent(idMappings));
       }
       catch (RuntimeException ex)
       {
@@ -144,12 +150,12 @@ public class CDOTransactionImpl
         throw new TransportException(ex);
       }
     }
-
-    return null;
   }
 
   public void rollback()
   {
+    checkWritable();
+
     try
     {
       // TODO Implement method CDOTransactionImpl.rollback()
@@ -163,6 +169,12 @@ public class CDOTransactionImpl
     {
       throw new TransportException(ex);
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("CDOTransaction({0})", getID());
   }
 
   public void registerNew(InternalCDOObject object)
@@ -208,7 +220,7 @@ public class CDOTransactionImpl
     if (!dirty)
     {
       dirty = true;
-      view.fireDirtyEvent();
+      fireEvent(new DirtyEvent());
     }
   }
 
@@ -220,6 +232,38 @@ public class CDOTransactionImpl
       {
         CDOStateMachine.INSTANCE.commit((InternalCDOObject)object, result);
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class DirtyEvent extends Event implements CDOTransactionDirtyEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private DirtyEvent()
+    {
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class CommittedEvent extends Event implements CDOTransactionCommittedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private Map<CDOID, CDOID> idMappings;
+
+    private CommittedEvent(Map<CDOID, CDOID> idMappings)
+    {
+      this.idMappings = idMappings;
+    }
+
+    public Map<CDOID, CDOID> getIDMappings()
+    {
+      return idMappings;
     }
   }
 

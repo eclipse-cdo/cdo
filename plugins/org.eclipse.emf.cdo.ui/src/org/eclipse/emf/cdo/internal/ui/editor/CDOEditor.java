@@ -8,9 +8,10 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSessionViewsEvent;
+import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.CDOViewCommittedEvent;
-import org.eclipse.emf.cdo.CDOViewDirtyEvent;
+import org.eclipse.emf.cdo.CDOTransactionCommittedEvent;
+import org.eclipse.emf.cdo.CDOTransactionDirtyEvent;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.views.CDOEventHandler;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -222,7 +223,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof CDOViewDirtyEvent || event instanceof CDOViewCommittedEvent)
+      if (event instanceof CDOTransactionDirtyEvent || event instanceof CDOTransactionCommittedEvent)
       {
         try
         {
@@ -1539,9 +1540,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   @Override
   public boolean isDirty()
   {
-    // return
-    // ((BasicCommandStack)editingDomain.getCommandStack()).isSaveNeeded();
-    return view.isDirty();
+    return view instanceof CDOTransaction && ((CDOTransaction)view).isDirty();
   }
 
   /**
@@ -2209,7 +2208,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       if (resource != null)
       {
-        CDOObject object = view.newInstance(cdoClass);
+        CDOObject object = ((CDOTransaction)view).newInstance(cdoClass);
         resource.getContents().add(object);
       }
     }

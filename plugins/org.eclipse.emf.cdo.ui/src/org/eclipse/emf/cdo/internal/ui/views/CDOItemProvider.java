@@ -12,8 +12,8 @@ package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.CDOViewCommittedEvent;
-import org.eclipse.emf.cdo.CDOViewDirtyEvent;
+import org.eclipse.emf.cdo.CDOTransactionCommittedEvent;
+import org.eclipse.emf.cdo.CDOTransactionDirtyEvent;
 import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
@@ -57,7 +57,7 @@ public class CDOItemProvider extends ContainerItemProvider
   {
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof CDOViewDirtyEvent || event instanceof CDOViewCommittedEvent)
+      if (event instanceof CDOTransactionDirtyEvent || event instanceof CDOTransactionCommittedEvent)
       {
         try
         {

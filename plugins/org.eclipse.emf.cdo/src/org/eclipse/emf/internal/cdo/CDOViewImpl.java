@@ -12,8 +12,6 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.CDOViewCommittedEvent;
-import org.eclipse.emf.cdo.CDOViewDirtyEvent;
 import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.CDOViewResourcesEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -28,6 +26,7 @@ import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
@@ -42,12 +41,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.ResourcePathRequest;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.text.MessageFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -66,32 +63,16 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private ResourceSet resourceSet;
 
-  private long timeStamp;
-
-  private CDOTransactionImpl transaction;
-
   private Map<CDOID, InternalCDOObject> objects = new HashMap();
 
   private CDOID lastLookupID;
 
   private InternalCDOObject lastLookupObject;
 
-  public CDOViewImpl(int id, CDOSessionImpl session, boolean readOnly)
+  public CDOViewImpl(int id, CDOSessionImpl session)
   {
     this.id = id;
     this.session = session;
-    timeStamp = UNSPECIFIED_DATE;
-    if (!readOnly)
-    {
-      transaction = new CDOTransactionImpl(this);
-    }
-  }
-
-  public CDOViewImpl(int id, CDOSessionImpl session, long timeStamp)
-  {
-    this.id = id;
-    this.session = session;
-    this.timeStamp = timeStamp;
   }
 
   public int getID()
@@ -109,29 +90,24 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return session;
   }
 
-  public CDOTransactionImpl getTransaction()
-  {
-    return transaction;
-  }
-
-  public long getTimeStamp()
-  {
-    return timeStamp;
-  }
-
   public boolean isHistorical()
   {
-    return timeStamp != CDOView.UNSPECIFIED_DATE;
-  }
-
-  public boolean isReadWrite()
-  {
-    return transaction != null;
+    return false;
   }
 
   public boolean isReadOnly()
   {
-    return transaction == null;
+    return true;
+  }
+
+  public CDOTransactionImpl toTransaction()
+  {
+    if (this instanceof CDOTransactionImpl)
+    {
+      return (CDOTransactionImpl)this;
+    }
+
+    throw new ReadOnlyException("CDO view is read only: " + this);
   }
 
   public CDOResource createResource(String path)
@@ -213,12 +189,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   public CDORevisionImpl lookupRevision(CDOID id)
   {
     CDORevisionResolver revisionManager = session.getRevisionManager();
-    if (isReadWrite())
-    {
-      return (CDORevisionImpl)revisionManager.getRevision(id);
-    }
-
-    return (CDORevisionImpl)revisionManager.getRevision(id, timeStamp);
+    return (CDORevisionImpl)revisionManager.getRevision(id);
   }
 
   public InternalCDOObject lookupInstance(CDOID id)
@@ -459,28 +430,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
   }
 
-  public boolean isDirty()
-  {
-    return transaction == null ? false : transaction.isDirty();
-  }
-
-  public void commit()
-  {
-    checkWritable();
-    CommitTransactionResult result = transaction.commit();
-    if (result != null)
-    {
-      Map<CDOID, CDOID> idMappings = result.getIdMappings();
-      fireEvent(new CommittedEvent(idMappings));
-    }
-  }
-
-  public void rollback()
-  {
-    checkWritable();
-    transaction.rollback();
-  }
-
   public void close()
   {
     session.viewDetached(this);
@@ -489,8 +438,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOView({0})", isHistorical() ? new Date(timeStamp) : isReadOnly() ? "readOnly"
-        : "readWrite");
+    return MessageFormat.format("CDOView({0})", id);
   }
 
   public boolean isAdapterForType(Object type)
@@ -543,11 +491,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       setTarget(null);
     }
-  }
-
-  public void fireDirtyEvent()
-  {
-    fireEvent(new DirtyEvent());
   }
 
   public void notifyChanged(Notification msg)
@@ -650,7 +593,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.REMOVED));
   }
 
-  private void checkWritable()
+  protected void checkWritable()
   {
     if (isReadOnly())
     {
@@ -693,7 +636,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   /**
    * @author Eike Stepper
    */
-  private abstract class Event extends org.eclipse.net4j.internal.util.event.Event implements CDOViewEvent
+  protected abstract class Event extends org.eclipse.net4j.internal.util.event.Event implements CDOViewEvent
   {
     private static final long serialVersionUID = 1L;
 
@@ -739,38 +682,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     public String toString()
     {
       return MessageFormat.format("CDOViewResourcesEvent[{0}, {1}, {2}]", getView(), resourcePath, kind);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class DirtyEvent extends Event implements CDOViewDirtyEvent
-  {
-    private static final long serialVersionUID = 1L;
-
-    private DirtyEvent()
-    {
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class CommittedEvent extends Event implements CDOViewCommittedEvent
-  {
-    private static final long serialVersionUID = 1L;
-
-    private Map<CDOID, CDOID> idMappings;
-
-    private CommittedEvent(Map<CDOID, CDOID> idMappings)
-    {
-      this.idMappings = idMappings;
-    }
-
-    public Map<CDOID, CDOID> getIDMappings()
-    {
-      return idMappings;
     }
   }
 }

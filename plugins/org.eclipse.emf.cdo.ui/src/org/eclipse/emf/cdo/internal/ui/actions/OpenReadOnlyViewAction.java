@@ -22,6 +22,6 @@ public final class OpenReadOnlyViewAction extends SessionAction
   @Override
   protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
   {
-    getSession().openView(new ResourceSetImpl(), true);
+    getSession().openView(new ResourceSetImpl());
   }
 }

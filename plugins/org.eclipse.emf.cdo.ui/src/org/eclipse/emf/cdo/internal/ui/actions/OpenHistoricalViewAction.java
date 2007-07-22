@@ -22,6 +22,6 @@ public final class OpenHistoricalViewAction extends SessionAction
   @Override
   protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
   {
-    getSession().openView(new ResourceSetImpl(), System.currentTimeMillis());
+    getSession().openAudit(new ResourceSetImpl(), System.currentTimeMillis());
   }
 }

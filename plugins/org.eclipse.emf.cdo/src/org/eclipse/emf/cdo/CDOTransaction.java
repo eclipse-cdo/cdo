@@ -11,39 +11,35 @@
 package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-
-import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * @author Eike Stepper
  */
-public interface CDOView extends INotifier
+public interface CDOTransaction extends CDOView
 {
-  public static final long UNSPECIFIED_DATE = CDORevision.UNSPECIFIED_DATE;
+  /**
+   * @see ResourceSet#createResource(URI)
+   */
+  public CDOResource createResource(String path);
 
-  public int getID();
+  public CDOObject newInstance(EClass eClass);
 
-  public CDOSession getSession();
+  public CDOObject newInstance(CDOClass cdoClass);
 
-  public ResourceSet getResourceSet();
-
-  public boolean isHistorical();
-
-  public boolean isReadOnly();
+  public boolean isDirty();
 
   /**
-   * @see ResourceSet#getResource(URI, boolean)
+   * @see CDOTransaction#commit()
    */
-  public CDOResource getResource(String path);
+  public void commit();
 
-  public CDOObject lookupInstance(CDOID id);
-
-  public CDORevision lookupRevision(CDOID id);
-
-  public void close();
+  /**
+   * @see CDOTransaction#rollback()
+   */
+  public void rollback();
 }

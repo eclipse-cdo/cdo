@@ -38,7 +38,7 @@ public final class CreateResourceAction extends ViewAction
   @Override
   protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
   {
-    getView().createResource(resourcePath);
+    getTransaction().createResource(resourcePath);
     CDOEditor.open(page, getView(), resourcePath);
   }
 }

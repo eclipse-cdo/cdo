@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
+ * Copyright (c) 2004-2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,16 +8,31 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo;
-
-import org.eclipse.emf.cdo.protocol.CDOID;
-
-import java.util.Map;
+package org.eclipse.emf.cdo.util;
 
 /**
  * @author Eike Stepper
  */
-public interface CDOViewCommittedEvent extends CDOViewEvent
+public class ReadOnlyException extends RuntimeException
 {
-  public Map<CDOID, CDOID> getIDMappings();
+  private static final long serialVersionUID = 1L;
+
+  public ReadOnlyException()
+  {
+  }
+
+  public ReadOnlyException(String message)
+  {
+    super(message);
+  }
+
+  public ReadOnlyException(String message, Throwable cause)
+  {
+    super(message, cause);
+  }
+
+  public ReadOnlyException(Throwable cause)
+  {
+    super(cause);
+  }
 }

@@ -41,17 +41,17 @@ public interface CDOSession extends IContainer<CDOView>
 
   public CDOView[] getViews();
 
-  public CDOView openView(ResourceSet resourceSet, long timeStamp);
+  public CDOTransaction openTransaction(ResourceSet resourceSet);
 
-  public CDOView openView(ResourceSet resourceSet, boolean readOnly);
+  public CDOTransaction openTransaction();
 
   public CDOView openView(ResourceSet resourceSet);
 
-  public CDOView openView(long timeStamp);
-
-  public CDOView openView(boolean readOnly);
-
   public CDOView openView();
+
+  public CDOAudit openAudit(ResourceSet resourceSet, long timeStamp);
+
+  public CDOAudit openAudit(long timeStamp);
 
   public void close();
 }

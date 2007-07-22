@@ -176,36 +176,37 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     return revisionManager;
   }
 
+  public CDOTransactionImpl openTransaction(ResourceSet resourceSet)
+  {
+    prepare(resourceSet);
+    return (CDOTransactionImpl)attach(resourceSet, new CDOTransactionImpl(++lastViewID, this));
+  }
+
+  public CDOTransactionImpl openTransaction()
+  {
+    return openTransaction(createResourceSet());
+  }
+
   public CDOViewImpl openView(ResourceSet resourceSet)
   {
-    return openView(resourceSet, false);
-  }
-
-  public CDOViewImpl openView(ResourceSet resourceSet, boolean readOnly)
-  {
     prepare(resourceSet);
-    return attach(resourceSet, new CDOViewImpl(++lastViewID, this, readOnly));
+    return attach(resourceSet, new CDOViewImpl(++lastViewID, this));
   }
 
-  public CDOViewImpl openView(ResourceSet resourceSet, long timeStamp)
-  {
-    prepare(resourceSet);
-    return attach(resourceSet, new CDOViewImpl(++lastViewID, this, timeStamp));
-  }
-
-  public CDOView openView(boolean readOnly)
-  {
-    return openView(createResourceSet(), readOnly);
-  }
-
-  public CDOView openView(long timeStamp)
-  {
-    return openView(createResourceSet(), timeStamp);
-  }
-
-  public CDOView openView()
+  public CDOViewImpl openView()
   {
     return openView(createResourceSet());
+  }
+
+  public CDOAuditImpl openAudit(ResourceSet resourceSet, long timeStamp)
+  {
+    prepare(resourceSet);
+    return (CDOAuditImpl)attach(resourceSet, new CDOAuditImpl(++lastViewID, this, timeStamp));
+  }
+
+  public CDOAuditImpl openAudit(long timeStamp)
+  {
+    return openAudit(createResourceSet(), timeStamp);
   }
 
   public CDOViewImpl[] getViews()

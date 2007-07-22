@@ -153,8 +153,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    */
   public static Model1Package init()
   {
-    if (isInited)
-      return (Model1Package)EPackage.Registry.INSTANCE.getEPackage(Model1Package.eNS_URI);
+    if (isInited) return (Model1Package)EPackage.Registry.INSTANCE.getEPackage(Model1Package.eNS_URI);
 
     // Obtain or create and register package
     Model1PackageImpl theModel1Package = (Model1PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof Model1PackageImpl ? EPackage.Registry.INSTANCE
@@ -531,8 +530,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    */
   public void createPackageContents()
   {
-    if (isCreated)
-      return;
+    if (isCreated) return;
     isCreated = true;
 
     // Create classes and their features
@@ -596,8 +594,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    */
   public void initializePackageContents()
   {
-    if (isInitialized)
-      return;
+    if (isInitialized) return;
     isInitialized = true;
 
     // Initialize package

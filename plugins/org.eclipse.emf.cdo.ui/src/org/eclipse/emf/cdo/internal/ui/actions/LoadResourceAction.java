@@ -23,8 +23,8 @@ public final class LoadResourceAction extends ViewAction
   protected void preRun(IWorkbenchPage page) throws Exception
   {
     String uri = ViewAction.lastResourceNumber == 0 ? "" : "/res" + ViewAction.lastResourceNumber;
-    InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Load Resource",
-        "Enter resource path:", uri, null);
+    InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Load Resource", "Enter resource path:",
+        uri, null);
     if (dialog.open() == InputDialog.OK)
     {
       resourcePath = dialog.getValue();

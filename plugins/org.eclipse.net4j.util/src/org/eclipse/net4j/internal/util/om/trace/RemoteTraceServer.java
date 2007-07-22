@@ -367,15 +367,14 @@ public class RemoteTraceServer
       }
 
       StackTraceElement[] stackTrace = event.getStackTrace();
-      if (stackTrace != null)
-        for (StackTraceElement element : stackTrace)
-        {
-          stream.print(element.getClassName());
-          stream.print("." + element.getMethodName());
-          stream.print("(" + element.getFileName());
-          stream.print(":" + element.getLineNumber());
-          stream.println(")");
-        }
+      if (stackTrace != null) for (StackTraceElement element : stackTrace)
+      {
+        stream.print(element.getClassName());
+        stream.print("." + element.getMethodName());
+        stream.print("(" + element.getFileName());
+        stream.print(":" + element.getLineNumber());
+        stream.println(")");
+      }
 
       stream.println();
     }

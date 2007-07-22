@@ -217,8 +217,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
    */
   public void dispose()
   {
-    if (cdoResourceItemProvider != null)
-      cdoResourceItemProvider.dispose();
+    if (cdoResourceItemProvider != null) cdoResourceItemProvider.dispose();
   }
 
 }

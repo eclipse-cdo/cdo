@@ -16,7 +16,8 @@ public final class OpenHistoricalViewAction extends SessionAction
 {
   public OpenHistoricalViewAction(IWorkbenchPage page, CDOSession session)
   {
-    super(page, "Open Historical View", "Open a historical CDO view", SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_EDITOR), session);
+    super(page, "Open Historical View", "Open a historical CDO view", SharedIcons
+        .getDescriptor(SharedIcons.ETOOL_OPEN_EDITOR), session);
   }
 
   @Override

@@ -101,8 +101,7 @@ public class EresourceSwitch<T>
     {
       CDOResource cdoResource = (CDOResource)theEObject;
       T result = caseCDOResource(cdoResource);
-      if (result == null)
-        result = defaultCase(theEObject);
+      if (result == null) result = defaultCase(theEObject);
       return result;
     }
     default:

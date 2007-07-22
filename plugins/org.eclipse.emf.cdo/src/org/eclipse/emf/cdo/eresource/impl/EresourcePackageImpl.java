@@ -106,8 +106,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    */
   public static EresourcePackage init()
   {
-    if (isInited)
-      return (EresourcePackage)EPackage.Registry.INSTANCE.getEPackage(EresourcePackage.eNS_URI);
+    if (isInited) return (EresourcePackage)EPackage.Registry.INSTANCE.getEPackage(EresourcePackage.eNS_URI);
 
     // Obtain or create and register package
     EresourcePackageImpl theEresourcePackage = (EresourcePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof EresourcePackageImpl ? EPackage.Registry.INSTANCE
@@ -287,8 +286,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    */
   public void createPackageContents()
   {
-    if (isCreated)
-      return;
+    if (isCreated) return;
     isCreated = true;
 
     // Create classes and their features
@@ -325,8 +323,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    */
   public void initializePackageContents()
   {
-    if (isInitialized)
-      return;
+    if (isInitialized) return;
     isInitialized = true;
 
     // Initialize package

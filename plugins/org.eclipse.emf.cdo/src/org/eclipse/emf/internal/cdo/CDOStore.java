@@ -38,6 +38,21 @@ public final class CDOStore implements EStore
   {
   }
 
+  public void setContainer(InternalEObject eObject, InternalEObject newContainer, int newContainerFeatureID)
+  {
+    InternalCDOObject cdoObject = CDOStateMachine.adapt(eObject);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("setContainer({0}, {1}, {2})", cdoObject, newContainer, newContainerFeatureID);
+    }
+
+    CDOID containerID = (CDOID)((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(newContainer);
+
+    CDORevisionImpl revision = getRevisionForWriting(cdoObject);
+    revision.setContainerID(containerID);
+    revision.setContainingFeature(newContainerFeatureID);
+  }
+
   public InternalEObject getContainer(InternalEObject eObject)
   {
     InternalCDOObject cdoObject = CDOStateMachine.adapt(eObject);
@@ -61,21 +76,6 @@ public final class CDOStore implements EStore
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
     return revision.getContainingFeatureID();
-  }
-
-  public void setContainer(InternalEObject eObject, InternalEObject newContainer, int newContainerFeatureID)
-  {
-    InternalCDOObject cdoObject = CDOStateMachine.adapt(eObject);
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("setContainer({0}, {1}, {2})", cdoObject, newContainer, newContainerFeatureID);
-    }
-
-    CDOID containerID = (CDOID)((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(newContainer);
-
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject);
-    revision.setContainerID(containerID);
-    revision.setContainingFeature(newContainerFeatureID);
   }
 
   public EStructuralFeature getContainingFeature(InternalEObject eObject)

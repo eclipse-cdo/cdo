@@ -42,7 +42,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.ResourcePathRequest;
-import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.text.MessageFormat;
@@ -65,6 +64,8 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   private ResourceSet resourceSet;
 
   private Map<CDOID, InternalCDOObject> objects = new HashMap();
+
+  private CDOStore store = new CDOStore(this);
 
   private CDOID lastLookupID;
 
@@ -89,6 +90,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   public CDOSessionImpl getSession()
   {
     return session;
+  }
+
+  public CDOStore getStore()
+  {
+    return store;
   }
 
   public boolean isDirty()
@@ -214,14 +220,14 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     lastLookupObject = objects.get(id);
     if (lastLookupObject == null)
     {
-      lastLookupObject = createObject(id);
+      lastLookupObject = createObjectForRevision(id);
       registerObject(lastLookupObject);
     }
 
     return lastLookupObject;
   }
 
-  private InternalCDOObject createObject(CDOID id)
+  private InternalCDOObject createObjectForRevision(CDOID id)
   {
     // if (id.isMeta())
     // {
@@ -244,20 +250,17 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
 
     CDORevisionImpl revision = lookupRevision(id);
-    CDOClassImpl cdoClass = revision.getCDOClass();
-    CDOID resourceID = revision.getResourceID();
-
-    InternalCDOObject object = newInstance(cdoClass);
+    InternalCDOObject object = newInstance(revision.getCDOClass());
     if (object instanceof CDOResourceImpl)
     {
       object.cdoInternalSetResource((CDOResourceImpl)object);
     }
     else
     {
-      CDOResourceImpl resource = getResource(resourceID);
-      object.cdoInternalSetResource(resource);
+      object.cdoInternalSetResource(getResource(revision.getResourceID()));
     }
 
+    object.cdoInternalSetView(this);
     object.cdoInternalSetRevision(revision);
     object.cdoInternalSetID(revision.getID());
     object.cdoInternalSetState(CDOState.CLEAN);
@@ -297,8 +300,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
         return id;
       }
 
-      InternalCDOObject adapter = FSMUtil.adapt(eObject);
-      potentialObject = adapter;
+      // potentialObject = FSMUtil.adapt(eObject, this);
     }
 
     if (potentialObject instanceof InternalCDOObject)

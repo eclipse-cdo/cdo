@@ -30,13 +30,18 @@ import org.eclipse.emf.internal.cdo.util.ModelUtil;
  */
 public final class CDOStore implements EStore
 {
-  // @Singleton
-  public static final CDOStore INSTANCE = new CDOStore();
-
   private final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOStore.class);
 
-  private CDOStore()
+  private CDOViewImpl view;
+
+  public CDOStore(CDOViewImpl view)
   {
+    this.view = view;
+  }
+
+  public CDOViewImpl getView()
+  {
+    return view;
   }
 
   public void setContainer(InternalEObject eObject, InternalEObject newContainer, int newContainerFeatureID)
@@ -364,12 +369,12 @@ public final class CDOStore implements EStore
     return "PersistentStore";
   }
 
-  private static InternalCDOObject getCDOObject(InternalEObject eObject)
+  private InternalCDOObject getCDOObject(Object object)
   {
-    return FSMUtil.adapt(eObject);
+    return FSMUtil.adapt(object, view);
   }
 
-  private static CDOFeatureImpl getCDOFeature(InternalCDOObject cdoObject, EStructuralFeature eFeature)
+  private CDOFeatureImpl getCDOFeature(InternalCDOObject cdoObject, EStructuralFeature eFeature)
   {
     CDOViewImpl view = (CDOViewImpl)cdoObject.cdoView();
     if (view == null)
@@ -404,10 +409,10 @@ public final class CDOStore implements EStore
     return revision;
   }
 
-  private static void handleContainmentAdd(InternalCDOObject cdoObject, CDOFeatureImpl cdoFeature, Object value)
+  private void handleContainmentAdd(InternalCDOObject cdoObject, CDOFeatureImpl cdoFeature, Object value)
   {
     InternalCDOObject container = cdoObject;
-    InternalCDOObject contained = FSMUtil.adapt(value);
+    InternalCDOObject contained = getCDOObject(value);
     CDOViewImpl containerView = (CDOViewImpl)container.cdoView();
     CDOViewImpl containedView = (CDOViewImpl)contained.cdoView();
     if (containedView != containerView)

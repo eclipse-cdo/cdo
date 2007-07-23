@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
 import org.eclipse.emf.internal.cdo.CDOMetaImpl;
+import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
 import java.util.Collection;
@@ -42,7 +43,7 @@ public final class FSMUtil
     return state == CDOState.TRANSIENT || state == CDOState.PREPARED_ATTACH;
   }
 
-  public static InternalCDOObject adapt(Object object)
+  public static InternalCDOObject adapt(Object object, CDOViewImpl view)
   {
     if (object instanceof InternalCDOObject)
     {
@@ -70,7 +71,7 @@ public final class FSMUtil
     throw new ImplementationError("Neither InternalCDOObject nor InternalEObject: " + object.getClass().getName());
   }
 
-  public static Iterator<InternalCDOObject> iterator(Collection instances)
+  public static Iterator<InternalCDOObject> iterator(Collection instances, final CDOViewImpl view)
   {
     final Iterator delegate = instances.iterator();
     return new Iterator<InternalCDOObject>()
@@ -81,7 +82,7 @@ public final class FSMUtil
       {
         while (delegate.hasNext())
         {
-          next = adapt(delegate.next());
+          next = adapt(delegate.next(), view);
           if (next instanceof InternalCDOObject)
           {
             return true;

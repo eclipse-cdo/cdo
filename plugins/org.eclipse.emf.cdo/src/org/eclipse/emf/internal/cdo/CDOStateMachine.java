@@ -13,6 +13,8 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.ResourceIDRequest;
@@ -201,7 +203,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       transaction.registerNew(object);
 
       // Attach content tree
-      for (Iterator it = FSMUtil.iterator(object.eContents()); it.hasNext();)
+      for (Iterator it = FSMUtil.iterator(object.eContents(), data.view); it.hasNext();)
       {
         InternalCDOObject content = (InternalCDOObject)it.next();
         INSTANCE.process(content, CDOEvent.ATTACH, data);
@@ -221,10 +223,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       object.cdoInternalSetState(CDOState.NEW);
 
       // Finalize content tree
-      for (Iterator it = FSMUtil.iterator(object.eContents()); it.hasNext();)
+      EList<EObject> contents = object.eContents();
+      for (EObject content : contents)
       {
-        InternalCDOObject content = (InternalCDOObject)it.next();
-        INSTANCE.process(content, CDOEvent.FINALIZE_ATTACH, null);
+        if (content instanceof InternalCDOObject)
+        {
+          INSTANCE.process((InternalCDOObject)content, CDOEvent.FINALIZE_ATTACH, null);
+        }
       }
     }
   }

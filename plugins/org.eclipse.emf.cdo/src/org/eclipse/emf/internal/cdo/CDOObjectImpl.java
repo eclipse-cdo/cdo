@@ -23,17 +23,30 @@ import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.common.util.BasicEMap;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
+import org.eclipse.emf.ecore.util.DelegatingEcoreEList;
+import org.eclipse.emf.ecore.util.DelegatingFeatureMap;
+import org.eclipse.emf.ecore.util.EcoreEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * @author Eike Stepper
@@ -52,7 +65,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public CDOObjectImpl()
   {
-    super(CDOStore.INSTANCE); // TODO Set store during ATTACH
     state = CDOState.TRANSIENT;
     eContainer = null;
   }
@@ -136,6 +148,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       ((CDOResourceImpl)this).cdoSetView((CDOViewImpl)view);
     }
+
+    eSetStore(cdoView().getStore());
   }
 
   public void cdoInternalSetResource(CDOResource resource)
@@ -191,6 +205,25 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
   {
     return eDynamicFeature(dynamicFeatureID);
+  }
+
+  @Override
+  protected FeatureMap createFeatureMap(EStructuralFeature eStructuralFeature)
+  {
+    return new CDOStoreFeatureMap(eStructuralFeature);
+  }
+
+  @Override
+  protected EList<?> createList(EStructuralFeature eStructuralFeature)
+  {
+    EClassifier eType = eStructuralFeature.getEType();
+    if (eType.getInstanceClassName() == "java.util.Map$Entry")
+    {
+      return new EcoreEMap<Object, Object>((EClass)eType, eType.getInstanceClass(),
+          new CDOStoreEList<BasicEMap.Entry<Object, Object>>(eStructuralFeature));
+    }
+
+    return new CDOStoreEList<Object>(eStructuralFeature);
   }
 
   @Override
@@ -296,7 +329,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     else
     {
       // Delegate to CDOStore
-      container = CDOStore.INSTANCE.getContainer(this);
+      container = getStore().getContainer(this);
     }
 
     if (container instanceof CDOResource)
@@ -316,7 +349,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     // Delegate to CDOStore
-    return CDOStore.INSTANCE.getContainingFeatureID(this);
+    return getStore().getContainingFeatureID(this);
   }
 
   @Override
@@ -335,7 +368,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     else
     {
       // Delegate to CDOStore
-      CDOStore.INSTANCE.setContainer(this, newContainer, newContainerFeatureID);
+      getStore().setContainer(this, newContainer, newContainerFeatureID);
     }
   }
 
@@ -444,6 +477,392 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     if (eSettings != null)
     {
       eSettings[i] = null;
+    }
+  }
+
+  private CDOStore getStore()
+  {
+    return cdoView().getStore();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public class CDOStoreEList<E> extends DelegatingEcoreEList.Dynamic<E>
+  {
+    private static final long serialVersionUID = 1L;
+
+    public CDOStoreEList(EStructuralFeature eStructuralFeature)
+    {
+      super(CDOObjectImpl.this, eStructuralFeature);
+    }
+
+    @Override
+    protected List<E> delegateList()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public EStructuralFeature getEStructuralFeature()
+    {
+      return eStructuralFeature;
+    }
+
+    @Override
+    protected void delegateAdd(int index, Object object)
+    {
+      getStore().add(owner, eStructuralFeature, index, object);
+    }
+
+    @Override
+    protected void delegateAdd(Object object)
+    {
+      delegateAdd(delegateSize(), object);
+    }
+
+    @Override
+    protected List<E> delegateBasicList()
+    {
+      int size = delegateSize();
+      if (size == 0)
+      {
+        return ECollections.emptyEList();
+      }
+      else
+      {
+        Object[] data = getStore().toArray(owner, eStructuralFeature);
+        return new EcoreEList.UnmodifiableEList<E>(owner, eStructuralFeature, data.length, data);
+      }
+    }
+
+    @Override
+    protected void delegateClear()
+    {
+      getStore().clear(owner, eStructuralFeature);
+    }
+
+    @Override
+    protected boolean delegateContains(Object object)
+    {
+      return getStore().contains(owner, eStructuralFeature, object);
+    }
+
+    @Override
+    protected boolean delegateContainsAll(Collection<?> collection)
+    {
+      for (Object o : collection)
+      {
+        if (!delegateContains(o))
+        {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected E delegateGet(int index)
+    {
+      return (E)getStore().get(owner, eStructuralFeature, index);
+    }
+
+    @Override
+    protected int delegateHashCode()
+    {
+      return getStore().hashCode(owner, eStructuralFeature);
+    }
+
+    @Override
+    protected int delegateIndexOf(Object object)
+    {
+      return getStore().indexOf(owner, eStructuralFeature, object);
+    }
+
+    @Override
+    protected boolean delegateIsEmpty()
+    {
+      return getStore().isEmpty(owner, eStructuralFeature);
+    }
+
+    @Override
+    protected Iterator<E> delegateIterator()
+    {
+      return iterator();
+    }
+
+    @Override
+    protected int delegateLastIndexOf(Object object)
+    {
+      return getStore().lastIndexOf(owner, eStructuralFeature, object);
+    }
+
+    @Override
+    protected ListIterator<E> delegateListIterator()
+    {
+      return listIterator();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected E delegateRemove(int index)
+    {
+      return (E)getStore().remove(owner, eStructuralFeature, index);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected E delegateSet(int index, E object)
+    {
+      return (E)getStore().set(owner, eStructuralFeature, index, object);
+    }
+
+    @Override
+    protected int delegateSize()
+    {
+      return getStore().size(owner, eStructuralFeature);
+    }
+
+    @Override
+    protected Object[] delegateToArray()
+    {
+      return getStore().toArray(owner, eStructuralFeature);
+    }
+
+    @Override
+    protected <T> T[] delegateToArray(T[] array)
+    {
+      return getStore().toArray(owner, eStructuralFeature, array);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected E delegateMove(int targetIndex, int sourceIndex)
+    {
+      return (E)getStore().move(owner, eStructuralFeature, targetIndex, sourceIndex);
+    }
+
+    @Override
+    protected boolean delegateEquals(Object object)
+    {
+      if (object == this)
+      {
+        return true;
+      }
+
+      if (!(object instanceof List))
+      {
+        return false;
+      }
+
+      List<?> list = (List<?>)object;
+      if (list.size() != delegateSize())
+      {
+        return false;
+      }
+
+      for (ListIterator<?> i = list.listIterator(); i.hasNext();)
+      {
+        Object element = i.next();
+        if (element == null ? get(i.previousIndex()) != null : !element.equals(get(i.previousIndex())))
+        {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    @Override
+    protected String delegateToString()
+    {
+      StringBuffer stringBuffer = new StringBuffer();
+      stringBuffer.append("[");
+      for (int i = 0, size = size(); i < size;)
+      {
+        Object value = delegateGet(i);
+        stringBuffer.append(String.valueOf(value));
+        if (++i < size)
+        {
+          stringBuffer.append(", ");
+        }
+      }
+      stringBuffer.append("]");
+      return stringBuffer.toString();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public class CDOStoreFeatureMap extends DelegatingFeatureMap
+  {
+    private static final long serialVersionUID = 1L;
+
+    public CDOStoreFeatureMap(EStructuralFeature eStructuralFeature)
+    {
+      super(CDOObjectImpl.this, eStructuralFeature);
+    }
+
+    @Override
+    protected List<FeatureMap.Entry> delegateList()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public EStructuralFeature getEStructuralFeature()
+    {
+      return eStructuralFeature;
+    }
+
+    @Override
+    protected void delegateAdd(int index, Entry object)
+    {
+      getStore().add(owner, eStructuralFeature, index, object);
+    }
+
+    @Override
+    protected void delegateAdd(Entry object)
+    {
+      delegateAdd(delegateSize(), object);
+    }
+
+    @Override
+    protected List<FeatureMap.Entry> delegateBasicList()
+    {
+      int size = delegateSize();
+      if (size == 0)
+      {
+        return ECollections.emptyEList();
+      }
+      else
+      {
+        Object[] data = getStore().toArray(owner, eStructuralFeature);
+        return new EcoreEList.UnmodifiableEList<FeatureMap.Entry>(owner, eStructuralFeature, data.length, data);
+      }
+    }
+
+    @Override
+    protected void delegateClear()
+    {
+      getStore().clear(owner, eStructuralFeature);
+    }
+
+    @Override
+    protected boolean delegateContains(Object object)
+    {
+      return getStore().contains(owner, eStructuralFeature, object);
+    }
+
+    @Override
+    protected boolean delegateContainsAll(Collection<?> collection)
+    {
+      for (Object o : collection)
+      {
+        if (!delegateContains(o))
+        {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    @Override
+    protected Entry delegateGet(int index)
+    {
+      return (Entry)getStore().get(owner, eStructuralFeature, index);
+    }
+
+    @Override
+    protected int delegateHashCode()
+    {
+      return getStore().hashCode(owner, eStructuralFeature);
+    }
+
+    @Override
+    protected int delegateIndexOf(Object object)
+    {
+      return getStore().indexOf(owner, eStructuralFeature, object);
+    }
+
+    @Override
+    protected boolean delegateIsEmpty()
+    {
+      return getStore().isEmpty(owner, eStructuralFeature);
+    }
+
+    @Override
+    protected Iterator<FeatureMap.Entry> delegateIterator()
+    {
+      return iterator();
+    }
+
+    @Override
+    protected int delegateLastIndexOf(Object object)
+    {
+      return getStore().lastIndexOf(owner, eStructuralFeature, object);
+    }
+
+    @Override
+    protected ListIterator<FeatureMap.Entry> delegateListIterator()
+    {
+      return listIterator();
+    }
+
+    @Override
+    protected Entry delegateRemove(int index)
+    {
+      return (Entry)getStore().remove(owner, eStructuralFeature, index);
+    }
+
+    @Override
+    protected Entry delegateSet(int index, Entry object)
+    {
+      return (Entry)getStore().set(owner, eStructuralFeature, index, object);
+    }
+
+    @Override
+    protected int delegateSize()
+    {
+      return getStore().size(owner, eStructuralFeature);
+    }
+
+    @Override
+    protected Object[] delegateToArray()
+    {
+      return getStore().toArray(owner, eStructuralFeature);
+    }
+
+    @Override
+    protected <T> T[] delegateToArray(T[] array)
+    {
+      return getStore().toArray(owner, eStructuralFeature, array);
+    }
+
+    @Override
+    protected Entry delegateMove(int targetIndex, int sourceIndex)
+    {
+      return (Entry)getStore().move(owner, eStructuralFeature, targetIndex, sourceIndex);
+    }
+
+    @Override
+    protected String delegateToString()
+    {
+      StringBuffer stringBuffer = new StringBuffer();
+      stringBuffer.append("[");
+      for (int i = 0, size = size(); i < size;)
+      {
+        Object value = delegateGet(i);
+        stringBuffer.append(String.valueOf(value));
+        if (++i < size)
+        {
+          stringBuffer.append(", ");
+        }
+      }
+      stringBuffer.append("]");
+      return stringBuffer.toString();
     }
   }
 }

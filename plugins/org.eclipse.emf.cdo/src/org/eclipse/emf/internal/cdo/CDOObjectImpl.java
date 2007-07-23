@@ -486,6 +486,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
+   * TODO Remove this when EMF has fixed
+   * https://bugs.eclipse.org/bugs/show_bug.cgi?id=197487
+   * 
    * @author Eike Stepper
    */
   public class CDOStoreEList<E> extends DelegatingEcoreEList.Dynamic<E>
@@ -694,6 +697,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
+   * TODO Remove this when EMF has fixed
+   * https://bugs.eclipse.org/bugs/show_bug.cgi?id=197487
+   * 
    * @author Eike Stepper
    */
   public class CDOStoreFeatureMap extends DelegatingFeatureMap

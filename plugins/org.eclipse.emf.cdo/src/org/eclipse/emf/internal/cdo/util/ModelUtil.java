@@ -254,8 +254,7 @@ public final class ModelUtil
       return EcorePackage.eINSTANCE;
     }
 
-    // TODO Implement method ModelUtil.createGeneratedEPackage()
-    throw new UnsupportedOperationException("Not yet implemented");
+    return EPackage.Registry.INSTANCE.getEPackage(packageURI);
   }
 
   public static EPackageImpl createDynamicEPackage(CDOPackageImpl cdoPackage)

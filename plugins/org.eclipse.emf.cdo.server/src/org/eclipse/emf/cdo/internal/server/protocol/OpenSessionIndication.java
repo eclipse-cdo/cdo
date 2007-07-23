@@ -127,7 +127,7 @@ public class OpenSessionIndication extends IndicationWithResponse
       {
         if (PROTOCOL.isEnabled())
         {
-          PROTOCOL.format("Writing package URI: {0}, dynamic={1}, metaIDRange={2}", p.getPackageURI(), p
+          PROTOCOL.format("Writing package info: uri={0}, dynamic={1}, metaIDRange={2}", p.getPackageURI(), p
               .getMetaIDRange());
         }
 

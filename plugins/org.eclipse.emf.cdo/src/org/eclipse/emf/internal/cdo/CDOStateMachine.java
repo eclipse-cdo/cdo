@@ -18,6 +18,7 @@ import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.ResourceIDRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
+import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -171,6 +172,12 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public CDOResource resource;
 
     public CDOViewImpl view;
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("ResourceAndView({0}, {1})", resource, view);
+    }
   }
 
   /**
@@ -325,6 +332,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       CDORevisionImpl revision = view.lookupRevision(id);
       object.cdoInternalSetRevision(revision);
       object.cdoInternalSetState(CDOState.CLEAN);
+      object.cdoInternalResolveRevision();
 
       if (forWrite)
       {
@@ -349,7 +357,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       // Prepare object
       object.cdoInternalSetID(id);
-      // object.setRevision(revision);
       object.cdoInternalSetResource(data.resource);
       object.cdoInternalSetView(data.view);
 

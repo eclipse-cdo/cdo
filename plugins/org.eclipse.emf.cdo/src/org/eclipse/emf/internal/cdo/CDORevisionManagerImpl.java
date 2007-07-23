@@ -40,8 +40,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   {
     try
     {
-      LoadObjectRequest signal = new LoadObjectRequest(session.getChannel(), id);
-      return signal.send();
+      return new LoadObjectRequest(session.getChannel(), id).send();
     }
     catch (RuntimeException ex)
     {

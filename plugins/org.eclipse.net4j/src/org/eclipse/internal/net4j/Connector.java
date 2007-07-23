@@ -249,6 +249,11 @@ public abstract class Connector extends Lifecycle implements IConnector
       return false;
     }
 
+    if (connectorState == ConnectorState.CONNECTED)
+    {
+      return true;
+    }
+
     try
     {
       if (TRACER.isEnabled())

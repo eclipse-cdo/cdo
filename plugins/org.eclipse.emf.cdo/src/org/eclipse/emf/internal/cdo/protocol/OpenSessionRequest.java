@@ -99,7 +99,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
       CDOIDRange metaIDRange = CDOIDRangeImpl.read(in);
       if (PROTOCOL.isEnabled())
       {
-        PROTOCOL.format("Read package URI: {0}, dynamic={1}, metaIDRange={2}", packageURI, dynamic, metaIDRange);
+        PROTOCOL.format("Read package info: uri={0}, dynamic={1}, metaIDRange={2}", packageURI, dynamic, metaIDRange);
       }
 
       result.addPackageInfo(packageURI, dynamic, metaIDRange);

@@ -207,6 +207,11 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     transferTargetToRevision();
   }
 
+  public void cdoInternalResolveRevision()
+  {
+    transferRevisionToTarget();
+  }
+
   public InternalEObject cdoInternalInstance()
   {
     return getTarget();
@@ -233,15 +238,12 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
   {
     InternalEObject target = getTarget();
     CDOViewImpl view = cdoView();
-
     CDOClassImpl cdoClass = revision.getCDOClass();
-
     CDOFeatureImpl[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
     {
       CDOFeatureImpl feature = features[i];
-
-      Object targetValue = getTargetValue(target, feature, view);
+      Object targetValue = getTargetValue(target, feature);
       if (feature.isMany())
       {
         List revisionList = revision.getList(feature); // TODO lazy?
@@ -284,7 +286,45 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     }
   }
 
-  private static Object getTargetValue(InternalEObject target, CDOFeatureImpl feature, CDOViewImpl view)
+  private void transferRevisionToTarget()
+  {
+    InternalEObject target = getTarget();
+    CDOViewImpl view = cdoView();
+    CDOClassImpl cdoClass = revision.getCDOClass();
+    CDOFeatureImpl[] features = cdoClass.getAllFeatures();
+    for (int i = 0; i < features.length; i++)
+    {
+      CDOFeatureImpl feature = features[i];
+      Object value = revision.getValue(feature);
+      if (feature.isMany())
+      {
+        InternalEList targetList = (InternalEList)getTargetValue(target, feature);
+        targetList.clear(); // XXX Notifications?
+
+        List revisionList = (List)value;
+        for (Object revisionElement : revisionList)
+        {
+          if (feature.isReference())
+          {
+            revisionElement = view.convertIDToObject(revisionElement);
+          }
+
+          targetList.basicAdd(revisionElement, null);
+        }
+      }
+      else
+      {
+        if (feature.isReference())
+        {
+          value = view.convertIDToObject(value);
+        }
+
+        setTargetValue(getTarget(), feature, value);
+      }
+    }
+  }
+
+  private Object getTargetValue(InternalEObject target, CDOFeatureImpl feature)
   {
     Class<?> targetClass = target.getClass();
     String featureName = feature.getName();
@@ -335,6 +375,67 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     return getFiedValue(target, field);
   }
 
+  private void setTargetValue(InternalEObject target, CDOFeatureImpl feature, Object value)
+  {
+    Class<?> targetClass = target.getClass();
+    String featureName = feature.getName();
+    String fieldName = featureName;// XXX safeName()
+    Field field = getField(targetClass, fieldName);
+    if (field == null && feature.getType() == CDOType.BOOLEAN)
+    {
+      if (targetClass.isAssignableFrom(EAttributeImpl.class) || targetClass.isAssignableFrom(EClassImpl.class)
+          || targetClass.isAssignableFrom(EDataTypeImpl.class) || targetClass.isAssignableFrom(EReferenceImpl.class)
+          || targetClass.isAssignableFrom(EStructuralFeatureImpl.class)
+          || targetClass.isAssignableFrom(ETypedElementImpl.class))
+      {
+        // *******************************************
+        // ID_EFLAG = 1 << 15;
+        // *******************************************
+        // ABSTRACT_EFLAG = 1 << 8;
+        // INTERFACE_EFLAG = 1 << 9;
+        // *******************************************
+        // SERIALIZABLE_EFLAG = 1 << 8;
+        // *******************************************
+        // CONTAINMENT_EFLAG = 1 << 15;
+        // RESOLVE_PROXIES_EFLAG = 1 << 16;
+        // *******************************************
+        // CHANGEABLE_EFLAG = 1 << 10;
+        // VOLATILE_EFLAG = 1 << 11;
+        // TRANSIENT_EFLAG = 1 << 12;
+        // UNSETTABLE_EFLAG = 1 << 13;
+        // DERIVED_EFLAG = 1 << 14;
+        // *******************************************
+        // ORDERED_EFLAG = 1 << 8;
+        // UNIQUE_EFLAG = 1 << 9;
+        // *******************************************
+
+        String flagName = GenUtil.getUpperFeatureName(featureName) + "_EFLAG";
+        int flagsMask = getEFlagMask(targetClass, flagName);
+
+        field = getField(targetClass, "eFlags");
+        int flags = (Integer)getFiedValue(target, field);
+        boolean on = (Boolean)value;
+        if (on)
+        {
+          flags |= flagsMask; // Add EFlag
+        }
+        else
+        {
+          flags &= ~flagsMask; // Remove EFlag
+        }
+
+        setFiedValue(target, field, flags);
+      }
+    }
+
+    if (field == null)
+    {
+      throw new ImplementationError("Field not found: " + fieldName);
+    }
+
+    setFiedValue(target, field, value);
+  }
+
   private static Object getFiedValue(InternalEObject target, Field field)
   {
     if (!field.isAccessible())
@@ -345,6 +446,23 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     try
     {
       return field.get(target);
+    }
+    catch (IllegalAccessException ex)
+    {
+      throw new ImplementationError(ex);
+    }
+  }
+
+  private static void setFiedValue(InternalEObject target, Field field, Object value)
+  {
+    if (!field.isAccessible())
+    {
+      field.setAccessible(true);
+    }
+
+    try
+    {
+      field.set(target, value);
     }
     catch (IllegalAccessException ex)
     {

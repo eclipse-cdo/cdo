@@ -124,6 +124,11 @@ public class CDOMetaImpl implements InternalCDOObject
     throw new UnsupportedOperationException();
   }
 
+  public void cdoInternalResolveRevision()
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public InternalEObject cdoInternalInstance()
   {
     return metaInstance;

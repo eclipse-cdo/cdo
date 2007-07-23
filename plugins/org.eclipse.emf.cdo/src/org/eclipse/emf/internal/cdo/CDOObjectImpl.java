@@ -197,6 +197,11 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
   }
 
+  public void cdoInternalResolveRevision()
+  {
+    // Do nothing
+  }
+
   public InternalEObject cdoInternalInstance()
   {
     return this;

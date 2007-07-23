@@ -153,4 +153,30 @@ public final class IOUtil
       throw new IORuntimeException(ex);
     }
   }
+
+  public static boolean equals(InputStream stream1, InputStream stream2) throws IORuntimeException
+  {
+    try
+    {
+      for (;;)
+      {
+        int byte1 = stream1.read();
+        int byte2 = stream2.read();
+
+        if (byte1 != byte2)
+        {
+          return false;
+        }
+
+        if (byte1 == -1)// Implies byte2 == -1
+        {
+          return true;
+        }
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
 }

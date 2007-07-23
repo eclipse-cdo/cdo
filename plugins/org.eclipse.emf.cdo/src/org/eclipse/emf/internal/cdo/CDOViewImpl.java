@@ -251,7 +251,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     object.cdoInternalSetView(this);
     object.cdoInternalSetRevision(revision);
     object.cdoInternalSetID(revision.getID());
-    object.cdoInternalSetState(CDOState.CLEAN);
+    object.cdoInternalSetState(CDOState.PROXY);
     return object;
   }
 

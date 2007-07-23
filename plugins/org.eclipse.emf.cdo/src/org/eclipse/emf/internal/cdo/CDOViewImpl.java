@@ -232,21 +232,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private InternalCDOObject createObjectForRevision(CDOID id)
   {
-    // if (id.isMeta())
-    // {
-    // if (TRACER.isEnabled())
-    // {
-    // TRACER.format("Creating meta: ID={0}", id);
-    // }
-    //
-    // InternalEObject metaInstance = session.lookupMetaInstance(id);
-    // if (metaInstance == null)
-    // {
-    // throw new IllegalArgumentException("No meta instance for " + id);
-    // }
-    //
-    // }
-
     if (TRACER.isEnabled())
     {
       TRACER.format("Creating object: ID={0}", id);

@@ -430,12 +430,13 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   @Override
   public CDOState cdoState()
   {
-    if (isExisting() && super.cdoState() == CDOState.TRANSIENT)
+    CDOState superState = super.cdoState();
+    if (superState == CDOState.TRANSIENT && isExisting())
     {
       return CDOState.PROXY;
     }
 
-    return super.cdoState();
+    return superState;
   }
 
   /**

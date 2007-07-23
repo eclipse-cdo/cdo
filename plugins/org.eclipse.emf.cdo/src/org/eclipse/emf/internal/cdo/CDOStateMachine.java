@@ -5,7 +5,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ServerException;
@@ -14,26 +13,13 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
 
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EGenericType;
-import org.eclipse.emf.ecore.EModelElement;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.ResourceIDRequest;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
+import java.util.Iterator;
 import java.util.Map;
-
-/**
- * @author Eike Stepper
- */
-enum CDOEvent
-{
-  ATTACH, DETACH, READ, WRITE, COMMIT, ROLLBACK, INVALIDATE, FINALIZE_ATTACH
-}
 
 /**
  * @author Eike Stepper
@@ -120,11 +106,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     data.view = view;
 
     // TRANSIENT --> PREPARED_ATTACH
-    if (TRACER.isEnabled()) TRACER.format("ATTACH: {0} --> {1}", object, view);
+    if (TRACER.isEnabled())
+      TRACER.format("ATTACH: {0} --> {1}", object, view);
     process(object, CDOEvent.ATTACH, data);
 
     // PREPARED_ATTACH --> NEW
-    if (TRACER.isEnabled()) TRACER.format("FINALIZE_ATTACH: {0} --> {1}", object, view);
+    if (TRACER.isEnabled())
+      TRACER.format("FINALIZE_ATTACH: {0} --> {1}", object, view);
     process(object, CDOEvent.FINALIZE_ATTACH, data);
   }
 
@@ -136,60 +124,37 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   public void read(InternalCDOObject object)
   {
-    if (TRACER.isEnabled()) TRACER.format("READ: {0}", object);
+    if (TRACER.isEnabled())
+      TRACER.format("READ: {0}", object);
     process(object, CDOEvent.READ, null);
   }
 
   public void write(InternalCDOObject object)
   {
-    if (TRACER.isEnabled()) TRACER.format("WRITE: {0}", object);
+    if (TRACER.isEnabled())
+      TRACER.format("WRITE: {0}", object);
     process(object, CDOEvent.WRITE, null);
   }
 
   public void invalidate(InternalCDOObject object, long timeStamp)
   {
-    if (TRACER.isEnabled()) TRACER.format("INVALIDATE: {0}", object);
+    if (TRACER.isEnabled())
+      TRACER.format("INVALIDATE: {0}", object);
     process(object, CDOEvent.INVALIDATE, timeStamp);
   }
 
   public void commit(InternalCDOObject object, CommitTransactionResult result)
   {
-    if (TRACER.isEnabled()) TRACER.format("COMMIT: {0}", object);
+    if (TRACER.isEnabled())
+      TRACER.format("COMMIT: {0}", object);
     process(object, CDOEvent.COMMIT, result);
   }
 
   public void rollback(InternalCDOObject object)
   {
-    if (TRACER.isEnabled()) TRACER.format("ROLLBACK: {0}", object);
+    if (TRACER.isEnabled())
+      TRACER.format("ROLLBACK: {0}", object);
     process(object, CDOEvent.ROLLBACK, null);
-  }
-
-  public static InternalCDOObject adapt(Object object)
-  {
-    if (object instanceof InternalCDOObject)
-    {
-      return (InternalCDOObject)object;
-    }
-
-    if (object instanceof EModelElement || object instanceof EGenericType)
-    {
-      return new CDOMetaImpl((InternalEObject)object);
-    }
-
-    if (object instanceof InternalEObject)
-    {
-      EList<Adapter> adapters = ((InternalEObject)object).eAdapters();
-      CDOAdapterImpl adapter = (CDOAdapterImpl)EcoreUtil.getAdapter(adapters, CDOAdapterImpl.class);
-      if (adapter == null)
-      {
-        adapter = new CDOAdapterImpl();
-        adapters.add(adapter);
-      }
-
-      return adapter;
-    }
-
-    throw new ImplementationError("Neither InternalCDOObject nor InternalEObject: " + object.getClass().getName());
   }
 
   @Override
@@ -235,11 +200,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       data.view.registerObject(object);
       transaction.registerNew(object);
 
-      // Prepare content tree
-      for (EObject content : object.eContents())
+      // Attach content tree
+      for (Iterator it = FSMUtil.iterator(object.eContents()); it.hasNext();)
       {
-        InternalCDOObject objectOrAdapter = adapt(content);
-        INSTANCE.process(objectOrAdapter, CDOEvent.ATTACH, data);
+        InternalCDOObject content = (InternalCDOObject)it.next();
+        INSTANCE.process(content, CDOEvent.ATTACH, data);
       }
     }
   }
@@ -255,11 +220,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       object.cdoInternalFinalizeRevision();
       object.cdoInternalSetState(CDOState.NEW);
 
-      // Prepare content tree
-      for (EObject content : object.eContents())
+      // Finalize content tree
+      for (Iterator it = FSMUtil.iterator(object.eContents()); it.hasNext();)
       {
-        InternalCDOObject objectOrAdapter = adapt(content);
-        INSTANCE.process(objectOrAdapter, CDOEvent.FINALIZE_ATTACH, null);
+        InternalCDOObject content = (InternalCDOObject)it.next();
+        INSTANCE.process(content, CDOEvent.FINALIZE_ATTACH, null);
       }
     }
   }
@@ -410,4 +375,12 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
     }
   }
+}
+
+/**
+ * @author Eike Stepper
+ */
+enum CDOEvent
+{
+  ATTACH, DETACH, READ, WRITE, COMMIT, ROLLBACK, INVALIDATE, FINALIZE_ATTACH
 }

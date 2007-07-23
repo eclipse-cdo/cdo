@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -27,13 +26,13 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 /**
@@ -91,11 +90,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     return resource;
-  }
-
-  public boolean cdoTransient()
-  {
-    return isCDOTransient(this);
   }
 
   public void cdoInternalSetID(CDOID id)
@@ -161,54 +155,42 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public void cdoInternalFinalizeRevision()
   {
-    // TODO Inline
-    finalizeCDORevision(this, eContainer, eContainerFeatureID, eSettings);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Finalizing revision for {0}", this);
+    }
+
+    CDOViewImpl view = cdoView();
+    revision.setVersion(1);
+    revision.setContainerID(eContainer == null ? CDOID.NULL : ((CDOObjectImpl)eContainer).cdoID());
+    revision.setContainingFeature(eContainerFeatureID);
+
+    if (eSettings != null)
+    {
+      EClass eClass = eClass();
+      for (int i = 0; i < eClass.getFeatureCount(); i++)
+      {
+        Object setting = eSettings[i];
+        if (setting != null)
+        {
+          EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
+          if (!eFeature.isTransient())
+          {
+            finalizeRevisionFeature(view, revision, i, setting, eFeature, eSettings);
+          }
+        }
+      }
+    }
+  }
+
+  public InternalEObject cdoInternalInstance()
+  {
+    return this;
   }
 
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
   {
     return eDynamicFeature(dynamicFeatureID);
-  }
-
-  @Deprecated
-  void initializeContainer(InternalEObject container, EStructuralFeature eContainingFeature)
-  {
-    eContainer = container;
-    CDORevisionImpl revision = cdoRevision();
-    if (eContainer != null)
-    {
-      if (revision != null)
-      {
-        if (eContainer instanceof CDOObject && !(eContainer instanceof CDOResource))
-        {
-          revision.setContainerID(((CDOObject)eContainer).cdoID());
-        }
-        else
-        {
-          revision.setContainerID(CDOID.NULL);
-        }
-      }
-
-      if (eContainingFeature instanceof EReference)
-      {
-        EReference eContainingReference = (EReference)eContainingFeature;
-        EReference eOpposite = eContainingReference.getEOpposite();
-        if (eOpposite != null)
-        {
-          eContainerFeatureID = eClass().getFeatureID(eOpposite);
-          return;
-        }
-      }
-
-      eContainerFeatureID = EOPPOSITE_FEATURE_BASE - eContainer.eClass().getFeatureID(eContainingFeature);
-    }
-    else
-    {
-      if (revision != null)
-      {
-        revision.setContainerID(CDOID.NULL);
-      }
-    }
   }
 
   @Override
@@ -239,7 +221,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   public Object dynamicGet(int dynamicFeatureID)
   {
-    if (cdoTransient())
+    if (FSMUtil.isTransient(this))
     {
       if (eSettings == null)
       {
@@ -256,7 +238,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   public boolean eIsSet(EStructuralFeature feature)
   {
-    if (cdoTransient())
+    if (FSMUtil.isTransient(this))
     {
       // TODO What about defaultValues != null?
       if (eSettings == null)
@@ -274,7 +256,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   public void dynamicSet(int dynamicFeatureID, Object value)
   {
-    if (cdoTransient())
+    if (FSMUtil.isTransient(this))
     {
       eSettings(); // Important to create eSettings array if necessary
       eSettings[dynamicFeatureID] = value;
@@ -289,7 +271,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   public void dynamicUnset(int dynamicFeatureID)
   {
-    if (cdoTransient())
+    if (FSMUtil.isTransient(this))
     {
       if (eSettings != null)
       {
@@ -307,7 +289,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   public InternalEObject eInternalContainer()
   {
     InternalEObject container;
-    if (cdoTransient())
+    if (FSMUtil.isTransient(this))
     {
       container = eContainer;
     }
@@ -328,7 +310,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   public int eContainerFeatureID()
   {
-    if (cdoTransient())
+    if (FSMUtil.isTransient(this))
     {
       return eContainerFeatureID;
     }
@@ -345,7 +327,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       TRACER.format("Setting container: {0}, featureID={1}", newContainer, newContainerFeatureID);
     }
 
-    if (cdoTransient())
+    if (FSMUtil.isTransient(this))
     {
       eContainer = newContainer;
       eContainerFeatureID = newContainerFeatureID;
@@ -393,16 +375,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return resource != null ? (CDOViewImpl)cdoObject.cdoResource().cdoView() : null;
   }
 
-  static boolean isCDOTransient(InternalCDOObject cdoObject)
-  {
-    final CDOState cdoState = cdoObject.cdoState();
-    return cdoState == CDOState.TRANSIENT || cdoState == CDOState.PREPARED_ATTACH;
-  }
-
-  /**
-   * TODO Inline
-   */
-  @Deprecated
   static void finalizeCDORevision(InternalCDOObject cdoObject, EObject eContainer, int eContainerFeatureID,
       Object[] eSettings)
   {

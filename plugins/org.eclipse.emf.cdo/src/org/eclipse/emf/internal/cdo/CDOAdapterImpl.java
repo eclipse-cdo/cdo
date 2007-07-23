@@ -149,11 +149,6 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     return CDOObjectImpl.getCDOView(this);
   }
 
-  public boolean cdoTransient()
-  {
-    return CDOObjectImpl.isCDOTransient(this);
-  }
-
   public void cdoInternalSetID(CDOID id)
   {
     if (id == null)
@@ -210,6 +205,11 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
   public void cdoInternalFinalizeRevision()
   {
     transferTargetToRevision();
+  }
+
+  public InternalEObject cdoInternalInstance()
+  {
+    return getTarget();
   }
 
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
@@ -296,12 +296,6 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     }
   }
 
-  private void transferRevisionToTarget()
-  {
-    // TODO Implement method CDOAdapterImpl.transferRevisionToTarget()
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
-
   private static Object getTargetValue(InternalEObject target, CDOFeatureImpl feature, CDOViewImpl view)
   {
     Class<?> targetClass = target.getClass();
@@ -381,24 +375,6 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     try
     {
       return (Integer)field.get(null);
-    }
-    catch (IllegalAccessException ex)
-    {
-      throw new ImplementationError(ex);
-    }
-  }
-
-  private static void setTargetValue(InternalEObject target, CDOFeatureImpl feature, Object value)
-  {
-    Field field = getField(target.getClass(), feature.getName());
-    if (!field.isAccessible())
-    {
-      field.setAccessible(true);
-    }
-
-    try
-    {
-      field.set(target, value);
     }
     catch (IllegalAccessException ex)
     {

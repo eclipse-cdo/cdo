@@ -37,5 +37,7 @@ public interface InternalCDOObject extends CDOObject, InternalEObject
 
   public void cdoInternalFinalizeRevision();
 
+  public InternalEObject cdoInternalInstance();
+
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID);
 }

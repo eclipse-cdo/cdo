@@ -122,6 +122,11 @@ public class CDOMetaImpl implements InternalCDOObject
     throw new UnsupportedOperationException();
   }
 
+  public InternalEObject cdoInternalInstance()
+  {
+    return metaInstance;
+  }
+
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
   {
     // TODO Implement method CDOMetaImpl.enclosing_method()

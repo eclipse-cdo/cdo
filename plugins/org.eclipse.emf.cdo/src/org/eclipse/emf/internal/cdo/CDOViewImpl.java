@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.ResourcePathRequest;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.text.MessageFormat;
@@ -296,7 +297,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
         return id;
       }
 
-      InternalCDOObject adapter = CDOStateMachine.adapt(eObject);
+      InternalCDOObject adapter = FSMUtil.adapt(eObject);
       potentialObject = adapter;
     }
 

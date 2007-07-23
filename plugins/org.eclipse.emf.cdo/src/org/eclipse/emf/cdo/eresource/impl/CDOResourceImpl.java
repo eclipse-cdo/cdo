@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -159,7 +160,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public EList<EObject> getContents()
   {
-    if (cdoTransient())
+    if (FSMUtil.isTransient(this))
     {
       EList<EObject> transientContents = (EList<EObject>)eSettings[EresourcePackage.CDO_RESOURCE__CONTENTS];
       if (transientContents == null)

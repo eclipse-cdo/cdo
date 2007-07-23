@@ -249,6 +249,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       return eSettings[dynamicFeatureID];
     }
 
+    // Delegate to CDOStore
     return super.dynamicGet(dynamicFeatureID);
   }
 
@@ -266,6 +267,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       return eSettings[eDynamicFeatureID(feature)] != null;
     }
 
+    // Delegate to CDOStore
     return super.eIsSet(feature);
   }
 
@@ -279,6 +281,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
     else
     {
+      // Delegate to CDOStore
       super.dynamicSet(dynamicFeatureID, value);
     }
   }
@@ -295,6 +298,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
     else
     {
+      // Delegate to CDOStore
       super.dynamicUnset(dynamicFeatureID);
     }
   }
@@ -309,6 +313,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
     else
     {
+      // Delegate to CDOStore
       container = CDOStore.INSTANCE.getContainer(this);
     }
 
@@ -328,6 +333,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       return eContainerFeatureID;
     }
 
+    // Delegate to CDOStore
     return CDOStore.INSTANCE.getContainingFeatureID(this);
   }
 
@@ -346,6 +352,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
     else
     {
+      // Delegate to CDOStore
       CDOStore.INSTANCE.setContainer(this, newContainer, newContainerFeatureID);
     }
   }

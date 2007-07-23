@@ -324,6 +324,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
         throw new ImplementationError("ID not registered: " + id);
       }
 
+      if (result instanceof CDOAdapterImpl)
+      {
+        return ((CDOAdapterImpl)result).getTarget();
+      }
+
       return result;
     }
 

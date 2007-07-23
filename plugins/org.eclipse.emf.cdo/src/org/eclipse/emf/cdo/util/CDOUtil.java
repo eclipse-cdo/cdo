@@ -74,13 +74,12 @@ public final class CDOUtil
     return null;
   }
 
-  public static CDOResourceFactory addResourceFactory(ResourceSet resourceSet)
+  public static void prepareResourceSet(ResourceSet resourceSet)
   {
     CDOResourceFactory factory = CDOResourceFactory.INSTANCE;
     Registry registry = resourceSet.getResourceFactoryRegistry();
     Map<String, Object> map = registry.getProtocolToFactoryMap();
     map.put(CDOProtocolConstants.PROTOCOL_NAME, factory);
-    return factory;
   }
 
   public static String extractPath(URI uri)

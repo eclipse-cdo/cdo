@@ -374,7 +374,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     }
 
     resourceSet.setPackageRegistry(new EPackageRegistryImpl(packageRegistry));
-    CDOUtil.addResourceFactory(resourceSet);
+    CDOUtil.prepareResourceSet(resourceSet);
   }
 
   private CDOViewImpl attach(ResourceSet resourceSet, CDOViewImpl view)

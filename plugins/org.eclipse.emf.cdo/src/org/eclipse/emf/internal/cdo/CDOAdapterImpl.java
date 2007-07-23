@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.util.ImplementationError;
@@ -174,6 +175,22 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
       }
 
       this.state = state;
+      InternalEObject target = getTarget();
+      if (state == CDOState.PROXY)
+      {
+        if (!target.eIsProxy())
+        {
+          URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":" + id);
+          target.eSetProxyURI(uri);
+        }
+      }
+      else
+      {
+        if (target.eIsProxy())
+        {
+          target.eSetProxyURI(null);
+        }
+      }
     }
   }
 

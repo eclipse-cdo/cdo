@@ -54,6 +54,7 @@ public final class FSMUtil
     if (object instanceof EModelElement || object instanceof EGenericType)
     {
       InternalEObject eObject = (InternalEObject)object;
+      eObject = (InternalEObject)EcoreUtil.resolve(eObject, view.getResourceSet());
       CDOID id = view.getSession().lookupMetaInstanceID(eObject);
       if (id != null)
       {

@@ -34,7 +34,6 @@ import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -261,15 +260,12 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
   {
     long lowerBound = nextTemporaryID;
     registerMetaInstance((InternalEObject)ePackage);
-    for (TreeIterator<EObject> it = ePackage.eAllContents(); it.hasNext();)
-    {
-      InternalEObject metaInstance = (InternalEObject)it.next();
-      registerMetaInstance(metaInstance);
-    }
-
     return CDOIDRangeImpl.create(lowerBound, nextTemporaryID + 2);
   }
 
+  /**
+   * TODO synchronize on nextTemporaryID
+   */
   private void registerMetaInstance(InternalEObject metaInstance)
   {
     CDOID id = CDOIDImpl.create(nextTemporaryID);
@@ -282,6 +278,16 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     metaInstanceToIDMap.put(metaInstance, id);
     --nextTemporaryID;
     --nextTemporaryID;
+
+    // for (EReference reference : metaInstance.eClass().getEAllReferences())
+    // {
+    // metaInstance.eGet(reference);
+    // }
+
+    for (EObject content : metaInstance.eContents())
+    {
+      registerMetaInstance((InternalEObject)content);
+    }
   }
 
   public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs, CDOViewImpl excludedView)

@@ -282,7 +282,9 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       return id;
     }
 
-    throw new ImplementationError("Not a CDOID: " + shouldBeCDOID.getClass().getName());
+    // XXX
+    convertObjectToID(idOrObject);
+    throw new ImplementationError("Unable to provideCDOID: " + idOrObject.getClass().getName());
   }
 
   public Object convertObjectToID(Object potentialObject)

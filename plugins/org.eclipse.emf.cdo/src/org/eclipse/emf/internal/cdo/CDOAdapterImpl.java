@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.util.ImplementationError;
@@ -30,7 +29,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -48,10 +46,12 @@ import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl;
 import org.eclipse.emf.ecore.impl.ETypedElementImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.GenUtil;
 
 import java.lang.reflect.Field;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -129,22 +129,22 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     return state;
   }
 
-  public CDORevision cdoRevision()
+  public CDORevisionImpl cdoRevision()
   {
     return revision;
   }
 
-  public CDOResource cdoResource()
+  public CDOResourceImpl cdoResource()
   {
     return resource;
   }
 
-  public CDOClass cdoClass()
+  public CDOClassImpl cdoClass()
   {
     return CDOObjectImpl.getCDOClass(this);
   }
 
-  public CDOView cdoView()
+  public CDOViewImpl cdoView()
   {
     return CDOObjectImpl.getCDOView(this);
   }
@@ -232,20 +232,14 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
   private void transferTargetToRevision()
   {
     InternalEObject target = getTarget();
-    CDOViewImpl view = (CDOViewImpl)cdoView();
+    CDOViewImpl view = cdoView();
 
     CDOClassImpl cdoClass = revision.getCDOClass();
-    System.out.println("TRANSFER " + cdoClass.getName() + ": " + target);
 
     CDOFeatureImpl[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
     {
       CDOFeatureImpl feature = features[i];
-      System.out.println("FEATURE " + feature);
-      if (feature.getName().equals("eClassifier") && feature.getContainingClass().getName().equals("EGenericType"))
-      {
-        System.out.println("EGenericType.eClassifier");
-      }
 
       Object targetValue = getTargetValue(target, feature, view);
       if (feature.isMany())
@@ -253,17 +247,16 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
         List revisionList = revision.getList(feature);
         revisionList.clear();
 
-        if (targetValue instanceof BasicEList)
+        if (targetValue != null)
         {
-          BasicEList targetList = (BasicEList)targetValue;
-          if (targetList != null)
+          if (targetValue instanceof InternalEList)
           {
-            Object[] data = targetList.data();
-            if (data != null)
+            InternalEList targetList = (InternalEList)targetValue;
+            if (targetList != null)
             {
-              for (int j = 0; j < targetList.size(); j++)
+              for (Iterator it = targetList.basicIterator(); it.hasNext();)
               {
-                Object targetElement = data[j];
+                Object targetElement = it.next();
                 if (targetElement != null && feature.isReference())
                 {
                   targetElement = view.convertObjectToID(targetElement);
@@ -273,15 +266,10 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
               }
             }
           }
-        }
-        else
-        {
-          if (targetValue != null && feature.isReference())
+          else
           {
-            targetValue = view.convertObjectToID(targetValue);
+            throw new ClassCastException(targetValue.getClass().getName());
           }
-
-          revisionList.add(targetValue);
         }
       }
       else

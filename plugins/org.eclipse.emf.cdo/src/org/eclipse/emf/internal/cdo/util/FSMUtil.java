@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -52,7 +53,12 @@ public final class FSMUtil
 
     if (object instanceof EModelElement || object instanceof EGenericType)
     {
-      return new CDOMetaImpl((InternalEObject)object);
+      InternalEObject eObject = (InternalEObject)object;
+      CDOID id = view.getSession().lookupMetaInstanceID(eObject);
+      if (id != null)
+      {
+        return new CDOMetaImpl(view, eObject, id);
+      }
     }
 
     if (object instanceof InternalEObject)

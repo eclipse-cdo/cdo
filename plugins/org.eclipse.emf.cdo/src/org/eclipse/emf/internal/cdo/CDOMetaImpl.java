@@ -42,9 +42,11 @@ public class CDOMetaImpl implements InternalCDOObject
 
   private CDOID id;
 
-  public CDOMetaImpl(InternalEObject metaInstance)
+  public CDOMetaImpl(CDOViewImpl view, InternalEObject metaInstance, CDOID id)
   {
+    this.view = view;
     this.metaInstance = metaInstance;
+    this.id = id;
   }
 
   public CDOViewImpl getView()

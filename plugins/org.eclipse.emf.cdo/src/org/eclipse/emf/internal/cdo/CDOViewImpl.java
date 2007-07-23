@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.ResourcePathRequest;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.text.MessageFormat;
@@ -294,13 +295,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     if (potentialObject instanceof InternalEObject && !(potentialObject instanceof InternalCDOObject))
     {
       InternalEObject eObject = (InternalEObject)potentialObject;
-      CDOID id = session.lookupMetaInstanceID(eObject);
-      if (id != null)
+      InternalCDOObject adapter = FSMUtil.adapt(eObject, this);
+      if (adapter != null)
       {
-        return id;
+        potentialObject = adapter;
       }
-
-      // potentialObject = FSMUtil.adapt(eObject, this);
     }
 
     if (potentialObject instanceof InternalCDOObject)

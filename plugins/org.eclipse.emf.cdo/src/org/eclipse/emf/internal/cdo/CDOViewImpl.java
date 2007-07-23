@@ -36,6 +36,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -190,7 +191,8 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public InternalCDOObject newInstance(EClass eClass)
   {
-    return (InternalCDOObject)EcoreUtil.create(eClass);
+    EObject eObject = EcoreUtil.create(eClass);
+    return FSMUtil.adapt(eObject, this);
   }
 
   public InternalCDOObject newInstance(CDOClass cdoClass)

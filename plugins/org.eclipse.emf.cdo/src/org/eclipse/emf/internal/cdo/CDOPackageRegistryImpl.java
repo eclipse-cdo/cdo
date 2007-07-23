@@ -96,7 +96,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   /**
    * @author Eike Stepper
    */
-  private static final class CDOPackageDescriptor implements EPackage.Descriptor
+  private final class CDOPackageDescriptor implements EPackage.Descriptor
   {
     private CDOPackageImpl cdoPackage;
 
@@ -113,7 +113,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
 
     public EPackage getEPackage()
     {
-      return ModelUtil.createEPackage(cdoPackage);
+      return ModelUtil.createEPackage(cdoPackage, CDOPackageRegistryImpl.this);
     }
 
     @Override

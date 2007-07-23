@@ -197,7 +197,7 @@ public final class ModelUtil
       ePackage = packageRegistry.getEPackage(uri);
       if (ePackage == null)
       {
-        ePackage = createEPackage(cdoPackage);
+        ePackage = createEPackage(cdoPackage, packageRegistry);
         packageRegistry.put(uri, ePackage);
       }
 
@@ -233,11 +233,11 @@ public final class ModelUtil
     return eFeature;
   }
 
-  public static EPackage createEPackage(CDOPackageImpl cdoPackage)
+  public static EPackage createEPackage(CDOPackageImpl cdoPackage, CDOPackageRegistryImpl packageRegistry)
   {
     if (!cdoPackage.isDynamic())
     {
-      EPackage ePackage = createGeneratedEPackage(cdoPackage.getPackageURI());
+      EPackage ePackage = createGeneratedEPackage(cdoPackage.getPackageURI(), packageRegistry);
       if (ePackage != null)
       {
         return ePackage;
@@ -247,9 +247,15 @@ public final class ModelUtil
     return createDynamicEPackage(cdoPackage);
   }
 
-  public static EPackage createGeneratedEPackage(String packageURI)
+  public static EPackage createGeneratedEPackage(String packageURI, CDOPackageRegistryImpl packageRegistry)
   {
-    return EPackage.Registry.INSTANCE.getEPackage(packageURI);
+    if (packageURI.equals(EcorePackage.eINSTANCE.getNsURI()))
+    {
+      return EcorePackage.eINSTANCE;
+    }
+
+    // TODO Implement method ModelUtil.createGeneratedEPackage()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   public static EPackageImpl createDynamicEPackage(CDOPackageImpl cdoPackage)

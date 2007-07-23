@@ -10,20 +10,22 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.views;
 
+import org.eclipse.emf.cdo.CDOAudit;
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOTransactionCommittedEvent;
 import org.eclipse.emf.cdo.CDOTransactionDirtyEvent;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CreateResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.LoadResourceAction;
-import org.eclipse.emf.cdo.internal.ui.actions.OpenHistoricalViewAction;
+import org.eclipse.emf.cdo.internal.ui.actions.OpenAuditAction;
+import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenViewAction;
-import org.eclipse.emf.cdo.internal.ui.actions.OpenReadOnlyViewAction;
-import org.eclipse.emf.cdo.internal.ui.actions.ShowViewAction;
+import org.eclipse.emf.cdo.internal.ui.actions.OpenViewEditorAction;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 
 import org.eclipse.net4j.IConnector;
@@ -34,12 +36,11 @@ import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkbenchPage;
 
-import java.util.Date;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -179,12 +180,22 @@ public class CDOItemProvider extends ContainerItemProvider
       return connector.getURL() + "/" + repositoryName + " [" + session.getSessionID() + "]";
     }
 
+    if (obj instanceof CDOTransaction)
+    {
+      CDOTransaction transaction = (CDOTransaction)obj;
+      return MessageFormat.format("{0}Transaction [{1}]", transaction.isDirty() ? "*" : "", transaction.getID());
+    }
+
+    if (obj instanceof CDOAudit)
+    {
+      CDOAudit audit = (CDOAudit)obj;
+      return MessageFormat.format("Audit [{0,date} {0,time}]", audit.getTimeStamp());
+    }
+
     if (obj instanceof CDOView)
     {
       CDOView view = (CDOView)obj;
-      return (view.isDirty() ? "*" : "")
-          + (view.isHistorical() ? new Date(view.getTimeStamp()).toString() : view.isReadOnly() ? "View"
-              : "Transaction") + " [" + view.getID() + "]";
+      return MessageFormat.format("View [{0}]", view.getID());
     }
 
     if (obj instanceof CDOViewHistory.Entry)
@@ -207,7 +218,7 @@ public class CDOItemProvider extends ContainerItemProvider
     if (obj instanceof CDOView)
     {
       CDOView view = (CDOView)obj;
-      if (view.isHistorical())
+      if (view.isAudit())
       {
         return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_HISTORICAL);
       }
@@ -247,9 +258,9 @@ public class CDOItemProvider extends ContainerItemProvider
 
   protected void fillSession(IMenuManager manager, CDOSession session)
   {
+    manager.add(new OpenTransactionAction(page, session));
     manager.add(new OpenViewAction(page, session));
-    manager.add(new OpenReadOnlyViewAction(page, session));
-    manager.add(new OpenHistoricalViewAction(page, session));
+    manager.add(new OpenAuditAction(page, session));
     manager.add(new Separator());
     manager.add(new CloseSessionAction(page, session));
   }
@@ -257,12 +268,12 @@ public class CDOItemProvider extends ContainerItemProvider
   protected void fillView(IMenuManager manager, CDOView view)
   {
     manager.add(new LoadResourceAction(page, view));
-    if (view.isReadWrite())
+    if (view.isTransaction())
     {
       manager.add(new CreateResourceAction(page, view));
     }
 
-    manager.add(new ShowViewAction(page, view));
+    manager.add(new OpenViewEditorAction(page, view));
     manager.add(new Separator());
     manager.add(new CloseViewAction(page, view));
   }

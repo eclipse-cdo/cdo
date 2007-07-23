@@ -90,7 +90,12 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return session;
   }
 
-  public boolean isHistorical()
+  public boolean isDirty()
+  {
+    return false;
+  }
+
+  public boolean isTransaction()
   {
     return false;
   }
@@ -98,6 +103,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   public boolean isReadOnly()
   {
     return true;
+  }
+
+  public boolean isAudit()
+  {
+    return false;
   }
 
   public CDOTransactionImpl toTransaction()

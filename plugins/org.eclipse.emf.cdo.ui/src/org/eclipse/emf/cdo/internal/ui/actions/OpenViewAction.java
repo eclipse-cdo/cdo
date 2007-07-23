@@ -15,13 +15,13 @@ public final class OpenViewAction extends SessionAction
 {
   public OpenViewAction(IWorkbenchPage page, CDOSession session)
   {
-    super(page, "Open View", "Open a read-write CDO view", SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_EDITOR),
+    super(page, "Open View", "Open a read-only CDO view", SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_EDITOR),
         session);
   }
 
   @Override
   protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
   {
-    getSession().openTransaction(new ResourceSetImpl());
+    getSession().openView(new ResourceSetImpl());
   }
 }

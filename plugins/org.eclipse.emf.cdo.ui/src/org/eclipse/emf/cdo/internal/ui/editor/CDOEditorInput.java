@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.editor;
 
+import org.eclipse.emf.cdo.CDOAudit;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
@@ -22,7 +23,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 
-import java.util.Date;
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -56,7 +57,7 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
 
   public ImageDescriptor getImageDescriptor()
   {
-    if (view.isHistorical())
+    if (view.isAudit())
     {
       return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR_HISTORICAL);
     }
@@ -105,14 +106,14 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
     builder.append(view.getID());
     builder.append("]");
 
-    if (view.isHistorical())
-    {
-      builder.append(" ");
-      builder.append(new Date(view.getTimeStamp()));
-    }
-    else if (view.isReadOnly())
+    if (view.isReadOnly())
     {
       builder.append(" readonly");
+    }
+
+    if (view instanceof CDOAudit)
+    {
+      builder.append(MessageFormat.format(" {0,date} {0,time}", ((CDOAudit)view).getTimeStamp()));
     }
 
     return builder.toString();

@@ -9,11 +9,11 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public final class ShowViewAction extends ViewAction
+public final class OpenViewEditorAction extends ViewAction
 {
-  public ShowViewAction(IWorkbenchPage page, CDOView view)
+  public OpenViewEditorAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, "Show Editor", "Show a CDO editor", null, view);
+    super(page, "Open Editor", "Open a CDO editor for this view", null, view);
   }
 
   @Override

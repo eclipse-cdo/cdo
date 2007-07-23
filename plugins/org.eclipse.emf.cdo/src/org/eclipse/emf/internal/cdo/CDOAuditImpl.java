@@ -36,7 +36,7 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
   }
 
   @Override
-  public boolean isHistorical()
+  public boolean isAudit()
   {
     return true;
   }

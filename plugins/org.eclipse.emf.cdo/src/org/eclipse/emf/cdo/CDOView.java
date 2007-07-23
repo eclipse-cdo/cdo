@@ -32,9 +32,13 @@ public interface CDOView extends INotifier
 
   public ResourceSet getResourceSet();
 
-  public boolean isHistorical();
+  public boolean isDirty();
+
+  public boolean isTransaction();
 
   public boolean isReadOnly();
+
+  public boolean isAudit();
 
   /**
    * @see ResourceSet#getResource(URI, boolean)

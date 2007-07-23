@@ -59,9 +59,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     super(id, session);
   }
 
+  @Override
   public boolean isDirty()
   {
     return dirty;
+  }
+
+  @Override
+  public boolean isTransaction()
+  {
+    return true;
   }
 
   @Override

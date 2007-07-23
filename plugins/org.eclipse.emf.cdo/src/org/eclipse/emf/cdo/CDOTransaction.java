@@ -31,8 +31,6 @@ public interface CDOTransaction extends CDOView
 
   public CDOObject newInstance(CDOClass cdoClass);
 
-  public boolean isDirty();
-
   /**
    * @see CDOTransaction#commit()
    */

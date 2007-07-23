@@ -3,7 +3,6 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory;
-import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -12,12 +11,12 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public final class ShowEntryAction extends EntryAction
+public final class OpenResourceEditorAction extends EntryAction
 {
-  public ShowEntryAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
+  public OpenResourceEditorAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
       CDOViewHistory.Entry entry)
   {
-    super(page, "Show Editor", "Show a CDO editor", null, entry);
+    super(page, "Open Editor", "Open a CDO editor for this resource", null, entry);
   }
 
   @Override

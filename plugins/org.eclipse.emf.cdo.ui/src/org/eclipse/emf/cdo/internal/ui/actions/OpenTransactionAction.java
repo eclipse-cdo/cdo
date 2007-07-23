@@ -11,17 +11,17 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public final class OpenReadOnlyViewAction extends SessionAction
+public final class OpenTransactionAction extends SessionAction
 {
-  public OpenReadOnlyViewAction(IWorkbenchPage page, CDOSession session)
+  public OpenTransactionAction(IWorkbenchPage page, CDOSession session)
   {
-    super(page, "Open Read-Only View", "Open a read-only CDO view", SharedIcons
+    super(page, "Open Transaction", "Open a read-write CDO view", SharedIcons
         .getDescriptor(SharedIcons.ETOOL_OPEN_EDITOR), session);
   }
 
   @Override
   protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
   {
-    getSession().openView(new ResourceSetImpl());
+    getSession().openTransaction(new ResourceSetImpl());
   }
 }

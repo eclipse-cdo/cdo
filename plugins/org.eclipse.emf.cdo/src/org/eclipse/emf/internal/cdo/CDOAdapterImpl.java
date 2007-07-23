@@ -244,7 +244,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
       Object targetValue = getTargetValue(target, feature, view);
       if (feature.isMany())
       {
-        List revisionList = revision.getList(feature);
+        List revisionList = revision.getList(feature); // TODO lazy?
         revisionList.clear();
 
         if (targetValue != null)
@@ -268,7 +268,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
           }
           else
           {
-            throw new ClassCastException(targetValue.getClass().getName());
+            throw new ImplementationError("Not an InternalEList: " + targetValue.getClass().getName());
           }
         }
       }

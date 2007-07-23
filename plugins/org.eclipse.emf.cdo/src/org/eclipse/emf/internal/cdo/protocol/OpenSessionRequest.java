@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
+import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.util.ServerException;
 
@@ -23,8 +25,6 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -85,7 +85,8 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
       PROTOCOL.format("Read repositoryUUID: {0}", repositoryUUID);
     }
 
-    Set<String> packageURIs = new HashSet();
+    OpenSessionResult result = new OpenSessionResult(sessionID, repositoryUUID);
+
     for (;;)
     {
       String packageURI = in.readString();
@@ -94,14 +95,16 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
         break;
       }
 
+      boolean dynamic = in.readBoolean();
+      CDOIDRange metaIDRange = CDOIDRangeImpl.read(in);
       if (PROTOCOL.isEnabled())
       {
-        PROTOCOL.format("Read package URI: {0}", packageURI);
+        PROTOCOL.format("Read package URI: {0}, dynamic={1}, metaIDRange={2}", packageURI, dynamic, metaIDRange);
       }
 
-      packageURIs.add(packageURI);
+      result.addPackageInfo(packageURI, dynamic, metaIDRange);
     }
 
-    return new OpenSessionResult(sessionID, repositoryUUID, packageURIs);
+    return result;
   }
 }

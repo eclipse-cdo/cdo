@@ -12,11 +12,14 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
+import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.LoadPackageRequest;
+import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult.PackageInfo;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.util.Collection;
@@ -39,11 +42,15 @@ public class CDOSessionPackageManager extends CDOPackageManagerImpl
     return session;
   }
 
-  public void addPackageProxies(Collection<String> packageURIs)
+  public void addPackageProxies(Collection<PackageInfo> packageInfos)
   {
-    for (String packageURI : packageURIs)
+    for (PackageInfo info : packageInfos)
     {
-      CDOPackageImpl proxy = new CDOPackageImpl(this, packageURI);
+      String packageURI = info.getPackageURI();
+      boolean dynamic = info.isDynamic();
+      CDOIDRange metaIDRange = info.getMetaIDRange();
+
+      CDOPackageImpl proxy = new CDOPackageImpl(this, packageURI, dynamic, metaIDRange);
       addPackage(proxy);
       session.getPackageRegistry().putPackageDescriptor(proxy);
     }
@@ -52,9 +59,24 @@ public class CDOSessionPackageManager extends CDOPackageManagerImpl
   @Override
   protected void resolve(CDOPackageImpl cdoPackage)
   {
+    if (!cdoPackage.isDynamic())
+    {
+      String uri = cdoPackage.getPackageURI();
+      EPackage ePackage = session.getPackageRegistry().getEPackage(uri);
+      if (ePackage != null)
+      {
+        ModelUtil.initializeCDOPackage(ePackage, cdoPackage);
+        return;
+      }
+    }
+
     try
     {
       new LoadPackageRequest(session.getChannel(), cdoPackage).send();
+      if (!cdoPackage.isDynamic())
+      {
+        OM.LOG.info("Dynamic package created for " + cdoPackage.getPackageURI());
+      }
     }
     catch (RuntimeException ex)
     {

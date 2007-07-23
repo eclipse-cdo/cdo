@@ -10,7 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import java.util.Set;
+import org.eclipse.emf.cdo.protocol.CDOIDRange;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -21,13 +24,12 @@ public final class OpenSessionResult
 
   private String repositoryUUID;
 
-  private Set<String> packageURIs;
+  private List<PackageInfo> packageInfos = new ArrayList();
 
-  public OpenSessionResult(int sessionID, String repositoryUUID, Set<String> packageURIs)
+  public OpenSessionResult(int sessionID, String repositoryUUID)
   {
     this.sessionID = sessionID;
     this.repositoryUUID = repositoryUUID;
-    this.packageURIs = packageURIs;
   }
 
   public int getSessionID()
@@ -40,8 +42,47 @@ public final class OpenSessionResult
     return repositoryUUID;
   }
 
-  public Set<String> getPackageURIs()
+  public List<PackageInfo> getPackageInfos()
   {
-    return packageURIs;
+    return packageInfos;
+  }
+
+  void addPackageInfo(String packageURI, boolean dynamic, CDOIDRange metaIDRange)
+  {
+    packageInfos.add(new PackageInfo(packageURI, dynamic, metaIDRange));
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class PackageInfo
+  {
+    private String packageURI;
+
+    private boolean dynamic;
+
+    private CDOIDRange metaIDRange;
+
+    public PackageInfo(String packageURI, boolean dynamic, CDOIDRange metaIDRange)
+    {
+      this.packageURI = packageURI;
+      this.dynamic = dynamic;
+      this.metaIDRange = metaIDRange;
+    }
+
+    public String getPackageURI()
+    {
+      return packageURI;
+    }
+
+    public boolean isDynamic()
+    {
+      return dynamic;
+    }
+
+    public CDOIDRange getMetaIDRange()
+    {
+      return metaIDRange;
+    }
   }
 }

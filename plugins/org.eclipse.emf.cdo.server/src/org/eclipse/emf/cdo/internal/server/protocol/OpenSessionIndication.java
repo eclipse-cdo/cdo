@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RepositoryManager;
 import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
@@ -126,10 +127,13 @@ public class OpenSessionIndication extends IndicationWithResponse
       {
         if (PROTOCOL.isEnabled())
         {
-          PROTOCOL.format("Writing package URI: {0}", p.getPackageURI());
+          PROTOCOL.format("Writing package URI: {0}, dynamic={1}, metaIDRange={2}", p.getPackageURI(), p
+              .getMetaIDRange());
         }
 
         out.writeString(p.getPackageURI());
+        out.writeBoolean(p.isDynamic());
+        CDOIDRangeImpl.write(out, p.getMetaIDRange());
       }
     }
 

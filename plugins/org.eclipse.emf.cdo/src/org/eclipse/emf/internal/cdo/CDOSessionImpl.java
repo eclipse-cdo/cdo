@@ -341,7 +341,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     OpenSessionResult result = request.send();
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
-    packageManager.addPackageProxies(result.getPackageURIs());
+    packageManager.addPackageProxies(result.getPackageInfos());
   }
 
   @Override

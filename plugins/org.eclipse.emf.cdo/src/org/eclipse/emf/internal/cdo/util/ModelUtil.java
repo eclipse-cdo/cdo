@@ -34,7 +34,6 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.CDOPackageRegistryImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManager;
 
 /**
@@ -90,6 +89,16 @@ public final class ModelUtil
     return CDOTypeImpl.STRING;
   }
 
+  public static void initializeCDOPackage(EPackage ePackage, CDOPackageImpl cdoPackage)
+  {
+    cdoPackage.setClientInfo(ePackage);
+    for (EClass eClass : EMFUtil.getPersistentClasses(ePackage))
+    {
+      CDOClassImpl cdoClass = createCDOClass(eClass, cdoPackage);
+      cdoPackage.addClass(cdoClass);
+    }
+  }
+
   public static CDOPackageImpl getCDOPackage(EPackage ePackage, CDOSessionPackageManager packageManager)
   {
     String packageURI = ePackage.getNsURI();
@@ -124,12 +133,7 @@ public final class ModelUtil
     CDOIDRange idRange = packageManager.getSession().registerEPackage(ePackage);
 
     CDOPackageImpl cdoPackage = new CDOPackageImpl(packageManager, packageURI, name, ecore, dynamic, idRange);
-    cdoPackage.setClientInfo(ePackage);
-    for (EClass eClass : EMFUtil.getPersistentClasses(ePackage))
-    {
-      CDOClassImpl cdoClass = createCDOClass(eClass, cdoPackage);
-      cdoPackage.addClass(cdoClass);
-    }
+    initializeCDOPackage(ePackage, cdoPackage);
 
     return cdoPackage;
   }

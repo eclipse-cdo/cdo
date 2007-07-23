@@ -52,7 +52,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public CDOObjectImpl()
   {
-    super(CDOStore.INSTANCE);
+    super(CDOStore.INSTANCE); // TODO Set store during ATTACH
     state = CDOState.TRANSIENT;
     eContainer = null;
   }

@@ -121,20 +121,22 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
   @Override
   public void notifyChanged(Notification msg)
   {
-    if (msg.getEventType() == Notification.RESOLVE)
+    switch (msg.getEventType())
     {
-      return;
-    }
-
-    if (msg.getNotifier() instanceof InternalEObject)
-    {
+    case Notification.ADD:
+    case Notification.ADD_MANY:
+    case Notification.REMOVE:
+    case Notification.REMOVE_MANY:
+    case Notification.MOVE:
+    case Notification.SET:
+    case Notification.UNSET:
       InternalEObject notifier = (InternalEObject)msg.getNotifier();
-      if (!notifier.eIsProxy())
+      if (notifier != getTarget() || notifier.eIsProxy())
       {
-        System.out.println(msg);
-        // TODO Implement method CDOAdapterImpl.notifyChanged()
-        throw new UnsupportedOperationException("Not yet implemented");
+        return;
       }
+
+      CDOStateMachine.INSTANCE.write(this);
     }
   }
 

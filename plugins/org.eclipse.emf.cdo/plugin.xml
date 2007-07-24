@@ -19,7 +19,7 @@
    <extension
          point="org.eclipse.net4j.util.elementProcessors">
       <elementProcessor
-            class="org.eclipse.emf.internal.cdo.ChannelInjector">
+            class="org.eclipse.emf.internal.cdo.util.ChannelInjector">
       </elementProcessor>
    </extension>
 

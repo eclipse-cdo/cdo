@@ -56,7 +56,7 @@ public final class FSMUtil
       InternalEObject eObject = (InternalEObject)object;
       if (eObject.eIsProxy())
       {
-        eObject = (InternalEObject)EcoreUtil.resolve(eObject, view.getResourceSet());
+        EcoreUtil.resolve(eObject, view.getResourceSet());
       }
 
       CDOID id = view.getSession().lookupMetaInstanceID(eObject);

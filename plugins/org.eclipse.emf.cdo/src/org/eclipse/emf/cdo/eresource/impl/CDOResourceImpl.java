@@ -365,7 +365,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void attached(EObject object)
   {
-    throw new UnsupportedOperationException();
+    // Do nothing
   }
 
   /**
@@ -373,7 +373,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void detached(EObject object)
   {
-    throw new UnsupportedOperationException();
+    // Do nothing
   }
 
   /**

@@ -65,6 +65,8 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOAdapterImpl.class);
 
+  private CDOViewImpl view;
+
   private CDOID id;
 
   private CDOState state;
@@ -163,7 +165,12 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
 
   public CDOViewImpl cdoView()
   {
-    return CDOObjectImpl.getCDOView(this);
+    if (view == null)
+    {
+      view = CDOObjectImpl.getCDOView(this);
+    }
+
+    return view;
   }
 
   public void cdoInternalSetID(CDOID id)
@@ -222,7 +229,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
 
   public void cdoInternalSetView(CDOView view)
   {
-    // Do nothing since target will never be a CDOResource
+    this.view = (CDOViewImpl)view;
   }
 
   public void cdoInternalSetResource(CDOResource resource)
@@ -351,6 +358,11 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
   {
     InternalEObject target = getTarget();
     CDOViewImpl view = cdoView();
+    if (view == null)
+    {
+      cdoView();
+      throw new ImplementationError("view == null");
+    }
 
     // Handle containment
     CDOID containerID = revision.getContainerID();
@@ -404,7 +416,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
           value = view.convertIDToObject(value);
         }
 
-        setTargetValue(getTarget(), feature, value);
+        setTargetValue(target, feature, value);
       }
     }
   }
@@ -565,6 +577,11 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     catch (IllegalAccessException ex)
     {
       throw new ImplementationError(ex);
+    }
+    catch (RuntimeException ex)
+    {
+      ex.printStackTrace();
+      throw ex;
     }
   }
 

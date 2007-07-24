@@ -616,7 +616,8 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
         return adapter.getTarget();
       }
 
-      return null;
+      // throw new ImplementationError("Can't resolve " + uriFragment);
+      return object;
     }
 
     public TreeIterator<EObject> getAllContents()

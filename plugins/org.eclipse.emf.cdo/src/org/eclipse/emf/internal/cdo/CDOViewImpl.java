@@ -223,21 +223,46 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     lastLookupObject = objects.get(id);
     if (lastLookupObject == null)
     {
-      lastLookupObject = createObjectForRevision(id);
+      if (id.isMeta())
+      {
+        lastLookupObject = createObjectForMeta(id);
+      }
+      else
+      {
+        lastLookupObject = createObjectForRevision(id);
+      }
+
       registerObject(lastLookupObject);
     }
 
     return lastLookupObject;
   }
 
-  private InternalCDOObject createObjectForRevision(CDOID id)
+  /**
+   * @return Never <code>null</code>
+   */
+  private InternalCDOObject createObjectForMeta(CDOID id)
   {
-    if (TRACER.isEnabled())
+    InternalEObject metaInstance = session.lookupMetaInstance(id);
+    if (metaInstance == null)
     {
-      TRACER.format("Creating object: ID={0}", id);
+      throw new ImplementationError("No metaInstance for " + id);
     }
 
+    return new CDOMetaImpl(this, metaInstance, id);
+  }
+
+  /**
+   * @return Never <code>null</code>
+   */
+  private InternalCDOObject createObjectForRevision(CDOID id)
+  {
     CDORevisionImpl revision = lookupRevision(id);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Creating object for revision: " + revision);
+    }
+
     InternalCDOObject object = newInstance(revision.getCDOClass());
     if (object instanceof CDOResourceImpl)
     {
@@ -246,8 +271,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     else
     {
       CDOID resourceID = revision.getResourceID();
-      CDOResourceImpl resource = getResource(resourceID);
-      object.cdoInternalSetResource(resource);
+      if (!resourceID.isNull())
+      {
+        CDOResourceImpl resource = getResource(resourceID);
+        object.cdoInternalSetResource(resource);
+      }
     }
 
     object.cdoInternalSetView(this);
@@ -324,12 +352,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
         throw new ImplementationError("ID not registered: " + id);
       }
 
-      if (result instanceof CDOAdapterImpl)
-      {
-        return ((CDOAdapterImpl)result).getTarget();
-      }
-
-      return result;
+      return result.cdoInternalInstance();
     }
 
     return potentialID;

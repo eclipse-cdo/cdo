@@ -19,8 +19,8 @@ import org.eclipse.net4j.util.collection.IHistory;
 
 import org.eclipse.emf.ecore.EPackage;
 
+import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -33,6 +33,8 @@ public class RegisterCDOPackageAction extends RegisterPackageAction
 
   private static final String TITLE = "Register CDO Package";
 
+  private EPackage.Registry registry = EPackage.Registry.INSTANCE;
+
   public RegisterCDOPackageAction(IWorkbenchPage page, CDOSession session)
   {
     super(page, TITLE, "Register a package generated for CDO", null, session);
@@ -42,26 +44,26 @@ public class RegisterCDOPackageAction extends RegisterPackageAction
   protected EPackage getEPackage(IWorkbenchPage page, CDOSession session)
   {
     Shell shell = page.getWorkbenchWindow().getShell();
-    for (;;)
+    IInputValidator validator = new EPackageFactoryValidator();
+    InputDialog dialog = new HistoryInputDialog(shell, TITLE, "Enter a package URI:", HISTORY, validator);
+    if (dialog.open() == InputDialog.OK)
     {
-      InputDialog dialog = new HistoryInputDialog(shell, TITLE, "Enter a package URI:", HISTORY, null);
-      if (dialog.open() != InputDialog.OK)
-      {
-        return null;
-      }
-
       String uri = dialog.getValue();
-      EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(uri);
-      if (ePackage != null)
-      {
-        HISTORY.add(uri);
-        return ePackage;
-      }
+      HISTORY.add(uri);
+      return registry.getEPackage(uri);
+    }
 
-      if (!MessageDialog.openQuestion(shell, TITLE, "Package " + uri + " not found.\nTry again?"))
-      {
-        return null;
-      }
+    return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public class EPackageFactoryValidator implements IInputValidator
+  {
+    public String isValid(String uri)
+    {
+      return registry.containsKey(uri) ? null : "Package " + uri + " not found.";
     }
   }
 }

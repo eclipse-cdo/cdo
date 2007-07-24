@@ -98,14 +98,15 @@ public class HistoryInputDialog extends InputDialog
   @Override
   protected void buttonPressed(int buttonId)
   {
-    super.buttonPressed(buttonId);
-    if (buttonId == IDialogConstants.OK_ID)
+    if (IDialogConstants.OK_ID == buttonId)
     {
       value = historyText.getText();
+      okPressed();
     }
-    else
+    else if (IDialogConstants.CANCEL_ID == buttonId)
     {
       value = null;
+      cancelPressed();
     }
   }
 

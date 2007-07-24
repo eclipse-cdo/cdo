@@ -215,6 +215,11 @@ public class HistoryText extends Composite
 
   protected void historyChanged()
   {
+    if (isDisposed())
+    {
+      return;
+    }
+
     combo.removeAll();
     for (IHistoryElement<String> element : history)
     {

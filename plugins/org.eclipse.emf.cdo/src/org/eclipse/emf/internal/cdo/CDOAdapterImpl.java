@@ -50,8 +50,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.GenUtil;
+import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 
@@ -90,8 +92,21 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
   @Override
   public void notifyChanged(Notification msg)
   {
-    // TODO Implement method CDOAdapterImpl.notifyChanged()
-    throw new UnsupportedOperationException("Not yet implemented");
+    if (msg.getEventType() == Notification.RESOLVE)
+    {
+      return;
+    }
+
+    if (msg.getNotifier() instanceof InternalEObject)
+    {
+      InternalEObject notifier = (InternalEObject)msg.getNotifier();
+      if (!notifier.eIsProxy())
+      {
+        System.out.println(msg);
+        // TODO Implement method CDOAdapterImpl.notifyChanged()
+        throw new UnsupportedOperationException("Not yet implemented");
+      }
+    }
   }
 
   @Override
@@ -180,7 +195,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
       {
         if (!target.eIsProxy())
         {
-          URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":" + id);
+          URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":proxy#" + id);
           target.eSetProxyURI(uri);
         }
       }
@@ -316,17 +331,24 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
       if (feature.isMany())
       {
         InternalEList targetList = (InternalEList)getTargetValue(target, feature);
-        targetList.clear(); // XXX Notifications?
-
-        List revisionList = (List)value;
-        for (Object revisionElement : revisionList)
+        if (targetList != null)
         {
-          if (feature.isReference())
+          while (!targetList.isEmpty())
           {
-            revisionElement = view.convertIDToObject(revisionElement);
+            Object toBeRemoved = targetList.basicGet(0);
+            targetList.basicRemove(toBeRemoved, null);
           }
 
-          targetList.basicAdd(revisionElement, null);
+          List revisionList = (List)value;
+          for (Object toBeAdded : revisionList)
+          {
+            if (feature.isReference())
+            {
+              toBeAdded = view.convertIDToObject(toBeAdded);
+            }
+
+            targetList.basicAdd(toBeAdded, null);
+          }
         }
       }
       else
@@ -343,53 +365,65 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
 
   private Object getTargetValue(InternalEObject target, CDOFeatureImpl feature)
   {
-    Class<?> targetClass = target.getClass();
-    String featureName = feature.getName();
-    String fieldName = featureName;// XXX safeName()
-    Field field = getField(targetClass, fieldName);
-    if (field == null && feature.getType() == CDOType.BOOLEAN)
-    {
-      if (targetClass.isAssignableFrom(EAttributeImpl.class) || targetClass.isAssignableFrom(EClassImpl.class)
-          || targetClass.isAssignableFrom(EDataTypeImpl.class) || targetClass.isAssignableFrom(EReferenceImpl.class)
-          || targetClass.isAssignableFrom(EStructuralFeatureImpl.class)
-          || targetClass.isAssignableFrom(ETypedElementImpl.class))
-      {
-        // *******************************************
-        // ID_EFLAG = 1 << 15;
-        // *******************************************
-        // ABSTRACT_EFLAG = 1 << 8;
-        // INTERFACE_EFLAG = 1 << 9;
-        // *******************************************
-        // SERIALIZABLE_EFLAG = 1 << 8;
-        // *******************************************
-        // CONTAINMENT_EFLAG = 1 << 15;
-        // RESOLVE_PROXIES_EFLAG = 1 << 16;
-        // *******************************************
-        // CHANGEABLE_EFLAG = 1 << 10;
-        // VOLATILE_EFLAG = 1 << 11;
-        // TRANSIENT_EFLAG = 1 << 12;
-        // UNSETTABLE_EFLAG = 1 << 13;
-        // DERIVED_EFLAG = 1 << 14;
-        // *******************************************
-        // ORDERED_EFLAG = 1 << 8;
-        // UNIQUE_EFLAG = 1 << 9;
-        // *******************************************
+    // Class<?> targetClass = target.getClass();
+    // String featureName = feature.getName();
+    EStructuralFeature eFeature = ModelUtil.getEFeature(feature, cdoView().getSession().getPackageRegistry());
+    Object value = target.eGet(eFeature);
+    return value;
 
-        String flagName = GenUtil.getUpperFeatureName(featureName) + "_EFLAG";
-        int flagsMask = getEFlagMask(targetClass, flagName);
-
-        field = getField(targetClass, "eFlags");
-        int value = (Integer)getFiedValue(target, field);
-        return new Boolean((value & flagsMask) != 0);
-      }
-    }
-
-    if (field == null)
-    {
-      throw new ImplementationError("Field not found: " + fieldName);
-    }
-
-    return getFiedValue(target, field);
+    // // TODO BOOLEAN_OBJECT?
+    // String methodName = GenUtil.getFeatureGetterName(featureName,
+    // feature.getType() == CDOType.BOOLEAN);
+    // Method method = getMethod(targetClass, methodName,
+    // ReflectUtil.NO_PARAMETERS);
+    //
+    // String fieldName = featureName;// XXX safeName()
+    // Field field = getField(targetClass, fieldName);
+    // if (field == null && feature.getType() == CDOType.BOOLEAN)
+    // {
+    // if (targetClass.isAssignableFrom(EAttributeImpl.class) ||
+    // targetClass.isAssignableFrom(EClassImpl.class)
+    // || targetClass.isAssignableFrom(EDataTypeImpl.class) ||
+    // targetClass.isAssignableFrom(EReferenceImpl.class)
+    // || targetClass.isAssignableFrom(EStructuralFeatureImpl.class)
+    // || targetClass.isAssignableFrom(ETypedElementImpl.class))
+    // {
+    // // *******************************************
+    // // ID_EFLAG = 1 << 15;
+    // // *******************************************
+    // // ABSTRACT_EFLAG = 1 << 8;
+    // // INTERFACE_EFLAG = 1 << 9;
+    // // *******************************************
+    // // SERIALIZABLE_EFLAG = 1 << 8;
+    // // *******************************************
+    // // CONTAINMENT_EFLAG = 1 << 15;
+    // // RESOLVE_PROXIES_EFLAG = 1 << 16;
+    // // *******************************************
+    // // CHANGEABLE_EFLAG = 1 << 10;
+    // // VOLATILE_EFLAG = 1 << 11;
+    // // TRANSIENT_EFLAG = 1 << 12;
+    // // UNSETTABLE_EFLAG = 1 << 13;
+    // // DERIVED_EFLAG = 1 << 14;
+    // // *******************************************
+    // // ORDERED_EFLAG = 1 << 8;
+    // // UNIQUE_EFLAG = 1 << 9;
+    // // *******************************************
+    //
+    // String flagName = GenUtil.getFeatureUpperName(featureName) + "_EFLAG";
+    // int flagsMask = getEFlagMask(targetClass, flagName);
+    //
+    // field = getField(targetClass, "eFlags");
+    // int value = (Integer)getFiedValue(target, field);
+    // return new Boolean((value & flagsMask) != 0);
+    // }
+    // }
+    //
+    // if (field == null)
+    // {
+    // throw new ImplementationError("Field not found: " + fieldName);
+    // }
+    //
+    // return getFiedValue(target, field);
   }
 
   private void setTargetValue(InternalEObject target, CDOFeatureImpl feature, Object value)
@@ -426,7 +460,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
         // UNIQUE_EFLAG = 1 << 9;
         // *******************************************
 
-        String flagName = GenUtil.getUpperFeatureName(featureName) + "_EFLAG";
+        String flagName = GenUtil.getFeatureUpperName(featureName) + "_EFLAG";
         int flagsMask = getEFlagMask(targetClass, flagName);
 
         field = getField(targetClass, "eFlags");
@@ -442,6 +476,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
         }
 
         setFiedValue(target, field, flags);
+        return;
       }
     }
 
@@ -519,6 +554,35 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
         if (superclass != null)
         {
           return getField(superclass, fieldName);
+        }
+
+        return null;
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new ImplementationError(ex);
+    }
+  }
+
+  private static Method getMethod(Class<?> c, String methodName, Class... parameterTypes)
+  {
+    try
+    {
+      try
+      {
+        return c.getDeclaredMethod(methodName, parameterTypes);
+      }
+      catch (NoSuchMethodException ex)
+      {
+        Class<?> superclass = c.getSuperclass();
+        if (superclass != null)
+        {
+          return getMethod(superclass, methodName, parameterTypes);
         }
 
         return null;

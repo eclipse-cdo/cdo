@@ -34,10 +34,16 @@ import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -45,6 +51,9 @@ import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
@@ -57,7 +66,6 @@ import java.util.Set;
  */
 public class CDOSessionImpl extends Lifecycle implements CDOSession
 {
-  @SuppressWarnings("unused")
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
   private static final long INITIAL_TEMPORARY_ID = -1L;
@@ -177,8 +185,9 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   public CDOTransactionImpl openTransaction(ResourceSet resourceSet)
   {
-    prepare(resourceSet);
-    return (CDOTransactionImpl)attach(resourceSet, new CDOTransactionImpl(++lastViewID, this));
+    CDOTransactionImpl transaction = new CDOTransactionImpl(++lastViewID, this);
+    attach(resourceSet, transaction);
+    return transaction;
   }
 
   public CDOTransactionImpl openTransaction()
@@ -188,8 +197,9 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   public CDOViewImpl openView(ResourceSet resourceSet)
   {
-    prepare(resourceSet);
-    return attach(resourceSet, new CDOViewImpl(++lastViewID, this));
+    CDOViewImpl view = new CDOViewImpl(++lastViewID, this);
+    attach(resourceSet, view);
+    return view;
   }
 
   public CDOViewImpl openView()
@@ -199,8 +209,9 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   public CDOAuditImpl openAudit(ResourceSet resourceSet, long timeStamp)
   {
-    prepare(resourceSet);
-    return (CDOAuditImpl)attach(resourceSet, new CDOAuditImpl(++lastViewID, this, timeStamp));
+    CDOAuditImpl audit = new CDOAuditImpl(++lastViewID, this, timeStamp);
+    attach(resourceSet, audit);
+    return audit;
   }
 
   public CDOAuditImpl openAudit(long timeStamp)
@@ -365,28 +376,30 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     return new ResourceSetImpl();
   }
 
-  private void prepare(ResourceSet resourceSet)
+  private void attach(ResourceSet resourceSet, CDOViewImpl view)
   {
-    CDOView view = CDOUtil.getView(resourceSet);
-    if (view != null)
+    if (CDOUtil.getView(resourceSet) != null)
     {
-      throw new IllegalStateException("CDO view already open: " + view);
+      throw new IllegalStateException("CDO view already open");
     }
 
     resourceSet.setPackageRegistry(new EPackageRegistryImpl(packageRegistry));
     CDOUtil.prepareResourceSet(resourceSet);
-  }
 
-  private CDOViewImpl attach(ResourceSet resourceSet, CDOViewImpl view)
-  {
+    Map<URI, Resource> resourceMap = null;
+    if (resourceSet instanceof ResourceSetImpl)
+    {
+      ResourceSetImpl rs = (ResourceSetImpl)resourceSet;
+      resourceMap = rs.getURIResourceMap();
+      rs.setURIResourceMap(new ProxyResolverURIResourceMap(view, resourceMap));
+    }
+
     synchronized (views)
     {
       resourceSet.eAdapters().add(view);
       views.put(resourceSet, view);
       fireEvent(new ViewsEvent(view, IContainerDelta.Kind.ADDED));
     }
-
-    return view;
   }
 
   /**
@@ -454,6 +467,257 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     public String toString()
     {
       return "CDOSessionInvalidationEvent" + dirtyOIDs;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ProxyResolverURIResourceMap implements Map<URI, Resource>
+  {
+    private Map<URI, Resource> delegate;
+
+    private Resource proxyResolverResource;
+
+    public ProxyResolverURIResourceMap(CDOViewImpl view, Map<URI, Resource> delegate)
+    {
+      if (delegate == null)
+      {
+        delegate = new HashMap(); // TODO Cleanup of this lookup cache?
+      }
+
+      this.delegate = delegate;
+      proxyResolverResource = new ProxyResolverResource(view);
+    }
+
+    public Resource get(Object key)
+    {
+      if (key instanceof URI)
+      {
+        URI uri = (URI)key;
+        String scheme = uri.scheme();
+        if ("cdo".equals(scheme))
+        {
+          String opaquePart = uri.opaquePart();
+          if ("proxy".equals(opaquePart))
+          {
+            return proxyResolverResource;
+          }
+        }
+      }
+
+      return delegate.get(key);
+    }
+
+    public void clear()
+    {
+      delegate.clear();
+    }
+
+    public boolean containsKey(Object key)
+    {
+      return delegate.containsKey(key);
+    }
+
+    public boolean containsValue(Object value)
+    {
+      return delegate.containsValue(value);
+    }
+
+    public Set<Entry<URI, Resource>> entrySet()
+    {
+      return delegate.entrySet();
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+      return delegate.equals(o);
+    }
+
+    @Override
+    public int hashCode()
+    {
+      return delegate.hashCode();
+    }
+
+    public boolean isEmpty()
+    {
+      return delegate.isEmpty();
+    }
+
+    public Set<URI> keySet()
+    {
+      return delegate.keySet();
+    }
+
+    public Resource put(URI key, Resource value)
+    {
+      return delegate.put(key, value);
+    }
+
+    public void putAll(Map<? extends URI, ? extends Resource> t)
+    {
+      delegate.putAll(t);
+    }
+
+    public Resource remove(Object key)
+    {
+      return delegate.remove(key);
+    }
+
+    public int size()
+    {
+      return delegate.size();
+    }
+
+    public Collection<Resource> values()
+    {
+      return delegate.values();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ProxyResolverResource implements Resource
+  {
+    private CDOViewImpl view;
+
+    public ProxyResolverResource(CDOViewImpl view)
+    {
+      this.view = view;
+    }
+
+    /*
+     * Called by {@link ResourceSetImpl#getResource(URI, boolean)}
+     */
+    public boolean isLoaded()
+    {
+      return true;
+    }
+
+    /*
+     * Called by {@link ResourceSetImpl#getEObject(URI, boolean)}
+     */
+    public EObject getEObject(String uriFragment)
+    {
+      CDOID id = CDOIDImpl.create(Long.parseLong(uriFragment));
+      InternalCDOObject object = view.lookupInstance(id);
+      if (object instanceof CDOAdapterImpl)
+      {
+        CDOAdapterImpl adapter = (CDOAdapterImpl)object;
+        System.out.println("RESOLVING");
+        adapter.cdoInternalResolveRevision();
+        return adapter.getTarget();
+      }
+
+      return null;
+    }
+
+    public TreeIterator<EObject> getAllContents()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public EList<EObject> getContents()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public EList<Diagnostic> getErrors()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public ResourceSet getResourceSet()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public URI getURI()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public String getURIFragment(EObject object)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public EList<Diagnostic> getWarnings()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isModified()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isTrackingModification()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void load(Map<?, ?> options) throws IOException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void load(InputStream inputStream, Map<?, ?> options) throws IOException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void save(Map<?, ?> options) throws IOException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void save(OutputStream outputStream, Map<?, ?> options) throws IOException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setModified(boolean isModified)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setTrackingModification(boolean isTrackingModification)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setURI(URI uri)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void unload()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public EList<Adapter> eAdapters()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean eDeliver()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void eNotify(Notification notification)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void eSetDeliver(boolean deliver)
+    {
+      throw new UnsupportedOperationException();
     }
   }
 }

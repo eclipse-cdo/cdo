@@ -607,7 +607,6 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
       if (object instanceof CDOAdapterImpl)
       {
         CDOAdapterImpl adapter = (CDOAdapterImpl)object;
-        System.out.println("RESOLVING"); // XXX
         adapter.cdoInternalResolveRevision();
         return adapter.getTarget();
       }

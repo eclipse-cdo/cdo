@@ -81,35 +81,15 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
   }
 
   @Override
-  public InternalEObject getTarget()
-  {
-    return (InternalEObject)super.getTarget();
-  }
-
-  @Override
   public boolean isAdapterForType(Object type)
   {
     return type == CDOAdapterImpl.class;
   }
 
   @Override
-  public void notifyChanged(Notification msg)
+  public InternalEObject getTarget()
   {
-    if (msg.getEventType() == Notification.RESOLVE)
-    {
-      return;
-    }
-
-    if (msg.getNotifier() instanceof InternalEObject)
-    {
-      InternalEObject notifier = (InternalEObject)msg.getNotifier();
-      if (!notifier.eIsProxy())
-      {
-        System.out.println(msg);
-        // TODO Implement method CDOAdapterImpl.notifyChanged()
-        throw new UnsupportedOperationException("Not yet implemented");
-      }
-    }
+    return (InternalEObject)super.getTarget();
   }
 
   @Override
@@ -135,6 +115,26 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     else
     {
       throw new IllegalArgumentException("Not an InternalEObject: " + oldTarget.getClass().getName());
+    }
+  }
+
+  @Override
+  public void notifyChanged(Notification msg)
+  {
+    if (msg.getEventType() == Notification.RESOLVE)
+    {
+      return;
+    }
+
+    if (msg.getNotifier() instanceof InternalEObject)
+    {
+      InternalEObject notifier = (InternalEObject)msg.getNotifier();
+      if (!notifier.eIsProxy())
+      {
+        System.out.println(msg);
+        // TODO Implement method CDOAdapterImpl.notifyChanged()
+        throw new UnsupportedOperationException("Not yet implemented");
+      }
     }
   }
 

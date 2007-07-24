@@ -13,7 +13,8 @@ package org.eclipse.emf.internal.cdo.util;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.util.ImplementationError;
+
+import org.eclipse.net4j.util.ImplementationError;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;

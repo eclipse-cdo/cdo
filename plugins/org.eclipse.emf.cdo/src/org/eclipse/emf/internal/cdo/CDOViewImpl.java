@@ -145,7 +145,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   {
     if (resourceID == null || resourceID == CDOID.NULL)
     {
-      throw new ImplementationError("resourceID == null || resourceID == CDOID.NULL");
+      throw new IllegalArgumentException("resourceID == null || resourceID == CDOID.NULL");
     }
 
     ResourceSet resourceSet = getResourceSet();
@@ -245,7 +245,9 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
     else
     {
-      object.cdoInternalSetResource(getResource(revision.getResourceID()));
+      CDOID resourceID = revision.getResourceID();
+      CDOResourceImpl resource = getResource(resourceID);
+      object.cdoInternalSetResource(resource);
     }
 
     object.cdoInternalSetView(this);

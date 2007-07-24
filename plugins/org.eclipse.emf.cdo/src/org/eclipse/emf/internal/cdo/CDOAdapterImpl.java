@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EAttributeImpl;
 import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.impl.EDataTypeImpl;
@@ -242,6 +243,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
   public void cdoInternalResolveRevision()
   {
     transferRevisionToTarget();
+    cdoInternalSetState(CDOState.CLEAN);
   }
 
   public InternalEObject cdoInternalInstance()
@@ -270,6 +272,33 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
   {
     InternalEObject target = getTarget();
     CDOViewImpl view = cdoView();
+
+    // Handle containment
+    EObject container = target.eContainer();
+    if (container != null)
+    {
+      if (container instanceof CDOResource)
+      {
+        revision.setResourceID(((CDOResource)container).cdoID());
+        revision.setContainerID(CDOID.NULL);
+        revision.setContainingFeature(0);
+      }
+      else
+      {
+        revision.setResourceID(CDOID.NULL);
+        CDOID containerID = view.provideCDOID(container);
+        if (containerID.isNull())
+        {
+          throw new ImplementationError("containerID.isNull()");
+        }
+
+        int containerFeatureID = target.eContainerFeatureID();// containER???
+        revision.setContainerID(containerID);
+        revision.setContainingFeature(containerFeatureID);
+      }
+    }
+
+    // Handle values
     CDOClassImpl cdoClass = revision.getCDOClass();
     CDOFeatureImpl[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
@@ -322,6 +351,23 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
   {
     InternalEObject target = getTarget();
     CDOViewImpl view = cdoView();
+
+    // Handle containment
+    CDOID containerID = revision.getContainerID();
+    if (containerID.isNull())
+    {
+      CDOID resourceID = revision.getResourceID();
+      Resource.Internal resource = (Resource.Internal)view.lookupInstance(resourceID);
+      ((BasicEObjectImpl)target).eSetResource(resource, null);
+    }
+    else
+    {
+      int containingFeatureID = revision.getContainingFeatureID();
+      InternalCDOObject container = view.lookupInstance(containerID);
+      ((BasicEObjectImpl)target).eBasicSetContainer(container, containingFeatureID, null);
+    }
+
+    // Handle values
     CDOClassImpl cdoClass = revision.getCDOClass();
     CDOFeatureImpl[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)

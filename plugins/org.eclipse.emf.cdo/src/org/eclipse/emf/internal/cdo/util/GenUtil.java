@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,9 +25,50 @@ public final class GenUtil
   {
   }
 
-  public static String getUpperFeatureName(String featureName)
+  /**
+   * @see GenFeatureImpl#getUpperName
+   */
+  public static String getFeatureUpperName(String featureName)
   {
     return format(featureName, '_', null, false, true).toUpperCase();
+  }
+
+  /**
+   * @see GenFeatureImpl#getGetAccessor
+   */
+  public static String getFeatureGetterName(String featureName, boolean isBooleanType)
+  {
+    String capName = StringUtil.cap(featureName);
+    // if (isMapEntryFeature())
+    // return "getTyped" + capName;
+    String result = isBooleanType ? "is" + capName : "get" + ("Class".equals(capName) ? "Class_" : capName);
+
+    // if (isListType() && !isFeatureMapType() && !isMapType() &&
+    // getGenModel().isArrayAccessors())
+    // {
+    // result += "List";
+    // }
+
+    // GenClass rootImplementsInterface =
+    // getGenModel().getRootImplementsInterfaceGenClass();
+    // GenClass context = getContext();
+    // if (rootImplementsInterface != null &&
+    // !rootImplementsInterface.isEObject())
+    // {
+    // for (GenOperation genOperation :
+    // rootImplementsInterface.getAllGenOperations())
+    // {
+    // if (genOperation.getName().equals(result) &&
+    // genOperation.getGenParameters().isEmpty() &&
+    // !genOperation.getType(context).equals(getType(context)))
+    // {
+    // result = result + "_";
+    // break;
+    // }
+    // }
+    // }
+
+    return result;
   }
 
   /**
@@ -57,7 +100,8 @@ public final class GenUtil
       }
     }
 
-    if (name.length() != 0) parsedName.addAll(parseName(name, '_'));
+    if (name.length() != 0)
+      parsedName.addAll(parseName(name, '_'));
 
     StringBuilder result = new StringBuilder();
 

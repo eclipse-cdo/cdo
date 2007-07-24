@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.ConnectorException;
@@ -393,6 +394,10 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
       resourceMap = rs.getURIResourceMap();
       rs.setURIResourceMap(new ProxyResolverURIResourceMap(view, resourceMap));
     }
+    else
+    {
+      throw new ImplementationError("Not a " + ResourceSetImpl.class.getName());
+    }
 
     synchronized (views)
     {
@@ -590,7 +595,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     }
 
     /*
-     * Called by {@link ResourceSetImpl#getResource(URI, boolean)}
+     * @ADDED Called by {@link ResourceSetImpl#getResource(URI, boolean)}
      */
     public boolean isLoaded()
     {
@@ -598,7 +603,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     }
 
     /*
-     * Called by {@link ResourceSetImpl#getEObject(URI, boolean)}
+     * @ADDED Called by {@link ResourceSetImpl#getEObject(URI, boolean)}
      */
     public EObject getEObject(String uriFragment)
     {

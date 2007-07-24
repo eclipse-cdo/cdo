@@ -291,11 +291,6 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     --nextTemporaryID;
     --nextTemporaryID;
 
-    // for (EReference reference : metaInstance.eClass().getEAllReferences())
-    // {
-    // metaInstance.eGet(reference);
-    // }
-
     for (EObject content : metaInstance.eContents())
     {
       registerMetaInstance((InternalEObject)content);

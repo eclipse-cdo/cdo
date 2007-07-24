@@ -27,13 +27,17 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -183,5 +187,77 @@ public final class CDOUtil
     eReference.setUpperBound(isMany ? -1 : 0);
     eClass.getEStructuralFeatures().add(eReference);
     return eReference;
+  }
+
+  /**
+   * Returns a self-contained copy of the eObject with all proxies resolved.
+   * 
+   * @param eObject
+   *          the object to copy.
+   * @return the copy.
+   * @see EcoreUtil#copy(EObject)
+   */
+  public static EObject copy(EObject eObject, CDOView view)
+  {
+    Copier copier = new CDOCopier(view);
+    EObject result = copier.copy(eObject);
+    copier.copyReferences();
+    return result;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class CDOCopier extends Copier
+  {
+    private static final long serialVersionUID = 1L;
+
+    private CDOView view;
+
+    public CDOCopier(CDOView view)
+    {
+      this.view = view;
+    }
+
+    @Override
+    protected void copyReference(EReference eReference, EObject eObject, EObject copyEObject)
+    {
+      resolve(eReference, eObject);
+      super.copyReference(eReference, eObject, copyEObject);
+    }
+
+    @Override
+    protected void copyContainment(EReference eReference, EObject eObject, EObject copyEObject)
+    {
+      resolve(eReference, eObject);
+      super.copyContainment(eReference, eObject, copyEObject);
+    }
+
+    protected void resolve(EReference eReference, EObject eObject)
+    {
+      if (eObject.eIsSet(eReference))
+      {
+        if (eReference.isMany())
+        {
+          @SuppressWarnings("unchecked")
+          List<EObject> list = (List<EObject>)eObject.eGet(eReference);
+          for (EObject element : list)
+          {
+            if (element.eIsProxy())
+            {
+              EcoreUtil.resolve(element, view.getResourceSet());
+            }
+          }
+        }
+        else
+        {
+          EObject childEObject = (EObject)eObject.eGet(eReference);
+          if (childEObject.eIsProxy())
+          {
+            EcoreUtil.resolve(childEObject, view.getResourceSet());
+          }
+        }
+      }
+    }
   }
 }

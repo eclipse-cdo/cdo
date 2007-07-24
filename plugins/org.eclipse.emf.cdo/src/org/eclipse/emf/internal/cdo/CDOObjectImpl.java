@@ -506,6 +506,12 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     @Override
+    protected boolean hasProxies()
+    {
+      return true;
+    }
+
+    @Override
     protected List<E> delegateList()
     {
       throw new UnsupportedOperationException();
@@ -714,6 +720,12 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     public CDOStoreFeatureMap(EStructuralFeature eStructuralFeature)
     {
       super(CDOObjectImpl.this, eStructuralFeature);
+    }
+
+    @Override
+    protected boolean hasProxies()
+    {
+      return true;
     }
 
     @Override

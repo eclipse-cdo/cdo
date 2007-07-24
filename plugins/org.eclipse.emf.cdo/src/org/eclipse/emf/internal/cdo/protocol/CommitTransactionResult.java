@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.protocol.CDOID;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,12 +22,11 @@ public final class CommitTransactionResult
 {
   private long timeStamp;
 
-  private Map<CDOID, CDOID> idMappings;
+  private Map<CDOID, CDOID> idMappings = new HashMap();
 
-  public CommitTransactionResult(long timeStamp, Map<CDOID, CDOID> idMappings)
+  public CommitTransactionResult(long timeStamp)
   {
     this.timeStamp = timeStamp;
-    this.idMappings = idMappings;
   }
 
   public long getTimeStamp()
@@ -34,8 +34,13 @@ public final class CommitTransactionResult
     return timeStamp;
   }
 
-  public Map<CDOID, CDOID> getIdMappings()
+  public Map<CDOID, CDOID> getIDMappings()
   {
     return idMappings;
+  }
+
+  void addIDMapping(CDOID oldID, CDOID newID)
+  {
+    idMappings.put(oldID, newID);
   }
 }

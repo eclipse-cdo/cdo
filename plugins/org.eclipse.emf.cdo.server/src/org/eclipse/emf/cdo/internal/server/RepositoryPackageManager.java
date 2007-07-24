@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
+import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
 /**
@@ -29,6 +30,19 @@ public class RepositoryPackageManager extends CDOPackageManagerImpl
   public Repository getRepository()
   {
     return repository;
+  }
+
+  @Override
+  public void addPackage(CDOPackageImpl cdoPackage)
+  {
+    CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
+    if (metaIDRange != null && metaIDRange.isTemporary())
+    {
+      CDOIDRange newRange = repository.getMetaIDRange(metaIDRange.getCount());
+      cdoPackage.setMetaIDRange(newRange);
+    }
+
+    super.addPackage(cdoPackage);
   }
 
   @Override

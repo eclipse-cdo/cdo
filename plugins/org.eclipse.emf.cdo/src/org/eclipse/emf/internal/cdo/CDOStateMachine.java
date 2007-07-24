@@ -258,7 +258,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CommitTransactionResult data)
     {
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
-      Map<CDOID, CDOID> idMappings = data.getIdMappings();
+      Map<CDOID, CDOID> idMappings = data.getIDMappings();
 
       // Adjust object
       CDOID id = object.cdoID();

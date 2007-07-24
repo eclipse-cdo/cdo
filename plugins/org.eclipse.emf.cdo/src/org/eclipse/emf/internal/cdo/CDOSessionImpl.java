@@ -276,7 +276,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
   }
 
   /**
-   * TODO synchronize on nextTemporaryID
+   * TODO synchronize
    */
   private void registerMetaInstance(InternalEObject metaInstance)
   {
@@ -295,6 +295,18 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     {
       registerMetaInstance((InternalEObject)content);
     }
+  }
+
+  public void remapMetaInstance(CDOID oldID, CDOID newID)
+  {
+    InternalEObject metaInstance = idToMetaInstanceMap.remove(oldID);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Remapping meta instance: {0} --> {1} <-> {2}", oldID, newID, metaInstance);
+    }
+
+    idToMetaInstanceMap.put(newID, metaInstance);
+    metaInstanceToIDMap.put(metaInstance, newID);
   }
 
   public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs, CDOViewImpl excludedView)

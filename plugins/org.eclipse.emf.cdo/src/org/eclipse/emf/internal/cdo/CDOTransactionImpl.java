@@ -145,7 +145,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
         dirty = false;
         nextTemporaryID = INITIAL_TEMPORARY_ID;
 
-        Map<CDOID, CDOID> idMappings = result.getIdMappings();
+        Map<CDOID, CDOID> idMappings = result.getIDMappings();
         fireEvent(new CommittedEvent(idMappings));
       }
       catch (RuntimeException ex)

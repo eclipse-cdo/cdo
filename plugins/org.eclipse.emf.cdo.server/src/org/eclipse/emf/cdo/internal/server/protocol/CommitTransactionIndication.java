@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
@@ -19,7 +20,6 @@ import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -40,7 +40,7 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CommitTransactionIndication.class);
 
-  private CDOPackage[] newPackages;
+  private CDOPackageImpl[] newPackages;
 
   private CDORevisionImpl[] newResources;
 
@@ -69,13 +69,13 @@ public class CommitTransactionIndication extends CDOServerIndication
     // throw new IOException(ex.getMessage());
     // }
 
-    newPackages = readNewPackages(in);
+    addNewPackages(in);
     newResources = readNewResources(in);
     newObjects = readNewObjects(in);
     dirtyObjects = readDirtyObjects(in);
   }
 
-  private CDOPackage[] readNewPackages(ExtendedDataInputStream in) throws IOException
+  private void addNewPackages(ExtendedDataInputStream in) throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL.isEnabled())
@@ -83,15 +83,16 @@ public class CommitTransactionIndication extends CDOServerIndication
       PROTOCOL.format("Reading {0} new packages", size);
     }
 
-    RepositoryPackageManager packageManager = getPackageManager();
-    CDOPackageImpl[] packages = new CDOPackageImpl[size];
-    for (int i = 0; i < size; i++)
+    if (size != 0)
     {
-      packages[i] = new CDOPackageImpl(packageManager, in);
-      packageManager.addPackage(packages[i]);
+      RepositoryPackageManager packageManager = getPackageManager();
+      newPackages = new CDOPackageImpl[size];
+      for (int i = 0; i < size; i++)
+      {
+        newPackages[i] = new CDOPackageImpl(packageManager, in);
+        packageManager.addPackage(newPackages[i]);
+      }
     }
-
-    return packages;
   }
 
   private CDORevisionImpl[] readNewResources(ExtendedDataInputStream in) throws IOException
@@ -155,6 +156,14 @@ public class CommitTransactionIndication extends CDOServerIndication
         addRevisions(dirtyObjects);
       }
     });
+
+    if (newPackages != null)
+    {
+      for (CDOPackageImpl newPackage : newPackages)
+      {
+        CDOIDRangeImpl.write(out, newPackage.getMetaIDRange());
+      }
+    }
 
     writeIDMappings(out);
     if (dirtyObjects.length > 0)

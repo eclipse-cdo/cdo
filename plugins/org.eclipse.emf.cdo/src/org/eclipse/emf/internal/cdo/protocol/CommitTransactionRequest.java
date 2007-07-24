@@ -12,9 +12,11 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.IChannel;
@@ -28,10 +30,8 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -120,16 +120,31 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
   protected CommitTransactionResult confirming(ExtendedDataInputStream in) throws IOException
   {
     long timeStamp = in.readLong();
+    CommitTransactionResult result = new CommitTransactionResult(timeStamp);
 
-    Map<CDOID, CDOID> idMappings = new HashMap();
+    List<CDOPackageImpl> newPackages = transaction.getNewPackages();
+    for (CDOPackageImpl newPackage : newPackages)
+    {
+      CDOIDRange oldRange = newPackage.getMetaIDRange();
+      CDOIDRange newRange = CDOIDRangeImpl.read(in);
+      newPackage.setMetaIDRange(newRange);
+      for (long i = 0; i < oldRange.getCount(); i++)
+      {
+        CDOID oldID = oldRange.get(i);
+        CDOID newID = newRange.get(i);
+        transaction.getSession().remapMetaInstance(oldID, newID);
+        result.addIDMapping(oldID, newID);
+      }
+    }
+
     int size = in.readInt();
     for (int i = 0; i < size; i++)
     {
       CDOID oldID = CDOIDImpl.read(in);
       CDOID newID = CDOIDImpl.read(in);
-      idMappings.put(oldID, newID);
+      result.addIDMapping(oldID, newID);
     }
 
-    return new CommitTransactionResult(timeStamp, idMappings);
+    return result;
   }
 }

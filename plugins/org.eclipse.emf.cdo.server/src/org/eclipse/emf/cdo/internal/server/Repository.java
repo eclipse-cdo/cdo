@@ -11,7 +11,9 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 
@@ -25,6 +27,8 @@ import java.util.UUID;
 public class Repository extends Lifecycle implements IRepository
 {
   private static final long INITIAL_OID_VALUE = 2;
+
+  private static final long INITIAL_META_ID_VALUE = 1;
 
   private String name;
 
@@ -41,6 +45,8 @@ public class Repository extends Lifecycle implements IRepository
   private RevisionManager revisionManager;
 
   private long nextOIDValue = INITIAL_OID_VALUE;
+
+  private long nextMetaIDValue = INITIAL_META_ID_VALUE;
 
   public Repository(String name, IStore store)
   {
@@ -86,6 +92,14 @@ public class Repository extends Lifecycle implements IRepository
   public RevisionManager getRevisionManager()
   {
     return revisionManager;
+  }
+
+  public CDOIDRange getMetaIDRange(long count)
+  {
+    long lowerBound = nextMetaIDValue;
+    nextMetaIDValue += count;
+    nextMetaIDValue += count;
+    return CDOIDRangeImpl.create(lowerBound, nextMetaIDValue - 2);
   }
 
   public CDOID getNextCDOID()

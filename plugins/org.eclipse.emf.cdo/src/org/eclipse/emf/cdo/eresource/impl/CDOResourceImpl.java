@@ -340,8 +340,10 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
       CDOTransaction transaction = (CDOTransaction)view;
       transaction.commit();
     }
-
-    throw new IOException("CDO view is read only: " + view);
+    else
+    {
+      throw new IOException("CDO view is read only: " + view);
+    }
   }
 
   /**

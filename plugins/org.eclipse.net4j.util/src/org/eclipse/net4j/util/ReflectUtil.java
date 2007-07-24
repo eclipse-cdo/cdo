@@ -56,6 +56,64 @@ public final class ReflectUtil
   {
   }
 
+  public static Field getField(Class<?> c, String fieldName)
+  {
+    try
+    {
+      try
+      {
+        return c.getDeclaredField(fieldName);
+      }
+      catch (NoSuchFieldException ex)
+      {
+        Class<?> superclass = c.getSuperclass();
+        if (superclass != null)
+        {
+          return getField(superclass, fieldName);
+        }
+
+        return null;
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new ImplementationError(ex);
+    }
+  }
+
+  public static Method getMethod(Class<?> c, String methodName, Class... parameterTypes)
+  {
+    try
+    {
+      try
+      {
+        return c.getDeclaredMethod(methodName, parameterTypes);
+      }
+      catch (NoSuchMethodException ex)
+      {
+        Class<?> superclass = c.getSuperclass();
+        if (superclass != null)
+        {
+          return getMethod(superclass, methodName, parameterTypes);
+        }
+
+        return null;
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new ImplementationError(ex);
+    }
+  }
+
   public static void printStackTrace(PrintStream out, StackTraceElement[] stackTrace)
   {
     for (int i = 2; i < stackTrace.length; i++)
@@ -364,7 +422,7 @@ public final class ReflectUtil
     // Recurse
     toString(segment.getSuperclass(), object, prefix, builder);
 
-    String segmentPrefix = segment == object.getClass() ? "" : getSimpleName(segment) + NAMESPACE_SEPARATOR; //$NON-NLS-1$ //$NON-NLS-2$
+    String segmentPrefix = segment == object.getClass() ? "" : getSimpleName(segment) + NAMESPACE_SEPARATOR; //$NON-NLS-1$ 
     Field[] fields = segment.getDeclaredFields();
     for (Field field : fields)
     {

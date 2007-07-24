@@ -13,7 +13,8 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
-import org.eclipse.emf.cdo.protocol.util.ImplementationError;
+
+import org.eclipse.net4j.util.ImplementationError;
 
 /**
  * @author Eike Stepper

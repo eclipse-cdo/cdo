@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
+import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 

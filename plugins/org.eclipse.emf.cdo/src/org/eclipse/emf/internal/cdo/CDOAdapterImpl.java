@@ -21,9 +21,10 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.protocol.util.ImplementationError;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ReflectUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -54,7 +55,6 @@ import org.eclipse.emf.internal.cdo.util.GenUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 
@@ -489,7 +489,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     Class<?> targetClass = target.getClass();
     String featureName = feature.getName();
     String fieldName = featureName;// XXX safeName()
-    Field field = getField(targetClass, fieldName);
+    Field field = ReflectUtil.getField(targetClass, fieldName);
     if (field == null && feature.getType() == CDOType.BOOLEAN)
     {
       if (targetClass.isAssignableFrom(EAttributeImpl.class) || targetClass.isAssignableFrom(EClassImpl.class)
@@ -521,7 +521,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
         String flagName = GenUtil.getFeatureUpperName(featureName) + "_EFLAG";
         int flagsMask = getEFlagMask(targetClass, flagName);
 
-        field = getField(targetClass, "eFlags");
+        field = ReflectUtil.getField(targetClass, "eFlags");
         int flags = (Integer)getFiedValue(target, field);
         boolean on = (Boolean)value;
         if (on)
@@ -587,7 +587,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
 
   private static int getEFlagMask(Class<?> targetClass, String flagName)
   {
-    Field field = getField(targetClass, flagName);
+    Field field = ReflectUtil.getField(targetClass, flagName);
     if (!field.isAccessible())
     {
       field.setAccessible(true);
@@ -598,64 +598,6 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
       return (Integer)field.get(null);
     }
     catch (IllegalAccessException ex)
-    {
-      throw new ImplementationError(ex);
-    }
-  }
-
-  private static Field getField(Class<?> c, String fieldName)
-  {
-    try
-    {
-      try
-      {
-        return c.getDeclaredField(fieldName);
-      }
-      catch (NoSuchFieldException ex)
-      {
-        Class<?> superclass = c.getSuperclass();
-        if (superclass != null)
-        {
-          return getField(superclass, fieldName);
-        }
-
-        return null;
-      }
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new ImplementationError(ex);
-    }
-  }
-
-  private static Method getMethod(Class<?> c, String methodName, Class... parameterTypes)
-  {
-    try
-    {
-      try
-      {
-        return c.getDeclaredMethod(methodName, parameterTypes);
-      }
-      catch (NoSuchMethodException ex)
-      {
-        Class<?> superclass = c.getSuperclass();
-        if (superclass != null)
-        {
-          return getMethod(superclass, methodName, parameterTypes);
-        }
-
-        return null;
-      }
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
     {
       throw new ImplementationError(ex);
     }

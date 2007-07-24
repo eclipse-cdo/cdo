@@ -190,6 +190,12 @@ public class HistoryText extends Composite
     combo.setTextLimit(limit);
   }
 
+  @Override
+  public boolean setFocus()
+  {
+    return combo.setFocus();
+  }
+
   public boolean isDropped()
   {
     if (droppedMethod != null)

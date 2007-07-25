@@ -81,7 +81,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
       }
 
       CDOPackageImpl cdoPackage = ModelUtil.getCDOPackage(ePackage, session.getPackageManager());
-      cdoPackage.setPersistent(false);
+      cdoPackage.setPersistent(!cdoPackage.getMetaIDRange().isTemporary());
     }
 
     return super.put(key, value);

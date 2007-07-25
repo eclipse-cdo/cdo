@@ -222,7 +222,7 @@ public class CDOItemProvider extends ContainerItemProvider
   {
     IConnector connector = session.getChannel().getConnector();
     String repositoryName = session.getRepositoryName();
-    return connector.getURL() + "/" + repositoryName + " [" + session.getSessionID() + "]";
+    return "Session " + connector.getURL() + "/" + repositoryName + " [" + session.getSessionID() + "]";
   }
 
   public static String getViewLabel(CDOView view)

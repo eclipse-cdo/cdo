@@ -157,7 +157,7 @@ public class PackageManagerDialog extends TitleAreaDialog
   {
     if (ePackage instanceof EPackage.Descriptor)
     {
-      return "PROXY";
+      return "?";
     }
 
     if (ePackage.getClass() == EPackageImpl.class)

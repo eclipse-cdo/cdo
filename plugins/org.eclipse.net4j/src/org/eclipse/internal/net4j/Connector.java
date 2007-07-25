@@ -27,6 +27,7 @@ import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.factory.FactoryKey;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerDelta;
@@ -294,6 +295,8 @@ public abstract class Connector extends Lifecycle implements IConnector
   public IChannel[] getChannels()
   {
     List<IChannel> result = new ArrayList(channels.size());
+
+    TRACE_SYNCHRONIZE();
     synchronized (channels)
     {
       for (Channel channel : channels)
@@ -396,6 +399,7 @@ public abstract class Connector extends Lifecycle implements IConnector
   {
     try
     {
+      TRACE_SYNCHRONIZE();
       synchronized (channels)
       {
         return channels.get(channelIndex);
@@ -415,6 +419,7 @@ public abstract class Connector extends Lifecycle implements IConnector
   protected List<Queue<IBuffer>> getChannelBufferQueues()
   {
     final List<Queue<IBuffer>> result = new ArrayList(channels.size());
+    TRACE_SYNCHRONIZE();
     synchronized (channels)
     {
       for (final Channel channel : channels)
@@ -432,6 +437,7 @@ public abstract class Connector extends Lifecycle implements IConnector
 
   protected short findFreeChannelIndex()
   {
+    TRACE_SYNCHRONIZE();
     synchronized (channels)
     {
       int size = channels.size();
@@ -449,6 +455,7 @@ public abstract class Connector extends Lifecycle implements IConnector
 
   protected void addChannel(Channel channel)
   {
+    TRACE_SYNCHRONIZE();
     synchronized (channels)
     {
       short channelIndex = channel.getChannelIndex();
@@ -463,7 +470,7 @@ public abstract class Connector extends Lifecycle implements IConnector
 
   protected boolean removeChannel(Channel channel, boolean actively)
   {
-    // TODO Can cause deadlock on shutdown
+    TRACE_SYNCHRONIZE();
     synchronized (channels)
     {
       int channelIndex = channel.getChannelIndex();
@@ -553,6 +560,7 @@ public abstract class Connector extends Lifecycle implements IConnector
   protected void doDeactivate() throws Exception
   {
     setState(ConnectorState.DISCONNECTED);
+    TRACE_SYNCHRONIZE();
     synchronized (channels)
     {
       for (short i = 0; i < channels.size(); i++)
@@ -568,6 +576,13 @@ public abstract class Connector extends Lifecycle implements IConnector
     }
 
     super.doDeactivate();
+  }
+
+  private static void TRACE_SYNCHRONIZE()
+  {
+    Thread currentThread = Thread.currentThread();
+    System.out.println("SYNCHRONIZE " + currentThread); // XXX
+    ReflectUtil.printStackTrace(System.out, currentThread.getStackTrace());
   }
 
   protected abstract void registerChannelWithPeer(short channelIndex, IProtocol protocol) throws ConnectorException;

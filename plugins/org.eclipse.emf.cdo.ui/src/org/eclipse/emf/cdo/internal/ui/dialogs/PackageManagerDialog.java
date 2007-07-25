@@ -85,7 +85,7 @@ public class PackageManagerDialog extends TitleAreaDialog
   protected Control createDialogArea(Composite parent)
   {
     Composite composite = (Composite)super.createDialogArea(parent);
-    setTitle("Packages of " + CDOItemProvider.getSessionLabel(session));
+    setTitle(CDOItemProvider.getSessionLabel(session));
     setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PACKAGE_MANAGER));
 
     viewer = new TableViewer(composite, SWT.NONE);
@@ -157,17 +157,17 @@ public class PackageManagerDialog extends TitleAreaDialog
   {
     if (ePackage instanceof EPackage.Descriptor)
     {
-      return "proxy";
+      return "PROXY";
     }
 
     if (ePackage.getClass() == EPackageImpl.class)
     {
-      return "dynamic";
+      return "DYNAMIC";
     }
 
     if (ePackage == EcorePackage.eINSTANCE)
     {
-      return "Ecore";
+      return "ECORE";
     }
 
     return persistentPackageURIs.contains(((EPackage)ePackage).getNsURI()) ? "CDO" : "EMF";
@@ -182,7 +182,7 @@ public class PackageManagerDialog extends TitleAreaDialog
 
     if (!cdoPackage.isPersistent())
     {
-      return "TRANSIENT";
+      return EMPTY;
     }
 
     return cdoPackage.isDynamic() ? "DYNAMIC" : "STATIC";

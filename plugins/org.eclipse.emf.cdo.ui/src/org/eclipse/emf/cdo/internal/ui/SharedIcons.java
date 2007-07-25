@@ -31,6 +31,8 @@ public class SharedIcons
 
   private static final String VIEW = "view16/";
 
+  private static final String WIZBAN = "wizban/";
+
   public static final String ETOOL_OPEN_SESSION = ETOOL + "open_session";
 
   public static final String ETOOL_OPEN_EDITOR = ETOOL + "open_editor";
@@ -50,6 +52,8 @@ public class SharedIcons
   public static final String OBJ_ECLASS = OBJ + "EClass";
 
   public static final String VIEW_SESSIONS = VIEW + "cdo_sessions";
+
+  public static final String WIZBAN_PACKAGE_MANAGER = WIZBAN + "PackageManager";
 
   public static Image getImage(String key)
   {

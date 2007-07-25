@@ -29,9 +29,9 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class RegisterCDOPackageAction extends RegisterPackageAction
 {
-  public static final IHistory<String> HISTORY = new PreferenceHistory(OM.PREF_HISTORY_REGISTER_CDO_PACKAGE);
+  public static final IHistory<String> HISTORY = new PreferenceHistory(OM.PREF_HISTORY_REGISTER_PACKAGE);
 
-  private static final String TITLE = "Register CDO Package";
+  private static final String TITLE = "Register Package";
 
   private EPackage.Registry registry = EPackage.Registry.INSTANCE;
 

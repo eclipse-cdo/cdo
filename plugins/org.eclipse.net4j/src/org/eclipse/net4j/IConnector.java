@@ -139,6 +139,13 @@ public interface IConnector extends IContainer<IChannel>
 
   public ConnectorException disconnect();
 
+  /**
+   * Returns an array of currently open channels. Note that the resulting array
+   * does not contain <code>null</code> values. Generally the
+   * <code>channelIndex</code> of a channel can not be used as an index into
+   * this array.
+   * <p>
+   */
   public IChannel[] getChannels();
 
   /**

@@ -45,15 +45,11 @@ public class CDOEventHandler
     {
       if (event instanceof CDOSessionInvalidationEvent)
       {
-        Set<CDOID> dirtyOIDs = ((CDOSessionInvalidationEvent)event).getDirtyOIDs();
-        new ItemsProcessor()
+        CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
+        if (e.getView() != view)
         {
-          @Override
-          protected void processCDOObject(TreeViewer viewer, CDOObject cdoObject)
-          {
-            viewer.refresh(cdoObject, true);
-          }
-        }.processCDOObjects(treeViewer, dirtyOIDs);
+          sessionInvalidated(e.getDirtyOIDs());
+        }
       }
       else if (event instanceof CDOSessionViewsEvent)
       {
@@ -82,7 +78,7 @@ public class CDOEventHandler
       {
         Map<CDOID, CDOID> idMappings = ((CDOTransactionCommittedEvent)event).getIDMappings();
         HashSet newOIDs = new HashSet(idMappings.values());
-        new ItemsProcessor()
+        new ItemsProcessor(view)
         {
           @Override
           protected void processCDOObject(TreeViewer viewer, CDOObject cdoObject)
@@ -129,6 +125,23 @@ public class CDOEventHandler
   public void setViewer(TreeViewer viewer)
   {
     this.treeViewer = viewer;
+  }
+
+  protected void sessionInvalidated(Set<CDOID> dirtyOIDs)
+  {
+    new ItemsProcessor(view)
+    {
+      @Override
+      protected void processCDOObject(TreeViewer viewer, CDOObject cdoObject)
+      {
+        objectInvalidated(cdoObject);
+        viewer.refresh(cdoObject, true);
+      }
+    }.processCDOObjects(treeViewer, dirtyOIDs);
+  }
+
+  protected void objectInvalidated(CDOObject cdoObject)
+  {
   }
 
   protected void viewDirtyStateChanged()

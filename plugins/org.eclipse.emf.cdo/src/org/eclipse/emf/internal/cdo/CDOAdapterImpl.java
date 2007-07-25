@@ -287,6 +287,10 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
   {
     InternalEObject target = getTarget();
     CDOViewImpl view = cdoView();
+    if (view == null)
+    {
+      throw new ImplementationError("view == null");
+    }
 
     // Handle containment
     EObject container = target.eContainer();
@@ -368,7 +372,6 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     CDOViewImpl view = cdoView();
     if (view == null)
     {
-      cdoView();
       throw new ImplementationError("view == null");
     }
 

@@ -56,6 +56,9 @@ import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
+import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
+import org.eclipse.emf.internal.cdo.CDOStateMachine;
+import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -1217,6 +1220,15 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     updateProblemIndication();
     eventHandler = new CDOEventHandler(view, selectionViewer)
     {
+      @Override
+      protected void objectInvalidated(CDOObject cdoObject)
+      {
+        if (cdoObject instanceof CDOAdapterImpl)
+        {
+          CDOStateMachine.INSTANCE.read((InternalCDOObject)cdoObject);
+        }
+      }
+
       @Override
       protected void viewClosed()
       {

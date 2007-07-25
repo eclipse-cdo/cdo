@@ -11,7 +11,10 @@
 package org.eclipse.emf.cdo.internal.ui;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.CDOID;
+
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.TreeItem;
@@ -23,8 +26,16 @@ import java.util.Set;
  */
 public abstract class ItemsProcessor
 {
-  public ItemsProcessor()
+  private CDOView view;
+
+  public ItemsProcessor(CDOView view)
   {
+    this.view = view;
+  }
+
+  public CDOView getView()
+  {
+    return view;
   }
 
   public void processCDOObjects(TreeViewer viewer)
@@ -58,6 +69,21 @@ public abstract class ItemsProcessor
     }
   }
 
+  protected CDOObject getCDOObject(Object object)
+  {
+    if (object instanceof CDOObject)
+    {
+      return (CDOObject)object;
+    }
+
+    if (view != null)
+    {
+      return FSMUtil.adapt(object, view);
+    }
+
+    return null;
+  }
+
   protected abstract void processCDOObject(TreeViewer viewer, CDOObject cdoObject);
 
   private void processItems(TreeViewer viewer, Set<CDOID> ids, TreeItem[] items)
@@ -75,9 +101,9 @@ public abstract class ItemsProcessor
 
   private void processCDOObject(TreeViewer viewer, Set<CDOID> ids, Object object)
   {
-    if (object instanceof CDOObject)
+    CDOObject cdoObject = getCDOObject(object);
+    if (cdoObject != null)
     {
-      CDOObject cdoObject = (CDOObject)object;
       if (ids == null)
       {
         processCDOObject(viewer, cdoObject);

@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.CDOID;
 
 import org.eclipse.net4j.util.ImplementationError;
@@ -45,7 +46,7 @@ public final class FSMUtil
     return state == CDOState.TRANSIENT || state == CDOState.PREPARED_ATTACH;
   }
 
-  public static InternalCDOObject adapt(Object object, CDOViewImpl view)
+  public static InternalCDOObject adapt(Object object, CDOView view)
   {
     if (object instanceof InternalCDOObject)
     {
@@ -60,10 +61,10 @@ public final class FSMUtil
         EcoreUtil.resolve(eObject, view.getResourceSet());
       }
 
-      CDOID id = view.getSession().lookupMetaInstanceID(eObject);
+      CDOID id = ((CDOViewImpl)view).getSession().lookupMetaInstanceID(eObject);
       if (id != null)
       {
-        return new CDOMetaImpl(view, eObject, id);
+        return new CDOMetaImpl((CDOViewImpl)view, eObject, id);
       }
     }
 

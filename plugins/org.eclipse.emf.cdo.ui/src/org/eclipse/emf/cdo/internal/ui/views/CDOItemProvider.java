@@ -175,34 +175,17 @@ public class CDOItemProvider extends ContainerItemProvider
   {
     if (obj instanceof CDOSession)
     {
-      CDOSession session = (CDOSession)obj;
-      IConnector connector = session.getChannel().getConnector();
-      String repositoryName = session.getRepositoryName();
-      return connector.getURL() + "/" + repositoryName + " [" + session.getSessionID() + "]";
-    }
-
-    if (obj instanceof CDOTransaction)
-    {
-      CDOTransaction transaction = (CDOTransaction)obj;
-      return MessageFormat.format("{0}Transaction [{1}]", transaction.isDirty() ? "*" : "", transaction.getID());
-    }
-
-    if (obj instanceof CDOAudit)
-    {
-      CDOAudit audit = (CDOAudit)obj;
-      return MessageFormat.format("Audit [{0,date} {0,time}]", audit.getTimeStamp());
+      return getSessionLabel((CDOSession)obj);
     }
 
     if (obj instanceof CDOView)
     {
-      CDOView view = (CDOView)obj;
-      return MessageFormat.format("View [{0}]", view.getID());
+      return getViewLabel((CDOView)obj);
     }
 
     if (obj instanceof CDOViewHistory.Entry)
     {
-      CDOViewHistory.Entry entry = (CDOViewHistory.Entry)obj;
-      return (entry.getView().isDirty() ? "*" : "") + entry.getResourcePath();
+      return getHistroyEntryLabel((CDOViewHistory.Entry)obj);
     }
 
     return super.getText(obj);
@@ -233,6 +216,35 @@ public class CDOItemProvider extends ContainerItemProvider
     }
 
     return super.getImage(obj);
+  }
+
+  public static String getSessionLabel(CDOSession session)
+  {
+    IConnector connector = session.getChannel().getConnector();
+    String repositoryName = session.getRepositoryName();
+    return connector.getURL() + "/" + repositoryName + " [" + session.getSessionID() + "]";
+  }
+
+  public static String getViewLabel(CDOView view)
+  {
+    if (view instanceof CDOTransaction)
+    {
+      CDOTransaction transaction = (CDOTransaction)view;
+      return MessageFormat.format("{0}Transaction [{1}]", transaction.isDirty() ? "*" : "", transaction.getID());
+    }
+
+    if (view instanceof CDOAudit)
+    {
+      CDOAudit audit = (CDOAudit)view;
+      return MessageFormat.format("Audit [{0,date} {0,time}]", audit.getTimeStamp());
+    }
+
+    return MessageFormat.format("View [{0}]", view.getID());
+  }
+
+  public static String getHistroyEntryLabel(CDOViewHistory.Entry entry)
+  {
+    return (entry.getView().isDirty() ? "*" : "") + entry.getResourcePath();
   }
 
   @Override

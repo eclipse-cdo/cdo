@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.dialogs;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterCDOPackageAction;
+import org.eclipse.emf.cdo.internal.ui.views.CDOItemProvider;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -84,7 +85,7 @@ public class PackageManagerDialog extends TitleAreaDialog
   protected Control createDialogArea(Composite parent)
   {
     Composite composite = (Composite)super.createDialogArea(parent);
-    setTitle(TITLE);
+    setTitle("Packages of " + CDOItemProvider.getSessionLabel(session));
     setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PACKAGE_MANAGER));
 
     viewer = new TableViewer(composite, SWT.NONE);
@@ -128,9 +129,21 @@ public class PackageManagerDialog extends TitleAreaDialog
     new RegisterCDOPackageAction(page, session)
     {
       @Override
-      protected void postRegistration(EPackage package1)
+      protected void postRegistration(EPackage ePackage)
       {
-        viewer.refresh();
+        page.getWorkbenchWindow().getShell().getDisplay().syncExec(new Runnable()
+        {
+          public void run()
+          {
+            try
+            {
+              viewer.refresh();
+            }
+            catch (RuntimeException ignore)
+            {
+            }
+          }
+        });
       }
     }.run();
   }
@@ -234,15 +247,12 @@ public class PackageManagerDialog extends TitleAreaDialog
 
     private CDOSession session;
 
-    private Content[] elements;
-
     public ContentProvider()
     {
     }
 
     public void dispose()
     {
-      elements = null;
     }
 
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
@@ -252,28 +262,17 @@ public class PackageManagerDialog extends TitleAreaDialog
         if (!ObjectUtil.equals(session, newInput))
         {
           session = (CDOSession)newInput;
-          elements = null;
         }
       }
     }
 
     public Object[] getElements(Object inputElement)
     {
-      if (inputElement == session)
+      if (inputElement != session)
       {
-        if (elements == null)
-        {
-          elements = createContent();
-        }
-
-        return elements;
+        return NO_ELEMENTS;
       }
 
-      return NO_ELEMENTS;
-    }
-
-    private Content[] createContent()
-    {
       Map<String, Content> map = new HashMap();
       for (Entry<String, Object> entry : session.getPackageRegistry().entrySet())
       {

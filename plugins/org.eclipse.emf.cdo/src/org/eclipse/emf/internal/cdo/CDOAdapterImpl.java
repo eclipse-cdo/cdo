@@ -379,7 +379,6 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
       CDOID resourceID = revision.getResourceID();
       Resource.Internal resource = (Resource.Internal)view.lookupInstance(resourceID);
       transferResourceToTarget((BasicEObjectImpl)target, resource);
-      // ((BasicEObjectImpl)target).eSetResource(resource, null);
     }
     else
     {

@@ -131,12 +131,10 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     case Notification.SET:
     case Notification.UNSET:
       InternalEObject notifier = (InternalEObject)msg.getNotifier();
-      if (notifier != getTarget() || notifier.eIsProxy())
+      if (notifier == getTarget() && !notifier.eIsProxy())
       {
-        return;
+        CDOStateMachine.INSTANCE.write(this);
       }
-
-      CDOStateMachine.INSTANCE.write(this);
     }
   }
 

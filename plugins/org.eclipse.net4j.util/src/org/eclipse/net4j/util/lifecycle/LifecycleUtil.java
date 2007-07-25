@@ -12,7 +12,9 @@ package org.eclipse.net4j.util.lifecycle;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.WrappedException;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
@@ -20,6 +22,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Method;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
@@ -91,6 +95,49 @@ public final class LifecycleUtil
     catch (Exception ex)
     {
       return ex;
+    }
+  }
+
+  public static boolean waitForActive(Object object, long millis)
+  {
+    try
+    {
+      if (object instanceof ILifecycle)
+      {
+        Lifecycle lifecycle = (Lifecycle)object;
+        if (lifecycle.isActive())
+        {
+          return true;
+        }
+
+        final CountDownLatch latch = new CountDownLatch(1);
+        LifecycleEventAdapter adapter = new LifecycleEventAdapter()
+        {
+          @Override
+          protected void onActivated(ILifecycle lifecycle)
+          {
+            latch.countDown();
+          }
+        };
+
+        try
+        {
+          lifecycle.addListener(adapter);
+          latch.await(millis, TimeUnit.MILLISECONDS);
+        }
+        finally
+        {
+          lifecycle.removeListener(adapter);
+        }
+
+        return lifecycle.isActive();
+      }
+
+      return true;
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
     }
   }
 

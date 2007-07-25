@@ -411,6 +411,12 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
   }
 
   @Override
+  protected String getThreadName()
+  {
+    return "jms-session";
+  }
+
+  @Override
   protected void work(WorkContext context, MessageConsumerImpl consumer)
   {
     consumer.dispatchMessage();

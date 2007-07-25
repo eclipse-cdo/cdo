@@ -36,7 +36,6 @@ public abstract class QueueWorker<E> extends Worker
   public void setPollMillis(long pollMillis)
   {
     this.pollMillis = pollMillis;
-    setJoinMillis(2 * pollMillis);
   }
 
   public boolean addWork(E element)

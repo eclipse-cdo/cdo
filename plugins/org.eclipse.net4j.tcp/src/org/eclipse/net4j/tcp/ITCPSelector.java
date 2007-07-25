@@ -22,8 +22,6 @@ import java.nio.channels.SocketChannel;
  */
 public interface ITCPSelector
 {
-  public void invokeAsync(Runnable operation);
-
   public void registerAsync(ServerSocketChannel channel, Passive listener);
 
   public void registerAsync(SocketChannel channel, Active listener);

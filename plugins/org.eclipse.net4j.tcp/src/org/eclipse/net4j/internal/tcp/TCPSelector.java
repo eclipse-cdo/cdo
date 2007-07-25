@@ -40,23 +40,14 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
   private Selector selector;
 
-  private Queue<Runnable> pendingOperations = new ConcurrentLinkedQueue();
+  private transient Queue<Runnable> pendingOperations = new ConcurrentLinkedQueue();
 
-  private Thread thread;
+  private transient Thread thread;
+
+  private transient boolean running;
 
   public TCPSelector()
   {
-  }
-
-  public void invokeAsync(final Runnable operation)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Pending operation " + operation);
-    }
-
-    pendingOperations.add(operation);
-    selector.wakeup();
   }
 
   public void registerAsync(final ServerSocketChannel channel, final Passive listener)
@@ -149,14 +140,8 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
   public void run()
   {
-    while (isActive())
+    while (running && !Thread.interrupted())
     {
-      if (Thread.interrupted())
-      {
-        deactivate();
-        break;
-      }
-
       try
       {
         Runnable operation;
@@ -205,10 +190,11 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       catch (Exception ex)
       {
         OM.LOG.error(ex);
-        deactivate();
         break;
       }
     }
+
+    deactivate();
   }
 
   @Override
@@ -275,6 +261,8 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
   @Override
   protected void doActivate() throws Exception
   {
+    super.doActivate();
+    running = true;
     selector = Selector.open();
     thread = new Thread(this, "selector"); //$NON-NLS-1$
     thread.setDaemon(true);
@@ -284,6 +272,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
   @Override
   protected void doDeactivate() throws Exception
   {
+    running = false;
     selector.wakeup();
     Exception exception = null;
 
@@ -319,6 +308,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       selector = null;
     }
 
+    super.doDeactivate();
     if (exception != null)
     {
       throw exception;
@@ -331,6 +321,17 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     {
       throw new IllegalArgumentException("listener == null"); //$NON-NLS-1$
     }
+  }
+
+  private void invokeAsync(final Runnable operation)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Pending operation " + operation);
+    }
+
+    pendingOperations.add(operation);
+    selector.wakeup();
   }
 
   private void doRegister(final ServerSocketChannel channel, final ITCPSelectorListener.Passive listener)

@@ -106,6 +106,9 @@ public class RWLock extends ReentrantReadWriteLock
         throw new TimeoutException("Acquisition of lock timed out after " + timeoutMillis + " millis");
       }
     }
+    catch (InterruptedException ignore)
+    {
+    }
     catch (Exception ex)
     {
       throw WrappedException.wrap(ex);

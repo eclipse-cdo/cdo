@@ -172,6 +172,12 @@ public class Server extends QueueWorker<MessageImpl> implements IServer
   }
 
   @Override
+  protected String getThreadName()
+  {
+    return "jms-server";
+  }
+
+  @Override
   protected void work(WorkContext context, MessageImpl message)
   {
     ServerDestination destination = getServerDestination(message.getJMSDestination());

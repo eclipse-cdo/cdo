@@ -11,14 +11,17 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.internal.tcp.bundle.OM;
+import org.eclipse.net4j.internal.util.lifecycle.Worker;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelectorListener;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.internal.net4j.Acceptor;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -28,19 +31,26 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.text.MessageFormat;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
  */
 public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorListener.Passive
 {
+  public static final boolean DEFAULT_START_SYNCHRONOUSLY = true;
+
+  public static final long DEFAULT_SYNCHRONOUS_START_TIMEOUT = 2 * Worker.DEFAULT_TIMEOUT;
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TCPAcceptor.class);
 
   private TCPSelector selector;
 
   private SelectionKey selectionKey;
 
-  private boolean startSynchronously = true;
+  private boolean startSynchronously = DEFAULT_START_SYNCHRONOUSLY;
+
+  private long synchronousStartTimeout = DEFAULT_SYNCHRONOUS_START_TIMEOUT;
 
   private CountDownLatch startLatch;
 
@@ -97,6 +107,16 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
   public SelectionKey getSelectionKey()
   {
     return selectionKey;
+  }
+
+  public long getSynchronousStartTimeout()
+  {
+    return synchronousStartTimeout;
+  }
+
+  public void setSynchronousStartTimeout(long synchronousStartTimeout)
+  {
+    this.synchronousStartTimeout = synchronousStartTimeout;
   }
 
   public void registered(SelectionKey selectionKey)
@@ -206,10 +226,15 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
       startLatch = new CountDownLatch(1);
     }
 
+    // LifecycleUtil.waitForActive(selector, 2000L);
     selector.registerAsync(serverSocketChannel, this);
     if (startSynchronously)
     {
-      startLatch.await();
+      if (!startLatch.await(synchronousStartTimeout, TimeUnit.MILLISECONDS))
+      {
+        IOUtil.closeSilent(serverSocketChannel);
+        throw new IOException("Registration with selector timed out after " + synchronousStartTimeout + " millis");
+      }
     }
   }
 

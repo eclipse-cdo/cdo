@@ -12,14 +12,24 @@ package org.eclipse.net4j.internal.util.lifecycle;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 /**
  * @author Eike Stepper
  */
 public abstract class Worker extends Lifecycle
 {
+  public static final int DEFAULT_TIMEOUT = 2000;
+
   private boolean daemon;
 
-  private long joinMillis;
+  private long activationTimeout = DEFAULT_TIMEOUT;
+
+  private long deactivationTimeout = DEFAULT_TIMEOUT;
+
+  private transient CountDownLatch activationLatch;
 
   private transient WorkerThread workerThread;
 
@@ -37,22 +47,47 @@ public abstract class Worker extends Lifecycle
     this.daemon = daemon;
   }
 
-  public long getJoinMillis()
+  public long getActivationTimeout()
   {
-    return joinMillis;
+    return activationTimeout;
   }
 
-  public void setJoinMillis(long joinMillis)
+  public void setActivationTimeout(long activationTimeout)
   {
-    this.joinMillis = joinMillis;
+    this.activationTimeout = activationTimeout;
+  }
+
+  public long getDeactivationTimeout()
+  {
+    return deactivationTimeout;
+  }
+
+  public void setDeactivationTimeout(long deactivationTimeout)
+  {
+    this.deactivationTimeout = deactivationTimeout;
   }
 
   @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    workerThread = new WorkerThread();
+    activationLatch = new CountDownLatch(1);
+    String threadName = getThreadName();
+    workerThread = threadName == null ? new WorkerThread() : new WorkerThread(threadName);
     workerThread.start();
+    if (!activationLatch.await(activationTimeout, TimeUnit.MILLISECONDS))
+    {
+      try
+      {
+        workerThread.stopRunning();
+        workerThread.interrupt();
+      }
+      catch (RuntimeException ignore)
+      {
+      }
+
+      throw new TimeoutException("Worker thread activation timed out after " + activationTimeout + " millis");
+    }
   }
 
   @Override
@@ -62,13 +97,18 @@ public abstract class Worker extends Lifecycle
     {
       workerThread.stopRunning();
       workerThread.interrupt();
-      workerThread.join(joinMillis);
+      workerThread.join(deactivationTimeout);
     }
-    catch (Exception ignore)
+    catch (RuntimeException ignore)
     {
     }
 
     super.doDeactivate();
+  }
+
+  protected String getThreadName()
+  {
+    return null;
   }
 
   protected abstract void work(WorkContext context) throws Exception;
@@ -85,6 +125,12 @@ public abstract class Worker extends Lifecycle
       setDaemon(daemon);
     }
 
+    public WorkerThread(String threadName)
+    {
+      super(threadName);
+      setDaemon(daemon);
+    }
+
     public void stopRunning()
     {
       running = false;
@@ -94,6 +140,7 @@ public abstract class Worker extends Lifecycle
     public void run()
     {
       WorkContext context = new WorkContext();
+      activationLatch.countDown();
       while (running && !isInterrupted())
       {
         try

@@ -121,6 +121,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
         CDOPackageManagerImpl packageManager = session.getPackageManager();
         newPackages = packageManager.getTransientPackages();
 
+        preCommit(newObjects);
+        preCommit(dirtyObjects);
+
         IChannel channel = session.getChannel();
         CommitTransactionResult result = new CommitTransactionRequest(channel, this).send();
 
@@ -228,6 +231,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     {
       dirty = true;
       fireEvent(new DirtyEvent());
+    }
+  }
+
+  private void preCommit(Map objects)
+  {
+    if (!objects.isEmpty())
+    {
+      for (Object object : objects.values())
+      {
+        ((InternalCDOObject)object).cdoInternalPreCommit();
+      }
     }
   }
 

@@ -119,12 +119,17 @@ public class CDOMetaImpl implements InternalCDOObject
     throw new UnsupportedOperationException();
   }
 
-  public void cdoInternalFinalizeRevision()
+  public void cdoInternalPostLoad()
   {
     throw new UnsupportedOperationException();
   }
 
-  public void cdoInternalResolveRevision()
+  public void cdoInternalPostAttach()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void cdoInternalPreCommit()
   {
     throw new UnsupportedOperationException();
   }

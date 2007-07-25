@@ -51,7 +51,7 @@ final class ProxyResolverResource implements Resource
     if (object instanceof CDOAdapterImpl)
     {
       CDOAdapterImpl adapter = (CDOAdapterImpl)object;
-      adapter.cdoInternalResolveRevision();
+      adapter.cdoInternalPostLoad();
       return adapter.getTarget();
     }
 

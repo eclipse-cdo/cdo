@@ -35,9 +35,11 @@ public interface InternalCDOObject extends CDOObject, InternalEObject
 
   public void cdoInternalSetRevision(CDORevision revision);
 
-  public void cdoInternalFinalizeRevision();
+  public void cdoInternalPostLoad();
 
-  public void cdoInternalResolveRevision();
+  public void cdoInternalPostAttach();
+
+  public void cdoInternalPreCommit();
 
   public InternalEObject cdoInternalInstance();
 

@@ -167,7 +167,12 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     this.resource = (CDOResourceImpl)resource;
   }
 
-  public void cdoInternalFinalizeRevision()
+  public void cdoInternalPostLoad()
+  {
+    // Do nothing
+  }
+
+  public void cdoInternalPostAttach()
   {
     if (TRACER.isEnabled())
     {
@@ -197,7 +202,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
   }
 
-  public void cdoInternalResolveRevision()
+  public void cdoInternalPreCommit()
   {
     // Do nothing
   }

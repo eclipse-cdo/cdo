@@ -225,7 +225,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object data)
     {
       CDOTransactionImpl transaction = (CDOTransactionImpl)object.cdoView();
-      object.cdoInternalFinalizeRevision();
+      object.cdoInternalPostAttach();
       object.cdoInternalSetState(CDOState.NEW);
 
       // Finalize content tree
@@ -332,7 +332,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       CDORevisionImpl revision = view.lookupRevision(id);
       object.cdoInternalSetRevision(revision);
       object.cdoInternalSetState(CDOState.CLEAN);
-      object.cdoInternalResolveRevision();
+      object.cdoInternalPostLoad();
 
       if (forWrite)
       {

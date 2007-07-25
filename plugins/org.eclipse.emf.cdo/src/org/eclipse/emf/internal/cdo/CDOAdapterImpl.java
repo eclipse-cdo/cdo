@@ -242,20 +242,25 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     this.resource = (CDOResourceImpl)resource;
   }
 
-  public void cdoInternalFinalizeRevision()
-  {
-    transferTargetToRevision();
-  }
-
-  public void cdoInternalResolveRevision()
+  public void cdoInternalPostLoad()
   {
     transferRevisionToTarget();
     cdoInternalSetState(CDOState.CLEAN);
   }
 
+  public void cdoInternalPostAttach()
+  {
+    // Do nothing
+  }
+
   public InternalEObject cdoInternalInstance()
   {
     return getTarget();
+  }
+
+  public void cdoInternalPreCommit()
+  {
+    transferTargetToRevision();
   }
 
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)

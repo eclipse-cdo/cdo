@@ -56,6 +56,52 @@ public final class ReflectUtil
   {
   }
 
+  public static Method getMethod(Class<?> c, String methodName, Class... parameterTypes)
+  {
+    try
+    {
+      try
+      {
+        return c.getDeclaredMethod(methodName, parameterTypes);
+      }
+      catch (NoSuchMethodException ex)
+      {
+        Class<?> superclass = c.getSuperclass();
+        if (superclass != null)
+        {
+          return getMethod(superclass, methodName, parameterTypes);
+        }
+
+        return null;
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new ImplementationError(ex);
+    }
+  }
+
+  public static Object invokeMethod(Method method, Object target, Object... arguments) throws InvocationTargetException
+  {
+    if (!method.isAccessible())
+    {
+      method.setAccessible(true);
+    }
+
+    try
+    {
+      return method.invoke(target, arguments);
+    }
+    catch (IllegalAccessException ex)
+    {
+      throw new ImplementationError(ex);
+    }
+  }
+
   public static Field getField(Class<?> c, String fieldName)
   {
     try
@@ -85,30 +131,35 @@ public final class ReflectUtil
     }
   }
 
-  public static Method getMethod(Class<?> c, String methodName, Class... parameterTypes)
+  public static Object getValue(Field field, Object target)
   {
+    if (!field.isAccessible())
+    {
+      field.setAccessible(true);
+    }
+
     try
     {
-      try
-      {
-        return c.getDeclaredMethod(methodName, parameterTypes);
-      }
-      catch (NoSuchMethodException ex)
-      {
-        Class<?> superclass = c.getSuperclass();
-        if (superclass != null)
-        {
-          return getMethod(superclass, methodName, parameterTypes);
-        }
-
-        return null;
-      }
+      return field.get(target);
     }
-    catch (RuntimeException ex)
+    catch (IllegalAccessException ex)
     {
-      throw ex;
+      throw new ImplementationError(ex);
     }
-    catch (Exception ex)
+  }
+
+  public static void setValue(Field field, Object target, Object value)
+  {
+    if (!field.isAccessible())
+    {
+      field.setAccessible(true);
+    }
+
+    try
+    {
+      field.set(target, value);
+    }
+    catch (IllegalAccessException ex)
     {
       throw new ImplementationError(ex);
     }

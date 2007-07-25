@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -55,6 +56,8 @@ import org.eclipse.emf.internal.cdo.util.GenUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 
@@ -375,7 +378,8 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     {
       CDOID resourceID = revision.getResourceID();
       Resource.Internal resource = (Resource.Internal)view.lookupInstance(resourceID);
-      ((BasicEObjectImpl)target).eSetResource(resource, null);
+      transferResourceToTarget((BasicEObjectImpl)target, resource);
+      // ((BasicEObjectImpl)target).eSetResource(resource, null);
     }
     else
     {
@@ -423,6 +427,20 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
 
         setTargetValue(target, feature, value);
       }
+    }
+  }
+
+  private void transferResourceToTarget(BasicEObjectImpl target, Resource.Internal resource)
+  {
+    Method method = ReflectUtil.getMethod(BasicEObjectImpl.class, "eSetDirectResource", Resource.Internal.class);
+
+    try
+    {
+      ReflectUtil.invokeMethod(method, target, resource);
+    }
+    catch (InvocationTargetException ex)
+    {
+      throw WrappedException.wrap(ex);
     }
   }
 
@@ -527,7 +545,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
         int flagsMask = getEFlagMask(targetClass, flagName);
 
         field = ReflectUtil.getField(targetClass, "eFlags");
-        int flags = (Integer)getFiedValue(target, field);
+        int flags = (Integer)ReflectUtil.getValue(field, target);
         boolean on = (Boolean)value;
         if (on)
         {
@@ -538,7 +556,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
           flags &= ~flagsMask; // Remove EFlag
         }
 
-        setFiedValue(target, field, flags);
+        ReflectUtil.setValue(field, target, flags);
         return;
       }
     }
@@ -548,46 +566,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
       throw new ImplementationError("Field not found: " + fieldName);
     }
 
-    setFiedValue(target, field, value);
-  }
-
-  private static Object getFiedValue(InternalEObject target, Field field)
-  {
-    if (!field.isAccessible())
-    {
-      field.setAccessible(true);
-    }
-
-    try
-    {
-      return field.get(target);
-    }
-    catch (IllegalAccessException ex)
-    {
-      throw new ImplementationError(ex);
-    }
-  }
-
-  private static void setFiedValue(InternalEObject target, Field field, Object value)
-  {
-    if (!field.isAccessible())
-    {
-      field.setAccessible(true);
-    }
-
-    try
-    {
-      field.set(target, value);
-    }
-    catch (IllegalAccessException ex)
-    {
-      throw new ImplementationError(ex);
-    }
-    catch (RuntimeException ex)
-    {
-      ex.printStackTrace();
-      throw ex;
-    }
+    ReflectUtil.setValue(field, target, value);
   }
 
   private static int getEFlagMask(Class<?> targetClass, String flagName)

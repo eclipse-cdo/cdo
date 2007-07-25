@@ -12,13 +12,17 @@ package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
-import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOTransactionCommittedEvent;
+import org.eclipse.emf.cdo.CDOTransactionDirtyEvent;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 import org.eclipse.emf.cdo.protocol.CDOID;
 
+import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 
 import org.eclipse.jface.viewers.TreeViewer;
 
@@ -51,6 +55,22 @@ public class CDOEventHandler
           }
         }.processCDOObjects(treeViewer, dirtyOIDs);
       }
+      else if (event instanceof CDOSessionViewsEvent)
+      {
+        CDOSessionViewsEvent e = (CDOSessionViewsEvent)event;
+        if (e.getView() == view && e.getDeltaKind() == IContainerDelta.Kind.REMOVED)
+        {
+          viewClosed();
+        }
+      }
+      else if (event instanceof ILifecycleEvent)
+      {
+        ILifecycleEvent e = (ILifecycleEvent)event;
+        if (e.getKind() == ILifecycleEvent.Kind.DEACTIVATED)
+        {
+          viewClosed();
+        }
+      }
     }
   };
 
@@ -70,6 +90,12 @@ public class CDOEventHandler
             viewer.update(cdoObject, null);
           }
         }.processCDOObjects(treeViewer, newOIDs);
+
+        viewDirtyStateChanged();
+      }
+      else if (event instanceof CDOTransactionDirtyEvent)
+      {
+        viewDirtyStateChanged();
       }
     }
   };
@@ -103,5 +129,13 @@ public class CDOEventHandler
   public void setViewer(TreeViewer viewer)
   {
     this.treeViewer = viewer;
+  }
+
+  protected void viewDirtyStateChanged()
+  {
+  }
+
+  protected void viewClosed()
+  {
   }
 }

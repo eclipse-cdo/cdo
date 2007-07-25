@@ -37,6 +37,11 @@ public abstract class RegisterPackageAction extends SessionAction
   {
     CDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
     packageRegistry.putEPackage(ePackage);
+    postRegistration(ePackage);
+  }
+
+  protected void postRegistration(EPackage ePackage)
+  {
   }
 
   protected abstract EPackage getEPackage(IWorkbenchPage page, CDOSession session);

@@ -63,6 +63,11 @@ public class RegisterCDOPackageAction extends RegisterPackageAction
   {
     public String isValid(String uri)
     {
+      if (uri == null || uri.length() == 0)
+      {
+        return "";
+      }
+
       return registry.containsKey(uri) ? null : "Package " + uri + " not found.";
     }
   }

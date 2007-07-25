@@ -28,8 +28,7 @@ public final class Activator extends EMFPlugin
     return plugin;
   }
 
-  public static class Implementation extends EclipsePlugin // implements
-  // IRegistryChangeListener
+  public static class Implementation extends EclipsePlugin
   {
     public Implementation()
     {
@@ -41,42 +40,14 @@ public final class Activator extends EMFPlugin
     {
       super.start(context);
       OM.BUNDLE.setBundleContext(context);
-      // EMFUtil.addModelInfos(EMFUtil.PACKAGE_MANAGER);
-      // IExtensionRegistry registry = Platform.getExtensionRegistry();
-      // IConfigurationElement[] elements =
-      // registry.getConfigurationElementsFor(CDO.BUNDLE_ID,
-      // CDO.PERSISTENT_PACKAGE_EXT_POINT);
-      // for (IConfigurationElement element : elements)
-      // {
-      // String uri = element.getAttribute("uri");
-      // // TODO Don't load EPackages eagerly
-      // EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(uri);
-      // if (ePackage != null)
-      // {
-      // EMFUtil.getCDOPackage(ePackage, EMFUtil.PACKAGE_MANAGER);
-      // }
-      // else
-      // {
-      // CDO.LOG.warn("Ecore package not found: " + uri);
-      // }
-      // }
-      //
-      // registry.addRegistryChangeListener(this, CDO.BUNDLE_ID);
     }
 
     @Override
     public void stop(BundleContext context) throws Exception
     {
-      // IExtensionRegistry registry = Platform.getExtensionRegistry();
-      // registry.removeRegistryChangeListener(this);
-      // EMFUtil.removeModelInfos(EMFUtil.PACKAGE_MANAGER);
       plugin = null;
       OM.BUNDLE.setBundleContext(null);
       super.stop(context);
     }
-
-    // public void registryChanged(IRegistryChangeEvent event)
-    // {
-    // }
   }
 }

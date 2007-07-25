@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -36,17 +37,43 @@ import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public final class CDOUtil
 {
+  public static final String EXT_POINT_NAME = "persistent_package";
+
   private CDOUtil()
   {
+  }
+
+  public static Set<String> getPersistentPackageURIs()
+  {
+    Set<String> result = new HashSet();
+    IExtensionRegistry registry = Platform.getExtensionRegistry();
+    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT_NAME);
+    for (IConfigurationElement element : elements)
+    {
+      String uri = element.getAttribute("uri");
+      if (!StringUtil.isEmpty(uri))
+      {
+        result.add(uri);
+      }
+    }
+
+    return result;
   }
 
   public static CDOSession openSession(IConnector connector, String repositoryName, EPackage.Registry delegate)

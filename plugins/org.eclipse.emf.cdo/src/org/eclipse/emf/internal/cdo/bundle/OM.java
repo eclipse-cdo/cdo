@@ -47,6 +47,4 @@ public abstract class OM
   public static final OMTracer DEBUG_REVISION = DEBUG.tracer("revision"); //$NON-NLS-1$
 
   public static final OMLogger LOG = BUNDLE.logger();
-
-  public static final String PERSISTENT_PACKAGE_EXT_POINT = "persistent_package";
 }

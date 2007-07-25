@@ -22,11 +22,11 @@ import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CreateResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.LoadResourceAction;
+import org.eclipse.emf.cdo.internal.ui.actions.ManagePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenAuditAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenViewEditorAction;
-import org.eclipse.emf.cdo.internal.ui.actions.RegisterCDOPackageAction;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 
 import org.eclipse.net4j.IConnector;
@@ -263,7 +263,7 @@ public class CDOItemProvider extends ContainerItemProvider
     manager.add(new OpenViewAction(page, session));
     manager.add(new OpenAuditAction(page, session));
     manager.add(new Separator());
-    manager.add(new RegisterCDOPackageAction(page, session));
+    manager.add(new ManagePackagesAction(page, session));
     manager.add(new Separator());
     manager.add(new CloseSessionAction(page, session));
   }

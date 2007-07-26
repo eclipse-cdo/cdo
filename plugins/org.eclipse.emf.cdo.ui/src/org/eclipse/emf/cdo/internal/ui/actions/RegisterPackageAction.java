@@ -23,9 +23,9 @@ public abstract class RegisterPackageAction extends SessionAction
   }
 
   @Override
-  protected void preRun(IWorkbenchPage page) throws Exception
+  protected void preRun() throws Exception
   {
-    ePackage = getEPackage(page, getSession());
+    ePackage = getEPackage(getPage(), getSession());
     if (ePackage == null)
     {
       cancel();
@@ -33,7 +33,7 @@ public abstract class RegisterPackageAction extends SessionAction
   }
 
   @Override
-  protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+  protected void doRun(IProgressMonitor monitor) throws Exception
   {
     CDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
     packageRegistry.putEPackage(ePackage);

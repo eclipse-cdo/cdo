@@ -20,7 +20,7 @@ public final class OpenTransactionAction extends SessionAction
   }
 
   @Override
-  protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+  protected void doRun(IProgressMonitor monitor) throws Exception
   {
     getSession().openTransaction(new ResourceSetImpl());
   }

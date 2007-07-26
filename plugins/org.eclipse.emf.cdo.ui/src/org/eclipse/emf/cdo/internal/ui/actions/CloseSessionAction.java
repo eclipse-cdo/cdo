@@ -16,7 +16,7 @@ public final class CloseSessionAction extends SessionAction
   }
 
   @Override
-  protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+  protected void doRun(IProgressMonitor monitor) throws Exception
   {
     getSession().close();
   }

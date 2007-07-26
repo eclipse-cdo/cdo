@@ -6,6 +6,9 @@
  */
 package org.eclipse.emf.cdo.internal.ui.editor;
 
+import org.eclipse.emf.cdo.internal.ui.actions.ExportResourceAction;
+import org.eclipse.emf.cdo.internal.ui.actions.ImportResourceAction;
+
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -47,6 +50,21 @@ import java.util.Collection;
  */
 public class CDOActionBarContributor extends EditingDomainActionBarContributor implements ISelectionChangedListener
 {
+  /**
+   * @ADDED
+   */
+  public static final String LOAD_RESOURCE_ID = "load-resource";
+
+  /**
+   * @ADDED
+   */
+  public static final String IMPORT_RESOURCE_ID = "import-resource";
+
+  /**
+   * @ADDED
+   */
+  public static final String EXPORT_RESOURCE_ID = "export-resource";
+
   /**
    * This keeps track of the active editor. <!-- begin-user-doc --> <!--
    * end-user-doc -->
@@ -151,16 +169,28 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    */
   protected IMenuManager createSiblingMenuManager;
 
+  protected ImportResourceAction importResourceAction;
+
+  protected ExportResourceAction exportResourceAction;
+
   /**
    * This creates an instance of the contributor. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   public CDOActionBarContributor()
   {
     super(ADDITIONS_LAST_STYLE);
     loadResourceAction = new LoadResourceAction();
+    loadResourceAction.setId(LOAD_RESOURCE_ID);
+
+    importResourceAction = new ImportResourceAction();
+    importResourceAction.setId(IMPORT_RESOURCE_ID);
+
+    exportResourceAction = new ExportResourceAction();
+    exportResourceAction.setId(EXPORT_RESOURCE_ID);
+
     validateAction = new ValidateAction();
     controlAction = new ControlAction();
   }
@@ -448,6 +478,20 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * 
    * @generated
    */
+  protected void addGlobalActionsGen(IMenuManager menuManager)
+  {
+    menuManager.insertAfter("additions-end", new Separator("ui-actions"));
+    menuManager.insertAfter("ui-actions", showPropertiesViewAction);
+
+    refreshViewerAction.setEnabled(refreshViewerAction.isEnabled());
+    menuManager.insertAfter("ui-actions", refreshViewerAction);
+
+    super.addGlobalActions(menuManager);
+  }
+
+  /**
+   * @ADDED
+   */
   @Override
   protected void addGlobalActions(IMenuManager menuManager)
   {
@@ -458,6 +502,33 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     menuManager.insertAfter("ui-actions", refreshViewerAction);
 
     super.addGlobalActions(menuManager);
+
+    if (loadResourceAction != null)
+    {
+      if (exportResourceAction != null)
+      {
+        menuManager.insertAfter(LOAD_RESOURCE_ID, exportResourceAction);
+      }
+
+      if (importResourceAction != null)
+      {
+        menuManager.insertAfter(LOAD_RESOURCE_ID, importResourceAction);
+      }
+    }
+    else
+    {
+      if (importResourceAction != null)
+      {
+        menuManager.insertBefore("additions-end", importResourceAction);
+      }
+
+      if (exportResourceAction != null)
+      {
+        menuManager.insertAfter("additions-end", exportResourceAction);
+      }
+
+      menuManager.insertBefore("additions-end", new Separator());
+    }
   }
 
   /**
@@ -472,4 +543,59 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     return true;
   }
 
+  /**
+   * @ADDED
+   */
+  @Override
+  public void activate()
+  {
+    if (importResourceAction != null)
+    {
+      importResourceAction.setActiveWorkbenchPart(activeEditor);
+    }
+
+    if (exportResourceAction != null)
+    {
+      exportResourceAction.setActiveWorkbenchPart(activeEditor);
+    }
+
+    super.activate();
+  }
+
+  /**
+   * @ADDED
+   */
+  @Override
+  public void deactivate()
+  {
+    if (importResourceAction != null)
+    {
+      importResourceAction.setActiveWorkbenchPart(null);
+    }
+
+    if (exportResourceAction != null)
+    {
+      exportResourceAction.setActiveWorkbenchPart(null);
+    }
+
+    super.deactivate();
+  }
+
+  /**
+   * @ADDED
+   */
+  @Override
+  public void update()
+  {
+    super.update();
+    if (importResourceAction != null)
+    {
+      importResourceAction.update();
+    }
+
+    if (exportResourceAction != null)
+    {
+      exportResourceAction.update();
+    }
+  }
 }

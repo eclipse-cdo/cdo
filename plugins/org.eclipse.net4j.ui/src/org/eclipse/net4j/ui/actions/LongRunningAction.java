@@ -18,7 +18,9 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 
 /**
  * @author Eike Stepper
@@ -66,6 +68,55 @@ public abstract class LongRunningAction extends SafeAction
     this.page = page;
   }
 
+  public LongRunningAction()
+  {
+  }
+
+  public LongRunningAction(String text, ImageDescriptor image)
+  {
+    super(text, image);
+  }
+
+  public LongRunningAction(String text, int style)
+  {
+    super(text, style);
+  }
+
+  public LongRunningAction(String text, String toolTipText, ImageDescriptor image)
+  {
+    super(text, toolTipText, image);
+  }
+
+  public LongRunningAction(String text, String toolTipText)
+  {
+    super(text, toolTipText);
+  }
+
+  public LongRunningAction(String text)
+  {
+    super(text);
+  }
+
+  public void setPage(IWorkbenchPage page)
+  {
+    this.page = page;
+  }
+
+  public IWorkbenchPage getPage()
+  {
+    return page;
+  }
+
+  public IWorkbenchWindow getWorkbenchWindow()
+  {
+    return page.getWorkbenchWindow();
+  }
+
+  public Shell getShell()
+  {
+    return getWorkbenchWindow().getShell();
+  }
+
   protected final int getTotalWork()
   {
     return totalWork;
@@ -90,7 +141,7 @@ public abstract class LongRunningAction extends SafeAction
   protected final void doRun() throws Exception
   {
     totalWork = IProgressMonitor.UNKNOWN;
-    preRun(page);
+    preRun();
     if (totalWork != 0)
     {
       new Job(getText())
@@ -102,7 +153,7 @@ public abstract class LongRunningAction extends SafeAction
           try
           {
             setStatus(Status.OK_STATUS);
-            doRun(page, monitor);
+            doRun(monitor);
             return status;
           }
           catch (Exception ex)
@@ -118,11 +169,11 @@ public abstract class LongRunningAction extends SafeAction
     }
   }
 
-  protected void preRun(IWorkbenchPage page) throws Exception
+  protected void preRun() throws Exception
   {
   }
 
-  protected abstract void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception;
+  protected abstract void doRun(IProgressMonitor monitor) throws Exception;
 
   protected IStatus handleException(Exception ex)
   {

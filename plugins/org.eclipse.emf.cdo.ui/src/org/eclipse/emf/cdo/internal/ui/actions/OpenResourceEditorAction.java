@@ -13,17 +13,19 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class OpenResourceEditorAction extends EntryAction
 {
+  private static final String TITLE = "Open Editor";
+
   public OpenResourceEditorAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
       CDOViewHistory.Entry entry)
   {
-    super(page, "Open Editor", "Open a CDO editor for this resource", null, entry);
+    super(page, TITLE, "Open a CDO editor for this resource", null, entry);
   }
 
   @Override
-  protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+  protected void doRun(IProgressMonitor monitor) throws Exception
   {
     CDOView view = getEntry().getView();
     String resourcePath = getEntry().getResourcePath();
-    CDOEditor.open(page, view, resourcePath);
+    CDOEditor.open(getPage(), view, resourcePath);
   }
 }

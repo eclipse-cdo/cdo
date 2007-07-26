@@ -11,14 +11,16 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class OpenViewEditorAction extends ViewAction
 {
+  private static final String TITLE = "Open Editor";
+
   public OpenViewEditorAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, "Open Editor", "Open a CDO editor for this view", null, view);
+    super(page, TITLE, "Open a CDO editor for this view", null, view);
   }
 
   @Override
-  protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+  protected void doRun(IProgressMonitor monitor) throws Exception
   {
-    CDOEditor.open(page, getView(), null);
+    CDOEditor.open(getPage(), getView(), null);
   }
 }

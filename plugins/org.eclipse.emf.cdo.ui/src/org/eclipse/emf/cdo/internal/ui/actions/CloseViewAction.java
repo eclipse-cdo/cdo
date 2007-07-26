@@ -16,7 +16,7 @@ public final class CloseViewAction extends ViewAction
   }
 
   @Override
-  protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+  protected void doRun(IProgressMonitor monitor) throws Exception
   {
     getView().close();
   }

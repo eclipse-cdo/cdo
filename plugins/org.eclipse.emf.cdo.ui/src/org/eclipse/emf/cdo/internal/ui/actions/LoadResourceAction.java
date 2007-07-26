@@ -12,19 +12,20 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class LoadResourceAction extends ViewAction
 {
+  private static final String TITLE = "Load Resource";
+
   private String resourcePath;
 
   public LoadResourceAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, "Load Resource", "Load a CDO resource", null, view);
+    super(page, TITLE, "Load a CDO resource", null, view);
   }
 
   @Override
-  protected void preRun(IWorkbenchPage page) throws Exception
+  protected void preRun() throws Exception
   {
     String uri = ViewAction.lastResourceNumber == 0 ? "" : "/res" + ViewAction.lastResourceNumber;
-    InputDialog dialog = new InputDialog(page.getWorkbenchWindow().getShell(), "Load Resource", "Enter resource path:",
-        uri, null);
+    InputDialog dialog = new InputDialog(getShell(), TITLE, "Enter resource path:", uri, null);
     if (dialog.open() == InputDialog.OK)
     {
       resourcePath = dialog.getValue();
@@ -36,8 +37,8 @@ public final class LoadResourceAction extends ViewAction
   }
 
   @Override
-  protected void doRun(final IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+  protected void doRun(IProgressMonitor monitor) throws Exception
   {
-    CDOEditor.open(page, getView(), resourcePath);
+    CDOEditor.open(getPage(), getView(), resourcePath);
   }
 }

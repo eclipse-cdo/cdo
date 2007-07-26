@@ -21,15 +21,15 @@ public class ManagePackagesAction extends SessionAction
   }
 
   @Override
-  protected void preRun(IWorkbenchPage page) throws Exception
+  protected void preRun() throws Exception
   {
-    PackageManagerDialog dialog = new PackageManagerDialog(page, getSession());
+    PackageManagerDialog dialog = new PackageManagerDialog(getPage(), getSession());
     dialog.open();
     cancel();
   }
 
   @Override
-  protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+  protected void doRun(IProgressMonitor monitor) throws Exception
   {
   }
 }

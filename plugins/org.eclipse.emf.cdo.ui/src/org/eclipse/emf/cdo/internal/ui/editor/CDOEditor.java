@@ -1920,7 +1920,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         MenuManager submenuManager = new MenuManager(cdoPackage.getPackageURI());
         for (CDOClass cdoClass : cdoClasses)
         {
-          submenuManager.add(new CreateRootAction(cdoClass));
+          // TODO Optimize/cache this?
+          CreateRootAction action = new CreateRootAction(cdoClass);
+          submenuManager.add(action);
           populated = true;
         }
 
@@ -2166,7 +2168,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     }
 
     @Override
-    protected void doRun(IWorkbenchPage page, IProgressMonitor monitor) throws Exception
+    protected void doRun(IProgressMonitor monitor) throws Exception
     {
       Resource resource = null;
       IStructuredSelection ssel = (IStructuredSelection)editorSelection;

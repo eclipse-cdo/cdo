@@ -6,6 +6,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui.editor;
 
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.actions.ExportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportResourceAction;
 
@@ -297,6 +298,55 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * 
    * @generated
    */
+  public void selectionChangedGen(SelectionChangedEvent event)
+  {
+    // Remove any menu items for old selection.
+    //
+    if (createChildMenuManager != null)
+    {
+      depopulateManager(createChildMenuManager, createChildActions);
+    }
+    if (createSiblingMenuManager != null)
+    {
+      depopulateManager(createSiblingMenuManager, createSiblingActions);
+    }
+
+    // Query the new selection for appropriate new child/sibling descriptors
+    //
+    Collection<?> newChildDescriptors = null;
+    Collection<?> newSiblingDescriptors = null;
+
+    ISelection selection = event.getSelection();
+    if (selection instanceof IStructuredSelection && ((IStructuredSelection)selection).size() == 1)
+    {
+      Object object = ((IStructuredSelection)selection).getFirstElement();
+
+      EditingDomain domain = ((IEditingDomainProvider)activeEditorPart).getEditingDomain();
+
+      newChildDescriptors = domain.getNewChildDescriptors(object, null);
+      newSiblingDescriptors = domain.getNewChildDescriptors(null, object);
+    }
+
+    // Generate actions for selection; populate and redraw the menus.
+    //
+    createChildActions = generateCreateChildActions(newChildDescriptors, selection);
+    createSiblingActions = generateCreateSiblingActions(newSiblingDescriptors, selection);
+
+    if (createChildMenuManager != null)
+    {
+      populateManager(createChildMenuManager, createChildActions, null);
+      createChildMenuManager.update(true);
+    }
+    if (createSiblingMenuManager != null)
+    {
+      populateManager(createSiblingMenuManager, createSiblingActions, null);
+      createSiblingMenuManager.update(true);
+    }
+  }
+
+  /**
+   * @ADDED
+   */
   public void selectionChanged(SelectionChangedEvent event)
   {
     // Remove any menu items for old selection.
@@ -324,6 +374,18 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
 
       newChildDescriptors = domain.getNewChildDescriptors(object, null);
       newSiblingDescriptors = domain.getNewChildDescriptors(null, object);
+
+      if (importResourceAction != null)
+      {
+        if (object instanceof CDOResource)
+        {
+          importResourceAction.setTargetResource((CDOResource)object);
+        }
+        else
+        {
+          importResourceAction.setTargetResource(null);
+        }
+      }
     }
 
     // Generate actions for selection; populate and redraw the menus.
@@ -552,6 +614,15 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     if (importResourceAction != null)
     {
       importResourceAction.setActiveWorkbenchPart(activeEditor);
+      Object input = ((CDOEditor)getActiveEditor()).getViewer().getInput();
+      if (input instanceof CDOResource)
+      {
+        importResourceAction.setTargetResource((CDOResource)input);
+      }
+      else
+      {
+        importResourceAction.setTargetResource(null);
+      }
     }
 
     if (exportResourceAction != null)
@@ -571,6 +642,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     if (importResourceAction != null)
     {
       importResourceAction.setActiveWorkbenchPart(null);
+      importResourceAction.setTargetResource(null);
     }
 
     if (exportResourceAction != null)

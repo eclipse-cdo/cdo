@@ -53,7 +53,7 @@ public abstract class EditingDomainAction extends LongRunningAction
 
   public void setActiveWorkbenchPart(IWorkbenchPart workbenchPart)
   {
-    setPage(workbenchPart.getSite().getPage());
+    setPage(workbenchPart == null ? null : workbenchPart.getSite().getPage());
     setEditingDomain(workbenchPart instanceof IEditingDomainProvider ? ((IEditingDomainProvider)workbenchPart)
         .getEditingDomain() : null);
   }

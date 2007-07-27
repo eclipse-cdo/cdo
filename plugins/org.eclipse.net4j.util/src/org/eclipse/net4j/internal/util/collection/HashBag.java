@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util;
+package org.eclipse.net4j.internal.util.collection;
 
 import java.util.Collection;
 import java.util.HashMap;

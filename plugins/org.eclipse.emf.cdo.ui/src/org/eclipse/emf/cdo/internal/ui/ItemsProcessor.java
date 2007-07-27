@@ -53,7 +53,7 @@ public abstract class ItemsProcessor
         {
           try
           {
-            processCDOObject(viewer, ids, viewer.getInput());
+            processObject(viewer, ids, viewer.getInput());
             processItems(viewer, ids, viewer.getTree().getItems());
           }
           catch (Exception ex)
@@ -76,7 +76,7 @@ public abstract class ItemsProcessor
       return (CDOObject)object;
     }
 
-    if (view != null)
+    if (object != null && view != null)
     {
       return FSMUtil.adapt(object, view);
     }
@@ -91,7 +91,7 @@ public abstract class ItemsProcessor
     for (TreeItem item : items)
     {
       Object object = item.getData();
-      processCDOObject(viewer, ids, object);
+      processObject(viewer, ids, object);
       if (item.getItemCount() != 0)
       {
         processItems(viewer, ids, item.getItems());
@@ -99,7 +99,7 @@ public abstract class ItemsProcessor
     }
   }
 
-  private void processCDOObject(TreeViewer viewer, Set<CDOID> ids, Object object)
+  private void processObject(TreeViewer viewer, Set<CDOID> ids, Object object)
   {
     CDOObject cdoObject = getCDOObject(object);
     if (cdoObject != null)

@@ -11,7 +11,7 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public final class OpenViewAction extends SessionAction
+public final class OpenViewAction extends AbstractOpenViewAction
 {
   public OpenViewAction(IWorkbenchPage page, CDOSession session)
   {

@@ -282,7 +282,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   {
     if (super.removeChannel(channel, actively))
     {
-      if (isConnected() && actively)
+      if (controlChannel != null && channel != null && isConnected() && actively)
       {
         controlChannel.deregisterChannel(channel.getChannelIndex());
       }

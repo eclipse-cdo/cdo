@@ -297,28 +297,6 @@ public class CDOItemProvider extends ContainerItemProvider
   {
   }
 
-  // @Override
-  // protected Display getDisplay()
-  // {
-  // Display display = getViewer().getControl().getDisplay();
-  // if (display == null)
-  // {
-  // display = Display.getCurrent();
-  // }
-  //
-  // if (display == null)
-  // {
-  // display = Display.getDefault();
-  // }
-  //
-  // if (display == null)
-  // {
-  // throw new IllegalStateException("display == null");
-  // }
-  //
-  // return display;
-  // }
-
   @Override
   protected void elementAdded(Object element, Object parent)
   {

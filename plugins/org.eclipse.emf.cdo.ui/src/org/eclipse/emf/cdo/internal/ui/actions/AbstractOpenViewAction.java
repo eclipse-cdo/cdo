@@ -10,8 +10,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public abstract class AbstractOpenViewAction extends SessionAction
 {
-  private static final int NUMBER_OF_SYSTEM_PACKAGES = 2;
-
   public AbstractOpenViewAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
       CDOSession session)
   {
@@ -21,6 +19,6 @@ public abstract class AbstractOpenViewAction extends SessionAction
   @Override
   public boolean isEnabled()
   {
-    return getSession().getPackageRegistry().size() > NUMBER_OF_SYSTEM_PACKAGES && super.isEnabled();
+    return !getSession().getPackageRegistry().isEmpty() && super.isEnabled();
   }
 }

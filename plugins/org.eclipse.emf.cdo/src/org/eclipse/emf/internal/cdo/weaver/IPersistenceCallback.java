@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.weaver;
+package org.eclipse.emf.internal.cdo.weaver;
 
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 

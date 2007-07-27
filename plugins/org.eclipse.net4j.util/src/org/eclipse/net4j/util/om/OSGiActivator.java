@@ -28,12 +28,12 @@ public abstract class OSGiActivator implements BundleActivator
     this.omBundle = omBundle;
   }
 
-  public OMBundle getOMBundle()
+  public final OMBundle getOMBundle()
   {
     return omBundle;
   }
 
-  public final void start(BundleContext context) throws Exception
+  public void start(BundleContext context) throws Exception
   {
     OM.Activator.traceStart(context);
     OSGiBundle bundle = (OSGiBundle)getOMBundle();
@@ -59,7 +59,7 @@ public abstract class OSGiActivator implements BundleActivator
     }
   }
 
-  public final void stop(BundleContext context) throws Exception
+  public void stop(BundleContext context) throws Exception
   {
     OM.Activator.traceStop(context);
     OSGiBundle bundle = (OSGiBundle)getOMBundle();
@@ -86,21 +86,9 @@ public abstract class OSGiActivator implements BundleActivator
   }
 
   @Override
-  protected final Object clone() throws CloneNotSupportedException
-  {
-    return super.clone();
-  }
-
-  @Override
   public final boolean equals(Object obj)
   {
     return super.equals(obj);
-  }
-
-  @Override
-  protected final void finalize() throws Throwable
-  {
-    super.finalize();
   }
 
   @Override
@@ -113,5 +101,17 @@ public abstract class OSGiActivator implements BundleActivator
   public final String toString()
   {
     return super.toString();
+  }
+
+  @Override
+  protected final Object clone() throws CloneNotSupportedException
+  {
+    return super.clone();
+  }
+
+  @Override
+  protected final void finalize() throws Throwable
+  {
+    super.finalize();
   }
 }

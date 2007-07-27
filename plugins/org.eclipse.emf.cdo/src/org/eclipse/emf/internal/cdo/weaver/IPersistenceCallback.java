@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  */
 public interface IPersistenceCallback
 {
-  public void read(EObjectImpl eObject);
+  public void beforeRead(EObjectImpl eObject);
 
-  public void write(EObjectImpl eObject);
+  public void beforeWrite(EObjectImpl eObject);
 }

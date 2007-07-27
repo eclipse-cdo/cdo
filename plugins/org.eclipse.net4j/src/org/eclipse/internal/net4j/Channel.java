@@ -17,7 +17,6 @@ import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IChannelID;
 import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.internal.util.Value;
 import org.eclipse.net4j.internal.util.concurrent.AsynchronousWorkSerializer;
 import org.eclipse.net4j.internal.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
@@ -27,6 +26,7 @@ import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
+import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -240,7 +240,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
   /**
    * @author Eike Stepper
    */
-  private final class ChannelIDImpl extends Value implements IChannelID
+  private final class ChannelIDImpl implements IChannelID, Cloneable, Serializable
   {
     private static final long serialVersionUID = 1L;
 

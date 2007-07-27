@@ -48,6 +48,16 @@ public final class FSMUtil
 
   public static InternalCDOObject adapt(Object object, CDOView view)
   {
+    if (object == null)
+    {
+      throw new IllegalArgumentException("object == null");
+    }
+
+    if (view == null)
+    {
+      throw new IllegalArgumentException("view == null");
+    }
+
     if (object instanceof InternalCDOObject)
     {
       return (InternalCDOObject)object;

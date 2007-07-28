@@ -27,8 +27,13 @@ public final class NIOUtil
   {
   }
 
+  /**
+   * TODO Look at {@link #copy(File, File, boolean)}
+   */
   public static void copyFile(File source, File target)
   {
+    // http://www.javalobby.org/java/forums/t17036.html
+    // http://java.sun.com/developer/JDCTechTips/2002/tt0507.html#tip1
     FileChannel sourceChannel = null;
     FileChannel targetChannel = null;
 
@@ -59,4 +64,135 @@ public final class NIOUtil
       IOUtil.closeSilent(targetChannel);
     }
   }
+
+  /**
+   * Copy source file to destination. If destination is a path then source file
+   * name is appended. If destination file exists then: overwrite=true -
+   * destination file is replaced; overwite=false - exception is thrown.
+   * 
+   * @param src
+   *          source file
+   * @param dst
+   *          destination file or path
+   * @param overwrite
+   *          overwrite destination file
+   * @exception IOException
+   *              I/O problem
+   * @exception IllegalArgumentException
+   *              illegal argument
+   */
+  @SuppressWarnings("unused")
+  private static void copy(final File src, File dst, final boolean overwrite) throws IOException,
+      IllegalArgumentException
+  {
+    long q = System.currentTimeMillis();
+    // checks
+    if (!src.isFile() || !src.exists())
+      throw new IllegalArgumentException("Source file '" + src.getAbsolutePath() + "' not found!");
+    if (dst.exists())
+      if (dst.isDirectory()) // Directory? -> use source file name
+        dst = new File(dst, src.getName());
+      else if (dst.isFile())
+      {
+        if (!overwrite)
+          throw new IllegalArgumentException("Destination file '" + dst.getAbsolutePath() + "' already exists!");
+      }
+      else
+        throw new IllegalArgumentException("Invalid destination object '" + dst.getAbsolutePath() + "'!");
+    File dstParent = dst.getParentFile();
+    if (!dstParent.exists())
+      if (!dstParent.mkdirs())
+        throw new IOException("Failed to create directory " + dstParent.getAbsolutePath());
+    long fileSize = src.length();
+    if (fileSize > 20971520l)
+    { // for larger files (20Mb) use streams
+      FileInputStream in = new FileInputStream(src);
+      FileOutputStream out = new FileOutputStream(dst);
+      try
+      {
+        int doneCnt = -1, bufSize = 32768;
+        byte buf[] = new byte[bufSize];
+        while ((doneCnt = in.read(buf, 0, bufSize)) >= 0)
+          if (doneCnt == 0)
+            Thread.yield();
+          else
+            out.write(buf, 0, doneCnt);
+        out.flush();
+      }
+      finally
+      {
+        try
+        {
+          in.close();
+        }
+        catch (IOException e)
+        {
+        }
+
+        try
+        {
+          out.close();
+        }
+        catch (IOException e)
+        {
+        }
+      }
+    }
+    else
+    { // smaller files, use channels
+      FileInputStream fis = new FileInputStream(src);
+      FileOutputStream fos = new FileOutputStream(dst);
+      FileChannel in = fis.getChannel(), out = fos.getChannel();
+
+      try
+      {
+        long offs = 0, doneCnt = 0, copyCnt = Math.min(65536, fileSize);
+        do
+        {
+          doneCnt = in.transferTo(offs, copyCnt, out);
+          offs += doneCnt;
+          fileSize -= doneCnt;
+        }
+
+        while (fileSize > 0);
+      }
+      finally
+      { // cleanup
+        try
+        {
+          in.close();
+        }
+        catch (IOException e)
+        {
+        }
+
+        try
+        {
+          out.close();
+        }
+        catch (IOException e)
+        {
+        }
+
+        try
+        {
+          fis.close();
+        }
+        catch (IOException e)
+        {
+        }
+
+        try
+        {
+          fos.close();
+        }
+        catch (IOException e)
+        {
+        }
+      }
+    } // else
+
+    System.out.println(">>> " + String.valueOf(src.length() / 1024) + " Kb, "
+        + String.valueOf(System.currentTimeMillis() - q));
+  } // copy
 }

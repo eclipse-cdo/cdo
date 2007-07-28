@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -226,6 +228,80 @@ public final class IOUtil
     }
   }
 
+  public static List<File> listDepthFirst(File file)
+  {
+    FileCollector collector = new FileCollector();
+    visitDepthFirst(file, collector);
+    return collector.getFiles();
+  }
+
+  public static List<File> listBreadthFirst(File file)
+  {
+    FileCollector collector = new FileCollector();
+    visitBreadthFirst(file, collector);
+    return collector.getFiles();
+  }
+
+  public static void visitDepthFirst(File file, IOVisitor visitor) throws IORuntimeException
+  {
+    try
+    {
+      boolean recurse = visitor.visit(file);
+      if (recurse && file.isDirectory())
+      {
+        visitDepthFirst(file.listFiles(), visitor);
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  public static void visitDepthFirst(File[] files, IOVisitor visitor)
+  {
+    for (File file : files)
+    {
+      visitDepthFirst(file, visitor);
+    }
+  }
+
+  public static void visitBreadthFirst(File file, IOVisitor visitor) throws IORuntimeException
+  {
+    File[] files = { file };
+    visitBreadthFirst(files, visitor);
+  }
+
+  public static void visitBreadthFirst(File[] files, IOVisitor visitor) throws IORuntimeException
+  {
+    try
+    {
+      boolean[] recurse = new boolean[files.length];
+      for (int i = 0; i < files.length; i++)
+      {
+        File file = files[i];
+        recurse[i] = visitor.visit(file);
+      }
+
+      for (int i = 0; i < files.length; i++)
+      {
+        File file = files[i];
+        if (file.isDirectory() && recurse[i])
+        {
+          File[] children = file.listFiles();
+          for (File child : children)
+          {
+            visitBreadthFirst(child, visitor);
+          }
+        }
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
   public static void safeRun(Closeable io, IORunnable runnable) throws IORuntimeException
   {
     try
@@ -285,6 +361,57 @@ public final class IOUtil
     catch (IOException ex)
     {
       throw new IORuntimeException(ex);
+    }
+  }
+
+  public static boolean equals(File file1, File file2) throws IORuntimeException
+  {
+    if (file1.length() != file2.length())
+    {
+      return false;
+    }
+
+    FileInputStream stream1 = null;
+    FileInputStream stream2 = null;
+
+    try
+    {
+      stream1 = new FileInputStream(file1);
+      stream2 = new FileInputStream(file2);
+
+      return equals(stream1, stream2);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+    finally
+    {
+      closeSilent(stream1);
+      closeSilent(stream2);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class FileCollector implements IOVisitor
+  {
+    private List<File> files = new ArrayList();
+
+    public FileCollector()
+    {
+    }
+
+    public List<File> getFiles()
+    {
+      return files;
+    }
+
+    public boolean visit(File file) throws IOException
+    {
+      files.add(file);
+      return true;
     }
   }
 }

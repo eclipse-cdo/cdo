@@ -16,9 +16,9 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public final class TempUtil
+public final class TMPUtil
 {
-  private TempUtil()
+  private TMPUtil()
   {
   }
 

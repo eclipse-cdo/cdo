@@ -59,6 +59,9 @@ public final class CDOUtil
   {
   }
 
+  /**
+   * Can only be used with Eclipse running!
+   */
   public static Set<String> getPersistentPackageURIs()
   {
     Set<String> result = new HashSet();

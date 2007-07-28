@@ -188,6 +188,9 @@ public class PackageManagerDialog extends TitleAreaDialog
     return cdoPackage.isDynamic() ? "DYNAMIC" : "STATIC";
   }
 
+  /**
+   * TODO Extend TableViewer
+   */
   private void addColumn(Table table, String title, int width, int alignment)
   {
     TableColumn column = new TableColumn(table, alignment);

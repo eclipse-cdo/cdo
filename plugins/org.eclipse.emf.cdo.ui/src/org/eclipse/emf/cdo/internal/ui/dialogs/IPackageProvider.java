@@ -17,6 +17,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.swt.events.SelectionEvent;
 
 /**
+ * TODO Is this used/needed?
+ * 
  * @author Eike Stepper
  */
 public interface IPackageProvider

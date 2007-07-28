@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+
    <extension-point id="persistent_package" name="CDO Persistent Package" schema="schema/persistent_package.exsd"/>
 
    <extension
@@ -28,7 +29,13 @@
      <package 
        		uri="http://www.eclipse.org/emf/CDO/Eresource/1.0.0" 
        		class="org.eclipse.emf.cdo.eresource.EresourcePackage"
-       		genModel="model/resource.genmodel" /> 
+       		genModel="model/resource.genmodel"/> 
+   </extension>
+
+   <extension
+  			point="org.eclipse.emf.cdo.persistent_package">
+     <package 
+       		uri="http://www.eclipse.org/emf/CDO/Eresource/1.0.0"/> 
    </extension>
 
 </plugin>

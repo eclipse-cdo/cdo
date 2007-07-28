@@ -9,12 +9,6 @@
             id="org.eclipse.net4j.ui"
             name="Net4j">
       </category>
-      <!--<view
-            category="org.eclipse.net4j.ui"
-            class="org.eclipse.net4j.ui.widgets.HistoryView"
-            id="org.eclipse.net4j.ui.views.HistoryView"
-            name="History">
-      </view>-->
       <view
             category="org.eclipse.net4j.ui"
             class="org.eclipse.net4j.internal.ui.views.AcceptorsView"

@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +20,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 
 /**
@@ -54,7 +57,55 @@ public final class IOUtil
     print(t, System.err);
   }
 
-  public static IOException closeSilent(Closeable closeable)
+  public static FileInputStream openInputStream(File file) throws IORuntimeException
+  {
+    try
+    {
+      return new FileInputStream(file);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  public static FileOutputStream openOutputStream(File file) throws IORuntimeException
+  {
+    try
+    {
+      return new FileOutputStream(file);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  public static FileReader openReader(File file) throws IORuntimeException
+  {
+    try
+    {
+      return new FileReader(file);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  public static FileWriter openWriter(File file) throws IORuntimeException
+  {
+    try
+    {
+      return new FileWriter(file);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  public static Exception closeSilent(Closeable closeable)
   {
     try
     {
@@ -65,7 +116,7 @@ public final class IOUtil
 
       return null;
     }
-    catch (IOException ex)
+    catch (Exception ex)
     {
       return ex;
     }
@@ -86,7 +137,96 @@ public final class IOUtil
     }
   }
 
-  public static void run(Closeable io, IORunnable runnable) throws IORuntimeException
+  public static void copy(InputStream input, OutputStream output, byte buffer[]) throws IORuntimeException
+  {
+    try
+    {
+      int n = 0;
+      while ((n = input.read(buffer)) != -1)
+      {
+        output.write(buffer, 0, n);
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  public static void copy(InputStream input, OutputStream output, int bufferSize) throws IORuntimeException
+  {
+    copy(input, output, new byte[bufferSize]);
+  }
+
+  public static void copy(InputStream input, OutputStream output) throws IORuntimeException
+  {
+    copy(input, output, 4096);
+  }
+
+  /**
+   * @see NIOUtil#copyFile(File, File)
+   */
+  public static void copyFile(File source, File target) throws IORuntimeException
+  {
+    FileInputStream input = null;
+    FileOutputStream output = null;
+
+    try
+    {
+      input = new FileInputStream(source);
+      output = new FileOutputStream(target);
+
+      copy(input, output);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+    finally
+    {
+      closeSilent(input);
+      closeSilent(output);
+    }
+  }
+
+  public static byte[] readFile(File file) throws IORuntimeException
+  {
+    if (file.length() > Integer.MAX_VALUE)
+    {
+      throw new IllegalArgumentException("File too long: " + file.length());
+    }
+
+    int size = (int)file.length();
+    FileInputStream input = openInputStream(file);
+
+    try
+    {
+      ByteArrayOutputStream output = new ByteArrayOutputStream(size);
+      copy(input, output);
+      return output.toByteArray();
+    }
+    finally
+    {
+      closeSilent(input);
+    }
+  }
+
+  public static void writeFile(File file, byte[] bytes) throws IORuntimeException
+  {
+    FileOutputStream output = openOutputStream(file);
+
+    try
+    {
+      ByteArrayInputStream input = new ByteArrayInputStream(bytes);
+      copy(input, output);
+    }
+    finally
+    {
+      closeSilent(output);
+    }
+  }
+
+  public static void safeRun(Closeable io, IORunnable runnable) throws IORuntimeException
   {
     try
     {
@@ -102,56 +242,24 @@ public final class IOUtil
     }
   }
 
-  public static void read(File file, IORunnable<FileReader> runnable) throws IORuntimeException
+  public static void safeInput(File file, IORunnable<FileInputStream> runnable) throws IORuntimeException
   {
-    try
-    {
-      FileReader io = new FileReader(file);
-      run(io, runnable);
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
+    safeRun(openInputStream(file), runnable);
   }
 
-  public static void write(File file, IORunnable<FileWriter> runnable) throws IORuntimeException
+  public static void safeOutput(File file, IORunnable<FileOutputStream> runnable) throws IORuntimeException
   {
-    try
-    {
-      FileWriter io = new FileWriter(file);
-      run(io, runnable);
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
+    safeRun(openOutputStream(file), runnable);
   }
 
-  public static void input(File file, IORunnable<FileInputStream> runnable) throws IORuntimeException
+  public static void safeRead(File file, IORunnable<FileReader> runnable) throws IORuntimeException
   {
-    try
-    {
-      FileInputStream io = new FileInputStream(file);
-      run(io, runnable);
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
+    safeRun(openReader(file), runnable);
   }
 
-  public static void output(File file, IORunnable<FileOutputStream> runnable) throws IORuntimeException
+  public static void safeWrite(File file, IORunnable<FileWriter> runnable) throws IORuntimeException
   {
-    try
-    {
-      FileOutputStream io = new FileOutputStream(file);
-      run(io, runnable);
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
+    safeRun(openWriter(file), runnable);
   }
 
   public static boolean equals(InputStream stream1, InputStream stream2) throws IORuntimeException

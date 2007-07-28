@@ -59,7 +59,7 @@ public class Preferences extends Notifier implements OMPreferences
       File file = getFile();
       if (file.exists())
       {
-        IOUtil.input(file, new IORunnable<FileInputStream>()
+        IOUtil.safeInput(file, new IORunnable<FileInputStream>()
         {
           public void run(FileInputStream io) throws IOException
           {
@@ -105,7 +105,7 @@ public class Preferences extends Notifier implements OMPreferences
       }
       else
       {
-        IOUtil.output(file, new IORunnable<FileOutputStream>()
+        IOUtil.safeOutput(file, new IORunnable<FileOutputStream>()
         {
           public void run(FileOutputStream io) throws IOException
           {

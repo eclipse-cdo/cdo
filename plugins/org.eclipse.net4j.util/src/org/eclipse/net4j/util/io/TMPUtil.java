@@ -22,28 +22,35 @@ public final class TMPUtil
   {
   }
 
-  public static File createTempFolder() throws IOException
+  public static File createTempFolder() throws IORuntimeException
   {
     return createTempFolder("tmp");
   }
 
-  public static File createTempFolder(String prefix) throws IOException
+  public static File createTempFolder(String prefix) throws IORuntimeException
   {
     return createTempFolder(prefix, "");
   }
 
-  public static File createTempFolder(String prefix, String suffix) throws IOException
+  public static File createTempFolder(String prefix, String suffix) throws IORuntimeException
   {
     return createTempFolder(prefix, suffix, null);
   }
 
-  public static File createTempFolder(String prefix, String suffix, File directory) throws IOException
+  public static File createTempFolder(String prefix, String suffix, File directory) throws IORuntimeException
   {
-    File tmp = File.createTempFile(prefix, suffix, directory);
-    String tmpPath = tmp.getAbsolutePath();
-    tmp.delete();
-    tmp = new File(tmpPath);
-    tmp.mkdirs();
-    return tmp;
+    try
+    {
+      File tmp = File.createTempFile(prefix, suffix, directory);
+      String tmpPath = tmp.getAbsolutePath();
+      tmp.delete();
+      tmp = new File(tmpPath);
+      tmp.mkdirs();
+      return tmp;
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
   }
 }

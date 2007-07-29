@@ -8,28 +8,23 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.om.monitor;
+package org.eclipse.net4j.internal.util.om.monitor;
+
+import org.eclipse.net4j.util.om.monitor.MONITOR;
 
 /**
  * @author Eike Stepper
  */
-public class LegacyTest
+public abstract class MonitorTest
 {
   private static final String[] CLASSES = { "A", "B", "C", "D", "E" };
 
   private static final String[] FIELDS = { "x", "y", "z" };
 
-  public static void main(String[] args)
-  {
-    LegacyMonitor.startMonitoring();
-    readClasses();
-    LegacyMonitor.stopMonitoring();
-  }
-
   /**
    * Supports {@link MONITOR progress monitoring}.
    */
-  private static void readClasses()
+  public static void readClasses()
   {
     int num = CLASSES.length;
     MONITOR.begin(2 * num, "Reading " + num + " classes");
@@ -52,7 +47,7 @@ public class LegacyTest
   /**
    * Supports {@link MONITOR progress monitoring}.
    */
-  private static void readFields()
+  public static void readFields()
   {
     int num = FIELDS.length;
     MONITOR.begin(num, "Reading " + num + " fields");

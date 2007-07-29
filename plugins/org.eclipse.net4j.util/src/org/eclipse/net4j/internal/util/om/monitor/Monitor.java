@@ -9,22 +9,38 @@ public abstract class Monitor
 {
   private static final int UNINITIALIZED = 0;
 
+  private Monitor parent;
+
+  private int workFromParent;
+
   private int totalWork = UNINITIALIZED;
 
   private int work;
 
   private String task;
 
-  public Monitor()
+  public Monitor(Monitor parent, int workFromParent)
   {
+    this.parent = parent;
+    this.workFromParent = workFromParent;
   }
 
-  public final String getTask()
+  public Monitor getParent()
+  {
+    return parent;
+  }
+
+  public int getWorkFromParent()
+  {
+    return workFromParent;
+  }
+
+  public String getTask()
   {
     return task;
   }
 
-  public final void setTask(String task, int level)
+  public void setTask(String task, int level)
   {
     this.task = task;
     message(task, level);
@@ -68,7 +84,22 @@ public abstract class Monitor
     }
   }
 
-  public abstract void message(String msg, int level);
+  public void message(String msg, int level)
+  {
+    if (parent != null)
+    {
+      parent.message(msg, level + 1);
+    }
+    else
+    {
+      for (int i = 0; i < level; i++)
+      {
+        System.out.print("  ");
+      }
 
-  public abstract SubMonitor newSubMonitor(int workFromParent);
+      System.out.println(msg);
+    }
+  }
+
+  public abstract Monitor subMonitor(int workFromParent);
 }

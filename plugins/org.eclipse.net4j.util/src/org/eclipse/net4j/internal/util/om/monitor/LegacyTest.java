@@ -10,12 +10,17 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.monitor;
 
+import org.eclipse.net4j.util.om.monitor.LegacyMonitor;
+
 /**
  * @author Eike Stepper
  */
-public abstract class RootMonitor extends Monitor
+public class LegacyTest extends MonitorTest
 {
-  public RootMonitor()
+  public static void main(String[] args)
   {
+    LegacyMonitor.startMonitoring();
+    readClasses();
+    LegacyMonitor.stopMonitoring();
   }
 }

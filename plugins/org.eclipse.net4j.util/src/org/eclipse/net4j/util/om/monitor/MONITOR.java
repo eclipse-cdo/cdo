@@ -11,8 +11,6 @@
 package org.eclipse.net4j.util.om.monitor;
 
 import org.eclipse.net4j.internal.util.om.monitor.Monitor;
-import org.eclipse.net4j.internal.util.om.monitor.RootMonitor;
-import org.eclipse.net4j.internal.util.om.monitor.SubMonitor;
 
 /**
  * @author Eike Stepper
@@ -99,7 +97,7 @@ public final class MONITOR
       return;
     }
 
-    SubMonitor subMonitor = monitor.newSubMonitor(workFromParent);
+    Monitor subMonitor = monitor.subMonitor(workFromParent);
     CURRENT.set(subMonitor);
 
     try
@@ -132,7 +130,7 @@ public final class MONITOR
     }
   }
 
-  static void startMonitoring(RootMonitor rootMonitor)
+  static void startMonitoring(Monitor rootMonitor)
   {
     Monitor monitor = CURRENT.get();
     if (monitor != null)
@@ -151,7 +149,7 @@ public final class MONITOR
       throw new IllegalStateException("Monitoring has not been started");
     }
 
-    if (!(monitor instanceof RootMonitor))
+    if (monitor.getParent() != null)
     {
       throw new IllegalStateException("Illegal monitor nesting");
     }

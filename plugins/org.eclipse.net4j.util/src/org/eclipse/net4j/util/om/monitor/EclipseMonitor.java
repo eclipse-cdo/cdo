@@ -10,21 +10,27 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om.monitor;
 
-import org.eclipse.net4j.internal.util.om.monitor.EclipseSubMonitor;
-import org.eclipse.net4j.internal.util.om.monitor.RootMonitor;
-import org.eclipse.net4j.internal.util.om.monitor.SubMonitor;
+import org.eclipse.net4j.internal.util.om.monitor.Monitor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 
 /**
  * @author Eike Stepper
  */
-public final class EclipseMonitor extends RootMonitor
+public final class EclipseMonitor extends Monitor
 {
   private IProgressMonitor progressMonitor;
 
+  private EclipseMonitor(EclipseMonitor parent, int workFromParent)
+  {
+    super(parent, workFromParent);
+    progressMonitor = new SubProgressMonitor(parent.getProgressMonitor(), workFromParent);
+  }
+
   private EclipseMonitor(IProgressMonitor progressMonitor)
   {
+    super(null, 0);
     this.progressMonitor = progressMonitor;
   }
 
@@ -34,20 +40,41 @@ public final class EclipseMonitor extends RootMonitor
   }
 
   @Override
-  public SubMonitor newSubMonitor(int workFromParent)
+  public void begin(int totalWork, String task, int level)
   {
-    return new EclipseSubMonitor(this, workFromParent);
+    super.begin(totalWork, task, level);
+    progressMonitor.beginTask(task == null ? "" : task, totalWork);
   }
 
   @Override
   public void message(String msg, int level)
   {
-    for (int i = 0; i < level; i++)
-    {
-      System.out.print("  ");
-    }
+    super.message(msg, level);
+    progressMonitor.subTask(msg);
+  }
 
-    System.out.println(msg);
+  @Override
+  public void setTask(String task, int level)
+  {
+    super.setTask(task, level);
+    progressMonitor.setTaskName(task);
+  }
+
+  @Override
+  public void worked(int work, String msg, int level)
+  {
+    super.worked(work, msg, level);
+    progressMonitor.worked(work);
+    if (msg != null)
+    {
+      progressMonitor.subTask(msg);
+    }
+  }
+
+  @Override
+  public EclipseMonitor subMonitor(int workFromParent)
+  {
+    return new EclipseMonitor(this, workFromParent);
   }
 
   public static void startMonitoring(IProgressMonitor progressMonitor)

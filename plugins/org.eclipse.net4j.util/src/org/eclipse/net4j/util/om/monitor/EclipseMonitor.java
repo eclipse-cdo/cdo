@@ -10,7 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om.monitor;
 
+import org.eclipse.net4j.internal.util.om.monitor.EclipseSubMonitor;
 import org.eclipse.net4j.internal.util.om.monitor.RootMonitor;
+import org.eclipse.net4j.internal.util.om.monitor.SubMonitor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -29,6 +31,23 @@ public final class EclipseMonitor extends RootMonitor
   public IProgressMonitor getProgressMonitor()
   {
     return progressMonitor;
+  }
+
+  @Override
+  public SubMonitor newSubMonitor(int workFromParent)
+  {
+    return new EclipseSubMonitor(this, workFromParent);
+  }
+
+  @Override
+  public void message(String msg, int level)
+  {
+    for (int i = 0; i < level; i++)
+    {
+      System.out.print("  ");
+    }
+
+    System.out.println(msg);
   }
 
   public static void startMonitoring(IProgressMonitor progressMonitor)

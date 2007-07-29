@@ -3,7 +3,7 @@ package org.eclipse.net4j.internal.util.om.monitor;
 /**
  * @author Eike Stepper
  */
-public class SubMonitor extends Monitor
+public abstract class SubMonitor extends Monitor
 {
   private Monitor parent;
 

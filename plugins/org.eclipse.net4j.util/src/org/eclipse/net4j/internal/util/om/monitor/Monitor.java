@@ -69,4 +69,6 @@ public abstract class Monitor
   }
 
   public abstract void message(String msg, int level);
+
+  public abstract SubMonitor newSubMonitor(int workFromParent);
 }

@@ -8,14 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.om.monitor;
+package org.eclipse.net4j.util.om.monitor;
+
+import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * @author Eike Stepper
  */
-public abstract class RootMonitor extends Monitor
+public interface IEclipseMonitor
 {
-  public RootMonitor()
-  {
-  }
+  public IProgressMonitor getProgressMonitor();
 }

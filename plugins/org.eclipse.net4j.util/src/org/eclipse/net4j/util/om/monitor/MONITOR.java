@@ -99,7 +99,7 @@ public final class MONITOR
       return;
     }
 
-    SubMonitor subMonitor = new SubMonitor(monitor, workFromParent);
+    SubMonitor subMonitor = monitor.newSubMonitor(workFromParent);
     CURRENT.set(subMonitor);
 
     try

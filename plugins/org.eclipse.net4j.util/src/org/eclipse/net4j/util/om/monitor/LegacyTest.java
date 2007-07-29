@@ -8,54 +8,58 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.om;
+package org.eclipse.net4j.util.om.monitor;
 
 /**
  * @author Eike Stepper
  */
-public class Test
+public class LegacyTest
 {
+  private static final String[] CLASSES = { "A", "B", "C", "D", "E" };
+
+  private static final String[] FIELDS = { "x", "y", "z" };
+
   public static void main(String[] args)
   {
-    LegacyUtil.startMonitoring();
+    LegacyMonitor.startMonitoring();
     readClasses();
-    LegacyUtil.stopMonitoring();
+    LegacyMonitor.stopMonitoring();
   }
 
   /**
-   * Supports {@link PROGRESS progress monitoring}.
+   * Supports {@link MONITOR progress monitoring}.
    */
   private static void readClasses()
   {
-    int num = 3;
-    PROGRESS.begin(2 * num, "Reading {0}", "class", "classes");
+    int num = CLASSES.length;
+    MONITOR.begin(2 * num, "Reading " + num + " classes");
     for (int i = 0; i < num; i++)
     {
       // Create class buffer
-      PROGRESS.worked(1, "Created class buffer {0}");
+      MONITOR.worked(1, "Created class buffer for " + CLASSES[i]);
 
       // Read class
-      PROGRESS.fork(1, new Runnable()
+      MONITOR.fork(1, new Runnable()
       {
         public void run()
         {
           readFields();
         }
-      }, "Read {0}", "class", "classes");
+      }, "Read class " + CLASSES[i]);
     }
   }
 
   /**
-   * Supports {@link PROGRESS progress monitoring}.
+   * Supports {@link MONITOR progress monitoring}.
    */
   private static void readFields()
   {
-    int num = 5;
-    PROGRESS.begin(num, "Reading {0}", "field", "fields");
+    int num = FIELDS.length;
+    MONITOR.begin(num, "Reading " + num + " fields");
     for (int i = 0; i < num; i++)
     {
       // Read field
-      PROGRESS.worked(1, "Read {0}", "field", "fields");
+      MONITOR.worked(1, "Read field " + FIELDS[i]);
     }
   }
 }

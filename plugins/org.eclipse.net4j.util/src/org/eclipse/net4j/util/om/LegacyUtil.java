@@ -11,7 +11,6 @@
 package org.eclipse.net4j.util.om;
 
 import org.eclipse.net4j.internal.util.om.LegacyBundle;
-import org.eclipse.net4j.internal.util.om.progress.LegacyMonitor;
 
 /**
  * @author Eike Stepper
@@ -36,15 +35,5 @@ public final class LegacyUtil
     {
       ((LegacyBundle)bundles[i]).stop();
     }
-  }
-
-  public static void startMonitoring()
-  {
-    PROGRESS.startMonitoring(new LegacyMonitor());
-  }
-
-  public static void stopMonitoring()
-  {
-    PROGRESS.stopMonitoring();
   }
 }

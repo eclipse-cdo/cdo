@@ -1,4 +1,4 @@
-package org.eclipse.net4j.internal.util.om.progress;
+package org.eclipse.net4j.internal.util.om.monitor;
 
 /**
  * @author Eike Stepper
@@ -26,20 +26,8 @@ public class SubMonitor extends Monitor
   }
 
   @Override
-  public void onSuccess(String success)
+  public void message(String msg, int level)
   {
-    parent.onSuccess(success);
-  }
-
-  @Override
-  public String getTask()
-  {
-    return parent.getTask();
-  }
-
-  @Override
-  public void setTask(String task)
-  {
-    parent.setTask(task);
+    parent.message(msg, level + 1);
   }
 }

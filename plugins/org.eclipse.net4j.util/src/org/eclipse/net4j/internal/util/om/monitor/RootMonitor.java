@@ -8,14 +8,25 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.om.progress;
+package org.eclipse.net4j.internal.util.om.monitor;
 
 /**
  * @author Eike Stepper
  */
-public class LegacyMonitor extends RootMonitor
+public abstract class RootMonitor extends Monitor
 {
-  public LegacyMonitor()
+  public RootMonitor()
   {
+  }
+
+  @Override
+  public void message(String msg, int level)
+  {
+    for (int i = 0; i < level; i++)
+    {
+      System.out.print("  ");
+    }
+
+    System.out.println(msg);
   }
 }

@@ -8,35 +8,26 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.om.progress;
+package org.eclipse.net4j.util.om.monitor;
+
+import org.eclipse.net4j.internal.util.om.monitor.RootMonitor;
 
 /**
  * @author Eike Stepper
  */
-public abstract class RootMonitor extends Monitor
+public final class LegacyMonitor extends RootMonitor
 {
-  private transient String task;
-
-  public RootMonitor()
+  private LegacyMonitor()
   {
   }
 
-  @Override
-  public void onSuccess(String success)
+  public static void startMonitoring()
   {
-    System.out.println(success);
+    MONITOR.startMonitoring(new LegacyMonitor());
   }
 
-  @Override
-  public String getTask()
+  public static void stopMonitoring()
   {
-    return task;
-  }
-
-  @Override
-  public void setTask(String task)
-  {
-    this.task = task;
-    System.out.println(task);
+    MONITOR.stopMonitoring();
   }
 }

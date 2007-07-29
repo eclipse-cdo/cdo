@@ -8,24 +8,36 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.om.progress;
+package org.eclipse.net4j.util.om.monitor;
+
+import org.eclipse.net4j.internal.util.om.monitor.RootMonitor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * @author Eike Stepper
  */
-public class EclipseMonitor extends RootMonitor
+public final class EclipseMonitor extends RootMonitor
 {
-  private IProgressMonitor eclipseMonitor;
+  private IProgressMonitor progressMonitor;
 
-  public EclipseMonitor(IProgressMonitor eclipseMonitor)
+  private EclipseMonitor(IProgressMonitor progressMonitor)
   {
-    this.eclipseMonitor = eclipseMonitor;
+    this.progressMonitor = progressMonitor;
   }
 
-  public IProgressMonitor getEclipseMonitor()
+  public IProgressMonitor getProgressMonitor()
   {
-    return eclipseMonitor;
+    return progressMonitor;
+  }
+
+  public static void startMonitoring(IProgressMonitor progressMonitor)
+  {
+    MONITOR.startMonitoring(new EclipseMonitor(progressMonitor));
+  }
+
+  public static void stopMonitoring()
+  {
+    MONITOR.stopMonitoring();
   }
 }

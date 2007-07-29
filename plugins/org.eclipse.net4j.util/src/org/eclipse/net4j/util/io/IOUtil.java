@@ -139,6 +139,32 @@ public final class IOUtil
     }
   }
 
+  public static int delete(File file)
+  {
+    if (file == null)
+    {
+      return 0;
+    }
+
+    int deleted = 0;
+    if (file.isDirectory())
+    {
+      for (File child : file.listFiles())
+      {
+        deleted += delete(child);
+      }
+    }
+
+    if (file.delete())
+    {
+      System.out.println("Deleted " + file.getAbsolutePath());
+      return deleted + 1;
+    }
+
+    System.out.println("Not deleted " + file.getAbsolutePath());
+    return deleted;
+  }
+
   public static void copy(InputStream input, OutputStream output, byte buffer[]) throws IORuntimeException
   {
     try

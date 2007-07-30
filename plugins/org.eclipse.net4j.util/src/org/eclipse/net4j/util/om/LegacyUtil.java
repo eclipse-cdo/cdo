@@ -21,7 +21,7 @@ public final class LegacyUtil
   {
   }
 
-  public static void start(OMBundle[] bundles) throws Exception
+  public static void startBundles(OMBundle[] bundles) throws Exception
   {
     for (int i = 0; i < bundles.length; i++)
     {
@@ -29,7 +29,7 @@ public final class LegacyUtil
     }
   }
 
-  public static void stop(OMBundle[] bundles) throws Exception
+  public static void stopBundles(OMBundle[] bundles) throws Exception
   {
     for (int i = bundles.length - 1; i >= 0; i--)
     {

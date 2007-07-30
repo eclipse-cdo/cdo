@@ -89,8 +89,8 @@ public final class MON
     if (current != monitor)
     {
       throw new IllegalMonitorNestingException("Illegal monitor nesting\n" + // 
-          "Current monitor stack: " + current.dump() + "\n" + //
-          "   Used monitor stack: " + monitor.dump() + "\n");
+          "Current monitor stack:\n" + current.dump() + //
+          "Used monitor stack:\n" + monitor.dump());
     }
 
     if (!current.hasBegun())

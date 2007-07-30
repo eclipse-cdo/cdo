@@ -134,12 +134,12 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
 
   public void fork(Runnable runnable, String msg) throws MonitorCanceledException
   {
-    fork(UNKNOWN, runnable, msg);
+    fork(1, runnable, msg);
   }
 
   public void fork(Runnable runnable) throws MonitorCanceledException
   {
-    fork(UNKNOWN, runnable, null);
+    fork(1, runnable, null);
   }
 
   public OMSubMonitor fork(int workFromParent) throws MonitorCanceledException
@@ -154,7 +154,7 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
 
   public OMSubMonitor fork() throws MonitorCanceledException
   {
-    return fork(UNKNOWN);
+    return fork(1);
   }
 
   public void join(String msg) throws MonitorCanceledException
@@ -262,13 +262,13 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
 
   protected void dump(StringBuilder builder)
   {
+    builder.append("  ");
+    builder.append(task);
+    builder.append("\n");
     if (parent != null)
     {
       parent.dump(builder);
-      builder.append(", ");
     }
-
-    builder.append(task);
   }
 
   protected abstract Monitor subMonitor(int workFromParent);

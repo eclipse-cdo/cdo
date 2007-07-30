@@ -148,7 +148,7 @@ public class MonitorTest extends AbstractOMTest
    */
   private static void readSetting()
   {
-    OMMonitor monitor = MonitorUtil.begin(1);
+    OMMonitor monitor = MonitorUtil.begin(1, "Reading setting");
     // Read setting
     monitor.worked("Read setting");
   }

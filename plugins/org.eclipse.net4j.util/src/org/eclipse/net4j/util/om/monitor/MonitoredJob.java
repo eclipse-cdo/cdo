@@ -32,7 +32,6 @@ public abstract class MonitoredJob extends Job
   protected final IStatus run(IProgressMonitor monitor)
   {
     MonitorUtil.Eclipse.startMonitoring(monitor);
-
     try
     {
       run();

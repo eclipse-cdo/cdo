@@ -28,38 +28,41 @@ public class MonitorTest extends AbstractOMTest
   public void testJoined() throws Exception
   {
     MonitorUtil.Legacy.startMonitoring();
-    readClasses(CLASSES, FIELDS, true);
-    MonitorUtil.Legacy.stopMonitoring();
+    try
+    {
+      readClasses(CLASSES, FIELDS, true, true);
+    }
+    finally
+    {
+      MonitorUtil.Legacy.stopMonitoring();
+    }
   }
 
   public void testJoinedNotStarted() throws Exception
   {
-    readClasses(CLASSES, FIELDS, true);
+    readClasses(CLASSES, FIELDS, true, true);
   }
 
   public void testJoinedStopNotStarted() throws Exception
   {
-    try
-    {
-      readClasses(CLASSES, FIELDS, true);
-      MonitorUtil.Legacy.stopMonitoring();
-      fail("IllegalMonitorNestingException expected");
-    }
-    catch (IllegalMonitorNestingException ex)
-    {
-    }
+    readClasses(CLASSES, FIELDS, true, true);
+    MonitorUtil.Legacy.stopMonitoring();
   }
 
   public void testUnjoined() throws Exception
   {
+    MonitorUtil.Legacy.startMonitoring();
     try
     {
-      MonitorUtil.Legacy.startMonitoring();
-      readClasses(CLASSES, FIELDS, false);
+      readClasses(CLASSES, FIELDS, true, false);
       fail("IllegalMonitorNestingException expected");
     }
     catch (IllegalMonitorNestingException ex)
     {
+    }
+    finally
+    {
+      MonitorUtil.Legacy.stopMonitoring();
     }
   }
 
@@ -67,7 +70,7 @@ public class MonitorTest extends AbstractOMTest
   {
     try
     {
-      readClasses(CLASSES, FIELDS, false);
+      readClasses(CLASSES, FIELDS, true, false);
       fail("MonitorAlreadyBegunException expected");
     }
     catch (MonitorAlreadyBegunException ex)
@@ -75,10 +78,23 @@ public class MonitorTest extends AbstractOMTest
     }
   }
 
+  public void testNotForked() throws Exception
+  {
+    MonitorUtil.Legacy.startMonitoring();
+    try
+    {
+      readClasses(CLASSES, FIELDS, false, false);
+    }
+    finally
+    {
+      MonitorUtil.Legacy.stopMonitoring();
+    }
+  }
+
   /**
    * Supports {@link MonitorUtil progress monitoring}.
    */
-  private static void readClasses(String[] classes, String[][] fields, boolean join)
+  private static void readClasses(String[] classes, String[][] fields, boolean fork, boolean join)
   {
     int num = classes.length;
     OMMonitor monitor = MonitorUtil.begin(2 * num, "Reading " + num + " classes");
@@ -88,10 +104,10 @@ public class MonitorTest extends AbstractOMTest
       monitor.worked(1, "Created class buffer for " + classes[i]);
 
       // Read class
-      OMSubMonitor subMonitor = monitor.fork();
+      OMSubMonitor subMonitor = fork ? monitor.fork() : null;
       try
       {
-        readFields(fields[i]);
+        readFields(fields[i], fork, join);
       }
       finally
       {
@@ -105,17 +121,38 @@ public class MonitorTest extends AbstractOMTest
 
   /**
    * Supports {@link MonitorUtil progress monitoring}.
-   * 
-   * @param i2
    */
-  private static void readFields(String[] fields)
+  private static void readFields(String[] fields, boolean fork, boolean join)
   {
     int num = fields.length;
-    OMMonitor monitor = MonitorUtil.begin(num, "Reading " + num + " fields");
+    OMMonitor monitor = MonitorUtil.begin(2 * num, "Reading " + num + " fields");
     for (int i = 0; i < num; i++)
     {
       // Read field
       monitor.worked(1, "Read field " + fields[i]);
+
+      OMSubMonitor subMonitor = fork ? monitor.fork() : null;
+      try
+      {
+        readSetting();
+      }
+      finally
+      {
+        if (join)
+        {
+          subMonitor.join();
+        }
+      }
     }
+  }
+
+  /**
+   * Supports {@link MonitorUtil progress monitoring}.
+   */
+  private static void readSetting()
+  {
+    OMMonitor monitor = MonitorUtil.begin(1);
+    // Read setting
+    monitor.worked("Read setting");
   }
 }

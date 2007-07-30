@@ -252,9 +252,7 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
     }
   }
 
-  protected abstract Monitor subMonitor(int workFromParent);
-
-  private void checkWork(int work)
+  protected void checkWork(int work)
   {
     if (totalWork != UNKNOWN && this.work + work > totalWork)
     {
@@ -262,7 +260,7 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
     }
   }
 
-  private void dump(StringBuilder builder)
+  protected void dump(StringBuilder builder)
   {
     if (parent != null)
     {
@@ -272,4 +270,6 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
 
     builder.append(task);
   }
+
+  protected abstract Monitor subMonitor(int workFromParent);
 }

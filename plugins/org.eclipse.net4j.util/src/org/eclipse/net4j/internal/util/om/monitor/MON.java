@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.monitor;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.om.monitor.IllegalMonitorNestingException;
 import org.eclipse.net4j.util.om.monitor.MonitorAlreadyBegunException;
 import org.eclipse.net4j.util.om.monitor.MonitorException;
@@ -24,8 +25,6 @@ public final class MON
   public static final int UNKNOWN = -1;
 
   private static final ThreadLocal<Monitor> CURRENT = new ThreadLocal();
-
-  private static final NullMonitor NULL_MONITOR = new NullMonitor();
 
   private MON()
   {
@@ -44,19 +43,27 @@ public final class MON
 
   public static void stopMonitoring()
   {
-    Monitor current = CURRENT.get();
-    if (current == null)
+    try
     {
-      throw new IllegalMonitorNestingException("Monitoring has not been started");
-    }
+      Monitor current = CURRENT.get();
+      if (current == null)
+      {
+        OM.LOG.warn("Monitoring has not been started");
+      }
+      else
+      {
+        if (current.getParent() != null)
+        {
+          OM.LOG.warn("Illegal monitor nesting");
+        }
 
-    if (current.getParent() != null)
+        current.done();
+      }
+    }
+    finally
     {
-      throw new IllegalMonitorNestingException("Illegal monitor nesting");
+      CURRENT.set(null);
     }
-
-    current.done();
-    CURRENT.set(null);
   }
 
   public static OMMonitor begin(int totalWork, String task)
@@ -64,7 +71,7 @@ public final class MON
     Monitor current = CURRENT.get();
     if (current == null)
     {
-      return NULL_MONITOR;
+      return new NullMonitor();
     }
 
     if (current.hasBegun())
@@ -78,6 +85,11 @@ public final class MON
 
   static void checkMonitor(Monitor monitor) throws MonitorException
   {
+    if (monitor instanceof NullMonitor)
+    {
+      return;
+    }
+
     Monitor current = CURRENT.get();
     if (current != monitor)
     {

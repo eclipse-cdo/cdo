@@ -66,9 +66,14 @@ public final class MonitorUtil
    */
   public static final class Legacy
   {
+    public static void startMonitoring(IMessageHandler messageHandler)
+    {
+      MON.startMonitoring(new LegacyMonitor(messageHandler));
+    }
+
     public static void startMonitoring()
     {
-      MON.startMonitoring(new LegacyMonitor());
+      MON.startMonitoring(new LegacyMonitor(null));
     }
 
     public static void stopMonitoring()

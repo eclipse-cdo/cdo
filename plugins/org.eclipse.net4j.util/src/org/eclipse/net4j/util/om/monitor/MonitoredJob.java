@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om.monitor;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -39,6 +41,7 @@ public abstract class MonitoredJob extends Job
     }
     catch (Exception ex)
     {
+      OM.LOG.error(ex);
       return new Status(IStatus.ERROR, bundleID, ex.getMessage(), ex);
     }
     finally

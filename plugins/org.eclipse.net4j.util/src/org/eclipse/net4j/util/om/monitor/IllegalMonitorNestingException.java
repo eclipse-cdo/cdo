@@ -8,19 +8,31 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.om.monitor;
-
-import org.eclipse.net4j.util.om.monitor.MonitorUtil;
+package org.eclipse.net4j.util.om.monitor;
 
 /**
  * @author Eike Stepper
  */
-public class LegacyTest extends MonitorTest
+public class IllegalMonitorNestingException extends MonitorException
 {
-  public static void main(String[] args)
+  private static final long serialVersionUID = 1L;
+
+  public IllegalMonitorNestingException()
   {
-    MonitorUtil.Legacy.startMonitoring();
-    readClasses();
-    MonitorUtil.Legacy.stopMonitoring();
+  }
+
+  public IllegalMonitorNestingException(String s)
+  {
+    super(s);
+  }
+
+  public IllegalMonitorNestingException(Throwable cause)
+  {
+    super(cause);
+  }
+
+  public IllegalMonitorNestingException(String message, Throwable cause)
+  {
+    super(message, cause);
   }
 }

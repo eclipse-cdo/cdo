@@ -10,17 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.monitor;
 
-import org.eclipse.net4j.util.om.monitor.MonitorUtil;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMSubMonitor;
 
 /**
  * @author Eike Stepper
  */
-public class LegacyTest extends MonitorTest
+public interface InternalOMMonitor extends OMMonitor, OMSubMonitor
 {
-  public static void main(String[] args)
-  {
-    MonitorUtil.Legacy.startMonitoring();
-    readClasses();
-    MonitorUtil.Legacy.stopMonitoring();
-  }
 }

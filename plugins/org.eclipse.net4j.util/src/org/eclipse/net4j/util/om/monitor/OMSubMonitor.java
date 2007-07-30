@@ -8,19 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.om.monitor;
-
-import org.eclipse.net4j.util.om.monitor.MonitorUtil;
+package org.eclipse.net4j.util.om.monitor;
 
 /**
  * @author Eike Stepper
  */
-public class LegacyTest extends MonitorTest
+public interface OMSubMonitor
 {
-  public static void main(String[] args)
-  {
-    MonitorUtil.Legacy.startMonitoring();
-    readClasses();
-    MonitorUtil.Legacy.stopMonitoring();
-  }
+  public void join(String msg);
+
+  public void join();
 }

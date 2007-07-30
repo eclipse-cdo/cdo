@@ -10,51 +10,57 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.monitor;
 
-import org.eclipse.net4j.util.om.monitor.MONITOR;
+import org.eclipse.net4j.util.om.monitor.MonitorUtil;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMSubMonitor;
 
 /**
  * @author Eike Stepper
  */
 public abstract class MonitorTest
 {
-  private static final String[] CLASSES = { "A", "B", "C", "D", "E" };
+  private static final String[] CLASSES = { "Pair", "Triple" };
 
-  private static final String[] FIELDS = { "x", "y", "z" };
+  private static final String[][] FIELDS = { { "x", "y" }, { "x", "y", "z" } };
 
   /**
-   * Supports {@link MONITOR progress monitoring}.
+   * Supports {@link MonitorUtil progress monitoring}.
    */
   public static void readClasses()
   {
     int num = CLASSES.length;
-    MONITOR.begin(2 * num, "Reading " + num + " classes");
-    for (int i = 0; i < num; i++)
+    OMMonitor monitor = MonitorUtil.begin(2 * num, "Reading " + num + " classes");
+    for (int c = 0; c < num; c++)
     {
       // Create class buffer
-      MONITOR.worked(1, "Created class buffer for " + CLASSES[i]);
+      monitor.worked(1, "Created class buffer for " + CLASSES[c]);
 
       // Read class
-      MONITOR.fork(1, new Runnable()
+      OMSubMonitor subMonitor = monitor.fork();
+      try
       {
-        public void run()
-        {
-          readFields();
-        }
-      }, "Read class " + CLASSES[i]);
+        readFields(c);
+      }
+      finally
+      {
+        subMonitor.join("Read class " + CLASSES[c]);
+      }
     }
   }
 
   /**
-   * Supports {@link MONITOR progress monitoring}.
+   * Supports {@link MonitorUtil progress monitoring}.
+   * 
+   * @param i2
    */
-  public static void readFields()
+  public static void readFields(int c)
   {
-    int num = FIELDS.length;
-    MONITOR.begin(num, "Reading " + num + " fields");
-    for (int i = 0; i < num; i++)
+    int num = FIELDS[c].length;
+    OMMonitor monitor = MonitorUtil.begin(num, "Reading " + num + " fields");
+    for (int f = 0; f < num; f++)
     {
       // Read field
-      MONITOR.worked(1, "Read field " + FIELDS[i]);
+      monitor.worked(1, "Read field " + FIELDS[c][f]);
     }
   }
 }

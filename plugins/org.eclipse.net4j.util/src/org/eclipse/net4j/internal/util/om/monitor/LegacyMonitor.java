@@ -8,38 +8,26 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.om.monitor;
-
-import org.eclipse.net4j.internal.util.om.monitor.Monitor;
+package org.eclipse.net4j.internal.util.om.monitor;
 
 /**
  * @author Eike Stepper
  */
 public final class LegacyMonitor extends Monitor
 {
+  public LegacyMonitor()
+  {
+    super(null, 0);
+  }
+
   private LegacyMonitor(LegacyMonitor parent, int workFromParent)
   {
     super(parent, workFromParent);
-  }
-
-  private LegacyMonitor()
-  {
-    super(null, 0);
   }
 
   @Override
   public LegacyMonitor subMonitor(int workFromParent)
   {
     return new LegacyMonitor(this, workFromParent);
-  }
-
-  public static void startMonitoring()
-  {
-    MONITOR.startMonitoring(new LegacyMonitor());
-  }
-
-  public static void stopMonitoring()
-  {
-    MONITOR.stopMonitoring();
   }
 }

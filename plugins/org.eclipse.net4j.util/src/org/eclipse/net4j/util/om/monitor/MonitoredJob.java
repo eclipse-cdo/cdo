@@ -31,7 +31,7 @@ public abstract class MonitoredJob extends Job
   @Override
   protected final IStatus run(IProgressMonitor monitor)
   {
-    EclipseMonitor.startMonitoring(monitor);
+    MonitorUtil.Eclipse.startMonitoring(monitor);
 
     try
     {
@@ -44,7 +44,7 @@ public abstract class MonitoredJob extends Job
     }
     finally
     {
-      EclipseMonitor.stopMonitoring();
+      MonitorUtil.Eclipse.stopMonitoring();
     }
   }
 

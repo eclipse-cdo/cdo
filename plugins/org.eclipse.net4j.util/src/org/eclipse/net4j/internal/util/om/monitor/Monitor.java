@@ -1,5 +1,6 @@
 package org.eclipse.net4j.internal.util.om.monitor;
 
+import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
 import org.eclipse.net4j.util.om.monitor.OMSubMonitor;
 import org.eclipse.net4j.util.om.monitor.TotalWorkExceededException;
 
@@ -20,10 +21,27 @@ public abstract class Monitor implements InternalOMMonitor
 
   private String task;
 
+  private Monitor child;
+
+  private boolean canceled;
+
   public Monitor(Monitor parent, int workFromParent)
   {
     this.parent = parent;
     this.workFromParent = workFromParent;
+  }
+
+  public boolean isCanceled()
+  {
+    return canceled;
+  }
+
+  public void checkCanceled() throws MonitorCanceledException
+  {
+    if (canceled)
+    {
+      throw new MonitorCanceledException();
+    }
   }
 
   public String getTask()
@@ -55,7 +73,7 @@ public abstract class Monitor implements InternalOMMonitor
     }
   }
 
-  public void worked(int work, String msg)
+  public void worked(int work, String msg) throws MonitorCanceledException
   {
     MON.checkMonitor(this);
     checkWork(work);
@@ -64,28 +82,28 @@ public abstract class Monitor implements InternalOMMonitor
     message(msg);
   }
 
-  public void worked(int work)
+  public void worked(int work) throws MonitorCanceledException
   {
     worked(work, null);
   }
 
-  public void worked(String msg)
+  public void worked(String msg) throws MonitorCanceledException
   {
     worked(1, msg);
   }
 
-  public void worked()
+  public void worked() throws MonitorCanceledException
   {
     worked(1, null);
   }
 
-  public void fork(int workFromParent, Runnable runnable, String msg)
+  public void fork(int workFromParent, Runnable runnable, String msg) throws MonitorCanceledException
   {
     MON.checkMonitor(this);
     checkWork(workFromParent);
 
-    Monitor subMonitor = subMonitor(workFromParent);
-    MON.setMonitor(subMonitor);
+    child = subMonitor(workFromParent);
+    MON.setMonitor(child);
 
     try
     {
@@ -93,56 +111,79 @@ public abstract class Monitor implements InternalOMMonitor
     }
     finally
     {
-      MON.checkMonitor(subMonitor);
-      subMonitor.done();
+      MON.checkMonitor(child);
+      child.done();
+
       MON.setMonitor(this);
+      child = null;
     }
 
     work += workFromParent;
     message(msg);
   }
 
-  public void fork(int workFromParent, Runnable runnable)
+  public void fork(int workFromParent, Runnable runnable) throws MonitorCanceledException
   {
     fork(workFromParent, runnable, null);
   }
 
-  public void fork(Runnable runnable, String msg)
+  public void fork(Runnable runnable, String msg) throws MonitorCanceledException
   {
     fork(UNKNOWN, runnable, msg);
   }
 
-  public void fork(Runnable runnable)
+  public void fork(Runnable runnable) throws MonitorCanceledException
   {
     fork(UNKNOWN, runnable, null);
   }
 
-  public OMSubMonitor fork(int workFromParent)
+  public OMSubMonitor fork(int workFromParent) throws MonitorCanceledException
   {
     MON.checkMonitor(this);
     checkWork(workFromParent);
 
-    Monitor subMonitor = subMonitor(workFromParent);
-    MON.setMonitor(subMonitor);
-    return subMonitor;
+    child = subMonitor(workFromParent);
+    MON.setMonitor(child);
+    return child;
   }
 
-  public OMSubMonitor fork()
+  public OMSubMonitor fork() throws MonitorCanceledException
   {
     return fork(UNKNOWN);
   }
 
-  public void join(String msg)
+  public void join(String msg) throws MonitorCanceledException
   {
     MON.checkMonitor(this);
     done();
+
     MON.setMonitor(parent);
+    parent.setChild(null);
     parent.message(msg);
   }
 
-  public void join()
+  public void join() throws MonitorCanceledException
   {
     join(null);
+  }
+
+  protected Monitor getChild()
+  {
+    return child;
+  }
+
+  protected void setChild(Monitor child)
+  {
+    this.child = child;
+  }
+
+  protected void setCanceled(boolean canceled)
+  {
+    this.canceled = canceled;
+    if (child != null)
+    {
+      child.setCanceled(canceled);
+    }
   }
 
   protected Monitor getParent()
@@ -162,8 +203,9 @@ public abstract class Monitor implements InternalOMMonitor
     return builder.toString();
   }
 
-  protected void begin(int totalWork, String task)
+  protected void begin(int totalWork, String task) throws MonitorCanceledException
   {
+    checkCanceled();
     this.totalWork = totalWork;
     if (task != null)
     {

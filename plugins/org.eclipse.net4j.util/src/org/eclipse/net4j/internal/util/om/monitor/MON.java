@@ -87,6 +87,8 @@ public final class MON
     {
       throw new MonitorNotBegunException("Monitor has not begun");
     }
+
+    monitor.checkCanceled();
   }
 
   static void setMonitor(Monitor monitor)

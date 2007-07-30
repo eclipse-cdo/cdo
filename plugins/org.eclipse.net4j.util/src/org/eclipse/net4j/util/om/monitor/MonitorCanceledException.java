@@ -8,14 +8,31 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.om.monitor;
-
-import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.monitor.OMSubMonitor;
+package org.eclipse.net4j.util.om.monitor;
 
 /**
  * @author Eike Stepper
  */
-public interface InternalOMMonitor extends OMMonitor, OMSubMonitor
+public class MonitorCanceledException extends MonitorException
 {
+  private static final long serialVersionUID = 1L;
+
+  public MonitorCanceledException()
+  {
+  }
+
+  public MonitorCanceledException(String s)
+  {
+    super(s);
+  }
+
+  public MonitorCanceledException(Throwable cause)
+  {
+    super(cause);
+  }
+
+  public MonitorCanceledException(String message, Throwable cause)
+  {
+    super(message, cause);
+  }
 }

@@ -10,12 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.monitor;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMSubMonitor;
 
 /**
  * @author Eike Stepper
  */
-public class NullMonitor implements InternalOMMonitor
+public class NullMonitor implements OMMonitor, OMSubMonitor
 {
   public NullMonitor()
   {

@@ -1,13 +1,14 @@
 package org.eclipse.net4j.internal.util.om.monitor;
 
 import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMSubMonitor;
 import org.eclipse.net4j.util.om.monitor.TotalWorkExceededException;
 
 /**
  * @author Eike Stepper
  */
-public abstract class Monitor implements InternalOMMonitor
+public abstract class Monitor implements OMMonitor, OMSubMonitor
 {
   private static final int UNINITIALIZED = 0;
 

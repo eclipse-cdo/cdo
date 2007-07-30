@@ -3,6 +3,7 @@ package org.eclipse.net4j.internal.util.om.monitor;
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
+import org.eclipse.net4j.util.om.monitor.MonitorNotBegunException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMSubMonitor;
 import org.eclipse.net4j.util.om.monitor.TotalWorkExceededException;
@@ -117,9 +118,8 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
     finally
     {
       MON.checkMonitor(child);
-      child.done();
-
       MON.setMonitor(this);
+      child.done();
       child = null;
     }
 
@@ -160,11 +160,10 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
   public void join(String msg) throws MonitorCanceledException
   {
     MON.checkMonitor(this);
-    done();
-
     MON.setMonitor(parent);
     parent.setChild(null);
     parent.message(msg);
+    done();
   }
 
   public void join() throws MonitorCanceledException
@@ -254,6 +253,11 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
 
   protected void checkWork(int work)
   {
+    if (!hasBegun())
+    {
+      throw new MonitorNotBegunException("Monitor has not begun");
+    }
+
     if (totalWork != UNKNOWN && this.work + work > totalWork)
     {
       throw new TotalWorkExceededException(("Work of " + work + " exceeded total work of " + totalWork));

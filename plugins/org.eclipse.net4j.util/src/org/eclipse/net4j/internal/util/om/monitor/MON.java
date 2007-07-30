@@ -14,7 +14,6 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.om.monitor.IllegalMonitorNestingException;
 import org.eclipse.net4j.util.om.monitor.MonitorAlreadyBegunException;
 import org.eclipse.net4j.util.om.monitor.MonitorException;
-import org.eclipse.net4j.util.om.monitor.MonitorNotBegunException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 /**
@@ -91,11 +90,6 @@ public final class MON
       throw new IllegalMonitorNestingException("Illegal monitor nesting\n" + // 
           "Current monitor stack:\n" + current.dump() + //
           "Used monitor stack:\n" + monitor.dump());
-    }
-
-    if (!current.hasBegun())
-    {
-      throw new MonitorNotBegunException("Monitor has not begun");
     }
 
     monitor.checkCanceled();

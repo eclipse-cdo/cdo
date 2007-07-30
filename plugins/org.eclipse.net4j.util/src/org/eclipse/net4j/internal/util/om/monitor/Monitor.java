@@ -1,5 +1,7 @@
 package org.eclipse.net4j.internal.util.om.monitor;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMSubMonitor;
@@ -10,6 +12,8 @@ import org.eclipse.net4j.util.om.monitor.TotalWorkExceededException;
  */
 public abstract class Monitor implements OMMonitor, OMSubMonitor
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, Monitor.class);
+
   private static final int UNINITIALIZED = 0;
 
   private Monitor parent;
@@ -226,12 +230,25 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
     }
     else
     {
-      for (int i = 0; i < level; i++)
-      {
-        System.out.print("  ");
-      }
 
-      System.out.println(msg);
+      if (TRACER.isEnabled())
+      {
+        if (level == 0)
+        {
+          TRACER.trace(msg);
+        }
+        else
+        {
+          StringBuilder builder = new StringBuilder();
+          for (int i = 0; i < level; i++)
+          {
+            builder.append("  ");
+          }
+
+          builder.append(msg);
+          TRACER.trace(builder.toString());
+        }
+      }
     }
   }
 

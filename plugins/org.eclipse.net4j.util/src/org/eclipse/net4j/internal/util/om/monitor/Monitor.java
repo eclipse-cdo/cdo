@@ -200,7 +200,7 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
   protected String dump()
   {
     StringBuilder builder = new StringBuilder();
-    dump(builder, 0);
+    dump(builder);
     return builder.toString();
   }
 
@@ -245,23 +245,14 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
     }
   }
 
-  private int dump(StringBuilder builder, int level)
+  private void dump(StringBuilder builder)
   {
     if (parent != null)
     {
-      int line = parent.dump(builder, level + 1);
-      builder.append(line);
-      builder.append(": ");
-      builder.append(task);
-      builder.append("\n");
-      return line + 1;
+      parent.dump(builder);
+      builder.append(", ");
     }
-    else
-    {
-      builder.append("1: ");
-      builder.append(task);
-      builder.append("\n");
-      return 2;
-    }
+
+    builder.append(task);
   }
 }

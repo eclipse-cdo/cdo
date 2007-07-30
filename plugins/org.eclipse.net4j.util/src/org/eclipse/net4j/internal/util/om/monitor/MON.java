@@ -11,6 +11,8 @@
 package org.eclipse.net4j.internal.util.om.monitor;
 
 import org.eclipse.net4j.util.om.monitor.IllegalMonitorNestingException;
+import org.eclipse.net4j.util.om.monitor.MonitorAlreadyBegunException;
+import org.eclipse.net4j.util.om.monitor.MonitorException;
 import org.eclipse.net4j.util.om.monitor.MonitorNotBegunException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -67,20 +69,21 @@ public final class MON
 
     if (current.hasBegun())
     {
-      throw new IllegalStateException("Monitor has already begun");
+      throw new MonitorAlreadyBegunException("Monitor has already begun");
     }
 
     current.begin(totalWork, task);
     return current;
   }
 
-  static void checkMonitor(Monitor monitor)
+  static void checkMonitor(Monitor monitor) throws MonitorException
   {
     Monitor current = CURRENT.get();
     if (current != monitor)
     {
-      throw new IllegalMonitorNestingException("Illegal monitor nesting\nCurrent:\n" + current.dump() + "Used:\n"
-          + monitor.dump());
+      throw new IllegalMonitorNestingException("Illegal monitor nesting\n" + // 
+          "Current monitor stack: " + current.dump() + "\n" + //
+          "   Used monitor stack: " + monitor.dump() + "\n");
     }
 
     if (!current.hasBegun())

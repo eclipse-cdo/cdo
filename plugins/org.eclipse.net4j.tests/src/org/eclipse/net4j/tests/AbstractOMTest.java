@@ -58,6 +58,20 @@ public abstract class AbstractOMTest extends TestCase
     System.out.println();
   }
 
+  @Override
+  protected void runTest() throws Throwable
+  {
+    try
+    {
+      super.runTest();
+    }
+    catch (Throwable t)
+    {
+      t.printStackTrace(System.out);
+      throw t;
+    }
+  }
+
   protected void enableConsole()
   {
     if (!consoleEnabled)
@@ -82,6 +96,14 @@ public abstract class AbstractOMTest extends TestCase
     }
   }
 
+  protected void doSetUp() throws Exception
+  {
+  }
+
+  protected void doTearDown() throws Exception
+  {
+  }
+
   protected static void msg(String m)
   {
     if (consoleEnabled)
@@ -89,13 +111,5 @@ public abstract class AbstractOMTest extends TestCase
       System.out.println();
       System.out.println("--> " + m);
     }
-  }
-
-  protected void doSetUp() throws Exception
-  {
-  }
-
-  protected void doTearDown() throws Exception
-  {
   }
 }

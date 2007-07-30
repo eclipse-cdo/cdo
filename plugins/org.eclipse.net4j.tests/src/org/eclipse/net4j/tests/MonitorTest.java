@@ -68,14 +68,7 @@ public class MonitorTest extends AbstractOMTest
 
   public void testUnjoinedNotStarted() throws Exception
   {
-    try
-    {
-      readClasses(CLASSES, FIELDS, true, false);
-      fail("MonitorAlreadyBegunException expected");
-    }
-    catch (MonitorAlreadyBegunException ex)
-    {
-    }
+    readClasses(CLASSES, FIELDS, true, false);
   }
 
   public void testNotForked() throws Exception
@@ -84,6 +77,10 @@ public class MonitorTest extends AbstractOMTest
     try
     {
       readClasses(CLASSES, FIELDS, false, false);
+      fail("MonitorAlreadyBegunException expected");
+    }
+    catch (MonitorAlreadyBegunException ex)
+    {
     }
     finally
     {

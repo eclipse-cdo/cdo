@@ -71,7 +71,7 @@ public final class MON
     Monitor current = CURRENT.get();
     if (current == null)
     {
-      return new NullMonitor();
+      return NullMonitor.INSTANCE;
     }
 
     if (current.hasBegun())
@@ -85,11 +85,6 @@ public final class MON
 
   static void checkMonitor(Monitor monitor) throws MonitorException
   {
-    if (monitor instanceof NullMonitor)
-    {
-      return;
-    }
-
     Monitor current = CURRENT.get();
     if (current != monitor)
     {

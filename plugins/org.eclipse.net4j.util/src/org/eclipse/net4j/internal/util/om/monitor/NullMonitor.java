@@ -10,29 +10,90 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.monitor;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMSubMonitor;
+
 /**
  * @author Eike Stepper
  */
-public class NullMonitor extends Monitor
+public class NullMonitor implements OMMonitor, OMSubMonitor
 {
-  public NullMonitor()
+  public static final NullMonitor INSTANCE = new NullMonitor();
+
+  private NullMonitor()
   {
-    super(null, 0);
   }
 
-  private NullMonitor(NullMonitor parent, int workFromParent)
+  public void join()
   {
-    super(parent, workFromParent);
   }
 
-  @Override
-  protected Monitor subMonitor(int workFromParent)
+  public void join(String msg)
   {
-    return new NullMonitor(this, workFromParent);
   }
 
-  @Override
-  protected void checkWork(int work)
+  public OMSubMonitor fork()
+  {
+    return this;
+  }
+
+  public void fork(int workFromParent, Runnable runnable, String msg)
+  {
+  }
+
+  public void fork(int workFromParent, Runnable runnable)
+  {
+  }
+
+  public OMSubMonitor fork(int workFromParent)
+  {
+    return this;
+  }
+
+  public void fork(Runnable runnable, String msg)
+  {
+  }
+
+  public void fork(Runnable runnable)
+  {
+  }
+
+  public String getTask()
+  {
+    return null;
+  }
+
+  public int getTotalWork()
+  {
+    return 0;
+  }
+
+  public boolean hasBegun()
+  {
+    return true;
+  }
+
+  public void message(String msg)
+  {
+  }
+
+  public void setTask(String task)
+  {
+  }
+
+  public void worked()
+  {
+  }
+
+  public void worked(int work, String msg)
+  {
+  }
+
+  public void worked(int work)
+  {
+  }
+
+  public void worked(String msg)
   {
   }
 }

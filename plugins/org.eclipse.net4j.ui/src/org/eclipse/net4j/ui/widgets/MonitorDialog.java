@@ -54,23 +54,8 @@ public class MonitorDialog extends ProgressMonitorDialog
   {
     try
     {
-      log = new MonitorLogDialog(getShell(), getShellStyle(), "Log of " + title, "See the log for details.", settings)
-      {
-        @Override
-        public void handleMessage(String msg, int level)
-        {
-          if (msg.startsWith("Woven class "))
-          {
-            setTextStyle(getRed());
-            append(msg);
-            append("\n");
-          }
-          else
-          {
-            super.handleMessage(msg, level);
-          }
-        }
-      };
+      log = new MonitorLogDialog(getShell(), getShellStyle(), "Log of " + title, "See the log for details.", settings);
+      log.setEmphasizePrefix("Woven class ");
 
       super.run(fork, cancelable, new IRunnableWithProgress()
       {

@@ -13,6 +13,8 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class MonitorLogDialog extends LogDialog implements OMMonitorHandler
 {
+  private String emphasizePrefix;
+
   private TextStyle normal;
 
   private TextStyle blue;
@@ -24,13 +26,23 @@ public class MonitorLogDialog extends LogDialog implements OMMonitorHandler
     super(parentShell, shellStyle, title, message, settings);
     Display display = Display.getCurrent();
     normal = new TextStyle(null, display.getSystemColor(SWT.COLOR_DARK_GRAY), null);
-    blue = new TextStyle(null, display.getSystemColor(SWT.COLOR_DARK_BLUE), null);
-    red = new TextStyle(null, display.getSystemColor(SWT.COLOR_DARK_RED), null);
+    blue = new TextStyle(null, display.getSystemColor(SWT.COLOR_BLUE), null);
+    red = new TextStyle(null, display.getSystemColor(SWT.COLOR_RED), null);
   }
 
   public MonitorLogDialog(Shell parentShell, String title, String message, IDialogSettings settings)
   {
     this(parentShell, DEFAULT_SHELL_STYLE, title, message, settings);
+  }
+
+  public String getEmphasizePrefix()
+  {
+    return emphasizePrefix;
+  }
+
+  public void setEmphasizePrefix(String emphasizePrefix)
+  {
+    this.emphasizePrefix = emphasizePrefix;
   }
 
   public TextStyle getNormal()
@@ -57,7 +69,15 @@ public class MonitorLogDialog extends LogDialog implements OMMonitorHandler
 
   public void handleMessage(String msg, int level)
   {
-    setTextStyle(normal);
+    if (msg.startsWith(emphasizePrefix))
+    {
+      setTextStyle(red);
+    }
+    else
+    {
+      setTextStyle(normal);
+    }
+
     append(msg);
     append("\n");
   }

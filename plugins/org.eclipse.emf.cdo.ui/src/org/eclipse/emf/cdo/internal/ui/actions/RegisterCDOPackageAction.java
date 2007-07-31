@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 
 import org.eclipse.net4j.internal.util.collection.PreferenceHistory;
-import org.eclipse.net4j.ui.widgets.HistoryInputDialog;
+import org.eclipse.net4j.ui.widgets.HistoryTextDialog;
 import org.eclipse.net4j.util.collection.IHistory;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -45,7 +45,7 @@ public class RegisterCDOPackageAction extends RegisterPackageAction
   {
     Shell shell = page.getWorkbenchWindow().getShell();
     IInputValidator validator = new EPackageFactoryValidator();
-    InputDialog dialog = new HistoryInputDialog(shell, TITLE, "Enter a package URI:", HISTORY, validator);
+    InputDialog dialog = new HistoryTextDialog(shell, TITLE, "Enter a package URI:", HISTORY, validator);
     if (dialog.open() == InputDialog.OK)
     {
       String uri = dialog.getValue();

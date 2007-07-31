@@ -35,54 +35,12 @@ public abstract class OSGiActivator implements BundleActivator
 
   public void start(BundleContext context) throws Exception
   {
-    OM.Activator.traceStart(context);
-    OSGiBundle bundle = (OSGiBundle)getOMBundle();
-    if (bundle == null)
-    {
-      throw new IllegalStateException("bundle == null");
-    }
-
-    try
-    {
-      bundle.setBundleContext(context);
-      bundle.start();
-    }
-    catch (Error error)
-    {
-      bundle.logger().error(error);
-      throw error;
-    }
-    catch (Exception ex)
-    {
-      bundle.logger().error(ex);
-      throw ex;
-    }
+    startBundle(context, (OSGiBundle)getOMBundle());
   }
 
   public void stop(BundleContext context) throws Exception
   {
-    OM.Activator.traceStop(context);
-    OSGiBundle bundle = (OSGiBundle)getOMBundle();
-    if (bundle == null)
-    {
-      throw new IllegalStateException("bundle == null");
-    }
-
-    try
-    {
-      bundle.stop();
-      bundle.setBundleContext(null);
-    }
-    catch (Error error)
-    {
-      bundle.logger().error(error);
-      throw error;
-    }
-    catch (Exception ex)
-    {
-      bundle.logger().error(ex);
-      throw ex;
-    }
+    stopBundle(context, (OSGiBundle)getOMBundle());
   }
 
   @Override
@@ -113,5 +71,55 @@ public abstract class OSGiActivator implements BundleActivator
   protected final void finalize() throws Throwable
   {
     super.finalize();
+  }
+
+  public static void startBundle(BundleContext context, OSGiBundle bundle) throws Error, Exception
+  {
+    OM.Activator.traceStart(context);
+    if (bundle == null)
+    {
+      throw new IllegalStateException("bundle == null");
+    }
+
+    try
+    {
+      bundle.setBundleContext(context);
+      bundle.start();
+    }
+    catch (Error error)
+    {
+      bundle.logger().error(error);
+      throw error;
+    }
+    catch (Exception ex)
+    {
+      bundle.logger().error(ex);
+      throw ex;
+    }
+  }
+
+  public static void stopBundle(BundleContext context, OSGiBundle bundle) throws Error, Exception
+  {
+    OM.Activator.traceStop(context);
+    if (bundle == null)
+    {
+      throw new IllegalStateException("bundle == null");
+    }
+
+    try
+    {
+      bundle.stop();
+      bundle.setBundleContext(null);
+    }
+    catch (Error error)
+    {
+      bundle.logger().error(error);
+      throw error;
+    }
+    catch (Exception ex)
+    {
+      bundle.logger().error(ex);
+      throw ex;
+    }
   }
 }

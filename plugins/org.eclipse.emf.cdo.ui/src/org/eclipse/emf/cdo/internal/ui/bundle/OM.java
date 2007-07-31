@@ -66,9 +66,12 @@ public abstract class OM
    */
   public static final class Activator extends OSGiActivator
   {
+    public static Activator INSTANCE;
+
     public Activator()
     {
       super(BUNDLE);
+      INSTANCE = this;
     }
   }
 }

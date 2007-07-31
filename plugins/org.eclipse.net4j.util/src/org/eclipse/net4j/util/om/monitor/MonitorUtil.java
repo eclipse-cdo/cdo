@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om.monitor;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.internal.util.om.monitor.LegacyMonitor;
 import org.eclipse.net4j.internal.util.om.monitor.MON;
@@ -45,14 +46,42 @@ public final class MonitorUtil
     return MON.begin(totalWork, task);
   }
 
+  static void handleMessage(final IMessageHandler messageHandler, String msg, int level)
+  {
+    if (messageHandler != null)
+    {
+      try
+      {
+        messageHandler.handleMessage(msg, level);
+      }
+      catch (RuntimeException ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
   public static final class Eclipse
   {
+    public static void startMonitoring(IProgressMonitor progressMonitor, final IMessageHandler messageHandler)
+    {
+      MON.startMonitoring(new EclipseMonitor(progressMonitor)
+      {
+        @Override
+        protected void message(String msg, int level)
+        {
+          super.message(msg, level);
+          handleMessage(messageHandler, msg, level);
+        }
+      });
+    }
+
     public static void startMonitoring(IProgressMonitor progressMonitor)
     {
-      MON.startMonitoring(new EclipseMonitor(progressMonitor));
+      startMonitoring(null);
     }
 
     public static void stopMonitoring()
@@ -66,14 +95,22 @@ public final class MonitorUtil
    */
   public static final class Legacy
   {
-    public static void startMonitoring(IMessageHandler messageHandler)
+    public static void startMonitoring(final IMessageHandler messageHandler)
     {
-      MON.startMonitoring(new LegacyMonitor(messageHandler));
+      MON.startMonitoring(new LegacyMonitor()
+      {
+        @Override
+        protected void message(String msg, int level)
+        {
+          super.message(msg, level);
+          handleMessage(messageHandler, msg, level);
+        }
+      });
     }
 
     public static void startMonitoring()
     {
-      MON.startMonitoring(new LegacyMonitor(null));
+      startMonitoring(null);
     }
 
     public static void stopMonitoring()

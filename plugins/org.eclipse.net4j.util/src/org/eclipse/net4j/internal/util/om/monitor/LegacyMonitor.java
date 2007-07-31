@@ -10,20 +10,14 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.monitor;
 
-import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.util.om.monitor.IMessageHandler;
-
 /**
  * @author Eike Stepper
  */
-public final class LegacyMonitor extends Monitor
+public class LegacyMonitor extends Monitor
 {
-  private IMessageHandler messageHandler;
-
-  public LegacyMonitor(IMessageHandler messageHandler)
+  public LegacyMonitor()
   {
     super(null, 0);
-    this.messageHandler = messageHandler;
   }
 
   private LegacyMonitor(LegacyMonitor parent, int workFromParent)
@@ -35,28 +29,5 @@ public final class LegacyMonitor extends Monitor
   public LegacyMonitor subMonitor(int workFromParent)
   {
     return new LegacyMonitor(this, workFromParent);
-  }
-
-  @Override
-  protected void message(String msg, int level)
-  {
-    if (getParent() != null)
-    {
-      super.message(msg, level);
-    }
-    else
-    {
-      if (messageHandler != null)
-      {
-        try
-        {
-          messageHandler.handleMessage(msg, level);
-        }
-        catch (RuntimeException ex)
-        {
-          OM.LOG.error(ex);
-        }
-      }
-    }
   }
 }

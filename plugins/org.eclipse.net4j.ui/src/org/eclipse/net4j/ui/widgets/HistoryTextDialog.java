@@ -27,9 +27,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 /**
+ * TODO extend BaseDialog
+ * 
  * @author Eike Stepper
  */
-public class HistoryInputDialog extends InputDialog
+public class HistoryTextDialog extends InputDialog
 {
   private static final String EMPTY = "";
 
@@ -39,7 +41,7 @@ public class HistoryInputDialog extends InputDialog
 
   private HistoryText historyText;
 
-  public HistoryInputDialog(Shell parentShell, String dialogTitle, String dialogMessage, IHistory<String> history,
+  public HistoryTextDialog(Shell parentShell, String dialogTitle, String dialogMessage, IHistory<String> history,
       IInputValidator validator)
   {
     super(parentShell, dialogTitle, dialogMessage, history.getMostRecent(), validator);

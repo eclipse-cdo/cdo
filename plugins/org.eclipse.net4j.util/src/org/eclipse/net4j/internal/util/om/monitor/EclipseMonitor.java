@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 /**
  * @author Eike Stepper
  */
-public final class EclipseMonitor extends Monitor
+public class EclipseMonitor extends Monitor
 {
   private IProgressMonitor progressMonitor;
 

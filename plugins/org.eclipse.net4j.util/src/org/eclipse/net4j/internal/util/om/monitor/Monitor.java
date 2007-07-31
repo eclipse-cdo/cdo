@@ -68,7 +68,6 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
   public void setTask(String task)
   {
     this.task = task;
-    message(task);
   }
 
   public int getTotalWork()

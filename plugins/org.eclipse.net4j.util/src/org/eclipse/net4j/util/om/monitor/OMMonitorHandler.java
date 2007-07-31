@@ -13,7 +13,9 @@ package org.eclipse.net4j.util.om.monitor;
 /**
  * @author Eike Stepper
  */
-public interface IMessageHandler
+public interface OMMonitorHandler
 {
+  public void handleTask(String task, int level);
+
   public void handleMessage(String msg, int level);
 }

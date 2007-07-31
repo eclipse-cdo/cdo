@@ -239,7 +239,7 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
     }
     else
     {
-      trace(task, level);
+      trace(task, level, true);
     }
   }
 
@@ -251,11 +251,11 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
     }
     else
     {
-      trace(msg, level);
+      trace(msg, level, false);
     }
   }
 
-  protected void trace(String msg, int level)
+  protected void trace(String msg, int level, boolean isTask)
   {
     if (TRACER.isEnabled())
     {

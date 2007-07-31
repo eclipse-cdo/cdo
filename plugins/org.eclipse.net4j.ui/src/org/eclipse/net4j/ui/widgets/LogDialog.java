@@ -13,33 +13,83 @@ package org.eclipse.net4j.ui.widgets;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
  */
 public class LogDialog extends BaseDialog
 {
-  private String log;
+  private StringBuilder log = new StringBuilder();
 
-  private Text text;
+  private StyledText text;
+
+  private TextStyle textStyle;
+
+  private List<StyleRange> styleRanges = new ArrayList();
+
+  private StyleRange currentStyleRange = new StyleRange();
+
+  private StyleRange lastStyleRange;
 
   private Font font;
 
-  public LogDialog(Shell parentShell, int shellStyle, String title, String message, String log, IDialogSettings settings)
+  public LogDialog(Shell parentShell, int shellStyle, String title, String message, IDialogSettings settings)
   {
     super(parentShell, shellStyle, title, message, settings);
-    this.log = log;
   }
 
-  public LogDialog(Shell parentShell, String title, String message, String log, IDialogSettings settings)
+  public LogDialog(Shell parentShell, String title, String message, IDialogSettings settings)
   {
-    this(parentShell, DEFAULT_SHELL_STYLE, title, message, log, settings);
+    this(parentShell, DEFAULT_SHELL_STYLE, title, message, settings);
+  }
+
+  public TextStyle getTextStyle()
+  {
+    return textStyle;
+  }
+
+  public void setTextStyle(TextStyle textStyle)
+  {
+    if (textStyle == null)
+    {
+      throw new IllegalArgumentException("textStyle == null");
+    }
+
+    if (textStyle.equals(this.textStyle))
+    {
+      return;
+    }
+
+    lastStyleRange = currentStyleRange;
+    this.textStyle = textStyle;
+
+    currentStyleRange = new StyleRange();
+    currentStyleRange.start = log.length();
+    currentStyleRange.rise = textStyle.rise;
+    currentStyleRange.background = textStyle.background;
+    currentStyleRange.font = textStyle.font;
+    currentStyleRange.foreground = textStyle.foreground;
+    currentStyleRange.metrics = textStyle.metrics;
+    currentStyleRange.strikeout = textStyle.strikeout;
+    currentStyleRange.underline = textStyle.underline;
+  }
+
+  public void append(String text)
+  {
+    checkStyleRange();
+    log.append(text);
+    currentStyleRange.length += text.length();
   }
 
   @Override
@@ -62,11 +112,13 @@ public class LogDialog extends BaseDialog
     composite.setLayout(grid);
     composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-    font = new Font(getShell().getDisplay(), "Courier", 5, SWT.NORMAL);
+    font = new Font(getShell().getDisplay(), "Courier New", 9, SWT.NORMAL);
+    checkStyleRange();
 
-    text = new Text(composite, SWT.MULTI | SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+    text = new StyledText(composite, SWT.MULTI | SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
     text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-    text.setText(log);
+    text.setText(log.toString());
+    text.setStyleRanges(styleRanges.toArray(new StyleRange[styleRanges.size()]));
     text.setBackground(getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE));
     text.setFont(font);
   }
@@ -75,5 +127,14 @@ public class LogDialog extends BaseDialog
   protected void createButtonsForButtonBar(Composite parent)
   {
     createButton(parent, IDialogConstants.OK_ID, IDialogConstants.CLOSE_LABEL, true);
+  }
+
+  private void checkStyleRange()
+  {
+    if (lastStyleRange != null)
+    {
+      styleRanges.add(lastStyleRange);
+      lastStyleRange = null;
+    }
   }
 }

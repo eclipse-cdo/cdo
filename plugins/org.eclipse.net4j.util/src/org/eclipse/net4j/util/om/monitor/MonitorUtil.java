@@ -46,13 +46,20 @@ public final class MonitorUtil
     return MON.begin(totalWork, task);
   }
 
-  static void handleMessage(final IMessageHandler messageHandler, String msg, int level)
+  static void handleTrace(final OMMonitorHandler messageHandler, String msg, int level, boolean isTask)
   {
     if (messageHandler != null)
     {
       try
       {
-        messageHandler.handleMessage(msg, level);
+        if (isTask)
+        {
+          messageHandler.handleTask(msg, level);
+        }
+        else
+        {
+          messageHandler.handleMessage(msg, level);
+        }
       }
       catch (RuntimeException ex)
       {
@@ -66,15 +73,15 @@ public final class MonitorUtil
    */
   public static final class Eclipse
   {
-    public static void startMonitoring(IProgressMonitor progressMonitor, final IMessageHandler messageHandler)
+    public static void startMonitoring(IProgressMonitor progressMonitor, final OMMonitorHandler messageHandler)
     {
       MON.startMonitoring(new EclipseMonitor(progressMonitor)
       {
         @Override
-        protected void trace(String msg, int level)
+        protected void trace(String msg, int level, boolean isTask)
         {
-          super.trace(msg, level);
-          handleMessage(messageHandler, msg, level);
+          super.trace(msg, level, isTask);
+          handleTrace(messageHandler, msg, level, isTask);
         }
       });
     }
@@ -95,15 +102,15 @@ public final class MonitorUtil
    */
   public static final class Legacy
   {
-    public static void startMonitoring(final IMessageHandler messageHandler)
+    public static void startMonitoring(final OMMonitorHandler messageHandler)
     {
       MON.startMonitoring(new LegacyMonitor()
       {
         @Override
-        protected void trace(String msg, int level)
+        protected void trace(String msg, int level, boolean isTask)
         {
-          super.trace(msg, level);
-          handleMessage(messageHandler, msg, level);
+          super.trace(msg, level, isTask);
+          handleTrace(messageHandler, msg, level, isTask);
         }
       });
     }

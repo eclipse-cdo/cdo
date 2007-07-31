@@ -11,19 +11,15 @@
 package org.eclipse.net4j.ui.widgets;
 
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.om.monitor.IMessageHandler;
 import org.eclipse.net4j.util.om.monitor.MonitorUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -37,16 +33,7 @@ public class MonitorDialog extends ProgressMonitorDialog
 
   private Exception exception;
 
-  private StringBuilder log = new StringBuilder();
-
-  private IMessageHandler logHandler = new IMessageHandler()
-  {
-    public void handleMessage(String msg, int level)
-    {
-      log.append(msg);
-      log.append("\n");
-    }
-  };
+  private MonitorLogDialog log;
 
   private IDialogSettings settings;
 
@@ -67,11 +54,12 @@ public class MonitorDialog extends ProgressMonitorDialog
   {
     try
     {
+      log = new MonitorLogDialog(getShell(), getShellStyle(), "Log of " + title, "See the log for details.", settings);
       super.run(fork, cancelable, new IRunnableWithProgress()
       {
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
         {
-          MonitorUtil.Eclipse.startMonitoring(monitor, logHandler);
+          MonitorUtil.Eclipse.startMonitoring(monitor, log);
           try
           {
             runnable.run();
@@ -79,10 +67,11 @@ public class MonitorDialog extends ProgressMonitorDialog
           catch (RuntimeException ex)
           {
             exception = WrappedException.unwrap(ex);
-            log.append(exception.getMessage());
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            exception.printStackTrace(new PrintStream(bytes));
-            log.append(bytes);
+            // log.append(exception.getMessage());
+            // ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            // exception.printStackTrace(new PrintStream(bytes));
+            // log.append(bytes);
+            throw ex;
           }
           finally
           {
@@ -101,19 +90,9 @@ public class MonitorDialog extends ProgressMonitorDialog
   protected void finishedRun()
   {
     super.finishedRun();
-    if (exception != null)
+    if (log != null)
     {
-      new LogDialog(getShell(), getShellStyle(), "Aborted " + title, "An error occured. See the log for details.", log
-          .toString(), settings).open();
-    }
-    else if (log.length() != 0)
-    {
-      new LogDialog(getShell(), getShellStyle(), "Finished " + title,
-          "The operation finished successfully. See the log for details.", log.toString(), settings).open();
-    }
-    else
-    {
-      MessageDialog.openInformation(getShell(), "Finished " + title, "The operation finished successfully.");
+      log.open();
     }
   }
 

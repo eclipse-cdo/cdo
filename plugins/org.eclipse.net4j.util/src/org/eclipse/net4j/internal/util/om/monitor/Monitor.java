@@ -259,21 +259,7 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
   {
     if (TRACER.isEnabled())
     {
-      if (level == 0)
-      {
-        TRACER.trace(msg);
-      }
-      else
-      {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < level; i++)
-        {
-          builder.append("  ");
-        }
-
-        builder.append(msg);
-        TRACER.trace(builder.toString());
-      }
+      TRACER.trace(msg);
     }
   }
 

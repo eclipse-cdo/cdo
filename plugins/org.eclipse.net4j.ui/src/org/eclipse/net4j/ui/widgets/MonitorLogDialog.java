@@ -21,6 +21,8 @@ public class MonitorLogDialog extends LogDialog implements OMMonitorHandler
 
   private TextStyle red;
 
+  private TextStyle green;
+
   public MonitorLogDialog(Shell parentShell, int shellStyle, String title, String message, IDialogSettings settings)
   {
     super(parentShell, shellStyle, title, message, settings);
@@ -28,6 +30,7 @@ public class MonitorLogDialog extends LogDialog implements OMMonitorHandler
     normal = new TextStyle(null, display.getSystemColor(SWT.COLOR_DARK_GRAY), null);
     blue = new TextStyle(null, display.getSystemColor(SWT.COLOR_BLUE), null);
     red = new TextStyle(null, display.getSystemColor(SWT.COLOR_RED), null);
+    green = new TextStyle(null, display.getSystemColor(SWT.COLOR_GREEN), null);
   }
 
   public MonitorLogDialog(Shell parentShell, String title, String message, IDialogSettings settings)
@@ -60,6 +63,11 @@ public class MonitorLogDialog extends LogDialog implements OMMonitorHandler
     return red;
   }
 
+  public TextStyle getGreen()
+  {
+    return green;
+  }
+
   public void handleTask(String task, int level)
   {
     setTextStyle(blue);
@@ -71,7 +79,7 @@ public class MonitorLogDialog extends LogDialog implements OMMonitorHandler
   {
     if (msg.startsWith(emphasizePrefix))
     {
-      setTextStyle(red);
+      setTextStyle(green);
     }
     else
     {
@@ -80,5 +88,12 @@ public class MonitorLogDialog extends LogDialog implements OMMonitorHandler
 
     append(msg);
     append("\n");
+  }
+
+  @Override
+  public void append(Throwable t)
+  {
+    setTextStyle(red);
+    super.append(t);
   }
 }

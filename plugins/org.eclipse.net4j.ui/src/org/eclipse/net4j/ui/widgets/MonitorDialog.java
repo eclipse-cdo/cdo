@@ -31,11 +31,9 @@ public class MonitorDialog extends ProgressMonitorDialog
 
   private String title;
 
-  private Exception exception;
+  private IDialogSettings settings;
 
   private MonitorLogDialog log;
-
-  private IDialogSettings settings;
 
   public MonitorDialog(Shell parentShell, int shellStyle, String title, IDialogSettings settings)
   {
@@ -68,11 +66,7 @@ public class MonitorDialog extends ProgressMonitorDialog
           }
           catch (RuntimeException ex)
           {
-            exception = WrappedException.unwrap(ex);
-            // log.append(exception.getMessage());
-            // ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            // exception.printStackTrace(new PrintStream(bytes));
-            // log.append(bytes);
+            log.append(ex);
             throw ex;
           }
           finally

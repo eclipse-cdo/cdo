@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.ui.widgets;
 
+import org.eclipse.net4j.util.io.IORuntimeException;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.swt.SWT;
@@ -22,6 +24,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +95,26 @@ public class LogDialog extends BaseDialog
     checkStyleRange();
     log.append(text);
     currentStyleRange.length += text.length();
+  }
+
+  public void append(Throwable t)
+  {
+    try
+    {
+      checkStyleRange();
+      ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+      String message = t.getMessage() + "\n";
+      bytes.write(message.getBytes());
+      t.printStackTrace(new PrintStream(bytes));
+
+      String text = bytes.toString();
+      log.append(text);
+      currentStyleRange.length += text.length();
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
   }
 
   @Override

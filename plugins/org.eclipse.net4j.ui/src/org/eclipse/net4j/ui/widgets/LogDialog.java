@@ -62,7 +62,7 @@ public class LogDialog extends BaseDialog
     composite.setLayout(grid);
     composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-    font = new Font(getShell().getDisplay(), "Courier", 8, SWT.NORMAL);
+    font = new Font(getShell().getDisplay(), "Courier", 5, SWT.NORMAL);
 
     text = new Text(composite, SWT.MULTI | SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
     text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));

@@ -43,11 +43,6 @@ public class MonitorDialog extends ProgressMonitorDialog
   {
     public void handleMessage(String msg, int level)
     {
-      // for (int i = 0; i < level; i++)
-      // {
-      // log.append(" ");
-      // }
-
       log.append(msg);
       log.append("\n");
     }

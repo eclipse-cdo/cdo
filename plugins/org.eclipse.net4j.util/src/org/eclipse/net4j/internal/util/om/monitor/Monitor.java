@@ -68,6 +68,7 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
   public void setTask(String task)
   {
     this.task = task;
+    taskChanged(task, 0);
   }
 
   public int getTotalWork()
@@ -230,6 +231,18 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
   {
   }
 
+  protected void taskChanged(String task, int level)
+  {
+    if (parent != null)
+    {
+      parent.taskChanged(task, level + 1);
+    }
+    else
+    {
+      trace(task, level);
+    }
+  }
+
   protected void message(String msg, int level)
   {
     if (parent != null)
@@ -238,24 +251,28 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
     }
     else
     {
+      trace(msg, level);
+    }
+  }
 
-      if (TRACER.isEnabled())
+  protected void trace(String msg, int level)
+  {
+    if (TRACER.isEnabled())
+    {
+      if (level == 0)
       {
-        if (level == 0)
+        TRACER.trace(msg);
+      }
+      else
+      {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < level; i++)
         {
-          TRACER.trace(msg);
+          builder.append("  ");
         }
-        else
-        {
-          StringBuilder builder = new StringBuilder();
-          for (int i = 0; i < level; i++)
-          {
-            builder.append("  ");
-          }
 
-          builder.append(msg);
-          TRACER.trace(builder.toString());
-        }
+        builder.append(msg);
+        TRACER.trace(builder.toString());
       }
     }
   }

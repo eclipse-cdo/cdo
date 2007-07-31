@@ -71,9 +71,9 @@ public final class MonitorUtil
       MON.startMonitoring(new EclipseMonitor(progressMonitor)
       {
         @Override
-        protected void message(String msg, int level)
+        protected void trace(String msg, int level)
         {
-          super.message(msg, level);
+          super.trace(msg, level);
           handleMessage(messageHandler, msg, level);
         }
       });
@@ -100,9 +100,9 @@ public final class MonitorUtil
       MON.startMonitoring(new LegacyMonitor()
       {
         @Override
-        protected void message(String msg, int level)
+        protected void trace(String msg, int level)
         {
-          super.message(msg, level);
+          super.trace(msg, level);
           handleMessage(messageHandler, msg, level);
         }
       });

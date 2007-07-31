@@ -15,22 +15,22 @@ public class MonitorLogDialog extends LogDialog implements OMMonitorHandler
 {
   private String emphasizePrefix;
 
-  private TextStyle normal;
+  private TextStyle taskStyle;
 
-  private TextStyle blue;
+  private TextStyle normalStyle;
 
-  private TextStyle red;
+  private TextStyle emphasizedStyle;
 
-  private TextStyle green;
+  private TextStyle problemStyle;
 
   public MonitorLogDialog(Shell parentShell, int shellStyle, String title, String message, IDialogSettings settings)
   {
     super(parentShell, shellStyle, title, message, settings);
     Display display = Display.getCurrent();
-    normal = new TextStyle(null, display.getSystemColor(SWT.COLOR_DARK_GRAY), null);
-    blue = new TextStyle(null, display.getSystemColor(SWT.COLOR_BLUE), null);
-    red = new TextStyle(null, display.getSystemColor(SWT.COLOR_RED), null);
-    green = new TextStyle(null, display.getSystemColor(SWT.COLOR_GREEN), null);
+    taskStyle = new TextStyle(null, display.getSystemColor(SWT.COLOR_BLACK), null);
+    normalStyle = new TextStyle(null, display.getSystemColor(SWT.COLOR_DARK_GRAY), null);
+    emphasizedStyle = new TextStyle(null, display.getSystemColor(SWT.COLOR_BLUE), null);
+    problemStyle = new TextStyle(null, display.getSystemColor(SWT.COLOR_RED), null);
   }
 
   public MonitorLogDialog(Shell parentShell, String title, String message, IDialogSettings settings)
@@ -48,29 +48,29 @@ public class MonitorLogDialog extends LogDialog implements OMMonitorHandler
     this.emphasizePrefix = emphasizePrefix;
   }
 
-  public TextStyle getNormal()
+  public TextStyle getNormalStyle()
   {
-    return normal;
+    return normalStyle;
   }
 
-  public TextStyle getBlue()
+  public TextStyle getTaskStyle()
   {
-    return blue;
+    return taskStyle;
   }
 
-  public TextStyle getRed()
+  public TextStyle getProblemStyle()
   {
-    return red;
+    return problemStyle;
   }
 
-  public TextStyle getGreen()
+  public TextStyle getEmphasizedStyle()
   {
-    return green;
+    return emphasizedStyle;
   }
 
   public void handleTask(String task, int level)
   {
-    setTextStyle(blue);
+    setTextStyle(taskStyle);
     append(task);
     append("\n");
   }
@@ -79,11 +79,11 @@ public class MonitorLogDialog extends LogDialog implements OMMonitorHandler
   {
     if (msg.startsWith(emphasizePrefix))
     {
-      setTextStyle(green);
+      setTextStyle(emphasizedStyle);
     }
     else
     {
-      setTextStyle(normal);
+      setTextStyle(normalStyle);
     }
 
     append(msg);
@@ -93,7 +93,7 @@ public class MonitorLogDialog extends LogDialog implements OMMonitorHandler
   @Override
   public void append(Throwable t)
   {
-    setTextStyle(red);
+    setTextStyle(problemStyle);
     super.append(t);
   }
 }

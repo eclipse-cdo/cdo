@@ -114,6 +114,8 @@ public class LogDialog extends BaseDialog
 
     font = new Font(getShell().getDisplay(), "Courier New", 9, SWT.NORMAL);
     checkStyleRange();
+    lastStyleRange = currentStyleRange;
+    checkStyleRange();
 
     text = new StyledText(composite, SWT.MULTI | SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
     text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));

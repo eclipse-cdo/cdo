@@ -17,7 +17,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -28,6 +31,10 @@ import java.util.zip.ZipOutputStream;
 public final class ZIPUtil
 {
   public static final int DEFALULT_BUFFER_SIZE = 4096;
+
+  private static final int ORDER_KEEP = -1;
+
+  private static final int ORDER_SWAP = 1;
 
   private ZIPUtil()
   {
@@ -56,7 +63,7 @@ public final class ZIPUtil
 
         try
         {
-          String name = context.getName();
+          String name = context.getName().replace(File.separatorChar, '/');
           entry = new ZipEntry(name);
           zos.putNextEntry(entry);
 
@@ -229,7 +236,98 @@ public final class ZIPUtil
         ++sourceFolderLength;
       }
 
-      files = IOUtil.listBreadthFirst(sourceFolder).iterator();
+      final int baseLength = sourceFolder.getAbsolutePath().length();
+      List<File> list = IOUtil.listBreadthFirst(sourceFolder);
+      Collections.sort(list, new Comparator()
+      {
+        public int compare(Object o1, Object o2)
+        {
+          File f1 = (File)o1;
+          File f2 = (File)o2;
+
+          String path1 = getPath(f1, baseLength);
+          String path2 = getPath(f2, baseLength);
+          if (path1.length() == 0) return ORDER_KEEP;
+          if (path2.length() == 0) return ORDER_SWAP;
+
+          if (f1.isDirectory())
+          {
+            if (f2.isDirectory())
+            {
+              // f1=dir, f2=dir
+              if (path1.equalsIgnoreCase("/META-INF"))
+              {
+                return ORDER_KEEP;
+              }
+
+              if (path2.equalsIgnoreCase("/META-INF"))
+              {
+                return ORDER_SWAP;
+              }
+
+              return path1.compareTo(path2);
+            }
+            else
+            {
+              // f1=dir, f2=file
+              if (path1.equalsIgnoreCase("/META-INF"))
+              {
+                return ORDER_KEEP;
+              }
+
+              if (path2.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
+              {
+                return ORDER_SWAP;
+              }
+
+              return ORDER_KEEP;
+            }
+          }
+          else
+          {
+            if (f2.isDirectory())
+            {
+              // f1=file, f2=dir
+              if (path2.equalsIgnoreCase("/META-INF"))
+              {
+                return ORDER_SWAP;
+              }
+
+              if (path1.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
+              {
+                return ORDER_KEEP;
+              }
+
+              return ORDER_SWAP;
+            }
+            else
+            {
+              // f1=file, f2=file
+              if (path1.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
+              {
+                return ORDER_KEEP;
+              }
+
+              if (path2.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
+              {
+                return ORDER_SWAP;
+              }
+
+              return path1.compareTo(path2);
+            }
+          }
+        }
+
+        private String getPath(File file, int baseLength)
+        {
+          String absolutePath = file.getAbsolutePath();
+          String substring = absolutePath.substring(baseLength);
+          String replace = substring.replace(File.separatorChar, '/');
+          return replace;
+        }
+      });
+
+      files = list.iterator();
       if (excludeRoot)
       {
         files.next();

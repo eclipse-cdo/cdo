@@ -22,11 +22,15 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.CDOAware;
+import org.eclipse.emf.ecore.impl.CDOCallback;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
+import org.eclipse.emf.internal.cdo.CDOCallbackImpl;
 import org.eclipse.emf.internal.cdo.CDOMetaImpl;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -76,6 +80,30 @@ public final class FSMUtil
       {
         return new CDOMetaImpl((CDOViewImpl)view, eObject, id);
       }
+    }
+
+    try
+    {
+      if (object instanceof CDOAware)
+      {
+        CDOAware aware = (CDOAware)object;
+        CDOCallback callback = aware.getCDOCallback();
+        if (callback != null)
+        {
+          return (InternalCDOObject)callback;
+        }
+
+        CDOCallbackImpl callbackAdapter = new CDOCallbackImpl();
+        aware.setCDOCallback(callbackAdapter);
+
+        EList<Adapter> adapters = ((InternalEObject)object).eAdapters();
+        adapters.add(callbackAdapter);
+        return callbackAdapter;
+      }
+    }
+    catch (Throwable t)
+    {
+      OM.LOG.info(t);
     }
 
     if (object instanceof InternalEObject)

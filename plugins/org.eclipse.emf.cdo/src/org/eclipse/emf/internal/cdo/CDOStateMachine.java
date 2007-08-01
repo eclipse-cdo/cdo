@@ -47,7 +47,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     transit(CDOState.PREPARED_ATTACH, CDOEvent.ATTACH, FAIL);
     transit(CDOState.PREPARED_ATTACH, CDOEvent.DETACH, FAIL);
-    transit(CDOState.PREPARED_ATTACH, CDOEvent.READ, FAIL);
+    transit(CDOState.PREPARED_ATTACH, CDOEvent.READ, IGNORE);
     transit(CDOState.PREPARED_ATTACH, CDOEvent.WRITE, FAIL);
     transit(CDOState.PREPARED_ATTACH, CDOEvent.COMMIT, FAIL);
     transit(CDOState.PREPARED_ATTACH, CDOEvent.ROLLBACK, FAIL);
@@ -107,13 +107,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     data.view = view;
 
     // TRANSIENT --> PREPARED_ATTACH
-    if (TRACER.isEnabled())
-      TRACER.format("ATTACH: {0} --> {1}", object, view);
+    if (TRACER.isEnabled()) TRACER.format("ATTACH: {0} --> {1}", object, view);
     process(object, CDOEvent.ATTACH, data);
 
     // PREPARED_ATTACH --> NEW
-    if (TRACER.isEnabled())
-      TRACER.format("FINALIZE_ATTACH: {0} --> {1}", object, view);
+    if (TRACER.isEnabled()) TRACER.format("FINALIZE_ATTACH: {0} --> {1}", object, view);
     process(object, CDOEvent.FINALIZE_ATTACH, data);
   }
 
@@ -125,36 +123,31 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   public void read(InternalCDOObject object)
   {
-    if (TRACER.isEnabled())
-      TRACER.format("READ: {0}", object);
+    if (TRACER.isEnabled()) TRACER.format("READ: {0}", object);
     process(object, CDOEvent.READ, null);
   }
 
   public void write(InternalCDOObject object)
   {
-    if (TRACER.isEnabled())
-      TRACER.format("WRITE: {0}", object);
+    if (TRACER.isEnabled()) TRACER.format("WRITE: {0}", object);
     process(object, CDOEvent.WRITE, null);
   }
 
   public void invalidate(InternalCDOObject object, long timeStamp)
   {
-    if (TRACER.isEnabled())
-      TRACER.format("INVALIDATE: {0}", object);
+    if (TRACER.isEnabled()) TRACER.format("INVALIDATE: {0}", object);
     process(object, CDOEvent.INVALIDATE, timeStamp);
   }
 
   public void commit(InternalCDOObject object, CommitTransactionResult result)
   {
-    if (TRACER.isEnabled())
-      TRACER.format("COMMIT: {0}", object);
+    if (TRACER.isEnabled()) TRACER.format("COMMIT: {0}", object);
     process(object, CDOEvent.COMMIT, result);
   }
 
   public void rollback(InternalCDOObject object)
   {
-    if (TRACER.isEnabled())
-      TRACER.format("ROLLBACK: {0}", object);
+    if (TRACER.isEnabled()) TRACER.format("ROLLBACK: {0}", object);
     process(object, CDOEvent.ROLLBACK, null);
   }
 

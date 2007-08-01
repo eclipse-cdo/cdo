@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -47,6 +48,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
+import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.emf.internal.cdo.util.ProxyResolverURIResourceMap;
 
 import java.text.MessageFormat;
@@ -254,7 +256,24 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   public InternalEObject lookupMetaInstance(CDOID id)
   {
-    return idToMetaInstanceMap.get(id);
+    InternalEObject metaInstance = idToMetaInstanceMap.get(id);
+    if (metaInstance == null)
+    {
+      CDOPackageImpl[] cdoPackages = packageManager.getPackages();
+      for (CDOPackageImpl cdoPackage : cdoPackages)
+      {
+        CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
+        if (metaIDRange != null && metaIDRange.contains(id))
+        {
+          EPackage ePackage = ModelUtil.getEPackage(cdoPackage, packageRegistry);
+          registerEPackage(ePackage);
+          metaInstance = idToMetaInstanceMap.get(id);
+          break;
+        }
+      }
+    }
+
+    return metaInstance;
   }
 
   public CDOID lookupMetaInstanceID(InternalEObject metaInstance)

@@ -137,10 +137,14 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
       }
     }
 
-    int size = in.readInt();
-    for (int i = 0; i < size; i++)
+    for (;;)
     {
       CDOID oldID = CDOIDImpl.read(in);
+      if (oldID.isNull())
+      {
+        break;
+      }
+
       CDOID newID = CDOIDImpl.read(in);
       result.addIDMapping(oldID, newID);
     }

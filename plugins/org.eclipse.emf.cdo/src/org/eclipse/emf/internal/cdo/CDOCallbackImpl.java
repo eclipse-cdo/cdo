@@ -8,16 +8,27 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.internal.cdo.weaver;
+package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.ecore.impl.CDOCallback;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * @author Eike Stepper
  */
-public interface IPersistenceCallback
+public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
 {
-  public void beforeRead(EObjectImpl eObject);
+  public CDOCallbackImpl()
+  {
+  }
 
-  public void beforeWrite(EObjectImpl eObject);
+  public void beforeRead(EObjectImpl instance)
+  {
+    CDOStateMachine.INSTANCE.read(this);
+  }
+
+  public void beforeWrite(EObjectImpl instance)
+  {
+    CDOStateMachine.INSTANCE.write(this);
+  }
 }

@@ -49,7 +49,6 @@ import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl;
 import org.eclipse.emf.ecore.impl.ETypedElementImpl;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.GenUtil;
@@ -86,7 +85,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
   @Override
   public boolean isAdapterForType(Object type)
   {
-    return type == CDOAdapterImpl.class;
+    return type == CDOAdapterImpl.class || type == CDOCallbackImpl.class;
   }
 
   @Override
@@ -810,11 +809,5 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
   public String eURIFragmentSegment(EStructuralFeature feature, EObject object)
   {
     return getTarget().eURIFragmentSegment(feature, object);
-  }
-
-  public static CDOAdapterImpl get(InternalEObject eObject)
-  {
-    EList<Adapter> adapters = eObject.eAdapters();
-    return (CDOAdapterImpl)EcoreUtil.getAdapter(adapters, CDOAdapterImpl.class);
   }
 }

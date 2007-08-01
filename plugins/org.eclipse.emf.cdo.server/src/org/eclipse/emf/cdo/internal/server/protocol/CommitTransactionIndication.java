@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -60,15 +61,6 @@ public class CommitTransactionIndication extends CDOServerIndication
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    // try
-    // {
-    // Thread.sleep(100000000000L);
-    // }
-    // catch (InterruptedException ex)
-    // {
-    // throw new IOException(ex.getMessage());
-    // }
-
     addNewPackages(in);
     newResources = readNewResources(in);
     newObjects = readNewObjects(in);
@@ -90,7 +82,20 @@ public class CommitTransactionIndication extends CDOServerIndication
       for (int i = 0; i < size; i++)
       {
         newPackages[i] = new CDOPackageImpl(packageManager, in);
+        CDOIDRange oldRange = newPackages[i].getMetaIDRange();
+
         packageManager.addPackage(newPackages[i]);
+        CDOIDRange newRange = newPackages[i].getMetaIDRange();
+
+        long count = oldRange.getCount();
+        for (long l = 0; l < count; l++)
+        {
+          CDOID oldID = oldRange.get(l);
+          CDOID newID = newRange.get(l);
+
+          TRACER.format("Mapping ID: {0} --> {1}", oldID, newID);
+          idMappings.put(oldID, newID);
+        }
       }
     }
   }
@@ -201,11 +206,17 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   private void writeIDMappings(ExtendedDataOutputStream out) throws IOException
   {
-    out.writeInt(idMappings.size());
     for (Entry<CDOID, CDOID> entry : idMappings.entrySet())
     {
-      CDOIDImpl.write(out, entry.getKey());
-      CDOIDImpl.write(out, entry.getValue());
+      CDOID oldID = entry.getKey();
+      if (!oldID.isMeta())
+      {
+        CDOID newID = entry.getValue();
+        CDOIDImpl.write(out, oldID);
+        CDOIDImpl.write(out, newID);
+      }
     }
+
+    CDOIDImpl.write(out, CDOID.NULL);
   }
 }

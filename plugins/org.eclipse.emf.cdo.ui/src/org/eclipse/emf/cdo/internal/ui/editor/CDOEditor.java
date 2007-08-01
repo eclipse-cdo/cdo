@@ -57,6 +57,7 @@ import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
+import org.eclipse.emf.internal.cdo.CDOCallbackImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
@@ -1223,7 +1224,11 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       @Override
       protected void objectInvalidated(CDOObject cdoObject)
       {
-        if (cdoObject instanceof CDOAdapterImpl)
+        if (cdoObject instanceof CDOCallbackImpl)
+        {
+          // Do nothing
+        }
+        else if (cdoObject instanceof CDOAdapterImpl)
         {
           CDOStateMachine.INSTANCE.read((InternalCDOObject)cdoObject);
         }

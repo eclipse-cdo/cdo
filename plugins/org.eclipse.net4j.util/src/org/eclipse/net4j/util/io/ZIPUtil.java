@@ -33,7 +33,7 @@ public final class ZIPUtil
   {
   }
 
-  public static void zip(File zipFile, ZipEntryHandler handler) throws IORuntimeException
+  public static void zip(ZipEntryHandler handler, File zipFile) throws IORuntimeException
   {
     final byte[] buffer = new byte[DEFALULT_BUFFER_SIZE];
     final EntryContext context = new EntryContext();
@@ -41,6 +41,7 @@ public final class ZIPUtil
     FileOutputStream fos = IOUtil.openOutputStream(zipFile);
     ZipOutputStream zos = null;
     InputStream input = null;
+    ZipEntry entry = null;
 
     try
     {
@@ -53,24 +54,28 @@ public final class ZIPUtil
           break;
         }
 
-        String name = context.getName();
-        ZipEntry entry = new ZipEntry(name);
-        zos.putNextEntry(entry);
-
-        if (!context.isDirectory())
+        try
         {
-          try
+          String name = context.getName();
+          entry = new ZipEntry(name);
+          zos.putNextEntry(entry);
+
+          if (!context.isDirectory())
           {
             input = context.getInputStream();
             IOUtil.copy(input, zos, buffer);
           }
-          finally
-          {
-            IOUtil.closeSilent(input);
-          }
         }
+        finally
+        {
+          IOUtil.closeSilent(input);
+          if (entry != null)
+          {
+            zos.closeEntry();
+          }
 
-        context.reset();
+          context.reset();
+        }
       }
     }
     catch (IOException ex)
@@ -84,18 +89,9 @@ public final class ZIPUtil
     }
   }
 
-  public static void zip(File zipFile, File sourceFolder, boolean excludeRoot)
+  public static void zip(File sourceFolder, boolean excludeRoot, File zipFile)
   {
-    zip(zipFile, new FileSystemZipHandler(sourceFolder, excludeRoot));
-  }
-
-  public static void main(String[] args) throws Exception
-  {
-    File zipFile = new File("C:\\org.eclipse.emf.ecore_2.3.1.v200707242120.zip");
-    File targetFolder = new File("C:\\_weaver\\org.eclipse.emf.ecore_2.3.1.unzipped");
-    unzip(zipFile, targetFolder);
-
-    zip(new File("C:\\_weaver\\org.eclipse.emf.ecore_2.3.1.jar"), targetFolder, true);
+    zip(new FileSystemZipHandler(sourceFolder, excludeRoot), zipFile);
   }
 
   public static void unzip(File zipFile, UnzipHandler handler) throws IORuntimeException
@@ -166,6 +162,8 @@ public final class ZIPUtil
 
     private InputStream inputStream;
 
+    private boolean directory;
+
     EntryContext()
     {
     }
@@ -183,17 +181,12 @@ public final class ZIPUtil
 
     boolean isDirectory()
     {
-      return inputStream == null;
+      return directory;
     }
 
     String getName()
     {
-      if (isDirectory())
-      {
-        return name;
-      }
-
-      return name + "/";
+      return name;
     }
 
     InputStream getInputStream()
@@ -201,9 +194,10 @@ public final class ZIPUtil
       return inputStream;
     }
 
-    public void setName(String name)
+    public void setName(String name, boolean directory)
     {
-      this.name = name;
+      this.name = name + (directory ? "/" : "");
+      this.directory = directory;
     }
 
     public void setInputStream(InputStream inputStream)
@@ -223,7 +217,13 @@ public final class ZIPUtil
 
     public FileSystemZipHandler(File sourceFolder, boolean excludeRoot)
     {
-      sourceFolderLength = sourceFolder.getAbsolutePath().length();
+      File root = excludeRoot ? sourceFolder : sourceFolder.getParentFile();
+      sourceFolderLength = root.getAbsolutePath().length();
+      if (excludeRoot)
+      {
+        ++sourceFolderLength;
+      }
+
       files = IOUtil.listBreadthFirst(sourceFolder).iterator();
       if (excludeRoot)
       {
@@ -236,11 +236,15 @@ public final class ZIPUtil
       if (files.hasNext())
       {
         File file = files.next();
-        context.setName(getName(file));
-
-        if (file.isFile())
+        String name = getName(file);
+        if (name.length() != 0)
         {
-          context.setInputStream(IOUtil.openInputStream(file));
+          context.setName(name, file.isDirectory());
+
+          if (file.isFile())
+          {
+            context.setInputStream(IOUtil.openInputStream(file));
+          }
         }
       }
     }

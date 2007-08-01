@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.tests;
+package org.eclipse.net4j.util.tests;
 
 import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;

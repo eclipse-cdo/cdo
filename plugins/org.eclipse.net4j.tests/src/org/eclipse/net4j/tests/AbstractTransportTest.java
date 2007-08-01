@@ -16,6 +16,7 @@ import org.eclipse.net4j.internal.tcp.TCPSelectorFactory;
 import org.eclipse.net4j.internal.tcp.TCPSelectorInjector;
 import org.eclipse.net4j.tcp.ITCPConstants;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.internal.net4j.Acceptor;
 import org.eclipse.internal.net4j.Connector;

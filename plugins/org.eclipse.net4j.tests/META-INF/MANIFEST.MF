@@ -11,5 +11,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.junit;visibility:=reexport,
  org.eclipse.net4j.tcp;visibility:=reexport
 Export-Package: org.eclipse.net4j.tests,
- org.eclipse.net4j.tests.bundle,
- org.eclipse.net4j.tests.signal
+ org.eclipse.net4j.tests.signal,
+ org.eclipse.net4j.util.tests

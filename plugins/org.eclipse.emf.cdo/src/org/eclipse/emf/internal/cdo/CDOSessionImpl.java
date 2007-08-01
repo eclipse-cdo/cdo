@@ -281,19 +281,28 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     return metaInstanceToIDMap.get(metaInstance);
   }
 
+  public void registerEPackage(EPackage ePackage, CDOIDRange metaIDRange)
+  {
+    // TODO Check range is not temp
+    registerMetaInstance((InternalEObject)ePackage, metaIDRange.getLowerBound().getValue());
+    // TODO Check count matches range
+  }
+
   public CDOIDRange registerEPackage(EPackage ePackage)
   {
-    long lowerBound = nextTemporaryID;
-    registerMetaInstance((InternalEObject)ePackage);
-    return CDOIDRangeImpl.create(lowerBound, nextTemporaryID + 2);
+    long count = registerMetaInstance((InternalEObject)ePackage, nextTemporaryID);
+    long newTempID = nextTemporaryID - 2 * count;
+    CDOIDRange range = CDOIDRangeImpl.create(nextTemporaryID, newTempID + 2);
+    nextTemporaryID = newTempID;
+    return range;
   }
 
   /**
    * TODO synchronize
    */
-  private void registerMetaInstance(InternalEObject metaInstance)
+  private long registerMetaInstance(InternalEObject metaInstance, long idValue)
   {
-    CDOID id = CDOIDImpl.create(nextTemporaryID);
+    CDOID id = CDOIDImpl.create(idValue);
     if (TRACER.isEnabled())
     {
       TRACER.format("Registering meta instance: {0} <-> {1}", id, metaInstance);
@@ -301,13 +310,14 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
     idToMetaInstanceMap.put(id, metaInstance);
     metaInstanceToIDMap.put(metaInstance, id);
-    --nextTemporaryID;
-    --nextTemporaryID;
 
+    long count = 1;
     for (EObject content : metaInstance.eContents())
     {
-      registerMetaInstance((InternalEObject)content);
+      count += registerMetaInstance((InternalEObject)content, idValue + 2 * count);
     }
+
+    return count;
   }
 
   public void remapMetaInstance(CDOID oldID, CDOID newID)

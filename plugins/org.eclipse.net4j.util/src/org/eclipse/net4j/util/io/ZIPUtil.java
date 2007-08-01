@@ -63,6 +63,11 @@ public final class ZIPUtil
           if (!context.isDirectory())
           {
             input = context.getInputStream();
+            if (input == null)
+            {
+              throw new IllegalStateException("Input is null for zip entry " + name);
+            }
+
             IOUtil.copy(input, zos, buffer);
           }
         }

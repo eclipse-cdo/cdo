@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -30,6 +32,8 @@ import java.util.List;
  */
 public final class IOUtil
 {
+  public static final int DEFAULT_BUFFER_SIZE = 8192;
+
   private IOUtil()
   {
   }
@@ -165,6 +169,47 @@ public final class IOUtil
     return deleted;
   }
 
+  public static void copyText(File source, File target, IOFilter<String>... lineFilters) throws IORuntimeException
+  {
+    BufferedReader reader = null;
+    BufferedWriter writer = null;
+
+    try
+    {
+      reader = new BufferedReader(openReader(source));
+      writer = new BufferedWriter(openWriter(target));
+
+      copyText(reader, writer, lineFilters);
+    }
+    finally
+    {
+      closeSilent(reader);
+      closeSilent(writer);
+    }
+  }
+
+  public static void copyText(BufferedReader reader, BufferedWriter writer, IOFilter<String>... lineFilters)
+  {
+    try
+    {
+      String line;
+      while ((line = reader.readLine()) != null)
+      {
+        for (IOFilter<String> lineFilter : lineFilters)
+        {
+          line = lineFilter.filter(line);
+        }
+
+        writer.write(line);
+        writer.newLine();
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
   public static void copy(InputStream input, OutputStream output, byte buffer[]) throws IORuntimeException
   {
     try
@@ -188,7 +233,7 @@ public final class IOUtil
 
   public static void copy(InputStream input, OutputStream output) throws IORuntimeException
   {
-    copy(input, output, 4096);
+    copy(input, output, DEFAULT_BUFFER_SIZE);
   }
 
   /**
@@ -201,14 +246,10 @@ public final class IOUtil
 
     try
     {
-      input = new FileInputStream(source);
-      output = new FileOutputStream(target);
+      input = openInputStream(source);
+      output = openOutputStream(target);
 
       copy(input, output);
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
     }
     finally
     {

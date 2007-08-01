@@ -241,6 +241,11 @@ public final class IOUtil
    */
   public static void copyFile(File source, File target) throws IORuntimeException
   {
+    if (!target.getParentFile().exists())
+    {
+      target.getParentFile().mkdirs();
+    }
+
     FileInputStream input = null;
     FileOutputStream output = null;
 

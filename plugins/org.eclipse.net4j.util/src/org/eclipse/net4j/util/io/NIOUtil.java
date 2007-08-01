@@ -39,6 +39,11 @@ public final class NIOUtil
 
     try
     {
+      if (!target.getParentFile().exists())
+      {
+        target.getParentFile().mkdirs();
+      }
+
       if (!target.exists())
       {
         target.createNewFile();
@@ -89,8 +94,7 @@ public final class NIOUtil
     // checks
     if (!src.isFile() || !src.exists())
       throw new IllegalArgumentException("Source file '" + src.getAbsolutePath() + "' not found!");
-    if (dst.exists())
-      if (dst.isDirectory()) // Directory? -> use source file name
+    if (dst.exists()) if (dst.isDirectory()) // Directory? -> use source file name
         dst = new File(dst, src.getName());
       else if (dst.isFile())
       {
@@ -101,8 +105,7 @@ public final class NIOUtil
         throw new IllegalArgumentException("Invalid destination object '" + dst.getAbsolutePath() + "'!");
     File dstParent = dst.getParentFile();
     if (!dstParent.exists())
-      if (!dstParent.mkdirs())
-        throw new IOException("Failed to create directory " + dstParent.getAbsolutePath());
+      if (!dstParent.mkdirs()) throw new IOException("Failed to create directory " + dstParent.getAbsolutePath());
     long fileSize = src.length();
     if (fileSize > 20971520l)
     { // for larger files (20Mb) use streams

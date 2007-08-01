@@ -53,7 +53,7 @@ public class MonitorDialog extends ProgressMonitorDialog
     try
     {
       log = new MonitorLogDialog(getShell(), getShellStyle(), "Log of " + title, "See the log for details.", settings);
-      log.setEmphasizePrefix("Woven class ");
+      log.setEmphasizePrefix("Woven class ", "Mixed in ", "Reversioned ");
 
       super.run(fork, cancelable, new IRunnableWithProgress()
       {

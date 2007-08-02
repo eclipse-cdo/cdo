@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.internal.server.store.Store;
 import org.eclipse.emf.cdo.server.IRepositoryManager;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
@@ -75,7 +76,9 @@ public final class RepositoryManager extends Lifecycle implements IRepositoryMan
         throw new RuntimeException("Repository already exists: " + name);
       }
 
-      repository = new Repository(name, store);
+      // XXX Introduce IStoreFactory so that the client doesn't need to create
+      // the store on its own
+      repository = new Repository(name, (Store)store);
       LifecycleUtil.activate(repository);
       repositories.put(name, repository);
       return repository;

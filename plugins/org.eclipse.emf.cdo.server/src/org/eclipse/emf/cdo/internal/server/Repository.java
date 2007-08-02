@@ -12,10 +12,10 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
+import org.eclipse.emf.cdo.internal.server.store.Store;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IStore;
 
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 
@@ -32,7 +32,7 @@ public class Repository extends Lifecycle implements IRepository
 
   private String name;
 
-  private IStore store;
+  private Store store;
 
   private String uuid;
 
@@ -48,15 +48,18 @@ public class Repository extends Lifecycle implements IRepository
 
   private long nextMetaIDValue = INITIAL_META_ID_VALUE;
 
-  public Repository(String name, IStore store)
+  public Repository(String name, Store store)
   {
     this.name = name;
     this.store = store;
     this.uuid = UUID.randomUUID().toString();
+
     packageManager = new RepositoryPackageManager(this);
     sessionManager = new SessionManager(this);
     resourceManager = new ResourceManager(this);
     revisionManager = new RevisionManager(this);
+
+    store.setRepository(this);
   }
 
   public String getName()
@@ -64,7 +67,7 @@ public class Repository extends Lifecycle implements IRepository
     return name;
   }
 
-  public IStore getStore()
+  public Store getStore()
   {
     return store;
   }

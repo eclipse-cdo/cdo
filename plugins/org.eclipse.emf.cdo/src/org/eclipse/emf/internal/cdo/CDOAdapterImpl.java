@@ -67,15 +67,15 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOAdapterImpl.class);
 
-  private CDOViewImpl view;
+  protected CDOViewImpl view;
 
-  private CDOID id;
+  protected CDOID id;
 
-  private CDOState state;
+  protected CDOState state;
 
-  private CDOResourceImpl resource;
+  protected CDOResourceImpl resource;
 
-  private CDORevisionImpl revision;
+  protected CDORevisionImpl revision;
 
   public CDOAdapterImpl()
   {
@@ -216,6 +216,10 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
           target.eSetProxyURI(null);
         }
       }
+    }
+    else
+    {
+      // TODO Detect duplicate setstate calls
     }
   }
 

@@ -283,16 +283,28 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   public void registerEPackage(EPackage ePackage, CDOIDRange metaIDRange)
   {
-    // TODO Check range is not temp
-    registerMetaInstance((InternalEObject)ePackage, metaIDRange.getLowerBound().getValue());
-    // TODO Check count matches range
+    if (metaIDRange.isTemporary())
+    {
+      throw new IllegalArgumentException("metaIDRange.isTemporary()");
+    }
+
+    if (!metaIDRange.isMeta())
+    {
+      throw new IllegalArgumentException("!metaIDRange.isMeta()");
+    }
+
+    long count = registerMetaInstance((InternalEObject)ePackage, metaIDRange.getLowerBound().getValue());
+    if (count != metaIDRange.getCount())
+    {
+      throw new IllegalStateException("count != metaIDRange.getCount()");
+    }
   }
 
   public CDOIDRange registerEPackage(EPackage ePackage)
   {
     long count = registerMetaInstance((InternalEObject)ePackage, nextTemporaryID);
-    long newTempID = nextTemporaryID - 2 * count;
-    CDOIDRange range = CDOIDRangeImpl.create(nextTemporaryID, newTempID + 2);
+    long newTempID = nextTemporaryID - 2L * count;
+    CDOIDRange range = CDOIDRangeImpl.create(nextTemporaryID, newTempID + 2L);
     nextTemporaryID = newTempID;
     return range;
   }
@@ -311,10 +323,11 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     idToMetaInstanceMap.put(id, metaInstance);
     metaInstanceToIDMap.put(metaInstance, id);
 
-    long count = 1;
+    long step = id.isTemporary() ? -2L : 2L;
+    long count = 1L;
     for (EObject content : metaInstance.eContents())
     {
-      count += registerMetaInstance((InternalEObject)content, idValue + 2 * count);
+      count += registerMetaInstance((InternalEObject)content, idValue + step * count);
     }
 
     return count;
@@ -323,6 +336,11 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
   public void remapMetaInstance(CDOID oldID, CDOID newID)
   {
     InternalEObject metaInstance = idToMetaInstanceMap.remove(oldID);
+    if (metaInstance == null)
+    {
+      throw new IllegalArgumentException("Unknown meta instance id: " + oldID);
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.format("Remapping meta instance: {0} --> {1} <-> {2}", oldID, newID, metaInstance);

@@ -48,7 +48,7 @@ final class ProxyResolverResource implements Resource
   public EObject getEObject(String uriFragment)
   {
     CDOID id = CDOIDImpl.create(Long.parseLong(uriFragment));
-    InternalCDOObject object = view.lookupInstance(id);
+    InternalCDOObject object = view.lookupObject(id);
     if (object instanceof CDOCallbackImpl)
     {
       CDOCallbackImpl callback = (CDOCallbackImpl)object;

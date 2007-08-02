@@ -88,6 +88,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
   @Override
   public CDOViewImpl cdoView()
   {
+    // TODO Why is this lazy?
     if (view == null)
     {
       view = CDOObjectImpl.getCDOView(this);
@@ -263,13 +264,13 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     if (containerID.isNull())
     {
       CDOID resourceID = revision.getResourceID();
-      Resource.Internal resource = (Resource.Internal)view.lookupInstance(resourceID);
+      Resource.Internal resource = (Resource.Internal)view.lookupObject(resourceID);
       transferResourceToInstance((BasicEObjectImpl)instance, resource);
     }
     else
     {
       int containingFeatureID = revision.getContainingFeatureID();
-      InternalCDOObject container = view.lookupInstance(containerID);
+      InternalCDOObject container = view.lookupObject(containerID);
       ((BasicEObjectImpl)instance).eBasicSetContainer(container, containingFeatureID, null);
     }
 
@@ -285,12 +286,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
         InternalEList instanceList = (InternalEList)getInstanceValue(instance, feature);
         if (instanceList != null)
         {
-          while (!instanceList.isEmpty())
-          {
-            Object toBeRemoved = instanceList.basicGet(0);
-            instanceList.basicRemove(toBeRemoved, null);
-          }
-
+          clearEList(instanceList);
           List revisionList = (List)value;
           for (Object toBeAdded : revisionList)
           {
@@ -453,6 +449,15 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     }
 
     ReflectUtil.setValue(field, instance, value);
+  }
+
+  protected void clearEList(InternalEList list)
+  {
+    while (!list.isEmpty())
+    {
+      Object toBeRemoved = list.basicGet(0);
+      list.basicRemove(toBeRemoved, null);
+    }
   }
 
   protected static int getEFlagMask(Class<?> instanceClass, String flagName)

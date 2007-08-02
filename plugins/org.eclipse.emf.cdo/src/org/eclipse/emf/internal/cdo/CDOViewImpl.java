@@ -212,7 +212,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return (CDORevisionImpl)revisionManager.getRevision(id);
   }
 
-  public InternalCDOObject lookupInstance(CDOID id)
+  public InternalCDOObject lookupObject(CDOID id)
   {
     if (id.equals(lastLookupID))
     {
@@ -346,7 +346,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       }
 
       CDOID id = (CDOID)potentialID;
-      InternalCDOObject result = lookupInstance(id);
+      InternalCDOObject result = lookupObject(id);
       if (result == null)
       {
         throw new ImplementationError("ID not registered: " + id);

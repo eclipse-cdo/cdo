@@ -51,11 +51,12 @@ final class ProxyResolverResource implements Resource
     InternalCDOObject object = view.lookupInstance(id);
     if (object instanceof CDOCallbackImpl)
     {
-      CDOCallbackImpl callbackAdapter = (CDOCallbackImpl)object;
-      return callbackAdapter.getTarget();
+      CDOCallbackImpl callback = (CDOCallbackImpl)object;
+      return callback.cdoInternalInstance();
     }
     else if (object instanceof CDOAdapterImpl)
     {
+      // TODO Move this somehow to cdoInternalPostLoad()
       CDOAdapterImpl adapter = (CDOAdapterImpl)object;
       if (adapter.cdoState() == CDOState.PROXY)
       {

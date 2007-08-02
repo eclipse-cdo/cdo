@@ -88,17 +88,13 @@ public final class FSMUtil
       {
         CDOAware aware = (CDOAware)object;
         CDOCallback callback = aware.getCDOCallback();
-        if (callback != null)
+        if (callback == null)
         {
-          return (InternalCDOObject)callback;
+          callback = new CDOCallbackImpl((InternalEObject)aware);
+          aware.setCDOCallback(callback);
         }
 
-        CDOCallbackImpl callbackAdapter = new CDOCallbackImpl();
-        aware.setCDOCallback(callbackAdapter);
-
-        EList<Adapter> adapters = ((InternalEObject)object).eAdapters();
-        adapters.add(callbackAdapter);
-        return callbackAdapter;
+        return (InternalCDOObject)callback;
       }
     }
     catch (Throwable t)

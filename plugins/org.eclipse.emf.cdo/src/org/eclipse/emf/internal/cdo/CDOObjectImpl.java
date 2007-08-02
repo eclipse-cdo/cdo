@@ -119,7 +119,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     this.id = id;
   }
 
-  public void cdoInternalSetState(CDOState state)
+  public CDOState cdoInternalSetState(CDOState state)
   {
     if (this.state != state)
     {
@@ -128,7 +128,19 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         TRACER.format("Setting state {0} for {1}", state, this);
       }
 
-      this.state = state;
+      try
+      {
+        return this.state;
+      }
+      finally
+      {
+        this.state = state;
+      }
+    }
+    else
+    {
+      // TODO Detect duplicate cdoInternalSetState() calls
+      return null;
     }
   }
 

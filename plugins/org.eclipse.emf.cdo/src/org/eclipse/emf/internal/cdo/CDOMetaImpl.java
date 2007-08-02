@@ -99,7 +99,7 @@ public class CDOMetaImpl implements InternalCDOObject
     this.id = id;
   }
 
-  public void cdoInternalSetState(CDOState state)
+  public CDOState cdoInternalSetState(CDOState state)
   {
     throw new UnsupportedOperationException();
   }

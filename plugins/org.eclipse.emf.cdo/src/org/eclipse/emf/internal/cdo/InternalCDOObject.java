@@ -25,21 +25,21 @@ import org.eclipse.emf.ecore.InternalEObject;
  */
 public interface InternalCDOObject extends CDOObject, InternalEObject
 {
+  public void cdoInternalPostLoad();
+
+  public void cdoInternalPostAttach();
+
+  public void cdoInternalPreCommit();
+
   public void cdoInternalSetID(CDOID id);
 
   public void cdoInternalSetResource(CDOResource resource);
 
   public void cdoInternalSetView(CDOView view);
 
-  public void cdoInternalSetState(CDOState state);
-
   public void cdoInternalSetRevision(CDORevision revision);
 
-  public void cdoInternalPostLoad();
-
-  public void cdoInternalPostAttach();
-
-  public void cdoInternalPreCommit();
+  public CDOState cdoInternalSetState(CDOState state);
 
   public InternalEObject cdoInternalInstance();
 

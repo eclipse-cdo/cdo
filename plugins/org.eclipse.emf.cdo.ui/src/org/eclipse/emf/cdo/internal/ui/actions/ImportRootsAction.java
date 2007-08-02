@@ -20,19 +20,18 @@ import java.util.List;
 
 /**
  * @author Eike Stepper
- * @ADDED
  */
-public class ImportResourceAction extends EditingDomainAction
+public class ImportRootsAction extends EditingDomainAction
 {
-  private static final String TITLE = "Import Resource";
+  private static final String TITLE = "Import Roots";
 
   private CDOResource targetResource;
 
   private transient List<URI> uris;
 
-  public ImportResourceAction()
+  public ImportRootsAction()
   {
-    super("Import Resource...");
+    super(TITLE + "...");
   }
 
   public CDOResource getTargetResource()

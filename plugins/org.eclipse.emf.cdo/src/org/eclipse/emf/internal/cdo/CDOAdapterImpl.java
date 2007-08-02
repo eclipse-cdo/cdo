@@ -286,7 +286,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     return eClass().getName() + "@" + id;
   }
 
-  private void transferTargetToRevision()
+  protected void transferTargetToRevision()
   {
     InternalEObject target = getTarget();
     CDOViewImpl view = cdoView();
@@ -369,7 +369,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     }
   }
 
-  private void transferRevisionToTarget()
+  protected void transferRevisionToTarget()
   {
     InternalEObject target = getTarget();
     CDOViewImpl view = cdoView();
@@ -435,7 +435,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     }
   }
 
-  private void transferResourceToTarget(BasicEObjectImpl target, Resource.Internal resource)
+  protected void transferResourceToTarget(BasicEObjectImpl target, Resource.Internal resource)
   {
     Method method = ReflectUtil.getMethod(BasicEObjectImpl.class, "eSetDirectResource", Resource.Internal.class);
 
@@ -449,7 +449,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     }
   }
 
-  private Object getTargetValue(InternalEObject target, CDOFeatureImpl feature)
+  protected Object getTargetValue(InternalEObject target, CDOFeatureImpl feature)
   {
     // Class<?> targetClass = target.getClass();
     // String featureName = feature.getName();
@@ -512,7 +512,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     // return getFiedValue(target, field);
   }
 
-  private void setTargetValue(InternalEObject target, CDOFeatureImpl feature, Object value)
+  protected void setTargetValue(InternalEObject target, CDOFeatureImpl feature, Object value)
   {
     Class<?> targetClass = target.getClass();
     String featureName = feature.getName();
@@ -574,7 +574,7 @@ public class CDOAdapterImpl extends AdapterImpl implements InternalCDOObject
     ReflectUtil.setValue(field, target, value);
   }
 
-  private static int getEFlagMask(Class<?> targetClass, String flagName)
+  protected static int getEFlagMask(Class<?> targetClass, String flagName)
   {
     Field field = ReflectUtil.getField(targetClass, flagName);
     if (!field.isAccessible())

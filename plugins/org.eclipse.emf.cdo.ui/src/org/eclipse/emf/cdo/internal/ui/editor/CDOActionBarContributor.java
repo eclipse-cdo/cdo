@@ -8,7 +8,7 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.actions.ExportResourceAction;
-import org.eclipse.emf.cdo.internal.ui.actions.ImportResourceAction;
+import org.eclipse.emf.cdo.internal.ui.actions.ImportRootsAction;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -170,7 +170,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    */
   protected IMenuManager createSiblingMenuManager;
 
-  protected ImportResourceAction importResourceAction;
+  protected ImportRootsAction importResourceAction;
 
   protected ExportResourceAction exportResourceAction;
 
@@ -186,7 +186,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     loadResourceAction = new LoadResourceAction();
     loadResourceAction.setId(LOAD_RESOURCE_ID);
 
-    importResourceAction = new ImportResourceAction();
+    importResourceAction = new ImportRootsAction();
     importResourceAction.setId(IMPORT_RESOURCE_ID);
 
     exportResourceAction = new ExportResourceAction();

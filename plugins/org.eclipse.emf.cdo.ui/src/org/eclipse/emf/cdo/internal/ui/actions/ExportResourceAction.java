@@ -4,7 +4,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * @author Eike Stepper
- * @ADDED
  */
 public class ExportResourceAction extends EditingDomainAction
 {

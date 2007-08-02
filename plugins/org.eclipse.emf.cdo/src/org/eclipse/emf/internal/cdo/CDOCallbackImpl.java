@@ -20,6 +20,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 /**
+ * TODO Check if deriving from CDOAdapterImpl is necessary
+ * 
  * @author Eike Stepper
  */
 public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
@@ -63,5 +65,11 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
     {
       // TODO Detect duplicate setstate calls
     }
+  }
+
+  @Override
+  public void cdoInternalPostLoad()
+  {
+    transferRevisionToTarget();
   }
 }

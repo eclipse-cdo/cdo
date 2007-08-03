@@ -171,6 +171,11 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
 
   protected void transferInstanceToRevision()
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Transfering instance to revision: {0} --> {1}", instance, revision);
+    }
+
     CDOViewImpl view = cdoView();
     if (view == null)
     {
@@ -254,6 +259,11 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
 
   protected void transferRevisionToInstance()
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Transfering revision to instance: {0} --> {1}", revision, instance);
+    }
+
     CDOViewImpl view = cdoView();
     if (view == null)
     {

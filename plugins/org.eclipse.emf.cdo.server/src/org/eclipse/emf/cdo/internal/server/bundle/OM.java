@@ -39,6 +39,8 @@ public abstract class OM
 
   public static final OMTracer DEBUG_RESOURCE = DEBUG.tracer("resource"); //$NON-NLS-1$
 
+  public static final OMTracer DEBUG_STORE = DEBUG.tracer("store"); //$NON-NLS-1$
+
   public static final OMLogger LOG = BUNDLE.logger();
 
   static void start() throws Exception

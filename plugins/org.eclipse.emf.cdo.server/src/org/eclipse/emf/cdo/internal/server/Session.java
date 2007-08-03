@@ -73,7 +73,7 @@ public class Session implements ISession, CDOIDProvider
   public CDOID provideCDOID(Object idObject)
   {
     CDOID id = (CDOID)idObject;
-    if (id.isNull())
+    if (id.isNull() || id.isMeta())
     {
       return id;
     }

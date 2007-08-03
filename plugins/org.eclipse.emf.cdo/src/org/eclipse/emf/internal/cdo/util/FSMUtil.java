@@ -50,16 +50,15 @@ public final class FSMUtil
     return state == CDOState.TRANSIENT || state == CDOState.PREPARED_ATTACH;
   }
 
+  /**
+   * @param view
+   *          Only needed if object is a meta instance.
+   */
   public static InternalCDOObject adapt(Object object, CDOView view)
   {
     if (object == null)
     {
       throw new IllegalArgumentException("object == null");
-    }
-
-    if (view == null)
-    {
-      throw new IllegalArgumentException("view == null");
     }
 
     if (object instanceof InternalCDOObject)
@@ -70,6 +69,11 @@ public final class FSMUtil
     if (object instanceof EModelElement || object instanceof EGenericType)
     {
       InternalEObject eObject = (InternalEObject)object;
+      if (view == null)
+      {
+        throw new IllegalArgumentException("view == null");
+      }
+
       if (eObject.eIsProxy())
       {
         EcoreUtil.resolve(eObject, view.getResourceSet());

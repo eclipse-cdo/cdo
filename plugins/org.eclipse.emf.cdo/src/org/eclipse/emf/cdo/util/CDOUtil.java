@@ -28,6 +28,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -37,13 +39,18 @@ import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.CDOStateMachine;
+import org.eclipse.emf.internal.cdo.CDOViewImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -227,6 +234,7 @@ public final class CDOUtil
    * @return the copy.
    * @see EcoreUtil#copy(EObject)
    */
+  @Deprecated
   public static EObject copy(EObject eObject, CDOView view)
   {
     Copier copier = new CDOCopier(view);
@@ -235,9 +243,28 @@ public final class CDOUtil
     return result;
   }
 
+  public static void load(EObject eObject)
+  {
+    if (eObject instanceof EModelElement || eObject instanceof EGenericType)
+    {
+      return;
+    }
+
+    InternalCDOObject cdoObject = FSMUtil.adapt(eObject, null);
+    CDOStateMachine.INSTANCE.read(cdoObject);
+
+    CDOViewImpl view = (CDOViewImpl)cdoObject.cdoView();
+    for (Iterator<InternalCDOObject> it = FSMUtil.iterator(cdoObject.eContents(), view); it.hasNext();)
+    {
+      InternalCDOObject content = it.next();
+      load(content);
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
+  @Deprecated
   public static final class CDOCopier extends Copier
   {
     private static final long serialVersionUID = 1L;

@@ -93,7 +93,7 @@ public class HistoryTextDialog extends InputDialog
       }
     });
 
-    composite.getShell().layout(true); // XXX
+    composite.getShell().layout(true);
     return composite;
   }
 

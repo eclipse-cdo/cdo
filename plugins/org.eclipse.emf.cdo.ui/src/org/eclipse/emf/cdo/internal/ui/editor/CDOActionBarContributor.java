@@ -189,7 +189,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     importResourceAction = new ImportRootsAction();
     importResourceAction.setId(IMPORT_RESOURCE_ID);
 
-    // exportResourceAction = new ExportResourceAction(); // XXX
+    // exportResourceAction = new ExportResourceAction(); // TODO
     // exportResourceAction.setId(EXPORT_RESOURCE_ID);
 
     validateAction = new ValidateAction();

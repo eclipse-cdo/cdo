@@ -76,7 +76,7 @@ public final class RepositoryManager extends Lifecycle implements IRepositoryMan
         throw new RuntimeException("Repository already exists: " + name);
       }
 
-      // XXX Introduce IStoreFactory so that the client doesn't need to create
+      // TODO Introduce IStoreFactory so that the client doesn't need to create
       // the store on its own
       repository = new Repository(name, (Store)store);
       LifecycleUtil.activate(repository);

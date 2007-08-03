@@ -190,7 +190,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
       else
       {
         revision.setResourceID(CDOID.NULL);
-        // XXX is as CDOIDProvider call ok here?
+        // TODO is as CDOIDProvider call ok here?
         CDOID containerID = view.provideCDOID(container);
         if (containerID.isNull())
         {
@@ -284,7 +284,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     else
     {
       int containingFeatureID = revision.getContainingFeatureID();
-      // XXX Maybe convertPotentialID() better here?
+      // TODO Maybe convertPotentialID() better here?
       InternalCDOObject container = view.lookupObject(containerID);
       ((BasicEObjectImpl)instance).eBasicSetContainer(container, containingFeatureID, null);
     }
@@ -352,7 +352,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     // Method method = getMethod(targetClass, methodName,
     // ReflectUtil.NO_PARAMETERS);
     //
-    // String fieldName = featureName;// XXX safeName()
+    // String fieldName = featureName;// TODO safeName()
     // Field field = getField(targetClass, fieldName);
     // if (field == null && feature.getType() == CDOType.BOOLEAN)
     // {
@@ -405,7 +405,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
   {
     Class<?> instanceClass = instance.getClass();
     String featureName = feature.getName();
-    String fieldName = featureName;// XXX safeName()
+    String fieldName = featureName;// TODO safeName()
     Field field = ReflectUtil.getField(instanceClass, fieldName);
     if (field == null && feature.getType() == CDOType.BOOLEAN)
     {

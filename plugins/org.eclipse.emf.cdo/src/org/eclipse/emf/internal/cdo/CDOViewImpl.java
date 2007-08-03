@@ -258,6 +258,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
    */
   private InternalCDOObject createMetaObject(CDOID id)
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Creating meta object for " + id);
+    }
+
     InternalEObject metaInstance = session.lookupMetaInstance(id);
     if (metaInstance == null)
     {
@@ -272,12 +277,12 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
    */
   private InternalCDOObject createObject(CDOID id)
   {
-    CDORevisionImpl revision = getRevision(id);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Creating object for revision: " + revision);
+      TRACER.trace("Creating object for " + id);
     }
 
+    CDORevisionImpl revision = getRevision(id);
     CDOClassImpl cdoClass = revision.getCDOClass();
     InternalCDOObject object = newInstance(cdoClass);
     if (object instanceof CDOResourceImpl)
@@ -298,17 +303,18 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     object.cdoInternalSetRevision(revision);
     object.cdoInternalSetID(revision.getID());
     object.cdoInternalSetState(CDOState.CLEAN);
+    object.cdoInternalPostLoad();
     return object;
   }
 
   private InternalCDOObject createProxy(CDOID id)
   {
-    CDOClassImpl cdoClass = getObjectType(id);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Creating proxy for {0}: {1}" + id, cdoClass);
+      TRACER.format("Creating proxy for " + id);
     }
 
+    CDOClassImpl cdoClass = getObjectType(id);
     InternalCDOObject object = newInstance(cdoClass);
     if (object instanceof CDOResourceImpl)
     {
@@ -318,7 +324,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     object.cdoInternalSetView(this);
     object.cdoInternalSetID(id);
     object.cdoInternalSetState(CDOState.PROXY);
-
     return object;
   }
 

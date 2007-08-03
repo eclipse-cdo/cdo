@@ -155,7 +155,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
   public void cdoInternalPostLoad()
   {
     transferRevisionToInstance();
-    cdoInternalSetState(CDOState.CLEAN);
+    // cdoInternalSetState(CDOState.CLEAN);
   }
 
   @Override

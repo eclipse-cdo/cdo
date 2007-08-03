@@ -346,7 +346,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     }
   }
 
-  protected Object convertPotentialID(CDOViewImpl view, Object potentialID)
+  protected InternalEObject convertPotentialID(CDOViewImpl view, Object potentialID)
   {
     if (potentialID instanceof CDOID)
     {
@@ -359,10 +359,24 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
       return convertID(view, id);
     }
 
-    return potentialID;
+    if (potentialID instanceof InternalCDOObject)
+    {
+      potentialID = ((InternalCDOObject)potentialID).cdoInternalInstance();
+    }
+
+    if (potentialID instanceof InternalEObject)
+    {
+      return (InternalEObject)potentialID;
+    }
+
+    throw new ImplementationError();
   }
 
-  protected abstract Object convertID(CDOViewImpl view, CDOID id);
+  protected InternalEObject convertID(CDOViewImpl view, CDOID id)
+  {
+    InternalCDOObject object = view.getObject(id, false);
+    return object.cdoInternalInstance();
+  }
 
   protected Object getInstanceValue(InternalEObject instance, CDOFeatureImpl feature)
   {

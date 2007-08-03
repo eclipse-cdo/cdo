@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.protocol.CDOID;
-
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.CDOCallback;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -36,10 +34,10 @@ public class CDOCallbackImpl extends CDOLegacyImpl implements CDOCallback
     CDOStateMachine.INSTANCE.write(this);
   }
 
-  @Override
-  protected Object convertID(CDOViewImpl view, CDOID id)
-  {
-    InternalCDOObject object = view.getObject(id, false);
-    return object.cdoInternalInstance();
-  }
+  // @Override
+  // protected InternalEObject convertID(CDOViewImpl view, CDOID id)
+  // {
+  // InternalCDOObject object = view.getObject(id, false);
+  // return object.cdoInternalInstance();
+  // }
 }

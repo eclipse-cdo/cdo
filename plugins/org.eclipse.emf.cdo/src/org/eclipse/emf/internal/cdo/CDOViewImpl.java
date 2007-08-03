@@ -217,7 +217,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   public InternalCDOObject getObject(CDOID id)
   {
     // TODO Really load on demand here?
-    return getObject(id, true);
+    return getObject(id, false);
   }
 
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
@@ -297,7 +297,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     object.cdoInternalSetView(this);
     object.cdoInternalSetRevision(revision);
     object.cdoInternalSetID(revision.getID());
-    object.cdoInternalSetState(CDOState.PROXY); // FIXME
+    object.cdoInternalSetState(CDOState.CLEAN);
     return object;
   }
 
@@ -403,7 +403,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       }
 
       CDOID id = (CDOID)potentialID;
-      InternalCDOObject result = getObject(id);
+      InternalCDOObject result = getObject(id, true);
       if (result == null)
       {
         throw new ImplementationError("ID not registered: " + id);

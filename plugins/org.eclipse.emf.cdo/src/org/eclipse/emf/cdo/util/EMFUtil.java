@@ -72,7 +72,6 @@ public final class EMFUtil
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
     Resource resource = resourceSet.createResource(URI.createFileURI(fileName));
 
-    CDOUtil.load(root);
     EObject copy = EcoreUtil.copy(root);
     resource.getContents().add(copy);
     try

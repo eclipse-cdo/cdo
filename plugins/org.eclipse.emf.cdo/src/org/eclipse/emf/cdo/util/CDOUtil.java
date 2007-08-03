@@ -28,8 +28,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EGenericType;
-import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -243,21 +241,15 @@ public final class CDOUtil
     return result;
   }
 
-  public static void load(EObject eObject)
+  public static void load(EObject eObject, CDOView view)
   {
-    if (eObject instanceof EModelElement || eObject instanceof EGenericType)
-    {
-      return;
-    }
-
-    InternalCDOObject cdoObject = FSMUtil.adapt(eObject, null);
+    InternalCDOObject cdoObject = FSMUtil.adapt(eObject, view);
     CDOStateMachine.INSTANCE.read(cdoObject);
 
-    CDOViewImpl view = (CDOViewImpl)cdoObject.cdoView();
-    for (Iterator<InternalCDOObject> it = FSMUtil.iterator(cdoObject.eContents(), view); it.hasNext();)
+    for (Iterator<InternalCDOObject> it = FSMUtil.iterator(cdoObject.eContents(), (CDOViewImpl)view); it.hasNext();)
     {
       InternalCDOObject content = it.next();
-      load(content);
+      load(content, view);
     }
   }
 

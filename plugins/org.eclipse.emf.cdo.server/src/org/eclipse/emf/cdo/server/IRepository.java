@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 
 /**
@@ -30,4 +32,6 @@ public interface IRepository
   public IResourceManager getResourceManager();
 
   public IRevisionManager getRevisionManager();
+
+  public CDOClassRef getObjectType(CDOID id);
 }

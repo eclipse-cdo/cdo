@@ -12,10 +12,10 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.server.store.Store;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.IRepository;
 
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
@@ -52,7 +52,7 @@ public class Repository extends Lifecycle implements IRepository
 
   private long nextMetaIDValue = INITIAL_META_ID_VALUE;
 
-  private ConcurrentMap<CDOID, CDOClassRef> types = new ConcurrentHashMap();
+  private ConcurrentMap<CDOID, CDOClassRefImpl> types = new ConcurrentHashMap();
 
   public Repository(String name, Store store)
   {
@@ -119,9 +119,9 @@ public class Repository extends Lifecycle implements IRepository
     return id;
   }
 
-  public CDOClassRef getObjectType(CDOID id)
+  public CDOClassRefImpl getObjectType(CDOID id)
   {
-    CDOClassRef type = types.get(id);
+    CDOClassRefImpl type = types.get(id);
     if (type == null)
     {
       type = store.queryObjectType(id);
@@ -136,7 +136,7 @@ public class Repository extends Lifecycle implements IRepository
     return type;
   }
 
-  public void setObjectType(CDOID id, CDOClassRef type)
+  public void setObjectType(CDOID id, CDOClassRefImpl type)
   {
     types.putIfAbsent(id, type);
   }

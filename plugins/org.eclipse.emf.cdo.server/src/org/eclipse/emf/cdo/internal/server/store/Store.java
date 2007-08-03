@@ -10,11 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.store;
 
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.IStore;
 
 import org.eclipse.net4j.util.transaction.TX;
@@ -80,7 +80,7 @@ public abstract class Store implements IStore
     return (CDORevisionImpl)TX.execute(createLoadHistoricalRevisionOperation(id, timeStamp));
   }
 
-  public CDOClassRef queryObjectType(CDOID id)
+  public CDOClassRefImpl queryObjectType(CDOID id)
   {
     // TODO Implement method Store.queryObjectType()
     throw new UnsupportedOperationException("Not yet implemented");

@@ -73,8 +73,14 @@ public class Session implements ISession, CDOIDProvider
   public CDOID provideCDOID(Object idObject)
   {
     CDOID id = (CDOID)idObject;
+    if (id.isNull())
+    {
+      return id;
+    }
+
     if (knownObjects.contains(id))
     {
+      // TODO On client-side add a check if the id is really known!
       return id;
     }
 

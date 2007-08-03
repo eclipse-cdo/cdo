@@ -59,8 +59,8 @@ public class CDOServerProtocol extends SignalProtocol
     case CDOProtocolConstants.SIGNAL_LOAD_PACKAGE:
       return new LoadPackageIndication();
 
-    case CDOProtocolConstants.SIGNAL_LOAD_OBJECT:
-      return new LoadObjectIndication();
+    case CDOProtocolConstants.SIGNAL_LOAD_REVISION:
+      return new LoadRevisionIndication();
 
     case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION:
       return new CommitTransactionIndication();

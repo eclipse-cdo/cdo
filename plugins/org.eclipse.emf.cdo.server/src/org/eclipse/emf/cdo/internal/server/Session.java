@@ -10,22 +10,31 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDOIDProvider;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.internal.server.protocol.InvalidationRequest;
+import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.ISession;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public class Session implements ISession
+public class Session implements ISession, CDOIDProvider
 {
   private SessionManager sessionManager;
 
   private CDOServerProtocol protocol;
 
   private int sessionID;
+
+  private Set<CDOID> knownObjects = new HashSet();
 
   public Session(SessionManager sessionManager, CDOServerProtocol protocol, int sessionID)
   {
@@ -59,5 +68,18 @@ public class Session implements ISession
     {
       OM.LOG.error(ex);
     }
+  }
+
+  public CDOID provideCDOID(Object idObject)
+  {
+    CDOID id = (CDOID)idObject;
+    if (knownObjects.contains(id))
+    {
+      return id;
+    }
+
+    knownObjects.add(id);
+    CDOClassRef type = null;
+    return CDOIDImpl.create(id.getValue(), type);
   }
 }

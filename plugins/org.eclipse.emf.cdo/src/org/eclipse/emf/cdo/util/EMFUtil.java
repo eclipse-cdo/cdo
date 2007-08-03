@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -24,8 +25,14 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EClassifierImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -42,6 +49,39 @@ public final class EMFUtil
 
   private EMFUtil()
   {
+  }
+
+  public static EObject loadXMI(String fileName)
+  {
+    return loadXMI(fileName, EPackage.Registry.INSTANCE);
+  }
+
+  public static EObject loadXMI(String fileName, EPackage.Registry packageRegistry)
+  {
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+    resourceSet.setPackageRegistry(packageRegistry);
+
+    Resource resource = resourceSet.getResource(URI.createFileURI(fileName), true);
+    return resource.getContents().get(0);
+  }
+
+  public static void saveXMI(String fileName, EObject root)
+  {
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+    Resource resource = resourceSet.createResource(URI.createFileURI(fileName));
+
+    EObject copy = EcoreUtil.copy(root);
+    resource.getContents().add(copy);
+    try
+    {
+      resource.save(null);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
   }
 
   public static int countAllContents(EObject eObject)

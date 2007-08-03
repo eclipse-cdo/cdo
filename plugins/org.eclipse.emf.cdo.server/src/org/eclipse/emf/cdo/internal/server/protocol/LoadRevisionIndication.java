@@ -26,17 +26,17 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadObjectIndication extends CDOServerIndication
+public class LoadRevisionIndication extends CDOServerIndication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadObjectIndication.class);
+  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionIndication.class);
 
   private CDOID id;
 
   private Long timeStamp;
 
-  public LoadObjectIndication()
+  public LoadRevisionIndication()
   {
-    super(CDOProtocolConstants.SIGNAL_LOAD_OBJECT);
+    super(CDOProtocolConstants.SIGNAL_LOAD_REVISION);
   }
 
   @Override
@@ -72,6 +72,6 @@ public class LoadObjectIndication extends CDOServerIndication
       }
     });
 
-    revision[0].write(out, null);
+    revision[0].write(out, getSession());
   }
 }

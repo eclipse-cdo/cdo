@@ -27,21 +27,21 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadObjectRequest extends CDOClientRequest<CDORevisionImpl>
+public class LoadRevisionRequest extends CDOClientRequest<CDORevisionImpl>
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadObjectRequest.class);
+  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionRequest.class);
 
   private CDOID id;
 
   private Long timeStamp;
 
-  public LoadObjectRequest(IChannel channel, CDOID id)
+  public LoadRevisionRequest(IChannel channel, CDOID id)
   {
-    super(channel, CDOProtocolConstants.SIGNAL_LOAD_OBJECT);
+    super(channel, CDOProtocolConstants.SIGNAL_LOAD_REVISION);
     this.id = id;
   }
 
-  public LoadObjectRequest(IChannel channel, CDOID id, long timeStamp)
+  public LoadRevisionRequest(IChannel channel, CDOID id, long timeStamp)
   {
     this(channel, id);
     this.timeStamp = timeStamp;

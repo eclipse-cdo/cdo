@@ -190,6 +190,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
       else
       {
         revision.setResourceID(CDOID.NULL);
+        // XXX is as CDOIDProvider call ok here?
         CDOID containerID = view.provideCDOID(container);
         if (containerID.isNull())
         {
@@ -260,6 +261,19 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     }
 
     // Handle containment
+    transferContainmentToInstance(view);
+
+    // Handle values
+    CDOClassImpl cdoClass = revision.getCDOClass();
+    CDOFeatureImpl[] features = cdoClass.getAllFeatures();
+    for (CDOFeatureImpl feature : features)
+    {
+      transferFeatureToInstance(view, feature);
+    }
+  }
+
+  protected void transferContainmentToInstance(CDOViewImpl view)
+  {
     CDOID containerID = revision.getContainerID();
     if (containerID.isNull())
     {
@@ -270,44 +284,9 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     else
     {
       int containingFeatureID = revision.getContainingFeatureID();
+      // XXX Maybe convertPotentialID() better here?
       InternalCDOObject container = view.lookupObject(containerID);
       ((BasicEObjectImpl)instance).eBasicSetContainer(container, containingFeatureID, null);
-    }
-
-    // Handle values
-    CDOClassImpl cdoClass = revision.getCDOClass();
-    CDOFeatureImpl[] features = cdoClass.getAllFeatures();
-    for (int i = 0; i < features.length; i++)
-    {
-      CDOFeatureImpl feature = features[i];
-      Object value = revision.getValue(feature);
-      if (feature.isMany())
-      {
-        InternalEList instanceList = (InternalEList)getInstanceValue(instance, feature);
-        if (instanceList != null)
-        {
-          clearEList(instanceList);
-          List revisionList = (List)value;
-          for (Object toBeAdded : revisionList)
-          {
-            if (feature.isReference())
-            {
-              toBeAdded = view.convertIDToObject(toBeAdded);
-            }
-
-            instanceList.basicAdd(toBeAdded, null);
-          }
-        }
-      }
-      else
-      {
-        if (feature.isReference())
-        {
-          value = view.convertIDToObject(value);
-        }
-
-        setInstanceValue(instance, feature, value);
-      }
     }
   }
 
@@ -324,6 +303,40 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
       throw WrappedException.wrap(ex);
     }
   }
+
+  protected void transferFeatureToInstance(CDOViewImpl view, CDOFeatureImpl feature)
+  {
+    Object value = revision.getValue(feature);
+    if (feature.isMany())
+    {
+      InternalEList instanceList = (InternalEList)getInstanceValue(instance, feature);
+      if (instanceList != null)
+      {
+        clearEList(instanceList);
+        List revisionList = (List)value;
+        for (Object element : revisionList)
+        {
+          if (feature.isReference())
+          {
+            element = convertPotentialID(view, element);
+          }
+
+          instanceList.basicAdd(element, null);
+        }
+      }
+    }
+    else
+    {
+      if (feature.isReference())
+      {
+        value = convertPotentialID(view, value);
+      }
+
+      setInstanceValue(instance, feature, value);
+    }
+  }
+
+  protected abstract Object convertPotentialID(CDOViewImpl view, Object potentialID);
 
   protected Object getInstanceValue(InternalEObject instance, CDOFeatureImpl feature)
   {

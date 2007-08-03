@@ -68,4 +68,24 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
     ObjectInputStream wrapper = new ObjectInputStream(this);
     return wrapper.readObject();
   }
+
+  public static ExtendedDataInputStream wrap(InputStream stream)
+  {
+    if (stream instanceof ExtendedDataInputStream)
+    {
+      return (ExtendedDataInputStream)stream;
+    }
+
+    return new ExtendedDataInputStream(stream);
+  }
+
+  public static InputStream unwrap(InputStream stream)
+  {
+    if (stream instanceof ExtendedDataInputStream)
+    {
+      return ((ExtendedDataInputStream)stream).in;
+    }
+
+    return stream;
+  }
 }

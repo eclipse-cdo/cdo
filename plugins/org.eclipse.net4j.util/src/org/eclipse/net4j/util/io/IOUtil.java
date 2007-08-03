@@ -450,7 +450,6 @@ public final class IOUtil
     {
       stream1 = new FileInputStream(file1);
       stream2 = new FileInputStream(file2);
-
       return equals(stream1, stream2);
     }
     catch (IOException ex)

@@ -15,8 +15,6 @@ import org.eclipse.emf.ecore.impl.CDOCallback;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * TODO Check if deriving from CDOAdapterImpl is necessary
- * 
  * @author Eike Stepper
  */
 public class CDOCallbackImpl extends CDOLegacyImpl implements CDOCallback
@@ -34,5 +32,12 @@ public class CDOCallbackImpl extends CDOLegacyImpl implements CDOCallback
   public void beforeWrite(EObjectImpl instance)
   {
     CDOStateMachine.INSTANCE.write(this);
+  }
+
+  @Override
+  protected Object convertPotentialID(CDOViewImpl view, Object potentialID)
+  {
+    // XXX
+    return view.convertIDToObject(potentialID);
   }
 }

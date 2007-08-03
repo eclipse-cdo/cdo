@@ -55,4 +55,24 @@ public class ExtendedDataOutputStream extends DataOutputStream implements Extend
     ObjectOutputStream wrapper = new ObjectOutputStream(this);
     wrapper.writeObject(object);
   }
+
+  public static ExtendedDataOutputStream wrap(OutputStream stream)
+  {
+    if (stream instanceof ExtendedDataOutputStream)
+    {
+      return (ExtendedDataOutputStream)stream;
+    }
+
+    return new ExtendedDataOutputStream(stream);
+  }
+
+  public static OutputStream unwrap(OutputStream stream)
+  {
+    if (stream instanceof ExtendedDataOutputStream)
+    {
+      return ((ExtendedDataOutputStream)stream).out;
+    }
+
+    return stream;
+  }
 }

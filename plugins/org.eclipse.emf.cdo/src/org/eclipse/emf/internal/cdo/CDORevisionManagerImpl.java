@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 
-import org.eclipse.emf.internal.cdo.protocol.LoadObjectRequest;
+import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
 
 /**
  * @author Eike Stepper
@@ -40,7 +40,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   {
     try
     {
-      return new LoadObjectRequest(session.getChannel(), id).send();
+      return new LoadRevisionRequest(session.getChannel(), id).send();
     }
     catch (RuntimeException ex)
     {
@@ -57,7 +57,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   {
     try
     {
-      LoadObjectRequest signal = new LoadObjectRequest(session.getChannel(), id, timeStamp);
+      LoadRevisionRequest signal = new LoadRevisionRequest(session.getChannel(), id, timeStamp);
       return signal.send();
     }
     catch (RuntimeException ex)

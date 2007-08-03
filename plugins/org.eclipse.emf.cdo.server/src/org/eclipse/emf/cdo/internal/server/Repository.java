@@ -21,9 +21,9 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.ImplementationError;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Eike Stepper
@@ -52,7 +52,7 @@ public class Repository extends Lifecycle implements IRepository
 
   private long nextMetaIDValue = INITIAL_META_ID_VALUE;
 
-  private Map<CDOID, CDOClassRef> types = new HashMap();
+  private ConcurrentMap<CDOID, CDOClassRef> types = new ConcurrentHashMap();
 
   public Repository(String name, Store store)
   {
@@ -119,7 +119,7 @@ public class Repository extends Lifecycle implements IRepository
     return id;
   }
 
-  public CDOClassRef getType(CDOID id)
+  public CDOClassRef getObjectType(CDOID id)
   {
     CDOClassRef type = types.get(id);
     if (type == null)
@@ -134,5 +134,10 @@ public class Repository extends Lifecycle implements IRepository
     }
 
     return type;
+  }
+
+  public void setObjectType(CDOID id, CDOClassRef type)
+  {
+    types.putIfAbsent(id, type);
   }
 }

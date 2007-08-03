@@ -39,6 +39,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   @Override
   public void addRevision(CDORevisionImpl revision)
   {
+    repository.setObjectType(revision.getID(), revision.getCDOClass().createClassRef());
     repository.getStore().addRevision(this, revision);
     if (revision.isResource())
     {
@@ -55,12 +56,16 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   @Override
   protected CDORevisionImpl loadRevision(CDOID id)
   {
-    return repository.getStore().loadRevision(id);
+    CDORevisionImpl revision = repository.getStore().loadRevision(id);
+    repository.setObjectType(revision.getID(), revision.getCDOClass().createClassRef());
+    return revision;
   }
 
   @Override
   protected CDORevisionImpl loadRevision(CDOID id, long timeStamp)
   {
-    return repository.getStore().loadHistoricalRevision(id, timeStamp);
+    CDORevisionImpl revision = repository.getStore().loadHistoricalRevision(id, timeStamp);
+    repository.setObjectType(revision.getID(), revision.getCDOClass().createClassRef());
+    return revision;
   }
 }

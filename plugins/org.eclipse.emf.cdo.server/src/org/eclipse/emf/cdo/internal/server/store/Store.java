@@ -82,7 +82,8 @@ public abstract class Store implements IStore
 
   public CDOClassRef queryObjectType(CDOID id)
   {
-    return null;
+    // TODO Implement method Store.queryObjectType()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   protected abstract RegisterResourceOperation createRegisterResourceOperation(CDOID id, String path,

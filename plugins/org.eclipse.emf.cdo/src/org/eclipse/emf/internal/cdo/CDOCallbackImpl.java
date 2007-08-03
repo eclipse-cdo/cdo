@@ -37,9 +37,9 @@ public class CDOCallbackImpl extends CDOLegacyImpl implements CDOCallback
   }
 
   @Override
-  protected Object convertPotentialID(CDOViewImpl view, Object id)
+  protected Object convertID(CDOViewImpl view, CDOID id)
   {
-    InternalCDOObject object = view.getObject((CDOID)id, false);
+    InternalCDOObject object = view.getObject(id, false);
     return object.cdoInternalInstance();
   }
 }

@@ -346,7 +346,23 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     }
   }
 
-  protected abstract Object convertPotentialID(CDOViewImpl view, Object potentialID);
+  protected Object convertPotentialID(CDOViewImpl view, Object potentialID)
+  {
+    if (potentialID instanceof CDOID)
+    {
+      CDOID id = (CDOID)potentialID;
+      if (id.isNull())
+      {
+        return null;
+      }
+
+      return convertID(view, id);
+    }
+
+    return potentialID;
+  }
+
+  protected abstract Object convertID(CDOViewImpl view, CDOID id);
 
   protected Object getInstanceValue(InternalEObject instance, CDOFeatureImpl feature)
   {

@@ -11,6 +11,7 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -129,13 +130,15 @@ public class CDOAdapterImpl extends CDOLegacyImpl implements Adapter.Internal
   /**
    * This implementation simply asks the view to convert the ID which can result
    * in a LoadObjectRequest being sent. Basically this leads to loading the
-   * whole subtree (i.e. resource). TODO Investigate the use of proxies here
+   * whole subtree (i.e. resource).
+   * <p>
+   * TODO Investigate the use of proxies here
    * 
    * @see CDOCallbackImpl
    */
   @Override
-  protected Object convertPotentialID(CDOViewImpl view, Object potentialID)
+  protected Object convertID(CDOViewImpl view, CDOID id)
   {
-    return view.convertIDToObject(potentialID);
+    return view.convertIDToObject(id);
   }
 }

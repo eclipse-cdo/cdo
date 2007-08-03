@@ -294,8 +294,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     else
     {
       int containingFeatureID = revision.getContainingFeatureID();
-      // TODO Maybe convertPotentialID() better here?
-      InternalCDOObject container = view.getObject(containerID);
+      InternalEObject container = convertPotentialID(view, containerID);
       ((BasicEObjectImpl)instance).eBasicSetContainer(container, containingFeatureID, null);
     }
   }
@@ -356,7 +355,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
         return null;
       }
 
-      return convertID(view, id);
+      potentialID = view.getObject(id, false);
     }
 
     if (potentialID instanceof InternalCDOObject)
@@ -370,12 +369,6 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     }
 
     throw new ImplementationError();
-  }
-
-  protected InternalEObject convertID(CDOViewImpl view, CDOID id)
-  {
-    InternalCDOObject object = view.getObject(id, false);
-    return object.cdoInternalInstance();
   }
 
   protected Object getInstanceValue(InternalEObject instance, CDOFeatureImpl feature)

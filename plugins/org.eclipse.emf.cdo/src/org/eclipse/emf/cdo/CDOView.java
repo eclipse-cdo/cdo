@@ -45,9 +45,9 @@ public interface CDOView extends INotifier
    */
   public CDOResource getResource(String path);
 
-  public CDOObject lookupObject(CDOID id);
+  public CDOObject getObject(CDOID id);
 
-  public CDORevision lookupRevision(CDOID id);
+  public CDORevision getRevision(CDOID id);
 
   public void close();
 }

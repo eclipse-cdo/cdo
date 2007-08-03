@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.protocol.CDOID;
+
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.CDOCallback;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -37,7 +39,6 @@ public class CDOCallbackImpl extends CDOLegacyImpl implements CDOCallback
   @Override
   protected Object convertPotentialID(CDOViewImpl view, Object potentialID)
   {
-    // XXX
-    return view.convertIDToObject(potentialID);
+    return view.getObject((CDOID)potentialID, false);
   }
 }

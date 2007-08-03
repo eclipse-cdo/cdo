@@ -21,7 +21,9 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDOIDProvider;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDTyped;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -206,13 +208,19 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return newInstance(eClass);
   }
 
-  public CDORevisionImpl lookupRevision(CDOID id)
+  public CDORevisionImpl getRevision(CDOID id)
   {
     CDORevisionResolver revisionManager = session.getRevisionManager();
     return (CDORevisionImpl)revisionManager.getRevision(id);
   }
 
-  public InternalCDOObject lookupObject(CDOID id)
+  public InternalCDOObject getObject(CDOID id)
+  {
+    // TODO Really load on demand here?
+    return getObject(id, true);
+  }
+
+  public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
     if (id.equals(lastLookupID))
     {
@@ -225,11 +233,18 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       if (id.isMeta())
       {
-        lastLookupObject = createObjectForMeta(id);
+        lastLookupObject = createMetaObject(id);
       }
       else
       {
-        lastLookupObject = createObjectForRevision(id);
+        if (loadOnDemand)
+        {
+          lastLookupObject = createObject(id);
+        }
+        else
+        {
+          lastLookupObject = createProxy(id);
+        }
       }
 
       registerObject(lastLookupObject);
@@ -241,7 +256,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   /**
    * @return Never <code>null</code>
    */
-  private InternalCDOObject createObjectForMeta(CDOID id)
+  private InternalCDOObject createMetaObject(CDOID id)
   {
     InternalEObject metaInstance = session.lookupMetaInstance(id);
     if (metaInstance == null)
@@ -255,15 +270,16 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   /**
    * @return Never <code>null</code>
    */
-  private InternalCDOObject createObjectForRevision(CDOID id)
+  private InternalCDOObject createObject(CDOID id)
   {
-    CDORevisionImpl revision = lookupRevision(id);
+    CDORevisionImpl revision = getRevision(id);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Creating object for revision: " + revision);
     }
 
-    InternalCDOObject object = newInstance(revision.getCDOClass());
+    CDOClassImpl cdoClass = revision.getCDOClass();
+    InternalCDOObject object = newInstance(cdoClass);
     if (object instanceof CDOResourceImpl)
     {
       object.cdoInternalSetResource((CDOResourceImpl)object);
@@ -281,8 +297,41 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     object.cdoInternalSetView(this);
     object.cdoInternalSetRevision(revision);
     object.cdoInternalSetID(revision.getID());
-    object.cdoInternalSetState(CDOState.PROXY);
+    object.cdoInternalSetState(CDOState.PROXY); // FIXME
     return object;
+  }
+
+  private InternalCDOObject createProxy(CDOID id)
+  {
+    CDOClassImpl cdoClass = getObjectType(id);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Creating proxy for {0}: {1}" + id, cdoClass);
+    }
+
+    InternalCDOObject object = newInstance(cdoClass);
+    if (object instanceof CDOResourceImpl)
+    {
+      object.cdoInternalSetResource((CDOResourceImpl)object);
+    }
+
+    object.cdoInternalSetView(this);
+    object.cdoInternalSetID(id);
+    object.cdoInternalSetState(CDOState.PROXY);
+
+    return object;
+  }
+
+  private CDOClassImpl getObjectType(CDOID id)
+  {
+    if (id instanceof CDOIDTyped)
+    {
+      CDOIDTyped typed = (CDOIDTyped)id;
+      CDOClassRef type = typed.getType();
+      return session.getPackageManager().resolveClass(type);
+    }
+
+    return null;
   }
 
   public CDOID provideCDOID(Object idOrObject)
@@ -346,7 +395,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       }
 
       CDOID id = (CDOID)potentialID;
-      InternalCDOObject result = lookupObject(id);
+      InternalCDOObject result = getObject(id);
       if (result == null)
       {
         throw new ImplementationError("ID not registered: " + id);

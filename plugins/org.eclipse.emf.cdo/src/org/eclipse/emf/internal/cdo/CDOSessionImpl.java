@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
@@ -57,6 +58,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Eike Stepper
@@ -86,6 +89,8 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
   private Map<CDOID, InternalEObject> idToMetaInstanceMap = new HashMap();
 
   private Map<InternalEObject, CDOID> metaInstanceToIDMap = new HashMap();
+
+  private ConcurrentMap<CDOID, CDOClassImpl> types = new ConcurrentHashMap();
 
   private Map<ResourceSet, CDOViewImpl> views = new HashMap();
 

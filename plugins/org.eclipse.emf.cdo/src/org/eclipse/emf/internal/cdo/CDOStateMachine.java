@@ -322,7 +322,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       CDOID id = object.cdoID();
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
-      CDORevisionImpl revision = view.lookupRevision(id);
+      CDORevisionImpl revision = view.getRevision(id);
       object.cdoInternalSetRevision(revision);
       object.cdoInternalSetState(CDOState.CLEAN);
       object.cdoInternalPostLoad();

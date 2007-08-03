@@ -278,14 +278,14 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     if (containerID.isNull())
     {
       CDOID resourceID = revision.getResourceID();
-      Resource.Internal resource = (Resource.Internal)view.lookupObject(resourceID);
+      Resource.Internal resource = (Resource.Internal)view.getObject(resourceID);
       transferResourceToInstance((BasicEObjectImpl)instance, resource);
     }
     else
     {
       int containingFeatureID = revision.getContainingFeatureID();
       // TODO Maybe convertPotentialID() better here?
-      InternalCDOObject container = view.lookupObject(containerID);
+      InternalCDOObject container = view.getObject(containerID);
       ((BasicEObjectImpl)instance).eBasicSetContainer(container, containingFeatureID, null);
     }
   }

@@ -133,13 +133,13 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public CDOResource createResource(String path)
   {
-    URI createURI = CDOUtil.createURI(path);
+    URI createURI = CDOUtil.createResourceURI(path);
     return (CDOResource)getResourceSet().createResource(createURI);
   }
 
   public CDOResource getResource(String path)
   {
-    URI uri = CDOUtil.createURI(path);
+    URI uri = CDOUtil.createResourceURI(path);
     return (CDOResource)getResourceSet().getResource(uri, true);
   }
 
@@ -324,14 +324,22 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private CDOClassImpl getObjectType(CDOID id)
   {
+    CDOClassImpl type = session.getObjectType(id);
+    if (type != null)
+    {
+      return type;
+    }
+
     if (id instanceof CDOIDTyped)
     {
       CDOIDTyped typed = (CDOIDTyped)id;
-      CDOClassRef type = typed.getType();
-      return session.getPackageManager().resolveClass(type);
+      CDOClassRef typeRef = typed.getType();
+      type = session.getPackageManager().resolveClass(typeRef);
+      session.registerObjectType(id, type);
+      return type;
     }
 
-    return null;
+    return session.requestObjectType(id);
   }
 
   public CDOID provideCDOID(Object idOrObject)

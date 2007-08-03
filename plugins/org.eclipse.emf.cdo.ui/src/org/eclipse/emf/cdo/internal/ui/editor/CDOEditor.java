@@ -1046,7 +1046,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
       else
       {
-        URI resourceURI = CDOUtil.createURI(resourcePath);
+        URI resourceURI = CDOUtil.createResourceURI(resourcePath);
         viewerInput = resourceSet.getResource(resourceURI, true);
       }
 

@@ -95,6 +95,7 @@ public class CDOAdapterImpl extends CDOLegacyImpl implements Adapter.Internal
     CDOState oldState = super.cdoInternalSetState(state);
     if (oldState != state)
     {
+      // TODO Check if EMF proxy resolution is needed at all
       if (state == CDOState.PROXY)
       {
         if (!instance.eIsProxy())

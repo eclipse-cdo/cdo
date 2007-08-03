@@ -359,7 +359,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     private CDOID requestID(CDOResource resource, CDOViewImpl view)
     {
-      String path = CDOUtil.extractPath(resource.getURI());
+      String path = CDOUtil.extractResourcePath(resource.getURI());
       ResourceIDRequest signal = new ResourceIDRequest(view.getSession().getChannel(), path);
 
       try

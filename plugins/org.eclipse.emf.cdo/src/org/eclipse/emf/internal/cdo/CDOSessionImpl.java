@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.ConnectorException;
@@ -353,6 +354,24 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
     idToMetaInstanceMap.put(newID, metaInstance);
     metaInstanceToIDMap.put(metaInstance, newID);
+  }
+
+  public CDOClassImpl getObjectType(CDOID id)
+  {
+    return types.get(id);
+  }
+
+  public CDOClassImpl requestObjectType(CDOID id)
+  {
+    CDOClassRef typeRef = null; // FIXME
+    CDOClassImpl type = packageManager.resolveClass(typeRef);
+    registerObjectType(id, type);
+    return type;
+  }
+
+  public void registerObjectType(CDOID id, CDOClassImpl type)
+  {
+    types.put(id, type);
   }
 
   public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs, CDOViewImpl excludedView)

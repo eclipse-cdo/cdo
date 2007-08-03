@@ -116,7 +116,7 @@ public final class CDOUtil
     map.put(CDOProtocolConstants.PROTOCOL_NAME, factory);
   }
 
-  public static String extractPath(URI uri)
+  public static String extractResourcePath(URI uri)
   {
     if (!CDOProtocolConstants.PROTOCOL_NAME.equals(uri.scheme()))
     {
@@ -141,7 +141,7 @@ public final class CDOUtil
     return uri.path();
   }
 
-  public static CDOID extractID(URI uri)
+  public static CDOID extractResourceID(URI uri)
   {
     if (!CDOProtocolConstants.PROTOCOL_NAME.equals(uri.scheme()))
     {
@@ -174,7 +174,7 @@ public final class CDOUtil
     }
   }
 
-  public static URI createURI(String path)
+  public static URI createResourceURI(String path)
   {
     return URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":" + path);
   }

@@ -150,7 +150,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   public void setURI(URI newURI)
   {
     eSet(EresourcePackage.Literals.CDO_RESOURCE__URI, newURI);
-    basicSetPath(CDOUtil.extractPath(newURI));
+    basicSetPath(CDOUtil.extractResourcePath(newURI));
   }
 
   /**
@@ -274,7 +274,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void setPath(String newPath)
   {
-    setURI(CDOUtil.createURI(newPath));
+    setURI(CDOUtil.createResourceURI(newPath));
   }
 
   /**

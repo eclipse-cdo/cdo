@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 
 import org.eclipse.net4j.util.transaction.ITransaction;
 
@@ -40,4 +41,6 @@ public interface IStore
   public CDORevisionImpl loadRevision(CDOID id);
 
   public CDORevisionImpl loadHistoricalRevision(CDOID id, long timeStamp);
+
+  public CDOClassRef queryObjectType(CDOID id);
 }

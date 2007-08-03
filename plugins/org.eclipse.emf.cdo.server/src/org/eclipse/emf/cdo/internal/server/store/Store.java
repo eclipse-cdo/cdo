@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.IStore;
 
 import org.eclipse.net4j.util.transaction.TX;
@@ -77,6 +78,11 @@ public abstract class Store implements IStore
   public CDORevisionImpl loadHistoricalRevision(CDOID id, long timeStamp)
   {
     return (CDORevisionImpl)TX.execute(createLoadHistoricalRevisionOperation(id, timeStamp));
+  }
+
+  public CDOClassRef queryObjectType(CDOID id)
+  {
+    return null;
   }
 
   protected abstract RegisterResourceOperation createRegisterResourceOperation(CDOID id, String path,

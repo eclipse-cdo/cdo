@@ -79,7 +79,7 @@ public class Session implements ISession, CDOIDProvider
     }
 
     knownObjects.add(id);
-    CDOClassRef type = null;
+    CDOClassRef type = sessionManager.getRepository().getType(id);
     return CDOIDImpl.create(id.getValue(), type);
   }
 }

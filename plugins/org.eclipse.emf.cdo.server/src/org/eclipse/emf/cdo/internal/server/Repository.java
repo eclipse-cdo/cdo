@@ -15,10 +15,14 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.server.store.Store;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.IRepository;
 
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.ImplementationError;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -47,6 +51,8 @@ public class Repository extends Lifecycle implements IRepository
   private long nextOIDValue = INITIAL_OID_VALUE;
 
   private long nextMetaIDValue = INITIAL_META_ID_VALUE;
+
+  private Map<CDOID, CDOClassRef> types = new HashMap();
 
   public Repository(String name, Store store)
   {
@@ -111,5 +117,22 @@ public class Repository extends Lifecycle implements IRepository
     ++nextOIDValue;
     ++nextOIDValue;
     return id;
+  }
+
+  public CDOClassRef getType(CDOID id)
+  {
+    CDOClassRef type = types.get(id);
+    if (type == null)
+    {
+      type = store.queryObjectType(id);
+      if (type == null)
+      {
+        throw new ImplementationError("type == null");
+      }
+
+      types.put(id, type);
+    }
+
+    return type;
   }
 }

@@ -33,11 +33,4 @@ public class CDOCallbackImpl extends CDOLegacyImpl implements CDOCallback
   {
     CDOStateMachine.INSTANCE.write(this);
   }
-
-  // @Override
-  // protected InternalEObject convertID(CDOViewImpl view, CDOID id)
-  // {
-  // InternalCDOObject object = view.getObject(id, false);
-  // return object.cdoInternalInstance();
-  // }
 }

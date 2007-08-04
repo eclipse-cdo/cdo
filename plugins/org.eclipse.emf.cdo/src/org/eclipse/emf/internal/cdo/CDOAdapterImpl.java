@@ -125,20 +125,4 @@ public class CDOAdapterImpl extends CDOLegacyImpl implements Adapter.Internal
 
     return oldState;
   }
-
-  // /**
-  // * This implementation simply asks the view to convert the ID which can
-  // result
-  // * in a LoadObjectRequest being sent. Basically this leads to loading the
-  // * whole subtree (i.e. resource).
-  // * <p>
-  // * TODO Investigate the use of proxies here
-  // *
-  // * @see CDOCallbackImpl
-  // */
-  // @Override
-  // protected Object convertID(CDOViewImpl view, CDOID id)
-  // {
-  // return view.convertIDToObject(id);
-  // }
 }

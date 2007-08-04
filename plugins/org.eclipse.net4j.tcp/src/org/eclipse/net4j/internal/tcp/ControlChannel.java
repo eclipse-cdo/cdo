@@ -148,11 +148,13 @@ public final class ControlChannel extends Channel
         {
           try
           {
-            Channel channel = ((TCPConnector)getConnector()).getChannel(channelIndex);
-            if (channel != null)
-            {
-              channel.deactivate();
-            }
+            getConnector().inverseRemoveChannel(channelIndex);
+            // Channel channel =
+            // ((TCPConnector)getConnector()).getChannel(channelIndex);
+            // if (channel != null)
+            // {
+            // channel.deactivate();
+            // }
           }
           catch (Exception ex)
           {

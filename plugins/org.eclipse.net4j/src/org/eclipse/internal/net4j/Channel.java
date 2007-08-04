@@ -132,7 +132,6 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
 
   public void close()
   {
-    connector.removeChannel(this, true);
     deactivate();
   }
 
@@ -227,6 +226,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
   @Override
   protected void doDeactivate() throws Exception
   {
+    connector.removeChannel(this);
     receiveSerializer = null;
     if (sendQueue != null)
     {

@@ -30,7 +30,6 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.RWLock;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IListener;
@@ -88,10 +87,10 @@ public abstract class Connector extends Lifecycle implements IConnector
     @Override
     protected IContainerEvent createContainerEvent(IContainer container, Object element, Kind kind)
     {
-      if (kind == IContainerDelta.Kind.REMOVED)
-      {
-        removeChannel((Channel)element, false);
-      }
+      // if (kind == IContainerDelta.Kind.REMOVED)
+      // {
+      // removeChannel((Channel)element);
+      // }
 
       return new ConnectorChannelsEvent((IConnector)container, (IChannel)element, kind);
     }
@@ -468,9 +467,18 @@ public abstract class Connector extends Lifecycle implements IConnector
     });
   }
 
-  protected boolean removeChannel(final Channel channel, boolean actively)
+  /**
+   * @return <code>true</code> if the channel was removed, <code>false</code>
+   *         otherwise.
+   */
+  protected boolean removeChannel(final Channel channel)
   {
-    return channelsLock.write(new Callable<Boolean>()
+    if (channel == null)
+    {
+      throw new IllegalArgumentException("channel == null");
+    }
+
+    boolean removed = channelsLock.write(new Callable<Boolean>()
     {
       public Boolean call() throws Exception
       {
@@ -486,12 +494,33 @@ public abstract class Connector extends Lifecycle implements IConnector
           channels.set(channelIndex, null);
           return true;
         }
-        else
-        {
-          return false;
-        }
+
+        return false;
       }
     });
+
+    if (removed)
+    {
+      channel.close();
+    }
+
+    return removed;
+  }
+
+  public void inverseRemoveChannel(short channelIndex)
+  {
+    try
+    {
+      Channel channel = getChannel(channelIndex);
+      if (channel != null)
+      {
+        removeChannel(channel);
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      OM.LOG.warn(ex);
+    }
   }
 
   protected IProtocol createProtocol(String type)

@@ -50,6 +50,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
   {
   }
 
+  @Override
   public void setFocus()
   {
     viewer.getControl().setFocus();
@@ -60,6 +61,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     viewer.setSelection(selection, true);
   }
 
+  @Override
   public void createPartControl(Composite parent)
   {
     itemProvider = createContainerItemProvider();
@@ -262,7 +264,6 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     @Override
     protected void doRun() throws Exception
     {
-      System.out.println("Refreshing");
       viewer.refresh(false);
     }
   }

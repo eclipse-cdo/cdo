@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EClassifierImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
@@ -51,29 +53,75 @@ public final class EMFUtil
   {
   }
 
-  public static EObject loadXMI(String fileName)
-  {
-    return loadXMI(fileName, EPackage.Registry.INSTANCE);
-  }
-
-  public static EObject loadXMI(String fileName, EPackage.Registry packageRegistry)
+  public static ResourceSet newResourceSet(Resource.Factory resourceFactory)
   {
     ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
-    resourceSet.setPackageRegistry(packageRegistry);
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory);
+    return resourceSet;
+  }
 
+  public static ResourceSet newXMIResourceSet(EPackage... ePackages)
+  {
+    ResourceSet resourceSet = newResourceSet(new XMIResourceFactoryImpl());
+    if (ePackages != null && ePackages.length != 0)
+    {
+      Registry packageRegistry = resourceSet.getPackageRegistry();
+      for (EPackage ePackage : ePackages)
+      {
+        packageRegistry.put(ePackage.getNsURI(), ePackage);
+      }
+    }
+
+    return resourceSet;
+  }
+
+  public static ResourceSet newEcoreResourceSet(EPackage.Registry packageRegistry)
+  {
+    ResourceSet resourceSet = newResourceSet(new EcoreResourceFactoryImpl());
+    resourceSet.setPackageRegistry(packageRegistry);
+    return resourceSet;
+  }
+
+  public static ResourceSet newEcoreResourceSet()
+  {
+    return newEcoreResourceSet(EPackage.Registry.INSTANCE);
+  }
+
+  public static EObject load(String fileName, ResourceSet resourceSet)
+  {
     Resource resource = resourceSet.getResource(URI.createFileURI(fileName), true);
     return resource.getContents().get(0);
   }
 
-  public static void saveXMI(String fileName, EObject root)
+  public static EObject loadXMI(String fileName, EPackage... ePackages)
   {
-    ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
-    Resource resource = resourceSet.createResource(URI.createFileURI(fileName));
+    ResourceSet resourceSet = newXMIResourceSet(ePackages);
+    return load(fileName, resourceSet);
+  }
 
+  public static EObject loadXMI(String fileName, EPackage.Registry packageRegistry)
+  {
+    ResourceSet resourceSet = newXMIResourceSet();
+    resourceSet.setPackageRegistry(packageRegistry);
+    return load(fileName, resourceSet);
+  }
+
+  public static EObject loadEcore(String fileName, EPackage.Registry packageRegistry)
+  {
+    return load(fileName, newEcoreResourceSet(packageRegistry));
+  }
+
+  public static EObject loadEcore(String fileName)
+  {
+    return load(fileName, newEcoreResourceSet());
+  }
+
+  public static void save(String fileName, EObject root, ResourceSet resourceSet)
+  {
+    Resource resource = resourceSet.createResource(URI.createFileURI(fileName));
     EObject copy = EcoreUtil.copy(root);
     resource.getContents().add(copy);
+
     try
     {
       resource.save(null);
@@ -82,6 +130,16 @@ public final class EMFUtil
     {
       throw new IORuntimeException(ex);
     }
+  }
+
+  public static void saveXMI(String fileName, EObject root)
+  {
+    save(fileName, root, newXMIResourceSet());
+  }
+
+  public static void saveEcore(String fileName, EObject root)
+  {
+    save(fileName, root, newEcoreResourceSet());
   }
 
   public static int countAllContents(EObject eObject)

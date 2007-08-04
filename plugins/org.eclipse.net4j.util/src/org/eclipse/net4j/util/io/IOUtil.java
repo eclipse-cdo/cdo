@@ -161,11 +161,9 @@ public final class IOUtil
 
     if (file.delete())
     {
-      System.out.println("Deleted " + file.getAbsolutePath());
       return deleted + 1;
     }
 
-    System.out.println("Not deleted " + file.getAbsolutePath());
     return deleted;
   }
 

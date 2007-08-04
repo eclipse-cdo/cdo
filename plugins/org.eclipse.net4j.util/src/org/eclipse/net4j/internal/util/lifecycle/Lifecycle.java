@@ -37,6 +37,10 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
   {
   }
 
+  /**
+   * TODO Look into concurrent if there's something faster than synchronized
+   * (atomic values?)
+   */
   public final synchronized void activate() throws Exception
   {
     if (lifecycleState == ILifecycleState.INACTIVE)

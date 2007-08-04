@@ -22,8 +22,10 @@ public interface ILifecycle
   /**
    * @author Eike Stepper
    */
-  public interface Introspection
+  public interface Introspection extends ILifecycle
   {
+    public ILifecycleState getLifecycleState();
+
     public boolean isActive();
   }
 }

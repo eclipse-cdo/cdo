@@ -36,6 +36,16 @@ public final class LifecycleUtil
   {
   }
 
+  public static ILifecycleState getLifecycleState(Object object)
+  {
+    if (object instanceof ILifecycle.Introspection)
+    {
+      return ((ILifecycle.Introspection)object).getLifecycleState();
+    }
+
+    return ILifecycleState.ACTIVE;
+  }
+
   public static boolean isActive(Object object)
   {
     if (object instanceof ILifecycle.Introspection)

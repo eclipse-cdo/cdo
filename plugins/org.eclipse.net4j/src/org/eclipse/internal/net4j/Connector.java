@@ -496,7 +496,7 @@ public abstract class Connector extends Lifecycle implements IConnector
     if (removed)
     {
       channel.close();
-      channel.removeListener(channelListener);
+      // channel.removeListener(channelListener);
     }
 
     return removed;

@@ -388,7 +388,7 @@ public abstract class Connector extends Lifecycle implements IConnector
     channel.setChannelIndex(channelIndex);
     channel.setConnector(this);
     channel.setReceiveHandler(protocol);
-    channel.addListener(channelListener);
+    channel.addListener(channelListener); // TODO remove?
     addChannel(channel);
     return channel;
   }

@@ -280,6 +280,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   @Override
   protected boolean removeChannel(Channel channel)
   {
+    if (channel instanceof ControlChannel)
+    {
+      return true;
+    }
+
     if (super.removeChannel(channel))
     {
       if (controlChannel != null && isConnected())

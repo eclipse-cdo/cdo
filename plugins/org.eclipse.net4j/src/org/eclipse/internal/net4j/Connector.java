@@ -480,7 +480,6 @@ public abstract class Connector extends Lifecycle implements IConnector
         int channelIndex = channel.getChannelIndex();
         if (channelIndex < channels.size() && channels.get(channelIndex) == channel)
         {
-          channel.removeListener(channelListener);
           if (TRACER.isEnabled())
           {
             TRACER.trace("Removing channel " + channelIndex); //$NON-NLS-1$
@@ -497,6 +496,7 @@ public abstract class Connector extends Lifecycle implements IConnector
     if (removed)
     {
       channel.close();
+      channel.removeListener(channelListener);
     }
 
     return removed;

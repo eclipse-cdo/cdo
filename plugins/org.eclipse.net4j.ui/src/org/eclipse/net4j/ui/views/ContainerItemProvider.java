@@ -306,6 +306,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
     }
 
     @Override
+    public String toString()
+    {
+      return container == null ? super.toString() : container.toString();
+    }
+
+    @Override
     protected List<Node> createChildren()
     {
       Object[] elements = container.getElements();
@@ -368,6 +374,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
     public List<Node> getChildren()
     {
       return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public String toString()
+    {
+      return element == null ? super.toString() : element.toString();
     }
   }
 }

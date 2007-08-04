@@ -87,11 +87,6 @@ public abstract class Connector extends Lifecycle implements IConnector
     @Override
     protected IContainerEvent createContainerEvent(IContainer container, Object element, Kind kind)
     {
-      // if (kind == IContainerDelta.Kind.REMOVED)
-      // {
-      // removeChannel((Channel)element);
-      // }
-
       return new ConnectorChannelsEvent((IConnector)container, (IChannel)element, kind);
     }
   };

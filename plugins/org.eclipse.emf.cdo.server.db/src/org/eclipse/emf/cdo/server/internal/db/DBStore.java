@@ -81,6 +81,7 @@ public class DBStore extends Store
       @Override
       protected void queryAndFill(ITransaction transaction, CDOPackageImpl cdoPackage)
       {
+        Connection connection = ((IDBTransaction)transaction).getConnection();
         // TODO Implement method .createLoadPackageOperation()
         throw new UnsupportedOperationException("Not yet implemented");
       }

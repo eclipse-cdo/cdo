@@ -41,6 +41,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -108,7 +109,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   public CDOSessionImpl(EPackage.Registry delegate)
   {
-    this.packageRegistry = new CDOPackageRegistryImpl(this, delegate);
+    packageRegistry = new CDOPackageRegistryImpl(this, delegate);
     packageManager = new CDOSessionPackageManager(this);
     revisionManager = new CDORevisionManagerImpl(this);
   }
@@ -426,6 +427,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
     packageManager.addPackageProxies(result.getPackageInfos());
+    packageRegistry.putEPackage(EcorePackage.eINSTANCE);
   }
 
   @Override

@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.IORuntimeException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -59,12 +60,51 @@ public class CommitTransactionIndication extends CDOServerIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(final ExtendedDataInputStream in) throws IOException
   {
-    addNewPackages(in);
-    newResources = readNewResources(in);
-    newObjects = readNewObjects(in);
-    dirtyObjects = readDirtyObjects(in);
+    timeStamp = System.currentTimeMillis();
+
+    transact(new Runnable()
+    {
+      public void run()
+      {
+        try
+        {
+          addNewPackages(in);
+          newResources = readNewResources(in);
+          newObjects = readNewObjects(in);
+          dirtyObjects = readDirtyObjects(in);
+        }
+        catch (IOException ex)
+        {
+          throw new IORuntimeException(ex);
+        }
+
+        addRevisions(newResources);
+        addRevisions(newObjects);
+        addRevisions(dirtyObjects);
+      }
+    });
+
+  }
+
+  @Override
+  protected void responding(ExtendedDataOutputStream out) throws IOException
+  {
+    out.writeLong(timeStamp);
+    if (newPackages != null)
+    {
+      for (CDOPackageImpl newPackage : newPackages)
+      {
+        CDOIDRangeImpl.write(out, newPackage.getMetaIDRange());
+      }
+    }
+
+    writeIDMappings(out);
+    if (dirtyObjects.length > 0)
+    {
+      getSessionManager().notifyInvalidation(timeStamp, dirtyObjects, getSession());
+    }
   }
 
   private void addNewPackages(ExtendedDataInputStream in) throws IOException
@@ -144,37 +184,6 @@ public class CommitTransactionIndication extends CDOServerIndication
     }
 
     return revisions;
-  }
-
-  @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
-  {
-    timeStamp = System.currentTimeMillis();
-    out.writeLong(timeStamp);
-
-    transact(new Runnable()
-    {
-      public void run()
-      {
-        addRevisions(newResources);
-        addRevisions(newObjects);
-        addRevisions(dirtyObjects);
-      }
-    });
-
-    if (newPackages != null)
-    {
-      for (CDOPackageImpl newPackage : newPackages)
-      {
-        CDOIDRangeImpl.write(out, newPackage.getMetaIDRange());
-      }
-    }
-
-    writeIDMappings(out);
-    if (dirtyObjects.length > 0)
-    {
-      getSessionManager().notifyInvalidation(timeStamp, dirtyObjects, getSession());
-    }
   }
 
   private void addRevisions(CDORevisionImpl[] revisions)

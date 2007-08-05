@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.internal.server.store;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
+import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -89,6 +91,26 @@ public abstract class Store implements IStore
     return (String)TX.execute(createLoadResourcePathOperation(id));
   }
 
+  public void addPackage(RepositoryPackageManager packageManager, CDOPackageImpl cdoPackage)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Adding package: {0}", cdoPackage);
+    }
+
+    TX.execute(createAddPackageOperation(packageManager, cdoPackage));
+  }
+
+  public void loadPackage(CDOPackageImpl cdoPackage)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Loading package: {0}", cdoPackage);
+    }
+
+    TX.execute(createLoadPackageOperation(cdoPackage));
+  }
+
   public void addRevision(RevisionManager revisionManager, CDORevisionImpl revision)
   {
     if (TRACER.isEnabled())
@@ -126,8 +148,7 @@ public abstract class Store implements IStore
       TRACER.format("Querying object type: {0}", id);
     }
 
-    // TODO Implement method Store.queryObjectType()
-    throw new UnsupportedOperationException("Not yet implemented");
+    return (CDOClassRefImpl)TX.execute(createQueryObjectTypeOperation(id));
   }
 
   protected abstract RegisterResourceOperation createRegisterResourceOperation(CDOID id, String path,
@@ -137,10 +158,17 @@ public abstract class Store implements IStore
 
   protected abstract LoadResourcePathOperation createLoadResourcePathOperation(CDOID id);
 
+  protected abstract AddPackageOperation createAddPackageOperation(RepositoryPackageManager packageManager,
+      CDOPackageImpl cdoPackage);
+
+  protected abstract LoadPackageOperation createLoadPackageOperation(CDOPackageImpl cdoPackage);
+
   protected abstract AddRevisionOperation createAddRevisionOperation(RevisionManager revisionManager,
       CDORevisionImpl revision);
 
   protected abstract LoadRevisionOperation createLoadRevisionOperation(CDOID id);
 
   protected abstract LoadHistoricalRevisionOperation createLoadHistoricalRevisionOperation(CDOID id, long timeStamp);
+
+  protected abstract QueryObjectTypeOperation createQueryObjectTypeOperation(CDOID id);
 }

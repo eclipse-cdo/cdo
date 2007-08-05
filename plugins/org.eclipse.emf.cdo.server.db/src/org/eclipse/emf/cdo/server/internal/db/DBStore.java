@@ -10,27 +10,36 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
+import org.eclipse.emf.cdo.internal.server.store.AddPackageOperation;
 import org.eclipse.emf.cdo.internal.server.store.AddRevisionOperation;
 import org.eclipse.emf.cdo.internal.server.store.LoadHistoricalRevisionOperation;
+import org.eclipse.emf.cdo.internal.server.store.LoadPackageOperation;
 import org.eclipse.emf.cdo.internal.server.store.LoadResourceIDOperation;
 import org.eclipse.emf.cdo.internal.server.store.LoadResourcePathOperation;
 import org.eclipse.emf.cdo.internal.server.store.LoadRevisionOperation;
+import org.eclipse.emf.cdo.internal.server.store.QueryObjectTypeOperation;
 import org.eclipse.emf.cdo.internal.server.store.RegisterResourceOperation;
 import org.eclipse.emf.cdo.internal.server.store.Store;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBTransaction;
 import org.eclipse.net4j.util.transaction.ITransaction;
 
 import javax.sql.DataSource;
 
+import java.sql.Connection;
 import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
+@SuppressWarnings("unused")
 public class DBStore extends Store
 {
   private static final String TYPE = "db";
@@ -49,6 +58,36 @@ public class DBStore extends Store
   }
 
   @Override
+  protected AddPackageOperation createAddPackageOperation(RepositoryPackageManager packageManager,
+      CDOPackageImpl cdoPackage)
+  {
+    return new AddPackageOperation(packageManager, cdoPackage)
+    {
+      @Override
+      protected void update(ITransaction transaction, CDOPackageImpl cdoPackage)
+      {
+        Connection connection = ((IDBTransaction)transaction).getConnection();
+        // TODO Implement method .createAddPackageOperation()
+        throw new UnsupportedOperationException("Not yet implemented");
+      }
+    };
+  }
+
+  @Override
+  protected LoadPackageOperation createLoadPackageOperation(CDOPackageImpl cdoPackage)
+  {
+    return new LoadPackageOperation(cdoPackage)
+    {
+      @Override
+      protected void queryAndFill(ITransaction transaction, CDOPackageImpl cdoPackage)
+      {
+        // TODO Implement method .createLoadPackageOperation()
+        throw new UnsupportedOperationException("Not yet implemented");
+      }
+    };
+  }
+
+  @Override
   protected AddRevisionOperation createAddRevisionOperation(RevisionManager revisionManager, CDORevisionImpl revision)
   {
     return new AddRevisionOperation(revisionManager, revision)
@@ -56,6 +95,7 @@ public class DBStore extends Store
       @Override
       protected void update(ITransaction transaction, CDORevisionImpl revision)
       {
+        Connection connection = ((IDBTransaction)transaction).getConnection();
         // TODO Implement method .update()
         throw new UnsupportedOperationException("Not yet implemented");
       }
@@ -70,6 +110,7 @@ public class DBStore extends Store
       @Override
       protected CDORevisionImpl query(ITransaction transaction, CDOID id) throws Exception
       {
+        Connection connection = ((IDBTransaction)transaction).getConnection();
         // TODO Implement method .query()
         throw new UnsupportedOperationException("Not yet implemented");
       }
@@ -84,6 +125,7 @@ public class DBStore extends Store
       @Override
       protected CDORevisionImpl query(ITransaction transaction, CDOID id, long timeStamp) throws Exception
       {
+        Connection connection = ((IDBTransaction)transaction).getConnection();
         // TODO Implement method .query()
         throw new UnsupportedOperationException("Not yet implemented");
       }
@@ -99,6 +141,7 @@ public class DBStore extends Store
       @Override
       protected void update(ITransaction transaction, CDOID id, String path)
       {
+        Connection connection = ((IDBTransaction)transaction).getConnection();
         // TODO Implement method .update()
         throw new UnsupportedOperationException("Not yet implemented");
       }
@@ -113,6 +156,7 @@ public class DBStore extends Store
       @Override
       protected CDOID query(ITransaction transaction, String path) throws Exception
       {
+        Connection connection = ((IDBTransaction)transaction).getConnection();
         // TODO Implement method .query()
         throw new UnsupportedOperationException("Not yet implemented");
       }
@@ -127,6 +171,22 @@ public class DBStore extends Store
       @Override
       protected String query(ITransaction transaction, CDOID id) throws Exception
       {
+        Connection connection = ((IDBTransaction)transaction).getConnection();
+        // TODO Implement method .query()
+        throw new UnsupportedOperationException("Not yet implemented");
+      }
+    };
+  }
+
+  @Override
+  protected QueryObjectTypeOperation createQueryObjectTypeOperation(CDOID id)
+  {
+    return new QueryObjectTypeOperation(id)
+    {
+      @Override
+      protected CDOClassRef query(ITransaction transaction, CDOID id) throws Exception
+      {
+        Connection connection = ((IDBTransaction)transaction).getConnection();
         // TODO Implement method .query()
         throw new UnsupportedOperationException("Not yet implemented");
       }

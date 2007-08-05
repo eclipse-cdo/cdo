@@ -10,9 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.store;
 
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 
 import org.eclipse.net4j.util.transaction.ITransaction;
 import org.eclipse.net4j.util.transaction.TransactionUtil;
@@ -37,6 +40,35 @@ public class NOOPStore extends Store
   }
 
   @Override
+  protected AddPackageOperation createAddPackageOperation(RepositoryPackageManager packageManager,
+      CDOPackageImpl cdoPackage)
+  {
+    return new AddPackageOperation(packageManager, cdoPackage)
+    {
+      @Override
+      protected void update(ITransaction transaction, CDOPackageImpl cdoPackage)
+      {
+        // TODO Implement method .createAddPackageOperation()
+        throw new UnsupportedOperationException("Not yet implemented");
+      }
+    };
+  }
+
+  @Override
+  protected LoadPackageOperation createLoadPackageOperation(CDOPackageImpl cdoPackage)
+  {
+    return new LoadPackageOperation(cdoPackage)
+    {
+      @Override
+      protected void queryAndFill(ITransaction transaction, CDOPackageImpl cdoPackage)
+      {
+        // TODO Implement method .createLoadPackageOperation()
+        throw new UnsupportedOperationException("Not yet implemented");
+      }
+    };
+  }
+
+  @Override
   protected AddRevisionOperation createAddRevisionOperation(RevisionManager revisionManager, CDORevisionImpl revision)
   {
     return new AddRevisionOperation(revisionManager, revision)
@@ -44,6 +76,8 @@ public class NOOPStore extends Store
       @Override
       protected void update(ITransaction transaction, CDORevisionImpl revision)
       {
+        // TODO Implement method .update()
+        throw new UnsupportedOperationException("Not yet implemented");
       }
     };
   }
@@ -85,6 +119,8 @@ public class NOOPStore extends Store
       @Override
       protected void update(ITransaction transaction, CDOID id, String path)
       {
+        // TODO Implement method .createRegisterResourceOperation()
+        throw new UnsupportedOperationException("Not yet implemented");
       }
     };
   }
@@ -110,6 +146,20 @@ public class NOOPStore extends Store
     {
       @Override
       protected String query(ITransaction transaction, CDOID id) throws Exception
+      {
+        // TODO Implement method .query()
+        throw new UnsupportedOperationException("Not yet implemented");
+      }
+    };
+  }
+
+  @Override
+  protected QueryObjectTypeOperation createQueryObjectTypeOperation(CDOID id)
+  {
+    return new QueryObjectTypeOperation(id)
+    {
+      @Override
+      protected CDOClassRef query(ITransaction transaction, CDOID id) throws Exception
       {
         // TODO Implement method .query()
         throw new UnsupportedOperationException("Not yet implemented");

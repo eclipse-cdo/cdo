@@ -43,14 +43,18 @@ public class RepositoryPackageManager extends CDOPackageManagerImpl
       cdoPackage.setMetaIDRange(newRange);
     }
 
+    repository.getStore().addPackage(this, cdoPackage);
+  }
+
+  public void addPackageToCache(CDOPackageImpl cdoPackage)
+  {
     super.addPackage(cdoPackage);
   }
 
   @Override
   protected void resolve(CDOPackageImpl cdoPackage)
   {
-    // TODO Implement method RepositoryPackageManager.resolve()
-    throw new UnsupportedOperationException("Not yet implemented");
+    repository.getStore().loadPackage(cdoPackage);
   }
 
   @Override

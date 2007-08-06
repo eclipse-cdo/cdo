@@ -106,7 +106,7 @@ public abstract class FiniteStateMachine<STATE extends Enum, EVENT extends Enum,
     ITransition transition = transitions[s][e];
     if (transition == IGNORE)
     {
-      // if (TRACER.isEnabled())
+      // TODO if (TRACER.isEnabled())
       // {
       // TRACER.trace(formatIgnoreMessage(subject, state, event, data));
       // }

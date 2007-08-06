@@ -32,6 +32,12 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOStateMachine.class);
 
+  private InternalCDOObject lastTracedObject;
+
+  private CDOState lastTracedState;
+
+  private CDOEvent lastTracedEvent;
+
   private CDOStateMachine()
   {
     super(CDOState.class, CDOEvent.class);
@@ -123,31 +129,31 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   public void read(InternalCDOObject object)
   {
-    if (TRACER.isEnabled()) TRACER.format("READ: {0}", object);
+    if (TRACER.isEnabled()) trace(object, CDOEvent.READ);
     process(object, CDOEvent.READ, null);
   }
 
   public void write(InternalCDOObject object)
   {
-    if (TRACER.isEnabled()) TRACER.format("WRITE: {0}", object);
+    if (TRACER.isEnabled()) trace(object, CDOEvent.WRITE);
     process(object, CDOEvent.WRITE, null);
   }
 
   public void invalidate(InternalCDOObject object, long timeStamp)
   {
-    if (TRACER.isEnabled()) TRACER.format("INVALIDATE: {0}", object);
+    if (TRACER.isEnabled()) trace(object, CDOEvent.INVALIDATE);
     process(object, CDOEvent.INVALIDATE, timeStamp);
   }
 
   public void commit(InternalCDOObject object, CommitTransactionResult result)
   {
-    if (TRACER.isEnabled()) TRACER.format("COMMIT: {0}", object);
+    if (TRACER.isEnabled()) trace(object, CDOEvent.COMMIT);
     process(object, CDOEvent.COMMIT, result);
   }
 
   public void rollback(InternalCDOObject object)
   {
-    if (TRACER.isEnabled()) TRACER.format("ROLLBACK: {0}", object);
+    if (TRACER.isEnabled()) trace(object, CDOEvent.ROLLBACK);
     process(object, CDOEvent.ROLLBACK, null);
   }
 
@@ -155,6 +161,21 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   protected CDOState getState(InternalCDOObject object)
   {
     return object.cdoState();
+  }
+
+  /**
+   * Removes clutter from the trace log
+   */
+  private void trace(InternalCDOObject object, CDOEvent event)
+  {
+    CDOState state = object.cdoState();
+    if (lastTracedObject != object || lastTracedState != state || lastTracedEvent != event)
+    {
+      TRACER.format("{0}: {1}", event, object);
+      lastTracedObject = object;
+      lastTracedState = state;
+      lastTracedEvent = event;
+    }
   }
 
   /**

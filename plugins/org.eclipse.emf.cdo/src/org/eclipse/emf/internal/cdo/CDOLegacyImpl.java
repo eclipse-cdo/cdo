@@ -110,7 +110,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
 
       // Setting eProxyURI is necessary to prevent content adapters from
       // loading the whole content tree.
-      // TODO Does not have the desired effect ;-(
+      // TODO Does not have the desired effect ;-( see CDOEditor.createModel()
       if (state == CDOState.PROXY)
       {
         if (!instance.eIsProxy())

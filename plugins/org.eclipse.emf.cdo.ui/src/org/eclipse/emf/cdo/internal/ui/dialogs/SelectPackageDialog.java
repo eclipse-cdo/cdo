@@ -78,29 +78,13 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
     viewer.setLabelProvider(new PackageLabelProvider());
     viewer.setInput(packageTypes);
 
-    setCurrentViewer(viewer);
-  }
+    String[] uris = OM.PREF_HISTORY_SELECT_PACKAGES.getValue();
+    if (uris != null)
+    {
+      viewer.setCheckedElements(uris);
+    }
 
-  @Override
-  protected void createButtonsForButtonBar(Composite parent)
-  {
-    super.createButtonsForButtonBar(parent);
-    // final PreferenceButton showIgnored = new PreferenceButton(parent,
-    // SWT.CHECK, OM.PREF_SHOW_IGNORED_BUNDLES);
-    // showIgnored.setText("Show ignored bundles");
-    // showIgnored.addSelectionListener(new SelectionAdapter()
-    // {
-    // @Override
-    // public void widgetSelected(SelectionEvent e)
-    // {
-    // OM.PREF_SHOW_IGNORED_BUNDLES.setValue(showIgnored.getSelection());
-    // getCurrentViewer().refresh(true);
-    // }
-    // });
-    //
-    // PreferenceButton startup = new PreferenceButton(parent, SWT.CHECK,
-    // OM.PREF_CHECK_DURING_STARTUP);
-    // startup.setText("Check during startup");
+    setCurrentViewer(viewer);
   }
 
   @Override
@@ -112,6 +96,7 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
       checkedURIs.add((String)checkedElement);
     }
 
+    OM.PREF_HISTORY_SELECT_PACKAGES.setValue(checkedURIs.toArray(new String[checkedURIs.size()]));
     super.okPressed();
   }
 

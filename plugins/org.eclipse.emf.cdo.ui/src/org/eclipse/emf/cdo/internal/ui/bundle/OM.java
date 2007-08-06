@@ -36,8 +36,8 @@ public abstract class OM
 
   public static final OMPreferences PREFS = BUNDLE.preferences();
 
-  public static final OMPreference<String[]> PREF_HISTORY_REGISTER_PACKAGE = PREFS
-      .initArray("history.register.package");
+  public static final OMPreference<String[]> PREF_HISTORY_SELECT_PACKAGES = PREFS
+      .initArray("PREF_HISTORY_SELECT_PACKAGES");
 
   static void start() throws Exception
   {

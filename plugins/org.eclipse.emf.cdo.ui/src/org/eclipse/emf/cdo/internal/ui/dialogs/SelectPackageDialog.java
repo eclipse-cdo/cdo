@@ -51,7 +51,7 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
 
   private Set<String> excludedURIs = new HashSet();
 
-  private String[] checkedURIs = {};
+  private Set<String> checkedURIs = new HashSet();
 
   public SelectPackageDialog(Shell shell, String title, String message, Set<String> excludedURIs)
   {
@@ -64,7 +64,7 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
     this(shell, title, message, NO_URIS);
   }
 
-  public String[] getCheckedURIs()
+  public Set<String> getCheckedURIs()
   {
     return checkedURIs;
   }
@@ -106,7 +106,12 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
   @Override
   protected void okPressed()
   {
-    checkedURIs = (String[])getCurrentViewer().getCheckedElements();
+    Object[] checkedElements = getCurrentViewer().getCheckedElements();
+    for (Object checkedElement : checkedElements)
+    {
+      checkedURIs.add((String)checkedElement);
+    }
+
     super.okPressed();
   }
 

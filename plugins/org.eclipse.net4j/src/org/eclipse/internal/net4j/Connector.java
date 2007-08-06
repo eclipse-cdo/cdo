@@ -473,6 +473,11 @@ public abstract class Connector extends Lifecycle implements IConnector
       throw new IllegalArgumentException("channel == null");
     }
 
+    if (!isConnected())
+    {
+      return false;
+    }
+
     boolean removed = channelsLock.write(new Callable<Boolean>()
     {
       public Boolean call() throws Exception

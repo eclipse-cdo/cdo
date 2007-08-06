@@ -21,6 +21,7 @@ import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -45,8 +46,8 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
 
     if (dialog.open() == SelectPackageDialog.OK)
     {
-      String[] checkedURIs = dialog.getCheckedURIs();
-      List<EPackage> ePackages = new ArrayList(checkedURIs.length);
+      Set<String> checkedURIs = dialog.getCheckedURIs();
+      List<EPackage> ePackages = new ArrayList(checkedURIs.size());
       for (String uri : checkedURIs)
       {
         EPackage ePackage = registry.getEPackage(uri);

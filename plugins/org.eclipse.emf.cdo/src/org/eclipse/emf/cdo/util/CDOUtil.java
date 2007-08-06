@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.util;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
@@ -85,7 +86,7 @@ public final class CDOUtil
       for (IConfigurationElement element : registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT_NAME))
       {
         String uri = element.getAttribute("uri");
-        if (!StringUtil.isEmpty(uri))
+        if (!StringUtil.isEmpty(uri) && !uri.equals(EresourcePackage.eINSTANCE.getNsURI()))
         {
           packageTypes.put(uri, CDOPackageType.NATIVE);
         }
@@ -96,7 +97,8 @@ public final class CDOUtil
           .getSymbolicName(), EcorePlugin.GENERATED_PACKAGE_PPID))
       {
         String uri = element.getAttribute("uri");
-        if (!StringUtil.isEmpty(uri) && !packageTypes.containsKey(uri))
+        if (!StringUtil.isEmpty(uri) && !packageTypes.containsKey(uri)
+            && !uri.equals(EresourcePackage.eINSTANCE.getNsURI()))
         {
           String bundleName = element.getContributor().getName();
           Bundle bundle = Platform.getBundle(bundleName);

@@ -11,46 +11,49 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.internal.ui.bundle.OM;
-
-import org.eclipse.net4j.internal.util.collection.PreferenceHistory;
-import org.eclipse.net4j.ui.widgets.HistoryTextDialog;
-import org.eclipse.net4j.util.collection.IHistory;
+import org.eclipse.emf.cdo.internal.ui.dialogs.SelectPackageDialog;
 
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.jface.dialogs.IInputValidator;
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
  */
-public class RegisterCDOPackageAction extends RegisterPackageAction
+public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
 {
-  public static final IHistory<String> HISTORY = new PreferenceHistory(OM.PREF_HISTORY_REGISTER_PACKAGE);
-
-  private static final String TITLE = "Register Package";
+  private static final String TITLE = "Register Generated Packages";
 
   private EPackage.Registry registry = EPackage.Registry.INSTANCE;
 
-  public RegisterCDOPackageAction(IWorkbenchPage page, CDOSession session)
+  public RegisterGeneratedPackagesAction(IWorkbenchPage page, CDOSession session)
   {
-    super(page, TITLE, "Register a package generated for CDO", null, session);
+    super(page, TITLE, "Register native, legacy or converted packages", null, session);
   }
 
   @Override
-  protected EPackage getEPackage(IWorkbenchPage page, CDOSession session)
+  protected List<EPackage> getEPackages(IWorkbenchPage page, CDOSession session)
   {
     Shell shell = page.getWorkbenchWindow().getShell();
-    IInputValidator validator = new EPackageFactoryValidator();
-    InputDialog dialog = new HistoryTextDialog(shell, TITLE, "Enter a package URI:", HISTORY, validator);
-    if (dialog.open() == InputDialog.OK)
+    SelectPackageDialog dialog = new SelectPackageDialog(shell, "Generated Packages",
+        "Select one or more packages for registration with the CDO package registry");
+
+    if (dialog.open() == SelectPackageDialog.OK)
     {
-      String uri = dialog.getValue();
-      HISTORY.add(uri);
-      return registry.getEPackage(uri);
+      String[] checkedURIs = dialog.getCheckedURIs();
+      List<EPackage> ePackages = new ArrayList(checkedURIs.length);
+      for (String uri : checkedURIs)
+      {
+        EPackage ePackage = registry.getEPackage(uri);
+        ePackages.add(ePackage);
+      }
+
+      return ePackages;
     }
 
     return null;

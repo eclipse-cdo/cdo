@@ -13,9 +13,9 @@ package org.eclipse.emf.cdo.internal.ui.bundle;
 import org.eclipse.emf.cdo.internal.server.store.NOOPStore;
 import org.eclipse.emf.cdo.server.IRepositoryManager;
 
+import org.eclipse.net4j.ui.UIActivator;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.pref.OMPreference;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
@@ -64,7 +64,7 @@ public abstract class OM
   /**
    * @author Eike Stepper
    */
-  public static final class Activator extends OSGiActivator
+  public static final class Activator extends UIActivator
   {
     public static Activator INSTANCE;
 

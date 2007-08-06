@@ -9,14 +9,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 
+import java.util.List;
+
 /**
  * @author Eike Stepper
  */
-public abstract class RegisterPackageAction extends SessionAction
+public abstract class RegisterPackagesAction extends SessionAction
 {
-  private EPackage ePackage;
+  private List<EPackage> ePackages;
 
-  public RegisterPackageAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
+  public RegisterPackagesAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
       CDOSession session)
   {
     super(page, text, toolTipText, image, session);
@@ -25,8 +27,8 @@ public abstract class RegisterPackageAction extends SessionAction
   @Override
   protected void preRun() throws Exception
   {
-    ePackage = getEPackage(getPage(), getSession());
-    if (ePackage == null)
+    ePackages = getEPackages(getPage(), getSession());
+    if (ePackages == null)
     {
       cancel();
     }
@@ -36,13 +38,17 @@ public abstract class RegisterPackageAction extends SessionAction
   protected void doRun(IProgressMonitor monitor) throws Exception
   {
     CDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
-    packageRegistry.putEPackage(ePackage);
-    postRegistration(ePackage);
+    for (EPackage ePackage : ePackages)
+    {
+      packageRegistry.putEPackage(ePackage);
+    }
+
+    postRegistration(ePackages);
   }
 
-  protected void postRegistration(EPackage ePackage)
+  protected void postRegistration(List<EPackage> ePackages)
   {
   }
 
-  protected abstract EPackage getEPackage(IWorkbenchPage page, CDOSession session);
+  protected abstract List<EPackage> getEPackages(IWorkbenchPage page, CDOSession session);
 }

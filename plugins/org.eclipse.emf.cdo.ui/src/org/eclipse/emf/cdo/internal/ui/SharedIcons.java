@@ -49,6 +49,12 @@ public class SharedIcons
 
   public static final String OBJ_EPACKAGE = OBJ + "EPackage";
 
+  public static final String OBJ_EPACKAGE_CONVERTED = OBJ + "EPackageConverted";
+
+  public static final String OBJ_EPACKAGE_LEGACY = OBJ + "EPackageLegacy";
+
+  public static final String OBJ_EPACKAGE_NATIVE = OBJ + "EPackageNative";
+
   public static final String OBJ_ECLASS = OBJ + "EClass";
 
   public static final String VIEW_SESSIONS = VIEW + "cdo_sessions";

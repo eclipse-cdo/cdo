@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
-import org.eclipse.emf.cdo.internal.ui.actions.RegisterCDOPackageAction;
+import org.eclipse.emf.cdo.internal.ui.actions.RegisterGeneratedPackagesAction;
 import org.eclipse.emf.cdo.internal.ui.views.CDOItemProvider;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.util.CDOPackageType;
@@ -44,6 +44,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -124,10 +125,10 @@ public class PackageManagerDialog extends TitleAreaDialog
 
   protected void registerPackage()
   {
-    new RegisterCDOPackageAction(page, session)
+    new RegisterGeneratedPackagesAction(page, session)
     {
       @Override
-      protected void postRegistration(EPackage ePackage)
+      protected void postRegistration(List<EPackage> ePackages)
       {
         page.getWorkbenchWindow().getShell().getDisplay().syncExec(new Runnable()
         {

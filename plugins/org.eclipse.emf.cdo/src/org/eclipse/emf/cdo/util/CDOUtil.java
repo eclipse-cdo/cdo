@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -47,11 +48,13 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
-import java.util.HashSet;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.Constants;
+
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -60,6 +63,10 @@ public final class CDOUtil
 {
   public static final String EXT_POINT_NAME = "persistent_package";
 
+  private static Map<String, CDOPackageType> packageTypes;
+
+  public static final String CDO_VERSION_SUFFIX = "-CDO";
+
   private CDOUtil()
   {
   }
@@ -67,21 +74,46 @@ public final class CDOUtil
   /**
    * Can only be used with Eclipse running!
    */
-  public static Set<String> getPersistentPackageURIs()
+  public static synchronized Map<String, CDOPackageType> getPackageTypes()
   {
-    Set<String> result = new HashSet();
-    IExtensionRegistry registry = Platform.getExtensionRegistry();
-    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT_NAME);
-    for (IConfigurationElement element : elements)
+    if (packageTypes == null)
     {
-      String uri = element.getAttribute("uri");
-      if (!StringUtil.isEmpty(uri))
+      packageTypes = new HashMap();
+      IExtensionRegistry registry = Platform.getExtensionRegistry();
+
+      // Collect native packages
+      for (IConfigurationElement element : registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT_NAME))
       {
-        result.add(uri);
+        String uri = element.getAttribute("uri");
+        if (!StringUtil.isEmpty(uri))
+        {
+          packageTypes.put(uri, CDOPackageType.NATIVE);
+        }
+      }
+
+      // Collect legacy and converted packages
+      for (IConfigurationElement element : registry.getConfigurationElementsFor(EcorePlugin.getPlugin().getBundle()
+          .getSymbolicName(), EcorePlugin.GENERATED_PACKAGE_PPID))
+      {
+        String uri = element.getAttribute("uri");
+        if (!StringUtil.isEmpty(uri) && !packageTypes.containsKey(uri))
+        {
+          String bundleName = element.getContributor().getName();
+          Bundle bundle = Platform.getBundle(bundleName);
+          String version = (String)bundle.getHeaders().get(Constants.BUNDLE_VERSION);
+          if (version.endsWith(CDOUtil.CDO_VERSION_SUFFIX))
+          {
+            packageTypes.put(uri, CDOPackageType.CONVERTED);
+          }
+          else
+          {
+            packageTypes.put(uri, CDOPackageType.LEGACY);
+          }
+        }
       }
     }
 
-    return result;
+    return packageTypes;
   }
 
   public static CDOSession openSession(IConnector connector, String repositoryName, EPackage.Registry delegate)

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterCDOPackageAction;
 import org.eclipse.emf.cdo.internal.ui.views.CDOItemProvider;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -44,7 +45,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
 
 /**
@@ -57,8 +57,6 @@ public class PackageManagerDialog extends TitleAreaDialog
   private static final String TITLE = "CDO Package Manager";
 
   private static final String EMPTY = "";
-
-  private final Set<String> persistentPackageURIs = CDOUtil.getPersistentPackageURIs();
 
   private IWorkbenchPage page;
 
@@ -170,7 +168,9 @@ public class PackageManagerDialog extends TitleAreaDialog
       return "ECORE";
     }
 
-    return persistentPackageURIs.contains(((EPackage)ePackage).getNsURI()) ? "CDO" : "EMF";
+    String uri = ((EPackage)ePackage).getNsURI();
+    CDOPackageType packageType = CDOUtil.getPackageTypes().get(uri);
+    return packageType.toString();
   }
 
   protected String getCDOPackageText(CDOPackage cdoPackage)

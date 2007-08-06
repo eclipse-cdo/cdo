@@ -59,13 +59,12 @@ public class Repository extends Lifecycle implements IRepository
     this.name = name;
     this.store = store;
     this.uuid = UUID.randomUUID().toString();
+    store.setRepository(this);
 
     packageManager = new RepositoryPackageManager(this);
     sessionManager = new SessionManager(this);
     resourceManager = new ResourceManager(this);
     revisionManager = new RevisionManager(this);
-
-    store.setRepository(this);
   }
 
   public String getName()

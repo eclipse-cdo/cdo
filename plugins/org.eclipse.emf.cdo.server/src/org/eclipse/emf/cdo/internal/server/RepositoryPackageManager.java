@@ -43,7 +43,14 @@ public class RepositoryPackageManager extends CDOPackageManagerImpl
       cdoPackage.setMetaIDRange(newRange);
     }
 
-    repository.getStore().addPackage(this, cdoPackage);
+    if (cdoPackage.isSystem())
+    {
+      addPackageToCache(cdoPackage);
+    }
+    else
+    {
+      repository.getStore().addPackage(this, cdoPackage);
+    }
   }
 
   public void addPackageToCache(CDOPackageImpl cdoPackage)
@@ -54,7 +61,10 @@ public class RepositoryPackageManager extends CDOPackageManagerImpl
   @Override
   protected void resolve(CDOPackageImpl cdoPackage)
   {
-    repository.getStore().loadPackage(cdoPackage);
+    if (!cdoPackage.isSystem())
+    {
+      repository.getStore().loadPackage(cdoPackage);
+    }
   }
 
   @Override

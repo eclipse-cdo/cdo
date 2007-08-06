@@ -31,11 +31,11 @@ import java.util.List;
  */
 public class RegisterWorkspacePackagesAction extends RegisterPackagesAction
 {
-  private static final String TITLE = "Register Generated Packages";
+  private static final String TITLE = "Register Workspace Packages";
 
   public RegisterWorkspacePackagesAction(IWorkbenchPage page, CDOSession session)
   {
-    super(page, TITLE, "Register native, legacy or converted packages", null, session);
+    super(page, TITLE, "Register dynamic packages from the workspace", null, session);
   }
 
   @Override

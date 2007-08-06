@@ -11,69 +11,68 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.internal.ui.dialogs.SelectPackageDialog;
+import org.eclipse.emf.cdo.util.EMFUtil;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
-import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public class RegisterFilesystemPackagesAction extends RegisterPackagesAction
 {
-  private static final String TITLE = "Register Generated Packages";
+  private static final String TITLE = "Register Filesystem Packages";
 
-  private EPackage.Registry registry = EPackage.Registry.INSTANCE;
+  private static final String[] FILTER_NAMES = { "Ecore models (*.ecore)", "XMI files (*.xmi)", "XML files (*.xml)",
+      "All files (*.*)" };
+
+  private static final String[] FILTER_EXTENSIONS = { "ecore", "xmi", "xml", null };
 
   public RegisterFilesystemPackagesAction(IWorkbenchPage page, CDOSession session)
   {
-    super(page, TITLE, "Register native, legacy or converted packages", null, session);
+    super(page, TITLE, "Register dynamic packages from the filesystem", null, session);
   }
 
   @Override
   protected List<EPackage> getEPackages(IWorkbenchPage page, CDOSession session)
   {
     Shell shell = page.getWorkbenchWindow().getShell();
-    SelectPackageDialog dialog = new SelectPackageDialog(shell, "Generated Packages",
-        "Select one or more packages for registration with the CDO package registry", session.getPackageRegistry()
-            .keySet());
-
-    if (dialog.open() == SelectPackageDialog.OK)
+    FileDialog dialog = new FileDialog(shell, SWT.OPEN | SWT.MULTI);
+    dialog.setFileName("*.ecore");
+    dialog.setFilterNames(FILTER_NAMES);
+    dialog.setFilterExtensions(FILTER_EXTENSIONS);
+    if (dialog.open() != null)
     {
-      Set<String> checkedURIs = dialog.getCheckedURIs();
-      List<EPackage> ePackages = new ArrayList(checkedURIs.size());
-      for (String uri : checkedURIs)
+      String filterPath = dialog.getFilterPath();
+      String[] fileNames = dialog.getFileNames();
+      if (fileNames != null && fileNames.length != 0)
       {
-        EPackage ePackage = registry.getEPackage(uri);
-        ePackages.add(ePackage);
-      }
+        ResourceSet resourceSet = EMFUtil.newEcoreResourceSet();
+        List<EPackage> ePackages = new ArrayList(fileNames.length);
+        for (String fileName : fileNames)
+        {
+          String path = filterPath + File.separator + fileName;
+          URI uri = URI.createFileURI(path);
+          Resource resource = resourceSet.getResource(uri, true);
+          EPackage ePackage = (EPackage)resource.getContents().get(0);
+          ePackages.add(ePackage);
+        }
 
-      return ePackages;
+        return ePackages;
+      }
     }
 
     return null;
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public class EPackageFactoryValidator implements IInputValidator
-  {
-    public String isValid(String uri)
-    {
-      if (uri == null || uri.length() == 0)
-      {
-        return "";
-      }
-
-      return registry.containsKey(uri) ? null : "Package " + uri + " not found.";
-    }
   }
 }

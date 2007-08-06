@@ -112,9 +112,9 @@ public class PackageManagerDialog extends TitleAreaDialog
   @Override
   protected void createButtonsForButtonBar(Composite parent)
   {
-    createButton(parent, REGISTER_GENERATED_PACKAGES_ID, "Register Generated Packages", false);
-    createButton(parent, REGISTER_WORKSPACE_PACKAGES_ID, "Register Workspace Packages", false);
-    createButton(parent, REGISTER_FILESYSTEM_PACKAGES_ID, "Register Filesystem Packages", false);
+    createButton(parent, REGISTER_GENERATED_PACKAGES_ID, "Generated...", false);
+    createButton(parent, REGISTER_WORKSPACE_PACKAGES_ID, "Workspace...", false);
+    createButton(parent, REGISTER_FILESYSTEM_PACKAGES_ID, "Filesystem...", false);
     createButton(parent, IDialogConstants.CLOSE_ID, IDialogConstants.CLOSE_LABEL, false);
   }
 

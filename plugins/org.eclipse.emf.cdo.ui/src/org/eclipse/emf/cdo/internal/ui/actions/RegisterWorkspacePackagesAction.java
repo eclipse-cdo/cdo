@@ -11,17 +11,20 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.internal.ui.dialogs.SelectPackageDialog;
+import org.eclipse.emf.cdo.internal.ui.dialogs.OpenResourcesDialog;
+import org.eclipse.emf.cdo.util.EMFUtil;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
-import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -29,8 +32,6 @@ import java.util.Set;
 public class RegisterWorkspacePackagesAction extends RegisterPackagesAction
 {
   private static final String TITLE = "Register Generated Packages";
-
-  private EPackage.Registry registry = EPackage.Registry.INSTANCE;
 
   public RegisterWorkspacePackagesAction(IWorkbenchPage page, CDOSession session)
   {
@@ -41,40 +42,30 @@ public class RegisterWorkspacePackagesAction extends RegisterPackagesAction
   protected List<EPackage> getEPackages(IWorkbenchPage page, CDOSession session)
   {
     Shell shell = page.getWorkbenchWindow().getShell();
-
-    SelectPackageDialog dialog = new SelectPackageDialog(shell, "Generated Packages",
-        "Select one or more packages for registration with the CDO package registry", session.getPackageRegistry()
-            .keySet());
-
-    if (dialog.open() == SelectPackageDialog.OK)
+    OpenResourcesDialog dialog = new OpenResourcesDialog(shell);
+    if (dialog.open() == OpenResourcesDialog.OK)
     {
-      Set<String> checkedURIs = dialog.getCheckedURIs();
-      List<EPackage> ePackages = new ArrayList(checkedURIs.size());
-      for (String uri : checkedURIs)
+      Object[] result = dialog.getResult();
+      if (result != null && result.length != 0)
       {
-        EPackage ePackage = registry.getEPackage(uri);
-        ePackages.add(ePackage);
-      }
+        ResourceSet resourceSet = EMFUtil.newEcoreResourceSet();
+        List<EPackage> ePackages = new ArrayList(result.length);
+        for (Object object : result)
+        {
+          if (object instanceof IFile)
+          {
+            IFile file = (IFile)object;
+            URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+            Resource resource = resourceSet.getResource(uri, true);
+            EPackage ePackage = (EPackage)resource.getContents().get(0);
+            ePackages.add(ePackage);
+          }
+        }
 
-      return ePackages;
+        return ePackages;
+      }
     }
 
     return null;
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public class EPackageFactoryValidator implements IInputValidator
-  {
-    public String isValid(String uri)
-    {
-      if (uri == null || uri.length() == 0)
-      {
-        return "";
-      }
-
-      return registry.containsKey(uri) ? null : "Package " + uri + " not found.";
-    }
   }
 }

@@ -83,7 +83,13 @@ public class Logger implements OMLogger
 
   public void log(Level level, Throwable t)
   {
-    log(level, t.getLocalizedMessage(), t);
+    String msg = t.getMessage();
+    if (msg == null)
+    {
+      msg = t.getClass().getSimpleName();
+    }
+
+    log(level, msg, t);
   }
 
   public void error(Throwable t)

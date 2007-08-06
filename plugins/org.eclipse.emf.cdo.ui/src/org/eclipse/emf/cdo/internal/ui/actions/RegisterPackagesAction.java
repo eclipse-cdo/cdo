@@ -1,12 +1,17 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.List;
@@ -17,6 +22,8 @@ import java.util.List;
 public abstract class RegisterPackagesAction extends SessionAction
 {
   private List<EPackage> ePackages;
+
+  private int errors;
 
   public RegisterPackagesAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
       CDOSession session)
@@ -37,13 +44,45 @@ public abstract class RegisterPackagesAction extends SessionAction
   @Override
   protected void doRun(IProgressMonitor monitor) throws Exception
   {
+    errors = 0;
     CDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
     for (EPackage ePackage : ePackages)
     {
-      packageRegistry.putEPackage(ePackage);
+      Resource resource = ePackage.eResource();
+      URI uri = resource == null ? null : resource.getURI();
+
+      try
+      {
+        packageRegistry.putEPackage(ePackage);
+      }
+      catch (RuntimeException ex)
+      {
+        ++errors;
+        if (uri == null)
+        {
+          OM.LOG.error(ex);
+        }
+        else
+        {
+          OM.LOG.error("Failed to register package " + uri, ex);
+        }
+      }
     }
 
     postRegistration(ePackages);
+    if (errors != 0)
+    {
+      final String label = String.valueOf(errors) + (errors == 1 ? " package has" : " packages have");
+      final Shell shell = getShell();
+      shell.getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          MessageDialog.openError(shell, getText(), label
+              + " not been registered due to errors.\nSee the log for details.");
+        }
+      });
+    }
   }
 
   protected void postRegistration(List<EPackage> ePackages)

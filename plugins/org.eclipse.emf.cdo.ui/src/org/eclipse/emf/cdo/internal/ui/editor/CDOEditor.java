@@ -1050,7 +1050,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         viewerInput = resourceSet.getResource(resourceURI, true);
       }
 
-      resourceSet.eAdapters().add(problemIndicationAdapter);
+      // TODO resourceSet.eAdapters().add(problemIndicationAdapter);
     }
     catch (RuntimeException ex)
     {

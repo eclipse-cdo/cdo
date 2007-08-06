@@ -520,6 +520,10 @@ public abstract class Connector extends Lifecycle implements IConnector
           {
             throw ex;
           }
+
+          if (TRACER.isEnabled())
+          {
+          }
         }
       }
       else

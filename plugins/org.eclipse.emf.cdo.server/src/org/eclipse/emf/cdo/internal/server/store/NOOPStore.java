@@ -48,8 +48,6 @@ public class NOOPStore extends Store
       @Override
       protected void update(ITransaction transaction, CDOPackageImpl cdoPackage)
       {
-        // TODO Implement method .createAddPackageOperation()
-        throw new UnsupportedOperationException("Not yet implemented");
       }
     };
   }
@@ -62,8 +60,6 @@ public class NOOPStore extends Store
       @Override
       protected void queryAndFill(ITransaction transaction, CDOPackageImpl cdoPackage)
       {
-        // TODO Implement method .createLoadPackageOperation()
-        throw new UnsupportedOperationException("Not yet implemented");
       }
     };
   }
@@ -76,8 +72,6 @@ public class NOOPStore extends Store
       @Override
       protected void update(ITransaction transaction, CDORevisionImpl revision)
       {
-        // TODO Implement method .update()
-        throw new UnsupportedOperationException("Not yet implemented");
       }
     };
   }
@@ -90,8 +84,7 @@ public class NOOPStore extends Store
       @Override
       protected CDORevisionImpl query(ITransaction transaction, CDOID id) throws Exception
       {
-        // TODO Implement method .query()
-        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
       }
     };
   }
@@ -104,8 +97,7 @@ public class NOOPStore extends Store
       @Override
       protected CDORevisionImpl query(ITransaction transaction, CDOID id, long timeStamp) throws Exception
       {
-        // TODO Implement method .query()
-        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
       }
     };
   }
@@ -119,8 +111,6 @@ public class NOOPStore extends Store
       @Override
       protected void update(ITransaction transaction, CDOID id, String path)
       {
-        // TODO Implement method .createRegisterResourceOperation()
-        throw new UnsupportedOperationException("Not yet implemented");
       }
     };
   }
@@ -133,8 +123,7 @@ public class NOOPStore extends Store
       @Override
       protected CDOID query(ITransaction transaction, String path) throws Exception
       {
-        // TODO Implement method .query()
-        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
       }
     };
   }
@@ -147,8 +136,7 @@ public class NOOPStore extends Store
       @Override
       protected String query(ITransaction transaction, CDOID id) throws Exception
       {
-        // TODO Implement method .query()
-        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
       }
     };
   }
@@ -161,8 +149,7 @@ public class NOOPStore extends Store
       @Override
       protected CDOClassRef query(ITransaction transaction, CDOID id) throws Exception
       {
-        // TODO Implement method .query()
-        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
       }
     };
   }

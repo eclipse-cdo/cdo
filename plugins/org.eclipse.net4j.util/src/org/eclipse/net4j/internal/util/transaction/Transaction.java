@@ -85,13 +85,8 @@ public class Transaction implements ITransaction
 
   private List<ITransactionalOperation> end()
   {
-    try
-    {
-      return operations;
-    }
-    finally
-    {
-      operations = null;
-    }
+    List<ITransactionalOperation> tmp = operations;
+    operations = null;
+    return tmp;
   }
 }

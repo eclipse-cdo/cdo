@@ -9,6 +9,7 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.views.CDOEventHandler;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -2163,7 +2164,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     private CreateRootAction(CDOClass cdoClass)
     {
-      super(getEditorSite().getPage(), cdoClass.getName());
+      super(getEditorSite().getPage(), cdoClass.getName(), SharedIcons.getDescriptor(SharedIcons.OBJ_ECLASS));
       this.cdoClass = cdoClass;
     }
 

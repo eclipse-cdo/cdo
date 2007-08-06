@@ -12,7 +12,9 @@ package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
+import org.eclipse.emf.cdo.internal.ui.actions.RegisterFilesystemPackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterGeneratedPackagesAction;
+import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.views.CDOItemProvider;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.util.CDOPackageType;
@@ -53,7 +55,11 @@ import java.util.Map.Entry;
  */
 public class PackageManagerDialog extends TitleAreaDialog
 {
-  private static final int REGISTER_PACKAGE_ID = IDialogConstants.CLIENT_ID + 1;
+  private static final int REGISTER_GENERATED_PACKAGES_ID = IDialogConstants.CLIENT_ID + 1;
+
+  private static final int REGISTER_WORKSPACE_PACKAGES_ID = IDialogConstants.CLIENT_ID + 2;
+
+  private static final int REGISTER_FILESYSTEM_PACKAGES_ID = IDialogConstants.CLIENT_ID + 3;
 
   private static final String TITLE = "CDO Package Manager";
 
@@ -106,45 +112,54 @@ public class PackageManagerDialog extends TitleAreaDialog
   @Override
   protected void createButtonsForButtonBar(Composite parent)
   {
-    createButton(parent, REGISTER_PACKAGE_ID, "Register Package", false);
+    createButton(parent, REGISTER_GENERATED_PACKAGES_ID, "Register Generated Packages", false);
+    createButton(parent, REGISTER_WORKSPACE_PACKAGES_ID, "Register Workspace Packages", false);
+    createButton(parent, REGISTER_FILESYSTEM_PACKAGES_ID, "Register Filesystem Packages", false);
     createButton(parent, IDialogConstants.CLOSE_ID, IDialogConstants.CLOSE_LABEL, false);
   }
 
   @Override
   protected void buttonPressed(int buttonId)
   {
-    if (buttonId == REGISTER_PACKAGE_ID)
+    switch (buttonId)
     {
-      registerPackage();
-    }
-    else if (buttonId == IDialogConstants.CLOSE_ID)
-    {
-      close();
-    }
-  }
-
-  protected void registerPackage()
-  {
-    new RegisterGeneratedPackagesAction(page, session)
-    {
-      @Override
-      protected void postRegistration(List<EPackage> ePackages)
+    case REGISTER_GENERATED_PACKAGES_ID:
+      new RegisterGeneratedPackagesAction(page, session)
       {
-        page.getWorkbenchWindow().getShell().getDisplay().syncExec(new Runnable()
+        @Override
+        protected void postRegistration(List<EPackage> ePackages)
         {
-          public void run()
-          {
-            try
-            {
-              viewer.refresh();
-            }
-            catch (RuntimeException ignore)
-            {
-            }
-          }
-        });
-      }
-    }.run();
+          refreshViewer();
+        }
+      }.run();
+      break;
+
+    case REGISTER_WORKSPACE_PACKAGES_ID:
+      new RegisterWorkspacePackagesAction(page, session)
+      {
+        @Override
+        protected void postRegistration(List<EPackage> ePackages)
+        {
+          refreshViewer();
+        }
+      }.run();
+      break;
+
+    case REGISTER_FILESYSTEM_PACKAGES_ID:
+      new RegisterFilesystemPackagesAction(page, session)
+      {
+        @Override
+        protected void postRegistration(List<EPackage> ePackages)
+        {
+          refreshViewer();
+        }
+      }.run();
+      break;
+
+    case IDialogConstants.CLOSE_ID:
+      close();
+      break;
+    }
   }
 
   protected Image getContentIcon(Content content)
@@ -194,6 +209,23 @@ public class PackageManagerDialog extends TitleAreaDialog
     TableColumn column = new TableColumn(table, alignment);
     column.setText(title);
     column.setWidth(width);
+  }
+
+  protected void refreshViewer()
+  {
+    page.getWorkbenchWindow().getShell().getDisplay().syncExec(new Runnable()
+    {
+      public void run()
+      {
+        try
+        {
+          viewer.refresh();
+        }
+        catch (RuntimeException ignore)
+        {
+        }
+      }
+    });
   }
 
   /**

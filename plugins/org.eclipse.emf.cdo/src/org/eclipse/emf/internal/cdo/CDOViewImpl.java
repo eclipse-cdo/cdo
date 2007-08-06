@@ -424,7 +424,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Registering object {0}", object);
+      TRACER.format("Registering {0}", object);
     }
 
     InternalCDOObject old = objects.put(object.cdoID(), object);
@@ -438,7 +438,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Deregistering object {0}", object);
+      TRACER.format("Deregistering {0}", object);
     }
 
     InternalCDOObject old = objects.remove(object.cdoID());
@@ -455,7 +455,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     objects.put(newID, object);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Remapping object: {0} --> {1}", oldID, newID);
+      TRACER.format("Remapping {0} --> {1}", oldID, newID);
     }
   }
 

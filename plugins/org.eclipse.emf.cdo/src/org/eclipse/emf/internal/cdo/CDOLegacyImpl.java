@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
@@ -25,6 +26,7 @@ import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.WrappedException;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -106,20 +108,42 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
         TRACER.format("Setting state {0} for {1}", state, this);
       }
 
-      try
+      // Setting eProxyURI is necessary to prevent content adapters from
+      // loading the whole content tree.
+      // TODO Does not have the desired effect ;-(
+      if (state == CDOState.PROXY)
       {
-        return this.state;
+        if (!instance.eIsProxy())
+        {
+          URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":proxy#" + id);
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Setting proxyURI {0} for {1}", uri, instance);
+          }
+
+          instance.eSetProxyURI(uri);
+        }
       }
-      finally
+      else
       {
-        this.state = state;
+        if (instance.eIsProxy())
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Unsetting proxyURI for {1}", instance);
+          }
+
+          instance.eSetProxyURI(null);
+        }
       }
+
+      CDOState tmp = this.state;
+      this.state = state;
+      return tmp;
     }
-    else
-    {
-      // TODO Detect duplicate cdoInternalSetState() calls
-      return null;
-    }
+
+    // TODO Detect duplicate cdoInternalSetState() calls
+    return null;
   }
 
   public void cdoInternalSetRevision(CDORevision revision)
@@ -270,15 +294,31 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
       throw new ImplementationError("view == null");
     }
 
-    // Handle containment
-    transferContainmentToInstance(view);
-
-    // Handle values
-    CDOClassImpl cdoClass = revision.getCDOClass();
-    CDOFeatureImpl[] features = cdoClass.getAllFeatures();
-    for (CDOFeatureImpl feature : features)
+    boolean deliver = instance.eDeliver();
+    if (deliver)
     {
-      transferFeatureToInstance(view, feature);
+      instance.eSetDeliver(false);
+    }
+
+    try
+    {
+      // Handle containment
+      transferContainmentToInstance(view);
+
+      // Handle values
+      CDOClassImpl cdoClass = revision.getCDOClass();
+      CDOFeatureImpl[] features = cdoClass.getAllFeatures();
+      for (CDOFeatureImpl feature : features)
+      {
+        transferFeatureToInstance(view, feature);
+      }
+    }
+    finally
+    {
+      if (deliver)
+      {
+        instance.eSetDeliver(true);
+      }
     }
   }
 

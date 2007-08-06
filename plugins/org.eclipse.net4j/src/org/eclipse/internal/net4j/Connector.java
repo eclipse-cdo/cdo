@@ -28,6 +28,7 @@ import org.eclipse.net4j.internal.util.factory.FactoryKey;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.RWLock;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerEvent;
@@ -48,6 +49,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Eike Stepper
@@ -478,30 +480,52 @@ public abstract class Connector extends Lifecycle implements IConnector
       return false;
     }
 
-    boolean removed = channelsLock.write(new Callable<Boolean>()
+    final int channelIndex = channel.getChannelIndex();
+    boolean removed = false;
+    try
     {
-      public Boolean call() throws Exception
+      removed = channelsLock.write(new Callable<Boolean>()
       {
-        int channelIndex = channel.getChannelIndex();
-        if (channelIndex < channels.size() && channels.get(channelIndex) == channel)
+        public Boolean call() throws Exception
         {
-          if (TRACER.isEnabled())
+          if (channelIndex < channels.size() && channels.get(channelIndex) == channel)
           {
-            TRACER.trace("Removing channel " + channelIndex); //$NON-NLS-1$
+            if (TRACER.isEnabled())
+            {
+              TRACER.trace("Removing channel " + channelIndex); //$NON-NLS-1$
+            }
+
+            channels.set(channelIndex, null);
+            return true;
           }
 
-          channels.set(channelIndex, null);
-          return true;
+          return false;
         }
+      });
 
-        return false;
+      if (removed)
+      {
+        channel.close();
       }
-    });
-
-    if (removed)
+    }
+    catch (RuntimeException ex)
     {
-      channel.close();
-      // channel.removeListener(channelListener);
+      Exception unwrapped = WrappedException.unwrap(ex);
+      if (unwrapped instanceof TimeoutException)
+      {
+        if (channelIndex < channels.size())
+        {
+          Channel c = channels.get(channelIndex);
+          if (c != null && c.isActive())
+          {
+            throw ex;
+          }
+        }
+      }
+      else
+      {
+        throw ex;
+      }
     }
 
     return removed;

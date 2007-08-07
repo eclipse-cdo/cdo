@@ -5,28 +5,23 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            name="Net4j"
-            id="org.eclipse.net4j">
+            name="Net4j Debug"
+            id="org.eclipse.net4j.debug">
       </category>
       <view
             name="Remote Traces"
             icon="icons/sample.gif"
-            category="org.eclipse.net4j"
+            category="org.eclipse.net4j.debug"
             class="org.eclipse.net4j.internal.debug.views.RemoteTraceView"
-            id="org.eclipse.net4j.internal.debug.views.RemoteTraceView">
+            id="org.eclipse.net4j.debug.RemoteTraceView">
+      </view>
+      <view
+            name="Introspector"
+            icon="icons/sample.gif"
+            category="org.eclipse.net4j.debug"
+            class="org.eclipse.net4j.internal.debug.views.IntrospectorView"
+            id="org.eclipse.net4j.debug.IntrospectorView">
       </view>
    </extension>
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="org.eclipse.ui.resourcePerspective">
-         <view
-               ratio="0.5"
-               relative="org.eclipse.ui.views.TaskList"
-               relationship="right"
-               id="org.eclipse.net4j.internal.debug.views.RemoteTraceView">
-         </view>
-      </perspectiveExtension>
-   </extension>
-
+   
 </plugin>

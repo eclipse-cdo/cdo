@@ -130,7 +130,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("Unsetting proxyURI for {1}", instance);
+            TRACER.format("Unsetting proxyURI for {0}", instance);
           }
 
           instance.eSetProxyURI(null);
@@ -164,6 +164,10 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     }
 
     this.resource = (CDOResourceImpl)resource;
+    // if (resource != null)
+    // {
+    // transferResourceToInstance(resource);
+    // }
   }
 
   public void cdoInternalPostAttach()
@@ -329,7 +333,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     {
       CDOID resourceID = revision.getResourceID();
       Resource.Internal resource = (Resource.Internal)view.getObject(resourceID);
-      transferResourceToInstance((BasicEObjectImpl)instance, resource);
+      transferResourceToInstance(resource);
     }
     else
     {
@@ -339,7 +343,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     }
   }
 
-  protected void transferResourceToInstance(BasicEObjectImpl instance, Resource.Internal resource)
+  protected void transferResourceToInstance(Resource.Internal resource)
   {
     Method method = ReflectUtil.getMethod(BasicEObjectImpl.class, "eSetDirectResource", Resource.Internal.class);
 

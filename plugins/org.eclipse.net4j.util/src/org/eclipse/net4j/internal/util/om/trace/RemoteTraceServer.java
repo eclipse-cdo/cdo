@@ -120,7 +120,12 @@ public class RemoteTraceServer
       }
       catch (IOException ex)
       {
-        IOUtil.print(ex);
+        if (!serverSocket.isClosed())
+        {
+          IOUtil.print(ex);
+        }
+
+        break;
       }
     }
   }

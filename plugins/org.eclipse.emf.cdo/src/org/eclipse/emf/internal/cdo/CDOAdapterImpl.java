@@ -10,21 +10,16 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.internal.cdo.bundle.OM;
 
 /**
  * @author Eike Stepper
  */
 public class CDOAdapterImpl extends CDOLegacyImpl implements Adapter.Internal
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOAdapterImpl.class);
-
   public CDOAdapterImpl()
   {
   }
@@ -84,43 +79,4 @@ public class CDOAdapterImpl extends CDOLegacyImpl implements Adapter.Internal
       }
     }
   }
-
-  // @Override
-  // public CDOState cdoInternalSetState(CDOState state)
-  // {
-  // CDOState oldState = super.cdoInternalSetState(state);
-  // if (oldState != state)
-  // {
-  // // Setting eProxyURI is necessary to prevent content adapters from loading
-  // // the whole content tree.
-  // if (state == CDOState.PROXY)
-  // {
-  // if (!instance.eIsProxy())
-  // {
-  // URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":proxy#" +
-  // id);
-  // if (TRACER.isEnabled())
-  // {
-  // TRACER.format("Setting proxyURI {0} for {1}", uri, instance);
-  // }
-  //
-  // instance.eSetProxyURI(uri);
-  // }
-  // }
-  // else
-  // {
-  // if (instance.eIsProxy())
-  // {
-  // if (TRACER.isEnabled())
-  // {
-  // TRACER.format("Unsetting proxyURI for {1}", instance);
-  // }
-  //
-  // instance.eSetProxyURI(null);
-  // }
-  // }
-  // }
-  //
-  // return oldState;
-  // }
 }

@@ -13,6 +13,7 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.ImplementationError;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -30,8 +31,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
+import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
@@ -367,7 +371,11 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void attached(EObject object)
   {
-    // Do nothing
+    InternalCDOObject legacy = getLegacyWrapper(object);
+    if (legacy.cdoState() != CDOState.CLEAN)
+    {
+      CDOStateMachine.INSTANCE.attach(legacy, this, view);
+    }
   }
 
   /**
@@ -375,7 +383,8 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void detached(EObject object)
   {
-    // Do nothing
+    InternalCDOObject legacy = getLegacyWrapper(object);
+    CDOStateMachine.INSTANCE.detach(legacy, this, view);
   }
 
   /**
@@ -477,6 +486,17 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   void setExisting(boolean existing)
   {
     this.existing = existing;
+  }
+
+  private InternalCDOObject getLegacyWrapper(EObject object) throws ImplementationError
+  {
+    InternalCDOObject legacy = FSMUtil.adapt(object, view);
+    if (!(legacy instanceof CDOLegacyImpl))
+    {
+      throw new ImplementationError("Should be legacy wrapper: " + object);
+    }
+
+    return legacy;
   }
 
   /**

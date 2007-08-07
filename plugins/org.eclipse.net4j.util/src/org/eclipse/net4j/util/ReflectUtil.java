@@ -12,6 +12,7 @@ package org.eclipse.net4j.util;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.PrintStream;
@@ -23,8 +24,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.Map.Entry;
@@ -119,6 +122,49 @@ public final class ReflectUtil
         }
 
         return null;
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new ImplementationError(ex);
+    }
+  }
+
+  public static void collectFields(Class<?> c, List<Field> fields)
+  {
+    if (c == ROOT_CLASS || c == Lifecycle.class)
+    {
+      return;
+    }
+
+    // Recurse
+    collectFields(c.getSuperclass(), fields);
+
+    try
+    {
+      Field[] declaredFields = c.getDeclaredFields();
+      for (Field field : declaredFields)
+      {
+        if (field.isSynthetic())
+        {
+          continue;
+        }
+
+        if ((field.getModifiers() & Modifier.STATIC) != 0 && !DUMP_STATICS)
+        {
+          continue;
+        }
+
+        if (field.getAnnotation(ExcludeFromDump.class) != null)
+        {
+          continue;
+        }
+
+        fields.add(field);
       }
     }
     catch (RuntimeException ex)
@@ -292,24 +338,19 @@ public final class ReflectUtil
     out.print(toString(object, prefix));
   }
 
-  public static Object getValue(Object object, Field field)
+  public static Pair<Field, Object>[] dumpToArray(Object object)
   {
-    try
+    List<Field> fields = new ArrayList();
+    collectFields(object.getClass(), fields);
+    Pair<Field, Object>[] result = new Pair[fields.size()];
+    int i = 0;
+    for (Field field : fields)
     {
-      return field.get(object);
+      Object value = getValue(field, object);
+      result[i++] = new Pair(field, value);
     }
-    catch (IllegalAccessException ex)
-    {
-      field.setAccessible(true);
-      try
-      {
-        return field.get(object);
-      }
-      catch (IllegalAccessException ex1)
-      {
-        throw new RuntimeException(ex1);
-      }
-    }
+
+    return result;
   }
 
   public static Object instantiate(Map<Object, Object> properties, String namespace, String classKey,
@@ -497,7 +538,7 @@ public final class ReflectUtil
       builder.append(field.getName());
       builder.append(" = "); //$NON-NLS-1$
 
-      Object value = getValue(object, field);
+      Object value = getValue(field, object);
       if (value instanceof Map)
       {
         value = ((Map)value).entrySet();

@@ -25,6 +25,8 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -366,7 +368,7 @@ public final class CDOStore implements EStore
   @Override
   public String toString()
   {
-    return "PersistentStore";
+    return MessageFormat.format("CDOStore[{0}]", view);
   }
 
   private InternalCDOObject getCDOObject(Object object)

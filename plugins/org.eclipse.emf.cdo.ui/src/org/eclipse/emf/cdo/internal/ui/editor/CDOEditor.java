@@ -6,7 +6,6 @@
  */
 package org.eclipse.emf.cdo.internal.ui.editor;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
@@ -61,6 +60,7 @@ import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -1181,12 +1181,15 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       @Override
       public String getColumnText(Object object, int columnIndex)
       {
-        if (object instanceof CDOObject)
+        try
         {
-          return super.getColumnText(object, columnIndex) + " [" + ((CDOObject)object).cdoID() + "]";
+          InternalCDOObject cdoObject = FSMUtil.adapt(object, view);
+          return super.getColumnText(object, columnIndex) + " [" + cdoObject.cdoID() + "]";
         }
-
-        return super.getColumnText(object, columnIndex);
+        catch (RuntimeException ex)
+        {
+          return super.getColumnText(object, columnIndex);
+        }
       }
     });
     selectionViewer.setInput(viewerInput);

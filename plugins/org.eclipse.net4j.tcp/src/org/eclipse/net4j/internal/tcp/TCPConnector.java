@@ -21,6 +21,8 @@ import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.ITCPConstants;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelectorListener;
+import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.internal.net4j.Channel;
 import org.eclipse.internal.net4j.Connector;
@@ -325,56 +327,13 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   @Override
   protected void doDeactivate() throws Exception
   {
-    Exception exception = null;
+    LifecycleUtil.deactivate(controlChannel);
+    controlChannel = null;
 
-    try
-    {
-      controlChannel.deactivate();
-    }
-    catch (Exception ex)
-    {
-      if (exception == null)
-      {
-        exception = ex;
-      }
-    }
-    finally
-    {
-      controlChannel = null;
-    }
+    IOUtil.closeSilent(socketChannel);
+    socketChannel = null;
 
-    try
-    {
-      socketChannel.close();
-    }
-    catch (Exception ex)
-    {
-      if (exception == null)
-      {
-        exception = ex;
-      }
-    }
-    finally
-    {
-      socketChannel = null;
-    }
-
-    try
-    {
-      super.doDeactivate();
-    }
-    catch (Exception ex)
-    {
-      if (exception == null)
-      {
-        exception = ex;
-      }
-    }
-
-    if (exception != null)
-    {
-      throw exception;
-    }
+    super.doDeactivate();
   }
 
   private void checkSelectionKey()

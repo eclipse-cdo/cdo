@@ -171,7 +171,16 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
     }
     else
     {
-      label.setText(selection.toString() + " - " + selection.getClass().getName());
+      String className = selection.getClass().getName();
+      String value = selection.toString();
+      if (value.startsWith(className))
+      {
+        label.setText(value);
+      }
+      else
+      {
+        label.setText(className + ": " + value);
+      }
     }
 
     refreshViewer();
@@ -325,7 +334,17 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
           case 2:
             return field.getType().getName();
           case 3:
-            return value == null ? "" : value.getClass().getName();
+            if (value == null)
+            {
+              return "";
+            }
+
+            if (value.getClass() == field.getType())
+            {
+              return "";
+            }
+
+            return value.getClass().getName();
           }
         }
         catch (RuntimeException ex)

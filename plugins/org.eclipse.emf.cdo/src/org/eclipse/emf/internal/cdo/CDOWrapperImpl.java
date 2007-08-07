@@ -88,15 +88,15 @@ public abstract class CDOWrapperImpl implements InternalCDOObject
     return instance;
   }
 
-  public EList<Adapter> eAdapters()
-  {
-    return instance.eAdapters();
-  }
-
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
   {
     // TODO Implement method CDOWrapperImpl.cdoInternalDynamicFeature()
     throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  public EList<Adapter> eAdapters()
+  {
+    return instance.eAdapters();
   }
 
   public TreeIterator<EObject> eAllContents()

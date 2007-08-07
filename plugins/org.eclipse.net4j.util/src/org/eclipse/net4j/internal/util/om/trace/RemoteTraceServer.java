@@ -31,7 +31,7 @@ public class RemoteTraceServer
 {
   public static final String DEFAULT_ADDRESS = "0.0.0.0"; //$NON-NLS-1$
 
-  public static final int DEFAULT_PORT = 2037;
+  public static final int DEFAULT_PORT = 2035;
 
   public static final int ANY_PORT = 0;
 

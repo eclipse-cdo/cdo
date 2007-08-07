@@ -59,6 +59,7 @@ import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
+import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
 import org.eclipse.core.resources.IFile;
@@ -2195,8 +2196,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       if (resource != null)
       {
-        CDOObject object = ((CDOTransaction)view).newInstance(cdoClass);
-        resource.getContents().add(object);
+        InternalCDOObject object = ((CDOTransactionImpl)view).newInstance(cdoClass);
+        resource.getContents().add(object.cdoInternalInstance());
       }
     }
   }

@@ -114,8 +114,8 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
 
   protected void createColmuns(TableViewer viewer)
   {
-    final String[] columnNames = { "Field", "Value" };
-    final int[] columnWidths = { 200, 400 };
+    final String[] columnNames = { "Field", "Value", "Declared Type", "Concrete Type" };
+    final int[] columnWidths = { 200, 400, 300, 300 };
     TableColumn[] columns = new TableColumn[columnNames.length];
     for (int i = 0; i < columns.length; i++)
     {
@@ -165,7 +165,15 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
   private void setSelection(Object newSelection)
   {
     selection = newSelection;
-    label.setText(selection == null ? "" : selection.toString());
+    if (selection == null)
+    {
+      label.setText("");
+    }
+    else
+    {
+      label.setText(selection.toString() + " - " + selection.getClass().getName());
+    }
+
     refreshViewer();
   }
 
@@ -306,13 +314,18 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
         try
         {
           Pair<Field, Object> pair = (Pair)obj;
+          Field field = pair.getElement1();
+          Object value = pair.getElement2();
           switch (index)
           {
           case 0:
-            return pair.getElement1().getName();
+            return field.getName();
           case 1:
-            Object value = pair.getElement2();
             return value == null ? "null" : value.toString();
+          case 2:
+            return field.getType().getName();
+          case 3:
+            return value == null ? "" : value.getClass().getName();
           }
         }
         catch (RuntimeException ex)

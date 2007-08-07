@@ -31,10 +31,14 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -54,6 +58,8 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
 
   private Object selection;
 
+  private Text label;
+
   public IntrospectorView()
   {
   }
@@ -68,7 +74,28 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
   @Override
   public void createPartControl(Composite parent)
   {
-    viewer = new TableViewer(parent, SWT.FULL_SELECTION | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+    Color white = getSite().getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE);
+
+    GridLayout grid = new GridLayout();
+    grid.marginTop = 0;
+    grid.marginLeft = 0;
+    grid.marginRight = 0;
+    grid.marginBottom = 0;
+    grid.marginWidth = 0;
+    grid.marginHeight = 0;
+    grid.horizontalSpacing = 0;
+    grid.verticalSpacing = 0;
+
+    Composite composite = new Composite(parent, SWT.NONE);
+    composite.setLayout(grid);
+    // composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+    label = new Text(composite, SWT.READ_ONLY | SWT.BORDER);
+    label.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+    label.setBackground(white);
+
+    viewer = new TableViewer(composite, SWT.FULL_SELECTION | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+    viewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     viewer.getTable().setHeaderVisible(true);
     viewer.getTable().setLinesVisible(true);
     createColmuns(viewer);
@@ -127,13 +154,18 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
     if (sel instanceof IStructuredSelection)
     {
       IStructuredSelection ssel = (IStructuredSelection)sel;
-      selection = ssel.getFirstElement();
+      setSelection(ssel.getFirstElement());
     }
     else
     {
-      selection = null;
+      setSelection(null);
     }
+  }
 
+  private void setSelection(Object newSelection)
+  {
+    selection = newSelection;
+    label.setText(selection == null ? "" : selection.toString());
     refreshViewer();
   }
 
@@ -189,8 +221,27 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
     {
       public void doubleClick(DoubleClickEvent event)
       {
+        ISelection sel = event.getSelection();
+        if (sel instanceof IStructuredSelection)
+        {
+          IStructuredSelection ssel = (IStructuredSelection)sel;
+          Object element = ssel.getFirstElement();
+          if (element instanceof Pair)
+          {
+            doubleClicked((Pair)element);
+          }
+        }
       }
     });
+  }
+
+  protected void doubleClicked(Pair<Field, Object> pair)
+  {
+    Field field = pair.getElement1();
+    if (!field.getType().isPrimitive())
+    {
+      setSelection(pair.getElement2());
+    }
   }
 
   @SuppressWarnings("unused")

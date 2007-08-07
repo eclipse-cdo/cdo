@@ -343,7 +343,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     }
   }
 
-  protected void transferResourceToInstance(Resource.Internal resource)
+  public void transferResourceToInstance(Resource.Internal resource)
   {
     Method method = ReflectUtil.getMethod(BasicEObjectImpl.class, "eSetDirectResource", Resource.Internal.class);
 

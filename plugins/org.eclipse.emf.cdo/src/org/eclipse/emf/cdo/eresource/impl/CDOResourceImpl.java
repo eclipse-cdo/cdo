@@ -375,6 +375,11 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     if (legacy.cdoState() != CDOState.CLEAN)
     {
       CDOStateMachine.INSTANCE.attach(legacy, this, view);
+      // if (legacy.eContainer() == this)
+      // {
+      // legacy.eBasicSetContainer(null, 0, null);
+      // legacy.eSetResource(this, null);
+      // }
     }
   }
 

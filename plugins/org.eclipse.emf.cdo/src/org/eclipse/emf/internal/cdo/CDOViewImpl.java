@@ -624,7 +624,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       {
         if (!oldResources.contains(newResource))
         {
-          // TODO Optimize event notification with IContainerEvent
           notifyAdd((CDOResourceImpl)newResource);
         }
       }

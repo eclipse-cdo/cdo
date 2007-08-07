@@ -10,6 +10,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
@@ -49,25 +50,16 @@ final class ProxyResolverResource implements Resource
   {
     CDOID id = CDOIDImpl.create(Long.parseLong(uriFragment));
     InternalCDOObject object = view.getObject(id);
-    if (object instanceof CDOCallbackImpl)
+    InternalEObject instance = object.cdoInternalInstance();
+    if (instance instanceof CDOAdapterImpl && !(instance instanceof CDOCallbackImpl))
     {
-      CDOCallbackImpl callback = (CDOCallbackImpl)object;
-      return callback.cdoInternalInstance();
-    }
-    else if (object instanceof CDOAdapterImpl)
-    {
-      // TODO Move this somehow to cdoInternalPostLoad()
-      CDOAdapterImpl adapter = (CDOAdapterImpl)object;
-      if (adapter.cdoState() == CDOState.PROXY)
+      if (object.cdoState() == CDOState.PROXY)
       {
-        adapter.cdoInternalPostLoad();
+        object.cdoInternalPostLoad();
       }
-
-      return adapter.getTarget();
     }
 
-    // throw new ImplementationError("Can't resolve " + uriFragment);
-    return object;
+    return instance;
   }
 
   public TreeIterator<EObject> getAllContents()

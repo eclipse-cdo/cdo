@@ -63,19 +63,21 @@ public class CDOAdapterImpl extends CDOLegacyImpl implements Adapter.Internal
 
   public void notifyChanged(Notification msg)
   {
-    switch (msg.getEventType())
+    if (msg.getNotifier() == instance)
     {
-    case Notification.ADD:
-    case Notification.ADD_MANY:
-    case Notification.REMOVE:
-    case Notification.REMOVE_MANY:
-    case Notification.MOVE:
-    case Notification.SET:
-    case Notification.UNSET:
-      InternalEObject notifier = (InternalEObject)msg.getNotifier();
-      if (notifier == instance && !notifier.eIsProxy())
+      switch (msg.getEventType())
       {
-        CDOStateMachine.INSTANCE.write(this);
+      case Notification.ADD:
+      case Notification.ADD_MANY:
+      case Notification.REMOVE:
+      case Notification.REMOVE_MANY:
+      case Notification.MOVE:
+      case Notification.SET:
+      case Notification.UNSET:
+        if (!instance.eIsProxy())
+        {
+          CDOStateMachine.INSTANCE.write(this);
+        }
       }
     }
   }

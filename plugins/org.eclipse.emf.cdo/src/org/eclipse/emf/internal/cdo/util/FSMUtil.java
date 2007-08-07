@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.CDOAware;
-import org.eclipse.emf.ecore.impl.CDOCallback;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
 import org.eclipse.emf.internal.cdo.CDOCallbackImpl;
@@ -91,14 +90,16 @@ public final class FSMUtil
       if (object instanceof CDOAware)
       {
         CDOAware aware = (CDOAware)object;
-        CDOCallback callback = aware.getCDOCallback();
+        CDOCallbackImpl callback = (CDOCallbackImpl)aware.getCDOCallback();
         if (callback == null)
         {
-          callback = new CDOCallbackImpl((InternalEObject)aware);
+          InternalEObject instance = (InternalEObject)aware;
+          callback = new CDOCallbackImpl(instance);
           aware.setCDOCallback(callback);
+          instance.eAdapters().add(callback);
         }
 
-        return (InternalCDOObject)callback;
+        return callback;
       }
     }
     catch (Throwable t)

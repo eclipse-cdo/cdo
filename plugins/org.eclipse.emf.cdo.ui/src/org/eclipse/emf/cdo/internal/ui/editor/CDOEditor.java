@@ -1165,87 +1165,97 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   @Override
   public void createPages()
   {
-    // Creates the model from the editor input
-    //
-    createModel();
-
-    // Create a page for the selection tree view.
-    //
-    Tree tree = new Tree(getContainer(), SWT.MULTI);
-    selectionViewer = new TreeViewer(tree);
-    setCurrentViewer(selectionViewer);
-
-    selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-    selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory)
+    try
     {
-      @Override
-      public String getColumnText(Object object, int columnIndex)
+      // Creates the model from the editor input
+      //
+      createModel();
+
+      // Create a page for the selection tree view.
+      //
+      Tree tree = new Tree(getContainer(), SWT.MULTI);
+      selectionViewer = new TreeViewer(tree);
+      setCurrentViewer(selectionViewer);
+
+      selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+      selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory)
       {
-        try
+        @Override
+        public String getColumnText(Object object, int columnIndex)
         {
-          InternalCDOObject cdoObject = FSMUtil.adapt(object, view);
-          return super.getColumnText(object, columnIndex) + " [" + cdoObject.cdoID() + "]";
+          try
+          {
+            InternalCDOObject cdoObject = FSMUtil.adapt(object, view);
+            return super.getColumnText(object, columnIndex) + " [" + cdoObject.cdoID() + "]";
+          }
+          catch (RuntimeException ex)
+          {
+            return super.getColumnText(object, columnIndex);
+          }
         }
-        catch (RuntimeException ex)
+      });
+
+      selectionViewer.setInput(viewerInput);
+      // selectionViewer.setSelection(new StructuredSelection(viewerInput),
+      // true);
+
+      new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
+
+      createContextMenuFor(selectionViewer);
+      int pageIndex = addPage(tree);
+      setPageText(pageIndex, getString("_UI_SelectionPage_label"));
+
+      setActivePage(0);
+
+      // Ensures that this editor will only display the page's tab
+      // area if there are more than one page
+      //
+      getContainer().addControlListener(new ControlAdapter()
+      {
+        boolean guard = false;
+
+        @Override
+        public void controlResized(ControlEvent event)
         {
-          return super.getColumnText(object, columnIndex);
+          if (!guard)
+          {
+            guard = true;
+            hideTabs();
+            guard = false;
+          }
         }
-      }
-    });
-    selectionViewer.setInput(viewerInput);
-    // selectionViewer.setSelection(new StructuredSelection(viewerInput), true);
+      });
 
-    new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
+      updateProblemIndication();
+      eventHandler = new CDOEventHandler(view, selectionViewer)
+      {
+        @Override
+        protected void objectInvalidated(InternalCDOObject cdoObject)
+        {
+          if (cdoObject instanceof CDOLegacyImpl)
+          {
+            CDOStateMachine.INSTANCE.read(cdoObject);
+          }
+        }
 
-    createContextMenuFor(selectionViewer);
-    int pageIndex = addPage(tree);
-    setPageText(pageIndex, getString("_UI_SelectionPage_label"));
+        @Override
+        protected void viewClosed()
+        {
+          closeEditor();
+        }
 
-    setActivePage(0);
-
-    // Ensures that this editor will only display the page's tab
-    // area if there are more than one page
-    //
-    getContainer().addControlListener(new ControlAdapter()
+        @Override
+        protected void viewDirtyStateChanged()
+        {
+          fireDirtyPropertyChange();
+        }
+      };
+    }
+    catch (RuntimeException ex)
     {
-      boolean guard = false;
-
-      @Override
-      public void controlResized(ControlEvent event)
-      {
-        if (!guard)
-        {
-          guard = true;
-          hideTabs();
-          guard = false;
-        }
-      }
-    });
-
-    updateProblemIndication();
-    eventHandler = new CDOEventHandler(view, selectionViewer)
-    {
-      @Override
-      protected void objectInvalidated(InternalCDOObject cdoObject)
-      {
-        if (cdoObject instanceof CDOLegacyImpl)
-        {
-          CDOStateMachine.INSTANCE.read(cdoObject);
-        }
-      }
-
-      @Override
-      protected void viewClosed()
-      {
-        closeEditor();
-      }
-
-      @Override
-      protected void viewDirtyStateChanged()
-      {
-        fireDirtyPropertyChange();
-      }
-    };
+      OM.LOG.error(ex);
+      throw ex;
+    }
   }
 
   /**

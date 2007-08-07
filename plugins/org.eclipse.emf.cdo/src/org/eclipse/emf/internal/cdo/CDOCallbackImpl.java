@@ -10,14 +10,18 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.CDOCallback;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 /**
  * @author Eike Stepper
  */
-public class CDOCallbackImpl extends CDOLegacyImpl implements CDOCallback
+public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
 {
   public CDOCallbackImpl(InternalEObject instance)
   {
@@ -32,5 +36,77 @@ public class CDOCallbackImpl extends CDOLegacyImpl implements CDOCallback
   public void beforeWrite(EObjectImpl instance)
   {
     CDOStateMachine.INSTANCE.write(this);
+  }
+
+  @Override
+  public void notifyChanged(Notification msg)
+  {
+    if (msg.getNotifier() == instance)
+    {
+      Object feature = msg.getFeature();
+      if (feature instanceof EReference)
+      {
+        EReference reference = (EReference)feature;
+        if (reference.isContainment())
+        {
+          switch (msg.getEventType())
+          {
+          case Notification.ADD:
+            notifyAdd((InternalEObject)msg.getNewValue());
+            break;
+
+          case Notification.ADD_MANY:
+            notifyAddMany(msg);
+            break;
+
+          case Notification.REMOVE:
+            notifyRemove((InternalEObject)msg.getOldValue());
+            break;
+
+          case Notification.REMOVE_MANY:
+            notifyRemoveMany(msg);
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  private void notifyAddMany(Notification msg)
+  {
+    EList<InternalEObject> newValues = (EList<InternalEObject>)msg.getNewValue();
+    EList<InternalEObject> oldValues = (EList<InternalEObject>)msg.getOldValue();
+    for (InternalEObject newValue : newValues)
+    {
+      if (!oldValues.contains(newValue))
+      {
+        notifyAdd(newValue);
+      }
+    }
+  }
+
+  private void notifyAdd(InternalEObject instance)
+  {
+    InternalCDOObject object = FSMUtil.adapt(instance, view);
+    CDOStateMachine.INSTANCE.attach(object, cdoResource(), view);
+  }
+
+  private void notifyRemoveMany(Notification msg)
+  {
+    EList<InternalEObject> newValues = (EList<InternalEObject>)msg.getNewValue();
+    EList<InternalEObject> oldValues = (EList<InternalEObject>)msg.getOldValue();
+    for (InternalEObject oldValue : oldValues)
+    {
+      if (!newValues.contains(oldValue))
+      {
+        notifyRemove(oldValue);
+      }
+    }
+  }
+
+  private void notifyRemove(InternalEObject instance)
+  {
+    InternalCDOObject object = FSMUtil.adapt(instance, view);
+    CDOStateMachine.INSTANCE.detach(object, cdoResource(), view);
   }
 }

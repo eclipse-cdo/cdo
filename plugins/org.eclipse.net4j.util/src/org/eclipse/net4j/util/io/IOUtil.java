@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -143,6 +144,17 @@ public final class IOUtil
     }
   }
 
+  public static void mkdirs(File folder)
+  {
+    if (!folder.exists())
+    {
+      if (!folder.mkdirs())
+      {
+        throw new IORuntimeException("Unable to create directory " + folder.getAbsolutePath());
+      }
+    }
+  }
+
   public static int delete(File file)
   {
     if (file == null)
@@ -167,6 +179,32 @@ public final class IOUtil
     return deleted;
   }
 
+  public static void copyTree(File source, File target) throws IORuntimeException
+  {
+    if (source.isDirectory())
+    {
+      mkdirs(target);
+      File[] files = source.listFiles();
+      for (File file : files)
+      {
+        String name = file.getName();
+        copyTree(new File(source, name), new File(target, name));
+      }
+    }
+    else
+    {
+      copyFile(source, target);
+    }
+  }
+
+  public static void copyTrees(Collection<File> sources, File target) throws IORuntimeException
+  {
+    for (File source : sources)
+    {
+      copyTree(source, target);
+    }
+  }
+
   public static void copyText(File source, File target, IOFilter<String>... lineFilters) throws IORuntimeException
   {
     BufferedReader reader = null;
@@ -176,7 +214,6 @@ public final class IOUtil
     {
       reader = new BufferedReader(openReader(source));
       writer = new BufferedWriter(openWriter(target));
-
       copyText(reader, writer, lineFilters);
     }
     finally
@@ -239,11 +276,7 @@ public final class IOUtil
    */
   public static void copyFile(File source, File target) throws IORuntimeException
   {
-    if (!target.getParentFile().exists())
-    {
-      target.getParentFile().mkdirs();
-    }
-
+    mkdirs(target.getParentFile());
     FileInputStream input = null;
     FileOutputStream output = null;
 
@@ -251,7 +284,6 @@ public final class IOUtil
     {
       input = openInputStream(source);
       output = openOutputStream(target);
-
       copy(input, output);
     }
     finally

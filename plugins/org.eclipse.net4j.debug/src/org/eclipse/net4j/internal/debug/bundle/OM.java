@@ -11,9 +11,9 @@
 package org.eclipse.net4j.internal.debug.bundle;
 
 import org.eclipse.net4j.internal.debug.RemoteTraceManager;
+import org.eclipse.net4j.ui.UIActivator;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 
@@ -43,11 +43,14 @@ public abstract class OM
   /**
    * @author Eike Stepper
    */
-  public static final class Activator extends OSGiActivator
+  public static final class Activator extends UIActivator
   {
+    public static Activator INSTANCE;
+
     public Activator()
     {
       super(BUNDLE);
+      INSTANCE = this;
     }
   }
 }

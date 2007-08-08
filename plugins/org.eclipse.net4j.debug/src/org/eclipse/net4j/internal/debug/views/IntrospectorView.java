@@ -14,6 +14,8 @@ import org.eclipse.net4j.internal.debug.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.collection.Pair;
 
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -27,6 +29,7 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
@@ -38,14 +41,18 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import java.lang.reflect.Field;
+import java.util.Stack;
 
 /**
  * @author Eike Stepper
@@ -56,9 +63,15 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
 
   private TableViewer viewer;
 
-  private Object selection;
+  // private Object object;
 
-  private Text label;
+  private Stack<Element> elements = new Stack();
+
+  private Text classLabel;
+
+  private Text objectLabel;
+
+  private IAction backAction = new BackAction();
 
   public IntrospectorView()
   {
@@ -74,25 +87,24 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
   @Override
   public void createPartControl(Composite parent)
   {
-    Color white = getSite().getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE);
-
-    GridLayout grid = new GridLayout();
-    grid.marginTop = 0;
-    grid.marginLeft = 0;
-    grid.marginRight = 0;
-    grid.marginBottom = 0;
-    grid.marginWidth = 0;
-    grid.marginHeight = 0;
-    grid.horizontalSpacing = 0;
-    grid.verticalSpacing = 0;
+    Color bg = parent.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND);
+    Color gray = parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE);
 
     Composite composite = new Composite(parent, SWT.NONE);
-    composite.setLayout(grid);
-    // composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    composite.setLayout(newGrid(1));
 
-    label = new Text(composite, SWT.READ_ONLY | SWT.BORDER);
-    label.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-    label.setBackground(white);
+    Composite c = new Composite(composite, SWT.BORDER);
+    c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    c.setLayout(newGrid(2));
+
+    classLabel = new Text(c, SWT.READ_ONLY);
+    classLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+    classLabel.setBackground(bg);
+    classLabel.setForeground(gray);
+
+    objectLabel = new Text(c, SWT.READ_ONLY);
+    objectLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    objectLabel.setBackground(bg);
 
     viewer = new TableViewer(composite, SWT.FULL_SELECTION | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
     viewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -103,28 +115,11 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
     viewer.setLabelProvider(new ViewLabelProvider());
     viewer.setInput(getViewSite());
 
-    makeActions();
     hookContextMenu();
     hookDoubleClickAction();
     contributeToActionBars();
 
     getSite().getPage().addSelectionListener(this);
-    // getSite().getPage().getSelectionProvider().addSelectionChangedListener(this);
-  }
-
-  protected void createColmuns(TableViewer viewer)
-  {
-    final String[] columnNames = { "Field", "Value", "Declared Type", "Concrete Type" };
-    final int[] columnWidths = { 200, 400, 300, 300 };
-    TableColumn[] columns = new TableColumn[columnNames.length];
-    for (int i = 0; i < columns.length; i++)
-    {
-      TableColumn column = new TableColumn(viewer.getTable(), SWT.LEFT, i);
-      column.setText(columnNames[i]);
-      column.setWidth(columnWidths[i]);
-      column.setMoveable(true);
-      column.setResizable(true);
-    }
   }
 
   public void refreshViewer()
@@ -138,6 +133,15 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
           if (isViewerAlive())
           {
             viewer.refresh();
+            // viewer.setSelection(StructuredSelection.EMPTY);
+            // if (!elements.isEmpty())
+            // {
+            // Element element = elements.peek();
+            // if (element.field != null)
+            // {
+            // setField(element.field);
+            // }
+            // }
           }
         }
       });
@@ -154,36 +158,136 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
     if (sel instanceof IStructuredSelection)
     {
       IStructuredSelection ssel = (IStructuredSelection)sel;
-      setSelection(ssel.getFirstElement());
+      elements.clear();
+      setObject(ssel.getFirstElement());
     }
     else
     {
-      setSelection(null);
+      setObject(null);
     }
   }
 
-  private void setSelection(Object newSelection)
+  /**
+   * Passing the focus request to the viewer's control.
+   */
+  @Override
+  public void setFocus()
   {
-    selection = newSelection;
-    if (selection == null)
+    viewer.getControl().setFocus();
+  }
+
+  private void doubleClicked(Pair<Field, Object> pair)
+  {
+    Field field = pair.getElement1();
+    if (!field.getType().isPrimitive())
     {
-      label.setText("");
-    }
-    else
-    {
-      String className = selection.getClass().getName();
-      String value = selection.toString();
-      if (value.startsWith(className))
+      Element element = elements.peek();
+      if (element != null)
       {
-        label.setText(value);
+        element.field = field;
+      }
+
+      setObject(pair.getElement2());
+    }
+  }
+
+  private void setObject(Object object)
+  {
+    if (object != null)
+    {
+      if (!elements.isEmpty())
+      {
+        Element element = elements.peek();
+        if (element.object != object)
+        {
+          pushObject(object);
+        }
       }
       else
       {
-        label.setText(className + ": " + value);
+        pushObject(object);
       }
     }
 
+    if (object == null)
+    {
+      classLabel.setText("");
+      objectLabel.setText("");
+    }
+    else
+    {
+      String className = object.getClass().getName();
+      classLabel.setText(className);
+
+      String value = object.toString();
+      if (value.startsWith(className + "@"))
+      {
+        objectLabel.setText(value.substring(className.length()));
+      }
+      else
+      {
+        objectLabel.setText(value);
+      }
+    }
+
+    classLabel.getParent().layout();
+    backAction.setEnabled(elements.size() >= 2);
     refreshViewer();
+  }
+
+  private void pushObject(Object object)
+  {
+    Element e = new Element();
+    e.object = object;
+    elements.push(e);
+  }
+
+  @SuppressWarnings("unused")
+  private void setField(Field field)
+  {
+    TableItem[] items = viewer.getTable().getItems();
+    for (TableItem item : items)
+    {
+      Object data = item.getData();
+      if (data instanceof Pair)
+      {
+        Pair<Field, Object> pair = (Pair)data;
+        if (pair.getElement1() == field)
+        {
+          viewer.setSelection(new StructuredSelection(pair.getElement2()), true);
+          break;
+        }
+      }
+    }
+  }
+
+  private GridLayout newGrid(int numColumns)
+  {
+    GridLayout grid = new GridLayout(numColumns, false);
+    grid.marginTop = 0;
+    grid.marginLeft = 0;
+    grid.marginRight = 0;
+    grid.marginBottom = 0;
+    grid.marginWidth = 0;
+    grid.marginHeight = 0;
+    grid.horizontalSpacing = 0;
+    grid.verticalSpacing = 0;
+    return grid;
+  }
+
+  private void createColmuns(TableViewer viewer)
+  {
+    final String[] columnNames = { "Field", "Value", "Declared Type", "Concrete Type" };
+    final int[] columnWidths = { 200, 400, 300, 300 };
+    TableColumn[] columns = new TableColumn[columnNames.length];
+    for (int i = 0; i < columns.length; i++)
+    {
+      TableColumn column = new TableColumn(viewer.getTable(), SWT.LEFT, i);
+      column.setText(columnNames[i]);
+      column.setWidth(columnWidths[i]);
+      column.setMoveable(true);
+      column.setResizable(true);
+    }
   }
 
   private boolean isViewerAlive()
@@ -226,10 +330,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
 
   private void fillLocalToolBar(IToolBarManager manager)
   {
-  }
-
-  private void makeActions()
-  {
+    manager.add(backAction);
   }
 
   private void hookDoubleClickAction()
@@ -252,28 +353,45 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
     });
   }
 
-  protected void doubleClicked(Pair<Field, Object> pair)
-  {
-    Field field = pair.getElement1();
-    if (!field.getType().isPrimitive())
-    {
-      setSelection(pair.getElement2());
-    }
-  }
-
   @SuppressWarnings("unused")
   private void showMessage(String message)
   {
     MessageDialog.openInformation(viewer.getControl().getShell(), "Remote Traces", message);
   }
 
-  /**
-   * Passing the focus request to the viewer's control.
-   */
-  @Override
-  public void setFocus()
+  static class Element
   {
-    viewer.getControl().setFocus();
+    public Object object;
+
+    public Field field;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  class BackAction extends Action
+  {
+    private BackAction()
+    {
+      super("Back");
+      ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
+      setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_BACK));
+      setDisabledImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_BACK_DISABLED));
+    }
+
+    @Override
+    public void run()
+    {
+      if (!elements.isEmpty())
+      {
+        elements.pop();
+        if (!elements.isEmpty())
+        {
+          Element element = elements.peek();
+          setObject(element.object);
+        }
+      }
+    }
   }
 
   /**
@@ -291,11 +409,12 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
 
     public Object[] getElements(Object parent)
     {
-      if (selection != null)
+      if (!elements.isEmpty())
       {
         try
         {
-          return ReflectUtil.dumpToArray(selection);
+          Element element = elements.peek();
+          return ReflectUtil.dumpToArray(element.object);
         }
         catch (RuntimeException ex)
         {
@@ -334,17 +453,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
           case 2:
             return field.getType().getName();
           case 3:
-            if (value == null)
-            {
-              return "";
-            }
-
-            if (value.getClass() == field.getType())
-            {
-              return "";
-            }
-
-            return value.getClass().getName();
+            return value == null ? "" : value.getClass().getName();
           }
         }
         catch (RuntimeException ex)

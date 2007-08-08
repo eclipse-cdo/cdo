@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 
 /**
  * @author Eike Stepper
@@ -63,22 +64,29 @@ public class CDOAdapterImpl extends CDOLegacyImpl implements Adapter.Internal
 
   public void notifyChanged(Notification msg)
   {
-    if (msg.getNotifier() == instance)
+    try
     {
-      switch (msg.getEventType())
+      if (msg.getNotifier() == instance)
       {
-      case Notification.ADD:
-      case Notification.ADD_MANY:
-      case Notification.REMOVE:
-      case Notification.REMOVE_MANY:
-      case Notification.MOVE:
-      case Notification.SET:
-      case Notification.UNSET:
-        if (!instance.eIsProxy())
+        switch (msg.getEventType())
         {
-          CDOStateMachine.INSTANCE.write(this);
+        case Notification.ADD:
+        case Notification.ADD_MANY:
+        case Notification.REMOVE:
+        case Notification.REMOVE_MANY:
+        case Notification.MOVE:
+        case Notification.SET:
+        case Notification.UNSET:
+          if (!instance.eIsProxy())
+          {
+            CDOStateMachine.INSTANCE.write(this);
+          }
         }
       }
+    }
+    catch (RuntimeException ex)
+    {
+      OM.LOG.error(ex);
     }
   }
 }

@@ -54,7 +54,7 @@ import java.util.Stack;
 /**
  * @author Eike Stepper
  */
-public class IntrospectorView extends ViewPart implements ISelectionListener
+public class IntrospectorView extends ViewPart implements ISelectionListener, IDoubleClickListener
 {
   private static final Object[] NO_ELEMENTS = {};
 
@@ -75,37 +75,6 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
   private Text objectLabel;
 
   private IAction backAction = new BackAction();
-
-  private IDoubleClickListener doubleClickListener = new IDoubleClickListener()
-  {
-    public void doubleClick(DoubleClickEvent event)
-    {
-      ISelection sel = event.getSelection();
-      if (sel instanceof IStructuredSelection)
-      {
-        IStructuredSelection ssel = (IStructuredSelection)sel;
-        Object element = ssel.getFirstElement();
-        if (currentViewer == objectViewer && element instanceof Pair)
-        {
-          Pair<Field, Object> pair = (Pair)element;
-          Field field = pair.getElement1();
-          if (!field.getType().isPrimitive())
-          {
-            setObject(pair.getElement2());
-          }
-        }
-        else if (currentViewer == mapViewer && element instanceof Map.Entry)
-        {
-          Map.Entry entry = (Map.Entry)element;
-          setObject(entry.getValue());
-        }
-        else if (currentViewer == iterableViewer)
-        {
-          setObject(element);
-        }
-      }
-    }
-  };
 
   private StackLayout stackLayout;
 
@@ -151,7 +120,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
 
     objectViewer = createViewer(stacked);
     createObjectColmuns();
-    objectViewer.addDoubleClickListener(doubleClickListener);
+    objectViewer.addDoubleClickListener(this);
     objectViewer.setContentProvider(new ObjectContentProvider());
     objectViewer.setLabelProvider(new ObjectLabelProvider());
     objectViewer.setSorter(new NameSorter());
@@ -159,15 +128,14 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
 
     iterableViewer = createViewer(stacked);
     createIterableColmuns();
-    iterableViewer.addDoubleClickListener(doubleClickListener);
+    iterableViewer.addDoubleClickListener(this);
     iterableViewer.setContentProvider(new IterableContentProvider());
     iterableViewer.setLabelProvider(new IterableLabelProvider());
-    iterableViewer.setSorter(new NameSorter());
     iterableViewer.setInput(getViewSite());
 
     mapViewer = createViewer(stacked);
     createMapColmuns();
-    mapViewer.addDoubleClickListener(doubleClickListener);
+    mapViewer.addDoubleClickListener(this);
     mapViewer.setContentProvider(new MapContentProvider());
     mapViewer.setLabelProvider(new MapLabelProvider());
     mapViewer.setSorter(new NameSorter());
@@ -235,6 +203,34 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
     else
     {
       setObject(null);
+    }
+  }
+
+  public void doubleClick(DoubleClickEvent event)
+  {
+    ISelection sel = event.getSelection();
+    if (sel instanceof IStructuredSelection)
+    {
+      IStructuredSelection ssel = (IStructuredSelection)sel;
+      Object element = ssel.getFirstElement();
+      if (currentViewer == objectViewer && element instanceof Pair)
+      {
+        Pair<Field, Object> pair = (Pair)element;
+        Field field = pair.getElement1();
+        if (!field.getType().isPrimitive())
+        {
+          setObject(pair.getElement2());
+        }
+      }
+      else if (currentViewer == mapViewer && element instanceof Map.Entry)
+      {
+        Map.Entry entry = (Map.Entry)element;
+        setObject(entry.getValue());
+      }
+      else if (currentViewer == iterableViewer)
+      {
+        setObject(element);
+      }
     }
   }
 

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.CDOCallback;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 /**
@@ -41,34 +42,41 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
   @Override
   public void notifyChanged(Notification msg)
   {
-    if (msg.getNotifier() == instance)
+    try
     {
-      Object feature = msg.getFeature();
-      if (feature instanceof EReference)
+      if (msg.getNotifier() == instance)
       {
-        EReference reference = (EReference)feature;
-        if (reference.isContainment())
+        Object feature = msg.getFeature();
+        if (feature instanceof EReference)
         {
-          switch (msg.getEventType())
+          EReference reference = (EReference)feature;
+          if (reference.isContainment())
           {
-          case Notification.ADD:
-            notifyAdd((InternalEObject)msg.getNewValue());
-            break;
+            switch (msg.getEventType())
+            {
+            case Notification.ADD:
+              notifyAdd((InternalEObject)msg.getNewValue());
+              break;
 
-          case Notification.ADD_MANY:
-            notifyAddMany(msg);
-            break;
+            case Notification.ADD_MANY:
+              notifyAddMany(msg);
+              break;
 
-          case Notification.REMOVE:
-            notifyRemove((InternalEObject)msg.getOldValue());
-            break;
+            case Notification.REMOVE:
+              notifyRemove((InternalEObject)msg.getOldValue());
+              break;
 
-          case Notification.REMOVE_MANY:
-            notifyRemoveMany(msg);
-            break;
+            case Notification.REMOVE_MANY:
+              notifyRemoveMany(msg);
+              break;
+            }
           }
         }
       }
+    }
+    catch (RuntimeException ex)
+    {
+      OM.LOG.error(ex);
     }
   }
 

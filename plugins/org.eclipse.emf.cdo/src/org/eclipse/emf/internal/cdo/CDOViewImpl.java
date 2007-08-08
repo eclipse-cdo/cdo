@@ -586,23 +586,30 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public void notifyChanged(Notification msg)
   {
-    switch (msg.getEventType())
+    try
     {
-    case Notification.ADD:
-      notifyAdd(msg);
-      break;
+      switch (msg.getEventType())
+      {
+      case Notification.ADD:
+        notifyAdd(msg);
+        break;
 
-    case Notification.ADD_MANY:
-      notifyAddMany(msg);
-      break;
+      case Notification.ADD_MANY:
+        notifyAddMany(msg);
+        break;
 
-    case Notification.REMOVE:
-      notifyRemove(msg);
-      break;
+      case Notification.REMOVE:
+        notifyRemove(msg);
+        break;
 
-    case Notification.REMOVE_MANY:
-      notifyRemoveMany(msg);
-      break;
+      case Notification.REMOVE_MANY:
+        notifyRemoveMany(msg);
+        break;
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      OM.LOG.error(ex);
     }
   }
 

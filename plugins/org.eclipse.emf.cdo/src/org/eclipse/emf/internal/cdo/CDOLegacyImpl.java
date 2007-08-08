@@ -108,37 +108,9 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
         TRACER.format("Setting state {0} for {1}", state, this);
       }
 
-      // Setting eProxyURI is necessary to prevent content adapters from
-      // loading the whole content tree.
-      // TODO Does not have the desired effect ;-( see CDOEditor.createModel()
-      if (state == CDOState.PROXY)
-      {
-        if (!instance.eIsProxy())
-        {
-          URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":proxy#" + id);
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("Setting proxyURI {0} for {1}", uri, instance);
-          }
-
-          instance.eSetProxyURI(uri);
-        }
-      }
-      else
-      {
-        if (instance.eIsProxy())
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("Unsetting proxyURI for {0}", instance);
-          }
-
-          instance.eSetProxyURI(null);
-        }
-      }
-
       CDOState tmp = this.state;
       this.state = state;
+      adjustEProxy();
       return tmp;
     }
 
@@ -539,6 +511,38 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     }
 
     ReflectUtil.setValue(field, instance, value);
+  }
+
+  protected void adjustEProxy()
+  {
+    // Setting eProxyURI is necessary to prevent content adapters from
+    // loading the whole content tree.
+    // TODO Does not have the desired effect ;-( see CDOEditor.createModel()
+    if (state == CDOState.PROXY)
+    {
+      if (!instance.eIsProxy())
+      {
+        URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":proxy#" + id);
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Setting proxyURI {0} for {1}", uri, instance);
+        }
+
+        instance.eSetProxyURI(uri);
+      }
+    }
+    else
+    {
+      if (instance.eIsProxy())
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Unsetting proxyURI for {0}", instance);
+        }
+
+        instance.eSetProxyURI(null);
+      }
+    }
   }
 
   protected void clearEList(InternalEList list)

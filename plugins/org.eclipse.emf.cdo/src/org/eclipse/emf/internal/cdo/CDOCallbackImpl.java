@@ -75,6 +75,7 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
   @Override
   protected void adjustEProxy()
   {
+    // Do nothing
   }
 
   private void notifyAddMany(Notification msg)

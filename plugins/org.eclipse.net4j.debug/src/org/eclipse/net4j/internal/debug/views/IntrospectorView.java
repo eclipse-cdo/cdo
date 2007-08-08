@@ -16,12 +16,8 @@ import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -29,29 +25,30 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 /**
@@ -61,17 +58,58 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
 {
   private static final Object[] NO_ELEMENTS = {};
 
-  private TableViewer viewer;
+  private TableViewer currentViewer;
+
+  private TableViewer objectViewer;
+
+  private TableViewer iterableViewer;
+
+  private TableViewer mapViewer;
 
   // private Object object;
 
-  private Stack<Element> elements = new Stack();
+  private Stack elements = new Stack();
 
   private Text classLabel;
 
   private Text objectLabel;
 
   private IAction backAction = new BackAction();
+
+  private IDoubleClickListener doubleClickListener = new IDoubleClickListener()
+  {
+    public void doubleClick(DoubleClickEvent event)
+    {
+      ISelection sel = event.getSelection();
+      if (sel instanceof IStructuredSelection)
+      {
+        IStructuredSelection ssel = (IStructuredSelection)sel;
+        Object element = ssel.getFirstElement();
+        if (currentViewer == objectViewer && element instanceof Pair)
+        {
+          Pair<Field, Object> pair = (Pair)element;
+          Field field = pair.getElement1();
+          if (!field.getType().isPrimitive())
+          {
+            setObject(pair.getElement2());
+          }
+        }
+        else if (currentViewer == mapViewer && element instanceof Map.Entry)
+        {
+          Map.Entry entry = (Map.Entry)element;
+          setObject(entry.getValue());
+        }
+        else if (currentViewer == iterableViewer)
+        {
+          setObject(element);
+        }
+      }
+    }
+  };
+
+  private StackLayout stackLayout;
+
+  private Composite stacked;
 
   public IntrospectorView()
   {
@@ -106,45 +144,78 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
     objectLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
     objectLabel.setBackground(bg);
 
-    viewer = new TableViewer(composite, SWT.FULL_SELECTION | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+    stackLayout = new StackLayout();
+    stacked = new Composite(composite, SWT.NONE);
+    stacked.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    stacked.setLayout(stackLayout);
+
+    objectViewer = createViewer(stacked);
+    createObjectColmuns();
+    objectViewer.addDoubleClickListener(doubleClickListener);
+    objectViewer.setContentProvider(new ObjectContentProvider());
+    objectViewer.setLabelProvider(new ObjectLabelProvider());
+    objectViewer.setSorter(new NameSorter());
+    objectViewer.setInput(getViewSite());
+
+    iterableViewer = createViewer(stacked);
+    createIterableColmuns();
+    iterableViewer.addDoubleClickListener(doubleClickListener);
+    iterableViewer.setContentProvider(new IterableContentProvider());
+    iterableViewer.setLabelProvider(new IterableLabelProvider());
+    iterableViewer.setSorter(new NameSorter());
+    iterableViewer.setInput(getViewSite());
+
+    mapViewer = createViewer(stacked);
+    createMapColmuns();
+    mapViewer.addDoubleClickListener(doubleClickListener);
+    mapViewer.setContentProvider(new MapContentProvider());
+    mapViewer.setLabelProvider(new MapLabelProvider());
+    mapViewer.setSorter(new NameSorter());
+    mapViewer.setInput(getViewSite());
+
+    IActionBars bars = getViewSite().getActionBars();
+    fillLocalPullDown(bars.getMenuManager());
+    fillLocalToolBar(bars.getToolBarManager());
+    getSite().getPage().addSelectionListener(this);
+    setCurrentViewer(objectViewer);
+  }
+
+  private void setCurrentViewer(TableViewer viewer)
+  {
+    currentViewer = viewer;
+    stackLayout.topControl = currentViewer.getControl();
+    stacked.layout();
+  }
+
+  private TableViewer createViewer(Composite parent)
+  {
+    TableViewer viewer = new TableViewer(parent, SWT.FULL_SELECTION | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
     viewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     viewer.getTable().setHeaderVisible(true);
     viewer.getTable().setLinesVisible(true);
-    createColmuns(viewer);
-    viewer.setContentProvider(new ViewContentProvider());
-    viewer.setLabelProvider(new ViewLabelProvider());
-    viewer.setInput(getViewSite());
-
-    hookContextMenu();
-    hookDoubleClickAction();
-    contributeToActionBars();
-
-    getSite().getPage().addSelectionListener(this);
+    return viewer;
   }
 
   public void refreshViewer()
   {
-    if (isViewerAlive())
+    try
     {
-      getSite().getShell().getDisplay().asyncExec(new Runnable()
+      currentViewer.getControl().getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {
-          if (isViewerAlive())
+          try
           {
-            viewer.refresh();
-            // viewer.setSelection(StructuredSelection.EMPTY);
-            // if (!elements.isEmpty())
-            // {
-            // Element element = elements.peek();
-            // if (element.field != null)
-            // {
-            // setField(element.field);
-            // }
-            // }
+            currentViewer.refresh();
+          }
+          catch (RuntimeException ignore)
+          {
           }
         }
       });
+    }
+    catch (RuntimeException ignore)
+    {
     }
   }
 
@@ -173,21 +244,12 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
   @Override
   public void setFocus()
   {
-    viewer.getControl().setFocus();
-  }
-
-  private void doubleClicked(Pair<Field, Object> pair)
-  {
-    Field field = pair.getElement1();
-    if (!field.getType().isPrimitive())
+    try
     {
-      Element element = elements.peek();
-      if (element != null)
-      {
-        element.field = field;
-      }
-
-      setObject(pair.getElement2());
+      currentViewer.getControl().setFocus();
+    }
+    catch (RuntimeException ignore)
+    {
     }
   }
 
@@ -197,15 +259,15 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
     {
       if (!elements.isEmpty())
       {
-        Element element = elements.peek();
-        if (element.object != object)
+        Object element = elements.peek();
+        if (element != object)
         {
-          pushObject(object);
+          elements.push(object);
         }
       }
       else
       {
-        pushObject(object);
+        elements.push(object);
       }
     }
 
@@ -213,6 +275,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
     {
       classLabel.setText("");
       objectLabel.setText("");
+      currentViewer = objectViewer;
     }
     else
     {
@@ -232,33 +295,21 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
 
     classLabel.getParent().layout();
     backAction.setEnabled(elements.size() >= 2);
-    refreshViewer();
-  }
 
-  private void pushObject(Object object)
-  {
-    Element e = new Element();
-    e.object = object;
-    elements.push(e);
-  }
-
-  @SuppressWarnings("unused")
-  private void setField(Field field)
-  {
-    TableItem[] items = viewer.getTable().getItems();
-    for (TableItem item : items)
+    if (object instanceof Map)
     {
-      Object data = item.getData();
-      if (data instanceof Pair)
-      {
-        Pair<Field, Object> pair = (Pair)data;
-        if (pair.getElement1() == field)
-        {
-          viewer.setSelection(new StructuredSelection(pair.getElement2()), true);
-          break;
-        }
-      }
+      setCurrentViewer(mapViewer);
     }
+    else if (object instanceof Iterable)
+    {
+      setCurrentViewer(iterableViewer);
+    }
+    else
+    {
+      setCurrentViewer(objectViewer);
+    }
+
+    refreshViewer();
   }
 
   private GridLayout newGrid(int numColumns)
@@ -275,14 +326,36 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
     return grid;
   }
 
-  private void createColmuns(TableViewer viewer)
+  private void createObjectColmuns()
   {
-    final String[] columnNames = { "Field", "Value", "Declared Type", "Concrete Type" };
-    final int[] columnWidths = { 200, 400, 300, 300 };
+    Table table = objectViewer.getTable();
+    String[] columnNames = { "Field", "Value", "Declared Type", "Concrete Type" };
+    int[] columnWidths = { 200, 400, 300, 300 };
+    createColumns(table, columnNames, columnWidths);
+  }
+
+  private void createMapColmuns()
+  {
+    Table table = mapViewer.getTable();
+    String[] columnNames = { "Key", "Value", "Type" };
+    int[] columnWidths = { 200, 400, 300 };
+    createColumns(table, columnNames, columnWidths);
+  }
+
+  private void createIterableColmuns()
+  {
+    Table table = iterableViewer.getTable();
+    String[] columnNames = { "Element", "Type" };
+    int[] columnWidths = { 400, 300 };
+    createColumns(table, columnNames, columnWidths);
+  }
+
+  private void createColumns(Table table, String[] columnNames, int[] columnWidths)
+  {
     TableColumn[] columns = new TableColumn[columnNames.length];
     for (int i = 0; i < columns.length; i++)
     {
-      TableColumn column = new TableColumn(viewer.getTable(), SWT.LEFT, i);
+      TableColumn column = new TableColumn(table, SWT.LEFT, i);
       column.setText(columnNames[i]);
       column.setWidth(columnWidths[i]);
       column.setMoveable(true);
@@ -290,80 +363,13 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
     }
   }
 
-  private boolean isViewerAlive()
-  {
-    return viewer != null && viewer.getControl() != null && !viewer.getControl().isDisposed();
-  }
-
-  private void hookContextMenu()
-  {
-    MenuManager menuMgr = new MenuManager("#PopupMenu");
-    menuMgr.setRemoveAllWhenShown(true);
-    menuMgr.addMenuListener(new IMenuListener()
-    {
-      public void menuAboutToShow(IMenuManager manager)
-      {
-        IntrospectorView.this.fillContextMenu(manager);
-      }
-    });
-
-    Menu menu = menuMgr.createContextMenu(viewer.getControl());
-    viewer.getControl().setMenu(menu);
-    getSite().registerContextMenu(menuMgr, viewer);
-  }
-
-  private void contributeToActionBars()
-  {
-    IActionBars bars = getViewSite().getActionBars();
-    fillLocalPullDown(bars.getMenuManager());
-    fillLocalToolBar(bars.getToolBarManager());
-  }
-
   private void fillLocalPullDown(IMenuManager manager)
   {
-  }
-
-  private void fillContextMenu(IMenuManager manager)
-  {
-    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
   }
 
   private void fillLocalToolBar(IToolBarManager manager)
   {
     manager.add(backAction);
-  }
-
-  private void hookDoubleClickAction()
-  {
-    viewer.addDoubleClickListener(new IDoubleClickListener()
-    {
-      public void doubleClick(DoubleClickEvent event)
-      {
-        ISelection sel = event.getSelection();
-        if (sel instanceof IStructuredSelection)
-        {
-          IStructuredSelection ssel = (IStructuredSelection)sel;
-          Object element = ssel.getFirstElement();
-          if (element instanceof Pair)
-          {
-            doubleClicked((Pair)element);
-          }
-        }
-      }
-    });
-  }
-
-  @SuppressWarnings("unused")
-  private void showMessage(String message)
-  {
-    MessageDialog.openInformation(viewer.getControl().getShell(), "Remote Traces", message);
-  }
-
-  static class Element
-  {
-    public Object object;
-
-    public Field field;
   }
 
   /**
@@ -387,8 +393,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
         elements.pop();
         if (!elements.isEmpty())
         {
-          Element element = elements.peek();
-          setObject(element.object);
+          setObject(elements.peek());
         }
       }
     }
@@ -397,7 +402,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
   /**
    * @author Eike Stepper
    */
-  class ViewContentProvider implements IStructuredContentProvider
+  abstract class AbstractContentProvider implements IStructuredContentProvider
   {
     public void inputChanged(Viewer v, Object oldInput, Object newInput)
     {
@@ -406,15 +411,43 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
     public void dispose()
     {
     }
+  }
 
+  /**
+   * @author Eike Stepper
+   */
+  abstract class AbstractLabelProvider extends LabelProvider implements ITableLabelProvider
+  {
+    @Override
+    public String getText(Object element)
+    {
+      return getColumnText(element, 0);
+    }
+
+    public Image getColumnImage(Object obj, int index)
+    {
+      return null;
+    }
+
+    @Override
+    public Image getImage(Object obj)
+    {
+      return null;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  class ObjectContentProvider extends AbstractContentProvider
+  {
     public Object[] getElements(Object parent)
     {
       if (!elements.isEmpty())
       {
         try
         {
-          Element element = elements.peek();
-          return ReflectUtil.dumpToArray(element.object);
+          return ReflectUtil.dumpToArray(elements.peek());
         }
         catch (RuntimeException ex)
         {
@@ -429,12 +462,8 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
   /**
    * @author Eike Stepper
    */
-  class ViewLabelProvider extends LabelProvider implements ITableLabelProvider
+  class ObjectLabelProvider extends AbstractLabelProvider
   {
-    public ViewLabelProvider()
-    {
-    }
-
     public String getColumnText(Object obj, int index)
     {
       if (obj instanceof Pair)
@@ -462,18 +491,99 @@ public class IntrospectorView extends ViewPart implements ISelectionListener
         }
       }
 
-      return getText(obj);
+      return "";
     }
+  }
 
-    public Image getColumnImage(Object obj, int index)
+  /**
+   * @author Eike Stepper
+   */
+  class IterableContentProvider extends AbstractContentProvider
+  {
+    public Object[] getElements(Object parent)
     {
-      return null;
+      if (!elements.isEmpty())
+      {
+        Object element = elements.peek();
+        if (element instanceof Iterable)
+        {
+          List result = new ArrayList();
+          for (Object object : (Iterable)element)
+          {
+            result.add(object);
+          }
+
+          return result.toArray();
+        }
+      }
+
+      return NO_ELEMENTS;
     }
+  }
 
-    @Override
-    public Image getImage(Object obj)
+  /**
+   * @author Eike Stepper
+   */
+  class IterableLabelProvider extends AbstractLabelProvider
+  {
+    public String getColumnText(Object obj, int index)
     {
-      return null;
+      switch (index)
+      {
+      case 0:
+        return obj == null ? "null" : obj.toString();
+      case 1:
+        return obj == null ? "" : obj.getClass().getName();
+      }
+
+      return "";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  class MapContentProvider extends AbstractContentProvider
+  {
+    public Object[] getElements(Object parent)
+    {
+      if (!elements.isEmpty())
+      {
+        Object element = elements.peek();
+        if (element instanceof Map)
+        {
+          return ((Map)element).entrySet().toArray();
+        }
+      }
+
+      return NO_ELEMENTS;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  class MapLabelProvider extends AbstractLabelProvider
+  {
+    public String getColumnText(Object obj, int index)
+    {
+      if (obj instanceof Map.Entry)
+      {
+        Map.Entry entry = (Map.Entry)obj;
+        Object key = entry.getKey();
+        Object value = entry.getValue();
+        switch (index)
+        {
+        case 0:
+          return key == null ? "null" : key.toString();
+        case 1:
+          return value == null ? "null" : value.toString();
+        case 2:
+          return value == null ? "" : value.getClass().getName();
+        }
+      }
+
+      return "";
     }
   }
 

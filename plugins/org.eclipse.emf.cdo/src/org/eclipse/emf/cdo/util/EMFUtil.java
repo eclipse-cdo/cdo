@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EClassifierImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -172,10 +173,17 @@ public final class EMFUtil
     List<EStructuralFeature> result = new ArrayList();
     for (EStructuralFeature feature : eFeatues)
     {
-      if (!feature.isTransient())
+      if (feature.isTransient())
       {
-        result.add(feature);
+        continue;
       }
+
+      if (feature == EcorePackage.eINSTANCE.getEClass_ESuperTypes())
+      {
+        continue;
+      }
+
+      result.add(feature);
     }
 
     return result;

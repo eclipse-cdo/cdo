@@ -198,7 +198,7 @@ public final class ModelUtil
       ePackage = packageRegistry.getEPackage(uri);
       if (ePackage == null)
       {
-        ePackage = createEPackage(cdoPackage, packageRegistry);
+        ePackage = createEPackage(cdoPackage);
         packageRegistry.put(uri, ePackage);
       }
 
@@ -234,11 +234,11 @@ public final class ModelUtil
     return eFeature;
   }
 
-  public static EPackage createEPackage(CDOPackageImpl cdoPackage, CDOPackageRegistryImpl packageRegistry)
+  public static EPackage createEPackage(CDOPackageImpl cdoPackage)
   {
     if (!cdoPackage.isDynamic())
     {
-      EPackage ePackage = createGeneratedEPackage(cdoPackage.getPackageURI(), packageRegistry);
+      EPackage ePackage = createGeneratedEPackage(cdoPackage.getPackageURI());
       if (ePackage != null)
       {
         return ePackage;
@@ -248,7 +248,7 @@ public final class ModelUtil
     return createDynamicEPackage(cdoPackage);
   }
 
-  public static EPackage createGeneratedEPackage(String packageURI, CDOPackageRegistryImpl packageRegistry)
+  public static EPackage createGeneratedEPackage(String packageURI)
   {
     if (packageURI.equals(EcorePackage.eINSTANCE.getNsURI()))
     {

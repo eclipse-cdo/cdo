@@ -425,12 +425,6 @@ public final class CDOStore implements EStore
       }
 
       CDOStateMachine.INSTANCE.attach(contained, container.cdoResource(), containerView);
-
-      // if (contained instanceof CDOLegacyImpl && container instanceof
-      // Resource.Internal)
-      // {
-      // ((CDOLegacyImpl)contained).transferResourceToInstance((Resource.Internal)container);
-      // }
     }
   }
 }

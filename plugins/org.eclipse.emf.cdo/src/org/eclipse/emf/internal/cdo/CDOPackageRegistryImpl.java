@@ -113,7 +113,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
 
     public EPackage getEPackage()
     {
-      EPackage ePackage = ModelUtil.createEPackage(cdoPackage, CDOPackageRegistryImpl.this);
+      EPackage ePackage = ModelUtil.createEPackage(cdoPackage);
       session.registerEPackage(ePackage, cdoPackage.getMetaIDRange());
       return ePackage;
     }

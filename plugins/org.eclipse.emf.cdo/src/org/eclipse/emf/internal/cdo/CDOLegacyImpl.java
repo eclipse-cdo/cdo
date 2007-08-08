@@ -390,11 +390,6 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
   protected Object getInstanceValue(InternalEObject instance, CDOFeatureImpl feature)
   {
     EStructuralFeature eFeature = ModelUtil.getEFeature(feature, cdoView().getSession().getPackageRegistry());
-    // if (eFeature.isUnsettable() &&!instance.eIsSet(eFeature))
-    // {
-    // return eFeature.getDefaultValue();
-    // }
-
     return instance.eGet(eFeature);
   }
 

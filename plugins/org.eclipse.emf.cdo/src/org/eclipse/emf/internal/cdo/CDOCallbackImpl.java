@@ -123,7 +123,10 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
 
   private void notifyRemove(InternalEObject instance)
   {
-    InternalCDOObject object = FSMUtil.adapt(instance, view);
-    CDOStateMachine.INSTANCE.detach(object, cdoResource(), view);
+    if (instance.eDeliver())
+    {
+      InternalCDOObject object = FSMUtil.adapt(instance, view);
+      CDOStateMachine.INSTANCE.detach(object, cdoResource(), view);
+    }
   }
 }

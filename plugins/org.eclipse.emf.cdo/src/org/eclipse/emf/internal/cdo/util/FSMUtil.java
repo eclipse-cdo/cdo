@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.CDOAware;
+import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
 import org.eclipse.emf.internal.cdo.CDOCallbackImpl;
@@ -63,7 +64,8 @@ public final class FSMUtil
       return (InternalCDOObject)object;
     }
 
-    if (object instanceof EModelElement || object instanceof EGenericType)
+    if (object instanceof EModelElement || object instanceof EGenericType
+        || object instanceof EStringToStringMapEntryImpl)
     {
       InternalEObject eObject = (InternalEObject)object;
       if (view == null)

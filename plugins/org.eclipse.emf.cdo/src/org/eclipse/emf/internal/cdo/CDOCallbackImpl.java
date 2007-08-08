@@ -72,6 +72,11 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
     }
   }
 
+  @Override
+  protected void adjustEProxy()
+  {
+  }
+
   private void notifyAddMany(Notification msg)
   {
     EList<InternalEObject> newValues = (EList<InternalEObject>)msg.getNewValue();

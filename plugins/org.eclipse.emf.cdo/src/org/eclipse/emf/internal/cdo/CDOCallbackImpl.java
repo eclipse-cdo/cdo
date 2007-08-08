@@ -50,7 +50,7 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
         if (feature instanceof EReference)
         {
           EReference reference = (EReference)feature;
-          if (reference.isContainment())
+          if (reference.isContainment() && !reference.isTransient())
           {
             switch (msg.getEventType())
             {
@@ -101,7 +101,7 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
 
   private void notifyAdd(InternalEObject instance)
   {
-    if (!instance.eDeliver())
+    if (instance.eDeliver())
     {
       InternalCDOObject object = FSMUtil.adapt(instance, view);
       CDOStateMachine.INSTANCE.attach(object, cdoResource(), view);

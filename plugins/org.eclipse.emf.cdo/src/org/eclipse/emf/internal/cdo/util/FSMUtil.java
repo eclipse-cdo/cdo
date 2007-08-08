@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.CDOID;
 
-import org.eclipse.net4j.util.ImplementationError;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EGenericType;
@@ -120,7 +118,7 @@ public final class FSMUtil
       return adapter;
     }
 
-    throw new ImplementationError("Neither InternalCDOObject nor InternalEObject: " + object.getClass().getName());
+    return null;
   }
 
   public static Iterator<InternalCDOObject> iterator(Collection instances, final CDOViewImpl view)

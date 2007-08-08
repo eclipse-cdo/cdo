@@ -66,8 +66,6 @@ public class IntrospectorView extends ViewPart implements ISelectionListener, ID
 
   private TableViewer mapViewer;
 
-  // private Object object;
-
   private Stack elements = new Stack();
 
   private Text classLabel;

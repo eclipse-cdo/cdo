@@ -389,69 +389,18 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
 
   protected Object getInstanceValue(InternalEObject instance, CDOFeatureImpl feature)
   {
-    // Class<?> targetClass = target.getClass();
-    // String featureName = feature.getName();
     EStructuralFeature eFeature = ModelUtil.getEFeature(feature, cdoView().getSession().getPackageRegistry());
-    Object value = instance.eGet(eFeature);
-    return value;
+    // if (eFeature.isUnsettable() &&!instance.eIsSet(eFeature))
+    // {
+    // return eFeature.getDefaultValue();
+    // }
 
-    // // TODO BOOLEAN_OBJECT?
-    // String methodName = GenUtil.getFeatureGetterName(featureName,
-    // feature.getType() == CDOType.BOOLEAN);
-    // Method method = getMethod(targetClass, methodName,
-    // ReflectUtil.NO_PARAMETERS);
-    //
-    // String fieldName = featureName;// TODO safeName()
-    // Field field = getField(targetClass, fieldName);
-    // if (field == null && feature.getType() == CDOType.BOOLEAN)
-    // {
-    // if (targetClass.isAssignableFrom(EAttributeImpl.class) ||
-    // targetClass.isAssignableFrom(EClassImpl.class)
-    // || targetClass.isAssignableFrom(EDataTypeImpl.class) ||
-    // targetClass.isAssignableFrom(EReferenceImpl.class)
-    // || targetClass.isAssignableFrom(EStructuralFeatureImpl.class)
-    // || targetClass.isAssignableFrom(ETypedElementImpl.class))
-    // {
-    // // *******************************************
-    // // ID_EFLAG = 1 << 15;
-    // // *******************************************
-    // // ABSTRACT_EFLAG = 1 << 8;
-    // // INTERFACE_EFLAG = 1 << 9;
-    // // *******************************************
-    // // SERIALIZABLE_EFLAG = 1 << 8;
-    // // *******************************************
-    // // CONTAINMENT_EFLAG = 1 << 15;
-    // // RESOLVE_PROXIES_EFLAG = 1 << 16;
-    // // *******************************************
-    // // CHANGEABLE_EFLAG = 1 << 10;
-    // // VOLATILE_EFLAG = 1 << 11;
-    // // TRANSIENT_EFLAG = 1 << 12;
-    // // UNSETTABLE_EFLAG = 1 << 13;
-    // // DERIVED_EFLAG = 1 << 14;
-    // // *******************************************
-    // // ORDERED_EFLAG = 1 << 8;
-    // // UNIQUE_EFLAG = 1 << 9;
-    // // *******************************************
-    //
-    // String flagName = GenUtil.getFeatureUpperName(featureName) + "_EFLAG";
-    // int flagsMask = getEFlagMask(targetClass, flagName);
-    //
-    // field = getField(targetClass, "eFlags");
-    // int value = (Integer)getFiedValue(target, field);
-    // return new Boolean((value & flagsMask) != 0);
-    // }
-    // }
-    //
-    // if (field == null)
-    // {
-    // throw new ImplementationError("Field not found: " + fieldName);
-    // }
-    //
-    // return getFiedValue(target, field);
+    return instance.eGet(eFeature);
   }
 
   protected void setInstanceValue(InternalEObject instance, CDOFeatureImpl feature, Object value)
   {
+    // TODO Don't use Java reflection
     Class<?> instanceClass = instance.getClass();
     String featureName = feature.getName();
     String fieldName = featureName;// TODO safeName()

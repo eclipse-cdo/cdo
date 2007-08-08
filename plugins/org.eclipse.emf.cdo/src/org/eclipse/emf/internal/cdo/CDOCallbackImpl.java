@@ -11,13 +11,14 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.CDOCallback;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -55,7 +56,7 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
             switch (msg.getEventType())
             {
             case Notification.ADD:
-              notifyAdd((InternalEObject)msg.getNewValue());
+              notifyAdd(msg.getNewValue());
               break;
 
             case Notification.ADD_MANY:
@@ -63,7 +64,7 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
               break;
 
             case Notification.REMOVE:
-              notifyRemove((InternalEObject)msg.getOldValue());
+              notifyRemove(msg.getOldValue());
               break;
 
             case Notification.REMOVE_MANY:
@@ -88,9 +89,9 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
 
   private void notifyAddMany(Notification msg)
   {
-    EList<InternalEObject> newValues = (EList<InternalEObject>)msg.getNewValue();
-    EList<InternalEObject> oldValues = (EList<InternalEObject>)msg.getOldValue();
-    for (InternalEObject newValue : newValues)
+    List newValues = (List)msg.getNewValue();
+    List oldValues = (List)msg.getOldValue();
+    for (Object newValue : newValues)
     {
       if (!oldValues.contains(newValue))
       {
@@ -99,20 +100,23 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
     }
   }
 
-  private void notifyAdd(InternalEObject instance)
+  private void notifyAdd(Object instance)
   {
-    if (instance.eDeliver())
+    if (instance instanceof InternalEObject)
     {
-      InternalCDOObject object = FSMUtil.adapt(instance, view);
-      CDOStateMachine.INSTANCE.attach(object, cdoResource(), view);
+      if (((InternalEObject)instance).eDeliver())
+      {
+        InternalCDOObject object = FSMUtil.adapt(instance, view);
+        CDOStateMachine.INSTANCE.attach(object, cdoResource(), view);
+      }
     }
   }
 
   private void notifyRemoveMany(Notification msg)
   {
-    EList<InternalEObject> newValues = (EList<InternalEObject>)msg.getNewValue();
-    EList<InternalEObject> oldValues = (EList<InternalEObject>)msg.getOldValue();
-    for (InternalEObject oldValue : oldValues)
+    List newValues = (List)msg.getNewValue();
+    List oldValues = (List)msg.getOldValue();
+    for (Object oldValue : oldValues)
     {
       if (!newValues.contains(oldValue))
       {
@@ -121,12 +125,15 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
     }
   }
 
-  private void notifyRemove(InternalEObject instance)
+  private void notifyRemove(Object instance)
   {
-    if (instance.eDeliver())
+    if (instance instanceof InternalEObject)
     {
-      InternalCDOObject object = FSMUtil.adapt(instance, view);
-      CDOStateMachine.INSTANCE.detach(object, cdoResource(), view);
+      if (((InternalEObject)instance).eDeliver())
+      {
+        InternalCDOObject object = FSMUtil.adapt(instance, view);
+        CDOStateMachine.INSTANCE.detach(object, cdoResource(), view);
+      }
     }
   }
 }

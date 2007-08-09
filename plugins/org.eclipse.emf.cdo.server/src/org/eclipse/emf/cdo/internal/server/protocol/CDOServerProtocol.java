@@ -50,6 +50,9 @@ public class CDOServerProtocol extends SignalProtocol
     case CDOProtocolConstants.SIGNAL_OPEN_SESSION:
       return new OpenSessionIndication();
 
+    case CDOProtocolConstants.SIGNAL_VIEWS_CHANGED:
+      return new ViewsChangedIndication();
+
     case CDOProtocolConstants.SIGNAL_RESOURCE_ID:
       return new ResourceIDIndication();
 

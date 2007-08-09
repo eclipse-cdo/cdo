@@ -125,7 +125,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
         preCommit(dirtyObjects);
 
         IChannel channel = session.getChannel();
-        CommitTransactionResult result = new CommitTransactionRequest(channel, this).send();
+        CommitTransactionResult result = new CommitTransactionRequest(channel, this).send(100000L);
+        // TODO Change timeout semantics in Net4j
 
         postCommit(newResources, result);
         postCommit(newObjects, result);

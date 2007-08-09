@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -32,6 +33,7 @@ import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -50,6 +52,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
+import org.eclipse.emf.internal.cdo.protocol.ViewsChangedNotification;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.emf.internal.cdo.util.ProxyResolverURIResourceMap;
 
@@ -245,11 +248,25 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
   public void viewDetached(CDOViewImpl view)
   {
+    ResourceSet resourceSet = view.getResourceSet();
     synchronized (views)
     {
-      views.remove(view.getResourceSet());
-      fireEvent(new ViewsEvent(view, IContainerDelta.Kind.REMOVED));
+      if (views.remove(resourceSet) == null)
+      {
+        return;
+      }
     }
+
+    try
+    {
+      new ViewsChangedNotification(channel, view.getID(), CDOProtocolConstants.VIEW_REMOVED).send();
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
+    fireEvent(new ViewsEvent(view, IContainerDelta.Kind.REMOVED));
   }
 
   public CDOIDRange getTemporaryIDRange(long count)
@@ -474,10 +491,20 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
     synchronized (views)
     {
-      resourceSet.eAdapters().add(view);
       views.put(resourceSet, view);
-      fireEvent(new ViewsEvent(view, IContainerDelta.Kind.ADDED));
     }
+
+    try
+    {
+      new ViewsChangedNotification(channel, view.getID(), CDOProtocolConstants.VIEW_ADDED).send();
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
+    resourceSet.eAdapters().add(view);
+    fireEvent(new ViewsEvent(view, IContainerDelta.Kind.ADDED));
   }
 
   /**

@@ -1597,6 +1597,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
             }
             catch (Exception exception)
             {
+              OM.LOG.error(exception);
               resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
             }
             first = false;

@@ -133,7 +133,11 @@ public class CommitTransactionIndication extends CDOServerIndication
           CDOID oldID = oldRange.get(l);
           CDOID newID = newRange.get(l);
 
-          TRACER.format("Mapping ID: {0} --> {1}", oldID, newID);
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Mapping ID: {0} --> {1}", oldID, newID);
+          }
+
           idMappings.put(oldID, newID);
         }
       }

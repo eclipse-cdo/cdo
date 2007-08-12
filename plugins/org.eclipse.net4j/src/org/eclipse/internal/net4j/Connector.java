@@ -578,9 +578,9 @@ public abstract class Connector extends Lifecycle implements IConnector
     switch (getLocation())
     {
     case SERVER:
-      return new FactoryKey(ServerProtocolFactory.SERVER_PROTOCOL_GROUP, type);
+      return new FactoryKey(ServerProtocolFactory.PRODUCT_GROUP, type);
     case CLIENT:
-      return new FactoryKey(ClientProtocolFactory.CLIENT_PROTOCOL_GROUP, type);
+      return new FactoryKey(ClientProtocolFactory.PRODUCT_GROUP, type);
     default:
       throw new IllegalStateException();
     }

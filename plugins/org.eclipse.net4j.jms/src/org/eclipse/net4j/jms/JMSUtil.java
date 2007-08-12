@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.jms;
 
-import org.eclipse.net4j.ITransportContainer;
 import org.eclipse.net4j.internal.jms.protocol.JMSClientProtocolFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
@@ -22,7 +21,7 @@ import javax.naming.NamingException;
  */
 public final class JMSUtil
 {
-  private static ITransportContainer transportContainer;
+  private static IManagedContainer transportContainer;
 
   private JMSUtil()
   {
@@ -43,12 +42,12 @@ public final class JMSUtil
     return new JMSInitialContext(transportContainer);
   }
 
-  public static ITransportContainer getTransportContainer()
+  public static IManagedContainer getTransportContainer()
   {
     return transportContainer;
   }
 
-  public static void setTransportContainer(ITransportContainer transportContainer)
+  public static void setTransportContainer(IManagedContainer transportContainer)
   {
     JMSUtil.transportContainer = transportContainer;
   }

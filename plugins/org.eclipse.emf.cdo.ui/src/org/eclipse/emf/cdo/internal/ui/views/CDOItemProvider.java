@@ -30,10 +30,10 @@ import org.eclipse.emf.cdo.internal.ui.actions.OpenViewEditorAction;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 
 import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.ui.views.ContainerItemProvider;
-import org.eclipse.net4j.ui.views.IElementFilter;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
+import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;

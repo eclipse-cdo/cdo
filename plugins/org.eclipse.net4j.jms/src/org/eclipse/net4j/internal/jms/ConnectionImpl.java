@@ -12,7 +12,7 @@ package org.eclipse.net4j.internal.jms;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.ITransportContainer;
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.internal.jms.bundle.OM;
 import org.eclipse.net4j.internal.jms.protocol.JMSClientProtocol;
 import org.eclipse.net4j.internal.jms.protocol.JMSLogonRequest;
@@ -25,6 +25,7 @@ import org.eclipse.net4j.jms.JMSUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -60,7 +61,7 @@ public class ConnectionImpl extends Lifecycle implements Connection, IContainer<
 
   private long sendTimeout = 2500;
 
-  private ITransportContainer transportContainer;
+  private IManagedContainer transportContainer;
 
   private IChannel channel;
 
@@ -93,7 +94,7 @@ public class ConnectionImpl extends Lifecycle implements Connection, IContainer<
 
   private boolean stopped = true;
 
-  public ConnectionImpl(ITransportContainer transportContainer, String connectorType, String connectorDescription,
+  public ConnectionImpl(IManagedContainer transportContainer, String connectorType, String connectorDescription,
       String userName, String password) throws JMSException
   {
     this.transportContainer = transportContainer == null ? JMSUtil.getTransportContainer() : transportContainer;
@@ -107,7 +108,7 @@ public class ConnectionImpl extends Lifecycle implements Connection, IContainer<
     this.userName = userName;
     this.password = password;
 
-    IConnector connector = transportContainer.getConnector(connectorType, connectorDescription);
+    IConnector connector = Net4jUtil.getConnector(transportContainer, connectorType, connectorDescription);
     JMSClientProtocol protocol = new JMSClientProtocol();
     protocol.setConnection(this);
     channel = connector.openChannel(protocol);
@@ -169,7 +170,7 @@ public class ConnectionImpl extends Lifecycle implements Connection, IContainer<
     return session;
   }
 
-  public ITransportContainer getTransportContainer()
+  public IManagedContainer getTransportContainer()
   {
     return transportContainer;
   }

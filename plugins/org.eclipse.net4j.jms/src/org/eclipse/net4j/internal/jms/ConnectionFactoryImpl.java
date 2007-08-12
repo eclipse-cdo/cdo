@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jms;
 
-import org.eclipse.net4j.ITransportContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -62,7 +62,7 @@ public class ConnectionFactoryImpl implements ConnectionFactory, Remote, Seriali
 
   public Connection createConnection(String userName, String password) throws JMSException
   {
-    return new ConnectionImpl((ITransportContainer)transportContainer, connectorType, connectorDescription, userName,
+    return new ConnectionImpl((IManagedContainer)transportContainer, connectorType, connectorDescription, userName,
         password);
   }
 }

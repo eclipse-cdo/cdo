@@ -11,22 +11,29 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.internal.util.factory.Factory;
-import org.eclipse.net4j.tcp.ITCPConstants;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
  * @author Eike Stepper
  */
 public class TCPSelectorFactory extends Factory<TCPSelector>
 {
-  public static final String SELECTOR_GROUP = "org.eclipse.net4j.selectors";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.selectors";
+
+  public static final String TYPE = "tcp";
 
   public TCPSelectorFactory()
   {
-    super(SELECTOR_GROUP, ITCPConstants.TYPE);
+    super(PRODUCT_GROUP, TYPE);
   }
 
   public TCPSelector create(String description)
   {
     return new TCPSelector();
+  }
+
+  public static TCPSelector get(IManagedContainer container, String description)
+  {
+    return (TCPSelector)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 }

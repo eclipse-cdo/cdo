@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
-import org.eclipse.net4j.IBufferProvider;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,21 +31,6 @@ public final class BufferUtil
 
   private BufferUtil()
   {
-  }
-
-  public static IBufferProvider getBufferProvider(Object object)
-  {
-    if (object instanceof IBufferProvider)
-    {
-      return (IBufferProvider)object;
-    }
-
-    if (object == null)
-    {
-      throw new IllegalArgumentException("object == null"); //$NON-NLS-1$
-    }
-
-    throw new IllegalArgumentException("Unable to provide buffers: " + object); //$NON-NLS-1$
   }
 
   public static byte[] toUTF8(String str)

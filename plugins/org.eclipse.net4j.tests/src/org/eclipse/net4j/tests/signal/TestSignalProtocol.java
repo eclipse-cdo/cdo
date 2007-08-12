@@ -18,7 +18,7 @@ import org.eclipse.net4j.signal.SignalReactor;
  */
 public class TestSignalProtocol extends SignalProtocol
 {
-  public static final String TYPE = "signal.protocol";
+  public static final String PROTOCOL_NAME = "signal.protocol";
 
   public static final short SIGNAL1 = 1;
 
@@ -30,7 +30,7 @@ public class TestSignalProtocol extends SignalProtocol
 
   public String getType()
   {
-    return TYPE;
+    return PROTOCOL_NAME;
   }
 
   @Override

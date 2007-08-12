@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jvm;
 
-import org.eclipse.net4j.jvm.IJVMConstants;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.internal.net4j.AcceptorFactory;
@@ -20,9 +20,11 @@ import org.eclipse.internal.net4j.AcceptorFactory;
  */
 public class JVMAcceptorFactory extends AcceptorFactory<JVMAcceptor>
 {
+  public static final String TYPE = "jvm";
+
   public JVMAcceptorFactory()
   {
-    super(IJVMConstants.TYPE);
+    super(TYPE);
   }
 
   public JVMAcceptor create(String description) throws ProductCreationException
@@ -36,5 +38,10 @@ public class JVMAcceptorFactory extends AcceptorFactory<JVMAcceptor>
   public String getDescriptionFor(JVMAcceptor acceptor)
   {
     return acceptor.getName();
+  }
+
+  public static JVMAcceptor get(IManagedContainer container, String description)
+  {
+    return (JVMAcceptor)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 }

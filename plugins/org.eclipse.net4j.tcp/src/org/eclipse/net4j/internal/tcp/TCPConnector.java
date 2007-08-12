@@ -18,7 +18,6 @@ import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.tcp.ITCPConnector;
-import org.eclipse.net4j.tcp.ITCPConstants;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelectorListener;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -104,7 +103,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
 
   public String getURL()
   {
-    return ITCPConstants.TYPE + "://" + host + ":" + port;
+    return "tcp://" + host + ":" + port;
   }
 
   /**

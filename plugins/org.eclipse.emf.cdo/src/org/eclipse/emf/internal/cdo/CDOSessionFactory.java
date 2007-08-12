@@ -11,9 +11,9 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.internal.util.factory.Factory;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -26,11 +26,13 @@ import org.eclipse.core.runtime.Path;
  */
 public class CDOSessionFactory extends Factory<CDOSession>
 {
-  public static final String SESSION_GROUP = "org.eclipse.emf.cdo.sessions";
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.sessions";
+
+  public static final String TYPE = "cdo";
 
   public CDOSessionFactory()
   {
-    super(SESSION_GROUP, CDOProtocolConstants.PROTOCOL_NAME);
+    super(PRODUCT_GROUP, TYPE);
   }
 
   public CDOSession create(String description)
@@ -45,5 +47,10 @@ public class CDOSessionFactory extends Factory<CDOSession>
     URI uri = URI.createURI(description);
     IPath path = new Path(uri.path());
     return path.segment(0);
+  }
+
+  public static CDOSession get(IManagedContainer container, String description)
+  {
+    return (CDOSession)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 }

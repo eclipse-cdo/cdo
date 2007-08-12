@@ -6,26 +6,26 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            id="org.eclipse.net4j.ui"
+            id="org.eclipse.net4j"
             name="Net4j">
       </category>
       <view
-            category="org.eclipse.net4j.ui"
+            category="org.eclipse.net4j"
             class="org.eclipse.net4j.internal.ui.views.AcceptorsView"
             icon="icons/full/view16/acceptors.gif"
-            id="org.eclipse.net4j.ui.AcceptorsView"
-            name="Acceptors">
+            id="org.eclipse.net4j.AcceptorsView"
+            name="Net4j Acceptors">
       </view>
       <view
-            category="org.eclipse.net4j.ui"
+            category="org.eclipse.net4j"
             class="org.eclipse.net4j.internal.ui.views.ConnectorsView"
             icon="icons/full/view16/connectors.gif"
-            id="org.eclipse.net4j.ui.ConnectorsView"
-            name="Connectors">
+            id="org.eclipse.net4j.ConnectorsView"
+            name="Net4j Connectors">
       </view>
    </extension>
    
-   <extension
+   <!--extension
          point="org.eclipse.ui.newWizards">
       <category
             id="org.eclipse.net4j.ui"
@@ -49,6 +49,6 @@
             id="org.eclipse.net4j.ui.NewAcceptorWizard"
             name="New Acceptor">
       </wizard>
-   </extension>
+   </extension-->
 
 </plugin>

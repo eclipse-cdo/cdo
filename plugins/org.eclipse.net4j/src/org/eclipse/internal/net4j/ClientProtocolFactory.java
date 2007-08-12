@@ -18,10 +18,10 @@ import org.eclipse.net4j.internal.util.factory.Factory;
  */
 public abstract class ClientProtocolFactory<PRODUCT extends IProtocol> extends Factory<PRODUCT>
 {
-  public static final String CLIENT_PROTOCOL_GROUP = "org.eclipse.net4j.clientProtocols";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.clientProtocols";
 
   public ClientProtocolFactory(String type)
   {
-    super(CLIENT_PROTOCOL_GROUP, type);
+    super(PRODUCT_GROUP, type);
   }
 }

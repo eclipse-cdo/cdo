@@ -18,10 +18,10 @@ import org.eclipse.net4j.internal.util.factory.Factory;
  */
 public abstract class ConnectorFactory<PRODUCT extends IConnector> extends Factory<PRODUCT>
 {
-  public static final String CONNECTOR_GROUP = "org.eclipse.net4j.connectors";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.connectors";
 
   public ConnectorFactory(String type)
   {
-    super(CONNECTOR_GROUP, type);
+    super(PRODUCT_GROUP, type);
   }
 }

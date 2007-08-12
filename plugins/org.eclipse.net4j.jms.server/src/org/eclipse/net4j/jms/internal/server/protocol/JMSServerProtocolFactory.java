@@ -11,21 +11,29 @@
 package org.eclipse.net4j.jms.internal.server.protocol;
 
 import org.eclipse.net4j.jms.JMSProtocolConstants;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.internal.net4j.ServerProtocolFactory;
 
 /**
  * @author Eike Stepper
  */
-public final class JMSServerProtocolFactory extends ServerProtocolFactory
+public final class JMSServerProtocolFactory extends ServerProtocolFactory<JMSServerProtocol>
 {
+  public static final String TYPE = JMSProtocolConstants.PROTOCOL_NAME;
+
   public JMSServerProtocolFactory()
   {
-    super(JMSProtocolConstants.PROTOCOL_NAME);
+    super(TYPE);
   }
 
-  public Object create(String description)
+  public JMSServerProtocol create(String description)
   {
     return new JMSServerProtocol();
+  }
+
+  public static JMSServerProtocol get(IManagedContainer container, String description)
+  {
+    return (JMSServerProtocol)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 }

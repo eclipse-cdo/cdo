@@ -12,7 +12,7 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferPool;
-import org.eclipse.net4j.BufferUtil;
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -26,7 +26,7 @@ import java.util.Collection;
  */
 public class TestBufferPool
 {
-  private static IBufferPool bufferPool = BufferUtil.createBufferPool();
+  private static IBufferPool bufferPool = Net4jUtil.createBufferPool();
 
   private static Collection memory = new ArrayList();
 
@@ -48,7 +48,7 @@ public class TestBufferPool
       buffers[i] = null;
     }
 
-    while (BufferUtil.getPooledBuffers(bufferPool) > 0 && allocate())
+    while (Net4jUtil.getPooledBuffers(bufferPool) > 0 && allocate())
     {
       Thread.sleep(200);
       ReflectUtil.dump(bufferPool);
@@ -59,7 +59,7 @@ public class TestBufferPool
 
   private static void msg()
   {
-    System.out.println("pooledBuffers = " + BufferUtil.getPooledBuffers(bufferPool));
+    System.out.println("pooledBuffers = " + Net4jUtil.getPooledBuffers(bufferPool));
   }
 
   private static boolean allocate()

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IChannel;
@@ -39,17 +40,17 @@ public abstract class Protocol extends Lifecycle implements IProtocol, IBufferPr
 
   public short getBufferCapacity()
   {
-    return BufferUtil.getBufferProvider(channel).getBufferCapacity();
+    return Net4jUtil.getBufferProvider(channel).getBufferCapacity();
   }
 
   public IBuffer provideBuffer()
   {
-    return BufferUtil.getBufferProvider(channel).provideBuffer();
+    return Net4jUtil.getBufferProvider(channel).provideBuffer();
   }
 
   public void retainBuffer(IBuffer buffer)
   {
-    BufferUtil.getBufferProvider(channel).retainBuffer(buffer);
+    Net4jUtil.getBufferProvider(channel).retainBuffer(buffer);
   }
 
   @Override

@@ -13,13 +13,13 @@ package org.eclipse.emf.cdo.internal.ui.bundle;
 import org.eclipse.emf.cdo.internal.server.store.NOOPStore;
 import org.eclipse.emf.cdo.server.IRepositoryManager;
 
-import org.eclipse.net4j.ui.UIActivator;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.pref.OMPreference;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
+import org.eclipse.net4j.util.ui.UIActivator;
 
 /**
  * @author Eike Stepper

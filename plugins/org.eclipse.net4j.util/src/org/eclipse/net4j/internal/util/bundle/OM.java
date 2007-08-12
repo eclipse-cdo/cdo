@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.bundle;
 
+import org.eclipse.net4j.internal.util.container.PluginTransportContainer;
 import org.eclipse.net4j.internal.util.om.OSGiBundle;
 import org.eclipse.net4j.internal.util.om.log.EclipseLoggingBridge;
 import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
@@ -47,6 +48,11 @@ public abstract class OM
   public static final OMLogger LOG = BUNDLE.logger();
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OM, OM.class);
+
+  static void stop() throws Exception
+  {
+    PluginTransportContainer.dispose();
+  }
 
   /**
    * @author Eike Stepper

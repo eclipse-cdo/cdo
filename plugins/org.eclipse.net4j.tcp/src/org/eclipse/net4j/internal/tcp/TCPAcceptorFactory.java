@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.tcp.ITCPConstants;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.internal.net4j.AcceptorFactory;
 
@@ -20,17 +20,23 @@ import org.eclipse.internal.net4j.AcceptorFactory;
  */
 public class TCPAcceptorFactory extends AcceptorFactory<TCPAcceptor>
 {
-  public static final String SEPARATOR = ":"; //$NON-NLS-1$
+  public static final String TYPE = "tcp";
+
+  public static final String DEFAULT_ADDRESS = "0.0.0.0"; //$NON-NLS-1$
+
+  public static final int DEFAULT_PORT = 2036;
+
+  private static final String SEPARATOR = ":"; //$NON-NLS-1$
 
   public TCPAcceptorFactory()
   {
-    super(ITCPConstants.TYPE);
+    super(TYPE);
   }
 
   public TCPAcceptor create(String description)
   {
-    String address = ITCPConstants.DEFAULT_ADDRESS;
-    int port = ITCPConstants.DEFAULT_PORT;
+    String address = DEFAULT_ADDRESS;
+    int port = DEFAULT_PORT;
 
     if (!StringUtil.isEmpty(description))
     {
@@ -56,5 +62,10 @@ public class TCPAcceptorFactory extends AcceptorFactory<TCPAcceptor>
   public String getDescriptionFor(TCPAcceptor acceptor)
   {
     return acceptor.getAddress() + SEPARATOR + acceptor.getPort();
+  }
+
+  public static TCPAcceptor get(IManagedContainer container, String description)
+  {
+    return (TCPAcceptor)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 }

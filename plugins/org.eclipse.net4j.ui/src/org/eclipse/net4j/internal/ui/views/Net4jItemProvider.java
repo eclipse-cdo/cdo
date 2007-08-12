@@ -14,11 +14,11 @@ import org.eclipse.net4j.IAcceptor;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.internal.ui.SharedIcons;
-import org.eclipse.net4j.ui.actions.SafeAction;
-import org.eclipse.net4j.ui.views.ContainerItemProvider;
-import org.eclipse.net4j.ui.views.ContainerView;
-import org.eclipse.net4j.ui.views.IElementFilter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.ui.actions.SafeAction;
+import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
+import org.eclipse.net4j.util.ui.views.ContainerView;
+import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ITreeSelection;

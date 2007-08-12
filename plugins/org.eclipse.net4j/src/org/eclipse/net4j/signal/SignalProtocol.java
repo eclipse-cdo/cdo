@@ -16,7 +16,6 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
 
-import org.eclipse.internal.net4j.BufferUtil;
 import org.eclipse.internal.net4j.Protocol;
 import org.eclipse.internal.net4j.bundle.OM;
 
@@ -227,7 +226,7 @@ public abstract class SignalProtocol extends Protocol
     {
       super(getChannel(), new IBufferProvider()
       {
-        private IBufferProvider delegate = BufferUtil.getBufferProvider(getChannel());
+        private IBufferProvider delegate = org.eclipse.net4j.Net4jUtil.getBufferProvider(getChannel());
 
         private boolean firstBuffer = addSignalID;
 

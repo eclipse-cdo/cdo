@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.jms;
 
-import org.eclipse.net4j.ITransportContainer;
 import org.eclipse.net4j.internal.jms.ConnectionFactoryImpl;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import javax.naming.InitialContext;
 import javax.naming.Name;
@@ -24,26 +24,26 @@ import java.util.Hashtable;
  */
 public class JMSInitialContext extends InitialContext
 {
-  private ITransportContainer transportContainer;
+  private IManagedContainer transportContainer;
 
-  public JMSInitialContext(ITransportContainer transportContainer) throws NamingException
+  public JMSInitialContext(IManagedContainer transportContainer) throws NamingException
   {
     this.transportContainer = transportContainer;
   }
 
-  public JMSInitialContext(boolean lazy, ITransportContainer transportContainer) throws NamingException
+  public JMSInitialContext(boolean lazy, IManagedContainer transportContainer) throws NamingException
   {
     super(lazy);
     this.transportContainer = transportContainer;
   }
 
-  public JMSInitialContext(Hashtable<?, ?> environment, ITransportContainer transportContainer) throws NamingException
+  public JMSInitialContext(Hashtable<?, ?> environment, IManagedContainer transportContainer) throws NamingException
   {
     super(environment);
     this.transportContainer = transportContainer;
   }
 
-  public ITransportContainer getTransportContainer()
+  public IManagedContainer getTransportContainer()
   {
     return transportContainer;
   }

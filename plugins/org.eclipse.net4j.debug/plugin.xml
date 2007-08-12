@@ -5,20 +5,20 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            name="Net4j Debug"
-            id="org.eclipse.net4j.debug">
+            id="org.eclipse.debug.ui"
+            name="Debug">
       </category>
       <view
             name="Remote Traces"
-            icon="icons/sample.gif"
-            category="org.eclipse.net4j.debug"
+            icon="icons/text.gif"
+            category="org.eclipse.debug.ui"
             class="org.eclipse.net4j.internal.debug.views.RemoteTraceView"
             id="org.eclipse.net4j.debug.RemoteTraceView">
       </view>
       <view
             name="Introspector"
-            icon="icons/sample.gif"
-            category="org.eclipse.net4j.debug"
+            icon="icons/javabean.gif"
+            category="org.eclipse.debug.ui"
             class="org.eclipse.net4j.internal.debug.views.IntrospectorView"
             id="org.eclipse.net4j.debug.IntrospectorView">
       </view>

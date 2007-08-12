@@ -10,17 +10,17 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory;
 import org.eclipse.net4j.internal.tcp.TCPConnectorFactory;
-import org.eclipse.net4j.internal.tcp.TCPSelectorFactory;
-import org.eclipse.net4j.internal.tcp.TCPSelectorInjector;
-import org.eclipse.net4j.tcp.ITCPConstants;
+import org.eclipse.net4j.internal.util.container.ManagedContainer;
+import org.eclipse.net4j.tcp.TCPUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.internal.net4j.Acceptor;
 import org.eclipse.internal.net4j.Connector;
-import org.eclipse.internal.net4j.TransportContainer;
 
 /**
  * @author Eike Stepper
@@ -29,7 +29,7 @@ public abstract class AbstractTransportTest extends AbstractOMTest
 {
   protected static final String HOST = "localhost";
 
-  protected TransportContainer container;
+  protected IManagedContainer container;
 
   private Acceptor acceptor;
 
@@ -60,13 +60,11 @@ public abstract class AbstractTransportTest extends AbstractOMTest
     }
   }
 
-  protected TransportContainer createContainer()
+  protected IManagedContainer createContainer()
   {
-    TransportContainer container = new TransportContainer();
-    container.registerFactory(new TCPSelectorFactory());
-    container.registerFactory(new TCPAcceptorFactory());
-    container.registerFactory(new TCPConnectorFactory());
-    container.addPostProcessor(new TCPSelectorInjector());
+    IManagedContainer container = new ManagedContainer();
+    Net4jUtil.prepareContainer(container);
+    TCPUtil.prepareContainer(container);
     return container;
   }
 
@@ -74,7 +72,7 @@ public abstract class AbstractTransportTest extends AbstractOMTest
   {
     if (acceptor == null)
     {
-      acceptor = container.getAcceptor(ITCPConstants.TYPE, null);
+      acceptor = TCPAcceptorFactory.get(container, null);
     }
 
     return acceptor;
@@ -84,7 +82,7 @@ public abstract class AbstractTransportTest extends AbstractOMTest
   {
     if (connector == null)
     {
-      connector = container.getConnector(ITCPConstants.TYPE, HOST);
+      connector = TCPConnectorFactory.get(container, HOST);
     }
 
     return connector;

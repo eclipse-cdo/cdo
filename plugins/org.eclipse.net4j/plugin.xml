@@ -4,6 +4,26 @@
 <plugin>
 
    <extension-point id="factories" name="Factories" schema="schema/factories.exsd"/>
+
    <extension-point id="elementProcessors" name="Element Processors" schema="schema/elementProcessors.exsd"/>
+
+   <extension
+         point="org.eclipse.net4j.util.factories">
+      <factory
+            class="org.eclipse.internal.net4j.ExecutorServiceFactory"
+            productGroup="org.eclipse.net4j.executorServices"
+            type="default"/>
+      <factory
+            class="org.eclipse.internal.net4j.BufferProviderFactory"
+            productGroup="org.eclipse.net4j.bufferProviders"
+            type="default"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.net4j.util.elementProcessors">
+      <elementProcessor
+            class="org.eclipse.internal.net4j.Net4jTransportInjector">
+      </elementProcessor>
+   </extension>
 
 </plugin>

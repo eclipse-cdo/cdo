@@ -5,12 +5,12 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
-import org.eclipse.net4j.IPluginTransportContainer;
-import org.eclipse.net4j.ITransportContainer;
-import org.eclipse.net4j.ui.actions.SafeAction;
-import org.eclipse.net4j.ui.views.ContainerItemProvider;
-import org.eclipse.net4j.ui.views.ContainerView;
-import org.eclipse.net4j.ui.views.IElementFilter;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginTransportContainer;
+import org.eclipse.net4j.util.ui.actions.SafeAction;
+import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
+import org.eclipse.net4j.util.ui.views.ContainerView;
+import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.emf.internal.cdo.CDOSessionFactory;
 
@@ -28,7 +28,7 @@ public class CDOSessionsView extends ContainerView
   }
 
   @Override
-  protected ITransportContainer getContainer()
+  protected IManagedContainer getContainer()
   {
     return IPluginTransportContainer.INSTANCE;
   }
@@ -86,7 +86,7 @@ public class CDOSessionsView extends ContainerView
     @Override
     protected void doRun() throws Exception
     {
-      IPluginTransportContainer.INSTANCE.getElement(CDOSessionFactory.SESSION_GROUP,
+      IPluginTransportContainer.INSTANCE.getElement(CDOSessionFactory.PRODUCT_GROUP,
           CDOProtocolConstants.PROTOCOL_NAME, "tcp://127.0.0.1:" + port + "/repo1");
     }
   }

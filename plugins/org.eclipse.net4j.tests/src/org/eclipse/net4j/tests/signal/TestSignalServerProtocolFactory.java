@@ -9,9 +9,11 @@ import org.eclipse.internal.net4j.ServerProtocolFactory;
  */
 public class TestSignalServerProtocolFactory extends ServerProtocolFactory<TestSignalProtocol>
 {
+  public static final String TYPE = TestSignalProtocol.PROTOCOL_NAME;
+
   public TestSignalServerProtocolFactory()
   {
-    super(TestSignalProtocol.TYPE);
+    super(TYPE);
   }
 
   public TestSignalProtocol create(String description) throws ProductCreationException

@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.ui;
 
-import org.eclipse.net4j.ui.StructuredContentProvider;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
 import org.eclipse.internal.net4j.ConnectorFactory;
 
@@ -20,7 +20,7 @@ import org.eclipse.internal.net4j.ConnectorFactory;
  */
 public class ConnectorContentProvider extends StructuredContentProvider<IManagedContainer>
 {
-  public static final String PRODUCT_GROUP = ConnectorFactory.CONNECTOR_GROUP;
+  public static final String PRODUCT_GROUP = ConnectorFactory.PRODUCT_GROUP;
 
   public ConnectorContentProvider()
   {

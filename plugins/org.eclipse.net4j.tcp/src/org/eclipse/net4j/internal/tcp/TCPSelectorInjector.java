@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.tcp.ITCPConstants;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
@@ -19,6 +18,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
  */
 public class TCPSelectorInjector implements IElementProcessor
 {
+  public static final String TYPE = null;
+
   public TCPSelectorInjector()
   {
   }
@@ -48,6 +49,6 @@ public class TCPSelectorInjector implements IElementProcessor
 
   protected TCPSelector getSelector(IManagedContainer container)
   {
-    return (TCPSelector)container.getElement(TCPSelectorFactory.SELECTOR_GROUP, ITCPConstants.TYPE, null);
+    return TCPSelectorFactory.get(container, null);
   }
 }

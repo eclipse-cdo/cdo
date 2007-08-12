@@ -86,11 +86,6 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
       catch (Exception ex)
       {
         OM.LOG.error(ex);
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace(ex);
-        }
-
         return ex;
       }
       finally

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jvm;
 
-import org.eclipse.net4j.jvm.IJVMConstants;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.internal.net4j.ConnectorFactory;
@@ -20,9 +20,11 @@ import org.eclipse.internal.net4j.ConnectorFactory;
  */
 public class JVMConnectorFactory extends ConnectorFactory<JVMClientConnector>
 {
+  public static final String TYPE = "jvm";
+
   public JVMConnectorFactory(String type)
   {
-    super(IJVMConstants.TYPE);
+    super(TYPE);
   }
 
   public JVMClientConnector create(String description) throws ProductCreationException
@@ -36,5 +38,10 @@ public class JVMConnectorFactory extends ConnectorFactory<JVMClientConnector>
   public String getDescriptionFor(JVMClientConnector connector)
   {
     return connector.getName();
+  }
+
+  public static JVMClientConnector get(IManagedContainer container, String description)
+  {
+    return (JVMClientConnector)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 }

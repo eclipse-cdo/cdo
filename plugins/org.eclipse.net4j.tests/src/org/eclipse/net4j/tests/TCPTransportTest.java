@@ -12,16 +12,17 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.IAcceptorEvent;
 import org.eclipse.net4j.IBuffer;
+import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnectorChannelsEvent;
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.stream.ChannelInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
 import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
 import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-
-import org.eclipse.internal.net4j.TransportContainer;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -40,16 +41,17 @@ import java.util.concurrent.TimeUnit;
 public class TCPTransportTest extends AbstractTransportTest
 {
   @Override
-  protected TransportContainer createContainer()
+  protected IManagedContainer createContainer()
   {
-    TransportContainer container = super.createContainer();
+    IManagedContainer container = super.createContainer();
     container.registerFactory(new TestSignalServerProtocolFactory());
     return container;
   }
 
   protected IBuffer provideBuffer()
   {
-    return container.getBufferProvider().provideBuffer();
+    IBufferProvider bufferProvider = Net4jUtil.getBufferProvider(container);
+    return bufferProvider.provideBuffer();
   }
 
   public void testConnect() throws Exception
@@ -319,7 +321,8 @@ public class TCPTransportTest extends AbstractTransportTest
       {
         try
         {
-          ChannelOutputStream outputStream = new ChannelOutputStream(channel, container.getBufferProvider());
+          IBufferProvider bufferProvider = Net4jUtil.getBufferProvider(container);
+          ChannelOutputStream outputStream = new ChannelOutputStream(channel, bufferProvider);
           PrintStream printer = new PrintStream(outputStream);
           StringTokenizer tokenizer = HugeData.getTokenizer();
           while (tokenizer.hasMoreTokens())

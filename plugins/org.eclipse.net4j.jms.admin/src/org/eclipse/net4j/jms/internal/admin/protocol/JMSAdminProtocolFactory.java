@@ -11,21 +11,29 @@
 package org.eclipse.net4j.jms.internal.admin.protocol;
 
 import org.eclipse.net4j.jms.JMSAdminProtocolConstants;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.internal.net4j.ClientProtocolFactory;
 
 /**
  * @author Eike Stepper
  */
-public final class JMSAdminProtocolFactory extends ClientProtocolFactory
+public final class JMSAdminProtocolFactory extends ClientProtocolFactory<JMSAdminProtocol>
 {
+  public static final String TYPE = JMSAdminProtocolConstants.PROTOCOL_NAME;
+
   public JMSAdminProtocolFactory()
   {
-    super(JMSAdminProtocolConstants.PROTOCOL_NAME);
+    super(TYPE);
   }
 
-  public Object create(String description)
+  public JMSAdminProtocol create(String description)
   {
     return new JMSAdminProtocol();
+  }
+
+  public static JMSAdminProtocol get(IManagedContainer container, String description)
+  {
+    return (JMSAdminProtocol)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 }

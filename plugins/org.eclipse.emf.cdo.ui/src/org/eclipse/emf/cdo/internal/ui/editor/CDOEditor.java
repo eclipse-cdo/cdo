@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.net4j.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;

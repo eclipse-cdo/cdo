@@ -18,6 +18,7 @@
             productGroup="org.eclipse.net4j.selectors"
             type="tcp"/>
    </extension>
+   
    <extension
          point="org.eclipse.net4j.util.elementProcessors">
       <elementProcessor

@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.tcp.ITCPConstants;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.internal.net4j.ConnectorFactory;
@@ -24,11 +24,15 @@ import java.net.URL;
  */
 public class TCPConnectorFactory extends ConnectorFactory<TCPClientConnector>
 {
+  public static final String TYPE = "tcp";
+
+  public static final int DEFAULT_PORT = 2036;
+
   private static final String URL_SCHEME = "http://";
 
   public TCPConnectorFactory()
   {
-    super(ITCPConstants.TYPE);
+    super(TYPE);
   }
 
   public TCPClientConnector create(String description)
@@ -42,7 +46,7 @@ public class TCPConnectorFactory extends ConnectorFactory<TCPClientConnector>
       int port = url.getPort();
       if (port == -1)
       {
-        port = ITCPConstants.DEFAULT_PORT;
+        port = DEFAULT_PORT;
       }
 
       TCPClientConnector connector = new TCPClientConnector();
@@ -68,11 +72,16 @@ public class TCPConnectorFactory extends ConnectorFactory<TCPClientConnector>
     }
 
     int port = connector.getPort();
-    if (port != ITCPConstants.DEFAULT_PORT)
+    if (port != DEFAULT_PORT)
     {
       description = description + ":" + port;
     }
 
     return description;
+  }
+
+  public static TCPClientConnector get(IManagedContainer container, String description)
+  {
+    return (TCPClientConnector)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 }

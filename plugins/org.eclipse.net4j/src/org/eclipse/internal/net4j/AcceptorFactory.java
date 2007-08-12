@@ -18,10 +18,10 @@ import org.eclipse.net4j.internal.util.factory.Factory;
  */
 public abstract class AcceptorFactory<PRODUCT extends IAcceptor> extends Factory<PRODUCT>
 {
-  public static final String ACCEPTOR_GROUP = "org.eclipse.net4j.acceptors";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.acceptors";
 
   public AcceptorFactory(String type)
   {
-    super(ACCEPTOR_GROUP, type);
+    super(PRODUCT_GROUP, type);
   }
 }

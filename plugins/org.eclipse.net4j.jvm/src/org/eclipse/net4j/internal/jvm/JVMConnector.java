@@ -14,7 +14,6 @@ import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IProtocol;
-import org.eclipse.net4j.jvm.IJVMConstants;
 
 import org.eclipse.internal.net4j.Channel;
 import org.eclipse.internal.net4j.Connector;
@@ -58,7 +57,7 @@ public abstract class JVMConnector extends Connector
 
   public String getURL()
   {
-    return IJVMConstants.TYPE + "://" + name;
+    return "jvm://" + name;
   }
 
   @Override

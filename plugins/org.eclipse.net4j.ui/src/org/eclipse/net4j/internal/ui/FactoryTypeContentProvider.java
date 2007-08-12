@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.ui;
 
-import org.eclipse.net4j.ui.StructuredContentProvider;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
 /**
  * @author Eike Stepper

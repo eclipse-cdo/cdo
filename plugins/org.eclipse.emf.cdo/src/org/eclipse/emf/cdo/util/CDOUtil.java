@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -43,6 +44,7 @@ import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -153,6 +155,11 @@ public final class CDOUtil
     Registry registry = resourceSet.getResourceFactoryRegistry();
     Map<String, Object> map = registry.getProtocolToFactoryMap();
     map.put(CDOProtocolConstants.PROTOCOL_NAME, factory);
+  }
+
+  public static void prepareContainer(IManagedContainer container)
+  {
+    container.registerFactory(new CDOClientProtocolFactory());
   }
 
   public static String extractResourcePath(URI uri)

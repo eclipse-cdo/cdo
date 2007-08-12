@@ -49,6 +49,6 @@ public class ChannelInjector implements IElementProcessor
     String factoryType = uri.scheme();
 
     String connectorDescription = uri.authority();
-    return (IConnector)container.getElement(ConnectorFactory.CONNECTOR_GROUP, factoryType, connectorDescription);
+    return (IConnector)container.getElement(ConnectorFactory.PRODUCT_GROUP, factoryType, connectorDescription);
   }
 }

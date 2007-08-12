@@ -11,11 +11,11 @@
 package org.eclipse.net4j.internal.debug.bundle;
 
 import org.eclipse.net4j.internal.debug.RemoteTraceManager;
-import org.eclipse.net4j.ui.UIActivator;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
+import org.eclipse.net4j.util.ui.UIActivator;
 
 /**
  * @author Eike Stepper

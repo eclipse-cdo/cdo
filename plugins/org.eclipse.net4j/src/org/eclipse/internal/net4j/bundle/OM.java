@@ -43,11 +43,6 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  static void stop() throws Exception
-  {
-    PluginTransportContainer.dispose();
-  }
-
   /**
    * @author Eike Stepper
    */

@@ -202,17 +202,15 @@ public class CDOItemProvider extends ContainerItemProvider
     if (obj instanceof CDOView)
     {
       CDOView view = (CDOView)obj;
-      if (view.isAudit())
+      switch (view.getViewType())
       {
+      case TRANSACTION:
+        return SharedIcons.getImage(SharedIcons.OBJ_EDITOR);
+      case READONLY:
+        return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_READONLY);
+      case AUDIT:
         return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_HISTORICAL);
       }
-
-      if (view.isReadOnly())
-      {
-        return SharedIcons.getImage(SharedIcons.OBJ_EDITOR_READONLY);
-      }
-
-      return SharedIcons.getImage(SharedIcons.OBJ_EDITOR);
     }
 
     return super.getImage(obj);
@@ -230,7 +228,7 @@ public class CDOItemProvider extends ContainerItemProvider
     if (view instanceof CDOTransaction)
     {
       CDOTransaction transaction = (CDOTransaction)view;
-      return MessageFormat.format("{0}Transaction [{1}]", transaction.isDirty() ? "*" : "", transaction.getID());
+      return MessageFormat.format("{0}Transaction [{1}]", transaction.isDirty() ? "*" : "", transaction.getViewID());
     }
 
     if (view instanceof CDOAudit)
@@ -239,7 +237,7 @@ public class CDOItemProvider extends ContainerItemProvider
       return MessageFormat.format("Audit [{0,date} {0,time}]", audit.getTimeStamp());
     }
 
-    return MessageFormat.format("View [{0}]", view.getID());
+    return MessageFormat.format("View [{0}]", view.getViewID());
   }
 
   public static String getHistroyEntryLabel(CDOViewHistory.Entry entry)
@@ -283,7 +281,7 @@ public class CDOItemProvider extends ContainerItemProvider
   protected void fillView(IMenuManager manager, CDOView view)
   {
     manager.add(new LoadResourceAction(page, view));
-    if (view.isTransaction())
+    if (view.getViewType() == CDOView.Type.TRANSACTION)
     {
       manager.add(new CreateResourceAction(page, view));
     }

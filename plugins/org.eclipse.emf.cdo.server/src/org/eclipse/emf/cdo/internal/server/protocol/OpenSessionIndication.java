@@ -65,7 +65,8 @@ public class OpenSessionIndication extends IndicationWithResponse
   {
     try
     {
-      Repository repository = RepositoryManager.INSTANCE.getRepository(repositoryName);
+      RepositoryManager repositoryManager = RepositoryManager.INSTANCE;
+      Repository repository = repositoryManager.getRepository(repositoryName);
       SessionManager sessionManager = repository.getSessionManager();
 
       CDOServerProtocol serverProtocol = (CDOServerProtocol)getProtocol();

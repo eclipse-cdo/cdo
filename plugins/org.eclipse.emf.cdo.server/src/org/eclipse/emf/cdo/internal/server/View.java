@@ -21,10 +21,13 @@ public class View implements IView
 
   private int viewID;
 
-  public View(Session session, int viewID)
+  private Type viewType;
+
+  public View(Session session, int viewID, Type viewType)
   {
     this.session = session;
     this.viewID = viewID;
+    this.viewType = viewType;
   }
 
   public Session getSession()
@@ -35,5 +38,10 @@ public class View implements IView
   public int getViewID()
   {
     return viewID;
+  }
+
+  public Type getViewType()
+  {
+    return viewType;
   }
 }

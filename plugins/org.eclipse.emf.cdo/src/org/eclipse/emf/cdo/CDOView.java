@@ -26,19 +26,15 @@ public interface CDOView extends INotifier
 {
   public static final long UNSPECIFIED_DATE = CDORevision.UNSPECIFIED_DATE;
 
-  public int getID();
+  public int getViewID();
+
+  public Type getViewType();
 
   public CDOSession getSession();
 
   public ResourceSet getResourceSet();
 
   public boolean isDirty();
-
-  public boolean isTransaction();
-
-  public boolean isReadOnly();
-
-  public boolean isAudit();
 
   /**
    * @see ResourceSet#getResource(URI, boolean)
@@ -50,4 +46,12 @@ public interface CDOView extends INotifier
   public CDORevision getRevision(CDOID id);
 
   public void close();
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum Type
+  {
+    TRANSACTION, READONLY, AUDIT
+  }
 }

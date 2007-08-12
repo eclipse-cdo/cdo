@@ -259,7 +259,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
     try
     {
-      new ViewsChangedNotification(channel, view.getID(), CDOProtocolConstants.VIEW_REMOVED).send();
+      new ViewsChangedNotification(channel, view.getViewID(), CDOProtocolConstants.VIEW_CLOSED).send();
     }
     catch (Exception ex)
     {
@@ -494,17 +494,39 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
       views.put(resourceSet, view);
     }
 
+    resourceSet.eAdapters().add(view);
+    sendViewsNotification(view);
+    fireEvent(new ViewsEvent(view, IContainerDelta.Kind.ADDED));
+  }
+
+  private void sendViewsNotification(CDOViewImpl view)
+  {
     try
     {
-      new ViewsChangedNotification(channel, view.getID(), CDOProtocolConstants.VIEW_ADDED).send();
+      int id = view.getViewID();
+      byte kind = getKind(view);
+      new ViewsChangedNotification(channel, id, kind).send();
     }
     catch (Exception ex)
     {
       throw WrappedException.wrap(ex);
     }
+  }
 
-    resourceSet.eAdapters().add(view);
-    fireEvent(new ViewsEvent(view, IContainerDelta.Kind.ADDED));
+  private byte getKind(CDOViewImpl view)
+  {
+    CDOView.Type type = view.getViewType();
+    switch (type)
+    {
+    case TRANSACTION:
+      return CDOProtocolConstants.VIEW_TRANSACTION;
+    case READONLY:
+      return CDOProtocolConstants.VIEW_READONLY;
+    case AUDIT:
+      return CDOProtocolConstants.VIEW_AUDIT;
+    }
+
+    throw new ImplementationError("Invalid view type: " + type);
   }
 
   /**

@@ -1,7 +1,6 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory;
-import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 
 import org.eclipse.net4j.ui.actions.LongRunningAction;
 

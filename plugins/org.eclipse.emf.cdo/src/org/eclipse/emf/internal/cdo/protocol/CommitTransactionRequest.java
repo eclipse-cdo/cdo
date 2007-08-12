@@ -51,6 +51,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
+    out.writeInt(transaction.getViewID());
     writeNewPackages(out);
     writeNewResources(out);
     writeNewObjects(out);

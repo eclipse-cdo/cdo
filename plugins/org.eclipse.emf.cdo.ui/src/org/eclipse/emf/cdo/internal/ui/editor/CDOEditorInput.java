@@ -57,17 +57,17 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
 
   public ImageDescriptor getImageDescriptor()
   {
-    if (view.isAudit())
+    switch (view.getViewType())
     {
+    case TRANSACTION:
+      return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR);
+    case READONLY:
+      return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR_READONLY);
+    case AUDIT:
       return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR_HISTORICAL);
     }
 
-    if (view.isReadOnly())
-    {
-      return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR_READONLY);
-    }
-
-    return SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR);
+    return null;
   }
 
   public String getName()
@@ -103,10 +103,10 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
     builder.append(" [");
     builder.append(session.getSessionID());
     builder.append(":");
-    builder.append(view.getID());
+    builder.append(view.getViewID());
     builder.append("]");
 
-    if (view.isReadOnly())
+    if (view.getViewType() != CDOView.Type.TRANSACTION)
     {
       builder.append(" readonly");
     }

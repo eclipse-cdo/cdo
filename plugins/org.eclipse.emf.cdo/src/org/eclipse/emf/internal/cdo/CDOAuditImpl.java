@@ -30,15 +30,15 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
     this.timeStamp = timeStamp;
   }
 
+  @Override
+  public Type getViewType()
+  {
+    return Type.AUDIT;
+  }
+
   public long getTimeStamp()
   {
     return timeStamp;
-  }
-
-  @Override
-  public boolean isAudit()
-  {
-    return true;
   }
 
   @Override
@@ -51,6 +51,6 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOAudit({0})", getID());
+    return MessageFormat.format("CDOAudit({0})", getViewID());
   }
 }

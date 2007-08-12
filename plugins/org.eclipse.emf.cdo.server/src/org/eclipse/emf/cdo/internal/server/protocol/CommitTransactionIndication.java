@@ -63,7 +63,7 @@ public class CommitTransactionIndication extends CDOServerIndication
   protected void indicating(final ExtendedDataInputStream in) throws IOException
   {
     timeStamp = System.currentTimeMillis();
-
+    int viewID = in.readInt();
     transact(new Runnable()
     {
       public void run()

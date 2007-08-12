@@ -61,7 +61,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
-  private int id;
+  private int viewID;
 
   private CDOSessionImpl session;
 
@@ -77,13 +77,18 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public CDOViewImpl(int id, CDOSessionImpl session)
   {
-    this.id = id;
+    this.viewID = id;
     this.session = session;
   }
 
-  public int getID()
+  public int getViewID()
   {
-    return id;
+    return viewID;
+  }
+
+  public Type getViewType()
+  {
+    return Type.READONLY;
   }
 
   public ResourceSet getResourceSet()
@@ -102,21 +107,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   }
 
   public boolean isDirty()
-  {
-    return false;
-  }
-
-  public boolean isTransaction()
-  {
-    return false;
-  }
-
-  public boolean isReadOnly()
-  {
-    return true;
-  }
-
-  public boolean isAudit()
   {
     return false;
   }
@@ -529,7 +519,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOView({0})", id);
+    return MessageFormat.format("CDOView({0})", viewID);
   }
 
   public boolean isAdapterForType(Object type)
@@ -692,43 +682,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   protected void checkWritable()
   {
-    if (isReadOnly())
+    if (getViewType() != Type.TRANSACTION)
     {
       throw new IllegalStateException("CDO view is read only");
     }
   }
-
-  // public final class HistoryEntryImpl implements HistoryEntry, Comparable
-  // {
-  // private String resourcePath;
-  //
-  // private HistoryEntryImpl(String resourcePath)
-  // {
-  // this.resourcePath = resourcePath;
-  // }
-  //
-  // public CDOView getView()
-  // {
-  // return CDOViewImpl.this;
-  // }
-  //
-  // public String getResourcePath()
-  // {
-  // return resourcePath;
-  // }
-  //
-  // public int compareTo(Object o)
-  // {
-  // HistoryEntry that = (HistoryEntry)o;
-  // return resourcePath.compareTo(that.getResourcePath());
-  // }
-  //
-  // @Override
-  // public String toString()
-  // {
-  // return resourcePath;
-  // }
-  // }
 
   /**
    * @author Eike Stepper

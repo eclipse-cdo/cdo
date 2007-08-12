@@ -24,7 +24,7 @@ public interface IRepositoryManager
   public IRepository[] getRepositories();
 
   /**
-   * @return Never <code>null</code>
+   * @return Never <code>null</code>.
    */
   public IRepository getRepository(String name) throws RepositoryNotFoundException;
 

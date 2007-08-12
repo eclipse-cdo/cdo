@@ -22,9 +22,11 @@ import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionViewsEvent;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.IView.Type;
 
 import org.eclipse.net4j.internal.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.internal.util.event.Notifier;
+import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 
@@ -87,27 +89,36 @@ public class Session extends Notifier implements ISession, CDOIDProvider
 
   public void notifyViewsChanged(Session session, int viewID, byte kind)
   {
-    switch (kind)
-    {
-    case CDOProtocolConstants.VIEW_ADDED:
-    {
-      View view = new View(this, viewID);
-      views.put(viewID, view);
-      fireEvent(new ViewsEvent(view, IContainerDelta.Kind.ADDED));
-      break;
-    }
-
-    case CDOProtocolConstants.VIEW_REMOVED:
+    if (kind == CDOProtocolConstants.VIEW_CLOSED)
     {
       View view = views.remove(viewID);
       if (view != null)
       {
         fireEvent(new ViewsEvent(view, IContainerDelta.Kind.REMOVED));
       }
+    }
+    else
+    {
+      IView.Type viewType = getViewType(kind);
+      View view = new View(this, viewID, viewType);
+      views.put(viewID, view);
+      fireEvent(new ViewsEvent(view, IContainerDelta.Kind.ADDED));
+    }
+  }
 
-      break;
+  private Type getViewType(byte kind)
+  {
+    switch (kind)
+    {
+    case CDOProtocolConstants.VIEW_TRANSACTION:
+      return Type.TRANSACTION;
+    case CDOProtocolConstants.VIEW_READONLY:
+      return Type.READONLY;
+    case CDOProtocolConstants.VIEW_AUDIT:
+      return Type.AUDIT;
     }
-    }
+
+    throw new ImplementationError("Invalid kind: " + kind);
   }
 
   public void notifyInvalidation(long timeStamp, CDORevisionImpl[] dirtyObjects)

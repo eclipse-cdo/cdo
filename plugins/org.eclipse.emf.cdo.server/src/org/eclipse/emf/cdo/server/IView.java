@@ -18,4 +18,14 @@ public interface IView
   public ISession getSession();
 
   public int getViewID();
+
+  public Type getViewType();
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum Type
+  {
+    TRANSACTION, READONLY, AUDIT
+  }
 }

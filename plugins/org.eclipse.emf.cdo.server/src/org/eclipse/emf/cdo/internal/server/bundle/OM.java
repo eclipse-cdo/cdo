@@ -10,8 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.bundle;
 
-import org.eclipse.emf.cdo.internal.server.RepositoryManager;
+import org.eclipse.emf.cdo.server.IRepositoryManager;
 
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
@@ -45,12 +46,12 @@ public abstract class OM
 
   static void start() throws Exception
   {
-    RepositoryManager.INSTANCE.activate();
+    LifecycleUtil.activate(IRepositoryManager.INSTANCE);
   }
 
   static void stop() throws Exception
   {
-    RepositoryManager.INSTANCE.deactivate();
+    LifecycleUtil.deactivate(IRepositoryManager.INSTANCE);
   }
 
   /**

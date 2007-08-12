@@ -60,21 +60,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   }
 
   @Override
+  public Type getViewType()
+  {
+    return Type.TRANSACTION;
+  }
+
+  @Override
   public boolean isDirty()
   {
     return dirty;
-  }
-
-  @Override
-  public boolean isTransaction()
-  {
-    return true;
-  }
-
-  @Override
-  public boolean isReadOnly()
-  {
-    return false;
   }
 
   public List<CDOPackageImpl> getNewPackages()
@@ -185,7 +179,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOTransaction({0})", getID());
+    return MessageFormat.format("CDOTransaction({0})", getViewID());
   }
 
   public void registerNew(InternalCDOObject object)

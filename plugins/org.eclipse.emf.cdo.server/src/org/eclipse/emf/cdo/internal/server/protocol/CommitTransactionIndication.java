@@ -13,19 +13,31 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.PackageManager;
+import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
+import org.eclipse.emf.cdo.internal.server.StoreUtil;
+import org.eclipse.emf.cdo.internal.server.View;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
+import org.eclipse.emf.cdo.protocol.model.core.CDOCorePackage;
+import org.eclipse.emf.cdo.protocol.model.resource.CDOResourcePackage;
+import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.internal.util.transaction.Transaction;
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.io.IORuntimeException;
+import org.eclipse.net4j.util.transaction.ITransaction;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -54,50 +66,63 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   private long timeStamp;
 
+  private PackageManager sessionPackageManager;
+
+  private CDOPackageManager transactionPackageManager;
+
+  private View view;
+
   public CommitTransactionIndication()
   {
     super(CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION);
+    sessionPackageManager = getPackageManager();
+    transactionPackageManager = new TransactionPackageManager();
   }
 
   @Override
-  protected void indicating(final ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     timeStamp = System.currentTimeMillis();
     int viewID = in.readInt();
-    transact(new Runnable()
+
+    view = getSession().getView(viewID);
+    if (view == null || view.getViewType() != IView.Type.TRANSACTION)
     {
-      public void run()
-      {
-        try
-        {
-          addNewPackages(in);
-          newResources = readNewResources(in);
-          newObjects = readNewObjects(in);
-          dirtyObjects = readDirtyObjects(in);
-        }
-        catch (IOException ex)
-        {
-          throw new IORuntimeException(ex);
-        }
+      throw new IllegalStateException("Illegal view: " + view);
+    }
 
-        addRevisions(newResources);
-        addRevisions(newObjects);
-        addRevisions(dirtyObjects);
-      }
-    });
+    newPackages = readNewPackages(in);
+    newResources = readNewResources(in);
+    newObjects = readNewObjects(in);
+    dirtyObjects = readDirtyObjects(in);
 
+    IStore store = getStore();
+    IStoreWriter storeWriter = store.getWriter(view);
+
+    try
+    {
+      StoreUtil.setReader(storeWriter);
+      ITransaction<IStoreWriter> storeTransaction = new Transaction(storeWriter);
+      addPackages(storeTransaction, newPackages);
+      addRevisions(storeTransaction, newResources);
+      addRevisions(storeTransaction, newObjects);
+      addRevisions(storeTransaction, dirtyObjects);
+      storeTransaction.commit();
+    }
+    finally
+    {
+      storeWriter.release();
+      StoreUtil.setReader(null);
+    }
   }
 
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
     out.writeLong(timeStamp);
-    if (newPackages != null)
+    for (CDOPackageImpl newPackage : newPackages)
     {
-      for (CDOPackageImpl newPackage : newPackages)
-      {
-        CDOIDRangeImpl.write(out, newPackage.getMetaIDRange());
-      }
+      CDOIDRangeImpl.write(out, newPackage.getMetaIDRange());
     }
 
     writeIDMappings(out);
@@ -107,7 +132,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     }
   }
 
-  private void addNewPackages(ExtendedDataInputStream in) throws IOException
+  private CDOPackageImpl[] readNewPackages(ExtendedDataInputStream in) throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL.isEnabled())
@@ -115,17 +140,16 @@ public class CommitTransactionIndication extends CDOServerIndication
       PROTOCOL.format("Reading {0} new packages", size);
     }
 
-    if (size != 0)
+    Repository repository = getRepository();
+    CDOPackageImpl[] newPackages = new CDOPackageImpl[size];
+    for (int i = 0; i < size; i++)
     {
-      PackageManager packageManager = getPackageManager();
-      newPackages = new CDOPackageImpl[size];
-      for (int i = 0; i < size; i++)
+      newPackages[i] = new CDOPackageImpl(sessionPackageManager, in);
+      CDOIDRange oldRange = newPackages[i].getMetaIDRange();
+      if (oldRange != null && oldRange.isTemporary())
       {
-        newPackages[i] = new CDOPackageImpl(packageManager, in);
-        CDOIDRange oldRange = newPackages[i].getMetaIDRange();
-
-        packageManager.addPackage(newPackages[i]);
-        CDOIDRange newRange = newPackages[i].getMetaIDRange();
+        CDOIDRange newRange = repository.getMetaIDRange(oldRange.getCount());
+        newPackages[i].setMetaIDRange(newRange);
 
         long count = oldRange.getCount();
         for (long l = 0; l < count; l++)
@@ -142,6 +166,8 @@ public class CommitTransactionIndication extends CDOServerIndication
         }
       }
     }
+
+    return newPackages;
   }
 
   private CDORevisionImpl[] readNewResources(ExtendedDataInputStream in) throws IOException
@@ -179,25 +205,29 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   private CDORevisionImpl[] readRevisions(ExtendedDataInputStream in, int size) throws IOException
   {
-    CDOPackageManagerImpl packageManager = getRepository().getPackageManager();
     CDORevisionImpl[] revisions = new CDORevisionImpl[size];
     for (int i = 0; i < size; i++)
     {
-      revisions[i] = new CDORevisionImpl(packageManager, in);
+      revisions[i] = new CDORevisionImpl(in, transactionPackageManager);
       mapTemporaryID(revisions[i]);
     }
 
     return revisions;
   }
 
-  private void addRevisions(CDORevisionImpl[] revisions)
+  private void addPackages(ITransaction<IStoreWriter> storeTransaction, CDOPackageImpl[] newPackages)
+  {
+    sessionPackageManager.addPackages(storeTransaction, newPackages);
+  }
+
+  private void addRevisions(ITransaction<IStoreWriter> storeTransaction, CDORevisionImpl[] revisions)
   {
     RevisionManager revisionManager = getRevisionManager();
     for (CDORevisionImpl revision : revisions)
     {
       revision.setCreated(timeStamp);
       revision.adjustReferences(idMappings);
-      revisionManager.addRevision(revision);
+      revisionManager.addRevision(storeTransaction, revision);
     }
   }
 
@@ -231,5 +261,68 @@ public class CommitTransactionIndication extends CDOServerIndication
     }
 
     CDOIDImpl.write(out, CDOID.NULL);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class TransactionPackageManager implements CDOPackageManager
+  {
+    public TransactionPackageManager()
+    {
+    }
+
+    public CDOPackageImpl lookupPackage(String uri)
+    {
+      for (CDOPackageImpl cdoPackage : newPackages)
+      {
+        if (ObjectUtil.equals(cdoPackage.getPackageURI(), uri))
+        {
+          return cdoPackage;
+        }
+      }
+
+      return sessionPackageManager.lookupPackage(uri);
+    }
+
+    public CDOCorePackage getCDOCorePackage()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOResourcePackage getCDOResourcePackage()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public int getPackageCount()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOPackage[] getPackages()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOPackage[] getElements()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isEmpty()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void addListener(IListener listener)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void removeListener(IListener listener)
+    {
+      throw new UnsupportedOperationException();
+    }
   }
 }

@@ -13,13 +13,16 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
-import org.eclipse.emf.cdo.internal.server.store.Store;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.IStoreReader;
 
 import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.text.MessageFormat;
 import java.util.UUID;
@@ -37,7 +40,7 @@ public class Repository extends Container implements IRepository
 
   private String name;
 
-  private Store store;
+  private IStore store;
 
   private String uuid;
 
@@ -55,7 +58,7 @@ public class Repository extends Container implements IRepository
 
   private long nextMetaIDValue = INITIAL_META_ID_VALUE;
 
-  private ConcurrentMap<CDOID, CDOClassRefImpl> types = new ConcurrentHashMap();
+  private ConcurrentMap<CDOID, CDOClassRef> objectTypes = new ConcurrentHashMap();
 
   public Repository(String name)
   {
@@ -73,12 +76,12 @@ public class Repository extends Container implements IRepository
     return uuid;
   }
 
-  public Store getStore()
+  public IStore getStore()
   {
     return store;
   }
 
-  public void setStore(Store store)
+  public void setStore(IStore store)
   {
     this.store = store;
   }
@@ -130,31 +133,66 @@ public class Repository extends Container implements IRepository
     return id;
   }
 
-  public CDOClassRefImpl getObjectType(CDOID id)
+  public CDOClassRef getObjectType(IStoreReader storeReader, CDOID id)
   {
-    CDOClassRefImpl type = types.get(id);
+    CDOClassRef type = objectTypes.get(id);
     if (type == null)
     {
-      type = store.queryObjectType(id);
+      type = storeReader.readObjectType(id);
       if (type == null)
       {
         throw new ImplementationError("type == null");
       }
 
-      types.put(id, type);
+      objectTypes.put(id, type);
     }
 
     return type;
   }
 
-  public void setObjectType(CDOID id, CDOClassRefImpl type)
+  public void registerObjectType(CDOID id, CDOClassRefImpl type)
   {
-    types.putIfAbsent(id, type);
+    objectTypes.putIfAbsent(id, type);
   }
 
   @Override
   public String toString()
   {
     return MessageFormat.format("Repository[{0}, {1}]", name, uuid);
+  }
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    if (store == null)
+    {
+      throw new IllegalStateException("No store for repository " + name);
+    }
+
+    if (!LifecycleUtil.isActive(store))
+    {
+      throw new IllegalStateException("Inactive store for repository " + name);
+    }
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    packageManager.activate();
+    sessionManager.activate();
+    resourceManager.activate();
+    revisionManager.activate();
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    revisionManager.deactivate();
+    resourceManager.deactivate();
+    sessionManager.deactivate();
+    packageManager.deactivate();
+    super.doDeactivate();
   }
 }

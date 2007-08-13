@@ -26,4 +26,6 @@ public interface ISession extends IContainer<IView>
   public int getSessionID();
 
   public IView[] getViews();
+
+  public IView getView(int viewID);
 }

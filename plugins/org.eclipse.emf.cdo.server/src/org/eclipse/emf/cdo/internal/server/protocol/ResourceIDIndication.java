@@ -24,7 +24,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class ResourceIDIndication extends CDOServerIndication
+public class ResourceIDIndication extends CDOReadIndication
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, ResourceIDIndication.class);
 
@@ -36,7 +36,7 @@ public class ResourceIDIndication extends CDOServerIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void accessStore(ExtendedDataInputStream in) throws IOException
   {
     // TODO Optimize transfer of URIs/paths
     final String path = in.readString();
@@ -45,21 +45,7 @@ public class ResourceIDIndication extends CDOServerIndication
       PROTOCOL.format("Read path: {0}", path);
     }
 
-    try
-    {
-      transact(new Runnable()
-      {
-        public void run()
-        {
-          id = getResourceManager().getResourceID(path);
-        }
-      });
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-      id = CDOID.NULL;
-    }
+    id = getResourceManager().getResourceID(path);
   }
 
   @Override

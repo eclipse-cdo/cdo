@@ -16,11 +16,11 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.ConnectorException;
@@ -377,8 +377,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   public CDOClassImpl requestObjectType(CDOID id)
   {
-    CDOClassRef typeRef = null; // FIXME
-    CDOClassImpl type = packageManager.resolveClass(typeRef);
+    CDOClassRefImpl typeRef = null; // FIXME
+    CDOClassImpl type = typeRef.resolve(packageManager);
     registerObjectType(id, type);
     return type;
   }

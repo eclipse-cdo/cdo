@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.server.IView.Type;
@@ -109,6 +110,11 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     return views.values().toArray(new View[views.size()]);
   }
 
+  public View getView(int viewID)
+  {
+    return views.get(viewID);
+  }
+
   public void notifyViewsChanged(Session session, int viewID, byte kind)
   {
     if (kind == CDOProtocolConstants.VIEW_CLOSED)
@@ -169,8 +175,10 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
       return id;
     }
 
+    IStoreReader storeReader = StoreUtil.getReader();
+    CDOClassRef type = storeReader.readObjectType(id);
+
     knownObjects.add(id);
-    CDOClassRef type = sessionManager.getRepository().getObjectType(id);
     return CDOIDImpl.create(id.getValue(), type);
   }
 

@@ -15,6 +15,11 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.IRevisionManager;
+import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.IStoreWriter;
+
+import org.eclipse.net4j.util.transaction.ITransaction;
+import org.eclipse.net4j.util.transaction.ITransactionalOperation;
 
 /**
  * @author Eike Stepper
@@ -36,36 +41,59 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     return repository;
   }
 
-  @Override
-  public void addRevision(CDORevisionImpl revision)
+  public void addRevision(ITransaction<IStoreWriter> storeTransaction, CDORevisionImpl revision)
   {
-    repository.setObjectType(revision.getID(), revision.getCDOClass().createClassRef());
-    repository.getStore().addRevision(this, revision);
-    if (revision.isResource())
-    {
-      String path = (String)revision.getData().get(cdoPathFeature, -1);
-      repository.getResourceManager().registerResource(revision.getID(), path);
-    }
-  }
-
-  public void addRevisionToCache(CDORevisionImpl revision)
-  {
-    super.addRevision(revision);
+    storeTransaction.execute(new AddRevisionOperation(revision));
   }
 
   @Override
   protected CDORevisionImpl loadRevision(CDOID id)
   {
-    CDORevisionImpl revision = repository.getStore().loadRevision(id);
-    repository.setObjectType(revision.getID(), revision.getCDOClass().createClassRef());
+    IStoreReader storeReader = StoreUtil.getReader();
+    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevision(id);
+    repository.registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
     return revision;
   }
 
   @Override
   protected CDORevisionImpl loadRevision(CDOID id, long timeStamp)
   {
-    CDORevisionImpl revision = repository.getStore().loadHistoricalRevision(id, timeStamp);
-    repository.setObjectType(revision.getID(), revision.getCDOClass().createClassRef());
+    IStoreReader storeReader = StoreUtil.getReader();
+    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevision(id, timeStamp);
+    repository.registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
     return revision;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class AddRevisionOperation implements ITransactionalOperation<IStoreWriter>
+  {
+    private CDORevisionImpl revision;
+
+    private AddRevisionOperation(CDORevisionImpl revision)
+    {
+      this.revision = revision;
+    }
+
+    public void phase1(IStoreWriter storeWriter) throws Exception
+    {
+      storeWriter.writeRevision(revision);
+    }
+
+    public void phase2(IStoreWriter storeWriter)
+    {
+      repository.registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
+      addRevision(revision);
+      if (revision.isResource())
+      {
+        String path = (String)revision.getData().get(cdoPathFeature, -1);
+        repository.getResourceManager().registerResource(revision.getID(), path);
+      }
+    }
+
+    public void undoPhase1(IStoreWriter storeWriter)
+    {
+    }
   }
 }

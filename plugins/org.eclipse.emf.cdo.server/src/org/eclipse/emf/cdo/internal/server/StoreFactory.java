@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,16 +8,21 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db;
+package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.net4j.util.transaction.ITransaction;
+import org.eclipse.emf.cdo.server.IStore;
 
-import java.sql.Connection;
+import org.eclipse.net4j.internal.util.factory.Factory;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBTransaction extends ITransaction
+public abstract class StoreFactory<PRODUCT extends IStore> extends Factory<PRODUCT>
 {
-  public Connection getConnection();
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.stores";
+
+  public StoreFactory(String type)
+  {
+    super(PRODUCT_GROUP, type);
+  }
 }

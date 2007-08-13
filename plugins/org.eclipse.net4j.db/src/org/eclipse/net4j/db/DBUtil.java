@@ -11,13 +11,11 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.internal.db.DBSchema;
-import org.eclipse.net4j.internal.db.DBTransaction;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
 
 import javax.sql.DataSource;
 
-import java.sql.Connection;
 import java.util.Map;
 
 /**
@@ -59,29 +57,5 @@ public final class DBUtil
   public static IDBAdapter getDBAdapter(String adapterName)
   {
     return IDBAdapter.REGISTRY.get(adapterName);
-  }
-
-  public static IDBTransaction createTransaction(DataSource dataSource)
-  {
-    try
-    {
-      return createTransaction(dataSource.getConnection());
-    }
-    catch (Exception ex)
-    {
-      throw new DBException(ex);
-    }
-  }
-
-  public static IDBTransaction createTransaction(Connection connection)
-  {
-    try
-    {
-      return new DBTransaction(connection);
-    }
-    catch (Exception ex)
-    {
-      throw new DBException(ex);
-    }
   }
 }

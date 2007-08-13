@@ -75,6 +75,6 @@ public class LoadRevisionRequest extends CDOClientRequest<CDORevisionImpl>
   @Override
   protected CDORevisionImpl confirming(ExtendedDataInputStream in) throws IOException
   {
-    return new CDORevisionImpl(getSession().getPackageManager(), in);
+    return new CDORevisionImpl(in, getSession().getPackageManager());
   }
 }

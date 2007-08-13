@@ -21,18 +21,10 @@ public final class TX
   {
   }
 
-  public static <R> R execute(ITransactionalOperation<ITransaction, R> operation)
+  public static void execute(ITransactionalOperation<ITransaction> operation)
   {
     ITransaction transaction = get();
-
-    try
-    {
-      return transaction.execute(operation);
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
+    transaction.execute(operation);
   }
 
   public static void begin(ITransaction transaction)
@@ -44,11 +36,6 @@ public final class TX
     }
 
     tx.set(transaction);
-  }
-
-  public static void begin()
-  {
-    begin(TransactionUtil.createTransaction());
   }
 
   public static void commit()

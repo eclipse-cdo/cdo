@@ -8,20 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.transaction;
+package org.eclipse.emf.cdo.server;
+
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 
 /**
  * @author Eike Stepper
  */
-public interface ITransaction<CONTEXT>
+public interface IStoreWriter extends IStoreReader
 {
-  public boolean isActive();
+  public IView getView();
 
-  public CONTEXT getContext();
+  public void writePackage(CDOPackageImpl cdoPackage);
 
-  public void execute(ITransactionalOperation<CONTEXT> operation) throws TransactionException;
-
-  public void commit();
-
-  public void rollback();
+  public void writeRevision(CDORevisionImpl revision);
 }

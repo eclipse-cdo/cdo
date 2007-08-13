@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.PackageManager;
+import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.ResourceManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.Session;
@@ -19,8 +19,6 @@ import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.server.IStore;
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
-import org.eclipse.net4j.util.transaction.TX;
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 /**
  * @author Eike Stepper
@@ -79,21 +77,5 @@ public abstract class CDOServerIndication extends IndicationWithResponse
   protected CDOServerProtocol getProtocol()
   {
     return (CDOServerProtocol)super.getProtocol();
-  }
-
-  protected void transact(Runnable runnable) throws TransactionException
-  {
-    TX.begin();
-
-    try
-    {
-      runnable.run();
-      TX.commit();
-    }
-    catch (RuntimeException ex)
-    {
-      ex.printStackTrace();
-      TX.rollback();
-    }
   }
 }

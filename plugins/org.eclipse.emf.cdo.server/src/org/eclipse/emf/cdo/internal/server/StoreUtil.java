@@ -8,20 +8,34 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.transaction;
+package org.eclipse.emf.cdo.internal.server;
+
+import org.eclipse.emf.cdo.server.IStoreReader;
 
 /**
  * @author Eike Stepper
  */
-public interface ITransaction<CONTEXT>
+public final class StoreUtil
 {
-  public boolean isActive();
+  private static final ThreadLocal<IStoreReader> THREAD_LOCAL = new InheritableThreadLocal();
 
-  public CONTEXT getContext();
+  private StoreUtil()
+  {
+  }
 
-  public void execute(ITransactionalOperation<CONTEXT> operation) throws TransactionException;
+  public static void setReader(IStoreReader reader)
+  {
+    THREAD_LOCAL.set(reader);
+  }
 
-  public void commit();
+  public static IStoreReader getReader()
+  {
+    IStoreReader reader = THREAD_LOCAL.get();
+    if (reader == null)
+    {
+      throw new IllegalStateException("reader == null");
+    }
 
-  public void rollback();
+    return reader;
+  }
 }

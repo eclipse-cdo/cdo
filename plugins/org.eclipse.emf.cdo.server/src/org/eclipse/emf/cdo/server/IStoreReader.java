@@ -10,16 +10,25 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+
 /**
  * @author Eike Stepper
  */
-public interface IStore
+public interface IStoreReader extends IStoreAccessor
 {
-  public String getType();
+  public void readPackage(CDOPackageImpl cdoPackage);
 
-  public String getStoreID();
+  public CDOID readResourceID(String path);
 
-  public IStoreReader getReader();
+  public String readResourcePath(CDOID id);
 
-  public IStoreWriter getWriter(IView view);
+  public CDORevision readRevision(CDOID id);
+
+  public CDORevision readRevision(CDOID id, long timeStamp);
+
+  public CDOClassRef readObjectType(CDOID id);
 }

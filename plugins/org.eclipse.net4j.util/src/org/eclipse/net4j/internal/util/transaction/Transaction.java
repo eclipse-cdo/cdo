@@ -20,16 +20,28 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class Transaction implements ITransaction
+public class Transaction<CONTEXT> implements ITransaction<CONTEXT>
 {
   private List<ITransactionalOperation> operations = new ArrayList();
+
+  private CONTEXT context;
+
+  public Transaction(CONTEXT context)
+  {
+    this.context = context;
+  }
 
   public boolean isActive()
   {
     return operations != null;
   }
 
-  public <R> R execute(ITransactionalOperation<ITransaction, R> operation) throws TransactionException
+  public CONTEXT getContext()
+  {
+    return context;
+  }
+
+  public void execute(ITransactionalOperation<CONTEXT> operation) throws TransactionException
   {
     if (!isActive())
     {
@@ -38,8 +50,8 @@ public class Transaction implements ITransaction
 
     try
     {
+      operation.phase1(context);
       operations.add(operation);
-      return operation.prepare(this);
     }
     catch (TransactionException ex)
     {
@@ -53,33 +65,19 @@ public class Transaction implements ITransaction
     }
   }
 
-  public void commit() throws TransactionException
+  public void commit()
   {
     for (ITransactionalOperation operation : end())
     {
-      try
-      {
-        operation.onCommit(this);
-      }
-      catch (RuntimeException ex)
-      {
-        throw new TransactionException("Unexpected problem during commit", ex);
-      }
+      operation.phase2(context);
     }
   }
 
-  public void rollback() throws TransactionException
+  public void rollback()
   {
     for (ITransactionalOperation operation : end())
     {
-      try
-      {
-        operation.onRollback(this);
-      }
-      catch (RuntimeException ex)
-      {
-        throw new TransactionException("Unexpected problem during rollback", ex);
-      }
+      operation.undoPhase1(context);
     }
   }
 

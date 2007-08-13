@@ -34,5 +34,5 @@ public interface IRepository extends IContainer
 
   public IRevisionManager getRevisionManager();
 
-  public CDOClassRef getObjectType(CDOID id);
+  public CDOClassRef getObjectType(IStoreReader storeReader, CDOID id);
 }

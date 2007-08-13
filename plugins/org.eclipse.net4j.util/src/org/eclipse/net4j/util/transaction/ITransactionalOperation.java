@@ -13,11 +13,11 @@ package org.eclipse.net4j.util.transaction;
 /**
  * @author Eike Stepper
  */
-public interface ITransactionalOperation<T extends ITransaction, R>
+public interface ITransactionalOperation<CONTEXT>
 {
-  public R prepare(T transaction) throws Exception;
+  public void phase1(CONTEXT context) throws Exception;
 
-  public void onCommit(T transaction);
+  public void phase2(CONTEXT context);
 
-  public void onRollback(T transaction);
+  public void undoPhase1(CONTEXT context);
 }

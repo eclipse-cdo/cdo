@@ -26,7 +26,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadRevisionIndication extends CDOServerIndication
+public class LoadRevisionIndication extends CDOReadIndication
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionIndication.class);
 
@@ -40,7 +40,7 @@ public class LoadRevisionIndication extends CDOServerIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void accessStore(ExtendedDataInputStream in) throws IOException
   {
     id = CDOIDImpl.read(in);
     if (PROTOCOL.isEnabled())
@@ -62,16 +62,8 @@ public class LoadRevisionIndication extends CDOServerIndication
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    final CDORevisionImpl[] revision = new CDORevisionImpl[1];
-    transact(new Runnable()
-    {
-      public void run()
-      {
-        RevisionManager rm = getRevisionManager();
-        revision[0] = timeStamp != null ? rm.getRevision(id, timeStamp) : rm.getRevision(id);
-      }
-    });
-
-    revision[0].write(out, getSession());
+    RevisionManager rm = getRevisionManager();
+    CDORevisionImpl revision = timeStamp != null ? rm.getRevision(id, timeStamp) : rm.getRevision(id);
+    revision.write(out, getSession());
   }
 }

@@ -8,20 +8,32 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.transaction;
+package org.eclipse.emf.cdo.internal.server;
+
+import org.eclipse.emf.cdo.server.IStore;
 
 /**
  * @author Eike Stepper
  */
-public interface ITransaction<CONTEXT>
+public abstract class Store implements IStore
 {
-  public boolean isActive();
+  private String type;
 
-  public CONTEXT getContext();
+  private String storeID;
 
-  public void execute(ITransactionalOperation<CONTEXT> operation) throws TransactionException;
+  public Store(String type, String storeID)
+  {
+    this.type = type;
+    this.storeID = storeID;
+  }
 
-  public void commit();
+  public String getType()
+  {
+    return type;
+  }
 
-  public void rollback();
+  public String getStoreID()
+  {
+    return storeID;
+  }
 }

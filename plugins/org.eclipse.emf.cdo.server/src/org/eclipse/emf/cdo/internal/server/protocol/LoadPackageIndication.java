@@ -24,7 +24,7 @@ import java.io.IOException;
  * @author Eike Stepper
  */
 @SuppressWarnings("unused")
-public class LoadPackageIndication extends CDOServerIndication
+public class LoadPackageIndication extends CDOReadIndication
 {
   private CDOPackageImpl cdoPackage;
 
@@ -34,7 +34,7 @@ public class LoadPackageIndication extends CDOServerIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void accessStore(ExtendedDataInputStream in) throws IOException
   {
     String packageURI = in.readString();
     PackageManager packageManager = getPackageManager();

@@ -24,7 +24,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class ResourcePathIndication extends CDOServerIndication
+public class ResourcePathIndication extends CDOReadIndication
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, ResourcePathIndication.class);
 
@@ -36,7 +36,7 @@ public class ResourcePathIndication extends CDOServerIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void accessStore(ExtendedDataInputStream in) throws IOException
   {
     final CDOID id = CDOIDImpl.read(in);
     if (PROTOCOL.isEnabled())
@@ -44,13 +44,7 @@ public class ResourcePathIndication extends CDOServerIndication
       PROTOCOL.format("Read ID: {0}", id);
     }
 
-    transact(new Runnable()
-    {
-      public void run()
-      {
-        path = getResourceManager().getResourcePath(id);
-      }
-    });
+    path = getResourceManager().getResourcePath(id);
   }
 
   @Override

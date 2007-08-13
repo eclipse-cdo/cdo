@@ -329,7 +329,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       CDOIDTyped typed = (CDOIDTyped)id;
       CDOClassRef typeRef = typed.getType();
-      type = session.getPackageManager().resolveClass(typeRef);
+      type = (CDOClassImpl)typeRef.resolve(session.getPackageManager());
       session.registerObjectType(id, type);
       return type;
     }

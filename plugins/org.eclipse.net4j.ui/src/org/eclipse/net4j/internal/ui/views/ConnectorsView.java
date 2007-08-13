@@ -3,7 +3,7 @@ package org.eclipse.net4j.internal.ui.views;
 import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginTransportContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
@@ -19,7 +19,7 @@ public class ConnectorsView extends ContainerView
     @Override
     protected void doRun() throws Exception
     {
-      Net4jUtil.getConnector(IPluginTransportContainer.INSTANCE, "tcp", "127.0.0.1:2036");
+      Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", "127.0.0.1:2036");
     }
   };
 
@@ -30,7 +30,7 @@ public class ConnectorsView extends ContainerView
   @Override
   protected IManagedContainer getContainer()
   {
-    return IPluginTransportContainer.INSTANCE;
+    return IPluginContainer.INSTANCE;
   }
 
   @Override

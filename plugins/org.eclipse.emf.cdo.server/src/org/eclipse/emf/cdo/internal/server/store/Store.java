@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
+import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -91,7 +91,7 @@ public abstract class Store implements IStore
     return (String)TX.execute(createLoadResourcePathOperation(id));
   }
 
-  public void addPackage(RepositoryPackageManager packageManager, CDOPackageImpl cdoPackage)
+  public void addPackage(PackageManager packageManager, CDOPackageImpl cdoPackage)
   {
     if (TRACER.isEnabled())
     {
@@ -158,7 +158,7 @@ public abstract class Store implements IStore
 
   protected abstract LoadResourcePathOperation createLoadResourcePathOperation(CDOID id);
 
-  protected abstract AddPackageOperation createAddPackageOperation(RepositoryPackageManager packageManager,
+  protected abstract AddPackageOperation createAddPackageOperation(PackageManager packageManager,
       CDOPackageImpl cdoPackage);
 
   protected abstract LoadPackageOperation createLoadPackageOperation(CDOPackageImpl cdoPackage);

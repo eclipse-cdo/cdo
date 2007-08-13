@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
+import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.util.ImplementationError;
@@ -37,7 +37,7 @@ public class LoadPackageIndication extends CDOServerIndication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     String packageURI = in.readString();
-    RepositoryPackageManager packageManager = getPackageManager();
+    PackageManager packageManager = getPackageManager();
     cdoPackage = packageManager.lookupPackage(packageURI);
     if (cdoPackage == null)
     {

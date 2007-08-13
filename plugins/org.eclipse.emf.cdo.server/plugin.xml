@@ -6,9 +6,13 @@
    <extension
          point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocolFactory"
+            productGroup="org.eclipse.emf.cdo.server.repositories"
+            type="default"
+            class="org.eclipse.emf.cdo.internal.server.RepositoryFactory"/>
+      <factory
             productGroup="org.eclipse.net4j.serverProtocols"
-            type="cdo"/>
+            type="cdo"
+            class="org.eclipse.emf.cdo.internal.server.protocol.CDOPluginProtocolFactory"/>
    </extension>
 
 </plugin>

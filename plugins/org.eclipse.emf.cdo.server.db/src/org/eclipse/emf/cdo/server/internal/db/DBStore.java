@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
+import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.store.AddPackageOperation;
 import org.eclipse.emf.cdo.internal.server.store.AddRevisionOperation;
@@ -58,8 +58,7 @@ public class DBStore extends Store
   }
 
   @Override
-  protected AddPackageOperation createAddPackageOperation(RepositoryPackageManager packageManager,
-      CDOPackageImpl cdoPackage)
+  protected AddPackageOperation createAddPackageOperation(PackageManager packageManager, CDOPackageImpl cdoPackage)
   {
     return new AddPackageOperation(packageManager, cdoPackage)
     {

@@ -108,13 +108,36 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
               viewer.refresh(updateLabels);
             }
           }
-          catch (Exception ignore)
+          catch (RuntimeException ignore)
           {
           }
         }
       });
     }
-    catch (Exception ignore)
+    catch (RuntimeException ignore)
+    {
+    }
+  }
+
+  protected void updateLabels(final Object elements)
+  {
+    try
+    {
+      getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            viewer.update(elements, null);
+          }
+          catch (RuntimeException ignore)
+          {
+          }
+        }
+      });
+    }
+    catch (RuntimeException ignore)
     {
     }
   }
@@ -131,13 +154,13 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
           {
             viewer.reveal(element);
           }
-          catch (Exception ignore)
+          catch (RuntimeException ignore)
           {
           }
         }
       });
     }
-    catch (Exception ignore)
+    catch (RuntimeException ignore)
     {
     }
   }

@@ -13,17 +13,18 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.server.IPackageManager;
 
 import org.eclipse.net4j.util.ImplementationError;
 
 /**
  * @author Eike Stepper
  */
-public class RepositoryPackageManager extends CDOPackageManagerImpl
+public class PackageManager extends CDOPackageManagerImpl implements IPackageManager
 {
   private Repository repository;
 
-  public RepositoryPackageManager(Repository repository)
+  public PackageManager(Repository repository)
   {
     this.repository = repository;
   }

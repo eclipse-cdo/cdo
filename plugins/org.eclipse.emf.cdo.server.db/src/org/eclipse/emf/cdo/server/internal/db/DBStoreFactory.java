@@ -8,25 +8,32 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server;
+package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.server.RepositoryFactory;
-import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocolFactory;
+import org.eclipse.emf.cdo.internal.server.store.StoreFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 
 /**
  * @author Eike Stepper
  */
-public final class CDOServerUtil
+public class DBStoreFactory extends StoreFactory<DBStore>
 {
-  private CDOServerUtil()
+  public static final String TYPE = "db";
+
+  public DBStoreFactory()
   {
+    super(TYPE);
   }
 
-  public static void prepareContainer(IManagedContainer container, IRepositoryProvider repositoryProvider)
+  public DBStore create(String description) throws ProductCreationException
   {
-    container.registerFactory(new RepositoryFactory());
-    container.registerFactory(new CDOServerProtocolFactory(repositoryProvider));
+    return null;
+  }
+
+  public static DBStore get(IManagedContainer container, String description)
+  {
+    return (DBStore)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 }

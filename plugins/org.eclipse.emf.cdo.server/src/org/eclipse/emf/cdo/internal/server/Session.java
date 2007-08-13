@@ -20,16 +20,17 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.ISessionViewsEvent;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.server.IView.Type;
 
-import org.eclipse.net4j.internal.util.container.SingleDeltaContainerEvent;
-import org.eclipse.net4j.internal.util.event.Notifier;
+import org.eclipse.net4j.internal.util.container.Container;
+import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.container.IContainerDelta;
-import org.eclipse.net4j.util.container.IContainerDelta.Kind;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
+import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,7 +39,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class Session extends Notifier implements ISession, CDOIDProvider
+public class Session extends Container<IView> implements ISession, CDOIDProvider
 {
   private SessionManager sessionManager;
 
@@ -50,11 +51,31 @@ public class Session extends Notifier implements ISession, CDOIDProvider
 
   private Set<CDOID> knownObjects = new HashSet();
 
+  private IListener protocolListener = new LifecycleEventAdapter()
+  {
+    @Override
+    protected void onDeactivated(ILifecycle lifecycle)
+    {
+      deactivate();
+    }
+  };
+
   public Session(SessionManager sessionManager, CDOServerProtocol protocol, int sessionID)
+      throws SessionCreationException
   {
     this.sessionManager = sessionManager;
     this.protocol = protocol;
     this.sessionID = sessionID;
+
+    protocol.addListener(protocolListener);
+    try
+    {
+      activate();
+    }
+    catch (Exception ex)
+    {
+      throw new SessionCreationException(ex);
+    }
   }
 
   public SessionManager getSessionManager()
@@ -77,6 +98,7 @@ public class Session extends Notifier implements ISession, CDOIDProvider
     return getViews();
   }
 
+  @Override
   public boolean isEmpty()
   {
     return views.isEmpty();
@@ -94,7 +116,7 @@ public class Session extends Notifier implements ISession, CDOIDProvider
       View view = views.remove(viewID);
       if (view != null)
       {
-        fireEvent(new ViewsEvent(view, IContainerDelta.Kind.REMOVED));
+        fireElementRemovedEvent(view);
       }
     }
     else
@@ -102,7 +124,7 @@ public class Session extends Notifier implements ISession, CDOIDProvider
       IView.Type viewType = getViewType(kind);
       View view = new View(this, viewID, viewType);
       views.put(viewID, view);
-      fireEvent(new ViewsEvent(view, IContainerDelta.Kind.ADDED));
+      fireElementAddedEvent(view);
     }
   }
 
@@ -152,18 +174,17 @@ public class Session extends Notifier implements ISession, CDOIDProvider
     return CDOIDImpl.create(id.getValue(), type);
   }
 
-  private final class ViewsEvent extends SingleDeltaContainerEvent<IView> implements ISessionViewsEvent
+  @Override
+  public String toString()
   {
-    private static final long serialVersionUID = 1L;
+    return MessageFormat.format("Session[{0}, {1}]", sessionID, protocol.getChannel());
+  }
 
-    private ViewsEvent(IView view, Kind kind)
-    {
-      super(Session.this, view, kind);
-    }
-
-    public IView getView()
-    {
-      return getDeltaElement();
-    }
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    protocol.removeListener(protocolListener);
+    sessionManager.sessionClosed(this);
+    super.doDeactivate();
   }
 }

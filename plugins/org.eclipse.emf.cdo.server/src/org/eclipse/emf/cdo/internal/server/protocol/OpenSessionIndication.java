@@ -11,15 +11,15 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
+import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.internal.server.RepositoryManager;
-import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
 import org.eclipse.emf.cdo.server.SessionCreationException;
@@ -65,8 +65,7 @@ public class OpenSessionIndication extends IndicationWithResponse
   {
     try
     {
-      RepositoryManager repositoryManager = RepositoryManager.INSTANCE;
-      Repository repository = repositoryManager.getRepository(repositoryName);
+      Repository repository = getRepository();
       SessionManager sessionManager = repository.getSessionManager();
 
       CDOServerProtocol serverProtocol = (CDOServerProtocol)getProtocol();
@@ -98,6 +97,13 @@ public class OpenSessionIndication extends IndicationWithResponse
     }
   }
 
+  private Repository getRepository()
+  {
+    CDOServerProtocol protocol = (CDOServerProtocol)getProtocol();
+    IRepositoryProvider repositoryProvider = protocol.getRepositoryProvider();
+    return (Repository)repositoryProvider.getRepository(repositoryName);
+  }
+
   private void writeSessionID(ExtendedDataOutputStream out, ISession session) throws IOException
   {
     if (PROTOCOL.isEnabled())
@@ -118,8 +124,7 @@ public class OpenSessionIndication extends IndicationWithResponse
     out.writeString(repository.getUUID());
   }
 
-  private void writePackageURIs(ExtendedDataOutputStream out, RepositoryPackageManager packageManager)
-      throws IOException
+  private void writePackageURIs(ExtendedDataOutputStream out, PackageManager packageManager) throws IOException
   {
     CDOPackage[] packages = packageManager.getPackages();
     for (CDOPackage p : packages)

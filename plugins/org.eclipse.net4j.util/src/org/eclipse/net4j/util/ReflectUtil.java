@@ -284,7 +284,7 @@ public final class ReflectUtil
       return null;
     }
 
-    return getSimpleClassName(c.getName());
+    return c.getSimpleName();
   }
 
   public static String getSimpleClassName(String name)

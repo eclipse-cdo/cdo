@@ -1,7 +1,7 @@
 package org.eclipse.emf.cdo.internal.server.store;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
+import org.eclipse.emf.cdo.internal.server.PackageManager;
 
 import org.eclipse.net4j.util.transaction.ITransaction;
 import org.eclipse.net4j.util.transaction.ITransactionalOperation;
@@ -11,11 +11,11 @@ import org.eclipse.net4j.util.transaction.ITransactionalOperation;
  */
 public abstract class AddPackageOperation<T extends ITransaction> implements ITransactionalOperation<T, Object>
 {
-  private RepositoryPackageManager packageManager;
+  private PackageManager packageManager;
 
   private CDOPackageImpl cdoPackage;
 
-  public AddPackageOperation(RepositoryPackageManager packageManager, CDOPackageImpl cdoPackage)
+  public AddPackageOperation(PackageManager packageManager, CDOPackageImpl cdoPackage)
   {
     this.packageManager = packageManager;
     this.cdoPackage = cdoPackage;

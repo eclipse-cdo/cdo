@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
-import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOTransactionCommittedEvent;
 import org.eclipse.emf.cdo.CDOTransactionDirtyEvent;
 import org.eclipse.emf.cdo.CDOView;
@@ -19,6 +18,7 @@ import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 import org.eclipse.emf.cdo.protocol.CDOID;
 
 import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
@@ -52,10 +52,10 @@ public class CDOEventHandler
           sessionInvalidated(e.getDirtyOIDs());
         }
       }
-      else if (event instanceof CDOSessionViewsEvent)
+      else if (event instanceof IContainerEvent)
       {
-        CDOSessionViewsEvent e = (CDOSessionViewsEvent)event;
-        if (e.getView() == view && e.getDeltaKind() == IContainerDelta.Kind.REMOVED)
+        IContainerEvent e = (IContainerEvent)event;
+        if (e.getDeltaElement() == view && e.getDeltaKind() == IContainerDelta.Kind.REMOVED)
         {
           viewClosed();
         }

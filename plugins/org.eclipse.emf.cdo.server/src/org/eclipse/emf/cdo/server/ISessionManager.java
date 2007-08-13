@@ -12,13 +12,13 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 
+import org.eclipse.net4j.util.container.IContainer;
+
 /**
  * @author Eike Stepper
  */
-public interface ISessionManager
+public interface ISessionManager extends IRepositoryElement, IContainer<ISession>
 {
-  public IRepository getRepository();
-
   public ISession[] getSessions();
 
   /**

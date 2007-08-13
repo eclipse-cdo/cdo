@@ -3,7 +3,7 @@ package org.eclipse.net4j.internal.ui.views;
 import org.eclipse.net4j.IAcceptor;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginTransportContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
@@ -20,7 +20,7 @@ public class AcceptorsView extends ContainerView
     @Override
     protected void doRun() throws Exception
     {
-      Net4jUtil.getAcceptor(IPluginTransportContainer.INSTANCE, "tcp", "0.0.0.0:2036");
+      Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "tcp", "0.0.0.0:2036");
     }
   };
 
@@ -30,7 +30,7 @@ public class AcceptorsView extends ContainerView
     @Override
     protected void doRun() throws Exception
     {
-      Net4jUtil.getAcceptor(IPluginTransportContainer.INSTANCE, "tcp", "0.0.0.0:2037");
+      Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "tcp", "0.0.0.0:2037");
     }
   };
 
@@ -41,7 +41,7 @@ public class AcceptorsView extends ContainerView
   @Override
   protected IManagedContainer getContainer()
   {
-    return IPluginTransportContainer.INSTANCE;
+    return IPluginContainer.INSTANCE;
   }
 
   @Override

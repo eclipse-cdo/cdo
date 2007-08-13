@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.IResourceManager;
 
+import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class ResourceManager implements IResourceManager
+public class ResourceManager extends Lifecycle implements IResourceManager
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, SessionManager.class);
 

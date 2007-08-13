@@ -95,7 +95,7 @@ public final class NIOUtil
     if (!src.isFile() || !src.exists())
       throw new IllegalArgumentException("Source file '" + src.getAbsolutePath() + "' not found!");
     if (dst.exists()) if (dst.isDirectory()) // Directory? -> use source file
-                                              // name
+        // name
         dst = new File(dst, src.getName());
       else if (dst.isFile())
       {

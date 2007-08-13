@@ -12,12 +12,13 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
+
+import org.eclipse.net4j.util.container.IContainer;
 
 /**
  * @author Eike Stepper
  */
-public interface IRepository
+public interface IRepository extends IContainer
 {
   public String getName();
 
@@ -25,7 +26,7 @@ public interface IRepository
 
   public String getUUID();
 
-  public CDOPackageManager getPackageManager();
+  public IPackageManager getPackageManager();
 
   public ISessionManager getSessionManager();
 

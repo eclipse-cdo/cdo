@@ -23,6 +23,7 @@ import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
@@ -226,6 +227,9 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
   @Override
   protected void doDeactivate() throws Exception
   {
+    LifecycleUtil.deactivate(receiveHandler);
+    receiveHandler = null;
+
     connector.removeChannel(this);
     receiveSerializer = null;
     if (sendQueue != null)

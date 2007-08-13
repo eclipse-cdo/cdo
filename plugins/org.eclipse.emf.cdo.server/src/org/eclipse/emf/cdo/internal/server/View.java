@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.server.IView;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -43,5 +45,11 @@ public class View implements IView
   public Type getViewType()
   {
     return viewType;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("View({0}, {1})", viewID, viewType);
   }
 }

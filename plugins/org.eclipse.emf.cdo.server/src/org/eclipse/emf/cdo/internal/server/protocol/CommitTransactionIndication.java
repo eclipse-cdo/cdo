@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.server.RepositoryPackageManager;
+import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -117,7 +117,7 @@ public class CommitTransactionIndication extends CDOServerIndication
 
     if (size != 0)
     {
-      RepositoryPackageManager packageManager = getPackageManager();
+      PackageManager packageManager = getPackageManager();
       newPackages = new CDOPackageImpl[size];
       for (int i = 0; i < size; i++)
       {

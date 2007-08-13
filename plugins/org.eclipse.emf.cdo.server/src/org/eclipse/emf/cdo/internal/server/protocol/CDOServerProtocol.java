@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.server.IRepositoryProvider;
 
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
@@ -21,15 +22,23 @@ import org.eclipse.net4j.signal.SignalReactor;
  */
 public class CDOServerProtocol extends SignalProtocol
 {
+  private IRepositoryProvider repositoryProvider;
+
   private Session session;
 
-  public CDOServerProtocol()
+  public CDOServerProtocol(IRepositoryProvider repositoryProvider)
   {
+    this.repositoryProvider = repositoryProvider;
   }
 
   public String getType()
   {
     return CDOProtocolConstants.PROTOCOL_NAME;
+  }
+
+  public IRepositoryProvider getRepositoryProvider()
+  {
+    return repositoryProvider;
   }
 
   public Session getSession()

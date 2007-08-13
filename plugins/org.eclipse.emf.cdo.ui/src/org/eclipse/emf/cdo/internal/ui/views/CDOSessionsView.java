@@ -6,7 +6,7 @@ import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginTransportContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
@@ -30,7 +30,7 @@ public class CDOSessionsView extends ContainerView
   @Override
   protected IManagedContainer getContainer()
   {
-    return IPluginTransportContainer.INSTANCE;
+    return IPluginContainer.INSTANCE;
   }
 
   @Override
@@ -86,8 +86,8 @@ public class CDOSessionsView extends ContainerView
     @Override
     protected void doRun() throws Exception
     {
-      IPluginTransportContainer.INSTANCE.getElement(CDOSessionFactory.PRODUCT_GROUP,
-          CDOProtocolConstants.PROTOCOL_NAME, "tcp://127.0.0.1:" + port + "/repo1");
+      IPluginContainer.INSTANCE.getElement(CDOSessionFactory.PRODUCT_GROUP, CDOProtocolConstants.PROTOCOL_NAME,
+          "tcp://127.0.0.1:" + port + "/repo1");
     }
   }
 }

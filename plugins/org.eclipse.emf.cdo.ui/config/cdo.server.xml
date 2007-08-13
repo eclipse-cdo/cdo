@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repositoryManager>
+
+	<repository>
+		<name>repo1</name>
+		<store>
+			<type>db</type>
+			<instanceID>TEST0001</instanceID>
+			<dbAdapter>derby</dbAdapter>
+			<dataSource>
+				<driverClass>org.apache.derby.jdbc.EmbeddedDataSource</driverClass>
+				<databaseName>C:/temp/cdodb1</databaseName>
+				<createDatabase>create</createDatabase>
+			</dataSource>
+			<mappingStrategy>
+			
+			</mappingStrategy>
+		</store>
+	</repository>
+
+</repositoryManager>

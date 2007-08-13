@@ -13,9 +13,11 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 
+import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.util.HashMap;
@@ -24,7 +26,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class SessionManager implements ISessionManager
+public class SessionManager extends Container<ISession> implements ISessionManager
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, SessionManager.class);
 
@@ -52,6 +54,20 @@ public class SessionManager implements ISessionManager
     }
   }
 
+  public ISession[] getElements()
+  {
+    return getSessions();
+  }
+
+  @Override
+  public boolean isEmpty()
+  {
+    synchronized (sessions)
+    {
+      return sessions.isEmpty();
+    }
+  }
+
   public Session openSession(CDOServerProtocol protocol) throws SessionCreationException
   {
     int id = ++lastSessionID;
@@ -66,11 +82,13 @@ public class SessionManager implements ISessionManager
       sessions.put(id, session);
     }
 
+    fireElementAddedEvent(session);
     return session;
   }
 
   public void sessionClosed(Session session)
   {
+    fireElementRemovedEvent(session);
   }
 
   public void notifyInvalidation(long timeStamp, CDORevisionImpl[] dirtyObjects, Session excludedSession)

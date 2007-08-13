@@ -18,9 +18,10 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.server.IRepository;
 
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.util.ImplementationError;
 
+import java.text.MessageFormat;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -28,7 +29,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class Repository extends Lifecycle implements IRepository
+public class Repository extends Container implements IRepository
 {
   private static final long INITIAL_OID_VALUE = 2;
 
@@ -40,13 +41,15 @@ public class Repository extends Lifecycle implements IRepository
 
   private String uuid;
 
-  private RepositoryPackageManager packageManager;
+  private PackageManager packageManager = new PackageManager(this);
 
-  private SessionManager sessionManager;
+  private SessionManager sessionManager = new SessionManager(this);
 
-  private ResourceManager resourceManager;
+  private ResourceManager resourceManager = new ResourceManager(this);
 
-  private RevisionManager revisionManager;
+  private RevisionManager revisionManager = new RevisionManager(this);
+
+  private Object[] elements = { packageManager, sessionManager, resourceManager, revisionManager };
 
   private long nextOIDValue = INITIAL_OID_VALUE;
 
@@ -54,17 +57,10 @@ public class Repository extends Lifecycle implements IRepository
 
   private ConcurrentMap<CDOID, CDOClassRefImpl> types = new ConcurrentHashMap();
 
-  public Repository(String name, Store store)
+  public Repository(String name)
   {
     this.name = name;
-    this.store = store;
-    this.uuid = UUID.randomUUID().toString();
-    store.setRepository(this);
-
-    packageManager = new RepositoryPackageManager(this);
-    sessionManager = new SessionManager(this);
-    resourceManager = new ResourceManager(this);
-    revisionManager = new RevisionManager(this);
+    uuid = UUID.randomUUID().toString();
   }
 
   public String getName()
@@ -72,17 +68,22 @@ public class Repository extends Lifecycle implements IRepository
     return name;
   }
 
-  public Store getStore()
-  {
-    return store;
-  }
-
   public String getUUID()
   {
     return uuid;
   }
 
-  public RepositoryPackageManager getPackageManager()
+  public Store getStore()
+  {
+    return store;
+  }
+
+  public void setStore(Store store)
+  {
+    this.store = store;
+  }
+
+  public PackageManager getPackageManager()
   {
     return packageManager;
   }
@@ -100,6 +101,17 @@ public class Repository extends Lifecycle implements IRepository
   public RevisionManager getRevisionManager()
   {
     return revisionManager;
+  }
+
+  public Object[] getElements()
+  {
+    return elements;
+  }
+
+  @Override
+  public boolean isEmpty()
+  {
+    return false;
   }
 
   public CDOIDRange getMetaIDRange(long count)
@@ -138,5 +150,11 @@ public class Repository extends Lifecycle implements IRepository
   public void setObjectType(CDOID id, CDOClassRefImpl type)
   {
     types.putIfAbsent(id, type);
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("Repository[{0}, {1}]", name, uuid);
   }
 }

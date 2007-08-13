@@ -10,12 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.net4j.util.container.IContainerEvent;
-
 /**
  * @author Eike Stepper
  */
-public interface ISessionViewsEvent extends IContainerEvent<IView>
+public interface IRepositoryElement
 {
-  public IView getView();
+  public IRepository getRepository();
 }

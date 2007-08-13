@@ -13,6 +13,9 @@ package org.eclipse.net4j.internal.debug.views;
 import org.eclipse.net4j.internal.debug.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -54,7 +57,7 @@ import java.util.Stack;
 /**
  * @author Eike Stepper
  */
-public class IntrospectorView extends ViewPart implements ISelectionListener, IDoubleClickListener
+public class IntrospectorView extends ViewPart implements ISelectionListener, IDoubleClickListener, IListener
 {
   private static final Object[] NO_ELEMENTS = {};
 
@@ -247,8 +250,14 @@ public class IntrospectorView extends ViewPart implements ISelectionListener, ID
     }
   }
 
+  public void notifyEvent(IEvent event)
+  {
+    refreshViewer();
+  }
+
   private void setObject(Object object)
   {
+    EventUtil.removeListener(object, this);
     if (object != null)
     {
       if (!elements.isEmpty())
@@ -256,6 +265,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener, ID
         Object element = elements.peek();
         if (element != object)
         {
+          EventUtil.removeListener(element, this);
           elements.push(object);
         }
       }
@@ -273,6 +283,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener, ID
     }
     else
     {
+      EventUtil.addListener(object, this);
       String className = object.getClass().getName();
       classLabel.setText(className);
 

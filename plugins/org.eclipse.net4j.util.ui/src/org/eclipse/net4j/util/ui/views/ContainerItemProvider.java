@@ -12,6 +12,8 @@ package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.internal.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -257,7 +259,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
           Node node = addChild(getChildren(), element);
           if (node != null)
           {
-            refreshElement(container, false);
+            refreshElement(container, true);
             revealElement(element);
             elementAdded(element, container);
           }
@@ -274,10 +276,16 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
           {
             getChildren().remove(node);
             node.dispose();
-            refreshElement(container, false);
+            refreshElement(container, true);
             elementRemoved(element, container);
           }
         }
+      }
+
+      @Override
+      protected void notifyOtherEvent(IEvent event)
+      {
+        updateLabels(event.getSource());
       }
     };
 
@@ -343,7 +351,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
   /**
    * @author Eike Stepper
    */
-  public class LeafNode implements Node
+  public class LeafNode implements Node, IListener
   {
     private Node parent;
 
@@ -353,12 +361,14 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
     {
       this.parent = parent;
       this.element = element;
+      EventUtil.addListener(element, this);
     }
 
     public void dispose()
     {
-      parent = null;
+      EventUtil.removeListener(element, this);
       element = null;
+      parent = null;
     }
 
     public Node getParent()
@@ -374,6 +384,11 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
     public List<Node> getChildren()
     {
       return Collections.EMPTY_LIST;
+    }
+
+    public void notifyEvent(IEvent event)
+    {
+      updateLabels(event.getSource());
     }
 
     @Override

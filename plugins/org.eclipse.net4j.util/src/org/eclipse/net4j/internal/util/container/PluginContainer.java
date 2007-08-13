@@ -13,7 +13,7 @@ package org.eclipse.net4j.internal.util.container;
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.factory.PluginFactoryRegistry;
 import org.eclipse.net4j.util.container.IElementProcessor;
-import org.eclipse.net4j.util.container.IPluginTransportContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -23,11 +23,11 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class PluginTransportContainer extends ManagedContainer implements IPluginTransportContainer
+public class PluginContainer extends ManagedContainer implements IPluginContainer
 {
-  private static PluginTransportContainer instance;
+  private static PluginContainer instance;
 
-  private PluginTransportContainer()
+  private PluginContainer()
   {
   }
 
@@ -52,11 +52,11 @@ public class PluginTransportContainer extends ManagedContainer implements IPlugi
     }
   }
 
-  public static synchronized PluginTransportContainer getInstance()
+  public static synchronized PluginContainer getInstance()
   {
     if (instance == null)
     {
-      instance = new PluginTransportContainer();
+      instance = new PluginContainer();
 
       try
       {

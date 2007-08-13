@@ -1,6 +1,7 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.server.IRepositoryProvider;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 
@@ -9,18 +10,26 @@ import org.eclipse.internal.net4j.ServerProtocolFactory;
 /**
  * @author Eike Stepper
  */
-public final class CDOServerProtocolFactory extends ServerProtocolFactory<CDOServerProtocol>
+public class CDOServerProtocolFactory extends ServerProtocolFactory<CDOServerProtocol>
 {
   public static final String TYPE = CDOProtocolConstants.PROTOCOL_NAME;
 
-  public CDOServerProtocolFactory()
+  private IRepositoryProvider repositoryProvider;
+
+  public CDOServerProtocolFactory(IRepositoryProvider repositoryProvider)
   {
     super(TYPE);
+    this.repositoryProvider = repositoryProvider;
+  }
+
+  public IRepositoryProvider getRepositoryProvider()
+  {
+    return repositoryProvider;
   }
 
   public CDOServerProtocol create(String description)
   {
-    return new CDOServerProtocol();
+    return new CDOServerProtocol(repositoryProvider);
   }
 
   public static CDOServerProtocol get(IManagedContainer container, String description)

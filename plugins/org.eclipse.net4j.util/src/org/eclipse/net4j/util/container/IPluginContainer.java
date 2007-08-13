@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j.util.container;
 
-import org.eclipse.net4j.internal.util.container.PluginTransportContainer;
+import org.eclipse.net4j.internal.util.container.PluginContainer;
 
 /**
  * @author Eike Stepper
  * @since 0.8.0
  */
-public interface IPluginTransportContainer extends IManagedContainer
+public interface IPluginContainer extends IManagedContainer
 {
-  public static final IPluginTransportContainer INSTANCE = PluginTransportContainer.getInstance();
+  public static final IPluginContainer INSTANCE = PluginContainer.getInstance();
 }

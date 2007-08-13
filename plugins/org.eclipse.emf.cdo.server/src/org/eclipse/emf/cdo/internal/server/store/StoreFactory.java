@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004-2007 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,13 +8,21 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server;
+package org.eclipse.emf.cdo.internal.server.store;
 
-import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.server.IStore;
+
+import org.eclipse.net4j.internal.util.factory.Factory;
 
 /**
  * @author Eike Stepper
  */
-public interface IRevisionManager extends IRepositoryElement, CDORevisionResolver
+public abstract class StoreFactory<PRODUCT extends IStore> extends Factory<PRODUCT>
 {
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.stores";
+
+  public StoreFactory(String type)
+  {
+    super(PRODUCT_GROUP, type);
+  }
 }

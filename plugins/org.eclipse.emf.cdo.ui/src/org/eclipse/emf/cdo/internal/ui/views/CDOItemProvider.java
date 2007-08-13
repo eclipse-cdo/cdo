@@ -135,7 +135,7 @@ public class CDOItemProvider extends ContainerItemProvider
         return history.getEntries();
       }
 
-      return NO_CHILDREN;
+      return NO_ELEMENTS;
     }
 
     return super.getChildren(element);

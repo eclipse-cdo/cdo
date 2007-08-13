@@ -10,9 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.bundle;
 
-import org.eclipse.emf.cdo.server.IRepositoryManager;
-
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
@@ -43,16 +40,6 @@ public abstract class OM
   public static final OMTracer DEBUG_STORE = DEBUG.tracer("store"); //$NON-NLS-1$
 
   public static final OMLogger LOG = BUNDLE.logger();
-
-  static void start() throws Exception
-  {
-    LifecycleUtil.activate(IRepositoryManager.INSTANCE);
-  }
-
-  static void stop() throws Exception
-  {
-    LifecycleUtil.deactivate(IRepositoryManager.INSTANCE);
-  }
 
   /**
    * @author Eike Stepper

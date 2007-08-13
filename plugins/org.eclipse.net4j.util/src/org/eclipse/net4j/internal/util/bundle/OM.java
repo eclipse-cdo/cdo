@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.bundle;
 
-import org.eclipse.net4j.internal.util.container.PluginTransportContainer;
+import org.eclipse.net4j.internal.util.container.PluginContainer;
 import org.eclipse.net4j.internal.util.om.OSGiBundle;
 import org.eclipse.net4j.internal.util.om.log.EclipseLoggingBridge;
 import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
@@ -51,7 +51,7 @@ public abstract class OM
 
   static void stop() throws Exception
   {
-    PluginTransportContainer.dispose();
+    PluginContainer.dispose();
   }
 
   /**

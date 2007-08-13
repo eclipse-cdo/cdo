@@ -239,23 +239,20 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Object getElement(String productGroup, String factoryType, String description)
   {
-    synchronized (elementRegistry)
+    ElementKey key = new ElementKey(productGroup, factoryType, description);
+    Object element = elementRegistry.get(key);
+    if (element == null)
     {
-      ElementKey key = new ElementKey(productGroup, factoryType, description);
-      Object element = elementRegistry.get(key);
-      if (element == null)
-      {
-        element = createElement(productGroup, factoryType, description);
-        element = postProcessElement(productGroup, factoryType, description, element);
-        LifecycleUtil.activate(element);
-        EventUtil.addListener(element, elementListener);
-        key.setID(++maxElementID);
-        elementRegistry.put(key, element);
-        fireEvent(new SingleDeltaContainerEvent(this, element, IContainerDelta.Kind.ADDED));
-      }
-
-      return element;
+      element = createElement(productGroup, factoryType, description);
+      element = postProcessElement(productGroup, factoryType, description, element);
+      LifecycleUtil.activate(element);
+      EventUtil.addListener(element, elementListener);
+      key.setID(++maxElementID);
+      elementRegistry.put(key, element);
+      fireEvent(new SingleDeltaContainerEvent(this, element, IContainerDelta.Kind.ADDED));
     }
+
+    return element;
   }
 
   /**
@@ -264,21 +261,18 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
    */
   public Object putElement(String productGroup, String factoryType, String description, Object element)
   {
-    synchronized (elementRegistry)
+    ContainerEvent event = new ContainerEvent(this);
+    ElementKey key = new ElementKey(productGroup, factoryType, description);
+    key.setID(++maxElementID);
+    Object oldElement = elementRegistry.put(key, element);
+    if (oldElement != null)
     {
-      ContainerEvent event = new ContainerEvent(this);
-      ElementKey key = new ElementKey(productGroup, factoryType, description);
-      key.setID(++maxElementID);
-      Object oldElement = elementRegistry.put(key, element);
-      if (oldElement != null)
-      {
-        event.addDelta(oldElement, IContainerDelta.Kind.REMOVED);
-      }
-
-      event.addDelta(element, IContainerDelta.Kind.ADDED);
-      fireEvent(event);
-      return oldElement;
+      event.addDelta(oldElement, IContainerDelta.Kind.REMOVED);
     }
+
+    event.addDelta(element, IContainerDelta.Kind.ADDED);
+    fireEvent(event);
+    return oldElement;
   }
 
   public Object removeElement(String productGroup, String factoryType, String description)
@@ -289,65 +283,56 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public void clearElements()
   {
-    synchronized (elementRegistry)
+    if (!elementRegistry.isEmpty())
     {
-      if (!elementRegistry.isEmpty())
+      ContainerEvent event = new ContainerEvent(this);
+      for (Object element : elementRegistry.values())
       {
-        ContainerEvent event = new ContainerEvent(this);
-        for (Object element : elementRegistry.values())
-        {
-          event.addDelta(element, IContainerDelta.Kind.REMOVED);
-        }
-
-        elementRegistry.clear();
-        fireEvent(event);
+        event.addDelta(element, IContainerDelta.Kind.REMOVED);
       }
+
+      elementRegistry.clear();
+      fireEvent(event);
     }
   }
 
   public void loadElements(InputStream stream) throws IOException
   {
-    synchronized (elementRegistry)
+    clearElements();
+    ObjectInputStream ois = new ObjectInputStream(stream);
+    int size = ois.readInt();
+    for (int i = 0; i < size; i++)
     {
-      clearElements();
-      ObjectInputStream ois = new ObjectInputStream(stream);
-      int size = ois.readInt();
-      for (int i = 0; i < size; i++)
+      try
       {
-        try
-        {
-          ElementKey key = (ElementKey)ois.readObject();
-          Object element = getElement(key.getProductGroup(), key.getFactoryType(), key.getDescription());
+        ElementKey key = (ElementKey)ois.readObject();
+        Object element = getElement(key.getProductGroup(), key.getFactoryType(), key.getDescription());
 
-          boolean active = ois.readBoolean();
-          if (active)
-          {
-            LifecycleUtil.activate(element);
-          }
-        }
-        catch (ClassNotFoundException cannotHappen)
+        boolean active = ois.readBoolean();
+        if (active)
         {
+          LifecycleUtil.activate(element);
         }
       }
-
-      initMaxElementID();
+      catch (ClassNotFoundException cannotHappen)
+      {
+      }
     }
+
+    initMaxElementID();
   }
 
   public void saveElements(OutputStream stream) throws IOException
   {
-    synchronized (elementRegistry)
-    {
-      ObjectOutputStream oos = new ObjectOutputStream(stream);
-      List<Entry<ElementKey, Object>> entries = new ArrayList(elementRegistry.entrySet());
-      Collections.sort(entries, new EntryComparator());
+    ObjectOutputStream oos = new ObjectOutputStream(stream);
+    List<Entry<ElementKey, Object>> entries = new ArrayList(elementRegistry.entrySet());
+    Collections.sort(entries, new EntryComparator());
 
-      oos.writeInt(entries.size());
-      for (Entry<ElementKey, Object> entry : entries)
-      {
-        oos.writeObject(entry.getKey());
-        oos.writeBoolean(LifecycleUtil.isActive(entry.getValue()));
-      }
+    oos.writeInt(entries.size());
+    for (Entry<ElementKey, Object> entry : entries)
+    {
+      oos.writeObject(entry.getKey());
+      oos.writeBoolean(LifecycleUtil.isActive(entry.getValue()));
     }
   }
 
@@ -418,16 +403,13 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   protected void initMaxElementID()
   {
-    synchronized (elementRegistry)
+    maxElementID = 0L;
+    for (ElementKey key : elementRegistry.keySet())
     {
-      maxElementID = 0L;
-      for (ElementKey key : elementRegistry.keySet())
+      long id = key.getID();
+      if (maxElementID < id)
       {
-        long id = key.getID();
-        if (maxElementID < id)
-        {
-          maxElementID = id;
-        }
+        maxElementID = id;
       }
     }
   }

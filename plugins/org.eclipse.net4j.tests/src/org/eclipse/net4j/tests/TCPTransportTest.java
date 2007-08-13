@@ -10,16 +10,16 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.IAcceptorEvent;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IConnectorChannelsEvent;
+import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.stream.ChannelInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
 import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
 import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -159,19 +159,19 @@ public class TCPTransportTest extends AbstractTransportTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof IAcceptorEvent)
+        if (event instanceof IContainerEvent)
         {
-          IAcceptorEvent e = (IAcceptorEvent)event;
-          e.getConnector().addListener(new IListener()
+          IContainerEvent<IConnector> e = (IContainerEvent)event;
+          e.getDeltaElement().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
             {
-              if (event instanceof IConnectorChannelsEvent)
+              if (event instanceof IContainerEvent)
               {
-                IConnectorChannelsEvent e = (IConnectorChannelsEvent)event;
+                IContainerEvent<IChannel> e = (IContainerEvent)event;
                 if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
                 {
-                  inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
+                  inputStream[0] = new ChannelInputStream(e.getDeltaElement(), 2000);
                   counter.countDown();
                 }
               }
@@ -222,19 +222,19 @@ public class TCPTransportTest extends AbstractTransportTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof IAcceptorEvent)
+        if (event instanceof IContainerEvent)
         {
-          IAcceptorEvent e = (IAcceptorEvent)event;
-          e.getConnector().addListener(new IListener()
+          IContainerEvent<IConnector> e = (IContainerEvent)event;
+          e.getDeltaElement().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
             {
-              if (event instanceof IConnectorChannelsEvent)
+              if (event instanceof IContainerEvent)
               {
-                IConnectorChannelsEvent e = (IConnectorChannelsEvent)event;
+                IContainerEvent<IChannel> e = (IContainerEvent)event;
                 if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
                 {
-                  inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
+                  inputStream[0] = new ChannelInputStream(e.getDeltaElement(), 2000);
                   counter.countDown();
                 }
               }
@@ -288,19 +288,19 @@ public class TCPTransportTest extends AbstractTransportTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof IAcceptorEvent)
+        if (event instanceof IContainerEvent)
         {
-          IAcceptorEvent e = (IAcceptorEvent)event;
-          e.getConnector().addListener(new IListener()
+          IContainerEvent<IConnector> e = (IContainerEvent)event;
+          e.getDeltaElement().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
             {
-              if (event instanceof IConnectorChannelsEvent)
+              if (event instanceof IContainerEvent)
               {
-                IConnectorChannelsEvent e = (IConnectorChannelsEvent)event;
+                IContainerEvent<IChannel> e = (IContainerEvent)event;
                 if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
                 {
-                  inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
+                  inputStream[0] = new ChannelInputStream(e.getDeltaElement(), 2000);
                   counter.countDown();
                 }
               }
@@ -370,19 +370,19 @@ public class TCPTransportTest extends AbstractTransportTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof IAcceptorEvent)
+        if (event instanceof IContainerEvent)
         {
-          IAcceptorEvent e = (IAcceptorEvent)event;
-          e.getConnector().addListener(new IListener()
+          IContainerEvent<IConnector> e = (IContainerEvent)event;
+          e.getDeltaElement().addListener(new IListener()
           {
             public void notifyEvent(IEvent event)
             {
-              if (event instanceof IConnectorChannelsEvent)
+              if (event instanceof IContainerEvent)
               {
-                IConnectorChannelsEvent e = (IConnectorChannelsEvent)event;
+                IContainerEvent<IChannel> e = (IContainerEvent)event;
                 if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
                 {
-                  inputStream[0] = new ChannelInputStream(e.getChannel(), 2000);
+                  inputStream[0] = new ChannelInputStream(e.getDeltaElement(), 2000);
                   counter.countDown();
                 }
               }

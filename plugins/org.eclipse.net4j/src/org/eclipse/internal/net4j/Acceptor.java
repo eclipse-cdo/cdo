@@ -11,15 +11,12 @@
 package org.eclipse.internal.net4j;
 
 import org.eclipse.net4j.IAcceptor;
-import org.eclipse.net4j.IAcceptorEvent;
 import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.internal.util.container.LifecycleEventConverter;
-import org.eclipse.net4j.internal.util.container.SingleDeltaContainerEvent;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IListener;
@@ -37,7 +34,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public abstract class Acceptor extends Lifecycle implements IAcceptor
+public abstract class Acceptor extends Container<IConnector> implements IAcceptor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_ACCEPTOR, Acceptor.class);
 
@@ -56,7 +53,7 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor
     @Override
     protected IContainerEvent createContainerEvent(IContainer container, Object element, Kind kind)
     {
-      return new AcceptorEvent((IAcceptor)container, (IConnector)element, kind);
+      return newContainerEvent((IConnector)element, kind);
     }
   };
 
@@ -115,6 +112,7 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor
     }
   }
 
+  @Override
   public boolean isEmpty()
   {
     return acceptedConnectors.isEmpty();
@@ -145,7 +143,7 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor
         TRACER.trace("Added connector " + connector); //$NON-NLS-1$
       }
 
-      fireEvent(new AcceptorEvent(this, connector, IContainerDelta.Kind.ADDED));
+      fireElementAddedEvent(connector);
     }
     catch (Exception ex)
     {
@@ -166,7 +164,7 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor
       TRACER.trace("Removed connector " + connector); //$NON-NLS-1$
     }
 
-    fireEvent(new AcceptorEvent(this, connector, IContainerDelta.Kind.REMOVED));
+    fireElementRemovedEvent(connector);
   }
 
   @Override
@@ -200,28 +198,5 @@ public abstract class Acceptor extends Lifecycle implements IAcceptor
     }
 
     super.doDeactivate();
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static class AcceptorEvent extends SingleDeltaContainerEvent<IConnector> implements IAcceptorEvent
-  {
-    private static final long serialVersionUID = 1L;
-
-    public AcceptorEvent(IAcceptor acceptor, IConnector connector, Kind kind)
-    {
-      super(acceptor, connector, kind);
-    }
-
-    public IAcceptor getAcceptor()
-    {
-      return (IAcceptor)getContainer();
-    }
-
-    public IConnector getConnector()
-    {
-      return getDeltaElement();
-    }
   }
 }

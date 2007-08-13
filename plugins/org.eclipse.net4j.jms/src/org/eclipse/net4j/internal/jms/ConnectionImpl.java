@@ -17,9 +17,9 @@ import org.eclipse.net4j.internal.jms.bundle.OM;
 import org.eclipse.net4j.internal.jms.protocol.JMSClientProtocol;
 import org.eclipse.net4j.internal.jms.protocol.JMSLogonRequest;
 import org.eclipse.net4j.internal.jms.protocol.JMSOpenSessionRequest;
+import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.internal.util.container.LifecycleEventConverter;
 import org.eclipse.net4j.internal.util.container.SingleDeltaContainerEvent;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.jms.JMSUtil;
 import org.eclipse.net4j.util.container.IContainer;
@@ -43,7 +43,7 @@ import javax.jms.Topic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConnectionImpl extends Lifecycle implements Connection, IContainer<Session>
+public class ConnectionImpl extends Container<Session> implements Connection
 {
   private String connectorType;
 
@@ -77,7 +77,7 @@ public class ConnectionImpl extends Lifecycle implements Connection, IContainer<
         removeSession((SessionImpl)element);
       }
 
-      return new ConnectionSessionsEvent((ConnectionImpl)container, (SessionImpl)element, kind);
+      return new SingleDeltaContainerEvent(container, element, kind);
     }
   };
 
@@ -336,6 +336,7 @@ public class ConnectionImpl extends Lifecycle implements Connection, IContainer<
     return getSessions();
   }
 
+  @Override
   public boolean isEmpty()
   {
     return getSessions().length == 0;
@@ -400,30 +401,6 @@ public class ConnectionImpl extends Lifecycle implements Connection, IContainer<
     if (channel == null)
     {
       throw new IllegalStateException("channel == null");
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static class ConnectionSessionsEvent extends SingleDeltaContainerEvent<Session> implements
-      JMSConnectionSessionsEvent
-  {
-    private static final long serialVersionUID = 1L;
-
-    public ConnectionSessionsEvent(ConnectionImpl connection, Session session, Kind kind)
-    {
-      super(connection, session, kind);
-    }
-
-    public Connection getConnection()
-    {
-      return (Connection)getContainer();
-    }
-
-    public Session getSession()
-    {
-      return getDeltaElement();
     }
   }
 }

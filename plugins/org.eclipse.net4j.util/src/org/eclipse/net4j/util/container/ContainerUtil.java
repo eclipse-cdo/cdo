@@ -15,7 +15,7 @@ package org.eclipse.net4j.util.container;
  */
 public final class ContainerUtil
 {
-  private static final Object[] NO_ELEMENTS = new Object[0];
+  private static final Object[] NO_ELEMENTS = {};
 
   private ContainerUtil()
   {

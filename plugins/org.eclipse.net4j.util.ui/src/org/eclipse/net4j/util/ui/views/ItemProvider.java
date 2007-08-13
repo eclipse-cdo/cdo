@@ -29,7 +29,7 @@ import java.util.List;
 public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPUT> implements ITreeContentProvider,
     ILabelProvider
 {
-  protected static final Object[] NO_CHILDREN = new Object[0];
+  public static final Object[] NO_ELEMENTS = {};
 
   private List<ILabelProviderListener> listeners = new ArrayList(0);
 

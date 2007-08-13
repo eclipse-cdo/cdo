@@ -86,7 +86,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
     }
     catch (RuntimeException ex)
     {
-      return NO_CHILDREN;
+      return NO_ELEMENTS;
     }
   }
 

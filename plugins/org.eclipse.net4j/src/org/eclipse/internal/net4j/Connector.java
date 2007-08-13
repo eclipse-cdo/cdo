@@ -17,15 +17,13 @@ import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.IConnectorChannelsEvent;
 import org.eclipse.net4j.IConnectorCredentials;
 import org.eclipse.net4j.IConnectorStateEvent;
 import org.eclipse.net4j.IProtocol;
+import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.internal.util.container.LifecycleEventConverter;
-import org.eclipse.net4j.internal.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.factory.FactoryKey;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -54,7 +52,7 @@ import java.util.concurrent.TimeoutException;
 /**
  * @author Eike Stepper
  */
-public abstract class Connector extends Lifecycle implements IConnector
+public abstract class Connector extends Container<IChannel> implements IConnector
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONNECTOR, Connector.class);
 
@@ -89,7 +87,7 @@ public abstract class Connector extends Lifecycle implements IConnector
     @Override
     protected IContainerEvent createContainerEvent(IContainer container, Object element, Kind kind)
     {
-      return new ConnectorChannelsEvent((IConnector)container, (IChannel)element, kind);
+      return newContainerEvent((IChannel)element, kind);
     }
   };
 
@@ -311,6 +309,7 @@ public abstract class Connector extends Lifecycle implements IConnector
     return result.toArray(new IChannel[result.size()]);
   }
 
+  @Override
   public boolean isEmpty()
   {
     return getElements().length == 0;
@@ -672,30 +671,6 @@ public abstract class Connector extends Lifecycle implements IConnector
     public ConnectorState getNewState()
     {
       return newState;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static class ConnectorChannelsEvent extends SingleDeltaContainerEvent<IChannel> implements
-      IConnectorChannelsEvent
-  {
-    private static final long serialVersionUID = 1L;
-
-    public ConnectorChannelsEvent(IConnector connector, IChannel channel, Kind kind)
-    {
-      super(connector, channel, kind);
-    }
-
-    public IConnector getConnector()
-    {
-      return (IConnector)getContainer();
-    }
-
-    public IChannel getChannel()
-    {
-      return getDeltaElement();
     }
   }
 }

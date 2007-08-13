@@ -11,7 +11,8 @@
 package org.eclipse.net4j.internal.util.registry;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.internal.util.container.Container;
+import org.eclipse.net4j.internal.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.registry.IRegistry;
 
@@ -23,7 +24,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class Registry<K, V> extends Lifecycle implements IRegistry<K, V>
+public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implements IRegistry<K, V>
 {
   private boolean autoCommit;
 
@@ -39,6 +40,7 @@ public abstract class Registry<K, V> extends Lifecycle implements IRegistry<K, V
     this(true);
   }
 
+  @Override
   public boolean isEmpty()
   {
     return keySet().isEmpty();
@@ -246,7 +248,7 @@ public abstract class Registry<K, V> extends Lifecycle implements IRegistry<K, V
   {
     private int nesting = 1;
 
-    private RegistryEvent<K, V> event;
+    private ContainerEvent<Map.Entry<K, V>> event;
 
     private Thread owner;
 
@@ -258,7 +260,7 @@ public abstract class Registry<K, V> extends Lifecycle implements IRegistry<K, V
 
     private void initEvent()
     {
-      event = new RegistryEvent(Registry.this);
+      event = newContainerEvent();
     }
 
     public boolean isOwned()

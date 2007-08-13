@@ -12,7 +12,6 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
-import org.eclipse.emf.cdo.CDOSessionViewsEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
@@ -27,15 +26,12 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.internal.util.container.SingleDeltaContainerEvent;
+import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.internal.util.event.Event;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.container.IContainerDelta;
-import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -68,7 +64,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class CDOSessionImpl extends Lifecycle implements CDOSession
+public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
@@ -241,6 +237,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     return getViews();
   }
 
+  @Override
   public boolean isEmpty()
   {
     return views.isEmpty();
@@ -266,7 +263,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
       throw WrappedException.wrap(ex);
     }
 
-    fireEvent(new ViewsEvent(view, IContainerDelta.Kind.REMOVED));
+    fireElementRemovedEvent(view);
   }
 
   public CDOIDRange getTemporaryIDRange(long count)
@@ -496,7 +493,7 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
 
     resourceSet.eAdapters().add(view);
     sendViewsNotification(view);
-    fireEvent(new ViewsEvent(view, IContainerDelta.Kind.ADDED));
+    fireElementAddedEvent(view);
   }
 
   private void sendViewsNotification(CDOViewImpl view)
@@ -527,29 +524,6 @@ public class CDOSessionImpl extends Lifecycle implements CDOSession
     }
 
     throw new ImplementationError("Invalid view type: " + type);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class ViewsEvent extends SingleDeltaContainerEvent<CDOView> implements CDOSessionViewsEvent
-  {
-    private static final long serialVersionUID = 1L;
-
-    public ViewsEvent(CDOView view, Kind kind)
-    {
-      super(CDOSessionImpl.this, view, kind);
-    }
-
-    public CDOSession getSession()
-    {
-      return CDOSessionImpl.this;
-    }
-
-    public CDOView getView()
-    {
-      return getDeltaElement();
-    }
   }
 
   private final class InvalidationEvent extends Event implements CDOSessionInvalidationEvent

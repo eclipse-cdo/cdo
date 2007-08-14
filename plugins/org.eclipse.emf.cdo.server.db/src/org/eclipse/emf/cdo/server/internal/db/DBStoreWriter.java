@@ -63,13 +63,9 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
 
   public void writePackage(CDOPackageImpl cdoPackage)
   {
-    // TODO Implement method DBStoreWriter.writePackage()
-    // throw new UnsupportedOperationException("Not yet implemented");
   }
 
   public void writeRevision(CDORevisionImpl revision)
   {
-    // TODO Implement method DBStoreWriter.writeRevision()
-    // throw new UnsupportedOperationException("Not yet implemented");
   }
 }

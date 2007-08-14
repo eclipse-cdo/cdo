@@ -23,50 +23,103 @@ public class CDODBSchema extends DBSchema
   public static final CDODBSchema INSTANCE = new CDODBSchema();
 
   /**
-   * DBTable Destinations
+   * DBTable cdo_packages
    */
-  public static final IDBTable DESTINATIONS = INSTANCE.addTable("destinations");
+  public static final IDBTable PACKAGES = INSTANCE.addTable("cdo_packages");
 
-  public static final IDBField DESTINATIONS_NAME = //
-  DESTINATIONS.addField("name", IDBField.Type.VARCHAR, 255);
+  public static final IDBField PACKAGES_ID = //
+  PACKAGES.addField("id", IDBField.Type.INTEGER);
 
-  public static final IDBField DESTINATIONS_TYPE = //
-  DESTINATIONS.addField("type", IDBField.Type.INTEGER);
+  public static final IDBField PACKAGES_URI = //
+  PACKAGES.addField("uri", IDBField.Type.VARCHAR, 255);
 
-  public static final IDBIndex INDEX_DESTINATIONS_PK = //
-  DESTINATIONS.addIndex(IDBIndex.Type.PRIMARY_KEY, DESTINATIONS_NAME);
+  public static final IDBField PACKAGES_NAME = //
+  PACKAGES.addField("name", IDBField.Type.VARCHAR, 255);
+
+  public static final IDBField PACKAGES_ECORE = //
+  PACKAGES.addField("ecore", IDBField.Type.LONGVARCHAR);
+
+  public static final IDBField PACKAGES_DYNAMIC = //
+  PACKAGES.addField("dynamic", IDBField.Type.BOOLEAN);
+
+  public static final IDBField PACKAGES_RANGE_LB = //
+  PACKAGES.addField("rangelb", IDBField.Type.BIGINT);
+
+  public static final IDBField PACKAGES_RANGE_UB = //
+  PACKAGES.addField("rangeub", IDBField.Type.BIGINT);
+
+  public static final IDBIndex INDEX_PACKAGES_PK = //
+  PACKAGES.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGES_ID);
+
+  public static final IDBIndex INDEX_PACKAGES_URI = //
+  PACKAGES.addIndex(IDBIndex.Type.UNIQUE, PACKAGES_URI);
 
   /**
-   * DBTable Messages
+   * DBTable cdo_classes
    */
-  public static final IDBTable MESSAGES = INSTANCE.addTable("messages");
+  public static final IDBTable CLASSES = INSTANCE.addTable("cdo_classes");
 
-  public static final IDBField MESSAGES_ID = //
-  MESSAGES.addField("id", IDBField.Type.VARCHAR);
+  public static final IDBField CLASSES_ID = //
+  CLASSES.addField("id", IDBField.Type.INTEGER);
 
-  public static final IDBField MESSAGES_DESTINATION = //
-  MESSAGES.addField("destination", IDBField.Type.VARCHAR);
+  public static final IDBField CLASSES_PACKAGE = //
+  CLASSES.addField("package", IDBField.Type.INTEGER);
 
-  public static final IDBField MESSAGES_PRIORITY = //
-  MESSAGES.addField("priority", IDBField.Type.INTEGER);
+  public static final IDBField CLASSES_CLASSIFIER = //
+  CLASSES.addField("classifier", IDBField.Type.INTEGER);
 
-  public static final IDBIndex INDEX_MESSAGES_PK = //
-  MESSAGES.addIndex(IDBIndex.Type.PRIMARY_KEY, MESSAGES_ID);
+  public static final IDBField CLASSES_NAME = //
+  CLASSES.addField("name", IDBField.Type.VARCHAR, 255);
+
+  public static final IDBField CLASSES_ABSTRACT = //
+  CLASSES.addField("abstract", IDBField.Type.BOOLEAN);
+
+  public static final IDBIndex INDEX_CLASSES_PK = //
+  CLASSES.addIndex(IDBIndex.Type.PRIMARY_KEY, CLASSES_ID);
 
   /**
-   * Queries
+   * DBTable cdo_supertypes
    */
-  public static final String QUERY = "SELECT " + DESTINATIONS_TYPE + ", " + MESSAGES_ID + ", " + MESSAGES_PRIORITY
-      + " FROM " + DESTINATIONS + ", " + MESSAGES + " WHERE " + DESTINATIONS_NAME + "=" + MESSAGES_DESTINATION
-      + " AND " + DESTINATIONS_NAME + "=?";
+  public static final IDBTable SUPERTYPES = INSTANCE.addTable("cdo_supertypes");
+
+  public static final IDBField SUPERTYPES_TYPE = //
+  SUPERTYPES.addField("type", IDBField.Type.INTEGER);
+
+  public static final IDBField SUPERTYPES_SUPERTYPE = //
+  SUPERTYPES.addField("supertype", IDBField.Type.INTEGER);
+
+  public static final IDBIndex INDEX_SUPERTYPES_PK = //
+  SUPERTYPES.addIndex(IDBIndex.Type.PRIMARY_KEY, SUPERTYPES_TYPE);
+
+  /**
+   * DBTable cdo_features
+   */
+  public static final IDBTable FEATURES = INSTANCE.addTable("cdo_features");
+
+  public static final IDBField FEATURES_ID = //
+  FEATURES.addField("id", IDBField.Type.INTEGER);
+
+  public static final IDBField FEATURES_TYPE = //
+  FEATURES.addField("type", IDBField.Type.INTEGER);
+
+  public static final IDBField FEATURES_REFERENCE = //
+  FEATURES.addField("reference", IDBField.Type.INTEGER);
+
+  public static final IDBField FEATURES_MANY = //
+  FEATURES.addField("many", IDBField.Type.BOOLEAN);
+
+  public static final IDBField FEATURES_CONTAINMENT = //
+  FEATURES.addField("containment", IDBField.Type.BOOLEAN);
+
+  public static final IDBField FEATURES_INDEX = //
+  FEATURES.addField("idx", IDBField.Type.INTEGER);
+
+  public static final IDBIndex INDEX_FEATURES_PK = //
+  FEATURES.addIndex(IDBIndex.Type.PRIMARY_KEY, FEATURES_ID);
 
   private CDODBSchema()
   {
-    super("JMS");
-  }
-
-  static
-  {
-    INSTANCE.lock();
+    super("CDO");
+    lock();
   }
 }

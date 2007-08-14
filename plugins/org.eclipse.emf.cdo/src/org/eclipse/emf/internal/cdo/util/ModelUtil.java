@@ -16,12 +16,12 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.core.CDOCorePackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOResourceClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOResourcePackageImpl;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.net4j.util.ImplementationError;
@@ -170,7 +170,7 @@ public final class ModelUtil
 
   private static CDOFeatureImpl createCDOReference(EStructuralFeature eFeature, CDOClassImpl containingClass)
   {
-    CDOPackageManagerImpl packageManager = containingClass.getPackageManager();
+    CDOPackageManager packageManager = containingClass.getPackageManager();
     int featureID = eFeature.getFeatureID();
     String name = eFeature.getName();
     CDOClassRefImpl classRef = createClassRef(eFeature.getEType());

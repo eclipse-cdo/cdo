@@ -8,3 +8,4 @@ Fragment-Host: org.eclipse.net4j.db;bundle-version="0.8.0"
 Require-Bundle: org.eclipse.core.runtime
 Bundle-ClassPath: .,
  lib/derby.jar
+Export-Package: org.apache.derby.jdbc;x-friends:="org.eclipse.emf.cdo.tests.tdd"

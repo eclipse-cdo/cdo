@@ -14,9 +14,8 @@ import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreReader;
 
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-
-import java.io.IOException;
+import org.eclipse.net4j.stream.BufferInputStream;
+import org.eclipse.net4j.stream.BufferOutputStream;
 
 /**
  * @author Eike Stepper
@@ -29,7 +28,7 @@ public abstract class CDOReadIndication extends CDOServerIndication
   }
 
   @Override
-  protected final void indicating(ExtendedDataInputStream in) throws IOException
+  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
     IStore store = getStore();
     IStoreReader storeReader = store.getReader();
@@ -37,7 +36,7 @@ public abstract class CDOReadIndication extends CDOServerIndication
     try
     {
       StoreUtil.setReader(storeReader);
-      accessStore(in);
+      super.execute(in, out);
     }
     finally
     {
@@ -45,6 +44,4 @@ public abstract class CDOReadIndication extends CDOServerIndication
       StoreUtil.setReader(null);
     }
   }
-
-  protected abstract void accessStore(ExtendedDataInputStream in) throws IOException;
 }

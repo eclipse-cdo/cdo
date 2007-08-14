@@ -445,15 +445,21 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   @Override
   protected void doDeactivate() throws Exception
   {
+    EventUtil.removeListener(channel, channelListener);
     synchronized (views)
     {
       for (CDOViewImpl view : getViews())
       {
-        view.close();
+        try
+        {
+          view.close();
+        }
+        catch (RuntimeException ignore)
+        {
+        }
       }
     }
 
-    EventUtil.removeListener(channel, channelListener);
     channel.close();
     super.doDeactivate();
   }

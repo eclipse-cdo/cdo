@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
@@ -30,9 +29,7 @@ public class LoadRevisionIndication extends CDOReadIndication
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionIndication.class);
 
-  private CDOID id;
-
-  private Long timeStamp;
+  private CDORevisionImpl revision;
 
   public LoadRevisionIndication()
   {
@@ -40,9 +37,9 @@ public class LoadRevisionIndication extends CDOReadIndication
   }
 
   @Override
-  protected void accessStore(ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    id = CDOIDImpl.read(in);
+    CDOID id = CDOIDImpl.read(in);
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Read ID: {0}", id);
@@ -51,19 +48,23 @@ public class LoadRevisionIndication extends CDOReadIndication
     boolean historical = in.readBoolean();
     if (historical)
     {
-      timeStamp = in.readLong();
+      long timeStamp = in.readLong();
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("Read timeStamp: {0}", timeStamp);
       }
+
+      revision = getRevisionManager().getRevision(id, timeStamp);
+    }
+    else
+    {
+      revision = getRevisionManager().getRevision(id);
     }
   }
 
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    RevisionManager rm = getRevisionManager();
-    CDORevisionImpl revision = timeStamp != null ? rm.getRevision(id, timeStamp) : rm.getRevision(id);
     revision.write(out, getSession());
   }
 }

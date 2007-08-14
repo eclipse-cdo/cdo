@@ -33,7 +33,7 @@ public abstract class IndicationWithResponse extends SignalReactor
   }
 
   @Override
-  protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
+  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
     if (TRACER.isEnabled())
     {

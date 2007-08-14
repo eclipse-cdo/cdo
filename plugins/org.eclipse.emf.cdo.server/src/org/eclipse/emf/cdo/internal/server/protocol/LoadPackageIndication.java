@@ -11,9 +11,10 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.server.PackageManager;
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -26,6 +27,8 @@ import java.io.IOException;
 @SuppressWarnings("unused")
 public class LoadPackageIndication extends CDOReadIndication
 {
+  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadPackageIndication.class);
+
   private CDOPackageImpl cdoPackage;
 
   public LoadPackageIndication()
@@ -34,11 +37,15 @@ public class LoadPackageIndication extends CDOReadIndication
   }
 
   @Override
-  protected void accessStore(ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     String packageURI = in.readString();
-    PackageManager packageManager = getPackageManager();
-    cdoPackage = packageManager.lookupPackage(packageURI);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Read packageURI: {0}", packageURI);
+    }
+
+    cdoPackage = getPackageManager().lookupPackage(packageURI);
     if (cdoPackage == null)
     {
       throw new ImplementationError("CDO package not found: " + packageURI);
@@ -48,6 +55,11 @@ public class LoadPackageIndication extends CDOReadIndication
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing package: {0}", cdoPackage);
+    }
+
     cdoPackage.write(out);
   }
 }

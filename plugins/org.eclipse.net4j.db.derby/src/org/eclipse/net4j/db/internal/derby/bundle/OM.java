@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db.internal.mysql.bundle;
+package org.eclipse.net4j.db.internal.derby.bundle;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;

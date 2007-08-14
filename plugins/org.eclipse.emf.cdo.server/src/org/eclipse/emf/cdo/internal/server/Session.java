@@ -175,8 +175,13 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
       return id;
     }
 
-    IStoreReader storeReader = StoreUtil.getReader();
-    CDOClassRef type = storeReader.readObjectType(id);
+    RevisionManager revisionManager = sessionManager.getRepository().getRevisionManager();
+    CDOClassRef type = revisionManager.getObjectType(id).createClassRef();
+    if (type == null)
+    {
+      IStoreReader storeReader = StoreUtil.getReader();
+      type = storeReader.readObjectType(id);
+    }
 
     knownObjects.add(id);
     return CDOIDImpl.create(id.getValue(), type);

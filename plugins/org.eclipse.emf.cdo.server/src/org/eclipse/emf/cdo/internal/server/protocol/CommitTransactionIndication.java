@@ -75,16 +75,16 @@ public class CommitTransactionIndication extends CDOServerIndication
   public CommitTransactionIndication()
   {
     super(CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION);
-    sessionPackageManager = getPackageManager();
-    transactionPackageManager = new TransactionPackageManager();
   }
 
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     timeStamp = System.currentTimeMillis();
-    int viewID = in.readInt();
+    sessionPackageManager = getPackageManager();
+    transactionPackageManager = new TransactionPackageManager();
 
+    int viewID = in.readInt();
     view = getSession().getView(viewID);
     if (view == null || view.getViewType() != IView.Type.TRANSACTION)
     {
@@ -144,7 +144,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     CDOPackageImpl[] newPackages = new CDOPackageImpl[size];
     for (int i = 0; i < size; i++)
     {
-      newPackages[i] = new CDOPackageImpl(sessionPackageManager, in);
+      newPackages[i] = new CDOPackageImpl(transactionPackageManager, in);
       CDOIDRange oldRange = newPackages[i].getMetaIDRange();
       if (oldRange != null && oldRange.isTemporary())
       {

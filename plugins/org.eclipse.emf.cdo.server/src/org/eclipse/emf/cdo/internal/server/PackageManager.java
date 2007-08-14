@@ -41,6 +41,7 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
   {
     for (CDOPackageImpl cdoPackage : cdoPackages)
     {
+      cdoPackage.setPackageManager(this);
       storeTransaction.execute(new AddPackageOperation(cdoPackage));
     }
   }

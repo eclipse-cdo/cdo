@@ -8,26 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db.internal.mysql;
-
-import org.eclipse.net4j.internal.db.DBAdapter;
-
-import org.apache.derby.jdbc.EmbeddedDriver;
-
-import java.sql.Driver;
+package org.eclipse.emf.cdo.server;
 
 /**
  * @author Eike Stepper
  */
-public class DerbyAdapter extends DBAdapter
+public interface IStoreProvider
 {
-  public DerbyAdapter()
-  {
-    super("derby", "10.2.2.0");
-  }
-
-  public Driver getJDBCDriver()
-  {
-    return new EmbeddedDriver();
-  }
+  public IStore getStore(String name);
 }

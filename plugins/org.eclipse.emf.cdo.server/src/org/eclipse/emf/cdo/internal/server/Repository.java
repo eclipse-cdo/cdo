@@ -60,9 +60,10 @@ public class Repository extends Container implements IRepository
 
   private ConcurrentMap<CDOID, CDOClassRef> objectTypes = new ConcurrentHashMap();
 
-  public Repository(String name)
+  public Repository(String name, IStore store)
   {
     this.name = name;
+    this.store = store;
     uuid = UUID.randomUUID().toString();
   }
 
@@ -71,19 +72,14 @@ public class Repository extends Container implements IRepository
     return name;
   }
 
-  public String getUUID()
-  {
-    return uuid;
-  }
-
   public IStore getStore()
   {
     return store;
   }
 
-  public void setStore(IStore store)
+  public String getUUID()
   {
-    this.store = store;
+    return uuid;
   }
 
   public PackageManager getPackageManager()

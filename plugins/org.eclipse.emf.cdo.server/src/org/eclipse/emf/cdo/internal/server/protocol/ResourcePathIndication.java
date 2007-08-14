@@ -36,7 +36,7 @@ public class ResourcePathIndication extends CDOReadIndication
   }
 
   @Override
-  protected void accessStore(ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     final CDOID id = CDOIDImpl.read(in);
     if (PROTOCOL.isEnabled())

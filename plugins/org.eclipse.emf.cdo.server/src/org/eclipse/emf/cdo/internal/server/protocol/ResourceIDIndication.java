@@ -36,7 +36,7 @@ public class ResourceIDIndication extends CDOReadIndication
   }
 
   @Override
-  protected void accessStore(ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     // TODO Optimize transfer of URIs/paths
     final String path = in.readString();

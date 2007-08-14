@@ -16,9 +16,12 @@ import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 
 import javax.sql.DataSource;
+
+import java.sql.Connection;
 
 /**
  * @author Eike Stepper
@@ -30,6 +33,12 @@ public class DBStore extends Store
   private IDBAdapter dbAdapter;
 
   private DataSource dataSource;
+
+  private int nextPackageID;
+
+  private int nextClassID;
+
+  private int nextFeatureID;
 
   public DBStore(IDBAdapter dbAdapter, DataSource dataSource)
   {
@@ -66,5 +75,40 @@ public class DBStore extends Store
   public IStoreWriter getWriter(IView view) throws DBException
   {
     return new DBStoreWriter(this, view);
+  }
+
+  public int getNextPackageID()
+  {
+    return nextPackageID++;
+  }
+
+  public int getNextClassID()
+  {
+    return nextClassID++;
+  }
+
+  public int getNextFeatureID()
+  {
+    return nextFeatureID++;
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    CDODBSchema.INSTANCE.create(dbAdapter, dataSource);
+    Connection connection = null;
+
+    try
+    {
+      connection = dataSource.getConnection();
+      nextPackageID = DBUtil.selectMaximum(connection, CDODBSchema.PACKAGES_ID) + 1;
+      nextClassID = DBUtil.selectMaximum(connection, CDODBSchema.CLASSES_ID) + 1;
+      nextFeatureID = DBUtil.selectMaximum(connection, CDODBSchema.FEATURES_ID) + 1;
+    }
+    finally
+    {
+      DBUtil.close(connection);
+    }
   }
 }

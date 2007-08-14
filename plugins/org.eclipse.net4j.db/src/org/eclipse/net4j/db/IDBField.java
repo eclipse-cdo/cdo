@@ -17,7 +17,7 @@ public interface IDBField
 {
   public static final int DEFAULT = -1;
 
-  public IDBTable geTable();
+  public IDBTable getTable();
 
   public String getName();
 

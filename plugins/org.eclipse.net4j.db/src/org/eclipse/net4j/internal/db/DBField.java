@@ -44,7 +44,7 @@ public class DBField implements IDBField
     this.position = position;
   }
 
-  public DBTable geTable()
+  public DBTable getTable()
   {
     return table;
   }

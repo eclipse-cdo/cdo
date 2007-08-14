@@ -31,7 +31,6 @@ public interface IStoreReader extends IStoreAccessor
    * <b>Note:</b> The implementor is free to create and return package proxies
    * that are demand loaded at a later point in time.
    * <p>
-   * TODO Decouple from {@link CDOPackageImpl}.
    * 
    * @see CDOPackageImpl#CDOPackageImpl(CDOPackageManagerImpl, String, boolean,
    *      CDOIDRange)
@@ -42,7 +41,6 @@ public interface IStoreReader extends IStoreAccessor
    * Demand loads a given package proxy that has been created on startup of the
    * repository.
    * <p>
-   * TODO Decouple from {@link CDOPackageImpl}.
    */
   public void readPackage(CDOPackageImpl cdoPackage);
 

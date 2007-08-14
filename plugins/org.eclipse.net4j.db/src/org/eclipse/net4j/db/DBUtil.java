@@ -16,6 +16,11 @@ import org.eclipse.net4j.util.ReflectUtil;
 
 import javax.sql.DataSource;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Map;
 
 /**
@@ -57,5 +62,154 @@ public final class DBUtil
   public static IDBAdapter getDBAdapter(String adapterName)
   {
     return IDBAdapter.REGISTRY.get(adapterName);
+  }
+
+  public static Exception close(Connection connection)
+  {
+    if (connection != null)
+    {
+      try
+      {
+        connection.close();
+      }
+      catch (Exception ex)
+      {
+        return ex;
+      }
+    }
+
+    return null;
+  }
+
+  public static Exception close(Statement statement)
+  {
+    if (statement != null)
+    {
+      try
+      {
+        statement.close();
+      }
+      catch (Exception ex)
+      {
+        return ex;
+      }
+    }
+
+    return null;
+  }
+
+  public static Exception close(ResultSet resultSet)
+  {
+    if (resultSet != null)
+    {
+      try
+      {
+        resultSet.close();
+      }
+      catch (Exception ex)
+      {
+        return ex;
+      }
+    }
+
+    return null;
+  }
+
+  public static int selectMaximum(Connection connection, IDBField field) throws DBException
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT MAX(");
+    builder.append(field);
+    builder.append(") FROM ");
+    builder.append(field.getTable());
+
+    String sql = builder.toString();
+    Statement stmt = null;
+    ResultSet rs = null;
+
+    try
+    {
+      stmt = connection.createStatement();
+
+      try
+      {
+        rs = stmt.executeQuery(sql);
+        if (!rs.first())
+        {
+          return 0;
+        }
+
+        return rs.getInt(1);
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        close(rs);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(stmt);
+    }
+  }
+
+  public static void insertRow(Connection connection, IDBTable table, Object... args) throws DBException
+  {
+    IDBField[] fields = table.getFields();
+    if (fields.length != args.length)
+    {
+      throw new IllegalArgumentException("fields.length != args.length");
+    }
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("INSERT INTO ");
+    builder.append(table);
+    builder.append(" VALUES (");
+
+    for (int i = 0; i < fields.length; i++)
+    {
+      if (i > 0)
+      {
+        builder.append(", ");
+      }
+
+      builder.append("?");
+    }
+
+    builder.append(")");
+
+    String sql = builder.toString();
+    PreparedStatement stmt = null;
+
+    try
+    {
+      stmt = connection.prepareStatement(sql);
+      for (int i = 0; i < fields.length; i++)
+      {
+        IDBField field = fields[i];
+        stmt.setObject(i, args[i], field.getType().getCode());
+      }
+
+      stmt.execute();
+      if (stmt.getUpdateCount() == 0)
+      {
+        throw new DBException("No row inserted into table " + table);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(stmt);
+    }
   }
 }

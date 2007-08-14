@@ -26,7 +26,7 @@ public abstract class Store extends Lifecycle implements IStore
     this.type = type;
   }
 
-  public String getType()
+  public String getStoreType()
   {
     return type;
   }

@@ -10,12 +10,16 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBUtil;
 
 import java.sql.SQLException;
 
@@ -62,6 +66,47 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
   }
 
   public void writePackage(CDOPackageImpl cdoPackage)
+  {
+    CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
+    long lb = metaIDRange.getLowerBound().getValue();
+    long ub = metaIDRange.getUpperBound().getValue();
+
+    int id = store.getNextPackageID();
+    cdoPackage.setServerInfo(id);
+
+    DBUtil.insertRow(connection, CDODBSchema.PACKAGES, id, cdoPackage.getPackageURI(), cdoPackage.getName(), cdoPackage
+        .getEcore(), cdoPackage.isDynamic(), lb, ub);
+
+    for (CDOClassImpl cdoClass : cdoPackage.getClasses())
+    {
+      writeClass(cdoClass);
+    }
+  }
+
+  public void writeClass(CDOClassImpl cdoClass)
+  {
+    int id = store.getNextClassID();
+    cdoClass.setServerInfo(id);
+
+    DBUtil.insertRow(connection, CDODBSchema.CLASSES, id, cdoClass.getPackageURI(), cdoClass.getName(), cdoClass
+        .getEcore(), cdoClass.isDynamic());
+
+    for (CDOClassImpl superType : cdoClass.getSuperTypes())
+    {
+      writeSuperType(cdoClass, superType);
+    }
+
+    for (CDOFeatureImpl feature : cdoClass.getFeatures())
+    {
+      writeFeature(feature);
+    }
+  }
+
+  public void writeSuperType(CDOClassImpl type, CDOClassImpl superType)
+  {
+  }
+
+  public void writeFeature(CDOFeatureImpl feature)
   {
   }
 

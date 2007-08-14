@@ -15,7 +15,7 @@ package org.eclipse.emf.cdo.server;
  */
 public interface IStore
 {
-  public String getType();
+  public String getStoreType();
 
   public IStoreReader getReader();
 

@@ -8,21 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.server;
+package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.server.IStore;
-
-import org.eclipse.net4j.internal.util.factory.Factory;
+import org.w3c.dom.Element;
 
 /**
  * @author Eike Stepper
  */
-public abstract class StoreFactory<PRODUCT extends IStore> extends Factory<PRODUCT>
+public interface IStoreFactory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.stores";
+  public String getStoreType();
 
-  public StoreFactory(String type)
-  {
-    super(PRODUCT_GROUP, type);
-  }
+  public IStore createStore(Element storeConfig);
 }

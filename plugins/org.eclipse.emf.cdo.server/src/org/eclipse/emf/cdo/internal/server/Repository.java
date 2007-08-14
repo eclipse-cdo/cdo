@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.server.IStoreReader;
 
 import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.text.MessageFormat;
@@ -52,7 +53,7 @@ public class Repository extends Container implements IRepository
 
   private RevisionManager revisionManager = new RevisionManager(this);
 
-  private Object[] elements = { packageManager, sessionManager, resourceManager, revisionManager };
+  private Object[] elements;
 
   private long nextOIDValue = INITIAL_OID_VALUE;
 
@@ -62,9 +63,21 @@ public class Repository extends Container implements IRepository
 
   public Repository(String name, IStore store)
   {
+    if (StringUtil.isEmpty(name))
+    {
+      throw new IllegalArgumentException("name is null or empty");
+    }
+
+    if (store == null)
+    {
+      throw new IllegalArgumentException("store is null");
+    }
+
     this.name = name;
     this.store = store;
+
     uuid = UUID.randomUUID().toString();
+    elements = new Object[] { packageManager, sessionManager, resourceManager, revisionManager, store };
   }
 
   public String getName()
@@ -158,21 +171,6 @@ public class Repository extends Container implements IRepository
   }
 
   @Override
-  protected void doBeforeActivate() throws Exception
-  {
-    super.doBeforeActivate();
-    if (store == null)
-    {
-      throw new IllegalStateException("No store for repository " + name);
-    }
-
-    if (!LifecycleUtil.isActive(store))
-    {
-      throw new IllegalStateException("Inactive store for repository " + name);
-    }
-  }
-
-  @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
@@ -180,11 +178,13 @@ public class Repository extends Container implements IRepository
     sessionManager.activate();
     resourceManager.activate();
     revisionManager.activate();
+    LifecycleUtil.activate(store);
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
+    LifecycleUtil.deactivate(store);
     revisionManager.deactivate();
     resourceManager.deactivate();
     sessionManager.deactivate();

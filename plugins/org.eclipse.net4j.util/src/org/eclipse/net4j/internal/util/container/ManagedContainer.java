@@ -181,6 +181,18 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return result;
   }
 
+  public IFactory getFactory(String productGroup, String factoryType)
+  {
+    FactoryKey key = new FactoryKey(productGroup, factoryType);
+    IFactory factory = getFactoryRegistry().get(key);
+    if (factory == null)
+    {
+      throw new FactoryNotFoundException("Factory not found: " + key);
+    }
+
+    return factory;
+  }
+
   public boolean isEmpty()
   {
     return elementRegistry.isEmpty();
@@ -255,10 +267,6 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return element;
   }
 
-  /**
-   * TODO Replace usages by factories (BufferProvider, ExecutorService,
-   * ProtocolFactoryRegistry)
-   */
   public Object putElement(String productGroup, String factoryType, String description, Object element)
   {
     ContainerEvent event = new ContainerEvent(this);
@@ -369,13 +377,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   protected Object createElement(String productGroup, String factoryType, String description)
   {
-    FactoryKey key = new FactoryKey(productGroup, factoryType);
-    IFactory factory = getFactoryRegistry().get(key);
-    if (factory == null)
-    {
-      throw new FactoryNotFoundException("Factory not found: " + key);
-    }
-
+    IFactory factory = getFactory(productGroup, factoryType);
     return factory.create(description);
   }
 

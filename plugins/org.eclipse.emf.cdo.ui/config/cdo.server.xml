@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<repositoryManager>
+<repositories>
 
-	<repository>
-		<name>repo1</name>
-		<store>
-			<type>db</type>
-			<instanceID>TEST0001</instanceID>
-			<dbAdapter>derby</dbAdapter>
-			<dataSource>
-				<driverClass>org.apache.derby.jdbc.EmbeddedDataSource</driverClass>
-				<databaseName>C:/temp/cdodb1</databaseName>
-				<createDatabase>create</createDatabase>
-			</dataSource>
-			<mappingStrategy>
-			
-			</mappingStrategy>
+	<repository name="repo1">
+		<store type="db">
+			<dbAdapter type="derby"/>
+			<dataSource 
+				driverClass="org.apache.derby.jdbc.EmbeddedDataSource" 
+				databaseName="C:/temp/cdodb1"
+				createDatabase="create"/>
 		</store>
 	</repository>
 
-</repositoryManager>
+</repositories>

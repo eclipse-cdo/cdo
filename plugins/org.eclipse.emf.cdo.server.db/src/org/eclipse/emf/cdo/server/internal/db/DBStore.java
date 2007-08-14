@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.IDBAdapter;
 
 import javax.sql.DataSource;
 
@@ -26,12 +27,20 @@ public class DBStore extends Store
 {
   private static final String TYPE = "db";
 
+  private IDBAdapter dbAdapter;
+
   private DataSource dataSource;
 
-  public DBStore(String storeID, DataSource dataSource)
+  public DBStore(IDBAdapter dbAdapter, DataSource dataSource)
   {
-    super(TYPE, storeID);
+    super(TYPE);
+    this.dbAdapter = dbAdapter;
     this.dataSource = dataSource;
+  }
+
+  public IDBAdapter getDBAdapter()
+  {
+    return dbAdapter;
   }
 
   public DataSource getDataSource()

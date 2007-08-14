@@ -15,7 +15,7 @@
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-nosplash"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dosgi.console&#13;&#10;-Dorg.aspectj.tracing.debug=true&#13;&#10;-Xms40m&#13;&#10;-Xmx512m"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dosgi.console&#13;&#10;-Dorg.aspectj.tracing.debug=false&#13;&#10;-Dnet4j.config=${resource_loc:/org.eclipse.emf.cdo.ui/config}&#13;&#10;-Xms40m&#13;&#10;-Xmx512m"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.sdk.ide"/>
 <stringAttribute key="selectedPlugin" value="org.eclipse.emf.cdo.server.db"/>

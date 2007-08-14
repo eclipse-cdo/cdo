@@ -10,6 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.bundle;
 
+import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
+import org.eclipse.emf.cdo.server.IRepository;
+
+import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
@@ -40,6 +45,28 @@ public abstract class OM
   public static final OMTracer DEBUG_STORE = DEBUG.tracer("store"); //$NON-NLS-1$
 
   public static final OMLogger LOG = BUNDLE.logger();
+
+  static void start() throws Exception
+  {
+    if (DEBUG.isEnabled())
+    {
+      DEBUG.trace(OM.class, "Configuring repositories");
+    }
+
+    RepositoryConfigurator configurator = new RepositoryConfigurator();
+    IRepository[] repositories = configurator.configure(OMPlatform.INSTANCE.getConfigFile("cdo.server.xml"));
+    for (IRepository repository : repositories)
+    {
+      if (DEBUG.isEnabled())
+      {
+        DEBUG.trace(OM.class, "Activating repository " + repository.getName());
+      }
+
+      LifecycleUtil.activate(repository);
+      IPluginContainer.INSTANCE.putElement("org.eclipse.emf.cdo.server.repositories", "default", repository.getName(),
+          repository);
+    }
+  }
 
   /**
    * @author Eike Stepper

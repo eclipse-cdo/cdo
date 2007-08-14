@@ -15,5 +15,5 @@ package org.eclipse.emf.cdo.server;
  */
 public interface IStoreProvider
 {
-  public IStore getStore(String name);
+  public IStore getStore(String repositoryName);
 }

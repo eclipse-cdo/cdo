@@ -13,7 +13,22 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.internal.server.RepositoryFactory;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocolFactory;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.om.OMPlatform;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -29,5 +44,31 @@ public final class CDOServerUtil
   {
     container.registerFactory(new RepositoryFactory(storeProvider));
     container.registerFactory(new CDOServerProtocolFactory(repositoryProvider));
+  }
+
+  public static Element getRepositoryConfig(String repositoryName) throws ParserConfigurationException, SAXException,
+      IOException
+  {
+    File configFile = OMPlatform.INSTANCE.getConfigFile("cdo.server.xml");
+
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    Document document = builder.parse(configFile);
+    NodeList elements = document.getElementsByTagName("repository");
+    for (int i = 0; i < elements.getLength(); i++)
+    {
+      Node node = elements.item(i);
+      if (node instanceof Element)
+      {
+        Element element = (Element)node;
+        String name = element.getAttribute("name");
+        if (ObjectUtil.equals(name, repositoryName))
+        {
+          return element;
+        }
+      }
+    }
+
+    throw new IllegalStateException("Repository config not found: " + repositoryName);
   }
 }

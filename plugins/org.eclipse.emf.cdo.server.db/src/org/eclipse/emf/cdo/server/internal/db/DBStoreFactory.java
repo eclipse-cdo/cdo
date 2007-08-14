@@ -10,30 +10,72 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.server.StoreFactory;
+import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.IStoreFactory;
 
-import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.factory.ProductCreationException;
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.NodeList;
+
+import javax.sql.DataSource;
+
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
  */
-public class DBStoreFactory extends StoreFactory<DBStore>
+public class DBStoreFactory implements IStoreFactory
 {
-  public static final String TYPE = "db";
-
   public DBStoreFactory()
   {
-    super(TYPE);
   }
 
-  public DBStore create(String description) throws ProductCreationException
+  public String getStoreType()
   {
-    return null;
+    return "db";
   }
 
-  public static DBStore get(IManagedContainer container, String description)
+  public IStore createStore(Element storeConfig)
   {
-    return (DBStore)container.getElement(PRODUCT_GROUP, TYPE, description);
+    IDBAdapter dbAdapter = getDBAdapter(storeConfig);
+    DataSource dataSource = getDataSource(storeConfig);
+    return new DBStore(dbAdapter, dataSource);
+  }
+
+  private IDBAdapter getDBAdapter(Element storeConfig)
+  {
+    NodeList dbAdapterConfigs = storeConfig.getElementsByTagName("dbAdapter");
+    if (dbAdapterConfigs.getLength() != 1)
+    {
+      throw new IllegalStateException("Exactly one dbAdapter must be configured for DB store");
+    }
+
+    Element dbAdapterConfig = (Element)dbAdapterConfigs.item(0);
+    String dbAdapterName = dbAdapterConfig.getAttribute("name");
+    return DBUtil.getDBAdapter(dbAdapterName);
+  }
+
+  private DataSource getDataSource(Element storeConfig)
+  {
+    NodeList dataSourceConfigs = storeConfig.getElementsByTagName("dataSource");
+    if (dataSourceConfigs.getLength() != 1)
+    {
+      throw new IllegalStateException("Exactly one dataSource must be configured for DB store");
+    }
+
+    Properties properties = new Properties();
+    Element dataSourceConfig = (Element)dataSourceConfigs.item(0);
+    NamedNodeMap attributes = dataSourceConfig.getAttributes();
+    for (int i = 0; i < attributes.getLength(); i++)
+    {
+      Attr attribute = (Attr)attributes.item(i);
+      properties.put(attribute.getName(), attribute.getValue());
+    }
+
+    return DBUtil.createDataSource(properties);
   }
 }

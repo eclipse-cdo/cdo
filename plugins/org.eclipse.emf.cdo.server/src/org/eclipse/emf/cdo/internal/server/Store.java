@@ -12,28 +12,22 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.server.IStore;
 
+import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+
 /**
  * @author Eike Stepper
  */
-public abstract class Store implements IStore
+public abstract class Store extends Lifecycle implements IStore
 {
   private String type;
 
-  private String storeID;
-
-  public Store(String type, String storeID)
+  public Store(String type)
   {
     this.type = type;
-    this.storeID = storeID;
   }
 
   public String getType()
   {
     return type;
-  }
-
-  public String getStoreID()
-  {
-    return storeID;
   }
 }

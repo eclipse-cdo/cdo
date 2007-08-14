@@ -17,8 +17,6 @@ public interface IStore
 {
   public String getType();
 
-  public String getStoreID();
-
   public IStoreReader getReader();
 
   public IStoreWriter getWriter(IView view);

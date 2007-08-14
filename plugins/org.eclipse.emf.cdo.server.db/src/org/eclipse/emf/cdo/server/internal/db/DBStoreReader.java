@@ -61,6 +61,12 @@ public class DBStoreReader implements IStoreReader
     return store;
   }
 
+  public CDOPackageImpl[] readPackages()
+  {
+    // TODO Implement method DBStoreReader.readPackages()
+    throw new UnsupportedOperationException("Not yet implemented");
+  }
+
   public void readPackage(CDOPackageImpl cdoPackage)
   {
     // TODO Implement method DBStoreReader.readPackage()

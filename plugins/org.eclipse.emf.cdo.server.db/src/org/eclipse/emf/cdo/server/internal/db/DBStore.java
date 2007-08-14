@@ -34,6 +34,16 @@ public class DBStore extends Store
   public DBStore(IDBAdapter dbAdapter, DataSource dataSource)
   {
     super(TYPE);
+    if (dbAdapter == null)
+    {
+      throw new IllegalArgumentException("dbAdapter is null");
+    }
+
+    if (dataSource == null)
+    {
+      throw new IllegalArgumentException("dataSource is null");
+    }
+
     this.dbAdapter = dbAdapter;
     this.dataSource = dataSource;
   }

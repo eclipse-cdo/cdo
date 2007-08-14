@@ -55,7 +55,7 @@ public class DBStoreFactory implements IStoreFactory
     }
 
     Element dbAdapterConfig = (Element)dbAdapterConfigs.item(0);
-    String dbAdapterName = dbAdapterConfig.getAttribute("name");
+    String dbAdapterName = dbAdapterConfig.getAttribute("type");
     return DBUtil.getDBAdapter(dbAdapterName);
   }
 

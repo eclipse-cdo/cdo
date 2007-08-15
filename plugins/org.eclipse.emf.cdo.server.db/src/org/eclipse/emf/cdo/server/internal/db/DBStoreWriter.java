@@ -71,12 +71,15 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
     int id = store.getNextPackageID();
     cdoPackage.setServerInfo(id);
 
+    String packageURI = cdoPackage.getPackageURI();
+    String name = cdoPackage.getName();
+    String ecore = cdoPackage.getEcore();
+    boolean dynamic = cdoPackage.isDynamic();
     CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
     long lb = metaIDRange.getLowerBound().getValue();
     long ub = metaIDRange.getUpperBound().getValue();
 
-    DBUtil.insertRow(connection, CDODBSchema.PACKAGES, id, cdoPackage.getPackageURI(), cdoPackage.getName(), cdoPackage
-        .getEcore(), cdoPackage.isDynamic(), lb, ub);
+    DBUtil.insertRow(connection, CDODBSchema.PACKAGES, id, packageURI, name, ecore, dynamic, lb, ub);
 
     for (CDOClassImpl cdoClass : cdoPackage.getClasses())
     {
@@ -90,8 +93,12 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
     cdoClass.setServerInfo(id);
 
     CDOPackageImpl cdoPackage = cdoClass.getContainingPackage();
-    DBUtil.insertRow(connection, CDODBSchema.CLASSES, id, cdoPackage.getPackageURI(), cdoClass.getClassifierID(),
-        cdoClass.getName(), cdoClass.isAbstract());
+    String packageURI = cdoPackage.getPackageURI();
+    int classifierID = cdoClass.getClassifierID();
+    String name = cdoClass.getName();
+    boolean isAbstract = cdoClass.isAbstract();
+
+    DBUtil.insertRow(connection, CDODBSchema.CLASSES, id, packageURI, classifierID, name, isAbstract);
 
     for (CDOClassProxy superType : cdoClass.getSuperTypeProxies())
     {
@@ -114,9 +121,15 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
     int id = store.getNextFeatureID();
     feature.setServerInfo(id);
 
+    String name = feature.getName();
     CDOClassProxy reference = feature.getReferenceTypeProxy();
-    DBUtil.insertRow(connection, CDODBSchema.FEATURES, id, feature.getName(), reference.getPackageURI(), reference
-        .getClassifierID(), feature.isMany(), feature.isContainment(), feature.getFeatureIndex());
+    String packageURI = reference.getPackageURI();
+    int classifierID = reference.getClassifierID();
+    boolean many = feature.isMany();
+    boolean containment = feature.isContainment();
+    int idx = feature.getFeatureIndex();
+
+    DBUtil.insertRow(connection, CDODBSchema.FEATURES, id, name, packageURI, classifierID, many, containment, idx);
   }
 
   public void writeRevision(CDORevisionImpl revision)

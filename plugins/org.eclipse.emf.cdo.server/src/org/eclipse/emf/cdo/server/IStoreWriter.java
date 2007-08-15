@@ -39,7 +39,8 @@ public interface IStoreWriter extends IStoreReader
    * {@link CDOFeatureImpl#getReferenceTypeProxy()} should be used.
    * <p>
    * 
-   * @see CDOClassProxy#getClassRef()
+   * @see CDOClassProxy#getPackageURI()
+   * @see CDOClassProxy#getClassifierID()
    */
   public void writePackage(CDOPackageImpl cdoPackage);
 

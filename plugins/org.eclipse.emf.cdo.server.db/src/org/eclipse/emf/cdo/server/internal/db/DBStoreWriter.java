@@ -78,7 +78,6 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
     CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
     long lb = metaIDRange.getLowerBound().getValue();
     long ub = metaIDRange.getUpperBound().getValue();
-
     DBUtil.insertRow(connection, CDODBSchema.PACKAGES, id, packageURI, name, ecore, dynamic, lb, ub);
 
     for (CDOClassImpl cdoClass : cdoPackage.getClasses())
@@ -97,7 +96,6 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
     int classifierID = cdoClass.getClassifierID();
     String name = cdoClass.getName();
     boolean isAbstract = cdoClass.isAbstract();
-
     DBUtil.insertRow(connection, CDODBSchema.CLASSES, id, packageURI, classifierID, name, isAbstract);
 
     for (CDOClassProxy superType : cdoClass.getSuperTypeProxies())
@@ -113,7 +111,9 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
 
   public void writeSuperType(int type, CDOClassProxy superType)
   {
-    DBUtil.insertRow(connection, CDODBSchema.SUPERTYPES, type, superType.getPackageURI(), superType.getClassifierID());
+    String packageURI = superType.getPackageURI();
+    int classifierID = superType.getClassifierID();
+    DBUtil.insertRow(connection, CDODBSchema.SUPERTYPES, type, packageURI, classifierID);
   }
 
   public void writeFeature(CDOFeatureImpl feature)
@@ -128,7 +128,6 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
     boolean many = feature.isMany();
     boolean containment = feature.isContainment();
     int idx = feature.getFeatureIndex();
-
     DBUtil.insertRow(connection, CDODBSchema.FEATURES, id, name, packageURI, classifierID, many, containment, idx);
   }
 

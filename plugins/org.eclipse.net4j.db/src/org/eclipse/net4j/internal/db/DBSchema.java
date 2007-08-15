@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBSchema;
 
@@ -78,10 +79,12 @@ public class DBSchema implements IDBSchema
 
   public void create(IDBAdapter dbAdapter, DataSource dataSource)
   {
+    Connection connection = null;
+    Statement statement = null;
     try
     {
-      Connection connection = dataSource.getConnection();
-      Statement statement = connection.createStatement();
+      connection = dataSource.getConnection();
+      statement = connection.createStatement();
       for (DBTable table : tables.values())
       {
         dbAdapter.createTable(table, statement);
@@ -90,6 +93,11 @@ public class DBSchema implements IDBSchema
     catch (SQLException ex)
     {
       throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(statement);
+      DBUtil.close(connection);
     }
   }
 

@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.transaction.ITransaction;
 import org.eclipse.net4j.util.transaction.ITransactionalOperation;
 
@@ -59,7 +58,8 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
   @Override
   protected String provideEcore(CDOPackageImpl cdoPackage)
   {
-    throw new ImplementationError("No generated model on server side");
+    // No generated model on server side
+    return null;
   }
 
   /**

@@ -24,6 +24,8 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
+import org.osgi.framework.BundleContext;
+
 /**
  * @author Eike Stepper
  */
@@ -41,36 +43,6 @@ public abstract class OM
 
   public static final String EXT_POINT = "dbAdapters";
 
-  static void start() throws Exception
-  {
-    IExtensionRegistry registry = Platform.getExtensionRegistry();
-    IConfigurationElement[] elements = registry.getConfigurationElementsFor(BUNDLE_ID, EXT_POINT);
-    for (final IConfigurationElement element : elements)
-    {
-      if ("dbAdapter".equals(element.getName()))
-      {
-        DBAdapterDescriptor descriptor = new DBAdapterDescriptor(element.getAttribute("name"))
-        {
-          @Override
-          public IDBAdapter createDBAdapter()
-          {
-            try
-            {
-              return (IDBAdapter)element.createExecutableExtension("class");
-            }
-            catch (CoreException ex)
-            {
-              OM.LOG.error(ex);
-              return null;
-            }
-          }
-        };
-
-        DBAdapterRegistry.INSTANCE.addDescriptor(descriptor);
-      }
-    }
-  }
-
   /**
    * @author Eike Stepper
    */
@@ -79,6 +51,43 @@ public abstract class OM
     public Activator()
     {
       super(BUNDLE);
+    }
+
+    @Override
+    public void start(BundleContext context) throws Exception
+    {
+      super.start(context);
+      initAdapterRegistry();
+    }
+
+    private void initAdapterRegistry()
+    {
+      IExtensionRegistry registry = Platform.getExtensionRegistry();
+      IConfigurationElement[] elements = registry.getConfigurationElementsFor(BUNDLE_ID, EXT_POINT);
+      for (final IConfigurationElement element : elements)
+      {
+        if ("dbAdapter".equals(element.getName()))
+        {
+          DBAdapterDescriptor descriptor = new DBAdapterDescriptor(element.getAttribute("name"))
+          {
+            @Override
+            public IDBAdapter createDBAdapter()
+            {
+              try
+              {
+                return (IDBAdapter)element.createExecutableExtension("class");
+              }
+              catch (CoreException ex)
+              {
+                OM.LOG.error(ex);
+                return null;
+              }
+            }
+          };
+
+          DBAdapterRegistry.INSTANCE.addDescriptor(descriptor);
+        }
+      }
     }
   }
 }

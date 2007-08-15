@@ -10,7 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.db.internal.derby;
 
+import org.eclipse.net4j.db.IDBField.Type;
 import org.eclipse.net4j.internal.db.DBAdapter;
+import org.eclipse.net4j.internal.db.DBField;
 
 import org.apache.derby.jdbc.EmbeddedDriver;
 
@@ -29,5 +31,18 @@ public class DerbyAdapter extends DBAdapter
   public Driver getJDBCDriver()
   {
     return new EmbeddedDriver();
+  }
+
+  @Override
+  protected String getTypeName(DBField field)
+  {
+    Type type = field.getType();
+    switch (type)
+    {
+    case BOOLEAN:
+      return "CHAR(1)";
+    }
+
+    return super.getTypeName(field);
   }
 }

@@ -12,6 +12,7 @@ package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.internal.db.DBSchema;
 import org.eclipse.net4j.internal.db.bundle.OM;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ReflectUtil;
 
 import javax.sql.DataSource;
@@ -21,6 +22,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -28,6 +30,8 @@ import java.util.Map;
  */
 public final class DBUtil
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBUtil.class);
+
   private DBUtil()
   {
   }
@@ -124,22 +128,27 @@ public final class DBUtil
     builder.append(field.getTable());
 
     String sql = builder.toString();
-    Statement stmt = null;
-    ResultSet rs = null;
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
+
+    Statement statement = null;
+    ResultSet resultSet = null;
 
     try
     {
-      stmt = connection.createStatement();
+      statement = connection.createStatement();
 
       try
       {
-        rs = stmt.executeQuery(sql);
-        if (!rs.first())
+        resultSet = statement.executeQuery(sql);
+        if (!resultSet.next())
         {
           return 0;
         }
 
-        return rs.getInt(1);
+        return resultSet.getInt(1);
       }
       catch (SQLException ex)
       {
@@ -147,7 +156,7 @@ public final class DBUtil
       }
       finally
       {
-        close(rs);
+        close(resultSet);
       }
     }
     catch (SQLException ex)
@@ -156,16 +165,17 @@ public final class DBUtil
     }
     finally
     {
-      close(stmt);
+      close(statement);
     }
   }
 
-  public static void insertRow(Connection connection, IDBTable table, Object... args) throws DBException
+  public static void insert(Connection connection, IDBTable table, Object... args) throws DBException
   {
     IDBField[] fields = table.getFields();
     if (fields.length != args.length)
     {
-      throw new IllegalArgumentException("fields.length != args.length");
+      throw new IllegalArgumentException("Wrong number of args for " + table + ": " + Arrays.asList(args) + " --> "
+          + Arrays.asList(table.getFields()));
     }
 
     StringBuilder builder = new StringBuilder();
@@ -186,19 +196,40 @@ public final class DBUtil
     builder.append(")");
 
     String sql = builder.toString();
-    PreparedStatement stmt = null;
+    if (TRACER.isEnabled())
+    {
+      builder = new StringBuilder();
+      builder.append("INSERT INTO ");
+      builder.append(table);
+      builder.append(" VALUES (");
+
+      for (int i = 0; i < fields.length; i++)
+      {
+        if (i > 0)
+        {
+          builder.append(", ");
+        }
+
+        builder.append(args[i]);
+      }
+
+      builder.append(")");
+      TRACER.trace(builder.toString());
+    }
+
+    PreparedStatement statement = null;
 
     try
     {
-      stmt = connection.prepareStatement(sql);
+      statement = connection.prepareStatement(sql);
       for (int i = 0; i < fields.length; i++)
       {
         IDBField field = fields[i];
-        stmt.setObject(i, args[i], field.getType().getCode());
+        statement.setObject(i + 1, args[i], field.getType().getCode());
       }
 
-      stmt.execute();
-      if (stmt.getUpdateCount() == 0)
+      statement.execute();
+      if (statement.getUpdateCount() == 0)
       {
         throw new DBException("No row inserted into table " + table);
       }
@@ -209,7 +240,7 @@ public final class DBUtil
     }
     finally
     {
-      close(stmt);
+      close(statement);
     }
   }
 }

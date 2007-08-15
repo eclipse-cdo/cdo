@@ -43,10 +43,10 @@ public class CDODBSchema extends DBSchema
   PACKAGES.addField("dynamic", IDBField.Type.BOOLEAN);
 
   public static final IDBField PACKAGES_RANGE_LB = //
-  PACKAGES.addField("rangelb", IDBField.Type.BIGINT);
+  PACKAGES.addField("range_lb", IDBField.Type.BIGINT);
 
   public static final IDBField PACKAGES_RANGE_UB = //
-  PACKAGES.addField("rangeub", IDBField.Type.BIGINT);
+  PACKAGES.addField("range_ub", IDBField.Type.BIGINT);
 
   public static final IDBIndex INDEX_PACKAGES_PK = //
   PACKAGES.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGES_ID);
@@ -129,6 +129,10 @@ public class CDODBSchema extends DBSchema
   private CDODBSchema()
   {
     super("CDO");
-    lock();
+  }
+
+  static
+  {
+    INSTANCE.lock();
   }
 }

@@ -51,26 +51,45 @@ public interface IDBField
     DECIMAL(3), //
     CHAR(1), //
     VARCHAR(12), //
-    LONGVARCHAR(-1), //
+    LONGVARCHAR(-1, "LONG VARCHAR"), //
     DATE(91), //
     TIME(92), //
     TIMESTAMP(93), //
     BINARY(-2), //
     VARBINARY(-3), //
-    LONGVARBINARY(-4), //
+    LONGVARBINARY(-4, "LONG VARBINARY"), //
     BLOB(2004), //
     CLOB(2005); //
 
     private int code;
 
-    private Type(int code)
+    private String keyword;
+
+    private Type(int code, String keyword)
     {
       this.code = code;
+      this.keyword = keyword;
+    }
+
+    private Type(int code)
+    {
+      this(code, null);
     }
 
     public int getCode()
     {
       return code;
+    }
+
+    public String getKeyword()
+    {
+      return keyword == null ? super.toString() : keyword;
+    }
+
+    @Override
+    public String toString()
+    {
+      return getKeyword();
     }
   }
 }

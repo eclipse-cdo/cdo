@@ -13,6 +13,8 @@ package org.eclipse.net4j.internal.db;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBField.Type;
+import org.eclipse.net4j.internal.db.bundle.OM;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -24,6 +26,8 @@ import java.sql.Statement;
  */
 public abstract class DBAdapter implements IDBAdapter
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBAdapter.class);
+
   private String name;
 
   private String version;
@@ -52,7 +56,10 @@ public abstract class DBAdapter implements IDBAdapter
     }
     catch (SQLException ex)
     {
-      System.out.println(ex.getMessage());
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(ex.getMessage());
+      }
     }
 
     validateTable(table, statement);
@@ -80,7 +87,11 @@ public abstract class DBAdapter implements IDBAdapter
 
     builder.append(")");
     String sql = builder.toString();
-    System.out.println(sql);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
+
     statement.execute(sql);
   }
 
@@ -111,16 +122,16 @@ public abstract class DBAdapter implements IDBAdapter
     case DATE:
     case TIME:
     case TIMESTAMP:
+    case LONGVARCHAR:
+    case LONGVARBINARY:
     case BLOB:
     case CLOB:
       return type.toString();
 
     case CHAR:
     case VARCHAR:
-    case LONGVARCHAR:
     case BINARY:
     case VARBINARY:
-    case LONGVARBINARY:
       return type.toString() + field.formatPrecision();
 
     case NUMERIC:
@@ -151,17 +162,18 @@ public abstract class DBAdapter implements IDBAdapter
             + table.getFieldCount());
       }
 
-      for (int i = 0; i < columnCount; i++)
-      {
-        int existingCode = metaData.getColumnType(i + 1);
-        DBField field = table.getField(i);
-        int code = field.getType().getCode();
-        if (code != existingCode)
-        {
-          throw new DBException("DBField " + field.getFullName() + " has type " + existingCode + " instead of " + code
-              + " (" + field.getType() + ")");
-        }
-      }
+      // for (int i = 0; i < columnCount; i++)
+      // {
+      // int existingCode = metaData.getColumnType(i + 1);
+      // DBField field = table.getField(i);
+      // int code = field.getType().getCode();
+      // if (code != existingCode)
+      // {
+      // throw new DBException("DBField " + field.getFullName() + " has type " +
+      // existingCode + " instead of " + code
+      // + " (" + field.getType() + ")");
+      // }
+      // }
     }
     catch (SQLException ex)
     {

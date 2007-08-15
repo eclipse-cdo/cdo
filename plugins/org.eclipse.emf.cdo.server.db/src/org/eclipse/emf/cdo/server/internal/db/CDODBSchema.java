@@ -83,10 +83,13 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable SUPERTYPES = INSTANCE.addTable("cdo_supertypes");
 
   public static final IDBField SUPERTYPES_TYPE = //
-  SUPERTYPES.addField("type", IDBField.Type.INTEGER);
+  SUPERTYPES.addField("type_id", IDBField.Type.INTEGER);
 
-  public static final IDBField SUPERTYPES_SUPERTYPE = //
-  SUPERTYPES.addField("supertype", IDBField.Type.INTEGER);
+  public static final IDBField SUPERTYPES_SUPERTYPE_PACKAGE = //
+  SUPERTYPES.addField("supertype_package", IDBField.Type.VARCHAR, 255);
+
+  public static final IDBField SUPERTYPES_SUPERTYPE_CLASSIFIER = //
+  SUPERTYPES.addField("supertype_classifier", IDBField.Type.INTEGER);
 
   public static final IDBIndex INDEX_SUPERTYPES_PK = //
   SUPERTYPES.addIndex(IDBIndex.Type.PRIMARY_KEY, SUPERTYPES_TYPE);
@@ -99,11 +102,17 @@ public class CDODBSchema extends DBSchema
   public static final IDBField FEATURES_ID = //
   FEATURES.addField("id", IDBField.Type.INTEGER);
 
+  public static final IDBField FEATURES_NAME = //
+  FEATURES.addField("name", IDBField.Type.VARCHAR, 255);
+
   public static final IDBField FEATURES_TYPE = //
   FEATURES.addField("type", IDBField.Type.INTEGER);
 
-  public static final IDBField FEATURES_REFERENCE = //
-  FEATURES.addField("reference", IDBField.Type.INTEGER);
+  public static final IDBField FEATURES_REFERENCE_PACKAGE = //
+  FEATURES.addField("reference_package", IDBField.Type.VARCHAR, 255);
+
+  public static final IDBField FEATURES_REFERENCE_CLASSIFIER = //
+  FEATURES.addField("reference_classifier", IDBField.Type.INTEGER);
 
   public static final IDBField FEATURES_MANY = //
   FEATURES.addField("many", IDBField.Type.BOOLEAN);

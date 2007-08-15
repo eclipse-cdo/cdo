@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
@@ -67,12 +68,12 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
 
   public void writePackage(CDOPackageImpl cdoPackage)
   {
+    int id = store.getNextPackageID();
+    cdoPackage.setServerInfo(id);
+
     CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
     long lb = metaIDRange.getLowerBound().getValue();
     long ub = metaIDRange.getUpperBound().getValue();
-
-    int id = store.getNextPackageID();
-    cdoPackage.setServerInfo(id);
 
     DBUtil.insertRow(connection, CDODBSchema.PACKAGES, id, cdoPackage.getPackageURI(), cdoPackage.getName(), cdoPackage
         .getEcore(), cdoPackage.isDynamic(), lb, ub);
@@ -88,12 +89,13 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
     int id = store.getNextClassID();
     cdoClass.setServerInfo(id);
 
-    DBUtil.insertRow(connection, CDODBSchema.CLASSES, id, cdoClass.getPackageURI(), cdoClass.getName(), cdoClass
-        .getEcore(), cdoClass.isDynamic());
+    CDOPackageImpl cdoPackage = cdoClass.getContainingPackage();
+    DBUtil.insertRow(connection, CDODBSchema.CLASSES, id, cdoPackage.getPackageURI(), cdoClass.getClassifierID(),
+        cdoClass.getName(), cdoClass.isAbstract());
 
-    for (CDOClassImpl superType : cdoClass.getSuperTypes())
+    for (CDOClassProxy superType : cdoClass.getSuperTypeProxies())
     {
-      writeSuperType(cdoClass, superType);
+      writeSuperType(id, superType);
     }
 
     for (CDOFeatureImpl feature : cdoClass.getFeatures())
@@ -102,12 +104,19 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
     }
   }
 
-  public void writeSuperType(CDOClassImpl type, CDOClassImpl superType)
+  public void writeSuperType(int type, CDOClassProxy superType)
   {
+    DBUtil.insertRow(connection, CDODBSchema.SUPERTYPES, type, superType.getPackageURI(), superType.getClassifierID());
   }
 
   public void writeFeature(CDOFeatureImpl feature)
   {
+    int id = store.getNextFeatureID();
+    feature.setServerInfo(id);
+
+    CDOClassProxy reference = feature.getReferenceTypeProxy();
+    DBUtil.insertRow(connection, CDODBSchema.FEATURES, id, feature.getName(), reference.getPackageURI(), reference
+        .getClassifierID(), feature.isMany(), feature.isContainment(), feature.getFeatureIndex());
   }
 
   public void writeRevision(CDORevisionImpl revision)

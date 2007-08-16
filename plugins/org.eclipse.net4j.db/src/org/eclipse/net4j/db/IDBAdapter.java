@@ -13,6 +13,7 @@ package org.eclipse.net4j.db;
 import org.eclipse.net4j.internal.db.DBAdapterRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
+import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.Statement;
 
@@ -29,5 +30,7 @@ public interface IDBAdapter
 
   public Driver getJDBCDriver();
 
-  public void createTable(IDBTable table, Statement statement);
+  public void createTables(IDBTable[] tables, Connection connection) throws DBException;
+
+  public void createTable(IDBTable table, Statement statement) throws DBException;
 }

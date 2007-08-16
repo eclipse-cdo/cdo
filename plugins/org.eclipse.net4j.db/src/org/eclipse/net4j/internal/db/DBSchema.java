@@ -14,12 +14,12 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBSchema;
+import org.eclipse.net4j.db.IDBTable;
 
 import javax.sql.DataSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,16 +80,11 @@ public class DBSchema implements IDBSchema
   public void create(IDBAdapter dbAdapter, DataSource dataSource)
   {
     Connection connection = null;
-    Statement statement = null;
 
     try
     {
       connection = dataSource.getConnection();
-      statement = connection.createStatement();
-      for (DBTable table : tables.values())
-      {
-        dbAdapter.createTable(table, statement);
-      }
+      create(dbAdapter, connection);
     }
     catch (SQLException ex)
     {
@@ -97,9 +92,13 @@ public class DBSchema implements IDBSchema
     }
     finally
     {
-      DBUtil.close(statement);
       DBUtil.close(connection);
     }
+  }
+
+  public void create(IDBAdapter dbAdapter, Connection connection)
+  {
+    dbAdapter.createTables(tables.values().toArray(new IDBTable[tables.size()]), connection);
   }
 
   @Override

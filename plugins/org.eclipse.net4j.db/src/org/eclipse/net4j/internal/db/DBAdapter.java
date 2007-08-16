@@ -12,11 +12,13 @@ package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -49,7 +51,29 @@ public abstract class DBAdapter implements IDBAdapter
     return version;
   }
 
-  public void createTable(IDBTable table, Statement statement)
+  public void createTables(IDBTable[] tables, Connection connection) throws DBException
+  {
+    Statement statement = null;
+
+    try
+    {
+      statement = connection.createStatement();
+      for (IDBTable table : tables)
+      {
+        createTable(table, statement);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(statement);
+    }
+  }
+
+  public void createTable(IDBTable table, Statement statement) throws DBException
   {
     try
     {
@@ -143,7 +167,7 @@ public abstract class DBAdapter implements IDBAdapter
     throw new IllegalArgumentException("Unknown type: " + type);
   }
 
-  protected void validateTable(DBTable table, Statement statement)
+  protected void validateTable(DBTable table, Statement statement) throws DBException
   {
     try
     {

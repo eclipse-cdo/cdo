@@ -25,7 +25,6 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBTable;
 
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * @author Eike Stepper
@@ -90,24 +89,7 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
 
     IMappingStrategy mappingStrategy = store.getMappingStrategy();
     IDBTable[] affectedTables = mappingStrategy.map(cdoPackage);
-    Statement statement = null;
-
-    try
-    {
-      statement = connection.createStatement();
-      for (IDBTable table : affectedTables)
-      {
-        store.getDBAdapter().createTable(table, statement);
-      }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(statement);
-    }
+    store.getDBAdapter().createTables(affectedTables, connection);
   }
 
   public void writeClass(CDOClassImpl cdoClass)

@@ -91,17 +91,17 @@ public class CommitTransactionIndication extends CDOServerIndication
       throw new IllegalStateException("Illegal view: " + view);
     }
 
-    newPackages = readNewPackages(in);
-    newResources = readNewResources(in);
-    newObjects = readNewObjects(in);
-    dirtyObjects = readDirtyObjects(in);
-
     IStore store = getStore();
     IStoreWriter storeWriter = store.getWriter(view);
 
     try
     {
       StoreUtil.setReader(storeWriter);
+      newPackages = readNewPackages(in);
+      newResources = readNewResources(in);
+      newObjects = readNewObjects(in);
+      dirtyObjects = readDirtyObjects(in);
+
       ITransaction<IStoreWriter> storeTransaction = new Transaction(storeWriter);
       addPackages(storeTransaction, newPackages);
       addRevisions(storeTransaction, newResources);

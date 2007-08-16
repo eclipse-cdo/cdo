@@ -82,7 +82,7 @@ public class DBStoreReader implements IStoreReader
       public boolean handle(int row, final Object... values)
       {
         String packageURI = (String)values[0];
-        boolean dynamic = values[1] != null;
+        boolean dynamic = getBoolean(values[1]);
         long rangeLB = (Long)values[2];
         long rangeUB = (Long)values[3];
         CDOIDRange metaIDRange = CDOIDRangeImpl.create(rangeLB, rangeUB);
@@ -98,37 +98,37 @@ public class DBStoreReader implements IStoreReader
 
   public void readPackage(final CDOPackageImpl cdoPackage)
   {
-    Object[] values = DBUtil.select(connection, "", CDODBSchema.PACKAGES_ID, CDODBSchema.PACKAGES_NAME,
+    String where = CDODBSchema.PACKAGES_URI.toString() + " = '" + cdoPackage.getPackageURI() + "'";
+    Object[] values = DBUtil.select(connection, where, CDODBSchema.PACKAGES_ID, CDODBSchema.PACKAGES_NAME,
         CDODBSchema.PACKAGES_ECORE);
     cdoPackage.setServerInfo(values[0]);
     cdoPackage.setName((String)values[1]);
     cdoPackage.setEcore((String)values[2]);
+    readClasses(cdoPackage);
+  }
 
+  public void readClasses(final CDOPackageImpl cdoPackage)
+  {
     IDBRowHandler rowHandler = new IDBRowHandler()
     {
       public boolean handle(int row, Object... values)
       {
+        int classID = (Integer)values[0];
         int classifierID = (Integer)values[1];
         String name = (String)values[2];
-        boolean isAbstract = (Boolean)values[3];
+        boolean isAbstract = getBoolean(values[3]);
         CDOClassImpl cdoClass = new CDOClassImpl(cdoPackage, classifierID, name, isAbstract);
-        cdoClass.setServerInfo(values[0]);
+        cdoClass.setServerInfo(classID);
         cdoPackage.addClass(cdoClass);
-        readClass(cdoClass);
+        readSuperTypes(cdoClass, classID);
+        readFeatures(cdoClass, classID);
         return true;
       }
     };
 
-    String where = CDODBSchema.CLASSES_PACKAGE.toString() + " = '" + cdoPackage.getPackageURI() + "'";
+    String where = CDODBSchema.CLASSES_PACKAGE.toString() + " = " + cdoPackage.getServerInfo();
     DBUtil.select(connection, rowHandler, where, CDODBSchema.CLASSES_ID, CDODBSchema.CLASSES_CLASSIFIER,
         CDODBSchema.CLASSES_NAME, CDODBSchema.CLASSES_ABSTRACT);
-  }
-
-  public void readClass(final CDOClassImpl cdoClass)
-  {
-    int classID = (Integer)cdoClass.getServerInfo();
-    readSuperTypes(cdoClass, classID);
-    readFeatures(cdoClass, classID);
   }
 
   public void readSuperTypes(final CDOClassImpl cdoClass, int classID)
@@ -158,14 +158,14 @@ public class DBStoreReader implements IStoreReader
         int featureID = (Integer)values[1];
         String name = (String)values[2];
         CDOTypeImpl type = CDOTypeImpl.getType((Integer)values[3]);
-        boolean many = (Boolean)values[6];
+        boolean many = getBoolean(values[6]);
 
         CDOFeatureImpl feature;
         if (type == CDOType.OBJECT)
         {
           String packageURI = (String)values[4];
           int classifierID = (Integer)values[5];
-          boolean containment = (Boolean)values[7];
+          boolean containment = getBoolean(values[7]);
           CDOClassRefImpl classRef = new CDOClassRefImpl(packageURI, classifierID);
           CDOClassProxy referenceType = new CDOClassProxy(classRef, cdoClass.getPackageManager());
           feature = new CDOFeatureImpl(cdoClass, featureID, name, referenceType, many, containment);
@@ -215,5 +215,25 @@ public class DBStoreReader implements IStoreReader
   {
     // TODO Implement method DBStoreReader.readObjectType()
     throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  protected Boolean getBoolean(Object value)
+  {
+    if (value == null)
+    {
+      return null;
+    }
+
+    if (value instanceof Boolean)
+    {
+      return (Boolean)value;
+    }
+
+    if (value instanceof Number)
+    {
+      return ((Number)value).intValue() != 0;
+    }
+
+    throw new IllegalArgumentException("Not a boolean value: " + value);
   }
 }

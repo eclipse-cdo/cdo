@@ -40,7 +40,8 @@ public class DerbyAdapter extends DBAdapter
     switch (type)
     {
     case BOOLEAN:
-      return "CHAR(1)";
+    case BIT:
+      return "SMALLINT";
     }
 
     return super.getTypeName(field);

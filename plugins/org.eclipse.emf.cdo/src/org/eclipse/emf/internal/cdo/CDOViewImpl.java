@@ -356,6 +356,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public Object convertObjectToID(Object potentialObject)
   {
+    if (potentialObject instanceof CDOID)
+    {
+      return potentialObject;
+    }
+
     if (potentialObject == null)
     {
       throw new ImplementationError();

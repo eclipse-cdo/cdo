@@ -58,7 +58,7 @@ public abstract class DBAdapter implements IDBAdapter
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace(ex.getMessage());
+        TRACER.trace("-- " + ex.getMessage());
       }
     }
 

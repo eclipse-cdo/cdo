@@ -3,7 +3,8 @@
 
 	<repository name="repo1">
 		<store type="db">
-			<dbAdapter type="derby"/>
+			<mappingStrategy type="Horizontal"/>
+			<dbAdapter name="derby"/>
 			<dataSource 
 				driverClass="org.apache.derby.jdbc.EmbeddedDataSource" 
 				databaseName="C:/temp/cdodb1"

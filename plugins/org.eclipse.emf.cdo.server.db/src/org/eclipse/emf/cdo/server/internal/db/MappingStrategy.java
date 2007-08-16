@@ -51,7 +51,6 @@ public abstract class MappingStrategy implements IMappingStrategy
   public void setStore(IStore store)
   {
     this.store = store;
-    schema = createSchema();
   }
 
   public Properties getProperties()
@@ -77,6 +76,11 @@ public abstract class MappingStrategy implements IMappingStrategy
 
   public IDBTable[] map(CDOPackage cdoPackage)
   {
+    if (schema == null)
+    {
+      schema = createSchema();
+    }
+
     Set<IDBTable> affectedTables = new HashSet();
     ((DBPackageInfo)cdoPackage.getServerInfo()).setSchema(schema);
     for (CDOClass cdoClass : cdoPackage.getClasses())

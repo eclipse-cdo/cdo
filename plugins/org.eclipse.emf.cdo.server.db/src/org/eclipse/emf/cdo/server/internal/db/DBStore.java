@@ -56,6 +56,7 @@ public class DBStore extends Store
       throw new IllegalArgumentException("dataSource is null");
     }
 
+    this.mappingStrategy = mappingStrategy;
     this.dbAdapter = dbAdapter;
     this.dataSource = dataSource;
   }

@@ -47,7 +47,9 @@ public class DBStoreFactory implements IStoreFactory
     IMappingStrategy mappingStrategy = getMappingStrategy(storeConfig);
     IDBAdapter dbAdapter = getDBAdapter(storeConfig);
     DataSource dataSource = getDataSource(storeConfig);
-    return new DBStore(mappingStrategy, dbAdapter, dataSource);
+    DBStore store = new DBStore(mappingStrategy, dbAdapter, dataSource);
+    mappingStrategy.setStore(store);
+    return store;
   }
 
   private IMappingStrategy getMappingStrategy(Element storeConfig)

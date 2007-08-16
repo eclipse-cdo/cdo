@@ -101,7 +101,7 @@ public class DBStoreReader implements IStoreReader
     String where = CDODBSchema.PACKAGES_URI.toString() + " = '" + cdoPackage.getPackageURI() + "'";
     Object[] values = DBUtil.select(connection, where, CDODBSchema.PACKAGES_ID, CDODBSchema.PACKAGES_NAME,
         CDODBSchema.PACKAGES_ECORE);
-    cdoPackage.setServerInfo(values[0]);
+    cdoPackage.setServerInfo(new DBPackageInfo((Integer)values[0]));
     cdoPackage.setName((String)values[1]);
     cdoPackage.setEcore((String)values[2]);
     readClasses(cdoPackage);
@@ -118,7 +118,7 @@ public class DBStoreReader implements IStoreReader
         String name = (String)values[2];
         boolean isAbstract = getBoolean(values[3]);
         CDOClassImpl cdoClass = new CDOClassImpl(cdoPackage, classifierID, name, isAbstract);
-        cdoClass.setServerInfo(classID);
+        cdoClass.setServerInfo(new DBClassInfo(classID));
         cdoPackage.addClass(cdoClass);
         readSuperTypes(cdoClass, classID);
         readFeatures(cdoClass, classID);
@@ -175,7 +175,7 @@ public class DBStoreReader implements IStoreReader
           feature = new CDOFeatureImpl(cdoClass, featureID, name, type, many);
         }
 
-        feature.setServerInfo(values[0]);
+        feature.setServerInfo(new DBFeatureInfo((Integer)values[0]));
         cdoClass.addFeature(feature);
         return true;
       }
@@ -185,6 +185,12 @@ public class DBStoreReader implements IStoreReader
     DBUtil.select(connection, rowHandler, where, CDODBSchema.FEATURES_ID, CDODBSchema.FEATURES_FEATURE,
         CDODBSchema.FEATURES_NAME, CDODBSchema.FEATURES_TYPE, CDODBSchema.FEATURES_REFERENCE_PACKAGE,
         CDODBSchema.FEATURES_REFERENCE_CLASSIFIER, CDODBSchema.FEATURES_MANY, CDODBSchema.FEATURES_CONTAINMENT);
+  }
+
+  public CDORevision readRevision(CDOID id)
+  {
+    // TODO Implement method DBStoreReader.readRevision()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   public CDORevision readRevision(CDOID id, long timeStamp)
@@ -205,18 +211,15 @@ public class DBStoreReader implements IStoreReader
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
-  public CDORevision readRevision(CDOID id)
-  {
-    // TODO Implement method DBStoreReader.readRevision()
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
-
   public CDOClassRef readObjectType(CDOID id)
   {
     // TODO Implement method DBStoreReader.readObjectType()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
+  /**
+   * TODO Move this somehow to DBAdapter
+   */
   protected Boolean getBoolean(Object value)
   {
     if (value == null)

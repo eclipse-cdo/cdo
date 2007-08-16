@@ -69,7 +69,7 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
   public void writePackage(CDOPackageImpl cdoPackage)
   {
     int id = store.getNextPackageID();
-    cdoPackage.setServerInfo(id);
+    cdoPackage.setServerInfo(new DBPackageInfo(id));
 
     String packageURI = cdoPackage.getPackageURI();
     String name = cdoPackage.getName();
@@ -89,7 +89,7 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
   public void writeClass(CDOClassImpl cdoClass)
   {
     int id = store.getNextClassID();
-    cdoClass.setServerInfo(id);
+    cdoClass.setServerInfo(new DBClassInfo(id));
 
     CDOPackageImpl cdoPackage = cdoClass.getContainingPackage();
     int packageID = (Integer)cdoPackage.getServerInfo();
@@ -119,7 +119,7 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
   public void writeFeature(CDOFeatureImpl feature)
   {
     int id = store.getNextFeatureID();
-    feature.setServerInfo(id);
+    feature.setServerInfo(new DBFeatureInfo(id));
 
     int classID = (Integer)feature.getContainingClass().getServerInfo();
     String name = feature.getName();

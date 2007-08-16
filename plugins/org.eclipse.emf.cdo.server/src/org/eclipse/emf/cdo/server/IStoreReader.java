@@ -34,13 +34,13 @@ public interface IStoreReader extends IStoreAccessor
    */
   public void readPackage(CDOPackageImpl cdoPackage);
 
-  public CDOID readResourceID(String path);
-
-  public String readResourcePath(CDOID id);
-
   public CDORevision readRevision(CDOID id);
 
   public CDORevision readRevision(CDOID id, long timeStamp);
+
+  public CDOID readResourceID(String path);
+
+  public String readResourcePath(CDOID id);
 
   public CDOClassRef readObjectType(CDOID id);
 }

@@ -10,13 +10,51 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.WrappedException;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
+
 /**
  * @author Eike Stepper
  */
 public final class CDODBUtil
 {
+  public static final String EXT_POINT = "mappingStrategies";
+
   private CDODBUtil()
   {
+  }
+
+  public static IMappingStrategy createMappingStrategy(String type)
+  {
+    IExtensionRegistry registry = Platform.getExtensionRegistry();
+    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT);
+    for (final IConfigurationElement element : elements)
+    {
+      if ("mappingStrategy".equals(element.getName()))
+      {
+        String typeAttr = element.getAttribute("type");
+        if (ObjectUtil.equals(typeAttr, type))
+        {
+          try
+          {
+            return (IMappingStrategy)element.createExecutableExtension("class");
+          }
+          catch (CoreException ex)
+          {
+            throw WrappedException.wrap(ex);
+          }
+        }
+      }
+    }
+
+    return null;
   }
 
   // public static CDODBStoreManager getStoreManager(IDBAdapter dbAdapter,

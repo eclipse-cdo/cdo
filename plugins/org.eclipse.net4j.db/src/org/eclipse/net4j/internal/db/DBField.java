@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.db;
 
+import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBField;
 
 /**
@@ -23,7 +24,7 @@ public class DBField implements IDBField
 
   private String name;
 
-  private Type type;
+  private DBType type;
 
   private int precision;
 
@@ -33,7 +34,7 @@ public class DBField implements IDBField
 
   private int position;
 
-  public DBField(DBTable table, String name, Type type, int precision, int scale, boolean notNull, int position)
+  public DBField(DBTable table, String name, DBType type, int precision, int scale, boolean notNull, int position)
   {
     this.table = table;
     this.name = name;
@@ -54,7 +55,7 @@ public class DBField implements IDBField
     return name;
   }
 
-  public Type getType()
+  public DBType getType()
   {
     return type;
   }

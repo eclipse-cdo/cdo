@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
+
+   <extension-point id="mappingStrategies" name="CDO Mapping Strategies" schema="schema/mappingStrategies.exsd"/>
+
    <extension
          point="org.eclipse.emf.cdo.server.storeFactories">
       <storeFactory
             class="org.eclipse.emf.cdo.server.internal.db.DBStoreFactory"
             storeType="db">
       </storeFactory>
+   </extension>
+
+   <extension
+         point="org.eclipse.emf.cdo.server.db.mappingStrategies">
+      <mappingStrategy
+            class="org.eclipse.emf.cdo.server.internal.db.HorizontalMappingStrategy"
+            type="Horizontal">
+      </mappingStrategy>
+      <mappingStrategy
+            class="org.eclipse.emf.cdo.server.internal.db.VerticalMappingStrategy"
+            type="Vertical">
+      </mappingStrategy>
    </extension>
 
 </plugin>

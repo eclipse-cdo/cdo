@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.db;
 
+import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBIndex;
 import org.eclipse.net4j.db.IDBTable;
@@ -48,32 +49,32 @@ public class DBTable implements IDBTable
     return name;
   }
 
-  public DBField addField(String name, IDBField.Type type)
+  public DBField addField(String name, DBType type)
   {
     return addField(name, type, IDBField.DEFAULT, IDBField.DEFAULT, false);
   }
 
-  public DBField addField(String name, IDBField.Type type, boolean notNull)
+  public DBField addField(String name, DBType type, boolean notNull)
   {
     return addField(name, type, IDBField.DEFAULT, IDBField.DEFAULT, notNull);
   }
 
-  public DBField addField(String name, IDBField.Type type, int precision)
+  public DBField addField(String name, DBType type, int precision)
   {
     return addField(name, type, precision, IDBField.DEFAULT, false);
   }
 
-  public DBField addField(String name, IDBField.Type type, int precision, boolean notNull)
+  public DBField addField(String name, DBType type, int precision, boolean notNull)
   {
     return addField(name, type, precision, IDBField.DEFAULT, notNull);
   }
 
-  public DBField addField(String name, IDBField.Type type, int precision, int scale)
+  public DBField addField(String name, DBType type, int precision, int scale)
   {
     return addField(name, type, precision, scale, false);
   }
 
-  public DBField addField(String name, IDBField.Type type, int precision, int scale, boolean notNull)
+  public DBField addField(String name, DBType type, int precision, int scale, boolean notNull)
   {
     schema.assertUnlocked();
     if (getField(name) != null)

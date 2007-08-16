@@ -8,29 +8,28 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db;
+package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.net4j.internal.db.DBType;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.server.IRepository;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import org.eclipse.net4j.db.IDBSchema;
+import org.eclipse.net4j.db.IDBTable;
+
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
  */
-@Deprecated
-public interface IDBType<JAVA>
+public interface IMappingStrategy
 {
-  public static final IDBType<Boolean> BOOLEAN = DBType.BOOLEAN;
+  public String getType();
 
-  public String getName();
+  public Properties getProperties();
 
-  public int getCode();
+  public void setProperties(Properties properties);
 
-  public String format(JAVA value);
+  public IDBSchema createSchema(IRepository repository);
 
-  public JAVA get(ResultSet resultSet, int index) throws SQLException;
-
-  public void set(PreparedStatement statement, int index, JAVA value) throws SQLException;
+  public IDBTable[] map(IDBSchema schema, CDOPackage cdoPackage);
 }

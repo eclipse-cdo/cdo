@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.jms.server.internal.jdbc;
 
+import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBIndex;
 import org.eclipse.net4j.db.IDBTable;
@@ -28,10 +29,10 @@ public class JMSSchema extends DBSchema
   public static final IDBTable DESTINATIONS = INSTANCE.addTable("destinations");
 
   public static final IDBField DESTINATIONS_NAME = //
-  DESTINATIONS.addField("name", IDBField.Type.VARCHAR, 255);
+  DESTINATIONS.addField("name", DBType.VARCHAR, 255);
 
   public static final IDBField DESTINATIONS_TYPE = //
-  DESTINATIONS.addField("type", IDBField.Type.INTEGER);
+  DESTINATIONS.addField("type", DBType.INTEGER);
 
   public static final IDBIndex INDEX_DESTINATIONS_PK = //
   DESTINATIONS.addIndex(IDBIndex.Type.PRIMARY_KEY, DESTINATIONS_NAME);
@@ -42,13 +43,13 @@ public class JMSSchema extends DBSchema
   public static final IDBTable MESSAGES = INSTANCE.addTable("messages");
 
   public static final IDBField MESSAGES_ID = //
-  MESSAGES.addField("id", IDBField.Type.VARCHAR);
+  MESSAGES.addField("id", DBType.VARCHAR);
 
   public static final IDBField MESSAGES_DESTINATION = //
-  MESSAGES.addField("destination", IDBField.Type.VARCHAR);
+  MESSAGES.addField("destination", DBType.VARCHAR);
 
   public static final IDBField MESSAGES_PRIORITY = //
-  MESSAGES.addField("priority", IDBField.Type.INTEGER);
+  MESSAGES.addField("priority", DBType.INTEGER);
 
   public static final IDBIndex INDEX_MESSAGES_PK = //
   MESSAGES.addIndex(IDBIndex.Type.PRIMARY_KEY, MESSAGES_ID);

@@ -57,10 +57,10 @@ public abstract class OM
     public void start(BundleContext context) throws Exception
     {
       super.start(context);
-      initAdapterRegistry();
+      initDBAdapterRegistry();
     }
 
-    private void initAdapterRegistry()
+    private void initDBAdapterRegistry()
     {
       IExtensionRegistry registry = Platform.getExtensionRegistry();
       IConfigurationElement[] elements = registry.getConfigurationElementsFor(BUNDLE_ID, EXT_POINT);

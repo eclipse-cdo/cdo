@@ -11,8 +11,8 @@
 package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.IDBField.Type;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
@@ -107,7 +107,7 @@ public abstract class DBAdapter implements IDBAdapter
 
   protected String getTypeName(DBField field)
   {
-    Type type = field.getType();
+    DBType type = field.getType();
     switch (type)
     {
     case BOOLEAN:

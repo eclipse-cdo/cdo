@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.db.internal.derby;
 
-import org.eclipse.net4j.db.IDBField.Type;
+import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.internal.db.DBAdapter;
 import org.eclipse.net4j.internal.db.DBField;
 
@@ -36,7 +36,7 @@ public class DerbyAdapter extends DBAdapter
   @Override
   protected String getTypeName(DBField field)
   {
-    Type type = field.getType();
+    DBType type = field.getType();
     switch (type)
     {
     case BOOLEAN:

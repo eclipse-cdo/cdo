@@ -21,17 +21,17 @@ public interface IDBTable
 
   public String getName();
 
-  public IDBField addField(String name, IDBField.Type type);
+  public IDBField addField(String name, DBType type);
 
-  public DBField addField(String name, IDBField.Type type, boolean notNull);
+  public DBField addField(String name, DBType type, boolean notNull);
 
-  public DBField addField(String name, IDBField.Type type, int precision);
+  public DBField addField(String name, DBType type, int precision);
 
-  public DBField addField(String name, IDBField.Type type, int precision, boolean notNull);
+  public DBField addField(String name, DBType type, int precision, boolean notNull);
 
-  public DBField addField(String name, IDBField.Type type, int precision, int scale);
+  public DBField addField(String name, DBType type, int precision, int scale);
 
-  public DBField addField(String name, IDBField.Type type, int precision, int scale, boolean notNull);
+  public DBField addField(String name, DBType type, int precision, int scale, boolean notNull);
 
   public IDBField getField(String name);
 

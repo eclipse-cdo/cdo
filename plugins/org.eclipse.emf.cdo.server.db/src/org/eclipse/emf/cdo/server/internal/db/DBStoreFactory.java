@@ -10,8 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
+import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -41,9 +44,26 @@ public class DBStoreFactory implements IStoreFactory
 
   public IStore createStore(Element storeConfig)
   {
+    IMappingStrategy mappingStrategy = getMappingStrategy(storeConfig);
     IDBAdapter dbAdapter = getDBAdapter(storeConfig);
     DataSource dataSource = getDataSource(storeConfig);
-    return new DBStore(dbAdapter, dataSource);
+    return new DBStore(mappingStrategy, dbAdapter, dataSource);
+  }
+
+  private IMappingStrategy getMappingStrategy(Element storeConfig)
+  {
+    NodeList mappingStrategyConfigs = storeConfig.getElementsByTagName("mappingStrategy");
+    if (mappingStrategyConfigs.getLength() != 1)
+    {
+      throw new IllegalStateException("Exactly one mappingStrategy must be configured for DB store");
+    }
+
+    Element mappingStrategyConfig = (Element)mappingStrategyConfigs.item(0);
+    String mappingStrategyType = mappingStrategyConfig.getAttribute("type");
+    IMappingStrategy mappingStrategy = CDODBUtil.createMappingStrategy(mappingStrategyType);
+    Properties properties = RepositoryConfigurator.getProperties(mappingStrategyConfig);
+    mappingStrategy.setProperties(properties);
+    return mappingStrategy;
   }
 
   private IDBAdapter getDBAdapter(Element storeConfig)
@@ -55,7 +75,7 @@ public class DBStoreFactory implements IStoreFactory
     }
 
     Element dbAdapterConfig = (Element)dbAdapterConfigs.item(0);
-    String dbAdapterName = dbAdapterConfig.getAttribute("type");
+    String dbAdapterName = dbAdapterConfig.getAttribute("name");
     return DBUtil.getDBAdapter(dbAdapterName);
   }
 

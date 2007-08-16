@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.Platform;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -35,6 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
@@ -107,5 +109,33 @@ public class RepositoryConfigurator
     DocumentBuilder builder = factory.newDocumentBuilder();
     Document document = builder.parse(configFile);
     return document;
+  }
+
+  public static Properties getProperties(Element element)
+  {
+    Properties properties = new Properties();
+    collectProperties(element, "", properties);
+    return properties;
+  }
+
+  private static void collectProperties(Element element, String prefix, Properties properties)
+  {
+    if ("property".equals(element.getNodeName()))
+    {
+      String name = element.getAttribute("name");
+      String value = element.getAttribute("value");
+      properties.put(prefix + name, value);
+      prefix += name + ".";
+    }
+
+    NodeList childNodes = element.getChildNodes();
+    for (int i = 0; i < childNodes.getLength(); i++)
+    {
+      Node childNode = childNodes.item(i);
+      if (childNode instanceof Element)
+      {
+        collectProperties((Element)childNode, prefix, properties);
+      }
+    }
   }
 }

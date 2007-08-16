@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.server.Store;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -30,6 +31,8 @@ public class DBStore extends Store
 {
   private static final String TYPE = "db";
 
+  private IMappingStrategy mappingStrategy;
+
   private IDBAdapter dbAdapter;
 
   private DataSource dataSource;
@@ -40,7 +43,7 @@ public class DBStore extends Store
 
   private int nextFeatureID;
 
-  public DBStore(IDBAdapter dbAdapter, DataSource dataSource)
+  public DBStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter, DataSource dataSource)
   {
     super(TYPE);
     if (dbAdapter == null)
@@ -55,6 +58,11 @@ public class DBStore extends Store
 
     this.dbAdapter = dbAdapter;
     this.dataSource = dataSource;
+  }
+
+  public IMappingStrategy getMappingStrategy()
+  {
+    return mappingStrategy;
   }
 
   public IDBAdapter getDBAdapter()

@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
-import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBType;
@@ -33,10 +33,25 @@ import java.util.Set;
  */
 public abstract class MappingStrategy implements IMappingStrategy
 {
+  private IStore store;
+
   private Properties properties;
+
+  private IDBSchema schema;
 
   public MappingStrategy()
   {
+  }
+
+  public IStore getStore()
+  {
+    return store;
+  }
+
+  public void setStore(IStore store)
+  {
+    this.store = store;
+    schema = createSchema();
   }
 
   public Properties getProperties()
@@ -49,18 +64,18 @@ public abstract class MappingStrategy implements IMappingStrategy
     this.properties = properties;
   }
 
+  public IDBSchema getSchema()
+  {
+    return schema;
+  }
+
   @Override
   public String toString()
   {
     return getType();
   }
 
-  public IDBSchema createSchema(IRepository repository)
-  {
-    return new DBSchema(repository.getName());
-  }
-
-  public IDBTable[] map(IDBSchema schema, CDOPackage cdoPackage)
+  public IDBTable[] map(CDOPackage cdoPackage)
   {
     Set<IDBTable> affectedTables = new HashSet();
     ((DBPackageInfo)cdoPackage.getServerInfo()).setSchema(schema);
@@ -103,6 +118,12 @@ public abstract class MappingStrategy implements IMappingStrategy
    */
   protected abstract IDBField map(IDBSchema schema, CDOClass cdoClass, CDOFeature cdoFeature,
       Set<IDBTable> affectedTables);
+
+  protected IDBSchema createSchema()
+  {
+    String name = store.getRepository().getName();
+    return new DBSchema(name);
+  }
 
   protected void initTable(IDBTable table, boolean full)
   {

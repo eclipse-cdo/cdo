@@ -74,7 +74,9 @@ public class RepositoryConfigurator
 
     Element storeConfig = (Element)storeConfigs.item(0);
     IStore store = configureStore(storeConfig);
-    return new Repository(repositoryName, store);
+    Repository repository = new Repository(repositoryName, store);
+    store.setRepository(repository);
+    return repository;
   }
 
   protected IStore configureStore(Element storeConfig) throws CoreException

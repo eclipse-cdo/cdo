@@ -81,6 +81,7 @@ public class DBSchema implements IDBSchema
   {
     Connection connection = null;
     Statement statement = null;
+
     try
     {
       connection = dataSource.getConnection();

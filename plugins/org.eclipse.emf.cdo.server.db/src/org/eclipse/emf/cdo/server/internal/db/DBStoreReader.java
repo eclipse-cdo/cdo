@@ -105,6 +105,7 @@ public class DBStoreReader implements IStoreReader
     cdoPackage.setName((String)values[1]);
     cdoPackage.setEcore((String)values[2]);
     readClasses(cdoPackage);
+    store.getMappingStrategy().map(cdoPackage);
   }
 
   public void readClasses(final CDOPackageImpl cdoPackage)

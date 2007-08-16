@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.server.IRepository;
 
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBSchema;
@@ -35,9 +34,9 @@ public class VerticalMappingStrategy extends MappingStrategy
   }
 
   @Override
-  public IDBSchema createSchema(IRepository repository)
+  protected IDBSchema createSchema()
   {
-    IDBSchema schema = super.createSchema(repository);
+    IDBSchema schema = super.createSchema();
     IDBTable table = schema.addTable("CDO_REVISIONS");
     initTable(table, true);
     return schema;

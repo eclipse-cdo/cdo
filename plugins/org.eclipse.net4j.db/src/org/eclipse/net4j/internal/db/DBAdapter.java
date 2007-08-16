@@ -13,6 +13,7 @@ package org.eclipse.net4j.internal.db;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
@@ -48,11 +49,11 @@ public abstract class DBAdapter implements IDBAdapter
     return version;
   }
 
-  public void createTable(DBTable table, Statement statement)
+  public void createTable(IDBTable table, Statement statement)
   {
     try
     {
-      doCreateTable(table, statement);
+      doCreateTable((DBTable)table, statement);
     }
     catch (SQLException ex)
     {
@@ -62,7 +63,7 @@ public abstract class DBAdapter implements IDBAdapter
       }
     }
 
-    validateTable(table, statement);
+    validateTable((DBTable)table, statement);
   }
 
   @Override

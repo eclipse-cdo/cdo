@@ -41,7 +41,9 @@ public class RepositoryFactory extends Factory<Repository>
   public Repository create(String name)
   {
     IStore store = storeProvider.getStore(name);
-    return new Repository(name, store);
+    Repository repository = new Repository(name, store);
+    store.setRepository(repository);
+    return repository;
   }
 
   public static Repository get(IManagedContainer container, String name)

@@ -11,7 +11,6 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.internal.db.DBAdapterRegistry;
-import org.eclipse.net4j.internal.db.DBTable;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import java.sql.Driver;
@@ -30,5 +29,5 @@ public interface IDBAdapter
 
   public Driver getJDBCDriver();
 
-  public void createTable(DBTable table, Statement statement);
+  public void createTable(IDBTable table, Statement statement);
 }

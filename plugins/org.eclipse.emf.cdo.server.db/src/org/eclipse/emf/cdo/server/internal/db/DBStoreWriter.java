@@ -18,11 +18,14 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBTable;
 
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * @author Eike Stepper
@@ -83,6 +86,27 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
     for (CDOClassImpl cdoClass : cdoPackage.getClasses())
     {
       writeClass(cdoClass);
+    }
+
+    IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    IDBTable[] affectedTables = mappingStrategy.map(cdoPackage);
+    Statement statement = null;
+
+    try
+    {
+      statement = connection.createStatement();
+      for (IDBTable table : affectedTables)
+      {
+        store.getDBAdapter().createTable(table, statement);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(statement);
     }
   }
 

@@ -13,9 +13,11 @@ package org.eclipse.emf.cdo.server;
 /**
  * @author Eike Stepper
  */
-public interface IStore
+public interface IStore extends IRepositoryElement
 {
   public String getStoreType();
+
+  public void setRepository(IRepository repository);
 
   public IStoreReader getReader();
 

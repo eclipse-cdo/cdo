@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
@@ -21,6 +22,8 @@ public abstract class Store extends Lifecycle implements IStore
 {
   private String type;
 
+  private IRepository repository;
+
   public Store(String type)
   {
     this.type = type;
@@ -29,5 +32,15 @@ public abstract class Store extends Lifecycle implements IStore
   public String getStoreType()
   {
     return type;
+  }
+
+  public IRepository getRepository()
+  {
+    return repository;
+  }
+
+  public void setRepository(IRepository repository)
+  {
+    this.repository = repository;
   }
 }

@@ -63,7 +63,7 @@ public class CDODBSchema extends DBSchema
   CLASSES.addField("id", IDBField.Type.INTEGER);
 
   public static final IDBField CLASSES_PACKAGE = //
-  CLASSES.addField("package", IDBField.Type.VARCHAR, 255);
+  CLASSES.addField("package", IDBField.Type.INTEGER);
 
   public static final IDBField CLASSES_CLASSIFIER = //
   CLASSES.addField("classifier", IDBField.Type.INTEGER);
@@ -101,6 +101,12 @@ public class CDODBSchema extends DBSchema
 
   public static final IDBField FEATURES_ID = //
   FEATURES.addField("id", IDBField.Type.INTEGER);
+
+  public static final IDBField FEATURES_CLASS = //
+  FEATURES.addField("class", IDBField.Type.INTEGER);
+
+  public static final IDBField FEATURES_FEATURE = //
+  FEATURES.addField("feature", IDBField.Type.INTEGER);
 
   public static final IDBField FEATURES_NAME = //
   FEATURES.addField("name", IDBField.Type.VARCHAR, 255);

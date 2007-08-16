@@ -169,7 +169,7 @@ public final class DBUtil
     }
   }
 
-  public static void insert(Connection connection, IDBTable table, Object... args) throws DBException
+  public static void insertRow(Connection connection, IDBTable table, Object... args) throws DBException
   {
     IDBField[] fields = table.getFields();
     if (fields.length != args.length)
@@ -242,5 +242,108 @@ public final class DBUtil
     {
       close(statement);
     }
+  }
+
+  public static int select(Connection connection, IDBRowHandler rowHandler, String where, IDBField... fields)
+      throws DBException
+  {
+    IDBTable table = fields[0].getTable();
+    for (int i = 1; i < fields.length; i++)
+    {
+      if (fields[i].getTable() != table)
+      {
+        throw new IllegalArgumentException("Multiple tables not allowed: " + Arrays.asList(fields));
+      }
+    }
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT ");
+    for (int i = 0; i < fields.length; i++)
+    {
+      if (i > 0)
+      {
+        builder.append(", ");
+      }
+
+      builder.append(fields[i]);
+    }
+
+    builder.append(" FROM ");
+    builder.append(table);
+    if (where != null)
+    {
+      builder.append(" WHERE ");
+      builder.append(where);
+    }
+
+    String sql = builder.toString();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
+
+    Statement statement = null;
+    ResultSet resultSet = null;
+
+    try
+    {
+      statement = connection.createStatement();
+
+      try
+      {
+        int rows = 0;
+        boolean proceed = true;
+        Object[] values = new Object[fields.length];
+        resultSet = statement.executeQuery(sql);
+        while (proceed && resultSet.next())
+        {
+          for (int i = 0; i < fields.length; i++)
+          {
+            values[i] = resultSet.getObject(i + 1);
+          }
+
+          proceed = rowHandler.handle(rows++, values);
+        }
+
+        return rows;
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        close(resultSet);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(statement);
+    }
+  }
+
+  public static int select(Connection connection, IDBRowHandler rowHandler, IDBField... fields) throws DBException
+  {
+    return select(connection, rowHandler, null, fields);
+  }
+
+  public static Object[] select(Connection connection, String where, IDBField... fields) throws DBException
+  {
+    final Object[][] result = new Object[1][];
+    IDBRowHandler rowHandler = new IDBRowHandler()
+    {
+      public boolean handle(int row, Object... values)
+      {
+        result[0] = values;
+        return false;
+      }
+    };
+
+    select(connection, rowHandler, where, fields);
+    return result[0];
   }
 }

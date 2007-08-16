@@ -11,12 +11,13 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+
+import java.util.Collection;
 
 /**
  * @see StoreUtil#getReader()
@@ -24,18 +25,7 @@ import org.eclipse.emf.cdo.protocol.revision.CDORevision;
  */
 public interface IStoreReader extends IStoreAccessor
 {
-  /**
-   * Creates and returns package instances for all packages stored in the
-   * repository. This method is called on startup of a repository.
-   * <p>
-   * <b>Note:</b> The implementor is free to create and return package proxies
-   * that are demand loaded at a later point in time.
-   * <p>
-   * 
-   * @see CDOPackageImpl#CDOPackageImpl(CDOPackageManagerImpl, String, boolean,
-   *      CDOIDRange)
-   */
-  public CDOPackageImpl[] readPackages();
+  public Collection<PackageInfo> readPackageInfos();
 
   /**
    * Demand loads a given package proxy that has been created on startup of the
@@ -53,4 +43,16 @@ public interface IStoreReader extends IStoreAccessor
   public CDORevision readRevision(CDOID id, long timeStamp);
 
   public CDOClassRef readObjectType(CDOID id);
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface PackageInfo
+  {
+    public String getPackageURI();
+
+    public boolean isDynamic();
+
+    public CDOIDRange getMetaIDRange();
+  }
 }

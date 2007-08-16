@@ -15,9 +15,12 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.IStoreReader.PackageInfo;
 
 import org.eclipse.net4j.util.transaction.ITransaction;
 import org.eclipse.net4j.util.transaction.ITransactionalOperation;
+
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -60,6 +63,18 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
   {
     // No generated model on server side
     return null;
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    IStoreReader storeReader = repository.getStore().getReader();
+    Collection<PackageInfo> packageInfos = storeReader.readPackageInfos();
+    for (PackageInfo info : packageInfos)
+    {
+      addPackage(new CDOPackageImpl(this, info.getPackageURI(), info.isDynamic(), info.getMetaIDRange()));
+    }
   }
 
   /**

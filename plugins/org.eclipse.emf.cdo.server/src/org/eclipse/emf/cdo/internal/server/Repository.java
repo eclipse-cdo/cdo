@@ -174,21 +174,21 @@ public class Repository extends Container implements IRepository
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    LifecycleUtil.activate(store);
     packageManager.activate();
     sessionManager.activate();
     resourceManager.activate();
     revisionManager.activate();
-    LifecycleUtil.activate(store);
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    LifecycleUtil.deactivate(store);
     revisionManager.deactivate();
     resourceManager.deactivate();
     sessionManager.deactivate();
     packageManager.deactivate();
+    LifecycleUtil.deactivate(store);
     super.doDeactivate();
   }
 }

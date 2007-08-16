@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
+import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import java.util.Collection;
@@ -25,7 +25,7 @@ import java.util.Collection;
  */
 public interface IStoreReader extends IStoreAccessor
 {
-  public Collection<PackageInfo> readPackageInfos();
+  public Collection<CDOPackageInfo> readPackageInfos();
 
   /**
    * Demand loads a given package proxy that has been created on startup of the
@@ -43,16 +43,4 @@ public interface IStoreReader extends IStoreAccessor
   public CDORevision readRevision(CDOID id, long timeStamp);
 
   public CDOClassRef readObjectType(CDOID id);
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface PackageInfo
-  {
-    public String getPackageURI();
-
-    public boolean isDynamic();
-
-    public CDOIDRange getMetaIDRange();
-  }
 }

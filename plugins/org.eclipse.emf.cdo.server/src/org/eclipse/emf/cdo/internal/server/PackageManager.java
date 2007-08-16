@@ -12,10 +12,10 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
+import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
-import org.eclipse.emf.cdo.server.IStoreReader.PackageInfo;
 
 import org.eclipse.net4j.util.transaction.ITransaction;
 import org.eclipse.net4j.util.transaction.ITransactionalOperation;
@@ -70,8 +70,8 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
   {
     super.doActivate();
     IStoreReader storeReader = repository.getStore().getReader();
-    Collection<PackageInfo> packageInfos = storeReader.readPackageInfos();
-    for (PackageInfo info : packageInfos)
+    Collection<CDOPackageInfo> packageInfos = storeReader.readPackageInfos();
+    for (CDOPackageInfo info : packageInfos)
     {
       addPackage(new CDOPackageImpl(this, info.getPackageURI(), info.isDynamic(), info.getMetaIDRange()));
     }

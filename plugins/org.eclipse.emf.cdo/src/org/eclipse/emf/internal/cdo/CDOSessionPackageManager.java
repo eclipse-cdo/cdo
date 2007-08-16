@@ -13,13 +13,13 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.LoadPackageRequest;
-import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult.PackageInfo;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.util.Collection;
@@ -42,9 +42,9 @@ public class CDOSessionPackageManager extends CDOPackageManagerImpl
     return session;
   }
 
-  public void addPackageProxies(Collection<PackageInfo> packageInfos)
+  public void addPackageProxies(Collection<CDOPackageInfo> packageInfos)
   {
-    for (PackageInfo info : packageInfos)
+    for (CDOPackageInfo info : packageInfos)
     {
       String packageURI = info.getPackageURI();
       boolean dynamic = info.isDynamic();

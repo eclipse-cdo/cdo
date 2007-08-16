@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
+import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreReader;
@@ -73,33 +74,19 @@ public class DBStoreReader implements IStoreReader
     return store;
   }
 
-  public Collection<PackageInfo> readPackageInfos()
+  public Collection<CDOPackageInfo> readPackageInfos()
   {
-    final Collection<PackageInfo> result = new ArrayList(0);
+    final Collection<CDOPackageInfo> result = new ArrayList(0);
     IDBRowHandler rowHandler = new IDBRowHandler()
     {
       public boolean handle(int row, final Object... values)
       {
-        result.add(new PackageInfo()
-        {
-          public String getPackageURI()
-          {
-            return (String)values[0];
-          }
-
-          public boolean isDynamic()
-          {
-            return values[1] != null;
-          }
-
-          public CDOIDRange getMetaIDRange()
-          {
-            long rangeLB = (Long)values[2];
-            long rangeUB = (Long)values[3];
-            return CDOIDRangeImpl.create(rangeLB, rangeUB);
-          }
-        });
-
+        String packageURI = (String)values[0];
+        boolean dynamic = values[1] != null;
+        long rangeLB = (Long)values[2];
+        long rangeUB = (Long)values[3];
+        CDOIDRange metaIDRange = CDOIDRangeImpl.create(rangeLB, rangeUB);
+        result.add(new CDOPackageInfo(packageURI, dynamic, metaIDRange));
         return true;
       }
     };

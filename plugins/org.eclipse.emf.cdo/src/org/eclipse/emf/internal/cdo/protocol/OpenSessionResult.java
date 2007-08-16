@@ -11,6 +11,7 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public final class OpenSessionResult
 
   private String repositoryUUID;
 
-  private List<PackageInfo> packageInfos = new ArrayList();
+  private List<CDOPackageInfo> packageInfos = new ArrayList();
 
   public OpenSessionResult(int sessionID, String repositoryUUID)
   {
@@ -42,47 +43,13 @@ public final class OpenSessionResult
     return repositoryUUID;
   }
 
-  public List<PackageInfo> getPackageInfos()
+  public List<CDOPackageInfo> getPackageInfos()
   {
     return packageInfos;
   }
 
   void addPackageInfo(String packageURI, boolean dynamic, CDOIDRange metaIDRange)
   {
-    packageInfos.add(new PackageInfo(packageURI, dynamic, metaIDRange));
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class PackageInfo
-  {
-    private String packageURI;
-
-    private boolean dynamic;
-
-    private CDOIDRange metaIDRange;
-
-    public PackageInfo(String packageURI, boolean dynamic, CDOIDRange metaIDRange)
-    {
-      this.packageURI = packageURI;
-      this.dynamic = dynamic;
-      this.metaIDRange = metaIDRange;
-    }
-
-    public String getPackageURI()
-    {
-      return packageURI;
-    }
-
-    public boolean isDynamic()
-    {
-      return dynamic;
-    }
-
-    public CDOIDRange getMetaIDRange()
-    {
-      return metaIDRange;
-    }
+    packageInfos.add(new CDOPackageInfo(packageURI, dynamic, metaIDRange));
   }
 }

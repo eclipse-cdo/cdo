@@ -12,11 +12,12 @@ package org.eclipse.net4j.util.internal.ui.views;
 
 import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.ui.actions.SafeAction;
+import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.swt.graphics.Image;
@@ -52,7 +53,7 @@ public class Net4jItemProvider extends ContainerItemProvider
   /**
    * @author Eike Stepper
    */
-  public class RemoveAction extends SafeAction
+  public class RemoveAction extends LongRunningAction
   {
     private ITreeSelection selection;
 
@@ -63,7 +64,7 @@ public class Net4jItemProvider extends ContainerItemProvider
     }
 
     @Override
-    protected void doRun() throws Exception
+    protected void doRun(IProgressMonitor monitor) throws Exception
     {
       for (Iterator it = selection.iterator(); it.hasNext();)
       {

@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
@@ -74,7 +74,7 @@ public abstract class MappingStrategy implements IMappingStrategy
     return getType();
   }
 
-  public IDBTable[] map(CDOPackage cdoPackage)
+  public Set<IDBTable> map(CDOPackageImpl[] cdoPackages)
   {
     if (schema == null)
     {
@@ -82,28 +82,31 @@ public abstract class MappingStrategy implements IMappingStrategy
     }
 
     Set<IDBTable> affectedTables = new HashSet();
-    ((DBPackageInfo)cdoPackage.getServerInfo()).setSchema(schema);
-    for (CDOClass cdoClass : cdoPackage.getClasses())
+    for (CDOPackageImpl cdoPackage : cdoPackages)
     {
-      IDBTable table = map(schema, cdoClass, affectedTables);
-      if (table != null)
+      ((DBPackageInfo)cdoPackage.getServerInfo()).setSchema(schema);
+      for (CDOClass cdoClass : cdoPackage.getClasses())
       {
-        ((DBClassInfo)cdoClass.getServerInfo()).setTable(table);
-        affectedTables.add(table);
-      }
-
-      for (CDOFeature cdoFeature : cdoClass.getAllFeatures())
-      {
-        IDBField field = map(schema, cdoClass, cdoFeature, affectedTables);
+        IDBTable table = map(schema, cdoClass, affectedTables);
         if (table != null)
         {
-          ((DBFeatureInfo)cdoFeature.getServerInfo()).setField(field);
-          affectedTables.add(field.getTable());
+          ((DBClassInfo)cdoClass.getServerInfo()).setTable(table);
+          affectedTables.add(table);
+        }
+
+        for (CDOFeature cdoFeature : cdoClass.getAllFeatures())
+        {
+          IDBField field = map(schema, cdoClass, cdoFeature, affectedTables);
+          if (table != null)
+          {
+            ((DBFeatureInfo)cdoFeature.getServerInfo()).setField(field);
+            affectedTables.add(field.getTable());
+          }
         }
       }
     }
 
-    return affectedTables.toArray(new IDBTable[affectedTables.size()]);
+    return affectedTables;
   }
 
   /**

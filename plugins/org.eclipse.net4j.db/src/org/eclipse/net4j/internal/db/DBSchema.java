@@ -14,7 +14,6 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBSchema;
-import org.eclipse.net4j.db.IDBTable;
 
 import javax.sql.DataSource;
 
@@ -98,7 +97,7 @@ public class DBSchema implements IDBSchema
 
   public void create(IDBAdapter dbAdapter, Connection connection)
   {
-    dbAdapter.createTables(tables.values().toArray(new IDBTable[tables.size()]), connection);
+    dbAdapter.createTables(tables.values(), connection);
   }
 
   @Override

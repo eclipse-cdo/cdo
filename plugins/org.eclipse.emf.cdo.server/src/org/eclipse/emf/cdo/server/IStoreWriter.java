@@ -42,7 +42,7 @@ public interface IStoreWriter extends IStoreReader
    * @see CDOClassProxy#getPackageURI()
    * @see CDOClassProxy#getClassifierID()
    */
-  public void writePackage(CDOPackageImpl cdoPackage);
+  public void writePackages(CDOPackageImpl[] cdoPackages);
 
   public void writeRevision(CDORevisionImpl revision);
 }

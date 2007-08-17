@@ -44,8 +44,9 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
     for (CDOPackageImpl cdoPackage : cdoPackages)
     {
       cdoPackage.setPackageManager(this);
-      storeTransaction.execute(new AddPackageOperation(cdoPackage));
     }
+
+    storeTransaction.execute(new AddPackagesOperation(cdoPackages));
   }
 
   @Override
@@ -80,23 +81,26 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
   /**
    * @author Eike Stepper
    */
-  private final class AddPackageOperation implements ITransactionalOperation<IStoreWriter>
+  private final class AddPackagesOperation implements ITransactionalOperation<IStoreWriter>
   {
-    private CDOPackageImpl cdoPackage;
+    private CDOPackageImpl[] cdoPackages;
 
-    private AddPackageOperation(CDOPackageImpl cdoPackage)
+    private AddPackagesOperation(CDOPackageImpl[] cdoPackages)
     {
-      this.cdoPackage = cdoPackage;
+      this.cdoPackages = cdoPackages;
     }
 
     public void phase1(IStoreWriter storeWriter) throws Exception
     {
-      storeWriter.writePackage(cdoPackage);
+      storeWriter.writePackages(cdoPackages);
     }
 
     public void phase2(IStoreWriter storeWriter)
     {
-      addPackage(cdoPackage);
+      for (CDOPackageImpl cdoPackage : cdoPackages)
+      {
+        addPackage(cdoPackage);
+      }
     }
 
     public void undoPhase1(IStoreWriter storeWriter)

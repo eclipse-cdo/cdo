@@ -51,7 +51,7 @@ public abstract class DBAdapter implements IDBAdapter
     return version;
   }
 
-  public void createTables(IDBTable[] tables, Connection connection) throws DBException
+  public void createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException
   {
     Statement statement = null;
 

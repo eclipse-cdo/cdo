@@ -25,6 +25,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBTable;
 
 import java.sql.SQLException;
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -68,27 +69,30 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
     return view;
   }
 
-  public void writePackage(CDOPackageImpl cdoPackage)
+  public void writePackages(CDOPackageImpl[] cdoPackages)
   {
-    int id = store.getNextPackageID();
-    cdoPackage.setServerInfo(new DBPackageInfo(id));
-
-    String packageURI = cdoPackage.getPackageURI();
-    String name = cdoPackage.getName();
-    String ecore = cdoPackage.getEcore();
-    boolean dynamic = cdoPackage.isDynamic();
-    CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
-    long lb = metaIDRange.getLowerBound().getValue();
-    long ub = metaIDRange.getUpperBound().getValue();
-    DBUtil.insertRow(connection, CDODBSchema.PACKAGES, id, packageURI, name, ecore, dynamic, lb, ub);
-
-    for (CDOClassImpl cdoClass : cdoPackage.getClasses())
+    for (CDOPackageImpl cdoPackage : cdoPackages)
     {
-      writeClass(cdoClass);
+      int id = store.getNextPackageID();
+      cdoPackage.setServerInfo(new DBPackageInfo(id));
+
+      String packageURI = cdoPackage.getPackageURI();
+      String name = cdoPackage.getName();
+      String ecore = cdoPackage.getEcore();
+      boolean dynamic = cdoPackage.isDynamic();
+      CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
+      long lb = metaIDRange.getLowerBound().getValue();
+      long ub = metaIDRange.getUpperBound().getValue();
+      DBUtil.insertRow(connection, CDODBSchema.PACKAGES, id, packageURI, name, ecore, dynamic, lb, ub);
+
+      for (CDOClassImpl cdoClass : cdoPackage.getClasses())
+      {
+        writeClass(cdoClass);
+      }
     }
 
     IMappingStrategy mappingStrategy = store.getMappingStrategy();
-    IDBTable[] affectedTables = mappingStrategy.map(cdoPackage);
+    Collection<IDBTable> affectedTables = mappingStrategy.map(cdoPackages);
     store.getDBAdapter().createTables(affectedTables, connection);
   }
 

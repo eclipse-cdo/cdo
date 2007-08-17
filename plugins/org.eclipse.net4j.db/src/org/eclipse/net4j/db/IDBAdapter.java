@@ -30,7 +30,7 @@ public interface IDBAdapter
 
   public Driver getJDBCDriver();
 
-  public void createTables(IDBTable[] tables, Connection connection) throws DBException;
+  public void createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException;
 
   public void createTable(IDBTable table, Statement statement) throws DBException;
 }

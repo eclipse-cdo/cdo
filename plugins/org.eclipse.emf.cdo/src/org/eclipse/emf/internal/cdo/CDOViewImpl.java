@@ -343,7 +343,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     if (shouldBeCDOID instanceof CDOID)
     {
       CDOID id = (CDOID)shouldBeCDOID;
-      if (TRACER.isEnabled())
+      if (TRACER.isEnabled() && id != idOrObject)
       {
         TRACER.format("Converted dangling reference: {0} --> {1}", idOrObject, id);
       }

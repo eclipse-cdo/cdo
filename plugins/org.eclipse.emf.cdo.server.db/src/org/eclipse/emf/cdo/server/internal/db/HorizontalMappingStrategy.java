@@ -49,6 +49,11 @@ public class HorizontalMappingStrategy extends MappingStrategy
   @Override
   protected IDBField map(IDBSchema schema, CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables)
   {
+    if (cdoClass.isAbstract())
+    {
+      return null;
+    }
+
     DBClassInfo classInfo = (DBClassInfo)cdoClass.getServerInfo();
     IDBTable table = classInfo.getTable();
     return table.addField(cdoFeature.getName(), getDBType(cdoFeature.getType()));

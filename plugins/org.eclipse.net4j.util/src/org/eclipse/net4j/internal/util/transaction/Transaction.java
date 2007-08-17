@@ -53,7 +53,7 @@ public class Transaction<CONTEXT> implements ITransaction<CONTEXT>
       operation.phase1(context);
       operations.add(operation);
     }
-    catch (TransactionException ex)
+    catch (RuntimeException ex)
     {
       rollback();
       throw ex;

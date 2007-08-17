@@ -43,20 +43,20 @@ public class VerticalMappingStrategy extends MappingStrategy
   }
 
   @Override
-  protected IDBTable map(IDBSchema schema, CDOClass cdoClass, Set<IDBTable> affectedTables)
+  protected IDBTable map(CDOClass cdoClass, Set<IDBTable> affectedTables)
   {
     if (cdoClass.isRoot())
     {
       return null;
     }
 
-    IDBTable table = schema.addTable(cdoClass.getName());
+    IDBTable table = getSchema().addTable(cdoClass.getName());
     initTable(table, false);
     return table;
   }
 
   @Override
-  protected IDBField map(IDBSchema schema, CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables)
+  protected IDBField map(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables)
   {
     if (cdoFeature.getContainingClass() != cdoClass)
     {

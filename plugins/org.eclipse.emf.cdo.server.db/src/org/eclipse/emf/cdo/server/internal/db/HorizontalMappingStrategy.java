@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
 import org.eclipse.net4j.db.IDBField;
-import org.eclipse.net4j.db.IDBSchema;
 import org.eclipse.net4j.db.IDBTable;
 
 import java.util.Set;
@@ -34,20 +33,20 @@ public class HorizontalMappingStrategy extends MappingStrategy
   }
 
   @Override
-  protected IDBTable map(IDBSchema schema, CDOClass cdoClass, Set<IDBTable> affectedTables)
+  protected IDBTable map(CDOClass cdoClass, Set<IDBTable> affectedTables)
   {
     if (cdoClass.isAbstract())
     {
       return null;
     }
 
-    IDBTable table = schema.addTable(cdoClass.getName());
+    IDBTable table = getSchema().addTable(cdoClass.getName());
     initTable(table, true);
     return table;
   }
 
   @Override
-  protected IDBField map(IDBSchema schema, CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables)
+  protected IDBField map(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables)
   {
     if (cdoClass.isAbstract())
     {

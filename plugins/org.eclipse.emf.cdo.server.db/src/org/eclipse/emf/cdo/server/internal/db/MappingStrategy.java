@@ -113,7 +113,7 @@ public abstract class MappingStrategy implements IMappingStrategy
       for (CDOClass cdoClass : cdoPackage.getClasses())
       {
         cdoClasses.add(cdoClass);
-        IDBTable table = map(schema, cdoClass, affectedTables);
+        IDBTable table = map(cdoClass, affectedTables);
         if (table != null)
         {
           ((DBClassInfo)cdoClass.getServerInfo()).setTable(table);
@@ -136,7 +136,7 @@ public abstract class MappingStrategy implements IMappingStrategy
 
       for (CDOFeature cdoFeature : cdoClass.getAllFeatures())
       {
-        IDBField field = map(schema, cdoClass, cdoFeature, affectedTables);
+        IDBField field = map(cdoClass, cdoFeature, affectedTables);
         if (field != null)
         {
           ((DBFeatureInfo)cdoFeature.getServerInfo()).setField(field);
@@ -158,7 +158,7 @@ public abstract class MappingStrategy implements IMappingStrategy
    *          tables. There is no need to add the returned table to this set of
    *          affected tables. The caller takes care of that.
    */
-  protected abstract IDBTable map(IDBSchema schema, CDOClass cdoClass, Set<IDBTable> affectedTables);
+  protected abstract IDBTable map(CDOClass cdoClass, Set<IDBTable> affectedTables);
 
   /**
    * @param affectedTables
@@ -166,8 +166,7 @@ public abstract class MappingStrategy implements IMappingStrategy
    *          tables. There is no need to add the table of the returned field to
    *          this set of affected tables. The caller takes care of that.
    */
-  protected abstract IDBField map(IDBSchema schema, CDOClass cdoClass, CDOFeature cdoFeature,
-      Set<IDBTable> affectedTables);
+  protected abstract IDBField map(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables);
 
   protected IDBSchema createSchema()
   {

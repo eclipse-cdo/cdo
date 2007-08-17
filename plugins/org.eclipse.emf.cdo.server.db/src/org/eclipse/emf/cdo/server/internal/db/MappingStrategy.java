@@ -24,7 +24,9 @@ import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.db.DBSchema;
 import org.eclipse.net4j.util.ImplementationError;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -76,32 +78,47 @@ public abstract class MappingStrategy implements IMappingStrategy
 
   public Set<IDBTable> map(CDOPackageImpl[] cdoPackages)
   {
+    // Lazily create the schema
     if (schema == null)
     {
       schema = createSchema();
     }
 
+    // Prepare data structures
     Set<IDBTable> affectedTables = new HashSet();
+    List<CDOClass> cdoClasses = new ArrayList();
+
+    // Map all packages before classes are mapped
     for (CDOPackageImpl cdoPackage : cdoPackages)
     {
       ((DBPackageInfo)cdoPackage.getServerInfo()).setSchema(schema);
+    }
+
+    // Map all classes before features are mapped
+    for (CDOPackageImpl cdoPackage : cdoPackages)
+    {
       for (CDOClass cdoClass : cdoPackage.getClasses())
       {
+        cdoClasses.add(cdoClass);
         IDBTable table = map(schema, cdoClass, affectedTables);
         if (table != null)
         {
           ((DBClassInfo)cdoClass.getServerInfo()).setTable(table);
           affectedTables.add(table);
         }
+      }
+    }
 
-        for (CDOFeature cdoFeature : cdoClass.getAllFeatures())
+    // Map all features
+    for (CDOClass cdoClass : cdoClasses)
+    {
+      for (CDOFeature cdoFeature : cdoClass.getAllFeatures())
+      {
+        IDBField field = map(schema, cdoClass, cdoFeature, affectedTables);
+        if (field != null)
         {
-          IDBField field = map(schema, cdoClass, cdoFeature, affectedTables);
-          if (table != null)
-          {
-            ((DBFeatureInfo)cdoFeature.getServerInfo()).setField(field);
-            affectedTables.add(field.getTable());
-          }
+          ((DBFeatureInfo)cdoFeature.getServerInfo()).setField(field);
+          affectedTables.add(field.getTable());
         }
       }
     }
@@ -188,6 +205,6 @@ public abstract class MappingStrategy implements IMappingStrategy
       return DBType.LONGVARCHAR;
     }
 
-    throw new ImplementationError("Unrecognized type: " + type);
+    throw new ImplementationError("Unrecognized CDOType: " + type);
   }
 }

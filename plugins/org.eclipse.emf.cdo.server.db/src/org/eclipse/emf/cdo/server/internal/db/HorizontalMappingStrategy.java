@@ -10,12 +10,17 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
 
+import java.sql.Connection;
 import java.util.Set;
 
 /**
@@ -56,5 +61,34 @@ public class HorizontalMappingStrategy extends MappingStrategy
     DBClassInfo classInfo = (DBClassInfo)cdoClass.getServerInfo();
     IDBTable table = classInfo.getTable();
     return addField(cdoFeature, table);
+  }
+
+  public void writeRevision(Connection connection, CDORevisionImpl revision)
+  {
+  }
+
+  public CDORevision readRevision(Connection connection, CDOID id)
+  {
+    return null;
+  }
+
+  public CDORevision readRevision(Connection connection, CDOID id, long timeStamp)
+  {
+    return null;
+  }
+
+  public CDOID readResourceID(Connection connection, String path)
+  {
+    return null;
+  }
+
+  public String readResourcePath(Connection connection, CDOID id)
+  {
+    return null;
+  }
+
+  public CDOClassRef readObjectType(Connection connection, CDOID id)
+  {
+    return null;
   }
 }

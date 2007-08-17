@@ -147,5 +147,6 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
 
   public void writeRevision(CDORevisionImpl revision)
   {
+    store.getMappingStrategy().writeRevision(connection, revision);
   }
 }

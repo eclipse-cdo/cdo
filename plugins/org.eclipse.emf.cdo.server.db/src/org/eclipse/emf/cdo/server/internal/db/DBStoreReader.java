@@ -192,32 +192,27 @@ public class DBStoreReader implements IStoreReader
 
   public CDORevision readRevision(CDOID id)
   {
-    // TODO Implement method DBStoreReader.readRevision()
-    throw new UnsupportedOperationException("Not yet implemented");
+    return store.getMappingStrategy().readRevision(connection, id);
   }
 
   public CDORevision readRevision(CDOID id, long timeStamp)
   {
-    // TODO Implement method DBStoreReader.readRevision()
-    throw new UnsupportedOperationException("Not yet implemented");
+    return store.getMappingStrategy().readRevision(connection, id, timeStamp);
   }
 
   public CDOID readResourceID(String path)
   {
-    // TODO Implement method DBStoreReader.readResourceID()
-    throw new UnsupportedOperationException("Not yet implemented");
+    return store.getMappingStrategy().readResourceID(connection, path);
   }
 
   public String readResourcePath(CDOID id)
   {
-    // TODO Implement method DBStoreReader.readResourcePath()
-    throw new UnsupportedOperationException("Not yet implemented");
+    return store.getMappingStrategy().readResourcePath(connection, id);
   }
 
   public CDOClassRef readObjectType(CDOID id)
   {
-    // TODO Implement method DBStoreReader.readObjectType()
-    throw new UnsupportedOperationException("Not yet implemented");
+    return store.getMappingStrategy().readObjectType(connection, id);
   }
 
   /**

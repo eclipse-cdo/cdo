@@ -3,7 +3,9 @@
 
 	<repository name="repo1">
 		<store type="db">
-			<mappingStrategy type="horizontal"/>
+			<mappingStrategy type="horizontal">
+				<property name="referenceMapping" value="ONE_TABLE_PER_REFERENCE"/>
+			</mappingStrategy>
 			<dbAdapter name="derby"/>
 			<dataSource 
 				driverClass="org.apache.derby.jdbc.EmbeddedDataSource" 

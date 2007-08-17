@@ -30,7 +30,7 @@ public class VerticalMappingStrategy extends MappingStrategy
 
   public String getType()
   {
-    return "Vertical";
+    return "vertical";
   }
 
   @Override

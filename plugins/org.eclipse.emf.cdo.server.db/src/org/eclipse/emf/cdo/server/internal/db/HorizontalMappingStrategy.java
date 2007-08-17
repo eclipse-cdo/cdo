@@ -30,7 +30,7 @@ public class HorizontalMappingStrategy extends MappingStrategy
 
   public String getType()
   {
-    return "Horizontal";
+    return "horizontal";
   }
 
   @Override

@@ -16,12 +16,14 @@ import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBSchema;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.db.DBSchema;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
 
 import java.util.ArrayList;
@@ -35,6 +37,8 @@ import java.util.Set;
  */
 public abstract class MappingStrategy implements IMappingStrategy
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MappingStrategy.class);
+
   private IStore store;
 
   private Properties properties;
@@ -92,11 +96,20 @@ public abstract class MappingStrategy implements IMappingStrategy
     for (CDOPackageImpl cdoPackage : cdoPackages)
     {
       ((DBPackageInfo)cdoPackage.getServerInfo()).setSchema(schema);
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Mapped package: {0} --> {1}", cdoPackage, schema);
+      }
     }
 
     // Map all classes before features are mapped
     for (CDOPackageImpl cdoPackage : cdoPackages)
     {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Mapping classes of package {0}", cdoPackage);
+      }
+
       for (CDOClass cdoClass : cdoPackage.getClasses())
       {
         cdoClasses.add(cdoClass);
@@ -105,6 +118,10 @@ public abstract class MappingStrategy implements IMappingStrategy
         {
           ((DBClassInfo)cdoClass.getServerInfo()).setTable(table);
           affectedTables.add(table);
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Mapped class: {0} --> {1}", cdoClass, table);
+          }
         }
       }
     }
@@ -112,6 +129,11 @@ public abstract class MappingStrategy implements IMappingStrategy
     // Map all features
     for (CDOClass cdoClass : cdoClasses)
     {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Mapping features of class {0}", cdoClass);
+      }
+
       for (CDOFeature cdoFeature : cdoClass.getAllFeatures())
       {
         IDBField field = map(schema, cdoClass, cdoFeature, affectedTables);
@@ -119,6 +141,10 @@ public abstract class MappingStrategy implements IMappingStrategy
         {
           ((DBFeatureInfo)cdoFeature.getServerInfo()).setField(field);
           affectedTables.add(field.getTable());
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Mapped feature: {0} --> {1}", cdoFeature, field);
+          }
         }
       }
     }

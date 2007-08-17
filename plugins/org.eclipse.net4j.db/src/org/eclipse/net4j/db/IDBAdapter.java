@@ -33,4 +33,8 @@ public interface IDBAdapter
   public void createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException;
 
   public void createTable(IDBTable table, Statement statement) throws DBException;
+
+  public String mangleTableName(String name, int attempt);
+
+  public String mangleFieldName(String name, int attempt);
 }

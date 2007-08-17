@@ -90,6 +90,16 @@ public abstract class DBAdapter implements IDBAdapter
     validateTable((DBTable)table, statement);
   }
 
+  public String mangleFieldName(String name, int attempt)
+  {
+    return name;
+  }
+
+  public String mangleTableName(String name, int attempt)
+  {
+    return name;
+  }
+
   @Override
   public String toString()
   {

@@ -8,26 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db;
+package org.eclipse.emf.cdo.server.db;
+
+import org.eclipse.emf.cdo.server.IStore;
+
+import org.eclipse.net4j.db.IDBAdapter;
 
 import javax.sql.DataSource;
-
-import java.sql.Connection;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBSchema
+public interface IDBStore extends IStore
 {
-  public String getName();
+  public IMappingStrategy getMappingStrategy();
 
-  public IDBTable addTable(String name) throws DBException;
+  public IDBAdapter getDBAdapter();
 
-  public IDBTable getTable(String name);
-
-  public IDBTable[] getTables();
-
-  public void create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException;
-
-  public void create(IDBAdapter dbAdapter, Connection connection) throws DBException;
+  public DataSource getDataSource();
 }

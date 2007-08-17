@@ -98,7 +98,7 @@ public class DBStoreReader implements IStoreReader
 
   public void readPackage(final CDOPackageImpl cdoPackage)
   {
-    String where = CDODBSchema.PACKAGES_URI.toString() + " = '" + cdoPackage.getPackageURI() + "'";
+    String where = CDODBSchema.PACKAGES_URI.getName() + " = '" + cdoPackage.getPackageURI() + "'";
     Object[] values = DBUtil.select(connection, where, CDODBSchema.PACKAGES_ID, CDODBSchema.PACKAGES_NAME,
         CDODBSchema.PACKAGES_ECORE);
     cdoPackage.setServerInfo(new DBPackageInfo((Integer)values[0]));
@@ -129,7 +129,7 @@ public class DBStoreReader implements IStoreReader
       }
     };
 
-    String where = CDODBSchema.CLASSES_PACKAGE.toString() + " = " + cdoPackage.getServerInfo();
+    String where = CDODBSchema.CLASSES_PACKAGE.getName() + " = " + cdoPackage.getServerInfo();
     DBUtil.select(connection, rowHandler, where, CDODBSchema.CLASSES_ID, CDODBSchema.CLASSES_CLASSIFIER,
         CDODBSchema.CLASSES_NAME, CDODBSchema.CLASSES_ABSTRACT);
   }
@@ -147,7 +147,7 @@ public class DBStoreReader implements IStoreReader
       }
     };
 
-    String where = CDODBSchema.SUPERTYPES_TYPE.toString() + " = " + classID;
+    String where = CDODBSchema.SUPERTYPES_TYPE.getName() + " = " + classID;
     DBUtil.select(connection, rowHandler, where, CDODBSchema.SUPERTYPES_SUPERTYPE_PACKAGE,
         CDODBSchema.SUPERTYPES_SUPERTYPE_CLASSIFIER);
   }
@@ -184,7 +184,7 @@ public class DBStoreReader implements IStoreReader
       }
     };
 
-    String where = CDODBSchema.FEATURES_CLASS.toString() + " = " + classID;
+    String where = CDODBSchema.FEATURES_CLASS.getName() + " = " + classID;
     DBUtil.select(connection, rowHandler, where, CDODBSchema.FEATURES_ID, CDODBSchema.FEATURES_FEATURE,
         CDODBSchema.FEATURES_NAME, CDODBSchema.FEATURES_TYPE, CDODBSchema.FEATURES_REFERENCE_PACKAGE,
         CDODBSchema.FEATURES_REFERENCE_CLASSIFIER, CDODBSchema.FEATURES_MANY, CDODBSchema.FEATURES_CONTAINMENT);

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.server.Store;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
@@ -27,7 +28,7 @@ import java.sql.Connection;
 /**
  * @author Eike Stepper
  */
-public class DBStore extends Store
+public class DBStore extends Store implements IDBStore
 {
   private static final String TYPE = "db";
 

@@ -50,7 +50,7 @@ public class VerticalMappingStrategy extends MappingStrategy
       return null;
     }
 
-    IDBTable table = getSchema().addTable(cdoClass.getName());
+    IDBTable table = addTable(cdoClass);
     initTable(table, false);
     return table;
   }
@@ -65,6 +65,6 @@ public class VerticalMappingStrategy extends MappingStrategy
 
     DBClassInfo classInfo = (DBClassInfo)cdoClass.getServerInfo();
     IDBTable table = classInfo.getTable();
-    return table.addField(cdoFeature.getName(), getDBType(cdoFeature.getType()));
+    return addField(cdoFeature, table);
   }
 }

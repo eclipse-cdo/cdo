@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.db;
 
+import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBIndex;
@@ -79,7 +80,7 @@ public class DBTable implements IDBTable
     schema.assertUnlocked();
     if (getField(name) != null)
     {
-      throw new IllegalStateException("DBField exists: " + name);
+      throw new DBException("DBField exists: " + name);
     }
 
     DBField field = new DBField(this, name, type, precision, scale, notNull, fields.size());

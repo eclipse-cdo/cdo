@@ -43,12 +43,12 @@ public class DBSchema implements IDBSchema
     return name;
   }
 
-  public DBTable addTable(String name)
+  public DBTable addTable(String name) throws DBException
   {
     assertUnlocked();
     if (tables.containsKey(name))
     {
-      throw new IllegalStateException("DBTable exists: " + name);
+      throw new DBException("DBTable exists: " + name);
     }
 
     DBTable table = new DBTable(this, name);
@@ -76,7 +76,7 @@ public class DBSchema implements IDBSchema
     return locked = true;
   }
 
-  public void create(IDBAdapter dbAdapter, DataSource dataSource)
+  public void create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
   {
     Connection connection = null;
 
@@ -95,7 +95,7 @@ public class DBSchema implements IDBSchema
     }
   }
 
-  public void create(IDBAdapter dbAdapter, Connection connection)
+  public void create(IDBAdapter dbAdapter, Connection connection) throws DBException
   {
     dbAdapter.createTables(tables.values(), connection);
   }
@@ -106,11 +106,11 @@ public class DBSchema implements IDBSchema
     return name;
   }
 
-  void assertUnlocked()
+  void assertUnlocked() throws DBException
   {
     if (locked)
     {
-      throw new IllegalStateException("DBSchema locked: " + name);
+      throw new DBException("DBSchema locked: " + name);
     }
   }
 }

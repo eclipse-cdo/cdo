@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.server.IStore;
 
 import org.eclipse.net4j.db.IDBSchema;
 import org.eclipse.net4j.db.IDBTable;
@@ -26,15 +25,15 @@ public interface IMappingStrategy
 {
   public String getType();
 
-  public IStore getStore();
+  public IDBSchema getSchema();
 
-  public void setStore(IStore store);
+  public IDBStore getStore();
+
+  public void setStore(IDBStore store);
 
   public Properties getProperties();
 
   public void setProperties(Properties properties);
-
-  public IDBSchema getSchema();
 
   /**
    * @return A collection of the affected tables.

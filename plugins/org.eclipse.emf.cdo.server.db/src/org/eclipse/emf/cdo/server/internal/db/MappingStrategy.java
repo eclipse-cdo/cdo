@@ -14,10 +14,11 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
-import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
+import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBSchema;
@@ -39,7 +40,7 @@ public abstract class MappingStrategy implements IMappingStrategy
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MappingStrategy.class);
 
-  private IStore store;
+  private IDBStore store;
 
   private Properties properties;
 
@@ -49,12 +50,12 @@ public abstract class MappingStrategy implements IMappingStrategy
   {
   }
 
-  public IStore getStore()
+  public IDBStore getStore()
   {
     return store;
   }
 
-  public void setStore(IStore store)
+  public void setStore(IDBStore store)
   {
     this.store = store;
   }
@@ -168,6 +169,16 @@ public abstract class MappingStrategy implements IMappingStrategy
    */
   protected abstract IDBField map(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables);
 
+  protected String mangleTableName(String name, int attempt)
+  {
+    return store.getDBAdapter().mangleTableName(name, attempt);
+  }
+
+  protected String mangleFieldName(String name, int attempt)
+  {
+    return store.getDBAdapter().mangleFieldName(name, attempt);
+  }
+
   protected IDBSchema createSchema()
   {
     String name = store.getRepository().getName();
@@ -180,6 +191,37 @@ public abstract class MappingStrategy implements IMappingStrategy
     if (full)
     {
       table.addField("cdo_class", DBType.INTEGER);
+    }
+  }
+
+  protected IDBTable addTable(CDOClass cdoClass)
+  {
+    for (int attempt = 0;; ++attempt)
+    {
+      try
+      {
+        String tableName = mangleTableName(cdoClass.getName(), attempt);
+        return getSchema().addTable(tableName);
+      }
+      catch (DBException ignore)
+      {
+      }
+    }
+  }
+
+  protected IDBField addField(CDOFeature cdoFeature, IDBTable table) throws DBException
+  {
+    for (int attempt = 0;; ++attempt)
+    {
+      try
+      {
+        String fieldName = mangleFieldName(cdoFeature.getName(), attempt);
+        DBType fieldType = getDBType(cdoFeature.getType());
+        return table.addField(fieldName, fieldType);
+      }
+      catch (DBException ignore)
+      {
+      }
     }
   }
 

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.server.Store;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
@@ -77,7 +78,7 @@ public class DBStore extends Store implements IDBStore
     return dataSource;
   }
 
-  public IStoreReader getReader() throws DBException
+  public IStoreReader getReader(ISession session) throws DBException
   {
     return new DBStoreReader(this);
   }

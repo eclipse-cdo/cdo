@@ -31,7 +31,7 @@ public abstract class CDOReadIndication extends CDOServerIndication
   protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
     IStore store = getStore();
-    IStoreReader storeReader = store.getReader();
+    IStoreReader storeReader = store.getReader(getSession());
 
     try
     {

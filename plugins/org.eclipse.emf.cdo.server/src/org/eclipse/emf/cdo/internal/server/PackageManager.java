@@ -70,7 +70,7 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    IStoreReader storeReader = repository.getStore().getReader();
+    IStoreReader storeReader = repository.getStore().getReader(null);
     Collection<CDOPackageInfo> packageInfos = storeReader.readPackageInfos();
     for (CDOPackageInfo info : packageInfos)
     {

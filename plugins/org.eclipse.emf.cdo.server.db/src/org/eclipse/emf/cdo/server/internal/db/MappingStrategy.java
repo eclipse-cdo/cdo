@@ -140,7 +140,7 @@ public abstract class MappingStrategy implements IMappingStrategy
         IDBField field = map(cdoClass, cdoFeature, affectedTables);
         if (field != null)
         {
-          ((DBFeatureInfo)cdoFeature.getServerInfo()).setField(field);
+          ((DBFeatureInfo)cdoFeature.getServerInfo()).addField(cdoClass, field);
           affectedTables.add(field.getTable());
           if (TRACER.isEnabled())
           {

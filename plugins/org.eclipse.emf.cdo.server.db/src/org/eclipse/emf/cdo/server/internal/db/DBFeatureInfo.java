@@ -12,6 +12,9 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.net4j.db.IDBField;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Eike Stepper
  */
@@ -19,7 +22,7 @@ public final class DBFeatureInfo
 {
   private int id;
 
-  private IDBField field;
+  private Map<Object, IDBField> fields;
 
   public DBFeatureInfo(int id)
   {
@@ -31,13 +34,35 @@ public final class DBFeatureInfo
     return id;
   }
 
-  public IDBField getField()
+  public IDBField getField(Object context)
   {
-    return field;
+    return fields == null ? null : fields.get(context);
   }
 
-  public void setField(IDBField field)
+  public void addField(Object context, IDBField field)
   {
-    this.field = field;
+    if (fields == null)
+    {
+      fields = new HashMap();
+    }
+    else
+    {
+      if (fields.containsKey(context))
+      {
+        throw new IllegalStateException("Field " + field + " is already added for context " + context);
+      }
+    }
+
+    fields.put(context, field);
+  }
+
+  public IDBField removeField(Object context)
+  {
+    if (fields == null)
+    {
+      return null;
+    }
+
+    return fields.remove(context);
   }
 }

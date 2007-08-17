@@ -65,6 +65,7 @@ public class HorizontalMappingStrategy extends MappingStrategy
 
   public void writeRevision(Connection connection, CDORevisionImpl revision)
   {
+    revision.getCDOClass();
   }
 
   public CDORevision readRevision(Connection connection, CDOID id)

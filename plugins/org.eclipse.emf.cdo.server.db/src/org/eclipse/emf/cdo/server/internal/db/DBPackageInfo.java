@@ -38,6 +38,14 @@ public final class DBPackageInfo
 
   public void setSchema(IDBSchema schema)
   {
-    this.schema = schema;
+    if (this.schema != schema)
+    {
+      if (this.schema != null)
+      {
+        throw new IllegalStateException("Schema " + schema + "is already set");
+      }
+
+      this.schema = schema;
+    }
   }
 }

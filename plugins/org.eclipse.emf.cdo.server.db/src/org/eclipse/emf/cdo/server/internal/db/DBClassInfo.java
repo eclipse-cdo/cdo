@@ -38,6 +38,14 @@ public final class DBClassInfo
 
   public void setTable(IDBTable table)
   {
-    this.table = table;
+    if (this.table != table)
+    {
+      if (this.table != null)
+      {
+        throw new IllegalStateException("Table is already set");
+      }
+
+      this.table = table;
+    }
   }
 }

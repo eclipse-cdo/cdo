@@ -90,14 +90,14 @@ public abstract class DBAdapter implements IDBAdapter
     validateTable((DBTable)table, statement);
   }
 
-  public String mangleFieldName(String name, int attempt)
-  {
-    return name;
-  }
-
   public String mangleTableName(String name, int attempt)
   {
-    return name;
+    return mangleName(name, getMaximumTableNameLength(), attempt);
+  }
+
+  public String mangleFieldName(String name, int attempt)
+  {
+    return mangleName(name, getMaximumFieldNameLength(), attempt);
   }
 
   @Override
@@ -175,6 +175,43 @@ public abstract class DBAdapter implements IDBAdapter
     }
 
     throw new IllegalArgumentException("Unknown type: " + type);
+  }
+
+  protected int getMaximumTableNameLength()
+  {
+    return 128;
+  }
+
+  protected int getMaximumFieldNameLength()
+  {
+    return 128;
+  }
+
+  protected String mangleName(String name, int max, int attempt)
+  {
+    if (isReservedWord(name))
+    {
+      String suffix = "_" + String.valueOf(attempt);
+      if (name.length() + suffix.length() > max)
+      {
+        name = name.substring(0, max - suffix.length()) + suffix;
+      }
+      else
+      {
+        name += suffix;
+      }
+    }
+    else if (name.length() > max)
+    {
+      name = name.substring(0, max);
+    }
+
+    return name;
+  }
+
+  protected boolean isReservedWord(String word)
+  {
+    return false;
   }
 
   protected void validateTable(DBTable table, Statement statement) throws DBException

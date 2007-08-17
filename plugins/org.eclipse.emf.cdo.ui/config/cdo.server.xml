@@ -3,7 +3,7 @@
 
 	<repository name="repo1">
 		<store type="db">
-			<mappingStrategy type="Horizontal"/>
+			<mappingStrategy type="horizontal"/>
 			<dbAdapter name="derby"/>
 			<dataSource 
 				driverClass="org.apache.derby.jdbc.EmbeddedDataSource" 

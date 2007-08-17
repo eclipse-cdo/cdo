@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util;
 
+import java.lang.reflect.Array;
+
 /**
  * @author Eike Stepper
  */
@@ -37,5 +39,13 @@ public final class ObjectUtil
     }
 
     return o.hashCode();
+  }
+
+  public static <T> T[] appendtoArray(T[] array, T... elements)
+  {
+    T[] result = (T[])Array.newInstance(array.getClass().getComponentType(), array.length + elements.length);
+    System.arraycopy(array, 0, result, 0, array.length);
+    System.arraycopy(elements, 0, result, array.length, elements.length);
+    return result;
   }
 }

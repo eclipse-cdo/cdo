@@ -19,6 +19,10 @@ public class Pair<T1, T2>
 
   private T2 element2;
 
+  public Pair()
+  {
+  }
+
   public Pair(T1 element1, T2 element2)
   {
     this.element1 = element1;

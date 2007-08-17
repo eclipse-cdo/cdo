@@ -3,10 +3,24 @@
 
 	<repository name="repo1">
 		<store type="db">
+			<!-- mode: OFF | EXPRESS | NORMAL | GUARANTEED -->
+			<invalidationStrategy mode="EXPRESS"/>
+			
+			<!-- type: horizontal | vertical | <any user-contributed type> -->
 			<mappingStrategy type="horizontal">
-				<property name="referenceMapping" value="ONE_TABLE_PER_REFERENCE"/>
+				<!-- ONE_TABLE_PER_REFERENCE | ONE_TABLE_PER_CLASS | ONE_TABLE_PER_PACKAGE | ONE_TABLE_PER_REPOSITORY | LIKE_ATTRIBUTES -->
+				<property name="toManyReferences" value="ONE_TABLE_PER_REFERENCE"/>
+
+				<!-- LIKE_ATTRIBUTES | LIKE_TO_MANY_REFERENCES -->
+				<property name="toOneReferences" value="LIKE_ATTRIBUTES"/>
+				
+				<!-- MODEL | STRATEGY -->
+				<property name="mappingPrecedence" value="MODEL"/>
 			</mappingStrategy>
+			
+			<!-- name: <any user-contributed DBAdapter name> -->
 			<dbAdapter name="derby"/>
+			
 			<dataSource 
 				driverClass="org.apache.derby.jdbc.EmbeddedDataSource" 
 				databaseName="C:/temp/cdodb1"

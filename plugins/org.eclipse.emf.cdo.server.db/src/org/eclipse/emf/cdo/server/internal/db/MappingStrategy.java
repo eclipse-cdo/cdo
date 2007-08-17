@@ -26,12 +26,18 @@ import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.db.DBSchema;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ObjectUtil;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -45,6 +51,8 @@ public abstract class MappingStrategy implements IMappingStrategy
   private Properties properties;
 
   private IDBSchema schema;
+
+  private Map<CDOClass, ClassMapping> classMappings = new HashMap();
 
   public MappingStrategy()
   {
@@ -169,6 +177,28 @@ public abstract class MappingStrategy implements IMappingStrategy
    */
   protected abstract IDBField map(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables);
 
+  protected ClassMapping getClassMapping(CDOClass cdoClass)
+  {
+    ClassMapping classMapping = classMappings.get(cdoClass);
+    if (classMapping == null)
+    {
+      classMapping = new ClassMapping(cdoClass);
+      classMappings.put(cdoClass, classMapping);
+      for (CDOFeature feature : cdoClass.getAllFeatures())
+      {
+        DBFeatureInfo featureInfo = (DBFeatureInfo)feature.getServerInfo();
+        IDBField field = featureInfo.getField(cdoClass);
+        if (field != null)
+        {
+          classMapping.addFeatureMapping(feature, field);
+        }
+      }
+    }
+
+    classMapping.sortFeatureMappings();
+    return classMapping;
+  }
+
   protected String mangleTableName(String name, int attempt)
   {
     return store.getDBAdapter().mangleTableName(name, attempt);
@@ -273,5 +303,109 @@ public abstract class MappingStrategy implements IMappingStrategy
     }
 
     throw new ImplementationError("Unrecognized CDOType: " + type);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class ClassMapping
+  {
+    private CDOClass cdoClass;
+
+    private Map<IDBTable, FeatureMapping[]> tables;
+
+    public ClassMapping(CDOClass cdoClass)
+    {
+      this.cdoClass = cdoClass;
+    }
+
+    public CDOClass getCdoClass()
+    {
+      return cdoClass;
+    }
+
+    public Map<IDBTable, FeatureMapping[]> getTables()
+    {
+      return tables;
+    }
+
+    public void addFeatureMapping(CDOFeature feature, IDBField field)
+    {
+      if (tables == null)
+      {
+        tables = new HashMap();
+      }
+
+      IDBTable table = field.getTable();
+      FeatureMapping featureMapping = new FeatureMapping(feature, field);
+      FeatureMapping[] featureMappings = tables.get(table);
+      if (featureMappings == null)
+      {
+        FeatureMapping[] newFeatureMappings = { featureMapping };
+        tables.put(table, newFeatureMappings);
+      }
+      else
+      {
+        FeatureMapping[] newFeatureMappings = ObjectUtil.appendtoArray(featureMappings, featureMapping);
+        tables.put(table, newFeatureMappings);
+      }
+    }
+
+    public void sortFeatureMappings()
+    {
+      for (Entry<IDBTable, FeatureMapping[]> entry : tables.entrySet())
+      {
+        FeatureMapping[] featureMappings = entry.getValue();
+        Arrays.sort(featureMappings);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class FeatureMapping implements Comparable
+  {
+    private CDOFeature feature;
+
+    private IDBField field;
+
+    public FeatureMapping(CDOFeature feature, IDBField field)
+    {
+      this.feature = feature;
+      this.field = field;
+    }
+
+    public CDOFeature getFeature()
+    {
+      return feature;
+    }
+
+    public IDBField getField()
+    {
+      return field;
+    }
+
+    public IDBTable getTable()
+    {
+      return field.getTable();
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("FeatureMapping[{0}, {1}]", feature, field);
+    }
+
+    public int compareTo(Object o)
+    {
+      if (o instanceof FeatureMapping)
+      {
+        FeatureMapping that = (FeatureMapping)o;
+        return new Integer(field.getPosition()).compareTo(that.getField().getPosition());
+      }
+
+      throw new IllegalArgumentException("Not a FeatureMapping: " + o);
+    }
   }
 }

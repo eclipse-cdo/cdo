@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -17,11 +18,14 @@ import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
 
 import java.sql.Connection;
+import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -65,7 +69,16 @@ public class HorizontalMappingStrategy extends MappingStrategy
 
   public void writeRevision(Connection connection, CDORevisionImpl revision)
   {
-    revision.getCDOClass();
+    CDOClassImpl cdoClass = revision.getCDOClass();
+    ClassMapping classMapping = getClassMapping(cdoClass);
+    Map<IDBTable, FeatureMapping[]> tables = classMapping.getTables();
+    for (Entry<IDBTable, FeatureMapping[]> entry : tables.entrySet())
+    {
+      IDBTable table = entry.getKey();
+      FeatureMapping[] featureMappings = entry.getValue();
+
+      DBUtil.insertRow(connection, table);
+    }
   }
 
   public CDORevision readRevision(Connection connection, CDOID id)

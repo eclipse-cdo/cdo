@@ -238,13 +238,10 @@ public final class ZIPUtil
 
       final int baseLength = sourceFolder.getAbsolutePath().length();
       List<File> list = IOUtil.listBreadthFirst(sourceFolder);
-      Collections.sort(list, new Comparator()
+      Collections.sort(list, new Comparator<File>()
       {
-        public int compare(Object o1, Object o2)
+        public int compare(File f1, File f2)
         {
-          File f1 = (File)o1;
-          File f2 = (File)o2;
-
           String path1 = getPath(f1, baseLength);
           String path2 = getPath(f2, baseLength);
           if (path1.length() == 0) return ORDER_KEEP;

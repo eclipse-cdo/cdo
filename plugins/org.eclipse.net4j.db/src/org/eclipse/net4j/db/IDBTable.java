@@ -15,12 +15,8 @@ import org.eclipse.net4j.internal.db.DBField;
 /**
  * @author Eike Stepper
  */
-public interface IDBTable
+public interface IDBTable extends IDBElement
 {
-  public IDBSchema getSchema();
-
-  public String getName();
-
   public IDBField addField(String name, DBType type);
 
   public DBField addField(String name, DBType type, boolean notNull);

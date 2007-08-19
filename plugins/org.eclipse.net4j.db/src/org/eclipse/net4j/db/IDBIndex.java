@@ -13,11 +13,11 @@ package org.eclipse.net4j.db;
 /**
  * @author Eike Stepper
  */
-public interface IDBIndex
+public interface IDBIndex extends IDBElement
 {
-  public IDBTable geTable();
+  public IDBTable getTable();
 
-  public Type geType();
+  public Type getType();
 
   public IDBField getField(int index);
 
@@ -26,8 +26,6 @@ public interface IDBIndex
   public IDBField[] getFields();
 
   public int getPosition();
-
-  public String getName();
 
   /**
    * @author Eike Stepper

@@ -13,13 +13,11 @@ package org.eclipse.net4j.db;
 /**
  * @author Eike Stepper
  */
-public interface IDBField
+public interface IDBField extends IDBElement
 {
   public static final int DEFAULT = -1;
 
   public IDBTable getTable();
-
-  public String getName();
 
   public DBType getType();
 

@@ -10,22 +10,18 @@
  **************************************************************************/
 package org.eclipse.net4j.db;
 
-import javax.sql.DataSource;
-
-import java.sql.Connection;
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBSchema extends IDBElement
+public interface IDBElement
 {
-  public IDBTable addTable(String name) throws DBException;
+  public IDBSchema getSchema();
 
-  public IDBTable getTable(String name);
+  public String getName();
 
-  public IDBTable[] getTables();
+  public String getFullName();
 
-  public void create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException;
-
-  public void create(IDBAdapter dbAdapter, Connection connection) throws DBException;
+  public Properties getProperties();
 }

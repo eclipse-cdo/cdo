@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class DBSchema implements IDBSchema
+public class DBSchema extends DBElement implements IDBSchema
 {
   private String name;
 
@@ -36,6 +36,16 @@ public class DBSchema implements IDBSchema
   public DBSchema(String name)
   {
     this.name = name;
+  }
+
+  public String getFullName()
+  {
+    return name;
+  }
+
+  public IDBSchema getSchema()
+  {
+    return this;
   }
 
   public String getName()
@@ -98,12 +108,6 @@ public class DBSchema implements IDBSchema
   public void create(IDBAdapter dbAdapter, Connection connection) throws DBException
   {
     dbAdapter.createTables(tables.values(), connection);
-  }
-
-  @Override
-  public String toString()
-  {
-    return name;
   }
 
   void assertUnlocked() throws DBException

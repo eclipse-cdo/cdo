@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class DBTable implements IDBTable
+public class DBTable extends DBElement implements IDBTable
 {
   private DBSchema schema;
 
@@ -144,7 +144,7 @@ public class DBTable implements IDBTable
   {
     for (IDBIndex index : indices)
     {
-      if (index.geType() == IDBIndex.Type.PRIMARY_KEY)
+      if (index.getType() == IDBIndex.Type.PRIMARY_KEY)
       {
         return index;
       }
@@ -199,8 +199,7 @@ public class DBTable implements IDBTable
     }
   }
 
-  @Override
-  public String toString()
+  public String getFullName()
   {
     return name;
   }

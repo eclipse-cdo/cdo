@@ -12,11 +12,12 @@ package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBField;
+import org.eclipse.net4j.db.IDBSchema;
 
 /**
  * @author Eike Stepper
  */
-public class DBField implements IDBField
+public class DBField extends DBElement implements IDBField
 {
   private static final int DEFAULT_PRECISION = 255;
 
@@ -43,6 +44,11 @@ public class DBField implements IDBField
     this.scale = scale;
     this.notNull = notNull;
     this.position = position;
+  }
+
+  public IDBSchema getSchema()
+  {
+    return table.getSchema();
   }
 
   public DBTable getTable()
@@ -83,12 +89,6 @@ public class DBField implements IDBField
   public String getFullName()
   {
     return table.getName() + "." + name;
-  }
-
-  @Override
-  public String toString()
-  {
-    return getFullName();
   }
 
   public String formatPrecision()

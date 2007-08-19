@@ -8,24 +8,36 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db;
+package org.eclipse.net4j.internal.db;
 
-import javax.sql.DataSource;
+import org.eclipse.net4j.db.IDBElement;
 
-import java.sql.Connection;
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBSchema extends IDBElement
+public abstract class DBElement implements IDBElement
 {
-  public IDBTable addTable(String name) throws DBException;
+  private Properties properties;
 
-  public IDBTable getTable(String name);
+  public DBElement()
+  {
+  }
 
-  public IDBTable[] getTables();
+  public Properties getProperties()
+  {
+    if (properties == null)
+    {
+      properties = new Properties();
+    }
 
-  public void create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException;
+    return properties;
+  }
 
-  public void create(IDBAdapter dbAdapter, Connection connection) throws DBException;
+  @Override
+  public String toString()
+  {
+    return getFullName();
+  }
 }

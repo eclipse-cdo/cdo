@@ -12,11 +12,12 @@ package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBIndex;
+import org.eclipse.net4j.db.IDBSchema;
 
 /**
  * @author Eike Stepper
  */
-public class DBIndex implements IDBIndex
+public class DBIndex extends DBElement implements IDBIndex
 {
   private DBTable table;
 
@@ -34,12 +35,17 @@ public class DBIndex implements IDBIndex
     this.position = position;
   }
 
-  public DBTable geTable()
+  public IDBSchema getSchema()
+  {
+    return table.getSchema();
+  }
+
+  public DBTable getTable()
   {
     return table;
   }
 
-  public Type geType()
+  public Type getType()
   {
     return type;
   }
@@ -69,8 +75,7 @@ public class DBIndex implements IDBIndex
     return "idx_" + table.getName() + "_" + position;
   }
 
-  @Override
-  public String toString()
+  public String getFullName()
   {
     return getName();
   }

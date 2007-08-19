@@ -44,6 +44,8 @@ import java.util.Map.Entry;
  */
 public abstract class MappingStrategy implements IMappingStrategy
 {
+  public static final int FULL_NUMBER_OF_FIELDS = 8;
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MappingStrategy.class);
 
   private IDBStore store;
@@ -215,13 +217,22 @@ public abstract class MappingStrategy implements IMappingStrategy
     return new DBSchema(name);
   }
 
-  protected void initTable(IDBTable table, boolean full)
+  protected int initTable(IDBTable table, boolean full)
   {
     table.addField("cdo_id", DBType.BIGINT);
     if (full)
     {
       table.addField("cdo_class", DBType.INTEGER);
+      table.addField("cdo_version", DBType.INTEGER);
+      table.addField("cdo_created", DBType.TIMESTAMP);
+      table.addField("cdo_revised", DBType.TIMESTAMP);
+      table.addField("cdo_resource", DBType.BIGINT);
+      table.addField("cdo_container", DBType.BIGINT);
+      table.addField("cdo_feature", DBType.INTEGER);
+      return FULL_NUMBER_OF_FIELDS;
     }
+
+    return 1;
   }
 
   protected IDBTable addTable(CDOClass cdoClass)

@@ -112,7 +112,6 @@ public class DBStore extends Store implements IDBStore
 
     try
     {
-
       nextPackageID = DBUtil.selectMaximum(connection, CDODBSchema.PACKAGES_ID) + 1;
       nextClassID = DBUtil.selectMaximum(connection, CDODBSchema.CLASSES_ID) + 1;
       nextFeatureID = DBUtil.selectMaximum(connection, CDODBSchema.FEATURES_ID) + 1;

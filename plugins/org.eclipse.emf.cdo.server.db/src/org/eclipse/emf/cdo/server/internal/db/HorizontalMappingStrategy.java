@@ -11,18 +11,22 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -32,6 +36,8 @@ import java.util.Map.Entry;
  */
 public class HorizontalMappingStrategy extends MappingStrategy
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalMappingStrategy.class);
+
   public HorizontalMappingStrategy()
   {
   }
@@ -69,16 +75,34 @@ public class HorizontalMappingStrategy extends MappingStrategy
 
   public void writeRevision(Connection connection, CDORevisionImpl revision)
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Inserting revision: {0}", revision);
+    }
+
     CDOClassImpl cdoClass = revision.getCDOClass();
     ClassMapping classMapping = getClassMapping(cdoClass);
     Map<IDBTable, FeatureMapping[]> tables = classMapping.getTables();
-    for (Entry<IDBTable, FeatureMapping[]> entry : tables.entrySet())
-    {
-      IDBTable table = entry.getKey();
-      FeatureMapping[] featureMappings = entry.getValue();
+    Entry<IDBTable, FeatureMapping[]> entry = tables.entrySet().iterator().next();
+    IDBTable table = entry.getKey();
 
-      DBUtil.insertRow(connection, table);
+    Object[] values = new Object[table.getFieldCount()];
+    values[0] = revision.getID();
+    values[1] = ((DBClassInfo)revision.getCDOClass().getServerInfo()).getID();
+    values[2] = revision.getVersion();
+    values[3] = new Date(revision.getCreated());
+    values[4] = new Date(revision.getRevised());
+    values[5] = revision.getResourceID();
+    values[6] = revision.getContainerID();
+    values[7] = revision.getContainingFeatureID();
+
+    int i = 8;
+    for (CDOFeatureImpl feature : cdoClass.getAllFeatures())
+    {
+      values[i++] = revision.getValue(feature);
     }
+
+    DBUtil.insertRow(connection, table, values);
   }
 
   public CDORevision readRevision(Connection connection, CDOID id)

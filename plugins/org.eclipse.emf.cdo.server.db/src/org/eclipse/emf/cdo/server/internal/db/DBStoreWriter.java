@@ -19,10 +19,12 @@ import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -32,6 +34,8 @@ import java.util.Collection;
  */
 public class DBStoreWriter extends DBStoreReader implements IStoreWriter
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreWriter.class);
+
   private IView view;
 
   public DBStoreWriter(DBStore store, IView view) throws DBException
@@ -69,12 +73,16 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
     return view;
   }
 
-  public void writePackages(CDOPackageImpl[] cdoPackages)
+  public void writePackages(CDOPackageImpl... cdoPackages)
   {
     for (CDOPackageImpl cdoPackage : cdoPackages)
     {
       int id = store.getNextPackageID();
       cdoPackage.setServerInfo(new DBPackageInfo(id));
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Inserting package: {0} --> {1}", cdoPackage, id);
+      }
 
       String packageURI = cdoPackage.getPackageURI();
       String name = cdoPackage.getName();

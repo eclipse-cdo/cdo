@@ -74,6 +74,11 @@ public class DBStoreReader implements IStoreReader
     return store;
   }
 
+  public Connection getConnection()
+  {
+    return connection;
+  }
+
   public Collection<CDOPackageInfo> readPackageInfos()
   {
     final Collection<CDOPackageInfo> result = new ArrayList(0);
@@ -129,7 +134,7 @@ public class DBStoreReader implements IStoreReader
       }
     };
 
-    String where = CDODBSchema.CLASSES_PACKAGE.getName() + " = " + cdoPackage.getServerInfo();
+    String where = CDODBSchema.CLASSES_PACKAGE.getName() + " = " + ((DBPackageInfo)cdoPackage.getServerInfo()).getID();
     DBUtil.select(connection, rowHandler, where, CDODBSchema.CLASSES_ID, CDODBSchema.CLASSES_CLASSIFIER,
         CDODBSchema.CLASSES_NAME, CDODBSchema.CLASSES_ABSTRACT);
   }

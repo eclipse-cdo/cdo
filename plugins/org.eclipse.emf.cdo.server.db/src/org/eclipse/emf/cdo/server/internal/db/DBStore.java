@@ -10,10 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.Store;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IStoreReader;
-import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
@@ -78,12 +77,12 @@ public class DBStore extends Store implements IDBStore
     return dataSource;
   }
 
-  public IStoreReader getReader(ISession session) throws DBException
+  public DBStoreReader getReader(ISession session) throws DBException
   {
     return new DBStoreReader(this);
   }
 
-  public IStoreWriter getWriter(IView view) throws DBException
+  public DBStoreWriter getWriter(IView view) throws DBException
   {
     return new DBStoreWriter(this, view);
   }
@@ -108,14 +107,23 @@ public class DBStore extends Store implements IDBStore
   {
     super.doActivate();
     CDODBSchema.INSTANCE.create(dbAdapter, dataSource);
-    Connection connection = null;
+    DBStoreWriter writer = getWriter(null);
+    Connection connection = writer.getConnection();
 
     try
     {
-      connection = dataSource.getConnection();
+
       nextPackageID = DBUtil.selectMaximum(connection, CDODBSchema.PACKAGES_ID) + 1;
       nextClassID = DBUtil.selectMaximum(connection, CDODBSchema.CLASSES_ID) + 1;
       nextFeatureID = DBUtil.selectMaximum(connection, CDODBSchema.FEATURES_ID) + 1;
+
+      if (nextPackageID == 1)
+      {
+        PackageManager packageManager = (PackageManager)getRepository().getPackageManager();
+        writer.writePackages(packageManager.getCDOResourcePackage());
+      }
+
+      writer.release();
     }
     finally
     {

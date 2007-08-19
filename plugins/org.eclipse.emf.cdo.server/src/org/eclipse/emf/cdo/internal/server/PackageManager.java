@@ -29,6 +29,8 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
 {
   private Repository repository;
 
+  private boolean resourcePackageStored;
+
   public PackageManager(Repository repository)
   {
     this.repository = repository;
@@ -92,6 +94,12 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
 
     public void phase1(IStoreWriter storeWriter) throws Exception
     {
+      if (!resourcePackageStored)
+      {
+        storeWriter.writePackages(getCDOResourcePackage());
+        resourcePackageStored = true;
+      }
+
       storeWriter.writePackages(cdoPackages);
     }
 

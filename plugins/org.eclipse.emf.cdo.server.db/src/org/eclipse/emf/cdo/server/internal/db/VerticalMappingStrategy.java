@@ -31,6 +31,7 @@ public class VerticalMappingStrategy extends MappingStrategy
 {
   public VerticalMappingStrategy()
   {
+    throw new UnsupportedOperationException();
   }
 
   public String getType()
@@ -48,7 +49,7 @@ public class VerticalMappingStrategy extends MappingStrategy
   }
 
   @Override
-  protected IDBTable map(CDOClass cdoClass, Set<IDBTable> affectedTables)
+  protected IDBTable mapClass(CDOClass cdoClass, Set<IDBTable> affectedTables)
   {
     if (cdoClass.isRoot())
     {
@@ -61,7 +62,7 @@ public class VerticalMappingStrategy extends MappingStrategy
   }
 
   @Override
-  protected IDBField map(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables)
+  protected IDBField mapFeature(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables)
   {
     if (cdoFeature.getContainingClass() != cdoClass)
     {

@@ -191,7 +191,7 @@ public abstract class MappingStrategy implements IMappingStrategy
       for (CDOClass cdoClass : cdoPackage.getClasses())
       {
         cdoClasses.add(cdoClass);
-        IDBTable table = map(cdoClass, affectedTables);
+        IDBTable table = mapClass(cdoClass, affectedTables);
         if (table != null)
         {
           ((DBClassInfo)cdoClass.getServerInfo()).setTable(table);
@@ -214,7 +214,7 @@ public abstract class MappingStrategy implements IMappingStrategy
 
       for (CDOFeature cdoFeature : cdoClass.getAllFeatures())
       {
-        IDBField field = map(cdoClass, cdoFeature, affectedTables);
+        IDBField field = mapFeature(cdoClass, cdoFeature, affectedTables);
         if (field != null)
         {
           ((DBFeatureInfo)cdoFeature.getServerInfo()).addField(cdoClass, field);
@@ -236,7 +236,7 @@ public abstract class MappingStrategy implements IMappingStrategy
    *          tables. There is no need to add the returned table to this set of
    *          affected tables. The caller takes care of that.
    */
-  protected abstract IDBTable map(CDOClass cdoClass, Set<IDBTable> affectedTables);
+  protected abstract IDBTable mapClass(CDOClass cdoClass, Set<IDBTable> affectedTables);
 
   /**
    * @param affectedTables
@@ -244,7 +244,7 @@ public abstract class MappingStrategy implements IMappingStrategy
    *          tables. There is no need to add the table of the returned field to
    *          this set of affected tables. The caller takes care of that.
    */
-  protected abstract IDBField map(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables);
+  protected abstract IDBField mapFeature(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables);
 
   protected ClassMapping getClassMapping(CDOClass cdoClass)
   {
@@ -304,11 +304,16 @@ public abstract class MappingStrategy implements IMappingStrategy
 
   protected IDBTable addTable(CDOClass cdoClass)
   {
+    return addTable(cdoClass.getName());
+  }
+
+  protected IDBTable addTable(String name)
+  {
     for (int attempt = 0;; ++attempt)
     {
       try
       {
-        String tableName = mangleTableName(cdoClass.getName(), attempt);
+        String tableName = mangleTableName(name, attempt);
         return getSchema().addTable(tableName);
       }
       catch (DBException ignore)

@@ -311,13 +311,18 @@ public abstract class MappingStrategy implements IMappingStrategy
   {
     for (int attempt = 0;; ++attempt)
     {
+      String tableName = mangleTableName(name, attempt);
+
       try
       {
-        String tableName = mangleTableName(name, attempt);
         return getSchema().addTable(tableName);
       }
       catch (DBException ignore)
       {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("{0}. attempt to add table: {1} ({2})", attempt, tableName, ignore.getMessage());
+        }
       }
     }
   }
@@ -326,14 +331,19 @@ public abstract class MappingStrategy implements IMappingStrategy
   {
     for (int attempt = 0;; ++attempt)
     {
+      String fieldName = mangleFieldName(cdoFeature.getName(), attempt);
+      DBType fieldType = getDBType(cdoFeature.getType());
+
       try
       {
-        String fieldName = mangleFieldName(cdoFeature.getName(), attempt);
-        DBType fieldType = getDBType(cdoFeature.getType());
         return table.addField(fieldName, fieldType);
       }
       catch (DBException ignore)
       {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("{0}. attempt to add field: {1} ({2})", attempt, fieldName, ignore.getMessage());
+        }
       }
     }
   }

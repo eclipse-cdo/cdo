@@ -18,20 +18,13 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public final class DBFeatureInfo
+public final class DBFeatureInfo extends DBInfo
 {
-  private int id;
-
   private Map<Object, IDBField> fields;
 
   public DBFeatureInfo(int id)
   {
-    this.id = id;
-  }
-
-  public int getID()
-  {
-    return id;
+    super(id);
   }
 
   public IDBField getField(Object context)

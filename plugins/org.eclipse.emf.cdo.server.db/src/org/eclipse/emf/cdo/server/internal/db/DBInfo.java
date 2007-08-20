@@ -10,35 +10,27 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.net4j.db.IDBSchema;
+import org.eclipse.emf.cdo.protocol.model.CDOModelElement;
 
 /**
  * @author Eike Stepper
  */
-public final class DBPackageInfo extends DBInfo
+public abstract class DBInfo
 {
-  private IDBSchema schema;
+  private int id;
 
-  public DBPackageInfo(int id)
+  public DBInfo(int id)
   {
-    super(id);
+    this.id = id;
   }
 
-  public IDBSchema getSchema()
+  public int getID()
   {
-    return schema;
+    return id;
   }
 
-  public void setSchema(IDBSchema schema)
+  public static int getDBID(CDOModelElement modelElement)
   {
-    if (this.schema != schema)
-    {
-      if (this.schema != null)
-      {
-        throw new IllegalStateException("Schema " + schema + "is already set");
-      }
-
-      this.schema = schema;
-    }
+    return ((DBInfo)modelElement.getServerInfo()).getID();
   }
 }

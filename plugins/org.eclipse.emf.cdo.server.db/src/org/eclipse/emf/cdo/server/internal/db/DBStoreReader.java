@@ -134,7 +134,7 @@ public class DBStoreReader implements IStoreReader
       }
     };
 
-    String where = CDODBSchema.CLASSES_PACKAGE.getName() + " = " + ((DBPackageInfo)cdoPackage.getServerInfo()).getID();
+    String where = CDODBSchema.CLASSES_PACKAGE.getName() + " = " + DBInfo.getDBID(cdoPackage);
     DBUtil.select(connection, rowHandler, where, CDODBSchema.CLASSES_ID, CDODBSchema.CLASSES_CLASSIFIER,
         CDODBSchema.CLASSES_NAME, CDODBSchema.CLASSES_ABSTRACT);
   }

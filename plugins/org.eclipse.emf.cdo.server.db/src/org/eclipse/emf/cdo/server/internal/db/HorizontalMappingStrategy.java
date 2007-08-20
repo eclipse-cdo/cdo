@@ -213,7 +213,7 @@ public class HorizontalMappingStrategy extends MappingStrategy
 
     Object[] values = new Object[table.getFieldCount()];
     values[0] = revision.getID().getValue();
-    values[1] = ((DBClassInfo)revision.getCDOClass().getServerInfo()).getID();
+    values[1] = DBInfo.getDBID(revision.getCDOClass());
     values[2] = revision.getVersion();
     values[3] = new Date(revision.getCreated());
     values[4] = new Date(revision.getRevised());

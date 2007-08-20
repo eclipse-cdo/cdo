@@ -15,20 +15,13 @@ import org.eclipse.net4j.db.IDBTable;
 /**
  * @author Eike Stepper
  */
-public final class DBClassInfo
+public final class DBClassInfo extends DBInfo
 {
-  private int id;
-
   private IDBTable table;
 
   public DBClassInfo(int id)
   {
-    this.id = id;
-  }
-
-  public int getID()
-  {
-    return id;
+    super(id);
   }
 
   public IDBTable getTable()

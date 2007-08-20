@@ -20,7 +20,7 @@ import org.eclipse.net4j.db.IDBSchema;
 import org.eclipse.net4j.db.IDBTable;
 
 import java.sql.Connection;
-import java.util.Properties;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -36,9 +36,15 @@ public interface IMappingStrategy
 
   public void setStore(IDBStore store);
 
-  public Properties getProperties();
+  public Map<String, String> getProperties();
 
-  public void setProperties(Properties properties);
+  public void setProperties(Map<String, String> properties);
+
+  public ToManyReferenceMapping getToManyReferenceMapping();
+
+  public ToOneReferenceMapping getToOneReferenceMapping();
+
+  public MappingPrecedence getMappingPrecedence();
 
   /**
    * @return A collection of the affected tables.

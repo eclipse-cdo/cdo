@@ -35,8 +35,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -113,14 +114,14 @@ public class RepositoryConfigurator
     return document;
   }
 
-  public static Properties getProperties(Element element)
+  public static Map<String, String> getProperties(Element element)
   {
-    Properties properties = new Properties();
+    Map<String, String> properties = new HashMap();
     collectProperties(element, "", properties);
     return properties;
   }
 
-  private static void collectProperties(Element element, String prefix, Properties properties)
+  private static void collectProperties(Element element, String prefix, Map<String, String> properties)
   {
     if ("property".equals(element.getNodeName()))
     {

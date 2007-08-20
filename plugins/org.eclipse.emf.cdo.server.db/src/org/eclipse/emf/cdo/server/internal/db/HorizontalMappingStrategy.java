@@ -87,13 +87,13 @@ public class HorizontalMappingStrategy extends MappingStrategy
     IDBTable table = entry.getKey();
 
     Object[] values = new Object[table.getFieldCount()];
-    values[0] = revision.getID();
+    values[0] = revision.getID().getValue();
     values[1] = ((DBClassInfo)revision.getCDOClass().getServerInfo()).getID();
     values[2] = revision.getVersion();
     values[3] = new Date(revision.getCreated());
     values[4] = new Date(revision.getRevised());
-    values[5] = revision.getResourceID();
-    values[6] = revision.getContainerID();
+    values[5] = revision.getResourceID().getValue();
+    values[6] = revision.getContainerID().getValue();
     values[7] = revision.getContainingFeatureID();
 
     int i = 8;

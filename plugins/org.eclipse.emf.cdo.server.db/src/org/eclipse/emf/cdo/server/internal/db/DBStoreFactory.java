@@ -26,6 +26,7 @@ import org.w3c.dom.NodeList;
 
 import javax.sql.DataSource;
 
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -63,7 +64,7 @@ public class DBStoreFactory implements IStoreFactory
     Element mappingStrategyConfig = (Element)mappingStrategyConfigs.item(0);
     String mappingStrategyType = mappingStrategyConfig.getAttribute("type");
     IMappingStrategy mappingStrategy = CDODBUtil.createMappingStrategy(mappingStrategyType);
-    Properties properties = RepositoryConfigurator.getProperties(mappingStrategyConfig);
+    Map<String, String> properties = RepositoryConfigurator.getProperties(mappingStrategyConfig);
     mappingStrategy.setProperties(properties);
     return mappingStrategy;
   }

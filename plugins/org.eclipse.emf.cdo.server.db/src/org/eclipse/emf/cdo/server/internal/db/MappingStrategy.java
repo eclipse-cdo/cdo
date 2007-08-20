@@ -16,6 +16,9 @@ import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
+import org.eclipse.emf.cdo.server.db.MappingPrecedence;
+import org.eclipse.emf.cdo.server.db.ToManyReferenceMapping;
+import org.eclipse.emf.cdo.server.db.ToOneReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
@@ -35,7 +38,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.Map.Entry;
 
@@ -50,9 +52,15 @@ public abstract class MappingStrategy implements IMappingStrategy
 
   private IDBStore store;
 
-  private Properties properties;
+  private Map<String, String> properties;
 
   private IDBSchema schema;
+
+  private MappingPrecedence mappingPrecedence;
+
+  private ToManyReferenceMapping toManyReferenceMapping;
+
+  private ToOneReferenceMapping toOneReferenceMapping;
 
   private Map<CDOClass, ClassMapping> classMappings = new HashMap();
 
@@ -70,12 +78,17 @@ public abstract class MappingStrategy implements IMappingStrategy
     this.store = store;
   }
 
-  public Properties getProperties()
+  public Map<String, String> getProperties()
   {
+    if (properties == null)
+    {
+      properties = new HashMap();
+    }
+
     return properties;
   }
 
-  public void setProperties(Properties properties)
+  public void setProperties(Map<String, String> properties)
   {
     this.properties = properties;
   }
@@ -83,6 +96,60 @@ public abstract class MappingStrategy implements IMappingStrategy
   public IDBSchema getSchema()
   {
     return schema;
+  }
+
+  public MappingPrecedence getMappingPrecedence()
+  {
+    if (mappingPrecedence == null)
+    {
+      mappingPrecedence = MappingPrecedence.STRATEGY;
+      if (properties != null)
+      {
+        String value = properties.get("mappingPrecedence");
+        if (value != null)
+        {
+          mappingPrecedence = MappingPrecedence.valueOf(value);
+        }
+      }
+    }
+
+    return mappingPrecedence;
+  }
+
+  public ToManyReferenceMapping getToManyReferenceMapping()
+  {
+    if (toManyReferenceMapping == null)
+    {
+      toManyReferenceMapping = ToManyReferenceMapping.ONE_TABLE_PER_REFERENCE;
+      if (properties != null)
+      {
+        String value = properties.get("toManyReferenceMapping");
+        if (value != null)
+        {
+          toManyReferenceMapping = ToManyReferenceMapping.valueOf(value);
+        }
+      }
+    }
+
+    return toManyReferenceMapping;
+  }
+
+  public ToOneReferenceMapping getToOneReferenceMapping()
+  {
+    if (toOneReferenceMapping == null)
+    {
+      toOneReferenceMapping = ToOneReferenceMapping.LIKE_ATTRIBUTES;
+      if (properties != null)
+      {
+        String value = properties.get("toOneReferenceMapping");
+        if (value != null)
+        {
+          toOneReferenceMapping = ToOneReferenceMapping.valueOf(value);
+        }
+      }
+    }
+
+    return toOneReferenceMapping;
   }
 
   @Override

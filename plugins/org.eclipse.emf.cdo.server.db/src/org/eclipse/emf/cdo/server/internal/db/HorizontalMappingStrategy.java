@@ -106,6 +106,7 @@ public class HorizontalMappingStrategy extends MappingStrategy
     {
       table = addTable(cdoClass);
       initTable(table, true);
+      classInfo.setTable(table);
     }
 
     return addField(cdoFeature, table);

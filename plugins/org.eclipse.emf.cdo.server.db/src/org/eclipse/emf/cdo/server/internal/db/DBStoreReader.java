@@ -90,7 +90,7 @@ public class DBStoreReader implements IStoreReader
         boolean dynamic = getBoolean(values[1]);
         long rangeLB = (Long)values[2];
         long rangeUB = (Long)values[3];
-        CDOIDRange metaIDRange = CDOIDRangeImpl.create(rangeLB, rangeUB);
+        CDOIDRange metaIDRange = rangeLB == 0L && rangeUB == 0L ? null : CDOIDRangeImpl.create(rangeLB, rangeUB);
         result.add(new CDOPackageInfo(packageURI, dynamic, metaIDRange));
         return true;
       }

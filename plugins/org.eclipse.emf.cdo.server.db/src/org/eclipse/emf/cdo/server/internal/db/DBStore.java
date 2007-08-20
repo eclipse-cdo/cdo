@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.Store;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
@@ -77,6 +76,11 @@ public class DBStore extends Store implements IDBStore
     return dataSource;
   }
 
+  public boolean hasAuditSupport()
+  {
+    return true;
+  }
+
   public DBStoreReader getReader(ISession session) throws DBException
   {
     return new DBStoreReader(this);
@@ -116,11 +120,12 @@ public class DBStore extends Store implements IDBStore
       nextClassID = DBUtil.selectMaximum(connection, CDODBSchema.CLASSES_ID) + 1;
       nextFeatureID = DBUtil.selectMaximum(connection, CDODBSchema.FEATURES_ID) + 1;
 
-      if (nextPackageID == 1)
-      {
-        PackageManager packageManager = (PackageManager)getRepository().getPackageManager();
-        writer.writePackages(packageManager.getCDOResourcePackage());
-      }
+      // if (nextPackageID == 1)
+      // {
+      // PackageManager packageManager =
+      // (PackageManager)getRepository().getPackageManager();
+      // writer.writePackages(packageManager.getCDOResourcePackage());
+      // }
 
       writer.release();
     }

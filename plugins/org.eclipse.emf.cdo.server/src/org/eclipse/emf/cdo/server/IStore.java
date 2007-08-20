@@ -17,9 +17,15 @@ import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
  */
 public interface IStore extends IRepositoryElement
 {
+  public void setRepository(IRepository repository);
+
   public String getStoreType();
 
-  public void setRepository(IRepository repository);
+  /**
+   * @return <code>true</code> if this store supports audit views,
+   *         <code>false</code> otherwise.
+   */
+  public boolean hasAuditSupport();
 
   /**
    * Returns a reader that can be used to read from this store in the context of

@@ -99,7 +99,8 @@ public class HorizontalMappingStrategy extends MappingStrategy
     int i = 8;
     for (CDOFeatureImpl feature : cdoClass.getAllFeatures())
     {
-      values[i++] = revision.getValue(feature);
+      Object value = revision.getValue(feature);
+      values[i++] = value instanceof CDOID ? ((CDOID)value).getValue() : value;
     }
 
     DBUtil.insertRow(connection, table, values);

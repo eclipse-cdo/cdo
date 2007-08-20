@@ -89,8 +89,8 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
       String ecore = cdoPackage.getEcore();
       boolean dynamic = cdoPackage.isDynamic();
       CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
-      long lb = metaIDRange.getLowerBound().getValue();
-      long ub = metaIDRange.getUpperBound().getValue();
+      long lb = metaIDRange == null ? 0L : metaIDRange.getLowerBound().getValue();
+      long ub = metaIDRange == null ? 0L : metaIDRange.getUpperBound().getValue();
       DBUtil.insertRow(connection, CDODBSchema.PACKAGES, id, packageURI, name, ecore, dynamic, lb, ub);
 
       for (CDOClassImpl cdoClass : cdoPackage.getClasses())

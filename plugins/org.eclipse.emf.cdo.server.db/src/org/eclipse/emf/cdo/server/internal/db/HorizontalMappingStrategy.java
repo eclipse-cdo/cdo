@@ -72,7 +72,7 @@ public class HorizontalMappingStrategy extends MappingStrategy
     {
       if (cdoFeature.isMany())
       {
-        return mapReferenceMany(cdoClass, cdoFeature, getToManyReferenceMapping());
+        return mapReference(cdoClass, cdoFeature, getToManyReferenceMapping());
       }
       else
       {
@@ -81,7 +81,7 @@ public class HorizontalMappingStrategy extends MappingStrategy
         case LIKE_ATTRIBUTES:
           return mapAttribute(cdoClass, cdoFeature);
         case LIKE_TO_MANY_REFERENCES:
-          return mapReferenceMany(cdoClass, cdoFeature, getToManyReferenceMapping());
+          return mapReference(cdoClass, cdoFeature, getToManyReferenceMapping());
         default:
           throw new IllegalArgumentException("Invalid mapping: " + getToOneReferenceMapping());
         }
@@ -112,18 +112,20 @@ public class HorizontalMappingStrategy extends MappingStrategy
     return addField(cdoFeature, table);
   }
 
-  protected IDBField mapReferenceMany(CDOClass cdoClass, CDOFeature cdoFeature, ToManyReferenceMapping mapping)
+  protected IDBField mapReference(CDOClass cdoClass, CDOFeature cdoFeature, ToManyReferenceMapping mapping)
   {
     switch (mapping)
     {
     case ONE_TABLE_PER_REFERENCE:
-      return mapReference(cdoClass, cdoFeature);
+      return mapReferenceTable(cdoFeature, cdoClass.getName() + "_" + cdoFeature.getName() + "_refs", false);
     case ONE_TABLE_PER_CLASS:
-      return mapReferencePerClass(cdoClass);
+      return mapReferenceTable(cdoClass, cdoClass.getName() + "_refs", true);
     case ONE_TABLE_PER_PACKAGE:
-      return mapReferencePerPackage(cdoClass.getContainingPackage());
+      CDOPackage cdoPackage = cdoClass.getContainingPackage();
+      return mapReferenceTable(cdoPackage, cdoPackage.getName() + "_refs", true);
     case ONE_TABLE_PER_REPOSITORY:
-      return mapReferencePerRepository(getStore().getRepository());
+      IRepository repository = getStore().getRepository();
+      return mapReferenceTable(repository, repository.getName() + "_refs", true);
     case LIKE_ATTRIBUTES:
       return mapReferenceSerialized(cdoClass, cdoFeature);
     default:
@@ -131,58 +133,22 @@ public class HorizontalMappingStrategy extends MappingStrategy
     }
   }
 
-  protected IDBField mapReference(CDOClass cdoClass, CDOFeature cdoFeature)
-  {
-    IDBTable table = referenceTables.get(cdoFeature);
-    if (table == null)
-    {
-      table = addReferenceTable(cdoClass.getName() + "_" + cdoFeature.getName() + "_refs", false);
-      referenceTables.put(cdoFeature, table);
-    }
-
-    return table.getField(0);
-  }
-
-  protected IDBField mapReferencePerClass(CDOClass cdoClass)
-  {
-    IDBTable table = referenceTables.get(cdoClass);
-    if (table == null)
-    {
-      table = addReferenceTable(cdoClass.getName() + "_refs", true);
-      referenceTables.put(cdoClass, table);
-    }
-
-    return table.getField(0);
-  }
-
-  protected IDBField mapReferencePerPackage(CDOPackage cdoPackage)
-  {
-    IDBTable table = referenceTables.get(cdoPackage);
-    if (table == null)
-    {
-      table = addReferenceTable(cdoPackage.getName() + "_refs", true);
-      referenceTables.put(cdoPackage, table);
-    }
-
-    return table.getField(0);
-  }
-
-  protected IDBField mapReferencePerRepository(IRepository repository)
-  {
-    IDBTable table = referenceTables.get(repository);
-    if (table == null)
-    {
-      table = addReferenceTable(repository.getName() + "_refs", true);
-      referenceTables.put(repository, table);
-    }
-
-    return table.getField(0);
-  }
-
   protected IDBField mapReferenceSerialized(CDOClass cdoClass, CDOFeature cdoFeature)
   {
     // TODO Implement method HorizontalMappingStrategy.mapReferenceSerialized()
     throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  protected IDBField mapReferenceTable(Object key, String tableName, boolean withFeature)
+  {
+    IDBTable table = referenceTables.get(key);
+    if (table == null)
+    {
+      table = addReferenceTable(tableName, withFeature);
+      referenceTables.put(key, table);
+    }
+
+    return table.getField(0);
   }
 
   protected IDBTable addReferenceTable(String tableName, boolean withFeature)
@@ -193,9 +159,9 @@ public class HorizontalMappingStrategy extends MappingStrategy
       table.addField("cdo_feature", DBType.INTEGER);
     }
 
+    table.addField("cdo_idx", DBType.INTEGER);
     table.addField("cdo_source", DBType.BIGINT);
     table.addField("cdo_target", DBType.BIGINT);
-    table.addField("cdo_idx", DBType.INTEGER);
     return table;
   }
 

@@ -10,21 +10,31 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.info.ClassServerInfo;
 import org.eclipse.emf.cdo.server.internal.db.info.FeatureServerInfo;
 import org.eclipse.emf.cdo.server.internal.db.info.PackageServerInfo;
+import org.eclipse.emf.cdo.server.internal.db.info.ServerInfo;
 
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ObjectUtil;
 
+import java.sql.Connection;
+import java.sql.Date;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -133,42 +143,7 @@ public abstract class StandardMappingStrategy extends MappingStrategy
    *          tables. There is no need to add the table of the returned field to
    *          this set of affected tables. The caller takes care of that.
    */
-  protected IDBField mapFeature(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables)
-  {
-    if (cdoClass.isAbstract())
-    {
-      return null;
-    }
-
-    if (cdoFeature.isReference())
-    {
-      if (cdoFeature.isMany())
-      {
-        return mapReference(cdoClass, cdoFeature, getToMany());
-      }
-      else
-      {
-        switch (getToOne())
-        {
-        case LIKE_ATTRIBUTES:
-          return mapAttribute(cdoClass, cdoFeature);
-        case LIKE_TO_MANY_REFERENCES:
-          return mapReference(cdoClass, cdoFeature, getToMany());
-        default:
-          throw new IllegalArgumentException("Invalid mapping: " + getToOne());
-        }
-      }
-    }
-    else
-    {
-      if (cdoFeature.isMany())
-      {
-        throw new UnsupportedOperationException();
-      }
-
-      return mapAttribute(cdoClass, cdoFeature);
-    }
-  }
+  protected abstract IDBField mapFeature(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables);
 
   protected IDBField mapAttribute(CDOClass cdoClass, CDOFeature cdoFeature)
   {
@@ -243,6 +218,71 @@ public abstract class StandardMappingStrategy extends MappingStrategy
 
     classMapping.sortFeatureMappings();
     return classMapping;
+  }
+
+  public void writeRevision(Connection connection, CDORevisionImpl revision)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Inserting revision: {0}", revision);
+    }
+
+    CDOClassImpl cdoClass = revision.getCDOClass();
+    ClassMapping classMapping = getClassMapping(cdoClass);
+    Map<IDBTable, FeatureMapping[]> tables = classMapping.getTables();
+    Entry<IDBTable, FeatureMapping[]> entry = tables.entrySet().iterator().next();
+    IDBTable table = entry.getKey();
+
+    int i = 0;
+    Object[] values = new Object[table.getFieldCount()];
+    values[i++] = revision.getID().getValue();
+    values[i++] = ServerInfo.getDBID(revision.getCDOClass());
+    values[i++] = revision.getVersion();
+    values[i++] = new Date(revision.getCreated());
+    values[i++] = new Date(revision.getRevised());
+    values[i++] = revision.getResourceID().getValue();
+    values[i++] = revision.getContainerID().getValue();
+    values[i++] = revision.getContainingFeatureID();
+
+    for (CDOFeatureImpl feature : cdoClass.getAllFeatures())
+    {
+      Object value = revision.getValue(feature);
+      if (value instanceof CDOID)
+      {
+        values[i++] = ((CDOID)value).getValue();
+      }
+      else
+      {
+        values[i++] = value;
+      }
+    }
+
+    DBUtil.insertRow(connection, table, values);
+  }
+
+  public CDORevision readRevision(Connection connection, CDOID id)
+  {
+    return null;
+  }
+
+  public CDORevision readRevision(Connection connection, CDOID id, long timeStamp)
+  {
+    return null;
+  }
+
+  public CDOID readResourceID(Connection connection, String path)
+  {
+    return null;
+  }
+
+  public String readResourcePath(Connection connection, CDOID id)
+  {
+    return null;
+  }
+
+  public CDOClassRef readObjectType(Connection connection, CDOID id)
+  {
+    return null;
   }
 
   /**

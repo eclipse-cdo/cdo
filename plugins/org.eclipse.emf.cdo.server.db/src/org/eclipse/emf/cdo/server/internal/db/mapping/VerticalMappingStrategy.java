@@ -10,15 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
+import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBSchema;
 import org.eclipse.net4j.db.IDBTable;
 
-import java.sql.Connection;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -44,60 +43,15 @@ public class VerticalMappingStrategy extends StandardMappingStrategy
     return schema;
   }
 
-  // @Override
-  // protected IDBTable mapClass(CDOClass cdoClass, Set<IDBTable>
-  // affectedTables)
-  // {
-  // if (cdoClass.isRoot())
-  // {
-  // return null;
-  // }
-  //
-  // IDBTable table = addTable(cdoClass);
-  // initTable(table, false);
-  // return table;
-  // }
-
-  // @Override
-  // protected IDBField mapFeature(CDOClass cdoClass, CDOFeature cdoFeature,
-  // Set<IDBTable> affectedTables)
-  // {
-  // if (cdoFeature.getContainingClass() != cdoClass)
-  // {
-  // return null;
-  // }
-  //
-  // DBClassInfo classInfo = (DBClassInfo)cdoClass.getServerInfo();
-  // IDBTable table = classInfo.getTable();
-  // return addField(cdoFeature, table);
-  // }
-
-  public void writeRevision(Connection connection, CDORevisionImpl revision)
+  @Override
+  protected IDBField mapFeature(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables)
   {
-  }
+    if (cdoFeature.getContainingClass() != cdoClass)
+    {
+      return null;
+    }
 
-  public CDORevision readRevision(Connection connection, CDOID id)
-  {
-    return null;
-  }
-
-  public CDORevision readRevision(Connection connection, CDOID id, long timeStamp)
-  {
-    return null;
-  }
-
-  public CDOID readResourceID(Connection connection, String path)
-  {
-    return null;
-  }
-
-  public String readResourcePath(Connection connection, CDOID id)
-  {
-    return null;
-  }
-
-  public CDOClassRef readObjectType(Connection connection, CDOID id)
-  {
-    return null;
+    // TODO Implement method enclosing_type.enclosing_method()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 }

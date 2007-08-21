@@ -10,31 +10,19 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.server.internal.db.info.ServerInfo;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
-import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public class HorizontalMappingStrategy extends StandardMappingStrategy
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalMappingStrategy.class);
-
   public HorizontalMappingStrategy()
   {
   }
@@ -44,68 +32,41 @@ public class HorizontalMappingStrategy extends StandardMappingStrategy
     return "horizontal";
   }
 
-  public void writeRevision(Connection connection, CDORevisionImpl revision)
+  @Override
+  protected IDBField mapFeature(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables)
   {
-    if (TRACER.isEnabled())
+    if (cdoClass.isAbstract())
     {
-      TRACER.format("Inserting revision: {0}", revision);
+      return null;
     }
 
-    CDOClassImpl cdoClass = revision.getCDOClass();
-    ClassMapping classMapping = getClassMapping(cdoClass);
-    Map<IDBTable, FeatureMapping[]> tables = classMapping.getTables();
-    Entry<IDBTable, FeatureMapping[]> entry = tables.entrySet().iterator().next();
-    IDBTable table = entry.getKey();
-
-    int i = 0;
-    Object[] values = new Object[table.getFieldCount()];
-    values[i++] = revision.getID().getValue();
-    values[i++] = ServerInfo.getDBID(revision.getCDOClass());
-    values[i++] = revision.getVersion();
-    values[i++] = new Date(revision.getCreated());
-    values[i++] = new Date(revision.getRevised());
-    values[i++] = revision.getResourceID().getValue();
-    values[i++] = revision.getContainerID().getValue();
-    values[i++] = revision.getContainingFeatureID();
-
-    for (CDOFeatureImpl feature : cdoClass.getAllFeatures())
+    if (cdoFeature.isReference())
     {
-      Object value = revision.getValue(feature);
-      if (value instanceof CDOID)
+      if (cdoFeature.isMany())
       {
-        values[i++] = ((CDOID)value).getValue();
+        return mapReference(cdoClass, cdoFeature, getToMany());
       }
       else
       {
-        values[i++] = value;
+        switch (getToOne())
+        {
+        case LIKE_ATTRIBUTES:
+          return mapAttribute(cdoClass, cdoFeature);
+        case LIKE_TO_MANY_REFERENCES:
+          return mapReference(cdoClass, cdoFeature, getToMany());
+        default:
+          throw new IllegalArgumentException("Invalid mapping: " + getToOne());
+        }
       }
     }
+    else
+    {
+      if (cdoFeature.isMany())
+      {
+        throw new UnsupportedOperationException();
+      }
 
-    DBUtil.insertRow(connection, table, values);
-  }
-
-  public CDORevision readRevision(Connection connection, CDOID id)
-  {
-    return null;
-  }
-
-  public CDORevision readRevision(Connection connection, CDOID id, long timeStamp)
-  {
-    return null;
-  }
-
-  public CDOID readResourceID(Connection connection, String path)
-  {
-    return null;
-  }
-
-  public String readResourcePath(Connection connection, CDOID id)
-  {
-    return null;
-  }
-
-  public CDOClassRef readObjectType(Connection connection, CDOID id)
-  {
-    return null;
+      return mapAttribute(cdoClass, cdoFeature);
+    }
   }
 }

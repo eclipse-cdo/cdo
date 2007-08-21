@@ -11,6 +11,7 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.internal.db.DBSchema;
+import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ReflectUtil;
@@ -61,6 +62,11 @@ public final class DBUtil
     {
       throw new DBException(ex);
     }
+  }
+
+  public static ConnectionProvider createConnectionProvider(DataSource dataSource)
+  {
+    return new DataSourceConnectionProvider(dataSource);
   }
 
   public static IDBAdapter getDBAdapter(String adapterName)

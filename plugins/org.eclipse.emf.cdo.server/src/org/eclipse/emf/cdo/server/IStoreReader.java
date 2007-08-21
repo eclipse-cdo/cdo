@@ -25,6 +25,8 @@ import java.util.Collection;
  */
 public interface IStoreReader extends IStoreAccessor
 {
+  public ISession getSession();
+
   public Collection<CDOPackageInfo> readPackageInfos();
 
   /**

@@ -8,26 +8,42 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db;
+package org.eclipse.net4j.internal.db;
+
+import org.eclipse.net4j.db.ConnectionProvider;
+import org.eclipse.net4j.db.DBException;
 
 import javax.sql.DataSource;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBSchema extends IDBElement
+public class DataSourceConnectionProvider implements ConnectionProvider
 {
-  public IDBTable addTable(String name) throws DBException;
+  private DataSource dataSource;
 
-  public IDBTable getTable(String name);
+  public DataSourceConnectionProvider(DataSource dataSource)
+  {
+    this.dataSource = dataSource;
+  }
 
-  public IDBTable[] getTables();
+  public DataSource getDataSource()
+  {
+    return dataSource;
+  }
 
-  public void create(IDBAdapter dbAdapter, Connection connection) throws DBException;
-
-  public void create(IDBAdapter dbAdapter, ConnectionProvider connectionProvider) throws DBException;
-
-  public void create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException;
+  public Connection getConnection()
+  {
+    try
+    {
+      return dataSource.getConnection();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
 }

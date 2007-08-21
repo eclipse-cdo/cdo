@@ -178,21 +178,28 @@ public class HorizontalMappingStrategy extends MappingStrategy
     Entry<IDBTable, FeatureMapping[]> entry = tables.entrySet().iterator().next();
     IDBTable table = entry.getKey();
 
+    int i = 0;
     Object[] values = new Object[table.getFieldCount()];
-    values[0] = revision.getID().getValue();
-    values[1] = DBInfo.getDBID(revision.getCDOClass());
-    values[2] = revision.getVersion();
-    values[3] = new Date(revision.getCreated());
-    values[4] = new Date(revision.getRevised());
-    values[5] = revision.getResourceID().getValue();
-    values[6] = revision.getContainerID().getValue();
-    values[7] = revision.getContainingFeatureID();
+    values[i++] = revision.getID().getValue();
+    values[i++] = DBInfo.getDBID(revision.getCDOClass());
+    values[i++] = revision.getVersion();
+    values[i++] = new Date(revision.getCreated());
+    values[i++] = new Date(revision.getRevised());
+    values[i++] = revision.getResourceID().getValue();
+    values[i++] = revision.getContainerID().getValue();
+    values[i++] = revision.getContainingFeatureID();
 
-    int i = 8;
     for (CDOFeatureImpl feature : cdoClass.getAllFeatures())
     {
       Object value = revision.getValue(feature);
-      values[i++] = value instanceof CDOID ? ((CDOID)value).getValue() : value;
+      if (value instanceof CDOID)
+      {
+        values[i++] = ((CDOID)value).getValue();
+      }
+      else
+      {
+        values[i++] = value;
+      }
     }
 
     DBUtil.insertRow(connection, table, values);

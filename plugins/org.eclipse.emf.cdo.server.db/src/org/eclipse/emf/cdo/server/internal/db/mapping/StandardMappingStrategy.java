@@ -235,7 +235,7 @@ public abstract class StandardMappingStrategy extends MappingStrategy
     int i = 0;
     Object[] values = new Object[table.getFieldCount()];
     values[i++] = revision.getID().getValue();
-    values[i++] = ServerInfo.getID(revision.getCDOClass());
+    values[i++] = ServerInfo.getDBID(revision.getCDOClass());
     values[i++] = revision.getVersion();
     values[i++] = new Date(revision.getCreated());
     values[i++] = new Date(revision.getRevised());

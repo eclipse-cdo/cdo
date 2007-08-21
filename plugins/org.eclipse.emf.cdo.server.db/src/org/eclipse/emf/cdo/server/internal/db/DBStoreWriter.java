@@ -117,7 +117,7 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
     cdoClass.setServerInfo(new ClassServerInfo(id));
 
     CDOPackageImpl cdoPackage = cdoClass.getContainingPackage();
-    int packageID = ServerInfo.getID(cdoPackage);
+    int packageID = ServerInfo.getDBID(cdoPackage);
     int classifierID = cdoClass.getClassifierID();
     String name = cdoClass.getName();
     boolean isAbstract = cdoClass.isAbstract();
@@ -146,7 +146,7 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
     int id = store.getNextFeatureID();
     feature.setServerInfo(new FeatureServerInfo(id));
 
-    int classID = ServerInfo.getID(feature.getContainingClass());
+    int classID = ServerInfo.getDBID(feature.getContainingClass());
     String name = feature.getName();
     int featureID = feature.getFeatureID();
     int type = feature.getType().getTypeID();

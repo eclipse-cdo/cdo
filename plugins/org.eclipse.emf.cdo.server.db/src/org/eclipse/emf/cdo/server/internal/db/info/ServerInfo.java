@@ -17,15 +17,15 @@ import org.eclipse.emf.cdo.protocol.model.CDOModelElement;
  */
 public abstract class ServerInfo
 {
-  private int id;
+  private int dbID;
 
-  public ServerInfo(int id)
+  public ServerInfo(int dbID)
   {
-    this.id = id;
+    this.dbID = dbID;
   }
 
-  public static int getID(CDOModelElement modelElement)
+  public static int getDBID(CDOModelElement modelElement)
   {
-    return ((ServerInfo)modelElement.getServerInfo()).id;
+    return ((ServerInfo)modelElement.getServerInfo()).dbID;
   }
 }

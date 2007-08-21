@@ -8,12 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.db;
+package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 /**
  * @author Eike Stepper
  */
-public enum ToOneReferenceMapping
+public enum Precedence
 {
-  LIKE_ATTRIBUTES, LIKE_TO_MANY_REFERENCES
+  MODEL, STRATEGY
 }

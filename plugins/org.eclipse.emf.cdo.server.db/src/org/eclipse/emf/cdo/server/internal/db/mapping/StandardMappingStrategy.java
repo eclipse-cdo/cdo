@@ -15,9 +15,6 @@ import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.db.MappingPrecedence;
-import org.eclipse.emf.cdo.server.db.ToManyReferenceMapping;
-import org.eclipse.emf.cdo.server.db.ToOneReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.info.ClassServerInfo;
 import org.eclipse.emf.cdo.server.internal.db.info.FeatureServerInfo;
@@ -43,11 +40,11 @@ public abstract class StandardMappingStrategy extends MappingStrategy
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, StandardMappingStrategy.class);
 
-  private MappingPrecedence mappingPrecedence;
+  private Precedence precedence;
 
-  private ToManyReferenceMapping toManyReferenceMapping;
+  private ToMany toMany;
 
-  private ToOneReferenceMapping toOneReferenceMapping;
+  private ToOne toOne;
 
   private Map<CDOClass, ClassMapping> classMappings = new HashMap();
 
@@ -57,58 +54,37 @@ public abstract class StandardMappingStrategy extends MappingStrategy
   {
   }
 
-  public MappingPrecedence getMappingPrecedence()
+  public Precedence getPrecedence()
   {
-    if (mappingPrecedence == null)
+    if (precedence == null)
     {
       String value = getProperties().get("mappingPrecedence");
-      if (value == null)
-      {
-        mappingPrecedence = MappingPrecedence.STRATEGY;
-      }
-      else
-      {
-        mappingPrecedence = MappingPrecedence.valueOf(value);
-      }
+      precedence = value == null ? Precedence.STRATEGY : Precedence.valueOf(value);
     }
 
-    return mappingPrecedence;
+    return precedence;
   }
 
-  public ToManyReferenceMapping getToManyReferenceMapping()
+  public ToMany getToMany()
   {
-    if (toManyReferenceMapping == null)
+    if (toMany == null)
     {
       String value = getProperties().get("toManyReferenceMapping");
-      if (value == null)
-      {
-        toManyReferenceMapping = ToManyReferenceMapping.ONE_TABLE_PER_REFERENCE;
-      }
-      else
-      {
-        toManyReferenceMapping = ToManyReferenceMapping.valueOf(value);
-      }
+      toMany = value == null ? ToMany.PER_REFERENCE : ToMany.valueOf(value);
     }
 
-    return toManyReferenceMapping;
+    return toMany;
   }
 
-  public ToOneReferenceMapping getToOneReferenceMapping()
+  public ToOne getToOne()
   {
-    if (toOneReferenceMapping == null)
+    if (toOne == null)
     {
       String value = getProperties().get("toOneReferenceMapping");
-      if (value == null)
-      {
-        toOneReferenceMapping = ToOneReferenceMapping.LIKE_ATTRIBUTES;
-      }
-      else
-      {
-        toOneReferenceMapping = ToOneReferenceMapping.valueOf(value);
-      }
+      toOne = value == null ? ToOne.LIKE_ATTRIBUTES : ToOne.valueOf(value);
     }
 
-    return toOneReferenceMapping;
+    return toOne;
   }
 
   public Set<IDBTable> map(CDOPackageImpl[] cdoPackages)
@@ -168,18 +144,18 @@ public abstract class StandardMappingStrategy extends MappingStrategy
     {
       if (cdoFeature.isMany())
       {
-        return mapReference(cdoClass, cdoFeature, getToManyReferenceMapping());
+        return mapReference(cdoClass, cdoFeature, getToMany());
       }
       else
       {
-        switch (getToOneReferenceMapping())
+        switch (getToOne())
         {
         case LIKE_ATTRIBUTES:
           return mapAttribute(cdoClass, cdoFeature);
         case LIKE_TO_MANY_REFERENCES:
-          return mapReference(cdoClass, cdoFeature, getToManyReferenceMapping());
+          return mapReference(cdoClass, cdoFeature, getToMany());
         default:
-          throw new IllegalArgumentException("Invalid mapping: " + getToOneReferenceMapping());
+          throw new IllegalArgumentException("Invalid mapping: " + getToOne());
         }
       }
     }
@@ -208,18 +184,18 @@ public abstract class StandardMappingStrategy extends MappingStrategy
     return addField(cdoFeature, table);
   }
 
-  protected IDBField mapReference(CDOClass cdoClass, CDOFeature cdoFeature, ToManyReferenceMapping mapping)
+  protected IDBField mapReference(CDOClass cdoClass, CDOFeature cdoFeature, ToMany mapping)
   {
     switch (mapping)
     {
-    case ONE_TABLE_PER_REFERENCE:
+    case PER_REFERENCE:
       return mapReferenceTable(cdoFeature, cdoClass.getName() + "_" + cdoFeature.getName() + "_refs", false);
-    case ONE_TABLE_PER_CLASS:
+    case PER_CLASS:
       return mapReferenceTable(cdoClass, cdoClass.getName() + "_refs", true);
-    case ONE_TABLE_PER_PACKAGE:
+    case PER_PACKAGE:
       CDOPackage cdoPackage = cdoClass.getContainingPackage();
       return mapReferenceTable(cdoPackage, cdoPackage.getName() + "_refs", true);
-    case ONE_TABLE_PER_REPOSITORY:
+    case PER_REPOSITORY:
       IRepository repository = getStore().getRepository();
       return mapReferenceTable(repository, repository.getName() + "_refs", true);
     case LIKE_ATTRIBUTES:

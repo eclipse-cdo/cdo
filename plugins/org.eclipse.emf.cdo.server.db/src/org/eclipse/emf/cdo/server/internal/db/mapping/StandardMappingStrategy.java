@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.server.internal.db.info.ClassServerInfo;
 import org.eclipse.emf.cdo.server.internal.db.info.FeatureServerInfo;
 import org.eclipse.emf.cdo.server.internal.db.info.PackageServerInfo;
 import org.eclipse.emf.cdo.server.internal.db.info.ServerInfo;
@@ -141,21 +140,24 @@ public abstract class StandardMappingStrategy extends MappingStrategy
    * @param affectedTables
    *          Can be used to indicate the creation or modification of additional
    *          tables. There is no need to add the table of the returned field to
-   *          this set of affected tables. The caller takes care of that.
+   *          this set of affected tables. The framework takes care of that.
    */
   protected abstract IDBField mapFeature(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables);
 
   protected IDBField mapAttribute(CDOClass cdoClass, CDOFeature cdoFeature)
   {
-    IDBTable table = ClassServerInfo.getTable(cdoClass);
-    if (table == null)
-    {
-      table = addTable(cdoClass);
-      initTable(table, true);
-      ClassServerInfo.setTable(cdoClass, table);
-    }
+    // IDBTable table = ClassServerInfo.getTable(cdoClass);
+    // if (table == null)
+    // {
+    // table = addTable(cdoClass);
+    // initTable(table, true);
+    // ClassServerInfo.setTable(cdoClass, table);
+    // }
+    //
+    // return addField(cdoFeature, table);
 
-    return addField(cdoFeature, table);
+    // TODO Implement method StandardMappingStrategy.mapAttribute()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   protected IDBField mapReference(CDOClass cdoClass, CDOFeature cdoFeature, ToMany mapping)
@@ -227,6 +229,12 @@ public abstract class StandardMappingStrategy extends MappingStrategy
     }
 
     CDOClassImpl cdoClass = revision.getCDOClass();
+    // ClassMapper classMapper = ClassServerInfo.getMapper(cdoClass);
+    // List<AttributeMapper> attributeMappers =
+    // classMapper.getAttributeMappers();
+    //
+    // Map<IDBTable, FeatureMapper[]> featureMappers = classMapping.getTables();
+
     ClassMapping classMapping = getClassMapping(cdoClass);
     Map<IDBTable, FeatureMapping[]> tables = classMapping.getTables();
     Entry<IDBTable, FeatureMapping[]> entry = tables.entrySet().iterator().next();

@@ -16,11 +16,10 @@ import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
+import org.eclipse.net4j.db.ConnectionProvider;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
-
-import javax.sql.DataSource;
 
 import java.sql.Connection;
 
@@ -35,7 +34,7 @@ public class DBStore extends Store implements IDBStore
 
   private IDBAdapter dbAdapter;
 
-  private DataSource dataSource;
+  private ConnectionProvider connectionProvider;
 
   private int nextPackageID;
 
@@ -43,7 +42,7 @@ public class DBStore extends Store implements IDBStore
 
   private int nextFeatureID;
 
-  public DBStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter, DataSource dataSource)
+  public DBStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter, ConnectionProvider connectionProvider)
   {
     super(TYPE);
     if (dbAdapter == null)
@@ -51,14 +50,14 @@ public class DBStore extends Store implements IDBStore
       throw new IllegalArgumentException("dbAdapter is null");
     }
 
-    if (dataSource == null)
+    if (connectionProvider == null)
     {
-      throw new IllegalArgumentException("dataSource is null");
+      throw new IllegalArgumentException("connectionProvider is null");
     }
 
     this.mappingStrategy = mappingStrategy;
     this.dbAdapter = dbAdapter;
-    this.dataSource = dataSource;
+    this.connectionProvider = connectionProvider;
   }
 
   public IMappingStrategy getMappingStrategy()
@@ -71,9 +70,9 @@ public class DBStore extends Store implements IDBStore
     return dbAdapter;
   }
 
-  public DataSource getDataSource()
+  public ConnectionProvider getConnectionProvider()
   {
-    return dataSource;
+    return connectionProvider;
   }
 
   public boolean hasAuditSupport()
@@ -81,14 +80,14 @@ public class DBStore extends Store implements IDBStore
     return true;
   }
 
-  public DBStoreReader getReader(ISession session) throws DBException
+  public DBStoreAccessor getReader(ISession session) throws DBException
   {
-    return new DBStoreReader(this);
+    return new DBStoreAccessor(this, session);
   }
 
-  public DBStoreWriter getWriter(IView view) throws DBException
+  public DBStoreAccessor getWriter(IView view) throws DBException
   {
-    return new DBStoreWriter(this, view);
+    return new DBStoreAccessor(this, view);
   }
 
   public int getNextPackageID()
@@ -110,8 +109,8 @@ public class DBStore extends Store implements IDBStore
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    CDODBSchema.INSTANCE.create(dbAdapter, dataSource);
-    DBStoreWriter writer = getWriter(null);
+    CDODBSchema.INSTANCE.create(dbAdapter, connectionProvider);
+    DBStoreAccessor writer = getWriter(null);
     Connection connection = writer.getConnection();
 
     try

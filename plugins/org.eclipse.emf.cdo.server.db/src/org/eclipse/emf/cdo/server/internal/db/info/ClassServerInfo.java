@@ -11,28 +11,27 @@
 package org.eclipse.emf.cdo.server.internal.db.info;
 
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-
-import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.emf.cdo.server.internal.db.mapping.ClassMapper;
 
 /**
  * @author Eike Stepper
  */
 public final class ClassServerInfo extends ServerInfo
 {
-  private IDBTable table;
+  private ClassMapper mapper;
 
   public ClassServerInfo(int id)
   {
     super(id);
   }
 
-  public static IDBTable getTable(CDOClass cdoClass)
+  public static ClassMapper getMapper(CDOClass cdoClass)
   {
-    return ((ClassServerInfo)cdoClass.getServerInfo()).table;
+    return ((ClassServerInfo)cdoClass.getServerInfo()).mapper;
   }
 
-  public static void setTable(CDOClass cdoClass, IDBTable table)
+  public static void setMapper(CDOClass cdoClass, ClassMapper mapper)
   {
-    ((ClassServerInfo)cdoClass.getServerInfo()).table = table;
+    ((ClassServerInfo)cdoClass.getServerInfo()).mapper = mapper;
   }
 }

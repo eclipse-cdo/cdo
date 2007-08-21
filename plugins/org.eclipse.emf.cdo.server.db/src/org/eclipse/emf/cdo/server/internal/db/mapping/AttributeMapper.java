@@ -8,22 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.db;
-
-import org.eclipse.emf.cdo.server.IStore;
-
-import org.eclipse.net4j.db.ConnectionProvider;
-import org.eclipse.net4j.db.IDBAdapter;
-
+package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBStore extends IStore
+public final class AttributeMapper
 {
-  public IMappingStrategy getMappingStrategy();
 
-  public IDBAdapter getDBAdapter();
-
-  public ConnectionProvider getConnectionProvider();
 }

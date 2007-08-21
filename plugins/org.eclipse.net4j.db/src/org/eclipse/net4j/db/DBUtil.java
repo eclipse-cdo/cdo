@@ -178,27 +178,10 @@ public final class DBUtil
           + Arrays.asList(table.getFields()));
     }
 
-    StringBuilder builder = new StringBuilder();
-    builder.append("INSERT INTO ");
-    builder.append(table);
-    builder.append(" VALUES (");
-
-    for (int i = 0; i < fields.length; i++)
-    {
-      if (i > 0)
-      {
-        builder.append(", ");
-      }
-
-      builder.append("?");
-    }
-
-    builder.append(")");
-
-    String sql = builder.toString();
+    String sql = table.sqlInsert();
     if (TRACER.isEnabled())
     {
-      builder = new StringBuilder();
+      StringBuilder builder = new StringBuilder();
       builder.append("INSERT INTO ");
       builder.append(table);
       builder.append(" VALUES (");

@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db.info;
 
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+
 import org.eclipse.net4j.db.IDBTable;
 
 /**
@@ -24,21 +26,13 @@ public final class ClassServerInfo extends ServerInfo
     super(id);
   }
 
-  public IDBTable getTable()
+  public static IDBTable getTable(CDOClass cdoClass)
   {
-    return table;
+    return ((ClassServerInfo)cdoClass.getServerInfo()).table;
   }
 
-  public void setTable(IDBTable table)
+  public static void setTable(CDOClass cdoClass, IDBTable table)
   {
-    if (this.table != table)
-    {
-      if (this.table != null)
-      {
-        throw new IllegalStateException("Table is already set");
-      }
-
-      this.table = table;
-    }
+    ((ClassServerInfo)cdoClass.getServerInfo()).table = table;
   }
 }

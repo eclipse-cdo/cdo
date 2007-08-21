@@ -24,13 +24,8 @@ public abstract class ServerInfo
     this.id = id;
   }
 
-  public int getID()
+  public static int getID(CDOModelElement modelElement)
   {
-    return id;
-  }
-
-  public static int getDBID(CDOModelElement modelElement)
-  {
-    return ((ServerInfo)modelElement.getServerInfo()).getID();
+    return ((ServerInfo)modelElement.getServerInfo()).id;
   }
 }

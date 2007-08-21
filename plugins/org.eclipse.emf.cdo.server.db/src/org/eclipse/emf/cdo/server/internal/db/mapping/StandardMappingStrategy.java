@@ -102,7 +102,7 @@ public abstract class StandardMappingStrategy extends MappingStrategy
     Set<IDBTable> affectedTables = new HashSet();
     for (CDOPackageImpl cdoPackage : cdoPackages)
     {
-      ((PackageServerInfo)cdoPackage.getServerInfo()).setSchema(getSchema());
+      PackageServerInfo.setSchema(cdoPackage, getSchema());
       if (TRACER.isEnabled())
       {
         TRACER.format("Mapped package: {0} --> {1}", cdoPackage, getSchema());
@@ -147,13 +147,12 @@ public abstract class StandardMappingStrategy extends MappingStrategy
 
   protected IDBField mapAttribute(CDOClass cdoClass, CDOFeature cdoFeature)
   {
-    ClassServerInfo classInfo = (ClassServerInfo)cdoClass.getServerInfo();
-    IDBTable table = classInfo.getTable();
+    IDBTable table = ClassServerInfo.getTable(cdoClass);
     if (table == null)
     {
       table = addTable(cdoClass);
       initTable(table, true);
-      classInfo.setTable(table);
+      ClassServerInfo.setTable(cdoClass, table);
     }
 
     return addField(cdoFeature, table);
@@ -236,7 +235,7 @@ public abstract class StandardMappingStrategy extends MappingStrategy
     int i = 0;
     Object[] values = new Object[table.getFieldCount()];
     values[i++] = revision.getID().getValue();
-    values[i++] = ServerInfo.getDBID(revision.getCDOClass());
+    values[i++] = ServerInfo.getID(revision.getCDOClass());
     values[i++] = revision.getVersion();
     values[i++] = new Date(revision.getCreated());
     values[i++] = new Date(revision.getRevised());

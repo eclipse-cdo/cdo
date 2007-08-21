@@ -46,4 +46,6 @@ public interface IDBTable extends IDBElement
   public IDBIndex[] getIndices();
 
   public IDBIndex getPrimaryKeyIndex();
+
+  public String sqlInsert();
 }

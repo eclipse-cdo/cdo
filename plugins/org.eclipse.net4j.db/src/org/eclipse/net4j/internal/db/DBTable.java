@@ -203,4 +203,25 @@ public class DBTable extends DBElement implements IDBTable
   {
     return name;
   }
+
+  public String sqlInsert()
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("INSERT INTO ");
+    builder.append(getName());
+    builder.append(" VALUES (");
+
+    for (int i = 0; i < fields.size(); i++)
+    {
+      if (i > 0)
+      {
+        builder.append(", ");
+      }
+
+      builder.append("?");
+    }
+
+    builder.append(")");
+    return builder.toString();
+  }
 }

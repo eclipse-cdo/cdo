@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db.info;
 
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+
 import org.eclipse.net4j.db.IDBSchema;
 
 /**
@@ -24,21 +26,13 @@ public final class PackageServerInfo extends ServerInfo
     super(id);
   }
 
-  public IDBSchema getSchema()
+  public static IDBSchema getSchema(CDOPackage cdoPackage)
   {
-    return schema;
+    return ((PackageServerInfo)cdoPackage.getServerInfo()).schema;
   }
 
-  public void setSchema(IDBSchema schema)
+  public static void setSchema(CDOPackage cdoPackage, IDBSchema schema)
   {
-    if (this.schema != schema)
-    {
-      if (this.schema != null)
-      {
-        throw new IllegalStateException("Schema " + schema + "is already set");
-      }
-
-      this.schema = schema;
-    }
+    ((PackageServerInfo)cdoPackage.getServerInfo()).schema = schema;
   }
 }

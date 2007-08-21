@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db;
+package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -19,6 +19,9 @@ import org.eclipse.emf.cdo.server.db.MappingPrecedence;
 import org.eclipse.emf.cdo.server.db.ToManyReferenceMapping;
 import org.eclipse.emf.cdo.server.db.ToOneReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.info.ClassServerInfo;
+import org.eclipse.emf.cdo.server.internal.db.info.FeatureServerInfo;
+import org.eclipse.emf.cdo.server.internal.db.info.PackageServerInfo;
 
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
@@ -113,7 +116,7 @@ public abstract class StandardMappingStrategy extends MappingStrategy
     Set<IDBTable> affectedTables = new HashSet();
     for (CDOPackageImpl cdoPackage : cdoPackages)
     {
-      ((DBPackageInfo)cdoPackage.getServerInfo()).setSchema(getSchema());
+      ((PackageServerInfo)cdoPackage.getServerInfo()).setSchema(getSchema());
       if (TRACER.isEnabled())
       {
         TRACER.format("Mapped package: {0} --> {1}", cdoPackage, getSchema());
@@ -134,7 +137,7 @@ public abstract class StandardMappingStrategy extends MappingStrategy
           IDBField field = mapFeature(cdoClass, cdoFeature, affectedTables);
           if (field != null)
           {
-            ((DBFeatureInfo)cdoFeature.getServerInfo()).addField(cdoClass, field);
+            ((FeatureServerInfo)cdoFeature.getServerInfo()).addField(cdoClass, field);
             affectedTables.add(field.getTable());
             if (TRACER.isEnabled())
             {
@@ -193,7 +196,7 @@ public abstract class StandardMappingStrategy extends MappingStrategy
 
   protected IDBField mapAttribute(CDOClass cdoClass, CDOFeature cdoFeature)
   {
-    DBClassInfo classInfo = (DBClassInfo)cdoClass.getServerInfo();
+    ClassServerInfo classInfo = (ClassServerInfo)cdoClass.getServerInfo();
     IDBTable table = classInfo.getTable();
     if (table == null)
     {
@@ -253,7 +256,7 @@ public abstract class StandardMappingStrategy extends MappingStrategy
       classMappings.put(cdoClass, classMapping);
       for (CDOFeature feature : cdoClass.getAllFeatures())
       {
-        DBFeatureInfo featureInfo = (DBFeatureInfo)feature.getServerInfo();
+        FeatureServerInfo featureInfo = (FeatureServerInfo)feature.getServerInfo();
         IDBField field = featureInfo.getField(cdoClass);
         if (field != null)
         {

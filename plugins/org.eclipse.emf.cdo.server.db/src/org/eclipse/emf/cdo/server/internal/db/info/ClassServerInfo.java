@@ -8,37 +8,37 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db;
+package org.eclipse.emf.cdo.server.internal.db.info;
 
-import org.eclipse.net4j.db.IDBSchema;
+import org.eclipse.net4j.db.IDBTable;
 
 /**
  * @author Eike Stepper
  */
-public final class DBPackageInfo extends DBInfo
+public final class ClassServerInfo extends ServerInfo
 {
-  private IDBSchema schema;
+  private IDBTable table;
 
-  public DBPackageInfo(int id)
+  public ClassServerInfo(int id)
   {
     super(id);
   }
 
-  public IDBSchema getSchema()
+  public IDBTable getTable()
   {
-    return schema;
+    return table;
   }
 
-  public void setSchema(IDBSchema schema)
+  public void setTable(IDBTable table)
   {
-    if (this.schema != schema)
+    if (this.table != table)
     {
-      if (this.schema != null)
+      if (this.table != null)
       {
-        throw new IllegalStateException("Schema " + schema + "is already set");
+        throw new IllegalStateException("Table is already set");
       }
 
-      this.schema = schema;
+      this.table = table;
     }
   }
 }

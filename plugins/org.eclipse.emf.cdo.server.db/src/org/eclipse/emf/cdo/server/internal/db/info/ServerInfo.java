@@ -8,37 +8,29 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db;
+package org.eclipse.emf.cdo.server.internal.db.info;
 
-import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.emf.cdo.protocol.model.CDOModelElement;
 
 /**
  * @author Eike Stepper
  */
-public final class DBClassInfo extends DBInfo
+public abstract class ServerInfo
 {
-  private IDBTable table;
+  private int id;
 
-  public DBClassInfo(int id)
+  public ServerInfo(int id)
   {
-    super(id);
+    this.id = id;
   }
 
-  public IDBTable getTable()
+  public int getID()
   {
-    return table;
+    return id;
   }
 
-  public void setTable(IDBTable table)
+  public static int getDBID(CDOModelElement modelElement)
   {
-    if (this.table != table)
-    {
-      if (this.table != null)
-      {
-        throw new IllegalStateException("Table is already set");
-      }
-
-      this.table = table;
-    }
+    return ((ServerInfo)modelElement.getServerInfo()).getID();
   }
 }

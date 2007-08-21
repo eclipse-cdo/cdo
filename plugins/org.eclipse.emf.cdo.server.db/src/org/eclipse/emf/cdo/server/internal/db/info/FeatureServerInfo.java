@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db;
+package org.eclipse.emf.cdo.server.internal.db.info;
 
 import org.eclipse.net4j.db.IDBField;
 
@@ -18,11 +18,11 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public final class DBFeatureInfo extends DBInfo
+public final class FeatureServerInfo extends ServerInfo
 {
   private Map<Object, IDBField> fields;
 
-  public DBFeatureInfo(int id)
+  public FeatureServerInfo(int id)
   {
     super(id);
   }

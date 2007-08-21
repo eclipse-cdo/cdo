@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db;
+package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.info.ServerInfo;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBTable;
@@ -59,7 +60,7 @@ public class HorizontalMappingStrategy extends StandardMappingStrategy
     int i = 0;
     Object[] values = new Object[table.getFieldCount()];
     values[i++] = revision.getID().getValue();
-    values[i++] = DBInfo.getDBID(revision.getCDOClass());
+    values[i++] = ServerInfo.getDBID(revision.getCDOClass());
     values[i++] = revision.getVersion();
     values[i++] = new Date(revision.getCreated());
     values[i++] = new Date(revision.getRevised());

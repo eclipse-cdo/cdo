@@ -20,6 +20,10 @@ import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.info.ClassServerInfo;
+import org.eclipse.emf.cdo.server.internal.db.info.FeatureServerInfo;
+import org.eclipse.emf.cdo.server.internal.db.info.ServerInfo;
+import org.eclipse.emf.cdo.server.internal.db.info.PackageServerInfo;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -80,7 +84,7 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
       if (!cdoPackage.isSystem())
       {
         int id = store.getNextPackageID();
-        cdoPackage.setServerInfo(new DBPackageInfo(id));
+        cdoPackage.setServerInfo(new PackageServerInfo(id));
         if (TRACER.isEnabled())
         {
           TRACER.format("Inserting package: {0} --> {1}", cdoPackage, id);
@@ -110,10 +114,10 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
   public void writeClass(CDOClassImpl cdoClass)
   {
     int id = store.getNextClassID();
-    cdoClass.setServerInfo(new DBClassInfo(id));
+    cdoClass.setServerInfo(new ClassServerInfo(id));
 
     CDOPackageImpl cdoPackage = cdoClass.getContainingPackage();
-    int packageID = DBInfo.getDBID(cdoPackage);
+    int packageID = ServerInfo.getDBID(cdoPackage);
     int classifierID = cdoClass.getClassifierID();
     String name = cdoClass.getName();
     boolean isAbstract = cdoClass.isAbstract();
@@ -140,9 +144,9 @@ public class DBStoreWriter extends DBStoreReader implements IStoreWriter
   public void writeFeature(CDOFeatureImpl feature)
   {
     int id = store.getNextFeatureID();
-    feature.setServerInfo(new DBFeatureInfo(id));
+    feature.setServerInfo(new FeatureServerInfo(id));
 
-    int classID = DBInfo.getDBID(feature.getContainingClass());
+    int classID = ServerInfo.getDBID(feature.getContainingClass());
     String name = feature.getName();
     int featureID = feature.getFeatureID();
     int type = feature.getType().getTypeID();

@@ -24,6 +24,10 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.internal.db.info.ClassServerInfo;
+import org.eclipse.emf.cdo.server.internal.db.info.FeatureServerInfo;
+import org.eclipse.emf.cdo.server.internal.db.info.ServerInfo;
+import org.eclipse.emf.cdo.server.internal.db.info.PackageServerInfo;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -106,7 +110,7 @@ public class DBStoreReader implements IStoreReader
     String where = CDODBSchema.PACKAGES_URI.getName() + " = '" + cdoPackage.getPackageURI() + "'";
     Object[] values = DBUtil.select(connection, where, CDODBSchema.PACKAGES_ID, CDODBSchema.PACKAGES_NAME,
         CDODBSchema.PACKAGES_ECORE);
-    cdoPackage.setServerInfo(new DBPackageInfo((Integer)values[0]));
+    cdoPackage.setServerInfo(new PackageServerInfo((Integer)values[0]));
     cdoPackage.setName((String)values[1]);
     cdoPackage.setEcore((String)values[2]);
     readClasses(cdoPackage);
@@ -126,7 +130,7 @@ public class DBStoreReader implements IStoreReader
         String name = (String)values[2];
         boolean isAbstract = getBoolean(values[3]);
         CDOClassImpl cdoClass = new CDOClassImpl(cdoPackage, classifierID, name, isAbstract);
-        cdoClass.setServerInfo(new DBClassInfo(classID));
+        cdoClass.setServerInfo(new ClassServerInfo(classID));
         cdoPackage.addClass(cdoClass);
         readSuperTypes(cdoClass, classID);
         readFeatures(cdoClass, classID);
@@ -134,7 +138,7 @@ public class DBStoreReader implements IStoreReader
       }
     };
 
-    String where = CDODBSchema.CLASSES_PACKAGE.getName() + " = " + DBInfo.getDBID(cdoPackage);
+    String where = CDODBSchema.CLASSES_PACKAGE.getName() + " = " + ServerInfo.getDBID(cdoPackage);
     DBUtil.select(connection, rowHandler, where, CDODBSchema.CLASSES_ID, CDODBSchema.CLASSES_CLASSIFIER,
         CDODBSchema.CLASSES_NAME, CDODBSchema.CLASSES_ABSTRACT);
   }
@@ -183,7 +187,7 @@ public class DBStoreReader implements IStoreReader
           feature = new CDOFeatureImpl(cdoClass, featureID, name, type, many);
         }
 
-        feature.setServerInfo(new DBFeatureInfo((Integer)values[0]));
+        feature.setServerInfo(new FeatureServerInfo((Integer)values[0]));
         cdoClass.addFeature(feature);
         return true;
       }

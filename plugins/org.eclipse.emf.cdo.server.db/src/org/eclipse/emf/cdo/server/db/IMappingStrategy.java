@@ -40,12 +40,6 @@ public interface IMappingStrategy
 
   public void setProperties(Map<String, String> properties);
 
-  public ToManyReferenceMapping getToManyReferenceMapping();
-
-  public ToOneReferenceMapping getToOneReferenceMapping();
-
-  public MappingPrecedence getMappingPrecedence();
-
   /**
    * @return A collection of the affected tables.
    */

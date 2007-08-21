@@ -14,36 +14,25 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.db.ToManyReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
-import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
  */
-public class HorizontalMappingStrategy extends MappingStrategy
+public class HorizontalMappingStrategy extends StandardMappingStrategy
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalMappingStrategy.class);
-
-  private Map<Object, IDBTable> referenceTables = new HashMap();
 
   public HorizontalMappingStrategy()
   {
@@ -52,117 +41,6 @@ public class HorizontalMappingStrategy extends MappingStrategy
   public String getType()
   {
     return "horizontal";
-  }
-
-  @Override
-  protected IDBTable mapClass(CDOClass cdoClass, Set<IDBTable> affectedTables)
-  {
-    return null;
-  }
-
-  @Override
-  protected IDBField mapFeature(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables)
-  {
-    if (cdoClass.isAbstract())
-    {
-      return null;
-    }
-
-    if (cdoFeature.isReference())
-    {
-      if (cdoFeature.isMany())
-      {
-        return mapReference(cdoClass, cdoFeature, getToManyReferenceMapping());
-      }
-      else
-      {
-        switch (getToOneReferenceMapping())
-        {
-        case LIKE_ATTRIBUTES:
-          return mapAttribute(cdoClass, cdoFeature);
-        case LIKE_TO_MANY_REFERENCES:
-          return mapReference(cdoClass, cdoFeature, getToManyReferenceMapping());
-        default:
-          throw new IllegalArgumentException("Invalid mapping: " + getToOneReferenceMapping());
-        }
-      }
-    }
-    else
-    {
-      if (cdoFeature.isMany())
-      {
-        throw new UnsupportedOperationException();
-      }
-
-      return mapAttribute(cdoClass, cdoFeature);
-    }
-  }
-
-  protected IDBField mapAttribute(CDOClass cdoClass, CDOFeature cdoFeature)
-  {
-    DBClassInfo classInfo = (DBClassInfo)cdoClass.getServerInfo();
-    IDBTable table = classInfo.getTable();
-    if (table == null)
-    {
-      table = addTable(cdoClass);
-      initTable(table, true);
-      classInfo.setTable(table);
-    }
-
-    return addField(cdoFeature, table);
-  }
-
-  protected IDBField mapReference(CDOClass cdoClass, CDOFeature cdoFeature, ToManyReferenceMapping mapping)
-  {
-    switch (mapping)
-    {
-    case ONE_TABLE_PER_REFERENCE:
-      return mapReferenceTable(cdoFeature, cdoClass.getName() + "_" + cdoFeature.getName() + "_refs", false);
-    case ONE_TABLE_PER_CLASS:
-      return mapReferenceTable(cdoClass, cdoClass.getName() + "_refs", true);
-    case ONE_TABLE_PER_PACKAGE:
-      CDOPackage cdoPackage = cdoClass.getContainingPackage();
-      return mapReferenceTable(cdoPackage, cdoPackage.getName() + "_refs", true);
-    case ONE_TABLE_PER_REPOSITORY:
-      IRepository repository = getStore().getRepository();
-      return mapReferenceTable(repository, repository.getName() + "_refs", true);
-    case LIKE_ATTRIBUTES:
-      return mapReferenceSerialized(cdoClass, cdoFeature);
-    default:
-      throw new IllegalArgumentException("Invalid mapping: " + mapping);
-    }
-  }
-
-  protected IDBField mapReferenceSerialized(CDOClass cdoClass, CDOFeature cdoFeature)
-  {
-    // TODO Implement method HorizontalMappingStrategy.mapReferenceSerialized()
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
-
-  protected IDBField mapReferenceTable(Object key, String tableName, boolean withFeature)
-  {
-    IDBTable table = referenceTables.get(key);
-    if (table == null)
-    {
-      table = addReferenceTable(tableName, withFeature);
-      referenceTables.put(key, table);
-    }
-
-    return table.getField(0);
-  }
-
-  protected IDBTable addReferenceTable(String tableName, boolean withFeature)
-  {
-    IDBTable table = addTable(tableName);
-    if (withFeature)
-    {
-      table.addField("cdo_feature", DBType.INTEGER);
-    }
-
-    table.addField("cdo_idx", DBType.INTEGER);
-    table.addField("cdo_source", DBType.BIGINT);
-    table.addField("cdo_target", DBType.BIGINT);
-    return table;
   }
 
   public void writeRevision(Connection connection, CDORevisionImpl revision)

@@ -26,11 +26,9 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -60,9 +58,12 @@ public abstract class StandardMappingStrategy extends MappingStrategy
   {
     if (mappingPrecedence == null)
     {
-      mappingPrecedence = MappingPrecedence.STRATEGY;
       String value = getProperties().get("mappingPrecedence");
-      if (value != null)
+      if (value == null)
+      {
+        mappingPrecedence = MappingPrecedence.STRATEGY;
+      }
+      else
       {
         mappingPrecedence = MappingPrecedence.valueOf(value);
       }
@@ -75,9 +76,12 @@ public abstract class StandardMappingStrategy extends MappingStrategy
   {
     if (toManyReferenceMapping == null)
     {
-      toManyReferenceMapping = ToManyReferenceMapping.ONE_TABLE_PER_REFERENCE;
       String value = getProperties().get("toManyReferenceMapping");
-      if (value != null)
+      if (value == null)
+      {
+        toManyReferenceMapping = ToManyReferenceMapping.ONE_TABLE_PER_REFERENCE;
+      }
+      else
       {
         toManyReferenceMapping = ToManyReferenceMapping.valueOf(value);
       }
@@ -90,9 +94,12 @@ public abstract class StandardMappingStrategy extends MappingStrategy
   {
     if (toOneReferenceMapping == null)
     {
-      toOneReferenceMapping = ToOneReferenceMapping.LIKE_ATTRIBUTES;
       String value = getProperties().get("toOneReferenceMapping");
-      if (value != null)
+      if (value == null)
+      {
+        toOneReferenceMapping = ToOneReferenceMapping.LIKE_ATTRIBUTES;
+      }
+      else
       {
         toOneReferenceMapping = ToOneReferenceMapping.valueOf(value);
       }
@@ -103,11 +110,7 @@ public abstract class StandardMappingStrategy extends MappingStrategy
 
   public Set<IDBTable> map(CDOPackageImpl[] cdoPackages)
   {
-    // Prepare data structures
     Set<IDBTable> affectedTables = new HashSet();
-    List<CDOClass> cdoClasses = new ArrayList();
-
-    // Map all packages before classes are mapped
     for (CDOPackageImpl cdoPackage : cdoPackages)
     {
       ((DBPackageInfo)cdoPackage.getServerInfo()).setSchema(getSchema());
@@ -117,48 +120,26 @@ public abstract class StandardMappingStrategy extends MappingStrategy
       }
     }
 
-    // Map all classes before features are mapped
-    // for (CDOPackageImpl cdoPackage : cdoPackages)
-    // {
-    // if (TRACER.isEnabled())
-    // {
-    // TRACER.format("Mapping classes of package {0}", cdoPackage);
-    // }
-    //
-    // for (CDOClass cdoClass : cdoPackage.getClasses())
-    // {
-    // cdoClasses.add(cdoClass);
-    // IDBTable table = mapClass(cdoClass, affectedTables);
-    // if (table != null)
-    // {
-    // ((DBClassInfo)cdoClass.getServerInfo()).setTable(table);
-    // affectedTables.add(table);
-    // if (TRACER.isEnabled())
-    // {
-    // TRACER.format("Mapped class: {0} --> {1}", cdoClass, table);
-    // }
-    // }
-    // }
-    // }
-
-    // Map all features
-    for (CDOClass cdoClass : cdoClasses)
+    for (CDOPackageImpl cdoPackage : cdoPackages)
     {
-      if (TRACER.isEnabled())
+      for (CDOClass cdoClass : cdoPackage.getClasses())
       {
-        TRACER.format("Mapping features of class {0}", cdoClass);
-      }
-
-      for (CDOFeature cdoFeature : cdoClass.getAllFeatures())
-      {
-        IDBField field = mapFeature(cdoClass, cdoFeature, affectedTables);
-        if (field != null)
+        if (TRACER.isEnabled())
         {
-          ((DBFeatureInfo)cdoFeature.getServerInfo()).addField(cdoClass, field);
-          affectedTables.add(field.getTable());
-          if (TRACER.isEnabled())
+          TRACER.format("Mapping features of class {0}", cdoClass);
+        }
+
+        for (CDOFeature cdoFeature : cdoClass.getAllFeatures())
+        {
+          IDBField field = mapFeature(cdoClass, cdoFeature, affectedTables);
+          if (field != null)
           {
-            TRACER.format("Mapped feature: {0} --> {1}", cdoFeature, field);
+            ((DBFeatureInfo)cdoFeature.getServerInfo()).addField(cdoClass, field);
+            affectedTables.add(field.getTable());
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("Mapped feature: {0} --> {1}", cdoFeature, field);
+            }
           }
         }
       }

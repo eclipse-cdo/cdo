@@ -8,12 +8,24 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.mapping;
+package org.eclipse.emf.cdo.server.internal.db;
+
+import org.eclipse.emf.cdo.protocol.model.CDOModelElement;
 
 /**
  * @author Eike Stepper
  */
-public enum Precedence
+public abstract class ServerInfo
 {
-  MODEL, STRATEGY
+  private int dbID;
+
+  public ServerInfo(int dbID)
+  {
+    this.dbID = dbID;
+  }
+
+  public static int getDBID(CDOModelElement modelElement)
+  {
+    return ((ServerInfo)modelElement.getServerInfo()).dbID;
+  }
 }

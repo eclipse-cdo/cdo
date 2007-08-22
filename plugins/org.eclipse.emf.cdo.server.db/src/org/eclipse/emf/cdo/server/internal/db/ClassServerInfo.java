@@ -8,30 +8,30 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.info;
+package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.server.internal.db.mapping.ClassMapper;
+import org.eclipse.emf.cdo.server.db.IMapping;
 
 /**
  * @author Eike Stepper
  */
 public final class ClassServerInfo extends ServerInfo
 {
-  private ClassMapper mapper;
+  private IMapping mapping;
 
   public ClassServerInfo(int id)
   {
     super(id);
   }
 
-  public static ClassMapper getMapper(CDOClass cdoClass)
+  public static IMapping getMapping(CDOClass cdoClass)
   {
-    return ((ClassServerInfo)cdoClass.getServerInfo()).mapper;
+    return ((ClassServerInfo)cdoClass.getServerInfo()).mapping;
   }
 
-  public static void setMapper(CDOClass cdoClass, ClassMapper mapper)
+  public static void setMapping(CDOClass cdoClass, IMapping mapping)
   {
-    ((ClassServerInfo)cdoClass.getServerInfo()).mapper = mapper;
+    ((ClassServerInfo)cdoClass.getServerInfo()).mapping = mapping;
   }
 }

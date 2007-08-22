@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.info;
+package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.net4j.db.IDBField;
 
@@ -27,11 +27,13 @@ public final class FeatureServerInfo extends ServerInfo
     super(id);
   }
 
+  @Deprecated
   public IDBField getField(Object context)
   {
     return fields == null ? null : fields.get(context);
   }
 
+  @Deprecated
   public void addField(Object context, IDBField field)
   {
     if (fields == null)
@@ -49,6 +51,7 @@ public final class FeatureServerInfo extends ServerInfo
     fields.put(context, field);
   }
 
+  @Deprecated
   public IDBField removeField(Object context)
   {
     if (fields == null)

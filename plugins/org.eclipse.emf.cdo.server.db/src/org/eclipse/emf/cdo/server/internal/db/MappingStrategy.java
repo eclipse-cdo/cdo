@@ -8,12 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.mapping;
+package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.server.db.IDBStore;
+import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
@@ -82,6 +83,25 @@ public abstract class MappingStrategy implements IMappingStrategy
 
     return schema;
   }
+
+  public IMapping getMapping(CDOClass cdoClass)
+  {
+    IMapping mapping = ClassServerInfo.getMapping(cdoClass);
+    if (mapping == NoMapping.INSTANCE)
+    {
+      return null;
+    }
+
+    if (mapping == null)
+    {
+      mapping = createMapping(cdoClass);
+      ClassServerInfo.setMapping(cdoClass, mapping == null ? NoMapping.INSTANCE : mapping);
+    }
+
+    return mapping;
+  }
+
+  protected abstract IMapping createMapping(CDOClass cdoClass);
 
   @Override
   public String toString()

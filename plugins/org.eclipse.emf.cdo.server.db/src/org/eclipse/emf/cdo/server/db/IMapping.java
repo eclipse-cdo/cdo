@@ -8,19 +8,26 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.mapping;
+package org.eclipse.emf.cdo.server.db;
 
-import java.util.List;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.server.IStoreWriter;
+
+import org.eclipse.net4j.db.IDBTable;
+
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public final class ClassMapper
+public interface IMapping
 {
-  private List<AttributeMapper> attributeMappers;
+  public IMappingStrategy getMappingStrategy();
 
-  public List<AttributeMapper> getAttributeMappers()
-  {
-    return attributeMappers;
-  }
+  public CDOClass getCDOClass();
+
+  public Set<IDBTable> getAffectedTables();
+
+  public void writeRevision(IStoreWriter writer, CDORevisionImpl revision);
 }

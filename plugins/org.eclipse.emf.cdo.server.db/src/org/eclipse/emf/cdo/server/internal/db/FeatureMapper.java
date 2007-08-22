@@ -8,12 +8,32 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.mapping;
+package org.eclipse.emf.cdo.server.internal.db;
+
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
 /**
  * @author Eike Stepper
  */
-public enum ToOne
+public class FeatureMapper
 {
-  LIKE_ATTRIBUTES, LIKE_TO_MANY_REFERENCES
+  private CDOFeature feature;
+
+  private int index;
+
+  public FeatureMapper(CDOFeature feature, int index)
+  {
+    this.feature = feature;
+    this.index = index;
+  }
+
+  public CDOFeature getFeature()
+  {
+    return feature;
+  }
+
+  public int getIndex()
+  {
+    return index;
+  }
 }

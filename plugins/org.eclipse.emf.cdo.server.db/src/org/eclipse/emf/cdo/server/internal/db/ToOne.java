@@ -8,12 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.mapping;
+package org.eclipse.emf.cdo.server.internal.db;
 
 /**
  * @author Eike Stepper
  */
-public enum ToMany
+public enum ToOne
 {
-  PER_REFERENCE, PER_CLASS, PER_PACKAGE, PER_REPOSITORY, LIKE_ATTRIBUTES
+  LIKE_ATTRIBUTES, LIKE_TO_MANY_REFERENCES
 }

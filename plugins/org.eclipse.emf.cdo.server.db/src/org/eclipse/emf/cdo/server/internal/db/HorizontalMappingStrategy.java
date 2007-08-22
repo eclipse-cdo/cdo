@@ -8,10 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.mapping;
+package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.server.db.IMapping;
 
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
@@ -30,6 +31,12 @@ public class HorizontalMappingStrategy extends StandardMappingStrategy
   public String getType()
   {
     return "horizontal";
+  }
+
+  @Override
+  protected IMapping createMapping(CDOClass cdoClass)
+  {
+    return new HorizontalMapping(this, cdoClass);
   }
 
   @Override

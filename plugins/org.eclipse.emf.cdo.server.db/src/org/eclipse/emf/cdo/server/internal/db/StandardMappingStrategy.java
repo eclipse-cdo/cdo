@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.mapping;
+package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
@@ -16,15 +16,10 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.server.internal.db.info.FeatureServerInfo;
-import org.eclipse.emf.cdo.server.internal.db.info.PackageServerInfo;
-import org.eclipse.emf.cdo.server.internal.db.info.ServerInfo;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBField;
@@ -221,6 +216,7 @@ public abstract class StandardMappingStrategy extends MappingStrategy
     return classMapping;
   }
 
+  @Deprecated
   public void writeRevision(Connection connection, CDORevisionImpl revision)
   {
     if (TRACER.isEnabled())
@@ -229,12 +225,6 @@ public abstract class StandardMappingStrategy extends MappingStrategy
     }
 
     CDOClassImpl cdoClass = revision.getCDOClass();
-    // ClassMapper classMapper = ClassServerInfo.getMapper(cdoClass);
-    // List<AttributeMapper> attributeMappers =
-    // classMapper.getAttributeMappers();
-    //
-    // Map<IDBTable, FeatureMapper[]> featureMappers = classMapping.getTables();
-
     ClassMapping classMapping = getClassMapping(cdoClass);
     Map<IDBTable, FeatureMapping[]> tables = classMapping.getTables();
     Entry<IDBTable, FeatureMapping[]> entry = tables.entrySet().iterator().next();
@@ -265,31 +255,6 @@ public abstract class StandardMappingStrategy extends MappingStrategy
     }
 
     DBUtil.insertRow(connection, table, values);
-  }
-
-  public CDORevision readRevision(Connection connection, CDOID id)
-  {
-    return null;
-  }
-
-  public CDORevision readRevision(Connection connection, CDOID id, long timeStamp)
-  {
-    return null;
-  }
-
-  public CDOID readResourceID(Connection connection, String path)
-  {
-    return null;
-  }
-
-  public String readResourcePath(Connection connection, CDOID id)
-  {
-    return null;
-  }
-
-  public CDOClassRef readObjectType(Connection connection, CDOID id)
-  {
-    return null;
   }
 
   /**

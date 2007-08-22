@@ -8,24 +8,31 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.info;
+package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.protocol.model.CDOModelElement;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+
+import org.eclipse.net4j.db.IDBSchema;
 
 /**
  * @author Eike Stepper
  */
-public abstract class ServerInfo
+public final class PackageServerInfo extends ServerInfo
 {
-  private int dbID;
+  private IDBSchema schema;
 
-  public ServerInfo(int dbID)
+  public PackageServerInfo(int id)
   {
-    this.dbID = dbID;
+    super(id);
   }
 
-  public static int getDBID(CDOModelElement modelElement)
+  public static IDBSchema getSchema(CDOPackage cdoPackage)
   {
-    return ((ServerInfo)modelElement.getServerInfo()).dbID;
+    return ((PackageServerInfo)cdoPackage.getServerInfo()).schema;
+  }
+
+  public static void setSchema(CDOPackage cdoPackage, IDBSchema schema)
+  {
+    ((PackageServerInfo)cdoPackage.getServerInfo()).schema = schema;
   }
 }

@@ -28,12 +28,9 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.server.internal.db.info.ClassServerInfo;
-import org.eclipse.emf.cdo.server.internal.db.info.FeatureServerInfo;
-import org.eclipse.emf.cdo.server.internal.db.info.PackageServerInfo;
-import org.eclipse.emf.cdo.server.internal.db.info.ServerInfo;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -176,7 +173,7 @@ public class DBStoreAccessor implements IStoreReader, IStoreWriter
     store.getDBAdapter().createTables(affectedTables, connection);
   }
 
-  public void writeClass(CDOClassImpl cdoClass)
+  protected void writeClass(CDOClassImpl cdoClass)
   {
     int id = store.getNextClassID();
     cdoClass.setServerInfo(new ClassServerInfo(id));
@@ -199,14 +196,14 @@ public class DBStoreAccessor implements IStoreReader, IStoreWriter
     }
   }
 
-  public void writeSuperType(int type, CDOClassProxy superType)
+  protected void writeSuperType(int type, CDOClassProxy superType)
   {
     String packageURI = superType.getPackageURI();
     int classifierID = superType.getClassifierID();
     DBUtil.insertRow(connection, CDODBSchema.SUPERTYPES, type, packageURI, classifierID);
   }
 
-  public void writeFeature(CDOFeatureImpl feature)
+  protected void writeFeature(CDOFeatureImpl feature)
   {
     int id = store.getNextFeatureID();
     feature.setServerInfo(new FeatureServerInfo(id));
@@ -223,11 +220,6 @@ public class DBStoreAccessor implements IStoreReader, IStoreWriter
     int idx = feature.getFeatureIndex();
     DBUtil.insertRow(connection, CDODBSchema.FEATURES, id, classID, featureID, name, type, packageURI, classifierID,
         many, containment, idx);
-  }
-
-  public void writeRevision(CDORevisionImpl revision)
-  {
-    store.getMappingStrategy().writeRevision(connection, revision);
   }
 
   public Collection<CDOPackageInfo> readPackageInfos()
@@ -266,7 +258,7 @@ public class DBStoreAccessor implements IStoreReader, IStoreWriter
     store.getMappingStrategy().map(cdoPackages);
   }
 
-  public void readClasses(final CDOPackageImpl cdoPackage)
+  protected void readClasses(final CDOPackageImpl cdoPackage)
   {
     IDBRowHandler rowHandler = new IDBRowHandler()
     {
@@ -290,7 +282,7 @@ public class DBStoreAccessor implements IStoreReader, IStoreWriter
         CDODBSchema.CLASSES_NAME, CDODBSchema.CLASSES_ABSTRACT);
   }
 
-  public void readSuperTypes(final CDOClassImpl cdoClass, int classID)
+  protected void readSuperTypes(final CDOClassImpl cdoClass, int classID)
   {
     IDBRowHandler rowHandler = new IDBRowHandler()
     {
@@ -308,7 +300,7 @@ public class DBStoreAccessor implements IStoreReader, IStoreWriter
         CDODBSchema.SUPERTYPES_SUPERTYPE_CLASSIFIER);
   }
 
-  public void readFeatures(final CDOClassImpl cdoClass, int classID)
+  protected void readFeatures(final CDOClassImpl cdoClass, int classID)
   {
     IDBRowHandler rowHandler = new IDBRowHandler()
     {
@@ -346,29 +338,47 @@ public class DBStoreAccessor implements IStoreReader, IStoreWriter
         CDODBSchema.FEATURES_REFERENCE_CLASSIFIER, CDODBSchema.FEATURES_MANY, CDODBSchema.FEATURES_CONTAINMENT);
   }
 
+  public void writeRevision(CDORevisionImpl revision)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Inserting revision: {0}", revision);
+    }
+
+    CDOClassImpl cdoClass = revision.getCDOClass();
+    IMapping mapping = ClassServerInfo.getMapping(cdoClass);
+
+    mapping.writeRevision(this, revision);
+  }
+
   public CDORevision readRevision(CDOID id)
   {
-    return store.getMappingStrategy().readRevision(connection, id);
+    // TODO Implement method DBStoreAccessor.readRevision()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   public CDORevision readRevision(CDOID id, long timeStamp)
   {
-    return store.getMappingStrategy().readRevision(connection, id, timeStamp);
+    // TODO Implement method DBStoreAccessor.enclosing_method()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   public CDOID readResourceID(String path)
   {
-    return store.getMappingStrategy().readResourceID(connection, path);
+    // TODO Implement method DBStoreAccessor.readResourceID()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   public String readResourcePath(CDOID id)
   {
-    return store.getMappingStrategy().readResourcePath(connection, id);
+    // TODO Implement method DBStoreAccessor.readResourcePath()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   public CDOClassRef readObjectType(CDOID id)
   {
-    return store.getMappingStrategy().readObjectType(connection, id);
+    // TODO Implement method DBStoreAccessor.readObjectType()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   /**

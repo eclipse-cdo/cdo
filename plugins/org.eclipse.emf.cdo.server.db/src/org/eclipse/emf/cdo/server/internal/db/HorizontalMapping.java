@@ -8,31 +8,26 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.info;
+package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
-
-import org.eclipse.net4j.db.IDBSchema;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 /**
  * @author Eike Stepper
  */
-public final class PackageServerInfo extends ServerInfo
+public class HorizontalMapping extends FullInfoMapping
 {
-  private IDBSchema schema;
-
-  public PackageServerInfo(int id)
+  public HorizontalMapping(IMappingStrategy mappingStrategy, CDOClass cdoClass)
   {
-    super(id);
+    super(mappingStrategy, cdoClass);
   }
 
-  public static IDBSchema getSchema(CDOPackage cdoPackage)
+  @Override
+  public void writeRevision(IStoreWriter writer, CDORevisionImpl revision)
   {
-    return ((PackageServerInfo)cdoPackage.getServerInfo()).schema;
-  }
-
-  public static void setSchema(CDOPackage cdoPackage, IDBSchema schema)
-  {
-    ((PackageServerInfo)cdoPackage.getServerInfo()).schema = schema;
+    super.writeRevision(writer, revision);
   }
 }

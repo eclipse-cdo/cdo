@@ -8,10 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.mapping;
+package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.server.db.IMapping;
 
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBSchema;
@@ -32,6 +33,12 @@ public class VerticalMappingStrategy extends StandardMappingStrategy
   public String getType()
   {
     return "vertical";
+  }
+
+  @Override
+  protected IMapping createMapping(CDOClass cdoClass)
+  {
+    return new VerticalMapping(this, cdoClass);
   }
 
   @Override

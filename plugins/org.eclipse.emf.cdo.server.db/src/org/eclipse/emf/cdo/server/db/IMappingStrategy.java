@@ -11,15 +11,11 @@
 package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
 
 import org.eclipse.net4j.db.IDBSchema;
 import org.eclipse.net4j.db.IDBTable;
 
-import java.sql.Connection;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,20 +36,10 @@ public interface IMappingStrategy
 
   public void setProperties(Map<String, String> properties);
 
+  public IMapping getMapping(CDOClass cdoClass);
+
   /**
    * @return A collection of the affected tables.
    */
   public Set<IDBTable> map(CDOPackageImpl[] cdoPackages);
-
-  public void writeRevision(Connection connection, CDORevisionImpl revision);
-
-  public CDORevision readRevision(Connection connection, CDOID id);
-
-  public CDORevision readRevision(Connection connection, CDOID id, long timeStamp);
-
-  public CDOID readResourceID(Connection connection, String path);
-
-  public String readResourcePath(Connection connection, CDOID id);
-
-  public CDOClassRef readObjectType(Connection connection, CDOID id);
 }

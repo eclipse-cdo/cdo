@@ -8,12 +8,18 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.mapping;
+package org.eclipse.emf.cdo.server.internal.db;
+
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 /**
  * @author Eike Stepper
  */
-public final class AttributeMapper
+public class RootMapping extends FullInfoMapping
 {
-
+  public RootMapping(IMappingStrategy mappingStrategy, CDOClass cdoClass)
+  {
+    super(mappingStrategy, cdoClass);
+  }
 }

@@ -105,4 +105,9 @@ public class DBField extends DBElement implements IDBField
 
     return "(" + getPrecision() + ", " + scale + ")";
   }
+
+  public void appendValue(StringBuilder builder, Object value)
+  {
+    type.appendValue(builder, value);
+  }
 }

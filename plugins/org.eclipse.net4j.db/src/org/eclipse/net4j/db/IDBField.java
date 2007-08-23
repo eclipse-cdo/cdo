@@ -30,4 +30,6 @@ public interface IDBField extends IDBElement
   public int getPosition();
 
   public String getFullName();
+
+  public void appendValue(StringBuilder builder, Object value);
 }

@@ -71,8 +71,16 @@ public class VerticalMapping extends IDInfoMapping
   public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
     super.writeRevision(storeAccessor, revision);
-    writeAttributes(storeAccessor, revision);
-    writeReferences(storeAccessor, revision);
+    if (attributeMappings != null)
+    {
+      writeAttributes(storeAccessor, revision);
+    }
+
+    if (referenceMappings != null)
+    {
+      writeReferences(storeAccessor, revision);
+    }
+
     if (superMappings != null)
     {
       for (IMapping superMapping : superMappings)

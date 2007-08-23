@@ -11,12 +11,16 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
+import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 
 import org.eclipse.net4j.db.IDBTable;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -49,5 +53,15 @@ public abstract class Mapping implements IMapping
   public Set<IDBTable> getAffectedTables()
   {
     return affectedTables;
+  }
+
+  public List<IAttributeMapping> createAttributeMappings(CDOFeature[] features)
+  {
+    return null;
+  }
+
+  public List<IReferenceMapping> createReferenceMappings(CDOFeature[] features)
+  {
+    return null;
   }
 }

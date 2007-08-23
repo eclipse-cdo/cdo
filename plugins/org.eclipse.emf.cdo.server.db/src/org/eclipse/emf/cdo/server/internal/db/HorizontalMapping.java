@@ -41,8 +41,8 @@ public class HorizontalMapping extends FullInfoMapping
   {
     super(mappingStrategy, cdoClass);
     CDOFeature[] features = cdoClass.getAllFeatures();
-    attributeMappings = mappingStrategy.getAttributeMappings(features);
-    referenceMappings = mappingStrategy.getReferenceMappings(features);
+    attributeMappings = createAttributeMappings(features);
+    referenceMappings = createReferenceMappings(features);
   }
 
   @Override

@@ -58,8 +58,8 @@ public class VerticalMapping extends IDInfoMapping
     }
 
     CDOFeature[] features = cdoClass.getFeatures();
-    attributeMappings = mappingStrategy.getAttributeMappings(features);
-    referenceMappings = mappingStrategy.getReferenceMappings(features);
+    attributeMappings = createAttributeMappings(features);
+    referenceMappings = createReferenceMappings(features);
   }
 
   public List<IMapping> getSuperMappings()

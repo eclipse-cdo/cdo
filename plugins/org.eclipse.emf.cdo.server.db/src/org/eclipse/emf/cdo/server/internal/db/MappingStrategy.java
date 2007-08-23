@@ -13,9 +13,11 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
+import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
+import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
@@ -28,6 +30,7 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -99,6 +102,16 @@ public abstract class MappingStrategy implements IMappingStrategy
     }
 
     return mapping;
+  }
+
+  public List<IAttributeMapping> getAttributeMappings(CDOFeature[] features)
+  {
+    return null;
+  }
+
+  public List<IReferenceMapping> getReferenceMappings(CDOFeature[] features)
+  {
+    return null;
   }
 
   protected abstract IMapping createMapping(CDOClass cdoClass);

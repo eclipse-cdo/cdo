@@ -16,17 +16,79 @@ public enum DBType
   DOUBLE(8), //
   NUMERIC(2), //
   DECIMAL(3), //
-  CHAR(1), //
-  VARCHAR(12), //
-  LONGVARCHAR(-1, "LONG VARCHAR"), //
+  CHAR(1)
+  {
+    @Override
+    public void appendValue(StringBuilder builder, Object value)
+    {
+      builder.append("'");
+      builder.append(value);
+      builder.append("'");
+    }
+  }, //
+  VARCHAR(12)
+  {
+    @Override
+    public void appendValue(StringBuilder builder, Object value)
+    {
+      builder.append("'");
+      builder.append(value);
+      builder.append("'");
+    }
+  }, //
+  LONGVARCHAR(-1, "LONG VARCHAR")
+  {
+    @Override
+    public void appendValue(StringBuilder builder, Object value)
+    {
+      builder.append("'");
+      builder.append(value);
+      builder.append("'");
+    }
+  }, //
   DATE(91), //
   TIME(92), //
   TIMESTAMP(93), //
-  BINARY(-2), //
-  VARBINARY(-3), //
-  LONGVARBINARY(-4, "LONG VARBINARY"), //
-  BLOB(2004), //
-  CLOB(2005); //
+  BINARY(-2)
+  {
+    @Override
+    public void appendValue(StringBuilder builder, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
+  }, //
+  VARBINARY(-3)
+  {
+    @Override
+    public void appendValue(StringBuilder builder, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
+  }, //
+  LONGVARBINARY(-4, "LONG VARBINARY")
+  {
+    @Override
+    public void appendValue(StringBuilder builder, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
+  }, //
+  BLOB(2004)
+  {
+    @Override
+    public void appendValue(StringBuilder builder, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
+  }, //
+  CLOB(2005)
+  {
+    @Override
+    public void appendValue(StringBuilder builder, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
+  }; //
 
   private int code;
 
@@ -57,5 +119,10 @@ public enum DBType
   public String toString()
   {
     return getKeyword();
+  }
+
+  public void appendValue(StringBuilder builder, Object value)
+  {
+    builder.append(value);
   }
 }

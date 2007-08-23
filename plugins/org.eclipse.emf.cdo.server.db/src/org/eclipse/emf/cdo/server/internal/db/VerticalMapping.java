@@ -12,11 +12,18 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
+import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 
+import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.IDBTable;
+
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +33,12 @@ import java.util.List;
 public class VerticalMapping extends IDInfoMapping
 {
   private List<IMapping> superMappings;
+
+  private IDBTable table;
+
+  private List<IAttributeMapping> attributeMappings;
+
+  private List<IReferenceMapping> referenceMappings;
 
   public VerticalMapping(IMappingStrategy mappingStrategy, CDOClass cdoClass)
   {
@@ -43,6 +56,10 @@ public class VerticalMapping extends IDInfoMapping
         superMappings.add(superMapping);
       }
     }
+
+    CDOFeature[] features = cdoClass.getFeatures();
+    attributeMappings = mappingStrategy.getAttributeMappings(features);
+    referenceMappings = mappingStrategy.getReferenceMappings(features);
   }
 
   public List<IMapping> getSuperMappings()
@@ -65,11 +82,42 @@ public class VerticalMapping extends IDInfoMapping
     }
   }
 
-  protected void writeAttributes(IStoreWriter writer, CDORevisionImpl revision)
+  protected void writeAttributes(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
+    try
+    {
+      StringBuilder builder = new StringBuilder();
+      builder.append("INSERT INTO ");
+      builder.append(table);
+      builder.append(" VALUES (");
+      builder.append(revision.getID().getValue());
+      for (IAttributeMapping attributeMapping : attributeMappings)
+      {
+        builder.append(", ");
+        attributeMapping.appendValue(builder, revision);
+      }
+
+      builder.append(")");
+      String sql = builder.toString();
+
+      Statement statement = storeAccessor.getStatement();
+      int count = statement.executeUpdate(sql);
+      if (count != 1)
+      {
+        throw new DBException("Wrong update count: " + count);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
   }
 
-  protected void writeReferences(IStoreWriter writer, CDORevisionImpl revision)
+  protected void writeReferences(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
+    for (IReferenceMapping referenceMapping : referenceMappings)
+    {
+      referenceMapping.writeReference(this, storeAccessor, revision);
+    }
   }
 }

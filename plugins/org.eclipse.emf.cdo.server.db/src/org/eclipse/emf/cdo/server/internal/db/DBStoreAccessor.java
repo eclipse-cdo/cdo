@@ -39,6 +39,7 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -49,13 +50,15 @@ public class DBStoreAccessor implements IDBStoreAccessor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
-  protected DBStore store;
+  private DBStore store;
 
-  protected Object context;
+  private Object context;
 
-  protected boolean reader;
+  private boolean reader;
 
-  protected Connection connection;
+  private Connection connection;
+
+  private Statement statement;
 
   private DBStoreAccessor(DBStore store, Object context, boolean reader) throws DBException
   {
@@ -99,6 +102,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     }
     finally
     {
+      DBUtil.close(statement);
       DBUtil.close(connection);
     }
   }
@@ -136,6 +140,23 @@ public class DBStoreAccessor implements IDBStoreAccessor
   public Connection getConnection()
   {
     return connection;
+  }
+
+  public Statement getStatement()
+  {
+    if (statement == null)
+    {
+      try
+      {
+        statement = getConnection().createStatement();
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    return statement;
   }
 
   public void writePackages(CDOPackageImpl... cdoPackages)

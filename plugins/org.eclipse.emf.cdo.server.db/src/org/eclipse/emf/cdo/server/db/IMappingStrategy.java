@@ -12,10 +12,12 @@ package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
 import org.eclipse.net4j.db.IDBSchema;
 import org.eclipse.net4j.db.IDBTable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,6 +39,10 @@ public interface IMappingStrategy
   public void setProperties(Map<String, String> properties);
 
   public IMapping getMapping(CDOClass cdoClass);
+
+  public List<IAttributeMapping> getAttributeMappings(CDOFeature[] features);
+
+  public List<IReferenceMapping> getReferenceMappings(CDOFeature[] features);
 
   /**
    * @return A collection of the affected tables.

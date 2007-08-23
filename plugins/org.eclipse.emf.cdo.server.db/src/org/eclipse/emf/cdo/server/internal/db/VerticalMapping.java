@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
@@ -50,15 +51,25 @@ public class VerticalMapping extends IDInfoMapping
   }
 
   @Override
-  public void writeRevision(IStoreWriter writer, CDORevisionImpl revision)
+  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
-    super.writeRevision(writer, revision);
+    super.writeRevision(storeAccessor, revision);
+    writeAttributes(storeAccessor, revision);
+    writeReferences(storeAccessor, revision);
     if (superMappings != null)
     {
       for (IMapping superMapping : superMappings)
       {
-        superMapping.writeRevision(writer, revision);
+        superMapping.writeRevision(storeAccessor, revision);
       }
     }
+  }
+
+  protected void writeAttributes(IStoreWriter writer, CDORevisionImpl revision)
+  {
+  }
+
+  protected void writeReferences(IStoreWriter writer, CDORevisionImpl revision)
+  {
   }
 }

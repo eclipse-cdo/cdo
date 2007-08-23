@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 /**
@@ -26,13 +26,13 @@ public abstract class FullInfoMapping extends IDInfoMapping
   }
 
   @Override
-  public void writeRevision(IStoreWriter writer, CDORevisionImpl revision)
+  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
-    super.writeRevision(writer, revision);
-    writeFullInfo(writer, revision);
+    super.writeRevision(storeAccessor, revision);
+    writeFullInfo(storeAccessor, revision);
   }
 
-  protected void writeFullInfo(IStoreWriter writer, CDORevisionImpl revision)
+  protected void writeFullInfo(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
   }
 }

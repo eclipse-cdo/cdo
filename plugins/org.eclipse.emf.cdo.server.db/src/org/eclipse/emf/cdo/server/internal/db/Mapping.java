@@ -50,8 +50,4 @@ public abstract class Mapping implements IMapping
   {
     return affectedTables;
   }
-
-  // protected abstract List<FeatureMapper> getAttributeMappers();
-  //
-  // protected abstract List<FeatureMapper> getReferenceMappers();
 }

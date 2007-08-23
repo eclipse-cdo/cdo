@@ -10,23 +10,15 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.IStoreWriter;
 
-import org.eclipse.net4j.db.IDBTable;
-
-import java.util.Set;
+import java.sql.Connection;
 
 /**
  * @author Eike Stepper
  */
-public interface IMapping
+public interface IDBStoreAccessor extends IStoreReader, IStoreWriter
 {
-  public IMappingStrategy getMappingStrategy();
-
-  public CDOClass getCDOClass();
-
-  public Set<IDBTable> getAffectedTables();
-
-  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
+  public Connection getConnection();
 }

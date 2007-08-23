@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 /**
@@ -25,12 +25,12 @@ public abstract class IDInfoMapping extends Mapping
     super(mappingStrategy, cdoClass);
   }
 
-  public void writeRevision(IStoreWriter writer, CDORevisionImpl revision)
+  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
-    writeIDInfo(writer, revision);
+    writeIDInfo(storeAccessor, revision);
   }
 
-  protected void writeIDInfo(IStoreWriter writer, CDORevisionImpl revision)
+  protected void writeIDInfo(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
   }
 }

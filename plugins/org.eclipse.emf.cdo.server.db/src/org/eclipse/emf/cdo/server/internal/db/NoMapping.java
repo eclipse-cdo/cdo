@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
@@ -47,7 +47,7 @@ public class NoMapping implements IMapping
     return Collections.emptySet();
   }
 
-  public void writeRevision(IStoreWriter writer, CDORevisionImpl revision)
+  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
   }
 }

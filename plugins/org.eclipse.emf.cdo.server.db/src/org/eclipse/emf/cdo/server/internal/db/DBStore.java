@@ -20,6 +20,8 @@ import org.eclipse.net4j.db.ConnectionProvider;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBSchema;
+import org.eclipse.net4j.internal.db.DBSchema;
 
 import java.sql.Connection;
 
@@ -35,6 +37,8 @@ public class DBStore extends Store implements IDBStore
   private IDBAdapter dbAdapter;
 
   private ConnectionProvider connectionProvider;
+
+  private IDBSchema schema;
 
   private int nextPackageID;
 
@@ -73,6 +77,16 @@ public class DBStore extends Store implements IDBStore
   public ConnectionProvider getConnectionProvider()
   {
     return connectionProvider;
+  }
+
+  public IDBSchema getSchema()
+  {
+    if (schema == null)
+    {
+      schema = createSchema();
+    }
+
+    return schema;
   }
 
   public boolean hasAuditSupport()
@@ -119,18 +133,17 @@ public class DBStore extends Store implements IDBStore
       nextClassID = DBUtil.selectMaximum(connection, CDODBSchema.CLASSES_ID) + 1;
       nextFeatureID = DBUtil.selectMaximum(connection, CDODBSchema.FEATURES_ID) + 1;
 
-      // if (nextPackageID == 1)
-      // {
-      // PackageManager packageManager =
-      // (PackageManager)getRepository().getPackageManager();
-      // writer.writePackages(packageManager.getCDOResourcePackage());
-      // }
-
       writer.release();
     }
     finally
     {
       DBUtil.close(connection);
     }
+  }
+
+  protected IDBSchema createSchema()
+  {
+    String name = getRepository().getName();
+    return new DBSchema(name);
   }
 }

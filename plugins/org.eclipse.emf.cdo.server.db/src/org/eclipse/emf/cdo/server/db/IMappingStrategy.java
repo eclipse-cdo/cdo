@@ -10,14 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 
-import org.eclipse.net4j.db.IDBSchema;
-import org.eclipse.net4j.db.IDBTable;
-
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -25,8 +20,6 @@ import java.util.Set;
 public interface IMappingStrategy
 {
   public String getType();
-
-  public IDBSchema getSchema();
 
   public IDBStore getStore();
 
@@ -37,9 +30,4 @@ public interface IMappingStrategy
   public void setProperties(Map<String, String> properties);
 
   public IMapping getMapping(CDOClass cdoClass);
-
-  /**
-   * @return A collection of the affected tables.
-   */
-  public Set<IDBTable> map(CDOPackageImpl[] cdoPackages);
 }

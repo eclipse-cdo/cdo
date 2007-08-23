@@ -10,16 +10,31 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 /**
  * @author Eike Stepper
  */
-public class RootMapping extends FullInfoMapping
+public class RootMapping extends Mapping
 {
   public RootMapping(IMappingStrategy mappingStrategy, CDOClass cdoClass)
   {
     super(mappingStrategy, cdoClass);
+  }
+
+  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("INSERT INTO ");
+    builder.append(getTable());
+    builder.append(" VALUES (");
+    builder.append(revision.getID().getValue());
+    builder.append(", ");
+    appendFullInfo(builder, revision);
+    builder.append(")");
+    executeSQL(storeAccessor, builder.toString());
   }
 }

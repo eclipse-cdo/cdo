@@ -12,13 +12,10 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -32,9 +29,7 @@ import java.sql.Date;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
 
 /**
@@ -91,108 +86,70 @@ public abstract class StandardMappingStrategy extends MappingStrategy
     return toOne;
   }
 
-  public Set<IDBTable> map(CDOPackageImpl[] cdoPackages)
-  {
-    Set<IDBTable> affectedTables = new HashSet();
-    for (CDOPackageImpl cdoPackage : cdoPackages)
-    {
-      PackageServerInfo.setSchema(cdoPackage, getSchema());
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Mapped package: {0} --> {1}", cdoPackage, getSchema());
-      }
-    }
-
-    for (CDOPackageImpl cdoPackage : cdoPackages)
-    {
-      for (CDOClass cdoClass : cdoPackage.getClasses())
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Mapping features of class {0}", cdoClass);
-        }
-
-        for (CDOFeature cdoFeature : cdoClass.getAllFeatures())
-        {
-          IDBField field = mapFeature(cdoClass, cdoFeature, affectedTables);
-          if (field != null)
-          {
-            ((FeatureServerInfo)cdoFeature.getServerInfo()).addField(cdoClass, field);
-            affectedTables.add(field.getTable());
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("Mapped feature: {0} --> {1}", cdoFeature, field);
-            }
-          }
-        }
-      }
-    }
-
-    return affectedTables;
-  }
-
-  /**
-   * @param affectedTables
-   *          Can be used to indicate the creation or modification of additional
-   *          tables. There is no need to add the table of the returned field to
-   *          this set of affected tables. The framework takes care of that.
-   */
-  protected abstract IDBField mapFeature(CDOClass cdoClass, CDOFeature cdoFeature, Set<IDBTable> affectedTables);
-
-  protected IDBField mapAttribute(CDOClass cdoClass, CDOFeature cdoFeature)
-  {
-    // IDBTable table = ClassServerInfo.getTable(cdoClass);
-    // if (table == null)
-    // {
-    // table = addTable(cdoClass);
-    // initTable(table, true);
-    // ClassServerInfo.setTable(cdoClass, table);
-    // }
-    //
-    // return addField(cdoFeature, table);
-
-    // TODO Implement method StandardMappingStrategy.mapAttribute()
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
-
-  protected IDBField mapReference(CDOClass cdoClass, CDOFeature cdoFeature, ToMany mapping)
-  {
-    switch (mapping)
-    {
-    case PER_REFERENCE:
-      return mapReferenceTable(cdoFeature, cdoClass.getName() + "_" + cdoFeature.getName() + "_refs", false);
-    case PER_CLASS:
-      return mapReferenceTable(cdoClass, cdoClass.getName() + "_refs", true);
-    case PER_PACKAGE:
-      CDOPackage cdoPackage = cdoClass.getContainingPackage();
-      return mapReferenceTable(cdoPackage, cdoPackage.getName() + "_refs", true);
-    case PER_REPOSITORY:
-      IRepository repository = getStore().getRepository();
-      return mapReferenceTable(repository, repository.getName() + "_refs", true);
-    case LIKE_ATTRIBUTES:
-      return mapReferenceSerialized(cdoClass, cdoFeature);
-    default:
-      throw new IllegalArgumentException("Invalid mapping: " + mapping);
-    }
-  }
-
-  protected IDBField mapReferenceSerialized(CDOClass cdoClass, CDOFeature cdoFeature)
-  {
-    // TODO Implement method HorizontalMappingStrategy.mapReferenceSerialized()
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
-
-  protected IDBField mapReferenceTable(Object key, String tableName, boolean withFeature)
-  {
-    IDBTable table = referenceTables.get(key);
-    if (table == null)
-    {
-      table = addReferenceTable(tableName, withFeature);
-      referenceTables.put(key, table);
-    }
-
-    return table.getField(0);
-  }
+  // public Set<IDBTable> map(CDOPackageImpl[] cdoPackages)
+  // {
+  // Set<IDBTable> affectedTables = new HashSet();
+  // for (CDOPackageImpl cdoPackage : cdoPackages)
+  // {
+  // PackageServerInfo.setSchema(cdoPackage, getSchema());
+  // if (TRACER.isEnabled())
+  // {
+  // TRACER.format("Mapped package: {0} --> {1}", cdoPackage, getSchema());
+  // }
+  // }
+  //
+  // for (CDOPackageImpl cdoPackage : cdoPackages)
+  // {
+  // for (CDOClass cdoClass : cdoPackage.getClasses())
+  // {
+  // if (TRACER.isEnabled())
+  // {
+  // TRACER.format("Mapping features of class {0}", cdoClass);
+  // }
+  //
+  // for (CDOFeature cdoFeature : cdoClass.getAllFeatures())
+  // {
+  // IDBField field = mapFeature(cdoClass, cdoFeature, affectedTables);
+  // if (field != null)
+  // {
+  // ((FeatureServerInfo)cdoFeature.getServerInfo()).addField(cdoClass, field);
+  // affectedTables.add(field.getTable());
+  // if (TRACER.isEnabled())
+  // {
+  // TRACER.format("Mapped feature: {0} --> {1}", cdoFeature, field);
+  // }
+  // }
+  // }
+  // }
+  // }
+  //
+  // return affectedTables;
+  // }
+  //
+  // /**
+  // * @param affectedTables
+  // * Can be used to indicate the creation or modification of additional
+  // * tables. There is no need to add the table of the returned field to
+  // * this set of affected tables. The framework takes care of that.
+  // */
+  // protected abstract IDBField mapFeature(CDOClass cdoClass, CDOFeature
+  // cdoFeature, Set<IDBTable> affectedTables);
+  //
+  // protected IDBField mapAttribute(CDOClass cdoClass, CDOFeature cdoFeature)
+  // {
+  // IDBTable table = ClassServerInfo.getTable(cdoClass);
+  // if (table == null)
+  // {
+  // table = addTable(cdoClass);
+  // initTable(table, true);
+  // ClassServerInfo.setTable(cdoClass, table);
+  // }
+  //
+  // return addField(cdoFeature, table);
+  //
+  // // TODO Implement method StandardMappingStrategy.mapAttribute()
+  // throw new UnsupportedOperationException("Not yet implemented");
+  // }
 
   protected ClassMapping getClassMapping(CDOClass cdoClass)
   {

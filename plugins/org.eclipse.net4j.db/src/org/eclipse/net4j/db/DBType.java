@@ -16,36 +16,9 @@ public enum DBType
   DOUBLE(8), //
   NUMERIC(2), //
   DECIMAL(3), //
-  CHAR(1)
-  {
-    @Override
-    public void appendValue(StringBuilder builder, Object value)
-    {
-      builder.append("'");
-      builder.append(value);
-      builder.append("'");
-    }
-  }, //
-  VARCHAR(12)
-  {
-    @Override
-    public void appendValue(StringBuilder builder, Object value)
-    {
-      builder.append("'");
-      builder.append(value);
-      builder.append("'");
-    }
-  }, //
-  LONGVARCHAR(-1, "LONG VARCHAR")
-  {
-    @Override
-    public void appendValue(StringBuilder builder, Object value)
-    {
-      builder.append("'");
-      builder.append(value);
-      builder.append("'");
-    }
-  }, //
+  CHAR(1), //
+  VARCHAR(12), //
+  LONGVARCHAR(-1, "LONG VARCHAR"), //
   DATE(91), //
   TIME(92), //
   TIMESTAMP(93), //
@@ -129,7 +102,16 @@ public enum DBType
     }
     else
     {
-      builder.append(value);
+      if (value instanceof String || value instanceof Character)
+      {
+        builder.append("'");
+        builder.append(value);
+        builder.append("'");
+      }
+      else
+      {
+        builder.append(value);
+      }
     }
   }
 }

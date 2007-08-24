@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 
 import java.util.List;
@@ -29,9 +28,10 @@ public abstract class ValueMapping extends Mapping
 
   private List<IReferenceMapping> referenceMappings;
 
-  public ValueMapping(IMappingStrategy mappingStrategy, CDOClass cdoClass, CDOFeature[] features)
+  public ValueMapping(MappingStrategy mappingStrategy, CDOClass cdoClass, CDOFeature[] features)
   {
     super(mappingStrategy, cdoClass);
+    mappingStrategy.initTable(getTable(), hasFullRevisionInfo());
     attributeMappings = createAttributeMappings(features);
     referenceMappings = createReferenceMappings(features);
   }

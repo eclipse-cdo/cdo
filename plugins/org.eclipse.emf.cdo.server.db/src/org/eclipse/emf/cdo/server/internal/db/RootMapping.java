@@ -11,18 +11,24 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.core.CDOObjectClass;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 /**
  * @author Eike Stepper
  */
 public class RootMapping extends Mapping
 {
-  public RootMapping(IMappingStrategy mappingStrategy, CDOClass cdoClass)
+  public RootMapping(VerticalMappingStrategy mappingStrategy)
   {
-    super(mappingStrategy, cdoClass);
+    super(mappingStrategy, getRootClass(mappingStrategy));
+    mappingStrategy.initTable(getTable(), true);
+  }
+
+  @Override
+  public VerticalMappingStrategy getMappingStrategy()
+  {
+    return (VerticalMappingStrategy)super.getMappingStrategy();
   }
 
   public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
@@ -34,5 +40,10 @@ public class RootMapping extends Mapping
     appendRevisionInfo(builder, revision, true);
     builder.append(")");
     executeSQL(storeAccessor, builder.toString());
+  }
+
+  private static CDOObjectClass getRootClass(VerticalMappingStrategy mappingStrategy)
+  {
+    return mappingStrategy.getStore().getRepository().getPackageManager().getCDOCorePackage().getCDOObjectClass();
   }
 }

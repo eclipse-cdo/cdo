@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
-import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
@@ -39,7 +38,7 @@ public abstract class Mapping implements IMapping
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, Mapping.class);
 
-  private IMappingStrategy mappingStrategy;
+  private MappingStrategy mappingStrategy;
 
   private CDOClass cdoClass;
 
@@ -47,14 +46,14 @@ public abstract class Mapping implements IMapping
 
   private Set<IDBTable> affectedTables = new HashSet();
 
-  public Mapping(IMappingStrategy mappingStrategy, CDOClass cdoClass)
+  public Mapping(MappingStrategy mappingStrategy, CDOClass cdoClass)
   {
     this.mappingStrategy = mappingStrategy;
     this.cdoClass = cdoClass;
     table = addTable(cdoClass.getName());
   }
 
-  public IMappingStrategy getMappingStrategy()
+  public MappingStrategy getMappingStrategy()
   {
     return mappingStrategy;
   }

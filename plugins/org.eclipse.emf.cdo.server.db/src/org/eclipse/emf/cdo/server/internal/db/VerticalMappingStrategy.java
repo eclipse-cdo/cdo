@@ -13,15 +13,12 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.server.db.IMapping;
 
-import org.eclipse.net4j.db.IDBSchema;
-import org.eclipse.net4j.db.IDBTable;
-
 /**
  * @author Eike Stepper
  */
 public class VerticalMappingStrategy extends MappingStrategy
 {
-  private IDBTable rootTable;
+  private RootMapping rootMapping;
 
   public VerticalMappingStrategy()
   {
@@ -33,16 +30,14 @@ public class VerticalMappingStrategy extends MappingStrategy
     return "vertical";
   }
 
-  public IDBTable getRootTable()
+  public RootMapping getRootMapping()
   {
-    if (rootTable == null)
+    if (rootMapping == null)
     {
-      IDBSchema schema = getStore().getSchema();
-      rootTable = schema.addTable("cdo_revisions");
-      initTable(rootTable, true);
+      rootMapping = new RootMapping(this);
     }
 
-    return rootTable;
+    return rootMapping;
   }
 
   @Override

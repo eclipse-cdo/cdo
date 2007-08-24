@@ -122,8 +122,6 @@ public abstract class MappingStrategy implements IMappingStrategy
     return mapping;
   }
 
-  protected abstract IMapping createMapping(CDOClass cdoClass);
-
   @Override
   public String toString()
   {
@@ -144,4 +142,6 @@ public abstract class MappingStrategy implements IMappingStrategy
       table.addField("cdo_feature", DBType.INTEGER);
     }
   }
+
+  protected abstract IMapping createMapping(CDOClass cdoClass);
 }

@@ -20,7 +20,6 @@ public class HorizontalMapping extends ValueMapping
   public HorizontalMapping(HorizontalMappingStrategy mappingStrategy, CDOClass cdoClass)
   {
     super(mappingStrategy, cdoClass, cdoClass.getAllFeatures());
-    mappingStrategy.initTable(getTable(), true);
   }
 
   @Override

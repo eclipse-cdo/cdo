@@ -25,7 +25,6 @@ import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
 
-import java.sql.Date;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
@@ -82,9 +81,9 @@ public abstract class Mapping implements IMapping
       builder.append(", ");
       builder.append(revision.getVersion());
       builder.append(", ");
-      builder.append(new Date(revision.getCreated()));
+      builder.append(revision.getCreated());
       builder.append(", ");
-      builder.append(new Date(revision.getRevised()));
+      builder.append(revision.getRevised());
       builder.append(", ");
       builder.append(revision.getResourceID().getValue());
       builder.append(", ");

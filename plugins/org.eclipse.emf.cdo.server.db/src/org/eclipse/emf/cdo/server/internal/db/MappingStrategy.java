@@ -135,8 +135,8 @@ public abstract class MappingStrategy implements IMappingStrategy
     {
       table.addField("cdo_class", DBType.INTEGER);
       table.addField("cdo_version", DBType.INTEGER);
-      table.addField("cdo_created", DBType.TIMESTAMP);
-      table.addField("cdo_revised", DBType.TIMESTAMP);
+      table.addField("cdo_created", DBType.BIGINT);
+      table.addField("cdo_revised", DBType.BIGINT);
       table.addField("cdo_resource", DBType.BIGINT);
       table.addField("cdo_container", DBType.BIGINT);
       table.addField("cdo_feature", DBType.INTEGER);

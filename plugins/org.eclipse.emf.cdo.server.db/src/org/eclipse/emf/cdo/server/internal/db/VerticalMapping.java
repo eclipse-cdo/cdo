@@ -50,6 +50,12 @@ public class VerticalMapping extends ValueMapping
     return (VerticalMappingStrategy)super.getMappingStrategy();
   }
 
+  @Override
+  protected boolean hasFullRevisionInfo()
+  {
+    return false;
+  }
+
   public List<IMapping> getSuperMappings()
   {
     return superMappings;

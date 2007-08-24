@@ -74,21 +74,26 @@ public abstract class Mapping implements IMapping
     return affectedTables;
   }
 
-  protected void appendFullInfo(StringBuilder builder, CDORevisionImpl revision)
+  protected void appendRevisionInfo(StringBuilder builder, CDORevisionImpl revision, boolean full)
   {
-    builder.append(ServerInfo.getDBID(revision.getCDOClass()));
-    builder.append(", ");
-    builder.append(revision.getVersion());
-    builder.append(", ");
-    builder.append(new Date(revision.getCreated()));
-    builder.append(", ");
-    builder.append(new Date(revision.getRevised()));
-    builder.append(", ");
-    builder.append(revision.getResourceID().getValue());
-    builder.append(", ");
-    builder.append(revision.getContainerID().getValue());
-    builder.append(", ");
-    builder.append(revision.getContainingFeatureID());
+    builder.append(revision.getID().getValue());
+    if (full)
+    {
+      builder.append(", ");
+      builder.append(ServerInfo.getDBID(revision.getCDOClass()));
+      builder.append(", ");
+      builder.append(revision.getVersion());
+      builder.append(", ");
+      builder.append(new Date(revision.getCreated()));
+      builder.append(", ");
+      builder.append(new Date(revision.getRevised()));
+      builder.append(", ");
+      builder.append(revision.getResourceID().getValue());
+      builder.append(", ");
+      builder.append(revision.getContainerID().getValue());
+      builder.append(", ");
+      builder.append(revision.getContainingFeatureID());
+    }
   }
 
   protected void executeSQL(IDBStoreAccessor storeAccessor, String sql) throws DBException

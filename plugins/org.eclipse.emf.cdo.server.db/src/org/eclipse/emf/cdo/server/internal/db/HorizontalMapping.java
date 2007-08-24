@@ -28,4 +28,10 @@ public class HorizontalMapping extends ValueMapping
   {
     return (HorizontalMappingStrategy)super.getMappingStrategy();
   }
+
+  @Override
+  protected boolean hasFullRevisionInfo()
+  {
+    return true;
+  }
 }

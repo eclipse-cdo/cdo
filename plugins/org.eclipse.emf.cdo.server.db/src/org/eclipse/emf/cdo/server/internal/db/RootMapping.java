@@ -31,9 +31,7 @@ public class RootMapping extends Mapping
     builder.append("INSERT INTO ");
     builder.append(getTable());
     builder.append(" VALUES (");
-    builder.append(revision.getID().getValue());
-    builder.append(", ");
-    appendFullInfo(builder, revision);
+    appendRevisionInfo(builder, revision, true);
     builder.append(")");
     executeSQL(storeAccessor, builder.toString());
   }

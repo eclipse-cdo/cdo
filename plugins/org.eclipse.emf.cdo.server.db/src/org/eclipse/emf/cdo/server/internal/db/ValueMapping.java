@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class ValueMapping extends Mapping
+public abstract class ValueMapping extends Mapping
 {
   private List<IAttributeMapping> attributeMappings;
 
@@ -65,9 +65,7 @@ public class ValueMapping extends Mapping
     builder.append("INSERT INTO ");
     builder.append(getTable());
     builder.append(" VALUES (");
-    builder.append(revision.getID().getValue());
-    builder.append(", ");
-    appendFullInfo(builder, revision);
+    appendRevisionInfo(builder, revision, hasFullRevisionInfo());
     builder.append(", ");
 
     for (IAttributeMapping attributeMapping : attributeMappings)
@@ -87,4 +85,6 @@ public class ValueMapping extends Mapping
       referenceMapping.writeReference(this, storeAccessor, revision);
     }
   }
+
+  protected abstract boolean hasFullRevisionInfo();
 }

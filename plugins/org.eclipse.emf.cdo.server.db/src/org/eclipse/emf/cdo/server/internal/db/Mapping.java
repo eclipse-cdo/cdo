@@ -144,11 +144,11 @@ public abstract class Mapping implements IMapping
       {
         return mappingStrategy.getStore().getSchema().addTable(tableName);
       }
-      catch (DBException ignore)
+      catch (DBException ex)
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("{0}. attempt to add table: {1} ({2})", attempt + 1, tableName, ignore.getMessage());
+          TRACER.format("{0}. attempt to add table: {1} ({2})", attempt + 1, tableName, ex.getMessage());
         }
       }
     }

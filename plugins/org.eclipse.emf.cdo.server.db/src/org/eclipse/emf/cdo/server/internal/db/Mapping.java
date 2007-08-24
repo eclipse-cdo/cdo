@@ -130,7 +130,9 @@ public abstract class Mapping implements IMapping
 
       try
       {
-        return mappingStrategy.getStore().getSchema().addTable(tableName);
+        IDBTable table = mappingStrategy.getStore().getSchema().addTable(tableName);
+        affectedTables.add(table);
+        return table;
       }
       catch (DBException ex)
       {
@@ -151,7 +153,9 @@ public abstract class Mapping implements IMapping
 
       try
       {
-        return table.addField(fieldName, fieldType);
+        IDBField field = table.addField(fieldName, fieldType);
+        affectedTables.add(table);
+        return field;
       }
       catch (DBException ex)
       {

@@ -29,4 +29,6 @@ public interface IMapping
   public Set<IDBTable> getAffectedTables();
 
   public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
+
+  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
 }

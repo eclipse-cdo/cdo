@@ -18,10 +18,8 @@ import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.internal.server.protocol.InvalidationRequest;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.server.IView.Type;
@@ -177,7 +175,8 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     }
 
     knownObjects.add(id);
-    CDOClassRef type = getObjectType(id);
+    Repository repository = sessionManager.getRepository();
+    CDOClassRef type = repository.getObjectType(StoreUtil.getReader(), id);
     return CDOIDImpl.create(id.getValue(), type);
   }
 
@@ -193,18 +192,5 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     protocol.removeListener(protocolListener);
     sessionManager.sessionClosed(this);
     super.doDeactivate();
-  }
-
-  protected CDOClassRef getObjectType(CDOID id)
-  {
-    RevisionManager revisionManager = sessionManager.getRepository().getRevisionManager();
-    CDOClass cdoClass = revisionManager.getObjectType(id);
-    if (cdoClass != null)
-    {
-      return cdoClass.createClassRef();
-    }
-
-    IStoreReader storeReader = StoreUtil.getReader();
-    return storeReader.readObjectType(id);
   }
 }

@@ -22,7 +22,7 @@ public class RootMapping extends Mapping
   public RootMapping(VerticalMappingStrategy mappingStrategy)
   {
     super(mappingStrategy, getRootClass(mappingStrategy));
-    mappingStrategy.initTable(getTable(), true);
+    initTable(getTable(), true);
   }
 
   @Override
@@ -37,9 +37,15 @@ public class RootMapping extends Mapping
     builder.append("INSERT INTO ");
     builder.append(getTable());
     builder.append(" VALUES (");
-    appendRevisionInfo(builder, revision, true);
+    appendRevisionInfos(builder, revision, true);
     builder.append(")");
-    executeSQL(storeAccessor, builder.toString());
+    sqlUpdate(storeAccessor, builder.toString());
+  }
+
+  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  {
+    // TODO Implement method RootMapping.readRevision()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   private static CDOObjectClass getRootClass(VerticalMappingStrategy mappingStrategy)

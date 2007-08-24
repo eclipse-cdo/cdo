@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.server.IPackageManager;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -369,14 +371,25 @@ public class DBStoreAccessor implements IDBStoreAccessor
 
     CDOClassImpl cdoClass = revision.getCDOClass();
     IMapping mapping = ClassServerInfo.getMapping(cdoClass);
-
     mapping.writeRevision(this, revision);
   }
 
   public CDORevision readRevision(CDOID id)
   {
-    // TODO Implement method DBStoreAccessor.readRevision()
-    throw new UnsupportedOperationException("Not yet implemented");
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Selecting revision: {0}", id);
+    }
+
+    IRepository repository = store.getRepository();
+    IPackageManager packageManager = repository.getPackageManager();
+    CDOClassRef type = repository.getObjectType(this, id);
+    CDOClassImpl cdoClass = (CDOClassImpl)type.resolve(packageManager);
+    CDORevisionImpl revision = new CDORevisionImpl(cdoClass, id);
+
+    IMapping mapping = ClassServerInfo.getMapping(cdoClass);
+    mapping.readRevision(this, revision);
+    return revision;
   }
 
   public CDORevision readRevision(CDOID id, long timeStamp)

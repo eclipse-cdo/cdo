@@ -16,6 +16,10 @@ import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+
+import org.eclipse.net4j.db.IDBField;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +29,8 @@ import java.util.List;
  */
 public abstract class ValueMapping extends Mapping
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, ValueMapping.class);
+
   private List<IAttributeMapping> attributeMappings;
 
   private List<IReferenceMapping> referenceMappings;
@@ -32,7 +38,7 @@ public abstract class ValueMapping extends Mapping
   public ValueMapping(MappingStrategy mappingStrategy, CDOClass cdoClass, CDOFeature[] features)
   {
     super(mappingStrategy, cdoClass);
-    mappingStrategy.initTable(getTable(), hasFullRevisionInfo());
+    initTable(getTable(), hasFullRevisionInfo());
     attributeMappings = createAttributeMappings(features);
     referenceMappings = createReferenceMappings(features);
   }
@@ -50,13 +56,26 @@ public abstract class ValueMapping extends Mapping
     }
   }
 
+  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  {
+    if (attributeMappings != null)
+    {
+      readAttributes(storeAccessor, revision);
+    }
+
+    if (referenceMappings != null)
+    {
+      readReferences(storeAccessor, revision);
+    }
+  }
+
   protected void writeAttributes(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
     StringBuilder builder = new StringBuilder();
     builder.append("INSERT INTO ");
     builder.append(getTable());
     builder.append(" VALUES (");
-    appendRevisionInfo(builder, revision, hasFullRevisionInfo());
+    appendRevisionInfos(builder, revision, hasFullRevisionInfo());
 
     for (IAttributeMapping attributeMapping : attributeMappings)
     {
@@ -65,10 +84,59 @@ public abstract class ValueMapping extends Mapping
     }
 
     builder.append(")");
-    executeSQL(storeAccessor, builder.toString());
+    sqlUpdate(storeAccessor, builder.toString());
   }
 
   protected void writeReferences(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  {
+    for (IReferenceMapping referenceMapping : referenceMappings)
+    {
+      referenceMapping.writeReference(storeAccessor, revision);
+    }
+  }
+
+  protected void readAttributes(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  {
+    IDBField[] fields = getTable().getFields();
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT ");
+    for (int i = 1; i < 8; i++)
+    {
+      if (i > 1)
+      {
+        builder.append(", ");
+      }
+
+      builder.append(fields[i].getName());
+    }
+
+    builder.append(" FROM ");
+    builder.append(getTable());
+    builder.append(" WHERE ");
+    builder.append(fields[0].getName());
+    builder.append("=");
+    builder.append(revision.getID().getValue());
+    builder.append(" AND ");
+    builder.append(fields[0].getName());
+    builder.append("=0");
+
+    for (IAttributeMapping attributeMapping : attributeMappings)
+    {
+      builder.append(", ");
+      attributeMapping.appendValue(builder, revision);
+    }
+
+    builder.append(")");
+    String sql = builder.toString();
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
+
+  }
+
+  protected void readReferences(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
     for (IReferenceMapping referenceMapping : referenceMappings)
     {

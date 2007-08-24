@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
-import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBTable;
 
 import java.util.HashMap;
@@ -126,21 +125,6 @@ public abstract class MappingStrategy implements IMappingStrategy
   public String toString()
   {
     return getType();
-  }
-
-  protected void initTable(IDBTable table, boolean full)
-  {
-    table.addField("cdo_id", DBType.BIGINT);
-    if (full)
-    {
-      table.addField("cdo_class", DBType.INTEGER);
-      table.addField("cdo_version", DBType.INTEGER);
-      table.addField("cdo_created", DBType.BIGINT);
-      table.addField("cdo_revised", DBType.BIGINT);
-      table.addField("cdo_resource", DBType.BIGINT);
-      table.addField("cdo_container", DBType.BIGINT);
-      table.addField("cdo_feature", DBType.INTEGER);
-    }
   }
 
   protected abstract IMapping createMapping(CDOClass cdoClass);

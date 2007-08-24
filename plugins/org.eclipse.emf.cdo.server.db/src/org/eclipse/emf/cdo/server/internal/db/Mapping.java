@@ -72,7 +72,37 @@ public abstract class Mapping implements IMapping
     return affectedTables;
   }
 
-  protected void appendRevisionInfo(StringBuilder builder, CDORevisionImpl revision, boolean full)
+  protected void initTable(IDBTable table, boolean full)
+  {
+    table.addField("cdo_id", DBType.BIGINT);
+    if (full)
+    {
+      table.addField("cdo_class", DBType.INTEGER);
+      table.addField("cdo_version", DBType.INTEGER);
+      table.addField("cdo_created", DBType.BIGINT);
+      table.addField("cdo_revised", DBType.BIGINT);
+      table.addField("cdo_resource", DBType.BIGINT);
+      table.addField("cdo_container", DBType.BIGINT);
+      table.addField("cdo_feature", DBType.INTEGER);
+    }
+  }
+
+  @Deprecated
+  protected void appendRevisionFields(StringBuilder builder, CDORevisionImpl revision, boolean full)
+  {
+    IDBField[] fields = table.getFields();
+    builder.append(fields[0].getName());
+    if (full)
+    {
+      for (int i = 1; i < 8; i++)
+      {
+        builder.append(", ");
+        builder.append(fields[i].getName());
+      }
+    }
+  }
+
+  protected void appendRevisionInfos(StringBuilder builder, CDORevisionImpl revision, boolean full)
   {
     builder.append(revision.getID().getValue());
     if (full)
@@ -94,7 +124,7 @@ public abstract class Mapping implements IMapping
     }
   }
 
-  protected void executeSQL(IDBStoreAccessor storeAccessor, String sql) throws DBException
+  protected int sqlUpdate(IDBStoreAccessor storeAccessor, String sql) throws DBException
   {
     if (TRACER.isEnabled())
     {
@@ -104,11 +134,7 @@ public abstract class Mapping implements IMapping
     try
     {
       Statement statement = storeAccessor.getStatement();
-      int count = statement.executeUpdate(sql);
-      if (count != 1)
-      {
-        throw new DBException("Wrong update count: " + count);
-      }
+      return statement.executeUpdate(sql);
     }
     catch (SQLException ex)
     {

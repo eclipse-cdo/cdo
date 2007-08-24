@@ -28,6 +28,7 @@ public class VerticalMapping extends ValueMapping
   public VerticalMapping(VerticalMappingStrategy mappingStrategy, CDOClass cdoClass)
   {
     super(mappingStrategy, cdoClass, cdoClass.getFeatures());
+    mappingStrategy.initTable(getTable(), false);
     for (CDOClass superType : cdoClass.getSuperTypes())
     {
       IMapping superMapping = mappingStrategy.getMapping(superType);

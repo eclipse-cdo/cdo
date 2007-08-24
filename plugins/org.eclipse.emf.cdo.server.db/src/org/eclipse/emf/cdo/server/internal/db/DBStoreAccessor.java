@@ -28,13 +28,11 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
-import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBRowHandler;
-import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.sql.Connection;
@@ -188,9 +186,9 @@ public class DBStoreAccessor implements IDBStoreAccessor
       }
     }
 
-    IMappingStrategy mappingStrategy = store.getMappingStrategy();
-    Collection<IDBTable> affectedTables = mappingStrategy.map(cdoPackages);
-    store.getDBAdapter().createTables(affectedTables, connection);
+    // IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    // Collection<IDBTable> affectedTables = mappingStrategy.map(cdoPackages);
+    // store.getDBAdapter().createTables(affectedTables, connection);
   }
 
   protected void writeClass(CDOClassImpl cdoClass)
@@ -274,8 +272,8 @@ public class DBStoreAccessor implements IDBStoreAccessor
     cdoPackage.setEcore((String)values[2]);
     readClasses(cdoPackage);
 
-    CDOPackageImpl[] cdoPackages = { cdoPackage };
-    store.getMappingStrategy().map(cdoPackages);
+    // CDOPackageImpl[] cdoPackages = { cdoPackage };
+    // store.getMappingStrategy().map(cdoPackages);
   }
 
   protected void readClasses(final CDOPackageImpl cdoPackage)

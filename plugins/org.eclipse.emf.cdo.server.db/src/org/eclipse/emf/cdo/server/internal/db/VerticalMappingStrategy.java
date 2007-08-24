@@ -19,7 +19,7 @@ import org.eclipse.net4j.db.IDBTable;
 /**
  * @author Eike Stepper
  */
-public class VerticalMappingStrategy extends StandardMappingStrategy
+public class VerticalMappingStrategy extends MappingStrategy
 {
   private IDBTable rootTable;
 

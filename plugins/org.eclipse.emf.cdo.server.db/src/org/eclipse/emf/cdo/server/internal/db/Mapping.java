@@ -13,9 +13,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
@@ -225,42 +223,46 @@ public abstract class Mapping implements IMapping
     throw new ImplementationError("Unrecognized CDOType: " + type);
   }
 
-  protected IDBField mapReference(CDOClass cdoClass, CDOFeature cdoFeature, ToMany mapping)
-  {
-    switch (mapping)
-    {
-    case PER_REFERENCE:
-      return mapReferenceTable(cdoFeature, cdoClass.getName() + "_" + cdoFeature.getName() + "_refs", false);
-    case PER_CLASS:
-      return mapReferenceTable(cdoClass, cdoClass.getName() + "_refs", true);
-    case PER_PACKAGE:
-      CDOPackage cdoPackage = cdoClass.getContainingPackage();
-      return mapReferenceTable(cdoPackage, cdoPackage.getName() + "_refs", true);
-    case PER_REPOSITORY:
-      IRepository repository = mappingStrategy.getStore().getRepository();
-      return mapReferenceTable(repository, repository.getName() + "_refs", true);
-    case LIKE_ATTRIBUTES:
-      return mapReferenceSerialized(cdoClass, cdoFeature);
-    default:
-      throw new IllegalArgumentException("Invalid mapping: " + mapping);
-    }
-  }
-
-  protected IDBField mapReferenceSerialized(CDOClass cdoClass, CDOFeature cdoFeature)
-  {
-    // TODO Implement method HorizontalMappingStrategy.mapReferenceSerialized()
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
-
-  protected IDBField mapReferenceTable(Object key, String tableName, boolean withFeature)
-  {
-    IDBTable table = referenceTables.get(key);
-    if (table == null)
-    {
-      table = addReferenceTable(tableName, withFeature);
-      referenceTables.put(key, table);
-    }
-
-    return table.getField(0);
-  }
+  // protected IDBField mapReference(CDOClass cdoClass, CDOFeature cdoFeature,
+  // ToMany mapping)
+  // {
+  // switch (mapping)
+  // {
+  // case PER_REFERENCE:
+  // return mapReferenceTable(cdoFeature, cdoClass.getName() + "_" +
+  // cdoFeature.getName() + "_refs", false);
+  // case PER_CLASS:
+  // return mapReferenceTable(cdoClass, cdoClass.getName() + "_refs", true);
+  // case PER_PACKAGE:
+  // CDOPackage cdoPackage = cdoClass.getContainingPackage();
+  // return mapReferenceTable(cdoPackage, cdoPackage.getName() + "_refs", true);
+  // case PER_REPOSITORY:
+  // IRepository repository = mappingStrategy.getStore().getRepository();
+  // return mapReferenceTable(repository, repository.getName() + "_refs", true);
+  // case LIKE_ATTRIBUTES:
+  // return mapReferenceSerialized(cdoClass, cdoFeature);
+  // default:
+  // throw new IllegalArgumentException("Invalid mapping: " + mapping);
+  // }
+  // }
+  //
+  // protected IDBField mapReferenceSerialized(CDOClass cdoClass, CDOFeature
+  // cdoFeature)
+  // {
+  // // TODO Implement method HorizontalMappingStrategy.mapReferenceSerialized()
+  // throw new UnsupportedOperationException("Not yet implemented");
+  // }
+  //
+  // protected IDBField mapReferenceTable(Object key, String tableName, boolean
+  // withFeature)
+  // {
+  // IDBTable table = referenceTables.get(key);
+  // if (table == null)
+  // {
+  // table = addReferenceTable(tableName, withFeature);
+  // referenceTables.put(key, table);
+  // }
+  //
+  // return table.getField(0);
+  // }
 }

@@ -30,6 +30,14 @@ public abstract class MappingStrategy implements IMappingStrategy
 
   private Map<String, String> properties;
 
+  private Precedence precedence;
+
+  private ToMany toMany;
+
+  private ToOne toOne;
+
+  private Map<Object, IDBTable> referenceTables = new HashMap();
+
   public MappingStrategy()
   {
   }
@@ -57,6 +65,44 @@ public abstract class MappingStrategy implements IMappingStrategy
   public void setProperties(Map<String, String> properties)
   {
     this.properties = properties;
+  }
+
+  public Precedence getPrecedence()
+  {
+    if (precedence == null)
+    {
+      String value = getProperties().get("mappingPrecedence");
+      precedence = value == null ? Precedence.STRATEGY : Precedence.valueOf(value);
+    }
+
+    return precedence;
+  }
+
+  public ToMany getToMany()
+  {
+    if (toMany == null)
+    {
+      String value = getProperties().get("toManyReferenceMapping");
+      toMany = value == null ? ToMany.PER_REFERENCE : ToMany.valueOf(value);
+    }
+
+    return toMany;
+  }
+
+  public ToOne getToOne()
+  {
+    if (toOne == null)
+    {
+      String value = getProperties().get("toOneReferenceMapping");
+      toOne = value == null ? ToOne.LIKE_ATTRIBUTES : ToOne.valueOf(value);
+    }
+
+    return toOne;
+  }
+
+  public Map<Object, IDBTable> getReferenceTables()
+  {
+    return referenceTables;
   }
 
   public IMapping getMapping(CDOClass cdoClass)

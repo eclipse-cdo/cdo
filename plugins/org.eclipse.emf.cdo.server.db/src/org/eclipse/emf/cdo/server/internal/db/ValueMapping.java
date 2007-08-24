@@ -43,6 +43,16 @@ public abstract class ValueMapping extends Mapping
     referenceMappings = createReferenceMappings(features);
   }
 
+  public List<IAttributeMapping> getAttributeMappings()
+  {
+    return attributeMappings;
+  }
+
+  public List<IReferenceMapping> getReferenceMappings()
+  {
+    return referenceMappings;
+  }
+
   public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
     if (attributeMappings != null)

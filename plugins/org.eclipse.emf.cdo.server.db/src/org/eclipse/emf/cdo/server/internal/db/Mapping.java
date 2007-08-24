@@ -26,7 +26,6 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
@@ -106,9 +105,9 @@ public abstract class Mapping implements IMapping
         throw new DBException("Wrong update count: " + count);
       }
     }
-    catch (SQLException ex)
+    catch (Exception ex)
     {
-      throw new DBException(ex);
+      throw new DBException("Problem with " + sql, ex);
     }
   }
 

@@ -19,7 +19,6 @@ import org.eclipse.net4j.util.ReflectUtil;
 import javax.sql.DataSource;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -184,41 +183,36 @@ public final class DBUtil
           + Arrays.asList(table.getFields()));
     }
 
-    String sql = table.sqlInsert();
-    if (TRACER.isEnabled())
+    StringBuilder builder = new StringBuilder();
+    builder.append("INSERT INTO ");
+    builder.append(table);
+    builder.append(" VALUES (");
+
+    for (int i = 0; i < fields.length; i++)
     {
-      StringBuilder builder = new StringBuilder();
-      builder.append("INSERT INTO ");
-      builder.append(table);
-      builder.append(" VALUES (");
-
-      for (int i = 0; i < fields.length; i++)
+      if (i > 0)
       {
-        if (i > 0)
-        {
-          builder.append(", ");
-        }
-
-        builder.append(args[i]);
+        builder.append(", ");
       }
 
-      builder.append(")");
-      TRACER.trace(builder.toString());
+      fields[i].appendValue(builder, args[i]);
     }
 
-    PreparedStatement statement = null;
+    builder.append(")");
+    String sql = builder.toString();
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
+
+    Statement statement = null;
 
     try
     {
-      statement = connection.prepareStatement(sql);
-      for (int i = 0; i < fields.length; i++)
-      {
-        IDBField field = fields[i];
-        statement.setObject(i + 1, args[i], field.getType().getCode());
-      }
-
-      statement.execute();
-      if (statement.getUpdateCount() == 0)
+      statement = connection.createStatement();
+      int count = statement.executeUpdate(sql);
+      if (count == 0)
       {
         throw new DBException("No row inserted into table " + table);
       }

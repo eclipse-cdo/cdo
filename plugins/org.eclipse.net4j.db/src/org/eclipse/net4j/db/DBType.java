@@ -123,6 +123,13 @@ public enum DBType
 
   public void appendValue(StringBuilder builder, Object value)
   {
-    builder.append(value);
+    if (value == null)
+    {
+      builder.append("NULL");
+    }
+    else
+    {
+      builder.append(value);
+    }
   }
 }

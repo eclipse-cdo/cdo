@@ -57,7 +57,6 @@ public abstract class ValueMapping extends Mapping
     builder.append(getTable());
     builder.append(" VALUES (");
     appendRevisionInfo(builder, revision, hasFullRevisionInfo());
-    builder.append(", ");
 
     for (IAttributeMapping attributeMapping : attributeMappings)
     {

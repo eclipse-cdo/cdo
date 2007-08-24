@@ -22,10 +22,17 @@ public interface IStore extends IRepositoryElement
   public String getStoreType();
 
   /**
-   * @return <code>true</code> if this store supports audit views,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if this store supports the retrieval of
+   *         historical revisions, <code>false</code> otherwise.
    */
-  public boolean hasAuditSupport();
+  public boolean hasAuditingSupport();
+
+  /**
+   * @return <code>true</code> if this store supports the storage of
+   *         concurrent revisions in separate branches, <code>false</code>
+   *         otherwise.
+   */
+  public boolean hasBranchingSupport();
 
   /**
    * Returns a reader that can be used to read from this store in the context of

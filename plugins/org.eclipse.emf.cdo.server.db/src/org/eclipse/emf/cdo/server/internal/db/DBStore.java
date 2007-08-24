@@ -89,9 +89,14 @@ public class DBStore extends Store implements IDBStore
     return schema;
   }
 
-  public boolean hasAuditSupport()
+  public boolean hasAuditingSupport()
   {
     return true;
+  }
+
+  public boolean hasBranchingSupport()
+  {
+    return false;
   }
 
   public DBStoreAccessor getReader(ISession session) throws DBException

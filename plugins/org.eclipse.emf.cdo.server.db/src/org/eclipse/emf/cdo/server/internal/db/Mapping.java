@@ -148,7 +148,7 @@ public abstract class Mapping implements IMapping
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("{0}. attempt to add table: {1} ({2})", attempt, tableName, ignore.getMessage());
+          TRACER.format("{0}. attempt to add table: {1} ({2})", attempt + 1, tableName, ignore.getMessage());
         }
       }
     }

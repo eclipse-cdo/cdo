@@ -30,6 +30,11 @@ public class HorizontalMappingStrategy extends MappingStrategy
   @Override
   protected IMapping createMapping(CDOClass cdoClass)
   {
+    if (cdoClass.isAbstract())
+    {
+      return null;
+    }
+
     return new HorizontalMapping(this, cdoClass);
   }
 }

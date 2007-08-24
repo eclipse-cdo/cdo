@@ -95,6 +95,11 @@ public abstract class Mapping implements IMapping
 
   protected void executeSQL(IDBStoreAccessor storeAccessor, String sql) throws DBException
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
+
     try
     {
       Statement statement = storeAccessor.getStatement();

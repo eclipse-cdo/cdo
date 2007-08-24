@@ -46,4 +46,10 @@ public class DataSourceConnectionProvider implements ConnectionProvider
       throw new DBException(ex);
     }
   }
+
+  @Override
+  public String toString()
+  {
+    return dataSource.toString();
+  }
 }

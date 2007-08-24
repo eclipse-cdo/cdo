@@ -450,7 +450,10 @@ public class DBStoreAccessor implements IDBStoreAccessor
       for (CDOClassImpl cdoClass : cdoClasses)
       {
         IMapping mapping = mappingStrategy.getMapping(cdoClass);
-        affectedTables.addAll(mapping.getAffectedTables());
+        if (mapping != null)
+        {
+          affectedTables.addAll(mapping.getAffectedTables());
+        }
       }
     }
 

@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+
 import org.eclipse.net4j.db.IDBField;
 
 import java.util.HashMap;
@@ -22,9 +24,16 @@ public final class FeatureServerInfo extends ServerInfo
 {
   private Map<Object, IDBField> fields;
 
-  public FeatureServerInfo(int id)
+  private FeatureServerInfo(int id)
   {
     super(id);
+  }
+
+  public static FeatureServerInfo setDBID(CDOFeature cdoFeature, int id)
+  {
+    FeatureServerInfo serverInfo = new FeatureServerInfo(id);
+    cdoFeature.setServerInfo(serverInfo);
+    return serverInfo;
   }
 
   @Deprecated

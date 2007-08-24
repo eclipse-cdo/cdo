@@ -19,7 +19,7 @@ public abstract class ServerInfo
 {
   private int dbID;
 
-  public ServerInfo(int dbID)
+  protected ServerInfo(int dbID)
   {
     this.dbID = dbID;
   }

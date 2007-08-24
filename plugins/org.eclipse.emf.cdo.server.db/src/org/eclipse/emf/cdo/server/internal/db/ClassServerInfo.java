@@ -20,9 +20,16 @@ public final class ClassServerInfo extends ServerInfo
 {
   private IMapping mapping;
 
-  public ClassServerInfo(int id)
+  private ClassServerInfo(int id)
   {
     super(id);
+  }
+
+  public static ClassServerInfo setDBID(CDOClass cdoClass, int id)
+  {
+    ClassServerInfo serverInfo = new ClassServerInfo(id);
+    cdoClass.setServerInfo(serverInfo);
+    return serverInfo;
   }
 
   public static IMapping getMapping(CDOClass cdoClass)

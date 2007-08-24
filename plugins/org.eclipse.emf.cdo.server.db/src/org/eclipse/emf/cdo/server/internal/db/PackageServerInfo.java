@@ -21,9 +21,16 @@ public final class PackageServerInfo extends ServerInfo
 {
   private IDBSchema schema;
 
-  public PackageServerInfo(int id)
+  private PackageServerInfo(int id)
   {
     super(id);
+  }
+
+  public static PackageServerInfo setDBID(CDOPackage cdoPackage, int id)
+  {
+    PackageServerInfo serverInfo = new PackageServerInfo(id);
+    cdoPackage.setServerInfo(serverInfo);
+    return serverInfo;
   }
 
   public static IDBSchema getSchema(CDOPackage cdoPackage)

@@ -8,21 +8,26 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.db;
+package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-
-import org.eclipse.net4j.db.IDBTable;
 
 /**
  * @author Eike Stepper
  */
-public interface IReferenceMapping
+public class ToOneReferenceMapping extends AttributeMapping
 {
-  public CDOFeature getFeature();
+  public ToOneReferenceMapping(ValueMapping valueMapping, CDOFeature feature)
+  {
+    super(valueMapping, feature);
+  }
 
-  public IDBTable getTable();
-
-  public void writeReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
+  @Override
+  protected Long getRevisionValue(CDORevisionImpl revision)
+  {
+    CDOID id = (CDOID)super.getRevisionValue(revision);
+    return id.getValue();
+  }
 }

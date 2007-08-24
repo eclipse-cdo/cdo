@@ -122,20 +122,6 @@ public abstract class Mapping implements IMapping
     return mappingStrategy.getStore().getDBAdapter().mangleFieldName(name, attempt);
   }
 
-  protected IDBTable addReferenceTable(String tableName, boolean withFeature)
-  {
-    IDBTable table = addTable(tableName);
-    if (withFeature)
-    {
-      table.addField("cdo_feature", DBType.INTEGER);
-    }
-
-    table.addField("cdo_idx", DBType.INTEGER);
-    table.addField("cdo_source", DBType.BIGINT);
-    table.addField("cdo_target", DBType.BIGINT);
-    return table;
-  }
-
   protected IDBTable addTable(String name)
   {
     for (int attempt = 0;; ++attempt)
@@ -226,47 +212,4 @@ public abstract class Mapping implements IMapping
 
     throw new ImplementationError("Unrecognized CDOType: " + type);
   }
-
-  // protected IDBField mapReference(CDOClass cdoClass, CDOFeature cdoFeature,
-  // ToMany mapping)
-  // {
-  // switch (mapping)
-  // {
-  // case PER_REFERENCE:
-  // return mapReferenceTable(cdoFeature, cdoClass.getName() + "_" +
-  // cdoFeature.getName() + "_refs", false);
-  // case PER_CLASS:
-  // return mapReferenceTable(cdoClass, cdoClass.getName() + "_refs", true);
-  // case PER_PACKAGE:
-  // CDOPackage cdoPackage = cdoClass.getContainingPackage();
-  // return mapReferenceTable(cdoPackage, cdoPackage.getName() + "_refs", true);
-  // case PER_REPOSITORY:
-  // IRepository repository = mappingStrategy.getStore().getRepository();
-  // return mapReferenceTable(repository, repository.getName() + "_refs", true);
-  // case LIKE_ATTRIBUTES:
-  // return mapReferenceSerialized(cdoClass, cdoFeature);
-  // default:
-  // throw new IllegalArgumentException("Invalid mapping: " + mapping);
-  // }
-  // }
-  //
-  // protected IDBField mapReferenceSerialized(CDOClass cdoClass, CDOFeature
-  // cdoFeature)
-  // {
-  // // TODO Implement method HorizontalMappingStrategy.mapReferenceSerialized()
-  // throw new UnsupportedOperationException("Not yet implemented");
-  // }
-  //
-  // protected IDBField mapReferenceTable(Object key, String tableName, boolean
-  // withFeature)
-  // {
-  // IDBTable table = referenceTables.get(key);
-  // if (table == null)
-  // {
-  // table = addReferenceTable(tableName, withFeature);
-  // referenceTables.put(key, table);
-  // }
-  //
-  // return table.getField(0);
-  // }
 }

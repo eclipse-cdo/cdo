@@ -15,25 +15,25 @@ import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 /**
  * @author Eike Stepper
  */
-public class FeatureMapper
+public class FeatureMapping
 {
+  private ValueMapping valueMapping;
+
   private CDOFeature feature;
 
-  private int index;
-
-  public FeatureMapper(CDOFeature feature, int index)
+  public FeatureMapping(ValueMapping valueMapping, CDOFeature feature)
   {
+    this.valueMapping = valueMapping;
     this.feature = feature;
-    this.index = index;
+  }
+
+  public ValueMapping getValueMapping()
+  {
+    return valueMapping;
   }
 
   public CDOFeature getFeature()
   {
     return feature;
-  }
-
-  public int getIndex()
-  {
-    return index;
   }
 }

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,16 +35,6 @@ public abstract class ValueMapping extends Mapping
     mappingStrategy.initTable(getTable(), hasFullRevisionInfo());
     attributeMappings = createAttributeMappings(features);
     referenceMappings = createReferenceMappings(features);
-  }
-
-  public List<IAttributeMapping> createAttributeMappings(CDOFeature[] features)
-  {
-    return null;
-  }
-
-  public List<IReferenceMapping> createReferenceMappings(CDOFeature[] features)
-  {
-    return null;
   }
 
   public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
@@ -82,8 +73,43 @@ public abstract class ValueMapping extends Mapping
   {
     for (IReferenceMapping referenceMapping : referenceMappings)
     {
-      referenceMapping.writeReference(this, storeAccessor, revision);
+      referenceMapping.writeReference(storeAccessor, revision);
     }
+  }
+
+  protected List<IAttributeMapping> createAttributeMappings(CDOFeature[] features)
+  {
+    List<IAttributeMapping> attributeMappings = new ArrayList();
+    for (CDOFeature feature : features)
+    {
+      if (feature.isReference())
+      {
+        if (!feature.isMany())
+        {
+          attributeMappings.add(new ToOneReferenceMapping(this, feature));
+        }
+      }
+      else
+      {
+        attributeMappings.add(new AttributeMapping(this, feature));
+      }
+    }
+
+    return attributeMappings.isEmpty() ? null : attributeMappings;
+  }
+
+  protected List<IReferenceMapping> createReferenceMappings(CDOFeature[] features)
+  {
+    List<IReferenceMapping> referenceMappings = new ArrayList();
+    for (CDOFeature feature : features)
+    {
+      if (feature.isReference() && feature.isMany())
+      {
+        referenceMappings.add(new ReferenceMapping(this, feature));
+      }
+    }
+
+    return referenceMappings.isEmpty() ? null : referenceMappings;
   }
 
   protected abstract boolean hasFullRevisionInfo();

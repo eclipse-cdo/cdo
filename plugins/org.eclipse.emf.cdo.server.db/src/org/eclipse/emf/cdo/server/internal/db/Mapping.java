@@ -197,7 +197,7 @@ public abstract class Mapping implements IMapping
     {
       return DBType.INTEGER;
     }
-    else if (type == CDOType.LONG || type == CDOType.INTEGER_OBJECT)
+    else if (type == CDOType.LONG || type == CDOType.LONG_OBJECT)
     {
       return DBType.BIGINT;
     }

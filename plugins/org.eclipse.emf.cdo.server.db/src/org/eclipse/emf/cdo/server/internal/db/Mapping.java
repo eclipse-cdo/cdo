@@ -165,11 +165,11 @@ public abstract class Mapping implements IMapping
       {
         return table.addField(fieldName, fieldType);
       }
-      catch (DBException ignore)
+      catch (DBException ex)
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("{0}. attempt to add field: {1} ({2})", attempt, fieldName, ignore.getMessage());
+          TRACER.format("{0}. attempt to add field: {1} ({2})", attempt + 1, fieldName, ex.getMessage());
         }
       }
     }

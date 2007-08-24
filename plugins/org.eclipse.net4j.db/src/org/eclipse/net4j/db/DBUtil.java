@@ -174,7 +174,8 @@ public final class DBUtil
     }
   }
 
-  public static void insertRow(Connection connection, IDBTable table, Object... args) throws DBException
+  public static void insertRow(Connection connection, IDBAdapter dbAdapter, IDBTable table, Object... args)
+      throws DBException
   {
     IDBField[] fields = table.getFields();
     if (fields.length != args.length)
@@ -195,7 +196,7 @@ public final class DBUtil
         builder.append(", ");
       }
 
-      fields[i].appendValue(builder, args[i]);
+      dbAdapter.appendValue(builder, fields[i], args[i]);
     }
 
     builder.append(")");

@@ -181,7 +181,8 @@ public class DBStoreAccessor implements IDBStoreAccessor
         CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
         long lb = metaIDRange == null ? 0L : metaIDRange.getLowerBound().getValue();
         long ub = metaIDRange == null ? 0L : metaIDRange.getUpperBound().getValue();
-        DBUtil.insertRow(connection, CDODBSchema.PACKAGES, id, packageURI, name, ecore, dynamic, lb, ub);
+        DBUtil.insertRow(connection, store.getDBAdapter(), CDODBSchema.PACKAGES, id, packageURI, name, ecore, dynamic,
+            lb, ub);
 
         for (CDOClassImpl cdoClass : cdoPackage.getClasses())
         {
@@ -204,7 +205,8 @@ public class DBStoreAccessor implements IDBStoreAccessor
     int classifierID = cdoClass.getClassifierID();
     String name = cdoClass.getName();
     boolean isAbstract = cdoClass.isAbstract();
-    DBUtil.insertRow(connection, CDODBSchema.CLASSES, id, packageID, classifierID, name, isAbstract);
+    DBUtil.insertRow(connection, store.getDBAdapter(), CDODBSchema.CLASSES, id, packageID, classifierID, name,
+        isAbstract);
 
     for (CDOClassProxy superType : cdoClass.getSuperTypeProxies())
     {
@@ -221,7 +223,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
   {
     String packageURI = superType.getPackageURI();
     int classifierID = superType.getClassifierID();
-    DBUtil.insertRow(connection, CDODBSchema.SUPERTYPES, type, packageURI, classifierID);
+    DBUtil.insertRow(connection, store.getDBAdapter(), CDODBSchema.SUPERTYPES, type, packageURI, classifierID);
   }
 
   protected void writeFeature(CDOFeatureImpl feature)
@@ -239,8 +241,8 @@ public class DBStoreAccessor implements IDBStoreAccessor
     boolean many = feature.isMany();
     boolean containment = feature.isContainment();
     int idx = feature.getFeatureIndex();
-    DBUtil.insertRow(connection, CDODBSchema.FEATURES, id, classID, featureID, name, type, packageURI, classifierID,
-        many, containment, idx);
+    DBUtil.insertRow(connection, store.getDBAdapter(), CDODBSchema.FEATURES, id, classID, featureID, name, type,
+        packageURI, classifierID, many, containment, idx);
   }
 
   public Collection<CDOPackageInfo> readPackageInfos()

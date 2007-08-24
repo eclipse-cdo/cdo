@@ -37,4 +37,6 @@ public interface IDBAdapter
   public String mangleTableName(String name, int attempt);
 
   public String mangleFieldName(String name, int attempt);
+
+  public void appendValue(StringBuilder builder, IDBField field, Object value);
 }

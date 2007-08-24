@@ -11,6 +11,7 @@
 package org.eclipse.net4j.db.internal.derby;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.internal.db.DBAdapter;
 import org.eclipse.net4j.internal.db.DBField;
 
@@ -67,6 +68,17 @@ public class DerbyAdapter extends DBAdapter
     }
 
     return super.getTypeName(field);
+  }
+
+  @Override
+  public void appendValue(StringBuilder builder, IDBField field, Object value)
+  {
+    if (value instanceof Boolean)
+    {
+      value = (Boolean)value ? 1 : 0;
+    }
+
+    super.appendValue(builder, field, value);
   }
 
   @Override

@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
+import org.eclipse.net4j.db.IDBAdapter;
+
 /**
  * @author Eike Stepper
  */
@@ -35,5 +37,10 @@ public class FeatureMapping
   public CDOFeature getFeature()
   {
     return feature;
+  }
+
+  protected IDBAdapter getDBAdapter()
+  {
+    return getValueMapping().getMappingStrategy().getStore().getDBAdapter();
   }
 }

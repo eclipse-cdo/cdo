@@ -4,6 +4,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBField;
 
 /**
@@ -26,8 +27,9 @@ public class AttributeMapping extends FeatureMapping implements IAttributeMappin
 
   public void appendValue(StringBuilder builder, CDORevisionImpl revision)
   {
+    IDBAdapter dbAdapter = getDBAdapter();
     Object value = getRevisionValue(revision);
-    field.appendValue(builder, value);
+    dbAdapter.appendValue(builder, field, value);
   }
 
   protected Object getRevisionValue(CDORevisionImpl revision)

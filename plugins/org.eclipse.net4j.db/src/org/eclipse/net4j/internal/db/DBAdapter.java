@@ -14,6 +14,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -98,6 +99,11 @@ public abstract class DBAdapter implements IDBAdapter
   public String mangleFieldName(String name, int attempt)
   {
     return mangleName(name, getMaximumFieldNameLength(), attempt);
+  }
+
+  public void appendValue(StringBuilder builder, IDBField field, Object value)
+  {
+    field.appendValue(builder, value);
   }
 
   @Override

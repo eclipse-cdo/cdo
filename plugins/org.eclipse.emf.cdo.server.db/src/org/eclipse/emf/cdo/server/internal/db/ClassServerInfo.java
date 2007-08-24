@@ -13,11 +13,17 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.server.db.IMapping;
 
+import org.eclipse.net4j.util.ImplementationError;
+
 /**
  * @author Eike Stepper
  */
 public final class ClassServerInfo extends ServerInfo
 {
+  public static final int CDO_OBJECT_CLASS_DBID = -1;
+
+  public static final int CDO_RESOURCE_CLASS_DBID = -2;
+
   private IMapping mapping;
 
   private ClassServerInfo(int id)
@@ -34,11 +40,36 @@ public final class ClassServerInfo extends ServerInfo
 
   public static IMapping getMapping(CDOClass cdoClass)
   {
-    return ((ClassServerInfo)cdoClass.getServerInfo()).mapping;
+    ClassServerInfo serverInfo = getServerInfo(cdoClass);
+    return serverInfo == null ? null : serverInfo.mapping;
   }
 
   public static void setMapping(CDOClass cdoClass, IMapping mapping)
   {
-    ((ClassServerInfo)cdoClass.getServerInfo()).mapping = mapping;
+    ClassServerInfo serverInfo = getServerInfo(cdoClass);
+    if (serverInfo == null)
+    {
+      throw new ImplementationError("No serverInfo for class " + cdoClass);
+    }
+
+    serverInfo.mapping = mapping;
+  }
+
+  protected static ClassServerInfo getServerInfo(CDOClass cdoClass)
+  {
+    ClassServerInfo serverInfo = (ClassServerInfo)cdoClass.getServerInfo();
+    if (serverInfo == null)
+    {
+      if (cdoClass.isRoot())
+      {
+        serverInfo = setDBID(cdoClass, CDO_OBJECT_CLASS_DBID);
+      }
+      else if (cdoClass.isResource())
+      {
+        serverInfo = setDBID(cdoClass, CDO_RESOURCE_CLASS_DBID);
+      }
+    }
+
+    return serverInfo;
   }
 }

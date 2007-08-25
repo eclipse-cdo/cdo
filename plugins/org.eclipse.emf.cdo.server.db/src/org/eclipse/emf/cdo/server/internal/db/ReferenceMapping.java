@@ -26,11 +26,26 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
   private boolean withFeature;
 
+  private String constantPrefix;
+
   public ReferenceMapping(ValueMapping valueMapping, CDOFeature feature, ToMany toMany)
   {
     super(valueMapping, feature);
     this.toMany = toMany;
     mapReference(valueMapping.getCDOClass(), feature);
+
+    // Build the constant SQL prefix
+    StringBuilder builder = new StringBuilder();
+    builder.append("INSERT INTO ");
+    builder.append(table);
+    builder.append(" VALUES (");
+    if (withFeature)
+    {
+      builder.append(FeatureServerInfo.getDBID(feature));
+      builder.append(", ");
+    }
+
+    constantPrefix = builder.toString();
   }
 
   public IDBTable getTable()
@@ -47,16 +62,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     for (Object value : list)
     {
       long target = ((CDOID)value).getValue();
-      StringBuilder builder = new StringBuilder();
-      builder.append("INSERT INTO ");
-      builder.append(table);
-      builder.append(" VALUES (");
-      if (withFeature)
-      {
-        builder.append(FeatureServerInfo.getDBID(feature));
-        builder.append(", ");
-      }
-
+      StringBuilder builder = new StringBuilder(constantPrefix);
       builder.append(idx++);
       builder.append(", ");
       builder.append(source);

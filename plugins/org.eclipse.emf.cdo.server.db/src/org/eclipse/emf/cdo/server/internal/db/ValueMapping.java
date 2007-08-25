@@ -163,12 +163,12 @@ public abstract class ValueMapping extends Mapping
       {
         if (!feature.isMany())
         {
-          attributeMappings.add(new ToOneReferenceMapping(this, feature));
+          attributeMappings.add(createToOneReferenceMapping(feature));
         }
       }
       else
       {
-        attributeMappings.add(new AttributeMapping(this, feature));
+        attributeMappings.add(createAttributeMapping(feature));
       }
     }
 
@@ -182,11 +182,26 @@ public abstract class ValueMapping extends Mapping
     {
       if (feature.isReference() && feature.isMany())
       {
-        referenceMappings.add(new ReferenceMapping(this, feature));
+        referenceMappings.add(createReferenceMapping(feature));
       }
     }
 
     return referenceMappings.isEmpty() ? null : referenceMappings;
+  }
+
+  protected AttributeMapping createAttributeMapping(CDOFeature feature)
+  {
+    return new AttributeMapping(this, feature);
+  }
+
+  protected ToOneReferenceMapping createToOneReferenceMapping(CDOFeature feature)
+  {
+    return new ToOneReferenceMapping(this, feature);
+  }
+
+  protected ReferenceMapping createReferenceMapping(CDOFeature feature)
+  {
+    return new ReferenceMapping(this, feature, ToMany.PER_REFERENCE);
   }
 
   protected abstract boolean hasFullRevisionInfo();

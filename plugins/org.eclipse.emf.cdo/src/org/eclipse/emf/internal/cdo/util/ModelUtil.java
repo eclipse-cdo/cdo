@@ -130,7 +130,7 @@ public final class ModelUtil
     String packageURI = ePackage.getNsURI();
     String name = ePackage.getName();
     boolean dynamic = EMFUtil.isDynamicEPackage(ePackage);
-    String ecore = dynamic ? EMFUtil.ePackageToString(ePackage) : null;
+    String ecore = EMFUtil.ePackageToString(ePackage);
     CDOIDRange idRange = packageManager.getSession().registerEPackage(ePackage);
 
     CDOPackageImpl cdoPackage = new CDOPackageImpl(packageManager, packageURI, name, ecore, dynamic, idRange);

@@ -82,6 +82,44 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
     return index * entrySize;
   }
 
+  public K getMaxKey()
+  {
+    if (entryCount == 0)
+    {
+      return null;
+    }
+
+    return getKey(entryCount - 1);
+  }
+
+  public K getKey(long index)
+  {
+    try
+    {
+      long pos = getPosition(index);
+      randomAccessFile.seek(pos);
+      return readKey(input);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  public V getValue(long index)
+  {
+    try
+    {
+      long pos = getPosition(index) + getKeySize();
+      randomAccessFile.seek(pos);
+      return readValue(input);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
   public V get(K key)
   {
     try

@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.ITypeManager;
 
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.internal.util.lifecycle.QueueWorker;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.io.CachedFileMap;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
@@ -35,7 +35,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class TypeManager extends Lifecycle implements ITypeManager
+public class TypeManager extends QueueWorker<ObjectEntry> implements ITypeManager
 {
   private Repository repository;
 
@@ -45,9 +45,13 @@ public class TypeManager extends Lifecycle implements ITypeManager
 
   private PackageURIMap packageURIMap;
 
+  private PackageIDMap packageIDMap;
+
   private ObjectTypeMap objectTypeMap;
 
   private ObjectTypeMap metaObjectTypeMap;
+
+  private int nextPackageID;
 
   public TypeManager(Repository repository)
   {
@@ -72,22 +76,22 @@ public class TypeManager extends Lifecycle implements ITypeManager
   public CDOClassRef getObjectType(IStoreReader storeReader, CDOID id)
   {
     CDOClassRef type = objectTypes.get(id);
-    if (type == null)
+    if (type == null && persistent)
     {
       type = persistentLoadType(id);
-      if (type == null && storeReader != null)
-      {
-        type = storeReader.readObjectType(id);
-      }
-
-      if (type == null)
-      {
-        throw new ImplementationError("type == null");
-      }
-
-      objectTypes.put(id, type);
     }
 
+    if (type == null && storeReader != null)
+    {
+      type = storeReader.readObjectType(id);
+    }
+
+    if (type == null)
+    {
+      throw new ImplementationError("Type not found for id " + id);
+    }
+
+    objectTypes.put(id, type);
     return type;
   }
 
@@ -127,6 +131,26 @@ public class TypeManager extends Lifecycle implements ITypeManager
   }
 
   @Override
+  protected void work(WorkContext context, ObjectEntry element)
+  {
+    CDOID id = element.getID();
+    CDOClassRef type = element.getType();
+    String packageURI = type.getPackageURI();
+    int classifierID = type.getClassifierID();
+
+    Integer packageID = packageIDMap.get(packageURI);
+    if (packageID == null)
+    {
+      packageID = nextPackageID++;
+      packageIDMap.put(packageURI, packageID);
+      packageURIMap.put(packageID, packageURI);
+    }
+
+    TypeEntry entry = new TypeEntry(classifierID, packageID);
+    objectTypeMap.put(id, entry);
+  }
+
+  @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
@@ -137,8 +161,12 @@ public class TypeManager extends Lifecycle implements ITypeManager
       IOUtil.mkdirs(repositoryFolder);
 
       packageURIMap = new PackageURIMap(new File(repositoryFolder, "package.uris"));
+      packageIDMap = new PackageIDMap(new File(repositoryFolder, "package.ids"));
       objectTypeMap = new ObjectTypeMap(new File(repositoryFolder, "object.types"));
       metaObjectTypeMap = new ObjectTypeMap(new File(repositoryFolder, "metaobject.types"));
+
+      Integer max = packageURIMap.getMaxKey();
+      nextPackageID = max == null ? 1 : max + 1;
     }
   }
 
@@ -147,6 +175,7 @@ public class TypeManager extends Lifecycle implements ITypeManager
   {
     IOUtil.close(metaObjectTypeMap);
     IOUtil.close(objectTypeMap);
+    IOUtil.close(packageIDMap);
     IOUtil.close(packageURIMap);
     super.doDeactivate();
   }
@@ -247,6 +276,59 @@ public class TypeManager extends Lifecycle implements ITypeManager
   /**
    * @author Eike Stepper
    */
+  private static final class PackageIDMap extends CachedFileMap<String, Integer>
+  {
+    public PackageIDMap(File file)
+    {
+      super(file, "rw");
+    }
+
+    @Override
+    public int getKeySize()
+    {
+      return 260;
+    }
+
+    @Override
+    protected String readKey(ExtendedDataInput in) throws IOException
+    {
+      return in.readString();
+    }
+
+    @Override
+    protected void writeKey(ExtendedDataOutput out, String key) throws IOException
+    {
+      byte[] bytes = key.getBytes();
+      if (bytes.length + 4 > getValueSize())
+      {
+        throw new IllegalArgumentException("Key size of " + getValueSize() + " exceeded: " + key);
+      }
+
+      ExtendedIOUtil.writeByteArray(out, bytes);
+    }
+
+    @Override
+    public int getValueSize()
+    {
+      return 4;
+    }
+
+    @Override
+    protected Integer readValue(ExtendedDataInput in) throws IOException
+    {
+      return in.readInt();
+    }
+
+    @Override
+    protected void writeValue(ExtendedDataOutput out, Integer value) throws IOException
+    {
+      out.writeInt(value);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private static final class ObjectTypeMap extends SortedFileMap<CDOID, TypeEntry>
   {
     public ObjectTypeMap(File file)
@@ -289,5 +371,31 @@ public class TypeManager extends Lifecycle implements ITypeManager
     {
       value.write(out);
     }
+  }
+}
+
+/**
+ * @author Eike Stepper
+ */
+final class ObjectEntry
+{
+  private CDOID id;
+
+  private CDOClassRef type;
+
+  public ObjectEntry(CDOID id, CDOClassRef type)
+  {
+    this.id = id;
+    this.type = type;
+  }
+
+  public CDOID getID()
+  {
+    return id;
+  }
+
+  public CDOClassRef getType()
+  {
+    return type;
   }
 }

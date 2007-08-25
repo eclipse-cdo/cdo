@@ -134,7 +134,7 @@ public abstract class MappingStrategy implements IMappingStrategy
 
   public CloseableIterator<CDOID> readObjectIDs(final IDBStoreAccessor storeAccessor, final boolean withTypes)
   {
-    List<CDOClass> classes = getObjectIDClasses();
+    List<CDOClass> classes = getClassesWithObjectInfo();
     final Iterator<CDOClass> classIt = classes.iterator();
     return new ObjectIDIterator(this, storeAccessor, withTypes)
     {
@@ -180,6 +180,40 @@ public abstract class MappingStrategy implements IMappingStrategy
     };
   }
 
+  public CDOClassRef readObjectType(IDBStoreAccessor storeAccessor, CDOID id)
+  {
+    String prefix = "SELECT DISTINCT " + Mapping.FIELD_NAME_CLASS + " FROM ";
+    String suffix = " WHERE " + Mapping.FIELD_NAME_ID + "=" + id;
+    for (CDOClass cdoClass : getClassesWithObjectInfo())
+    {
+      ValueMapping mapping = (ValueMapping)ClassServerInfo.getMapping(cdoClass);
+      if (mapping != null)
+      {
+        IDBTable table = mapping.getTable();
+        if (table != null)
+        {
+          String sql = prefix + table + suffix;
+
+          try
+          {
+            ResultSet resultSet = storeAccessor.getStatement().executeQuery(sql);
+            if (resultSet.next())
+            {
+              int classID = resultSet.getInt(1);
+              return getClassRef(storeAccessor, classID);
+            }
+          }
+          catch (SQLException ex)
+          {
+            throw new DBException(ex);
+          }
+        }
+      }
+    }
+
+    throw new DBException("No object with id " + id);
+  }
+
   public CDOClassRef getClassRef(IDBStoreAccessor storeAccessor, int classID)
   {
     CDOClassRef classRef = classRefs.get(classID);
@@ -200,5 +234,5 @@ public abstract class MappingStrategy implements IMappingStrategy
 
   protected abstract IMapping createMapping(CDOClass cdoClass);
 
-  protected abstract List<CDOClass> getObjectIDClasses();
+  protected abstract List<CDOClass> getClassesWithObjectInfo();
 }

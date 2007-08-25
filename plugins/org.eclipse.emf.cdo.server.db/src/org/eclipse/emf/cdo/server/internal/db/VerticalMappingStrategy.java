@@ -10,13 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
-
-import org.eclipse.net4j.util.io.CloseableIterator;
 
 import java.util.Collections;
 import java.util.List;
@@ -43,17 +38,6 @@ public class VerticalMappingStrategy extends MappingStrategy
     return true;
   }
 
-  @Override
-  public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor storeAccessor, boolean withTypes)
-  {
-    return null;
-  }
-
-  public CDOClassRef readObjectType(IDBStoreAccessor storeAccessor, CDOID id)
-  {
-    return null;
-  }
-
   public RootMapping getRootMapping()
   {
     if (rootMapping == null)
@@ -71,7 +55,7 @@ public class VerticalMappingStrategy extends MappingStrategy
   }
 
   @Override
-  protected List<CDOClass> getObjectIDClasses()
+  protected List<CDOClass> getClassesWithObjectInfo()
   {
     return Collections.singletonList(rootMapping.getCDOClass());
   }

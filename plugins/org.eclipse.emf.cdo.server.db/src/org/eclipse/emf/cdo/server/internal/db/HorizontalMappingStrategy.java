@@ -10,12 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.server.IPackageManager;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
 
 import java.util.ArrayList;
@@ -40,11 +37,6 @@ public class HorizontalMappingStrategy extends MappingStrategy
     return false;
   }
 
-  public CDOClassRef readObjectType(IDBStoreAccessor storeAccessor, CDOID id)
-  {
-    return null;
-  }
-
   @Override
   protected IMapping createMapping(CDOClass cdoClass)
   {
@@ -57,7 +49,7 @@ public class HorizontalMappingStrategy extends MappingStrategy
   }
 
   @Override
-  protected List<CDOClass> getObjectIDClasses()
+  protected List<CDOClass> getClassesWithObjectInfo()
   {
     List<CDOClass> result = new ArrayList();
     IPackageManager packageManager = getStore().getRepository().getPackageManager();

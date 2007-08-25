@@ -75,10 +75,10 @@ public abstract class Mapping implements IMapping
   protected void initTable(IDBTable table, boolean full)
   {
     table.addField("cdo_id", DBType.BIGINT);
+    table.addField("cdo_version", DBType.INTEGER);
     if (full)
     {
       table.addField("cdo_class", DBType.INTEGER);
-      table.addField("cdo_version", DBType.INTEGER);
       table.addField("cdo_created", DBType.BIGINT);
       table.addField("cdo_revised", DBType.BIGINT);
       table.addField("cdo_resource", DBType.BIGINT);
@@ -176,10 +176,10 @@ public abstract class Mapping implements IMapping
 
   protected IDBField addField(CDOFeature cdoFeature, IDBTable table) throws DBException
   {
+    DBType fieldType = getDBType(cdoFeature.getType());
     for (int attempt = 0;; ++attempt)
     {
       String fieldName = mangleFieldName(cdoFeature.getName(), attempt);
-      DBType fieldType = getDBType(cdoFeature.getType());
 
       try
       {

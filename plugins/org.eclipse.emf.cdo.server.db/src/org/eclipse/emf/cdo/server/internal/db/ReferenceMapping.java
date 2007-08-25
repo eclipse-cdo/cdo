@@ -1,6 +1,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
@@ -11,6 +12,7 @@ import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBTable;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,10 +22,15 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 {
   private IDBTable table;
 
-  public ReferenceMapping(ValueMapping valueMapping, CDOFeature feature)
+  private ToMany toMany;
+
+  private boolean withFeature;
+
+  public ReferenceMapping(ValueMapping valueMapping, CDOFeature feature, ToMany toMany)
   {
     super(valueMapping, feature);
-    table = mapReference(valueMapping.getCDOClass(), feature, ToMany.PER_REFERENCE);
+    this.toMany = toMany;
+    mapReference(valueMapping.getCDOClass(), feature);
   }
 
   public IDBTable getTable()
@@ -33,41 +40,78 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
   public void writeReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
-  }
-
-  protected IDBTable mapReference(CDOClass cdoClass, CDOFeature cdoFeature, ToMany mapping)
-  {
-    switch (mapping)
+    int idx = 0;
+    long source = revision.getID().getValue();
+    CDOFeature feature = getFeature();
+    List list = revision.getList(feature);
+    for (Object value : list)
     {
-    case PER_REFERENCE:
-      return mapReferenceTable(cdoFeature, cdoClass.getName() + "_" + cdoFeature.getName() + "_refs", false);
-    case PER_CLASS:
-      return mapReferenceTable(cdoClass, cdoClass.getName() + "_refs", true);
-    case PER_PACKAGE:
-      CDOPackage cdoPackage = cdoClass.getContainingPackage();
-      return mapReferenceTable(cdoPackage, cdoPackage.getName() + "_refs", true);
-    case PER_REPOSITORY:
-      IRepository repository = getValueMapping().getMappingStrategy().getStore().getRepository();
-      return mapReferenceTable(repository, repository.getName() + "_refs", true);
-    default:
-      throw new IllegalArgumentException("Invalid mapping: " + mapping);
+      long target = ((CDOID)value).getValue();
+      StringBuilder builder = new StringBuilder();
+      builder.append("INSERT INTO ");
+      builder.append(table);
+      builder.append(" VALUES (");
+      if (withFeature)
+      {
+        builder.append(FeatureServerInfo.getDBID(feature));
+        builder.append(", ");
+      }
+
+      builder.append(idx++);
+      builder.append(", ");
+      builder.append(source);
+      builder.append(", ");
+      builder.append(target);
+      builder.append(")");
+      getValueMapping().sqlUpdate(storeAccessor, builder.toString());
     }
   }
 
-  protected IDBTable mapReferenceTable(Object key, String tableName, boolean withFeature)
+  protected void mapReference(CDOClass cdoClass, CDOFeature cdoFeature)
+  {
+    switch (toMany)
+    {
+    case PER_REFERENCE:
+      withFeature = false;
+      table = mapReferenceTable(cdoFeature, cdoClass.getName() + "_" + cdoFeature.getName() + "_refs");
+      break;
+
+    case PER_CLASS:
+      withFeature = true;
+      table = mapReferenceTable(cdoClass, cdoClass.getName() + "_refs");
+      break;
+
+    case PER_PACKAGE:
+      withFeature = true;
+      CDOPackage cdoPackage = cdoClass.getContainingPackage();
+      table = mapReferenceTable(cdoPackage, cdoPackage.getName() + "_refs");
+      break;
+
+    case PER_REPOSITORY:
+      withFeature = true;
+      IRepository repository = getValueMapping().getMappingStrategy().getStore().getRepository();
+      table = mapReferenceTable(repository, repository.getName() + "_refs");
+      break;
+
+    default:
+      throw new IllegalArgumentException("Invalid mapping: " + toMany);
+    }
+  }
+
+  protected IDBTable mapReferenceTable(Object key, String tableName)
   {
     Map<Object, IDBTable> referenceTables = getValueMapping().getMappingStrategy().getReferenceTables();
     IDBTable table = referenceTables.get(key);
     if (table == null)
     {
-      table = addReferenceTable(tableName, withFeature);
+      table = addReferenceTable(tableName);
       referenceTables.put(key, table);
     }
 
     return table;
   }
 
-  protected IDBTable addReferenceTable(String tableName, boolean withFeature)
+  protected IDBTable addReferenceTable(String tableName)
   {
     IDBTable table = getValueMapping().addTable(tableName);
     if (withFeature)

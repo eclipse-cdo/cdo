@@ -10,12 +10,11 @@
  **************************************************************************/
 package org.eclipse.net4j.util.tests;
 
-import org.eclipse.net4j.util.io.ExtendedIOUtil;
+import org.eclipse.net4j.util.io.ExtendedDataInput;
+import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.SortedFileMap;
 
-import java.io.DataInput;
-import java.io.DataOutput;
 import java.io.File;
 import java.io.IOException;
 
@@ -71,13 +70,13 @@ public class SortedFileMapTest extends AbstractOMTest
     }
 
     @Override
-    protected Integer readKey(DataInput in) throws IOException
+    protected Integer readKey(ExtendedDataInput in) throws IOException
     {
       return in.readInt();
     }
 
     @Override
-    protected void writeKey(DataOutput out, Integer key) throws IOException
+    protected void writeKey(ExtendedDataOutput out, Integer key) throws IOException
     {
       out.writeInt(key);
     }
@@ -89,13 +88,13 @@ public class SortedFileMapTest extends AbstractOMTest
     }
 
     @Override
-    protected String readValue(DataInput in) throws IOException
+    protected String readValue(ExtendedDataInput in) throws IOException
     {
-      return ExtendedIOUtil.readString(in);
+      return in.readString();
     }
 
     @Override
-    protected void writeValue(DataOutput out, String value) throws IOException
+    protected void writeValue(ExtendedDataOutput out, String value) throws IOException
     {
       byte[] bytes = value.getBytes();
       if (bytes.length + 4 > getValueSize())
@@ -103,7 +102,7 @@ public class SortedFileMapTest extends AbstractOMTest
         throw new IllegalArgumentException("Value size of " + getValueSize() + " exceeded: " + value);
       }
 
-      ExtendedIOUtil.writeByteArray(out, bytes);
+      out.writeByteArray(bytes);
     }
   }
 }

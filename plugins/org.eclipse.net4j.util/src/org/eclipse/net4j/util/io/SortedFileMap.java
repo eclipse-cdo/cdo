@@ -11,8 +11,6 @@
 package org.eclipse.net4j.util.io;
 
 import java.io.Closeable;
-import java.io.DataInput;
-import java.io.DataOutput;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -25,6 +23,10 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
   private File file;
 
   private RandomAccessFile randomAccessFile;
+
+  private ExtendedDataInput input;
+
+  private ExtendedDataOutput output;
 
   private long entrySize;
 
@@ -39,6 +41,8 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
     {
       this.file = file;
       randomAccessFile = new RandomAccessFile(file, mode);
+      input = new DataInputExtender(randomAccessFile);
+      output = new DataOutputExtender(randomAccessFile);
       entrySize = getKeySize() + getValueSize();
       entryCount = randomAccessFile.length() / entrySize;
     }
@@ -88,7 +92,7 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
         return null;
       }
 
-      return readValue(randomAccessFile);
+      return readValue(input);
     }
     catch (IOException ex)
     {
@@ -104,9 +108,9 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
       if (index >= 0)
       {
         long pos = randomAccessFile.getFilePointer();
-        V oldValue = readValue(randomAccessFile);
+        V oldValue = readValue(input);
         randomAccessFile.seek(pos);
-        writeValue(randomAccessFile, value);
+        writeValue(output, value);
         return oldValue;
       }
 
@@ -114,18 +118,18 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
       for (long i = entryCount; i > index; --i)
       {
         randomAccessFile.seek((i - 1) * entrySize);
-        K k = readKey(randomAccessFile);
-        V v = readValue(randomAccessFile);
+        K k = readKey(input);
+        V v = readValue(input);
 
         randomAccessFile.seek(i * entrySize);
-        writeKey(randomAccessFile, k);
-        writeValue(randomAccessFile, v);
+        writeKey(output, k);
+        writeValue(output, v);
       }
 
       ++entryCount;
       randomAccessFile.seek(getPosition(index));
-      writeKey(randomAccessFile, key);
-      writeValue(randomAccessFile, value);
+      writeKey(output, key);
+      writeValue(output, value);
       return null;
     }
     catch (IOException ex)
@@ -147,7 +151,7 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
     {
       long mid = low + high >> 1;
       randomAccessFile.seek(mid * entrySize);
-      Comparable midVal = readKey(randomAccessFile);
+      Comparable midVal = readKey(input);
       int cmp = midVal.compareTo(key);
 
       if (cmp < 0)
@@ -162,13 +166,13 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
 
   public abstract int getKeySize();
 
-  protected abstract K readKey(DataInput in) throws IOException;
+  protected abstract K readKey(ExtendedDataInput in) throws IOException;
 
-  protected abstract void writeKey(DataOutput out, K key) throws IOException;
+  protected abstract void writeKey(ExtendedDataOutput out, K key) throws IOException;
 
   public abstract int getValueSize();
 
-  protected abstract V readValue(DataInput in) throws IOException;
+  protected abstract V readValue(ExtendedDataInput in) throws IOException;
 
-  protected abstract void writeValue(DataOutput out, V value) throws IOException;
+  protected abstract void writeValue(ExtendedDataOutput out, V value) throws IOException;
 }

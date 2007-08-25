@@ -21,6 +21,4 @@ public interface ExtendedDataInput extends DataInput
   public byte[] readByteArray() throws IOException;
 
   public String readString() throws IOException;
-
-  public Object readObject() throws IOException, ClassNotFoundException;
 }

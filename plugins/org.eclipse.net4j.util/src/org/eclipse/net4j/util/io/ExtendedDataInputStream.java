@@ -27,40 +27,12 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
 
   public byte[] readByteArray() throws IOException
   {
-    int length = readInt();
-    if (length < 0)
-    {
-      return null;
-    }
-
-    byte[] b;
-    try
-    {
-      b = new byte[length];
-    }
-    catch (Throwable t)
-    {
-      throw new IOException("Unable to allocate " + length + " bytes");
-    }
-
-    int bytes = read(b);
-    if (bytes != length)
-    {
-      throw new IOException("Unable to read " + length + " bytes (after " + bytes + " bytes)");
-    }
-
-    return b;
+    return ExtendedIOUtil.readByteArray(this);
   }
 
   public String readString() throws IOException
   {
-    byte[] bytes = readByteArray();
-    if (bytes == null)
-    {
-      return null;
-    }
-
-    return new String(bytes);
+    return ExtendedIOUtil.readString(this);
   }
 
   public Object readObject() throws IOException, ClassNotFoundException

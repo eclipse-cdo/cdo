@@ -17,8 +17,9 @@ import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
+import org.eclipse.net4j.util.io.CloseableIterator;
+
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * @see StoreUtil#getReader()
@@ -41,7 +42,7 @@ public interface IStoreReader extends IStoreAccessor
    * their ids available for processing. This method is supposed to be called
    * very infrequently, for example during the recovery from a crash.
    */
-  public Iterator<CDOID> readObjectIDs(boolean withTypes);
+  public CloseableIterator<CDOID> readObjectIDs(boolean withTypes);
 
   /**
    * Reads the type of an object from the associated store and returns a class

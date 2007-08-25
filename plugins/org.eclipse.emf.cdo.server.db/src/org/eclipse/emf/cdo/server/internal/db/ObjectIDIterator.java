@@ -17,15 +17,16 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.util.io.CloseableIterator;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Iterator;
 
 /**
  * @author Eike Stepper
  */
-public abstract class ObjectIDIterator implements Iterator<CDOID>
+public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
 {
   private MappingStrategy mappingStrategy;
 
@@ -37,11 +38,21 @@ public abstract class ObjectIDIterator implements Iterator<CDOID>
 
   private CDOID nextID;
 
+  /**
+   * Creates an iterator over all objects in a store. It is important to
+   * {@link #dispose()} of this iterator after usage to properly close internal
+   * result sets.
+   */
   public ObjectIDIterator(MappingStrategy mappingStrategy, IDBStoreAccessor storeAccessor, boolean withTypes)
   {
     this.mappingStrategy = mappingStrategy;
     this.storeAccessor = storeAccessor;
     this.withTypes = withTypes;
+  }
+
+  public void close() throws IOException
+  {
+    DBUtil.close(currentResultSet);
   }
 
   public MappingStrategy getMappingStrategy()

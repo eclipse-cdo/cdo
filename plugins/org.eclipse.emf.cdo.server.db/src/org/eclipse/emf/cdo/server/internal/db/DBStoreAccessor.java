@@ -394,7 +394,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Selecting object ids");
+      TRACER.trace("Selecting object IDs");
     }
 
     return store.getMappingStrategy().readObjectIDs(this, withTypes);
@@ -429,7 +429,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Selecting revision: {0}", id);
+      TRACER.format("Selecting revision: {0}, {1,date} {1,time}", id, timeStamp);
     }
 
     CDOClassImpl cdoClass = getObjectType(id);

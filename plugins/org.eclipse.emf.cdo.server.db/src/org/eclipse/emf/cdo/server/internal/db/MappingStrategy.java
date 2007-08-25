@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.util.io.CloseableIterator;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -131,7 +132,7 @@ public abstract class MappingStrategy implements IMappingStrategy
     return mapping;
   }
 
-  public Iterator<CDOID> readObjectIDs(final IDBStoreAccessor storeAccessor, final boolean withTypes)
+  public CloseableIterator<CDOID> readObjectIDs(final IDBStoreAccessor storeAccessor, final boolean withTypes)
   {
     List<CDOClass> classes = getObjectIDClasses();
     final Iterator<CDOClass> classIt = classes.iterator();

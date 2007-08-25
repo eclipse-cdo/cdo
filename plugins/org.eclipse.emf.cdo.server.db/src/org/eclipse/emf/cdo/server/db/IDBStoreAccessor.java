@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 
@@ -24,4 +25,6 @@ public interface IDBStoreAccessor extends IStoreReader, IStoreWriter
   public Connection getConnection();
 
   public Statement getStatement();
+
+  public CDOClassRef readClassRef(int classID);
 }

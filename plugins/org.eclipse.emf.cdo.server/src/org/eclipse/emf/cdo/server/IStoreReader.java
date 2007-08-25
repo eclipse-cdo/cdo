@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * @see StoreUtil#getReader()
@@ -32,9 +33,22 @@ public interface IStoreReader extends IStoreAccessor
   /**
    * Demand loads a given package proxy that has been created on startup of the
    * repository.
-   * <p>
    */
   public void readPackage(CDOPackageImpl cdoPackage);
+
+  /**
+   * Returns an iterator that iterates over all objects in the store and makes
+   * their ids available for processing. This method is supposed to be called
+   * very infrequently, for example during the recovery from a crash.
+   */
+  public Iterator<CDOID> readObjectIDs(boolean withTypes);
+
+  /**
+   * Reads the type of an object from the associated store and returns a class
+   * reference of it. This method is supposed to be called very infrequently if
+   * the {@link IStore#hasEfficientTypeLookup()} returns <code>false</code>.
+   */
+  public CDOClassRef readObjectType(CDOID id);
 
   public CDORevision readRevision(CDOID id);
 
@@ -43,6 +57,4 @@ public interface IStoreReader extends IStoreAccessor
   public CDOID readResourceID(String path);
 
   public String readResourcePath(CDOID id);
-
-  public CDOClassRef readObjectType(CDOID id);
 }

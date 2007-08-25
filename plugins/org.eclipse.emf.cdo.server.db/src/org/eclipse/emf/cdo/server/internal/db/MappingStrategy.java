@@ -11,7 +11,9 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.db.IDBStore;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
@@ -36,6 +38,8 @@ public abstract class MappingStrategy implements IMappingStrategy
   private ToOne toOne;
 
   private Map<Object, IDBTable> referenceTables = new HashMap();
+
+  private Map<Integer, CDOClassRef> classRefs = new HashMap();
 
   public MappingStrategy()
   {
@@ -119,6 +123,18 @@ public abstract class MappingStrategy implements IMappingStrategy
     }
 
     return mapping;
+  }
+
+  public CDOClassRef getClassRef(IDBStoreAccessor storeAccessor, int classID)
+  {
+    CDOClassRef classRef = classRefs.get(classID);
+    if (classRef == null)
+    {
+      classRef = storeAccessor.readClassRef(classID);
+      classRefs.put(classID, classRef);
+    }
+
+    return classRef;
   }
 
   @Override

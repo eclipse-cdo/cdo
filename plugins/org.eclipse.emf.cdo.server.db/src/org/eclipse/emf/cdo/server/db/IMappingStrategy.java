@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -39,5 +40,7 @@ public interface IMappingStrategy
 
   public IMapping getMapping(CDOClass cdoClass);
 
-  public CDOClassRef readObjectType(CDOID id);
+  public Iterator<CDOID> readObjectIDs(IDBStoreAccessor storeAccessor, boolean withTypes);
+
+  public CDOClassRef readObjectType(IDBStoreAccessor storeAccessor, CDOID id);
 }

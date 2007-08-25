@@ -45,6 +45,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -301,7 +302,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
       }
     };
 
-    String where = CDODBSchema.CLASSES_PACKAGE.getName() + " = " + ServerInfo.getDBID(cdoPackage);
+    String where = CDODBSchema.CLASSES_PACKAGE.getName() + "=" + ServerInfo.getDBID(cdoPackage);
     DBUtil.select(connection, rowHandler, where, CDODBSchema.CLASSES_ID, CDODBSchema.CLASSES_CLASSIFIER,
         CDODBSchema.CLASSES_NAME, CDODBSchema.CLASSES_ABSTRACT);
   }
@@ -319,7 +320,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
       }
     };
 
-    String where = CDODBSchema.SUPERTYPES_TYPE.getName() + " = " + classID;
+    String where = CDODBSchema.SUPERTYPES_TYPE.getName() + "=" + classID;
     DBUtil.select(connection, rowHandler, where, CDODBSchema.SUPERTYPES_SUPERTYPE_PACKAGE,
         CDODBSchema.SUPERTYPES_SUPERTYPE_CLASSIFIER);
   }
@@ -356,10 +357,25 @@ public class DBStoreAccessor implements IDBStoreAccessor
       }
     };
 
-    String where = CDODBSchema.FEATURES_CLASS.getName() + " = " + classID;
+    String where = CDODBSchema.FEATURES_CLASS.getName() + "=" + classID;
     DBUtil.select(connection, rowHandler, where, CDODBSchema.FEATURES_ID, CDODBSchema.FEATURES_FEATURE,
         CDODBSchema.FEATURES_NAME, CDODBSchema.FEATURES_TYPE, CDODBSchema.FEATURES_REFERENCE_PACKAGE,
         CDODBSchema.FEATURES_REFERENCE_CLASSIFIER, CDODBSchema.FEATURES_MANY, CDODBSchema.FEATURES_CONTAINMENT);
+  }
+
+  public String readPackageURI(int packageID)
+  {
+    String where = CDODBSchema.PACKAGES_ID.getName() + "=" + packageID;
+    Object[] uri = DBUtil.select(connection, where, CDODBSchema.PACKAGES_URI);
+    return (String)uri[0];
+  }
+
+  public CDOClassRef readClassRef(int classID)
+  {
+    String where = CDODBSchema.CLASSES_ID.getName() + "=" + classID;
+    Object[] ids = DBUtil.select(connection, where, CDODBSchema.CLASSES_CLASSIFIER, CDODBSchema.CLASSES_PACKAGE);
+    String packageURI = readPackageURI((Integer)ids[1]);
+    return new CDOClassRefImpl(packageURI, (Integer)ids[0]);
   }
 
   public void writeRevision(CDORevisionImpl revision)
@@ -372,6 +388,26 @@ public class DBStoreAccessor implements IDBStoreAccessor
     CDOClassImpl cdoClass = revision.getCDOClass();
     IMapping mapping = ClassServerInfo.getMapping(cdoClass);
     mapping.writeRevision(this, revision);
+  }
+
+  public Iterator<CDOID> readObjectIDs(boolean withTypes)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Selecting object ids");
+    }
+
+    return store.getMappingStrategy().readObjectIDs(this, withTypes);
+  }
+
+  public CDOClassRef readObjectType(CDOID id)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Selecting object type: {0}", id);
+    }
+
+    return store.getMappingStrategy().readObjectType(this, id);
   }
 
   public CDORevision readRevision(CDOID id)
@@ -414,16 +450,6 @@ public class DBStoreAccessor implements IDBStoreAccessor
   {
     // TODO Implement method DBStoreAccessor.readResourcePath()
     throw new UnsupportedOperationException("Not yet implemented");
-  }
-
-  public CDOClassRef readObjectType(CDOID id)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Selecting object type: {0}", id);
-    }
-
-    return store.getMappingStrategy().readObjectType(id);
   }
 
   /**

@@ -74,7 +74,7 @@ public class TypeManager extends Lifecycle implements ITypeManager
     CDOClassRef type = objectTypes.get(id);
     if (type == null)
     {
-      type = loadTypeFromMap(id);
+      type = persistentLoadType(id);
       if (type == null && storeReader != null)
       {
         type = storeReader.readObjectType(id);
@@ -91,12 +91,15 @@ public class TypeManager extends Lifecycle implements ITypeManager
     return type;
   }
 
-  public void registerObjectType(CDOID id, CDOClassRefImpl type)
+  public void registerObjectType(CDOID id, CDOClassRef type)
   {
     objectTypes.putIfAbsent(id, type);
+    if (persistent)
+    {
+    }
   }
 
-  private CDOClassRef loadTypeFromMap(CDOID id)
+  protected CDOClassRef persistentLoadType(CDOID id)
   {
     TypeEntry entry = null;
     if (id.isMeta())
@@ -142,6 +145,9 @@ public class TypeManager extends Lifecycle implements ITypeManager
   @Override
   protected void doDeactivate() throws Exception
   {
+    IOUtil.close(metaObjectTypeMap);
+    IOUtil.close(objectTypeMap);
+    IOUtil.close(packageURIMap);
     super.doDeactivate();
   }
 

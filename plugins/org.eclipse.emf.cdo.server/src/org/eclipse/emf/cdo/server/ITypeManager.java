@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 
@@ -23,5 +22,5 @@ public interface ITypeManager extends IRepositoryElement
 
   public CDOClassRef getObjectType(IStoreReader storeReader, CDOID id);
 
-  public void registerObjectType(CDOID id, CDOClassRefImpl type);
+  public void registerObjectType(CDOID id, CDOClassRef type);
 }

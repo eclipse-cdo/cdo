@@ -16,8 +16,9 @@ import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
 
+import org.eclipse.net4j.util.io.CloseableIterator;
+
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class VerticalMappingStrategy extends MappingStrategy
   }
 
   @Override
-  public Iterator<CDOID> readObjectIDs(IDBStoreAccessor storeAccessor, boolean withTypes)
+  public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor storeAccessor, boolean withTypes)
   {
     return null;
   }

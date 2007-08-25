@@ -38,6 +38,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.io.CloseableIterator;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -45,7 +46,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -390,7 +390,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     mapping.writeRevision(this, revision);
   }
 
-  public Iterator<CDOID> readObjectIDs(boolean withTypes)
+  public CloseableIterator<CDOID> readObjectIDs(boolean withTypes)
   {
     if (TRACER.isEnabled())
     {

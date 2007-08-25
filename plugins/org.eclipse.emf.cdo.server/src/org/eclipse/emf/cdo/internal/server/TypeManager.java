@@ -49,6 +49,9 @@ public class TypeManager extends QueueWorker<ObjectEntry> implements ITypeManage
 
   private ObjectTypeMap objectTypeMap;
 
+  /**
+   * TODO Needed?
+   */
   private ObjectTypeMap metaObjectTypeMap;
 
   private int nextPackageID;

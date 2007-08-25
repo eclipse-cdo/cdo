@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -19,7 +20,10 @@ import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.IDBTable;
 
+import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -125,6 +129,35 @@ public abstract class MappingStrategy implements IMappingStrategy
     return mapping;
   }
 
+  public Iterator<CDOID> readObjectIDs(IDBStoreAccessor storeAccessor, boolean withTypes)
+  {
+    List<CDOClass> classes = getObjectIDClasses();
+    final Iterator<CDOClass> classIt = classes.iterator();
+    return new ObjectIDIterator(this, storeAccessor, withTypes)
+    {
+      @Override
+      protected ResultSet getNextResultSet()
+      {
+        while (classIt.hasNext())
+        {
+          CDOClass cdoClass = classIt.next();
+          ValueMapping mapping = (ValueMapping)ClassServerInfo.getMapping(cdoClass);
+          if (mapping != null)
+          {
+            IDBTable table = mapping.getTable();
+            if (table != null)
+            {
+
+              return null;
+            }
+          }
+        }
+
+        return null;
+      }
+    };
+  }
+
   public CDOClassRef getClassRef(IDBStoreAccessor storeAccessor, int classID)
   {
     CDOClassRef classRef = classRefs.get(classID);
@@ -144,4 +177,6 @@ public abstract class MappingStrategy implements IMappingStrategy
   }
 
   protected abstract IMapping createMapping(CDOClass cdoClass);
+
+  protected abstract List<CDOClass> getObjectIDClasses();
 }

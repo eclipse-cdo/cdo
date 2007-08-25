@@ -13,11 +13,13 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
 
-import java.sql.ResultSet;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -38,18 +40,6 @@ public class HorizontalMappingStrategy extends MappingStrategy
     return false;
   }
 
-  public Iterator<CDOID> readObjectIDs(IDBStoreAccessor storeAccessor, boolean withTypes)
-  {
-    return new ObjectIDIterator(this, storeAccessor, withTypes)
-    {
-      @Override
-      protected ResultSet getNextResultSet()
-      {
-        return null;
-      }
-    };
-  }
-
   public CDOClassRef readObjectType(IDBStoreAccessor storeAccessor, CDOID id)
   {
     return null;
@@ -64,5 +54,21 @@ public class HorizontalMappingStrategy extends MappingStrategy
     }
 
     return new HorizontalMapping(this, cdoClass);
+  }
+
+  @Override
+  protected List<CDOClass> getObjectIDClasses()
+  {
+    List<CDOClass> result = new ArrayList();
+    IPackageManager packageManager = getStore().getRepository().getPackageManager();
+    for (CDOPackage cdoPackage : packageManager.getPackages())
+    {
+      for (CDOClass cdoClass : cdoPackage.getClasses())
+      {
+        result.add(cdoClass);
+      }
+    }
+
+    return result;
   }
 }

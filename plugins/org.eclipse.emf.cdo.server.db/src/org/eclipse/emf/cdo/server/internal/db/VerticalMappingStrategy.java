@@ -16,7 +16,9 @@ import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
 
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -40,6 +42,7 @@ public class VerticalMappingStrategy extends MappingStrategy
     return true;
   }
 
+  @Override
   public Iterator<CDOID> readObjectIDs(IDBStoreAccessor storeAccessor, boolean withTypes)
   {
     return null;
@@ -64,5 +67,11 @@ public class VerticalMappingStrategy extends MappingStrategy
   protected IMapping createMapping(CDOClass cdoClass)
   {
     return new VerticalMapping(this, cdoClass);
+  }
+
+  @Override
+  protected List<CDOClass> getObjectIDClasses()
+  {
+    return Collections.singletonList(rootMapping.getCDOClass());
   }
 }

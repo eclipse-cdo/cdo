@@ -479,7 +479,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
   {
     IRepository repository = store.getRepository();
     IPackageManager packageManager = repository.getPackageManager();
-    CDOClassRef type = repository.getObjectType(this, id);
+    CDOClassRef type = repository.getTypeManager().getObjectType(this, id);
     return (CDOClassImpl)type.resolve(packageManager);
   }
 

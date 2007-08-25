@@ -12,26 +12,17 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
-import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IStoreReader;
 
 import org.eclipse.net4j.internal.util.container.Container;
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import java.io.File;
 import java.text.MessageFormat;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Eike Stepper
@@ -48,6 +39,8 @@ public class Repository extends Container implements IRepository
 
   private String uuid;
 
+  private TypeManager typeManager = new TypeManager(this);
+
   private PackageManager packageManager = new PackageManager(this);
 
   private SessionManager sessionManager = new SessionManager(this);
@@ -61,12 +54,6 @@ public class Repository extends Container implements IRepository
   private long nextOIDValue = INITIAL_OID_VALUE;
 
   private long nextMetaIDValue = INITIAL_META_ID_VALUE;
-
-  private ConcurrentMap<CDOID, CDOClassRef> objectTypes = new ConcurrentHashMap();
-
-  private ObjectTypeMap objectTypeMap;
-
-  private ObjectTypeMap metaObjectTypeMap;
 
   public Repository(String name, IStore store)
   {
@@ -84,7 +71,7 @@ public class Repository extends Container implements IRepository
     this.store = store;
 
     uuid = UUID.randomUUID().toString();
-    elements = new Object[] { packageManager, sessionManager, resourceManager, revisionManager, store };
+    elements = new Object[] { packageManager, sessionManager, resourceManager, revisionManager, typeManager, store };
   }
 
   public String getName()
@@ -100,6 +87,11 @@ public class Repository extends Container implements IRepository
   public String getUUID()
   {
     return uuid;
+  }
+
+  public TypeManager getTypeManager()
+  {
+    return typeManager;
   }
 
   public PackageManager getPackageManager()
@@ -149,45 +141,10 @@ public class Repository extends Container implements IRepository
     return id;
   }
 
-  public CDOClassRef getObjectType(IStoreReader storeReader, CDOID id)
-  {
-    CDOClassRef type = objectTypes.get(id);
-    if (type == null)
-    {
-      type = storeReader.readObjectType(id);
-      if (type == null)
-      {
-        throw new ImplementationError("type == null");
-      }
-
-      objectTypes.put(id, type);
-    }
-
-    return type;
-  }
-
-  public void registerObjectType(CDOID id, CDOClassRefImpl type)
-  {
-    objectTypes.putIfAbsent(id, type);
-  }
-
   @Override
   public String toString()
   {
     return MessageFormat.format("Repository[{0}, {1}]", name, uuid);
-  }
-
-  protected void initTypeMaps()
-  {
-    if (!store.hasEfficientTypeLookup())
-    {
-      File stateFolder = new File(OM.BUNDLE.getStateLocation());
-      File repositoryFolder = new File(stateFolder, uuid);
-      IOUtil.mkdirs(repositoryFolder);
-
-      objectTypeMap = new ObjectTypeMap(new File(repositoryFolder, "object.types"));
-      metaObjectTypeMap = new ObjectTypeMap(new File(repositoryFolder, "metaobject.types"));
-    }
   }
 
   @Override
@@ -195,8 +152,8 @@ public class Repository extends Container implements IRepository
   {
     super.doActivate();
     LifecycleUtil.activate(store);
-    initTypeMaps();
-
+    typeManager.setPersistent(!store.hasEfficientTypeLookup());
+    typeManager.activate();
     packageManager.activate();
     sessionManager.activate();
     resourceManager.activate();
@@ -210,9 +167,7 @@ public class Repository extends Container implements IRepository
     resourceManager.deactivate();
     sessionManager.deactivate();
     packageManager.deactivate();
-
-    IOUtil.close(metaObjectTypeMap);
-    IOUtil.close(objectTypeMap);
+    typeManager.deactivate();
     LifecycleUtil.deactivate(store);
     super.doDeactivate();
   }

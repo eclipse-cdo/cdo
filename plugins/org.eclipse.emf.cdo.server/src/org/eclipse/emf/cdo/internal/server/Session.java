@@ -176,7 +176,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
     knownObjects.add(id);
     Repository repository = sessionManager.getRepository();
-    CDOClassRef type = repository.getObjectType(StoreUtil.getReader(), id);
+    CDOClassRef type = repository.getTypeManager().getObjectType(StoreUtil.getReader(), id);
     return CDOIDImpl.create(id.getValue(), type);
   }
 

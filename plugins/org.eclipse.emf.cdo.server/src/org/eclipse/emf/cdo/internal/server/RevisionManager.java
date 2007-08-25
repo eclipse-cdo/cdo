@@ -51,7 +51,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   {
     IStoreReader storeReader = StoreUtil.getReader();
     CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevision(id);
-    repository.registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
+    repository.getTypeManager().registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
     return revision;
   }
 
@@ -60,7 +60,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   {
     IStoreReader storeReader = StoreUtil.getReader();
     CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevision(id, timeStamp);
-    repository.registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
+    repository.getTypeManager().registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
     return revision;
   }
 
@@ -83,7 +83,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
 
     public void phase2(IStoreWriter storeWriter)
     {
-      repository.registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
+      repository.getTypeManager().registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
       addRevision(revision);
       if (revision.isResource())
       {

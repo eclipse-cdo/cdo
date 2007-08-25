@@ -10,7 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.db.IMapping;
 
 /**
@@ -33,6 +35,11 @@ public class VerticalMappingStrategy extends MappingStrategy
   public boolean hasEfficientTypeLookup()
   {
     return true;
+  }
+
+  public CDOClassRef readObjectType(CDOID id)
+  {
+    return null;
   }
 
   public RootMapping getRootMapping()

@@ -381,10 +381,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
       TRACER.format("Selecting revision: {0}", id);
     }
 
-    IRepository repository = store.getRepository();
-    IPackageManager packageManager = repository.getPackageManager();
-    CDOClassRef type = repository.getObjectType(this, id);
-    CDOClassImpl cdoClass = (CDOClassImpl)type.resolve(packageManager);
+    CDOClassImpl cdoClass = getObjectType(id);
     CDORevisionImpl revision = new CDORevisionImpl(cdoClass, id);
 
     IMapping mapping = ClassServerInfo.getMapping(cdoClass);
@@ -394,8 +391,17 @@ public class DBStoreAccessor implements IDBStoreAccessor
 
   public CDORevision readRevision(CDOID id, long timeStamp)
   {
-    // TODO Implement method DBStoreAccessor.enclosing_method()
-    throw new UnsupportedOperationException("Not yet implemented");
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Selecting revision: {0}", id);
+    }
+
+    CDOClassImpl cdoClass = getObjectType(id);
+    CDORevisionImpl revision = new CDORevisionImpl(cdoClass, id);
+
+    IMapping mapping = ClassServerInfo.getMapping(cdoClass);
+    mapping.readRevision(this, revision, timeStamp);
+    return revision;
   }
 
   public CDOID readResourceID(String path)
@@ -412,8 +418,12 @@ public class DBStoreAccessor implements IDBStoreAccessor
 
   public CDOClassRef readObjectType(CDOID id)
   {
-    // TODO Implement method DBStoreAccessor.readObjectType()
-    throw new UnsupportedOperationException("Not yet implemented");
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Selecting object type: {0}", id);
+    }
+
+    return store.getMappingStrategy().readObjectType(id);
   }
 
   /**
@@ -437,6 +447,14 @@ public class DBStoreAccessor implements IDBStoreAccessor
     }
 
     throw new IllegalArgumentException("Not a boolean value: " + value);
+  }
+
+  protected CDOClassImpl getObjectType(CDOID id)
+  {
+    IRepository repository = store.getRepository();
+    IPackageManager packageManager = repository.getPackageManager();
+    CDOClassRef type = repository.getObjectType(this, id);
+    return (CDOClassImpl)type.resolve(packageManager);
   }
 
   protected Set<IDBTable> mapPackages(CDOPackageImpl... cdoPackages)

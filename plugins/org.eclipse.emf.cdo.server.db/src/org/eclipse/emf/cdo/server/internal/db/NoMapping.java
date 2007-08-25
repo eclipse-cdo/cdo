@@ -54,4 +54,8 @@ public class NoMapping implements IMapping
   public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
   }
+
+  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp)
+  {
+  }
 }

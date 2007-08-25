@@ -48,6 +48,12 @@ public class RootMapping extends Mapping
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
+  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp)
+  {
+    // TODO Implement method RootMapping.readRevision()
+    throw new UnsupportedOperationException("Not yet implemented");
+  }
+
   private static CDOObjectClass getRootClass(VerticalMappingStrategy mappingStrategy)
   {
     return mappingStrategy.getStore().getRepository().getPackageManager().getCDOCorePackage().getCDOObjectClass();

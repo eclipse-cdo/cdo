@@ -10,7 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 
 import java.util.Map;
 
@@ -36,4 +38,6 @@ public interface IMappingStrategy
   public void setProperties(Map<String, String> properties);
 
   public IMapping getMapping(CDOClass cdoClass);
+
+  public CDOClassRef readObjectType(CDOID id);
 }

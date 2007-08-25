@@ -31,4 +31,6 @@ public interface IMapping
   public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
 
   public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
+
+  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp);
 }

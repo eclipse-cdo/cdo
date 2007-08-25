@@ -29,6 +29,8 @@ import java.util.List;
  */
 public abstract class ValueMapping extends Mapping
 {
+  private static final long NO_TIMESTAMP = 0L;
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, ValueMapping.class);
 
   private List<IAttributeMapping> attributeMappings;
@@ -68,9 +70,14 @@ public abstract class ValueMapping extends Mapping
 
   public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
+    readRevision(storeAccessor, revision, NO_TIMESTAMP);
+  }
+
+  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp)
+  {
     if (attributeMappings != null)
     {
-      readAttributes(storeAccessor, revision);
+      readAttributes(storeAccessor, revision, timeStamp);
     }
 
     if (referenceMappings != null)
@@ -105,7 +112,7 @@ public abstract class ValueMapping extends Mapping
     }
   }
 
-  protected void readAttributes(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  protected void readAttributes(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp)
   {
     IDBField[] fields = getTable().getFields();
     StringBuilder builder = new StringBuilder();

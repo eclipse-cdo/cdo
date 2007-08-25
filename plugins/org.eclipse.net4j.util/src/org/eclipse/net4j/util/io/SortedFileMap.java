@@ -82,6 +82,11 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
     return index * entrySize;
   }
 
+  public long getValuePosition(long index)
+  {
+    return getPosition(index) + getKeySize();
+  }
+
   public K getMaxKey()
   {
     if (entryCount == 0)
@@ -110,7 +115,7 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
   {
     try
     {
-      long pos = getPosition(index) + getKeySize();
+      long pos = getValuePosition(index);
       randomAccessFile.seek(pos);
       return readValue(input);
     }
@@ -145,7 +150,8 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
       long index = search(key);
       if (index >= 0)
       {
-        long pos = randomAccessFile.getFilePointer();
+        long pos = getValuePosition(index);
+        randomAccessFile.seek(pos);
         V oldValue = readValue(input);
         randomAccessFile.seek(pos);
         writeValue(output, value);
@@ -155,18 +161,21 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
       index = -index - 1;
       for (long i = entryCount; i > index; --i)
       {
-        randomAccessFile.seek((i - 1) * entrySize);
+        randomAccessFile.seek(getPosition(i - 1));
         K k = readKey(input);
+        randomAccessFile.seek(getValuePosition(i - 1));
         V v = readValue(input);
 
-        randomAccessFile.seek(i * entrySize);
+        randomAccessFile.seek(getPosition(i));
         writeKey(output, k);
+        randomAccessFile.seek(getValuePosition(i));
         writeValue(output, v);
       }
 
       ++entryCount;
       randomAccessFile.seek(getPosition(index));
       writeKey(output, key);
+      randomAccessFile.seek(getValuePosition(index));
       writeValue(output, value);
       return null;
     }
@@ -188,17 +197,24 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
     while (low <= high)
     {
       long mid = low + high >> 1;
-      randomAccessFile.seek(mid * entrySize);
+      randomAccessFile.seek(getPosition(mid));
       Comparable midVal = readKey(input);
       int cmp = midVal.compareTo(key);
 
       if (cmp < 0)
+      {
         low = mid + 1;
+      }
       else if (cmp > 0)
+      {
         high = mid - 1;
+      }
       else
+      {
         return mid; // key found
+      }
     }
+
     return -(low + 1); // key not found.
   }
 

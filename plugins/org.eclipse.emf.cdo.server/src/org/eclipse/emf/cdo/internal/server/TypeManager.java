@@ -148,7 +148,14 @@ public class TypeManager extends QueueWorker<ObjectEntry> implements ITypeManage
     }
 
     TypeEntry entry = new TypeEntry(classifierID, packageID);
-    objectTypeMap.put(id, entry);
+    if (id.isMeta())
+    {
+      metaObjectTypeMap.put(id, entry);
+    }
+    else
+    {
+      objectTypeMap.put(id, entry);
+    }
   }
 
   @Override

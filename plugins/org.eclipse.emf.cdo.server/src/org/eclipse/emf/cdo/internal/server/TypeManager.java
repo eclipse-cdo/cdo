@@ -300,9 +300,9 @@ public class TypeManager extends QueueWorker<ObjectEntry> implements ITypeManage
     protected void writeKey(ExtendedDataOutput out, String key) throws IOException
     {
       byte[] bytes = key.getBytes();
-      if (bytes.length + 4 > getValueSize())
+      if (bytes.length + 4 > getKeySize())
       {
-        throw new IllegalArgumentException("Key size of " + getValueSize() + " exceeded: " + key);
+        throw new IllegalArgumentException("Key size of " + getKeySize() + " exceeded: " + key);
       }
 
       ExtendedIOUtil.writeByteArray(out, bytes);

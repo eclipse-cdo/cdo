@@ -30,6 +30,11 @@ public class VerticalMappingStrategy extends MappingStrategy
     return "vertical";
   }
 
+  public boolean hasEfficientTypeLookup()
+  {
+    return true;
+  }
+
   public RootMapping getRootMapping()
   {
     if (rootMapping == null)

@@ -12,7 +12,6 @@ import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBTable;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,15 +56,16 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
   {
     int idx = 0;
     long source = revision.getID().getValue();
-    CDOFeature feature = getFeature();
-    List list = revision.getList(feature);
-    for (Object value : list)
+    int version = revision.getVersion();
+    for (Object element : revision.getList(getFeature()))
     {
-      long target = ((CDOID)value).getValue();
+      long target = ((CDOID)element).getValue();
       StringBuilder builder = new StringBuilder(constantPrefix);
-      builder.append(idx++);
-      builder.append(", ");
       builder.append(source);
+      builder.append(", ");
+      builder.append(version);
+      builder.append(", ");
+      builder.append(idx++);
       builder.append(", ");
       builder.append(target);
       builder.append(")");
@@ -125,8 +125,9 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
       table.addField("cdo_feature", DBType.INTEGER);
     }
 
-    table.addField("cdo_idx", DBType.INTEGER);
     table.addField("cdo_source", DBType.BIGINT);
+    table.addField("cdo_version", DBType.INTEGER);
+    table.addField("cdo_idx", DBType.INTEGER);
     table.addField("cdo_target", DBType.BIGINT);
     return table;
   }

@@ -87,30 +87,15 @@ public abstract class Mapping implements IMapping
     }
   }
 
-  @Deprecated
-  protected void appendRevisionFields(StringBuilder builder, CDORevisionImpl revision, boolean full)
-  {
-    IDBField[] fields = table.getFields();
-    builder.append(fields[0].getName());
-    if (full)
-    {
-      for (int i = 1; i < 8; i++)
-      {
-        builder.append(", ");
-        builder.append(fields[i].getName());
-      }
-    }
-  }
-
   protected void appendRevisionInfos(StringBuilder builder, CDORevisionImpl revision, boolean full)
   {
     builder.append(revision.getID().getValue());
+    builder.append(", ");
+    builder.append(revision.getVersion());
     if (full)
     {
       builder.append(", ");
       builder.append(ServerInfo.getDBID(revision.getCDOClass()));
-      builder.append(", ");
-      builder.append(revision.getVersion());
       builder.append(", ");
       builder.append(revision.getCreated());
       builder.append(", ");

@@ -35,6 +35,12 @@ public interface IStore extends IRepositoryElement
   public boolean hasBranchingSupport();
 
   /**
+   * @return <code>true</code> if this store supports the efficient lookup of
+   *         object types, <code>false</code> otherwise.
+   */
+  public boolean hasEfficientTypeLookup();
+
+  /**
    * Returns a reader that can be used to read from this store in the context of
    * the given session.
    * 

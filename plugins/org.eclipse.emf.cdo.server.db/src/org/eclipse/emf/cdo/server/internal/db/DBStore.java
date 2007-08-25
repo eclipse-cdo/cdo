@@ -99,6 +99,11 @@ public class DBStore extends Store implements IDBStore
     return false;
   }
 
+  public boolean hasEfficientTypeLookup()
+  {
+    return mappingStrategy.hasEfficientTypeLookup();
+  }
+
   public DBStoreAccessor getReader(ISession session) throws DBException
   {
     return new DBStoreAccessor(this, session);

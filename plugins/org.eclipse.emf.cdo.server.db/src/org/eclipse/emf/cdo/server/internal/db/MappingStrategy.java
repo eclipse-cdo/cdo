@@ -18,9 +18,11 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
+import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBTable;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -129,7 +131,7 @@ public abstract class MappingStrategy implements IMappingStrategy
     return mapping;
   }
 
-  public Iterator<CDOID> readObjectIDs(IDBStoreAccessor storeAccessor, boolean withTypes)
+  public Iterator<CDOID> readObjectIDs(final IDBStoreAccessor storeAccessor, final boolean withTypes)
   {
     List<CDOClass> classes = getObjectIDClasses();
     final Iterator<CDOClass> classIt = classes.iterator();
@@ -147,8 +149,27 @@ public abstract class MappingStrategy implements IMappingStrategy
             IDBTable table = mapping.getTable();
             if (table != null)
             {
+              StringBuilder builder = new StringBuilder();
+              builder.append("SELECT DISTINCT ");
+              builder.append(Mapping.FIELD_NAME_ID);
+              if (withTypes)
+              {
+                builder.append(", ");
+                builder.append(Mapping.FIELD_NAME_CLASS);
+              }
 
-              return null;
+              builder.append(" FROM ");
+              builder.append(table);
+              String sql = builder.toString();
+
+              try
+              {
+                return storeAccessor.getStatement().executeQuery(sql);
+              }
+              catch (SQLException ex)
+              {
+                throw new DBException(ex);
+              }
             }
           }
         }

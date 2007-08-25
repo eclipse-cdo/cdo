@@ -19,6 +19,16 @@ import java.util.Map;
  */
 public class ReferenceMapping extends FeatureMapping implements IReferenceMapping
 {
+  public static final String FIELD_NAME_FEATURE = "cdo_feature";
+
+  public static final String FIELD_NAME_SOURCE = "cdo_source";
+
+  public static final String FIELD_NAME_VERSION = "cdo_version";
+
+  public static final String FIELD_NAME_IDX = "cdo_idx";
+
+  public static final String FIELD_NAME_TARGET = "cdo_target";
+
   private IDBTable table;
 
   private ToMany toMany;
@@ -122,13 +132,13 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     IDBTable table = getValueMapping().addTable(tableName);
     if (withFeature)
     {
-      table.addField("cdo_feature", DBType.INTEGER);
+      table.addField(FIELD_NAME_FEATURE, DBType.INTEGER);
     }
 
-    table.addField("cdo_source", DBType.BIGINT);
-    table.addField("cdo_version", DBType.INTEGER);
-    table.addField("cdo_idx", DBType.INTEGER);
-    table.addField("cdo_target", DBType.BIGINT);
+    table.addField(FIELD_NAME_SOURCE, DBType.BIGINT);
+    table.addField(FIELD_NAME_VERSION, DBType.INTEGER);
+    table.addField(FIELD_NAME_IDX, DBType.INTEGER);
+    table.addField(FIELD_NAME_TARGET, DBType.BIGINT);
     return table;
   }
 

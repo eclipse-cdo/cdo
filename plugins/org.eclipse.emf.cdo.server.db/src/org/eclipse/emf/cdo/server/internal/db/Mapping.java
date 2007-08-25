@@ -35,6 +35,22 @@ import java.util.Set;
  */
 public abstract class Mapping implements IMapping
 {
+  public static final String FIELD_NAME_ID = "cdo_id";
+
+  public static final String FIELD_NAME_VERSION = "cdo_version";
+
+  public static final String FIELD_NAME_CLASS = "cdo_class";
+
+  public static final String FIELD_NAME_CREATED = "cdo_created";
+
+  public static final String FIELD_NAME_REVISED = "cdo_revised";
+
+  public static final String FIELD_NAME_RESOURCE = "cdo_resource";
+
+  public static final String FIELD_NAME_CONTAINER = "cdo_container";
+
+  public static final String FIELD_NAME_FEATURE = "cdo_feature";
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, Mapping.class);
 
   private MappingStrategy mappingStrategy;
@@ -74,16 +90,16 @@ public abstract class Mapping implements IMapping
 
   protected void initTable(IDBTable table, boolean full)
   {
-    table.addField("cdo_id", DBType.BIGINT);
-    table.addField("cdo_version", DBType.INTEGER);
+    table.addField(FIELD_NAME_ID, DBType.BIGINT);
+    table.addField(FIELD_NAME_VERSION, DBType.INTEGER);
     if (full)
     {
-      table.addField("cdo_class", DBType.INTEGER);
-      table.addField("cdo_created", DBType.BIGINT);
-      table.addField("cdo_revised", DBType.BIGINT);
-      table.addField("cdo_resource", DBType.BIGINT);
-      table.addField("cdo_container", DBType.BIGINT);
-      table.addField("cdo_feature", DBType.INTEGER);
+      table.addField(FIELD_NAME_CLASS, DBType.INTEGER);
+      table.addField(FIELD_NAME_CREATED, DBType.BIGINT);
+      table.addField(FIELD_NAME_REVISED, DBType.BIGINT);
+      table.addField(FIELD_NAME_RESOURCE, DBType.BIGINT);
+      table.addField(FIELD_NAME_CONTAINER, DBType.BIGINT);
+      table.addField(FIELD_NAME_FEATURE, DBType.INTEGER);
     }
   }
 

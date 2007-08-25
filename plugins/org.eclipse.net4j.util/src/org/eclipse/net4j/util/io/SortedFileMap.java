@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
+import java.io.Closeable;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.File;
@@ -19,7 +20,7 @@ import java.io.RandomAccessFile;
 /**
  * @author Eike Stepper
  */
-public abstract class SortedFileMap<K extends Comparable, V>
+public abstract class SortedFileMap<K extends Comparable, V> implements Closeable
 {
   private File file;
 
@@ -45,6 +46,11 @@ public abstract class SortedFileMap<K extends Comparable, V>
     {
       throw new IORuntimeException(ex);
     }
+  }
+
+  public void close() throws IOException
+  {
+    IOUtil.close(randomAccessFile);
   }
 
   public File getFile()

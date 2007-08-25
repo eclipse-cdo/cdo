@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.tests;
 
 import org.eclipse.net4j.util.io.ExtendedIOUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.SortedFileMap;
 
 import java.io.DataInput;
@@ -25,21 +26,26 @@ public class SortedFileMapTest extends AbstractOMTest
 {
   public void testMap() throws Exception
   {
-    File file = new File("SortedFileMapTest.dat");
-    SortedFileMap<Integer, String> map = new TestMap(file);
+    File file = new File("testMap.dat");
+    SortedFileMap<Integer, String> map = null;
 
     try
     {
-      map.put(1, "Eike");
-      map.put(3, "René");
-      map.put(7, "Birte");
-      map.put(9, "Mama");
-      map.put(11, "Papa");
-      map.put(15, "Julchen");
+      map = new TestMap(file);
+      for (int i = 0; i < 500; i++)
+      {
+        map.put(i, "Value " + i);
+      }
+
+      for (int i = 0; i < 500; i++)
+      {
+        String value = map.get(i);
+        System.out.println(value);
+      }
     }
     finally
     {
-      map.close();
+      IOUtil.close(map);
     }
   }
 

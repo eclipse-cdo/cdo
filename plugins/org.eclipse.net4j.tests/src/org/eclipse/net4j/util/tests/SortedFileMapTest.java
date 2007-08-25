@@ -27,6 +27,11 @@ public class SortedFileMapTest extends AbstractOMTest
   public void testMap() throws Exception
   {
     File file = new File("testMap.dat");
+    if (file.exists())
+    {
+      file.delete();
+    }
+
     SortedFileMap<Integer, String> map = null;
 
     try

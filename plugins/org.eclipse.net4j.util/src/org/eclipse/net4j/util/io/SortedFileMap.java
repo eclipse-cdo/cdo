@@ -101,9 +101,9 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
     try
     {
       long index = search(key);
-      long pos = randomAccessFile.getFilePointer();
       if (index >= 0)
       {
+        long pos = randomAccessFile.getFilePointer();
         V oldValue = readValue(randomAccessFile);
         randomAccessFile.seek(pos);
         writeValue(randomAccessFile, value);
@@ -111,7 +111,7 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
       }
 
       index = -index - 1;
-      for (long i = entryCount; i >= index; --i)
+      for (long i = entryCount; i > index; --i)
       {
         randomAccessFile.seek((i - 1) * entrySize);
         K k = readKey(randomAccessFile);
@@ -122,7 +122,8 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
         writeValue(randomAccessFile, v);
       }
 
-      randomAccessFile.seek(pos);
+      ++entryCount;
+      randomAccessFile.seek(getPosition(index));
       writeKey(randomAccessFile, key);
       writeValue(randomAccessFile, value);
       return null;

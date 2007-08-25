@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
@@ -23,8 +24,10 @@ import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import java.io.File;
 import java.text.MessageFormat;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -60,6 +63,10 @@ public class Repository extends Container implements IRepository
   private long nextMetaIDValue = INITIAL_META_ID_VALUE;
 
   private ConcurrentMap<CDOID, CDOClassRef> objectTypes = new ConcurrentHashMap();
+
+  private ObjectTypeMap objectTypeMap;
+
+  private ObjectTypeMap metaObjectTypeMap;
 
   public Repository(String name, IStore store)
   {
@@ -170,11 +177,26 @@ public class Repository extends Container implements IRepository
     return MessageFormat.format("Repository[{0}, {1}]", name, uuid);
   }
 
+  protected void initTypeMaps()
+  {
+    if (!store.hasEfficientTypeLookup())
+    {
+      File stateFolder = new File(OM.BUNDLE.getStateLocation());
+      File repositoryFolder = new File(stateFolder, uuid);
+      IOUtil.mkdirs(repositoryFolder);
+
+      objectTypeMap = new ObjectTypeMap(new File(repositoryFolder, "object.types"));
+      metaObjectTypeMap = new ObjectTypeMap(new File(repositoryFolder, "metaobject.types"));
+    }
+  }
+
   @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
     LifecycleUtil.activate(store);
+    initTypeMaps();
+
     packageManager.activate();
     sessionManager.activate();
     resourceManager.activate();
@@ -188,6 +210,9 @@ public class Repository extends Container implements IRepository
     resourceManager.deactivate();
     sessionManager.deactivate();
     packageManager.deactivate();
+
+    IOUtil.close(metaObjectTypeMap);
+    IOUtil.close(objectTypeMap);
     LifecycleUtil.deactivate(store);
     super.doDeactivate();
   }

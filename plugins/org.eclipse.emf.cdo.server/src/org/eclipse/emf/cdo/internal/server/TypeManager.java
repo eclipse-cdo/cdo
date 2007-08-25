@@ -100,6 +100,7 @@ public class TypeManager extends QueueWorker<ObjectEntry> implements ITypeManage
     objectTypes.putIfAbsent(id, type);
     if (persistent)
     {
+      addWork(new ObjectEntry(id, type));
     }
   }
 

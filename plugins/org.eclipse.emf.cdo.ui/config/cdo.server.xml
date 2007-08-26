@@ -2,6 +2,9 @@
 <repositories>
 
 	<repository name="repo1">
+		<property name="supportingAudits" value="true"/>
+		<property name="verifyingRevisions" value="true"/>
+	
 		<store type="db">
 			<!-- mode: OFF | EXPRESS | NORMAL | GUARANTEED -->
 			<invalidationStrategy mode="EXPRESS"/>
@@ -23,7 +26,7 @@
 			
 			<dataSource 
 				driverClass="org.apache.derby.jdbc.EmbeddedDataSource" 
-				databaseName="C:/temp/cdodb1"
+				databaseName="/temp/cdodb1"
 				createDatabase="create"/>
 		</store>
 	</repository>

@@ -98,6 +98,7 @@ public class Repository extends Container implements IRepository
 
   public String getUUID()
   {
+    // TODO Support overriding UUIDs through setProperties()
     return uuid;
   }
 

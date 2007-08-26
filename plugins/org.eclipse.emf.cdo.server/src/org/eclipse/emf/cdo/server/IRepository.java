@@ -25,6 +25,10 @@ public interface IRepository extends IContainer
 
   public String getUUID();
 
+  public boolean isSupportingAudits();
+
+  public boolean isVerifyingRevisions();
+
   public TypeManager getTypeManager();
 
   public IPackageManager getPackageManager();

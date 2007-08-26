@@ -66,7 +66,7 @@ public class DBStoreFactory implements IStoreFactory
     Element mappingStrategyConfig = (Element)mappingStrategyConfigs.item(0);
     String mappingStrategyType = mappingStrategyConfig.getAttribute("type");
     IMappingStrategy mappingStrategy = CDODBUtil.createMappingStrategy(mappingStrategyType);
-    Map<String, String> properties = RepositoryConfigurator.getProperties(mappingStrategyConfig);
+    Map<String, String> properties = RepositoryConfigurator.getProperties(mappingStrategyConfig, 1);
     mappingStrategy.setProperties(properties);
     return mappingStrategy;
   }

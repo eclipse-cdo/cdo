@@ -67,15 +67,12 @@ public class RepositoryConfigurator
   protected IRepository configureRepository(Element repositoryConfig) throws CoreException
   {
     String repositoryName = repositoryConfig.getAttribute("name");
-    NodeList storeConfigs = repositoryConfig.getElementsByTagName("store");
-    if (storeConfigs.getLength() != 1)
-    {
-      throw new IllegalStateException("Exactly one store must be configured for repository " + repositoryName);
-    }
-
-    Element storeConfig = (Element)storeConfigs.item(0);
+    Element storeConfig = getStoreConfig(repositoryConfig);
     IStore store = configureStore(storeConfig);
+    Map<String, String> properties = RepositoryConfigurator.getProperties(repositoryConfig, 1);
+
     Repository repository = new Repository(repositoryName, store);
+    repository.setProperties(properties);
     store.setRepository(repository);
     return repository;
   }
@@ -114,14 +111,26 @@ public class RepositoryConfigurator
     return document;
   }
 
-  public static Map<String, String> getProperties(Element element)
+  protected Element getStoreConfig(Element repositoryConfig)
+  {
+    NodeList storeConfigs = repositoryConfig.getElementsByTagName("store");
+    if (storeConfigs.getLength() != 1)
+    {
+      String repositoryName = repositoryConfig.getAttribute("name");
+      throw new IllegalStateException("Exactly one store must be configured for repository " + repositoryName);
+    }
+
+    return (Element)storeConfigs.item(0);
+  }
+
+  public static Map<String, String> getProperties(Element element, int levels)
   {
     Map<String, String> properties = new HashMap();
-    collectProperties(element, "", properties);
+    collectProperties(element, "", properties, levels);
     return properties;
   }
 
-  private static void collectProperties(Element element, String prefix, Map<String, String> properties)
+  private static void collectProperties(Element element, String prefix, Map<String, String> properties, int levels)
   {
     if ("property".equals(element.getNodeName()))
     {
@@ -131,13 +140,16 @@ public class RepositoryConfigurator
       prefix += name + ".";
     }
 
-    NodeList childNodes = element.getChildNodes();
-    for (int i = 0; i < childNodes.getLength(); i++)
+    if (levels > 0)
     {
-      Node childNode = childNodes.item(i);
-      if (childNode instanceof Element)
+      NodeList childNodes = element.getChildNodes();
+      for (int i = 0; i < childNodes.getLength(); i++)
       {
-        collectProperties((Element)childNode, prefix, properties);
+        Node childNode = childNodes.item(i);
+        if (childNode instanceof Element)
+        {
+          collectProperties((Element)childNode, prefix, properties, levels - 1);
+        }
       }
     }
   }

@@ -22,6 +22,8 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -29,6 +31,10 @@ import java.util.UUID;
  */
 public class Repository extends Container implements IRepository
 {
+  public static final String PROP_SUPPORTING_AUDITS = "supportingAudits";
+
+  public static final String PROP_VERIFYING_REVISIONS = "verifyingRevisions";
+
   private static final long INITIAL_OID_VALUE = 2;
 
   private static final long INITIAL_META_ID_VALUE = 1;
@@ -38,6 +44,12 @@ public class Repository extends Container implements IRepository
   private IStore store;
 
   private String uuid;
+
+  private Map<String, String> properties;
+
+  private Boolean supportingAudits;
+
+  private Boolean verifyingRevisions;
 
   private TypeManager typeManager = new TypeManager(this);
 
@@ -87,6 +99,43 @@ public class Repository extends Container implements IRepository
   public String getUUID()
   {
     return uuid;
+  }
+
+  public Map<String, String> getProperties()
+  {
+    if (properties == null)
+    {
+      properties = new HashMap();
+    }
+
+    return properties;
+  }
+
+  public void setProperties(Map<String, String> properties)
+  {
+    this.properties = properties;
+  }
+
+  public boolean isSupportingAudits()
+  {
+    if (supportingAudits == null)
+    {
+      String value = getProperties().get(PROP_SUPPORTING_AUDITS);
+      supportingAudits = value == null ? false : Boolean.valueOf(value);
+    }
+
+    return supportingAudits;
+  }
+
+  public boolean isVerifyingRevisions()
+  {
+    if (verifyingRevisions == null)
+    {
+      String value = getProperties().get(PROP_VERIFYING_REVISIONS);
+      verifyingRevisions = value == null ? false : Boolean.valueOf(value);
+    }
+
+    return verifyingRevisions;
   }
 
   public TypeManager getTypeManager()

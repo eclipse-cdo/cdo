@@ -34,6 +34,12 @@ import java.util.Map;
  */
 public abstract class MappingStrategy implements IMappingStrategy
 {
+  public static final String PROP_MAPPING_PRECEDENCE = "mappingPrecedence";
+
+  public static final String PROP_TO_MANY_REFERENCE_MAPPING = "toManyReferenceMapping";
+
+  public static final String PROP_TO_ONE_REFERENCE_MAPPING = "toOneReferenceMapping";
+
   private IDBStore store;
 
   private Map<String, String> properties;
@@ -81,7 +87,7 @@ public abstract class MappingStrategy implements IMappingStrategy
   {
     if (precedence == null)
     {
-      String value = getProperties().get("mappingPrecedence");
+      String value = getProperties().get(PROP_MAPPING_PRECEDENCE);
       precedence = value == null ? Precedence.STRATEGY : Precedence.valueOf(value);
     }
 
@@ -92,7 +98,7 @@ public abstract class MappingStrategy implements IMappingStrategy
   {
     if (toMany == null)
     {
-      String value = getProperties().get("toManyReferenceMapping");
+      String value = getProperties().get(PROP_TO_MANY_REFERENCE_MAPPING);
       toMany = value == null ? ToMany.PER_REFERENCE : ToMany.valueOf(value);
     }
 
@@ -103,7 +109,7 @@ public abstract class MappingStrategy implements IMappingStrategy
   {
     if (toOne == null)
     {
-      String value = getProperties().get("toOneReferenceMapping");
+      String value = getProperties().get(PROP_TO_ONE_REFERENCE_MAPPING);
       toOne = value == null ? ToOne.LIKE_ATTRIBUTES : ToOne.valueOf(value);
     }
 

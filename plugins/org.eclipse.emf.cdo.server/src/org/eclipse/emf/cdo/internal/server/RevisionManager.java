@@ -47,6 +47,12 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   }
 
   @Override
+  protected void verifyRevision(CDORevisionImpl revision)
+  {
+    super.verifyRevision(revision);
+  }
+
+  @Override
   protected CDORevisionImpl loadRevision(CDOID id)
   {
     IStoreReader storeReader = StoreUtil.getReader();

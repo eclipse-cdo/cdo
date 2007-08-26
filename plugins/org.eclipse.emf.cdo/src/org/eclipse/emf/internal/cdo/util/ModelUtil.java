@@ -135,7 +135,9 @@ public final class ModelUtil
     // Current problem with EcorePackage.eINSTANCE is mutual modification of
     // certain Ecore features (see newsgroup thread "eGenericSuperTypes" and
     // EMFUtil.getPersistentFeatures()
+
     String ecore = EcorePackage.eINSTANCE.getNsURI().equals(packageURI) ? null : EMFUtil.ePackageToString(ePackage);
+    // String ecore = EMFUtil.ePackageToString(ePackage);
     CDOIDRange idRange = packageManager.getSession().registerEPackage(ePackage);
 
     CDOPackageImpl cdoPackage = new CDOPackageImpl(packageManager, packageURI, name, ecore, dynamic, idRange);

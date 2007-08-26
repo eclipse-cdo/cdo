@@ -40,6 +40,11 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
     CDOStateMachine.INSTANCE.write(this);
   }
 
+  // public Resource callbackResource(BasicEObjectImpl instance)
+  // {
+  // return cdoResource();
+  // }
+
   @Override
   public void notifyChanged(Notification msg)
   {

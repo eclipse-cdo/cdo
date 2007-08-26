@@ -452,6 +452,11 @@ public class DBStoreAccessor implements IDBStoreAccessor
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
+  public CDORevisionImpl verifyRevision(CDORevisionImpl revision)
+  {
+    return revision;
+  }
+
   /**
    * TODO Move this somehow to DBAdapter
    */

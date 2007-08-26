@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
@@ -58,4 +59,6 @@ public interface IStoreReader extends IStoreAccessor
   public CDOID readResourceID(String path);
 
   public String readResourcePath(CDOID id);
+
+  public CDORevisionImpl verifyRevision(CDORevisionImpl revision);
 }

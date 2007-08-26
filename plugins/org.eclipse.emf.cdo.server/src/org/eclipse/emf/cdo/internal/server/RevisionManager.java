@@ -47,9 +47,16 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   }
 
   @Override
-  protected void verifyRevision(CDORevisionImpl revision)
+  protected CDORevisionImpl verifyRevision(CDORevisionImpl revision)
   {
-    super.verifyRevision(revision);
+    revision = super.verifyRevision(revision);
+    if (repository.isVerifyingRevisions())
+    {
+      IStoreReader storeReader = StoreUtil.getReader();
+      revision = storeReader.verifyRevision(revision);
+    }
+
+    return revision;
   }
 
   @Override

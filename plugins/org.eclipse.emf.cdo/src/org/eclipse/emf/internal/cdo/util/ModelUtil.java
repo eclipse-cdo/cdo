@@ -130,13 +130,12 @@ public final class ModelUtil
     String packageURI = ePackage.getNsURI();
     String name = ePackage.getName();
     boolean dynamic = EMFUtil.isDynamicEPackage(ePackage);
-    String ecore = dynamic ? EMFUtil.ePackageToString(ePackage) : null;
-    // String ecore = EMFUtil.ePackageToString(ePackage);
+    // String ecore = dynamic ? EMFUtil.ePackageToString(ePackage) : null;
+    String ecore = EcorePackage.eINSTANCE.getNsURI().equals(packageURI) ? null : EMFUtil.ePackageToString(ePackage);
     CDOIDRange idRange = packageManager.getSession().registerEPackage(ePackage);
 
     CDOPackageImpl cdoPackage = new CDOPackageImpl(packageManager, packageURI, name, ecore, dynamic, idRange);
     initializeCDOPackage(ePackage, cdoPackage);
-
     return cdoPackage;
   }
 
@@ -301,6 +300,7 @@ public final class ModelUtil
     resourceClass.getCDOPathFeature().setClientInfo(EresourcePackage.eINSTANCE.getCDOResource_Path());
   }
 
+  @Deprecated
   public static void removeModelInfos(CDOSessionPackageManager packageManager)
   {
     // Ecore

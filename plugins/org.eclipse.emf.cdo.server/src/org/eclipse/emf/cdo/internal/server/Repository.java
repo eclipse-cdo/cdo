@@ -197,6 +197,16 @@ public class Repository extends Container implements IRepository
   }
 
   @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    if (isSupportingAudits() && !store.hasAuditingSupport())
+    {
+      throw new IllegalStateException("Store without auditing support");
+    }
+  }
+
+  @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();

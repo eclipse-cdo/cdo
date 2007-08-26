@@ -131,6 +131,10 @@ public final class ModelUtil
     String name = ePackage.getName();
     boolean dynamic = EMFUtil.isDynamicEPackage(ePackage);
     // String ecore = dynamic ? EMFUtil.ePackageToString(ePackage) : null;
+    // TODO Serialize EcorePackage.eINSTANCE, too
+    // Current problem with EcorePackage.eINSTANCE is mutual modification of
+    // certain Ecore features (see newsgroup thread "eGenericSuperTypes" and
+    // EMFUtil.getPersistentFeatures()
     String ecore = EcorePackage.eINSTANCE.getNsURI().equals(packageURI) ? null : EMFUtil.ePackageToString(ePackage);
     CDOIDRange idRange = packageManager.getSession().registerEPackage(ePackage);
 

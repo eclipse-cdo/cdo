@@ -168,20 +168,31 @@ public final class EMFUtil
     return result;
   }
 
-  public static List<EStructuralFeature> getPersistentFeatures(EList<EStructuralFeature> eFeatues)
+  public static List<EStructuralFeature> getPersistentFeatures(EList<EStructuralFeature> eFeatures)
   {
     List<EStructuralFeature> result = new ArrayList();
-    for (EStructuralFeature feature : eFeatues)
+    for (EStructuralFeature feature : eFeatures)
     {
       if (feature.isTransient())
       {
         continue;
       }
 
+      // TODO Make configurable via ExtPoint
       if (feature == EcorePackage.eINSTANCE.getEClass_ESuperTypes())
       {
         continue;
       }
+
+      if (feature == EcorePackage.eINSTANCE.getETypedElement_EType())
+      {
+        continue;
+      }
+
+      // if (feature == EcorePackage.eINSTANCE.getEGenericType_EClassifier())
+      // {
+      // continue;
+      // }
 
       result.add(feature);
     }

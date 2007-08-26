@@ -31,6 +31,8 @@ import java.util.UUID;
  */
 public class Repository extends Container implements IRepository
 {
+  public static final String PROP_OVERRIDE_UUID = "overrideUUID";
+
   public static final String PROP_SUPPORTING_AUDITS = "supportingAudits";
 
   public static final String PROP_VERIFYING_REVISIONS = "verifyingRevisions";
@@ -82,7 +84,6 @@ public class Repository extends Container implements IRepository
     this.name = name;
     this.store = store;
 
-    uuid = UUID.randomUUID().toString();
     elements = new Object[] { packageManager, sessionManager, resourceManager, revisionManager, typeManager, store };
   }
 
@@ -98,7 +99,12 @@ public class Repository extends Container implements IRepository
 
   public String getUUID()
   {
-    // TODO Support overriding UUIDs through setProperties()
+    if (uuid == null)
+    {
+      String value = getProperties().get(PROP_OVERRIDE_UUID);
+      uuid = StringUtil.isEmpty(value) ? UUID.randomUUID().toString() : value;
+    }
+
     return uuid;
   }
 

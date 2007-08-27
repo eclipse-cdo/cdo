@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server;
 /**
  * @author Eike Stepper
  */
+@Deprecated
 public interface IStoreProvider
 {
   public IStore getStore(String repositoryName);

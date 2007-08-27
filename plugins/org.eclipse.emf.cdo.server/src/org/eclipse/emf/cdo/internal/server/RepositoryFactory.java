@@ -10,8 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IStoreProvider;
+import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
 
 import org.eclipse.net4j.internal.util.factory.Factory;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -25,25 +24,16 @@ public class RepositoryFactory extends Factory<Repository>
 
   public static final String TYPE = "default";
 
-  private IStoreProvider storeProvider;
-
-  public RepositoryFactory(IStoreProvider storeProvider)
+  public RepositoryFactory()
   {
     super(PRODUCT_GROUP, TYPE);
-    this.storeProvider = storeProvider;
-  }
-
-  public IStoreProvider getStoreProvider()
-  {
-    return storeProvider;
   }
 
   public Repository create(String name)
   {
-    IStore store = storeProvider.getStore(name);
-    Repository repository = new Repository(name, store);
-    store.setRepository(repository);
-    return repository;
+    // Repositories are not created by factories rather they are put into a
+    // container directly. See RepositoryConfigurator
+    throw new RepositoryNotFoundException(name);
   }
 
   public static Repository get(IManagedContainer container, String name)

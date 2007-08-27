@@ -39,7 +39,7 @@ public abstract class Indication extends SignalReactor
       TRACER.trace("================ Indicating " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
-    indicating(new ExtendedDataInputStream(in));
+    indicating(wrapInputStream(in));
   }
 
   protected abstract void indicating(ExtendedDataInputStream in) throws IOException;

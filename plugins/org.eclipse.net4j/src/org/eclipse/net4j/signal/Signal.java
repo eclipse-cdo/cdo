@@ -13,10 +13,14 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.BufferOutputStream;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.EOFException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -31,9 +35,9 @@ public abstract class Signal implements Runnable
 
   private int correlationID;
 
-  private BufferInputStream inputStream;
+  private BufferInputStream bufferInputStream;
 
-  private BufferOutputStream outputStream;
+  private BufferOutputStream bufferOutputStream;
 
   protected Signal()
   {
@@ -49,14 +53,26 @@ public abstract class Signal implements Runnable
     return correlationID;
   }
 
-  protected final BufferInputStream getInputStream()
+  protected final BufferInputStream getBufferInputStream()
   {
-    return inputStream;
+    return bufferInputStream;
   }
 
-  protected final BufferOutputStream getOutputStream()
+  protected final BufferOutputStream getBufferOutputStream()
   {
-    return outputStream;
+    return bufferOutputStream;
+  }
+
+  protected ExtendedDataInputStream wrapInputStream(InputStream in)
+  {
+    in = protocol.wrapInputStream(in);
+    return ExtendedDataInputStream.wrap(in);
+  }
+
+  protected ExtendedDataOutputStream wrapOutputStream(OutputStream out)
+  {
+    out = protocol.wrapOutputStream(out);
+    return ExtendedDataOutputStream.wrap(out);
   }
 
   public final void run()
@@ -75,7 +91,7 @@ public abstract class Signal implements Runnable
   {
     try
     {
-      execute(inputStream, outputStream);
+      execute(bufferInputStream, bufferOutputStream);
     }
     catch (EOFException ex)
     {
@@ -105,13 +121,13 @@ public abstract class Signal implements Runnable
     this.correlationID = correlationID;
   }
 
-  void setInputStream(BufferInputStream inputStream)
+  void setBufferInputStream(BufferInputStream inputStream)
   {
-    this.inputStream = inputStream;
+    this.bufferInputStream = inputStream;
   }
 
-  void setOutputStream(BufferOutputStream outputStream)
+  void setBufferOutputStream(BufferOutputStream outputStream)
   {
-    this.outputStream = outputStream;
+    this.bufferOutputStream = outputStream;
   }
 }

@@ -42,14 +42,14 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT
       TRACER.trace("================ Requesting " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
-    requesting(new ExtendedDataOutputStream(out));
+    requesting(wrapOutputStream(out));
     out.flush();
     if (TRACER.isEnabled())
     {
       TRACER.trace("================ Confirming " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
-    setResult(confirming(new ExtendedDataInputStream(in)));
+    setResult(confirming(wrapInputStream(in)));
   }
 
   protected abstract void requesting(ExtendedDataOutputStream out) throws IOException;

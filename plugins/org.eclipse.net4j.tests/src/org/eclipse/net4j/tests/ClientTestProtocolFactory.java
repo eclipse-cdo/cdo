@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.internal.net4j.ClientProtocolFactory;
@@ -27,8 +26,8 @@ public class ClientTestProtocolFactory extends ClientProtocolFactory
     super(TYPE);
   }
 
-  public IProtocol create(String description) throws ProductCreationException
+  public TestProtocol create(String description) throws ProductCreationException
   {
-    return null;
+    return new TestProtocol(null);
   }
 }

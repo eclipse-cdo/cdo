@@ -27,6 +27,9 @@ public final class TestProtocol extends Protocol
   {
     System.out.println("BUFFER ARRIVED");
     buffer.release();
-    counter.countDown();
+    if (counter != null)
+    {
+      counter.countDown();
+    }
   }
 }

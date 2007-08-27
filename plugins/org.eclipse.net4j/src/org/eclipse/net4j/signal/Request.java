@@ -41,7 +41,7 @@ public abstract class Request extends SignalActor
       TRACER.trace("================ Requesting " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
-    requesting(new ExtendedDataOutputStream(out));
+    requesting(wrapOutputStream(out));
     out.flush();
   }
 

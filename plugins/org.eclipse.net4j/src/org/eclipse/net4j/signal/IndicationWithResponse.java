@@ -40,13 +40,13 @@ public abstract class IndicationWithResponse extends SignalReactor
       TRACER.trace("================ Indicating " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
-    indicating(new ExtendedDataInputStream(in));
+    indicating(wrapInputStream(in));
     if (TRACER.isEnabled())
     {
       TRACER.trace("================ Responding " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
-    responding(new ExtendedDataOutputStream(out));
+    responding(wrapOutputStream(out));
     out.flush();
   }
 

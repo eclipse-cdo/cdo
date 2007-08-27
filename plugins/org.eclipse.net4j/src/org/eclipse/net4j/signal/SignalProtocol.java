@@ -19,6 +19,8 @@ import org.eclipse.net4j.stream.ChannelOutputStream;
 import org.eclipse.internal.net4j.Protocol;
 import org.eclipse.internal.net4j.bundle.OM;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.text.MessageFormat;
 import java.util.Map;
@@ -98,8 +100,8 @@ public abstract class SignalProtocol extends Protocol
         signal = createSignalReactor(signalID);
         signal.setProtocol(this);
         signal.setCorrelationID(-correlationID);
-        signal.setInputStream(new SignalInputStream(getInputStreamTimeout()));
-        signal.setOutputStream(new SignalOutputStream(-correlationID, signalID, false));
+        signal.setBufferInputStream(new SignalInputStream(getInputStreamTimeout()));
+        signal.setBufferOutputStream(new SignalOutputStream(-correlationID, signalID, false));
         signals.put(-correlationID, signal);
         getExecutorService().execute(signal);
       }
@@ -121,7 +123,7 @@ public abstract class SignalProtocol extends Protocol
 
     if (signal != null) // Can be null after timeout
     {
-      BufferInputStream inputStream = signal.getInputStream();
+      BufferInputStream inputStream = signal.getBufferInputStream();
       inputStream.handleBuffer(buffer);
     }
   }
@@ -160,11 +162,20 @@ public abstract class SignalProtocol extends Protocol
 
     short signalID = signalActor.getSignalID();
     int correlationID = signalActor.getCorrelationID();
-    signalActor.setInputStream(new SignalInputStream(timeout));
-    signalActor.setOutputStream(new SignalOutputStream(correlationID, signalID, true));
+    signalActor.setBufferInputStream(new SignalInputStream(timeout));
+    signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));
     signals.put(correlationID, signalActor);
-
     signalActor.runSync();
+  }
+
+  protected InputStream wrapInputStream(InputStream in)
+  {
+    return in;
+  }
+
+  protected OutputStream wrapOutputStream(OutputStream out)
+  {
+    return out;
   }
 
   void stopSignal(Signal signal)

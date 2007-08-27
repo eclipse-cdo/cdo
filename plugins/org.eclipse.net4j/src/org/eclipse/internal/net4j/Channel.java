@@ -191,7 +191,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
   @Override
   public String toString()
   {
-    return MessageFormat.format("Channel[{0}, {1}]", channelIndex, receiveHandler); //$NON-NLS-1$ 
+    return MessageFormat.format("Channel[{0}]", channelIndex); //$NON-NLS-1$
   }
 
   @Override

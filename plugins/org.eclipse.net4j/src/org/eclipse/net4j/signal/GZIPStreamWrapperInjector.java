@@ -10,16 +10,16 @@
  **************************************************************************/
 package org.eclipse.net4j.signal;
 
-import org.eclipse.net4j.util.io.ZIPStreamWrapper;
+import org.eclipse.net4j.util.io.GZIPStreamWrapper;
 
 /**
  * @author Eike Stepper
  */
-public class ZIPStreamWrapperInjector extends StreamWrapperInjector
+public class GZIPStreamWrapperInjector extends StreamWrapperInjector
 {
-  public static final ZIPStreamWrapper STREAM_WRAPPER = new ZIPStreamWrapper();
+  public static final GZIPStreamWrapper STREAM_WRAPPER = new GZIPStreamWrapper();
 
-  public ZIPStreamWrapperInjector(String protocolID)
+  public GZIPStreamWrapperInjector(String protocolID)
   {
     super(protocolID, STREAM_WRAPPER);
   }

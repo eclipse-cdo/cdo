@@ -15,6 +15,7 @@ import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
+import org.eclipse.net4j.util.io.IStreamWrapper;
 
 import org.eclipse.internal.net4j.Protocol;
 import org.eclipse.internal.net4j.bundle.OM;
@@ -30,7 +31,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public abstract class SignalProtocol extends Protocol
+public abstract class SignalProtocol extends Protocol implements IStreamWrapper
 {
   public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
 
@@ -73,6 +74,16 @@ public abstract class SignalProtocol extends Protocol
     }
 
     return true;
+  }
+
+  public InputStream wrapInputStream(InputStream in)
+  {
+    return in;
+  }
+
+  public OutputStream wrapOutputStream(OutputStream out)
+  {
+    return out;
   }
 
   public void handleBuffer(IBuffer buffer)
@@ -166,16 +177,6 @@ public abstract class SignalProtocol extends Protocol
     signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));
     signals.put(correlationID, signalActor);
     signalActor.runSync();
-  }
-
-  protected InputStream wrapInputStream(InputStream in)
-  {
-    return in;
-  }
-
-  protected OutputStream wrapOutputStream(OutputStream out)
-  {
-    return out;
   }
 
   void stopSignal(Signal signal)

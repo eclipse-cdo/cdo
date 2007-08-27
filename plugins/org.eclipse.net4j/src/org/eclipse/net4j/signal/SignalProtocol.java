@@ -16,6 +16,7 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
 import org.eclipse.net4j.util.io.IStreamWrapper;
+import org.eclipse.net4j.util.io.StreamWrapperChain;
 
 import org.eclipse.internal.net4j.Protocol;
 import org.eclipse.internal.net4j.bundle.OM;
@@ -43,12 +44,36 @@ public abstract class SignalProtocol extends Protocol implements IStreamWrapper
 
   private static final ContextTracer STREAM_TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, SignalOutputStream.class);
 
+  private IStreamWrapper streamWrapper;
+
   private Map<Integer, Signal> signals = new ConcurrentHashMap(0);
 
   private int nextCorrelationID = MIN_CORRELATION_ID;
 
   protected SignalProtocol()
   {
+  }
+
+  public IStreamWrapper getStreamWrapper()
+  {
+    return streamWrapper;
+  }
+
+  public void setStreamWrapper(IStreamWrapper streamWrapper)
+  {
+    this.streamWrapper = streamWrapper;
+  }
+
+  public void addStreamWrapper(IStreamWrapper streamWrapper)
+  {
+    if (this.streamWrapper == null)
+    {
+      this.streamWrapper = streamWrapper;
+    }
+    else
+    {
+      this.streamWrapper = new StreamWrapperChain(streamWrapper, this.streamWrapper);
+    }
   }
 
   public ExecutorService getExecutorService()
@@ -78,11 +103,21 @@ public abstract class SignalProtocol extends Protocol implements IStreamWrapper
 
   public InputStream wrapInputStream(InputStream in)
   {
+    if (streamWrapper != null)
+    {
+      in = streamWrapper.wrapInputStream(in);
+    }
+
     return in;
   }
 
   public OutputStream wrapOutputStream(OutputStream out)
   {
+    if (streamWrapper != null)
+    {
+      out = streamWrapper.wrapOutputStream(out);
+    }
+
     return out;
   }
 

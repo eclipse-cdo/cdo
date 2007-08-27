@@ -92,6 +92,7 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
     return processors.containsAll(c);
   }
 
+  @Override
   public boolean equals(Object o)
   {
     return processors.equals(o);
@@ -102,6 +103,7 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
     return processors.get(index);
   }
 
+  @Override
   public int hashCode()
   {
     return processors.hashCode();
@@ -180,6 +182,12 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
   public <T> T[] toArray(T[] a)
   {
     return processors.toArray(a);
+  }
+
+  @Override
+  public String toString()
+  {
+    return processors.toString();
   }
 
   @Override

@@ -11,6 +11,7 @@
 package org.eclipse.net4j;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
@@ -19,6 +20,8 @@ import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.Channel;
 import org.eclipse.internal.net4j.Connector;
+
+import java.util.List;
 
 /**
  * One endpoint of a physical connection of arbitrary nature between two
@@ -100,7 +103,13 @@ public interface IConnector extends IContainer<IChannel>
    * Automatic protocol creation only happens if {@link #isServer()} returns
    * <code>true</code>.
    */
-  public IRegistry<IFactoryKey, IFactory> getFactoryRegistry();
+  public IRegistry<IFactoryKey, IFactory> getProtocolFactoryRegistry();
+
+  /**
+   * Returns the post processors used by this connector to modify protocols
+   * created for new channels.
+   */
+  public List<IElementProcessor> getProtocolPostProcessors();
 
   /**
    * Returns the current state of this onnector.

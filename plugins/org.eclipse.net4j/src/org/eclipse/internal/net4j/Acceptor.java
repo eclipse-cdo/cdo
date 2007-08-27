@@ -18,6 +18,7 @@ import org.eclipse.net4j.internal.util.container.LifecycleEventConverter;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerEvent;
+import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
@@ -28,6 +29,7 @@ import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.internal.net4j.bundle.OM;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
@@ -40,7 +42,9 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
 
   private IBufferProvider bufferProvider;
 
-  private IRegistry<IFactoryKey, IFactory> factoryRegistry;
+  private IRegistry<IFactoryKey, IFactory> protocolFactoryRegistry;
+
+  private List<IElementProcessor> protocolPostProcessors;
 
   private ExecutorService receiveExecutor;
 
@@ -56,17 +60,6 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
       return newContainerEvent((IConnector)element, kind);
     }
   };
-
-  // private transient IListener lifecycleEventConverter = new
-  // LifecycleEventConverter(this)
-  // {
-  // @Override
-  // protected void removed(ILifecycleEvent e)
-  // {
-  // removeConnector((IConnector)e.getLifecycle());
-  // super.removed(e);
-  // }
-  // };
 
   private Set<IConnector> acceptedConnectors = new HashSet(0);
 
@@ -94,14 +87,24 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
     this.receiveExecutor = receiveExecutor;
   }
 
-  public IRegistry<IFactoryKey, IFactory> getFactoryRegistry()
+  public IRegistry<IFactoryKey, IFactory> getProtocolFactoryRegistry()
   {
-    return factoryRegistry;
+    return protocolFactoryRegistry;
   }
 
-  public void setFactoryRegistry(IRegistry<IFactoryKey, IFactory> factoryRegistry)
+  public void setProtocolFactoryRegistry(IRegistry<IFactoryKey, IFactory> protocolFactoryRegistry)
   {
-    this.factoryRegistry = factoryRegistry;
+    this.protocolFactoryRegistry = protocolFactoryRegistry;
+  }
+
+  public List<IElementProcessor> getProtocolPostProcessors()
+  {
+    return protocolPostProcessors;
+  }
+
+  public void setProtocolPostProcessors(List<IElementProcessor> protocolPostProcessors)
+  {
+    this.protocolPostProcessors = protocolPostProcessors;
   }
 
   public IConnector[] getAcceptedConnectors()
@@ -129,7 +132,8 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
     {
       connector.setBufferProvider(bufferProvider);
       connector.setReceiveExecutor(receiveExecutor);
-      connector.setFactoryRegistry(factoryRegistry);
+      connector.setProtocolFactoryRegistry(protocolFactoryRegistry);
+      connector.setProtocolPostProcessors(protocolPostProcessors);
       connector.activate();
       connector.addListener(lifecycleEventConverter);
 
@@ -176,10 +180,16 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
       throw new IllegalStateException("bufferProvider == null"); //$NON-NLS-1$
     }
 
-    if (factoryRegistry == null && TRACER.isEnabled())
+    if (protocolFactoryRegistry == null && TRACER.isEnabled())
     {
       // Just a reminder during development
       TRACER.trace("factoryRegistry == null"); //$NON-NLS-1$
+    }
+
+    if (protocolPostProcessors == null && TRACER.isEnabled())
+    {
+      // Just a reminder during development
+      TRACER.trace("protocolPostProcessors == null"); //$NON-NLS-1$
     }
 
     if (receiveExecutor == null && TRACER.isEnabled())

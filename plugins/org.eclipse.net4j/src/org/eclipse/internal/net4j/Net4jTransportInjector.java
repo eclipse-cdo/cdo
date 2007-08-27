@@ -26,9 +26,14 @@ public class Net4jTransportInjector implements IElementProcessor
         acceptor.setReceiveExecutor(getExecutorService(container));
       }
 
-      if (acceptor.getFactoryRegistry() == null)
+      if (acceptor.getProtocolFactoryRegistry() == null)
       {
-        acceptor.setFactoryRegistry(container.getFactoryRegistry());
+        acceptor.setProtocolFactoryRegistry(container.getFactoryRegistry());
+      }
+
+      if (acceptor.getProtocolPostProcessors() == null)
+      {
+        acceptor.setProtocolPostProcessors(container.getPostProcessors());
       }
     }
     else if (element instanceof Connector)
@@ -44,9 +49,14 @@ public class Net4jTransportInjector implements IElementProcessor
         connector.setReceiveExecutor(getExecutorService(container));
       }
 
-      if (connector.getFactoryRegistry() == null)
+      if (connector.getProtocolFactoryRegistry() == null)
       {
-        connector.setFactoryRegistry(container.getFactoryRegistry());
+        connector.setProtocolFactoryRegistry(container.getFactoryRegistry());
+      }
+
+      if (connector.getProtocolPostProcessors() == null)
+      {
+        connector.setProtocolPostProcessors(container.getPostProcessors());
       }
     }
 

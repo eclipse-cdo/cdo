@@ -30,6 +30,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.RWLock;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerEvent;
+import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
@@ -60,7 +61,9 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
   private IConnectorCredentials credentials;
 
-  private IRegistry<IFactoryKey, IFactory> factoryRegistry;
+  private IRegistry<IFactoryKey, IFactory> protocolFactoryRegistry;
+
+  private List<IElementProcessor> protocolPostProcessors;
 
   private IBufferProvider bufferProvider;
 
@@ -111,14 +114,24 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     this.receiveExecutor = receiveExecutor;
   }
 
-  public IRegistry<IFactoryKey, IFactory> getFactoryRegistry()
+  public IRegistry<IFactoryKey, IFactory> getProtocolFactoryRegistry()
   {
-    return factoryRegistry;
+    return protocolFactoryRegistry;
   }
 
-  public void setFactoryRegistry(IRegistry<IFactoryKey, IFactory> factoryRegistry)
+  public void setProtocolFactoryRegistry(IRegistry<IFactoryKey, IFactory> protocolFactoryRegistry)
   {
-    this.factoryRegistry = factoryRegistry;
+    this.protocolFactoryRegistry = protocolFactoryRegistry;
+  }
+
+  public List<IElementProcessor> getProtocolPostProcessors()
+  {
+    return protocolPostProcessors;
+  }
+
+  public void setProtocolPostProcessors(List<IElementProcessor> protocolPostProcessors)
+  {
+    this.protocolPostProcessors = protocolPostProcessors;
   }
 
   public IBufferProvider getBufferProvider()
@@ -550,15 +563,23 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     }
   }
 
+  /**
+   * TODO Use IProtocolProvider and make the protocols real container elements,
+   * so that the post processors can reach them. The protocol description can be
+   * used to store unique protocol IDs so that always new protocols are created
+   * in the container.
+   */
   protected IProtocol createProtocol(String type)
   {
-    if (StringUtil.isEmpty(type) || factoryRegistry == null)
+    IRegistry<IFactoryKey, IFactory> registry = getProtocolFactoryRegistry();
+    if (StringUtil.isEmpty(type) || registry == null)
     {
       return null;
     }
 
+    // Get protocol factory
     IFactoryKey key = createProtocolFactoryKey(type);
-    IFactory<IProtocol> factory = factoryRegistry.get(key);
+    IFactory<IProtocol> factory = registry.get(key);
     if (factory == null)
     {
       if (TRACER.isEnabled())
@@ -569,7 +590,21 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
       return null;
     }
 
-    return factory.create(null);
+    // Create protocol
+    String description = null;
+    IProtocol protocol = factory.create(description);
+
+    // Post process protocol
+    List<IElementProcessor> processors = getProtocolPostProcessors();
+    if (processors != null)
+    {
+      for (IElementProcessor processor : processors)
+      {
+        protocol = (IProtocol)processor.process(null, key.getProductGroup(), key.getType(), description, protocol);
+      }
+    }
+
+    return protocol;
   }
 
   protected IFactoryKey createProtocolFactoryKey(String type)
@@ -594,7 +629,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
       throw new IllegalStateException("bufferProvider == null"); //$NON-NLS-1$
     }
 
-    if (factoryRegistry == null && TRACER.isEnabled())
+    if (protocolFactoryRegistry == null && TRACER.isEnabled())
     {
       // Just a reminder during development
       TRACER.trace("No factoryRegistry!"); //$NON-NLS-1$

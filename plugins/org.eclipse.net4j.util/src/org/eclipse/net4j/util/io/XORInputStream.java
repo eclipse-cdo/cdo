@@ -19,17 +19,17 @@ import java.io.InputStream;
  */
 public class XORInputStream extends FilterInputStream
 {
-  private byte[] key;
+  private int[] key;
 
   private int index;
 
-  public XORInputStream(InputStream in, byte... key)
+  public XORInputStream(InputStream in, int... key)
   {
     super(in);
     this.key = key;
   }
 
-  public byte[] getKey()
+  public int[] getKey()
   {
     return key;
   }
@@ -47,7 +47,7 @@ public class XORInputStream extends FilterInputStream
           index = 0;
         }
 
-        b = b & 0x0f ^ key[index++];
+        b = b & 0xff ^ key[index++] & 0xff;
       }
     }
 

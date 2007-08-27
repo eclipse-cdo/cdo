@@ -19,14 +19,14 @@ import java.io.OutputStream;
  */
 public class XORStreamWrapper implements IStreamWrapper<XORInputStream, XOROutputStream>
 {
-  private byte[] key;
+  private int[] key;
 
-  public XORStreamWrapper(byte[] key)
+  public XORStreamWrapper(int[] key)
   {
     this.key = key;
   }
 
-  public byte[] getKey()
+  public int[] getKey()
   {
     return key;
   }

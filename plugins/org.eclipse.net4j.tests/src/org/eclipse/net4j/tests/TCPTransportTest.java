@@ -80,7 +80,7 @@ public class TCPTransportTest extends AbstractTransportTest
     container.registerFactory(new ClientTestProtocolFactory());
     startTransport();
 
-    IChannel channel = getConnector().openChannel(ClientTestProtocolFactory.TYPE);
+    IChannel channel = getConnector().openChannel(ClientTestProtocolFactory.TYPE, null);
     for (int i = 0; i < COUNT; i++)
     {
       IBuffer buffer = provideBuffer();

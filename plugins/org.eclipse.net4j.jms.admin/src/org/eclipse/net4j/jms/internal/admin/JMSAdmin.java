@@ -26,7 +26,7 @@ public class JMSAdmin implements IJMSAdmin
 
   public JMSAdmin(IConnector connector)
   {
-    channel = connector.openChannel(JMSAdminProtocolConstants.PROTOCOL_NAME);
+    channel = connector.openChannel(JMSAdminProtocolConstants.PROTOCOL_NAME, this);
   }
 
   public void close()

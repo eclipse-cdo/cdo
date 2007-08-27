@@ -338,9 +338,9 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     return openChannel((IProtocol)null);
   }
 
-  public IChannel openChannel(String protocolID) throws ConnectorException
+  public IChannel openChannel(String protocolID, Object infraStructure) throws ConnectorException
   {
-    IProtocol protocol = createProtocol(protocolID);
+    IProtocol protocol = createProtocol(protocolID, infraStructure);
     if (protocol == null)
     {
       throw new IllegalArgumentException("Unknown protocolID: " + protocolID);
@@ -374,7 +374,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
   public Channel createChannel(short channelIndex, String protocolID)
   {
-    IProtocol protocol = createProtocol(protocolID);
+    IProtocol protocol = createProtocol(protocolID, null);
     return createChannel(channelIndex, protocol);
   }
 
@@ -568,8 +568,10 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
    * so that the post processors can reach them. The protocol description can be
    * used to store unique protocol IDs so that always new protocols are created
    * in the container.
+   * 
+   * @param infraStructure
    */
-  protected IProtocol createProtocol(String type)
+  protected IProtocol createProtocol(String type, Object infraStructure)
   {
     IRegistry<IFactoryKey, IFactory> registry = getProtocolFactoryRegistry();
     if (StringUtil.isEmpty(type) || registry == null)
@@ -593,6 +595,10 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     // Create protocol
     String description = null;
     IProtocol protocol = factory.create(description);
+    if (infraStructure != null)
+    {
+      protocol.setInfraStructure(infraStructure);
+    }
 
     // Post process protocol
     List<IElementProcessor> processors = getProtocolPostProcessors();

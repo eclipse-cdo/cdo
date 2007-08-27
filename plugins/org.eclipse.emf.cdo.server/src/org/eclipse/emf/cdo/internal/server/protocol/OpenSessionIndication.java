@@ -100,7 +100,7 @@ public class OpenSessionIndication extends IndicationWithResponse
   private Repository getRepository()
   {
     CDOServerProtocol protocol = (CDOServerProtocol)getProtocol();
-    IRepositoryProvider repositoryProvider = protocol.getRepositoryProvider();
+    IRepositoryProvider repositoryProvider = protocol.getInfraStructure();
     return (Repository)repositoryProvider.getRepository(repositoryName);
   }
 

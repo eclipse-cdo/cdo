@@ -13,12 +13,12 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.stream.BufferOutputStream;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.EOFException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.TimeoutException;
@@ -63,16 +63,52 @@ public abstract class Signal implements Runnable
     return bufferOutputStream;
   }
 
-  protected ExtendedDataInputStream wrapInputStream(InputStream in)
+  protected InputStream wrapInputStream(InputStream in)
   {
-    in = protocol.wrapInputStream(in);
-    return ExtendedDataInputStream.wrap(in);
+    try
+    {
+      return protocol.wrapInputStream(in);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
   }
 
-  protected ExtendedDataOutputStream wrapOutputStream(OutputStream out)
+  protected OutputStream wrapOutputStream(OutputStream out)
   {
-    out = protocol.wrapOutputStream(out);
-    return ExtendedDataOutputStream.wrap(out);
+    try
+    {
+      return protocol.wrapOutputStream(out);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  protected void finishInputStream(InputStream in)
+  {
+    try
+    {
+      protocol.finishInputStream(in);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  protected void finishOutputStream(OutputStream out)
+  {
+    try
+    {
+      protocol.finishOutputStream(out);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
   }
 
   public final void run()

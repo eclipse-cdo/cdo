@@ -41,7 +41,7 @@ public class JMSServerMessageIndication extends Indication
     long consumerID = in.readLong();
     MessageImpl message = MessageUtil.read(in);
     JMSClientProtocol protocol = (JMSClientProtocol)getProtocol();
-    ConnectionImpl connection = protocol.getConnection();
+    ConnectionImpl connection = protocol.getInfraStructure();
     connection.handleMessageFromSignal(sessionID, consumerID, message);
   }
 }

@@ -21,6 +21,8 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * @author Eike Stepper
@@ -42,14 +44,19 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT
       TRACER.trace("================ Requesting " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
-    requesting(wrapOutputStream(out));
+    OutputStream wrappedOutputStream = wrapOutputStream(out);
+    requesting(ExtendedDataOutputStream.wrap(wrappedOutputStream));
+    finishOutputStream(wrappedOutputStream);
     out.flush();
     if (TRACER.isEnabled())
     {
       TRACER.trace("================ Confirming " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
-    setResult(confirming(wrapInputStream(in)));
+    InputStream wrappedInputStream = wrapInputStream(in);
+    RESULT result = confirming(ExtendedDataInputStream.wrap(wrappedInputStream));
+    finishInputStream(wrappedInputStream);
+    setResult(result);
   }
 
   protected abstract void requesting(ExtendedDataOutputStream out) throws IOException;

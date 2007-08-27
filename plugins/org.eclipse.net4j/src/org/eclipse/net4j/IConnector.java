@@ -181,7 +181,7 @@ public interface IConnector extends IContainer<IChannel>
    * @see #openChannel()
    * @see #openChannel(IProtocol)
    */
-  public IChannel openChannel(String protocolID) throws ConnectorException;
+  public IChannel openChannel(String protocolID, Object infraStructure) throws ConnectorException;
 
   /**
    * Synchronous request to open a new {@link IChannel} with the given channel

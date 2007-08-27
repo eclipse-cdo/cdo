@@ -181,11 +181,22 @@ public final class EMFUtil
       // TODO Make configurable via ExtPoint
       if (feature == EcorePackage.eINSTANCE.getEClass_ESuperTypes())
       {
+        // See
+        // http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
         continue;
       }
 
       if (feature == EcorePackage.eINSTANCE.getETypedElement_EType())
       {
+        // See
+        // http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
+        continue;
+      }
+
+      if (feature == EcorePackage.eINSTANCE.getEOperation_EExceptions())
+      {
+        // See
+        // http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
         continue;
       }
 

@@ -47,8 +47,8 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
       }
 
       lifecycleState = ILifecycleState.ACTIVATING;
-      doBeforeActivate();
       fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE));
+      doBeforeActivate();
 
       dump();
 

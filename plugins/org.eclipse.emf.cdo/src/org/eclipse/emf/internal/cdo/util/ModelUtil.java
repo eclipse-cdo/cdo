@@ -125,6 +125,10 @@ public final class ModelUtil
     return cdoClass.lookupFeature(eFeature.getFeatureID());
   }
 
+  /**
+   * @see EMFUtil#getPersistentFeatures(org.eclipse.emf.common.util.EList)
+   * @see http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
+   */
   private static CDOPackageImpl createCDOPackage(EPackage ePackage, CDOSessionPackageManager packageManager)
   {
     String packageURI = ePackage.getNsURI();

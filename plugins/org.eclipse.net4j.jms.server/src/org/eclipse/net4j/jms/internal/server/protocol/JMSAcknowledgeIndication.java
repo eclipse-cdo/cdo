@@ -40,7 +40,7 @@ public class JMSAcknowledgeIndication extends Indication
     int sessionID = in.readInt();
 
     JMSServerProtocol protocol = (JMSServerProtocol)getProtocol();
-    ServerConnection connection = protocol.getConnection();
+    ServerConnection connection = protocol.getInfraStructure();
     ServerSession session = connection.getSession(sessionID);
     if (session == null)
     {

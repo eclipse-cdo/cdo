@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Eike Stepper
@@ -39,7 +40,9 @@ public abstract class Indication extends SignalReactor
       TRACER.trace("================ Indicating " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
-    indicating(wrapInputStream(in));
+    InputStream wrappedInputStream = wrapInputStream(in);
+    indicating(ExtendedDataInputStream.wrap(wrappedInputStream));
+    finishInputStream(wrappedInputStream);
   }
 
   protected abstract void indicating(ExtendedDataInputStream in) throws IOException;

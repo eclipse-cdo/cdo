@@ -11,13 +11,14 @@
 package org.eclipse.net4j.jms.internal.admin.protocol;
 
 import org.eclipse.net4j.jms.JMSAdminProtocolConstants;
+import org.eclipse.net4j.jms.internal.admin.JMSAdmin;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 
 /**
  * @author Eike Stepper
  */
-public class JMSAdminProtocol extends SignalProtocol
+public class JMSAdminProtocol extends SignalProtocol<JMSAdmin>
 {
   public JMSAdminProtocol()
   {

@@ -19,43 +19,38 @@ import java.util.zip.GZIPOutputStream;
 /**
  * @author Eike Stepper
  */
-public class GZIPStreamWrapper implements IStreamWrapper
+public class GZIPStreamWrapper implements IStreamWrapper<GZIPInputStream, GZIPOutputStream>
 {
   public GZIPStreamWrapper()
   {
   }
 
-  public InputStream wrapInputStream(InputStream in)
+  public GZIPInputStream wrapInputStream(InputStream in) throws IOException
   {
     if (in instanceof GZIPInputStream)
     {
-      return in;
+      return (GZIPInputStream)in;
     }
 
-    try
-    {
-      return new GZIPInputStream(in);
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
+    return new GZIPInputStream(in);
   }
 
-  public OutputStream wrapOutputStream(OutputStream out)
+  public GZIPOutputStream wrapOutputStream(OutputStream out) throws IOException
   {
     if (out instanceof GZIPOutputStream)
     {
-      return out;
+      return (GZIPOutputStream)out;
     }
 
-    try
-    {
-      return new GZIPOutputStream(out);
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
+    return new GZIPOutputStream(out);
+  }
+
+  public void finishInputStream(GZIPInputStream in) throws IOException
+  {
+  }
+
+  public void finishOutputStream(GZIPOutputStream out) throws IOException
+  {
+    out.finish();
   }
 }

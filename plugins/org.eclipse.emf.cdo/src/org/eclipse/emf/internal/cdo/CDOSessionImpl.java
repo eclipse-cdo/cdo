@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.internal.util.container.Container;
@@ -45,7 +44,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
 import org.eclipse.emf.internal.cdo.protocol.ViewsChangedNotification;
@@ -73,6 +71,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   private transient long nextTemporaryID = INITIAL_TEMPORARY_ID;
 
   private int sessionID;
+
+  private IConnector connector;
 
   private IChannel channel;
 
@@ -119,20 +119,12 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   public IConnector getConnector()
   {
-    if (channel == null)
-    {
-      return null;
-    }
-
-    return channel.getConnector();
+    return connector;
   }
 
-  public void setConnector(IConnector connector) throws ConnectorException
+  public void setConnector(IConnector connector)
   {
-    CDOClientProtocol protocol = new CDOClientProtocol();
-    protocol.setSession(this);
-    channel = connector.openChannel(protocol);
-    EventUtil.addListener(channel, channelListener);
+    this.connector = connector;
   }
 
   public IChannel getChannel()
@@ -343,6 +335,26 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     idToMetaInstanceMap.put(id, metaInstance);
     metaInstanceToIDMap.put(metaInstance, id);
 
+    // EClass eClass = metaInstance.eClass();
+    // for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
+    // {
+    // Object value = metaInstance.eGet(feature);
+    // if (value instanceof InternalEObject)
+    // {
+    // metaInstance.eResolveProxy((InternalEObject)value);
+    // }
+    // else if (value instanceof Collection)
+    // {
+    // for (Object element : (Collection)value)
+    // {
+    // if (element instanceof InternalEObject)
+    // {
+    // metaInstance.eResolveProxy((InternalEObject)element);
+    // }
+    // }
+    // }
+    // }
+
     long step = id.isTemporary() ? -2L : 2L;
     long count = 1L;
     for (EObject content : metaInstance.eContents())
@@ -420,9 +432,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (channel == null)
+    if (channel == null && connector == null)
     {
-      throw new IllegalStateException("channel == null");
+      throw new IllegalStateException("channel == null && connector == null");
     }
 
     if (repositoryName == null)
@@ -435,6 +447,13 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    if (channel == null)
+    {
+      channel = connector.openChannel(CDOProtocolConstants.PROTOCOL_NAME, this);
+    }
+
+    EventUtil.addListener(channel, channelListener);
+
     OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName);
     OpenSessionResult result = request.send();
     sessionID = result.getSessionID();

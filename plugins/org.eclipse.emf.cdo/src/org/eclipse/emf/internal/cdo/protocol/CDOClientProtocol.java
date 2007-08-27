@@ -20,10 +20,8 @@ import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 /**
  * @author Eike Stepper
  */
-public class CDOClientProtocol extends SignalProtocol
+public class CDOClientProtocol extends SignalProtocol<CDOSessionImpl>
 {
-  private CDOSessionImpl session;
-
   public CDOClientProtocol()
   {
   }
@@ -31,16 +29,6 @@ public class CDOClientProtocol extends SignalProtocol
   public String getType()
   {
     return CDOProtocolConstants.PROTOCOL_NAME;
-  }
-
-  public CDOSessionImpl getSession()
-  {
-    return session;
-  }
-
-  public void setSession(CDOSessionImpl session)
-  {
-    this.session = session;
   }
 
   @Override
@@ -59,7 +47,7 @@ public class CDOClientProtocol extends SignalProtocol
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (session == null)
+    if (getInfraStructure() == null)
     {
       throw new IllegalStateException("session == null");
     }

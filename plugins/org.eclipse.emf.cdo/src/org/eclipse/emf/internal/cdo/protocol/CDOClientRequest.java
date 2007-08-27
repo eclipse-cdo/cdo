@@ -43,9 +43,10 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
 
   protected CDOSessionImpl getSession()
   {
-    return getProtocol().getSession();
+    return getProtocol().getInfraStructure();
   }
 
+  @Override
   protected CDOClientProtocol getProtocol()
   {
     return (CDOClientProtocol)super.getProtocol();

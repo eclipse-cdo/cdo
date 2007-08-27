@@ -75,7 +75,7 @@ public final class FSMUtil
 
       if (eObject.eIsProxy())
       {
-        EcoreUtil.resolve(eObject, view.getResourceSet());
+        eObject = (InternalEObject)EcoreUtil.resolve(eObject, view.getResourceSet());
       }
 
       CDOID id = ((CDOViewImpl)view).getSession().lookupMetaInstanceID(eObject);
@@ -94,6 +94,11 @@ public final class FSMUtil
         if (callback == null)
         {
           InternalEObject instance = (InternalEObject)aware;
+          if (instance.eIsProxy())
+          {
+            instance = (InternalEObject)EcoreUtil.resolve(instance, view.getResourceSet());
+          }
+
           callback = new CDOCallbackImpl(instance);
           aware.setCDOCallback(callback);
           instance.eAdapters().add(callback);

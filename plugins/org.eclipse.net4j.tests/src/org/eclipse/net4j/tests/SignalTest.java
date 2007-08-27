@@ -35,7 +35,7 @@ public class SignalTest extends AbstractTransportTest
   public void testInteger() throws Exception
   {
     startTransport();
-    IChannel channel = getConnector().openChannel(TestSignalProtocol.PROTOCOL_NAME);
+    IChannel channel = getConnector().openChannel(TestSignalProtocol.PROTOCOL_NAME, null);
     int data = 0x0a;
     int result = new Request1(channel, data).send();
     assertEquals(data, result);
@@ -44,7 +44,7 @@ public class SignalTest extends AbstractTransportTest
   public void testArray() throws Exception
   {
     startTransport();
-    IChannel channel = getConnector().openChannel(TestSignalProtocol.PROTOCOL_NAME);
+    IChannel channel = getConnector().openChannel(TestSignalProtocol.PROTOCOL_NAME, null);
     byte[] data = TinyData.getBytes();
     byte[] result = new Request2(channel, data).send();
     assertTrue(Arrays.equals(data, result));

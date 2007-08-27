@@ -18,9 +18,8 @@ import org.eclipse.net4j.signal.SignalReactor;
 /**
  * @author Eike Stepper
  */
-public class JMSServerProtocol extends SignalProtocol
+public class JMSServerProtocol extends SignalProtocol<ServerConnection>
 {
-  private ServerConnection connection;
 
   public JMSServerProtocol()
   {
@@ -29,16 +28,6 @@ public class JMSServerProtocol extends SignalProtocol
   public String getType()
   {
     return JMSProtocolConstants.PROTOCOL_NAME;
-  }
-
-  public ServerConnection getConnection()
-  {
-    return connection;
-  }
-
-  public void setConnection(ServerConnection connection)
-  {
-    this.connection = connection;
   }
 
   @Override

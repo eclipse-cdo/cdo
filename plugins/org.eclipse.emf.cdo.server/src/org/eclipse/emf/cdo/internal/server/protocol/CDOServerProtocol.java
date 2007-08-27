@@ -20,25 +20,17 @@ import org.eclipse.net4j.signal.SignalReactor;
 /**
  * @author Eike Stepper
  */
-public class CDOServerProtocol extends SignalProtocol
+public class CDOServerProtocol extends SignalProtocol<IRepositoryProvider>
 {
-  private IRepositoryProvider repositoryProvider;
-
   private Session session;
 
-  public CDOServerProtocol(IRepositoryProvider repositoryProvider)
+  public CDOServerProtocol()
   {
-    this.repositoryProvider = repositoryProvider;
   }
 
   public String getType()
   {
     return CDOProtocolConstants.PROTOCOL_NAME;
-  }
-
-  public IRepositoryProvider getRepositoryProvider()
-  {
-    return repositoryProvider;
   }
 
   public Session getSession()

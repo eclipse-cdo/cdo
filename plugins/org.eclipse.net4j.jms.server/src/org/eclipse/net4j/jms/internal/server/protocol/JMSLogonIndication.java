@@ -51,7 +51,7 @@ public class JMSLogonIndication extends IndicationWithResponse
 
     JMSServerProtocol protocol = (JMSServerProtocol)getProtocol();
     connection.setProtocol(protocol);
-    protocol.setConnection(connection);
+    protocol.setInfraStructure(connection);
     ok = true;
   }
 

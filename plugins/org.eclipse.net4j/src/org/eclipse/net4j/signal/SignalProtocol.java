@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.io.StreamWrapperChain;
 import org.eclipse.internal.net4j.Protocol;
 import org.eclipse.internal.net4j.bundle.OM;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
@@ -32,7 +33,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public abstract class SignalProtocol extends Protocol implements IStreamWrapper
+public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> implements IStreamWrapper
 {
   public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
 
@@ -42,7 +43,7 @@ public abstract class SignalProtocol extends Protocol implements IStreamWrapper
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, SignalProtocol.class);
 
-  private static final ContextTracer STREAM_TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, SignalOutputStream.class);
+  private static final ContextTracer STREAM_TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, SignalProtocol.class);
 
   private IStreamWrapper streamWrapper;
 
@@ -101,7 +102,7 @@ public abstract class SignalProtocol extends Protocol implements IStreamWrapper
     return true;
   }
 
-  public InputStream wrapInputStream(InputStream in)
+  public InputStream wrapInputStream(InputStream in) throws IOException
   {
     if (streamWrapper != null)
     {
@@ -111,7 +112,7 @@ public abstract class SignalProtocol extends Protocol implements IStreamWrapper
     return in;
   }
 
-  public OutputStream wrapOutputStream(OutputStream out)
+  public OutputStream wrapOutputStream(OutputStream out) throws IOException
   {
     if (streamWrapper != null)
     {
@@ -119,6 +120,22 @@ public abstract class SignalProtocol extends Protocol implements IStreamWrapper
     }
 
     return out;
+  }
+
+  public void finishInputStream(InputStream in) throws IOException
+  {
+    if (streamWrapper != null)
+    {
+      streamWrapper.finishInputStream(in);
+    }
+  }
+
+  public void finishOutputStream(OutputStream out) throws IOException
+  {
+    if (streamWrapper != null)
+    {
+      streamWrapper.finishOutputStream(out);
+    }
   }
 
   public void handleBuffer(IBuffer buffer)

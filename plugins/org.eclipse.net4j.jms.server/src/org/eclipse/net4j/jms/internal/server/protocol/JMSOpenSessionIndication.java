@@ -41,7 +41,7 @@ public class JMSOpenSessionIndication extends IndicationWithResponse
   {
     int sessionID = in.readInt();
     JMSServerProtocol protocol = (JMSServerProtocol)getProtocol();
-    ServerConnection connection = protocol.getConnection();
+    ServerConnection connection = protocol.getInfraStructure();
     ServerSession session = connection.openSession(sessionID);
     if (session != null)
     {

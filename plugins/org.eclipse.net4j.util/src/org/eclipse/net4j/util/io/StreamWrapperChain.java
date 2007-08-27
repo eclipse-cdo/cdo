@@ -10,36 +10,50 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
  * @author Eike Stepper
  */
-public class StreamWrapperChain extends DelegatingStreamWrapper
+public class StreamWrapperChain<IN extends InputStream, OUT extends OutputStream> extends
+    DelegatingStreamWrapper<IN, OUT>
 {
-  private IStreamWrapper head;
+  private IStreamWrapper<IN, OUT> head;
 
-  public StreamWrapperChain(IStreamWrapper head, IStreamWrapper delegate)
+  public StreamWrapperChain(IStreamWrapper<IN, OUT> head, IStreamWrapper delegate)
   {
     super(delegate);
     this.head = head;
   }
 
-  public IStreamWrapper getHead()
+  public IStreamWrapper<IN, OUT> getHead()
   {
     return head;
   }
 
   @Override
-  protected InputStream doWrapInputStream(InputStream in)
+  protected IN doWrapInputStream(InputStream in) throws IOException
   {
     return head.wrapInputStream(in);
   }
 
   @Override
-  protected OutputStream doWrapOutputStream(OutputStream out)
+  protected OUT doWrapOutputStream(OutputStream out) throws IOException
   {
     return head.wrapOutputStream(out);
+  }
+
+  @Override
+  protected void doFinishInputStream(IN in) throws IOException
+  {
+    head.finishInputStream(in);
+  }
+
+  @Override
+  protected void doFinishOutputStream(OUT out) throws IOException
+  {
+    head.finishOutputStream(out);
   }
 }

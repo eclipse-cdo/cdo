@@ -20,9 +20,12 @@ import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 /**
  * @author Eike Stepper
  */
-public abstract class Protocol extends Lifecycle implements IProtocol, IBufferProvider
+public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IProtocol<INFRA_STRUCTURE>,
+    IBufferProvider
 {
   private Channel channel;
+
+  private INFRA_STRUCTURE infraStructure;
 
   public Protocol()
   {
@@ -36,6 +39,16 @@ public abstract class Protocol extends Lifecycle implements IProtocol, IBufferPr
   public void setChannel(IChannel channel)
   {
     this.channel = (Channel)channel;
+  }
+
+  public INFRA_STRUCTURE getInfraStructure()
+  {
+    return infraStructure;
+  }
+
+  public void setInfraStructure(INFRA_STRUCTURE infraStructure)
+  {
+    this.infraStructure = infraStructure;
   }
 
   public short getBufferCapacity()

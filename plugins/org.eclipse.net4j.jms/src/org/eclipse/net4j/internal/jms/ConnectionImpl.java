@@ -110,7 +110,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
 
     IConnector connector = Net4jUtil.getConnector(transportContainer, connectorType, connectorDescription);
     JMSClientProtocol protocol = new JMSClientProtocol();
-    protocol.setConnection(this);
+    protocol.setInfraStructure(this);
     channel = connector.openChannel(protocol);
     channel.addListener(channelListener);
 

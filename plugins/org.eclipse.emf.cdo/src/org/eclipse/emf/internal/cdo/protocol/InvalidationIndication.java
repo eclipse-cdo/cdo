@@ -67,8 +67,14 @@ public class InvalidationIndication extends Indication
     getSession().notifyInvalidation(timeStamp, dirtyOIDs, null);
   }
 
-  private CDOSessionImpl getSession()
+  protected CDOSessionImpl getSession()
   {
-    return ((CDOClientProtocol)getProtocol()).getSession();
+    return getProtocol().getInfraStructure();
+  }
+
+  @Override
+  protected CDOClientProtocol getProtocol()
+  {
+    return (CDOClientProtocol)super.getProtocol();
   }
 }

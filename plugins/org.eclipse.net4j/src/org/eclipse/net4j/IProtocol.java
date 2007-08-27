@@ -14,11 +14,15 @@ package org.eclipse.net4j;
  * @author Eike Stepper
  * @since 0.8.0
  */
-public interface IProtocol extends IBufferHandler
+public interface IProtocol<INFRA_STRUCTURE> extends IBufferHandler
 {
   public String getType();
 
   public IChannel getChannel();
 
   public void setChannel(IChannel channel);
+
+  public INFRA_STRUCTURE getInfraStructure();
+
+  public void setInfraStructure(INFRA_STRUCTURE infraStructure);
 }

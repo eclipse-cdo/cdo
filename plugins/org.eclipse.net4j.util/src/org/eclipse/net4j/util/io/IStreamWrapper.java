@@ -10,15 +10,20 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
  * @author Eike Stepper
  */
-public interface IStreamWrapper
+public interface IStreamWrapper<IN extends InputStream, OUT extends OutputStream>
 {
-  public InputStream wrapInputStream(InputStream in);
+  public IN wrapInputStream(InputStream in) throws IOException;
 
-  public OutputStream wrapOutputStream(OutputStream out);
+  public OUT wrapOutputStream(OutputStream out) throws IOException;
+
+  public void finishInputStream(IN in) throws IOException;
+
+  public void finishOutputStream(OUT out) throws IOException;
 }

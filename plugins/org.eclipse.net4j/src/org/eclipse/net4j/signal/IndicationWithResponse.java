@@ -20,6 +20,8 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * @author Eike Stepper
@@ -40,13 +42,17 @@ public abstract class IndicationWithResponse extends SignalReactor
       TRACER.trace("================ Indicating " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
-    indicating(wrapInputStream(in));
+    InputStream wrappedInputStream = wrapInputStream(in);
+    indicating(ExtendedDataInputStream.wrap(wrappedInputStream));
+    finishInputStream(wrappedInputStream);
     if (TRACER.isEnabled())
     {
       TRACER.trace("================ Responding " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
     }
 
-    responding(wrapOutputStream(out));
+    OutputStream wrappedOutputStream = wrapOutputStream(out);
+    responding(ExtendedDataOutputStream.wrap(wrappedOutputStream));
+    finishOutputStream(wrappedOutputStream);
     out.flush();
   }
 

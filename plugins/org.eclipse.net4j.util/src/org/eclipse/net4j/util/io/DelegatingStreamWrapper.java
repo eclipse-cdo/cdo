@@ -10,13 +10,15 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
  * @author Eike Stepper
  */
-public abstract class DelegatingStreamWrapper implements IStreamWrapper
+public abstract class DelegatingStreamWrapper<IN extends InputStream, OUT extends OutputStream> implements
+    IStreamWrapper<IN, OUT>
 {
   private IStreamWrapper delegate;
 
@@ -30,17 +32,33 @@ public abstract class DelegatingStreamWrapper implements IStreamWrapper
     return delegate;
   }
 
-  public InputStream wrapInputStream(InputStream in)
+  public IN wrapInputStream(InputStream in) throws IOException
   {
     return doWrapInputStream(delegate.wrapInputStream(in));
   }
 
-  public OutputStream wrapOutputStream(OutputStream out)
+  public OUT wrapOutputStream(OutputStream out) throws IOException
   {
     return doWrapOutputStream(delegate.wrapOutputStream(out));
   }
 
-  protected abstract InputStream doWrapInputStream(InputStream in);
+  public void finishInputStream(IN in) throws IOException
+  {
+    delegate.finishInputStream(in);
+    doFinishInputStream(in);
+  }
 
-  protected abstract OutputStream doWrapOutputStream(OutputStream out);
+  public void finishOutputStream(OUT out) throws IOException
+  {
+    delegate.finishOutputStream(out);
+    doFinishOutputStream(out);
+  }
+
+  protected abstract IN doWrapInputStream(InputStream in) throws IOException;
+
+  protected abstract OUT doWrapOutputStream(OutputStream out) throws IOException;
+
+  protected abstract void doFinishInputStream(IN in) throws IOException;
+
+  protected abstract void doFinishOutputStream(OUT out) throws IOException;
 }

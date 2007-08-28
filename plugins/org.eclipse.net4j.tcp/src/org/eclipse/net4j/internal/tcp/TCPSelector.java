@@ -264,7 +264,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     super.doActivate();
     running = true;
     selector = Selector.open();
-    thread = new Thread(this, "selector"); //$NON-NLS-1$
+    thread = new Thread(this, "TCPSelector"); //$NON-NLS-1$
     thread.setDaemon(true);
     thread.start();
   }

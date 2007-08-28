@@ -53,7 +53,7 @@ public abstract class IndicationWithResponse extends SignalReactor
     OutputStream wrappedOutputStream = wrapOutputStream(out);
     responding(ExtendedDataOutputStream.wrap(wrappedOutputStream));
     finishOutputStream(wrappedOutputStream);
-    out.flush();
+    out.flushWithEOS();
   }
 
   protected abstract void indicating(ExtendedDataInputStream in) throws IOException;

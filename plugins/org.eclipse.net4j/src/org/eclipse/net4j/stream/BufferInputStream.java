@@ -55,16 +55,19 @@ public class BufferInputStream extends InputStream implements IBufferHandler
   @Override
   public int read() throws IOException
   {
-    if (eos && currentBuffer == null)
+    if (currentBuffer == null)
     {
-      // End of sequence
-      return -1;
-    }
+      if (eos)
+      {
+        // End of stream
+        return -1;
+      }
 
-    if (!ensureBuffer())
-    {
-      // Timeout or interrupt
-      return -1;
+      if (!ensureBuffer())
+      {
+        // Timeout or interrupt
+        return -1;
+      }
     }
 
     final int result = currentBuffer.getByteBuffer().get() & 0xFF;

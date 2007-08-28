@@ -47,7 +47,7 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT
     OutputStream wrappedOutputStream = wrapOutputStream(out);
     requesting(ExtendedDataOutputStream.wrap(wrappedOutputStream));
     finishOutputStream(wrappedOutputStream);
-    out.flush();
+    out.flushWithEOS();
     if (TRACER.isEnabled())
     {
       TRACER.trace("================ Confirming " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$

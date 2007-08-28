@@ -45,7 +45,7 @@ public abstract class Request extends SignalActor
     OutputStream wrappedOutputStream = wrapOutputStream(out);
     requesting(ExtendedDataOutputStream.wrap(wrappedOutputStream));
     finishOutputStream(wrappedOutputStream);
-    out.flush();
+    out.flushWithEOS();
   }
 
   protected abstract void requesting(ExtendedDataOutputStream out) throws IOException;

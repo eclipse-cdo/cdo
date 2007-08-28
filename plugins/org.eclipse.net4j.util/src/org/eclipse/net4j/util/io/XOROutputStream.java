@@ -44,7 +44,7 @@ public class XOROutputStream extends FilterOutputStream
         index = 0;
       }
 
-      b = b & 0xff ^ key[index++] & 0xff;
+      b = b & 0xFF ^ key[index++] & 0xFF;
     }
 
     super.write(b);

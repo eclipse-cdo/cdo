@@ -67,7 +67,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
       return -1;
     }
 
-    final int result = currentBuffer.getByteBuffer().get() & 0xff;
+    final int result = currentBuffer.getByteBuffer().get() & 0xFF;
     if (TRACER.isEnabled())
     {
       TRACER.trace("<-- " + HexUtil.formatByte(result) //$NON-NLS-1$

@@ -47,7 +47,7 @@ public class XORInputStream extends FilterInputStream
           index = 0;
         }
 
-        b = b & 0xff ^ key[index++] & 0xff;
+        b = b & 0xFF ^ key[index++] & 0xFF;
       }
     }
 

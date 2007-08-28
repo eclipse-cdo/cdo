@@ -36,6 +36,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public abstract class AbstractPlatform implements OMPlatform
 {
+  public static final String SYSTEM_PROPERTY_OSGI_STATE = "osgi.instance.area"; //$NON-NLS-1$
+
+  public static final String SYSTEM_PROPERTY_NET4J_STATE = "net4j.state"; //$NON-NLS-1$
+
   public static final String SYSTEM_PROPERTY_NET4J_CONFIG = "net4j.config"; //$NON-NLS-1$
 
   static Object systemContext;
@@ -102,6 +106,41 @@ public abstract class AbstractPlatform implements OMPlatform
     this.debugging = debugging;
   }
 
+  public File getStateFolder()
+  {
+    String state = System.getProperty(SYSTEM_PROPERTY_NET4J_STATE);
+    if (state == null)
+    {
+      state = System.getProperty(SYSTEM_PROPERTY_OSGI_STATE);
+      if (state == null)
+      {
+        state = "state";
+      }
+      else
+      {
+        state += ".metadata";
+      }
+    }
+
+    File stateFolder = new File(state);
+    if (!stateFolder.exists())
+    {
+      if (!stateFolder.mkdirs())
+      {
+        OM.LOG.error("State folder " + stateFolder.getAbsolutePath() + " could not be created");
+        return null;
+      }
+    }
+
+    if (!stateFolder.isDirectory())
+    {
+      OM.LOG.error("State folder " + stateFolder.getAbsolutePath() + " is not a directoy");
+      return null;
+    }
+
+    return stateFolder;
+  }
+
   public File getConfigFolder()
   {
     String config = System.getProperty(SYSTEM_PROPERTY_NET4J_CONFIG, "config");
@@ -110,14 +149,14 @@ public abstract class AbstractPlatform implements OMPlatform
     {
       if (!configFolder.mkdirs())
       {
-        OM.LOG.error("Config folder " + config + " could not be created");
+        OM.LOG.error("Config folder " + configFolder.getAbsolutePath() + " could not be created");
         return null;
       }
     }
 
     if (!configFolder.isDirectory())
     {
-      OM.LOG.error("Config folder " + config + " is not a directoy");
+      OM.LOG.error("Config folder " + configFolder.getAbsolutePath() + " is not a directoy");
       return null;
     }
 

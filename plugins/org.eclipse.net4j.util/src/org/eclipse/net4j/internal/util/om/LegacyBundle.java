@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -48,7 +49,7 @@ public class LegacyBundle extends AbstractBundle
 
   public String getStateLocation()
   {
-    throw new UnsupportedOperationException();
+    return new File(getPlatform().getStateFolder(), ".plugins/" + getBundleID()).getAbsolutePath();
   }
 
   public URL getBaseURL()

@@ -39,6 +39,8 @@ public interface OMPlatform
 
   public void removeTraceHandler(OMTraceHandler traceHandler);
 
+  public File getStateFolder();
+
   public File getConfigFolder();
 
   public File getConfigFile(String name);

@@ -3,8 +3,6 @@
 
 <plugin>
 
-<!--
--->
   <extension point="org.eclipse.net4j.util.elementProcessors">
      <elementProcessor class="org.eclipse.emf.cdo.protocol.util.CDOGZIPStreamWrapperInjector"/>
   </extension>

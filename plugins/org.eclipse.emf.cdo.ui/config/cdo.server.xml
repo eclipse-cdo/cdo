@@ -25,9 +25,13 @@
 			<!-- name: <any user-contributed DBAdapter name> -->
 			<dbAdapter name="derby"/>
 			
-			<dataSource 
+			<!-- <dataSource 
 				driverClass="org.apache.derby.jdbc.EmbeddedDataSource" 
 				databaseName="/temp/cdodb1"
+				createDatabase="create"/> -->
+			<dataSource 
+				driverClass="org.apache.derby.jdbc.ClientDataSource" 
+				databaseName="cdodb1"
 				createDatabase="create"/>
 		</store>
 	</repository>

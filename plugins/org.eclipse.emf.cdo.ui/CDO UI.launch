@@ -154,7 +154,7 @@
 <mapEntry key="org.eclipse.datatools.connectivity.sqm.core/debug" value="false"/>
 <mapEntry key="org.eclipse.wst.sse.core/structuredmodel/lifecycle" value="false"/>
 <mapEntry key="org.eclipse.wst.sse.core/tasks/job" value="false"/>
-<mapEntry key="org.eclipse.net4j/debug.buffer" value="true"/>
+<mapEntry key="org.eclipse.net4j/debug.buffer" value="false"/>
 <mapEntry key="org.eclipse.core.resources/contenttype/cache" value="false"/>
 <mapEntry key="org.eclipse.emf.cdo/debug.repository" value="true"/>
 <mapEntry key="org.eclipse.wst.sse.ui/extendedconfigurationbuilder" value="false"/>
@@ -432,7 +432,7 @@
 <mapEntry key="org.eclipse.emf.validation/debug/constraints/evaluation" value="false"/>
 <mapEntry key="org.eclipse.jet/debug/xpath/compilations" value="false"/>
 <mapEntry key="org.eclipse.ui/perf/part.control" value="800"/>
-<mapEntry key="org.eclipse.net4j/debug.buffer.stream" value="true"/>
+<mapEntry key="org.eclipse.net4j/debug.buffer.stream" value="false"/>
 <mapEntry key="org.eclipse.ui/perf/uijob" value="200"/>
 <mapEntry key="org.eclipse.core.runtime/url/debug/cachelookup" value="false"/>
 <mapEntry key="org.eclipse.ui/listeners/IWorkbenchWindow.IPartListener2" value="false"/>

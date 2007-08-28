@@ -5,9 +5,10 @@
 
 <!--
   <extension point="org.eclipse.net4j.util.elementProcessors">
-     <elementProcessor class="org.eclipse.emf.cdo.protocol.util.CDOXORStreamWrapperInjector"/>
+     <elementProcessor class="org.eclipse.emf.cdo.protocol.util.CDOGZIPStreamWrapperInjector"/>
   </extension>
 -->
+
    <extension
          point="org.eclipse.ui.views">
       <category

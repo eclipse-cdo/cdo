@@ -60,7 +60,7 @@ public class RemoteTraceServer
     this.port = port;
     this.address = address;
     serverSocket = bind();
-    new Thread()
+    new Thread("RemoteTraceServer")
     {
       @Override
       public void run()

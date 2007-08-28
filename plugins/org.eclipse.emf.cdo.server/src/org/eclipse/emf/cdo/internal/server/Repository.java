@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IStore;
 
 import org.eclipse.net4j.internal.util.container.Container;
@@ -29,7 +30,7 @@ import java.util.UUID;
 /**
  * @author Eike Stepper
  */
-public class Repository extends Container implements IRepository
+public class Repository extends Container<IRepositoryElement> implements IRepository
 {
   public static final String PROP_OVERRIDE_UUID = "overrideUUID";
 
@@ -63,7 +64,7 @@ public class Repository extends Container implements IRepository
 
   private RevisionManager revisionManager = new RevisionManager(this);
 
-  private Object[] elements;
+  private IRepositoryElement[] elements;
 
   private long nextOIDValue = INITIAL_OID_VALUE;
 
@@ -84,7 +85,8 @@ public class Repository extends Container implements IRepository
     this.name = name;
     this.store = store;
 
-    elements = new Object[] { packageManager, sessionManager, resourceManager, revisionManager, typeManager, store };
+    elements = new IRepositoryElement[] { packageManager, sessionManager, resourceManager, revisionManager,
+        typeManager, store };
   }
 
   public String getName()
@@ -170,7 +172,7 @@ public class Repository extends Container implements IRepository
     return revisionManager;
   }
 
-  public Object[] getElements()
+  public IRepositoryElement[] getElements()
   {
     return elements;
   }

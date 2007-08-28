@@ -17,7 +17,7 @@ import org.eclipse.net4j.util.container.IContainer;
 /**
  * @author Eike Stepper
  */
-public interface IRepository extends IContainer
+public interface IRepository extends IContainer<IRepositoryElement>
 {
   public String getName();
 

@@ -11,10 +11,10 @@
 package org.eclipse.emf.cdo.internal.server.bundle;
 
 import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
+import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 
 import org.eclipse.net4j.util.container.IPluginContainer;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
@@ -62,9 +62,7 @@ public abstract class OM
         DEBUG.trace(OM.class, "Activating repository " + repository.getName());
       }
 
-      LifecycleUtil.activate(repository);
-      IPluginContainer.INSTANCE.putElement("org.eclipse.emf.cdo.server.repositories", "default", repository.getName(),
-          repository);
+      CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
     }
   }
 

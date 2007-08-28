@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocolFactory;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.w3c.dom.Document;
@@ -43,6 +44,12 @@ public final class CDOServerUtil
   {
     container.registerFactory(new RepositoryFactory());
     container.registerFactory(new CDOServerProtocolFactory(repositoryProvider));
+  }
+
+  public static void addRepository(IManagedContainer container, IRepository repository)
+  {
+    LifecycleUtil.activate(repository);
+    container.putElement(RepositoryFactory.PRODUCT_GROUP, RepositoryFactory.TYPE, repository.getName(), repository);
   }
 
   public static Element getRepositoryConfig(String repositoryName) throws ParserConfigurationException, SAXException,

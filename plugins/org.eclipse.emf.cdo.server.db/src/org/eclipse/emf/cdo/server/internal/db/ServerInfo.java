@@ -24,6 +24,12 @@ public abstract class ServerInfo
     this.dbID = dbID;
   }
 
+  @Override
+  public String toString()
+  {
+    return String.valueOf(dbID);
+  }
+
   public static int getDBID(CDOModelElement modelElement)
   {
     return ((ServerInfo)modelElement.getServerInfo()).dbID;

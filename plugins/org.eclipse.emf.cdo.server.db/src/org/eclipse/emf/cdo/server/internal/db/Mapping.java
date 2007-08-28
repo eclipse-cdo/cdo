@@ -14,12 +14,14 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -145,12 +147,12 @@ public abstract class Mapping implements IMapping
 
   protected String mangleTableName(String name, int attempt)
   {
-    return mappingStrategy.getStore().getDBAdapter().mangleTableName(name, attempt);
+    return getDBAdapter().mangleTableName(name, attempt);
   }
 
   protected String mangleFieldName(String name, int attempt)
   {
-    return mappingStrategy.getStore().getDBAdapter().mangleFieldName(name, attempt);
+    return getDBAdapter().mangleFieldName(name, attempt);
   }
 
   protected IDBTable addTable(String name)
@@ -246,5 +248,11 @@ public abstract class Mapping implements IMapping
     }
 
     throw new ImplementationError("Unrecognized CDOType: " + type);
+  }
+
+  protected IDBAdapter getDBAdapter()
+  {
+    IDBStore store = mappingStrategy.getStore();
+    return store.getDBAdapter();
   }
 }

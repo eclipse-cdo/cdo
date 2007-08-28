@@ -10,14 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
-import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
  * @author Eike Stepper
  */
-public class XORInputStream extends FilterInputStream
+public class XORInputStream extends DelegatingInputStream
 {
   private int[] key;
 

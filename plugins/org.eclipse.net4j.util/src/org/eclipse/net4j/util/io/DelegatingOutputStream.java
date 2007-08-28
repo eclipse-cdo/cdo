@@ -1,6 +1,5 @@
 package org.eclipse.net4j.util.io;
 
-import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -16,8 +15,8 @@ import java.io.OutputStream;
  * <code>DelegatingOutputStream</code> may further override some of these
  * methods as well as provide additional methods and fields.
  * <p>
- * <b>Note:</b> The only difference to {@link FilterOutputStream} is that
- * <code>DelegatingOutputStream</code> does <b>not</b> override
+ * <b>Note:</b> The only difference to {@link java.io.FilterOutputStream} is
+ * that <code>DelegatingOutputStream</code> does <b>not</b> override
  * {@link #write(byte[])} or {@link #write(byte[], int, int)} but rather exposes
  * the original implementations of <code>InputStream</code> which call
  * {@link #write(int)} instead of their delegate counterparts.

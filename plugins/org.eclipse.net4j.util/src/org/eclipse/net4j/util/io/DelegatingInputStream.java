@@ -1,6 +1,5 @@
 package org.eclipse.net4j.util.io;
 
-import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -14,8 +13,8 @@ import java.io.InputStream;
  * <code>DelegatingInputStream</code> may further override some of these
  * methods and may also provide additional methods and fields.
  * <p>
- * <b>Note:</b> The only difference to {@link FilterInputStream} is that
- * <code>DelegatingInputStream</code> does <b>not</b> override
+ * <b>Note:</b> The only difference to {@link java.io.FilterInputStream} is
+ * that <code>DelegatingInputStream</code> does <b>not</b> override
  * {@link #read(byte[])} or {@link #read(byte[], int, int)} but rather exposes
  * the original implementations of <code>InputStream</code> which call
  * {@link #read()} instead of their delegate counterparts.

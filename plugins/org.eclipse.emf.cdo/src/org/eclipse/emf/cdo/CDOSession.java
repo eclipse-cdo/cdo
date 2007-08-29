@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.signal.IFailOverStrategy;
 import org.eclipse.net4j.util.container.IContainer;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -24,6 +25,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 public interface CDOSession extends IContainer<CDOView>
 {
   public int getSessionID();
+
+  public IFailOverStrategy getFailOverStrategy();
 
   public IChannel getChannel();
 

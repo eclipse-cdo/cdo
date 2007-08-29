@@ -519,6 +519,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   protected void handleFailOver(IChannel newChannel)
   {
+    channel = newChannel;
+    connector = channel.getConnector();
   }
 
   @Override

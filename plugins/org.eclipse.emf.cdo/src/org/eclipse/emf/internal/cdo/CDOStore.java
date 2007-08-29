@@ -86,6 +86,7 @@ public final class CDOStore implements EStore
     return revision.getContainingFeatureID();
   }
 
+  @Deprecated
   public EStructuralFeature getContainingFeature(InternalEObject eObject)
   {
     throw new UnsupportedOperationException("Use getContainingFeatureID() instead");

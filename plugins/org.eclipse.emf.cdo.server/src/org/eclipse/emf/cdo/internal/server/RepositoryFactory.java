@@ -29,6 +29,13 @@ public class RepositoryFactory extends Factory<Repository>
 
   public Repository create(String name)
   {
+    Repository repository = createRepository();
+    repository.setName(name);
+    return repository;
+  }
+
+  protected Repository createRepository()
+  {
     return new Repository();
   }
 

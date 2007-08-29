@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.signal.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -156,8 +157,9 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
     try
     {
-      ResourcePathRequest signal = new ResourcePathRequest(getSession().getChannel(), resourceID);
-      String path = signal.send();
+      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
+      ResourcePathRequest request = new ResourcePathRequest(session.getChannel(), resourceID);
+      String path = failOverStrategy.send(request);
 
       CDOResourceImpl resource = (CDOResourceImpl)EresourceFactory.eINSTANCE.createCDOResource();
       resource.setResourceSet(resourceSet);

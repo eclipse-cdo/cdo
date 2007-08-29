@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
+import org.eclipse.net4j.signal.IFailOverStrategy;
+
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.LoadPackageRequest;
@@ -72,7 +74,10 @@ public class CDOSessionPackageManager extends CDOPackageManagerImpl
 
     try
     {
-      new LoadPackageRequest(session.getChannel(), cdoPackage).send();
+      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
+      LoadPackageRequest request = new LoadPackageRequest(session.getChannel(), cdoPackage);
+      failOverStrategy.send(request);
+
       if (!cdoPackage.isDynamic())
       {
         OM.LOG.info("Dynamic package created for " + cdoPackage.getPackageURI());

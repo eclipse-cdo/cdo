@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 
+import org.eclipse.net4j.signal.IFailOverStrategy;
+
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
 
 /**
@@ -40,7 +42,9 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   {
     try
     {
-      return new LoadRevisionRequest(session.getChannel(), id).send();
+      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
+      LoadRevisionRequest request = new LoadRevisionRequest(session.getChannel(), id);
+      return failOverStrategy.send(request);
     }
     catch (RuntimeException ex)
     {
@@ -57,8 +61,9 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   {
     try
     {
-      LoadRevisionRequest signal = new LoadRevisionRequest(session.getChannel(), id, timeStamp);
-      return signal.send();
+      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
+      LoadRevisionRequest request = new LoadRevisionRequest(session.getChannel(), id, timeStamp);
+      return failOverStrategy.send(request);
     }
     catch (RuntimeException ex)
     {

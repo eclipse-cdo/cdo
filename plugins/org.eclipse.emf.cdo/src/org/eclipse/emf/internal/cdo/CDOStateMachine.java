@@ -10,6 +10,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ServerException;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.signal.IFailOverStrategy;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
 
@@ -380,12 +381,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     private CDOID requestID(CDOResource resource, CDOViewImpl view)
     {
-      String path = CDOUtil.extractResourcePath(resource.getURI());
-      ResourceIDRequest signal = new ResourceIDRequest(view.getSession().getChannel(), path);
-
       try
       {
-        return signal.send();
+        String path = CDOUtil.extractResourcePath(resource.getURI());
+        CDOSessionImpl session = view.getSession();
+
+        IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
+        ResourceIDRequest request = new ResourceIDRequest(session.getChannel(), path);
+        return failOverStrategy.send(request);
       }
       catch (RuntimeException ex)
       {

@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.protocol.util.TransportException;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.signal.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -119,7 +120,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
         preCommit(dirtyObjects);
 
         IChannel channel = session.getChannel();
-        CommitTransactionResult result = new CommitTransactionRequest(channel, this).send(100000L);
+        IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
+        CommitTransactionRequest request = new CommitTransactionRequest(channel, this);
+        CommitTransactionResult result = failOverStrategy.send(request, 100000L);
         // TODO Change timeout semantics in Net4j
 
         postCommit(newResources, result);

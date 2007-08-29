@@ -29,9 +29,12 @@ import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.signal.IFailOverEvent;
+import org.eclipse.net4j.signal.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
@@ -72,6 +75,20 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   private int sessionID;
 
+  private IFailOverStrategy failOverStrategy;
+
+  private IListener failOverStrategyListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof IFailOverEvent)
+      {
+        IFailOverEvent e = (IFailOverEvent)event;
+        handleFailOver(e.getNewChannel());
+      }
+    }
+  };
+
   private IConnector connector;
 
   private IChannel channel;
@@ -107,14 +124,33 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   public CDOSessionImpl(EPackage.Registry delegate)
   {
-    packageRegistry = new CDOPackageRegistryImpl(this, delegate);
-    packageManager = new CDOSessionPackageManager(this);
-    revisionManager = new CDORevisionManagerImpl(this);
+    packageRegistry = createPackageRegistry(delegate);
+    packageManager = createPackageManager();
+    revisionManager = createRevisionManager();
   }
 
   public int getSessionID()
   {
     return sessionID;
+  }
+
+  public IFailOverStrategy getFailOverStrategy()
+  {
+    return failOverStrategy == null ? IFailOverStrategy.NOOP : failOverStrategy;
+  }
+
+  public void setFailOverStrategy(IFailOverStrategy failOverStrategy)
+  {
+    if (this.failOverStrategy != null)
+    {
+      this.failOverStrategy.removeListener(failOverStrategyListener);
+    }
+
+    this.failOverStrategy = failOverStrategy;
+    if (this.failOverStrategy != null)
+    {
+      this.failOverStrategy.addListener(failOverStrategyListener);
+    }
   }
 
   public IConnector getConnector()
@@ -428,67 +464,27 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     return MessageFormat.format("CDOSession[{0}/{1}]", connector, repositoryName);
   }
 
-  @Override
-  protected void doBeforeActivate() throws Exception
+  protected CDOPackageRegistryImpl createPackageRegistry(EPackage.Registry delegate)
   {
-    super.doBeforeActivate();
-    if (channel == null && connector == null)
-    {
-      throw new IllegalStateException("channel == null && connector == null");
-    }
-
-    if (repositoryName == null)
-    {
-      throw new IllegalStateException("repositoryName == null");
-    }
+    return new CDOPackageRegistryImpl(this, delegate);
   }
 
-  @Override
-  protected void doActivate() throws Exception
+  protected CDOSessionPackageManager createPackageManager()
   {
-    super.doActivate();
-    if (channel == null)
-    {
-      channel = connector.openChannel(CDOProtocolConstants.PROTOCOL_NAME, this);
-    }
-
-    EventUtil.addListener(channel, channelListener);
-
-    OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName);
-    OpenSessionResult result = request.send();
-    sessionID = result.getSessionID();
-    repositoryUUID = result.getRepositoryUUID();
-    packageManager.addPackageProxies(result.getPackageInfos());
+    return new CDOSessionPackageManager(this);
   }
 
-  @Override
-  protected void doDeactivate() throws Exception
+  protected CDORevisionManagerImpl createRevisionManager()
   {
-    EventUtil.removeListener(channel, channelListener);
-    synchronized (views)
-    {
-      for (CDOViewImpl view : getViews())
-      {
-        try
-        {
-          view.close();
-        }
-        catch (RuntimeException ignore)
-        {
-        }
-      }
-    }
-
-    channel.close();
-    super.doDeactivate();
+    return new CDORevisionManagerImpl(this);
   }
 
-  private ResourceSet createResourceSet()
+  protected ResourceSet createResourceSet()
   {
     return new ResourceSetImpl();
   }
 
-  private void attach(ResourceSet resourceSet, CDOViewImpl view)
+  protected void attach(ResourceSet resourceSet, CDOViewImpl view)
   {
     if (CDOUtil.getView(resourceSet) != null)
     {
@@ -519,6 +515,67 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     resourceSet.eAdapters().add(view);
     sendViewsNotification(view);
     fireElementAddedEvent(view);
+  }
+
+  protected void handleFailOver(IChannel newChannel)
+  {
+  }
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    if (channel == null && connector == null)
+    {
+      throw new IllegalStateException("channel == null && connector == null");
+    }
+
+    if (repositoryName == null)
+    {
+      throw new IllegalStateException("repositoryName == null");
+    }
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    if (channel == null)
+    {
+      channel = connector.openChannel(CDOProtocolConstants.PROTOCOL_NAME, this);
+    }
+
+    EventUtil.addListener(channel, channelListener);
+
+    IFailOverStrategy failOverStrategy = getFailOverStrategy();
+    OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName);
+    OpenSessionResult result = failOverStrategy.send(request);
+
+    sessionID = result.getSessionID();
+    repositoryUUID = result.getRepositoryUUID();
+    packageManager.addPackageProxies(result.getPackageInfos());
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    EventUtil.removeListener(channel, channelListener);
+    synchronized (views)
+    {
+      for (CDOViewImpl view : getViews())
+      {
+        try
+        {
+          view.close();
+        }
+        catch (RuntimeException ignore)
+        {
+        }
+      }
+    }
+
+    channel.close();
+    super.doDeactivate();
   }
 
   private void sendViewsNotification(CDOViewImpl view)

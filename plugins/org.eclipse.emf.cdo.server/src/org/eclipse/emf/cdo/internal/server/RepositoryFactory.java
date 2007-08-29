@@ -10,13 +10,15 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.net4j.internal.util.factory.Factory;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepositoryFactory;
+
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
  * @author Eike Stepper
  */
-public class RepositoryFactory extends Factory<Repository>
+public class RepositoryFactory implements IRepositoryFactory
 {
   public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositories";
 
@@ -24,22 +26,19 @@ public class RepositoryFactory extends Factory<Repository>
 
   public RepositoryFactory()
   {
-    super(PRODUCT_GROUP, TYPE);
   }
 
-  public Repository create(String name)
+  public String getRepositoryType()
   {
-    Repository repository = createRepository();
-    repository.setName(name);
-    return repository;
+    return TYPE;
   }
 
-  protected Repository createRepository()
+  public Repository createRepository()
   {
     return new Repository();
   }
 
-  public static Repository get(IManagedContainer container, String name)
+  public static IRepository get(IManagedContainer container, String name)
   {
     return (Repository)container.getElement(PRODUCT_GROUP, TYPE, name);
   }

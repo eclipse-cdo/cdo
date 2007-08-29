@@ -42,7 +42,7 @@ public final class CDOServerUtil
 
   public static void prepareContainer(IManagedContainer container, IRepositoryProvider repositoryProvider)
   {
-    container.registerFactory(new RepositoryFactory());
+    // container.registerFactory(new RepositoryFactory());
     container.registerFactory(new CDOServerProtocolFactory(repositoryProvider));
   }
 

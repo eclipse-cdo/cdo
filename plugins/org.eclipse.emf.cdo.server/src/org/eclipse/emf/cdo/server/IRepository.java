@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.internal.server.TypeManager;
 
 import org.eclipse.net4j.util.container.IContainer;
 
+import java.util.Map;
+
 /**
  * @author Eike Stepper
  */
@@ -21,7 +23,15 @@ public interface IRepository extends IContainer<IRepositoryElement>
 {
   public String getName();
 
+  public void setName(String name);
+
   public IStore getStore();
+
+  public void setStore(IStore store);
+
+  public Map<String, String> getProperties();
+
+  public void setProperties(Map<String, String> properties);
 
   public String getUUID();
 

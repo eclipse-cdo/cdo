@@ -11,8 +11,6 @@
 package org.eclipse.emf.cdo.internal.server.bundle;
 
 import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
-import org.eclipse.emf.cdo.server.CDOServerUtil;
-import org.eclipse.emf.cdo.server.IRepository;
 
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.OMBundle;
@@ -48,22 +46,8 @@ public abstract class OM
 
   static void start() throws Exception
   {
-    if (DEBUG.isEnabled())
-    {
-      DEBUG.trace(OM.class, "Configuring repositories");
-    }
-
-    RepositoryConfigurator configurator = new RepositoryConfigurator();
-    IRepository[] repositories = configurator.configure(OMPlatform.INSTANCE.getConfigFile("cdo.server.xml"));
-    for (IRepository repository : repositories)
-    {
-      if (DEBUG.isEnabled())
-      {
-        DEBUG.trace(OM.class, "Activating repository " + repository.getName());
-      }
-
-      CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
-    }
+    RepositoryConfigurator configurator = new RepositoryConfigurator(IPluginContainer.INSTANCE);
+    configurator.configure(OMPlatform.INSTANCE.getConfigFile("cdo.server.xml"));
   }
 
   /**

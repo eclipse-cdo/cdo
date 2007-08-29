@@ -99,9 +99,16 @@ public class OpenSessionIndication extends IndicationWithResponse
 
   private Repository getRepository()
   {
-    CDOServerProtocol protocol = (CDOServerProtocol)getProtocol();
-    IRepositoryProvider repositoryProvider = protocol.getInfraStructure();
-    return (Repository)repositoryProvider.getRepository(repositoryName);
+    try
+    {
+      CDOServerProtocol protocol = (CDOServerProtocol)getProtocol();
+      IRepositoryProvider repositoryProvider = protocol.getInfraStructure();
+      return (Repository)repositoryProvider.getRepository(repositoryName);
+    }
+    catch (RuntimeException ex)
+    {
+      throw new RepositoryNotFoundException(repositoryName);
+    }
   }
 
   private void writeSessionID(ExtendedDataOutputStream out, ISession session) throws IOException

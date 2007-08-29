@@ -11,11 +11,16 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepositoryFactory;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -44,13 +49,28 @@ import java.util.Map;
  */
 public class RepositoryConfigurator
 {
-  public RepositoryConfigurator()
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, RepositoryConfigurator.class);
+
+  private IManagedContainer container;
+
+  public RepositoryConfigurator(IManagedContainer container)
   {
+    this.container = container;
+  }
+
+  public IManagedContainer getContainer()
+  {
+    return container;
   }
 
   public IRepository[] configure(File configFile) throws ParserConfigurationException, SAXException, IOException,
       CoreException
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Configuring repositories from " + configFile.getAbsolutePath());
+    }
+
     List<IRepository> repositories = new ArrayList();
     Document document = getDocument(configFile);
     NodeList elements = document.getElementsByTagName("repository");
@@ -59,6 +79,7 @@ public class RepositoryConfigurator
       Element repositoryConfig = (Element)elements.item(i);
       IRepository repository = configureRepository(repositoryConfig);
       repositories.add(repository);
+      CDOServerUtil.addRepository(container, repository);
     }
 
     return repositories.toArray(new IRepository[repositories.size()]);
@@ -67,22 +88,40 @@ public class RepositoryConfigurator
   protected IRepository configureRepository(Element repositoryConfig) throws CoreException
   {
     String repositoryName = repositoryConfig.getAttribute("name");
+    if (StringUtil.isEmpty(repositoryName))
+    {
+      throw new IllegalArgumentException("Repository name is missing or empty");
+    }
+
+    String repositoryType = repositoryConfig.getAttribute("type");
+    if (StringUtil.isEmpty(repositoryType))
+    {
+      repositoryType = RepositoryFactory.TYPE;
+    }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Configuring repository {0} (type={1})", repositoryName, repositoryType);
+    }
+
+    IRepository repository = createRepository(repositoryType);
+    repository.setName(repositoryName);
+
     Element storeConfig = getStoreConfig(repositoryConfig);
     IStore store = configureStore(storeConfig);
-    Map<String, String> properties = getProperties(repositoryConfig, 1);
-
-    Repository repository = createRepository(repositoryName, store);
-    repository.setProperties(properties);
     store.setRepository(repository);
+    repository.setStore(store);
+
+    Map<String, String> properties = getProperties(repositoryConfig, 1);
+    repository.setProperties(properties);
+
     return repository;
   }
 
-  protected Repository createRepository(String repositoryName, IStore store)
+  protected IRepository createRepository(String repositoryType) throws CoreException
   {
-    Repository repository = new Repository();
-    repository.setName(repositoryName);
-    repository.setStore(store);
-    return repository;
+    IRepositoryFactory factory = getRepositoryFactory(repositoryType);
+    return factory.createRepository();
   }
 
   protected IStore configureStore(Element storeConfig) throws CoreException
@@ -94,29 +133,33 @@ public class RepositoryConfigurator
 
   protected IStoreFactory getStoreFactory(String type) throws CoreException
   {
-    IExtensionRegistry registry = Platform.getExtensionRegistry();
-    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, "storeFactories");
-    for (IConfigurationElement element : elements)
+    IStoreFactory factory = (IStoreFactory)createExecutableExtension("storeFactories", "storeFactory", "storeType",
+        type);
+    if (factory == null)
     {
-      if (ObjectUtil.equals(element.getName(), "storeFactory"))
-      {
-        String storeType = element.getAttribute("storeType");
-        if (ObjectUtil.equals(storeType, type))
-        {
-          return (IStoreFactory)element.createExecutableExtension("class");
-        }
-      }
+      throw new IllegalStateException("Store factory not found: " + type);
     }
 
-    throw new IllegalStateException("Store factory not found: " + type);
+    return factory;
+  }
+
+  protected IRepositoryFactory getRepositoryFactory(String type) throws CoreException
+  {
+    IRepositoryFactory factory = (IRepositoryFactory)createExecutableExtension("repositoryFactories",
+        "repositoryFactory", "repositoryType", type);
+    if (factory == null)
+    {
+      throw new IllegalStateException("Repository factory not found: " + type);
+    }
+
+    return factory;
   }
 
   protected Document getDocument(File configFile) throws ParserConfigurationException, SAXException, IOException
   {
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     DocumentBuilder builder = factory.newDocumentBuilder();
-    Document document = builder.parse(configFile);
-    return document;
+    return builder.parse(configFile);
   }
 
   protected Element getStoreConfig(Element repositoryConfig)
@@ -160,5 +203,25 @@ public class RepositoryConfigurator
         }
       }
     }
+  }
+
+  private static Object createExecutableExtension(String extPointName, String elementName, String attributeName,
+      String type) throws CoreException
+  {
+    IExtensionRegistry registry = Platform.getExtensionRegistry();
+    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, extPointName);
+    for (IConfigurationElement element : elements)
+    {
+      if (ObjectUtil.equals(element.getName(), elementName))
+      {
+        String storeType = element.getAttribute(attributeName);
+        if (ObjectUtil.equals(storeType, type))
+        {
+          return element.createExecutableExtension("class");
+        }
+      }
+    }
+
+    return null;
   }
 }

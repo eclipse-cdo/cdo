@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.signal.IFailOverStrategy;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -120,10 +121,11 @@ public final class CDOUtil
     return packageTypes;
   }
 
-  public static CDOSession openSession(IConnector connector, String repositoryName, EPackage.Registry delegate)
-      throws ConnectorException
+  public static CDOSession openSession(IConnector connector, String repositoryName, EPackage.Registry delegate,
+      IFailOverStrategy failOverStrategy) throws ConnectorException
   {
     CDOSessionImpl session = new CDOSessionImpl(delegate);
+    session.setFailOverStrategy(failOverStrategy);
     session.setConnector(connector);
     session.setRepositoryName(repositoryName);
     LifecycleUtil.activate(session);
@@ -132,7 +134,7 @@ public final class CDOUtil
 
   public static CDOSession openSession(IConnector connector, String repositoryName) throws ConnectorException
   {
-    return openSession(connector, repositoryName, null);
+    return openSession(connector, repositoryName, null, null);
   }
 
   public static CDOView getView(ResourceSet resourceSet)

@@ -84,7 +84,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
       if (event instanceof IFailOverEvent)
       {
         IFailOverEvent e = (IFailOverEvent)event;
-        handleFailOver(e.getNewChannel());
+        handleFailOver(e.getOldChannel(), e.getNewChannel());
       }
     }
   };
@@ -517,8 +517,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     fireElementAddedEvent(view);
   }
 
-  protected void handleFailOver(IChannel newChannel)
+  protected void handleFailOver(IChannel oldChannel, IChannel newChannel)
   {
+    EventUtil.removeListener(oldChannel, channelListener);
+    EventUtil.addListener(newChannel, channelListener);
+
     channel = newChannel;
     connector = channel.getConnector();
   }
@@ -547,15 +550,13 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
       channel = connector.openChannel(CDOProtocolConstants.PROTOCOL_NAME, this);
     }
 
-    EventUtil.addListener(channel, channelListener);
-
-    IFailOverStrategy failOverStrategy = getFailOverStrategy();
     OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName);
-    OpenSessionResult result = failOverStrategy.send(request);
+    OpenSessionResult result = request.send();
 
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
     packageManager.addPackageProxies(result.getPackageInfos());
+    EventUtil.addListener(channel, channelListener);
   }
 
   @Override

@@ -172,7 +172,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     CDOState state = object.cdoState();
     if (lastTracedObject != object || lastTracedState != state || lastTracedEvent != event)
     {
-      TRACER.format("{0}: {1}", event, object);
+      TRACER.format("{0}: {1}", event, object.getClass().getName());
       lastTracedObject = object;
       lastTracedState = state;
       lastTracedEvent = event;

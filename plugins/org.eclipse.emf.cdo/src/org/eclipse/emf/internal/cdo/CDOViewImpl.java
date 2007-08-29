@@ -162,7 +162,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       String path = failOverStrategy.send(request);
 
       CDOResourceImpl resource = (CDOResourceImpl)EresourceFactory.eINSTANCE.createCDOResource();
-      resource.setResourceSet(resourceSet);
       resource.setPath(path);
 
       InternalCDOObject resourceObject = resource;
@@ -171,6 +170,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       resourceObject.cdoInternalSetResource(resource);
       resourceObject.cdoInternalSetState(CDOState.PROXY);
 
+      resourceSet.getResources().add(resource);
       return resource;
     }
     catch (RuntimeException ex)

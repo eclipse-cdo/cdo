@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
+import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.text.MessageFormat;
@@ -36,10 +37,10 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
   private int pooledBuffers;
 
   @ExcludeFromDump
-  private final Queue<BufferRef> buffers = new ConcurrentLinkedQueue();
+  private final Queue<BufferRef> buffers = new ConcurrentLinkedQueue<BufferRef>();
 
   @ExcludeFromDump
-  private final ReferenceQueue<BufferRef> referenceQueue = new ReferenceQueue();
+  private final ReferenceQueue<IBuffer> referenceQueue = new ReferenceQueue<IBuffer>();
 
   @ExcludeFromDump
   private Monitor monitor;
@@ -55,7 +56,7 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
     return provider;
   }
 
-  public ReferenceQueue<BufferRef> getReferenceQueue()
+  public ReferenceQueue<IBuffer> getReferenceQueue()
   {
     return referenceQueue;
   }
@@ -114,6 +115,11 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
     return MessageFormat.format("BufferPool[{0}]", getBufferCapacity()); //$NON-NLS-1$ 
   }
 
+  protected BufferRef createBufferRef(IBuffer buffer)
+  {
+    return new BufferRef(buffer, referenceQueue);
+  }
+
   @Override
   protected IBuffer doProvideBuffer()
   {
@@ -156,7 +162,8 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
       TRACER.trace("Retaining " + buffer); //$NON-NLS-1$
     }
 
-    buffers.add(new BufferRef(buffer, referenceQueue));
+    BufferRef bufferRef = createBufferRef(buffer);
+    buffers.add(bufferRef);
     ++pooledBuffers;
   }
 
@@ -178,7 +185,7 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
 
   private static final class BufferRef extends SoftReference<IBuffer>
   {
-    public BufferRef(IBuffer buffer, ReferenceQueue queue)
+    public BufferRef(IBuffer buffer, ReferenceQueue<IBuffer> queue)
     {
       super(buffer, queue);
     }
@@ -204,7 +211,7 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
       {
         while (isActive() && !isInterrupted())
         {
-          BufferRef bufferRef = (BufferRef)referenceQueue.remove(200);
+          Reference<? extends IBuffer> bufferRef = referenceQueue.remove(200);
           if (bufferRef != null)
           {
             if (buffers.remove(bufferRef))

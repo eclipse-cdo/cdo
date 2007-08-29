@@ -54,15 +54,15 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   private Boolean verifyingRevisions;
 
-  private TypeManager typeManager = new TypeManager(this);
+  private TypeManager typeManager = createTypeManager();
 
-  private PackageManager packageManager = new PackageManager(this);
+  private PackageManager packageManager = createPackageManager();
 
-  private SessionManager sessionManager = new SessionManager(this);
+  private SessionManager sessionManager = createSessionManager();
 
-  private ResourceManager resourceManager = new ResourceManager(this);
+  private ResourceManager resourceManager = createResourceManager();
 
-  private RevisionManager revisionManager = new RevisionManager(this);
+  private RevisionManager revisionManager = createRevisionManager();
 
   private IRepositoryElement[] elements;
 
@@ -70,23 +70,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   private long nextMetaIDValue = INITIAL_META_ID_VALUE;
 
-  public Repository(String name, IStore store)
+  public Repository()
   {
-    if (StringUtil.isEmpty(name))
-    {
-      throw new IllegalArgumentException("name is null or empty");
-    }
-
-    if (store == null)
-    {
-      throw new IllegalArgumentException("store is null");
-    }
-
-    this.name = name;
-    this.store = store;
-
-    elements = new IRepositoryElement[] { packageManager, sessionManager, resourceManager, revisionManager,
-        typeManager, store };
   }
 
   public String getName()
@@ -94,9 +79,19 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return name;
   }
 
+  public void setName(String name)
+  {
+    this.name = name;
+  }
+
   public IStore getStore()
   {
     return store;
+  }
+
+  public void setStore(IStore store)
+  {
+    this.store = store;
   }
 
   public String getUUID()
@@ -205,20 +200,70 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return MessageFormat.format("Repository[{0}, {1}]", name, uuid);
   }
 
+  protected TypeManager createTypeManager()
+  {
+    return new TypeManager(this);
+  }
+
+  protected PackageManager createPackageManager()
+  {
+    return new PackageManager(this);
+  }
+
+  protected SessionManager createSessionManager()
+  {
+    return new SessionManager(this);
+  }
+
+  protected ResourceManager createResourceManager()
+  {
+    return new ResourceManager(this);
+  }
+
+  protected RevisionManager createRevisionManager()
+  {
+    return new RevisionManager(this);
+  }
+
   @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
+    if (StringUtil.isEmpty(name))
+    {
+      throw new IllegalArgumentException("name is null or empty");
+    }
+
+    if (store == null)
+    {
+      throw new IllegalArgumentException("store is null");
+    }
+
     if (isSupportingAudits() && !store.hasAuditingSupport())
     {
       throw new IllegalStateException("Store without auditing support");
     }
+
+    elements = new IRepositoryElement[] { packageManager, sessionManager, resourceManager, revisionManager,
+        typeManager, store };
   }
 
   @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    activateRepository();
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    deactivateRepository();
+    super.doDeactivate();
+  }
+
+  protected void activateRepository() throws Exception
+  {
     LifecycleUtil.activate(store);
     typeManager.setPersistent(!store.hasEfficientTypeLookup());
     typeManager.activate();
@@ -228,8 +273,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     revisionManager.activate();
   }
 
-  @Override
-  protected void doDeactivate() throws Exception
+  protected void deactivateRepository()
   {
     revisionManager.deactivate();
     resourceManager.deactivate();
@@ -237,6 +281,5 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     packageManager.deactivate();
     typeManager.deactivate();
     LifecycleUtil.deactivate(store);
-    super.doDeactivate();
   }
 }

@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
-
 import org.eclipse.net4j.internal.util.factory.Factory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
@@ -31,9 +29,7 @@ public class RepositoryFactory extends Factory<Repository>
 
   public Repository create(String name)
   {
-    // Repositories are not created by factories rather they are put into a
-    // container directly. See RepositoryConfigurator
-    throw new RepositoryNotFoundException(name);
+    return new Repository();
   }
 
   public static Repository get(IManagedContainer container, String name)

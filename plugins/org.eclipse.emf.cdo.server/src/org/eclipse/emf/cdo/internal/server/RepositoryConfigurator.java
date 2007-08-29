@@ -69,11 +69,19 @@ public class RepositoryConfigurator
     String repositoryName = repositoryConfig.getAttribute("name");
     Element storeConfig = getStoreConfig(repositoryConfig);
     IStore store = configureStore(storeConfig);
-    Map<String, String> properties = RepositoryConfigurator.getProperties(repositoryConfig, 1);
+    Map<String, String> properties = getProperties(repositoryConfig, 1);
 
-    Repository repository = new Repository(repositoryName, store);
+    Repository repository = createRepository(repositoryName, store);
     repository.setProperties(properties);
     store.setRepository(repository);
+    return repository;
+  }
+
+  protected Repository createRepository(String repositoryName, IStore store)
+  {
+    Repository repository = new Repository();
+    repository.setName(repositoryName);
+    repository.setStore(store);
     return repository;
   }
 

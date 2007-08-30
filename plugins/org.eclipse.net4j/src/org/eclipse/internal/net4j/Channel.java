@@ -215,6 +215,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     super.doActivate();
     sendQueue = new ConcurrentLinkedQueue();
     if (receiveExecutor == null)
+    // XXX if (true)
     {
       receiveSerializer = new SynchronousWorkSerializer();
     }
@@ -307,7 +308,14 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
 
     public void run()
     {
-      receiveHandler.handleBuffer(buffer);
+      if (receiveHandler != null)
+      {
+        receiveHandler.handleBuffer(buffer);
+      }
+      else
+      {
+        buffer.release();
+      }
     }
   }
 }

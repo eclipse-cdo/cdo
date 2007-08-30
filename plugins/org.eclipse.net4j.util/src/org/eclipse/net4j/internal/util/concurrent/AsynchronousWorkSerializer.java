@@ -31,6 +31,8 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, Runnable
 
   private Occupation occupation = new Occupation();
 
+  // private Object newElementLock = new Object();
+
   public AsynchronousWorkSerializer(ExecutorService executorService, Queue<Runnable> workQueue)
   {
     if (executorService == null)
@@ -54,22 +56,26 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, Runnable
 
   public void addWork(Runnable work)
   {
-    workQueue.add(work);
-
-    // isOccupied can (and must) be called unsynchronized here
-    if (!occupation.isOccupied())
+    // Need to be a block of execution. Cannot add when doing last check
+    // XXX synchronized (newElementLock)
     {
-      synchronized (occupation)
-      {
-        occupation.setOccupied(true);
-      }
+      workQueue.add(work);
 
-      if (TRACER.isEnabled())
+      // isOccupied can (and must) be called unsynchronized here
+      if (!occupation.isOccupied())
       {
-        TRACER.trace("Notifying executor service"); //$NON-NLS-1$
-      }
+        synchronized (occupation)
+        {
+          occupation.setOccupied(true);
+        }
 
-      executorService.execute(this);
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Notifying executor service"); //$NON-NLS-1$
+        }
+
+        executorService.execute(this);
+      }
     }
   }
 
@@ -80,25 +86,47 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, Runnable
    */
   public void run()
   {
-    synchronized (occupation)
+    // XXX synchronized (occupation)
     {
       Runnable work;
-      while (occupation.isOccupied() && (work = workQueue.poll()) != null)
+      // for (;;)
       {
-        try
+        while (occupation.isOccupied() && (work = workQueue.poll()) != null)
         {
-          work.run();
-        }
-        catch (RuntimeException ex)
-        {
-          if (TRACER.isEnabled())
+          try
           {
-            TRACER.trace(ex);
+            work.run();
+          }
+          catch (RuntimeException ex)
+          {
+            if (TRACER.isEnabled())
+            {
+              TRACER.trace(ex);
+            }
           }
         }
-      }
 
-      occupation.setOccupied(false);
+        // try
+        // {
+        // Thread.sleep(500);
+        // }
+        // catch (InterruptedException ex)
+        // {
+        // throw WrappedException.wrap(ex);
+        // }
+
+        // Could put the sync in the while loop... but not efficient.
+        // Doing a last check to make sure that no one added something in the
+        // queue
+        // synchronized (newElementLock)
+        // {
+        // if (!occupation.isOccupied() || (work = workQueue.peek()) == null)
+        // {
+        // occupation.setOccupied(false);
+        // break;
+        // }
+        // }
+      }
     }
   }
 

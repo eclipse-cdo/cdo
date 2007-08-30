@@ -17,7 +17,7 @@ import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IChannelID;
 import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.internal.util.concurrent.AsynchronousWorkSerializer;
+import org.eclipse.net4j.internal.util.concurrent.CompletionWorkSerializer;
 import org.eclipse.net4j.internal.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -215,13 +215,13 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     super.doActivate();
     sendQueue = new ConcurrentLinkedQueue();
     if (receiveExecutor == null)
-    // XXX if (true)
     {
       receiveSerializer = new SynchronousWorkSerializer();
     }
     else
     {
-      receiveSerializer = new AsynchronousWorkSerializer(receiveExecutor);
+      // receiveSerializer = new AsynchronousWorkSerializer(receiveExecutor);
+      receiveSerializer = new CompletionWorkSerializer(receiveExecutor);
     }
   }
 

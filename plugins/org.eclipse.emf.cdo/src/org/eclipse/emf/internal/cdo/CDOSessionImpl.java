@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
@@ -74,6 +75,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   private transient long nextTemporaryID = INITIAL_TEMPORARY_ID;
 
   private int sessionID;
+
+  private int referenceChunkSize = CDORevisionImpl.COMPLETE_REFERENCES;
 
   private IFailOverStrategy failOverStrategy;
 
@@ -132,6 +135,21 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   public int getSessionID()
   {
     return sessionID;
+  }
+
+  public int getReferenceChunkSize()
+  {
+    return referenceChunkSize;
+  }
+
+  public void setReferenceChunkSize(int referenceChunkSize)
+  {
+    if (referenceChunkSize < 0)
+    {
+      referenceChunkSize = CDORevisionImpl.COMPLETE_REFERENCES;
+    }
+
+    this.referenceChunkSize = referenceChunkSize;
   }
 
   public IFailOverStrategy getFailOverStrategy()

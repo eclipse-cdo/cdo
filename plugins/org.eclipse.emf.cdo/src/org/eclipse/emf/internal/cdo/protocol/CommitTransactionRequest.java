@@ -113,7 +113,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     {
       InternalCDOObject object = (InternalCDOObject)it.next();
       CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
-      revision.write(out, transaction);
+      revision.write(out, transaction, CDORevisionImpl.COMPLETE_REFERENCES);
     }
   }
 

@@ -203,7 +203,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   public CDORevisionImpl getRevision(CDOID id)
   {
     CDORevisionResolver revisionManager = session.getRevisionManager();
-    return (CDORevisionImpl)revisionManager.getRevision(id);
+    return (CDORevisionImpl)revisionManager.getRevision(id, session.getReferenceChunkSize());
   }
 
   public InternalCDOObject getObject(CDOID id)

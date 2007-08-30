@@ -38,12 +38,12 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   }
 
   @Override
-  protected CDORevisionImpl loadRevision(CDOID id)
+  protected CDORevisionImpl loadRevision(CDOID id, int referenceChunk)
   {
     try
     {
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      LoadRevisionRequest request = new LoadRevisionRequest(session.getChannel(), id);
+      LoadRevisionRequest request = new LoadRevisionRequest(session.getChannel(), id, referenceChunk);
       return failOverStrategy.send(request);
     }
     catch (RuntimeException ex)
@@ -57,12 +57,12 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   }
 
   @Override
-  protected CDORevisionImpl loadRevision(CDOID id, long timeStamp)
+  protected CDORevisionImpl loadRevision(CDOID id, int referenceChunk, long timeStamp)
   {
     try
     {
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      LoadRevisionRequest request = new LoadRevisionRequest(session.getChannel(), id, timeStamp);
+      LoadRevisionRequest request = new LoadRevisionRequest(session.getChannel(), id, referenceChunk, timeStamp);
       return failOverStrategy.send(request);
     }
     catch (RuntimeException ex)

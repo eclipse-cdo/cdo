@@ -60,7 +60,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   }
 
   @Override
-  protected CDORevisionImpl loadRevision(CDOID id)
+  protected CDORevisionImpl loadRevision(CDOID id, int referenceChunk)
   {
     IStoreReader storeReader = StoreUtil.getReader();
     CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevision(id);
@@ -69,7 +69,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   }
 
   @Override
-  protected CDORevisionImpl loadRevision(CDOID id, long timeStamp)
+  protected CDORevisionImpl loadRevision(CDOID id, int referenceChunk, long timeStamp)
   {
     IStoreReader storeReader = StoreUtil.getReader();
     CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevision(id, timeStamp);

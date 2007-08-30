@@ -129,7 +129,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
         {
           if (buffers == null)
           {
-            // Stream has been closed
+            // Stream has been closed - shutting sown
             return false;
           }
 

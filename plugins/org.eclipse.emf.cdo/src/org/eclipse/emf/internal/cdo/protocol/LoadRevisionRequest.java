@@ -35,27 +35,51 @@ public class LoadRevisionRequest extends CDOClientRequest<CDORevisionImpl>
 
   private Long timeStamp;
 
-  public LoadRevisionRequest(IChannel channel, CDOID id)
+  private int referenceChunk;
+
+  public LoadRevisionRequest(IChannel channel, CDOID id, int referenceChunk)
   {
     super(channel, CDOProtocolConstants.SIGNAL_LOAD_REVISION);
     this.id = id;
+    this.referenceChunk = referenceChunk;
   }
 
-  public LoadRevisionRequest(IChannel channel, CDOID id, long timeStamp)
+  public LoadRevisionRequest(IChannel channel, CDOID id, int referenceChunk, long timeStamp)
   {
-    this(channel, id);
+    this(channel, id, referenceChunk);
     this.timeStamp = timeStamp;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (referenceChunk == CDORevisionImpl.COMPLETE_REFERENCES)
     {
-      PROTOCOL.format("Writing ID: {0}", id);
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Writing ID: {0}", id);
+      }
+
+      CDOIDImpl.write(out, id);
+    }
+    else
+    {
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Writing ID: {0}", id);
+      }
+
+      CDOID negID = CDOIDImpl.create(-id.getValue());
+      CDOIDImpl.write(out, negID);
+
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Writing referenceChunk: {0}", referenceChunk);
+      }
+
+      out.writeInt(referenceChunk);
     }
 
-    CDOIDImpl.write(out, id);
     if (timeStamp != null)
     {
       if (PROTOCOL.isEnabled())

@@ -131,6 +131,11 @@ public abstract class Signal implements Runnable
     }
     catch (EOFException ex)
     {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(ex);
+      }
+
       throw new TimeoutException("Timeout");
     }
     catch (Exception ex)

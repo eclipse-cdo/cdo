@@ -31,6 +31,8 @@ public class LoadRevisionIndication extends CDOReadIndication
 
   private CDORevisionImpl revision;
 
+  private int referenceChunk;
+
   public LoadRevisionIndication()
   {
     super(CDOProtocolConstants.SIGNAL_LOAD_REVISION);
@@ -40,9 +42,28 @@ public class LoadRevisionIndication extends CDOReadIndication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     CDOID id = CDOIDImpl.read(in);
-    if (PROTOCOL.isEnabled())
+    if (id.isTemporary())
     {
-      PROTOCOL.format("Read ID: {0}", id);
+      id = CDOIDImpl.create(-id.getValue());
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Read ID: {0}", id);
+      }
+
+      referenceChunk = in.readInt();
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Read referenceChunk: {0}", referenceChunk);
+      }
+    }
+    else
+    {
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Read ID: {0}", id);
+      }
+
+      referenceChunk = CDORevisionImpl.COMPLETE_REFERENCES;
     }
 
     boolean historical = in.readBoolean();
@@ -54,17 +75,17 @@ public class LoadRevisionIndication extends CDOReadIndication
         PROTOCOL.format("Read timeStamp: {0}", timeStamp);
       }
 
-      revision = getRevisionManager().getRevision(id, timeStamp);
+      revision = getRevisionManager().getRevision(id, referenceChunk, timeStamp);
     }
     else
     {
-      revision = getRevisionManager().getRevision(id);
+      revision = getRevisionManager().getRevision(id, referenceChunk);
     }
   }
 
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    revision.write(out, getSession());
+    revision.write(out, getSession(), referenceChunk);
   }
 }

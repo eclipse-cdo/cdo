@@ -25,4 +25,6 @@ public interface IReferenceMapping
   public IDBTable getTable();
 
   public void writeReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
+
+  public void readReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
 }

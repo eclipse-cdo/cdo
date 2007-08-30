@@ -157,7 +157,7 @@ public abstract class ValueMapping extends Mapping
   {
     for (IReferenceMapping referenceMapping : referenceMappings)
     {
-      referenceMapping.writeReference(storeAccessor, revision);
+      referenceMapping.readReference(storeAccessor, revision);
     }
   }
 

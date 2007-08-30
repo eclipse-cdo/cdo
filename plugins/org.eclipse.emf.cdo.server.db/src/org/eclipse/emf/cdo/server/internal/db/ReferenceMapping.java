@@ -83,6 +83,12 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     }
   }
 
+  public void readReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  {
+    // TODO Implement method ReferenceMapping.readReference()
+    throw new UnsupportedOperationException("Not yet implemented");
+  }
+
   protected void mapReference(CDOClass cdoClass, CDOFeature cdoFeature)
   {
     switch (toMany)

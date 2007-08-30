@@ -237,7 +237,12 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     receiveHandler = null;
 
     connector.removeChannel(this);
-    receiveSerializer = null;
+    if (receiveSerializer != null)
+    {
+      receiveSerializer.dispose();
+      receiveSerializer = null;
+    }
+
     if (sendQueue != null)
     {
       sendQueue.clear();

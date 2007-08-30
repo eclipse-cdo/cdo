@@ -10,30 +10,28 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.concurrent;
 
+import org.eclipse.net4j.internal.util.lifecycle.QueueWorker;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * @author Eike Stepper
  */
-public class SynchronousWorkSerializer implements IWorkSerializer
+public class QueueWorkerWorkSerializer extends QueueWorker<Runnable> implements IWorkSerializer
 {
-  public SynchronousWorkSerializer()
+  public QueueWorkerWorkSerializer()
   {
-  }
-
-  public boolean addWork(Runnable work)
-  {
-    work.run();
-    return true;
+    LifecycleUtil.activate(this);
   }
 
   public void dispose()
   {
+    deactivate();
   }
 
   @Override
-  public String toString()
+  protected void work(WorkContext context, Runnable element)
   {
-    return SynchronousWorkSerializer.class.getSimpleName();
+    element.run();
   }
 }

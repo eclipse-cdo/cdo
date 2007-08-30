@@ -53,8 +53,15 @@ public class CompletionWorkSerializer implements IWorkSerializer
   {
   }
 
-  public void addWork(Runnable work)
+  public boolean addWork(Runnable work)
   {
     completionService.submit(work, true);
+    return true;
+  }
+
+  @Override
+  public String toString()
+  {
+    return CompletionWorkSerializer.class.getSimpleName();
   }
 }

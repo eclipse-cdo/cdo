@@ -54,7 +54,7 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, Runnable
     return executorService;
   }
 
-  public void addWork(Runnable work)
+  public boolean addWork(Runnable work)
   {
     // Need to be a block of execution. Cannot add when doing last check
     // XXX synchronized (newElementLock)
@@ -77,6 +77,8 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, Runnable
         executorService.execute(this);
       }
     }
+
+    return true;
   }
 
   /**
@@ -145,7 +147,7 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, Runnable
   @Override
   public String toString()
   {
-    return "AsynchronousWorkSerializer[" + executorService + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+    return AsynchronousWorkSerializer.class.getSimpleName();
   }
 
   /**

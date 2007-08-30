@@ -17,7 +17,7 @@ import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IChannelID;
 import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.internal.util.concurrent.CompletionWorkSerializer;
+import org.eclipse.net4j.internal.util.concurrent.AsynchronousWorkSerializer;
 import org.eclipse.net4j.internal.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -184,6 +184,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     }
     else
     {
+      // Shutting down
       buffer.release();
     }
   }
@@ -220,8 +221,9 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     }
     else
     {
-      // receiveSerializer = new AsynchronousWorkSerializer(receiveExecutor);
-      receiveSerializer = new CompletionWorkSerializer(receiveExecutor);
+      receiveSerializer = new AsynchronousWorkSerializer(receiveExecutor);
+      // receiveSerializer = new CompletionWorkSerializer();
+      // receiveSerializer = new QueueWorkerWorkSerializer();
     }
   }
 
@@ -314,6 +316,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
       }
       else
       {
+        // Shutting down
         buffer.release();
       }
     }

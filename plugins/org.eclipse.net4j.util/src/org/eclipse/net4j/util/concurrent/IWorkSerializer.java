@@ -10,16 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j.util.concurrent;
 
-import java.util.concurrent.ExecutorCompletionService;
 
 /**
- * TODO Replace by {@link ExecutorCompletionService}?
- * 
  * @author Eike Stepper
  */
 public interface IWorkSerializer
 {
-  public void addWork(Runnable work);
+  public boolean addWork(Runnable work);
 
   public void dispose();
 }

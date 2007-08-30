@@ -217,6 +217,10 @@ public class Buffer implements IBuffer
     return byteBuffer;
   }
 
+  /**
+   * @return <code>true</code> if the buffer has been completely written,
+   *         <code>false</code> otherwise.
+   */
   public boolean write(SocketChannel socketChannel) throws IOException
   {
     if (state != BufferState.PUTTING && state != BufferState.WRITING)
@@ -239,7 +243,7 @@ public class Buffer implements IBuffer
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Writing " + (payloadSize - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
+        TRACER.trace("Writing " + (Math.abs(payloadSize) - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
             + (eos ? " (EOS)" : "") + NL + formatContent()); //$NON-NLS-1$ //$NON-NLS-2$
       }
 

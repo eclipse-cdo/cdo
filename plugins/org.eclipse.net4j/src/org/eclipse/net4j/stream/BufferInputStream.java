@@ -122,6 +122,8 @@ public class BufferInputStream extends InputStream implements IBufferHandler
       }
       else
       {
+        // TODO Consider something faster than currentTimeMillis(), maybe less
+        // accurate?
         final long stop = System.currentTimeMillis() + timeout;
         while (currentBuffer == null)
         {

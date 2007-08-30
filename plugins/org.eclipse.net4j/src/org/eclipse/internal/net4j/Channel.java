@@ -173,19 +173,19 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
 
   public void handleBufferFromMultiplexer(final IBuffer buffer)
   {
-    if (receiveHandler == null)
+    if (receiveHandler != null)
     {
-      OM.LOG.warn("Ignoring buffer because receiveHandler == null: " + this); //$NON-NLS-1$
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Handling buffer from multiplexer: {0} --> {1}", buffer, this); //$NON-NLS-1$
+      }
+
+      receiveSerializer.addWork(new ReceiverWork(buffer));
+    }
+    else
+    {
       buffer.release();
-      return;
     }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Handling buffer from multiplexer: {0} --> {1}", buffer, this); //$NON-NLS-1$
-    }
-
-    receiveSerializer.addWork(new ReceiverWork(buffer));
   }
 
   @Override

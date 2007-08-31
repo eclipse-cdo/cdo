@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.2"?>
+<?eclipse version="3.3"?>
+<!--
+	<copyright>
+	
+	Copyright (c) 2004-2007 Eike Stepper, Germany.
+	All rights reserved.   This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+	
+	Contributors:
+	  Eike Stepper - Initial API and implementation
+	
+	</copyright>
+-->
 
 <plugin>
 
@@ -37,34 +51,6 @@
       </perspectiveExtension>
    </extension>
    
-   <!--
-   <extension
-         point="org.eclipse.ui.newWizards">
-      <category
-            id="org.eclipse.emf.cdo.ui"
-            name="CDO">
-      </category>
-      <wizard
-            category="org.eclipse.emf.cdo.ui"
-            class="org.eclipse.emf.cdo.internal.ui.wizards.NewEditorWizard"
-            hasPages="true"
-            icon="icons/full/etool16/open_editor.gif"
-            id="org.eclipse.emf.cdo.ui.NewEditorWizard"
-            name="New CDO Editor"
-            project="false">
-      </wizard>
-      <wizard
-            category="org.eclipse.emf.cdo.ui"
-            class="org.eclipse.emf.cdo.internal.ui.wizards.NewSessionWizard"
-            hasPages="true"
-            icon="icons/full/etool16/open_session.gif"
-            id="org.eclipse.emf.cdo.ui.NewSessionWizard"
-            name="New CDO Session"
-            project="false">
-      </wizard>
-   </extension>
-	-->
-	
   <extension point = "org.eclipse.ui.editors">
     <editor
         id = "org.eclipse.emf.cdo.ui.CDOEditor"
@@ -75,22 +61,5 @@
         contributorClass="org.eclipse.emf.cdo.internal.ui.editor.CDOActionBarContributor" >
     </editor>
   </extension>    
-
-   <!--extension
-         point="org.eclipse.ui.newWizards">
-      <category
-            id="org.eclipse.emf.cdo.ui"
-            name="CDO">
-      </category>
-      <wizard
-            canFinishEarly="true"
-            category="org.eclipse.emf.cdo.ui"
-            class="org.eclipse.emf.cdo.internal.ui.wizards.NewSessionWizard"
-            hasPages="true"
-            icon="icons/full/etool16/open_session.gif"
-            id="org.eclipse.net4j.ui.NewSessionWizard"
-            name="New Session">
-      </wizard>
-   </extension-->
 
 </plugin>

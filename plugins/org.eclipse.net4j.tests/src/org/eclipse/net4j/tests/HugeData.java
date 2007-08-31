@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004-2007 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -37,7 +37,7 @@ public final class HugeData
   public static String getText()
   {
     return "/***************************************************************************" + NL
-        + " * Copyright (c) 2004-2007 Eike Stepper, Germany." + NL
+        + " * Copyright (c) 2004 - 2007 Eike Stepper, Germany." + NL
         + " * All rights reserved. This program and the accompanying materials" + NL
         + " * are made available under the terms of the Eclipse Public License v1.0" + NL
         + " * which accompanies this distribution, and is available at" + NL

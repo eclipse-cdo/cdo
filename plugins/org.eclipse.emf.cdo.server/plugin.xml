@@ -20,12 +20,14 @@
    <extension-point id="storeFactories" name="CDO Store Factories" schema="schema/storeFactories.exsd"/>
    <extension-point id="repositoryFactories" name="CDO Repository Factories" schema="schema/repositoryFactories.exsd"/>
 
-   <extension point="org.eclipse.net4j.util.factories">
+    <extension
+    	point="org.eclipse.net4j.util.factories">
       <factory
             productGroup="org.eclipse.net4j.serverProtocols"
             type="cdo"
             class="org.eclipse.emf.cdo.internal.server.protocol.CDOPluginProtocolFactory"/>
    </extension>
+   
    <extension
          point="org.eclipse.emf.cdo.server.repositoryFactories">
       <repositoryFactory
@@ -34,4 +36,13 @@
       </repositoryFactory>
    </extension>
 
+    <extension
+		point="org.eclipse.core.runtime.applications"
+		id="app"
+		name="CDO Server">
+		<application cardinality="1" thread="any">
+			<run class="org.eclipse.emf.cdo.internal.server.bundle.CDOServerApplication"/>
+ 		</application>
+	</extension>
+	
 </plugin>

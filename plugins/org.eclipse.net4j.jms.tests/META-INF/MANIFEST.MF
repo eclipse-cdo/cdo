@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.net4j.jms.tests
+Bundle-Version: 0.8.0.qualifier
+Bundle-Vendor: %providerName
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.net4j.tcp,
+ org.eclipse.net4j.jms,
+ org.eclipse.net4j.jms.admin,
+ org.eclipse.net4j.jms.server,
+ org.eclipse.net4j.jms.server.jdbc
+Eclipse-LazyStart: true
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: javax.jms;version="1.1.0"

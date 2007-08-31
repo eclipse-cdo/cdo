@@ -6,8 +6,8 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %pluginProvider
 Bundle-Activator: org.eclipse.net4j.internal.jms.bundle.OM$Activator
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.net4j;visibility:=reexport
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.3.0,4.0.0)",
+ org.eclipse.net4j;bundle-version="[0.8.0,0.9.0)";visibility:=reexport
 Import-Package: javax.jms;version="1.1.0"
 Export-Package: org.eclipse.net4j.internal.jms;version="0.8.0",
  org.eclipse.net4j.internal.jms.protocol;version="0.8.0",

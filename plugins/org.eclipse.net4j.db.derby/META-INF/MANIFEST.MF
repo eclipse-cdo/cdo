@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %fragmentName
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.db.derby;singleton:=true
 Bundle-Version: 0.8.0.qualifier
 Bundle-Vendor: %providerName

@@ -13,11 +13,16 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDORevisionManager;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 
+import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.signal.IFailOverStrategy;
 
+import org.eclipse.emf.internal.cdo.protocol.LoadChunkRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
 
 /**
@@ -37,13 +42,67 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
     return session;
   }
 
+  public CDOID resolveReferenceProxy(CDOReferenceProxy referenceProxy)
+  {
+    CDORevisionImpl revision = (CDORevisionImpl)referenceProxy.getRevision();
+    CDOFeature feature = referenceProxy.getFeature();
+    int index = referenceProxy.getIndex();
+
+    int chunkSize = session.getReferenceChunkSize();
+    MoveableList list = revision.getList(feature);
+
+    int minIndex = Math.max(0, index - chunkSize / 2);
+    int fromIndex = index;
+    while (fromIndex > minIndex && list.get(fromIndex) instanceof CDOReferenceProxy)
+    {
+      --fromIndex;
+    }
+
+    int maxIndex = Math.min(list.size() - 1, index + chunkSize / 2);
+    int toIndex = index;
+    while (toIndex < maxIndex && list.get(toIndex) instanceof CDOReferenceProxy)
+    {
+      ++toIndex;
+    }
+
+    try
+    {
+      CDOID result = null;
+      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
+      IChannel channel = session.getChannel();
+      LoadChunkRequest request = new LoadChunkRequest(channel, revision.getID(), feature, fromIndex, toIndex);
+      CDOID[] ids = failOverStrategy.send(request);
+      for (int i = 0; i < ids.length; i++)
+      {
+        CDOID id = ids[i];
+        int j = fromIndex + i;
+        list.set(j, id);
+        if (j == index)
+        {
+          result = id;
+        }
+      }
+
+      return result;
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new TransportException(ex);
+    }
+  }
+
   @Override
   protected CDORevisionImpl loadRevision(CDOID id, int referenceChunk)
   {
     try
     {
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      LoadRevisionRequest request = new LoadRevisionRequest(session.getChannel(), id, referenceChunk);
+      IChannel channel = session.getChannel();
+      LoadRevisionRequest request = new LoadRevisionRequest(channel, id, referenceChunk);
       return failOverStrategy.send(request);
     }
     catch (RuntimeException ex)
@@ -62,7 +121,8 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
     try
     {
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      LoadRevisionRequest request = new LoadRevisionRequest(session.getChannel(), id, referenceChunk, timeStamp);
+      IChannel channel = session.getChannel();
+      LoadRevisionRequest request = new LoadRevisionRequest(channel, id, referenceChunk, timeStamp);
       return failOverStrategy.send(request);
     }
     catch (RuntimeException ex)

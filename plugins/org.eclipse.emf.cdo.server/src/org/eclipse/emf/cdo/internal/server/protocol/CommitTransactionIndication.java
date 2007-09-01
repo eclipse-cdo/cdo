@@ -205,10 +205,11 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   private CDORevisionImpl[] readRevisions(ExtendedDataInputStream in, int size) throws IOException
   {
+    RevisionManager revisionManager = sessionPackageManager.getRepository().getRevisionManager();
     CDORevisionImpl[] revisions = new CDORevisionImpl[size];
     for (int i = 0; i < size; i++)
     {
-      revisions[i] = new CDORevisionImpl(in, transactionPackageManager);
+      revisions[i] = new CDORevisionImpl(in, revisionManager, transactionPackageManager);
       mapTemporaryID(revisions[i]);
     }
 

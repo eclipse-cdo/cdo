@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
@@ -105,6 +106,11 @@ public final class CDOStore implements EStore
     Object result = revision.get(cdoFeature, index);
     if (cdoFeature.isReference())
     {
+      if (result instanceof CDOReferenceProxy)
+      {
+        result = ((CDOReferenceProxy)result).resolve();
+      }
+
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
     }
 
@@ -232,6 +238,11 @@ public final class CDOStore implements EStore
     {
       for (int i = 0; i < result.length; i++)
       {
+        if (result[i] instanceof CDOReferenceProxy)
+        {
+          result[i] = ((CDOReferenceProxy)result[i]).resolve();
+        }
+
         result[i] = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result[i]);
       }
     }
@@ -268,6 +279,11 @@ public final class CDOStore implements EStore
     Object result = revision.set(cdoFeature, index, value);
     if (cdoFeature.isReference())
     {
+      if (result instanceof CDOReferenceProxy)
+      {
+        result = ((CDOReferenceProxy)result).resolve();
+      }
+
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
     }
 
@@ -323,6 +339,11 @@ public final class CDOStore implements EStore
     Object result = revision.remove(cdoFeature, index);
     if (cdoFeature.isReference())
     {
+      if (result instanceof CDOReferenceProxy)
+      {
+        result = ((CDOReferenceProxy)result).resolve();
+      }
+
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
     }
 
@@ -355,6 +376,11 @@ public final class CDOStore implements EStore
     Object result = revision.move(cdoFeature, target, source);
     if (cdoFeature.isReference())
     {
+      if (result instanceof CDOReferenceProxy)
+      {
+        result = ((CDOReferenceProxy)result).resolve();
+      }
+
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
     }
 

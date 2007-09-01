@@ -20,6 +20,9 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
+import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
+import org.eclipse.emf.internal.cdo.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.CDOSessionPackageManager;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.io.IOException;
@@ -99,6 +102,9 @@ public class LoadRevisionRequest extends CDOClientRequest<CDORevisionImpl>
   @Override
   protected CDORevisionImpl confirming(ExtendedDataInputStream in) throws IOException
   {
-    return new CDORevisionImpl(in, getSession().getPackageManager());
+    CDOSessionImpl session = getSession();
+    CDORevisionManagerImpl revisionManager = session.getRevisionManager();
+    CDOSessionPackageManager packageManager = session.getPackageManager();
+    return new CDORevisionImpl(in, revisionManager, packageManager);
   }
 }

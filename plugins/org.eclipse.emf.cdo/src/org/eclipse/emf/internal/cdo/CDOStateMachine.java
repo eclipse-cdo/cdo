@@ -204,6 +204,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, ResourceAndView data)
     {
       CDOTransactionImpl transaction = data.view.toTransaction();
+      CDORevisionManagerImpl revisionManager = transaction.getSession().getRevisionManager();
 
       // Prepare object
       CDOID id = transaction.getNextTemporaryID();
@@ -213,7 +214,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       object.cdoInternalSetState(CDOState.PREPARED_ATTACH);
 
       // Create new revision
-      CDORevisionImpl revision = new CDORevisionImpl((CDOClassImpl)object.cdoClass(), id);
+      CDORevisionImpl revision = new CDORevisionImpl(revisionManager, (CDOClassImpl)object.cdoClass(), id);
       revision.setVersion(1);
       revision.setResourceID(data.resource.cdoID());
       object.cdoInternalSetRevision(revision);

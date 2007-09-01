@@ -26,6 +26,10 @@ public interface CDOSession extends IContainer<CDOView>
 {
   public int getSessionID();
 
+  public int getReferenceChunkSize();
+
+  public void setReferenceChunkSize(int referenceChunkSize);
+
   public IFailOverStrategy getFailOverStrategy();
 
   public IChannel getChannel();

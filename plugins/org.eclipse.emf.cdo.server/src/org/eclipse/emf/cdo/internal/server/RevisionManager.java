@@ -13,7 +13,10 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOPathFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
@@ -44,6 +47,11 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   public void addRevision(ITransaction<IStoreWriter> storeTransaction, CDORevisionImpl revision)
   {
     storeTransaction.execute(new AddRevisionOperation(revision));
+  }
+
+  public CDOID resolveReferenceProxy(CDOReferenceProxy referenceProxy)
+  {
+    throw new UnsupportedOperationException("Reference proxies not supported on server side");
   }
 
   @Override
@@ -108,5 +116,21 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     public void undoPhase1(IStoreWriter storeWriter)
     {
     }
+  }
+
+  public CDOID[] getReferenceChunk(CDOID id, CDOFeature feature, int fromIndex, int toIndex)
+  {
+    int size = toIndex - fromIndex + 1;
+    CDOID[] ids = new CDOID[size];
+
+    CDORevisionImpl revision = getRevision(id, CDORevisionImpl.COMPLETE_REFERENCES);
+    MoveableList list = revision.getList(feature);
+
+    for (int i = 0; i < size; i++)
+    {
+      ids[i] = (CDOID)list.get(fromIndex + i);
+    }
+
+    return ids;
   }
 }

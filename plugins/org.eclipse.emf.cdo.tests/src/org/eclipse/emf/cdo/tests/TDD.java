@@ -20,9 +20,9 @@ import java.lang.reflect.Method;
  */
 public class TDD
 {
-  private static final AbstractOMTest test = new PackageRegistryTest();
+  private static final AbstractOMTest test = new ChunkingTest();
 
-  private static final String METHOD_NAME = "testDynamicPackage";
+  private static final String METHOD_NAME = "testNativeObjects";
 
   public static void main(String[] args) throws Throwable
   {

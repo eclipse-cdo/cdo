@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -417,8 +418,9 @@ public class DBStoreAccessor implements IDBStoreAccessor
       TRACER.format("Selecting revision: {0}", id);
     }
 
+    IRevisionManager revisionManager = store.getRepository().getRevisionManager();
     CDOClassImpl cdoClass = getObjectType(id);
-    CDORevisionImpl revision = new CDORevisionImpl(cdoClass, id);
+    CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
     IMapping mapping = ClassServerInfo.getMapping(cdoClass);
     mapping.readRevision(this, revision);
@@ -432,8 +434,9 @@ public class DBStoreAccessor implements IDBStoreAccessor
       TRACER.format("Selecting revision: {0}, {1,date} {1,time}", id, timeStamp);
     }
 
+    IRevisionManager revisionManager = store.getRepository().getRevisionManager();
     CDOClassImpl cdoClass = getObjectType(id);
-    CDORevisionImpl revision = new CDORevisionImpl(cdoClass, id);
+    CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
     IMapping mapping = ClassServerInfo.getMapping(cdoClass);
     mapping.readRevision(this, revision, timeStamp);

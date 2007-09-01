@@ -36,7 +36,7 @@ public class ServerConsumer
 
   private boolean durable;
 
-  private ConcurrentMap<String, MessageImpl> messages = new ConcurrentHashMap();
+  private ConcurrentMap<String, MessageImpl> messages = new ConcurrentHashMap<String, MessageImpl>();
 
   public ServerConsumer(long id, ServerDestination destination, String messageSelector, boolean noLocal, boolean durable)
   {

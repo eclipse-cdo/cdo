@@ -94,8 +94,8 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
 
   private void notifyAddMany(Notification msg)
   {
-    List newValues = (List)msg.getNewValue();
-    List oldValues = (List)msg.getOldValue();
+    List<?> newValues = (List<?>)msg.getNewValue();
+    List<?> oldValues = (List<?>)msg.getOldValue();
     for (Object newValue : newValues)
     {
       if (!oldValues.contains(newValue))
@@ -119,8 +119,8 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
 
   private void notifyRemoveMany(Notification msg)
   {
-    List newValues = (List)msg.getNewValue();
-    List oldValues = (List)msg.getOldValue();
+    List<?> newValues = (List<?>)msg.getNewValue();
+    List<?> oldValues = (List<?>)msg.getOldValue();
     for (Object oldValue : oldValues)
     {
       if (!newValues.contains(oldValue))

@@ -71,7 +71,7 @@ public class RepositoryConfigurator
       TRACER.trace("Configuring repositories from " + configFile.getAbsolutePath());
     }
 
-    List<IRepository> repositories = new ArrayList();
+    List<IRepository> repositories = new ArrayList<IRepository>();
     Document document = getDocument(configFile);
     NodeList elements = document.getElementsByTagName("repository");
     for (int i = 0; i < elements.getLength(); i++)
@@ -176,7 +176,7 @@ public class RepositoryConfigurator
 
   public static Map<String, String> getProperties(Element element, int levels)
   {
-    Map<String, String> properties = new HashMap();
+    Map<String, String> properties = new HashMap<String, String>();
     collectProperties(element, "", properties, levels);
     return properties;
   }

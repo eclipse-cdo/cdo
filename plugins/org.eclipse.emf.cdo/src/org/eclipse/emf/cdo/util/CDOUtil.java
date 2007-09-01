@@ -82,7 +82,7 @@ public final class CDOUtil
   {
     if (packageTypes == null)
     {
-      packageTypes = new HashMap();
+      packageTypes = new HashMap<String, CDOPackageType>();
       IExtensionRegistry registry = Platform.getExtensionRegistry();
 
       // Collect native packages

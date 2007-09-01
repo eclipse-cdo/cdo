@@ -80,30 +80,30 @@ public class Tracer implements OMTracer
     ((AbstractPlatform)bundle.getPlatform()).trace(event);
   }
 
-  public OMTraceHandlerEvent trace(Class context, String msg, Throwable t)
+  public OMTraceHandlerEvent trace(Class<?> context, String msg, Throwable t)
   {
     OMTraceHandlerEvent event = new TraceHandlerEvent(this, context, msg, t);
     trace(event);
     return event;
   }
 
-  public OMTraceHandlerEvent format(Class context, String pattern, Throwable t, Object... args)
+  public OMTraceHandlerEvent format(Class<?> context, String pattern, Throwable t, Object... args)
   {
     String msg = MessageFormat.format(pattern, args);
     return trace(context, msg, t);
   }
 
-  public OMTraceHandlerEvent format(Class context, String pattern, Object... args)
+  public OMTraceHandlerEvent format(Class<?> context, String pattern, Object... args)
   {
     return format(context, pattern, (Throwable)null, args);
   }
 
-  public OMTraceHandlerEvent trace(Class context, String msg)
+  public OMTraceHandlerEvent trace(Class<?> context, String msg)
   {
     return trace(context, msg, (Throwable)null);
   }
 
-  public OMTraceHandlerEvent trace(Class context, Throwable t)
+  public OMTraceHandlerEvent trace(Class<?> context, Throwable t)
   {
     return trace(context, (String)null, t);
   }

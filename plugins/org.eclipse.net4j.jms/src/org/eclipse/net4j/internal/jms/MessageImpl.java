@@ -28,12 +28,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class MessageImpl implements Message, Comparable
+public class MessageImpl implements Message, Comparable<MessageImpl>
 {
   private static final String[] KEYWORDS = { "and", "between", "escape", "in", "is", "like", "false", "null", "or",
       "not", "true" };
 
-  private Map<String, Object> properties = new HashMap();
+  private Map<String, Object> properties = new HashMap<String, Object>();
 
   private byte[] correlationID;
 
@@ -253,7 +253,7 @@ public class MessageImpl implements Message, Comparable
     return properties.get(name);
   }
 
-  public Enumeration getPropertyNames()
+  public Enumeration<String> getPropertyNames()
   {
     return Collections.enumeration(properties.keySet());
   }
@@ -302,7 +302,7 @@ public class MessageImpl implements Message, Comparable
   {
     if (value instanceof Boolean || value instanceof Byte || value instanceof Short || value instanceof Integer
         || value instanceof Long || value instanceof Float || value instanceof Double || value instanceof String
-        || (value == null))
+        || value == null)
     {
       setProperty(name, value);
     }
@@ -379,25 +379,19 @@ public class MessageImpl implements Message, Comparable
     throw new NotYetImplementedException();
   }
 
-  public int compareTo(Object o)
+  public int compareTo(MessageImpl obj)
   {
-    if (o instanceof MessageImpl)
+    if (priority < obj.priority)
     {
-      MessageImpl that = (MessageImpl)o;
-      if (priority < that.priority)
-      {
-        return -1;
-      }
-
-      if (priority > that.priority)
-      {
-        return 1;
-      }
-
-      return 0;
+      return -1;
     }
 
-    throw new IllegalArgumentException("Invalid compare operand: " + o);
+    if (priority > obj.priority)
+    {
+      return 1;
+    }
+
+    return 0;
   }
 
   public void populate(Message source) throws JMSException
@@ -412,10 +406,10 @@ public class MessageImpl implements Message, Comparable
     setJMSType(source.getJMSType());
     setJMSReplyTo(source.getJMSReplyTo());
 
-    Enumeration e = source.getPropertyNames();
+    Enumeration<String> e = source.getPropertyNames();
     while (e.hasMoreElements())
     {
-      String name = (String)e.nextElement();
+      String name = e.nextElement();
       Object value = source.getObjectProperty(name);
       setObjectProperty(name, value);
     }

@@ -47,9 +47,9 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
   private int sessionID;
 
-  private ConcurrentMap<Integer, View> views = new ConcurrentHashMap();
+  private ConcurrentMap<Integer, View> views = new ConcurrentHashMap<Integer, View>();
 
-  private Set<CDOID> knownObjects = new HashSet();
+  private Set<CDOID> knownObjects = new HashSet<CDOID>();
 
   private IListener protocolListener = new LifecycleEventAdapter()
   {

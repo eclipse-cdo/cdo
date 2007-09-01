@@ -31,15 +31,15 @@ public interface OMTracer
 
   public void trace(OMTraceHandlerEvent traceRecord);
 
-  public OMTraceHandlerEvent format(Class context, String pattern, Object... args);
+  public OMTraceHandlerEvent format(Class<?> context, String pattern, Object... args);
 
-  public OMTraceHandlerEvent format(Class context, String pattern, Throwable t, Object... args);
+  public OMTraceHandlerEvent format(Class<?> context, String pattern, Throwable t, Object... args);
 
-  public OMTraceHandlerEvent trace(Class context, String msg, Throwable t);
+  public OMTraceHandlerEvent trace(Class<?> context, String msg, Throwable t);
 
-  public OMTraceHandlerEvent trace(Class context, String msg);
+  public OMTraceHandlerEvent trace(Class<?> context, String msg);
 
-  public OMTraceHandlerEvent trace(Class context, Throwable t);
+  public OMTraceHandlerEvent trace(Class<?> context, Throwable t);
 
   public OMTracer tracer(String name);
 }

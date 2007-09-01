@@ -14,6 +14,7 @@ import org.eclipse.net4j.IAcceptor;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.internal.ui.SharedIcons;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
@@ -28,7 +29,7 @@ import org.eclipse.swt.graphics.Image;
 /**
  * @author Eike Stepper
  */
-public class Net4jItemProvider extends ContainerItemProvider
+public class Net4jItemProvider extends ContainerItemProvider<IContainer<Object>>
 {
   public Net4jItemProvider()
   {

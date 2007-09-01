@@ -29,7 +29,7 @@ public class DBSchema extends DBElement implements IDBSchema
 {
   private String name;
 
-  private Map<String, DBTable> tables = new HashMap();
+  private Map<String, DBTable> tables = new HashMap<String, DBTable>();
 
   private boolean locked;
 

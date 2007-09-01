@@ -48,7 +48,7 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
     if (dialog.open() == SelectPackageDialog.OK)
     {
       Set<String> checkedURIs = dialog.getCheckedURIs();
-      List<EPackage> ePackages = new ArrayList(checkedURIs.size());
+      List<EPackage> ePackages = new ArrayList<EPackage>(checkedURIs.size());
       for (String uri : checkedURIs)
       {
         EPackage ePackage = registry.getEPackage(uri);

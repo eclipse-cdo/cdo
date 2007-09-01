@@ -35,7 +35,7 @@ public class VerticalMapping extends ValueMapping
       {
         if (superMappings == null)
         {
-          superMappings = new ArrayList(0);
+          superMappings = new ArrayList<IMapping>(0);
         }
 
         superMappings.add(superMapping);

@@ -217,17 +217,17 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
       Object instanceValue = getInstanceValue(instance, feature);
       if (feature.isMany())
       {
-        List revisionList = revision.getList(feature); // TODO lazy?
+        List<Object> revisionList = revision.getList(feature); // TODO lazy?
         revisionList.clear();
 
         if (instanceValue != null)
         {
           if (instanceValue instanceof InternalEList)
           {
-            InternalEList instanceList = (InternalEList)instanceValue;
+            InternalEList<?> instanceList = (InternalEList<?>)instanceValue;
             if (instanceList != null)
             {
-              for (Iterator it = instanceList.basicIterator(); it.hasNext();)
+              for (Iterator<?> it = instanceList.basicIterator(); it.hasNext();)
               {
                 Object instanceElement = it.next();
                 if (instanceElement != null && feature.isReference())
@@ -342,11 +342,11 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     Object value = revision.getValue(feature);
     if (feature.isMany())
     {
-      InternalEList instanceList = (InternalEList)getInstanceValue(instance, feature);
+      InternalEList<Object> instanceList = (InternalEList<Object>)getInstanceValue(instance, feature);
       if (instanceList != null)
       {
         clearEList(instanceList);
-        List revisionList = (List)value;
+        List<?> revisionList = (List<?>)value;
         for (Object element : revisionList)
         {
           if (feature.isReference())
@@ -497,7 +497,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     }
   }
 
-  protected void clearEList(InternalEList list)
+  protected void clearEList(InternalEList<Object> list)
   {
     while (!list.isEmpty())
     {

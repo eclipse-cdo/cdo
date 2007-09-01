@@ -30,9 +30,9 @@ public class DBTable extends DBElement implements IDBTable
 
   private String name;
 
-  private List<DBField> fields = new ArrayList();
+  private List<DBField> fields = new ArrayList<DBField>();
 
-  private List<DBIndex> indices = new ArrayList();
+  private List<DBIndex> indices = new ArrayList<DBIndex>();
 
   public DBTable(DBSchema schema, String name)
   {

@@ -41,7 +41,7 @@ public class OSGiPlatform extends AbstractPlatform
   }
 
   @Override
-  protected OMBundle createBundle(String bundleID, Class accessor)
+  protected OMBundle createBundle(String bundleID, Class<?> accessor)
   {
     return new OSGiBundle(this, bundleID, accessor);
   }

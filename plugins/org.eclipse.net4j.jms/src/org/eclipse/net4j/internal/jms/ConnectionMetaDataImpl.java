@@ -64,7 +64,7 @@ public class ConnectionMetaDataImpl implements ConnectionMetaData
     return "0.8.0";
   }
 
-  public Enumeration getJMSXPropertyNames()
+  public Enumeration<?> getJMSXPropertyNames()
   {
     return new StringTokenizer("");
   }

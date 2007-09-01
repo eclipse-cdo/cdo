@@ -23,7 +23,7 @@ import java.util.zip.GZIPOutputStream;
 /**
  * @author Eike Stepper
  */
-public class GZIPStreamWrapper implements IStreamWrapper<GZIPInputStream, GZIPOutputStream>
+public class GZIPStreamWrapper implements IStreamWrapper
 {
   public GZIPStreamWrapper()
   {
@@ -49,13 +49,13 @@ public class GZIPStreamWrapper implements IStreamWrapper<GZIPInputStream, GZIPOu
     return new GZIPOutputStream(out);
   }
 
-  public void finishInputStream(GZIPInputStream in) throws IOException
+  public void finishInputStream(InputStream in) throws IOException
   {
   }
 
-  public void finishOutputStream(GZIPOutputStream out) throws IOException
+  public void finishOutputStream(OutputStream out) throws IOException
   {
-    out.finish();
+    ((GZIPOutputStream)out).finish();
   }
 
   public static void main(String[] args) throws Exception

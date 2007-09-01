@@ -32,7 +32,7 @@ public class LegacyBundle extends AbstractBundle
 {
   private URL baseURL;
 
-  public LegacyBundle(AbstractPlatform platform, String bundleID, Class accessor)
+  public LegacyBundle(AbstractPlatform platform, String bundleID, Class<?> accessor)
   {
     super(platform, bundleID, accessor);
 
@@ -97,7 +97,7 @@ public class LegacyBundle extends AbstractBundle
     }
   }
 
-  private void computeBaseURL(Class accessor) throws MalformedURLException
+  private void computeBaseURL(Class<?> accessor) throws MalformedURLException
   {
     // Determine the URL for the class itself. The URL will be of one of the
     // following forms, so there are a few good places to consider looking for

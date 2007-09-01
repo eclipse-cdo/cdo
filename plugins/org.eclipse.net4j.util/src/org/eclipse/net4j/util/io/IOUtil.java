@@ -404,7 +404,7 @@ public final class IOUtil
     }
   }
 
-  public static void safeRun(Closeable io, IORunnable runnable) throws IORuntimeException
+  public static <IO extends Closeable> void safeRun(IO io, IORunnable<IO> runnable) throws IORuntimeException
   {
     try
     {
@@ -498,7 +498,7 @@ public final class IOUtil
    */
   public static class FileCollector implements IOVisitor
   {
-    private List<File> files = new ArrayList();
+    private List<File> files = new ArrayList<File>();
 
     public FileCollector()
     {

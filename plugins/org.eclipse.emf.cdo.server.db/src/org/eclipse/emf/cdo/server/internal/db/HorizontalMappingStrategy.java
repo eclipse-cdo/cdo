@@ -51,7 +51,7 @@ public class HorizontalMappingStrategy extends MappingStrategy
   @Override
   protected List<CDOClass> getClassesWithObjectInfo()
   {
-    List<CDOClass> result = new ArrayList();
+    List<CDOClass> result = new ArrayList<CDOClass>();
     IPackageManager packageManager = getStore().getRepository().getPackageManager();
     for (CDOPackage cdoPackage : packageManager.getPackages())
     {

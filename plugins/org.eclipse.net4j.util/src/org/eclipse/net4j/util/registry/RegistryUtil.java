@@ -28,6 +28,6 @@ public final class RegistryUtil
       return registry;
     }
 
-    return new UnmodifiableRegistry(registry);
+    return new UnmodifiableRegistry<K, V>(registry);
   }
 }

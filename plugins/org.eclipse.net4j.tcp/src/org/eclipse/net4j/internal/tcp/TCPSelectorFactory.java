@@ -16,7 +16,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 /**
  * @author Eike Stepper
  */
-public class TCPSelectorFactory extends Factory<TCPSelector>
+public class TCPSelectorFactory extends Factory
 {
   public static final String PRODUCT_GROUP = "org.eclipse.net4j.selectors";
 

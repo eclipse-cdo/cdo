@@ -156,7 +156,7 @@ public final class EMFUtil
 
   public static List<EClass> getPersistentClasses(EPackage ePackage)
   {
-    List<EClass> result = new ArrayList();
+    List<EClass> result = new ArrayList<EClass>();
     for (EClassifier classifier : ePackage.getEClassifiers())
     {
       if (classifier instanceof EClass)
@@ -170,7 +170,7 @@ public final class EMFUtil
 
   public static List<EStructuralFeature> getPersistentFeatures(EList<EStructuralFeature> eFeatures)
   {
-    List<EStructuralFeature> result = new ArrayList();
+    List<EStructuralFeature> result = new ArrayList<EStructuralFeature>();
     for (EStructuralFeature feature : eFeatures)
     {
       if (feature.isTransient())

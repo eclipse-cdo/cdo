@@ -58,7 +58,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
    */
   public boolean addAll(Collection<? extends E> c)
   {
-    ContainerEvent event = new ContainerEvent(this);
+    ContainerEvent<E> event = new ContainerEvent<E>(this);
     for (E e : c)
     {
       boolean modified = getDelegate().add(e);
@@ -78,7 +78,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   {
     if (!isEmpty())
     {
-      ContainerEvent event = createEvent(getDelegate(), IContainerDelta.Kind.REMOVED);
+      ContainerEvent<E> event = createEvent(getDelegate(), IContainerDelta.Kind.REMOVED);
       getDelegate().clear();
       fireEvent(event);
     }
@@ -103,13 +103,13 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
    */
   public boolean removeAll(Collection<?> c)
   {
-    ContainerEvent event = new ContainerEvent(this);
+    ContainerEvent<E> event = new ContainerEvent<E>(this);
     for (Object o : c)
     {
       boolean modified = getDelegate().remove(o);
       if (modified)
       {
-        event.addDelta(o, IContainerDelta.Kind.REMOVED);
+        event.addDelta((E)o, IContainerDelta.Kind.REMOVED);
       }
     }
 
@@ -121,13 +121,13 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
    */
   public boolean retainAll(Collection<?> c)
   {
-    ContainerEvent event = new ContainerEvent(this);
+    ContainerEvent<E> event = new ContainerEvent<E>(this);
     for (Object o : getDelegate())
     {
       if (!c.contains(o))
       {
         getDelegate().remove(o);
-        event.addDelta(o, IContainerDelta.Kind.REMOVED);
+        event.addDelta((E)o, IContainerDelta.Kind.REMOVED);
       }
     }
 
@@ -153,6 +153,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category READ
    */
+  @Override
   public boolean equals(Object o)
   {
     return getDelegate().equals(o);
@@ -161,6 +162,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category READ
    */
+  @Override
   public int hashCode()
   {
     return getDelegate().hashCode();

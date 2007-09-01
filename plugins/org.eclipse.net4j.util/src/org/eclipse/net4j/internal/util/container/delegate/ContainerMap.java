@@ -43,7 +43,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   {
     if (!isEmpty())
     {
-      ContainerEvent event = createEvent(getDelegate().entrySet(), IContainerDelta.Kind.REMOVED);
+      ContainerEvent<Map.Entry<K, V>> event = createEvent(getDelegate().entrySet(), IContainerDelta.Kind.REMOVED);
       getDelegate().clear();
       fireEvent(event);
     }
@@ -78,14 +78,14 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
    */
   public V put(K key, V value)
   {
-    ContainerEvent event = new ContainerEvent(this);
+    ContainerEvent<Map.Entry<K, V>> event = new ContainerEvent<Map.Entry<K, V>>(this);
     V removed = getDelegate().put(key, value);
     if (removed != null)
     {
-      event.addDelta(new MapEntry(key, removed), IContainerDelta.Kind.REMOVED);
+      event.addDelta(new MapEntry<K, V>(key, removed), IContainerDelta.Kind.REMOVED);
     }
 
-    event.addDelta(new MapEntry(key, value), IContainerDelta.Kind.ADDED);
+    event.addDelta(new MapEntry<K, V>(key, value), IContainerDelta.Kind.ADDED);
     fireEvent(event);
     return removed;
   }
@@ -95,20 +95,20 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
    */
   public void putAll(Map<? extends K, ? extends V> t)
   {
-    ContainerEvent event = new ContainerEvent(this);
+    ContainerEvent<Map.Entry<K, V>> event = new ContainerEvent<Map.Entry<K, V>>(this);
     Iterator<? extends Entry<? extends K, ? extends V>> i = t.entrySet().iterator();
     while (i.hasNext())
     {
-      Entry<? extends K, ? extends V> e = i.next();
-      K key = e.getKey();
-      V value = e.getValue();
+      Entry<? extends K, ? extends V> entry = i.next();
+      K key = entry.getKey();
+      V value = entry.getValue();
       V removed = getDelegate().put(key, value);
       if (removed != null)
       {
-        event.addDelta(new MapEntry(key, removed), IContainerDelta.Kind.REMOVED);
+        event.addDelta(new MapEntry<K, V>(key, removed), IContainerDelta.Kind.REMOVED);
       }
 
-      event.addDelta(e, IContainerDelta.Kind.ADDED);
+      event.addDelta(new MapEntry<K, V>(key, value), IContainerDelta.Kind.ADDED);
     }
 
     dispatchEvent(event);
@@ -122,7 +122,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
     V removed = getDelegate().remove(key);
     if (removed != null)
     {
-      fireRemovedEvent(new MapEntry(key, removed));
+      fireRemovedEvent(new MapEntry<Object, V>(key, removed));
     }
 
     return removed;
@@ -157,7 +157,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
    */
   public Set<Map.Entry<K, V>> entrySet()
   {
-    return new ContainerSet(getDelegate().entrySet());
+    return new ContainerSet<Map.Entry<K, V>>(getDelegate().entrySet());
   }
 
   /**
@@ -165,7 +165,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
    */
   public Set<K> keySet()
   {
-    return new ContainerSet(getDelegate().keySet());
+    return new ContainerSet<K>(getDelegate().keySet());
   }
 
   /**
@@ -173,7 +173,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
    */
   public Collection<V> values()
   {
-    return new ContainerCollection(getDelegate().values());
+    return new ContainerCollection<V>(getDelegate().values());
   }
 
   /**

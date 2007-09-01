@@ -25,7 +25,7 @@ public final class HistoryUtil
 
   public static IHistory<String> createHistory()
   {
-    return new History();
+    return new History<String>();
   }
 
   public static IHistory<String> createPreferenceHistory(OMPreference<String[]> preference)

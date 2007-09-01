@@ -7,7 +7,7 @@ import org.eclipse.internal.net4j.ServerProtocolFactory;
 /**
  * @author Eike Stepper
  */
-public class TestSignalServerProtocolFactory extends ServerProtocolFactory<TestSignalProtocol>
+public class TestSignalServerProtocolFactory extends ServerProtocolFactory
 {
   public static final String TYPE = TestSignalProtocol.PROTOCOL_NAME;
 

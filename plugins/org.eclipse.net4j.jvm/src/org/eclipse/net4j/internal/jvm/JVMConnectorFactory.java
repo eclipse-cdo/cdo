@@ -18,7 +18,7 @@ import org.eclipse.internal.net4j.ConnectorFactory;
 /**
  * @author Eike Stepper
  */
-public class JVMConnectorFactory extends ConnectorFactory<JVMClientConnector>
+public class JVMConnectorFactory extends ConnectorFactory
 {
   public static final String TYPE = "jvm";
 
@@ -35,9 +35,14 @@ public class JVMConnectorFactory extends ConnectorFactory<JVMClientConnector>
   }
 
   @Override
-  public String getDescriptionFor(JVMClientConnector connector)
+  public String getDescriptionFor(Object connector)
   {
-    return connector.getName();
+    if (connector instanceof JVMClientConnector)
+    {
+      return ((JVMClientConnector)connector).getName();
+    }
+
+    return null;
   }
 
   public static JVMClientConnector get(IManagedContainer container, String description)

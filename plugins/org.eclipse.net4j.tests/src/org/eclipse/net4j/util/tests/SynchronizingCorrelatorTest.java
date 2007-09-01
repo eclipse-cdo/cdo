@@ -21,7 +21,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
   public void testPutConsumerFirst() throws Exception
   {
     final Boolean[] result = { false };
-    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator();
+    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
     final Thread consumer = new Thread()
     {
       @Override
@@ -52,7 +52,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
   public void testBlockingPutConsumerFirst() throws Exception
   {
     final Boolean[] result = { false };
-    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator();
+    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
     final Thread consumer = new Thread()
     {
       @Override
@@ -86,7 +86,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
   public void testPutProducerFirst() throws Exception
   {
     final Boolean[] result = { false };
-    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator();
+    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
     correlator.put("eike", true);
 
     final Thread consumer = new Thread()
@@ -118,7 +118,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
   public void testBlockingPutProducerFirst() throws Exception
   {
     final Boolean[] result = { false };
-    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator();
+    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
     boolean consumed = correlator.put("eike", true, 50);
     System.out.println("Consumed: " + consumed);
     assertFalse(consumed);

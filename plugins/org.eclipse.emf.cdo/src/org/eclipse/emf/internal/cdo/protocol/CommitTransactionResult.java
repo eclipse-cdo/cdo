@@ -22,7 +22,7 @@ public final class CommitTransactionResult
 {
   private long timeStamp;
 
-  private Map<CDOID, CDOID> idMappings = new HashMap();
+  private Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
 
   public CommitTransactionResult(long timeStamp)
   {

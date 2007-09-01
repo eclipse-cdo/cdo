@@ -29,7 +29,7 @@ public class ContainerEventAdapter<E> implements IListener
   {
     if (event instanceof IContainerEvent)
     {
-      IContainerEvent e = (IContainerEvent)event;
+      IContainerEvent<E> e = (IContainerEvent<E>)event;
       notifyContainerEvent(e);
     }
     else

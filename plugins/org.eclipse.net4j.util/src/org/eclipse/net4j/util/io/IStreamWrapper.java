@@ -17,13 +17,13 @@ import java.io.OutputStream;
 /**
  * @author Eike Stepper
  */
-public interface IStreamWrapper<IN extends InputStream, OUT extends OutputStream>
+public interface IStreamWrapper
 {
-  public IN wrapInputStream(InputStream in) throws IOException;
+  public InputStream wrapInputStream(InputStream in) throws IOException;
 
-  public OUT wrapOutputStream(OutputStream out) throws IOException;
+  public OutputStream wrapOutputStream(OutputStream out) throws IOException;
 
-  public void finishInputStream(IN in) throws IOException;
+  public void finishInputStream(InputStream in) throws IOException;
 
-  public void finishOutputStream(OUT out) throws IOException;
+  public void finishOutputStream(OutputStream out) throws IOException;
 }

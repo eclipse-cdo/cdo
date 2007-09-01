@@ -21,9 +21,9 @@ import java.util.List;
  */
 public abstract class DBSelect implements IDBRowHandler
 {
-  private List<IDBField> fields = new ArrayList(0);
+  private List<IDBField> fields = new ArrayList<IDBField>(0);
 
-  private List<Pair<IDBField, Boolean>> orders = new ArrayList(0);
+  private List<Pair<IDBField, Boolean>> orders = new ArrayList<Pair<IDBField, Boolean>>(0);
 
   private String where;
 
@@ -40,7 +40,7 @@ public abstract class DBSelect implements IDBRowHandler
 
   public DBSelect order(IDBField field, boolean asc)
   {
-    orders.add(new Pair(field, asc));
+    orders.add(new Pair<IDBField, Boolean>(field, asc));
     return this;
   }
 

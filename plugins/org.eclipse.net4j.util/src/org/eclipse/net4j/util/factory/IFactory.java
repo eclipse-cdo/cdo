@@ -13,11 +13,11 @@ package org.eclipse.net4j.util.factory;
 /**
  * @author Eike Stepper
  */
-public interface IFactory<PRODUCT>
+public interface IFactory
 {
   public IFactoryKey getKey();
 
-  public PRODUCT create(String description) throws ProductCreationException;
+  public Object create(String description) throws ProductCreationException;
 
-  public String getDescriptionFor(PRODUCT product);
+  public String getDescriptionFor(Object product);
 }

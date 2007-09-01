@@ -25,7 +25,7 @@ public final class ContainerUtil
   {
     if (container instanceof IContainer)
     {
-      return ((IContainer)container).isEmpty();
+      return ((IContainer<?>)container).isEmpty();
     }
 
     return true;
@@ -35,7 +35,7 @@ public final class ContainerUtil
   {
     if (container instanceof IContainer)
     {
-      return ((IContainer)container).getElements();
+      return ((IContainer<?>)container).getElements();
     }
 
     return NO_ELEMENTS;

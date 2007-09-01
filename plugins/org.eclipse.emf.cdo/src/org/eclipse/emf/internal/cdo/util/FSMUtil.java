@@ -128,9 +128,9 @@ public final class FSMUtil
     return null;
   }
 
-  public static Iterator<InternalCDOObject> iterator(Collection instances, final CDOViewImpl view)
+  public static Iterator<InternalCDOObject> iterator(Collection<?> instances, final CDOViewImpl view)
   {
-    final Iterator delegate = instances.iterator();
+    final Iterator<?> delegate = instances.iterator();
     return new Iterator<InternalCDOObject>()
     {
       private Object next;

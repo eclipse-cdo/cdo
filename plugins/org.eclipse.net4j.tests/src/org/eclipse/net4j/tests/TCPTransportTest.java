@@ -15,6 +15,7 @@ import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.internal.util.container.ManagedContainer;
 import org.eclipse.net4j.stream.ChannelInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;
 import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
@@ -38,12 +39,13 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
+@SuppressWarnings("unchecked")
 public class TCPTransportTest extends AbstractTransportTest
 {
   @Override
   protected IManagedContainer createContainer()
   {
-    IManagedContainer container = super.createContainer();
+    IManagedContainer container = new ManagedContainer();
     container.registerFactory(new TestSignalServerProtocolFactory());
     return container;
   }
@@ -157,6 +159,7 @@ public class TCPTransportTest extends AbstractTransportTest
 
     getAcceptor().addListener(new IListener()
     {
+      @SuppressWarnings("unchecked")
       public void notifyEvent(IEvent event)
       {
         if (event instanceof IContainerEvent)

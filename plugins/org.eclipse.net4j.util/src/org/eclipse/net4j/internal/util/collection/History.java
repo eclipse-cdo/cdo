@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class History<T> extends Notifier implements IHistory<T>
 {
-  private List<IHistoryElement<T>> elements = new ArrayList(0);
+  private List<IHistoryElement<T>> elements = new ArrayList<IHistoryElement<T>>(0);
 
   private boolean loaded;
 
@@ -43,7 +43,7 @@ public class History<T> extends Notifier implements IHistory<T>
   {
     if (newElements == null)
     {
-      newElements = new ArrayList(0);
+      newElements = new ArrayList<IHistoryElement<T>>(0);
     }
 
     if (!elements.equals(newElements))
@@ -162,6 +162,7 @@ public class History<T> extends Notifier implements IHistory<T>
     return elements.iterator();
   }
 
+  @SuppressWarnings("unchecked")
   protected IHistoryElement<T> createElement(T data)
   {
     return new HistoryElement(this, data);

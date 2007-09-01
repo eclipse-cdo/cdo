@@ -163,7 +163,7 @@ public abstract class ValueMapping extends Mapping
 
   protected List<IAttributeMapping> createAttributeMappings(CDOFeature[] features)
   {
-    List<IAttributeMapping> attributeMappings = new ArrayList();
+    List<IAttributeMapping> attributeMappings = new ArrayList<IAttributeMapping>();
     for (CDOFeature feature : features)
     {
       if (feature.isReference())
@@ -184,7 +184,7 @@ public abstract class ValueMapping extends Mapping
 
   protected List<IReferenceMapping> createReferenceMappings(CDOFeature[] features)
   {
-    List<IReferenceMapping> referenceMappings = new ArrayList();
+    List<IReferenceMapping> referenceMappings = new ArrayList<IReferenceMapping>();
     for (CDOFeature feature : features)
     {
       if (feature.isReference() && feature.isMany())

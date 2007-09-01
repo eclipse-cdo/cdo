@@ -62,7 +62,7 @@ public class MapMessageImpl extends MessageImpl implements MapMessage
     throw new NotYetImplementedException();
   }
 
-  public Enumeration getMapNames()
+  public Enumeration<?> getMapNames()
   {
     throw new NotYetImplementedException();
   }
@@ -152,7 +152,7 @@ public class MapMessageImpl extends MessageImpl implements MapMessage
   {
     super.populate(source);
     MapMessage map = (MapMessage)source;
-    Enumeration e = map.getMapNames();
+    Enumeration<?> e = map.getMapNames();
     while (e.hasMoreElements())
     {
       String name = (String)e.nextElement();

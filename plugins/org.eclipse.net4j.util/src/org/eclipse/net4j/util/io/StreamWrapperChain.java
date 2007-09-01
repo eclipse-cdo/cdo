@@ -17,42 +17,41 @@ import java.io.OutputStream;
 /**
  * @author Eike Stepper
  */
-public class StreamWrapperChain<IN extends InputStream, OUT extends OutputStream> extends
-    DelegatingStreamWrapper<IN, OUT>
+public class StreamWrapperChain extends DelegatingStreamWrapper
 {
-  private IStreamWrapper<IN, OUT> head;
+  private IStreamWrapper head;
 
-  public StreamWrapperChain(IStreamWrapper<IN, OUT> head, IStreamWrapper delegate)
+  public StreamWrapperChain(IStreamWrapper head, IStreamWrapper delegate)
   {
     super(delegate);
     this.head = head;
   }
 
-  public IStreamWrapper<IN, OUT> getHead()
+  public IStreamWrapper getHead()
   {
     return head;
   }
 
   @Override
-  protected IN doWrapInputStream(InputStream in) throws IOException
+  protected InputStream doWrapInputStream(InputStream in) throws IOException
   {
     return head.wrapInputStream(in);
   }
 
   @Override
-  protected OUT doWrapOutputStream(OutputStream out) throws IOException
+  protected OutputStream doWrapOutputStream(OutputStream out) throws IOException
   {
     return head.wrapOutputStream(out);
   }
 
   @Override
-  protected void doFinishInputStream(IN in) throws IOException
+  protected void doFinishInputStream(InputStream in) throws IOException
   {
     head.finishInputStream(in);
   }
 
   @Override
-  protected void doFinishOutputStream(OUT out) throws IOException
+  protected void doFinishOutputStream(OutputStream out) throws IOException
   {
     head.finishOutputStream(out);
   }

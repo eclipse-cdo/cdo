@@ -17,7 +17,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public abstract class Factory<PRODUCT> implements IFactory<PRODUCT>
+public abstract class Factory implements IFactory
 {
   private FactoryKey key;
 
@@ -46,7 +46,7 @@ public abstract class Factory<PRODUCT> implements IFactory<PRODUCT>
     return key.getType();
   }
 
-  public String getDescriptionFor(PRODUCT product)
+  public String getDescriptionFor(Object product)
   {
     return null;
   }

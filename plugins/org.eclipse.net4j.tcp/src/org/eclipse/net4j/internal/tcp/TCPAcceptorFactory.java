@@ -18,7 +18,7 @@ import org.eclipse.internal.net4j.AcceptorFactory;
 /**
  * @author Eike Stepper
  */
-public class TCPAcceptorFactory extends AcceptorFactory<TCPAcceptor>
+public class TCPAcceptorFactory extends AcceptorFactory
 {
   public static final String TYPE = "tcp";
 
@@ -59,9 +59,16 @@ public class TCPAcceptorFactory extends AcceptorFactory<TCPAcceptor>
   }
 
   @Override
-  public String getDescriptionFor(TCPAcceptor acceptor)
+  public String getDescriptionFor(Object object)
   {
-    return acceptor.getAddress() + SEPARATOR + acceptor.getPort();
+    if (object instanceof TCPAcceptor)
+    {
+      TCPAcceptor acceptor = (TCPAcceptor)object;
+      return acceptor.getAddress() + SEPARATOR + acceptor.getPort();
+    }
+
+    return null;
+
   }
 
   public static TCPAcceptor get(IManagedContainer container, String description)

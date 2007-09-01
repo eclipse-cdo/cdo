@@ -199,9 +199,9 @@ public final class LifecycleUtil
     }
   }
 
-  private static void invokeAnnotation(Object object, Class annotationClass)
+  private static <T extends Annotation> void invokeAnnotation(Object object, Class<T> annotationClass)
   {
-    Class c = object.getClass();
+    Class<?> c = object.getClass();
     while (c != Object.class)
     {
       final Method[] methods = c.getDeclaredMethods();

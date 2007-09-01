@@ -20,12 +20,11 @@ import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 /**
  * @author Eike Stepper
  */
-public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IProtocol<INFRA_STRUCTURE>,
-    IBufferProvider
+public abstract class Protocol extends Lifecycle implements IProtocol, IBufferProvider
 {
   private Channel channel;
 
-  private INFRA_STRUCTURE infraStructure;
+  private Object infraStructure;
 
   public Protocol()
   {
@@ -41,12 +40,12 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
     this.channel = (Channel)channel;
   }
 
-  public INFRA_STRUCTURE getInfraStructure()
+  public Object getInfraStructure()
   {
     return infraStructure;
   }
 
-  public void setInfraStructure(INFRA_STRUCTURE infraStructure)
+  public void setInfraStructure(Object infraStructure)
   {
     this.infraStructure = infraStructure;
   }

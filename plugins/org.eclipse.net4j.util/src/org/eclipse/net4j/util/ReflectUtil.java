@@ -41,7 +41,7 @@ public final class ReflectUtil
 
   public static final Class<Object> ROOT_CLASS = Object.class;
 
-  public static final Class[] NO_PARAMETERS = null;
+  public static final Class<?>[] NO_PARAMETERS = null;
 
   public static final Object[] NO_ARGUMENTS = null;
 
@@ -49,7 +49,7 @@ public final class ReflectUtil
 
   private static final Method HASH_CODE_METHOD = lookupHashCodeMethod();
 
-  private static final Map<Object, Long> ids = new WeakHashMap();
+  private static final Map<Object, Long> ids = new WeakHashMap<Object, Long>();
 
   public static boolean DUMP_STATICS = false;
 
@@ -59,7 +59,7 @@ public final class ReflectUtil
   {
   }
 
-  public static Method getMethod(Class<?> c, String methodName, Class... parameterTypes)
+  public static Method getMethod(Class<?> c, String methodName, Class<?>... parameterTypes)
   {
     try
     {
@@ -340,14 +340,14 @@ public final class ReflectUtil
 
   public static Pair<Field, Object>[] dumpToArray(Object object)
   {
-    List<Field> fields = new ArrayList();
+    List<Field> fields = new ArrayList<Field>();
     collectFields(object.getClass(), fields);
     Pair<Field, Object>[] result = new Pair[fields.size()];
     int i = 0;
     for (Field field : fields)
     {
       Object value = getValue(field, object);
-      result[i++] = new Pair(field, value);
+      result[i++] = new Pair<Field, Object>(field, value);
     }
 
     return result;
@@ -370,7 +370,7 @@ public final class ReflectUtil
     }
 
     String className = null;
-    Map<String, Object> values = new HashMap();
+    Map<String, Object> values = new HashMap<String, Object>();
     for (Entry<Object, Object> entry : properties.entrySet())
     {
       if (entry.getKey() instanceof String)
@@ -541,13 +541,13 @@ public final class ReflectUtil
       Object value = getValue(field, object);
       if (value instanceof Map)
       {
-        value = ((Map)value).entrySet();
+        value = ((Map<?, ?>)value).entrySet();
       }
 
       if (value instanceof Collection)
       {
         builder.append(NL);
-        for (Object element : (Collection)value)
+        for (Object element : (Collection<?>)value)
         {
           builder.append("    ");
           builder.append(element);

@@ -46,11 +46,11 @@ public abstract class AbstractPlatform implements OMPlatform
 
   private static ContextTracer __TRACER__;
 
-  private Map<String, AbstractBundle> bundles = new ConcurrentHashMap(0);
+  private Map<String, AbstractBundle> bundles = new ConcurrentHashMap<String, AbstractBundle>(0);
 
-  private Queue<OMLogHandler> logHandlers = new ConcurrentLinkedQueue();
+  private Queue<OMLogHandler> logHandlers = new ConcurrentLinkedQueue<OMLogHandler>();
 
-  private Queue<OMTraceHandler> traceHandlers = new ConcurrentLinkedQueue();
+  private Queue<OMTraceHandler> traceHandlers = new ConcurrentLinkedQueue<OMTraceHandler>();
 
   private boolean debugging;
 
@@ -59,7 +59,7 @@ public abstract class AbstractPlatform implements OMPlatform
     debugging = Boolean.parseBoolean(System.getProperty("debug", "false")); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
-  public synchronized OMBundle bundle(String bundleID, Class accessor)
+  public synchronized OMBundle bundle(String bundleID, Class<?> accessor)
   {
     OMBundle bundle = bundles.get(bundleID);
     if (bundle == null)
@@ -242,7 +242,7 @@ public abstract class AbstractPlatform implements OMPlatform
     return bundles;
   }
 
-  protected abstract OMBundle createBundle(String bundleID, Class accessor);
+  protected abstract OMBundle createBundle(String bundleID, Class<?> accessor);
 
   protected abstract String getDebugOption(String bundleID, String option);
 

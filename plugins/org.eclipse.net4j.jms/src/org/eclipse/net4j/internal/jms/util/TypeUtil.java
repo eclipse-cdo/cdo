@@ -294,7 +294,7 @@ public final class TypeUtil
     throw new IOException("Invalid type: " + type);
   }
 
-  private static String conversionProblem(Class type, Object value)
+  private static String conversionProblem(Class<?> type, Object value)
   {
     return "Cannot convert values of type " + value.getClass().getName() + " to " + type.getName();
   }

@@ -40,7 +40,7 @@ public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements ICon
   public int drainTo(Collection<? super E> c)
   {
     int drainTo = getDelegate().drainTo(c);
-    ContainerEvent event = createEvent(c, IContainerDelta.Kind.REMOVED);
+    ContainerEvent<E> event = createEvent(c, IContainerDelta.Kind.REMOVED);
     fireEvent(event);
     return drainTo;
   }
@@ -51,7 +51,7 @@ public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements ICon
   public int drainTo(Collection<? super E> c, int maxElements)
   {
     int drainTo = getDelegate().drainTo(c, maxElements);
-    ContainerEvent event = createEvent(c, IContainerDelta.Kind.REMOVED);
+    ContainerEvent<E> event = createEvent(c, IContainerDelta.Kind.REMOVED);
     fireEvent(event);
     return drainTo;
   }

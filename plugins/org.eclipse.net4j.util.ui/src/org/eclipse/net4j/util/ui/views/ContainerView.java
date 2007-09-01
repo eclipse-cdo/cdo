@@ -1,5 +1,6 @@
 package org.eclipse.net4j.util.ui.views;
 
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
@@ -30,7 +31,7 @@ import org.eclipse.ui.part.ViewPart;
 
 public abstract class ContainerView extends ViewPart implements ISetSelectionTarget
 {
-  private ContainerItemProvider itemProvider;
+  private ContainerItemProvider<IContainer<Object>> itemProvider;
 
   private TreeViewer viewer;
 
@@ -78,9 +79,9 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     contributeToActionBars();
   }
 
-  protected ContainerItemProvider createContainerItemProvider()
+  protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
   {
-    return new ContainerItemProvider(getRootElementFilter())
+    return new ContainerItemProvider<IContainer<Object>>(getRootElementFilter())
     {
       @Override
       public Image getImage(Object obj)

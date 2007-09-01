@@ -25,25 +25,25 @@ public class HashMapDelegatingRegistry<K, V> extends DelegatingRegistry<K, V>
   public HashMapDelegatingRegistry(IRegistry<K, V> delegate)
   {
     super(delegate);
-    map = new HashMap();
+    map = new HashMap<K, V>();
   }
 
   public HashMapDelegatingRegistry(IRegistry<K, V> delegate, int initialCapacity)
   {
     super(delegate);
-    map = new HashMap(initialCapacity);
+    map = new HashMap<K, V>(initialCapacity);
   }
 
   public HashMapDelegatingRegistry(IRegistry<K, V> delegate, int initialCapacity, float loadFactor)
   {
     super(delegate);
-    map = new HashMap(initialCapacity, loadFactor);
+    map = new HashMap<K, V>(initialCapacity, loadFactor);
   }
 
   public HashMapDelegatingRegistry(IRegistry<K, V> delegate, Map<? extends K, ? extends V> m)
   {
     super(delegate);
-    map = new HashMap(m);
+    map = new HashMap<K, V>(m);
   }
 
   @Override

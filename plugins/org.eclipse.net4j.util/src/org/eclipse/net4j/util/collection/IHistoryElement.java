@@ -15,7 +15,7 @@ package org.eclipse.net4j.util.collection;
  */
 public interface IHistoryElement<T>
 {
-  public IHistory getHistory();
+  public IHistory<IHistoryElement<T>> getHistory();
 
   public T getData();
 

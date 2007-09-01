@@ -109,7 +109,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   {
     if (properties == null)
     {
-      properties = new HashMap();
+      properties = new HashMap<String, String>();
     }
 
     return properties;

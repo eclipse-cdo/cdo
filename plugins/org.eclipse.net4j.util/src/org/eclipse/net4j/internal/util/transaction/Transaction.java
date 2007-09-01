@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class Transaction<CONTEXT> implements ITransaction<CONTEXT>
 {
-  private List<ITransactionalOperation> operations = new ArrayList();
+  private List<ITransactionalOperation<CONTEXT>> operations = new ArrayList<ITransactionalOperation<CONTEXT>>();
 
   private CONTEXT context;
 
@@ -67,7 +67,7 @@ public class Transaction<CONTEXT> implements ITransaction<CONTEXT>
 
   public void commit()
   {
-    for (ITransactionalOperation operation : end())
+    for (ITransactionalOperation<CONTEXT> operation : end())
     {
       operation.phase2(context);
     }
@@ -75,15 +75,15 @@ public class Transaction<CONTEXT> implements ITransaction<CONTEXT>
 
   public void rollback()
   {
-    for (ITransactionalOperation operation : end())
+    for (ITransactionalOperation<CONTEXT> operation : end())
     {
       operation.undoPhase1(context);
     }
   }
 
-  private List<ITransactionalOperation> end()
+  private List<ITransactionalOperation<CONTEXT>> end()
   {
-    List<ITransactionalOperation> tmp = operations;
+    List<ITransactionalOperation<CONTEXT>> tmp = operations;
     operations = null;
     return tmp;
   }

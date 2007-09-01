@@ -47,7 +47,7 @@ public class QueueBrowserImpl implements QueueBrowser
     throw new NotYetImplementedException();
   }
 
-  public Enumeration getEnumeration()
+  public Enumeration<?> getEnumeration()
   {
     throw new NotYetImplementedException();
   }

@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class Notifier implements INotifier.Introspection
 {
-  private List<IListener> listeners = new ArrayList(0);
+  private List<IListener> listeners = new ArrayList<IListener>(0);
 
   public Notifier()
   {

@@ -40,7 +40,7 @@ public class JMSRecoverIndication extends IndicationWithResponse
   {
     int sessionID = in.readInt();
     JMSServerProtocol protocol = (JMSServerProtocol)getProtocol();
-    ServerConnection connection = protocol.getInfraStructure();
+    ServerConnection connection = (ServerConnection)protocol.getInfraStructure();
     ServerSession session = connection.getSession(sessionID);
     if (session == null)
     {

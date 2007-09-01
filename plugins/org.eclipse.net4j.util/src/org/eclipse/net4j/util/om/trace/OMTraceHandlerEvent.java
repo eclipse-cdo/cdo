@@ -9,7 +9,7 @@ public interface OMTraceHandlerEvent
 
   public OMTracer getTracer();
 
-  public Class getContext();
+  public Class<?> getContext();
 
   public String getMessage();
 

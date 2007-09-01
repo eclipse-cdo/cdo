@@ -18,7 +18,7 @@ import org.eclipse.internal.net4j.AcceptorFactory;
 /**
  * @author Eike Stepper
  */
-public class JVMAcceptorFactory extends AcceptorFactory<JVMAcceptor>
+public class JVMAcceptorFactory extends AcceptorFactory
 {
   public static final String TYPE = "jvm";
 
@@ -35,9 +35,14 @@ public class JVMAcceptorFactory extends AcceptorFactory<JVMAcceptor>
   }
 
   @Override
-  public String getDescriptionFor(JVMAcceptor acceptor)
+  public String getDescriptionFor(Object acceptor)
   {
-    return acceptor.getName();
+    if (acceptor instanceof JVMAcceptor)
+    {
+      return ((JVMAcceptor)acceptor).getName();
+    }
+
+    return null;
   }
 
   public static JVMAcceptor get(IManagedContainer container, String description)

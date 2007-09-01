@@ -30,9 +30,9 @@ public class ResourceManager extends Lifecycle implements IResourceManager
 
   private Repository repository;
 
-  private Map<CDOID, String> idToPathMap = new HashMap();
+  private Map<CDOID, String> idToPathMap = new HashMap<CDOID, String>();
 
-  private Map<String, CDOID> pathToIDMap = new HashMap();
+  private Map<String, CDOID> pathToIDMap = new HashMap<String, CDOID>();
 
   public ResourceManager(Repository repository)
   {

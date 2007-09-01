@@ -106,13 +106,13 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   private CDORevisionManagerImpl revisionManager;
 
-  private Map<CDOID, InternalEObject> idToMetaInstanceMap = new HashMap();
+  private Map<CDOID, InternalEObject> idToMetaInstanceMap = new HashMap<CDOID, InternalEObject>();
 
-  private Map<InternalEObject, CDOID> metaInstanceToIDMap = new HashMap();
+  private Map<InternalEObject, CDOID> metaInstanceToIDMap = new HashMap<InternalEObject, CDOID>();
 
-  private ConcurrentMap<CDOID, CDOClassImpl> types = new ConcurrentHashMap();
+  private ConcurrentMap<CDOID, CDOClassImpl> types = new ConcurrentHashMap<CDOID, CDOClassImpl>();
 
-  private Map<ResourceSet, CDOViewImpl> views = new HashMap();
+  private Map<ResourceSet, CDOViewImpl> views = new HashMap<ResourceSet, CDOViewImpl>();
 
   private transient int lastViewID = 0;
 

@@ -15,12 +15,10 @@ import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-
 /**
  * @author Eike Stepper
  */
-public class CDOClientProtocol extends SignalProtocol<CDOSessionImpl>
+public class CDOClientProtocol extends SignalProtocol
 {
   public CDOClientProtocol()
   {

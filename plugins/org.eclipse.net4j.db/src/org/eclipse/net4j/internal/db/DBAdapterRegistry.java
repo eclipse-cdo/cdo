@@ -24,7 +24,7 @@ public class DBAdapterRegistry extends HashMapRegistry<String, IDBAdapter> imple
 {
   public static final DBAdapterRegistry INSTANCE = new DBAdapterRegistry();
 
-  private Map<String, DBAdapterDescriptor> descriptors = new HashMap();
+  private Map<String, DBAdapterDescriptor> descriptors = new HashMap<String, DBAdapterDescriptor>();
 
   public DBAdapterRegistry()
   {

@@ -30,7 +30,7 @@ public final class CDOViewHistory extends Notifier
 {
   private CDOView view;
 
-  private Set<Entry> entries = new HashSet();
+  private Set<Entry> entries = new HashSet<Entry>();
 
   private IListener viewListener = new IListener()
   {
@@ -82,7 +82,7 @@ public final class CDOViewHistory extends Notifier
 
   public void reset()
   {
-    Set<Entry> openResources = new HashSet();
+    Set<Entry> openResources = new HashSet<Entry>();
     for (Resource resource : view.getResourceSet().getResources())
     {
       if (resource instanceof CDOResource)
@@ -148,7 +148,7 @@ public final class CDOViewHistory extends Notifier
   /**
    * @author Eike Stepper
    */
-  public final class Entry implements Comparable
+  public final class Entry implements Comparable<Entry>
   {
     private String resourcePath;
 
@@ -172,9 +172,9 @@ public final class CDOViewHistory extends Notifier
       return resourcePath;
     }
 
-    public int compareTo(Object o)
+    public int compareTo(Entry entry)
     {
-      return resourcePath.compareTo(((Entry)o).resourcePath);
+      return resourcePath.compareTo(entry.resourcePath);
     }
 
     @Override

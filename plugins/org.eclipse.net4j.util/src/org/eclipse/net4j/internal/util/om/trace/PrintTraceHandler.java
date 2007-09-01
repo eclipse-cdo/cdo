@@ -89,7 +89,7 @@ public class PrintTraceHandler implements OMTraceHandler
 
   public static String format(boolean shortContext, OMTraceHandlerEvent event)
   {
-    Class context = event.getContext();
+    Class<?> context = event.getContext();
     String contextName = shortContext ? context.getSimpleName() : context.getName();
     return Thread.currentThread().getName() + " [" + contextName + "] " + event.getMessage();
   }
@@ -116,7 +116,7 @@ public class PrintTraceHandler implements OMTraceHandler
     final String tracerName = tracer.getFullName();
     final String tracerShort = tracer.getName();
 
-    final Class context = event.getContext();
+    final Class<?> context = event.getContext();
     final String contextName = context.getName();
     final String contextShort = context.getName();
 

@@ -54,7 +54,7 @@ public class CDOEventHandler
       }
       else if (event instanceof IContainerEvent)
       {
-        IContainerEvent e = (IContainerEvent)event;
+        IContainerEvent<?> e = (IContainerEvent<?>)event;
         if (e.getDeltaElement() == view && e.getDeltaKind() == IContainerDelta.Kind.REMOVED)
         {
           viewClosed();
@@ -78,7 +78,7 @@ public class CDOEventHandler
       if (event instanceof CDOTransactionCommittedEvent)
       {
         Map<CDOID, CDOID> idMappings = ((CDOTransactionCommittedEvent)event).getIDMappings();
-        HashSet newOIDs = new HashSet(idMappings.values());
+        HashSet<CDOID> newOIDs = new HashSet<CDOID>(idMappings.values());
         new ItemsProcessor(view)
         {
           @Override

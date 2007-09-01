@@ -250,7 +250,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
 
   public Collection<CDOPackageInfo> readPackageInfos()
   {
-    final Collection<CDOPackageInfo> result = new ArrayList(0);
+    final Collection<CDOPackageInfo> result = new ArrayList<CDOPackageInfo>(0);
     IDBRowHandler rowHandler = new IDBRowHandler()
     {
       public boolean handle(int row, final Object... values)
@@ -490,7 +490,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
 
   protected Set<IDBTable> mapPackages(CDOPackageImpl... cdoPackages)
   {
-    Set<IDBTable> affectedTables = new HashSet();
+    Set<IDBTable> affectedTables = new HashSet<IDBTable>();
     if (cdoPackages != null && cdoPackages.length != 0)
     {
       for (CDOPackageImpl cdoPackage : cdoPackages)
@@ -505,7 +505,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
 
   protected Set<IDBTable> mapClasses(CDOClassImpl... cdoClasses)
   {
-    Set<IDBTable> affectedTables = new HashSet();
+    Set<IDBTable> affectedTables = new HashSet<IDBTable>();
     if (cdoClasses != null && cdoClasses.length != 0)
     {
       IMappingStrategy mappingStrategy = store.getMappingStrategy();

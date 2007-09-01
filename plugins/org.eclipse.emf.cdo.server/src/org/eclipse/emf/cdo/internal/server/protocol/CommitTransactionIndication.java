@@ -62,7 +62,7 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   private CDORevisionImpl[] dirtyObjects;
 
-  private Map<CDOID, CDOID> idMappings = new HashMap();
+  private Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
 
   private long timeStamp;
 
@@ -102,7 +102,7 @@ public class CommitTransactionIndication extends CDOServerIndication
       newObjects = readNewObjects(in);
       dirtyObjects = readDirtyObjects(in);
 
-      ITransaction<IStoreWriter> storeTransaction = new Transaction(storeWriter);
+      ITransaction<IStoreWriter> storeTransaction = new Transaction<IStoreWriter>(storeWriter);
       addPackages(storeTransaction, newPackages);
       addRevisions(storeTransaction, newResources);
       addRevisions(storeTransaction, newObjects);

@@ -106,10 +106,10 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     writeRevisions(out, dirtyObjects);
   }
 
-  private void writeRevisions(ExtendedDataOutputStream out, Collection objects) throws IOException
+  private void writeRevisions(ExtendedDataOutputStream out, Collection<?> objects) throws IOException
   {
     out.writeInt(objects.size());
-    for (Iterator it = objects.iterator(); it.hasNext();)
+    for (Iterator<?> it = objects.iterator(); it.hasNext();)
     {
       InternalCDOObject object = (InternalCDOObject)it.next();
       CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();

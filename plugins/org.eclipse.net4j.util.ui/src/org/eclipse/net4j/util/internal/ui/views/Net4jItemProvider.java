@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.internal.ui.views;
 
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
@@ -27,7 +28,7 @@ import java.util.Iterator;
 /**
  * @author Eike Stepper
  */
-public class Net4jItemProvider extends ContainerItemProvider
+public class Net4jItemProvider extends ContainerItemProvider<IContainer<Object>>
 {
   public Net4jItemProvider()
   {
@@ -66,7 +67,7 @@ public class Net4jItemProvider extends ContainerItemProvider
     @Override
     protected void doRun(IProgressMonitor monitor) throws Exception
     {
-      for (Iterator it = selection.iterator(); it.hasNext();)
+      for (Iterator<?> it = selection.iterator(); it.hasNext();)
       {
         Object object = it.next();
         LifecycleUtil.deactivate(object);

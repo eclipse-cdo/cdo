@@ -64,7 +64,7 @@ public abstract class QueueWorker<E> extends Worker
 
   protected BlockingQueue<E> createQueue()
   {
-    return new LinkedBlockingQueue();
+    return new LinkedBlockingQueue<E>();
   }
 
   @Override

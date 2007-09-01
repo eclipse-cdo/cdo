@@ -57,7 +57,7 @@ public class InvalidationIndication extends Indication
       PROTOCOL.format("Reading {0} IDs", size);
     }
 
-    Set<CDOID> dirtyOIDs = new HashSet();
+    Set<CDOID> dirtyOIDs = new HashSet<CDOID>();
     for (int i = 0; i < size; i++)
     {
       CDOID dirtyOID = CDOIDImpl.read(in);
@@ -69,7 +69,7 @@ public class InvalidationIndication extends Indication
 
   protected CDOSessionImpl getSession()
   {
-    return getProtocol().getInfraStructure();
+    return (CDOSessionImpl)getProtocol().getInfraStructure();
   }
 
   @Override

@@ -22,7 +22,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadPackageRequest extends CDOClientRequest
+public class LoadPackageRequest extends CDOClientRequest<Object>
 {
   private CDOPackageImpl cdoPackage;
 

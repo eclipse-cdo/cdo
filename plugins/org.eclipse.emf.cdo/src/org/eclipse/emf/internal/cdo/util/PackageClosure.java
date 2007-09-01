@@ -56,7 +56,7 @@ public final class PackageClosure
     }
 
     // Handle >1 packages
-    Set<EPackage> result = new HashSet();
+    Set<EPackage> result = new HashSet<EPackage>();
     for (EPackage ePackage : ePackages)
     {
       Set<EPackage> packages = calculate(ePackage);
@@ -76,7 +76,7 @@ public final class PackageClosure
       TRACER.trace("Package closure for " + ePackage.getNsURI());
     }
 
-    Set<EClass> visited = new HashSet();
+    Set<EClass> visited = new HashSet<EClass>();
 
     List<EClassifier> classifiers = ePackage.getEClassifiers();
     for (EClassifier classifier : classifiers)
@@ -84,7 +84,7 @@ public final class PackageClosure
       handleEClassifier(classifier, visited);
     }
 
-    Set<EPackage> result = new HashSet();
+    Set<EPackage> result = new HashSet<EPackage>();
     for (EClass eClass : visited)
     {
       final EPackage p = eClass.getEPackage();

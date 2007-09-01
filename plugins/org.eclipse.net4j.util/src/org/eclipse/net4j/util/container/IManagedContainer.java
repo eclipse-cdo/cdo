@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util.container;
 
-import org.eclipse.net4j.internal.util.container.ManagedContainer;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -24,11 +23,11 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public interface IManagedContainer extends IContainer
+public interface IManagedContainer extends IContainer<Object>
 {
   public IRegistry<IFactoryKey, IFactory> getFactoryRegistry();
 
-  public ManagedContainer registerFactory(IFactory factory);
+  public IManagedContainer registerFactory(IFactory factory);
 
   public List<IElementProcessor> getPostProcessors();
 

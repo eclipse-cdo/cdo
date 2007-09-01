@@ -49,7 +49,7 @@ public class RegisterWorkspacePackagesAction extends RegisterPackagesAction
       if (result != null && result.length != 0)
       {
         ResourceSet resourceSet = EMFUtil.newEcoreResourceSet();
-        List<EPackage> ePackages = new ArrayList(result.length);
+        List<EPackage> ePackages = new ArrayList<EPackage>(result.length);
         for (Object object : result)
         {
           if (object instanceof IFile)

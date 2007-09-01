@@ -22,7 +22,7 @@ public final class RoundRobinList<E> extends LinkedList<E>
   {
   }
 
-  public RoundRobinList(Collection c)
+  public RoundRobinList(Collection<? extends E> c)
   {
     super(c);
   }

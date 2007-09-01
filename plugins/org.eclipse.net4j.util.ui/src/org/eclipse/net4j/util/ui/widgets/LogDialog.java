@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
@@ -33,7 +34,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class LogDialog extends BaseDialog
+public class LogDialog extends BaseDialog<Viewer>
 {
   private StringBuilder log = new StringBuilder();
 
@@ -41,7 +42,7 @@ public class LogDialog extends BaseDialog
 
   private TextStyle textStyle;
 
-  private List<StyleRange> styleRanges = new ArrayList();
+  private List<StyleRange> styleRanges = new ArrayList<StyleRange>();
 
   private StyleRange currentStyleRange = new StyleRange();
 

@@ -75,7 +75,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
    */
   private ExecutorService receiveExecutor;
 
-  private List<Channel> channels = new ArrayList(0);
+  private List<Channel> channels = new ArrayList<Channel>(0);
 
   private RWLock channelsLock = new RWLock(2500);
 
@@ -83,14 +83,13 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
   /**
    * Is registered with each {@link IChannel} of this {@link IConnector}.
-   * <p>
    */
-  private transient IListener channelListener = new LifecycleEventConverter(this)
+  private transient IListener channelListener = new LifecycleEventConverter<IChannel>(this)
   {
     @Override
-    protected IContainerEvent createContainerEvent(IContainer container, Object element, Kind kind)
+    protected IContainerEvent<IChannel> createContainerEvent(IContainer<IChannel> container, IChannel element, Kind kind)
     {
-      return newContainerEvent((IChannel)element, kind);
+      return newContainerEvent(element, kind);
     }
   };
 
@@ -304,7 +303,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
   public IChannel[] getChannels()
   {
-    final List<IChannel> result = new ArrayList(0);
+    final List<IChannel> result = new ArrayList<IChannel>(0);
     channelsLock.read(new Runnable()
     {
       public void run()
@@ -420,7 +419,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
   protected List<Queue<IBuffer>> getChannelBufferQueues()
   {
-    final List<Queue<IBuffer>> result = new ArrayList(channels.size());
+    final List<Queue<IBuffer>> result = new ArrayList<Queue<IBuffer>>(channels.size());
     channelsLock.read(new Runnable()
     {
       public void run()
@@ -568,8 +567,6 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
    * so that the post processors can reach them. The protocol description can be
    * used to store unique protocol IDs so that always new protocols are created
    * in the container.
-   * 
-   * @param infraStructure
    */
   protected IProtocol createProtocol(String type, Object infraStructure)
   {
@@ -581,7 +578,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
     // Get protocol factory
     IFactoryKey key = createProtocolFactoryKey(type);
-    IFactory<IProtocol> factory = registry.get(key);
+    IFactory factory = registry.get(key);
     if (factory == null)
     {
       if (TRACER.isEnabled())
@@ -594,7 +591,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
     // Create protocol
     String description = null;
-    IProtocol protocol = factory.create(description);
+    IProtocol protocol = (IProtocol)factory.create(description);
     if (infraStructure != null)
     {
       protocol.setInfraStructure(infraStructure);

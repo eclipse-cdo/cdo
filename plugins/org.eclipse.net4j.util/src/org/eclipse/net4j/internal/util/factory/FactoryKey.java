@@ -20,7 +20,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public final class FactoryKey implements IFactoryKey, Serializable, Comparable
+public final class FactoryKey implements IFactoryKey, Serializable, Comparable<FactoryKey>
 {
   private static final long serialVersionUID = 1L;
 
@@ -68,20 +68,14 @@ public final class FactoryKey implements IFactoryKey, Serializable, Comparable
     return MessageFormat.format("{0}[{1}]", productGroup, type);
   }
 
-  public int compareTo(Object o)
+  public int compareTo(FactoryKey key)
   {
-    if (o instanceof FactoryKey)
+    int result = StringUtil.compare(productGroup, key.productGroup);
+    if (result == 0)
     {
-      FactoryKey key = (FactoryKey)o;
-      int result = StringUtil.compare(productGroup, key.productGroup);
-      if (result == 0)
-      {
-        result = StringUtil.compare(type, key.type);
-      }
-
-      return result;
+      result = StringUtil.compare(type, key.type);
     }
 
-    return 0;
+    return result;
   }
 }

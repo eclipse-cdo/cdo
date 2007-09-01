@@ -22,7 +22,7 @@ import java.net.URL;
 /**
  * @author Eike Stepper
  */
-public class TCPConnectorFactory extends ConnectorFactory<TCPClientConnector>
+public class TCPConnectorFactory extends ConnectorFactory
 {
   public static final String TYPE = "tcp";
 
@@ -62,22 +62,28 @@ public class TCPConnectorFactory extends ConnectorFactory<TCPClientConnector>
   }
 
   @Override
-  public String getDescriptionFor(TCPClientConnector connector)
+  public String getDescriptionFor(Object object)
   {
-    String description = connector.getHost();
-    String userID = connector.getUserID();
-    if (!StringUtil.isEmpty(userID))
+    if (object instanceof TCPClientConnector)
     {
-      description = userID + "@" + description;
+      TCPClientConnector connector = (TCPClientConnector)object;
+      String description = connector.getHost();
+      String userID = connector.getUserID();
+      if (!StringUtil.isEmpty(userID))
+      {
+        description = userID + "@" + description;
+      }
+
+      int port = connector.getPort();
+      if (port != DEFAULT_PORT)
+      {
+        description = description + ":" + port;
+      }
+
+      return description;
     }
 
-    int port = connector.getPort();
-    if (port != DEFAULT_PORT)
-    {
-      description = description + ":" + port;
-    }
-
-    return description;
+    return null;
   }
 
   public static TCPClientConnector get(IManagedContainer container, String description)

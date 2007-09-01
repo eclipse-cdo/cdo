@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.server.IStoreReader;
  */
 public final class StoreUtil
 {
-  private static final ThreadLocal<IStoreReader> THREAD_LOCAL = new InheritableThreadLocal();
+  private static final ThreadLocal<IStoreReader> THREAD_LOCAL = new InheritableThreadLocal<IStoreReader>();
 
   private StoreUtil()
   {

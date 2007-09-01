@@ -23,7 +23,7 @@ public final class MON
 {
   public static final int UNKNOWN = -1;
 
-  private static final ThreadLocal<Monitor> CURRENT = new ThreadLocal();
+  private static final ThreadLocal<Monitor> CURRENT = new ThreadLocal<Monitor>();
 
   private MON()
   {

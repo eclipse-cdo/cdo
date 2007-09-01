@@ -26,13 +26,13 @@ public class TraceHandlerEvent implements OMTraceHandlerEvent, Serializable
 
   protected OMTracer tracer;
 
-  protected Class context;
+  protected Class<?> context;
 
   protected String message;
 
   protected Throwable throwable;
 
-  public TraceHandlerEvent(OMTracer tracer, Class context, String message, Throwable throwable)
+  public TraceHandlerEvent(OMTracer tracer, Class<?> context, String message, Throwable throwable)
   {
     if (tracer == null)
     {
@@ -61,7 +61,7 @@ public class TraceHandlerEvent implements OMTraceHandlerEvent, Serializable
     return tracer;
   }
 
-  public Class getContext()
+  public Class<?> getContext()
   {
     return context;
   }

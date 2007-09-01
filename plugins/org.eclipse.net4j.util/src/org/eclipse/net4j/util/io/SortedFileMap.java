@@ -18,7 +18,7 @@ import java.io.RandomAccessFile;
 /**
  * @author Eike Stepper
  */
-public abstract class SortedFileMap<K extends Comparable, V> implements Closeable
+public abstract class SortedFileMap<K extends Comparable<K>, V> implements Closeable
 {
   private File file;
 
@@ -198,7 +198,7 @@ public abstract class SortedFileMap<K extends Comparable, V> implements Closeabl
     {
       long mid = low + high >> 1;
       randomAccessFile.seek(getPosition(mid));
-      Comparable midVal = readKey(input);
+      Comparable<K> midVal = readKey(input);
       int cmp = midVal.compareTo(key);
 
       if (cmp < 0)

@@ -28,7 +28,7 @@ import java.net.URL;
  */
 public class OSGiBundle extends AbstractBundle
 {
-  public OSGiBundle(AbstractPlatform platform, String bundleID, Class accessor)
+  public OSGiBundle(AbstractPlatform platform, String bundleID, Class<?> accessor)
   {
     super(platform, bundleID, accessor);
   }

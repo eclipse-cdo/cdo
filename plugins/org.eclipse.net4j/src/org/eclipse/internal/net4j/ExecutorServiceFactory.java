@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public class ExecutorServiceFactory extends Factory<ExecutorService>
+public class ExecutorServiceFactory extends Factory
 {
   public static final String PRODUCT_GROUP = "org.eclipse.net4j.executorServices";
 

@@ -79,7 +79,7 @@ public class ImportRootsAction extends EditingDomainAction
     List<Resource> resources = getSourceResources();
     for (Resource resource : resources)
     {
-      List<EObject> contents = new ArrayList(resource.getContents());
+      List<EObject> contents = new ArrayList<EObject>(resource.getContents());
       for (EObject root : contents)
       {
         targetContents.add(root);
@@ -90,7 +90,7 @@ public class ImportRootsAction extends EditingDomainAction
   protected List<Resource> getSourceResources()
   {
     ResourceSetImpl resourceSet = createSourceResourceSet();
-    List<Resource> resources = new ArrayList(uris.size());
+    List<Resource> resources = new ArrayList<Resource>(uris.size());
     for (URI uri : uris)
     {
       Resource resource = resourceSet.getResource(uri, true);

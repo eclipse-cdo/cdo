@@ -43,7 +43,7 @@ public class RemoteTraceServer
 
   private ServerSocket serverSocket;
 
-  private Queue<Listener> listeners = new ConcurrentLinkedQueue();
+  private Queue<Listener> listeners = new ConcurrentLinkedQueue<Listener>();
 
   public RemoteTraceServer() throws IOException
   {

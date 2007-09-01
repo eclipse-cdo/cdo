@@ -49,9 +49,9 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
 
   private Map<String, CDOPackageType> packageTypes = CDOUtil.getPackageTypes();
 
-  private Set<String> excludedURIs = new HashSet();
+  private Set<String> excludedURIs = new HashSet<String>();
 
-  private Set<String> checkedURIs = new HashSet();
+  private Set<String> checkedURIs = new HashSet<String>();
 
   public SelectPackageDialog(Shell shell, String title, String message, Set<String> excludedURIs)
   {
@@ -119,10 +119,10 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
 
     public Object[] getElements(Object inputElement)
     {
-      Set<String> uris = new HashSet(packageTypes.keySet());
+      Set<String> uris = new HashSet<String>(packageTypes.keySet());
       uris.removeAll(excludedURIs);
 
-      List<String> elements = new ArrayList(uris);
+      List<String> elements = new ArrayList<String>(uris);
       Collections.sort(elements);
       return elements.toArray();
     }

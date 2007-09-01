@@ -61,7 +61,7 @@ public abstract class Mapping implements IMapping
 
   private IDBTable table;
 
-  private Set<IDBTable> affectedTables = new HashSet();
+  private Set<IDBTable> affectedTables = new HashSet<IDBTable>();
 
   public Mapping(MappingStrategy mappingStrategy, CDOClass cdoClass)
   {

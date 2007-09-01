@@ -16,27 +16,28 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.Future;
 
 /**
  * @author Eike Stepper
  */
 public class CompletionWorkSerializer implements IWorkSerializer
 {
-  private CompletionService completionService;
+  private CompletionService<Object> completionService;
 
-  public CompletionWorkSerializer(CompletionService completionService)
+  public CompletionWorkSerializer(CompletionService<Object> completionService)
   {
     this.completionService = completionService;
   }
 
-  public CompletionWorkSerializer(Executor executor, BlockingQueue completionQueue)
+  public CompletionWorkSerializer(Executor executor, BlockingQueue<Future<Object>> completionQueue)
   {
-    this(new ExecutorCompletionService(executor, completionQueue));
+    this(new ExecutorCompletionService<Object>(executor, completionQueue));
   }
 
   public CompletionWorkSerializer(Executor executor)
   {
-    this(new ExecutorCompletionService(executor));
+    this(new ExecutorCompletionService<Object>(executor));
   }
 
   public CompletionWorkSerializer()
@@ -44,7 +45,7 @@ public class CompletionWorkSerializer implements IWorkSerializer
     this(new OnePendingExecutor());
   }
 
-  public CompletionService getCompletionService()
+  public CompletionService<Object> getCompletionService()
   {
     return completionService;
   }

@@ -10,13 +10,12 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
-import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.internal.util.factory.Factory;
 
 /**
  * @author Eike Stepper
  */
-public abstract class ConnectorFactory<PRODUCT extends IConnector> extends Factory<PRODUCT>
+public abstract class ConnectorFactory extends Factory
 {
   public static final String PRODUCT_GROUP = "org.eclipse.net4j.connectors";
 

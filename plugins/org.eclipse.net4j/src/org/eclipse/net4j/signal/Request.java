@@ -25,7 +25,7 @@ import java.io.OutputStream;
 /**
  * @author Eike Stepper
  */
-public abstract class Request extends SignalActor
+public abstract class Request extends SignalActor<Object>
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Request.class);
 

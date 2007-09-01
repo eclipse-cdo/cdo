@@ -68,7 +68,7 @@ public class TDD
     }
   }
 
-  private static Throwable filterException(Throwable t, Class entry)
+  private static Throwable filterException(Throwable t, Class<? extends Object> entry)
   {
     StackTraceElement[] stackTrace = t.getStackTrace();
     int len;

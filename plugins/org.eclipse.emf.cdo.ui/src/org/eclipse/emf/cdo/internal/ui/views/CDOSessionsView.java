@@ -5,6 +5,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
@@ -35,7 +36,7 @@ public class CDOSessionsView extends ContainerView
   }
 
   @Override
-  protected ContainerItemProvider createContainerItemProvider()
+  protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
   {
     return new CDOItemProvider(getSite().getPage(), new IElementFilter()
     {

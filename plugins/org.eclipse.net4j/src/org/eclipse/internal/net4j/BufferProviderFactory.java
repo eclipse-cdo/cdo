@@ -18,7 +18,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 /**
  * @author Eike Stepper
  */
-public class BufferProviderFactory extends Factory<IBufferProvider>
+public class BufferProviderFactory extends Factory
 {
   public static final String PRODUCT_GROUP = "org.eclipse.net4j.bufferProviders";
 

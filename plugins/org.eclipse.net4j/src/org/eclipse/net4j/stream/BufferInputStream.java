@@ -36,7 +36,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, BufferInputStream.class);
 
-  private BlockingQueue<IBuffer> buffers = new LinkedBlockingQueue();
+  private BlockingQueue<IBuffer> buffers = new LinkedBlockingQueue<IBuffer>();
 
   private IBuffer currentBuffer;
 

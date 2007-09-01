@@ -7,9 +7,9 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public abstract class CachedFileMap<K extends Comparable, V> extends SortedFileMap<K, V>
+public abstract class CachedFileMap<K extends Comparable<K>, V> extends SortedFileMap<K, V>
 {
-  private Map<K, V> cache = new HashMap();
+  private Map<K, V> cache = new HashMap<K, V>();
 
   public CachedFileMap(File file, String mode)
   {

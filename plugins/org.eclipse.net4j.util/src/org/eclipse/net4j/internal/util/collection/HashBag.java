@@ -25,22 +25,22 @@ public final class HashBag<T> implements Set<T>
 
   public HashBag()
   {
-    map = new HashMap();
+    map = new HashMap<T, Counter>();
   }
 
   public HashBag(int initialCapacity, float loadFactor)
   {
-    map = new HashMap(initialCapacity, loadFactor);
+    map = new HashMap<T, Counter>(initialCapacity, loadFactor);
   }
 
   public HashBag(int initialCapacity)
   {
-    map = new HashMap(initialCapacity);
+    map = new HashMap<T, Counter>(initialCapacity);
   }
 
   public HashBag(Map<? extends T, ? extends HashBag.Counter> m)
   {
-    map = new HashMap(m);
+    map = new HashMap<T, Counter>(m);
   }
 
   public boolean add(T o)

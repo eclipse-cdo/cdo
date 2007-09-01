@@ -69,7 +69,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener, ID
 
   private TableViewer mapViewer;
 
-  private Stack elements = new Stack();
+  private Stack<Object> elements = new Stack<Object>();
 
   private Text classLabel;
 
@@ -216,7 +216,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener, ID
       Object element = ssel.getFirstElement();
       if (currentViewer == objectViewer && element instanceof Pair)
       {
-        Pair<Field, Object> pair = (Pair)element;
+        Pair<Field, Object> pair = (Pair<Field, Object>)element;
         Field field = pair.getElement1();
         if (!field.getType().isPrimitive())
         {
@@ -225,7 +225,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener, ID
       }
       else if (currentViewer == mapViewer && element instanceof Map.Entry)
       {
-        Map.Entry entry = (Map.Entry)element;
+        Map.Entry<?, ?> entry = (Map.Entry<?, ?>)element;
         setObject(entry.getValue());
       }
       else if (currentViewer == iterableViewer)
@@ -475,7 +475,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener, ID
       {
         try
         {
-          Pair<Field, Object> pair = (Pair)obj;
+          Pair<Field, Object> pair = (Pair<Field, Object>)obj;
           Field field = pair.getElement1();
           Object value = pair.getElement2();
           switch (index)
@@ -512,8 +512,8 @@ public class IntrospectorView extends ViewPart implements ISelectionListener, ID
         Object element = elements.peek();
         if (element instanceof Iterable)
         {
-          List result = new ArrayList();
-          for (Object object : (Iterable)element)
+          List<Object> result = new ArrayList<Object>();
+          for (Object object : (Iterable<Object>)element)
           {
             result.add(object);
           }
@@ -557,7 +557,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener, ID
         Object element = elements.peek();
         if (element instanceof Map)
         {
-          return ((Map)element).entrySet().toArray();
+          return ((Map<?, ?>)element).entrySet().toArray();
         }
       }
 
@@ -574,7 +574,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener, ID
     {
       if (obj instanceof Map.Entry)
       {
-        Map.Entry entry = (Map.Entry)obj;
+        Map.Entry<?, ?> entry = (Map.Entry<?, ?>)obj;
         Object key = entry.getKey();
         Object value = entry.getValue();
         switch (index)

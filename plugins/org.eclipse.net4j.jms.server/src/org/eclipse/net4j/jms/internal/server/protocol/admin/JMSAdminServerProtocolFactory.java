@@ -18,7 +18,7 @@ import org.eclipse.internal.net4j.ServerProtocolFactory;
 /**
  * @author Eike Stepper
  */
-public final class JMSAdminServerProtocolFactory extends ServerProtocolFactory<JMSAdminServerProtocol>
+public final class JMSAdminServerProtocolFactory extends ServerProtocolFactory
 {
   public static final String TYPE = JMSAdminProtocolConstants.PROTOCOL_NAME;
 

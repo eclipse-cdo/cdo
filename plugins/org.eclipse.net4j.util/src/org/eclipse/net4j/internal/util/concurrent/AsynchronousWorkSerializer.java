@@ -46,7 +46,7 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, Runnable
 
   public AsynchronousWorkSerializer(ExecutorService executorService)
   {
-    this(executorService, new ConcurrentLinkedQueue());
+    this(executorService, new ConcurrentLinkedQueue<Runnable>());
   }
 
   public ExecutorService getExecutorService()

@@ -43,7 +43,7 @@ public class JMSClientMessageIndication extends IndicationWithResponse
   {
     MessageImpl[] messages = { MessageUtil.read(in) };
     JMSServerProtocol protocol = (JMSServerProtocol)getProtocol();
-    ServerConnection connection = protocol.getInfraStructure();
+    ServerConnection connection = (ServerConnection)protocol.getInfraStructure();
     Server server = connection.getServer();
     String[] ids = server.handleClientMessages(messages);
     if (ids != null && ids.length != 0)

@@ -19,7 +19,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * @author Eike Stepper
  */
-public class ServerTestProtocolFactory extends ServerProtocolFactory<TestProtocol>
+public class ServerTestProtocolFactory extends ServerProtocolFactory
 {
   public static final String TYPE = "test.protocol";
 

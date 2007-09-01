@@ -40,7 +40,7 @@ public class MessageConsumerImpl extends Lifecycle implements MessageConsumer
   /**
    * Incoming messages
    */
-  private BlockingQueue<MessageImpl> messages = new LinkedBlockingQueue();
+  private BlockingQueue<MessageImpl> messages = new LinkedBlockingQueue<MessageImpl>();
 
   public MessageConsumerImpl(SessionImpl session, long consumerID, DestinationImpl destination, String messageSelector)
   {

@@ -30,7 +30,7 @@ public class SingleDeltaContainerEvent<E> extends Event implements IContainerEve
   public SingleDeltaContainerEvent(IContainer<E> container, E element, Kind kind)
   {
     super(container);
-    deltas = new IContainerDelta[] { new ContainerDelta(element, kind) };
+    deltas = new IContainerDelta[] { new ContainerDelta<E>(element, kind) };
   }
 
   public IContainer<E> getContainer()
@@ -70,7 +70,7 @@ public class SingleDeltaContainerEvent<E> extends Event implements IContainerEve
     boolean filtered = true;
     if (visitor instanceof Filtered)
     {
-      filtered = ((Filtered)visitor).filter(element);
+      filtered = ((Filtered<E>)visitor).filter(element);
     }
 
     if (filtered)

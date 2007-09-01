@@ -59,7 +59,7 @@ public class RegisterFilesystemPackagesAction extends RegisterPackagesAction
       if (fileNames != null && fileNames.length != 0)
       {
         ResourceSet resourceSet = EMFUtil.newEcoreResourceSet();
-        List<EPackage> ePackages = new ArrayList(fileNames.length);
+        List<EPackage> ePackages = new ArrayList<EPackage>(fileNames.length);
         for (String fileName : fileNames)
         {
           String path = filterPath + File.separator + fileName;

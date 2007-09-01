@@ -33,7 +33,7 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
   public ContainerEvent(IContainer<E> container)
   {
     super(container);
-    deltas = new ArrayList();
+    deltas = new ArrayList<IContainerDelta<E>>();
   }
 
   public ContainerEvent(IContainer<E> container, List<IContainerDelta<E>> deltas)
@@ -79,7 +79,7 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
 
   public void addDelta(E element, Kind kind)
   {
-    addDelta(new ContainerDelta(element, kind));
+    addDelta(new ContainerDelta<E>(element, kind));
   }
 
   public void addDelta(IContainerDelta<E> delta)
@@ -96,7 +96,7 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
       boolean filtered = true;
       if (visitor instanceof Filtered)
       {
-        filtered = ((Filtered)visitor).filter(element);
+        filtered = ((Filtered<E>)visitor).filter(element);
       }
 
       if (filtered)

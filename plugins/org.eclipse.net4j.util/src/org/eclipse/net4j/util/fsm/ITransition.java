@@ -13,7 +13,7 @@ package org.eclipse.net4j.util.fsm;
 /**
  * @author Eike Stepper
  */
-public interface ITransition<STATE extends Enum, EVENT extends Enum, SUBJECT, DATA>
+public interface ITransition<STATE extends Enum<?>, EVENT extends Enum<?>, SUBJECT, DATA>
 {
   public void execute(SUBJECT subject, STATE state, EVENT event, DATA data);
 }

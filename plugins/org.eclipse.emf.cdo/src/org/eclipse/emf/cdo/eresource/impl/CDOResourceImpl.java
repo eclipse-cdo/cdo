@@ -169,7 +169,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
       EList<EObject> transientContents = (EList<EObject>)eSettings[EresourcePackage.CDO_RESOURCE__CONTENTS];
       if (transientContents == null)
       {
-        transientContents = new TransientContents();
+        transientContents = new TransientContents<EObject>();
         eSettings[EresourcePackage.CDO_RESOURCE__CONTENTS] = transientContents;
       }
 

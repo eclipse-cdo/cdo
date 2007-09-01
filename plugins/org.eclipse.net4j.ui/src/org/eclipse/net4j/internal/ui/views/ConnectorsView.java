@@ -2,6 +2,7 @@ package org.eclipse.net4j.internal.ui.views;
 
 import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
@@ -34,7 +35,7 @@ public class ConnectorsView extends ContainerView
   }
 
   @Override
-  protected ContainerItemProvider createContainerItemProvider()
+  protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
   {
     return new Net4jItemProvider(new IElementFilter()
     {

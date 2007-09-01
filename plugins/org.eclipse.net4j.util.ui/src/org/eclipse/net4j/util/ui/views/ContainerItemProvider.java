@@ -27,9 +27,9 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemProvider<CONTAINER>
+public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends ItemProvider<CONTAINER>
 {
-  private Map<Object, Node> nodes = new HashMap();
+  private Map<Object, Node> nodes = new HashMap<Object, Node>();
 
   private ContainerNode root;
 
@@ -69,7 +69,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
     {
       Node node = getNode(element);
       List<Node> children = node.getChildren();
-      for (Iterator it = children.iterator(); it.hasNext();)
+      for (Iterator<Node> it = children.iterator(); it.hasNext();)
       {
         Object child = it.next();
         if (!LifecycleUtil.isActive(child))
@@ -159,7 +159,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
   {
     if (element instanceof IContainer)
     {
-      return new ContainerNode(parent, (IContainer)element);
+      return new ContainerNode(parent, (IContainer<Object>)element);
     }
 
     return new LeafNode(parent, element);
@@ -247,12 +247,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
    */
   public class ContainerNode extends AbstractNode
   {
-    private IContainer container;
+    private IContainer<Object> container;
 
-    private IListener containerListener = new ContainerEventAdapter()
+    private IListener containerListener = new ContainerEventAdapter<Object>()
     {
       @Override
-      protected void onAdded(IContainer container, Object element)
+      protected void onAdded(IContainer<Object> container, Object element)
       {
         if (container == ContainerNode.this.container)
         {
@@ -267,7 +267,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
       }
 
       @Override
-      protected void onRemoved(IContainer container, Object element)
+      protected void onRemoved(IContainer<Object> container, Object element)
       {
         if (container == ContainerNode.this.container)
         {
@@ -289,7 +289,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
       }
     };
 
-    public ContainerNode(Node parent, IContainer container)
+    public ContainerNode(Node parent, IContainer<Object> container)
     {
       super(parent);
       this.container = container;
@@ -303,7 +303,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
       super.dispose();
     }
 
-    public IContainer getContainer()
+    public IContainer<Object> getContainer()
     {
       return container;
     }
@@ -323,7 +323,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer> extends ItemPro
     protected List<Node> createChildren()
     {
       Object[] elements = container.getElements();
-      List<Node> children = new ArrayList(elements.length);
+      List<Node> children = new ArrayList<Node>(elements.length);
       for (int i = 0; i < elements.length; i++)
       {
         Object element = elements[i];

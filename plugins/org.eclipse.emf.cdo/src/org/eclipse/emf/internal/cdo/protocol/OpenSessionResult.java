@@ -25,7 +25,7 @@ public final class OpenSessionResult
 
   private String repositoryUUID;
 
-  private List<CDOPackageInfo> packageInfos = new ArrayList();
+  private List<CDOPackageInfo> packageInfos = new ArrayList<CDOPackageInfo>();
 
   public OpenSessionResult(int sessionID, String repositoryUUID)
   {

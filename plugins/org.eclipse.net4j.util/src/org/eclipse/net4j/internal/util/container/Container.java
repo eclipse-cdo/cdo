@@ -49,16 +49,16 @@ public abstract class Container<E> extends Lifecycle implements IContainer<E>
 
   public void fireContainerEvent(List<IContainerDelta<E>> deltas)
   {
-    fireEvent(new ContainerEvent(this, deltas));
+    fireEvent(new ContainerEvent<E>(this, deltas));
   }
 
-  protected SingleDeltaContainerEvent newContainerEvent(E element, Kind kind)
+  protected SingleDeltaContainerEvent<E> newContainerEvent(E element, Kind kind)
   {
-    return new SingleDeltaContainerEvent(this, element, kind);
+    return new SingleDeltaContainerEvent<E>(this, element, kind);
   }
 
-  protected ContainerEvent newContainerEvent()
+  protected ContainerEvent<E> newContainerEvent()
   {
-    return new ContainerEvent(this);
+    return new ContainerEvent<E>(this);
   }
 }

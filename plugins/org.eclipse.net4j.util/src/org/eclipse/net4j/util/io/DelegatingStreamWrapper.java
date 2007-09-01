@@ -17,8 +17,7 @@ import java.io.OutputStream;
 /**
  * @author Eike Stepper
  */
-public abstract class DelegatingStreamWrapper<IN extends InputStream, OUT extends OutputStream> implements
-    IStreamWrapper<IN, OUT>
+public abstract class DelegatingStreamWrapper implements IStreamWrapper
 {
   private IStreamWrapper delegate;
 
@@ -32,33 +31,33 @@ public abstract class DelegatingStreamWrapper<IN extends InputStream, OUT extend
     return delegate;
   }
 
-  public IN wrapInputStream(InputStream in) throws IOException
+  public InputStream wrapInputStream(InputStream in) throws IOException
   {
     return doWrapInputStream(delegate.wrapInputStream(in));
   }
 
-  public OUT wrapOutputStream(OutputStream out) throws IOException
+  public OutputStream wrapOutputStream(OutputStream out) throws IOException
   {
     return doWrapOutputStream(delegate.wrapOutputStream(out));
   }
 
-  public void finishInputStream(IN in) throws IOException
+  public void finishInputStream(InputStream in) throws IOException
   {
     delegate.finishInputStream(in);
     doFinishInputStream(in);
   }
 
-  public void finishOutputStream(OUT out) throws IOException
+  public void finishOutputStream(OutputStream out) throws IOException
   {
     delegate.finishOutputStream(out);
     doFinishOutputStream(out);
   }
 
-  protected abstract IN doWrapInputStream(InputStream in) throws IOException;
+  protected abstract InputStream doWrapInputStream(InputStream in) throws IOException;
 
-  protected abstract OUT doWrapOutputStream(OutputStream out) throws IOException;
+  protected abstract OutputStream doWrapOutputStream(OutputStream out) throws IOException;
 
-  protected abstract void doFinishInputStream(IN in) throws IOException;
+  protected abstract void doFinishInputStream(InputStream in) throws IOException;
 
-  protected abstract void doFinishOutputStream(OUT out) throws IOException;
+  protected abstract void doFinishOutputStream(OutputStream out) throws IOException;
 }

@@ -15,7 +15,7 @@ import java.util.Collection;
 /**
  * @author Eike Stepper
  */
-public class StaticContentProvider extends StructuredContentProvider
+public class StaticContentProvider extends StructuredContentProvider<Object>
 {
   private Object[] elements;
 
@@ -24,12 +24,12 @@ public class StaticContentProvider extends StructuredContentProvider
     this.elements = elements;
   }
 
-  public StaticContentProvider(Collection elements)
+  public StaticContentProvider(Collection<?> elements)
   {
     this(elements.toArray());
   }
 
-  public StaticContentProvider(Class enumClass)
+  public StaticContentProvider(Class<Object> enumClass)
   {
     this(createElements(enumClass));
   }
@@ -39,7 +39,7 @@ public class StaticContentProvider extends StructuredContentProvider
     return elements;
   }
 
-  private static Object[] createElements(Class enumClass)
+  private static Object[] createElements(Class<Object> enumClass)
   {
     Object[] enumConstants = enumClass.getEnumConstants();
     if (enumConstants == null)

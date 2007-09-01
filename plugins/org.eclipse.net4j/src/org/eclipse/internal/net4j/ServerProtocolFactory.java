@@ -10,13 +10,12 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
-import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.internal.util.factory.Factory;
 
 /**
  * @author Eike Stepper
  */
-public abstract class ServerProtocolFactory<PRODUCT extends IProtocol> extends Factory<PRODUCT>
+public abstract class ServerProtocolFactory extends Factory
 {
   public static final String PRODUCT_GROUP = "org.eclipse.net4j.serverProtocols";
 

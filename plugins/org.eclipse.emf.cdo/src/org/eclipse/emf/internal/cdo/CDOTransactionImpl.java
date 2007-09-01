@@ -47,11 +47,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   private List<CDOPackageImpl> newPackages;
 
-  private Map<CDOID, CDOResourceImpl> newResources = new HashMap();
+  private Map<CDOID, CDOResourceImpl> newResources = new HashMap<CDOID, CDOResourceImpl>();
 
-  private Map<CDOID, InternalCDOObject> newObjects = new HashMap();
+  private Map<CDOID, InternalCDOObject> newObjects = new HashMap<CDOID, InternalCDOObject>();
 
-  private Map<CDOID, InternalCDOObject> dirtyObjects = new HashMap();
+  private Map<CDOID, InternalCDOObject> dirtyObjects = new HashMap<CDOID, InternalCDOObject>();
 
   private boolean dirty;
 
@@ -217,6 +217,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     register(dirtyObjects, object);
   }
 
+  @SuppressWarnings("unchecked")
   private void register(Map map, InternalCDOObject object)
   {
     Object old = map.put(object.cdoID(), object);
@@ -232,6 +233,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
   }
 
+  @SuppressWarnings("unchecked")
   private void preCommit(Map objects)
   {
     if (!objects.isEmpty())
@@ -243,6 +245,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
   }
 
+  @SuppressWarnings("unchecked")
   private void postCommit(Map objects, CommitTransactionResult result)
   {
     if (!objects.isEmpty())

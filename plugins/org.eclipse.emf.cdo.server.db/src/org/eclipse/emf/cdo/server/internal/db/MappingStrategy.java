@@ -50,9 +50,9 @@ public abstract class MappingStrategy implements IMappingStrategy
 
   private ToOne toOne;
 
-  private Map<Object, IDBTable> referenceTables = new HashMap();
+  private Map<Object, IDBTable> referenceTables = new HashMap<Object, IDBTable>();
 
-  private Map<Integer, CDOClassRef> classRefs = new HashMap();
+  private Map<Integer, CDOClassRef> classRefs = new HashMap<Integer, CDOClassRef>();
 
   public MappingStrategy()
   {
@@ -72,7 +72,7 @@ public abstract class MappingStrategy implements IMappingStrategy
   {
     if (properties == null)
     {
-      properties = new HashMap();
+      properties = new HashMap<String, String>();
     }
 
     return properties;

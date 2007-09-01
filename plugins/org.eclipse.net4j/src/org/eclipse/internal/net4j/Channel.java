@@ -214,7 +214,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    sendQueue = new ConcurrentLinkedQueue();
+    sendQueue = new ConcurrentLinkedQueue<IBuffer>();
     if (receiveExecutor == null)
     {
       receiveSerializer = new SynchronousWorkSerializer();

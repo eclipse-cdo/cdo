@@ -55,7 +55,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   private List<IElementProcessor> postProcessors;
 
-  private IRegistry<ElementKey, Object> elementRegistry = new HashMapRegistry();
+  private IRegistry<ElementKey, Object> elementRegistry = new HashMapRegistry<ElementKey, Object>();
 
   private long maxElementID;
 
@@ -109,7 +109,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   {
     if (processExistingElements)
     {
-      ContainerEvent event = new ContainerEvent(this);
+      ContainerEvent<Object> event = new ContainerEvent<Object>(this);
       for (Entry<ElementKey, Object> entry : elementRegistry.entrySet())
       {
         ElementKey key = entry.getKey();
@@ -145,7 +145,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Set<String> getProductGroups()
   {
-    Set<String> result = new HashSet();
+    Set<String> result = new HashSet<String>();
     for (IFactoryKey key : factoryRegistry.keySet())
     {
       result.add(key.getProductGroup());
@@ -161,7 +161,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Set<String> getFactoryTypes(String productGroup)
   {
-    Set<String> result = new HashSet();
+    Set<String> result = new HashSet<String>();
     for (IFactoryKey key : factoryRegistry.keySet())
     {
       if (ObjectUtil.equals(key.getProductGroup(), productGroup))
@@ -220,7 +220,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Object[] getElements(String productGroup)
   {
-    List result = new ArrayList();
+    List<Object> result = new ArrayList<Object>();
     for (Entry<ElementKey, Object> entry : elementRegistry.entrySet())
     {
       ElementKey key = entry.getKey();
@@ -235,7 +235,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Object[] getElements(String productGroup, String factoryType)
   {
-    List result = new ArrayList();
+    List<Object> result = new ArrayList<Object>();
     for (Entry<ElementKey, Object> entry : elementRegistry.entrySet())
     {
       ElementKey key = entry.getKey();
@@ -261,7 +261,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       EventUtil.addListener(element, elementListener);
       key.setID(++maxElementID);
       elementRegistry.put(key, element);
-      fireEvent(new SingleDeltaContainerEvent(this, element, IContainerDelta.Kind.ADDED));
+      fireEvent(new SingleDeltaContainerEvent<Object>(this, element, IContainerDelta.Kind.ADDED));
     }
 
     return element;
@@ -269,7 +269,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Object putElement(String productGroup, String factoryType, String description, Object element)
   {
-    ContainerEvent event = new ContainerEvent(this);
+    ContainerEvent<Object> event = new ContainerEvent<Object>(this);
     ElementKey key = new ElementKey(productGroup, factoryType, description);
     key.setID(++maxElementID);
     Object oldElement = elementRegistry.put(key, element);
@@ -293,7 +293,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   {
     if (!elementRegistry.isEmpty())
     {
-      ContainerEvent event = new ContainerEvent(this);
+      ContainerEvent<Object> event = new ContainerEvent<Object>(this);
       for (Object element : elementRegistry.values())
       {
         event.addDelta(element, IContainerDelta.Kind.REMOVED);
@@ -333,7 +333,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   public void saveElements(OutputStream stream) throws IOException
   {
     ObjectOutputStream oos = new ObjectOutputStream(stream);
-    List<Entry<ElementKey, Object>> entries = new ArrayList(elementRegistry.entrySet());
+    List<Entry<ElementKey, Object>> entries = new ArrayList<Entry<ElementKey, Object>>(elementRegistry.entrySet());
     Collections.sort(entries, new EntryComparator());
 
     oos.writeInt(entries.size());
@@ -349,7 +349,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   {
     if (event instanceof IContainerEvent)
     {
-      IContainerEvent containerEvent = (IContainerEvent)event;
+      IContainerEvent<Object> containerEvent = (IContainerEvent<Object>)event;
       if (containerEvent.isEmpty())
       {
         return;
@@ -367,12 +367,12 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   protected IRegistry<IFactoryKey, IFactory> createFactoryRegistry()
   {
-    return new HashMapRegistry();
+    return new HashMapRegistry<IFactoryKey, IFactory>();
   }
 
   protected List<IElementProcessor> createPostProcessors()
   {
-    return new ArrayList();
+    return new ArrayList<IElementProcessor>();
   }
 
   protected Object createElement(String productGroup, String factoryType, String description)
@@ -397,7 +397,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     if (element != null)
     {
       EventUtil.removeListener(element, elementListener);
-      fireEvent(new SingleDeltaContainerEvent(this, element, IContainerDelta.Kind.REMOVED));
+      fireEvent(new SingleDeltaContainerEvent<Object>(this, element, IContainerDelta.Kind.REMOVED));
     }
 
     return element;
@@ -448,7 +448,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   /**
    * @author Eike Stepper
    */
-  private static final class ElementKey implements Serializable, Comparable
+  private static final class ElementKey implements Serializable, Comparable<ElementKey>
   {
     private static final long serialVersionUID = 1L;
 
@@ -517,22 +517,16 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       return MessageFormat.format("{0}[{1}, {2}]", productGroup, factoryType, description);
     }
 
-    public int compareTo(Object o)
+    public int compareTo(ElementKey key)
     {
-      if (o instanceof ElementKey)
+      if (id < key.id)
       {
-        ElementKey key = (ElementKey)o;
-        if (id < key.id)
-        {
-          return -1;
-        }
+        return -1;
+      }
 
-        if (id > key.id)
-        {
-          return 1;
-        }
-
-        return 0;
+      if (id > key.id)
+      {
+        return 1;
       }
 
       return 0;
@@ -542,12 +536,10 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   /**
    * @author Eike Stepper
    */
-  private static final class EntryComparator implements Comparator
+  private static final class EntryComparator implements Comparator<Entry<ElementKey, Object>>
   {
-    public int compare(Object o1, Object o2)
+    public int compare(Entry<ElementKey, Object> entry1, Entry<ElementKey, Object> entry2)
     {
-      Entry<ElementKey, Object> entry1 = (Entry<ElementKey, Object>)o1;
-      Entry<ElementKey, Object> entry2 = (Entry<ElementKey, Object>)o2;
       return entry1.getKey().compareTo(entry2.getKey());
     }
   }

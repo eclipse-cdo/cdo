@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.OpenViewEditorAction;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 
 import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
@@ -48,11 +49,11 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class CDOItemProvider extends ContainerItemProvider
+public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 {
   private IWorkbenchPage page;
 
-  private Map<CDOView, CDOViewHistory> viewHistories = new HashMap();
+  private Map<CDOView, CDOViewHistory> viewHistories = new HashMap<CDOView, CDOViewHistory>();
 
   private IListener viewListener = new IListener()
   {

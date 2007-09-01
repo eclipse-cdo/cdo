@@ -50,18 +50,18 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
 
   /**
    * Is registered with each {@link IConnector} of this {@link IAcceptor}.
-   * <p>
    */
-  private transient IListener lifecycleEventConverter = new LifecycleEventConverter(this)
+  private transient IListener lifecycleEventConverter = new LifecycleEventConverter<IConnector>(this)
   {
     @Override
-    protected IContainerEvent createContainerEvent(IContainer container, Object element, Kind kind)
+    protected IContainerEvent<IConnector> createContainerEvent(IContainer<IConnector> container, IConnector element,
+        Kind kind)
     {
-      return newContainerEvent((IConnector)element, kind);
+      return newContainerEvent(element, kind);
     }
   };
 
-  private Set<IConnector> acceptedConnectors = new HashSet(0);
+  private Set<IConnector> acceptedConnectors = new HashSet<IConnector>(0);
 
   public Acceptor()
   {

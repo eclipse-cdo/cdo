@@ -23,6 +23,6 @@ public final class TransactionUtil
 
   public static <CONTEXT> ITransaction<CONTEXT> createTransaction(CONTEXT context)
   {
-    return new Transaction(context);
+    return new Transaction<CONTEXT>(context);
   }
 }

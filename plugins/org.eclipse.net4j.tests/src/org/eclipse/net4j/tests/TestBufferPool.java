@@ -28,7 +28,7 @@ public class TestBufferPool
 {
   private static IBufferPool bufferPool = Net4jUtil.createBufferPool();
 
-  private static Collection memory = new ArrayList();
+  private static Collection<byte[]> memory = new ArrayList<byte[]>();
 
   public static void main(String[] args) throws InterruptedException
   {

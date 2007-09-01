@@ -17,7 +17,7 @@ import java.io.OutputStream;
 /**
  * @author Eike Stepper
  */
-public class XORStreamWrapper implements IStreamWrapper<XORInputStream, XOROutputStream>
+public class XORStreamWrapper implements IStreamWrapper
 {
   private int[] key;
 
@@ -51,11 +51,11 @@ public class XORStreamWrapper implements IStreamWrapper<XORInputStream, XOROutpu
     return new XOROutputStream(out, key);
   }
 
-  public void finishInputStream(XORInputStream in) throws IOException
+  public void finishInputStream(InputStream in) throws IOException
   {
   }
 
-  public void finishOutputStream(XOROutputStream out) throws IOException
+  public void finishOutputStream(OutputStream out) throws IOException
   {
   }
 }

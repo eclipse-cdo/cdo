@@ -10,7 +10,7 @@ import org.eclipse.internal.net4j.ServerProtocolFactory;
 /**
  * @author Eike Stepper
  */
-public class CDOServerProtocolFactory extends ServerProtocolFactory<CDOServerProtocol>
+public class CDOServerProtocolFactory extends ServerProtocolFactory
 {
   public static final String TYPE = CDOProtocolConstants.PROTOCOL_NAME;
 

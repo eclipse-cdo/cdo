@@ -20,9 +20,9 @@ public class ContextTracer
 {
   private OMTracer delegate;
 
-  private Class context;
+  private Class<?> context;
 
-  public ContextTracer(OMTracer delegate, Class context)
+  public ContextTracer(OMTracer delegate, Class<?> context)
   {
     this.delegate = delegate;
     this.context = context;

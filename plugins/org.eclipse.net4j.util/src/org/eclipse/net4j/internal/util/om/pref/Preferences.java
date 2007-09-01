@@ -33,7 +33,7 @@ public class Preferences extends Notifier implements OMPreferences
 {
   private AbstractBundle bundle;
 
-  private Map<String, Preference> prefs = new HashMap();
+  private Map<String, Preference<?>> prefs = new HashMap<String, Preference<?>>();
 
   private boolean loaded;
 
@@ -68,7 +68,7 @@ public class Preferences extends Notifier implements OMPreferences
         });
       }
 
-      for (Preference preference : prefs.values())
+      for (Preference<?> preference : prefs.values())
       {
         String name = preference.getName();
         String value = properties.getProperty(name);
@@ -82,7 +82,7 @@ public class Preferences extends Notifier implements OMPreferences
     if (dirty)
     {
       final Properties properties = new Properties();
-      for (Preference preference : prefs.values())
+      for (Preference<?> preference : prefs.values())
       {
         if (preference.isSet())
         {

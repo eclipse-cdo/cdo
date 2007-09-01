@@ -51,7 +51,7 @@ public class JMSCommitIndication extends IndicationWithResponse
     }
 
     JMSServerProtocol protocol = (JMSServerProtocol)getProtocol();
-    ServerConnection connection = protocol.getInfraStructure();
+    ServerConnection connection = (ServerConnection)protocol.getInfraStructure();
     ServerSession session = connection.getSession(sessionID);
     if (session == null)
     {

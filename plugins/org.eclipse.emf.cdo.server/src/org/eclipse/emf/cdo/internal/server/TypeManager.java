@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.ITypeManager;
 
 import org.eclipse.net4j.internal.util.lifecycle.QueueWorker;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.io.CachedFileMap;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
@@ -37,11 +38,13 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class TypeManager extends QueueWorker<ObjectEntry> implements ITypeManager
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TYPES, TypeManager.class);
+
   private Repository repository;
 
   private boolean persistent;
 
-  private ConcurrentMap<CDOID, CDOClassRef> objectTypes = new ConcurrentHashMap();
+  private ConcurrentMap<CDOID, CDOClassRef> objectTypes = new ConcurrentHashMap<CDOID, CDOClassRef>();
 
   private PackageURIMap packageURIMap;
 
@@ -170,6 +173,10 @@ public class TypeManager extends QueueWorker<ObjectEntry> implements ITypeManage
       File stateFolder = new File(OM.BUNDLE.getStateLocation());
       File repositoryFolder = new File(stateFolder, repository.getUUID());
       IOUtil.mkdirs(repositoryFolder);
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Repository state location: {0}", repositoryFolder.getAbsolutePath());
+      }
 
       packageURIMap = new PackageURIMap(new File(repositoryFolder, "package.uris"));
       packageIDMap = new PackageIDMap(new File(repositoryFolder, "package.ids"));

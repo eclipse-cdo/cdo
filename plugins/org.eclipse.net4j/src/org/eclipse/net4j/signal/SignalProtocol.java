@@ -33,7 +33,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> implements IStreamWrapper
+public abstract class SignalProtocol extends Protocol
 {
   public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
 
@@ -47,7 +47,7 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
 
   private IStreamWrapper streamWrapper;
 
-  private Map<Integer, Signal> signals = new ConcurrentHashMap(0);
+  private Map<Integer, Signal> signals = new ConcurrentHashMap<Integer, Signal>(0);
 
   private int nextCorrelationID = MIN_CORRELATION_ID;
 
@@ -216,7 +216,7 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
 
   protected abstract SignalReactor doCreateSignalReactor(short signalID);
 
-  void startSignal(SignalActor signalActor, long timeout) throws Exception
+  void startSignal(SignalActor<?> signalActor, long timeout) throws Exception
   {
     if (signalActor.getProtocol() != this)
     {

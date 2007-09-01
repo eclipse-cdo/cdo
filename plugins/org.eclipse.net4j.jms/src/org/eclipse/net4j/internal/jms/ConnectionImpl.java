@@ -65,19 +65,20 @@ public class ConnectionImpl extends Container<Session> implements Connection
 
   private IChannel channel;
 
-  private List<SessionImpl> sessions = new ArrayList(0);
+  private List<SessionImpl> sessions = new ArrayList<SessionImpl>(0);
 
-  private transient IListener sessionListener = new LifecycleEventConverter(this)
+  private transient IListener sessionListener = new LifecycleEventConverter<Session>(this)
   {
+
     @Override
-    protected IContainerEvent createContainerEvent(IContainer container, Object element, Kind kind)
+    protected IContainerEvent<Session> createContainerEvent(IContainer<Session> container, Session element, Kind kind)
     {
       if (kind == IContainerDelta.Kind.REMOVED)
       {
         removeSession((SessionImpl)element);
       }
 
-      return new SingleDeltaContainerEvent(container, element, kind);
+      return new SingleDeltaContainerEvent<Session>(container, element, kind);
     }
   };
 
@@ -316,7 +317,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
 
   public SessionImpl[] getSessions()
   {
-    List<SessionImpl> result = new ArrayList(sessions.size());
+    List<SessionImpl> result = new ArrayList<SessionImpl>(sessions.size());
     synchronized (sessions)
     {
       for (SessionImpl session : sessions)

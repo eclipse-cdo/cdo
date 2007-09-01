@@ -44,7 +44,7 @@ public abstract class AbstractBundle implements OMBundle
 
   private String bundleID;
 
-  private Class accessor;
+  private Class<?> accessor;
 
   private Object bundleContext;
 
@@ -52,7 +52,7 @@ public abstract class AbstractBundle implements OMBundle
 
   private boolean debuggingInitialized;
 
-  private Map<String, Tracer> tracers = new ConcurrentHashMap(0);
+  private Map<String, Tracer> tracers = new ConcurrentHashMap<String, Tracer>(0);
 
   private OMLogger logger;
 
@@ -62,13 +62,13 @@ public abstract class AbstractBundle implements OMBundle
 
   private ResourceBundle untranslatedResourceBundle;
 
-  private Map<String, String> strings = new HashMap(0);
+  private Map<String, String> strings = new HashMap<String, String>(0);
 
-  private Map<String, String> untranslatedStrings = new HashMap(0);
+  private Map<String, String> untranslatedStrings = new HashMap<String, String>(0);
 
   private boolean shouldTranslate = true;
 
-  public AbstractBundle(AbstractPlatform platform, String bundleID, Class accessor)
+  public AbstractBundle(AbstractPlatform platform, String bundleID, Class<?> accessor)
   {
     this.platform = platform;
     this.bundleID = bundleID;
@@ -85,7 +85,7 @@ public abstract class AbstractBundle implements OMBundle
     return bundleID;
   }
 
-  public Class getAccessor()
+  public Class<?> getAccessor()
   {
     return accessor;
   }
@@ -225,8 +225,8 @@ public abstract class AbstractBundle implements OMBundle
 
   public String getString(String key, boolean translate)
   {
-    Map stringMap = translate ? strings : untranslatedStrings;
-    String result = (String)stringMap.get(key);
+    Map<String, String> stringMap = translate ? strings : untranslatedStrings;
+    String result = stringMap.get(key);
     if (result == null)
     {
 

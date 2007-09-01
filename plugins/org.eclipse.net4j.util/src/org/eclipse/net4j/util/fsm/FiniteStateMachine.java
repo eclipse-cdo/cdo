@@ -8,10 +8,12 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public abstract class FiniteStateMachine<STATE extends Enum, EVENT extends Enum, SUBJECT>
+public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends Enum<?>, SUBJECT>
 {
+  @SuppressWarnings("unchecked")
   public static final ITransition IGNORE = new IgnoreTransition();
 
+  @SuppressWarnings("unchecked")
   public static final ITransition FAIL = new FailTransition();
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, FiniteStateMachine.class);
@@ -26,9 +28,10 @@ public abstract class FiniteStateMachine<STATE extends Enum, EVENT extends Enum,
 
   private EVENT[] events;
 
-  private ITransition[][] transitions;
+  private ITransition<STATE, EVENT, SUBJECT, ?>[][] transitions;
 
-  public FiniteStateMachine(Class<STATE> stateEnum, Class<EVENT> eventEnum, ITransition defaultTransition)
+  public FiniteStateMachine(Class<STATE> stateEnum, Class<EVENT> eventEnum,
+      ITransition<STATE, EVENT, SUBJECT, ?> defaultTransition)
   {
     states = stateEnum.getEnumConstants();
     events = eventEnum.getEnumConstants();
@@ -51,14 +54,14 @@ public abstract class FiniteStateMachine<STATE extends Enum, EVENT extends Enum,
     return events;
   }
 
-  public final ITransition getTransition(STATE state, EVENT event)
+  public final ITransition<STATE, EVENT, SUBJECT, ?> getTransition(STATE state, EVENT event)
   {
     int s = state.ordinal();
     int e = event.ordinal();
     return transitions[s][e];
   }
 
-  public final void transit(STATE state, EVENT event, ITransition transition)
+  public final void transit(STATE state, EVENT event, ITransition<STATE, EVENT, SUBJECT, ?> transition)
   {
     checkTransition(transition);
     int s = state.ordinal();
@@ -66,7 +69,7 @@ public abstract class FiniteStateMachine<STATE extends Enum, EVENT extends Enum,
     transitions[s][e] = transition;
   }
 
-  public final void transitEvents(STATE state, ITransition transition)
+  public final void transitEvents(STATE state, ITransition<STATE, EVENT, SUBJECT, ?> transition)
   {
     checkTransition(transition);
     int s = state.ordinal();
@@ -76,7 +79,7 @@ public abstract class FiniteStateMachine<STATE extends Enum, EVENT extends Enum,
     }
   }
 
-  public final void transitStates(EVENT event, ITransition transition)
+  public final void transitStates(EVENT event, ITransition<STATE, EVENT, SUBJECT, ?> transition)
   {
     checkTransition(transition);
     int e = event.ordinal();
@@ -86,7 +89,7 @@ public abstract class FiniteStateMachine<STATE extends Enum, EVENT extends Enum,
     }
   }
 
-  public final void transitAll(ITransition transition)
+  public final void transitAll(ITransition<STATE, EVENT, SUBJECT, ?> transition)
   {
     checkTransition(transition);
     for (int s = 0; s < states.length; s++)
@@ -103,7 +106,7 @@ public abstract class FiniteStateMachine<STATE extends Enum, EVENT extends Enum,
     STATE state = getState(subject);
     int s = state.ordinal();
     int e = event.ordinal();
-    ITransition transition = transitions[s][e];
+    ITransition<STATE, EVENT, SUBJECT, DATA> transition = (ITransition<STATE, EVENT, SUBJECT, DATA>)transitions[s][e];
     if (transition == IGNORE)
     {
       // TODO if (TRACER.isEnabled())
@@ -126,12 +129,12 @@ public abstract class FiniteStateMachine<STATE extends Enum, EVENT extends Enum,
     }
   }
 
-  protected ITransition createIgnoreTransition(STATE state, EVENT event)
+  protected ITransition<STATE, EVENT, SUBJECT, ?> createIgnoreTransition(STATE state, EVENT event)
   {
     return IGNORE;
   }
 
-  protected ITransition createFailTransition(STATE state, EVENT event)
+  protected ITransition<STATE, EVENT, SUBJECT, ?> createFailTransition(STATE state, EVENT event)
   {
     return FAIL;
   }
@@ -153,7 +156,7 @@ public abstract class FiniteStateMachine<STATE extends Enum, EVENT extends Enum,
 
   protected abstract STATE getState(SUBJECT subject);
 
-  private void checkTransition(ITransition transition)
+  private void checkTransition(ITransition<STATE, EVENT, SUBJECT, ?> transition)
   {
     if (transition == null)
     {
@@ -164,9 +167,9 @@ public abstract class FiniteStateMachine<STATE extends Enum, EVENT extends Enum,
   /**
    * @author Eike Stepper
    */
-  public static class IgnoreTransition implements ITransition
+  public static class IgnoreTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
-    public void execute(Object subject, Enum state, Enum event, Object data)
+    public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
     {
       // Do nothing
     }
@@ -181,9 +184,9 @@ public abstract class FiniteStateMachine<STATE extends Enum, EVENT extends Enum,
   /**
    * @author Eike Stepper
    */
-  public static class FailTransition implements ITransition
+  public static class FailTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
-    public void execute(Object subject, Enum state, Enum event, Object data)
+    public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
     {
       // Do nothing
     }

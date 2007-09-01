@@ -22,22 +22,22 @@ public class HashMapRegistry<K, V> extends Registry<K, V>
 
   public HashMapRegistry()
   {
-    map = new HashMap();
+    map = new HashMap<K, V>();
   }
 
   public HashMapRegistry(int initialCapacity)
   {
-    map = new HashMap(initialCapacity);
+    map = new HashMap<K, V>(initialCapacity);
   }
 
   public HashMapRegistry(int initialCapacity, float loadFactor)
   {
-    map = new HashMap(initialCapacity, loadFactor);
+    map = new HashMap<K, V>(initialCapacity, loadFactor);
   }
 
   public HashMapRegistry(Map<? extends K, ? extends V> m)
   {
-    map = new HashMap(m);
+    map = new HashMap<K, V>(m);
   }
 
   @Override

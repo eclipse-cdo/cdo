@@ -244,7 +244,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       object.cdoInternalSetState(CDOState.NEW);
 
       // Finalize content tree
-      for (Iterator it = FSMUtil.iterator(object.eContents(), transaction); it.hasNext();)
+      for (Iterator<?> it = FSMUtil.iterator(object.eContents(), transaction); it.hasNext();)
       {
         InternalCDOObject content = (InternalCDOObject)it.next();
         INSTANCE.process(content, CDOEvent.FINALIZE_ATTACH, data);

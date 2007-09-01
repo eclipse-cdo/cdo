@@ -21,7 +21,8 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator<CORRELATION, ISynchronizer<RESULT>>
 {
-  private ConcurrentMap<CORRELATION, ISynchronizer<RESULT>> map = new ConcurrentHashMap(0);
+  private ConcurrentMap<CORRELATION, ISynchronizer<RESULT>> map = new ConcurrentHashMap<CORRELATION, ISynchronizer<RESULT>>(
+      0);
 
   public boolean isCorrelated(CORRELATION correlation)
   {

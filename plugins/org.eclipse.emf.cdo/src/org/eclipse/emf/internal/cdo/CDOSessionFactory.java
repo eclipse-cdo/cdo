@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.Path;
 /**
  * @author Eike Stepper
  */
-public class CDOSessionFactory extends Factory<CDOSession>
+public class CDOSessionFactory extends Factory
 {
   public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.sessions";
 

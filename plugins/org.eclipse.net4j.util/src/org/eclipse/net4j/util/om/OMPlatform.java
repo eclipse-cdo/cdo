@@ -25,7 +25,7 @@ public interface OMPlatform
   // @Singleton
   public static final OMPlatform INSTANCE = AbstractPlatform.createPlatform();
 
-  public OMBundle bundle(String bundleID, Class accessor);
+  public OMBundle bundle(String bundleID, Class<?> accessor);
 
   public boolean isDebugging();
 

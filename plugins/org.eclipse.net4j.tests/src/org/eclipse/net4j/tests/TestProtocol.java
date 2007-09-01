@@ -9,7 +9,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * @author Eike Stepper
  */
-public final class TestProtocol extends Protocol<CountDownLatch>
+public final class TestProtocol extends Protocol
 {
   public TestProtocol(CountDownLatch counter)
   {
@@ -25,9 +25,9 @@ public final class TestProtocol extends Protocol<CountDownLatch>
   {
     System.out.println("BUFFER ARRIVED");
     buffer.release();
-    if (getInfraStructure() != null)
+    if (getInfraStructure() instanceof CountDownLatch)
     {
-      getInfraStructure().countDown();
+      ((CountDownLatch)getInfraStructure()).countDown();
     }
   }
 }

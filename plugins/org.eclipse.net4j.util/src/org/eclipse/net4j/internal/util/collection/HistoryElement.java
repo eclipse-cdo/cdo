@@ -28,7 +28,7 @@ public class HistoryElement<T> implements IHistoryElement<T>
     this.data = data;
   }
 
-  public IHistory getHistory()
+  public IHistory<IHistoryElement<T>> getHistory()
   {
     return history;
   }
@@ -48,7 +48,7 @@ public class HistoryElement<T> implements IHistoryElement<T>
   {
     if (obj instanceof HistoryElement)
     {
-      HistoryElement that = (HistoryElement)obj;
+      HistoryElement<T> that = (HistoryElement<T>)obj;
       return this.history.equals(that.history) && this.data.equals(that.data);
     }
 

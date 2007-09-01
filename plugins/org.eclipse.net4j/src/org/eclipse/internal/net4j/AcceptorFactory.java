@@ -10,13 +10,12 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
-import org.eclipse.net4j.IAcceptor;
 import org.eclipse.net4j.internal.util.factory.Factory;
 
 /**
  * @author Eike Stepper
  */
-public abstract class AcceptorFactory<PRODUCT extends IAcceptor> extends Factory<PRODUCT>
+public abstract class AcceptorFactory extends Factory
 {
   public static final String PRODUCT_GROUP = "org.eclipse.net4j.acceptors";
 

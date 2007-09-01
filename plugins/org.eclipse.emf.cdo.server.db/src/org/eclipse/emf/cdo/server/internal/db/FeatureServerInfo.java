@@ -47,7 +47,7 @@ public final class FeatureServerInfo extends ServerInfo
   {
     if (fields == null)
     {
-      fields = new HashMap();
+      fields = new HashMap<Object, IDBField>();
     }
     else
     {

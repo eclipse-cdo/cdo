@@ -31,26 +31,26 @@ public abstract class AbstractDelegator<E> extends Notifier implements IContaine
 
   protected void fireAddedEvent(E o)
   {
-    fireEvent(new SingleDeltaContainerEvent(this, o, IContainerDelta.Kind.ADDED));
+    fireEvent(new SingleDeltaContainerEvent<E>(this, o, IContainerDelta.Kind.ADDED));
   }
 
   protected void fireRemovedEvent(Object o)
   {
-    fireEvent(new SingleDeltaContainerEvent(this, o, IContainerDelta.Kind.REMOVED));
+    fireEvent(new SingleDeltaContainerEvent<E>(this, (E)o, IContainerDelta.Kind.REMOVED));
   }
 
-  protected ContainerEvent createEvent(Collection c, Kind kind)
+  protected ContainerEvent<E> createEvent(Collection<? super E> c, Kind kind)
   {
-    ContainerEvent event = new ContainerEvent(this);
+    ContainerEvent<E> event = new ContainerEvent<E>(this);
     for (Object o : c)
     {
-      event.addDelta(o, kind);
+      event.addDelta((E)o, kind);
     }
 
     return event;
   }
 
-  protected boolean dispatchEvent(ContainerEvent event)
+  protected boolean dispatchEvent(ContainerEvent<E> event)
   {
     if (event.isEmpty())
     {

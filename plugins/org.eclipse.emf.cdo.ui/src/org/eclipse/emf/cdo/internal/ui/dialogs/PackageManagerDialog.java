@@ -306,7 +306,7 @@ public class PackageManagerDialog extends TitleAreaDialog
         return NO_ELEMENTS;
       }
 
-      Map<String, Content> map = new HashMap();
+      Map<String, Content> map = new HashMap<String, Content>();
       for (Entry<String, Object> entry : session.getPackageRegistry().entrySet())
       {
         String packageURI = entry.getKey();
@@ -328,7 +328,7 @@ public class PackageManagerDialog extends TitleAreaDialog
         content.setCDOPackage(cdoPackage);
       }
 
-      ArrayList<Content> list = new ArrayList(map.values());
+      ArrayList<Content> list = new ArrayList<Content>(map.values());
       Collections.sort(list);
       return list.toArray(new Content[list.size()]);
     }
@@ -337,7 +337,7 @@ public class PackageManagerDialog extends TitleAreaDialog
   /**
    * @author Eike Stepper
    */
-  public static final class Content implements Comparable
+  public static final class Content implements Comparable<Content>
   {
     private String packageURI;
 
@@ -375,9 +375,9 @@ public class PackageManagerDialog extends TitleAreaDialog
       this.cdoPackage = cdoPackage;
     }
 
-    public int compareTo(Object obj)
+    public int compareTo(Content content)
     {
-      return packageURI.compareTo(((Content)obj).packageURI);
+      return packageURI.compareTo(content.packageURI);
     }
 
     @Override

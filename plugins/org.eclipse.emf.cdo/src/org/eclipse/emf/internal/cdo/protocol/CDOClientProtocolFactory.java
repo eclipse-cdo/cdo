@@ -9,7 +9,7 @@ import org.eclipse.internal.net4j.ClientProtocolFactory;
 /**
  * @author Eike Stepper
  */
-public final class CDOClientProtocolFactory extends ClientProtocolFactory<CDOClientProtocol>
+public final class CDOClientProtocolFactory extends ClientProtocolFactory
 {
   public static final String TYPE = CDOProtocolConstants.PROTOCOL_NAME;
 

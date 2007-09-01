@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class JMSRecoverRequest extends RequestWithConfirmation
+public class JMSRecoverRequest extends RequestWithConfirmation<Object>
 {
   private int sessionID;
 

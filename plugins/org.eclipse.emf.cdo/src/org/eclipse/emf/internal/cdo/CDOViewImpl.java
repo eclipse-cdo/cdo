@@ -68,7 +68,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private ResourceSet resourceSet;
 
-  private Map<CDOID, InternalCDOObject> objects = new HashMap();
+  private Map<CDOID, InternalCDOObject> objects = new HashMap<CDOID, InternalCDOObject>();
 
   private CDOStore store = new CDOStore(this);
 
@@ -208,7 +208,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public InternalCDOObject getObject(CDOID id)
   {
-    // TODO Really load on demand here?
     return getObject(id, false);
   }
 
@@ -243,6 +242,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
 
     return lastLookupObject;
+  }
+
+  public boolean isObjectRegistered(CDOID id)
+  {
+    return objects.containsKey(id);
   }
 
   /**

@@ -27,7 +27,7 @@ import java.util.Iterator;
  */
 public class ChunkingTest extends AbstractCDOTest
 {
-  public void testNativeObjects() throws Exception
+  public void testReadNative() throws Exception
   {
     {
       msg("Opening session");
@@ -78,5 +78,60 @@ public class ChunkingTest extends AbstractCDOTest
       SalesOrder salesOrder = it.next();
       System.out.println(salesOrder);
     }
+  }
+
+  public void testWriteNative() throws Exception
+  {
+    {
+      msg("Opening session");
+      CDOSession session = openModel1Session();
+
+      msg("Attaching transaction");
+      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+
+      msg("Creating resource");
+      CDOResource resource = transaction.createResource("/test1");
+
+      msg("Creating customer");
+      Customer customer = Model1Factory.eINSTANCE.createCustomer();
+      customer.setName("customer");
+      resource.getContents().add(customer);
+
+      for (int i = 0; i < 100; i++)
+      {
+        msg("Creating salesOrder" + i);
+        SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+        salesOrder.setId(i);
+        salesOrder.setCustomer(customer);
+        resource.getContents().add(salesOrder);
+      }
+
+      msg("Committing");
+      transaction.commit();
+    }
+
+    // ************************************************************* //
+
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+    session.setReferenceChunkSize(10);
+
+    msg("Attaching transaction");
+    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+
+    msg("Loading resource");
+    CDOResource resource = transaction.getResource("/test1");
+
+    Customer customer = (Customer)resource.getContents().get(0);
+    EList<SalesOrder> salesOrders = customer.getSalesOrders();
+    for (int i = 50; i < 70; i++)
+    {
+      SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+      salesOrder.setId(i + 1000);
+      resource.getContents().add(salesOrder);
+      salesOrders.set(i, salesOrder);
+    }
+
+    transaction.commit();
   }
 }

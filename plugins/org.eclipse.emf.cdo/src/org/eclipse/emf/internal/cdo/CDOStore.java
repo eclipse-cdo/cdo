@@ -265,8 +265,15 @@ public final class CDOStore implements EStore
       TRACER.format("set({0}, {1}, {2}, {3})", cdoObject, cdoFeature, index, value);
     }
 
+    CDORevisionImpl revision = getRevisionForWriting(cdoObject);
     if (cdoFeature.isReference())
     {
+      Object oldValue = revision.get(cdoFeature, index);
+      if (oldValue instanceof CDOReferenceProxy)
+      {
+        ((CDOReferenceProxy)oldValue).resolve();
+      }
+
       if (cdoFeature.isContainment())
       {
         handleContainmentAdd(cdoObject, cdoFeature, value);
@@ -275,15 +282,9 @@ public final class CDOStore implements EStore
       value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
     }
 
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject);
     Object result = revision.set(cdoFeature, index, value);
     if (cdoFeature.isReference())
     {
-      if (result instanceof CDOReferenceProxy)
-      {
-        result = ((CDOReferenceProxy)result).resolve();
-      }
-
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
     }
 

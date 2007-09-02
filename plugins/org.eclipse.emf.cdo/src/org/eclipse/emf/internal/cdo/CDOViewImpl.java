@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - EMF invalidation notifications
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -50,7 +51,9 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -67,6 +70,8 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   private CDOSessionImpl session;
 
   private ResourceSet resourceSet;
+
+  private boolean enableInvalidationNotifications;
 
   private Map<CDOID, InternalCDOObject> objects = new HashMap<CDOID, InternalCDOObject>();
 
@@ -110,6 +115,16 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   public boolean isDirty()
   {
     return false;
+  }
+
+  public boolean isEnableInvalidationNotifications()
+  {
+    return enableInvalidationNotifications;
+  }
+
+  public void setEnableInvalidationNotifications(boolean on)
+  {
+    this.enableInvalidationNotifications = on;
   }
 
   public CDOTransactionImpl toTransaction()
@@ -512,12 +527,27 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
    */
   public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs)
   {
+    List<InternalCDOObject> dirtyObjects = enableInvalidationNotifications ? new ArrayList<InternalCDOObject>() : null;
     for (CDOID dirtyOID : dirtyOIDs)
     {
-      InternalCDOObject object = objects.get(dirtyOID);
-      if (object != null)
+      InternalCDOObject dirtyObject = objects.get(dirtyOID);
+      if (dirtyObject != null)
       {
-        CDOStateMachine.INSTANCE.invalidate(object, timeStamp);
+        CDOStateMachine.INSTANCE.invalidate(dirtyObject, timeStamp);
+
+        if (dirtyObjects != null && dirtyObject.eNotificationRequired())
+        {
+          dirtyObjects.add(dirtyObject);
+        }
+      }
+    }
+
+    if (dirtyObjects != null)
+    {
+      for (InternalCDOObject dirtyObject : dirtyObjects)
+      {
+        CDOInvalidationNotificationImpl notification = new CDOInvalidationNotificationImpl(dirtyObject);
+        dirtyObject.eNotify(notification);
       }
     }
   }

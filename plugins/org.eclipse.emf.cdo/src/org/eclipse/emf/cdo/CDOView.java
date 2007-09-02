@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - EMF invalidation notifications
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -36,6 +37,10 @@ public interface CDOView extends INotifier
 
   public boolean isDirty();
 
+  public boolean isEnableInvalidationNotifications();
+
+  public void setEnableInvalidationNotifications(boolean on);
+
   /**
    * @see ResourceSet#getResource(URI, boolean)
    */
@@ -44,6 +49,8 @@ public interface CDOView extends INotifier
   public CDOObject getObject(CDOID id);
 
   public CDORevision getRevision(CDOID id);
+
+  public boolean isObjectRegistered(CDOID id);
 
   public void close();
 

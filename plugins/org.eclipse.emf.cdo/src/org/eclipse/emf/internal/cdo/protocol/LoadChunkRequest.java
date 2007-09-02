@@ -12,6 +12,8 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
@@ -28,23 +30,27 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadChunkRequest extends CDOClientRequest<CDOID[]>
+public class LoadChunkRequest extends CDOClientRequest<CDOID>
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkRequest.class);
 
-  private CDOID id;
+  private CDORevisionImpl revision;
 
   private CDOFeature feature;
+
+  private int accessIndex;
 
   private int fromIndex;
 
   private int toIndex;
 
-  public LoadChunkRequest(IChannel channel, CDOID id, CDOFeature feature, int fromIndex, int toIndex)
+  public LoadChunkRequest(IChannel channel, CDORevisionImpl revision, CDOFeature feature, int accessIndex,
+      int fromIndex, int toIndex)
   {
     super(channel, CDOProtocolConstants.SIGNAL_LOAD_CHUNK);
-    this.id = id;
+    this.revision = revision;
     this.feature = feature;
+    this.accessIndex = accessIndex;
     this.fromIndex = fromIndex;
     this.toIndex = toIndex;
   }
@@ -52,8 +58,8 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID[]>
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing ID: {0}", id);
-    CDOIDImpl.write(out, id);
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing revision ID: {0}", revision.getID());
+    CDOIDImpl.write(out, revision.getID());
 
     if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing feature: {0}", feature);
     CDOClassRefImpl classRef = (CDOClassRefImpl)feature.getContainingClass().createClassRef();
@@ -68,15 +74,20 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID[]>
   }
 
   @Override
-  protected CDOID[] confirming(ExtendedDataInputStream in) throws IOException
+  protected CDOID confirming(ExtendedDataInputStream in) throws IOException
   {
-    int size = toIndex - fromIndex + 1;
-    CDOID[] ids = new CDOID[size];
-    for (int i = 0; i < ids.length; i++)
+    CDOID accessID = null;
+    MoveableList list = revision.getList(feature);
+    for (int i = fromIndex; i <= toIndex; i++)
     {
-      ids[i] = CDOIDImpl.read(in);
+      CDOID id = CDOIDImpl.read(in);
+      list.set(i, id);
+      if (i == accessIndex)
+      {
+        accessID = id;
+      }
     }
 
-    return ids;
+    return accessID;
   }
 }

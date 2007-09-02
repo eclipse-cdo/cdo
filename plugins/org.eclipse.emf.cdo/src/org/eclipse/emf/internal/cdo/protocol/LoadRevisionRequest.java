@@ -56,7 +56,7 @@ public class LoadRevisionRequest extends CDOClientRequest<CDORevisionImpl>
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (referenceChunk == CDORevisionImpl.COMPLETE_REFERENCES)
+    if (referenceChunk == CDORevisionImpl.UNCHUNKED)
     {
       if (PROTOCOL.isEnabled())
       {

@@ -22,7 +22,7 @@ public class TDD
 {
   private static final AbstractOMTest test = new ChunkingTest();
 
-  private static final String METHOD_NAME = "testWriteNative";
+  private static final String METHOD_NAME = "testReadNative";
 
   public static void main(String[] args) throws Throwable
   {

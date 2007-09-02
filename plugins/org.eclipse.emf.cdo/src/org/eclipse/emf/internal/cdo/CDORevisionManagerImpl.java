@@ -44,46 +44,73 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
 
   public CDOID resolveReferenceProxy(CDOReferenceProxy referenceProxy)
   {
+    // Get proxy values
     CDORevisionImpl revision = (CDORevisionImpl)referenceProxy.getRevision();
     CDOFeature feature = referenceProxy.getFeature();
-    int index = referenceProxy.getIndex();
+    int accessIndex = referenceProxy.getIndex();
 
+    // Get appropriate chunk size
     int chunkSize = session.getReferenceChunkSize();
-    MoveableList list = revision.getList(feature);
-
-    int minIndex = Math.max(0, index - chunkSize / 2);
-    int fromIndex = index;
-    while (fromIndex > minIndex && list.get(fromIndex) instanceof CDOReferenceProxy)
+    if (chunkSize == CDORevisionImpl.UNCHUNKED)
     {
-      --fromIndex;
+      // Can happen if CDOSession.setReferenceChunkSize() was called meanwhile
+      chunkSize = Integer.MAX_VALUE;
     }
 
-    int maxIndex = Math.min(list.size() - 1, index + chunkSize / 2);
-    int toIndex = index;
-    while (toIndex < maxIndex && list.get(toIndex) instanceof CDOReferenceProxy)
+    MoveableList list = revision.getList(feature);
+    int size = list.size();
+    int fromIndex = accessIndex;
+    int toIndex = accessIndex;
+    boolean minReached = false;
+    boolean maxReached = false;
+    boolean alternation = false;
+    for (int i = 0; i < chunkSize; i++)
     {
-      ++toIndex;
+      if (alternation)
+      {
+        if (!maxReached && toIndex < size - 1 && list.get(toIndex + 1) instanceof CDOReferenceProxy)
+        {
+          ++toIndex;
+        }
+        else
+        {
+          maxReached = true;
+        }
+
+        if (!minReached)
+        {
+          alternation = false;
+        }
+      }
+      else
+      {
+        if (!minReached && fromIndex > 0 && list.get(fromIndex - 1) instanceof CDOReferenceProxy)
+        {
+          --fromIndex;
+        }
+        else
+        {
+          minReached = true;
+        }
+
+        if (!maxReached)
+        {
+          alternation = true;
+        }
+      }
+
+      if (minReached && maxReached)
+      {
+        break;
+      }
     }
 
     try
     {
-      CDOID result = null;
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
       IChannel channel = session.getChannel();
-      LoadChunkRequest request = new LoadChunkRequest(channel, revision.getID(), feature, fromIndex, toIndex);
-      CDOID[] ids = failOverStrategy.send(request);
-      for (int i = 0; i < ids.length; i++)
-      {
-        CDOID id = ids[i];
-        int j = fromIndex + i;
-        list.set(j, id);
-        if (j == index)
-        {
-          result = id;
-        }
-      }
-
-      return result;
+      LoadChunkRequest request = new LoadChunkRequest(channel, revision, feature, accessIndex, fromIndex, toIndex);
+      return failOverStrategy.send(request);
     }
     catch (RuntimeException ex)
     {

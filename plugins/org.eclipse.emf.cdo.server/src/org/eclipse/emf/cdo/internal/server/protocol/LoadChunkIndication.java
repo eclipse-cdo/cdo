@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
@@ -32,7 +34,13 @@ public class LoadChunkIndication extends CDOReadIndication
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkIndication.class);
 
-  private CDOID[] ids;
+  private CDOID id;
+
+  private CDOFeature feature;
+
+  private int fromIndex;
+
+  private int toIndex;
 
   public LoadChunkIndication()
   {
@@ -42,30 +50,30 @@ public class LoadChunkIndication extends CDOReadIndication
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    CDOID id = CDOIDImpl.read(in);
+    id = CDOIDImpl.read(in);
     if (PROTOCOL.isEnabled()) PROTOCOL.format("Read ID: {0}", id);
 
     CDOClassRef classRef = new CDOClassRefImpl(in, null);
     int featureID = in.readInt();
     CDOClass cdoClass = classRef.resolve(getPackageManager());
-    CDOFeature feature = cdoClass.lookupFeature(featureID);
+    feature = cdoClass.lookupFeature(featureID);
     if (PROTOCOL.isEnabled()) PROTOCOL.format("Read feature: {0}", feature);
 
-    int fromIndex = in.readInt();
+    fromIndex = in.readInt();
     if (PROTOCOL.isEnabled()) PROTOCOL.format("Read fromIndex: {0}", fromIndex);
 
-    int toIndex = in.readInt();
+    toIndex = in.readInt();
     if (PROTOCOL.isEnabled()) PROTOCOL.format("Read toIndex: {0}", toIndex);
-
-    ids = getRevisionManager().getReferenceChunk(id, feature, fromIndex, toIndex);
   }
 
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    for (CDOID id : ids)
+    CDORevisionImpl revision = getRevisionManager().getRevision(id, CDORevisionImpl.UNCHUNKED);
+    MoveableList list = revision.getList(feature);
+    for (int i = fromIndex; i <= toIndex; i++)
     {
-      CDOIDImpl.write(out, id);
+      CDOIDImpl.write(out, (CDOID)list.get(i));
     }
   }
 }

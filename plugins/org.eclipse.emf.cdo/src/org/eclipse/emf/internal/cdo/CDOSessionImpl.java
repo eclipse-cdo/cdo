@@ -76,7 +76,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   private int sessionID;
 
-  private int referenceChunkSize = CDORevisionImpl.COMPLETE_REFERENCES;
+  private int referenceChunkSize = CDORevisionImpl.UNCHUNKED;
 
   private IFailOverStrategy failOverStrategy;
 
@@ -144,9 +144,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   public void setReferenceChunkSize(int referenceChunkSize)
   {
-    if (referenceChunkSize < 0)
+    if (referenceChunkSize <= 0)
     {
-      referenceChunkSize = CDORevisionImpl.COMPLETE_REFERENCES;
+      referenceChunkSize = CDORevisionImpl.UNCHUNKED;
     }
 
     this.referenceChunkSize = referenceChunkSize;

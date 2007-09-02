@@ -63,7 +63,7 @@ public class LoadRevisionIndication extends CDOReadIndication
         PROTOCOL.format("Read ID: {0}", id);
       }
 
-      referenceChunk = CDORevisionImpl.COMPLETE_REFERENCES;
+      referenceChunk = CDORevisionImpl.UNCHUNKED;
     }
 
     boolean historical = in.readBoolean();

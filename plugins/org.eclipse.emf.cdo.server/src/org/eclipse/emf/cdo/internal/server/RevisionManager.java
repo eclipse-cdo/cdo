@@ -77,7 +77,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   protected CDORevisionImpl loadRevision(CDOID id, int referenceChunk)
   {
     IStoreReader storeReader = StoreUtil.getReader();
-    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevision(id);
+    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevision(id, referenceChunk);
     registerObjectType(revision);
     return revision;
   }
@@ -86,7 +86,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   protected CDORevisionImpl loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
     IStoreReader storeReader = StoreUtil.getReader();
-    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevisionByTime(id, timeStamp);
+    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevisionByTime(id, referenceChunk, timeStamp);
     registerObjectType(revision);
     return revision;
   }
@@ -95,7 +95,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   protected CDORevisionImpl loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
     IStoreReader storeReader = StoreUtil.getReader();
-    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevisionByVersion(id, version);
+    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevisionByVersion(id, referenceChunk, version);
     registerObjectType(revision);
     return revision;
   }

@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -35,6 +36,8 @@ public class LoadChunkIndication extends CDOReadIndication
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkIndication.class);
 
   private CDOID id;
+
+  private int version;
 
   private CDOFeature feature;
 
@@ -56,7 +59,10 @@ public class LoadChunkIndication extends CDOReadIndication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     id = CDOIDImpl.read(in);
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Read ID: {0}", id);
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Read revision ID: {0}", id);
+
+    version = in.readInt();
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Read revision version: {0}", version);
 
     CDOClassRef classRef = new CDOClassRefImpl(in, null);
     int featureID = in.readInt();
@@ -74,7 +80,7 @@ public class LoadChunkIndication extends CDOReadIndication
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    CDORevisionImpl revision = getRevisionManager().getRevision(id, CDORevisionImpl.UNCHUNKED);
+    CDORevisionImpl revision = getRevisionManager().getRevisionByVersion(id, CDORevision.UNCHUNKED, version);
     MoveableList list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {

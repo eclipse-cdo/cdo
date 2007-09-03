@@ -411,7 +411,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     return store.getMappingStrategy().readObjectType(this, id);
   }
 
-  public CDORevision readRevision(CDOID id)
+  public CDORevision readRevision(CDOID id, int referenceChunk)
   {
     if (TRACER.isEnabled())
     {
@@ -427,7 +427,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     return revision;
   }
 
-  public CDORevision readRevisionByTime(CDOID id, long timeStamp)
+  public CDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
     if (TRACER.isEnabled())
     {
@@ -443,7 +443,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     return revision;
   }
 
-  public CDORevision readRevisionByVersion(CDOID id, int version)
+  public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
     if (TRACER.isEnabled())
     {

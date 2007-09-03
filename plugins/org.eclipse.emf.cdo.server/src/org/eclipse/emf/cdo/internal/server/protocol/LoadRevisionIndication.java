@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -68,7 +69,7 @@ public class LoadRevisionIndication extends CDOReadIndication
         PROTOCOL.format("Read ID: {0}", id);
       }
 
-      referenceChunk = CDORevisionImpl.UNCHUNKED;
+      referenceChunk = CDORevision.UNCHUNKED;
     }
   }
 

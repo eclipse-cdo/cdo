@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -119,7 +120,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     {
       InternalCDOObject object = (InternalCDOObject)it.next();
       CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
-      revision.write(out, transaction, CDORevisionImpl.UNCHUNKED);
+      revision.write(out, transaction, CDORevision.UNCHUNKED);
     }
   }
 

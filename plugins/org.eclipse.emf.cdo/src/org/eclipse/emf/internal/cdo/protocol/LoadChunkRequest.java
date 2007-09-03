@@ -67,6 +67,9 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
     if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing revision ID: {0}", revision.getID());
     CDOIDImpl.write(out, revision.getID());
 
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing revision version: {0}", revision.getVersion());
+    out.writeInt(revision.getVersion());
+
     if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing feature: {0}", feature);
     CDOClassRefImpl classRef = (CDOClassRefImpl)feature.getContainingClass().createClassRef();
     classRef.write(out, null);

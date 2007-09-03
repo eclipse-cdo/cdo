@@ -346,15 +346,18 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
       if (instanceList != null)
       {
         clearEList(instanceList);
-        List<?> revisionList = (List<?>)value;
-        for (Object element : revisionList)
+        if (value != null)
         {
-          if (feature.isReference())
+          List<?> revisionList = (List<?>)value;
+          for (Object element : revisionList)
           {
-            element = convertPotentialID(view, element);
-          }
+            if (feature.isReference())
+            {
+              element = convertPotentialID(view, element);
+            }
 
-          instanceList.basicAdd(element, null);
+            instanceList.basicAdd(element, null);
+          }
         }
       }
     }

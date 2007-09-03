@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -54,7 +55,7 @@ public class LoadRevisionRequest extends CDOClientRequest<CDORevisionImpl>
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (referenceChunk == CDORevisionImpl.UNCHUNKED)
+    if (referenceChunk == CDORevision.UNCHUNKED)
     {
       if (PROTOCOL.isEnabled())
       {

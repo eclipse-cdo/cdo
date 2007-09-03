@@ -18,10 +18,10 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.IChannel;
@@ -76,7 +76,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   private int sessionID;
 
-  private int referenceChunkSize = CDORevisionImpl.UNCHUNKED;
+  private int referenceChunkSize = CDORevision.UNCHUNKED;
 
   private IFailOverStrategy failOverStrategy;
 
@@ -146,7 +146,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   {
     if (referenceChunkSize <= 0)
     {
-      referenceChunkSize = CDORevisionImpl.UNCHUNKED;
+      referenceChunkSize = CDORevision.UNCHUNKED;
     }
 
     this.referenceChunkSize = referenceChunkSize;

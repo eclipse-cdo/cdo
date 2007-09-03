@@ -65,6 +65,12 @@ public class CDOServerProtocol extends SignalProtocol
     case CDOProtocolConstants.SIGNAL_LOAD_REVISION:
       return new LoadRevisionIndication();
 
+    case CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_TIME:
+      return new LoadRevisionByTimeIndication();
+
+    case CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_VERSION:
+      return new LoadRevisionByVersionIndication();
+
     case CDOProtocolConstants.SIGNAL_LOAD_CHUNK:
       return new LoadChunkIndication();
 

@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.net4j.util.transaction.ITransaction;
 import org.eclipse.net4j.util.transaction.ITransactionalOperation;
 
+import java.util.List;
+
 /**
  * @author Eike Stepper
  */
@@ -52,6 +54,12 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     throw new UnsupportedOperationException("Reference proxies not supported on server side");
   }
 
+  public List<Integer> analyzeReferenceRanges(List<Object> list)
+  {
+    // There are currently no reference proxies on server side
+    return null;
+  }
+
   @Override
   protected CDORevisionImpl verifyRevision(CDORevisionImpl revision)
   {
@@ -70,17 +78,31 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   {
     IStoreReader storeReader = StoreUtil.getReader();
     CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevision(id);
-    repository.getTypeManager().registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
+    registerObjectType(revision);
     return revision;
   }
 
   @Override
-  protected CDORevisionImpl loadRevision(CDOID id, int referenceChunk, long timeStamp)
+  protected CDORevisionImpl loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
     IStoreReader storeReader = StoreUtil.getReader();
-    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevision(id, timeStamp);
-    repository.getTypeManager().registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
+    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevisionByTime(id, timeStamp);
+    registerObjectType(revision);
     return revision;
+  }
+
+  @Override
+  protected CDORevisionImpl loadRevisionByVersion(CDOID id, int referenceChunk, int version)
+  {
+    IStoreReader storeReader = StoreUtil.getReader();
+    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevisionByVersion(id, version);
+    registerObjectType(revision);
+    return revision;
+  }
+
+  private void registerObjectType(CDORevisionImpl revision)
+  {
+    repository.getTypeManager().registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
   }
 
   /**

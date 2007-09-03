@@ -32,7 +32,12 @@ public class ResourcePathIndication extends CDOReadIndication
 
   public ResourcePathIndication()
   {
-    super(CDOProtocolConstants.SIGNAL_RESOURCE_PATH);
+  }
+
+  @Override
+  protected short getSignalID()
+  {
+    return CDOProtocolConstants.SIGNAL_RESOURCE_PATH;
   }
 
   @Override

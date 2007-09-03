@@ -28,8 +28,14 @@ public class LoadPackageRequest extends CDOClientRequest<Object>
 
   public LoadPackageRequest(IChannel channel, CDOPackageImpl cdoPackage)
   {
-    super(channel, CDOProtocolConstants.SIGNAL_LOAD_PACKAGE);
+    super(channel);
     this.cdoPackage = cdoPackage;
+  }
+
+  @Override
+  protected short getSignalID()
+  {
+    return CDOProtocolConstants.SIGNAL_LOAD_PACKAGE;
   }
 
   @Override

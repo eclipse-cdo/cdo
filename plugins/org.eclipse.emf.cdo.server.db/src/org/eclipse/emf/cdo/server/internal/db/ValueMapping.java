@@ -70,10 +70,10 @@ public abstract class ValueMapping extends Mapping
 
   public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
-    readRevision(storeAccessor, revision, NO_TIMESTAMP);
+    readRevisionByTime(storeAccessor, revision, NO_TIMESTAMP);
   }
 
-  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp)
+  public void readRevisionByTime(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp)
   {
     if (attributeMappings != null)
     {
@@ -84,6 +84,12 @@ public abstract class ValueMapping extends Mapping
     {
       readReferences(storeAccessor, revision);
     }
+  }
+
+  public void readRevisionByVersion(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int version)
+  {
+    // TODO Implement method ValueMapping.readRevisionByVersion()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   protected void writeAttributes(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)

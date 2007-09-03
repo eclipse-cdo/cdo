@@ -29,19 +29,24 @@ public class LoadRevisionIndication extends CDOReadIndication
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionIndication.class);
 
-  private CDORevisionImpl revision;
+  protected CDOID id;
 
-  private int referenceChunk;
+  protected int referenceChunk;
 
   public LoadRevisionIndication()
   {
-    super(CDOProtocolConstants.SIGNAL_LOAD_REVISION);
+  }
+
+  @Override
+  protected short getSignalID()
+  {
+    return CDOProtocolConstants.SIGNAL_LOAD_REVISION;
   }
 
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    CDOID id = CDOIDImpl.read(in);
+    id = CDOIDImpl.read(in);
     if (id.isTemporary())
     {
       id = CDOIDImpl.create(-id.getValue());
@@ -65,27 +70,17 @@ public class LoadRevisionIndication extends CDOReadIndication
 
       referenceChunk = CDORevisionImpl.UNCHUNKED;
     }
-
-    boolean historical = in.readBoolean();
-    if (historical)
-    {
-      long timeStamp = in.readLong();
-      if (PROTOCOL.isEnabled())
-      {
-        PROTOCOL.format("Read timeStamp: {0}", timeStamp);
-      }
-
-      revision = getRevisionManager().getRevision(id, referenceChunk, timeStamp);
-    }
-    else
-    {
-      revision = getRevisionManager().getRevision(id, referenceChunk);
-    }
   }
 
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
+    CDORevisionImpl revision = getRevision();
     revision.write(out, getSession(), referenceChunk);
+  }
+
+  protected CDORevisionImpl getRevision()
+  {
+    return getRevisionManager().getRevision(id, referenceChunk);
   }
 }

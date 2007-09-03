@@ -22,18 +22,9 @@ import org.eclipse.emf.internal.cdo.CDOSessionImpl;
  */
 public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<RESULT>
 {
-  private short signalID;
-
-  public CDOClientRequest(IChannel channel, short signalID)
+  public CDOClientRequest(IChannel channel)
   {
     super(channel);
-    this.signalID = signalID;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return signalID;
   }
 
   protected CDORevisionResolverImpl getRevisionManager()

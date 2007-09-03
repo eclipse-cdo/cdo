@@ -74,7 +74,12 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   public CommitTransactionIndication()
   {
-    super(CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION);
+  }
+
+  @Override
+  protected short getSignalID()
+  {
+    return CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION;
   }
 
   @Override

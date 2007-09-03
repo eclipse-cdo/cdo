@@ -22,9 +22,8 @@ import org.eclipse.net4j.stream.BufferOutputStream;
  */
 public abstract class CDOReadIndication extends CDOServerIndication
 {
-  public CDOReadIndication(short signalID)
+  public CDOReadIndication()
   {
-    super(signalID);
   }
 
   @Override

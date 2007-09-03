@@ -36,21 +36,19 @@ public class LoadRevisionRequest extends CDOClientRequest<CDORevisionImpl>
 
   private CDOID id;
 
-  private Long timeStamp;
-
   private int referenceChunk;
 
   public LoadRevisionRequest(IChannel channel, CDOID id, int referenceChunk)
   {
-    super(channel, CDOProtocolConstants.SIGNAL_LOAD_REVISION);
+    super(channel);
     this.id = id;
     this.referenceChunk = referenceChunk;
   }
 
-  public LoadRevisionRequest(IChannel channel, CDOID id, int referenceChunk, long timeStamp)
+  @Override
+  protected short getSignalID()
   {
-    this(channel, id, referenceChunk);
-    this.timeStamp = timeStamp;
+    return CDOProtocolConstants.SIGNAL_LOAD_REVISION;
   }
 
   @Override
@@ -81,21 +79,6 @@ public class LoadRevisionRequest extends CDOClientRequest<CDORevisionImpl>
       }
 
       out.writeInt(referenceChunk);
-    }
-
-    if (timeStamp != null)
-    {
-      if (PROTOCOL.isEnabled())
-      {
-        PROTOCOL.format("Writing timeStamp: {0}", timeStamp);
-      }
-
-      out.writeBoolean(true);
-      out.writeLong(timeStamp);
-    }
-    else
-    {
-      out.writeBoolean(false);
     }
   }
 

@@ -10,13 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -26,45 +24,33 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class ResourceIDRequest extends CDOClientRequest<CDOID>
+public class LoadRevisionByTimeRequest extends LoadRevisionRequest
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, ResourceIDRequest.class);
+  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionByTimeRequest.class);
 
-  private String path;
+  private long timeStamp;
 
-  public ResourceIDRequest(IChannel channel, String path)
+  public LoadRevisionByTimeRequest(IChannel channel, CDOID id, int referenceChunk, long timeStamp)
   {
-    super(channel);
-    this.path = path;
+    super(channel, id, referenceChunk);
+    this.timeStamp = timeStamp;
   }
 
   @Override
   protected short getSignalID()
   {
-    return CDOProtocolConstants.SIGNAL_RESOURCE_ID;
+    return CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_TIME;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
+    super.requesting(out);
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Writing path: {0}", path);
+      PROTOCOL.format("Writing timeStamp: {0}", timeStamp);
     }
 
-    // TODO Optimize transfer of URIs/paths
-    out.writeString(path);
-  }
-
-  @Override
-  protected CDOID confirming(ExtendedDataInputStream in) throws IOException
-  {
-    CDOID id = CDOIDImpl.read(in);
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Read ID: {0}", id);
-    }
-
-    return id;
+    out.writeLong(timeStamp);
   }
 }

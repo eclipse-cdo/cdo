@@ -47,12 +47,18 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
   public LoadChunkRequest(IChannel channel, CDORevisionImpl revision, CDOFeature feature, int accessIndex,
       int fromIndex, int toIndex)
   {
-    super(channel, CDOProtocolConstants.SIGNAL_LOAD_CHUNK);
+    super(channel);
     this.revision = revision;
     this.feature = feature;
     this.accessIndex = accessIndex;
     this.fromIndex = fromIndex;
     this.toIndex = toIndex;
+  }
+
+  @Override
+  protected short getSignalID()
+  {
+    return CDOProtocolConstants.SIGNAL_LOAD_CHUNK;
   }
 
   @Override

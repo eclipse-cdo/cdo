@@ -33,7 +33,12 @@ public class LoadPackageIndication extends CDOReadIndication
 
   public LoadPackageIndication()
   {
-    super(CDOProtocolConstants.SIGNAL_LOAD_PACKAGE);
+  }
+
+  @Override
+  protected short getSignalID()
+  {
+    return CDOProtocolConstants.SIGNAL_LOAD_PACKAGE;
   }
 
   @Override

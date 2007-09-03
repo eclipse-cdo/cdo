@@ -23,7 +23,12 @@ import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.signal.IFailOverStrategy;
 
 import org.eclipse.emf.internal.cdo.protocol.LoadChunkRequest;
+import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByTimeRequest;
+import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByVersionRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -122,34 +127,102 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
     }
   }
 
-  @Override
-  protected CDORevisionImpl loadRevision(CDOID id, int referenceChunk)
+  public List<Integer> analyzeReferenceRanges(List<Object> list)
   {
-    try
+    List<Integer> ranges = new ArrayList<Integer>(0);
+    int range = 0; // Not in range
+    int lastIndex = -1; // Not in proxy range
+    for (Object value : list)
     {
-      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      IChannel channel = session.getChannel();
-      LoadRevisionRequest request = new LoadRevisionRequest(channel, id, referenceChunk);
-      return failOverStrategy.send(request);
+      if (lastIndex == -1)
+      {
+        // Not in proxy range
+        if (value instanceof CDOReferenceProxy)
+        {
+          if (range != 0)
+          {
+            ranges.add(range);
+            range = 0;
+          }
+
+          CDOReferenceProxy proxy = (CDOReferenceProxy)value;
+          lastIndex = proxy.getIndex();
+          --range;
+        }
+        else
+        {
+          ++range; // One more non-proxy
+        }
+      }
+      else
+      {
+        // In proxy range
+        if (value instanceof CDOReferenceProxy)
+        {
+          CDOReferenceProxy proxy = (CDOReferenceProxy)value;
+          int index = proxy.getIndex();
+          if (index == lastIndex + 1)
+          {
+            --range;
+          }
+          else
+          {
+            ranges.add(range);
+            range = -1;
+          }
+
+          lastIndex = index;
+        }
+        else
+        {
+          if (range != 0)
+          {
+            ranges.add(range);
+            range = 1;
+          }
+
+          lastIndex = -1;
+        }
+      }
     }
-    catch (RuntimeException ex)
+
+    if (range != 0)
     {
-      throw ex;
+      ranges.add(range);
     }
-    catch (Exception ex)
+
+    int size = ranges.size();
+    if (size == 0 || size == 1 && ranges.get(0) > 0)
     {
-      throw new TransportException(ex);
+      return null;
     }
+
+    return ranges;
   }
 
   @Override
-  protected CDORevisionImpl loadRevision(CDOID id, int referenceChunk, long timeStamp)
+  protected CDORevisionImpl loadRevision(CDOID id, int referenceChunk)
+  {
+    return sendLoadRequest(new LoadRevisionRequest(session.getChannel(), id, referenceChunk));
+  }
+
+  @Override
+  protected CDORevisionImpl loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  {
+    return sendLoadRequest(new LoadRevisionByTimeRequest(session.getChannel(), id, referenceChunk, timeStamp));
+  }
+
+  @Override
+  protected CDORevisionImpl loadRevisionByVersion(CDOID id, int referenceChunk, int version)
+  {
+    return sendLoadRequest(new LoadRevisionByVersionRequest(session.getChannel(), id, referenceChunk, version));
+  }
+
+  private CDORevisionImpl sendLoadRequest(LoadRevisionRequest request)
   {
     try
     {
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      IChannel channel = session.getChannel();
-      LoadRevisionRequest request = new LoadRevisionRequest(channel, id, referenceChunk, timeStamp);
       return failOverStrategy.send(request);
     }
     catch (RuntimeException ex)

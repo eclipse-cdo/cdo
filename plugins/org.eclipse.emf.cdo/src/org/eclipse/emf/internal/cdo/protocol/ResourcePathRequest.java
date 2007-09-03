@@ -34,8 +34,14 @@ public class ResourcePathRequest extends CDOClientRequest<String>
 
   public ResourcePathRequest(IChannel channel, CDOID id)
   {
-    super(channel, CDOProtocolConstants.SIGNAL_RESOURCE_PATH);
+    super(channel);
     this.id = id;
+  }
+
+  @Override
+  protected short getSignalID()
+  {
+    return CDOProtocolConstants.SIGNAL_RESOURCE_PATH;
   }
 
   @Override

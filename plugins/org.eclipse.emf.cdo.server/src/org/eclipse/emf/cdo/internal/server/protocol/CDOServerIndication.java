@@ -25,17 +25,8 @@ import org.eclipse.net4j.signal.IndicationWithResponse;
  */
 public abstract class CDOServerIndication extends IndicationWithResponse
 {
-  private short signalID;
-
-  public CDOServerIndication(short signalID)
+  public CDOServerIndication()
   {
-    this.signalID = signalID;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return signalID;
   }
 
   protected PackageManager getPackageManager()

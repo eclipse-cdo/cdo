@@ -32,5 +32,7 @@ public interface IMapping
 
   public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
 
-  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp);
+  public void readRevisionByTime(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp);
+
+  public void readRevisionByVersion(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int version);
 }

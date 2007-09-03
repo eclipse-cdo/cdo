@@ -54,7 +54,9 @@ public interface IStoreReader extends IStoreAccessor
 
   public CDORevision readRevision(CDOID id);
 
-  public CDORevision readRevision(CDOID id, long timeStamp);
+  public CDORevision readRevisionByTime(CDOID id, long timeStamp);
+
+  public CDORevision readRevisionByVersion(CDOID id, int version);
 
   public CDOID readResourceID(String path);
 

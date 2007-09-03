@@ -48,9 +48,15 @@ public class RootMapping extends Mapping
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
-  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp)
+  public void readRevisionByTime(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp)
   {
-    // TODO Implement method RootMapping.readRevision()
+    // TODO Implement method RootMapping.readRevisionByTime()
+    throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  public void readRevisionByVersion(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int version)
+  {
+    // TODO Implement method RootMapping.readRevisionByVersion()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 

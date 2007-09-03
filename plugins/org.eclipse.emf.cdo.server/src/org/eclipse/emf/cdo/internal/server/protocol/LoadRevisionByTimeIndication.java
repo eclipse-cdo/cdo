@@ -10,57 +10,48 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class ResourceIDIndication extends CDOReadIndication
+public class LoadRevisionByTimeIndication extends LoadRevisionIndication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, ResourceIDIndication.class);
+  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionByTimeIndication.class);
 
-  private CDOID id;
+  private long timeStamp;
 
-  public ResourceIDIndication()
+  public LoadRevisionByTimeIndication()
   {
   }
 
   @Override
   protected short getSignalID()
   {
-    return CDOProtocolConstants.SIGNAL_RESOURCE_ID;
+    return CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_TIME;
   }
 
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    // TODO Optimize transfer of URIs/paths
-    final String path = in.readString();
+    super.indicating(in);
+    timeStamp = in.readLong();
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Read path: {0}", path);
+      PROTOCOL.format("Read timeStamp: {0}", timeStamp);
     }
-
-    id = getResourceManager().getResourceID(path);
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected CDORevisionImpl getRevision()
   {
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Writing ID: {0}", id);
-    }
-
-    CDOIDImpl.write(out, id);
+    return getRevisionManager().getRevisionByTime(id, referenceChunk, timeStamp);
   }
 }

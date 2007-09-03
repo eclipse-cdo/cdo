@@ -427,11 +427,11 @@ public class DBStoreAccessor implements IDBStoreAccessor
     return revision;
   }
 
-  public CDORevision readRevision(CDOID id, long timeStamp)
+  public CDORevision readRevisionByTime(CDOID id, long timeStamp)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Selecting revision: {0}, {1,date} {1,time}", id, timeStamp);
+      TRACER.format("Selecting revision: {0}, timestamp={1,date} {1,time}", id, timeStamp);
     }
 
     IRevisionManager revisionManager = store.getRepository().getRevisionManager();
@@ -439,7 +439,23 @@ public class DBStoreAccessor implements IDBStoreAccessor
     CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
     IMapping mapping = ClassServerInfo.getMapping(cdoClass);
-    mapping.readRevision(this, revision, timeStamp);
+    mapping.readRevisionByTime(this, revision, timeStamp);
+    return revision;
+  }
+
+  public CDORevision readRevisionByVersion(CDOID id, int version)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Selecting revision: {0}, version={1}", id, version);
+    }
+
+    IRevisionManager revisionManager = store.getRepository().getRevisionManager();
+    CDOClassImpl cdoClass = getObjectType(id);
+    CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
+
+    IMapping mapping = ClassServerInfo.getMapping(cdoClass);
+    mapping.readRevisionByVersion(this, revision, version);
     return revision;
   }
 

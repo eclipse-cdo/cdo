@@ -44,8 +44,14 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   public CommitTransactionRequest(IChannel channel, final CDOTransactionImpl transaction)
   {
-    super(channel, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION);
+    super(channel);
     this.transaction = transaction;
+  }
+
+  @Override
+  protected short getSignalID()
+  {
+    return CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION;
   }
 
   @Override

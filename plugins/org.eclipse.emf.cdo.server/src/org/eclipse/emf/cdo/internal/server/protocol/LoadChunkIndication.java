@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -80,7 +79,7 @@ public class LoadChunkIndication extends CDOReadIndication
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    CDORevisionImpl revision = getRevisionManager().getRevisionByVersion(id, CDORevision.UNCHUNKED, version);
+    CDORevisionImpl revision = getRevisionManager().getRevisionByVersion(id, 0, version);
     MoveableList list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {

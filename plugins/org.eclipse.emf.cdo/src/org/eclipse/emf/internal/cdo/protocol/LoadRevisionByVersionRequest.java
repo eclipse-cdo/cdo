@@ -46,11 +46,7 @@ public class LoadRevisionByVersionRequest extends LoadRevisionRequest
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
     super.requesting(out);
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Writing version: {0}", version);
-    }
-
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing version: {0}", version);
     out.writeInt(version);
   }
 }

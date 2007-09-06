@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableLi
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 
 import org.eclipse.net4j.IChannel;
@@ -29,6 +28,7 @@ import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByVersionRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -57,7 +57,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
 
     // Get appropriate chunk size
     int chunkSize = session.getReferenceChunkSize();
-    if (chunkSize == CDORevision.UNCHUNKED)
+    if (chunkSize == CDORevisionImpl.UNCHUNKED)
     {
       // Can happen if CDOSession.setReferenceChunkSize() was called meanwhile
       chunkSize = Integer.MAX_VALUE;
@@ -204,22 +204,34 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   @Override
   protected CDORevisionImpl loadRevision(CDOID id, int referenceChunk)
   {
-    return sendLoadRequest(new LoadRevisionRequest(session.getChannel(), id, referenceChunk));
+    return send(new LoadRevisionRequest(session.getChannel(), id, referenceChunk)).get(0);
   }
 
   @Override
   protected CDORevisionImpl loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
-    return sendLoadRequest(new LoadRevisionByTimeRequest(session.getChannel(), id, referenceChunk, timeStamp));
+    return send(new LoadRevisionByTimeRequest(session.getChannel(), id, referenceChunk, timeStamp)).get(0);
   }
 
   @Override
   protected CDORevisionImpl loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
-    return sendLoadRequest(new LoadRevisionByVersionRequest(session.getChannel(), id, referenceChunk, version));
+    return send(new LoadRevisionByVersionRequest(session.getChannel(), id, referenceChunk, version)).get(0);
   }
 
-  private CDORevisionImpl sendLoadRequest(LoadRevisionRequest request)
+  @Override
+  protected List<CDORevisionImpl> loadRevisions(Collection<CDOID> ids, int referenceChunk)
+  {
+    return send(new LoadRevisionRequest(session.getChannel(), ids, referenceChunk));
+  }
+
+  @Override
+  protected List<CDORevisionImpl> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
+  {
+    return send(new LoadRevisionByTimeRequest(session.getChannel(), ids, referenceChunk, timeStamp));
+  }
+
+  private List<CDORevisionImpl> send(LoadRevisionRequest request)
   {
     try
     {

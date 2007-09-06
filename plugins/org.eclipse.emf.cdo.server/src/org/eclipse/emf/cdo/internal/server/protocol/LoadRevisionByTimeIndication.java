@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -43,15 +44,12 @@ public class LoadRevisionByTimeIndication extends LoadRevisionIndication
   {
     super.indicating(in);
     timeStamp = in.readLong();
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Read timeStamp: {0}", timeStamp);
-    }
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Read timeStamp: {0}", timeStamp);
   }
 
   @Override
-  protected CDORevisionImpl getRevision()
+  protected CDORevisionImpl getRevision(CDOID cdoID)
   {
-    return getRevisionManager().getRevisionByTime(id, referenceChunk, timeStamp);
+    return getRevisionManager().getRevisionByTime(cdoID, referenceChunk, timeStamp);
   }
 }

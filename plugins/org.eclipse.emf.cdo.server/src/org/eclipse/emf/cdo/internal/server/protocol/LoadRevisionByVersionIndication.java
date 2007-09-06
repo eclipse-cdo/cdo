@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -44,14 +45,11 @@ public class LoadRevisionByVersionIndication extends LoadRevisionIndication
   {
     super.indicating(in);
     version = in.readInt();
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Read version: {0}", version);
-    }
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Read version: {0}", version);
   }
 
   @Override
-  protected CDORevisionImpl getRevision()
+  protected CDORevisionImpl getRevision(CDOID id)
   {
     return getRevisionManager().getRevisionByVersion(id, referenceChunk, version);
   }

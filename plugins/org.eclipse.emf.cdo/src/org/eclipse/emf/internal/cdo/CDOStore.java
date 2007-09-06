@@ -12,7 +12,9 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -27,6 +29,8 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -103,6 +107,59 @@ public final class CDOStore implements EStore
     }
 
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
+    Object value = get(revision, cdoFeature, index);
+    if (cdoFeature.isReference())
+    {
+      if (cdoFeature.isMany() && value instanceof CDOID)
+      {
+        CDOID id = (CDOID)value;
+        loadAhead(revision, cdoFeature, id, index);
+      }
+
+      value = view.convertIDToObject(value);
+    }
+
+    return value;
+  }
+
+  private void loadAhead(CDORevisionImpl revision, CDOFeatureImpl cdoFeature, CDOID id, int index)
+  {
+    CDOSessionImpl session = view.getSession();
+    CDORevisionManagerImpl revisionManager = session.getRevisionManager();
+
+    int chunkSize = view.getLoadRevisionCollectionChunkSize();
+    if (chunkSize > 1 && !revisionManager.containsRevision(id))
+    {
+      MoveableList list = revision.getList(cdoFeature);
+      int fromIndex = index;
+      int toIndex = Math.min(index + chunkSize - 1, list.size());
+
+      Set<CDOID> notRegistered = new HashSet<CDOID>();
+      for (int i = fromIndex; i <= toIndex; i++)
+      {
+        Object element = list.get(i);
+        if (element instanceof CDOID)
+        {
+          if (!revisionManager.containsRevision((CDOID)element))
+          {
+            if (!notRegistered.contains(element))
+            {
+              notRegistered.add((CDOID)element);
+            }
+          }
+        }
+      }
+
+      if (!notRegistered.isEmpty())
+      {
+        int referenceChunk = session.getReferenceChunkSize();
+        revisionManager.getRevisions(notRegistered, referenceChunk);
+      }
+    }
+  }
+
+  private Object get(CDORevisionImpl revision, CDOFeature cdoFeature, int index)
+  {
     Object result = revision.get(cdoFeature, index);
     if (cdoFeature.isReference())
     {
@@ -110,10 +167,7 @@ public final class CDOStore implements EStore
       {
         result = ((CDOReferenceProxy)result).resolve();
       }
-
-      result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
     }
-
     return result;
   }
 

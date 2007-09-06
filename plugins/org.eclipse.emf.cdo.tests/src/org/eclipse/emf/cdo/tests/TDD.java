@@ -20,9 +20,9 @@ import java.lang.reflect.Method;
  */
 public class TDD
 {
-  private static final AbstractOMTest test = new ChunkingTest();
+  private static final AbstractOMTest test = new InvalidationTest();
 
-  private static final String METHOD_NAME = "testWriteNative";
+  private static final String METHOD_NAME = "testSeparateView";
 
   public static void main(String[] args) throws Throwable
   {

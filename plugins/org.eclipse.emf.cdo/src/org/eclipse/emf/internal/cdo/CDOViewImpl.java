@@ -81,10 +81,13 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private InternalCDOObject lastLookupObject;
 
+  private int loadRevisionCollectionChunkSize;
+
   public CDOViewImpl(int id, CDOSessionImpl session)
   {
     this.viewID = id;
     this.session = session;
+    this.loadRevisionCollectionChunkSize = 1;
   }
 
   public int getViewID()
@@ -534,7 +537,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       if (dirtyObject != null)
       {
         CDOStateMachine.INSTANCE.invalidate(dirtyObject, timeStamp);
-
         if (dirtyObjects != null && dirtyObject.eNotificationRequired())
         {
           dirtyObjects.add(dirtyObject);
@@ -779,5 +781,15 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       return MessageFormat.format("CDOViewResourcesEvent[{0}, {1}, {2}]", getView(), resourcePath, kind);
     }
+  }
+
+  public int getLoadRevisionCollectionChunkSize()
+  {
+    return loadRevisionCollectionChunkSize;
+  }
+
+  public void setLoadRevisionCollectionChunkSize(int loadRevisionCollectionChunkSize)
+  {
+    this.loadRevisionCollectionChunkSize = loadRevisionCollectionChunkSize;
   }
 }

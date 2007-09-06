@@ -23,7 +23,7 @@ public final class ProxyResolverURIResourceMap implements Map<URI, Resource>
     if (delegate == null)
     {
       delegate = new HashMap<URI, Resource>(); // TODO Cleanup of this lookup
-                                                // cache?
+      // cache?
     }
 
     this.delegate = delegate;

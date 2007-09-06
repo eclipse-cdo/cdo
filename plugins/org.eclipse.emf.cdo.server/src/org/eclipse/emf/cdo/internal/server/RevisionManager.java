@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOPathFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
@@ -22,6 +23,8 @@ import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.net4j.util.transaction.ITransaction;
 import org.eclipse.net4j.util.transaction.ITransactionalOperation;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -100,9 +103,39 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     return revision;
   }
 
+  @Override
+  protected List<CDORevisionImpl> loadRevisions(Collection<CDOID> ids, int referenceChunk)
+  {
+    IStoreReader storeReader = StoreUtil.getReader();
+    List<CDORevisionImpl> revisions = new ArrayList<CDORevisionImpl>();
+    for (CDOID id : ids)
+    {
+      CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevision(id, referenceChunk);
+      registerObjectType(revision);
+    }
+
+    return revisions;
+  }
+
+  @Override
+  protected List<CDORevisionImpl> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
+  {
+    IStoreReader storeReader = StoreUtil.getReader();
+    List<CDORevisionImpl> revisions = new ArrayList<CDORevisionImpl>();
+    for (CDOID id : ids)
+    {
+      CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevisionByTime(id, referenceChunk, timeStamp);
+      registerObjectType(revision);
+    }
+
+    return revisions;
+  }
+
   private void registerObjectType(CDORevisionImpl revision)
   {
-    repository.getTypeManager().registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
+    CDOID id = revision.getID();
+    CDOClassRefImpl type = revision.getCDOClass().createClassRef();
+    repository.getTypeManager().registerObjectType(id, type);
   }
 
   /**
@@ -137,4 +170,5 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     {
     }
   }
+
 }

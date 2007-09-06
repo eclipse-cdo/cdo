@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -27,23 +26,32 @@ import org.eclipse.emf.internal.cdo.CDOSessionPackageManager;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Eike Stepper
  */
-public class LoadRevisionRequest extends CDOClientRequest<CDORevisionImpl>
+public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionRequest.class);
 
-  private CDOID id;
+  private Collection<CDOID> ids;
 
   private int referenceChunk;
 
-  public LoadRevisionRequest(IChannel channel, CDOID id, int referenceChunk)
+  public LoadRevisionRequest(IChannel channel, Collection<CDOID> ids, int referenceChunk)
   {
     super(channel);
-    this.id = id;
+    this.ids = ids;
     this.referenceChunk = referenceChunk;
+  }
+
+  public LoadRevisionRequest(IChannel channel, CDOID id, int referenceChunk)
+  {
+    this(channel, Collections.singleton(id), referenceChunk);
   }
 
   @Override
@@ -55,40 +63,45 @@ public class LoadRevisionRequest extends CDOClientRequest<CDORevisionImpl>
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (referenceChunk == CDORevision.UNCHUNKED)
-    {
-      if (PROTOCOL.isEnabled())
-      {
-        PROTOCOL.format("Writing ID: {0}", id);
-      }
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing referenceChunk: {0}", referenceChunk);
+    out.writeInt(referenceChunk);
 
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing {0} IDs", ids.size());
+    out.writeInt(ids.size());
+
+    for (CDOID id : ids)
+    {
+      if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing ID: {0}", id);
       CDOIDImpl.write(out, id);
-    }
-    else
-    {
-      if (PROTOCOL.isEnabled())
-      {
-        PROTOCOL.format("Writing ID: {0}", id);
-      }
-
-      CDOID negID = CDOIDImpl.create(-id.getValue());
-      CDOIDImpl.write(out, negID);
-
-      if (PROTOCOL.isEnabled())
-      {
-        PROTOCOL.format("Writing referenceChunk: {0}", referenceChunk);
-      }
-
-      out.writeInt(referenceChunk);
     }
   }
 
   @Override
-  protected CDORevisionImpl confirming(ExtendedDataInputStream in) throws IOException
+  public List<CDORevisionImpl> confirming(ExtendedDataInputStream in) throws IOException
   {
     CDOSessionImpl session = getSession();
     CDORevisionManagerImpl revisionManager = session.getRevisionManager();
     CDOSessionPackageManager packageManager = session.getPackageManager();
-    return new CDORevisionImpl(in, revisionManager, packageManager);
+    ArrayList<CDORevisionImpl> revisions = new ArrayList<CDORevisionImpl>(ids.size());
+
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Reading {0} revisions", ids.size());
+    for (int i = 0; i < ids.size(); i++)
+    {
+      CDORevisionImpl revision = new CDORevisionImpl(in, revisionManager, packageManager);
+      revisions.add(revision);
+    }
+
+    int size = in.readInt();
+    if (size != 0)
+    {
+      if (PROTOCOL.isEnabled()) PROTOCOL.format("Reading {0} additional revisions", size);
+      for (int i = 0; i < size; i++)
+      {
+        CDORevisionImpl revision = new CDORevisionImpl(in, revisionManager, packageManager);
+        revisionManager.addRevision(revision);
+      }
+    }
+
+    return revisions;
   }
 }

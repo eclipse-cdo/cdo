@@ -12,16 +12,18 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -30,7 +32,7 @@ public class LoadRevisionIndication extends CDOReadIndication
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionIndication.class);
 
-  protected CDOID id;
+  protected CDOID[] ids;
 
   protected int referenceChunk;
 
@@ -47,40 +49,44 @@ public class LoadRevisionIndication extends CDOReadIndication
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    id = CDOIDImpl.read(in);
-    if (id.isTemporary())
-    {
-      id = CDOIDImpl.create(-id.getValue());
-      if (PROTOCOL.isEnabled())
-      {
-        PROTOCOL.format("Read ID: {0}", id);
-      }
+    referenceChunk = in.readInt();
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Read referenceChunk: {0}", referenceChunk);
 
-      referenceChunk = in.readInt();
-      if (PROTOCOL.isEnabled())
-      {
-        PROTOCOL.format("Read referenceChunk: {0}", referenceChunk);
-      }
-    }
-    else
-    {
-      if (PROTOCOL.isEnabled())
-      {
-        PROTOCOL.format("Read ID: {0}", id);
-      }
+    int size = in.readInt();
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Reading {0} IDs", size);
 
-      referenceChunk = CDORevision.UNCHUNKED;
+    ids = new CDOID[size];
+    for (int i = 0; i < size; i++)
+    {
+      CDOID id = CDOIDImpl.read(in);
+      if (PROTOCOL.isEnabled()) PROTOCOL.format("Read ID: {0}", id);
+      ids[i] = id;
     }
   }
 
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    CDORevisionImpl revision = getRevision();
-    revision.write(out, getSession(), referenceChunk);
+    Session session = getSession();
+    List<CDORevisionImpl> containedRevisions = new ArrayList<CDORevisionImpl>(0);
+
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing {0} revisions", ids.length);
+    for (CDOID id : ids)
+    {
+      CDORevisionImpl revision = getRevision(id);
+      revision.write(out, session, referenceChunk);
+      session.collectContainedRevisions(revision, referenceChunk, containedRevisions);
+    }
+
+    out.writeInt(containedRevisions.size());
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing {0} additional revisions", containedRevisions.size());
+    for (CDORevisionImpl revision : containedRevisions)
+    {
+      revision.write(out, session, referenceChunk);
+    }
   }
 
-  protected CDORevisionImpl getRevision()
+  protected CDORevisionImpl getRevision(CDOID id)
   {
     return getRevisionManager().getRevision(id, referenceChunk);
   }

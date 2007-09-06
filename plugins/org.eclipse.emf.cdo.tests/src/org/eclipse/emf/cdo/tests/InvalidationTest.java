@@ -61,7 +61,7 @@ public class InvalidationTest extends AbstractCDOTest
     category1A.getCategories().add(category2A);
     category2A.getCategories().add(category3A);
 
-    msg("Attaching transaction");
+    msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
 
     msg("Creating resource");
@@ -75,11 +75,11 @@ public class InvalidationTest extends AbstractCDOTest
 
     // ************************************************************* //
 
-    msg("Attaching viewB");
-    final CDOView viewB = session.openTransaction(new ResourceSetImpl());
+    msg("Opening view");
+    final CDOView view = session.openTransaction(new ResourceSetImpl());
 
     msg("Loading resource");
-    final CDOResource resourceB = viewB.getResource("/test1");
+    final CDOResource resourceB = view.getResource("/test1");
     assertProxy(resourceB);
 
     EList<EObject> contents = resourceB.getContents();
@@ -117,12 +117,13 @@ public class InvalidationTest extends AbstractCDOTest
     transaction.commit();
 
     msg("Checking after commit");
-    boolean timedOut = new PollingTimeOuter(4, 100)
+    boolean timedOut = new PollingTimeOuter(200, 100)
     {
       @Override
       protected boolean successful()
       {
-        return "CHANGED NAME".equals(category1B.getName());
+        String name = category1B.getName();
+        return "CHANGED NAME".equals(name);
       }
     }.timedOut();
 

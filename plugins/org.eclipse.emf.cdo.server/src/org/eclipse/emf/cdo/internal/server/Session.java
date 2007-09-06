@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDOIDProvider;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -31,6 +33,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -178,6 +181,35 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     Repository repository = sessionManager.getRepository();
     CDOClassRef type = repository.getTypeManager().getObjectType(StoreUtil.getReader(), id);
     return CDOIDImpl.create(id.getValue(), type);
+  }
+
+  /**
+   * TODO I can't see how recursion is controlled/limited
+   */
+  public void collectContainedRevisions(CDORevisionImpl revision, int referenceChunk,
+      Collection<CDORevisionImpl> containedRevisions)
+  {
+    RevisionManager revisionManager = getSessionManager().getRepository().getRevisionManager();
+    CDOClassImpl cdoClass = revision.getCDOClass();
+    CDOFeatureImpl[] features = cdoClass.getAllFeatures();
+    for (int i = 0; i < features.length; i++)
+    {
+      CDOFeatureImpl feature = features[i];
+      if (feature.isReference() && !feature.isMany() && feature.isContainment())
+      {
+        Object value = revision.getValue(feature);
+        if (value instanceof CDOID)
+        {
+          CDOID id = (CDOID)value;
+          if (!id.isNull())
+          {
+            CDORevisionImpl containedRevision = revisionManager.getRevision(id, referenceChunk);
+            containedRevisions.add(containedRevision);
+            collectContainedRevisions(containedRevision, referenceChunk, containedRevisions);
+          }
+        }
+      }
+    }
   }
 
   @Override

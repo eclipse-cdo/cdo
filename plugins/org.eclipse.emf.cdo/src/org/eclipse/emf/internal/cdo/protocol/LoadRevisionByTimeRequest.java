@@ -20,6 +20,8 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author Eike Stepper
@@ -30,10 +32,15 @@ public class LoadRevisionByTimeRequest extends LoadRevisionRequest
 
   private long timeStamp;
 
+  public LoadRevisionByTimeRequest(IChannel channel, Collection<CDOID> ids, int referenceChunk, long timeStamp)
+  {
+    super(channel, ids, referenceChunk);
+    this.timeStamp = timeStamp;
+  }
+
   public LoadRevisionByTimeRequest(IChannel channel, CDOID id, int referenceChunk, long timeStamp)
   {
-    super(channel, id, referenceChunk);
-    this.timeStamp = timeStamp;
+    this(channel, Collections.singleton(id), referenceChunk, timeStamp);
   }
 
   @Override
@@ -46,11 +53,7 @@ public class LoadRevisionByTimeRequest extends LoadRevisionRequest
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
     super.requesting(out);
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Writing timeStamp: {0}", timeStamp);
-    }
-
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing timeStamp: {0}", timeStamp);
     out.writeLong(timeStamp);
   }
 }

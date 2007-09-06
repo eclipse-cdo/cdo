@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.util.io.CloseableIterator;
 
@@ -199,10 +200,11 @@ public abstract class MappingStrategy implements IMappingStrategy
         if (table != null)
         {
           String sql = prefix + table + suffix;
+          ResultSet resultSet = null;
 
           try
           {
-            ResultSet resultSet = storeAccessor.getStatement().executeQuery(sql);
+            resultSet = storeAccessor.getStatement().executeQuery(sql);
             if (resultSet.next())
             {
               int classID = resultSet.getInt(1);
@@ -212,6 +214,10 @@ public abstract class MappingStrategy implements IMappingStrategy
           catch (SQLException ex)
           {
             throw new DBException(ex);
+          }
+          finally
+          {
+            DBUtil.close(resultSet);
           }
         }
       }

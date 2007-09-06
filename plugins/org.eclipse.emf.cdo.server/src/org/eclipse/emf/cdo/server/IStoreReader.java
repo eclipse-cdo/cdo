@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
@@ -29,6 +30,8 @@ import java.util.Collection;
 public interface IStoreReader extends IStoreAccessor
 {
   public ISession getSession();
+
+  public IStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature);
 
   public Collection<CDOPackageInfo> readPackageInfos();
 

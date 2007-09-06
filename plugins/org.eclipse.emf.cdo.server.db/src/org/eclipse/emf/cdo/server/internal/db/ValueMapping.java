@@ -55,6 +55,19 @@ public abstract class ValueMapping extends Mapping
     return referenceMappings;
   }
 
+  public IReferenceMapping getReferenceMapping(CDOFeature feature)
+  {
+    for (IReferenceMapping referenceMapping : referenceMappings)
+    {
+      if (referenceMapping.getFeature() == feature)
+      {
+        return referenceMapping;
+      }
+    }
+
+    return null;
+  }
+
   public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
     if (attributeMappings != null)

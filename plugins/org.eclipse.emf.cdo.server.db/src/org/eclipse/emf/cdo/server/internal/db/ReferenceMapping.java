@@ -1,17 +1,25 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 
+import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBTable;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -87,6 +95,76 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
   {
     // TODO Implement method ReferenceMapping.readReference()
     throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  public void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)
+  {
+    IDBStoreAccessor storeAccessor = chunkReader.getStoreAccessor();
+    CDOID source = chunkReader.getRevision().getID();
+    int version = chunkReader.getRevision().getVersion();
+    CDOFeature feature = chunkReader.getFeature();
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT ");
+    builder.append(FIELD_NAME_TARGET);
+    builder.append(" FROM ");
+    builder.append(table);
+    builder.append(" WHERE ");
+    if (withFeature)
+    {
+      builder.append(FIELD_NAME_FEATURE);
+      builder.append("=");
+      builder.append(FeatureServerInfo.getDBID(feature));
+    }
+
+    builder.append(" AND ");
+    builder.append(FIELD_NAME_SOURCE);
+    builder.append("=");
+    builder.append(source.getValue());
+    builder.append(" AND ");
+    builder.append(FIELD_NAME_VERSION);
+    builder.append("=");
+    builder.append(version);
+    builder.append(where);
+    builder.append(" ORDER BY ");
+    builder.append(FIELD_NAME_IDX);
+
+    String sql = builder.toString();
+    ResultSet resultSet = null;
+
+    try
+    {
+      Chunk chunk = null;
+      int chunkSize = 0;
+      int chunkIndex = 0;
+      int indexInChunk = 0;
+
+      resultSet = storeAccessor.getStatement().executeQuery(sql);
+      while (resultSet.next())
+      {
+        long target = resultSet.getLong(1);
+        if (chunk == null)
+        {
+          chunk = chunks.get(chunkIndex++);
+          chunkSize = chunk.size();
+        }
+
+        chunk.addID(indexInChunk++, CDOIDImpl.create(target));
+        if (indexInChunk == chunkSize)
+        {
+          chunk = null;
+          indexInChunk = 0;
+        }
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+    }
   }
 
   protected void mapReference(CDOClass cdoClass, CDOFeature cdoFeature)

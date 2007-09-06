@@ -10,23 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.server.IStoreReader;
-import org.eclipse.emf.cdo.server.IStoreWriter;
-
-import java.sql.Connection;
-import java.sql.Statement;
+import org.eclipse.emf.cdo.server.IStoreChunkReader;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBStoreAccessor extends IStoreReader, IStoreWriter
+public interface IDBStoreChunkReader extends IStoreChunkReader
 {
-  public IDBStore getStore();
-
-  public Connection getConnection();
-
-  public Statement getStatement();
-
-  public CDOClassRef readClassRef(int classID);
+  public IDBStoreAccessor getStoreAccessor();
 }

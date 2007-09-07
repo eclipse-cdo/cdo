@@ -7,7 +7,9 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - EMF invalidation notifications
+ *    Simon McDuff - EMF invalidation notifications,
+ *                   IFeatureAnalyzer,
+ *                   LoadRevisionCollectionChunk
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -23,6 +25,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDOIDProvider;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDTyped;
+import org.eclipse.emf.cdo.protocol.analyzer.IFeatureAnalyzer;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
@@ -73,6 +76,10 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private boolean enableInvalidationNotifications;
 
+  private int loadRevisionCollectionChunkSize = 1;
+
+  private IFeatureAnalyzer featureAnalyzer = IFeatureAnalyzer.NOOP;
+
   private Map<CDOID, InternalCDOObject> objects = new HashMap<CDOID, InternalCDOObject>();
 
   private CDOStore store = new CDOStore(this);
@@ -81,13 +88,10 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private InternalCDOObject lastLookupObject;
 
-  private int loadRevisionCollectionChunkSize;
-
   public CDOViewImpl(int id, CDOSessionImpl session)
   {
     this.viewID = id;
     this.session = session;
-    this.loadRevisionCollectionChunkSize = 1;
   }
 
   public int getViewID()
@@ -127,7 +131,27 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public void setEnableInvalidationNotifications(boolean on)
   {
-    this.enableInvalidationNotifications = on;
+    enableInvalidationNotifications = on;
+  }
+
+  public int getLoadRevisionCollectionChunkSize()
+  {
+    return loadRevisionCollectionChunkSize;
+  }
+
+  public void setLoadRevisionCollectionChunkSize(int loadRevisionCollectionChunkSize)
+  {
+    this.loadRevisionCollectionChunkSize = loadRevisionCollectionChunkSize;
+  }
+
+  public IFeatureAnalyzer getFeatureAnalyzer()
+  {
+    return featureAnalyzer;
+  }
+
+  public void setFeatureAnalyzer(IFeatureAnalyzer featureAnalyzer)
+  {
+    this.featureAnalyzer = featureAnalyzer == null ? IFeatureAnalyzer.NOOP : featureAnalyzer;
   }
 
   public CDOTransactionImpl toTransaction()
@@ -781,15 +805,5 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       return MessageFormat.format("CDOViewResourcesEvent[{0}, {1}, {2}]", getView(), resourcePath, kind);
     }
-  }
-
-  public int getLoadRevisionCollectionChunkSize()
-  {
-    return loadRevisionCollectionChunkSize;
-  }
-
-  public void setLoadRevisionCollectionChunkSize(int loadRevisionCollectionChunkSize)
-  {
-    this.loadRevisionCollectionChunkSize = loadRevisionCollectionChunkSize;
   }
 }

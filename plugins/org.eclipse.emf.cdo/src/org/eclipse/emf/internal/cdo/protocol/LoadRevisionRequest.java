@@ -11,9 +11,11 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.internal.protocol.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.analyzer.IFetchRuleManager;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -73,6 +75,27 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
     {
       if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing ID: {0}", id);
       CDOIDImpl.write(out, id);
+    }
+
+    IFetchRuleManager ruleManager = getSession().getRevisionManager().getRuleManager();
+    List<CDOFetchRule> fetchRules = ruleManager.getFetchRules(ids);
+    if (fetchRules == null || fetchRules.size() == 0)
+    {
+      out.writeInt(0);
+    }
+    else
+    {
+      int fetchSize = fetchRules.size();
+      out.writeInt(fetchSize);
+      if (fetchSize > 0)
+      {
+        CDOID contextID = ruleManager.getContext();
+        CDOIDImpl.write(out, contextID);
+        for (CDOFetchRule fetchRule : fetchRules)
+        {
+          fetchRule.write(out);
+        }
+      }
     }
   }
 

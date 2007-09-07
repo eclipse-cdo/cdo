@@ -106,6 +106,7 @@ public final class CDOStore implements EStore
       TRACER.format("get({0}, {1}, {2})", cdoObject, cdoFeature, index);
     }
 
+    view.getFeatureAnalyzer().preTraverseFeature(cdoObject.cdoRevision(), cdoFeature, index);
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
     Object value = get(revision, cdoFeature, index);
     if (cdoFeature.isReference())
@@ -119,6 +120,7 @@ public final class CDOStore implements EStore
       value = view.convertIDToObject(value);
     }
 
+    view.getFeatureAnalyzer().postTraverseFeature(cdoObject.cdoRevision(), cdoFeature, index);
     return value;
   }
 
@@ -132,7 +134,7 @@ public final class CDOStore implements EStore
     {
       MoveableList list = revision.getList(cdoFeature);
       int fromIndex = index;
-      int toIndex = Math.min(index + chunkSize - 1, list.size());
+      int toIndex = Math.min(index + chunkSize, list.size()) - 1;
 
       Set<CDOID> notRegistered = new HashSet<CDOID>();
       for (int i = fromIndex; i <= toIndex; i++)

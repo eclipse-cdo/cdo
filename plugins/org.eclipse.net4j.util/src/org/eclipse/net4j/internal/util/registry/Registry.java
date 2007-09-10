@@ -82,8 +82,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
   }
 
   /**
-   * Requires {@link #commit()} to be called later if not
-   * {@link #isAutoCommit()}.
+   * Requires {@link #commit()} to be called later if not {@link #isAutoCommit()}.
    */
   public synchronized V put(K key, V value)
   {
@@ -93,8 +92,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
   }
 
   /**
-   * Requires {@link #commit()} to be called later if not
-   * {@link #isAutoCommit()}.
+   * Requires {@link #commit()} to be called later if not {@link #isAutoCommit()}.
    */
   public synchronized void putAll(Map<? extends K, ? extends V> t)
   {
@@ -112,8 +110,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
   }
 
   /**
-   * Requires {@link #commit()} to be called later if not
-   * {@link #isAutoCommit()}.
+   * Requires {@link #commit()} to be called later if not {@link #isAutoCommit()}.
    */
   public synchronized V remove(Object key)
   {
@@ -123,8 +120,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
   }
 
   /**
-   * Requires {@link #commit()} to be called later if not
-   * {@link #isAutoCommit()}.
+   * Requires {@link #commit()} to be called later if not {@link #isAutoCommit()}.
    */
   public synchronized void clear()
   {

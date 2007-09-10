@@ -72,11 +72,9 @@ public final class GenUtil
   }
 
   /**
-   * Formats a name by parsing it into words separated by underscores and/or
-   * mixed-casing and then recombining them using the specified separator. A
-   * prefix can also be given to be recognized as a separate word or to be
-   * trimmed. Leading underscores can be ignored or can cause a leading
-   * separator to be prepended.
+   * Formats a name by parsing it into words separated by underscores and/or mixed-casing and then recombining them
+   * using the specified separator. A prefix can also be given to be recognized as a separate word or to be trimmed.
+   * Leading underscores can be ignored or can cause a leading separator to be prepended.
    * 
    * @since 2.2
    */
@@ -123,8 +121,7 @@ public final class GenUtil
   }
 
   /**
-   * This method breaks sourceName into words delimited by separator and/or
-   * mixed-case naming.
+   * This method breaks sourceName into words delimited by separator and/or mixed-case naming.
    */
   public static List<String> parseName(String sourceName, char separator)
   {

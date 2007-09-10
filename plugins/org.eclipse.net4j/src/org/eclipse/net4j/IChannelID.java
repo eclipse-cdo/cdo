@@ -11,8 +11,7 @@
 package org.eclipse.net4j;
 
 /**
- * An identifier of an {@link IChannel} that is unique among all channels of all
- * {@link IConnector}s.
+ * An identifier of an {@link IChannel} that is unique among all channels of all {@link IConnector}s.
  * 
  * @author Eike Stepper
  * @since 0.8.0
@@ -25,8 +24,7 @@ public interface IChannelID
   public IConnector getConnector();
 
   /**
-   * Returns the channel index of the associated {@link IChannel} within its
-   * connector.
+   * Returns the channel index of the associated {@link IChannel} within its connector.
    */
   public short getChannelIndex();
 }

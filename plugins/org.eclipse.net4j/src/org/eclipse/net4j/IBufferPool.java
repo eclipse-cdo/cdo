@@ -19,18 +19,15 @@ package org.eclipse.net4j;
 public interface IBufferPool extends IBufferProvider
 {
   /**
-   * Tries to remove a single buffer from this <code>BufferPool</code> and
-   * {@link IBuffer#release() release} it.
+   * Tries to remove a single buffer from this <code>BufferPool</code> and {@link IBuffer#release() release} it.
    * 
-   * @return <code>true</code> if a buffer could be evicted,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if a buffer could be evicted, <code>false</code> otherwise.
    */
   public boolean evictOne();
 
   /**
-   * Tries to remove as many buffers from this <code>BufferPool</code> and
-   * {@link IBuffer#release() release} them as are needed to let a given maximum
-   * number of buffers survive in the pool.
+   * Tries to remove as many buffers from this <code>BufferPool</code> and {@link IBuffer#release() release} them as
+   * are needed to let a given maximum number of buffers survive in the pool.
    * 
    * @return The number of buffers that could be evicted.
    */
@@ -44,8 +41,7 @@ public interface IBufferPool extends IBufferProvider
   public interface Introspection extends IBufferPool, IBufferProvider.Introspection
   {
     /**
-     * Returns the number of buffers that are currently pooled in this
-     * <code>BufferPool</code>.
+     * Returns the number of buffers that are currently pooled in this <code>BufferPool</code>.
      */
     public int getPooledBuffers();
   }

@@ -68,9 +68,8 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   private IBufferProvider bufferProvider;
 
   /**
-   * An optional executor to be used by the {@link IChannel}s to process their
-   * {@link Channel#receiveQueue} instead of the current thread. If not
-   * <code>null</code> the sender and the receiver peers become decoupled.
+   * An optional executor to be used by the {@link IChannel}s to process their {@link Channel#receiveQueue} instead of
+   * the current thread. If not <code>null</code> the sender and the receiver peers become decoupled.
    * <p>
    */
   private ExecutorService receiveExecutor;
@@ -476,8 +475,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   }
 
   /**
-   * @return <code>true</code> if the channel was removed, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if the channel was removed, <code>false</code> otherwise.
    */
   protected boolean removeChannel(final Channel channel)
   {
@@ -563,10 +561,9 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   }
 
   /**
-   * TODO Use IProtocolProvider and make the protocols real container elements,
-   * so that the post processors can reach them. The protocol description can be
-   * used to store unique protocol IDs so that always new protocols are created
-   * in the container.
+   * TODO Use IProtocolProvider and make the protocols real container elements, so that the post processors can reach
+   * them. The protocol description can be used to store unique protocol IDs so that always new protocols are created in
+   * the container.
    */
   protected IProtocol createProtocol(String type, Object infraStructure)
   {

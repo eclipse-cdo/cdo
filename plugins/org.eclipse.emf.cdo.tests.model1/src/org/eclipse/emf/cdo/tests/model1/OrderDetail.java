@@ -9,8 +9,8 @@ package org.eclipse.emf.cdo.tests.model1;
 import org.eclipse.emf.cdo.CDOObject;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>Order Detail</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Order Detail</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are supported:
  * <ul>
@@ -28,12 +28,11 @@ import org.eclipse.emf.cdo.CDOObject;
 public interface OrderDetail extends CDOObject
 {
   /**
-   * Returns the value of the '<em><b>Order</b></em>' container reference.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.Order#getOrderDetails <em>Order Details</em>}'.
+   * Returns the value of the '<em><b>Order</b></em>' container reference. It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.Order#getOrderDetails <em>Order Details</em>}'.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Order</em>' container reference isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Order</em>' container reference isn't clear, there really should be more of a
+   * description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -47,8 +46,8 @@ public interface OrderDetail extends CDOObject
   Order getOrder();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail#getOrder <em>Order</em>}'
-   * container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail#getOrder <em>Order</em>}' container
+   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
    *          the new value of the '<em>Order</em>' container reference.
@@ -58,12 +57,11 @@ public interface OrderDetail extends CDOObject
   void setOrder(Order value);
 
   /**
-   * Returns the value of the '<em><b>Product</b></em>' reference. It is
-   * bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.Product#getOrderDetails <em>Order Details</em>}'.
+   * Returns the value of the '<em><b>Product</b></em>' reference. It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.Product#getOrderDetails <em>Order Details</em>}'.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Product</em>' reference isn't clear, there
-   * really should be more of a description here...
+   * If the meaning of the '<em>Product</em>' reference isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -88,11 +86,10 @@ public interface OrderDetail extends CDOObject
   void setProduct(Product value);
 
   /**
-   * Returns the value of the '<em><b>Price</b></em>' attribute. <!--
-   * begin-user-doc -->
+   * Returns the value of the '<em><b>Price</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Price</em>' attribute isn't clear, there
-   * really should be more of a description here...
+   * If the meaning of the '<em>Price</em>' attribute isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -105,8 +102,8 @@ public interface OrderDetail extends CDOObject
   float getPrice();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail#getPrice <em>Price</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail#getPrice <em>Price</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
    *          the new value of the '<em>Price</em>' attribute.

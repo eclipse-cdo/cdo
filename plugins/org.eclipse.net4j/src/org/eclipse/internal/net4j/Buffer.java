@@ -218,8 +218,7 @@ public class Buffer implements IBuffer
   }
 
   /**
-   * @return <code>true</code> if the buffer has been completely written,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if the buffer has been completely written, <code>false</code> otherwise.
    */
   public boolean write(SocketChannel socketChannel) throws IOException
   {

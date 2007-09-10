@@ -82,8 +82,7 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, Runnable
   }
 
   /**
-   * Executed in the context of the
-   * {@link #getExecutorService() executor service}.
+   * Executed in the context of the {@link #getExecutorService() executor service}.
    * <p>
    */
   public void run()

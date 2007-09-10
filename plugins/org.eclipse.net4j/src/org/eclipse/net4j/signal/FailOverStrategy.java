@@ -61,8 +61,8 @@ public class FailOverStrategy extends Notifier implements IFailOverStrategy
   }
 
   /**
-   * Should be overridden to provide a fail-over <code>IConnector</code>. The
-   * oldChannel <i>can</i> be used as a hint.
+   * Should be overridden to provide a fail-over <code>IConnector</code>. The oldChannel <i>can</i> be used as a
+   * hint.
    */
   protected IConnector getNewConnector(IChannel oldChannel)
   {

@@ -48,8 +48,8 @@ import java.util.ListIterator;
 import java.util.Map;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>

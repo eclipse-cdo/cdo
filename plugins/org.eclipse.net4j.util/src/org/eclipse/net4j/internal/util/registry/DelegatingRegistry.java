@@ -21,11 +21,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Implementation note: AbstractDelegatingRegistry does not preserve the
- * "modifyable view" contract of {@link Map#entrySet()} as well as of
- * {@link Map#keySet()}, i.e. they are disconnected sets and modifications
- * applied to them are not applied to their underlying
- * AbstractDelegatingRegistry.
+ * Implementation note: AbstractDelegatingRegistry does not preserve the "modifyable view" contract of
+ * {@link Map#entrySet()} as well as of {@link Map#keySet()}, i.e. they are disconnected sets and modifications applied
+ * to them are not applied to their underlying AbstractDelegatingRegistry.
  * <p>
  * 
  * @author Eike Stepper

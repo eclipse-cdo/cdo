@@ -26,16 +26,13 @@ public interface IStoreWriter extends IStoreReader
   public IView getView();
 
   /**
-   * Stores a complete description of a package so that it can be restored to an
-   * identical state at a later point in time.
+   * Stores a complete description of a package so that it can be restored to an identical state at a later point in
+   * time.
    * <p>
-   * <b>Note:</b> The implementor of this method must not assume that
-   * references to classes in this package or in any other package are already
-   * resolved or are resolveable at the point in time when this method is called
-   * by the framework. References to classes frequently appear in
-   * {@link CDOClass#getSuperTypes()} and in
-   * {@link CDOFeature#getReferenceType()}. Instead
-   * {@link CDOClassImpl#getSuperTypeProxies()} and
+   * <b>Note:</b> The implementor of this method must not assume that references to classes in this package or in any
+   * other package are already resolved or are resolveable at the point in time when this method is called by the
+   * framework. References to classes frequently appear in {@link CDOClass#getSuperTypes()} and in
+   * {@link CDOFeature#getReferenceType()}. Instead {@link CDOClassImpl#getSuperTypeProxies()} and
    * {@link CDOFeatureImpl#getReferenceTypeProxy()} should be used.
    * <p>
    * 

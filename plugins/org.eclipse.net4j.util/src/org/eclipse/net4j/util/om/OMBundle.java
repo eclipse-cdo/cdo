@@ -68,8 +68,7 @@ public interface OMBundle
   /**
    * Indicates whether strings should be translated by default.
    * 
-   * @return <code>true</code> if strings should be translated by default;
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if strings should be translated by default; <code>false</code> otherwise.
    */
   public boolean shouldTranslate();
 
@@ -102,8 +101,7 @@ public interface OMBundle
   String getString(String key, boolean translate);
 
   /**
-   * Returns a string resource associated with the key, and performs
-   * substitutions.
+   * Returns a string resource associated with the key, and performs substitutions.
    * 
    * @param key
    *          the key of the string.
@@ -116,8 +114,7 @@ public interface OMBundle
   String getString(String key, Object... args);
 
   /**
-   * Returns a string resource associated with the key, and performs
-   * substitutions.
+   * Returns a string resource associated with the key, and performs substitutions.
    * 
    * @param key
    *          the key of the string.

@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.analyzer.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
-
 /**
  * @author Eike Stepper
  */

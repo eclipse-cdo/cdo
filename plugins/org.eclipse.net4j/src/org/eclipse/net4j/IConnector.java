@@ -24,38 +24,30 @@ import org.eclipse.internal.net4j.Connector;
 import java.util.List;
 
 /**
- * One endpoint of a physical connection of arbitrary nature between two
- * communicating parties. A {@link IConnector} encapsulates the process of
- * establishing and closing such connections and has a {@link ConnectorLocation}
- * of {@link ConnectorLocation#CLIENT} or {@link ConnectorLocation#SERVER} with
- * respect to this process. Once a connection is established either party can
- * use its connector to open multiple {@link IChannel}s to asynchronously
- * exchange {@link IBuffer}s.
+ * One endpoint of a physical connection of arbitrary nature between two communicating parties. A {@link IConnector}
+ * encapsulates the process of establishing and closing such connections and has a {@link ConnectorLocation} of
+ * {@link ConnectorLocation#CLIENT} or {@link ConnectorLocation#SERVER} with respect to this process. Once a connection
+ * is established either party can use its connector to open multiple {@link IChannel}s to asynchronously exchange
+ * {@link IBuffer}s.
  * <p>
- * This interface is <b>not</b> intended to be implemented by clients.
- * Providers of connectors for new physical connection types have to subclass
- * {@link Connector} (see {@link Channel#setConnector(Connector)}.
+ * This interface is <b>not</b> intended to be implemented by clients. Providers of connectors for new physical
+ * connection types have to subclass {@link Connector} (see {@link Channel#setConnector(Connector)}.
  * <p>
  * <dt><b>Class Diagram:</b></dt>
- * <dd><img src="doc-files/Connectors.png" title="Diagram Connectors"
- * border="0" usemap="Connectors.png"/></dd>
+ * <dd><img src="doc-files/Connectors.png" title="Diagram Connectors" border="0" usemap="Connectors.png"/></dd>
  * <p>
- * <MAP NAME="Connectors.png"> <AREA SHAPE="RECT" COORDS="259,15,400,75"
- * HREF="IConnectorCredentials.html"> <AREA SHAPE="RECT" COORDS="12,174,138,245"
- * HREF="ConnectorLocation.html"> <AREA SHAPE="RECT" COORDS="258,139,401,281"
- * HREF="IConnector.html"> <AREA SHAPE="RECT" COORDS="518,156,642,263"
- * HREF="ConnectorState.html"> <AREA SHAPE="RECT" COORDS="280,360,380,410"
- * HREF="IChannel.html"> </MAP>
+ * <MAP NAME="Connectors.png"> <AREA SHAPE="RECT" COORDS="259,15,400,75" HREF="IConnectorCredentials.html"> <AREA
+ * SHAPE="RECT" COORDS="12,174,138,245" HREF="ConnectorLocation.html"> <AREA SHAPE="RECT" COORDS="258,139,401,281"
+ * HREF="IConnector.html"> <AREA SHAPE="RECT" COORDS="518,156,642,263" HREF="ConnectorState.html"> <AREA SHAPE="RECT"
+ * COORDS="280,360,380,410" HREF="IChannel.html"> </MAP>
  * <p>
  * <dt><b>Sequence Diagram: Communication Process</b></dt>
- * <dd> <img src="doc-files/CommunicationProcess.jpg" title="Communication
- * Process" border="0" usemap="#CommunicationProcess.jpg"/></dd>
+ * <dd> <img src="doc-files/CommunicationProcess.jpg" title="Communication Process" border="0"
+ * usemap="#CommunicationProcess.jpg"/></dd>
  * <p>
- * <MAP NAME="CommunicationProcess.jpg"> <AREA SHAPE="RECT"
- * COORDS="128,94,247,123" HREF="IConnector.html"> <AREA SHAPE="RECT"
- * COORDS="648,95,767,123" HREF="IConnector.html"> <AREA SHAPE="RECT"
- * COORDS="509,254,608,283" HREF="IChannel.html"> <AREA SHAPE="RECT"
- * COORDS="287,355,387,383" HREF="IChannel.html"> <AREA SHAPE="RECT"
+ * <MAP NAME="CommunicationProcess.jpg"> <AREA SHAPE="RECT" COORDS="128,94,247,123" HREF="IConnector.html"> <AREA
+ * SHAPE="RECT" COORDS="648,95,767,123" HREF="IConnector.html"> <AREA SHAPE="RECT" COORDS="509,254,608,283"
+ * HREF="IChannel.html"> <AREA SHAPE="RECT" COORDS="287,355,387,383" HREF="IChannel.html"> <AREA SHAPE="RECT"
  * COORDS="818,195,897,222" HREF="IProtocol.html"> </MAP>
  * 
  * @author Eike Stepper
@@ -66,28 +58,24 @@ public interface IConnector extends IContainer<IChannel>
   public String getURL();
 
   /**
-   * Indicates which role this connector has played during the establishment of
-   * the physical connection.
+   * Indicates which role this connector has played during the establishment of the physical connection.
    */
   public ConnectorLocation getLocation();
 
   /**
-   * Same as
-   * <code>{@link #getLocation()} == {@link ConnectorLocation#CLIENT}</code>.
+   * Same as <code>{@link #getLocation()} == {@link ConnectorLocation#CLIENT}</code>.
    */
   public boolean isClient();
 
   /**
-   * Same as
-   * <code>{@link #getLocation()} == {@link ConnectorLocation#SERVER}</code>.
+   * Same as <code>{@link #getLocation()} == {@link ConnectorLocation#SERVER}</code>.
    */
   public boolean isServer();
 
   /**
    * Returns the userID of this connector.
    * <p>
-   * Same as
-   * <code>{@link #getCredentials()}.{@link IConnectorCredentials#getUserID() getUserID()}</code>.
+   * Same as <code>{@link #getCredentials()}.{@link IConnectorCredentials#getUserID() getUserID()}</code>.
    */
   public String getUserID();
 
@@ -97,17 +85,15 @@ public interface IConnector extends IContainer<IChannel>
   public IConnectorCredentials getCredentials();
 
   /**
-   * Returns the factory registry used by this connector to lookup factories
-   * that can create {@link IProtocol}s for newly opened {@link IChannel}s.
+   * Returns the factory registry used by this connector to lookup factories that can create {@link IProtocol}s for
+   * newly opened {@link IChannel}s.
    * <p>
-   * Automatic protocol creation only happens if {@link #isServer()} returns
-   * <code>true</code>.
+   * Automatic protocol creation only happens if {@link #isServer()} returns <code>true</code>.
    */
   public IRegistry<IFactoryKey, IFactory> getProtocolFactoryRegistry();
 
   /**
-   * Returns the post processors used by this connector to modify protocols
-   * created for new channels.
+   * Returns the post processors used by this connector to modify protocols created for new channels.
    */
   public List<IElementProcessor> getProtocolPostProcessors();
 
@@ -117,8 +103,7 @@ public interface IConnector extends IContainer<IChannel>
   public ConnectorState getState();
 
   /**
-   * Same as
-   * <code>{@link #getState()} == {@link ConnectorState#CONNECTED}</code>.
+   * Same as <code>{@link #getState()} == {@link ConnectorState#CONNECTED}</code>.
    */
   public boolean isConnected();
 
@@ -130,8 +115,7 @@ public interface IConnector extends IContainer<IChannel>
   public void connectAsync() throws ConnectorException;
 
   /**
-   * Blocks until <code>{@link #isConnected()} == true</code> or the given
-   * timeout expired.
+   * Blocks until <code>{@link #isConnected()} == true</code> or the given timeout expired.
    * <p>
    * 
    * @throws ConnectorException
@@ -140,8 +124,7 @@ public interface IConnector extends IContainer<IChannel>
 
   /**
    * Synchronous connect. Blocks until <code>{@link #isConnected()} ==
-   * true</code>
-   * or the given timeout expired.
+   * true</code> or the given timeout expired.
    * <p>
    */
   public boolean connect(long timeout) throws ConnectorException;
@@ -149,20 +132,16 @@ public interface IConnector extends IContainer<IChannel>
   public ConnectorException disconnect();
 
   /**
-   * Returns an array of currently open channels. Note that the resulting array
-   * does not contain <code>null</code> values. Generally the
-   * <code>channelIndex</code> of a channel can not be used as an index into
-   * this array.
+   * Returns an array of currently open channels. Note that the resulting array does not contain <code>null</code>
+   * values. Generally the <code>channelIndex</code> of a channel can not be used as an index into this array.
    * <p>
    */
   public IChannel[] getChannels();
 
   /**
-   * Synchronous request to open a new {@link IChannel} with an undefined
-   * channel protocol. Since the peer connector can't lookup a protocol
-   * {@link IFactory factory} without a protocol identifier the
-   * {@link IBufferHandler} of the peer {@link IChannel} can only be provided by
-   * externally provided channel {@link ILifecycle lifecycle}
+   * Synchronous request to open a new {@link IChannel} with an undefined channel protocol. Since the peer connector
+   * can't lookup a protocol {@link IFactory factory} without a protocol identifier the {@link IBufferHandler} of the
+   * peer {@link IChannel} can only be provided by externally provided channel {@link ILifecycle lifecycle}
    * {@link IListener listeners}.
    * <p>
    * 
@@ -172,9 +151,8 @@ public interface IConnector extends IContainer<IChannel>
   public IChannel openChannel() throws ConnectorException;
 
   /**
-   * Synchronous request to open a new {@link IChannel} with a channel protocol
-   * defined by a given protocol identifier. The peer connector will lookup a
-   * protocol {@link IFactory factory} with the protocol identifier, create a
+   * Synchronous request to open a new {@link IChannel} with a channel protocol defined by a given protocol identifier.
+   * The peer connector will lookup a protocol {@link IFactory factory} with the protocol identifier, create a
    * {@link IBufferHandler} and inject it into the peer {@link IChannel}.
    * <p>
    * 
@@ -184,10 +162,9 @@ public interface IConnector extends IContainer<IChannel>
   public IChannel openChannel(String protocolID, Object infraStructure) throws ConnectorException;
 
   /**
-   * Synchronous request to open a new {@link IChannel} with the given channel
-   * protocol . The peer connector will lookup a protocol
-   * {@link IFactory factory} with the protocol identifier, create a
-   * {@link IBufferHandler} and inject it into the peer channel.
+   * Synchronous request to open a new {@link IChannel} with the given channel protocol . The peer connector will lookup
+   * a protocol {@link IFactory factory} with the protocol identifier, create a {@link IBufferHandler} and inject it
+   * into the peer channel.
    * <p>
    * 
    * @see #openChannel()

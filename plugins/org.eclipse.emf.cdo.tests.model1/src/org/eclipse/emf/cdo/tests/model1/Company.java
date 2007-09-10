@@ -9,8 +9,7 @@ package org.eclipse.emf.cdo.tests.model1;
 import org.eclipse.emf.common.util.EList;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>Company</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Company</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are supported:
  * <ul>
@@ -29,17 +28,15 @@ import org.eclipse.emf.common.util.EList;
 public interface Company extends Address
 {
   /**
-   * Returns the value of the '<em><b>Categories</b></em>' containment
-   * reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model1.Category}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Categories</b></em>' containment reference list. The list contents are of
+   * type {@link org.eclipse.emf.cdo.tests.model1.Category}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Categories</em>' containment reference list
-   * isn't clear, there really should be more of a description here...
+   * If the meaning of the '<em>Categories</em>' containment reference list isn't clear, there really should be more
+   * of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Categories</em>' containment reference
-   *         list.
+   * @return the value of the '<em>Categories</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_Categories()
    * @model containment="true"
    * @generated
@@ -47,17 +44,15 @@ public interface Company extends Address
   EList<Category> getCategories();
 
   /**
-   * Returns the value of the '<em><b>Suppliers</b></em>' containment
-   * reference list. The list contents are of type
+   * Returns the value of the '<em><b>Suppliers</b></em>' containment reference list. The list contents are of type
    * {@link org.eclipse.emf.cdo.tests.model1.Supplier}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Suppliers</em>' containment reference list
-   * isn't clear, there really should be more of a description here...
+   * If the meaning of the '<em>Suppliers</em>' containment reference list isn't clear, there really should be more
+   * of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Suppliers</em>' containment reference
-   *         list.
+   * @return the value of the '<em>Suppliers</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_Suppliers()
    * @model containment="true"
    * @generated
@@ -65,37 +60,31 @@ public interface Company extends Address
   EList<Supplier> getSuppliers();
 
   /**
-   * Returns the value of the '<em><b>Purchase Orders</b></em>' containment
-   * reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder}. <!--
-   * begin-user-doc -->
+   * Returns the value of the '<em><b>Purchase Orders</b></em>' containment reference list. The list contents are
+   * of type {@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Purchase Orders</em>' containment reference
-   * list isn't clear, there really should be more of a description here...
+   * If the meaning of the '<em>Purchase Orders</em>' containment reference list isn't clear, there really should be
+   * more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Purchase Orders</em>' containment
-   *         reference list.
+   * @return the value of the '<em>Purchase Orders</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_PurchaseOrders()
-   * @model type="org.eclipse.emf.cdo.tests.model1.PurchaseOrder"
-   *        containment="true"
+   * @model type="org.eclipse.emf.cdo.tests.model1.PurchaseOrder" containment="true"
    * @generated
    */
   EList<PurchaseOrder> getPurchaseOrders();
 
   /**
-   * Returns the value of the '<em><b>Customers</b></em>' containment
-   * reference list. The list contents are of type
+   * Returns the value of the '<em><b>Customers</b></em>' containment reference list. The list contents are of type
    * {@link org.eclipse.emf.cdo.tests.model1.Customer}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Customers</em>' containment reference list
-   * isn't clear, there really should be more of a description here...
+   * If the meaning of the '<em>Customers</em>' containment reference list isn't clear, there really should be more
+   * of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Customers</em>' containment reference
-   *         list.
+   * @return the value of the '<em>Customers</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_Customers()
    * @model containment="true"
    * @generated
@@ -103,18 +92,15 @@ public interface Company extends Address
   EList<Customer> getCustomers();
 
   /**
-   * Returns the value of the '<em><b>Sales Orders</b></em>' containment
-   * reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model1.SalesOrder}. <!-- begin-user-doc
-   * -->
+   * Returns the value of the '<em><b>Sales Orders</b></em>' containment reference list. The list contents are of
+   * type {@link org.eclipse.emf.cdo.tests.model1.SalesOrder}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Sales Orders</em>' containment reference
-   * list isn't clear, there really should be more of a description here...
+   * If the meaning of the '<em>Sales Orders</em>' containment reference list isn't clear, there really should be
+   * more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Sales Orders</em>' containment reference
-   *         list.
+   * @return the value of the '<em>Sales Orders</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_SalesOrders()
    * @model containment="true"
    * @generated

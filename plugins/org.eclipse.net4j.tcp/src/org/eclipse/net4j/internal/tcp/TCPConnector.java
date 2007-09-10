@@ -107,9 +107,8 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   /**
-   * Called by {@link Channel} each time a new buffer is available for
-   * multiplexing. This or another buffer can be dequeued from the outputQueue
-   * of the {@link Channel}.
+   * Called by {@link Channel} each time a new buffer is available for multiplexing. This or another buffer can be
+   * dequeued from the outputQueue of the {@link Channel}.
    */
   @Override
   public void multiplexBuffer(IChannel channel)

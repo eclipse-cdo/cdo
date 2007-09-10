@@ -11,8 +11,7 @@
 package org.eclipse.net4j;
 
 /**
- * Provides clients with the ability to pass {@link IBuffer}s in for further
- * buffer handling.
+ * Provides clients with the ability to pass {@link IBuffer}s in for further buffer handling.
  * 
  * @author Eike Stepper
  * @since 0.8.0
@@ -20,10 +19,9 @@ package org.eclipse.net4j;
 public interface IBufferHandler
 {
   /**
-   * Handles an {@link IBuffer} and optionally releases it. The implementor of
-   * this method takes over the ownership of the buffer. Care must be taken to
-   * properly {@link IBuffer#release() release} the buffer if the ownership is
-   * not explicitely passed to some further party.
+   * Handles an {@link IBuffer} and optionally releases it. The implementor of this method takes over the ownership of
+   * the buffer. Care must be taken to properly {@link IBuffer#release() release} the buffer if the ownership is not
+   * explicitely passed to some further party.
    * 
    * @param buffer
    *          The buffer to be handled and otionally released.

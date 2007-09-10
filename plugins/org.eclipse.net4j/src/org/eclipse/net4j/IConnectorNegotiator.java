@@ -19,11 +19,9 @@ package org.eclipse.net4j;
 public interface IConnectorNegotiator
 {
   /**
-   * Executes the negotitation phase between the given connector and ts peer
-   * connector.
+   * Executes the negotitation phase between the given connector and ts peer connector.
    * 
-   * @return <code>true</code> if the negotiation succeeded,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if the negotiation succeeded, <code>false</code> otherwise.
    */
   public boolean negotiate(IConnector connector);
 }

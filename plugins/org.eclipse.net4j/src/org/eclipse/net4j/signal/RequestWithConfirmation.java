@@ -62,9 +62,8 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT
   protected abstract void requesting(ExtendedDataOutputStream out) throws IOException;
 
   /**
-   * <b>Important Note:</b> The confirmation must not be empty, i.e. the stream
-   * must be used at least to read a <code>boolean</code>. Otherwise
-   * synchronization problems will result!
+   * <b>Important Note:</b> The confirmation must not be empty, i.e. the stream must be used at least to read a
+   * <code>boolean</code>. Otherwise synchronization problems will result!
    */
   protected abstract RESULT confirming(ExtendedDataInputStream in) throws IOException;
 }

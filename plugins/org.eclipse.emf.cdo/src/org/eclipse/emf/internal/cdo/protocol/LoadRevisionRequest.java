@@ -83,7 +83,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
     }
     else
     {
-      // At this point, fetch size is more than one.    
+      // At this point, fetch size is more than one.
       int fetchSize = fetchRules.size();
       out.writeInt(fetchSize);
       CDOID contextID = ruleManager.getContext();

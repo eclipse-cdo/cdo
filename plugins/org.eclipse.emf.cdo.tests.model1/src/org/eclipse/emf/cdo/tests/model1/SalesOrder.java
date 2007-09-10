@@ -7,8 +7,8 @@
 package org.eclipse.emf.cdo.tests.model1;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>Sales Order</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Sales Order</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are supported:
  * <ul>
@@ -24,11 +24,9 @@ package org.eclipse.emf.cdo.tests.model1;
 public interface SalesOrder extends Order
 {
   /**
-   * Returns the value of the '<em><b>Id</b></em>' attribute. <!--
-   * begin-user-doc -->
+   * Returns the value of the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Id</em>' attribute isn't clear, there really
-   * should be more of a description here...
+   * If the meaning of the '<em>Id</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -41,8 +39,8 @@ public interface SalesOrder extends Order
   int getId();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getId <em>Id</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getId <em>Id</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
    *          the new value of the '<em>Id</em>' attribute.
@@ -52,12 +50,11 @@ public interface SalesOrder extends Order
   void setId(int value);
 
   /**
-   * Returns the value of the '<em><b>Customer</b></em>' reference. It is
-   * bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.Customer#getSalesOrders <em>Sales Orders</em>}'.
+   * Returns the value of the '<em><b>Customer</b></em>' reference. It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.Customer#getSalesOrders <em>Sales Orders</em>}'.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Customer</em>' reference isn't clear, there
-   * really should be more of a description here...
+   * If the meaning of the '<em>Customer</em>' reference isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
    * 

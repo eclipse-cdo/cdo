@@ -42,14 +42,12 @@ public interface IBufferProvider
   public interface Introspection extends IBufferProvider
   {
     /**
-     * Returns the number of buffers that have already been provided by this
-     * <code>BufferProvider</code>.
+     * Returns the number of buffers that have already been provided by this <code>BufferProvider</code>.
      */
     public long getProvidedBuffers();
 
     /**
-     * Returns the number of buffers that have already been retained to this
-     * <code>BufferProvider</code>.
+     * Returns the number of buffers that have already been retained to this <code>BufferProvider</code>.
      */
     public long getRetainedBuffers();
   }

@@ -14,8 +14,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Address</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Address</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>

@@ -11,11 +11,9 @@
 package org.eclipse.net4j.util.concurrent;
 
 /**
- * Synchronizes a producer and a consumer thread letting the producer pass a
- * value to the consumer. Both producer and consumer must have access to this
- * {@link ISynchronizer} and there must only ever exist one consumer for it.
- * Once the result value is consumed by the consumer this {@link ISynchronizer}
- * must not be reused.
+ * Synchronizes a producer and a consumer thread letting the producer pass a value to the consumer. Both producer and
+ * consumer must have access to this {@link ISynchronizer} and there must only ever exist one consumer for it. Once the
+ * result value is consumed by the consumer this {@link ISynchronizer} must not be reused.
  * <p>
  * 
  * @author Eike Stepper

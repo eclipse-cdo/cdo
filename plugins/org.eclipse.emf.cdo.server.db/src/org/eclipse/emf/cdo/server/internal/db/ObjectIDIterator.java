@@ -39,9 +39,8 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
   private CDOID nextID;
 
   /**
-   * Creates an iterator over all objects in a store. It is important to
-   * {@link #dispose()} of this iterator after usage to properly close internal
-   * result sets.
+   * Creates an iterator over all objects in a store. It is important to {@link #dispose()} of this iterator after usage
+   * to properly close internal result sets.
    */
   public ObjectIDIterator(MappingStrategy mappingStrategy, IDBStoreAccessor storeAccessor, boolean withTypes)
   {

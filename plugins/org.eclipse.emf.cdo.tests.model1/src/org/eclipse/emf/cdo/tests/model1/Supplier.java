@@ -9,8 +9,7 @@ package org.eclipse.emf.cdo.tests.model1;
 import org.eclipse.emf.common.util.EList;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>Supplier</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Supplier</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are supported:
  * <ul>
@@ -25,14 +24,12 @@ import org.eclipse.emf.common.util.EList;
 public interface Supplier extends Address
 {
   /**
-   * Returns the value of the '<em><b>Purchase Orders</b></em>' reference
-   * list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder}. It is
-   * bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSupplier <em>Supplier</em>}'.
+   * Returns the value of the '<em><b>Purchase Orders</b></em>' reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder}. It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSupplier <em>Supplier</em>}'.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Purchase Orders</em>' reference list isn't
-   * clear, there really should be more of a description here...
+   * If the meaning of the '<em>Purchase Orders</em>' reference list isn't clear, there really should be more of a
+   * description here...
    * </p>
    * <!-- end-user-doc -->
    * 

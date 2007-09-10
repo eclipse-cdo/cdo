@@ -114,10 +114,10 @@ public final class CDOStore implements EStore
         CDOID id = (CDOID)value;
         loadAhead(revision, cdoFeature, id, index);
       }
-      
+
       value = view.convertIDToObject(value);
     }
-    
+
     view.getFeatureAnalyzer().postTraverseFeature(cdoObject, cdoFeature, index, value);
     return value;
   }

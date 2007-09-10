@@ -36,22 +36,19 @@ public interface IStoreReader extends IStoreAccessor
   public Collection<CDOPackageInfo> readPackageInfos();
 
   /**
-   * Demand loads a given package proxy that has been created on startup of the
-   * repository.
+   * Demand loads a given package proxy that has been created on startup of the repository.
    */
   public void readPackage(CDOPackageImpl cdoPackage);
 
   /**
-   * Returns an iterator that iterates over all objects in the store and makes
-   * their ids available for processing. This method is supposed to be called
-   * very infrequently, for example during the recovery from a crash.
+   * Returns an iterator that iterates over all objects in the store and makes their ids available for processing. This
+   * method is supposed to be called very infrequently, for example during the recovery from a crash.
    */
   public CloseableIterator<CDOID> readObjectIDs(boolean withTypes);
 
   /**
-   * Reads the type of an object from the associated store and returns a class
-   * reference of it. This method is supposed to be called very infrequently if
-   * the {@link IStore#hasEfficientTypeLookup()} returns <code>false</code>.
+   * Reads the type of an object from the associated store and returns a class reference of it. This method is supposed
+   * to be called very infrequently if the {@link IStore#hasEfficientTypeLookup()} returns <code>false</code>.
    */
   public CDOClassRef readObjectType(CDOID id);
 

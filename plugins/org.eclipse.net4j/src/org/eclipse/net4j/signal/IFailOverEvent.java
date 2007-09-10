@@ -19,15 +19,14 @@ import org.eclipse.net4j.util.event.IEvent;
 public interface IFailOverEvent extends IEvent
 {
   /**
-   * @return The old channel that was active before the fail over occured. At
-   *         the time this event is being sent the old channel is already
-   *         closed.
+   * @return The old channel that was active before the fail over occured. At the time this event is being sent the old
+   *         channel is already closed.
    */
   public IChannel getOldChannel();
 
   /**
-   * @return The new channel that is active after the fail over occured. At the
-   *         time this event is being sent the new channel is already active.
+   * @return The new channel that is active after the fail over occured. At the time this event is being sent the new
+   *         channel is already active.
    */
   public IChannel getNewChannel();
 }

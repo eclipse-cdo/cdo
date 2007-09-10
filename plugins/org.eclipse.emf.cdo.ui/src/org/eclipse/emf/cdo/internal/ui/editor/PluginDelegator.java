@@ -13,8 +13,7 @@ import org.eclipse.emf.common.ui.EclipseUIPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
 
 /**
- * This is the central singleton for the Editor editor plugin. <!--
- * begin-user-doc --> <!-- end-user-doc -->
+ * This is the central singleton for the Editor editor plugin. <!-- begin-user-doc --> <!-- end-user-doc -->
  * 
  * @generated
  */
@@ -61,8 +60,7 @@ public final class PluginDelegator extends EMFPlugin
   }
 
   /**
-   * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
+   * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the singleton instance.
    * @generated
@@ -74,8 +72,7 @@ public final class PluginDelegator extends EMFPlugin
   }
 
   /**
-   * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
+   * Returns the singleton instance of the Eclipse plugin. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the singleton instance.
    * @generated
@@ -86,8 +83,7 @@ public final class PluginDelegator extends EMFPlugin
   }
 
   /**
-   * The actual implementation of the Eclipse <b>Plugin</b>. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
+   * The actual implementation of the Eclipse <b>Plugin</b>. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    */

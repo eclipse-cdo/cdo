@@ -17,16 +17,13 @@ import java.nio.channels.SocketChannel;
  * Enumerates the internal states of an {@link IBuffer}.
  * <p>
  * <dt><b>State Machine Diagram:</b></dt>
- * <dd><img src="doc-files/BufferStates.png" title="Diagram Buffer States"
- * border="0" usemap="#BufferStates.png"/></dd>
+ * <dd><img src="doc-files/BufferStates.png" title="Diagram Buffer States" border="0" usemap="#BufferStates.png"/></dd>
  * <p>
- * <MAP NAME="BufferStates.png"> <AREA SHAPE="RECT" COORDS="300,8,449,34"
- * HREF="BufferState.html#INITIAL"> <AREA SHAPE="RECT" COORDS="46,115,195,139"
- * HREF="BufferState.html#PUTTING"> <AREA SHAPE="RECT" COORDS="48,271,195,295"
- * HREF="BufferState.html#WRITING"> <AREA SHAPE="RECT" COORDS="533,112,681,140"
- * HREF="BufferState.html#READING_HEADER"> <AREA SHAPE="RECT"
- * COORDS="533,271,680,295" HREF="BufferState.html#READING_BODY"> <AREA
- * SHAPE="RECT" COORDS="532,428,682,451" HREF="BufferState.html#GETTING"> </MAP>
+ * <MAP NAME="BufferStates.png"> <AREA SHAPE="RECT" COORDS="300,8,449,34" HREF="BufferState.html#INITIAL"> <AREA
+ * SHAPE="RECT" COORDS="46,115,195,139" HREF="BufferState.html#PUTTING"> <AREA SHAPE="RECT" COORDS="48,271,195,295"
+ * HREF="BufferState.html#WRITING"> <AREA SHAPE="RECT" COORDS="533,112,681,140" HREF="BufferState.html#READING_HEADER">
+ * <AREA SHAPE="RECT" COORDS="533,271,680,295" HREF="BufferState.html#READING_BODY"> <AREA SHAPE="RECT"
+ * COORDS="532,428,682,451" HREF="BufferState.html#GETTING"> </MAP>
  * 
  * @author Eike Stepper
  * @since 0.8.0
@@ -34,87 +31,70 @@ import java.nio.channels.SocketChannel;
 public enum BufferState
 {
   /**
-   * Indicates that the {@link IBuffer} has just been provided by its
-   * {@link IBufferProvider}} or that is has been used and subsequently
-   * {@link IBuffer#clear() cleared}.
+   * Indicates that the {@link IBuffer} has just been provided by its {@link IBufferProvider}} or that is has been used
+   * and subsequently {@link IBuffer#clear() cleared}.
    * <p>
-   * A transition to {@link #PUTTING} can be triggered by calling
-   * {@link IBuffer#startPutting(short)} once. If the buffer is intended to be
-   * passed to an {@link IChannel} later the
-   * {@link IChannel#getChannelIndex() channel index} of that Channel has to be
-   * passed because it is part of the buffer's header. A {@link ByteBuffer} is
-   * returned that can be used for putting data.
+   * A transition to {@link #PUTTING} can be triggered by calling {@link IBuffer#startPutting(short)} once. If the
+   * buffer is intended to be passed to an {@link IChannel} later the {@link IChannel#getChannelIndex() channel index}
+   * of that Channel has to be passed because it is part of the buffer's header. A {@link ByteBuffer} is returned that
+   * can be used for putting data.
    * <p>
-   * A transition to {@link #GETTING} can be triggered by calling
-   * {@link IBuffer#startGetting(SocketChannel)} repeatedly until it finally
-   * returns a {@link ByteBuffer} that can be used for getting data.
+   * A transition to {@link #GETTING} can be triggered by calling {@link IBuffer#startGetting(SocketChannel)} repeatedly
+   * until it finally returns a {@link ByteBuffer} that can be used for getting data.
    */
   INITIAL,
 
   /**
-   * Indicates that the {@link IBuffer} can provide a {@link ByteBuffer} that
-   * can be used for putting data.
+   * Indicates that the {@link IBuffer} can provide a {@link ByteBuffer} that can be used for putting data.
    * <p>
-   * A transition to {@link #WRITING} can be triggered by calling
-   * {@link IBuffer#write(SocketChannel)}.
+   * A transition to {@link #WRITING} can be triggered by calling {@link IBuffer#write(SocketChannel)}.
    * <p>
-   * A transition to {@link #GETTING} can be triggered by calling
-   * {@link IBuffer#flip()}.
+   * A transition to {@link #GETTING} can be triggered by calling {@link IBuffer#flip()}.
    * <p>
-   * A transition to {@link #INITIAL} can be triggered by calling
-   * {@link IBuffer#clear()}.
+   * A transition to {@link #INITIAL} can be triggered by calling {@link IBuffer#clear()}.
    * <p>
    */
   PUTTING,
 
   /**
-   * Indicates that the {@link IBuffer} is currently writing its data to a
-   * {@link SocketChannel}.
+   * Indicates that the {@link IBuffer} is currently writing its data to a {@link SocketChannel}.
    * <p>
-   * Self transitions to {@link #WRITING} can be triggered by repeatedly calling
-   * {@link IBuffer#write(SocketChannel)} until it returns <code>true</code>.
+   * Self transitions to {@link #WRITING} can be triggered by repeatedly calling {@link IBuffer#write(SocketChannel)}
+   * until it returns <code>true</code>.
    * <p>
-   * A transition to {@link #INITIAL} can be triggered by calling
-   * {@link IBuffer#clear()}.
+   * A transition to {@link #INITIAL} can be triggered by calling {@link IBuffer#clear()}.
    * <p>
    */
   WRITING,
 
   /**
-   * Indicates that the {@link IBuffer} is currently reading its header from a
-   * {@link SocketChannel}.
+   * Indicates that the {@link IBuffer} is currently reading its header from a {@link SocketChannel}.
    * <p>
-   * Transitions to {@link #READING_HEADER}, {@link #READING_BODY} or
-   * {@link #GETTING} can be triggered by repeatedly calling
-   * {@link IBuffer#startGetting(SocketChannel)} until it returns a
-   * {@link ByteBuffer} that can be used for getting data.
+   * Transitions to {@link #READING_HEADER}, {@link #READING_BODY} or {@link #GETTING} can be triggered by repeatedly
+   * calling {@link IBuffer#startGetting(SocketChannel)} until it returns a {@link ByteBuffer} that can be used for
+   * getting data.
    * <p>
-   * A transition to {@link #INITIAL} can be triggered by calling
-   * {@link IBuffer#clear()}.
+   * A transition to {@link #INITIAL} can be triggered by calling {@link IBuffer#clear()}.
    * <p>
    */
   READING_HEADER,
 
   /**
-   * Indicates that the {@link IBuffer} is currently reading its body from a
-   * {@link SocketChannel}.
+   * Indicates that the {@link IBuffer} is currently reading its body from a {@link SocketChannel}.
    * <p>
-   * Transitions to {@link #READING_BODY} or {@link #GETTING} can be triggered
-   * by repeatedly calling {@link IBuffer#startGetting(SocketChannel)} until it
-   * returns a {@link ByteBuffer} that can be used for getting data.
+   * Transitions to {@link #READING_BODY} or {@link #GETTING} can be triggered by repeatedly calling
+   * {@link IBuffer#startGetting(SocketChannel)} until it returns a {@link ByteBuffer} that can be used for getting
+   * data.
    * <p>
-   * A transition to {@link #INITIAL} can be triggered by calling
-   * {@link IBuffer#clear()}.
+   * A transition to {@link #INITIAL} can be triggered by calling {@link IBuffer#clear()}.
    * <p>
    */
   READING_BODY,
 
   /**
-   * Indicates that the {@link IBuffer} can provide a {@link ByteBuffer} that
-   * can be used for getting data.
+   * Indicates that the {@link IBuffer} can provide a {@link ByteBuffer} that can be used for getting data.
    * <p>
-   * A transition to {@link #INITIAL} can be triggered by calling
-   * {@link IBuffer#clear()}.
+   * A transition to {@link #INITIAL} can be triggered by calling {@link IBuffer#clear()}.
    * <p>
    */
   GETTING

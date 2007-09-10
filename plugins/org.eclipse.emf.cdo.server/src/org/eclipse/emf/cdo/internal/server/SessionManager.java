@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - maintenance https://bugs.eclipse.org/bugs/show_bug.cgi?id=202725
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
@@ -88,7 +89,17 @@ public class SessionManager extends Container<ISession> implements ISessionManag
 
   public void sessionClosed(Session session)
   {
-    fireElementRemovedEvent(session);
+    int sessionID = session.getSessionID();
+    ISession removeSession = null;
+    synchronized (sessions)
+    {
+      removeSession = sessions.remove(sessionID);
+    }
+
+    if (removeSession != null)
+    {
+      fireElementRemovedEvent(session);
+    }
   }
 
   public void notifyInvalidation(long timeStamp, CDORevisionImpl[] dirtyObjects, Session excludedSession)

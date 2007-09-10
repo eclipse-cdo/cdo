@@ -176,7 +176,6 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     {
       if (knownTypes.contains(id))
       {
-        // TODO On client-side add a check if the id is really known!
         return id;
       }
 

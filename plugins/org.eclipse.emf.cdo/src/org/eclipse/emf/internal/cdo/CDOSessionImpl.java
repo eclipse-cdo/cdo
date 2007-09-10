@@ -16,12 +16,13 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.IChannel;
@@ -50,6 +51,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
+import org.eclipse.emf.internal.cdo.protocol.QueryObjectTypesRequest;
 import org.eclipse.emf.internal.cdo.protocol.ViewsChangedNotification;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.emf.internal.cdo.util.ProxyResolverURIResourceMap;
@@ -443,10 +445,18 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   public CDOClassImpl requestObjectType(CDOID id)
   {
-    CDOClassRefImpl typeRef = null; // FIXME
-    CDOClassImpl type = typeRef.resolve(packageManager);
-    registerObjectType(id, type);
-    return type;
+    try
+    {
+      QueryObjectTypesRequest request = new QueryObjectTypesRequest(channel, Collections.singletonList(id));
+      CDOClassRef[] typeRefs = getFailOverStrategy().send(request);
+      CDOClassImpl type = (CDOClassImpl)typeRefs[0].resolve(packageManager);
+      registerObjectType(id, type);
+      return type;
+    }
+    catch (Exception ex)
+    {
+      throw new TransportException(ex);
+    }
   }
 
   public void registerObjectType(CDOID id, CDOClassImpl type)

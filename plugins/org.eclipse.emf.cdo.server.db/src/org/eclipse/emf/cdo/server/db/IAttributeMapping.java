@@ -20,6 +20,8 @@ import org.eclipse.net4j.db.IDBField;
  */
 public interface IAttributeMapping
 {
+  public IValueMapping getValueMapping();
+
   public CDOFeature getFeature();
 
   public IDBField getField();

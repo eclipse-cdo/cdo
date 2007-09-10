@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
+import org.eclipse.emf.cdo.server.db.IValueMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.IDBField;
@@ -27,7 +28,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public abstract class ValueMapping extends Mapping
+public abstract class ValueMapping extends Mapping implements IValueMapping
 {
   private static final long NO_TIMESTAMP = 0L;
 

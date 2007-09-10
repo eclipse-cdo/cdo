@@ -10,9 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 
 import org.eclipse.net4j.db.IDBTable;
 
@@ -21,17 +19,13 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public interface IReferenceMapping
+public interface IValueMapping extends IMapping
 {
-  public IValueMapping getValueMapping();
-
-  public CDOFeature getFeature();
-
   public IDBTable getTable();
 
-  public void writeReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
+  public List<IAttributeMapping> getAttributeMappings();
 
-  public void readReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
+  public List<IReferenceMapping> getReferenceMappings();
 
-  public void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String string);
+  public IReferenceMapping getReferenceMapping(CDOFeature feature);
 }

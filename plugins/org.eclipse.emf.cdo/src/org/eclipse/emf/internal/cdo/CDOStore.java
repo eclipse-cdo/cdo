@@ -10,15 +10,16 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
-
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -27,10 +28,7 @@ import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
-
-import java.text.MessageFormat;
-import java.util.HashSet;
-import java.util.Set;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 /**
  * @author Eike Stepper
@@ -106,7 +104,7 @@ public final class CDOStore implements EStore
       TRACER.format("get({0}, {1}, {2})", cdoObject, cdoFeature, index);
     }
 
-    view.getFeatureAnalyzer().preTraverseFeature(cdoObject.cdoRevision(), cdoFeature, index);
+    view.getFeatureAnalyzer().preTraverseFeature(cdoObject, cdoFeature, index);
     CDORevisionImpl revision = getRevisionForReading(cdoObject);
     Object value = get(revision, cdoFeature, index);
     if (cdoFeature.isReference())
@@ -116,11 +114,11 @@ public final class CDOStore implements EStore
         CDOID id = (CDOID)value;
         loadAhead(revision, cdoFeature, id, index);
       }
-
+      
       value = view.convertIDToObject(value);
     }
-
-    view.getFeatureAnalyzer().postTraverseFeature(cdoObject.cdoRevision(), cdoFeature, index);
+    
+    view.getFeatureAnalyzer().postTraverseFeature(cdoObject, cdoFeature, index, value);
     return value;
   }
 

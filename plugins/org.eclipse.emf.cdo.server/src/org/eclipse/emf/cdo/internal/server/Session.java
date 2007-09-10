@@ -34,7 +34,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -186,8 +186,8 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   /**
    * TODO I can't see how recursion is controlled/limited
    */
-  public void collectContainedRevisions(CDORevisionImpl revision, int referenceChunk,
-      Map<CDOID, CDORevisionImpl> containedRevisions)
+  public void collectContainedRevisions(CDORevisionImpl revision, int referenceChunk, Set<CDOID> revisions,
+      List<CDORevisionImpl> additionalRevisions)
   {
     RevisionManager revisionManager = getSessionManager().getRepository().getRevisionManager();
     CDOClassImpl cdoClass = revision.getCDOClass();
@@ -201,14 +201,13 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
         if (value instanceof CDOID)
         {
           CDOID id = (CDOID)value;
-          if (!id.isNull())
+          if (!id.isNull() && !revisions.contains(id))
           {
-            if (containedRevisions.get(id) == null)
-            {
-              CDORevisionImpl containedRevision = revisionManager.getRevision(id, referenceChunk);
-              containedRevisions.put(id, containedRevision);
-              collectContainedRevisions(containedRevision, referenceChunk, containedRevisions);
-            }
+            CDORevisionImpl containedRevision = revisionManager.getRevision(id, referenceChunk);
+            revisions.add(id);
+            additionalRevisions.add(containedRevision);
+
+            collectContainedRevisions(containedRevision, referenceChunk, revisions, additionalRevisions);
           }
         }
       }

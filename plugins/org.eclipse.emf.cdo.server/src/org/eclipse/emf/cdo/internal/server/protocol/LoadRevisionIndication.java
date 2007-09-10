@@ -28,8 +28,10 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -79,6 +81,8 @@ public class LoadRevisionIndication extends CDOReadIndication
     if (fetchSize > 0)
     {
       contextID = CDOIDImpl.read(in);
+      if (PROTOCOL.isEnabled()) PROTOCOL.format("Reading fetch rules for context {0}", contextID);
+
       for (int i = 0; i < fetchSize; i++)
       {
         CDOFetchRule fetchRule = new CDOFetchRule(in, getPackageManager());
@@ -91,27 +95,31 @@ public class LoadRevisionIndication extends CDOReadIndication
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
     Session session = getSession();
-    Map<CDOID, CDORevisionImpl> containedRevisions = new HashMap<CDOID, CDORevisionImpl>(0);
-
+    List<CDORevisionImpl> additionalRevisions = new ArrayList<CDORevisionImpl>();
+    HashSet<CDOID> revisions = new HashSet<CDOID>();
     if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing {0} revisions", ids.length);
+
+    // Need to fetch the rule first.
+    if (!contextID.isNull() && fetchRules.size() > 0)
+    {
+      if (PROTOCOL.isEnabled()) PROTOCOL.format("Collecting more objects based on rules");
+      CDORevisionImpl revisionContext = getRevision(contextID);
+      Set<CDOFetchRule> workingFetchRules = new HashSet<CDOFetchRule>();
+      collectRevisionsByRule(revisionContext, referenceChunk, revisions, additionalRevisions, workingFetchRules);
+    }
+
     for (CDOID id : ids)
     {
       CDORevisionImpl revision = getRevision(id);
       revision.write(out, session, referenceChunk);
-      session.collectContainedRevisions(revision, referenceChunk, containedRevisions);
+      revisions.add(revision.getID());
+      session.collectContainedRevisions(revision, referenceChunk, revisions, additionalRevisions);
     }
 
-    if (!contextID.isNull() && fetchRules.size() > 0)
-    {
-      // TODO What is this good for? Why 1000?
-      int newReferenceChunk = Math.max(referenceChunk, 1000);
-      CDORevisionImpl revisionContext = getRevision(contextID);
-      collectRevisionsByRule(revisionContext, newReferenceChunk, containedRevisions, new HashSet<CDOFetchRule>());
-    }
+    out.writeInt(additionalRevisions.size());
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing {0} additional revisions", additionalRevisions.size());
 
-    out.writeInt(containedRevisions.size());
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing {0} additional revisions", containedRevisions.size());
-    for (CDORevisionImpl revision : containedRevisions.values())
+    for (CDORevisionImpl revision : additionalRevisions)
     {
       revision.write(out, session, referenceChunk);
     }
@@ -122,8 +130,8 @@ public class LoadRevisionIndication extends CDOReadIndication
     return getRevisionManager().getRevision(id, referenceChunk);
   }
 
-  private void collectRevisionsByRule(CDORevisionImpl revision, int referenceChunk,
-      Map<CDOID, CDORevisionImpl> containedRevisions, Set<CDOFetchRule> workingFetchRules)
+  private void collectRevisionsByRule(CDORevisionImpl revision, int referenceChunk, Set<CDOID> revisions,
+      List<CDORevisionImpl> additionalRevisions, Set<CDOFetchRule> workingFetchRules)
   {
     CDOFetchRule fetchRule = fetchRules.get(revision.getCDOClass());
     if (fetchRule == null || workingFetchRules.contains(fetchRule))
@@ -132,6 +140,7 @@ public class LoadRevisionIndication extends CDOReadIndication
     }
 
     workingFetchRules.add(fetchRule);
+
     RevisionManager revisionManager = getSessionManager().getRepository().getRevisionManager();
     for (CDOFeature feature : fetchRule.getFeatures())
     {
@@ -145,11 +154,15 @@ public class LoadRevisionIndication extends CDOReadIndication
           if (value instanceof CDOID)
           {
             CDOID id = (CDOID)value;
-            // TODO Missing here? if (!id.isNull() &&
-            // !containedRevisions.containsKey(id))
-            CDORevisionImpl containedRevision = revisionManager.getRevision(id, referenceChunk);
-            containedRevisions.put(containedRevision.getID(), containedRevision);
-            collectRevisionsByRule(containedRevision, referenceChunk, containedRevisions, workingFetchRules);
+            if (!id.isNull() && !revisions.contains(id))
+            {
+              CDORevisionImpl containedRevision = revisionManager.getRevision(id, referenceChunk);
+              revisions.add(containedRevision.getID());
+              additionalRevisions.add(containedRevision);
+
+              collectRevisionsByRule(containedRevision, referenceChunk, revisions, additionalRevisions,
+                  workingFetchRules);
+            }
           }
         }
       }
@@ -159,11 +172,13 @@ public class LoadRevisionIndication extends CDOReadIndication
         if (value instanceof CDOID)
         {
           CDOID id = (CDOID)value;
-          if (!id.isNull() && !containedRevisions.containsKey(id))
+          if (!id.isNull() && !revisions.contains(id))
           {
             CDORevisionImpl containedRevision = revisionManager.getRevision(id, referenceChunk);
-            containedRevisions.put(containedRevision.getID(), containedRevision);
-            collectRevisionsByRule(containedRevision, referenceChunk, containedRevisions, workingFetchRules);
+            revisions.add(containedRevision.getID());
+            additionalRevisions.add(containedRevision);
+
+            collectRevisionsByRule(containedRevision, referenceChunk, revisions, additionalRevisions, workingFetchRules);
           }
         }
       }

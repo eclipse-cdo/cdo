@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.analyzer.IFetchRuleManager;
+import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
@@ -39,7 +39,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
 {
   private CDOSessionImpl session;
 
-  private IFetchRuleManager ruleManager = IFetchRuleManager.NOOP;
+  private CDOFetchRuleManager ruleManager = CDOFetchRuleManager.NOOP;
 
   public CDORevisionManagerImpl(CDOSessionImpl session)
   {
@@ -251,12 +251,12 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
     }
   }
 
-  public IFetchRuleManager getRuleManager()
+  public CDOFetchRuleManager getRuleManager()
   {
     return ruleManager;
   }
 
-  public void setRuleManager(IFetchRuleManager ruleManager)
+  public void setRuleManager(CDOFetchRuleManager ruleManager)
   {
     this.ruleManager = ruleManager;
   }

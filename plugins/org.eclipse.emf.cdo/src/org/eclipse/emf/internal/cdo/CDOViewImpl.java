@@ -13,10 +13,18 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.CDOViewResourcesEvent;
+import org.eclipse.emf.cdo.analyzer.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
@@ -25,18 +33,12 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDOIDProvider;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDTyped;
-import org.eclipse.emf.cdo.protocol.analyzer.IFeatureAnalyzer;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
-
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.signal.IFailOverStrategy;
-import org.eclipse.net4j.util.ImplementationError;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -52,13 +54,9 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.ResourcePathRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
-
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.signal.IFailOverStrategy;
+import org.eclipse.net4j.util.ImplementationError;
 
 /**
  * @author Eike Stepper
@@ -78,7 +76,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private int loadRevisionCollectionChunkSize = 1;
 
-  private IFeatureAnalyzer featureAnalyzer = IFeatureAnalyzer.NOOP;
+  private CDOFeatureAnalyzer featureAnalyzer = CDOFeatureAnalyzer.NOOP;
 
   private Map<CDOID, InternalCDOObject> objects = new HashMap<CDOID, InternalCDOObject>();
 
@@ -144,14 +142,14 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     this.loadRevisionCollectionChunkSize = loadRevisionCollectionChunkSize;
   }
 
-  public IFeatureAnalyzer getFeatureAnalyzer()
+  public CDOFeatureAnalyzer getFeatureAnalyzer()
   {
     return featureAnalyzer;
   }
 
-  public void setFeatureAnalyzer(IFeatureAnalyzer featureAnalyzer)
+  public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer)
   {
-    this.featureAnalyzer = featureAnalyzer == null ? IFeatureAnalyzer.NOOP : featureAnalyzer;
+    this.featureAnalyzer = featureAnalyzer == null ? CDOFeatureAnalyzer.NOOP : featureAnalyzer;
   }
 
   public CDOTransactionImpl toTransaction()

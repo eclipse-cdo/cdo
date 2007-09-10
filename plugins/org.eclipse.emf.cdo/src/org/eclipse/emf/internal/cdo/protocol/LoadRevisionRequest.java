@@ -10,28 +10,26 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.analyzer.CDOFetchRule;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.analyzer.IFetchRuleManager;
-
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-
-import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionPackageManager;
-import org.eclipse.emf.internal.cdo.bundle.OM;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
+import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.internal.protocol.analyzer.CDOFetchRule;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
+import org.eclipse.emf.internal.cdo.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.CDOSessionPackageManager;
+import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 /**
  * @author Eike Stepper
@@ -77,24 +75,22 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
       CDOIDImpl.write(out, id);
     }
 
-    IFetchRuleManager ruleManager = getSession().getRevisionManager().getRuleManager();
+    CDOFetchRuleManager ruleManager = getSession().getRevisionManager().getRuleManager();
     List<CDOFetchRule> fetchRules = ruleManager.getFetchRules(ids);
-    if (fetchRules == null || fetchRules.size() == 0)
+    if (fetchRules == null || fetchRules.size() <= 0)
     {
       out.writeInt(0);
     }
     else
     {
+      // At this point, fetch size is more than one.    
       int fetchSize = fetchRules.size();
       out.writeInt(fetchSize);
-      if (fetchSize > 0)
+      CDOID contextID = ruleManager.getContext();
+      CDOIDImpl.write(out, contextID);
+      for (CDOFetchRule fetchRule : fetchRules)
       {
-        CDOID contextID = ruleManager.getContext();
-        CDOIDImpl.write(out, contextID);
-        for (CDOFetchRule fetchRule : fetchRules)
-        {
-          fetchRule.write(out);
-        }
+        fetchRule.write(out);
       }
     }
   }

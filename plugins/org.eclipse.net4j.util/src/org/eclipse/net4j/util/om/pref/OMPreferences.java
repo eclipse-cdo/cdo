@@ -72,6 +72,10 @@ public interface OMPreferences extends INotifier
 
   public OMPreference<byte[]> initBytes(String name);
 
+  public boolean contains(String name);
+
+  public OMPreference<?> get(String name);
+
   public OMPreference<Boolean> getBoolean(String name);
 
   public OMPreference<Integer> getInteger(String name);
@@ -83,4 +87,8 @@ public interface OMPreferences extends INotifier
   public OMPreference<Double> getDouble(String name);
 
   public OMPreference<String> getString(String name);
+
+  public OMPreference<String[]> getArray(String name);
+
+  public OMPreference<byte[]> getBytes(String name);
 }

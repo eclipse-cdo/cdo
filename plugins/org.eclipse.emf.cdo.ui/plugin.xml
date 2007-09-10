@@ -60,6 +60,15 @@
         class = "org.eclipse.emf.cdo.internal.ui.editor.CDOEditor" 
         contributorClass="org.eclipse.emf.cdo.internal.ui.editor.CDOActionBarContributor" >
     </editor>
-  </extension>    
-
+  </extension>
+  
+  <extension
+        point="org.eclipse.ui.preferencePages">
+     <page
+           class="org.eclipse.emf.cdo.internal.ui.preferences.CDOPreferencePage"
+           id="org.eclipse.emf.cdo.ui.preferences.CDOPreferencePage"
+           name="CDO">
+     </page>
+  </extension>
+  
 </plugin>

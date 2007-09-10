@@ -74,7 +74,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private boolean enableInvalidationNotifications;
 
-  private int loadRevisionCollectionChunkSize = 1;
+  private int loadRevisionCollectionChunkSize;
 
   private CDOFeatureAnalyzer featureAnalyzer = CDOFeatureAnalyzer.NOOP;
 
@@ -90,6 +90,8 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   {
     this.viewID = id;
     this.session = session;
+    enableInvalidationNotifications = OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.getValue();
+    loadRevisionCollectionChunkSize = OM.PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE.getValue();
   }
 
   public int getViewID()

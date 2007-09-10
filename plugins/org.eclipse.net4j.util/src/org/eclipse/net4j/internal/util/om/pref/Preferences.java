@@ -203,34 +203,54 @@ public class Preferences extends Notifier implements OMPreferences
     return init(name, DEFAULT_BYTES);
   }
 
+  public boolean contains(String name)
+  {
+    return prefs.containsKey(name);
+  }
+
+  public OMPreference<?> get(String name)
+  {
+    return prefs.get(name);
+  }
+
   public OMPreference<Boolean> getBoolean(String name)
   {
-    return null;
+    return (OMPreference<Boolean>)get(name);
   }
 
   public OMPreference<Integer> getInteger(String name)
   {
-    return null;
+    return (OMPreference<Integer>)get(name);
   }
 
   public OMPreference<Long> getLong(String name)
   {
-    return null;
+    return (OMPreference<Long>)get(name);
   }
 
   public OMPreference<Float> getFloat(String name)
   {
-    return null;
+    return (OMPreference<Float>)get(name);
   }
 
   public OMPreference<Double> getDouble(String name)
   {
-    return null;
+    return (OMPreference<Double>)get(name);
   }
 
   public OMPreference<String> getString(String name)
   {
-    return null;
+    return (OMPreference<String>)get(name);
+  }
+
+  public OMPreference<String[]> getArray(String name)
+  {
+    return (OMPreference<String[]>)get(name);
+  }
+
+  public OMPreference<byte[]> getBytes(String name)
+  {
+    return (OMPreference<byte[]>)get(name);
   }
 
   public <T> void fireChangeEvent(Preference<T> preference, T oldValue, T newValue)

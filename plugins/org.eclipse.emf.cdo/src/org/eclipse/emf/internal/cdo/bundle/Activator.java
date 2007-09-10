@@ -3,6 +3,9 @@ package org.eclipse.emf.internal.cdo.bundle;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
 
+import org.eclipse.net4j.internal.util.om.OSGiBundle;
+import org.eclipse.net4j.util.om.OSGiActivator;
+
 import org.osgi.framework.BundleContext;
 
 public final class Activator extends EMFPlugin
@@ -39,14 +42,14 @@ public final class Activator extends EMFPlugin
     public void start(BundleContext context) throws Exception
     {
       super.start(context);
-      OM.BUNDLE.setBundleContext(context);
+      OSGiActivator.startBundle(context, (OSGiBundle)OM.BUNDLE);
     }
 
     @Override
     public void stop(BundleContext context) throws Exception
     {
       plugin = null;
-      OM.BUNDLE.setBundleContext(null);
+      OSGiActivator.stopBundle(context, (OSGiBundle)OM.BUNDLE);
       super.stop(context);
     }
   }

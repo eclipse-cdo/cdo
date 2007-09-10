@@ -78,7 +78,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   private int sessionID;
 
-  private int referenceChunkSize = CDORevision.UNCHUNKED;
+  private int referenceChunkSize;
 
   private IFailOverStrategy failOverStrategy;
 
@@ -132,6 +132,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     packageRegistry = createPackageRegistry(delegate);
     packageManager = createPackageManager();
     revisionManager = createRevisionManager();
+    referenceChunkSize = OM.PREF_REFERENCE_CHUNK_SIZE.getValue();
   }
 
   public int getSessionID()

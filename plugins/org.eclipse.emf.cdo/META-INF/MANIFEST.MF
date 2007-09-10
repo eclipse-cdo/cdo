@@ -20,6 +20,7 @@ Export-Package: org.eclipse.emf.cdo;version="0.8.0",
  org.eclipse.emf.cdo.util;version="0.8.0",
  org.eclipse.emf.internal.cdo;version="0.8.0",
  org.eclipse.emf.internal.cdo.analyzer;version="0.8.0",
+ org.eclipse.emf.internal.cdo.bundle;version="0.8.0";x-friends:="org.eclipse.emf.cdo.ui",
  org.eclipse.emf.internal.cdo.protocol;version="0.8.0",
  org.eclipse.emf.internal.cdo.util;version="0.8.0"
 Eclipse-LazyStart: true

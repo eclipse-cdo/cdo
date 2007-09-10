@@ -27,6 +27,8 @@ public interface CDOView extends INotifier
 {
   public static final long UNSPECIFIED_DATE = CDORevision.UNSPECIFIED_DATE;
 
+  public static final int NO_PRELOAD = 1;
+
   public int getViewID();
 
   public Type getViewType();
@@ -40,6 +42,10 @@ public interface CDOView extends INotifier
   public boolean isEnableInvalidationNotifications();
 
   public void setEnableInvalidationNotifications(boolean on);
+
+  public int getLoadRevisionCollectionChunkSize();
+
+  public void setLoadRevisionCollectionChunkSize(int loadRevisionCollectionChunkSize);
 
   /**
    * @see ResourceSet#getResource(URI, boolean)

@@ -49,14 +49,28 @@ public class FailOverStrategy extends Notifier implements IFailOverStrategy
   {
     IChannel oldChannel = protocol.getChannel();
     IConnector connector = getNewConnector(oldChannel);
+    if (connector == null)
+    {
+      throw new IllegalStateException("connector == null");
+    }
+
     IChannel newChannel = connector.openChannel(protocol);
     protocol.setChannel(newChannel);
     oldChannel.close();
     fireEvent(new FailOverEvent(oldChannel, newChannel));
   }
 
+  /**
+   * Should be overridden to provide a fail-over <code>IConnector</code>. The
+   * oldChannel <i>can</i> be used as a hint.
+   */
   protected IConnector getNewConnector(IChannel oldChannel)
   {
+    if (oldChannel == null)
+    {
+      throw new IllegalArgumentException("oldChannel == null");
+    }
+
     return oldChannel.getConnector();
   }
 

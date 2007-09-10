@@ -52,7 +52,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
   private ConcurrentMap<Integer, View> views = new ConcurrentHashMap<Integer, View>();
 
-  private Set<CDOID> knownObjects = new HashSet<CDOID>();
+  private Set<CDOID> knownTypes = new HashSet<CDOID>();
 
   private IListener protocolListener = new LifecycleEventAdapter()
   {
@@ -171,14 +171,18 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
       return id;
     }
 
-    if (knownObjects.contains(id))
+    Repository repository = sessionManager.getRepository();
+    if (repository.isRememberingKnownTypes())
     {
-      // TODO On client-side add a check if the id is really known!
-      return id;
+      if (knownTypes.contains(id))
+      {
+        // TODO On client-side add a check if the id is really known!
+        return id;
+      }
+
+      knownTypes.add(id);
     }
 
-    knownObjects.add(id);
-    Repository repository = sessionManager.getRepository();
     CDOClassRef type = repository.getTypeManager().getObjectType(StoreUtil.getReader(), id);
     return CDOIDImpl.create(id.getValue(), type);
   }

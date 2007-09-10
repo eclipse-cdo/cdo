@@ -38,6 +38,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   public static final String PROP_VERIFYING_REVISIONS = "verifyingRevisions";
 
+  public static final String PROP_REMEMBERING_KNOWN_TYPES = "rememberingKnownTypes";
+
   private static final long INITIAL_OID_VALUE = 2;
 
   private static final long INITIAL_META_ID_VALUE = 1;
@@ -53,6 +55,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   private Boolean supportingAudits;
 
   private Boolean verifyingRevisions;
+
+  private Boolean rememberingKnownTypes;
 
   private TypeManager typeManager = createTypeManager();
 
@@ -140,6 +144,17 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     }
 
     return verifyingRevisions;
+  }
+
+  public boolean isRememberingKnownTypes()
+  {
+    if (rememberingKnownTypes == null)
+    {
+      String value = getProperties().get(PROP_REMEMBERING_KNOWN_TYPES);
+      rememberingKnownTypes = value == null ? false : Boolean.valueOf(value);
+    }
+
+    return rememberingKnownTypes;
   }
 
   public TypeManager getTypeManager()

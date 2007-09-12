@@ -2,6 +2,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
@@ -83,20 +84,25 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
   public void readReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
   {
+    MoveableList list = revision.getList(getFeature());
     CDOID source = revision.getID();
     int version = revision.getVersion();
-    String where = "";
-
-    String sql = createSelect(source, version, where);
+    String sql = createSelect(source, version, null);
     if (TRACER.isEnabled()) TRACER.trace(sql);
     ResultSet resultSet = null;
 
     try
     {
       resultSet = storeAccessor.getStatement().executeQuery(sql);
-      while (resultSet.next())
+      while (resultSet.next() && --referenceChunk >= 0)
       {
         long target = resultSet.getLong(1);
+        list.add(CDOIDImpl.create(target));
+      }
+
+      while (resultSet.next())
+      {
+        list.add(CDORevisionImpl.UNINITIALIZED);
       }
     }
     catch (SQLException ex)

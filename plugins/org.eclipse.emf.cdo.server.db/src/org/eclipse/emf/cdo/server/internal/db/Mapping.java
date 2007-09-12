@@ -25,7 +25,6 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.ImplementationError;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -186,52 +185,7 @@ public abstract class Mapping implements IMapping
 
   protected DBType getDBType(CDOType type)
   {
-    if (type == CDOType.BOOLEAN || type == CDOType.BOOLEAN_OBJECT)
-    {
-      return DBType.BOOLEAN;
-    }
-    else if (type == CDOType.BYTE || type == CDOType.BYTE_OBJECT)
-    {
-      return DBType.SMALLINT;
-    }
-    else if (type == CDOType.CHAR || type == CDOType.CHARACTER_OBJECT)
-    {
-      return DBType.CHAR;
-    }
-    else if (type == CDOType.DATE)
-    {
-      return DBType.DATE;
-    }
-    else if (type == CDOType.DOUBLE || type == CDOType.DOUBLE_OBJECT)
-    {
-      return DBType.DOUBLE;
-    }
-    else if (type == CDOType.FLOAT || type == CDOType.FLOAT_OBJECT)
-    {
-      return DBType.FLOAT;
-    }
-    else if (type == CDOType.INT || type == CDOType.INTEGER_OBJECT)
-    {
-      return DBType.INTEGER;
-    }
-    else if (type == CDOType.LONG || type == CDOType.LONG_OBJECT)
-    {
-      return DBType.BIGINT;
-    }
-    else if (type == CDOType.OBJECT)
-    {
-      return DBType.BIGINT;
-    }
-    else if (type == CDOType.SHORT || type == CDOType.SHORT_OBJECT)
-    {
-      return DBType.SMALLINT;
-    }
-    else if (type == CDOType.STRING)
-    {
-      return DBType.LONGVARCHAR;
-    }
-
-    throw new ImplementationError("Unrecognized CDOType: " + type);
+    return DBStore.getDBType(type);
   }
 
   protected IDBAdapter getDBAdapter()

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.server.Store;
+import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -18,10 +19,12 @@ import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.ConnectionProvider;
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBSchema;
 import org.eclipse.net4j.internal.db.DBSchema;
+import org.eclipse.net4j.util.ImplementationError;
 
 import java.sql.Connection;
 
@@ -155,5 +158,55 @@ public class DBStore extends Store implements IDBStore
   {
     String name = getRepository().getName();
     return new DBSchema(name);
+  }
+
+  public static DBType getDBType(CDOType type)
+  {
+    if (type == CDOType.BOOLEAN || type == CDOType.BOOLEAN_OBJECT)
+    {
+      return DBType.BOOLEAN;
+    }
+    else if (type == CDOType.BYTE || type == CDOType.BYTE_OBJECT)
+    {
+      return DBType.SMALLINT;
+    }
+    else if (type == CDOType.CHAR || type == CDOType.CHARACTER_OBJECT)
+    {
+      return DBType.CHAR;
+    }
+    else if (type == CDOType.DATE)
+    {
+      return DBType.DATE;
+    }
+    else if (type == CDOType.DOUBLE || type == CDOType.DOUBLE_OBJECT)
+    {
+      return DBType.DOUBLE;
+    }
+    else if (type == CDOType.FLOAT || type == CDOType.FLOAT_OBJECT)
+    {
+      return DBType.FLOAT;
+    }
+    else if (type == CDOType.INT || type == CDOType.INTEGER_OBJECT)
+    {
+      return DBType.INTEGER;
+    }
+    else if (type == CDOType.LONG || type == CDOType.LONG_OBJECT)
+    {
+      return DBType.BIGINT;
+    }
+    else if (type == CDOType.OBJECT)
+    {
+      return DBType.BIGINT;
+    }
+    else if (type == CDOType.SHORT || type == CDOType.SHORT_OBJECT)
+    {
+      return DBType.SMALLINT;
+    }
+    else if (type == CDOType.STRING)
+    {
+      return DBType.LONGVARCHAR;
+    }
+
+    throw new ImplementationError("Unrecognized CDOType: " + type);
   }
 }

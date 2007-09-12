@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 /**
  * @author Eike Stepper
  */
-public class ToOneReferenceMapping extends AttributeMapping
+public class ToOneReferenceMapping extends AttributeMapping.AMObject
 {
   public ToOneReferenceMapping(ValueMapping valueMapping, CDOFeature feature)
   {

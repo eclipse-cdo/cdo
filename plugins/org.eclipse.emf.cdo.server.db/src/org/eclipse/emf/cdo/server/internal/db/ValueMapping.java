@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
@@ -23,6 +24,7 @@ import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.ImplementationError;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -161,7 +163,53 @@ public abstract class ValueMapping extends Mapping implements IValueMapping
 
   protected AttributeMapping createAttributeMapping(CDOFeature feature)
   {
-    return new AttributeMapping(this, feature);
+    CDOType type = feature.getType();
+    if (type == CDOType.BOOLEAN || type == CDOType.BOOLEAN_OBJECT)
+    {
+      return new AttributeMapping.AMBoolean(this, feature);
+    }
+    else if (type == CDOType.BYTE || type == CDOType.BYTE_OBJECT)
+    {
+      return new AttributeMapping.AMByte(this, feature);
+    }
+    else if (type == CDOType.CHAR || type == CDOType.CHARACTER_OBJECT)
+    {
+      return new AttributeMapping.AMCharacter(this, feature);
+    }
+    else if (type == CDOType.DATE)
+    {
+      return new AttributeMapping.AMDate(this, feature);
+    }
+    else if (type == CDOType.DOUBLE || type == CDOType.DOUBLE_OBJECT)
+    {
+      return new AttributeMapping.AMDouble(this, feature);
+    }
+    else if (type == CDOType.FLOAT || type == CDOType.FLOAT_OBJECT)
+    {
+      return new AttributeMapping.AMFloat(this, feature);
+    }
+    else if (type == CDOType.INT || type == CDOType.INTEGER_OBJECT)
+    {
+      return new AttributeMapping.AMInteger(this, feature);
+    }
+    else if (type == CDOType.LONG || type == CDOType.LONG_OBJECT)
+    {
+      return new AttributeMapping.AMLong(this, feature);
+    }
+    else if (type == CDOType.OBJECT)
+    {
+      return new AttributeMapping.AMObject(this, feature);
+    }
+    else if (type == CDOType.SHORT || type == CDOType.SHORT_OBJECT)
+    {
+      return new AttributeMapping.AMShort(this, feature);
+    }
+    else if (type == CDOType.STRING)
+    {
+      return new AttributeMapping.AMString(this, feature);
+    }
+
+    throw new ImplementationError("Unrecognized CDOType: " + type);
   }
 
   protected ToOneReferenceMapping createToOneReferenceMapping(CDOFeature feature)

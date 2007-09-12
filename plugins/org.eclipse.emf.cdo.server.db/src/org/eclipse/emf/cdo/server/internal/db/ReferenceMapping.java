@@ -62,9 +62,10 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
   public void writeReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
-    int idx = 0;
     long source = revision.getID().getValue();
     int version = revision.getVersion();
+
+    int idx = 0;
     for (Object element : revision.getList(getFeature()))
     {
       long target = ((CDOID)element).getValue();

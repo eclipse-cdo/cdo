@@ -11,8 +11,6 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.CDOIDNull;
-import org.eclipse.emf.cdo.internal.protocol.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
@@ -20,6 +18,7 @@ import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
@@ -48,7 +47,9 @@ public class LoadRevisionIndication extends CDOReadIndication
 
   protected Map<CDOClass, CDOFetchRule> fetchRules = new HashMap<CDOClass, CDOFetchRule>();
 
-  protected CDOID contextID = CDOIDNull.NULL;
+  protected CDOID contextID;
+
+  protected int loadRevisionCollectionChunkSize;
 
   public LoadRevisionIndication()
   {
@@ -80,6 +81,12 @@ public class LoadRevisionIndication extends CDOReadIndication
     int fetchSize = in.readInt();
     if (fetchSize > 0)
     {
+      loadRevisionCollectionChunkSize = in.readInt();
+      if (loadRevisionCollectionChunkSize < 1)
+      {
+        loadRevisionCollectionChunkSize = 1;
+      }
+
       contextID = CDOIDImpl.read(in);
       if (PROTOCOL.isEnabled()) PROTOCOL.format("Reading fetch rules for context {0}", contextID);
 
@@ -96,24 +103,28 @@ public class LoadRevisionIndication extends CDOReadIndication
   {
     Session session = getSession();
     List<CDORevisionImpl> additionalRevisions = new ArrayList<CDORevisionImpl>();
-    HashSet<CDOID> revisions = new HashSet<CDOID>();
+    Set<CDOID> revisions = new HashSet<CDOID>();
     if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing {0} revisions", ids.length);
 
+    for (CDOID id : ids)
+    {
+      revisions.add(id);
+    }
+
     // Need to fetch the rule first.
+    Set<CDOFetchRule> visitedFetchRules = new HashSet<CDOFetchRule>();
     if (!contextID.isNull() && fetchRules.size() > 0)
     {
       if (PROTOCOL.isEnabled()) PROTOCOL.format("Collecting more objects based on rules");
       CDORevisionImpl revisionContext = getRevision(contextID);
-      Set<CDOFetchRule> workingFetchRules = new HashSet<CDOFetchRule>();
-      collectRevisionsByRule(revisionContext, referenceChunk, revisions, additionalRevisions, workingFetchRules);
+      collectRevisions(revisionContext, revisions, additionalRevisions, visitedFetchRules);
     }
 
     for (CDOID id : ids)
     {
       CDORevisionImpl revision = getRevision(id);
       revision.write(out, session, referenceChunk);
-      revisions.add(revision.getID());
-      session.collectContainedRevisions(revision, referenceChunk, revisions, additionalRevisions);
+      collectRevisions(revision, revisions, additionalRevisions, visitedFetchRules);
     }
 
     out.writeInt(additionalRevisions.size());
@@ -130,16 +141,17 @@ public class LoadRevisionIndication extends CDOReadIndication
     return getRevisionManager().getRevision(id, referenceChunk);
   }
 
-  private void collectRevisionsByRule(CDORevisionImpl revision, int referenceChunk, Set<CDOID> revisions,
-      List<CDORevisionImpl> additionalRevisions, Set<CDOFetchRule> workingFetchRules)
+  private void collectRevisions(CDORevisionImpl revision, Set<CDOID> revisions,
+      List<CDORevisionImpl> additionalRevisions, Set<CDOFetchRule> visitedFetchRules)
   {
+    getSession().collectContainedRevisions(revision, this.referenceChunk, revisions, additionalRevisions);
     CDOFetchRule fetchRule = fetchRules.get(revision.getCDOClass());
-    if (fetchRule == null || workingFetchRules.contains(fetchRule))
+    if (fetchRule == null || visitedFetchRules.contains(fetchRule))
     {
       return;
     }
 
-    workingFetchRules.add(fetchRule);
+    visitedFetchRules.add(fetchRule);
 
     RevisionManager revisionManager = getSessionManager().getRepository().getRevisionManager();
     for (CDOFeature feature : fetchRule.getFeatures())
@@ -147,7 +159,7 @@ public class LoadRevisionIndication extends CDOReadIndication
       if (feature.isMany())
       {
         MoveableList list = revision.getList(feature);
-        int toIndex = Math.min(referenceChunk, list.size()) - 1;
+        int toIndex = Math.min(this.loadRevisionCollectionChunkSize, list.size()) - 1;
         for (int i = 0; i <= toIndex; i++)
         {
           Object value = list.get(i);
@@ -159,9 +171,7 @@ public class LoadRevisionIndication extends CDOReadIndication
               CDORevisionImpl containedRevision = revisionManager.getRevision(id, referenceChunk);
               revisions.add(containedRevision.getID());
               additionalRevisions.add(containedRevision);
-
-              collectRevisionsByRule(containedRevision, referenceChunk, revisions, additionalRevisions,
-                  workingFetchRules);
+              collectRevisions(containedRevision, revisions, additionalRevisions, visitedFetchRules);
             }
           }
         }
@@ -177,13 +187,12 @@ public class LoadRevisionIndication extends CDOReadIndication
             CDORevisionImpl containedRevision = revisionManager.getRevision(id, referenceChunk);
             revisions.add(containedRevision.getID());
             additionalRevisions.add(containedRevision);
-
-            collectRevisionsByRule(containedRevision, referenceChunk, revisions, additionalRevisions, workingFetchRules);
+            collectRevisions(containedRevision, revisions, additionalRevisions, visitedFetchRules);
           }
         }
       }
     }
 
-    workingFetchRules.remove(fetchRule);
+    visitedFetchRules.remove(fetchRule);
   }
 }

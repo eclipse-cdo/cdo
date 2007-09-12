@@ -11,103 +11,37 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.analyzer;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import org.eclipse.emf.cdo.internal.protocol.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 /**
  * @author Eike Stepper
  */
 public class CDOClusterOfFetchRule
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOClusterOfFetchRule.class);
-
-  private Map<CDOFeature, CDOFetchFeatureInfo> featureStats = new HashMap<CDOFeature, CDOFetchFeatureInfo>();
-
-  private Map<CDOClass, CDOFetchRule> fetchRules = new HashMap<CDOClass, CDOFetchRule>();
+  private CDOAnalyzerFeatureInfo featureInfo = new CDOAnalyzerFeatureInfo();
 
   private CDOFeature rootFeature;
 
+  private CDOClass rootClass;
+
   private long lastUpdate;
 
-  public CDOClusterOfFetchRule(CDOFeature rootFeature)
+  public CDOClusterOfFetchRule(CDOClass rootClass, CDOFeature rootFeature)
   {
     this.rootFeature = rootFeature;
+    this.rootClass = rootClass;
     lastUpdate = System.currentTimeMillis();
   }
 
-  public boolean isActive()
+  public CDOFeature getRootFeature()
   {
-    return !fetchRules.isEmpty();
+    return rootFeature;
   }
 
-  public Iterator<CDOFetchRule> iterator()
+  public CDOAnalyzerFeatureInfo getFeatureInfo()
   {
-    return fetchRules.values().iterator();
-  }
-
-  public synchronized CDOFetchFeatureInfo getFeatureStat(CDOFeature cdoFeature)
-  {
-    CDOFetchFeatureInfo featureRule = featureStats.get(cdoFeature);
-    if (featureRule == null)
-    {
-      featureRule = new CDOFetchFeatureInfo();
-      featureStats.put(cdoFeature, featureRule);
-    }
-
-    return featureRule;
-  }
-
-  public synchronized CDOFetchRule addFeatureRule(CDOClass cdoClass, CDOFeature cdoFeature)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Adding new fetch rule : {0}.{1} from root feature {2}", cdoClass.getName(), cdoFeature.getName(),
-          rootFeature);
-    }
-
-    lastUpdate = System.currentTimeMillis();
-    CDOFetchRule fetchRule = getFetchRule(cdoClass);
-    fetchRule.addFeature(cdoFeature);
-    return fetchRule;
-  }
-
-  public synchronized CDOFetchRule removeFeatureRule(CDOClass cdoClass, CDOFeature cdoFeature)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Removing fetch rule : {0}.{1} from root feature {2}", cdoClass.getName(), cdoFeature.getName(),
-          rootFeature);
-    }
-
-    lastUpdate = System.currentTimeMillis();
-
-    CDOFetchRule fetchRule = getFetchRule(cdoClass);
-    fetchRule.removeFeature(cdoFeature);
-    if (fetchRule.isEmpty())
-    {
-      fetchRules.remove(cdoClass);
-    }
-
-    return fetchRule;
-  }
-
-  public synchronized CDOFetchRule getFetchRule(CDOClass cdoFeature)
-  {
-    CDOFetchRule featureRule = fetchRules.get(cdoFeature);
-    if (featureRule == null)
-    {
-      featureRule = new CDOFetchRule(cdoFeature);
-      fetchRules.put(cdoFeature, featureRule);
-    }
-
-    return featureRule;
+    return featureInfo;
   }
 
   public long getLastUpdate()
@@ -115,8 +49,22 @@ public class CDOClusterOfFetchRule
     return lastUpdate;
   }
 
-  public CDOFeature getRootFeature()
+  @Override
+  public int hashCode()
   {
-    return rootFeature;
+    // TODO Missing "rootClass.hashCode() ^ " or intention?
+    return rootFeature.hashCode();
+  }
+
+  @Override
+  public boolean equals(Object object)
+  {
+    if (object instanceof CDOClusterOfFetchRule)
+    {
+      CDOClusterOfFetchRule featureInfo = (CDOClusterOfFetchRule)object;
+      return featureInfo.rootClass == rootClass && featureInfo.rootFeature == rootFeature;
+    }
+
+    return false;
   }
 }

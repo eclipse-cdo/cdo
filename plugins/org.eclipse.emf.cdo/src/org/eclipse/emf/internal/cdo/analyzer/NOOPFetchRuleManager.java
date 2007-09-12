@@ -16,8 +16,8 @@ import java.util.List;
 
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDNull;
-import org.eclipse.emf.cdo.internal.protocol.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
 
 /**
  * @author Eike Stepper
@@ -36,5 +36,10 @@ public class NOOPFetchRuleManager implements CDOFetchRuleManager
   public List<CDOFetchRule> getFetchRules(Collection<CDOID> ids)
   {
     return null;
+  }
+
+  public int getLoadRevisionCollectionChunkSize()
+  {
+    return 1;
   }
 }

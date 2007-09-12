@@ -18,10 +18,11 @@ import java.util.List;
 
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
+
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManager;
@@ -85,9 +86,12 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
     {
       // At this point, fetch size is more than one.
       int fetchSize = fetchRules.size();
-      out.writeInt(fetchSize);
       CDOID contextID = ruleManager.getContext();
+      
+      out.writeInt(fetchSize);
+      out.writeInt(ruleManager.getLoadRevisionCollectionChunkSize());
       CDOIDImpl.write(out, contextID);
+      
       for (CDOFetchRule fetchRule : fetchRules)
       {
         fetchRule.write(out);

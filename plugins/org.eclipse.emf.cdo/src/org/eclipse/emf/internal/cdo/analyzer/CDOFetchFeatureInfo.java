@@ -11,6 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.analyzer;
 
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+
 /**
  * @author Eike Stepper
  */
@@ -22,10 +25,26 @@ public class CDOFetchFeatureInfo
 
   private boolean active;
 
-  public CDOFetchFeatureInfo()
+  private CDOClass cdoClass;
+
+  private CDOFeature cdoFeature;
+
+  public CDOFetchFeatureInfo(CDOClass cdoClass, CDOFeature cdoFeature)
   {
+    this.cdoClass = cdoClass;
+    this.cdoFeature = cdoFeature;
     active = false;
     latencyTime = -1;
+  }
+
+  public CDOClass getCDOClass()
+  {
+    return cdoClass;
+  }
+
+  public CDOFeature getCDOFeature()
+  {
+    return cdoFeature;
   }
 
   public boolean isActive()
@@ -33,9 +52,9 @@ public class CDOFetchFeatureInfo
     return active;
   }
 
-  public void setActive(boolean isActive)
+  public void setActive(boolean active)
   {
-    active = isActive;
+    this.active = active;
   }
 
   public long getTimeBeforeUsed()
@@ -80,5 +99,24 @@ public class CDOFetchFeatureInfo
     {
       setTimeBeforeUsed((getTimeBeforeUsed() + elapseTimeBeforeLastRequest) / 2);
     }
+  }
+
+  @Override
+  public int hashCode()
+  {
+    // TODO Missing "cdoClass.hashCode() ^ " or intention?
+    return cdoFeature.hashCode();
+  }
+
+  @Override
+  public boolean equals(Object object)
+  {
+    if (object instanceof CDOFetchFeatureInfo)
+    {
+      CDOFetchFeatureInfo featureInfo = (CDOFetchFeatureInfo)object;
+      return featureInfo.cdoClass == cdoClass && featureInfo.cdoFeature == cdoFeature;
+    }
+
+    return false;
   }
 }

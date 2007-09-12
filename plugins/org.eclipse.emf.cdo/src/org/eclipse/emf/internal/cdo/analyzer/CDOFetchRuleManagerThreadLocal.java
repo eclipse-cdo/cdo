@@ -12,8 +12,8 @@
 package org.eclipse.emf.internal.cdo.analyzer;
 
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
-import org.eclipse.emf.cdo.internal.protocol.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,11 +21,11 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CDODynamicFetchRuleManager implements CDOFetchRuleManager
+public class CDOFetchRuleManagerThreadLocal implements CDOFetchRuleManager
 {
   private static final ThreadLocal<CDOFetchRuleManager> threadLocal = new ThreadLocal<CDOFetchRuleManager>();
 
-  public CDODynamicFetchRuleManager()
+  public CDOFetchRuleManagerThreadLocal()
   {
   }
 
@@ -46,13 +46,19 @@ public class CDODynamicFetchRuleManager implements CDOFetchRuleManager
 
   public CDOID getContext()
   {
-    CDOFetchRuleManager analyzer = CDODynamicFetchRuleManager.getCurrent();
+    CDOFetchRuleManager analyzer = CDOFetchRuleManagerThreadLocal.getCurrent();
     return analyzer != null ? analyzer.getContext() : null;
   }
 
   public List<CDOFetchRule> getFetchRules(Collection<CDOID> ids)
   {
-    CDOFetchRuleManager analyzer = CDODynamicFetchRuleManager.getCurrent();
+    CDOFetchRuleManager analyzer = CDOFetchRuleManagerThreadLocal.getCurrent();
     return analyzer != null ? analyzer.getFetchRules(ids) : null;
+  }
+
+  public int getLoadRevisionCollectionChunkSize() 
+  {
+	  CDOFetchRuleManager analyzer = CDOFetchRuleManagerThreadLocal.getCurrent();
+	  return analyzer != null ? analyzer.getLoadRevisionCollectionChunkSize() : 0;
   }
 }

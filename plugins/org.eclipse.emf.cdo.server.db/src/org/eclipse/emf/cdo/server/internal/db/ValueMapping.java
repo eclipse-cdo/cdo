@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
@@ -19,9 +20,12 @@ import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.emf.cdo.server.db.IValueMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
-import org.eclipse.net4j.db.IDBField;
+import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +36,13 @@ public abstract class ValueMapping extends Mapping implements IValueMapping
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, ValueMapping.class);
 
-  private static final long NO_TIMESTAMP = 0L;
-
   private List<IAttributeMapping> attributeMappings;
 
   private List<IReferenceMapping> referenceMappings;
+
+  private String selectPrefix;
+
+  private String selectPrefixWithVersion;
 
   public ValueMapping(MappingStrategy mappingStrategy, CDOClass cdoClass, CDOFeature[] features)
   {
@@ -44,6 +50,55 @@ public abstract class ValueMapping extends Mapping implements IValueMapping
     initTable(getTable(), hasFullRevisionInfo());
     attributeMappings = createAttributeMappings(features);
     referenceMappings = createReferenceMappings(features);
+
+    selectPrefix = createSelectPrefix(false);
+    selectPrefixWithVersion = createSelectPrefix(true);
+  }
+
+  protected String createSelectPrefix(boolean readVersion)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT ");
+
+    if (hasFullRevisionInfo())
+    {
+      if (readVersion)
+      {
+        builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+        builder.append(", ");
+      }
+
+      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append(", ");
+      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(", ");
+      builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
+      builder.append(", ");
+      builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+      builder.append(", ");
+      builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
+    }
+    else
+    {
+      if (attributeMappings == null)
+      {
+        // Only references
+        return null;
+      }
+    }
+
+    for (IAttributeMapping attributeMapping : attributeMappings)
+    {
+      builder.append(", ");
+      builder.append(attributeMapping.getField().getName());
+    }
+
+    builder.append(" FROM ");
+    builder.append(getTable());
+    builder.append(" WHERE ");
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append("=");
+    return builder.toString();
   }
 
   public List<IAttributeMapping> getAttributeMappings()
@@ -67,115 +122,6 @@ public abstract class ValueMapping extends Mapping implements IValueMapping
     }
 
     return null;
-  }
-
-  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
-  {
-    if (attributeMappings != null)
-    {
-      writeAttributes(storeAccessor, revision);
-    }
-
-    if (referenceMappings != null)
-    {
-      writeReferences(storeAccessor, revision);
-    }
-  }
-
-  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
-  {
-    readRevisionByTime(storeAccessor, revision, NO_TIMESTAMP, referenceChunk);
-  }
-
-  public void readRevisionByTime(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp,
-      int referenceChunk)
-  {
-    if (attributeMappings != null)
-    {
-      readAttributes(storeAccessor, revision, timeStamp);
-    }
-
-    if (referenceMappings != null)
-    {
-      readReferences(storeAccessor, revision, referenceChunk);
-    }
-  }
-
-  public void readRevisionByVersion(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int version,
-      int referenceChunk)
-  {
-    // TODO Implement method ValueMapping.readRevisionByVersion()
-    throw new UnsupportedOperationException("Not yet implemented");
-  }
-
-  protected void writeAttributes(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
-  {
-    StringBuilder builder = new StringBuilder();
-    builder.append("INSERT INTO ");
-    builder.append(getTable());
-    builder.append(" VALUES (");
-    appendRevisionInfos(builder, revision, hasFullRevisionInfo());
-
-    for (IAttributeMapping attributeMapping : attributeMappings)
-    {
-      builder.append(", ");
-      attributeMapping.appendValue(builder, revision);
-    }
-
-    builder.append(")");
-    sqlUpdate(storeAccessor, builder.toString());
-  }
-
-  protected void writeReferences(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
-  {
-    for (IReferenceMapping referenceMapping : referenceMappings)
-    {
-      referenceMapping.writeReference(storeAccessor, revision);
-    }
-  }
-
-  protected void readAttributes(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp)
-  {
-    IDBField[] fields = getTable().getFields();
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT ");
-    for (int i = 1; i < 8; i++)
-    {
-      if (i > 1)
-      {
-        builder.append(", ");
-      }
-
-      builder.append(fields[i].getName());
-    }
-
-    builder.append(" FROM ");
-    builder.append(getTable());
-    builder.append(" WHERE ");
-    builder.append(fields[0].getName());
-    builder.append("=");
-    builder.append(revision.getID().getValue());
-    builder.append(" AND ");
-    builder.append(fields[0].getName());
-    builder.append("=0");
-
-    for (IAttributeMapping attributeMapping : attributeMappings)
-    {
-      builder.append(", ");
-      attributeMapping.appendValue(builder, revision);
-    }
-
-    builder.append(")");
-    String sql = builder.toString();
-    if (TRACER.isEnabled()) TRACER.trace(sql);
-  }
-
-  protected void readReferences(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
-  {
-    for (IReferenceMapping referenceMapping : referenceMappings)
-    {
-      referenceMapping.readReference(storeAccessor, revision, referenceChunk);
-    }
   }
 
   protected List<IAttributeMapping> createAttributeMappings(CDOFeature[] features)
@@ -229,4 +175,149 @@ public abstract class ValueMapping extends Mapping implements IValueMapping
   }
 
   protected abstract boolean hasFullRevisionInfo();
+
+  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  {
+    if (attributeMappings != null)
+    {
+      writeAttributes(storeAccessor, revision);
+    }
+
+    if (referenceMappings != null)
+    {
+      writeReferences(storeAccessor, revision);
+    }
+  }
+
+  protected void writeAttributes(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("INSERT INTO ");
+    builder.append(getTable());
+    builder.append(" VALUES (");
+    appendRevisionInfos(builder, revision, hasFullRevisionInfo());
+
+    for (IAttributeMapping attributeMapping : attributeMappings)
+    {
+      builder.append(", ");
+      attributeMapping.appendValue(builder, revision);
+    }
+
+    builder.append(")");
+    sqlUpdate(storeAccessor, builder.toString());
+  }
+
+  protected void writeReferences(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  {
+    for (IReferenceMapping referenceMapping : referenceMappings)
+    {
+      referenceMapping.writeReference(storeAccessor, revision);
+    }
+  }
+
+  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
+  {
+    String where = CDODBSchema.ATTRIBUTES_REVISED + "=0";
+    readRevision(storeAccessor, revision, where, true, referenceChunk);
+  }
+
+  public void readRevisionByTime(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp,
+      int referenceChunk)
+  {
+    StringBuilder where = new StringBuilder();
+    where.append("(");
+    where.append(CDODBSchema.ATTRIBUTES_REVISED);
+    where.append("=0 OR ");
+    where.append(CDODBSchema.ATTRIBUTES_REVISED);
+    where.append(">=");
+    where.append(timeStamp);
+    where.append(") AND ");
+    where.append(timeStamp);
+    where.append(">=");
+    where.append(CDODBSchema.ATTRIBUTES_CREATED);
+    readRevision(storeAccessor, revision, where.toString(), true, referenceChunk);
+  }
+
+  public void readRevisionByVersion(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int version,
+      int referenceChunk)
+  {
+    String where = CDODBSchema.ATTRIBUTES_VERSION + "=" + version;
+    readRevision(storeAccessor, revision, where, false, referenceChunk);
+  }
+
+  protected void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, String where,
+      boolean readVersion, int referenceChunk)
+  {
+    if (attributeMappings != null)
+    {
+      readAttributes(storeAccessor, revision, where, readVersion);
+    }
+
+    if (referenceMappings != null)
+    {
+      readReferences(storeAccessor, revision, referenceChunk);
+    }
+  }
+
+  protected void readAttributes(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, String where,
+      boolean readVersion)
+  {
+    long id = revision.getID().getValue();
+    StringBuilder builder = new StringBuilder(readVersion ? selectPrefixWithVersion : selectPrefix);
+    builder.append(id);
+    if (where != null)
+    {
+      builder.append(" AND ");
+      builder.append(where);
+    }
+
+    String sql = builder.toString();
+    if (TRACER.isEnabled()) TRACER.trace(sql);
+    ResultSet resultSet = null;
+
+    try
+    {
+      resultSet = storeAccessor.getStatement().executeQuery(sql);
+      if (!resultSet.next())
+      {
+        throw new IllegalStateException("Revision not found: " + id);
+      }
+
+      int i = 0;
+      if (hasFullRevisionInfo())
+      {
+        if (readVersion)
+        {
+          revision.setVersion(resultSet.getInt(i++));
+        }
+
+        revision.setCreated(resultSet.getLong(i++));
+        revision.setRevised(resultSet.getLong(i++));
+        revision.setResourceID(CDOIDImpl.create(resultSet.getLong(i++)));
+        revision.setContainerID(CDOIDImpl.create(resultSet.getLong(i++)));
+        revision.setContainingFeature(resultSet.getInt(i++));
+      }
+
+      for (IAttributeMapping attributeMapping : attributeMappings)
+      {
+        attributeMapping.extractValue(resultSet, i++, revision);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+    }
+  }
+
+  protected void readReferences(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
+  {
+    for (IReferenceMapping referenceMapping : referenceMappings)
+    {
+      referenceMapping.readReference(storeAccessor, revision, referenceChunk);
+    }
+  }
 }

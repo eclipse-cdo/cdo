@@ -7,10 +7,12 @@ import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBField;
 
+import java.sql.ResultSet;
+
 /**
  * @author Eike Stepper
  */
-public class AttributeMapping extends FeatureMapping implements IAttributeMapping
+public abstract class AttributeMapping extends FeatureMapping implements IAttributeMapping
 {
   private IDBField field;
 
@@ -37,4 +39,11 @@ public class AttributeMapping extends FeatureMapping implements IAttributeMappin
     CDOFeature feature = getFeature();
     return revision.getValue(feature);
   }
+
+  public void extractValue(ResultSet resultSet, int column, CDORevisionImpl revision)
+  {
+    revision.setValue(getFeature(), getResultSetValue(resultSet, column));
+  }
+
+  protected abstract Object getResultSetValue(ResultSet resultSet, int column);
 }

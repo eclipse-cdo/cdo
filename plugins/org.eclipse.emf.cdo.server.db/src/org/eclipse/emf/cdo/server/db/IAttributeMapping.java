@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
 import org.eclipse.net4j.db.IDBField;
 
+import java.sql.ResultSet;
+
 /**
  * @author Eike Stepper
  */
@@ -27,4 +29,6 @@ public interface IAttributeMapping
   public IDBField getField();
 
   public void appendValue(StringBuilder builder, CDORevisionImpl revision);
+
+  public void extractValue(ResultSet resultSet, int column, CDORevisionImpl revision);
 }

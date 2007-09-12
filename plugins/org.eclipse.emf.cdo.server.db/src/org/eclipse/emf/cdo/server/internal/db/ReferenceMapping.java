@@ -87,6 +87,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     MoveableList list = revision.getList(getFeature());
     CDOID source = revision.getID();
     int version = revision.getVersion();
+
     String sql = createSelect(source, version, null);
     if (TRACER.isEnabled()) TRACER.trace(sql);
     ResultSet resultSet = null;

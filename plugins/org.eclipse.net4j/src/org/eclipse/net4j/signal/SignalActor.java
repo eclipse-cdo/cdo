@@ -15,6 +15,8 @@ import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.util.ReflectUtil;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -53,8 +55,8 @@ public abstract class SignalActor<RESULT> extends Signal
   @Override
   public String toString()
   {
-    return ReflectUtil.getSimpleName(getClass()) + "[" + getSignalID() + ", " + getProtocol() + ", correlation=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        + getCorrelationID() + (terminated ? ", SENT" : "") + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return MessageFormat.format("{0}[{1}, {2}, correlation= {3}, {4}]", ReflectUtil.getSimpleName(getClass()),
+        getSignalID(), getProtocol(), getCorrelationID(), terminated ? "SENT" : "UNSENT");
   }
 
   protected void setResult(RESULT result)

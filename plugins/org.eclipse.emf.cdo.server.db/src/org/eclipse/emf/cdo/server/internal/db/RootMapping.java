@@ -42,19 +42,21 @@ public class RootMapping extends Mapping
     sqlUpdate(storeAccessor, builder.toString());
   }
 
-  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
   {
     // TODO Implement method RootMapping.readRevision()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
-  public void readRevisionByTime(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp)
+  public void readRevisionByTime(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp,
+      int referenceChunk)
   {
     // TODO Implement method RootMapping.readRevisionByTime()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
-  public void readRevisionByVersion(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int version)
+  public void readRevisionByVersion(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int version,
+      int referenceChunk)
   {
     // TODO Implement method RootMapping.readRevisionByVersion()
     throw new UnsupportedOperationException("Not yet implemented");

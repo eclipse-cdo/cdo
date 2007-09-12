@@ -31,7 +31,7 @@ public interface IReferenceMapping
 
   public void writeReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
 
-  public void readReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
+  public void readReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk);
 
   public void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String string);
 }

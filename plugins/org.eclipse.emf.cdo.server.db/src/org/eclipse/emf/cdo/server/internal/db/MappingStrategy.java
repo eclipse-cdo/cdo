@@ -159,11 +159,11 @@ public abstract class MappingStrategy implements IMappingStrategy
             {
               StringBuilder builder = new StringBuilder();
               builder.append("SELECT DISTINCT ");
-              builder.append(Mapping.FIELD_NAME_ID);
+              builder.append(CDODBSchema.ATTRIBUTES_ID);
               if (withTypes)
               {
                 builder.append(", ");
-                builder.append(Mapping.FIELD_NAME_CLASS);
+                builder.append(CDODBSchema.ATTRIBUTES_CLASS);
               }
 
               builder.append(" FROM ");
@@ -189,8 +189,8 @@ public abstract class MappingStrategy implements IMappingStrategy
 
   public CDOClassRef readObjectType(IDBStoreAccessor storeAccessor, CDOID id)
   {
-    String prefix = "SELECT DISTINCT " + Mapping.FIELD_NAME_CLASS + " FROM ";
-    String suffix = " WHERE " + Mapping.FIELD_NAME_ID + "=" + id;
+    String prefix = "SELECT DISTINCT " + CDODBSchema.ATTRIBUTES_CLASS + " FROM ";
+    String suffix = " WHERE " + CDODBSchema.ATTRIBUTES_ID + "=" + id;
     for (CDOClass cdoClass : getClassesWithObjectInfo())
     {
       ValueMapping mapping = (ValueMapping)ClassServerInfo.getMapping(cdoClass);

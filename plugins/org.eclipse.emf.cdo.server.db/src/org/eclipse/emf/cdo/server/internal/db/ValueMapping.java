@@ -30,9 +30,9 @@ import java.util.List;
  */
 public abstract class ValueMapping extends Mapping implements IValueMapping
 {
-  private static final long NO_TIMESTAMP = 0L;
-
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, ValueMapping.class);
+
+  private static final long NO_TIMESTAMP = 0L;
 
   private List<IAttributeMapping> attributeMappings;
 
@@ -82,12 +82,13 @@ public abstract class ValueMapping extends Mapping implements IValueMapping
     }
   }
 
-  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
   {
-    readRevisionByTime(storeAccessor, revision, NO_TIMESTAMP);
+    readRevisionByTime(storeAccessor, revision, NO_TIMESTAMP, referenceChunk);
   }
 
-  public void readRevisionByTime(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp)
+  public void readRevisionByTime(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp,
+      int referenceChunk)
   {
     if (attributeMappings != null)
     {
@@ -96,11 +97,12 @@ public abstract class ValueMapping extends Mapping implements IValueMapping
 
     if (referenceMappings != null)
     {
-      readReferences(storeAccessor, revision);
+      readReferences(storeAccessor, revision, referenceChunk);
     }
   }
 
-  public void readRevisionByVersion(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int version)
+  public void readRevisionByVersion(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int version,
+      int referenceChunk)
   {
     // TODO Implement method ValueMapping.readRevisionByVersion()
     throw new UnsupportedOperationException("Not yet implemented");
@@ -165,19 +167,14 @@ public abstract class ValueMapping extends Mapping implements IValueMapping
 
     builder.append(")");
     String sql = builder.toString();
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace(sql);
-    }
-
+    if (TRACER.isEnabled()) TRACER.trace(sql);
   }
 
-  protected void readReferences(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  protected void readReferences(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
   {
     for (IReferenceMapping referenceMapping : referenceMappings)
     {
-      referenceMapping.readReference(storeAccessor, revision);
+      referenceMapping.readReference(storeAccessor, revision, referenceChunk);
     }
   }
 

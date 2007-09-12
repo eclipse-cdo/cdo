@@ -133,6 +133,38 @@ public class CDODBSchema extends DBSchema
   public static final IDBIndex INDEX_FEATURES_PK = //
   FEATURES.addIndex(IDBIndex.Type.PRIMARY_KEY, FEATURES_ID);
 
+  /**
+   * Field names of attribute tables
+   */
+  public static final String ATTRIBUTES_ID = "cdo_id";
+
+  public static final String ATTRIBUTES_VERSION = "cdo_version";
+
+  public static final String ATTRIBUTES_CLASS = "cdo_class";
+
+  public static final String ATTRIBUTES_CREATED = "cdo_created";
+
+  public static final String ATTRIBUTES_REVISED = "cdo_revised";
+
+  public static final String ATTRIBUTES_RESOURCE = "cdo_resource";
+
+  public static final String ATTRIBUTES_CONTAINER = "cdo_container";
+
+  public static final String ATTRIBUTES_FEATURE = "cdo_feature";
+
+  /**
+   * Field names of reference tables
+   */
+  public static final String REFERENCES_FEATURE = "cdo_feature";
+
+  public static final String REFERENCES_SOURCE = "cdo_source";
+
+  public static final String REFERENCES_VERSION = "cdo_version";
+
+  public static final String REFERENCES_IDX = "cdo_idx";
+
+  public static final String REFERENCES_TARGET = "cdo_target";
+
   private CDODBSchema()
   {
     super("CDO");

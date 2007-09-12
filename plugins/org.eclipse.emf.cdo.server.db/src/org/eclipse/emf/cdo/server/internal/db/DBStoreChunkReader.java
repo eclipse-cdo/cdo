@@ -60,7 +60,7 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
   {
     super.addSimpleChunk(index);
     builder.append(" AND ");
-    builder.append(ReferenceMapping.FIELD_NAME_IDX);
+    builder.append(CDODBSchema.REFERENCES_IDX);
     builder.append("=");
     builder.append(index);
   }
@@ -70,7 +70,7 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
   {
     super.addRangedChunk(fromIndex, toIndex);
     builder.append(" AND ");
-    builder.append(ReferenceMapping.FIELD_NAME_IDX);
+    builder.append(CDODBSchema.REFERENCES_IDX);
     builder.append(" BETWEEN ");
     builder.append(fromIndex);
     builder.append(" AND ");

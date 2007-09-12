@@ -430,7 +430,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
     IMapping mapping = ClassServerInfo.getMapping(cdoClass);
-    mapping.readRevision(this, revision);
+    mapping.readRevision(this, revision, referenceChunk);
     return revision;
   }
 
@@ -446,7 +446,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
     IMapping mapping = ClassServerInfo.getMapping(cdoClass);
-    mapping.readRevisionByTime(this, revision, timeStamp);
+    mapping.readRevisionByTime(this, revision, timeStamp, referenceChunk);
     return revision;
   }
 
@@ -462,7 +462,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
     IMapping mapping = ClassServerInfo.getMapping(cdoClass);
-    mapping.readRevisionByVersion(this, revision, version);
+    mapping.readRevisionByVersion(this, revision, version, referenceChunk);
     return revision;
   }
 

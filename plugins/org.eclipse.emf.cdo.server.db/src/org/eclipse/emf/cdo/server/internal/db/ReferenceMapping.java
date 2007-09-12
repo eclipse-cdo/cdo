@@ -11,11 +11,13 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,15 +29,9 @@ import java.util.Map;
  */
 public class ReferenceMapping extends FeatureMapping implements IReferenceMapping
 {
-  public static final String FIELD_NAME_FEATURE = "cdo_feature";
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, ReferenceMapping.class);
 
-  public static final String FIELD_NAME_SOURCE = "cdo_source";
-
-  public static final String FIELD_NAME_VERSION = "cdo_version";
-
-  public static final String FIELD_NAME_IDX = "cdo_idx";
-
-  public static final String FIELD_NAME_TARGET = "cdo_target";
+  private static final String SELECT_SUFFIX = " ORDER BY " + CDODBSchema.REFERENCES_IDX;
 
   private IDBTable table;
 
@@ -43,7 +39,9 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
   private boolean withFeature;
 
-  private String constantPrefix;
+  private String insertPrefix;
+
+  private String selectPrefix;
 
   public ReferenceMapping(ValueMapping valueMapping, CDOFeature feature, ToMany toMany)
   {
@@ -51,18 +49,9 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     this.toMany = toMany;
     mapReference(valueMapping.getCDOClass(), feature);
 
-    // Build the constant SQL prefix
-    StringBuilder builder = new StringBuilder();
-    builder.append("INSERT INTO ");
-    builder.append(table);
-    builder.append(" VALUES (");
-    if (withFeature)
-    {
-      builder.append(FeatureServerInfo.getDBID(feature));
-      builder.append(", ");
-    }
-
-    constantPrefix = builder.toString();
+    int dbFeatureID = withFeature ? FeatureServerInfo.getDBID(getFeature()) : 0;
+    insertPrefix = createInsertPrefix(dbFeatureID);
+    selectPrefix = createSelectPrefix(dbFeatureID);
   }
 
   public IDBTable getTable()
@@ -78,7 +67,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     for (Object element : revision.getList(getFeature()))
     {
       long target = ((CDOID)element).getValue();
-      StringBuilder builder = new StringBuilder(constantPrefix);
+      StringBuilder builder = new StringBuilder(insertPrefix);
       builder.append(source);
       builder.append(", ");
       builder.append(version);
@@ -87,14 +76,37 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
       builder.append(", ");
       builder.append(target);
       builder.append(")");
-      getValueMapping().sqlUpdate(storeAccessor, builder.toString());
+      String sql = builder.toString();
+      getValueMapping().sqlUpdate(storeAccessor, sql);
     }
   }
 
-  public void readReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  public void readReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
   {
-    // TODO Implement method ReferenceMapping.readReference()
-    throw new UnsupportedOperationException("Not yet implemented");
+    CDOID source = revision.getID();
+    int version = revision.getVersion();
+    String where = "";
+
+    String sql = createSelect(source, version, where);
+    if (TRACER.isEnabled()) TRACER.trace(sql);
+    ResultSet resultSet = null;
+
+    try
+    {
+      resultSet = storeAccessor.getStatement().executeQuery(sql);
+      while (resultSet.next())
+      {
+        long target = resultSet.getLong(1);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+    }
   }
 
   public void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)
@@ -102,34 +114,9 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     IDBStoreAccessor storeAccessor = chunkReader.getStoreAccessor();
     CDOID source = chunkReader.getRevision().getID();
     int version = chunkReader.getRevision().getVersion();
-    CDOFeature feature = chunkReader.getFeature();
 
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT ");
-    builder.append(FIELD_NAME_TARGET);
-    builder.append(" FROM ");
-    builder.append(table);
-    builder.append(" WHERE ");
-    if (withFeature)
-    {
-      builder.append(FIELD_NAME_FEATURE);
-      builder.append("=");
-      builder.append(FeatureServerInfo.getDBID(feature));
-    }
-
-    builder.append(" AND ");
-    builder.append(FIELD_NAME_SOURCE);
-    builder.append("=");
-    builder.append(source.getValue());
-    builder.append(" AND ");
-    builder.append(FIELD_NAME_VERSION);
-    builder.append("=");
-    builder.append(version);
-    builder.append(where);
-    builder.append(" ORDER BY ");
-    builder.append(FIELD_NAME_IDX);
-
-    String sql = builder.toString();
+    String sql = createSelect(source, version, where);
+    if (TRACER.isEnabled()) TRACER.trace(sql);
     ResultSet resultSet = null;
 
     try
@@ -165,6 +152,59 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     {
       DBUtil.close(resultSet);
     }
+  }
+
+  protected String createInsertPrefix(int dbFeatureID)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("INSERT INTO ");
+    builder.append(table);
+    builder.append(" VALUES (");
+    if (dbFeatureID != 0)
+    {
+      builder.append(FeatureServerInfo.getDBID(getFeature()));
+      builder.append(", ");
+    }
+
+    return builder.toString();
+  }
+
+  protected String createSelectPrefix(int dbFeatureID)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT ");
+    builder.append(CDODBSchema.REFERENCES_TARGET);
+    builder.append(" FROM ");
+    builder.append(table);
+    builder.append(" WHERE ");
+    if (dbFeatureID != 0)
+    {
+      builder.append(CDODBSchema.REFERENCES_FEATURE);
+      builder.append("=");
+      builder.append(dbFeatureID);
+      builder.append(" AND ");
+    }
+
+    builder.append(CDODBSchema.REFERENCES_SOURCE);
+    builder.append("=");
+    return builder.toString();
+  }
+
+  protected String createSelect(CDOID source, int version, String where)
+  {
+    StringBuilder builder = new StringBuilder(selectPrefix);
+    builder.append(source.getValue());
+    builder.append(" AND ");
+    builder.append(CDODBSchema.REFERENCES_VERSION);
+    builder.append("=");
+    builder.append(version);
+    if (where != null)
+    {
+      builder.append(where);
+    }
+
+    builder.append(SELECT_SUFFIX);
+    return builder.toString();
   }
 
   protected void mapReference(CDOClass cdoClass, CDOFeature cdoFeature)
@@ -216,13 +256,13 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     IDBTable table = getValueMapping().addTable(tableName);
     if (withFeature)
     {
-      table.addField(FIELD_NAME_FEATURE, DBType.INTEGER);
+      table.addField(CDODBSchema.REFERENCES_FEATURE, DBType.INTEGER);
     }
 
-    table.addField(FIELD_NAME_SOURCE, DBType.BIGINT);
-    table.addField(FIELD_NAME_VERSION, DBType.INTEGER);
-    table.addField(FIELD_NAME_IDX, DBType.INTEGER);
-    table.addField(FIELD_NAME_TARGET, DBType.BIGINT);
+    table.addField(CDODBSchema.REFERENCES_SOURCE, DBType.BIGINT);
+    table.addField(CDODBSchema.REFERENCES_VERSION, DBType.INTEGER);
+    table.addField(CDODBSchema.REFERENCES_IDX, DBType.INTEGER);
+    table.addField(CDODBSchema.REFERENCES_TARGET, DBType.BIGINT);
     return table;
   }
 

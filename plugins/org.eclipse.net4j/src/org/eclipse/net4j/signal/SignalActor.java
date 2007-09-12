@@ -55,7 +55,7 @@ public abstract class SignalActor<RESULT> extends Signal
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}[{1}, {2}, correlation= {3}, {4}]", ReflectUtil.getSimpleName(getClass()),
+    return MessageFormat.format("{0}[{1}, {2}, correlation={3} {4}]", ReflectUtil.getSimpleName(getClass()),
         getSignalID(), getProtocol(), getCorrelationID(), terminated ? "SENT" : "UNSENT");
   }
 

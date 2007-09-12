@@ -89,10 +89,13 @@ public abstract class ValueMapping extends Mapping implements IValueMapping
       }
     }
 
-    for (IAttributeMapping attributeMapping : attributeMappings)
+    if (attributeMappings != null)
     {
-      builder.append(", ");
-      builder.append(attributeMapping.getField().getName());
+      for (IAttributeMapping attributeMapping : attributeMappings)
+      {
+        builder.append(", ");
+        builder.append(attributeMapping.getField().getName());
+      }
     }
 
     builder.append(" FROM ");
@@ -346,9 +349,12 @@ public abstract class ValueMapping extends Mapping implements IValueMapping
         revision.setContainingFeature(resultSet.getInt(i++));
       }
 
-      for (IAttributeMapping attributeMapping : attributeMappings)
+      if (attributeMappings != null)
       {
-        attributeMapping.extractValue(resultSet, i++, revision);
+        for (IAttributeMapping attributeMapping : attributeMappings)
+        {
+          attributeMapping.extractValue(resultSet, i++, revision);
+        }
       }
     }
     catch (SQLException ex)

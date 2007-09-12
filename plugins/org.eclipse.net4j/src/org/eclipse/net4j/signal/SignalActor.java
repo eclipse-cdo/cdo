@@ -70,11 +70,11 @@ public abstract class SignalActor<RESULT> extends Signal
       throw new IllegalArgumentException("Channel has no protocol"); //$NON-NLS-1$
     }
 
-    if (!(receiveHandler instanceof SignalProtocol))
+    if (receiveHandler instanceof SignalProtocol)
     {
-      throw new IllegalArgumentException("Channel has no signal protocol"); //$NON-NLS-1$
+      return (SignalProtocol)receiveHandler;
     }
 
-    return (SignalProtocol)receiveHandler;
+    throw new IllegalArgumentException("Channel has no signal protocol"); //$NON-NLS-1$
   }
 }

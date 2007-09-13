@@ -10,11 +10,12 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
-import org.eclipse.net4j.internal.util.concurrent.NamedExecutorService;
 import org.eclipse.net4j.internal.util.factory.Factory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 /**
  * @author Eike Stepper
@@ -25,14 +26,30 @@ public class ExecutorServiceFactory extends Factory
 
   public static final String TYPE = "default";
 
+  public static final String DEFAULT_THREAD_GROUP_NAME = "net4j";
+
   public ExecutorServiceFactory()
   {
     super(PRODUCT_GROUP, TYPE);
   }
 
-  public ExecutorService create(String description)
+  public ExecutorService create(String threadGroupName)
   {
-    return new NamedExecutorService();
+    if (threadGroupName == null)
+    {
+      threadGroupName = DEFAULT_THREAD_GROUP_NAME;
+    }
+
+    final ThreadGroup threadGroup = new ThreadGroup(threadGroupName);
+    return Executors.newCachedThreadPool(new ThreadFactory()
+    {
+      public Thread newThread(Runnable r)
+      {
+        Thread thread = new Thread(threadGroup, r);
+        thread.setDaemon(true);
+        return thread;
+      }
+    });
   }
 
   public static ExecutorService get(IManagedContainer container)

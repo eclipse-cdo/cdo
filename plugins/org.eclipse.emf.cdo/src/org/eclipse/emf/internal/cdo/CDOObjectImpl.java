@@ -397,7 +397,13 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   public Resource eResource()
   {
-    return cdoResource();
+    Resource resource = cdoResource();
+    if (resource == null && FSMUtil.isTransient(this))
+    {
+      resource = super.eResource();
+    }
+
+    return resource;
   }
 
   @Override

@@ -83,6 +83,7 @@ public final class DBUtil
       }
       catch (Exception ex)
       {
+        OM.LOG.error(ex);
         return ex;
       }
     }
@@ -100,6 +101,7 @@ public final class DBUtil
       }
       catch (Exception ex)
       {
+        OM.LOG.error(ex);
         return ex;
       }
     }
@@ -113,10 +115,20 @@ public final class DBUtil
     {
       try
       {
+        resultSet.getStatement().setMaxRows(0);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+
+      try
+      {
         resultSet.close();
       }
       catch (Exception ex)
       {
+        OM.LOG.error(ex);
         return ex;
       }
     }

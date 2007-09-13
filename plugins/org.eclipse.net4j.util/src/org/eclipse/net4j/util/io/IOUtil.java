@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -125,6 +127,7 @@ public final class IOUtil
     }
     catch (Exception ex)
     {
+      OM.LOG.error(ex);
       return ex;
     }
   }

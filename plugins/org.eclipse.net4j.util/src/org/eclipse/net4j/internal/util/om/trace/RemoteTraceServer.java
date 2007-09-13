@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.trace;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.DataInputStream;
@@ -92,6 +93,7 @@ public class RemoteTraceServer
     }
     catch (IOException ex)
     {
+      OM.LOG.error(ex);
       return ex;
     }
   }

@@ -104,6 +104,7 @@ public final class LifecycleUtil
     }
     catch (Exception ex)
     {
+      OM.LOG.error(ex);
       return ex;
     }
   }

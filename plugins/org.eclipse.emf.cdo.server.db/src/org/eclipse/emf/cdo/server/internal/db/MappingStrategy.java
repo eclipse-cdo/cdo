@@ -349,6 +349,7 @@ public abstract class MappingStrategy implements IMappingStrategy
     builder.append(resourceTable);
     builder.append(" WHERE ");
     builder.append(whereField.getName());
+    builder.append("=");
     getStore().getDBAdapter().appendValue(builder, whereField, whereValue);
 
     String sql = builder.toString();

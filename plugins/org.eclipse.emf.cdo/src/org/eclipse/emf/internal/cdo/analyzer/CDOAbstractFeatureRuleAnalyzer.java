@@ -39,9 +39,6 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
 
   protected int loadRevisionCollectionChunkSize;
 
-  /**
-   * TODO Can didFetch be derived from fetchCount?
-   */
   private boolean didFetch;
 
   private int fetchCount = 0;

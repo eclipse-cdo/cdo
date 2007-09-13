@@ -7,25 +7,33 @@
  * 
  * Contributors:
  *    Simon McDuff - initial API and implementation
+ *    Eike Stepper - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
+import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
+import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.analyzer.CDOFeatureAnalyzerModelBased;
 import org.eclipse.emf.internal.cdo.analyzer.CDOFetchRuleManagerThreadLocal;
+import org.eclipse.emf.internal.cdo.util.ModelUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -34,6 +42,8 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
 {
   public void testLoadObject() throws Exception
   {
+    ArrayList<CDOObject> listOfCompany = new ArrayList<CDOObject>();
+
     {
       // disableConsole();
       msg("Opening session");
@@ -59,7 +69,8 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
           Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
 
           // Should it detect supplier to make it persistent...
-          // I don't want to do resource.getContents().add(supplier)
+
+          resource.getContents().add(supplier);
           purchaseOrder.setSupplier(supplier);
 
           SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
@@ -67,10 +78,11 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
         }
 
         resource.getContents().add(company);
+        listOfCompany.add(company);
       }
 
       transaction.commit();
-      // XXX session.close();
+      // session.close();
       enableConsole();
     }
 
@@ -87,19 +99,39 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
     transaction.setLoadRevisionCollectionChunkSize(10);
 
     msg("Getting resource");
-    CDOResource resource = transaction.getResource("/test2");
 
-    msg("Getting contents");
-    EList<EObject> contents = resource.getContents();
-    for (EObject eObject : contents)
+    for (CDOObject companyObject : listOfCompany)
     {
-      Company company = (Company)eObject;
+      Company company = (Company)transaction.getObject(companyObject.cdoID(), true);
       for (PurchaseOrder purchaseOrder : company.getPurchaseOrders())
       {
         purchaseOrder.getSupplier();
       }
+
     }
 
-    assertEquals(featureanalyzerModelBased.getFetchCount(), 12);
+    // Number of fetch should be 20.
+    assertEquals(20, featureanalyzerModelBased.getFetchCount());
+
+    List<CDOFetchRule> fetchRules = featureanalyzerModelBased.getFetchRules(null);
+
+    assertEquals(2, fetchRules.size());
+
+    CDOFetchRule fetchRule1 = fetchRules.get(0);
+    EClass eClass = ModelUtil.getEClass((CDOClassImpl)fetchRule1.getCDOClass(), session.getPackageRegistry());
+    assertEquals(Model1Package.eINSTANCE.getCompany(), eClass);
+    assertEquals(1, fetchRule1.getFeatures().size());
+    assertEquals(Model1Package.eINSTANCE.getCompany_PurchaseOrders().getName(), fetchRule1.getFeatures().get(0)
+        .getName());
+
+    CDOFetchRule fetchRule2 = fetchRules.get(1);
+    EClass ePurchaseOrder = ModelUtil.getEClass((CDOClassImpl)fetchRule2.getCDOClass(), session.getPackageRegistry());
+    assertEquals(Model1Package.eINSTANCE.getPurchaseOrder(), ePurchaseOrder);
+    assertEquals(1, fetchRule2.getFeatures().size());
+    assertEquals(Model1Package.eINSTANCE.getPurchaseOrder_Supplier().getName(), fetchRule2.getFeatures().get(0)
+        .getName());
+
+    transaction.close();
+    // TODO session.close();
   }
 }

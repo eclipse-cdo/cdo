@@ -52,8 +52,7 @@ public class CDOClusterOfFetchRule
   @Override
   public int hashCode()
   {
-    // TODO Missing "rootClass.hashCode() ^ " or intention?
-    return rootFeature.hashCode();
+    return rootClass.hashCode() ^ rootFeature.hashCode();
   }
 
   @Override

@@ -104,8 +104,7 @@ public class CDOFetchFeatureInfo
   @Override
   public int hashCode()
   {
-    // TODO Missing "cdoClass.hashCode() ^ " or intention?
-    return cdoFeature.hashCode();
+    return cdoClass.hashCode()  ^ cdoFeature.hashCode();
   }
 
   @Override

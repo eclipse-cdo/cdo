@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.internal.protocol.CDOIDNull;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
@@ -47,9 +48,9 @@ public class LoadRevisionIndication extends CDOReadIndication
 
   protected Map<CDOClass, CDOFetchRule> fetchRules = new HashMap<CDOClass, CDOFetchRule>();
 
-  protected CDOID contextID;
+  protected CDOID contextID = CDOIDNull.NULL;
 
-  protected int loadRevisionCollectionChunkSize;
+  protected int loadRevisionCollectionChunkSize = 1;
 
   public LoadRevisionIndication()
   {

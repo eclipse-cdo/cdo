@@ -102,6 +102,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
         list.add(CDOIDImpl.create(target));
       }
 
+      // TODO Optimize this?
       while (resultSet.next())
       {
         list.add(CDORevisionImpl.UNINITIALIZED);

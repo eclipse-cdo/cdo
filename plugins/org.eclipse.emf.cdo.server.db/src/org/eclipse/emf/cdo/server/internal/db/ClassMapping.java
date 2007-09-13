@@ -282,11 +282,26 @@ public abstract class ClassMapping implements IClassMapping
 
   public IReferenceMapping getReferenceMapping(CDOFeature feature)
   {
+    // TODO Optimize this?
     for (IReferenceMapping referenceMapping : referenceMappings)
     {
       if (referenceMapping.getFeature() == feature)
       {
         return referenceMapping;
+      }
+    }
+
+    return null;
+  }
+
+  public IAttributeMapping getAttributeMapping(CDOFeature feature)
+  {
+    // TODO Optimize this?
+    for (IAttributeMapping attributeMapping : attributeMappings)
+    {
+      if (attributeMapping.getFeature() == feature)
+      {
+        return attributeMapping;
       }
     }
 

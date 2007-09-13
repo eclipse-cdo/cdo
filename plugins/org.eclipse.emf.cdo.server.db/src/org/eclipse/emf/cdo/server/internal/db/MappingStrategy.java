@@ -13,13 +13,18 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
+import org.eclipse.emf.cdo.protocol.model.resource.CDOPathFeature;
+import org.eclipse.emf.cdo.protocol.model.resource.CDOResourceClass;
+import org.eclipse.emf.cdo.server.IPackageManager;
+import org.eclipse.emf.cdo.server.db.IAttributeMapping;
+import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.util.io.CloseableIterator;
 
@@ -54,6 +59,10 @@ public abstract class MappingStrategy implements IMappingStrategy
   private Map<Object, IDBTable> referenceTables = new HashMap<Object, IDBTable>();
 
   private Map<Integer, CDOClassRef> classRefs = new HashMap<Integer, CDOClassRef>();
+
+  private IClassMapping resourceClassMapping;
+
+  private IAttributeMapping resourcePathMapping;
 
   public MappingStrategy()
   {
@@ -137,6 +146,32 @@ public abstract class MappingStrategy implements IMappingStrategy
     }
 
     return mapping;
+  }
+
+  public IClassMapping getResourceClassMapping()
+  {
+    if (resourceClassMapping == null)
+    {
+      IPackageManager packageManager = getStore().getRepository().getPackageManager();
+      CDOResourceClass resourceClass = packageManager.getCDOResourcePackage().getCDOResourceClass();
+      resourceClassMapping = getClassMapping(resourceClass);
+    }
+
+    return resourceClassMapping;
+  }
+
+  public IAttributeMapping getResourcePathMapping()
+  {
+    if (resourcePathMapping == null)
+    {
+      IPackageManager packageManager = getStore().getRepository().getPackageManager();
+      CDOPathFeature pathFeature = packageManager.getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
+
+      IClassMapping resourceMapping = getResourceClassMapping();
+      resourcePathMapping = resourceMapping.getAttributeMapping(pathFeature);
+    }
+
+    return resourcePathMapping;
   }
 
   public CloseableIterator<CDOID> readObjectIDs(final IDBStoreAccessor storeAccessor, final boolean withTypes)
@@ -236,6 +271,23 @@ public abstract class MappingStrategy implements IMappingStrategy
     }
 
     return classRef;
+  }
+
+  public CDOID readResourceID(String path)
+  {
+    IClassMapping resourceClassMapping = getResourceClassMapping();
+    IAttributeMapping resourcePathMapping = getResourcePathMapping();
+
+    IDBTable resourceTable = resourceClassMapping.getTable();
+    IDBField idField = resourceTable.getField(CDODBSchema.ATTRIBUTES_ID);
+    IDBField pathField = resourcePathMapping.getField();
+
+    return null;
+  }
+
+  public String readResourcePath(CDOID id)
+  {
+    return null;
   }
 
   @Override

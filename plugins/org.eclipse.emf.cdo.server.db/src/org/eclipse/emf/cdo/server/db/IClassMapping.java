@@ -36,6 +36,8 @@ public interface IClassMapping
 
   public List<IReferenceMapping> getReferenceMappings();
 
+  public IAttributeMapping getAttributeMapping(CDOFeature feature);
+
   public IReferenceMapping getReferenceMapping(CDOFeature feature);
 
   public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);

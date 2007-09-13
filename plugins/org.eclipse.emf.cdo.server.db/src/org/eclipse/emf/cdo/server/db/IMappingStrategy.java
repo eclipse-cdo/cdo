@@ -44,4 +44,8 @@ public interface IMappingStrategy
   public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor storeAccessor, boolean withTypes);
 
   public CDOClassRef readObjectType(IDBStoreAccessor storeAccessor, CDOID id);
+
+  public CDOID readResourceID(String path);
+
+  public String readResourcePath(CDOID id);
 }

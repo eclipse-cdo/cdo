@@ -61,12 +61,17 @@ public class NoClassMapping implements IClassMapping
     return null;
   }
 
-  public IReferenceMapping getReferenceMapping(CDOFeature feature)
+  public List<IReferenceMapping> getReferenceMappings()
   {
     return null;
   }
 
-  public List<IReferenceMapping> getReferenceMappings()
+  public IAttributeMapping getAttributeMapping(CDOFeature feature)
+  {
+    return null;
+  }
+
+  public IReferenceMapping getReferenceMapping(CDOFeature feature)
   {
     return null;
   }

@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class VerticalMappingStrategy extends MappingStrategy
 {
-  private RootClassMapping rootMapping;
+  private RootClassMapping rootClassMapping;
 
   public VerticalMappingStrategy()
   {
@@ -38,14 +38,14 @@ public class VerticalMappingStrategy extends MappingStrategy
     return true;
   }
 
-  public RootClassMapping getRootMapping()
+  public RootClassMapping getRootClassMapping()
   {
-    if (rootMapping == null)
+    if (rootClassMapping == null)
     {
-      rootMapping = new RootClassMapping(this);
+      rootClassMapping = new RootClassMapping(this);
     }
 
-    return rootMapping;
+    return rootClassMapping;
   }
 
   @Override
@@ -57,6 +57,6 @@ public class VerticalMappingStrategy extends MappingStrategy
   @Override
   protected List<CDOClass> getClassesWithObjectInfo()
   {
-    return Collections.singletonList(rootMapping.getCDOClass());
+    return Collections.singletonList(rootClassMapping.getCDOClass());
   }
 }

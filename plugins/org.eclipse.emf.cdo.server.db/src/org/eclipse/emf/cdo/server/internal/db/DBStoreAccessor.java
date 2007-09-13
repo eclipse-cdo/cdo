@@ -469,14 +469,13 @@ public class DBStoreAccessor implements IDBStoreAccessor
   public CDOID readResourceID(String path)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    // TODO Implement method DBStoreAccessor.readResourceID()
-    throw new UnsupportedOperationException("Not yet implemented");
+    return mappingStrategy.readResourceID(path);
   }
 
   public String readResourcePath(CDOID id)
   {
-    // TODO Implement method DBStoreAccessor.readResourcePath()
-    throw new UnsupportedOperationException("Not yet implemented");
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    return mappingStrategy.readResourcePath(id);
   }
 
   public CDORevisionImpl verifyRevision(CDORevisionImpl revision)

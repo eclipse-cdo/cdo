@@ -204,7 +204,7 @@ public class DBStore extends Store implements IDBStore
     }
     else if (type == CDOType.STRING)
     {
-      return DBType.LONGVARCHAR;
+      return DBType.VARCHAR;
     }
 
     throw new ImplementationError("Unrecognized CDOType: " + type);

@@ -189,14 +189,15 @@ public abstract class ClassMapping implements IClassMapping
 
   protected IDBField addField(CDOFeature cdoFeature, IDBTable table) throws DBException
   {
-    DBType fieldType = getDBType(cdoFeature.getType());
+    DBType fieldType = getDBType(cdoFeature);
+    int fieldLength = getDBLength(cdoFeature);
     for (int attempt = 0;; ++attempt)
     {
       String fieldName = mangleFieldName(cdoFeature.getName(), attempt);
 
       try
       {
-        IDBField field = table.addField(fieldName, fieldType);
+        IDBField field = table.addField(fieldName, fieldType, fieldLength);
         affectedTables.add(table);
         return field;
       }
@@ -210,9 +211,15 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected DBType getDBType(CDOType type)
+  protected DBType getDBType(CDOFeature cdoFeature)
   {
-    return DBStore.getDBType(type);
+    return DBStore.getDBType(cdoFeature.getType());
+  }
+
+  protected int getDBLength(CDOFeature cdoFeature)
+  {
+    // Derby: The maximum length for a VARCHAR string is 32,672 characters.
+    return cdoFeature.getType() == CDOType.STRING ? 32672 : IDBField.DEFAULT;
   }
 
   protected IDBAdapter getDBAdapter()

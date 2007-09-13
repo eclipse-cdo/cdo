@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.trace;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.trace.OMTraceHandler;
 import org.eclipse.net4j.util.om.trace.OMTraceHandlerEvent;
@@ -72,6 +73,7 @@ public class RemoteTraceHandler implements OMTraceHandler
     }
     catch (IOException ex)
     {
+      OM.LOG.error(ex);
       return ex;
     }
   }
@@ -136,7 +138,7 @@ public class RemoteTraceHandler implements OMTraceHandler
     try
     {
       InetAddress localMachine = InetAddress.getLocalHost();
-      return localMachine.getHostName() + "#" + (++uniqueCounter);
+      return localMachine.getHostName() + "#" + ++uniqueCounter;
     }
     catch (Exception ex)
     {

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
@@ -21,15 +22,18 @@ import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.CloseableIterator;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -40,6 +44,8 @@ import java.util.Map;
  */
 public abstract class MappingStrategy implements IMappingStrategy
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MappingStrategy.class);
+
   public static final String PROP_MAPPING_PRECEDENCE = "mappingPrecedence";
 
   public static final String PROP_TO_MANY_REFERENCE_MAPPING = "toManyReferenceMapping";
@@ -63,6 +69,12 @@ public abstract class MappingStrategy implements IMappingStrategy
   private IClassMapping resourceClassMapping;
 
   private IAttributeMapping resourcePathMapping;
+
+  private IDBTable resourceTable;
+
+  private IDBField resourceIDField;
+
+  private IDBField resourcePathField;
 
   public MappingStrategy()
   {
@@ -152,9 +164,7 @@ public abstract class MappingStrategy implements IMappingStrategy
   {
     if (resourceClassMapping == null)
     {
-      IPackageManager packageManager = getStore().getRepository().getPackageManager();
-      CDOResourceClass resourceClass = packageManager.getCDOResourcePackage().getCDOResourceClass();
-      resourceClassMapping = getClassMapping(resourceClass);
+      initResourceInfos();
     }
 
     return resourceClassMapping;
@@ -164,14 +174,54 @@ public abstract class MappingStrategy implements IMappingStrategy
   {
     if (resourcePathMapping == null)
     {
-      IPackageManager packageManager = getStore().getRepository().getPackageManager();
-      CDOPathFeature pathFeature = packageManager.getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
-
-      IClassMapping resourceMapping = getResourceClassMapping();
-      resourcePathMapping = resourceMapping.getAttributeMapping(pathFeature);
+      initResourceInfos();
     }
 
     return resourcePathMapping;
+  }
+
+  public IDBTable getResourceTable()
+  {
+    if (resourceTable == null)
+    {
+      initResourceInfos();
+    }
+
+    return resourceTable;
+  }
+
+  public IDBField getResourceIDField()
+  {
+    if (resourceIDField == null)
+    {
+      initResourceInfos();
+    }
+
+    return resourceIDField;
+  }
+
+  public IDBField getResourcePathField()
+  {
+    if (resourcePathField == null)
+    {
+      initResourceInfos();
+    }
+
+    return resourcePathField;
+  }
+
+  protected void initResourceInfos()
+  {
+    IPackageManager packageManager = getStore().getRepository().getPackageManager();
+    CDOResourceClass resourceClass = packageManager.getCDOResourcePackage().getCDOResourceClass();
+    CDOPathFeature pathFeature = packageManager.getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
+
+    resourceClassMapping = getClassMapping(resourceClass);
+    resourcePathMapping = resourceClassMapping.getAttributeMapping(pathFeature);
+
+    resourceTable = resourceClassMapping.getTable();
+    resourceIDField = resourceTable.getField(CDODBSchema.ATTRIBUTES_ID);
+    resourcePathField = resourcePathMapping.getField();
   }
 
   public CloseableIterator<CDOID> readObjectIDs(final IDBStoreAccessor storeAccessor, final boolean withTypes)
@@ -273,21 +323,68 @@ public abstract class MappingStrategy implements IMappingStrategy
     return classRef;
   }
 
-  public CDOID readResourceID(String path)
+  public CDOID readResourceID(IDBStoreAccessor storeAccessor, String path)
   {
-    IClassMapping resourceClassMapping = getResourceClassMapping();
-    IAttributeMapping resourcePathMapping = getResourcePathMapping();
-
-    IDBTable resourceTable = resourceClassMapping.getTable();
-    IDBField idField = resourceTable.getField(CDODBSchema.ATTRIBUTES_ID);
-    IDBField pathField = resourcePathMapping.getField();
-
-    return null;
+    IDBTable resourceTable = getResourceTable();
+    IDBField selectField = getResourceIDField();
+    IDBField whereField = getResourcePathField();
+    return (CDOID)readResourceInfo(storeAccessor, resourceTable, selectField, whereField, path);
   }
 
-  public String readResourcePath(CDOID id)
+  public String readResourcePath(IDBStoreAccessor storeAccessor, CDOID id)
   {
-    return null;
+    IDBTable resourceTable = getResourceTable();
+    IDBField selectField = getResourcePathField();
+    IDBField whereField = getResourceIDField();
+    return (String)readResourceInfo(storeAccessor, resourceTable, selectField, whereField, id);
+  }
+
+  protected Object readResourceInfo(IDBStoreAccessor storeAccessor, IDBTable resourceTable, IDBField selectField,
+      IDBField whereField, Object whereValue)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT ");
+    builder.append(selectField.getName());
+    builder.append(" FROM ");
+    builder.append(resourceTable);
+    builder.append(" WHERE ");
+    builder.append(whereField.getName());
+    getStore().getDBAdapter().appendValue(builder, whereField, whereValue);
+
+    String sql = builder.toString();
+    if (TRACER.isEnabled()) TRACER.trace(sql);
+    ResultSet resultSet = null;
+
+    try
+    {
+      Statement statement = storeAccessor.getStatement();
+      statement.setMaxRows(1); // Reset by DBUtil.close(resultSet)
+
+      resultSet = statement.executeQuery(sql);
+      if (!resultSet.next())
+      {
+        return null;
+      }
+
+      if (whereValue instanceof CDOID)
+      {
+        String path = resultSet.getString(1);
+        return path;
+      }
+      else
+      {
+        long id = resultSet.getLong(1);
+        return CDOIDImpl.create(id);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+    }
   }
 
   @Override

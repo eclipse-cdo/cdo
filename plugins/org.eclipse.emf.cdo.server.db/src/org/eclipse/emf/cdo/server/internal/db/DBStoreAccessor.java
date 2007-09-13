@@ -469,13 +469,13 @@ public class DBStoreAccessor implements IDBStoreAccessor
   public CDOID readResourceID(String path)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    return mappingStrategy.readResourceID(path);
+    return mappingStrategy.readResourceID(this, path);
   }
 
   public String readResourcePath(CDOID id)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    return mappingStrategy.readResourcePath(id);
+    return mappingStrategy.readResourcePath(this, id);
   }
 
   public CDORevisionImpl verifyRevision(CDORevisionImpl revision)

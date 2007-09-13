@@ -273,11 +273,7 @@ public final class DBUtil
     }
 
     String sql = builder.toString();
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace(sql);
-    }
-
+    if (TRACER.isEnabled()) TRACER.trace(sql);
     Statement statement = null;
     ResultSet resultSet = null;
 

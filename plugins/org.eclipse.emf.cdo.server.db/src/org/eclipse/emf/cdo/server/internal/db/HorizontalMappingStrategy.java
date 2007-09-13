@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.server.IPackageManager;
-import org.eclipse.emf.cdo.server.db.IMapping;
+import org.eclipse.emf.cdo.server.db.IClassMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +38,14 @@ public class HorizontalMappingStrategy extends MappingStrategy
   }
 
   @Override
-  protected IMapping createMapping(CDOClass cdoClass)
+  protected IClassMapping createClassMapping(CDOClass cdoClass)
   {
     if (cdoClass.isAbstract())
     {
       return null;
     }
 
-    return new HorizontalMapping(this, cdoClass);
+    return new HorizontalClassMapping(this, cdoClass);
   }
 
   @Override

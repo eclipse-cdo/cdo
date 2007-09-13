@@ -44,11 +44,11 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
   private String selectPrefix;
 
-  public ReferenceMapping(ValueMapping valueMapping, CDOFeature feature, ToMany toMany)
+  public ReferenceMapping(ClassMapping classMapping, CDOFeature feature, ToMany toMany)
   {
-    super(valueMapping, feature);
+    super(classMapping, feature);
     this.toMany = toMany;
-    mapReference(valueMapping.getCDOClass(), feature);
+    mapReference(classMapping.getCDOClass(), feature);
 
     int dbFeatureID = withFeature ? FeatureServerInfo.getDBID(getFeature()) : 0;
     insertPrefix = createInsertPrefix(dbFeatureID);
@@ -79,7 +79,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
       builder.append(target);
       builder.append(")");
       String sql = builder.toString();
-      getValueMapping().sqlUpdate(storeAccessor, sql);
+      getClassMapping().sqlUpdate(storeAccessor, sql);
     }
   }
 
@@ -237,7 +237,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
     case PER_REPOSITORY:
       withFeature = true;
-      IRepository repository = getValueMapping().getMappingStrategy().getStore().getRepository();
+      IRepository repository = getClassMapping().getMappingStrategy().getStore().getRepository();
       table = mapReferenceTable(repository, repository.getName() + "_refs");
       break;
 
@@ -248,7 +248,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
   protected IDBTable mapReferenceTable(Object key, String tableName)
   {
-    Map<Object, IDBTable> referenceTables = getValueMapping().getMappingStrategy().getReferenceTables();
+    Map<Object, IDBTable> referenceTables = getClassMapping().getMappingStrategy().getReferenceTables();
     IDBTable table = referenceTables.get(key);
     if (table == null)
     {
@@ -261,7 +261,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
   protected IDBTable addReferenceTable(String tableName)
   {
-    IDBTable table = getValueMapping().addTable(tableName);
+    IDBTable table = getClassMapping().addTable(tableName);
     if (withFeature)
     {
       table.addField(CDODBSchema.REFERENCES_FEATURE, DBType.INTEGER);

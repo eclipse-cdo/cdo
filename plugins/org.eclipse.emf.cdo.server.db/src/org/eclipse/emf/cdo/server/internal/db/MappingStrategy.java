@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IMapping;
+import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
@@ -122,18 +122,18 @@ public abstract class MappingStrategy implements IMappingStrategy
     return referenceTables;
   }
 
-  public IMapping getMapping(CDOClass cdoClass)
+  public IClassMapping getClassMapping(CDOClass cdoClass)
   {
-    IMapping mapping = ClassServerInfo.getMapping(cdoClass);
-    if (mapping == NoMapping.INSTANCE)
+    IClassMapping mapping = ClassServerInfo.getClassMapping(cdoClass);
+    if (mapping == NoClassMapping.INSTANCE)
     {
       return null;
     }
 
     if (mapping == null)
     {
-      mapping = createMapping(cdoClass);
-      ClassServerInfo.setMapping(cdoClass, mapping == null ? NoMapping.INSTANCE : mapping);
+      mapping = createClassMapping(cdoClass);
+      ClassServerInfo.setClassMapping(cdoClass, mapping == null ? NoClassMapping.INSTANCE : mapping);
     }
 
     return mapping;
@@ -151,7 +151,7 @@ public abstract class MappingStrategy implements IMappingStrategy
         while (classIt.hasNext())
         {
           CDOClass cdoClass = classIt.next();
-          ValueMapping mapping = (ValueMapping)ClassServerInfo.getMapping(cdoClass);
+          ClassMapping mapping = (ClassMapping)ClassServerInfo.getClassMapping(cdoClass);
           if (mapping != null)
           {
             IDBTable table = mapping.getTable();
@@ -193,7 +193,7 @@ public abstract class MappingStrategy implements IMappingStrategy
     String suffix = " WHERE " + CDODBSchema.ATTRIBUTES_ID + "=" + id;
     for (CDOClass cdoClass : getClassesWithObjectInfo())
     {
-      ValueMapping mapping = (ValueMapping)ClassServerInfo.getMapping(cdoClass);
+      ClassMapping mapping = (ClassMapping)ClassServerInfo.getClassMapping(cdoClass);
       if (mapping != null)
       {
         IDBTable table = mapping.getTable();
@@ -244,7 +244,7 @@ public abstract class MappingStrategy implements IMappingStrategy
     return getType();
   }
 
-  protected abstract IMapping createMapping(CDOClass cdoClass);
+  protected abstract IClassMapping createClassMapping(CDOClass cdoClass);
 
   protected abstract List<CDOClass> getClassesWithObjectInfo();
 }

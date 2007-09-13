@@ -8,60 +8,43 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db;
+package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IMapping;
-import org.eclipse.emf.cdo.server.db.IMappingStrategy;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
 import org.eclipse.net4j.db.IDBTable;
 
-import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public class NoMapping implements IMapping
+public interface IClassMapping
 {
-  public static final IMapping INSTANCE = new NoMapping();
+  public IMappingStrategy getMappingStrategy();
 
-  private NoMapping()
-  {
-  }
+  public CDOClass getCDOClass();
 
-  public IMappingStrategy getMappingStrategy()
-  {
-    return null;
-  }
+  public IDBTable getTable();
 
-  public CDOClass getCDOClass()
-  {
-    return null;
-  }
+  public Set<IDBTable> getAffectedTables();
 
-  public Set<IDBTable> getAffectedTables()
-  {
-    return Collections.emptySet();
-  }
+  public List<IAttributeMapping> getAttributeMappings();
 
-  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
-  {
-  }
+  public List<IReferenceMapping> getReferenceMappings();
 
-  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
-  {
-  }
+  public IReferenceMapping getReferenceMapping(CDOFeature feature);
+
+  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
+
+  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk);
 
   public void readRevisionByTime(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp,
-      int referenceChunk)
-  {
-  }
+      int referenceChunk);
 
   public void readRevisionByVersion(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int version,
-      int referenceChunk)
-  {
-  }
+      int referenceChunk);
 }

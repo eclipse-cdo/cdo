@@ -32,7 +32,7 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IMapping;
+import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
@@ -394,7 +394,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     }
 
     CDOClassImpl cdoClass = revision.getCDOClass();
-    IMapping mapping = ClassServerInfo.getMapping(cdoClass);
+    IClassMapping mapping = ClassServerInfo.getClassMapping(cdoClass);
     mapping.writeRevision(this, revision);
   }
 
@@ -429,7 +429,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     CDOClassImpl cdoClass = getObjectType(id);
     CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
-    IMapping mapping = ClassServerInfo.getMapping(cdoClass);
+    IClassMapping mapping = ClassServerInfo.getClassMapping(cdoClass);
     mapping.readRevision(this, revision, referenceChunk);
     return revision;
   }
@@ -445,7 +445,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     CDOClassImpl cdoClass = getObjectType(id);
     CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
-    IMapping mapping = ClassServerInfo.getMapping(cdoClass);
+    IClassMapping mapping = ClassServerInfo.getClassMapping(cdoClass);
     mapping.readRevisionByTime(this, revision, timeStamp, referenceChunk);
     return revision;
   }
@@ -461,13 +461,14 @@ public class DBStoreAccessor implements IDBStoreAccessor
     CDOClassImpl cdoClass = getObjectType(id);
     CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
-    IMapping mapping = ClassServerInfo.getMapping(cdoClass);
+    IClassMapping mapping = ClassServerInfo.getClassMapping(cdoClass);
     mapping.readRevisionByVersion(this, revision, version, referenceChunk);
     return revision;
   }
 
   public CDOID readResourceID(String path)
   {
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     // TODO Implement method DBStoreAccessor.readResourceID()
     throw new UnsupportedOperationException("Not yet implemented");
   }
@@ -537,7 +538,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
       IMappingStrategy mappingStrategy = store.getMappingStrategy();
       for (CDOClassImpl cdoClass : cdoClasses)
       {
-        IMapping mapping = mappingStrategy.getMapping(cdoClass);
+        IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
         if (mapping != null)
         {
           affectedTables.addAll(mapping.getAffectedTables());

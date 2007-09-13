@@ -14,13 +14,11 @@ import org.eclipse.emf.cdo.internal.server.StoreChunkReader;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
-import org.eclipse.emf.cdo.server.db.IMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
-
-import org.eclipse.net4j.util.ImplementationError;
 
 import java.util.List;
 
@@ -37,16 +35,8 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
   {
     super(storeAccessor, revision, feature);
     IMappingStrategy mappingStrategy = storeAccessor.getStore().getMappingStrategy();
-    CDOClass cdoClass = revision.getCDOClass();
-    IMapping mapping = mappingStrategy.getMapping(cdoClass);
-    if (mapping instanceof ValueMapping)
-    {
-      referenceMapping = ((ValueMapping)mapping).getReferenceMapping(feature);
-    }
-    else
-    {
-      throw new ImplementationError();
-    }
+    IClassMapping mapping = mappingStrategy.getClassMapping(revision.getCDOClass());
+    referenceMapping = mapping.getReferenceMapping(feature);
   }
 
   @Override

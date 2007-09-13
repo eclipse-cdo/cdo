@@ -12,20 +12,12 @@ package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
-import org.eclipse.net4j.db.IDBTable;
-
-import java.util.List;
-
 /**
  * @author Eike Stepper
  */
-public interface IValueMapping extends IMapping
+public interface IFeatureMapping
 {
-  public IDBTable getTable();
+  public IClassMapping getClassMapping();
 
-  public List<IAttributeMapping> getAttributeMappings();
-
-  public List<IReferenceMapping> getReferenceMappings();
-
-  public IReferenceMapping getReferenceMapping(CDOFeature feature);
+  public CDOFeature getFeature();
 }

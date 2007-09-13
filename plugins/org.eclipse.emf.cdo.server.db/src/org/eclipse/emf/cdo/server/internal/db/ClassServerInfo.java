@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.server.db.IMapping;
+import org.eclipse.emf.cdo.server.db.IClassMapping;
 
 import org.eclipse.net4j.util.ImplementationError;
 
@@ -24,7 +24,7 @@ public final class ClassServerInfo extends ServerInfo
 
   public static final int CDO_RESOURCE_CLASS_DBID = -2;
 
-  private IMapping mapping;
+  private IClassMapping classMapping;
 
   private ClassServerInfo(int id)
   {
@@ -38,13 +38,13 @@ public final class ClassServerInfo extends ServerInfo
     return serverInfo;
   }
 
-  public static IMapping getMapping(CDOClass cdoClass)
+  public static IClassMapping getClassMapping(CDOClass cdoClass)
   {
     ClassServerInfo serverInfo = getServerInfo(cdoClass);
-    return serverInfo == null ? null : serverInfo.mapping;
+    return serverInfo == null ? null : serverInfo.classMapping;
   }
 
-  public static void setMapping(CDOClass cdoClass, IMapping mapping)
+  public static void setClassMapping(CDOClass cdoClass, IClassMapping classMapping)
   {
     ClassServerInfo serverInfo = getServerInfo(cdoClass);
     if (serverInfo == null)
@@ -52,7 +52,7 @@ public final class ClassServerInfo extends ServerInfo
       throw new ImplementationError("No serverInfo for class " + cdoClass);
     }
 
-    serverInfo.mapping = mapping;
+    serverInfo.classMapping = classMapping;
   }
 
   protected static ClassServerInfo getServerInfo(CDOClass cdoClass)

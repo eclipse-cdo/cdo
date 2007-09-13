@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
 import org.eclipse.net4j.db.IDBField;
 
@@ -20,12 +19,8 @@ import java.sql.ResultSet;
 /**
  * @author Eike Stepper
  */
-public interface IAttributeMapping
+public interface IAttributeMapping extends IFeatureMapping
 {
-  public IValueMapping getValueMapping();
-
-  public CDOFeature getFeature();
-
   public IDBField getField();
 
   public void appendValue(StringBuilder builder, CDORevisionImpl revision);

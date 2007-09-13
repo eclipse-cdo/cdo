@@ -39,7 +39,7 @@ public interface IMappingStrategy
 
   public void setProperties(Map<String, String> properties);
 
-  public IMapping getMapping(CDOClass cdoClass);
+  public IClassMapping getClassMapping(CDOClass cdoClass);
 
   public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor storeAccessor, boolean withTypes);
 

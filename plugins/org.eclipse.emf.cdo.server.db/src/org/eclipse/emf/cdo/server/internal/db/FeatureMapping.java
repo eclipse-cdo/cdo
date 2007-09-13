@@ -19,19 +19,19 @@ import org.eclipse.net4j.db.IDBAdapter;
  */
 public class FeatureMapping
 {
-  private ValueMapping valueMapping;
+  private ClassMapping classMapping;
 
   private CDOFeature feature;
 
-  public FeatureMapping(ValueMapping valueMapping, CDOFeature feature)
+  public FeatureMapping(ClassMapping classMapping, CDOFeature feature)
   {
-    this.valueMapping = valueMapping;
+    this.classMapping = classMapping;
     this.feature = feature;
   }
 
-  public ValueMapping getValueMapping()
+  public ClassMapping getClassMapping()
   {
-    return valueMapping;
+    return classMapping;
   }
 
   public CDOFeature getFeature()
@@ -41,6 +41,6 @@ public class FeatureMapping
 
   protected IDBAdapter getDBAdapter()
   {
-    return getValueMapping().getMappingStrategy().getStore().getDBAdapter();
+    return getClassMapping().getMappingStrategy().getStore().getDBAdapter();
   }
 }

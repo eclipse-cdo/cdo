@@ -10,27 +10,33 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.core.CDOObjectClass;
 
 /**
  * @author Eike Stepper
  */
-public class HorizontalMapping extends ValueMapping
+public class RootClassMapping extends ClassMapping
 {
-  public HorizontalMapping(HorizontalMappingStrategy mappingStrategy, CDOClass cdoClass)
+  public RootClassMapping(VerticalMappingStrategy mappingStrategy)
   {
-    super(mappingStrategy, cdoClass, cdoClass.getAllFeatures());
+    super(mappingStrategy, getRootClass(mappingStrategy), null);
+    initTable(getTable(), true);
   }
 
   @Override
-  public HorizontalMappingStrategy getMappingStrategy()
+  public VerticalMappingStrategy getMappingStrategy()
   {
-    return (HorizontalMappingStrategy)super.getMappingStrategy();
+    return (VerticalMappingStrategy)super.getMappingStrategy();
   }
 
   @Override
   protected boolean hasFullRevisionInfo()
   {
     return true;
+  }
+
+  private static CDOObjectClass getRootClass(VerticalMappingStrategy mappingStrategy)
+  {
+    return mappingStrategy.getStore().getRepository().getPackageManager().getCDOCorePackage().getCDOObjectClass();
   }
 }

@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IMapping;
+import org.eclipse.emf.cdo.server.db.IClassMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,21 +21,21 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class VerticalMapping extends ValueMapping
+public class VerticalClassMapping extends ClassMapping
 {
-  private List<IMapping> superMappings;
+  private List<IClassMapping> superMappings;
 
-  public VerticalMapping(VerticalMappingStrategy mappingStrategy, CDOClass cdoClass)
+  public VerticalClassMapping(VerticalMappingStrategy mappingStrategy, CDOClass cdoClass)
   {
     super(mappingStrategy, cdoClass, cdoClass.getFeatures());
     for (CDOClass superType : cdoClass.getSuperTypes())
     {
-      IMapping superMapping = mappingStrategy.getMapping(superType);
+      IClassMapping superMapping = mappingStrategy.getClassMapping(superType);
       if (superMapping != null)
       {
         if (superMappings == null)
         {
-          superMappings = new ArrayList<IMapping>(0);
+          superMappings = new ArrayList<IClassMapping>(0);
         }
 
         superMappings.add(superMapping);
@@ -55,7 +55,7 @@ public class VerticalMapping extends ValueMapping
     return false;
   }
 
-  public List<IMapping> getSuperMappings()
+  public List<IClassMapping> getSuperMappings()
   {
     return superMappings;
   }
@@ -66,7 +66,7 @@ public class VerticalMapping extends ValueMapping
     super.writeRevision(storeAccessor, revision);
     if (superMappings != null)
     {
-      for (IMapping superMapping : superMappings)
+      for (IClassMapping superMapping : superMappings)
       {
         superMapping.writeRevision(storeAccessor, revision);
       }

@@ -20,10 +20,10 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
 {
   private IDBField field;
 
-  public AttributeMapping(ValueMapping valueMapping, CDOFeature feature)
+  public AttributeMapping(ClassMapping classMapping, CDOFeature feature)
   {
-    super(valueMapping, feature);
-    field = valueMapping.addField(feature, valueMapping.getTable());
+    super(classMapping, feature);
+    field = classMapping.addField(feature, classMapping.getTable());
   }
 
   public IDBField getField()
@@ -74,9 +74,9 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
    */
   public static class AMString extends AttributeMapping
   {
-    public AMString(ValueMapping valueMapping, CDOFeature feature)
+    public AMString(ClassMapping classMapping, CDOFeature feature)
     {
-      super(valueMapping, feature);
+      super(classMapping, feature);
     }
 
     @Override
@@ -91,9 +91,9 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
    */
   public static class AMShort extends AttributeMapping
   {
-    public AMShort(ValueMapping valueMapping, CDOFeature feature)
+    public AMShort(ClassMapping classMapping, CDOFeature feature)
     {
-      super(valueMapping, feature);
+      super(classMapping, feature);
     }
 
     @Override
@@ -108,9 +108,9 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
    */
   public static class AMObject extends AttributeMapping
   {
-    public AMObject(ValueMapping valueMapping, CDOFeature feature)
+    public AMObject(ClassMapping classMapping, CDOFeature feature)
     {
-      super(valueMapping, feature);
+      super(classMapping, feature);
     }
 
     @Override
@@ -131,9 +131,9 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
    */
   public static class AMLong extends AttributeMapping
   {
-    public AMLong(ValueMapping valueMapping, CDOFeature feature)
+    public AMLong(ClassMapping classMapping, CDOFeature feature)
     {
-      super(valueMapping, feature);
+      super(classMapping, feature);
     }
 
     @Override
@@ -148,9 +148,9 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
    */
   public static class AMInteger extends AttributeMapping
   {
-    public AMInteger(ValueMapping valueMapping, CDOFeature feature)
+    public AMInteger(ClassMapping classMapping, CDOFeature feature)
     {
-      super(valueMapping, feature);
+      super(classMapping, feature);
     }
 
     @Override
@@ -165,9 +165,9 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
    */
   public static class AMFloat extends AttributeMapping
   {
-    public AMFloat(ValueMapping valueMapping, CDOFeature feature)
+    public AMFloat(ClassMapping classMapping, CDOFeature feature)
     {
-      super(valueMapping, feature);
+      super(classMapping, feature);
     }
 
     @Override
@@ -182,9 +182,9 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
    */
   public static class AMDouble extends AttributeMapping
   {
-    public AMDouble(ValueMapping valueMapping, CDOFeature feature)
+    public AMDouble(ClassMapping classMapping, CDOFeature feature)
     {
-      super(valueMapping, feature);
+      super(classMapping, feature);
     }
 
     @Override
@@ -199,9 +199,9 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
    */
   public static class AMDate extends AttributeMapping
   {
-    public AMDate(ValueMapping valueMapping, CDOFeature feature)
+    public AMDate(ClassMapping classMapping, CDOFeature feature)
     {
-      super(valueMapping, feature);
+      super(classMapping, feature);
     }
 
     @Override
@@ -217,9 +217,9 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
    */
   public static class AMCharacter extends AttributeMapping
   {
-    public AMCharacter(ValueMapping valueMapping, CDOFeature feature)
+    public AMCharacter(ClassMapping classMapping, CDOFeature feature)
     {
-      super(valueMapping, feature);
+      super(classMapping, feature);
     }
 
     @Override
@@ -240,9 +240,9 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
    */
   public static class AMByte extends AttributeMapping
   {
-    public AMByte(ValueMapping valueMapping, CDOFeature feature)
+    public AMByte(ClassMapping classMapping, CDOFeature feature)
     {
-      super(valueMapping, feature);
+      super(classMapping, feature);
     }
 
     @Override
@@ -257,9 +257,9 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
    */
   public static class AMBoolean extends AttributeMapping
   {
-    public AMBoolean(ValueMapping valueMapping, CDOFeature feature)
+    public AMBoolean(ClassMapping classMapping, CDOFeature feature)
     {
-      super(valueMapping, feature);
+      super(classMapping, feature);
     }
 
     @Override

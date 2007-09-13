@@ -10,24 +10,27 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
 
 /**
  * @author Eike Stepper
  */
-public class ToOneReferenceMapping extends AttributeMapping.AMObject
+public class HorizontalClassMapping extends ClassMapping
 {
-  public ToOneReferenceMapping(ClassMapping classMapping, CDOFeature feature)
+  public HorizontalClassMapping(HorizontalMappingStrategy mappingStrategy, CDOClass cdoClass)
   {
-    super(classMapping, feature);
+    super(mappingStrategy, cdoClass, cdoClass.getAllFeatures());
   }
 
   @Override
-  protected Long getRevisionValue(CDORevisionImpl revision)
+  public HorizontalMappingStrategy getMappingStrategy()
   {
-    CDOID id = (CDOID)super.getRevisionValue(revision);
-    return id.getValue();
+    return (HorizontalMappingStrategy)super.getMappingStrategy();
+  }
+
+  @Override
+  protected boolean hasFullRevisionInfo()
+  {
+    return true;
   }
 }

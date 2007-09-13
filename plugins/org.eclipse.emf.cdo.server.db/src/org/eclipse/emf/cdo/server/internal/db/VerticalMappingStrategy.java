@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.server.db.IMapping;
+import org.eclipse.emf.cdo.server.db.IClassMapping;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class VerticalMappingStrategy extends MappingStrategy
 {
-  private RootMapping rootMapping;
+  private RootClassMapping rootMapping;
 
   public VerticalMappingStrategy()
   {
@@ -38,20 +38,20 @@ public class VerticalMappingStrategy extends MappingStrategy
     return true;
   }
 
-  public RootMapping getRootMapping()
+  public RootClassMapping getRootMapping()
   {
     if (rootMapping == null)
     {
-      rootMapping = new RootMapping(this);
+      rootMapping = new RootClassMapping(this);
     }
 
     return rootMapping;
   }
 
   @Override
-  protected IMapping createMapping(CDOClass cdoClass)
+  protected IClassMapping createClassMapping(CDOClass cdoClass)
   {
-    return new VerticalMapping(this, cdoClass);
+    return new VerticalClassMapping(this, cdoClass);
   }
 
   @Override

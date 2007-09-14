@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.registry.IRegistry;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.Statement;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -30,9 +31,9 @@ public interface IDBAdapter
 
   public Driver getJDBCDriver();
 
-  public void createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException;
+  public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException;
 
-  public void createTable(IDBTable table, Statement statement) throws DBException;
+  public boolean createTable(IDBTable table, Statement statement) throws DBException;
 
   public String mangleTableName(String name, int attempt);
 

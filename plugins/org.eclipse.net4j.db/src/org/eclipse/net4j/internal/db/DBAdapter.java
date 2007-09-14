@@ -24,6 +24,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -52,8 +54,9 @@ public abstract class DBAdapter implements IDBAdapter
     return version;
   }
 
-  public void createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException
+  public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException
   {
+    Set<IDBTable> createdTables = new HashSet<IDBTable>();
     Statement statement = null;
 
     try
@@ -61,7 +64,10 @@ public abstract class DBAdapter implements IDBAdapter
       statement = connection.createStatement();
       for (IDBTable table : tables)
       {
-        createTable(table, statement);
+        if (createTable(table, statement))
+        {
+          createdTables.add(table);
+        }
       }
     }
     catch (SQLException ex)
@@ -72,16 +78,21 @@ public abstract class DBAdapter implements IDBAdapter
     {
       DBUtil.close(statement);
     }
+
+    return createdTables;
   }
 
-  public void createTable(IDBTable table, Statement statement) throws DBException
+  public boolean createTable(IDBTable table, Statement statement) throws DBException
   {
+    boolean created = true;
+
     try
     {
       doCreateTable((DBTable)table, statement);
     }
     catch (SQLException ex)
     {
+      created = false;
       if (TRACER.isEnabled())
       {
         TRACER.trace("-- " + ex.getMessage());
@@ -89,6 +100,7 @@ public abstract class DBAdapter implements IDBAdapter
     }
 
     validateTable((DBTable)table, statement);
+    return created;
   }
 
   public String mangleTableName(String name, int attempt)

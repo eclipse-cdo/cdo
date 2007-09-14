@@ -186,6 +186,26 @@ public final class DBUtil
     }
   }
 
+  public static int update(Connection connection, String sql)
+  {
+    if (TRACER.isEnabled()) TRACER.trace(sql);
+    Statement statement = null;
+
+    try
+    {
+      statement = connection.createStatement();
+      return statement.executeUpdate(sql);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(statement);
+    }
+  }
+
   public static void insertRow(Connection connection, IDBAdapter dbAdapter, IDBTable table, Object... args)
       throws DBException
   {
@@ -214,29 +234,10 @@ public final class DBUtil
     builder.append(")");
     String sql = builder.toString();
 
-    if (TRACER.isEnabled())
+    int count = update(connection, sql);
+    if (count == 0)
     {
-      TRACER.trace(sql);
-    }
-
-    Statement statement = null;
-
-    try
-    {
-      statement = connection.createStatement();
-      int count = statement.executeUpdate(sql);
-      if (count == 0)
-      {
-        throw new DBException("No row inserted into table " + table);
-      }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      close(statement);
+      throw new DBException("No row inserted into table " + table);
     }
   }
 

@@ -24,6 +24,32 @@ public class CDODBSchema extends DBSchema
   public static final CDODBSchema INSTANCE = new CDODBSchema();
 
   /**
+   * DBTable cdo_repository
+   */
+  public static final IDBTable REPOSITORY = INSTANCE.addTable("cdo_repository");
+
+  public static final IDBField REPOSITORY_NAME = //
+  REPOSITORY.addField("name", DBType.VARCHAR, 255);
+
+  public static final IDBField REPOSITORY_UUID = //
+  REPOSITORY.addField("uuid", DBType.VARCHAR, 64);
+
+  public static final IDBField REPOSITORY_STARTS = //
+  REPOSITORY.addField("starts", DBType.BIGINT);
+
+  public static final IDBField REPOSITORY_STARTED = //
+  REPOSITORY.addField("started", DBType.BIGINT);
+
+  public static final IDBField REPOSITORY_STOPPED = //
+  REPOSITORY.addField("stopped", DBType.BIGINT);
+
+  public static final IDBField REPOSITORY_NEXT_CDOID = //
+  REPOSITORY.addField("next_cdoid", DBType.BIGINT);
+
+  public static final IDBField REPOSITORY_NEXT_METAID = //
+  REPOSITORY.addField("next_metaid", DBType.BIGINT);
+
+  /**
    * DBTable cdo_packages
    */
   public static final IDBTable PACKAGES = INSTANCE.addTable("cdo_packages");

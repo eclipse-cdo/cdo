@@ -201,12 +201,32 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return CDOIDRangeImpl.create(lowerBound, nextMetaIDValue - 2);
   }
 
+  public void setNextMetaIDValue(long nextMetaIDValue)
+  {
+    this.nextMetaIDValue = nextMetaIDValue;
+  }
+
+  public long getNextMetaIDValue()
+  {
+    return nextMetaIDValue;
+  }
+
   public CDOID getNextCDOID()
   {
     CDOID id = CDOIDImpl.create(nextOIDValue);
     ++nextOIDValue;
     ++nextOIDValue;
     return id;
+  }
+
+  public long getNextOIDValue()
+  {
+    return nextOIDValue;
+  }
+
+  public void setNextOIDValue(long nextOIDValue)
+  {
+    this.nextOIDValue = nextOIDValue;
   }
 
   @Override

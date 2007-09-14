@@ -15,12 +15,14 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBSchema;
+import org.eclipse.net4j.db.IDBTable;
 
 import javax.sql.DataSource;
 
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -86,19 +88,19 @@ public class DBSchema extends DBElement implements IDBSchema
     return locked = true;
   }
 
-  public void create(IDBAdapter dbAdapter, Connection connection) throws DBException
+  public Set<IDBTable> create(IDBAdapter dbAdapter, Connection connection) throws DBException
   {
-    dbAdapter.createTables(tables.values(), connection);
+    return dbAdapter.createTables(tables.values(), connection);
   }
 
-  public void create(IDBAdapter dbAdapter, ConnectionProvider connectionProvider) throws DBException
+  public Set<IDBTable> create(IDBAdapter dbAdapter, ConnectionProvider connectionProvider) throws DBException
   {
     Connection connection = null;
 
     try
     {
       connection = connectionProvider.getConnection();
-      create(dbAdapter, connection);
+      return create(dbAdapter, connection);
     }
     finally
     {
@@ -106,9 +108,9 @@ public class DBSchema extends DBElement implements IDBSchema
     }
   }
 
-  public void create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
+  public Set<IDBTable> create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
   {
-    create(dbAdapter, DBUtil.createConnectionProvider(dataSource));
+    return create(dbAdapter, DBUtil.createConnectionProvider(dataSource));
   }
 
   void assertUnlocked() throws DBException

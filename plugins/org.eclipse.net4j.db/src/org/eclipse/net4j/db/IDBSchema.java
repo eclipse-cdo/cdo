@@ -13,6 +13,7 @@ package org.eclipse.net4j.db;
 import javax.sql.DataSource;
 
 import java.sql.Connection;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -25,9 +26,9 @@ public interface IDBSchema extends IDBElement
 
   public IDBTable[] getTables();
 
-  public void create(IDBAdapter dbAdapter, Connection connection) throws DBException;
+  public Set<IDBTable> create(IDBAdapter dbAdapter, Connection connection) throws DBException;
 
-  public void create(IDBAdapter dbAdapter, ConnectionProvider connectionProvider) throws DBException;
+  public Set<IDBTable> create(IDBAdapter dbAdapter, ConnectionProvider connectionProvider) throws DBException;
 
-  public void create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException;
+  public Set<IDBTable> create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException;
 }

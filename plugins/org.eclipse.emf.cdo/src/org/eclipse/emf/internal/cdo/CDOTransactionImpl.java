@@ -16,23 +16,28 @@ import org.eclipse.emf.cdo.CDOTransactionDirtyEvent;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
+
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.protocol.CommitTransactionRequest;
+import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
+import org.eclipse.emf.internal.cdo.util.EMFPackageClosure;
+import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 
-import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.protocol.CommitTransactionRequest;
-import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
-
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -113,8 +118,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       try
       {
         CDOSessionImpl session = getSession();
-        CDOPackageManagerImpl packageManager = session.getPackageManager();
-        newPackages = packageManager.getTransientPackages();
+        newPackages = analyzeNewPackages(session);
 
         preCommit(newObjects);
         preCommit(dirtyObjects);
@@ -231,6 +235,36 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       dirty = true;
       fireEvent(new DirtyEvent());
     }
+  }
+
+  private List<CDOPackageImpl> analyzeNewPackages(CDOSessionImpl session)
+  {
+    Set<EPackage> ePackages = new HashSet<EPackage>();
+    for (InternalCDOObject object : newObjects.values())
+    {
+      ePackages.add(object.eClass().getEPackage());
+    }
+
+    // Find all indirectly referenced EPackages as well
+    ePackages = new EMFPackageClosure().calculate(ePackages);
+
+    CDOSessionPackageManager packageManager = session.getPackageManager();
+    List<CDOPackageImpl> cdoPackages = new ArrayList<CDOPackageImpl>();
+    for (EPackage ePackage : ePackages)
+    {
+      CDOPackageImpl cdoPackage = ModelUtil.getCDOPackage(ePackage, packageManager);
+      if (cdoPackage == null)
+      {
+        throw new IllegalStateException("Missing CDO package: " + ePackage.getNsURI());
+      }
+
+      if (!cdoPackage.isPersistent())
+      {
+        cdoPackages.add(cdoPackage);
+      }
+    }
+
+    return cdoPackages;
   }
 
   @SuppressWarnings("unchecked")

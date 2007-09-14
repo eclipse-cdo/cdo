@@ -274,6 +274,7 @@ public abstract class MappingStrategy implements IMappingStrategy
 
   public CDOClassRef readObjectType(IDBStoreAccessor storeAccessor, CDOID id)
   {
+    // TODO Change to support vertical mappings
     String prefix = "SELECT DISTINCT " + CDODBSchema.ATTRIBUTES_CLASS + " FROM ";
     String suffix = " WHERE " + CDODBSchema.ATTRIBUTES_ID + "=" + id;
     for (CDOClass cdoClass : getClassesWithObjectInfo())

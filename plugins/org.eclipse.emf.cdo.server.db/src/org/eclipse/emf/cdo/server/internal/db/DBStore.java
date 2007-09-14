@@ -199,19 +199,19 @@ public class DBStore extends Store implements IDBStore
       builder.append("UPDATE ");
       builder.append(CDODBSchema.REPOSITORY);
       builder.append(" SET ");
-      builder.append(CDODBSchema.REPOSITORY_STARTS);
+      builder.append(CDODBSchema.REPOSITORY_STARTS.getName());
       builder.append("=");
-      builder.append(CDODBSchema.REPOSITORY_STARTS);
+      builder.append(CDODBSchema.REPOSITORY_STARTS.getName());
       builder.append("+1, ");
-      builder.append(CDODBSchema.REPOSITORY_STARTED);
+      builder.append(CDODBSchema.REPOSITORY_STARTED.getName());
       builder.append("=");
       builder.append(System.currentTimeMillis());
       builder.append(", ");
-      builder.append(CDODBSchema.REPOSITORY_STOPPED);
+      builder.append(CDODBSchema.REPOSITORY_STOPPED.getName());
       builder.append("=0, ");
-      builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID);
+      builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID.getName());
       builder.append("=0, ");
-      builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
+      builder.append(CDODBSchema.REPOSITORY_NEXT_METAID.getName());
       builder.append("=0");
 
       String sql = builder.toString();
@@ -233,15 +233,15 @@ public class DBStore extends Store implements IDBStore
     builder.append("UPDATE ");
     builder.append(CDODBSchema.REPOSITORY);
     builder.append(" SET ");
-    builder.append(CDODBSchema.REPOSITORY_STOPPED);
+    builder.append(CDODBSchema.REPOSITORY_STOPPED.getName());
     builder.append("=");
     builder.append(System.currentTimeMillis());
     builder.append(", ");
-    builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID);
+    builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID.getName());
     builder.append("=");
     builder.append(repository.getNextOIDValue());
     builder.append(", ");
-    builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
+    builder.append(CDODBSchema.REPOSITORY_NEXT_METAID.getName());
     builder.append("=");
     builder.append(repository.getNextMetaIDValue());
 

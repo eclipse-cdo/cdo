@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.server.Store;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
@@ -139,77 +140,65 @@ public class DBStore extends Store implements IDBStore
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    Set<IDBTable> createdTables = CDODBSchema.INSTANCE.create(dbAdapter, connectionProvider);
-    DBStoreAccessor writer = getWriter(null);
-    Connection connection = writer.getConnection();
-
-    try
-    {
-      if (createdTables.contains(CDODBSchema.REPOSITORY))
-      {
-        insertRepositoryRow(writer);
-      }
-      else
-      {
-        Repository repository = (Repository)getRepository();
-        repository.setNextOIDValue(DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_NEXT_CDOID));
-        repository.setNextMetaIDValue(DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_NEXT_METAID));
-        updateRepositoryRow(writer, true);
-      }
-
-      nextPackageID = DBUtil.selectMaximum(connection, CDODBSchema.PACKAGES_ID) + 1;
-      nextClassID = DBUtil.selectMaximum(connection, CDODBSchema.CLASSES_ID) + 1;
-      nextFeatureID = DBUtil.selectMaximum(connection, CDODBSchema.FEATURES_ID) + 1;
-
-      writer.release();
-    }
-    finally
-    {
-      DBUtil.close(connection);
-    }
+    activateOrDeactivate(true);
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    DBStoreAccessor writer = getWriter(null);
-    Connection connection = writer.getConnection();
+    activateOrDeactivate(false);
+    super.doDeactivate();
+  }
+
+  protected void activateOrDeactivate(boolean started)
+  {
+    Repository repository = (Repository)getRepository();
+    Connection connection = connectionProvider.getConnection();
 
     try
     {
-      updateRepositoryRow(writer, false);
-      writer.release();
+      if (started)
+      {
+        activateStore(repository, connection);
+      }
+      else
+      {
+        deactivateStore(repository, connection);
+      }
     }
     finally
     {
       DBUtil.close(connection);
     }
-
-    super.doDeactivate();
   }
 
-  protected IDBSchema createSchema()
+  protected void activateStore(Repository repository, Connection connection)
   {
-    String name = getRepository().getName();
-    return new DBSchema(name);
-  }
-
-  protected void insertRepositoryRow(DBStoreAccessor writer)
-  {
-    Repository repository = (Repository)getRepository();
-    DBUtil.insertRow(writer.getConnection(), dbAdapter, CDODBSchema.REPOSITORY, repository.getName(), repository
-        .getUUID(), 1, System.currentTimeMillis(), 0, 0, 0);
-  }
-
-  protected void updateRepositoryRow(DBStoreAccessor writer, boolean started)
-  {
-    Repository repository = (Repository)getRepository();
-    StringBuilder builder = new StringBuilder();
-    builder.append("UPDATE ");
-    builder.append(CDODBSchema.REPOSITORY);
-    builder.append(" SET ");
-    if (started)
+    Set<IDBTable> createdTables = CDODBSchema.INSTANCE.create(dbAdapter, connectionProvider);
+    if (createdTables.contains(CDODBSchema.REPOSITORY))
     {
+      // First start
+      DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, repository.getName(), repository.getUUID(), 1,
+          System.currentTimeMillis(), 0, 0, 0);
+
+      MappingStrategy mappingStrategy = (MappingStrategy)getMappingStrategy();
+      IClassMapping resourceClassMapping = mappingStrategy.getResourceClassMapping();
+      Set<IDBTable> tables = resourceClassMapping.getAffectedTables();
+      if (dbAdapter.createTables(tables, connection).size() != tables.size())
+      {
+        throw new DBException("CDOResource tables not completely created");
+      }
+    }
+    else
+    {
+      // Restart
+      repository.setNextOIDValue(DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_NEXT_CDOID));
+      repository.setNextMetaIDValue(DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_NEXT_METAID));
+
+      StringBuilder builder = new StringBuilder();
+      builder.append("UPDATE ");
+      builder.append(CDODBSchema.REPOSITORY);
+      builder.append(" SET ");
       builder.append(CDODBSchema.REPOSITORY_STARTS);
       builder.append("=");
       builder.append(CDODBSchema.REPOSITORY_STARTS);
@@ -224,28 +213,50 @@ public class DBStore extends Store implements IDBStore
       builder.append("=0, ");
       builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
       builder.append("=0");
-    }
-    else
-    {
-      builder.append(CDODBSchema.REPOSITORY_STOPPED);
-      builder.append("=");
-      builder.append(System.currentTimeMillis());
-      builder.append(", ");
-      builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID);
-      builder.append("=");
-      builder.append(repository.getNextOIDValue());
-      builder.append(", ");
-      builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
-      builder.append("=");
-      builder.append(repository.getNextMetaIDValue());
+
+      String sql = builder.toString();
+      int count = DBUtil.update(connection, sql);
+      if (count == 0)
+      {
+        throw new DBException("No row updated in table " + CDODBSchema.REPOSITORY);
+      }
     }
 
+    nextPackageID = DBUtil.selectMaximum(connection, CDODBSchema.PACKAGES_ID) + 1;
+    nextClassID = DBUtil.selectMaximum(connection, CDODBSchema.CLASSES_ID) + 1;
+    nextFeatureID = DBUtil.selectMaximum(connection, CDODBSchema.FEATURES_ID) + 1;
+  }
+
+  protected void deactivateStore(Repository repository, Connection connection)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("UPDATE ");
+    builder.append(CDODBSchema.REPOSITORY);
+    builder.append(" SET ");
+    builder.append(CDODBSchema.REPOSITORY_STOPPED);
+    builder.append("=");
+    builder.append(System.currentTimeMillis());
+    builder.append(", ");
+    builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID);
+    builder.append("=");
+    builder.append(repository.getNextOIDValue());
+    builder.append(", ");
+    builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
+    builder.append("=");
+    builder.append(repository.getNextMetaIDValue());
+
     String sql = builder.toString();
-    int count = DBUtil.update(writer.getConnection(), sql);
+    int count = DBUtil.update(connection, sql);
     if (count == 0)
     {
       throw new DBException("No row updated in table " + CDODBSchema.REPOSITORY);
     }
+  }
+
+  protected IDBSchema createSchema()
+  {
+    String name = getRepository().getName();
+    return new DBSchema(name);
   }
 
   public static DBType getDBType(CDOType type)

@@ -104,6 +104,11 @@ public enum DBType
     {
       if (value instanceof String || value instanceof Character)
       {
+        if (value instanceof String)
+        {
+          value = ((String)value).replaceAll("'", "\\'");
+        }
+
         builder.append("'");
         builder.append(value);
         builder.append("'");

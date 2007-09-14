@@ -265,7 +265,7 @@ public abstract class ClassMapping implements IClassMapping
       for (IAttributeMapping attributeMapping : attributeMappings)
       {
         builder.append(", ");
-        builder.append(attributeMapping.getField().getName());
+        builder.append(attributeMapping.getField());
       }
     }
 

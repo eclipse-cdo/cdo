@@ -38,6 +38,6 @@ public abstract class DBElement implements IDBElement
   @Override
   public String toString()
   {
-    return getFullName();
+    return getName();
   }
 }

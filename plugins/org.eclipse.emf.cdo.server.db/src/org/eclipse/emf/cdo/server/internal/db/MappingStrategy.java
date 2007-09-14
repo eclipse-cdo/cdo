@@ -356,11 +356,11 @@ public abstract class MappingStrategy implements IMappingStrategy
   {
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT ");
-    builder.append(selectField.getName());
+    builder.append(selectField);
     builder.append(" FROM ");
     builder.append(resourceTable);
     builder.append(" WHERE ");
-    builder.append(whereField.getName());
+    builder.append(whereField);
     builder.append("=");
     getStore().getDBAdapter().appendValue(builder, whereField, whereValue);
 

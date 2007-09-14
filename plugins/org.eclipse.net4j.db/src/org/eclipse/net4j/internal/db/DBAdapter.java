@@ -128,7 +128,7 @@ public abstract class DBAdapter implements IDBAdapter
   {
     StringBuilder builder = new StringBuilder();
     builder.append("CREATE TABLE ");
-    builder.append(table.getName());
+    builder.append(table);
     builder.append(" (");
     table.appendFieldDefs(builder, createFieldDefinitions(table));
     String constraints = createConstraints(table);
@@ -240,7 +240,7 @@ public abstract class DBAdapter implements IDBAdapter
       builder.append("SELECT ");
       table.appendFieldNames(builder);
       builder.append(" FROM ");
-      builder.append(table.getName());
+      builder.append(table);
       String sql = builder.toString();
 
       ResultSet resultSet = statement.executeQuery(sql);
@@ -248,7 +248,7 @@ public abstract class DBAdapter implements IDBAdapter
       int columnCount = metaData.getColumnCount();
       if (columnCount != table.getFieldCount())
       {
-        throw new DBException("DBTable " + table.getName() + " has " + columnCount + " columns instead of "
+        throw new DBException("DBTable " + table + " has " + columnCount + " columns instead of "
             + table.getFieldCount());
       }
 

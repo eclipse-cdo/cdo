@@ -192,14 +192,13 @@ public class DBStore extends Store implements IDBStore
     else
     {
       // Restart
-      int stopped = DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_STOPPED);
-      if (stopped == 0)
-      {
-        repairAfterCrash(repository, connection);
-      }
 
       int nextCDOID = DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_NEXT_CDOID);
       int nextMetaID = DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_NEXT_METAID);
+      if (nextCDOID == 0 || nextMetaID == 0)
+      {
+        repairAfterCrash(repository, connection);
+      }
 
       repository.setNextOIDValue(nextCDOID);
       repository.setNextMetaIDValue(nextMetaID);
@@ -208,19 +207,19 @@ public class DBStore extends Store implements IDBStore
       builder.append("UPDATE ");
       builder.append(CDODBSchema.REPOSITORY);
       builder.append(" SET ");
-      builder.append(CDODBSchema.REPOSITORY_STARTS.getName());
+      builder.append(CDODBSchema.REPOSITORY_STARTS);
       builder.append("=");
-      builder.append(CDODBSchema.REPOSITORY_STARTS.getName());
+      builder.append(CDODBSchema.REPOSITORY_STARTS);
       builder.append("+1, ");
-      builder.append(CDODBSchema.REPOSITORY_STARTED.getName());
+      builder.append(CDODBSchema.REPOSITORY_STARTED);
       builder.append("=");
       builder.append(System.currentTimeMillis());
       builder.append(", ");
-      builder.append(CDODBSchema.REPOSITORY_STOPPED.getName());
+      builder.append(CDODBSchema.REPOSITORY_STOPPED);
       builder.append("=0, ");
-      builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID.getName());
+      builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID);
       builder.append("=0, ");
-      builder.append(CDODBSchema.REPOSITORY_NEXT_METAID.getName());
+      builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
       builder.append("=0");
 
       String sql = builder.toString();
@@ -242,15 +241,15 @@ public class DBStore extends Store implements IDBStore
     builder.append("UPDATE ");
     builder.append(CDODBSchema.REPOSITORY);
     builder.append(" SET ");
-    builder.append(CDODBSchema.REPOSITORY_STOPPED.getName());
+    builder.append(CDODBSchema.REPOSITORY_STOPPED);
     builder.append("=");
     builder.append(System.currentTimeMillis());
     builder.append(", ");
-    builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID.getName());
+    builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID);
     builder.append("=");
     builder.append(repository.getNextOIDValue());
     builder.append(", ");
-    builder.append(CDODBSchema.REPOSITORY_NEXT_METAID.getName());
+    builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
     builder.append("=");
     builder.append(repository.getNextMetaIDValue());
 

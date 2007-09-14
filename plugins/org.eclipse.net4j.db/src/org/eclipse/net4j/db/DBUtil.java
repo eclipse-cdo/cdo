@@ -262,7 +262,7 @@ public final class DBUtil
         builder.append(", ");
       }
 
-      builder.append(fields[i].getName());
+      builder.append(fields[i]);
     }
 
     builder.append(" FROM ");

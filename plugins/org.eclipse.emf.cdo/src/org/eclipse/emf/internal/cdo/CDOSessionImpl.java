@@ -379,7 +379,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   }
 
   /**
-   * TODO synchronize
+   * TODO Synchronize?
    */
   private long registerMetaInstance(InternalEObject metaInstance, long idValue)
   {

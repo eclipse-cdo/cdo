@@ -19,14 +19,14 @@ import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.net4j.IBufferHandler;
-import org.eclipse.net4j.IChannel;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+
+import org.eclipse.net4j.IBufferHandler;
+import org.eclipse.net4j.IChannel;
 
 import java.util.Date;
 

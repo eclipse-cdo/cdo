@@ -38,6 +38,9 @@ public final class ClassServerInfo extends ServerInfo
     return serverInfo;
   }
 
+  /**
+   * Should only be called from {@link MappingStrategy#getClassMapping(CDOClass)}.
+   */
   public static IClassMapping getClassMapping(CDOClass cdoClass)
   {
     ClassServerInfo serverInfo = getServerInfo(cdoClass);

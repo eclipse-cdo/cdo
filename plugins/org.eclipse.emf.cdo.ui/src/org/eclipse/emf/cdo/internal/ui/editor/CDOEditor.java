@@ -1893,10 +1893,13 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         MenuManager submenuManager = new MenuManager(cdoPackage.getPackageURI());
         for (CDOClass cdoClass : cdoClasses)
         {
-          // TODO Optimize/cache this?
-          CreateRootAction action = new CreateRootAction(cdoClass);
-          submenuManager.add(action);
-          populated = true;
+          if (!cdoClass.isResource())
+          {
+            // TODO Optimize/cache this?
+            CreateRootAction action = new CreateRootAction(cdoClass);
+            submenuManager.add(action);
+            populated = true;
+          }
         }
 
         menuManager.add(submenuManager);

@@ -391,7 +391,9 @@ public class DBStoreAccessor implements IDBStoreAccessor
     }
 
     CDOClassImpl cdoClass = revision.getCDOClass();
-    IClassMapping mapping = ClassServerInfo.getClassMapping(cdoClass);
+
+    IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.writeRevision(this, revision);
   }
 
@@ -426,7 +428,8 @@ public class DBStoreAccessor implements IDBStoreAccessor
     CDOClassImpl cdoClass = getObjectType(id);
     CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
-    IClassMapping mapping = ClassServerInfo.getClassMapping(cdoClass);
+    IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.readRevision(this, revision, referenceChunk);
     return revision;
   }
@@ -442,7 +445,8 @@ public class DBStoreAccessor implements IDBStoreAccessor
     CDOClassImpl cdoClass = getObjectType(id);
     CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
-    IClassMapping mapping = ClassServerInfo.getClassMapping(cdoClass);
+    IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.readRevisionByTime(this, revision, timeStamp, referenceChunk);
     return revision;
   }
@@ -458,7 +462,8 @@ public class DBStoreAccessor implements IDBStoreAccessor
     CDOClassImpl cdoClass = getObjectType(id);
     CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
-    IClassMapping mapping = ClassServerInfo.getClassMapping(cdoClass);
+    IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.readRevisionByVersion(this, revision, version, referenceChunk);
     return revision;
   }

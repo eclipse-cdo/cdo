@@ -55,7 +55,7 @@ public class HorizontalMappingStrategy extends MappingStrategy
     IPackageManager packageManager = getStore().getRepository().getPackageManager();
     for (CDOPackage cdoPackage : packageManager.getPackages())
     {
-      for (CDOClass cdoClass : cdoPackage.getClasses())
+      for (CDOClass cdoClass : cdoPackage.getConcreteClasses())
       {
         result.add(cdoClass);
       }

@@ -236,7 +236,7 @@ public abstract class MappingStrategy implements IMappingStrategy
         while (classIt.hasNext())
         {
           CDOClass cdoClass = classIt.next();
-          IClassMapping mapping = ClassServerInfo.getClassMapping(cdoClass);
+          IClassMapping mapping = getClassMapping(cdoClass);
           if (mapping != null)
           {
             IDBTable table = mapping.getTable();
@@ -279,7 +279,7 @@ public abstract class MappingStrategy implements IMappingStrategy
     String suffix = " WHERE " + CDODBSchema.ATTRIBUTES_ID + "=" + id;
     for (CDOClass cdoClass : getClassesWithObjectInfo())
     {
-      IClassMapping mapping = ClassServerInfo.getClassMapping(cdoClass);
+      IClassMapping mapping = getClassMapping(cdoClass);
       if (mapping != null)
       {
         IDBTable table = mapping.getTable();

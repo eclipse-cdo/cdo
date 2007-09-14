@@ -192,8 +192,17 @@ public class DBStore extends Store implements IDBStore
     else
     {
       // Restart
-      repository.setNextOIDValue(DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_NEXT_CDOID));
-      repository.setNextMetaIDValue(DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_NEXT_METAID));
+      int stopped = DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_STOPPED);
+      if (stopped == 0)
+      {
+        repairAfterCrash(repository, connection);
+      }
+
+      int nextCDOID = DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_NEXT_CDOID);
+      int nextMetaID = DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_NEXT_METAID);
+
+      repository.setNextOIDValue(nextCDOID);
+      repository.setNextMetaIDValue(nextMetaID);
 
       StringBuilder builder = new StringBuilder();
       builder.append("UPDATE ");
@@ -251,6 +260,12 @@ public class DBStore extends Store implements IDBStore
     {
       throw new DBException("No row updated in table " + CDODBSchema.REPOSITORY);
     }
+  }
+
+  protected void repairAfterCrash(Repository repository, Connection connection)
+  {
+    // TODO Implement method DBStore.repairAfterCrash()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   protected IDBSchema createSchema()

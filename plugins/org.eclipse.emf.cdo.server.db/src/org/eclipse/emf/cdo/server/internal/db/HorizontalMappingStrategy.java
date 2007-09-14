@@ -57,7 +57,10 @@ public class HorizontalMappingStrategy extends MappingStrategy
     {
       for (CDOClass cdoClass : cdoPackage.getConcreteClasses())
       {
-        result.add(cdoClass);
+        if (!cdoClass.isRoot())
+        {
+          result.add(cdoClass);
+        }
       }
     }
 

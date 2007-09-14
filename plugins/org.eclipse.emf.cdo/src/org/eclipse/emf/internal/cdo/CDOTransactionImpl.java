@@ -258,7 +258,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
         throw new IllegalStateException("Missing CDO package: " + ePackage.getNsURI());
       }
 
-      if (!cdoPackage.isPersistent())
+      if (!cdoPackage.isPersistent() && !cdoPackage.isSystem())
       {
         cdoPackages.add(cdoPackage);
       }

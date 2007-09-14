@@ -176,29 +176,26 @@ public class DBStoreAccessor implements IDBStoreAccessor
   {
     for (CDOPackageImpl cdoPackage : cdoPackages)
     {
-      if (!cdoPackage.isSystem())
+      int id = store.getNextPackageID();
+      PackageServerInfo.setDBID(cdoPackage, id);
+      if (TRACER.isEnabled())
       {
-        int id = store.getNextPackageID();
-        PackageServerInfo.setDBID(cdoPackage, id);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Inserting package: {0} --> {1}", cdoPackage, id);
-        }
+        TRACER.format("Inserting package: {0} --> {1}", cdoPackage, id);
+      }
 
-        String packageURI = cdoPackage.getPackageURI();
-        String name = cdoPackage.getName();
-        String ecore = cdoPackage.getEcore();
-        boolean dynamic = cdoPackage.isDynamic();
-        CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
-        long lb = metaIDRange == null ? 0L : metaIDRange.getLowerBound().getValue();
-        long ub = metaIDRange == null ? 0L : metaIDRange.getUpperBound().getValue();
-        DBUtil.insertRow(connection, store.getDBAdapter(), CDODBSchema.PACKAGES, id, packageURI, name, ecore, dynamic,
-            lb, ub);
+      String packageURI = cdoPackage.getPackageURI();
+      String name = cdoPackage.getName();
+      String ecore = cdoPackage.getEcore();
+      boolean dynamic = cdoPackage.isDynamic();
+      CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
+      long lb = metaIDRange == null ? 0L : metaIDRange.getLowerBound().getValue();
+      long ub = metaIDRange == null ? 0L : metaIDRange.getUpperBound().getValue();
+      DBUtil.insertRow(connection, store.getDBAdapter(), CDODBSchema.PACKAGES, id, packageURI, name, ecore, dynamic,
+          lb, ub);
 
-        for (CDOClassImpl cdoClass : cdoPackage.getClasses())
-        {
-          writeClass(cdoClass);
-        }
+      for (CDOClassImpl cdoClass : cdoPackage.getClasses())
+      {
+        writeClass(cdoClass);
       }
     }
 

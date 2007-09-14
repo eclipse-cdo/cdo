@@ -318,7 +318,17 @@ public abstract class MappingStrategy implements IMappingStrategy
     CDOClassRef classRef = classRefs.get(classID);
     if (classRef == null)
     {
-      classRef = storeAccessor.readClassRef(classID);
+      if (classID == ClassServerInfo.CDO_RESOURCE_CLASS_DBID)
+      {
+        IPackageManager packageManager = getStore().getRepository().getPackageManager();
+        CDOResourceClass resourceClass = packageManager.getCDOResourcePackage().getCDOResourceClass();
+        classRef = resourceClass.createClassRef();
+      }
+      else
+      {
+        classRef = storeAccessor.readClassRef(classID);
+      }
+
       classRefs.put(classID, classRef);
     }
 

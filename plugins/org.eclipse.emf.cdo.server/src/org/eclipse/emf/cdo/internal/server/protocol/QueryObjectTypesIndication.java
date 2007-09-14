@@ -12,11 +12,12 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
-import org.eclipse.emf.cdo.internal.server.RevisionManager;
+import org.eclipse.emf.cdo.internal.server.StoreUtil;
+import org.eclipse.emf.cdo.internal.server.TypeManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.server.IStoreReader;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -60,11 +61,11 @@ public class QueryObjectTypesIndication extends CDOReadIndication
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    RevisionManager revisionManager = getRevisionManager();
+    IStoreReader storeReader = StoreUtil.getReader();
+    TypeManager typeManager = getRepository().getTypeManager();
     for (CDOID id : ids)
     {
-      CDOClass type = revisionManager.getObjectType(id);
-      CDOClassRefImpl classRef = (CDOClassRefImpl)type.createClassRef();
+      CDOClassRefImpl classRef = (CDOClassRefImpl)typeManager.getObjectType(storeReader, id);
       if (PROTOCOL.isEnabled()) PROTOCOL.format("Wrinting type: {0}", classRef);
       classRef.write(out, null);
     }

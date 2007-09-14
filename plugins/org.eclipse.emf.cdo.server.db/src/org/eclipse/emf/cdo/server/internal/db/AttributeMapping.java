@@ -8,7 +8,6 @@ import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBField;
-import org.eclipse.net4j.util.ImplementationError;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,11 +45,6 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
 
   public void extractValue(ResultSet resultSet, int column, CDORevisionImpl revision)
   {
-    if (column != field.getPosition() + 1)
-    {
-      throw new ImplementationError("Column mismatch");
-    }
-
     try
     {
       Object value = getResultSetValue(resultSet, column);

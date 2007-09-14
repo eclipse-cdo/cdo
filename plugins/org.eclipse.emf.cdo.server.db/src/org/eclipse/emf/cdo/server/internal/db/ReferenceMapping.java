@@ -7,6 +7,7 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -96,7 +97,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     try
     {
       resultSet = storeAccessor.getStatement().executeQuery(sql);
-      while (resultSet.next() && --referenceChunk >= 0)
+      while (resultSet.next() && (referenceChunk == CDORevision.UNCHUNKED || --referenceChunk >= 0))
       {
         long target = resultSet.getLong(1);
         list.add(CDOIDImpl.create(target));

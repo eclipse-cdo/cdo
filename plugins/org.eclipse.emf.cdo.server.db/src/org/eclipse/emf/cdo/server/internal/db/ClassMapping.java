@@ -520,7 +520,7 @@ public abstract class ClassMapping implements IClassMapping
         throw new IllegalStateException("Revision not found: " + id);
       }
 
-      int i = 0;
+      int i = 1;
       if (hasFullRevisionInfo())
       {
         if (readVersion)

@@ -23,6 +23,9 @@ import java.util.List;
  */
 public class Notifier implements INotifier.Introspection
 {
+  /**
+   * TODO Optimize by storing an array
+   */
   private List<IListener> listeners = new ArrayList<IListener>(0);
 
   public Notifier()

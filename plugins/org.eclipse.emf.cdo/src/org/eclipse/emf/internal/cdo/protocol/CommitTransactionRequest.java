@@ -10,7 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
@@ -18,16 +19,17 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+
+import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
-import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -67,22 +69,22 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   private void writeNewPackages(ExtendedDataOutputStream out) throws IOException
   {
-    List<CDOPackageImpl> newPackages = transaction.getNewPackages();
+    List<CDOPackage> newPackages = transaction.getNewPackages();
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Writing {0} new packages", newPackages.size());
     }
 
     out.writeInt(newPackages.size());
-    for (CDOPackageImpl newPackage : newPackages)
+    for (CDOPackage newPackage : newPackages)
     {
-      newPackage.write(out);
+      ((CDOPackageImpl)newPackage).write(out);
     }
   }
 
   private void writeNewResources(ExtendedDataOutputStream out) throws IOException
   {
-    Collection<CDOResourceImpl> newResources = transaction.getNewResources().values();
+    Collection<CDOResource> newResources = transaction.getNewResources().values();
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Writing {0} new resources", newResources.size());
@@ -93,7 +95,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   private void writeNewObjects(ExtendedDataOutputStream out) throws IOException
   {
-    Collection<InternalCDOObject> newObjects = transaction.getNewObjects().values();
+    Collection<CDOObject> newObjects = transaction.getNewObjects().values();
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Writing {0} new objects", newObjects.size());
@@ -104,7 +106,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   private void writeDirtyObjects(ExtendedDataOutputStream out) throws IOException
   {
-    Collection<InternalCDOObject> dirtyObjects = transaction.getDirtyObjects().values();
+    Collection<CDOObject> dirtyObjects = transaction.getDirtyObjects().values();
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Writing {0} dirty objects", dirtyObjects.size());
@@ -130,12 +132,12 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     long timeStamp = in.readLong();
     CommitTransactionResult result = new CommitTransactionResult(timeStamp);
 
-    List<CDOPackageImpl> newPackages = transaction.getNewPackages();
-    for (CDOPackageImpl newPackage : newPackages)
+    List<CDOPackage> newPackages = transaction.getNewPackages();
+    for (CDOPackage newPackage : newPackages)
     {
       CDOIDRange oldRange = newPackage.getMetaIDRange();
       CDOIDRange newRange = CDOIDRangeImpl.read(in);
-      newPackage.setMetaIDRange(newRange);
+      ((CDOPackageImpl)newPackage).setMetaIDRange(newRange);
       for (long i = 0; i < oldRange.getCount(); i++)
       {
         CDOID oldID = oldRange.get(i);

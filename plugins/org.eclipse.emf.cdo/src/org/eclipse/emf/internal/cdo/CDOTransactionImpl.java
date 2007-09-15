@@ -10,13 +10,17 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOTransactionCommittedEvent;
 import org.eclipse.emf.cdo.CDOTransactionDirtyEvent;
+import org.eclipse.emf.cdo.CDOTransactionHandler;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -27,6 +31,7 @@ import org.eclipse.emf.internal.cdo.util.EMFPackageClosure;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.internal.util.event.Notifier;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
@@ -50,13 +55,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   private transient long nextTemporaryID = INITIAL_TEMPORARY_ID;
 
-  private List<CDOPackageImpl> newPackages;
+  /**
+   * TODO Optimize by storing an array. See {@link Notifier}.
+   */
+  private List<CDOTransactionHandler> handlers = new ArrayList<CDOTransactionHandler>(0);
 
-  private Map<CDOID, CDOResourceImpl> newResources = new HashMap<CDOID, CDOResourceImpl>();
+  private List<CDOPackage> newPackages;
 
-  private Map<CDOID, InternalCDOObject> newObjects = new HashMap<CDOID, InternalCDOObject>();
+  private Map<CDOID, CDOResource> newResources = new HashMap<CDOID, CDOResource>();
 
-  private Map<CDOID, InternalCDOObject> dirtyObjects = new HashMap<CDOID, InternalCDOObject>();
+  private Map<CDOID, CDOObject> newObjects = new HashMap<CDOID, CDOObject>();
+
+  private Map<CDOID, CDOObject> dirtyObjects = new HashMap<CDOID, CDOObject>();
 
   private boolean dirty;
 
@@ -71,28 +81,52 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     return Type.TRANSACTION;
   }
 
+  public void addHandler(CDOTransactionHandler handler)
+  {
+    synchronized (handlers)
+    {
+      handlers.add(handler);
+    }
+  }
+
+  public void removeHandler(CDOTransactionHandler handler)
+  {
+    synchronized (handlers)
+    {
+      handlers.remove(handler);
+    }
+  }
+
+  public CDOTransactionHandler[] getHandlers()
+  {
+    synchronized (handlers)
+    {
+      return handlers.toArray(new CDOTransactionHandler[handlers.size()]);
+    }
+  }
+
   @Override
   public boolean isDirty()
   {
     return dirty;
   }
 
-  public List<CDOPackageImpl> getNewPackages()
+  public List<CDOPackage> getNewPackages()
   {
     return newPackages;
   }
 
-  public Map<CDOID, CDOResourceImpl> getNewResources()
+  public Map<CDOID, CDOResource> getNewResources()
   {
     return newResources;
   }
 
-  public Map<CDOID, InternalCDOObject> getNewObjects()
+  public Map<CDOID, CDOObject> getNewObjects()
   {
     return newObjects;
   }
 
-  public Map<CDOID, InternalCDOObject> getDirtyObjects()
+  public Map<CDOID, CDOObject> getDirtyObjects()
   {
     return dirtyObjects;
   }
@@ -113,6 +147,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       if (TRACER.isEnabled())
       {
         TRACER.trace("commit()");
+      }
+
+      for (CDOTransactionHandler handler : getHandlers())
+      {
+        handler.committingTransaction(this);
       }
 
       try
@@ -138,9 +177,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
           session.notifyInvalidation(result.getTimeStamp(), dirtyObjects.keySet(), this);
         }
 
-        for (CDOPackageImpl newPackage : newPackages)
+        for (CDOPackage newPackage : newPackages)
         {
-          newPackage.setPersistent(true);
+          ((CDOPackageImpl)newPackage).setPersistent(true);
         }
 
         newPackages = null;
@@ -191,22 +230,22 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   public void registerNew(InternalCDOObject object)
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Registering new object {0}", object);
+    }
+
+    for (CDOTransactionHandler handler : getHandlers())
+    {
+      handler.addingObject(this, object);
+    }
+
     if (object instanceof CDOResourceImpl)
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Registering new resource {0}", object);
-      }
-
       register(newResources, object);
     }
     else
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Registering new object {0}", object);
-      }
-
       register(newObjects, object);
     }
   }
@@ -216,6 +255,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     if (TRACER.isEnabled())
     {
       TRACER.format("Registering dirty object {0}", object);
+    }
+
+    for (CDOTransactionHandler handler : getHandlers())
+    {
+      handler.modifyingObject(this, object);
     }
 
     register(dirtyObjects, object);
@@ -237,10 +281,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
   }
 
-  private List<CDOPackageImpl> analyzeNewPackages(CDOSessionImpl session)
+  private List<CDOPackage> analyzeNewPackages(CDOSessionImpl session)
   {
     Set<EPackage> ePackages = new HashSet<EPackage>();
-    for (InternalCDOObject object : newObjects.values())
+    for (CDOObject object : newObjects.values())
     {
       ePackages.add(object.eClass().getEPackage());
     }
@@ -249,7 +293,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     ePackages = new EMFPackageClosure().calculate(ePackages);
 
     CDOSessionPackageManager packageManager = session.getPackageManager();
-    List<CDOPackageImpl> cdoPackages = new ArrayList<CDOPackageImpl>();
+    List<CDOPackage> cdoPackages = new ArrayList<CDOPackage>();
     for (EPackage ePackage : ePackages)
     {
       CDOPackageImpl cdoPackage = ModelUtil.getCDOPackage(ePackage, packageManager);

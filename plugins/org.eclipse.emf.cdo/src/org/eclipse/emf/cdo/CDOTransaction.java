@@ -11,11 +11,16 @@
 package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -40,4 +45,18 @@ public interface CDOTransaction extends CDOView
    * @see CDOTransaction#rollback()
    */
   public void rollback();
+
+  public void addHandler(CDOTransactionHandler handler);
+
+  public void removeHandler(CDOTransactionHandler handler);
+
+  public CDOTransactionHandler[] getHandlers();
+
+  public List<CDOPackage> getNewPackages();
+
+  public Map<CDOID, CDOResource> getNewResources();
+
+  public Map<CDOID, CDOObject> getNewObjects();
+
+  public Map<CDOID, CDOObject> getDirtyObjects();
 }

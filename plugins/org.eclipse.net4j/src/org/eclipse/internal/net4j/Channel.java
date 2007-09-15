@@ -221,11 +221,10 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     }
     else
     {
-      // receiveSerializer = new AsynchronousWorkSerializer(receiveExecutor);
-
       // CompletionWorkSerializer throws "One command already pending"
       // receiveSerializer = new CompletionWorkSerializer();
-
+      // receiveSerializer = new AsynchronousWorkSerializer(receiveExecutor);
+      // receiveSerializer = new SynchronousWorkSerializer();
       receiveSerializer = new QueueWorkerWorkSerializer();
     }
   }

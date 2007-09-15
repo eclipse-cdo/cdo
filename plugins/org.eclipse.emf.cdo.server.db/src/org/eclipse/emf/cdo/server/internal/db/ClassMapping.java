@@ -270,7 +270,7 @@ public abstract class ClassMapping implements IClassMapping
     }
 
     builder.append(" FROM ");
-    builder.append(getTable());
+    builder.append(table);
     builder.append(" WHERE ");
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append("=");
@@ -415,6 +415,11 @@ public abstract class ClassMapping implements IClassMapping
 
   public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
+    if (revision.getVersion() >= 2 && hasFullRevisionInfo())
+    {
+      writeRevisedRow(storeAccessor, revision);
+    }
+
     if (attributeMappings != null)
     {
       writeAttributes(storeAccessor, revision);
@@ -426,11 +431,31 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
+  protected void writeRevisedRow(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("UPDATE ");
+    builder.append(table);
+    builder.append(" SET ");
+    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append("=");
+    builder.append(revision.getCreated() - 1);
+    builder.append(" WHERE ");
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append("=");
+    builder.append(revision.getID().getValue());
+    builder.append(" AND ");
+    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append("=");
+    builder.append(revision.getVersion() - 1);
+    sqlUpdate(storeAccessor, builder.toString());
+  }
+
   protected void writeAttributes(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
   {
     StringBuilder builder = new StringBuilder();
     builder.append("INSERT INTO ");
-    builder.append(getTable());
+    builder.append(table);
     builder.append(" VALUES (");
     appendRevisionInfos(builder, revision, hasFullRevisionInfo());
 

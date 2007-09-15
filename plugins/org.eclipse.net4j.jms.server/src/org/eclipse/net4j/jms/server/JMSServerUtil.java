@@ -12,6 +12,7 @@ package org.eclipse.net4j.jms.server;
 
 import org.eclipse.net4j.jms.internal.server.protocol.JMSServerProtocolFactory;
 import org.eclipse.net4j.jms.internal.server.protocol.admin.JMSAdminServerProtocolFactory;
+import org.eclipse.net4j.jms.internal.server.store.NOOPStore;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
@@ -27,5 +28,10 @@ public final class JMSServerUtil
   {
     container.registerFactory(new JMSServerProtocolFactory());
     container.registerFactory(new JMSAdminServerProtocolFactory());
+  }
+
+  public static IStore createNOOPStore()
+  {
+    return new NOOPStore();
   }
 }

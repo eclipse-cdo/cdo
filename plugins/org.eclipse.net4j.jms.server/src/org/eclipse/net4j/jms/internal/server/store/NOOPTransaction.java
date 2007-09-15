@@ -17,9 +17,9 @@ import org.eclipse.net4j.jms.internal.server.ServerDestination;
 /**
  * @author Eike Stepper
  */
-public class EmptyTransaction extends AbstractTransaction
+public class NOOPTransaction extends AbstractTransaction
 {
-  public EmptyTransaction(AbstractStore store)
+  public NOOPTransaction(AbstractStore store)
   {
     super(store);
   }

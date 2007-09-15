@@ -15,11 +15,11 @@ import org.eclipse.net4j.jms.server.IStoreTransaction;
 /**
  * @author Eike Stepper
  */
-public class EmptyStore extends AbstractStore
+public class NOOPStore extends AbstractStore
 {
-  private static final String STORE_TYPE = "EMPTY";
+  private static final String STORE_TYPE = "NOOP";
 
-  public EmptyStore()
+  public NOOPStore()
   {
     super(STORE_TYPE);
     setInstanceID(STORE_TYPE);
@@ -27,7 +27,7 @@ public class EmptyStore extends AbstractStore
 
   public IStoreTransaction startTransaction()
   {
-    return new EmptyTransaction(this);
+    return new NOOPTransaction(this);
   }
 
   public void commitTransaction(IStoreTransaction transaction)

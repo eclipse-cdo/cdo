@@ -10,38 +10,43 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IView;
 
 /**
  * @author Eike Stepper
  */
-public final class StoreUtil
+public class NOOPStore extends Store
 {
-  private static final ThreadLocal<IStoreReader> THREAD_LOCAL = new InheritableThreadLocal<IStoreReader>();
+  public static final String TYPE = "noop";
 
-  private StoreUtil()
+  public NOOPStore()
   {
+    super(TYPE);
   }
 
-  public static IStore createNOOPStore()
+  public boolean hasAuditingSupport()
   {
-    return new NOOPStore();
+    return true;
   }
 
-  public static void setReader(IStoreReader reader)
+  public boolean hasBranchingSupport()
   {
-    THREAD_LOCAL.set(reader);
+    return false;
   }
 
-  public static IStoreReader getReader()
+  public boolean hasEfficientTypeLookup()
   {
-    IStoreReader reader = THREAD_LOCAL.get();
-    if (reader == null)
-    {
-      throw new IllegalStateException("reader == null");
-    }
+    return true;
+  }
 
-    return reader;
+  public NOOPStoreAccessor getReader(ISession session)
+  {
+    return new NOOPStoreAccessor(this, session);
+  }
+
+  public NOOPStoreAccessor getWriter(IView view)
+  {
+    return new NOOPStoreAccessor(this, view);
   }
 }

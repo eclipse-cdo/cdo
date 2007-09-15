@@ -37,7 +37,7 @@ import java.util.Set;
  */
 public class DBStore extends Store implements IDBStore
 {
-  private static final String TYPE = "db";
+  public static final String TYPE = "db";
 
   private IMappingStrategy mappingStrategy;
 

@@ -41,7 +41,7 @@ public class DBStoreFactory implements IStoreFactory
 
   public String getStoreType()
   {
-    return "db";
+    return DBStore.TYPE;
   }
 
   public IStore createStore(Element storeConfig)

@@ -11,37 +11,26 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.IStoreFactory;
+
+import org.w3c.dom.Element;
 
 /**
  * @author Eike Stepper
  */
-public final class StoreUtil
+public class NOOPStoreFactory implements IStoreFactory
 {
-  private static final ThreadLocal<IStoreReader> THREAD_LOCAL = new InheritableThreadLocal<IStoreReader>();
-
-  private StoreUtil()
+  public NOOPStoreFactory()
   {
   }
 
-  public static IStore createNOOPStore()
+  public String getStoreType()
+  {
+    return NOOPStore.TYPE;
+  }
+
+  public IStore createStore(Element storeConfig)
   {
     return new NOOPStore();
-  }
-
-  public static void setReader(IStoreReader reader)
-  {
-    THREAD_LOCAL.set(reader);
-  }
-
-  public static IStoreReader getReader()
-  {
-    IStoreReader reader = THREAD_LOCAL.get();
-    if (reader == null)
-    {
-      throw new IllegalStateException("reader == null");
-    }
-
-    return reader;
   }
 }

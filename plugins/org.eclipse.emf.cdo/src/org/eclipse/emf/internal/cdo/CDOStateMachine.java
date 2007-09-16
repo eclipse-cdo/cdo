@@ -289,6 +289,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       // Adjust revision
       CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
       revision.setID(id);
+      revision.setUntransactional();
       revision.setCreated(data.getTimeStamp());
       revision.adjustReferences(idMappings);
       view.getSession().getRevisionManager().addRevision(revision);

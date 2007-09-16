@@ -69,6 +69,11 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
     CDOIDImpl.write(out, id);
 
     int version = revision.getVersion();
+    if (revision.isTransactional())
+    {
+      --version;
+    }
+
     if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing revision version: {0}", version);
     out.writeInt(version);
 

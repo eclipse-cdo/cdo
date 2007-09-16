@@ -64,11 +64,13 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing revision ID: {0}", revision.getID());
-    CDOIDImpl.write(out, revision.getID());
+    CDOID id = revision.getID();
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing revision ID: {0}", id);
+    CDOIDImpl.write(out, id);
 
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing revision version: {0}", revision.getVersion());
-    out.writeInt(revision.getVersion());
+    int version = revision.getVersion();
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing revision version: {0}", version);
+    out.writeInt(version);
 
     if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing feature: {0}", feature);
     CDOClassRefImpl classRef = (CDOClassRefImpl)feature.getContainingClass().createClassRef();

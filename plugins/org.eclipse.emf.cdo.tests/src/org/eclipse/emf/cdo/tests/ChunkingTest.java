@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.util.Iterator;
@@ -130,6 +131,50 @@ public class ChunkingTest extends AbstractCDOTest
       salesOrder.setId(i + 1000);
       resource.getContents().add(salesOrder);
       salesOrders.set(i, salesOrder);
+    }
+
+    transaction.commit();
+  }
+
+  public void testChunkWithTemporaryObject() throws Exception
+  {
+    {
+      msg("Opening session");
+      CDOSession session = openModel1Session();
+
+      msg("Attaching transaction");
+      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+
+      msg("Creating resource");
+      CDOResource resource = transaction.createResource("/test1");
+
+      msg("Creating customer");
+      Customer customer = Model1Factory.eINSTANCE.createCustomer();
+      customer.setName("customer");
+      resource.getContents().add(customer);
+
+      msg("Committing");
+      transaction.commit();
+    }
+
+    // ************************************************************* //
+
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    msg("Attaching transaction");
+    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    transaction.setLoadRevisionCollectionChunkSize(10);
+
+    msg("Loading resource");
+    CDOResource resource = transaction.getResource("/test1");
+
+    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    customer.setName("customer");
+    resource.getContents().add(customer);
+    for (EObject element : resource.getContents())
+    {
+      System.out.println(element);
     }
 
     transaction.commit();

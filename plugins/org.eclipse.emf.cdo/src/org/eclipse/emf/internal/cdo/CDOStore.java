@@ -140,11 +140,15 @@ public final class CDOStore implements EStore
         Object element = list.get(i);
         if (element instanceof CDOID)
         {
-          if (!revisionManager.containsRevision((CDOID)element))
+          CDOID idElement = (CDOID)element;
+          if (!idElement.isTemporary())
           {
-            if (!notRegistered.contains(element))
+            if (!revisionManager.containsRevision(idElement))
             {
-              notRegistered.add((CDOID)element);
+              if (!notRegistered.contains(idElement))
+              {
+                notRegistered.add(idElement);
+              }
             }
           }
         }

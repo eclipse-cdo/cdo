@@ -195,6 +195,5 @@ public class CacheMonitor extends Worker implements ICacheMonitor
     {
       return newCondition;
     }
-
   }
 }

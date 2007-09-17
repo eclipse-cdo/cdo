@@ -19,9 +19,17 @@ import org.eclipse.net4j.util.cache.ICacheRegistration;
  */
 public class CacheRegistration implements ICacheRegistration
 {
+  public static final float DEFAULT_RECONSTRUCTION_COST_DECAY_FACTOR = 0.1f;
+
   private ICacheMonitor cacheMonitor;
 
   private ICache cache;
+
+  private int elementCount;
+
+  private long cacheSize;
+
+  private long reconstructionCost;
 
   public CacheRegistration(ICacheMonitor cacheMonitor, ICache cache)
   {
@@ -35,6 +43,11 @@ public class CacheRegistration implements ICacheRegistration
     cache = null;
   }
 
+  public boolean isDisposed()
+  {
+    return cacheMonitor == null || cache == null;
+  }
+
   public ICacheMonitor getCacheMonitor()
   {
     return cacheMonitor;
@@ -43,5 +56,59 @@ public class CacheRegistration implements ICacheRegistration
   public ICache getCache()
   {
     return cache;
+  }
+
+  public int getElementCount()
+  {
+    return elementCount;
+  }
+
+  public long getCacheSize()
+  {
+    return cacheSize;
+  }
+
+  public long getAverageElementSize()
+  {
+    return cacheSize / elementCount;
+  }
+
+  public long getReconstructionCost()
+  {
+    return reconstructionCost;
+  }
+
+  public void elementCached(int elementSize)
+  {
+    checkDisposal();
+    ++elementCount;
+    cacheSize += elementSize;
+  }
+
+  public void elementEvicted(int elementSize)
+  {
+    checkDisposal();
+    --elementCount;
+    cacheSize -= elementSize;
+  }
+
+  public void elementReconstructed(long reconstructionTime)
+  {
+    checkDisposal();
+    float decayFactor = getReconstructionCostDecayFactor();
+    this.reconstructionCost = (long)(decayFactor * this.reconstructionCost + (1 - decayFactor) * reconstructionTime);
+  }
+
+  protected float getReconstructionCostDecayFactor()
+  {
+    return DEFAULT_RECONSTRUCTION_COST_DECAY_FACTOR;
+  }
+
+  private void checkDisposal()
+  {
+    if (isDisposed())
+    {
+      throw new IllegalStateException("disposed");
+    }
   }
 }

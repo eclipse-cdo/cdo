@@ -15,5 +15,17 @@ package org.eclipse.net4j.util.cache;
  */
 public interface ICacheRegistration extends ICacheProbe
 {
+  public ICacheMonitor getCacheMonitor();
+
+  public ICache getCache();
+
   public void dispose();
+
+  public int getElementCount();
+
+  public long getCacheSize();
+
+  public long getAverageElementSize();
+
+  public long getReconstructionCost();
 }

@@ -15,7 +15,11 @@ package org.eclipse.net4j.util.cache;
  */
 public interface ICacheProbe
 {
-  public ICacheMonitor getCacheMonitor();
+  public boolean isDisposed();
 
-  public ICache getCache();
+  public void elementCached(int elementSize);
+
+  public void elementEvicted(int elementSize);
+
+  public void elementReconstructed(long reconstructionTime);
 }

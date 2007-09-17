@@ -15,9 +15,6 @@ package org.eclipse.net4j.util.cache;
  */
 public interface ICache
 {
-  public static final int UNKNOWN_ELEMENT_SIZE = -1;
-
-  public static final long UNKNOWN_RECONSTRUCTION_TIME = -1L;
 
   public ICacheMonitor getCacheMonitor();
 
@@ -42,5 +39,5 @@ public interface ICache
   /**
    * Instructs this cache to evict <b>elementCount</b> elements and return the number of actually evicted elements.
    */
-  public int evictElements(int elementCount);
+  public void evictElements(int elementCount);
 }

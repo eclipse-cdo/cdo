@@ -292,7 +292,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       revision.setUntransactional();
       revision.setCreated(data.getTimeStamp());
       revision.adjustReferences(idMappings);
-      view.getSession().getRevisionManager().addRevision(revision);
+
+      CDORevisionManagerImpl revisionManager = view.getSession().getRevisionManager();
+      revisionManager.addRevision(revision);
 
       object.cdoInternalSetState(CDOState.CLEAN);
     }

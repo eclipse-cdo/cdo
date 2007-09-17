@@ -16,13 +16,13 @@ import org.eclipse.net4j.util.cache.ICacheMonitor.Condition;
 /**
  * @author Eike Stepper
  */
-public class AbsoluteConditionPolicy implements ICacheMonitor.ConditionPolicy
+public class ThresholdConditionPolicy implements ICacheMonitor.ConditionPolicy
 {
   private long thresholdRedYellow;
 
   private long thresholdYellowGreen;
 
-  public AbsoluteConditionPolicy(long thresholdRedYellow, long thresholdYellowGreen)
+  public ThresholdConditionPolicy(long thresholdRedYellow, long thresholdYellowGreen)
   {
     if (thresholdRedYellow > thresholdYellowGreen)
     {

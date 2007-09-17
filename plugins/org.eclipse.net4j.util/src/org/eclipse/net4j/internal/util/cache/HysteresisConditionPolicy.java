@@ -15,7 +15,7 @@ import org.eclipse.net4j.util.cache.ICacheMonitor.Condition;
 /**
  * @author Eike Stepper
  */
-public class HysteresisConditionPolicy extends AbsoluteConditionPolicy
+public class HysteresisConditionPolicy extends ThresholdConditionPolicy
 {
   private long thresholdYellowRed;
 

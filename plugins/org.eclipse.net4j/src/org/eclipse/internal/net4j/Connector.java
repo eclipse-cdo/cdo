@@ -74,6 +74,8 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
    */
   private ExecutorService receiveExecutor;
 
+  private int nextChannelID;
+
   private List<Channel> channels = new ArrayList<Channel>(0);
 
   private RWLock channelsLock = new RWLock(2500);
@@ -350,9 +352,10 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   public IChannel openChannel(IProtocol protocol) throws ConnectorException
   {
     waitForConnection(Long.MAX_VALUE);
+    int channelID = getNextChannelID();
     short channelIndex = findFreeChannelIndex();
-    Channel channel = createChannel(channelIndex, protocol);
-    registerChannelWithPeer(channelIndex, protocol);
+    Channel channel = createChannel(channelID, channelIndex, protocol);
+    registerChannelWithPeer(channelID, channelIndex, protocol);
 
     try
     {
@@ -370,15 +373,15 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     return channel;
   }
 
-  public Channel createChannel(short channelIndex, String protocolID)
+  public Channel createChannel(int channelID, short channelIndex, String protocolID)
   {
     IProtocol protocol = createProtocol(protocolID, null);
-    return createChannel(channelIndex, protocol);
+    return createChannel(channelID, channelIndex, protocol);
   }
 
-  public Channel createChannel(short channelIndex, IProtocol protocol)
+  public Channel createChannel(int channelID, short channelIndex, IProtocol protocol)
   {
-    Channel channel = new Channel(receiveExecutor);
+    Channel channel = new Channel(channelID, receiveExecutor);
     if (protocol != null)
     {
       protocol.setChannel(channel);
@@ -416,6 +419,11 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     });
   }
 
+  protected int getNextChannelID()
+  {
+    return nextChannelID++;
+  }
+
   protected List<Queue<IBuffer>> getChannelBufferQueues()
   {
     final List<Queue<IBuffer>> result = new ArrayList<Queue<IBuffer>>(channels.size());
@@ -437,7 +445,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     return result;
   }
 
-  private short findFreeChannelIndex()
+  protected short findFreeChannelIndex()
   {
     return channelsLock.read(new Callable<Short>()
     {
@@ -540,14 +548,24 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     return removed;
   }
 
-  public void inverseRemoveChannel(short channelIndex)
+  public void inverseRemoveChannel(int channelID, short channelIndex)
   {
     try
     {
       Channel channel = getChannel(channelIndex);
       if (channel != null)
       {
-        removeChannel(channel);
+        if (channel.getChannelID() != channelID)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Ignoring concurrent atempt to remove channel {0} (channelID={1}", channelIndex, channelID);
+          }
+        }
+        else
+        {
+          removeChannel(channel);
+        }
       }
     }
     catch (RuntimeException ex)
@@ -669,7 +687,8 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     super.doDeactivate();
   }
 
-  protected abstract void registerChannelWithPeer(short channelIndex, IProtocol protocol) throws ConnectorException;
+  protected abstract void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol)
+      throws ConnectorException;
 
   /**
    * @author Eike Stepper

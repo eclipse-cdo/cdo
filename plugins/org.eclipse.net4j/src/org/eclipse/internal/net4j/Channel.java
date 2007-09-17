@@ -40,6 +40,8 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CHANNEL, Channel.class);
 
+  private int channelID;
+
   private short channelIndex = Buffer.NO_CHANNEL;
 
   private Connector connector;
@@ -56,14 +58,15 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
 
   private Queue<IBuffer> sendQueue;
 
-  public Channel(ExecutorService receiveExecutor)
+  public Channel(int channelID, ExecutorService receiveExecutor)
   {
+    this.channelID = channelID;
     this.receiveExecutor = receiveExecutor;
   }
 
-  public IChannelID getID()
+  public int getChannelID()
   {
-    return new ChannelIDImpl();
+    return channelID;
   }
 
   public short getChannelIndex()
@@ -254,6 +257,8 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
   /**
    * @author Eike Stepper
    */
+  @SuppressWarnings("unused")
+  @Deprecated
   private final class ChannelIDImpl implements IChannelID, Cloneable, Serializable
   {
     private static final long serialVersionUID = 1L;

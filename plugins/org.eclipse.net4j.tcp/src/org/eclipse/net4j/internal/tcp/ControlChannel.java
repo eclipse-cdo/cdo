@@ -27,7 +27,7 @@ import java.nio.ByteBuffer;
  */
 public final class ControlChannel extends Channel
 {
-  public static final short CONTROL_CHANNEL_ID = -1;
+  public static final short CONTROL_CHANNEL_INDEX = -1;
 
   public static final long REGISTRATION_TIMEOUT = 500000;
 
@@ -45,10 +45,10 @@ public final class ControlChannel extends Channel
 
   private SynchronizingCorrelator<Short, Boolean> registrations = new SynchronizingCorrelator<Short, Boolean>();
 
-  public ControlChannel(TCPConnector connector)
+  public ControlChannel(int channelID, TCPConnector connector)
   {
-    super(connector.getReceiveExecutor());
-    setChannelIndex(CONTROL_CHANNEL_ID);
+    super(channelID, connector.getReceiveExecutor());
+    setChannelIndex(CONTROL_CHANNEL_INDEX);
     setConnector(connector);
   }
 
@@ -58,7 +58,13 @@ public final class ControlChannel extends Channel
     return true;
   }
 
-  public boolean registerChannel(short channelIndex, IProtocol protocol)
+  @Override
+  public TCPConnector getConnector()
+  {
+    return (TCPConnector)super.getConnector();
+  }
+
+  public boolean registerChannel(int channelID, short channelIndex, IProtocol protocol)
   {
     if (TRACER.isEnabled())
     {
@@ -69,8 +75,9 @@ public final class ControlChannel extends Channel
     ISynchronizer<Boolean> registration = registrations.correlate(channelIndex);
 
     IBuffer buffer = provideBuffer();
-    ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_ID);
+    ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_INDEX);
     byteBuffer.put(OPCODE_REGISTRATION);
+    byteBuffer.putInt(channelID);
     byteBuffer.putShort(channelIndex);
     BufferUtil.putUTF8(byteBuffer, protocol == null ? null : protocol.getType());
     handleBuffer(buffer);
@@ -78,7 +85,7 @@ public final class ControlChannel extends Channel
     return registration.get(REGISTRATION_TIMEOUT);
   }
 
-  public void deregisterChannel(short channelIndex)
+  public void deregisterChannel(int channelID, short channelIndex)
   {
     if (TRACER.isEnabled())
     {
@@ -88,8 +95,9 @@ public final class ControlChannel extends Channel
     assertValidChannelIndex(channelIndex);
 
     IBuffer buffer = provideBuffer();
-    ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_ID);
+    ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_INDEX);
     byteBuffer.put(OPCODE_DEREGISTRATION);
+    byteBuffer.putInt(channelID);
     byteBuffer.putShort(channelIndex);
     handleBuffer(buffer);
   }
@@ -105,6 +113,7 @@ public final class ControlChannel extends Channel
       {
       case OPCODE_REGISTRATION:
       {
+        int channelID = byteBuffer.getInt();
         short channelIndex = byteBuffer.getShort();
         assertValidChannelIndex(channelIndex);
         boolean success = true;
@@ -113,7 +122,7 @@ public final class ControlChannel extends Channel
         {
           byte[] handlerFactoryUTF8 = BufferUtil.getByteArray(byteBuffer);
           String protocolID = BufferUtil.fromUTF8(handlerFactoryUTF8);
-          Channel channel = ((TCPConnector)getConnector()).createChannel(channelIndex, protocolID);
+          Channel channel = getConnector().createChannel(channelID, channelIndex, protocolID);
           if (channel != null)
           {
             channel.activate();
@@ -143,18 +152,13 @@ public final class ControlChannel extends Channel
 
       case OPCODE_DEREGISTRATION:
       {
+        int channelID = byteBuffer.getInt();
         short channelIndex = byteBuffer.getShort();
-        if (channelIndex != CONTROL_CHANNEL_ID)
+        if (channelIndex != CONTROL_CHANNEL_INDEX)
         {
           try
           {
-            getConnector().inverseRemoveChannel(channelIndex);
-            // Channel channel =
-            // ((TCPConnector)getConnector()).getChannel(channelIndex);
-            // if (channel != null)
-            // {
-            // channel.deactivate();
-            // }
+            getConnector().inverseRemoveChannel(channelID, channelIndex);
           }
           catch (Exception ex)
           {
@@ -167,7 +171,7 @@ public final class ControlChannel extends Channel
 
       default:
         OM.LOG.error("Invalid opcode: " + opcode); //$NON-NLS-1$
-        ((TCPConnector)getConnector()).deactivate();
+        getConnector().deactivate();
       }
     }
     finally
@@ -185,7 +189,7 @@ public final class ControlChannel extends Channel
   private void sendStatus(byte opcode, short channelIndex, boolean status)
   {
     IBuffer buffer = provideBuffer();
-    ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_ID);
+    ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_INDEX);
     byteBuffer.put(opcode);
     byteBuffer.putShort(channelIndex);
     byteBuffer.put(status ? SUCCESS : FAILURE);
@@ -194,7 +198,7 @@ public final class ControlChannel extends Channel
 
   private void assertValidChannelIndex(short channelIndex)
   {
-    if (channelIndex <= CONTROL_CHANNEL_ID)
+    if (channelIndex <= CONTROL_CHANNEL_INDEX)
     {
       throw new IllegalArgumentException("channelIndex <= CONTROL_CHANNEL_ID"); //$NON-NLS-1$
     }

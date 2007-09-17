@@ -166,7 +166,8 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       if (byteBuffer != null)
       {
         short channelIndex = inputBuffer.getChannelIndex();
-        Channel channel = channelIndex == ControlChannel.CONTROL_CHANNEL_ID ? controlChannel : getChannel(channelIndex);
+        Channel channel = channelIndex == ControlChannel.CONTROL_CHANNEL_INDEX ? controlChannel
+            : getChannel(channelIndex);
         if (channel != null)
         {
           channel.handleBufferFromMultiplexer(inputBuffer);
@@ -258,11 +259,12 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, IProtocol protocol) throws ConnectorException
+  protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol)
+      throws ConnectorException
   {
     try
     {
-      if (!controlChannel.registerChannel(channelIndex, protocol))
+      if (!controlChannel.registerChannel(channelID, channelIndex, protocol))
       {
         throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
       }
@@ -278,7 +280,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  public void inverseRemoveChannel(short channelIndex)
+  public void inverseRemoveChannel(int channelID, short channelIndex)
   {
     try
     {
@@ -311,7 +313,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     {
       if (controlChannel != null && isConnected())
       {
-        controlChannel.deregisterChannel(channel.getChannelIndex());
+        controlChannel.deregisterChannel(channel.getChannelID(), channel.getChannelIndex());
       }
 
       return true;
@@ -339,7 +341,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    controlChannel = new ControlChannel(this);
+    controlChannel = new ControlChannel(getNextChannelID(), this);
     controlChannel.activate();
     selector.registerAsync(socketChannel, this);
   }

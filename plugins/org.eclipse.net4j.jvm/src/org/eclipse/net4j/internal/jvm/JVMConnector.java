@@ -77,14 +77,15 @@ public abstract class JVMConnector extends Connector
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, IProtocol protocol) throws ConnectorException
+  protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol)
+      throws ConnectorException
   {
     try
     {
-      Channel channel = getPeer().createChannel(channelIndex, protocol);
+      Channel channel = getPeer().createChannel(channelID, channelIndex, protocol);
       if (channel == null)
       {
-        throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
+        throw new ConnectorException("Failed to register channel with peer");
       }
 
       channel.activate();

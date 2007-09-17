@@ -14,7 +14,6 @@ package org.eclipse.net4j;
  * Provides clients with the ability to obtain and retain {@link IBuffer}s.
  * 
  * @author Eike Stepper
- * @since 0.8.0
  */
 public interface IBufferProvider
 {
@@ -37,7 +36,6 @@ public interface IBufferProvider
    * Offers additional introspection features for {@link IBufferProvider}s.
    * 
    * @author Eike Stepper
-   * @since 0.8.0
    */
   public interface Introspection extends IBufferProvider
   {

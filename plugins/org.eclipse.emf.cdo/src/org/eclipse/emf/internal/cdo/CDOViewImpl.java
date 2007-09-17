@@ -60,6 +60,7 @@ import org.eclipse.net4j.util.ImplementationError;
 
 /**
  * @author Eike Stepper
+ * @author Simon McDuff
  */
 public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier implements CDOView, CDOIDProvider,
     Adapter.Internal

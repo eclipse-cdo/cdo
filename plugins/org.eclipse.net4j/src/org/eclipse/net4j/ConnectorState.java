@@ -30,7 +30,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
  * 
  * @see IConnector#getState()
  * @author Eike Stepper
- * @since 0.8.0
  */
 public enum ConnectorState
 {

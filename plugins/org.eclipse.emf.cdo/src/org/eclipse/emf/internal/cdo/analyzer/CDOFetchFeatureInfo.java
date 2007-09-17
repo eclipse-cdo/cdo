@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
 /**
+ * @author Simon McDuff
  * @author Eike Stepper
  */
 public class CDOFetchFeatureInfo
@@ -104,7 +105,7 @@ public class CDOFetchFeatureInfo
   @Override
   public int hashCode()
   {
-    return cdoClass.hashCode()  ^ cdoFeature.hashCode();
+    return cdoClass.hashCode() ^ cdoFeature.hashCode();
   }
 
   @Override

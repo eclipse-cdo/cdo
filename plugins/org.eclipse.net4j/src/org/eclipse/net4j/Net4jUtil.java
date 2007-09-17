@@ -24,7 +24,6 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
- * @since 0.8.0
  */
 public final class Net4jUtil
 {

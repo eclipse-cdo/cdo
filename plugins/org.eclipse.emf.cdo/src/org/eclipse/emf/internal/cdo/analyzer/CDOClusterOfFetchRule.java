@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
 /**
+ * @author Simon McDuff
  * @author Eike Stepper
  */
 public class CDOClusterOfFetchRule

@@ -14,7 +14,6 @@ package org.eclipse.net4j;
  * Provides the ability to execute a negotitation phase between two connectors.
  * 
  * @author Eike Stepper
- * @since 0.8.0
  */
 public interface IConnectorNegotiator
 {

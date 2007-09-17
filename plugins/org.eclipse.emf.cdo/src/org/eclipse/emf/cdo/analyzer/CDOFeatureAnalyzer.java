@@ -16,6 +16,7 @@ import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.analyzer.NOOPFeatureAnalyzer;
 
 /**
+ * @author Simon McDuff
  * @author Eike Stepper
  */
 public interface CDOFeatureAnalyzer

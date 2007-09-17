@@ -529,10 +529,6 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
           {
             throw ex;
           }
-
-          if (TRACER.isEnabled())
-          {
-          }
         }
       }
       else

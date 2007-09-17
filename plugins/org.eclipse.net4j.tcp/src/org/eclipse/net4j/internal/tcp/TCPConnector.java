@@ -278,6 +278,28 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
+  public void inverseRemoveChannel(short channelIndex)
+  {
+    try
+    {
+      Channel channel = getChannel(channelIndex);
+      if (channel instanceof ControlChannel)
+      {
+        return;
+      }
+
+      if (channel != null)
+      {
+        super.removeChannel(channel);
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      OM.LOG.warn(ex);
+    }
+  }
+
+  @Override
   protected boolean removeChannel(Channel channel)
   {
     if (channel instanceof ControlChannel)

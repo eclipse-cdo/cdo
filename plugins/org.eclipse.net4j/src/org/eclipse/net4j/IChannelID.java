@@ -14,7 +14,6 @@ package org.eclipse.net4j;
  * An identifier of an {@link IChannel} that is unique among all channels of all {@link IConnector}s.
  * 
  * @author Eike Stepper
- * @since 0.8.0
  */
 public interface IChannelID
 {

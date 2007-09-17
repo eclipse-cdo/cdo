@@ -18,7 +18,6 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
  * @author Eike Stepper
- * @since 0.8.0
  */
 public final class TCPUtil
 {

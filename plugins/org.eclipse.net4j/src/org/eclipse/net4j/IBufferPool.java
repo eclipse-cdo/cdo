@@ -14,7 +14,6 @@ package org.eclipse.net4j;
  * Provides clients with the ability to obtain and retain pooled {@link IBuffer}s.
  * 
  * @author Eike Stepper
- * @since 0.8.0
  */
 public interface IBufferPool extends IBufferProvider
 {

@@ -94,7 +94,6 @@ import java.nio.channels.SocketChannel;
  * @see IBufferHandler#handleBuffer(IBuffer)
  * @see Buffer
  * @author Eike Stepper
- * @since 0.8.0
  */
 public interface IBuffer
 {

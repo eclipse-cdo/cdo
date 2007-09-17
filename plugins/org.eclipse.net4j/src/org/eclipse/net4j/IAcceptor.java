@@ -46,7 +46,6 @@ import java.util.List;
  * SHAPE="RECT" COORDS="64,516,444,596" HREF="ConnectorState.html#NEGOTIATING"> </MAP>
  * 
  * @author Eike Stepper
- * @since 0.8.0
  */
 public interface IAcceptor extends IContainer<IConnector>
 {

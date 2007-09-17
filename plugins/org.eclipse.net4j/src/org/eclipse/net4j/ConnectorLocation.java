@@ -30,7 +30,6 @@ package org.eclipse.net4j;
  * @see IChannel#sendBuffer(IBuffer)
  * @see IChannel#setReceiveHandler(IBufferHandler)
  * @author Eike Stepper
- * @since 0.8.0
  */
 public enum ConnectorLocation
 {

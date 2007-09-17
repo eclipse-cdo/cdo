@@ -14,7 +14,6 @@ import org.eclipse.net4j.internal.util.container.PluginContainer;
 
 /**
  * @author Eike Stepper
- * @since 0.8.0
  */
 public interface IPluginContainer extends IManagedContainer
 {

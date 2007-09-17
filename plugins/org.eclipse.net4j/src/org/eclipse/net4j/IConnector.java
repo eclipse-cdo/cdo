@@ -51,7 +51,6 @@ import java.util.List;
  * COORDS="818,195,897,222" HREF="IProtocol.html"> </MAP>
  * 
  * @author Eike Stepper
- * @since 0.8.0
  */
 public interface IConnector extends IContainer<IChannel>
 {

@@ -26,7 +26,6 @@ import java.nio.channels.SocketChannel;
  * COORDS="532,428,682,451" HREF="BufferState.html#GETTING"> </MAP>
  * 
  * @author Eike Stepper
- * @since 0.8.0
  */
 public enum BufferState
 {

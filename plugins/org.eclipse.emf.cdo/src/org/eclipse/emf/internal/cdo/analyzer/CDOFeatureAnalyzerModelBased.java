@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * @author Simon McDuff
  * @author Eike Stepper
  */
 public class CDOFeatureAnalyzerModelBased extends CDOAbstractFeatureRuleAnalyzer

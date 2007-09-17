@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * @author Simon McDuff
  * @author Eike Stepper
  */
 public class CDOAnalyzerFeatureInfo

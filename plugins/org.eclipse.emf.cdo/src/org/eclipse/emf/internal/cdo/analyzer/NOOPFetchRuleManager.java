@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
 
 /**
+ * @author Simon McDuff
  * @author Eike Stepper
  */
 public class NOOPFetchRuleManager implements CDOFetchRuleManager

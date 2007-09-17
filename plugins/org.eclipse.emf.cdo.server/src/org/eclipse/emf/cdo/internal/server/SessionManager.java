@@ -7,7 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - maintenance https://bugs.eclipse.org/bugs/show_bug.cgi?id=202725
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=202725
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
@@ -26,6 +26,7 @@ import java.util.Map;
 
 /**
  * @author Eike Stepper
+ * @author Simon McDuff
  */
 public class SessionManager extends Container<ISession> implements ISessionManager
 {

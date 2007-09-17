@@ -80,7 +80,6 @@ import org.eclipse.net4j.util.event.INotifier;
  * </pre>
  * 
  * @author Eike Stepper
- * @since 0.8.0
  */
 public interface IChannel extends IBufferHandler, INotifier
 {

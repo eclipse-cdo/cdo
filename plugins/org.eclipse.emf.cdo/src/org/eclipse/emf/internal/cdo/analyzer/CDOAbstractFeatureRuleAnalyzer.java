@@ -19,6 +19,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 /**
+ * @author Simon McDuff
  * @author Eike Stepper
  */
 public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyzer, CDOFetchRuleManager

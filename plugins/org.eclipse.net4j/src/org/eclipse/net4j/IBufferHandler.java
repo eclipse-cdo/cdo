@@ -14,7 +14,6 @@ package org.eclipse.net4j;
  * Provides clients with the ability to pass {@link IBuffer}s in for further buffer handling.
  * 
  * @author Eike Stepper
- * @since 0.8.0
  */
 public interface IBufferHandler
 {

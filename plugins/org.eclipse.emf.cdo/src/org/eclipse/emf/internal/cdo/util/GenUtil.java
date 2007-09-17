@@ -75,8 +75,6 @@ public final class GenUtil
    * Formats a name by parsing it into words separated by underscores and/or mixed-casing and then recombining them
    * using the specified separator. A prefix can also be given to be recognized as a separate word or to be trimmed.
    * Leading underscores can be ignored or can cause a leading separator to be prepended.
-   * 
-   * @since 2.2
    */
   public static String format(String name, char separator, String prefix, boolean includePrefix,
       boolean includeLeadingSeparator)

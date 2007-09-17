@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * @author Simon McDuff
  * @author Eike Stepper
  */
 public class CDOFetchRuleManagerThreadLocal implements CDOFetchRuleManager
@@ -56,9 +57,9 @@ public class CDOFetchRuleManagerThreadLocal implements CDOFetchRuleManager
     return analyzer != null ? analyzer.getFetchRules(ids) : null;
   }
 
-  public int getLoadRevisionCollectionChunkSize() 
+  public int getLoadRevisionCollectionChunkSize()
   {
-	  CDOFetchRuleManager analyzer = CDOFetchRuleManagerThreadLocal.getCurrent();
-	  return analyzer != null ? analyzer.getLoadRevisionCollectionChunkSize() : 0;
+    CDOFetchRuleManager analyzer = CDOFetchRuleManagerThreadLocal.getCurrent();
+    return analyzer != null ? analyzer.getLoadRevisionCollectionChunkSize() : 0;
   }
 }

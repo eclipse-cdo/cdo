@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 
 /**
+ * @author Simon McDuff
  * @author Eike Stepper
  */
 public class CDOInvalidationNotificationImpl implements CDOInvalidationNotification

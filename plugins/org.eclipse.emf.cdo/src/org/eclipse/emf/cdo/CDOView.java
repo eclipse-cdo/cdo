@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * @author Eike Stepper
+ * @author Simon McDuff
  */
 public interface CDOView extends INotifier
 {

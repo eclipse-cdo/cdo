@@ -151,14 +151,16 @@ public class CacheMonitor extends Worker implements ICacheMonitor
       break;
 
     case RED:
-      handleRedCondition();
+      handleConditionRED();
       context.nextWork(pauseRED);
       break;
     }
   }
 
-  protected void handleRedCondition()
+  protected void handleConditionRED()
   {
+    // TODO Implement method CacheMonitor.handleConditionRED()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   /**

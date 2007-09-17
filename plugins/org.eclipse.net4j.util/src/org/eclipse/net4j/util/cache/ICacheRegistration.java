@@ -20,4 +20,12 @@ public interface ICacheRegistration extends ICacheProbe
   public ICache getCache();
 
   public void dispose();
+
+  public int getElementCount();
+
+  public long getCacheSize();
+
+  public long getAverageElementSize();
+
+  public long getReconstructionCost();
 }

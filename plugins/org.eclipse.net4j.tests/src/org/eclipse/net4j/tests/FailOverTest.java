@@ -22,7 +22,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 /**
  * @author Eike Stepper
  */
-public class FailingExceptionTest extends AbstractTransportTest
+public class FailOverTest extends AbstractTransportTest
 {
   @Override
   protected IManagedContainer createContainer()

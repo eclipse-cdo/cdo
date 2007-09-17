@@ -18,9 +18,9 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.server.StoreAccessor;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
@@ -32,8 +32,8 @@ import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
@@ -55,30 +55,32 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class DBStoreAccessor implements IDBStoreAccessor
+public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
-
-  private DBStore store;
-
-  private Object context;
-
-  private boolean reader;
 
   private Connection connection;
 
   private Statement statement;
 
-  private DBStoreAccessor(DBStore store, Object context, boolean reader) throws DBException
+  public DBStoreAccessor(DBStore store, ISession session) throws DBException
   {
-    this.store = store;
-    this.context = context;
-    this.reader = reader;
+    super(store, session);
+    initConnection();
+  }
 
+  public DBStoreAccessor(DBStore store, IView view) throws DBException
+  {
+    super(store, view);
+    initConnection();
+  }
+
+  protected void initConnection()
+  {
     try
     {
-      connection = store.getConnectionProvider().getConnection();
-      connection.setAutoCommit(reader);
+      connection = getStore().getConnectionProvider().getConnection();
+      connection.setAutoCommit(isReader());
     }
     catch (SQLException ex)
     {
@@ -86,21 +88,12 @@ public class DBStoreAccessor implements IDBStoreAccessor
     }
   }
 
-  public DBStoreAccessor(DBStore store, ISession session) throws DBException
-  {
-    this(store, session, true);
-  }
-
-  public DBStoreAccessor(DBStore store, IView view) throws DBException
-  {
-    this(store, view, false);
-  }
-
+  @Override
   public void release() throws DBException
   {
     try
     {
-      if (!reader)
+      if (!isReader())
       {
         connection.commit();
       }
@@ -116,34 +109,10 @@ public class DBStoreAccessor implements IDBStoreAccessor
     }
   }
 
+  @Override
   public DBStore getStore()
   {
-    return store;
-  }
-
-  public boolean isReader()
-  {
-    return reader;
-  }
-
-  public ISession getSession()
-  {
-    if (context instanceof IView)
-    {
-      return ((IView)context).getSession();
-    }
-
-    return (ISession)context;
-  }
-
-  public IView getView()
-  {
-    if (context instanceof IView)
-    {
-      return (IView)context;
-    }
-
-    return null;
+    return (DBStore)super.getStore();
   }
 
   public Connection getConnection()
@@ -177,7 +146,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
   {
     for (CDOPackageImpl cdoPackage : cdoPackages)
     {
-      int id = store.getNextPackageID();
+      int id = getStore().getNextPackageID();
       PackageServerInfo.setDBID(cdoPackage, id);
       if (TRACER.isEnabled())
       {
@@ -191,8 +160,8 @@ public class DBStoreAccessor implements IDBStoreAccessor
       CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
       long lb = metaIDRange == null ? 0L : metaIDRange.getLowerBound().getValue();
       long ub = metaIDRange == null ? 0L : metaIDRange.getUpperBound().getValue();
-      DBUtil.insertRow(connection, store.getDBAdapter(), CDODBSchema.PACKAGES, id, packageURI, name, ecore, dynamic,
-          lb, ub);
+      DBUtil.insertRow(connection, getStore().getDBAdapter(), CDODBSchema.PACKAGES, id, packageURI, name, ecore,
+          dynamic, lb, ub);
 
       for (CDOClassImpl cdoClass : cdoPackage.getClasses())
       {
@@ -201,12 +170,12 @@ public class DBStoreAccessor implements IDBStoreAccessor
     }
 
     Set<IDBTable> affectedTables = mapPackages(cdoPackages);
-    store.getDBAdapter().createTables(affectedTables, connection);
+    getStore().getDBAdapter().createTables(affectedTables, connection);
   }
 
   protected void writeClass(CDOClassImpl cdoClass)
   {
-    int id = store.getNextClassID();
+    int id = getStore().getNextClassID();
     ClassServerInfo.setDBID(cdoClass, id);
 
     CDOPackageImpl cdoPackage = cdoClass.getContainingPackage();
@@ -214,7 +183,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     int classifierID = cdoClass.getClassifierID();
     String name = cdoClass.getName();
     boolean isAbstract = cdoClass.isAbstract();
-    DBUtil.insertRow(connection, store.getDBAdapter(), CDODBSchema.CLASSES, id, packageID, classifierID, name,
+    DBUtil.insertRow(connection, getStore().getDBAdapter(), CDODBSchema.CLASSES, id, packageID, classifierID, name,
         isAbstract);
 
     for (CDOClassProxy superType : cdoClass.getSuperTypeProxies())
@@ -232,12 +201,12 @@ public class DBStoreAccessor implements IDBStoreAccessor
   {
     String packageURI = superType.getPackageURI();
     int classifierID = superType.getClassifierID();
-    DBUtil.insertRow(connection, store.getDBAdapter(), CDODBSchema.SUPERTYPES, type, packageURI, classifierID);
+    DBUtil.insertRow(connection, getStore().getDBAdapter(), CDODBSchema.SUPERTYPES, type, packageURI, classifierID);
   }
 
   protected void writeFeature(CDOFeatureImpl feature)
   {
-    int id = store.getNextFeatureID();
+    int id = getStore().getNextFeatureID();
     FeatureServerInfo.setDBID(feature, id);
 
     int classID = ServerInfo.getDBID(feature.getContainingClass());
@@ -250,7 +219,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     boolean many = feature.isMany();
     boolean containment = feature.isContainment();
     int idx = feature.getFeatureIndex();
-    DBUtil.insertRow(connection, store.getDBAdapter(), CDODBSchema.FEATURES, id, classID, featureID, name, type,
+    DBUtil.insertRow(connection, getStore().getDBAdapter(), CDODBSchema.FEATURES, id, classID, featureID, name, type,
         packageURI, classifierID, many, containment, idx);
   }
 
@@ -393,14 +362,9 @@ public class DBStoreAccessor implements IDBStoreAccessor
 
     CDOClassImpl cdoClass = revision.getCDOClass();
 
-    IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.writeRevision(this, revision);
-  }
-
-  public CDOID primeNewObject(CDOClass cdoClass)
-  {
-    return store.getNextCDOID();
   }
 
   public CloseableIterator<CDOID> readObjectIDs(boolean withTypes)
@@ -410,7 +374,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
       TRACER.trace("Selecting object IDs");
     }
 
-    return store.getMappingStrategy().readObjectIDs(this, withTypes);
+    return getStore().getMappingStrategy().readObjectIDs(this, withTypes);
   }
 
   public CDOClassRef readObjectType(CDOID id)
@@ -420,7 +384,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
       TRACER.format("Selecting object type: {0}", id);
     }
 
-    return store.getMappingStrategy().readObjectType(this, id);
+    return getStore().getMappingStrategy().readObjectType(this, id);
   }
 
   public CDORevision readRevision(CDOID id, int referenceChunk)
@@ -430,11 +394,11 @@ public class DBStoreAccessor implements IDBStoreAccessor
       TRACER.format("Selecting revision: {0}", id);
     }
 
-    IRevisionManager revisionManager = store.getRepository().getRevisionManager();
+    IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
     CDOClassImpl cdoClass = getObjectType(id);
     CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
-    IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.readRevision(this, revision, referenceChunk);
     return revision;
@@ -447,11 +411,11 @@ public class DBStoreAccessor implements IDBStoreAccessor
       TRACER.format("Selecting revision: {0}, timestamp={1,date} {1,time}", id, timeStamp);
     }
 
-    IRevisionManager revisionManager = store.getRepository().getRevisionManager();
+    IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
     CDOClassImpl cdoClass = getObjectType(id);
     CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
-    IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.readRevisionByTime(this, revision, timeStamp, referenceChunk);
     return revision;
@@ -464,11 +428,11 @@ public class DBStoreAccessor implements IDBStoreAccessor
       TRACER.format("Selecting revision: {0}, version={1}", id, version);
     }
 
-    IRevisionManager revisionManager = store.getRepository().getRevisionManager();
+    IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
     CDOClassImpl cdoClass = getObjectType(id);
     CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
 
-    IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.readRevisionByVersion(this, revision, version, referenceChunk);
     return revision;
@@ -484,11 +448,6 @@ public class DBStoreAccessor implements IDBStoreAccessor
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     return mappingStrategy.readResourcePath(this, id);
-  }
-
-  public CDORevisionImpl verifyRevision(CDORevisionImpl revision)
-  {
-    return revision;
   }
 
   /**
@@ -516,7 +475,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
 
   protected CDOClassImpl getObjectType(CDOID id)
   {
-    IRepository repository = store.getRepository();
+    IRepository repository = getStore().getRepository();
     IPackageManager packageManager = repository.getPackageManager();
     CDOClassRef type = repository.getTypeManager().getObjectType(this, id);
     return (CDOClassImpl)type.resolve(packageManager);
@@ -542,7 +501,7 @@ public class DBStoreAccessor implements IDBStoreAccessor
     Set<IDBTable> affectedTables = new HashSet<IDBTable>();
     if (cdoClasses != null && cdoClasses.length != 0)
     {
-      IMappingStrategy mappingStrategy = store.getMappingStrategy();
+      IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
       for (CDOClassImpl cdoClass : cdoClasses)
       {
         IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);

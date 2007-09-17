@@ -13,14 +13,12 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
-import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.util.io.CloseableIterator;
@@ -31,63 +29,22 @@ import java.util.Collections;
 /**
  * @author Eike Stepper
  */
-public class NOOPStoreAccessor implements IStoreWriter
+public class NOOPStoreAccessor extends StoreAccessor
 {
-  private NOOPStore store;
-
-  private Object context;
-
-  private boolean reader;
-
-  private NOOPStoreAccessor(NOOPStore store, Object context, boolean reader)
-  {
-    this.store = store;
-    this.context = context;
-    this.reader = reader;
-  }
-
   public NOOPStoreAccessor(NOOPStore store, ISession session)
   {
-    this(store, session, true);
+    super(store, session);
   }
 
   public NOOPStoreAccessor(NOOPStore store, IView view)
   {
-    this(store, view, false);
+    super(store, view);
   }
 
-  public void release()
-  {
-  }
-
+  @Override
   public NOOPStore getStore()
   {
-    return store;
-  }
-
-  public boolean isReader()
-  {
-    return reader;
-  }
-
-  public ISession getSession()
-  {
-    if (context instanceof IView)
-    {
-      return ((IView)context).getSession();
-    }
-
-    return (ISession)context;
-  }
-
-  public IView getView()
-  {
-    if (context instanceof IView)
-    {
-      return (IView)context;
-    }
-
-    return null;
+    return (NOOPStore)super.getStore();
   }
 
   public IStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature)
@@ -140,21 +97,11 @@ public class NOOPStoreAccessor implements IStoreWriter
     throw new UnsupportedOperationException();
   }
 
-  public CDORevisionImpl verifyRevision(CDORevisionImpl revision)
-  {
-    return revision;
-  }
-
   public void writePackages(CDOPackageImpl... cdoPackages)
   {
   }
 
   public void writeRevision(CDORevisionImpl revision)
   {
-  }
-
-  public CDOID primeNewObject(CDOClass cdoClass)
-  {
-    return store.getNextCDOID();
   }
 }

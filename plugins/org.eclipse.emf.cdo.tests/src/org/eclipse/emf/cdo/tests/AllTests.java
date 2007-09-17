@@ -28,6 +28,8 @@ public class AllTests
     suite.addTestSuite(ContainmentTest.class);
     suite.addTestSuite(InvalidationTest.class);
     suite.addTestSuite(CrossReferenceTest.class);
+    suite.addTestSuite(ChunkingTest.class);
+    suite.addTestSuite(RandomDeadLockTest.class);
     suite.addTestSuite(PackageRegistryTest.class);
     suite.addTestSuite(GeneratedEcoreTest.class);
     // $JUnit-END$

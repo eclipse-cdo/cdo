@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 
@@ -20,9 +22,13 @@ import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
  */
 public abstract class Store extends Lifecycle implements IStore
 {
+  private static final long INITIAL_OID_VALUE = 2;
+
   private String type;
 
   private IRepository repository;
+
+  private long nextOIDValue = INITIAL_OID_VALUE;
 
   public Store(String type)
   {
@@ -42,5 +48,23 @@ public abstract class Store extends Lifecycle implements IStore
   public void setRepository(IRepository repository)
   {
     this.repository = repository;
+  }
+
+  public CDOID getNextCDOID()
+  {
+    CDOID id = CDOIDImpl.create(nextOIDValue);
+    ++nextOIDValue;
+    ++nextOIDValue;
+    return id;
+  }
+
+  public long getNextOIDValue()
+  {
+    return nextOIDValue;
+  }
+
+  public void setNextOIDValue(long nextOIDValue)
+  {
+    this.nextOIDValue = nextOIDValue;
   }
 }

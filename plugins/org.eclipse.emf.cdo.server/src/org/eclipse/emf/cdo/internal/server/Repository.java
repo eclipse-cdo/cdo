@@ -10,9 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
-import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
@@ -39,8 +37,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   public static final String PROP_VERIFYING_REVISIONS = "verifyingRevisions";
 
   public static final String PROP_REMEMBERING_KNOWN_TYPES = "rememberingKnownTypes";
-
-  private static final long INITIAL_OID_VALUE = 2;
 
   private static final long INITIAL_META_ID_VALUE = 1;
 
@@ -69,8 +65,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   private RevisionManager revisionManager = createRevisionManager();
 
   private IRepositoryElement[] elements;
-
-  private long nextOIDValue = INITIAL_OID_VALUE;
 
   private long nextMetaIDValue = INITIAL_META_ID_VALUE;
 
@@ -209,24 +203,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   public long getNextMetaIDValue()
   {
     return nextMetaIDValue;
-  }
-
-  public CDOID getNextCDOID()
-  {
-    CDOID id = CDOIDImpl.create(nextOIDValue);
-    ++nextOIDValue;
-    ++nextOIDValue;
-    return id;
-  }
-
-  public long getNextOIDValue()
-  {
-    return nextOIDValue;
-  }
-
-  public void setNextOIDValue(long nextOIDValue)
-  {
-    this.nextOIDValue = nextOIDValue;
   }
 
   @Override

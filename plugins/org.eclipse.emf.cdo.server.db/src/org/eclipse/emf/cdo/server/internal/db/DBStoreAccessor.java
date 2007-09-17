@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
@@ -395,6 +396,11 @@ public class DBStoreAccessor implements IDBStoreAccessor
     IMappingStrategy mappingStrategy = store.getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.writeRevision(this, revision);
+  }
+
+  public CDOID primeNewObject(CDOClass cdoClass)
+  {
+    return store.getNextCDOID();
   }
 
   public CloseableIterator<CDOID> readObjectIDs(boolean withTypes)

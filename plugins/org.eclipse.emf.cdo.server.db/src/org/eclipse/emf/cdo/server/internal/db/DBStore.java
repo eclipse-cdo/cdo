@@ -200,7 +200,7 @@ public class DBStore extends Store implements IDBStore
         repairAfterCrash(repository, connection);
       }
 
-      repository.setNextOIDValue(nextCDOID);
+      setNextOIDValue(nextCDOID);
       repository.setNextMetaIDValue(nextMetaID);
 
       StringBuilder builder = new StringBuilder();
@@ -247,7 +247,7 @@ public class DBStore extends Store implements IDBStore
     builder.append(", ");
     builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID);
     builder.append("=");
-    builder.append(repository.getNextOIDValue());
+    builder.append(getNextOIDValue());
     builder.append(", ");
     builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
     builder.append("=");

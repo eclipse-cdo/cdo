@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
@@ -150,5 +151,10 @@ public class NOOPStoreAccessor implements IStoreWriter
 
   public void writeRevision(CDORevisionImpl revision)
   {
+  }
+
+  public CDOID primeNewObject(CDOClass cdoClass)
+  {
+    return store.getNextCDOID();
   }
 }

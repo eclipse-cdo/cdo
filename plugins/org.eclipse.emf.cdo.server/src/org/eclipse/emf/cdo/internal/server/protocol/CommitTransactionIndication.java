@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.internal.util.transaction.Transaction;
+import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -102,10 +103,10 @@ public class CommitTransactionIndication extends CDOServerIndication
     try
     {
       StoreUtil.setReader(storeWriter);
-      newPackages = readNewPackages(in);
-      newResources = readNewResources(in);
-      newObjects = readNewObjects(in);
-      dirtyObjects = readDirtyObjects(in);
+      newPackages = readNewPackages(in, storeWriter);
+      newResources = readNewResources(in, storeWriter);
+      newObjects = readNewObjects(in, storeWriter);
+      dirtyObjects = readDirtyObjects(in, storeWriter);
 
       ITransaction<IStoreWriter> storeTransaction = new Transaction<IStoreWriter>(storeWriter);
       addPackages(storeTransaction, newPackages);
@@ -137,7 +138,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     }
   }
 
-  private CDOPackageImpl[] readNewPackages(ExtendedDataInputStream in) throws IOException
+  private CDOPackageImpl[] readNewPackages(ExtendedDataInputStream in, IStoreWriter storeWriter) throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL.isEnabled())
@@ -175,7 +176,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     return newPackages;
   }
 
-  private CDORevisionImpl[] readNewResources(ExtendedDataInputStream in) throws IOException
+  private CDORevisionImpl[] readNewResources(ExtendedDataInputStream in, IStoreWriter storeWriter) throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL.isEnabled())
@@ -183,10 +184,10 @@ public class CommitTransactionIndication extends CDOServerIndication
       PROTOCOL.format("Reading {0} new resources", size);
     }
 
-    return readRevisions(in, size);
+    return readRevisions(in, storeWriter, size);
   }
 
-  private CDORevisionImpl[] readNewObjects(ExtendedDataInputStream in) throws IOException
+  private CDORevisionImpl[] readNewObjects(ExtendedDataInputStream in, IStoreWriter storeWriter) throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL.isEnabled())
@@ -194,10 +195,10 @@ public class CommitTransactionIndication extends CDOServerIndication
       PROTOCOL.format("Reading {0} new objects", size);
     }
 
-    return readRevisions(in, size);
+    return readRevisions(in, storeWriter, size);
   }
 
-  private CDORevisionImpl[] readDirtyObjects(ExtendedDataInputStream in) throws IOException
+  private CDORevisionImpl[] readDirtyObjects(ExtendedDataInputStream in, IStoreWriter storeWriter) throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL.isEnabled())
@@ -205,17 +206,18 @@ public class CommitTransactionIndication extends CDOServerIndication
       PROTOCOL.format("Reading {0} dirty objects", size);
     }
 
-    return readRevisions(in, size);
+    return readRevisions(in, storeWriter, size);
   }
 
-  private CDORevisionImpl[] readRevisions(ExtendedDataInputStream in, int size) throws IOException
+  private CDORevisionImpl[] readRevisions(ExtendedDataInputStream in, IStoreWriter storeWriter, int size)
+      throws IOException
   {
     RevisionManager revisionManager = sessionPackageManager.getRepository().getRevisionManager();
     CDORevisionImpl[] revisions = new CDORevisionImpl[size];
     for (int i = 0; i < size; i++)
     {
       revisions[i] = new CDORevisionImpl(in, revisionManager, transactionPackageManager);
-      mapTemporaryID(revisions[i]);
+      mapTemporaryID(revisions[i], storeWriter);
     }
 
     return revisions;
@@ -237,12 +239,17 @@ public class CommitTransactionIndication extends CDOServerIndication
     }
   }
 
-  private void mapTemporaryID(CDORevisionImpl revision)
+  private void mapTemporaryID(CDORevisionImpl revision, IStoreWriter storeWriter)
   {
     CDOID oldID = revision.getID();
     if (oldID.isTemporary())
     {
-      CDOID newID = getRepository().getNextCDOID();
+      CDOID newID = storeWriter.primeNewObject(revision.getCDOClass());
+      if (newID == null || newID.isNull() || newID.isMeta() || newID.isTemporary())
+      {
+        throw new ImplementationError("Store writer returned bad CDOID " + newID);
+      }
+
       if (TRACER.isEnabled())
       {
         TRACER.format("Mapping ID: {0} --> {1}", oldID, newID);

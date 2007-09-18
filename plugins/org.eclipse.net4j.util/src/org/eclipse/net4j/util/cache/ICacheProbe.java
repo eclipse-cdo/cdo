@@ -22,4 +22,12 @@ public interface ICacheProbe
   public void elementEvicted(int elementSize);
 
   public void elementReconstructed(long reconstructionTime);
+
+  public int getElementCount();
+
+  public long getCacheSize();
+
+  public long getAverageElementSize();
+
+  public long getReconstructionCost();
 }

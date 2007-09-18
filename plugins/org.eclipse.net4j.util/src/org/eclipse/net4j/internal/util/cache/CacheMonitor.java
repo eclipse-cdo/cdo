@@ -10,8 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.cache;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.lifecycle.Worker;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.cache.ICache;
 import org.eclipse.net4j.util.cache.ICacheMonitor;
@@ -26,6 +28,11 @@ import java.util.Map;
  */
 public class CacheMonitor extends Worker implements ICacheMonitor
 {
+  // percentFreeAllocated = Round((freeMemory / totalMemory) * 100);
+  // percentAllocated = Round((totalMemory / maxMemory ) * 100);
+
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CacheMonitor.class);
+
   private static final long DEFAULT_PAUSE_GREEN = 60L * 1000L; // 1 minute
 
   private static final long DEFAULT_PAUSE_YELLOW = 5L * 1000L; // 5 seconds
@@ -42,7 +49,7 @@ public class CacheMonitor extends Worker implements ICacheMonitor
 
   private Condition condition;
 
-  private Map<ICache, ICacheRegistration> caches = new HashMap<ICache, ICacheRegistration>();
+  private Map<ICache, ICacheRegistration> registrations = new HashMap<ICache, ICacheRegistration>();
 
   public CacheMonitor()
   {
@@ -93,34 +100,44 @@ public class CacheMonitor extends Worker implements ICacheMonitor
     return condition;
   }
 
-  public void setCondition(Condition newCondition)
+  public ICacheRegistration[] getRegistrations()
   {
-    if (newCondition == null)
+    synchronized (registrations)
     {
-      throw new ImplementationError("newCondition == null");
-    }
-
-    Condition oldCondition = condition;
-    if (newCondition != oldCondition)
-    {
-      condition = newCondition;
-      fireEvent(new CacheMonitorEvent(oldCondition, newCondition));
+      return registrations.values().toArray(new ICacheRegistration[registrations.size()]);
     }
   }
 
   public ICacheRegistration registerCache(ICache cache)
   {
+    if (TRACER.isEnabled()) TRACER.trace("Registering cache " + cache);
     ICacheRegistration registration = new CacheRegistration(this, cache);
-    caches.put(cache, registration);
+    ICacheRegistration oldRegistration;
+    synchronized (registrations)
+    {
+      oldRegistration = registrations.put(cache, registration);
+    }
+
+    if (oldRegistration != null)
+    {
+      oldRegistration.dispose();
+    }
+
     return registration;
   }
 
   public void deregisterCache(ICache cache)
   {
-    ICacheRegistration registration = caches.remove(cache);
+    ICacheRegistration registration;
+    synchronized (registrations)
+    {
+      registration = registrations.remove(cache);
+    }
+
     if (registration != null)
     {
       registration.dispose();
+      if (TRACER.isEnabled()) TRACER.trace("Deregistered cache " + cache);
     }
   }
 
@@ -132,6 +149,18 @@ public class CacheMonitor extends Worker implements ICacheMonitor
     {
       throw new IllegalStateException("conditionPolicy == null");
     }
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    for (ICacheRegistration registration : getRegistrations())
+    {
+      registration.dispose();
+    }
+
+    registrations.clear();
+    super.doDeactivate();
   }
 
   @Override
@@ -157,10 +186,24 @@ public class CacheMonitor extends Worker implements ICacheMonitor
     }
   }
 
+  protected void setCondition(Condition newCondition)
+  {
+    if (newCondition == null)
+    {
+      throw new ImplementationError("newCondition == null");
+    }
+
+    Condition oldCondition = condition;
+    if (newCondition != oldCondition)
+    {
+      condition = newCondition;
+      fireEvent(new CacheMonitorEvent(oldCondition, newCondition));
+    }
+  }
+
   protected void handleConditionRED()
   {
-    // TODO Implement method CacheMonitor.handleConditionRED()
-    throw new UnsupportedOperationException("Not yet implemented");
+    System.err.println("\n\n\nCache monitor condition RED\n\n\n\n");
   }
 
   /**

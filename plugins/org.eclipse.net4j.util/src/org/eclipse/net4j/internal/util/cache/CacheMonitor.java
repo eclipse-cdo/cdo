@@ -203,7 +203,7 @@ public class CacheMonitor extends Worker implements ICacheMonitor
 
   protected void handleConditionRED()
   {
-    System.err.println("\n\n\nCache monitor condition RED\n\n\n\n");
+    System.err.println("CONDITION RED");
   }
 
   /**

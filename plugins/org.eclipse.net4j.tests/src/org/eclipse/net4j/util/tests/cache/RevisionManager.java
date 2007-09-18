@@ -14,7 +14,8 @@ import org.eclipse.net4j.internal.util.cache.Cache;
 
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
-import java.lang.ref.WeakReference;
+import java.lang.ref.SoftReference;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,13 +35,7 @@ public class RevisionManager extends Cache<Revision>
 
   public Revision getRevision(int id, int version)
   {
-    TimeLine timeLine = timeLines.get(id);
-    if (timeLine == null)
-    {
-      timeLine = new TimeLine(id);
-      timeLines.put(id, timeLine);
-    }
-
+    TimeLine timeLine = getTimeLine(id);
     return timeLine.getRevision(version);
   }
 
@@ -48,17 +43,30 @@ public class RevisionManager extends Cache<Revision>
   {
   }
 
+  protected TimeLine getTimeLine(int id)
+  {
+    TimeLine timeLine = timeLines.get(id);
+    if (timeLine == null)
+    {
+      timeLine = new TimeLine(id);
+      timeLines.put(id, timeLine);
+    }
+
+    return timeLine;
+  }
+
   protected Revision loadRevision(int id, int version)
   {
-    Revision revision = new Revision(id, version);
-    System.out.println("Loaded " + revision + " (free=" + Runtime.getRuntime().freeMemory() + ", total="
-        + Runtime.getRuntime().totalMemory() + ", max=" + Runtime.getRuntime().maxMemory() + ")");
+    Revision revision = new Revision(this, id, version);
+    System.out.println(MessageFormat.format("Loaded {0} (free={1}, total={2}, max={3})", revision, Runtime.getRuntime()
+        .freeMemory(), Runtime.getRuntime().totalMemory(), Runtime.getRuntime().maxMemory()));
     return revision;
   }
 
-  protected int getRevisionSize(Revision revision)
+  protected void finalizeRevision(Revision revision)
   {
-    return 1;
+    // TimeLine timeLine = getTimeLine(revision.getID());
+    // timeLine.addRevision(revision);
   }
 
   @Override
@@ -109,25 +117,32 @@ public class RevisionManager extends Cache<Revision>
       long time = System.currentTimeMillis();
       Revision revision = loadRevision(id, version);
       time = System.currentTimeMillis() - time;
-      int size = getRevisionSize(revision);
 
-      revisions.add(new CacheElement(revision, getReferenceQueue()));
+      addRevision(revision);
       return revision;
+    }
+
+    public void addRevision(Revision revision)
+    {
+      revisions.add(new CacheElement(revision, getReferenceQueue()));
     }
   }
 
   /**
    * @author Eike Stepper
    */
-  private static final class CacheElement extends WeakReference<Revision>
+  private static final class CacheElement extends SoftReference<Revision>
   {
     private int id;
 
     private int version;
 
+    // private Reference<Revision> ref;
+
     public CacheElement(Revision revision, ReferenceQueue<Revision> queue)
     {
       super(revision, queue);
+      // ref = new WeakReference<Revision>(revision, queue);
       id = revision.getID();
       version = revision.getVersion();
     }
@@ -142,15 +157,10 @@ public class RevisionManager extends Cache<Revision>
       return version;
     }
 
-    public Revision getRevision()
-    {
-      return get();
-    }
-
     @Override
     public String toString()
     {
-      return "Ref" + id + "v" + version + (get() == null ? " cleared" : " set");
+      return "R" + id + "v" + version + (get() == null ? "" : " UNCLEARED");
     }
   }
 }

@@ -20,10 +20,9 @@ public class UTFTest extends AbstractOMTest
 {
   private static final int UNSIGNED_SHORT_MAX = (1 << 16) - 1;
 
-  private static final int MAX = UNSIGNED_SHORT_MAX / 10 + 1;
-
   public void testUTF8_OneOctet() throws Exception
   {
+    final int MAX = UNSIGNED_SHORT_MAX / 10 + 1;
     String part = "0123456789";
     assertEquals(10, part.length());
 
@@ -46,14 +45,15 @@ public class UTFTest extends AbstractOMTest
 
   public void testUTF8_ThreeOctets() throws Exception
   {
+    final int MAX = UNSIGNED_SHORT_MAX >> 1;
     StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < UNSIGNED_SHORT_MAX; i++)
+    for (int i = 0; i < MAX; i++)
     {
       builder.append("\u6771");
     }
 
     String str = builder.toString();
-    assertEquals(UNSIGNED_SHORT_MAX, str.length());
+    assertEquals(MAX, str.length());
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     DataOutputStream dos = new DataOutputStream(baos);

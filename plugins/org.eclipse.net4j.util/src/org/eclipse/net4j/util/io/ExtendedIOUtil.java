@@ -19,6 +19,14 @@ import java.io.IOException;
  */
 public final class ExtendedIOUtil
 {
+  private static final int UTF_HEADER_SIZE = 2;
+
+  private static final int MAX_16_BIT = (1 << 16) - 1;
+
+  private static final int MAX_UTF_LENGTH = MAX_16_BIT - UTF_HEADER_SIZE;
+
+  private static final int MAX_UTF_CHARS = MAX_UTF_LENGTH / 3;
+
   private ExtendedIOUtil()
   {
   }
@@ -40,12 +48,20 @@ public final class ExtendedIOUtil
   {
     if (str != null)
     {
-      writeByteArray(out, str.getBytes());
+      int size = str.length();
+      int start = 0;
+      do
+      {
+        out.writeBoolean(true);
+        int chunk = Math.min(size, MAX_UTF_CHARS);
+        int end = start + chunk;
+        out.writeUTF(str.substring(start, end));
+        start = end;
+        size -= chunk;
+      } while (size > 0);
     }
-    else
-    {
-      out.writeInt(-1);
-    }
+
+    out.writeBoolean(false);
   }
 
   public static byte[] readByteArray(DataInput in) throws IOException
@@ -72,12 +88,20 @@ public final class ExtendedIOUtil
 
   public static String readString(DataInput in) throws IOException
   {
-    byte[] bytes = readByteArray(in);
-    if (bytes == null)
+    boolean more = in.readBoolean();
+    if (!more)
     {
       return null;
     }
 
-    return new String(bytes);
+    StringBuilder builder = new StringBuilder();
+    do
+    {
+      String chunk = in.readUTF();
+      builder.append(chunk);
+      more = in.readBoolean();
+    } while (more);
+
+    return builder.toString();
   }
 }

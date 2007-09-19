@@ -11,7 +11,6 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.internal.net4j.AcceptorFactory;
 
@@ -69,10 +68,5 @@ public class TCPAcceptorFactory extends AcceptorFactory
 
     return null;
 
-  }
-
-  public static TCPAcceptor get(IManagedContainer container, String description)
-  {
-    return (TCPAcceptor)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 }

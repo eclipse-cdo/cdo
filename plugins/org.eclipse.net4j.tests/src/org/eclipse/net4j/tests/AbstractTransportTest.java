@@ -11,8 +11,6 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.Net4jUtil;
-import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory;
-import org.eclipse.net4j.internal.tcp.TCPConnectorFactory;
 import org.eclipse.net4j.internal.util.container.ManagedContainer;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -72,7 +70,7 @@ public abstract class AbstractTransportTest extends AbstractOMTest
   {
     if (acceptor == null)
     {
-      acceptor = TCPAcceptorFactory.get(container, null);
+      acceptor = (Acceptor)TCPUtil.getAcceptor(container, null);
     }
 
     return acceptor;
@@ -82,7 +80,7 @@ public abstract class AbstractTransportTest extends AbstractOMTest
   {
     if (connector == null)
     {
-      connector = TCPConnectorFactory.get(container, HOST);
+      connector = (Connector)TCPUtil.getConnector(container, HOST);
     }
 
     return connector;

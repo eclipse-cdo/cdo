@@ -14,8 +14,6 @@ import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.internal.derby.DerbyAdapter;
-import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory;
-import org.eclipse.net4j.internal.tcp.TCPConnectorFactory;
 import org.eclipse.net4j.internal.util.container.ManagedContainer;
 import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
@@ -101,7 +99,7 @@ public class JMSSeparatedTest
     TCPUtil.prepareContainer(serverContainer);
     JMSServerUtil.prepareContainer(serverContainer);
 
-    TCPAcceptorFactory.get(serverContainer, null);
+    TCPUtil.getAcceptor(serverContainer, null);
   }
 
   private static Context initClient() throws NamingException
@@ -112,7 +110,7 @@ public class JMSSeparatedTest
     JMSUtil.prepareContainer(clientContainer);
     JMSAdminUtil.prepareContainer(clientContainer);
 
-    IConnector connector = TCPConnectorFactory.get(clientContainer, "localhost");
+    IConnector connector = TCPUtil.getConnector(clientContainer, "localhost");
 
     IJMSAdmin admin = JMSAdminUtil.createAdmin(connector);
     admin.createQueue("StockQueue");

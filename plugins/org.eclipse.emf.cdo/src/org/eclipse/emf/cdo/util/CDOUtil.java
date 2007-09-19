@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
+import org.eclipse.emf.internal.cdo.CDOSessionFactory;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
@@ -135,6 +136,11 @@ public final class CDOUtil
   public static CDOSession openSession(IConnector connector, String repositoryName) throws ConnectorException
   {
     return openSession(connector, repositoryName, null, null);
+  }
+
+  public static CDOSession openSession(IManagedContainer container, String description) throws ConnectorException
+  {
+    return CDOSessionFactory.get(container, description);
   }
 
   public static CDOView getView(ResourceSet resourceSet)

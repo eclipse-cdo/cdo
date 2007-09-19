@@ -11,7 +11,6 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.internal.net4j.ConnectorFactory;
@@ -85,10 +84,5 @@ public class TCPConnectorFactory extends ConnectorFactory
     }
 
     return null;
-  }
-
-  public static TCPClientConnector get(IManagedContainer container, String description)
-  {
-    return (TCPClientConnector)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 }

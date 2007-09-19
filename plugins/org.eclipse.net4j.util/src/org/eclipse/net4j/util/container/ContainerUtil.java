@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.internal.util.container.ManagedContainer;
+
 /**
  * @author Eike Stepper
  */
@@ -19,6 +21,11 @@ public final class ContainerUtil
 
   private ContainerUtil()
   {
+  }
+
+  public static IManagedContainer createContainer()
+  {
+    return new ManagedContainer();
   }
 
   public static boolean isEmpty(Object container)

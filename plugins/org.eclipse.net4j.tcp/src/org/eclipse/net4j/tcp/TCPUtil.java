@@ -32,4 +32,15 @@ public final class TCPUtil
     container.registerFactory(new TCPConnectorFactory());
     container.addPostProcessor(new TCPSelectorInjector());
   }
+
+  public static ITCPAcceptor getAcceptor(IManagedContainer container, String description)
+  {
+    return (ITCPAcceptor)container.getElement(TCPAcceptorFactory.PRODUCT_GROUP, TCPAcceptorFactory.TYPE, description);
+  }
+
+  public static ITCPConnector getConnector(IManagedContainer container, String description)
+  {
+    return (ITCPConnector)container
+        .getElement(TCPConnectorFactory.PRODUCT_GROUP, TCPConnectorFactory.TYPE, description);
+  }
 }

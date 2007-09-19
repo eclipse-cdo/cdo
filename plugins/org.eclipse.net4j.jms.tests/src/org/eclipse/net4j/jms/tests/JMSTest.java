@@ -14,8 +14,6 @@ import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.internal.derby.DerbyAdapter;
-import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory;
-import org.eclipse.net4j.internal.tcp.TCPConnectorFactory;
 import org.eclipse.net4j.internal.util.container.ManagedContainer;
 import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
@@ -96,8 +94,8 @@ public class JMSTest
     JMSServerUtil.prepareContainer(container);
     JMSAdminUtil.prepareContainer(container);
 
-    TCPAcceptorFactory.get(container, null);
-    IConnector connector = TCPConnectorFactory.get(container, "localhost");
+    TCPUtil.getAcceptor(container, null);
+    IConnector connector = TCPUtil.getConnector(container, "localhost");
 
     IJMSAdmin admin = JMSAdminUtil.createAdmin(connector);
     admin.createQueue("StockQueue");

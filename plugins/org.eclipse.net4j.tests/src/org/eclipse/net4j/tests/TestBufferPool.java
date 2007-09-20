@@ -13,10 +13,9 @@ package org.eclipse.net4j.tests;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferPool;
 import org.eclipse.net4j.Net4jUtil;
-import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,16 +23,14 @@ import java.util.Collection;
 /**
  * @author Eike Stepper
  */
-public class TestBufferPool
+public class TestBufferPool extends AbstractOMTest
 {
   private static IBufferPool bufferPool = Net4jUtil.createBufferPool();
 
   private static Collection<byte[]> memory = new ArrayList<byte[]>();
 
-  public static void main(String[] args) throws InterruptedException
+  public void testBufferPool() throws Exception
   {
-    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
-    OMPlatform.INSTANCE.setDebugging(true);
     LifecycleUtil.activate(bufferPool);
 
     IBuffer[] buffers = new IBuffer[10];

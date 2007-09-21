@@ -40,7 +40,7 @@ public class CacheTest extends AbstractOMTest
     {
       for (int id = 1; id <= 100; id++)
       {
-        Revision revision = revisionManager.getRevision(id, version);
+        revisionManager.getRevision(id, version);
         Thread.sleep(200);
       }
 

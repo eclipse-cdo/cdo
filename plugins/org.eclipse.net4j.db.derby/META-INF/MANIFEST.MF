@@ -4,6 +4,7 @@ Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.db.derby;singleton:=true
 Bundle-Version: 0.8.0.qualifier
 Bundle-Vendor: %providerName
+Bundle-Localization: fragment
 Bundle-ClassPath: .,
  lib/derby.jar,
  lib/derbyclient.jar

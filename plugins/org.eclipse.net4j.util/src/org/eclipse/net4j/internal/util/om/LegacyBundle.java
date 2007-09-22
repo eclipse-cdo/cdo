@@ -191,6 +191,7 @@ public class LegacyBundle extends AbstractBundle
 
   private static URL trimSegments(URL url, int count) throws MalformedURLException
   {
+    System.out.println("trimSegments: " + url);
     String path = url.getPath();
     if (path.endsWith("/")) //$NON-NLS-1$
     {

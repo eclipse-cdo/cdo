@@ -13,7 +13,6 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.CDOCallback;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -23,7 +22,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
+public class CDOCallbackImpl extends CDOAdapterImpl // implements CDOCallback
 {
   public CDOCallbackImpl(InternalEObject instance)
   {

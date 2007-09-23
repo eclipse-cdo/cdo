@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+
 /**
  * @author Eike Stepper
  */

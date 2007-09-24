@@ -60,6 +60,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.net4j.tests"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.net4j.source"
          version="0.0.0"/>
 

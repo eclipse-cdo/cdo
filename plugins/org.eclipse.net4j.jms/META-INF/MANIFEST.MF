@@ -15,3 +15,4 @@ Export-Package: org.eclipse.net4j.internal.jms;version="0.8.0",
  org.eclipse.net4j.internal.jms.protocol;version="0.8.0",
  org.eclipse.net4j.internal.jms.util;version="0.8.0",
  org.eclipse.net4j.jms;version="0.8.0"
+Eclipse-LazyStart: true

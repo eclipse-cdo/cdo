@@ -16,3 +16,4 @@ Export-Package: org.eclipse.net4j.jms.internal.server;version="0.8.0",
  org.eclipse.net4j.jms.internal.server.protocol.admin;version="0.8.0",
  org.eclipse.net4j.jms.internal.server.store;version="0.8.0",
  org.eclipse.net4j.jms.server;version="0.8.0"
+Eclipse-LazyStart: true

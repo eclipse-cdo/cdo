@@ -46,3 +46,4 @@ Export-Package: org.eclipse.net4j.internal.util.cache;version="0.8.0",
  org.eclipse.net4j.util.om.trace;version="0.8.0",
  org.eclipse.net4j.util.registry;version="0.8.0",
  org.eclipse.net4j.util.transaction;version="0.8.0"
+Eclipse-LazyStart: true

@@ -16,3 +16,4 @@ Export-Package: org.eclipse.net4j.tests,
  org.eclipse.net4j.tests.signal,
  org.eclipse.net4j.util.tests,
  org.eclipse.net4j.util.tests.cache
+Eclipse-LazyStart: true

@@ -19,24 +19,14 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.db.IMappingStrategy;
-import org.eclipse.emf.cdo.server.internal.db.DBStore;
-import org.eclipse.emf.cdo.server.internal.db.HorizontalMappingStrategy;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
-import org.eclipse.net4j.db.ConnectionProvider;
-import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.internal.derby.DerbyAdapter;
 import org.eclipse.net4j.tests.AbstractTransportTest;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
-import javax.sql.DataSource;
-
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -74,22 +64,22 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     return StoreUtil.createNOOPStore();
   }
 
-  protected DBStore createDBStore()
-  {
-    IMappingStrategy mappingStrategy = new HorizontalMappingStrategy();
-    IDBAdapter dbAdapter = new DerbyAdapter();
-
-    Properties properties = new Properties();
-    properties.put("driverClass", "org.apache.derby.jdbc.EmbeddedDataSource");
-    properties.put("databaseName", "C:/temp/cdo-repo1");
-    properties.put("createDatabase", "create");
-    DataSource dataSource = DBUtil.createDataSource(properties);
-    ConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
-
-    DBStore store = new DBStore(mappingStrategy, dbAdapter, connectionProvider);
-    mappingStrategy.setStore(store);
-    return store;
-  }
+  // protected DBStore createDBStore()
+  // {
+  // IMappingStrategy mappingStrategy = new HorizontalMappingStrategy();
+  // IDBAdapter dbAdapter = new DerbyAdapter();
+  //
+  // Properties properties = new Properties();
+  // properties.put("driverClass", "org.apache.derby.jdbc.EmbeddedDataSource");
+  // properties.put("databaseName", "C:/temp/cdo-repo1");
+  // properties.put("createDatabase", "create");
+  // DataSource dataSource = DBUtil.createDataSource(properties);
+  // ConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
+  //
+  // DBStore store = new DBStore(mappingStrategy, dbAdapter, connectionProvider);
+  // mappingStrategy.setStore(store);
+  // return store;
+  // }
 
   @Override
   protected void doSetUp() throws Exception

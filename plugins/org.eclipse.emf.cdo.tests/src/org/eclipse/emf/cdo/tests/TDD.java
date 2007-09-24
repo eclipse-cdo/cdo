@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.net4j.util.tests.AbstractOMTest;
+import org.eclipse.net4j.tests.AbstractOMTest;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

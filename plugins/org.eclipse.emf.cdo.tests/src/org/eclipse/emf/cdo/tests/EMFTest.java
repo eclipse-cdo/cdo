@@ -12,14 +12,14 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.util.EMFUtil;
 
-import org.eclipse.net4j.util.tests.AbstractOMTest;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.net4j.tests.AbstractOMTest;
 
 /**
  * @author Eike Stepper

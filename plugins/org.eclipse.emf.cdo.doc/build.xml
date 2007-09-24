@@ -7,7 +7,7 @@
 	<property name="plugin" value="org.eclipse.emf.cdo"/>
 	<property name="docPlugin" value="org.eclipse.emf.cdo.doc"/>
 
-	<property name="filesToInclude" value="META-INF/,about.*,eclipse*.gif,eclipse*.png,eclipse_lg.gif,plugin.*,doc.zip,toc.xml,index/**"/>
+	<property name="filesToInclude" value="META-INF/,about.*,*.gif,*.png,plugin.*,doc.zip,toc.xml,index/**"/>
 
 	<!-- Compiler settings. -->
 	<property name="javacFailOnError" value="false"/>

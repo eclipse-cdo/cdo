@@ -20,12 +20,15 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.CDOAware;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
+import org.eclipse.emf.internal.cdo.CDOCallbackImpl;
 import org.eclipse.emf.internal.cdo.CDOMetaImpl;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -82,32 +85,32 @@ public final class FSMUtil
       }
     }
 
-    // try
-    // {
-    // if (object instanceof CDOAware)
-    // {
-    // CDOAware aware = (CDOAware)object;
-    // CDOCallbackImpl callback = (CDOCallbackImpl)aware.getCDOCallback();
-    // if (callback == null)
-    // {
-    // InternalEObject instance = (InternalEObject)aware;
-    // if (instance.eIsProxy())
-    // {
-    // instance = (InternalEObject)EcoreUtil.resolve(instance, view.getResourceSet());
-    // }
-    //
-    // callback = new CDOCallbackImpl(instance);
-    // aware.setCDOCallback(callback);
-    // instance.eAdapters().add(callback);
-    // }
-    //
-    // return callback;
-    // }
-    // }
-    // catch (Throwable t)
-    // {
-    // OM.LOG.info(t);
-    // }
+    try
+    {
+      if (object instanceof CDOAware)
+      {
+        CDOAware aware = (CDOAware)object;
+        CDOCallbackImpl callback = (CDOCallbackImpl)aware.getCDOCallback();
+        if (callback == null)
+        {
+          InternalEObject instance = (InternalEObject)aware;
+          if (instance.eIsProxy())
+          {
+            instance = (InternalEObject)EcoreUtil.resolve(instance, view.getResourceSet());
+          }
+
+          callback = new CDOCallbackImpl(instance);
+          aware.setCDOCallback(callback);
+          instance.eAdapters().add(callback);
+        }
+
+        return callback;
+      }
+    }
+    catch (Throwable t)
+    {
+      OM.LOG.info(t);
+    }
 
     if (object instanceof InternalEObject)
     {

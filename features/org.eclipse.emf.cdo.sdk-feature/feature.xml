@@ -39,36 +39,35 @@
       <import plugin="org.eclipse.core.runtime" version="3.3.0" match="compatible"/>
    </requires>
 
+   <!-- Client -->
    <includes
          id="org.eclipse.emf.cdo"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.doc"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.examples"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.tests"
          version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.cdo.source"
          version="0.0.0"/>
 
+   <!-- Server -->
+   <includes
+         id="org.eclipse.emf.cdo.server"
+         version="0.0.0"/>
+
    <includes
          id="org.eclipse.emf.cdo.server.source"
          version="0.0.0"/>
 
+   <!-- Examples -->
    <includes
-         id="org.eclipse.emf.cdo.tests.source"
+         id="org.eclipse.emf.cdo.examples"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.cdo.examples.source"
+         version="0.0.0"/>
+
+   <!-- Documentation -->
+   <includes
+         id="org.eclipse.emf.cdo.doc"
+         version="0.0.0"/>
 </feature>

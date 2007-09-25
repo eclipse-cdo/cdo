@@ -19,6 +19,8 @@ import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 
+import java.io.File;
+
 /**
  * @author Eike Stepper
  */
@@ -48,8 +50,16 @@ public abstract class OM
 
   static void start() throws Exception
   {
-    RepositoryConfigurator configurator = new RepositoryConfigurator(IPluginContainer.INSTANCE);
-    configurator.configure(OMPlatform.INSTANCE.getConfigFile("cdo.server.xml"));
+    File configFile = OMPlatform.INSTANCE.getConfigFile("cdo.server.xml");
+    if (configFile != null && configFile.exists())
+    {
+      RepositoryConfigurator configurator = new RepositoryConfigurator(IPluginContainer.INSTANCE);
+      configurator.configure(configFile);
+    }
+    else
+    {
+      LOG.warn("Repository config file not found: " + configFile.getAbsolutePath());
+    }
   }
 
   /**

@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-
 /**
  * @author Eike Stepper
  */
@@ -32,7 +31,7 @@ public class AllTests
     suite.addTestSuite(ChunkingTest.class);
     suite.addTestSuite(RandomDeadLockTest.class);
     suite.addTestSuite(PackageRegistryTest.class);
-    suite.addTestSuite(GeneratedEcoreTest.class);
+    // TODO suite.addTestSuite(GeneratedEcoreTest.class);
     // $JUnit-END$
 
     return suite;

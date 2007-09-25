@@ -85,7 +85,7 @@ public final class FSMUtil
 
     try
     {
-      InternalCDOObject callback = adaptCallback(object, view);
+      InternalCDOObject callback = org.eclipse.emf.internal.cdo.CDOCallbackImpl.adapt(object, view);
       if (callback != null)
       {
         return callback;
@@ -108,32 +108,6 @@ public final class FSMUtil
 
       return adapter;
     }
-
-    return null;
-  }
-
-  private static InternalCDOObject adaptCallback(Object object, CDOView view) throws Throwable
-  {
-    // if (object instanceof org.eclipse.emf.ecore.impl.CDOAware)
-    // {
-    // org.eclipse.emf.ecore.impl.CDOAware aware = (org.eclipse.emf.ecore.impl.CDOAware)object;
-    // org.eclipse.emf.internal.cdo.CDOCallbackImpl callback = (org.eclipse.emf.internal.cdo.CDOCallbackImpl)aware
-    // .getCDOCallback();
-    // if (callback == null)
-    // {
-    // InternalEObject instance = (InternalEObject)aware;
-    // if (instance.eIsProxy())
-    // {
-    // instance = (InternalEObject)EcoreUtil.resolve(instance, view.getResourceSet());
-    // }
-    //
-    // callback = new org.eclipse.emf.internal.cdo.CDOCallbackImpl(instance);
-    // aware.setCDOCallback(callback);
-    // instance.eAdapters().add(callback);
-    // }
-    //
-    // return callback;
-    // }
 
     return null;
   }

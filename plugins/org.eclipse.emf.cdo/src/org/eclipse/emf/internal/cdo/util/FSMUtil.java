@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
-import org.eclipse.emf.internal.cdo.CDOCallbackImpl;
 import org.eclipse.emf.internal.cdo.CDOMetaImpl;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
@@ -118,7 +117,8 @@ public final class FSMUtil
     if (object instanceof org.eclipse.emf.ecore.impl.CDOAware)
     {
       org.eclipse.emf.ecore.impl.CDOAware aware = (org.eclipse.emf.ecore.impl.CDOAware)object;
-      CDOCallbackImpl callback = (CDOCallbackImpl)aware.getCDOCallback();
+      org.eclipse.emf.internal.cdo.CDOCallbackImpl callback = (org.eclipse.emf.internal.cdo.CDOCallbackImpl)aware
+          .getCDOCallback();
       if (callback == null)
       {
         InternalEObject instance = (InternalEObject)aware;
@@ -127,7 +127,7 @@ public final class FSMUtil
           instance = (InternalEObject)EcoreUtil.resolve(instance, view.getResourceSet());
         }
 
-        callback = new CDOCallbackImpl(instance);
+        callback = new org.eclipse.emf.internal.cdo.CDOCallbackImpl(instance);
         aware.setCDOCallback(callback);
         instance.eAdapters().add(callback);
       }

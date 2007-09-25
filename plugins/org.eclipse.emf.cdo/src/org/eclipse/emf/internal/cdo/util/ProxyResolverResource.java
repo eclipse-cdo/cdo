@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
-import org.eclipse.emf.internal.cdo.CDOCallbackImpl;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
@@ -51,7 +50,7 @@ final class ProxyResolverResource implements Resource
     CDOID id = CDOIDImpl.create(Long.parseLong(uriFragment));
     InternalCDOObject object = view.getObject(id);
     InternalEObject instance = object.cdoInternalInstance();
-    if (instance instanceof CDOAdapterImpl && !(instance instanceof CDOCallbackImpl))
+    if (instance instanceof CDOAdapterImpl)
     {
       if (object.cdoState() == CDOState.PROXY)
       {

@@ -21,11 +21,8 @@ import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.ReflectUtil;
-import org.eclipse.net4j.util.WrappedException;
-
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -43,6 +40,11 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.GenUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.WrappedException;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -52,15 +54,15 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public abstract class CDOLegacyImpl extends CDOWrapperImpl
+public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.Internal
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOLegacyImpl.class);
 
-  protected CDOState state;
+  private CDOState state;
 
-  protected CDOResourceImpl resource;
+  private CDOResourceImpl resource;
 
-  protected CDORevisionImpl revision;
+  private CDORevisionImpl revision;
 
   public CDOLegacyImpl()
   {
@@ -155,7 +157,6 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
   public void cdoInternalPostLoad()
   {
     transferRevisionToInstance();
-    // cdoInternalSetState(CDOState.CLEAN);
   }
 
   @Override
@@ -167,6 +168,38 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl
     }
 
     return eClass().getName() + "@" + id;
+  }
+
+  public InternalEObject getTarget()
+  {
+    return instance;
+  }
+
+  public void setTarget(Notifier newTarget)
+  {
+    if (newTarget instanceof InternalEObject)
+    {
+      instance = (InternalEObject)newTarget;
+    }
+    else
+    {
+      throw new IllegalArgumentException("Not an InternalEObject: " + newTarget.getClass().getName());
+    }
+  }
+
+  public void unsetTarget(Notifier oldTarget)
+  {
+    if (oldTarget instanceof InternalEObject)
+    {
+      if (instance == oldTarget)
+      {
+        instance = null;
+      }
+    }
+    else
+    {
+      throw new IllegalArgumentException("Not an InternalEObject: " + oldTarget.getClass().getName());
+    }
   }
 
   protected void transferInstanceToRevision()

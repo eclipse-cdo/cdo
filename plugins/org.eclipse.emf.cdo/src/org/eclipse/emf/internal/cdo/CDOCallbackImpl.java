@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
+public class CDOCallbackImpl extends CDOLegacyImpl implements CDOCallback
 {
   public CDOCallbackImpl(InternalEObject instance)
   {
@@ -40,7 +40,11 @@ public class CDOCallbackImpl extends CDOAdapterImpl implements CDOCallback
     CDOStateMachine.INSTANCE.write(this);
   }
 
-  @Override
+  public boolean isAdapterForType(Object type)
+  {
+    return type == CDOCallbackImpl.class;
+  }
+
   public void notifyChanged(Notification msg)
   {
     try

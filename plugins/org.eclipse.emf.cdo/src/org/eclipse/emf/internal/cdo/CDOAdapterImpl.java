@@ -10,16 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 /**
  * @author Eike Stepper
  */
-public class CDOAdapterImpl extends CDOLegacyImpl implements Adapter.Internal
+public class CDOAdapterImpl extends CDOLegacyImpl
 {
   public CDOAdapterImpl()
   {
@@ -28,38 +25,6 @@ public class CDOAdapterImpl extends CDOLegacyImpl implements Adapter.Internal
   public boolean isAdapterForType(Object type)
   {
     return type == CDOAdapterImpl.class;
-  }
-
-  public InternalEObject getTarget()
-  {
-    return instance;
-  }
-
-  public void setTarget(Notifier newTarget)
-  {
-    if (newTarget instanceof InternalEObject)
-    {
-      instance = (InternalEObject)newTarget;
-    }
-    else
-    {
-      throw new IllegalArgumentException("Not an InternalEObject: " + newTarget.getClass().getName());
-    }
-  }
-
-  public void unsetTarget(Notifier oldTarget)
-  {
-    if (oldTarget instanceof InternalEObject)
-    {
-      if (instance == oldTarget)
-      {
-        instance = null;
-      }
-    }
-    else
-    {
-      throw new IllegalArgumentException("Not an InternalEObject: " + oldTarget.getClass().getName());
-    }
   }
 
   public void notifyChanged(Notification msg)

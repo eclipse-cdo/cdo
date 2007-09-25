@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.ConnectionProvider;
 import org.eclipse.net4j.db.DBException;
@@ -263,8 +264,10 @@ public class DBStore extends Store implements IDBStore
 
   protected void repairAfterCrash(Repository repository, Connection connection)
   {
-    // TODO Implement method DBStore.repairAfterCrash()
-    throw new UnsupportedOperationException("Not yet implemented");
+    OM.LOG.warn("Detected restart after crash");
+
+    // TODO repairAfterCrash not yet implemented
+    OM.LOG.error("repairAfterCrash not yet implemented");
   }
 
   protected IDBSchema createSchema()

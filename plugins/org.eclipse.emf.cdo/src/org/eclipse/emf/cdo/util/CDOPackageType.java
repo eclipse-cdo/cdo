@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
-import org.eclipse.emf.internal.cdo.CDOCallbackImpl;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 
@@ -34,8 +33,8 @@ public enum CDOPackageType
 
   /**
    * The type of <code>EPackages</code> that have been normally generated for EMF and later converted to CDO.
-   * Instances of <code>EClasses</code> of these packages are represented by {@link CDOCallbackImpl} to the
-   * {@link CDOStateMachine}.
+   * Instances of <code>EClasses</code> of these packages are represented by
+   * {@link org.eclipse.emf.internal.cdo.CDOCallbackImpl} to the {@link CDOStateMachine}.
    */
   CONVERTED
 }

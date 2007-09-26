@@ -336,6 +336,11 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
     protected Node addChild(List<Node> children, Object element)
     {
+      if (nodes.containsKey(element))
+      {
+        return null;
+      }
+
       if (this != root || filterRootElement(element))
       {
         Node node = createNode(this, element);

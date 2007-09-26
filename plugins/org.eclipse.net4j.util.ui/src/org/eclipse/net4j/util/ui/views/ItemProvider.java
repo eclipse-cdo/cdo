@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
 import org.eclipse.jface.action.IMenuManager;
@@ -20,6 +21,7 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
@@ -67,6 +69,11 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
 
   public Color getForeground(Object element)
   {
+    if (!LifecycleUtil.isActive(element))
+    {
+      return getDisplay().getSystemColor(SWT.COLOR_GRAY);
+    }
+
     return null;
   }
 

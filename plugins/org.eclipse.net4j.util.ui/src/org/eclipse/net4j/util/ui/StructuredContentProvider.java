@@ -119,7 +119,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
     }
   }
 
-  protected void updateLabels(final Object elements)
+  protected void updateLabels(final Object element)
   {
     try
     {
@@ -129,7 +129,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
         {
           try
           {
-            viewer.update(elements, null);
+            viewer.update(element, null);
           }
           catch (RuntimeException ignore)
           {

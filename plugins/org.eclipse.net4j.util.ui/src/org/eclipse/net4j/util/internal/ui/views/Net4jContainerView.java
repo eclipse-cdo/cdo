@@ -15,7 +15,7 @@ public class Net4jContainerView extends ContainerView
   @Override
   protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
   {
-    return new Net4jItemProvider();
+    return new Net4jContainerItemProvider();
   }
 
   @Override

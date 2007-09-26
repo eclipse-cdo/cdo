@@ -28,13 +28,13 @@ import java.util.Iterator;
 /**
  * @author Eike Stepper
  */
-public class Net4jItemProvider extends ContainerItemProvider<IContainer<Object>>
+public class Net4jContainerItemProvider extends ContainerItemProvider<IContainer<Object>>
 {
-  public Net4jItemProvider()
+  public Net4jContainerItemProvider()
   {
   }
 
-  public Net4jItemProvider(IElementFilter rootElementFilter)
+  public Net4jContainerItemProvider(IElementFilter rootElementFilter)
   {
     super(rootElementFilter);
   }

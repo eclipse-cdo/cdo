@@ -40,19 +40,6 @@ public class Net4jItemProvider extends ContainerItemProvider<IContainer<Object>>
     super(rootElementFilter);
   }
 
-  // @Override
-  // public String getText(Object obj)
-  // {
-  // if (obj instanceof IChannel)
-  // {
-  // IChannel channel = (IChannel)obj;
-  // return MessageFormat.format("[{0}] {1}", channel.getChannelIndex(),
-  // channel.getReceiveHandler());
-  // }
-  //
-  // return super.getText(obj);
-  // }
-
   @Override
   public Image getImage(Object obj)
   {

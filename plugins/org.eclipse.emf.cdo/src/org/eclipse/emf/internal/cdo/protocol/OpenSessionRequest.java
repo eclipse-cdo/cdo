@@ -35,10 +35,13 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
 
   private String repositoryName;
 
-  public OpenSessionRequest(IChannel channel, String repositoryName)
+  private boolean disableLegacyObjects;
+
+  public OpenSessionRequest(IChannel channel, String repositoryName, boolean disableLegacyObjects)
   {
     super(channel);
     this.repositoryName = repositoryName;
+    this.disableLegacyObjects = disableLegacyObjects;
   }
 
   @Override
@@ -50,12 +53,11 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Writing repositoryName: {0}", repositoryName);
-    }
-
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing repositoryName: {0}", repositoryName);
     out.writeString(repositoryName);
+
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing disableLegacyObjects: {0}", disableLegacyObjects);
+    out.writeBoolean(disableLegacyObjects);
   }
 
   @Override

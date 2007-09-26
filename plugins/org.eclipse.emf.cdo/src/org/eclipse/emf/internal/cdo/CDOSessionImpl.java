@@ -78,6 +78,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   private int sessionID;
 
+  private boolean disableLegacyObjects;
+
   private int referenceChunkSize;
 
   private IFailOverStrategy failOverStrategy;
@@ -138,6 +140,16 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   public int getSessionID()
   {
     return sessionID;
+  }
+
+  public boolean isDisableLegacyObjects()
+  {
+    return disableLegacyObjects;
+  }
+
+  public void setDisableLegacyObjects(boolean disableLegacyObjects)
+  {
+    this.disableLegacyObjects = disableLegacyObjects;
   }
 
   public int getReferenceChunkSize()
@@ -579,7 +591,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
       channel = connector.openChannel(CDOProtocolConstants.PROTOCOL_NAME, this);
     }
 
-    OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName);
+    OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName, disableLegacyObjects);
     OpenSessionResult result = request.send();
 
     sessionID = result.getSessionID();

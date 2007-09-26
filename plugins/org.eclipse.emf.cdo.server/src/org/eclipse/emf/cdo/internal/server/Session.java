@@ -50,6 +50,8 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
   private int sessionID;
 
+  private boolean disableLegacyObjects;
+
   private ConcurrentMap<Integer, View> views = new ConcurrentHashMap<Integer, View>();
 
   private Set<CDOID> knownTypes = new HashSet<CDOID>();
@@ -63,7 +65,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     }
   };
 
-  public Session(SessionManager sessionManager, CDOServerProtocol protocol, int sessionID)
+  public Session(SessionManager sessionManager, CDOServerProtocol protocol, int sessionID, boolean disableLegacyObjects)
       throws SessionCreationException
   {
     this.sessionManager = sessionManager;
@@ -89,6 +91,11 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   public int getSessionID()
   {
     return sessionID;
+  }
+
+  public boolean isDisableLegacyObjects()
+  {
+    return disableLegacyObjects;
   }
 
   public CDOServerProtocol getProtocol()
@@ -166,7 +173,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   public CDOID provideCDOID(Object idObject)
   {
     CDOID id = (CDOID)idObject;
-    if (id.isNull() || id.isMeta())
+    if (disableLegacyObjects || id.isNull() || id.isMeta())
     {
       return id;
     }

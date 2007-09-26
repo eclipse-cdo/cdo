@@ -45,6 +45,7 @@ import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.internal.cdo.LegacyObjectDisabler;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -122,20 +123,21 @@ public final class CDOUtil
     return packageTypes;
   }
 
-  public static CDOSession openSession(IConnector connector, String repositoryName, EPackage.Registry delegate,
-      IFailOverStrategy failOverStrategy) throws ConnectorException
+  public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects,
+      EPackage.Registry delegate, IFailOverStrategy failOverStrategy) throws ConnectorException
   {
     CDOSessionImpl session = new CDOSessionImpl(delegate);
     session.setFailOverStrategy(failOverStrategy);
     session.setConnector(connector);
     session.setRepositoryName(repositoryName);
+    session.setDisableLegacyObjects(disableLegacyObjects);
     LifecycleUtil.activate(session);
     return session;
   }
 
   public static CDOSession openSession(IConnector connector, String repositoryName) throws ConnectorException
   {
-    return openSession(connector, repositoryName, null, null);
+    return openSession(connector, repositoryName, false, null, null);
   }
 
   public static CDOSession openSession(IManagedContainer container, String description) throws ConnectorException
@@ -165,9 +167,10 @@ public final class CDOUtil
     map.put(CDOProtocolConstants.PROTOCOL_NAME, factory);
   }
 
-  public static void prepareContainer(IManagedContainer container)
+  public static void prepareContainer(IManagedContainer container, boolean disableLegacyObjects)
   {
     container.registerFactory(new CDOClientProtocolFactory());
+    container.addPostProcessor(new LegacyObjectDisabler(disableLegacyObjects));
   }
 
   public static String extractResourcePath(URI uri)

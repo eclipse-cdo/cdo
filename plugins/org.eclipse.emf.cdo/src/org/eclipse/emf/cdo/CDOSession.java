@@ -26,6 +26,10 @@ public interface CDOSession extends IContainer<CDOView>
 {
   public int getSessionID();
 
+  public boolean isDisableLegacyObjects();
+
+  public void setDisableLegacyObjects(boolean disableLegacyObjects);
+
   public int getReferenceChunkSize();
 
   public void setReferenceChunkSize(int referenceChunkSize);

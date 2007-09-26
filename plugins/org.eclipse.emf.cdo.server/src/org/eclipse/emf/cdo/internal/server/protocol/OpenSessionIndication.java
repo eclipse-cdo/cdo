@@ -40,6 +40,8 @@ public class OpenSessionIndication extends IndicationWithResponse
 
   private String repositoryName;
 
+  private boolean disableLegacyObjects;
+
   public OpenSessionIndication()
   {
   }
@@ -54,10 +56,10 @@ public class OpenSessionIndication extends IndicationWithResponse
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     repositoryName = in.readString();
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Read repositoryName: {0}", repositoryName);
-    }
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Read repositoryName: {0}", repositoryName);
+
+    disableLegacyObjects = in.readBoolean();
+    if (PROTOCOL.isEnabled()) PROTOCOL.format("Read disableLegacyObjects: {0}", disableLegacyObjects);
   }
 
   @Override
@@ -69,7 +71,7 @@ public class OpenSessionIndication extends IndicationWithResponse
       SessionManager sessionManager = repository.getSessionManager();
 
       CDOServerProtocol serverProtocol = (CDOServerProtocol)getProtocol();
-      Session session = sessionManager.openSession(serverProtocol);
+      Session session = sessionManager.openSession(serverProtocol, disableLegacyObjects);
       serverProtocol.setSession(session);
 
       writeSessionID(out, session);

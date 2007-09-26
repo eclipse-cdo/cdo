@@ -30,13 +30,6 @@
             class="org.eclipse.net4j.internal.debug.views.RemoteTraceView"
             id="org.eclipse.net4j.debug.RemoteTraceView">
       </view>
-      <view
-            name="Introspector"
-            icon="icons/javabean.gif"
-            category="org.eclipse.debug.ui"
-            class="org.eclipse.net4j.internal.debug.views.IntrospectorView"
-            id="org.eclipse.net4j.debug.IntrospectorView">
-      </view>
    </extension>
    
 </plugin>

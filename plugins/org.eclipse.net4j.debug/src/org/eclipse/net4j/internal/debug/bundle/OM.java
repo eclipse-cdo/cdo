@@ -32,12 +32,24 @@ public abstract class OM
 
   static void start() throws Exception
   {
-    RemoteTraceManager.INSTANCE.activate();
+    if (isRemoteTracing())
+    {
+      RemoteTraceManager.INSTANCE.activate();
+    }
   }
 
   static void stop() throws Exception
   {
-    RemoteTraceManager.INSTANCE.deactivate();
+    if (isRemoteTracing())
+    {
+      RemoteTraceManager.INSTANCE.deactivate();
+    }
+  }
+
+  private static boolean isRemoteTracing()
+  {
+    // TODO Make configurable
+    return true;
   }
 
   /**

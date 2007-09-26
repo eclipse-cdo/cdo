@@ -8,14 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.debug.views;
+package org.eclipse.net4j.util.internal.ui.views;
 
-import org.eclipse.net4j.internal.debug.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.internal.ui.bundle.OM;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;

@@ -14,11 +14,13 @@ import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPUT> implements ITreeContentProvider,
-    ILabelProvider
+    ILabelProvider, IColorProvider
 {
   public static final Object[] NO_ELEMENTS = {};
 
@@ -56,6 +58,16 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
   {
     String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
     return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
+  }
+
+  public Color getBackground(Object element)
+  {
+    return null;
+  }
+
+  public Color getForeground(Object element)
+  {
+    return null;
   }
 
   public boolean isLabelProperty(Object element, String property)

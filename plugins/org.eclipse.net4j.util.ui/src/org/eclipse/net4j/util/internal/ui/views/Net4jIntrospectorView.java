@@ -57,7 +57,7 @@ import java.util.Stack;
 /**
  * @author Eike Stepper
  */
-public class IntrospectorView extends ViewPart implements ISelectionListener, IDoubleClickListener, IListener
+public class Net4jIntrospectorView extends ViewPart implements ISelectionListener, IDoubleClickListener, IListener
 {
   private static final Object[] NO_ELEMENTS = {};
 
@@ -81,7 +81,7 @@ public class IntrospectorView extends ViewPart implements ISelectionListener, ID
 
   private Composite stacked;
 
-  public IntrospectorView()
+  public Net4jIntrospectorView()
   {
   }
 

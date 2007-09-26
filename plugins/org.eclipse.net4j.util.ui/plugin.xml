@@ -31,8 +31,8 @@
             icon="icons/full/view16/container.gif"/>
       <view
             category="org.eclipse.net4j"
-            id="org.eclipse.net4j.util.IntrospectorView"
-            class="org.eclipse.net4j.util.internal.ui.views.IntrospectorView"
+            id="org.eclipse.net4j.util.Net4jIntrospectorView"
+            class="org.eclipse.net4j.util.internal.ui.views.Net4jIntrospectorView"
             name="Net4j Introspector"
             icon="icons/full/view16/javabean.gif"/>
    </extension>

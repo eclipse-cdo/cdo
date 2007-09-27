@@ -1892,6 +1892,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       List<CDOClass> cdoClasses = Arrays.asList(cdoPackage.getConcreteClasses());
       Collections.sort(cdoClasses);
+      // TODO Sorting by class name may not have the desired effect if the labels are computed by an ItemProvider!
 
       if (!cdoClasses.isEmpty())
       {

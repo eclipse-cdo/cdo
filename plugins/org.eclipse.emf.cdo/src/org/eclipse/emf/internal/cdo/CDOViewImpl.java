@@ -410,11 +410,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       return potentialObject;
     }
 
-    if (potentialObject == null)
-    {
-      throw new ImplementationError();
-    }
-
     if (potentialObject instanceof InternalEObject && !(potentialObject instanceof InternalCDOObject))
     {
       InternalEObject eObject = (InternalEObject)potentialObject;
@@ -432,11 +427,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       {
         return object.cdoID();
       }
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Dangling reference: {0}", potentialObject);
     }
 
     return potentialObject;

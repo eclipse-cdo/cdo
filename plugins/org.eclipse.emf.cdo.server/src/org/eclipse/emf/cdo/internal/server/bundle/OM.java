@@ -10,16 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.bundle;
 
-import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
-
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
-
-import java.io.File;
 
 /**
  * @author Eike Stepper
@@ -48,19 +43,9 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  static void start() throws Exception
-  {
-    File configFile = OMPlatform.INSTANCE.getConfigFile("cdo.server.xml");
-    if (configFile != null && configFile.exists())
-    {
-      RepositoryConfigurator configurator = new RepositoryConfigurator(IPluginContainer.INSTANCE);
-      configurator.configure(configFile);
-    }
-    else
-    {
-      LOG.warn("Repository config file not found: " + configFile.getAbsolutePath());
-    }
-  }
+  // static void start() throws Exception
+  // {
+  // }
 
   /**
    * @author Eike Stepper

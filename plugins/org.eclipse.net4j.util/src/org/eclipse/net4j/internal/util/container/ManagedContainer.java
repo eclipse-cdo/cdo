@@ -258,10 +258,11 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       element = createElement(productGroup, factoryType, description);
       element = postProcessElement(productGroup, factoryType, description, element);
       LifecycleUtil.activate(element);
-      EventUtil.addListener(element, elementListener);
-      key.setID(++maxElementID);
-      elementRegistry.put(key, element);
-      fireEvent(new SingleDeltaContainerEvent<Object>(this, element, IContainerDelta.Kind.ADDED));
+      putElement(key, element);
+      // EventUtil.addListener(element, elementListener);
+      // key.setID(++maxElementID);
+      // elementRegistry.put(key, element);
+      // fireEvent(new SingleDeltaContainerEvent<Object>(this, element, IContainerDelta.Kind.ADDED));
     }
 
     return element;
@@ -269,17 +270,24 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Object putElement(String productGroup, String factoryType, String description, Object element)
   {
-    ContainerEvent<Object> event = new ContainerEvent<Object>(this);
     ElementKey key = new ElementKey(productGroup, factoryType, description);
+    return putElement(key, element);
+  }
+
+  protected Object putElement(ElementKey key, Object element)
+  {
+    ContainerEvent<Object> event = new ContainerEvent<Object>(this);
     key.setID(++maxElementID);
     Object oldElement = elementRegistry.put(key, element);
     if (oldElement != null)
     {
+      EventUtil.removeListener(oldElement, elementListener);
       event.addDelta(oldElement, IContainerDelta.Kind.REMOVED);
     }
 
     event.addDelta(element, IContainerDelta.Kind.ADDED);
     fireEvent(event);
+    EventUtil.addListener(element, elementListener);
     return oldElement;
   }
 
@@ -289,6 +297,18 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return removeElement(key);
   }
 
+  protected Object removeElement(ElementKey key)
+  {
+    Object element = elementRegistry.remove(key);
+    if (element != null)
+    {
+      EventUtil.removeListener(element, elementListener);
+      fireEvent(new SingleDeltaContainerEvent<Object>(this, element, IContainerDelta.Kind.REMOVED));
+    }
+
+    return element;
+  }
+
   public void clearElements()
   {
     if (!elementRegistry.isEmpty())
@@ -296,6 +316,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       ContainerEvent<Object> event = new ContainerEvent<Object>(this);
       for (Object element : elementRegistry.values())
       {
+        EventUtil.removeListener(element, elementListener);
         event.addDelta(element, IContainerDelta.Kind.REMOVED);
       }
 
@@ -319,6 +340,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
         boolean active = ois.readBoolean();
         if (active)
         {
+          // TODO Reconsider activation
           LifecycleUtil.activate(element);
         }
       }
@@ -391,18 +413,6 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return element;
   }
 
-  protected Object removeElement(ElementKey key)
-  {
-    Object element = elementRegistry.remove(key);
-    if (element != null)
-    {
-      EventUtil.removeListener(element, elementListener);
-      fireEvent(new SingleDeltaContainerEvent<Object>(this, element, IContainerDelta.Kind.REMOVED));
-    }
-
-    return element;
-  }
-
   protected void initMaxElementID()
   {
     maxElementID = 0L;
@@ -433,10 +443,11 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       try
       {
         LifecycleUtil.deactivateNoisy(element);
+        EventUtil.removeListener(element, elementListener);
       }
       catch (RuntimeException ex)
       {
-        OM.LOG.error(ex);
+        OM.LOG.warn(ex);
       }
     }
 

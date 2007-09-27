@@ -97,7 +97,7 @@ public abstract class OM
           TRACER.format("Starting bundle {0}", context.getBundle().getSymbolicName());
         }
       }
-      catch (Exception ignore)
+      catch (RuntimeException ignore)
       {
       }
     }
@@ -111,7 +111,7 @@ public abstract class OM
           TRACER.format("Stopping bundle {0}", context.getBundle().getSymbolicName());
         }
       }
-      catch (Exception ignore)
+      catch (RuntimeException ignore)
       {
       }
     }

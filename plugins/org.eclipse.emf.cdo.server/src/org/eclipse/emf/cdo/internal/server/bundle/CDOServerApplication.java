@@ -10,36 +10,68 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.bundle;
 
-import org.eclipse.net4j.internal.util.om.OSGiBundle;
+import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
+import org.eclipse.emf.cdo.internal.server.RepositoryFactory;
+import org.eclipse.emf.cdo.server.IRepository;
 
-import org.eclipse.equinox.app.IApplication;
-import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.OSGiApplication;
 
-import org.osgi.framework.BundleException;
+import java.io.File;
 
 /**
  * @author Eike Stepper
  */
-public class CDOServerApplication implements IApplication
+public class CDOServerApplication extends OSGiApplication
 {
+  public static final String ID = OM.BUNDLE_ID + ".app";
+
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOServerApplication.class);
+
+  private IRepository[] repositories;
+
   public CDOServerApplication()
   {
+    super(ID);
   }
 
-  public Object start(IApplicationContext context) throws Exception
+  @Override
+  protected void doStart() throws Exception
   {
-    return EXIT_OK;
+    super.doStart();
+    File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml");
+    if (configFile != null && configFile.exists())
+    {
+      if (TRACER.isEnabled()) TRACER.format("Configuring repositories from {0}", configFile.getAbsolutePath());
+      RepositoryConfigurator configurator = new RepositoryConfigurator(IPluginContainer.INSTANCE);
+      repositories = configurator.configure(configFile);
+    }
+    else
+    {
+      OM.LOG.warn("Repository config file not found: " + configFile.getAbsolutePath());
+    }
   }
 
-  public void stop()
+  @Override
+  protected void doStop() throws Exception
   {
-    try
+    if (repositories != null)
     {
-      ((OSGiBundle)OM.BUNDLE).getBundleContext().getBundle().stop();
+      for (IRepository repository : repositories)
+      {
+        LifecycleUtil.deactivate(repository);
+      }
     }
-    catch (BundleException ex)
+
+    Object[] elements = IPluginContainer.INSTANCE.getElements(RepositoryFactory.PRODUCT_GROUP);
+    for (Object element : elements)
     {
-      OM.LOG.error(ex);
+      System.out.println("Container: " + element);
     }
+
+    super.doStop();
   }
 }

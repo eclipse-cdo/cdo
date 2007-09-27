@@ -16,6 +16,7 @@ import org.eclipse.net4j.internal.util.om.log.EclipseLoggingBridge;
 import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -65,6 +66,7 @@ public abstract class OM
       OM.BUNDLE.setBundleContext(context);
       ((OSGiBundle)OM.BUNDLE).start();
 
+      // TODO Make configurable
       PrintTraceHandler.CONSOLE.setPattern("{6} [{0}] {5}");
       AbstractPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
       AbstractPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
@@ -78,6 +80,8 @@ public abstract class OM
       }
 
       traceStart(context);
+      IPluginContainer container = IPluginContainer.INSTANCE;
+      if (TRACER.isEnabled()) TRACER.format("Plugin container created: {0}", container);
     }
 
     public void stop(BundleContext context) throws Exception

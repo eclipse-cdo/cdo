@@ -43,10 +43,6 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  // static void start() throws Exception
-  // {
-  // }
-
   /**
    * @author Eike Stepper
    */

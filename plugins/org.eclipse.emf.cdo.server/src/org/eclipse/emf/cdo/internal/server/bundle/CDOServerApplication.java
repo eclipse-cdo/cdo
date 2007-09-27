@@ -11,14 +11,15 @@
 package org.eclipse.emf.cdo.internal.server.bundle;
 
 import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
-import org.eclipse.emf.cdo.internal.server.RepositoryFactory;
 import org.eclipse.emf.cdo.server.IRepository;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.IAcceptor;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiApplication;
+
+import org.eclipse.internal.net4j.Net4jConfigurator;
 
 import java.io.File;
 
@@ -29,9 +30,9 @@ public class CDOServerApplication extends OSGiApplication
 {
   public static final String ID = OM.BUNDLE_ID + ".app";
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOServerApplication.class);
-
   private IRepository[] repositories;
+
+  private IAcceptor[] acceptors;
 
   public CDOServerApplication()
   {
@@ -45,31 +46,35 @@ public class CDOServerApplication extends OSGiApplication
     File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml");
     if (configFile != null && configFile.exists())
     {
-      if (TRACER.isEnabled()) TRACER.format("Configuring repositories from {0}", configFile.getAbsolutePath());
-      RepositoryConfigurator configurator = new RepositoryConfigurator(IPluginContainer.INSTANCE);
-      repositories = configurator.configure(configFile);
+      RepositoryConfigurator repositoryConfigurator = new RepositoryConfigurator(IPluginContainer.INSTANCE);
+      repositories = repositoryConfigurator.configure(configFile);
+
+      Net4jConfigurator net4jConfigurator = new Net4jConfigurator(IPluginContainer.INSTANCE);
+      acceptors = net4jConfigurator.configure(configFile);
     }
     else
     {
-      OM.LOG.warn("Repository config file not found: " + configFile.getAbsolutePath());
+      OM.LOG.warn("CDO server configuration not found: " + configFile.getAbsolutePath());
     }
   }
 
   @Override
   protected void doStop() throws Exception
   {
+    if (acceptors != null)
+    {
+      for (IAcceptor acceptor : acceptors)
+      {
+        LifecycleUtil.deactivate(acceptor);
+      }
+    }
+
     if (repositories != null)
     {
       for (IRepository repository : repositories)
       {
         LifecycleUtil.deactivate(repository);
       }
-    }
-
-    Object[] elements = IPluginContainer.INSTANCE.getElements(RepositoryFactory.PRODUCT_GROUP);
-    for (Object element : elements)
-    {
-      System.out.println("Container: " + element);
     }
 
     super.doStop();

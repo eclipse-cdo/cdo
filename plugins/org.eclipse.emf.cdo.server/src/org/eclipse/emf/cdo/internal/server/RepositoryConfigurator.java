@@ -68,7 +68,7 @@ public class RepositoryConfigurator
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Configuring repositories from " + configFile.getAbsolutePath());
+      TRACER.trace("Configuring CDO server from " + configFile.getAbsolutePath());
     }
 
     List<IRepository> repositories = new ArrayList<IRepository>();

@@ -26,7 +26,7 @@
 <stringAttribute key="product" value="org.eclipse.sdk.ide"/>
 <stringAttribute key="selectedPlugin" value="org.eclipse.net4j.util"/>
 <stringAttribute key="selected_target_plugins" value="javax.servlet,org.eclipse.core.contenttype,org.eclipse.core.jobs,org.eclipse.core.runtime,org.eclipse.core.runtime.compatibility.auth,org.eclipse.core.runtime.compatibility.registry,org.eclipse.equinox.app,org.eclipse.equinox.common,org.eclipse.equinox.preferences,org.eclipse.equinox.registry,org.eclipse.osgi,org.eclipse.osgi.services,org.eclipse.osgi.util,org.eclipse.update.configurator"/>
-<stringAttribute key="selected_workspace_plugins" value="org.eclipse.emf.cdo.protocol,org.eclipse.net4j.util,org.eclipse.emf.cdo.server,org.eclipse.emf.cdo.server.db,org.eclipse.net4j.db.derby,org.eclipse.net4j.db,org.eclipse.net4j"/>
+<stringAttribute key="selected_workspace_plugins" value="org.eclipse.emf.cdo.protocol,org.eclipse.net4j.util,org.eclipse.emf.cdo.server,org.eclipse.emf.cdo.server.db,org.eclipse.net4j.db.derby,org.eclipse.net4j.db,org.eclipse.net4j,org.eclipse.net4j.tcp"/>
 <stringAttribute key="templateConfig" value="${target_home}\configuration\config.ini"/>
 <booleanAttribute key="tracing" value="true"/>
 <booleanAttribute key="useDefaultConfig" value="true"/>

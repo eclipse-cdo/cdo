@@ -209,16 +209,19 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     if (channel instanceof ServerSocketChannel)
     {
       ServerSocketChannel ssChannel = (ServerSocketChannel)selKey.channel();
-      ITCPSelectorListener.Passive listener = (ITCPSelectorListener.Passive)selKey.attachment();
-
-      if (selKey.isAcceptable())
+      if (ssChannel.isOpen())
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Accepting " + ssChannel); //$NON-NLS-1$
-        }
+        ITCPSelectorListener.Passive listener = (ITCPSelectorListener.Passive)selKey.attachment();
 
-        listener.handleAccept(this, ssChannel);
+        if (selKey.isAcceptable())
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Accepting " + ssChannel); //$NON-NLS-1$
+          }
+
+          listener.handleAccept(this, ssChannel);
+        }
       }
     }
     else if (channel instanceof SocketChannel)

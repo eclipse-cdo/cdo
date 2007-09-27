@@ -305,7 +305,7 @@
 <mapEntry key="org.eclipse.core.runtime/perf" value="false"/>
 <mapEntry key="org.eclipse.wst.sse.core/structuredmodel/modelmanager" value="false"/>
 <mapEntry key="org.eclipse.jdt.core/debug/hierarchy" value="false"/>
-<mapEntry key="org.eclipse.emf.cdo/debug.object" value="false"/>
+<mapEntry key="org.eclipse.emf.cdo/debug.object" value="true"/>
 <mapEntry key="org.eclipse.core.resources/refresh" value="false"/>
 <mapEntry key="org.eclipse.jem.util/debug/logtracefile" value="false"/>
 <mapEntry key="org.eclipse.wst.sse.core/tasks" value="false"/>

@@ -215,7 +215,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       // Create new revision
       CDORevisionImpl revision = new CDORevisionImpl(revisionManager, (CDOClassImpl)object.cdoClass(), id);
-      revision.setVersion(1);
+      revision.setVersion(-1);
       revision.setResourceID(data.resource.cdoID());
       object.cdoInternalSetRevision(revision);
 

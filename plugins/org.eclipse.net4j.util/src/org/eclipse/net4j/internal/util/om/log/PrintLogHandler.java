@@ -41,11 +41,17 @@ public class PrintLogHandler implements OMLogHandler
 
   public void logged(OMLogger logger, Level level, String msg, Throwable t)
   {
-    PrintStream stream = level == Level.ERROR ? err : out;
-    stream.println((toString(level) + " ") + msg); //$NON-NLS-1$
-    if (t != null)
+    try
     {
-      IOUtil.print(t, stream);
+      PrintStream stream = level == Level.ERROR ? err : out;
+      stream.println(toString(level) + " " + msg); //$NON-NLS-1$
+      if (t != null)
+      {
+        IOUtil.print(t, stream);
+      }
+    }
+    catch (RuntimeException ignore)
+    {
     }
   }
 

@@ -13,6 +13,7 @@ package org.eclipse.net4j.internal.tcp;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
+import java.nio.channels.CancelledKeyException;
 import java.nio.channels.SelectionKey;
 
 /**
@@ -59,26 +60,32 @@ public final class SelectorUtil
       return;
     }
 
-    int newOps;
-    int oldOps = selectionKey.interestOps();
-    if (interested)
+    try
     {
-      newOps = oldOps | operation;
-    }
-    else
-    {
-      newOps = oldOps & ~operation;
-    }
-
-    if (oldOps != newOps)
-    {
-      if (TRACER.isEnabled())
+      int newOps;
+      int oldOps = selectionKey.interestOps();
+      if (interested)
       {
-        TRACER.trace("Setting interest " //$NON-NLS-1$
-            + formatInterestOps(newOps) + " (was " + formatInterestOps(oldOps).toLowerCase() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+        newOps = oldOps | operation;
+      }
+      else
+      {
+        newOps = oldOps & ~operation;
       }
 
-      selectionKey.interestOps(newOps);
+      if (oldOps != newOps)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Setting interest " //$NON-NLS-1$
+              + formatInterestOps(newOps) + " (was " + formatInterestOps(oldOps).toLowerCase() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+
+        selectionKey.interestOps(newOps);
+      }
+    }
+    catch (CancelledKeyException ignore)
+    {
     }
   }
 

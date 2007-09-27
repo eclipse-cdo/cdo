@@ -10,9 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.log;
 
-import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.om.OSGiBundle;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.log.OMLogHandler;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.log.OMLogger.Level;
@@ -32,8 +30,6 @@ public class EclipseLoggingBridge implements OMLogHandler
    */
   public static final EclipseLoggingBridge INSTANCE = new EclipseLoggingBridge();
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OM, EclipseLoggingBridge.class);
-
   protected EclipseLoggingBridge()
   {
   }
@@ -42,16 +38,12 @@ public class EclipseLoggingBridge implements OMLogHandler
   {
     try
     {
-      OSGiBundle bundle = ((OSGiBundle)logger.getBundle());
+      OSGiBundle bundle = (OSGiBundle)logger.getBundle();
       ILog log = Platform.getLog(bundle.getBundleContext().getBundle());
       log.log(new Status(toEclipse(level), bundle.getBundleID(), IStatus.OK, msg, t));
     }
-    catch (Exception ex)
+    catch (RuntimeException ignore)
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(ex);
-      }
     }
   }
 

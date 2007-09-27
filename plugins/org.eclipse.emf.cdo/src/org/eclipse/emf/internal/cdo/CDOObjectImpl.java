@@ -192,7 +192,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     CDOViewImpl view = cdoView();
-    revision.setVersion(1);
     revision.setContainerID(eContainer == null ? CDOID.NULL : ((CDOObjectImpl)eContainer).cdoID());
     revision.setContainingFeature(eContainerFeatureID);
 

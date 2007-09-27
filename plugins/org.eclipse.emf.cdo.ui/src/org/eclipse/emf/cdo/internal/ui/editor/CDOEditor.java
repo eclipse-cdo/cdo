@@ -126,6 +126,7 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
@@ -1884,11 +1885,15 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   private boolean populateManager(MenuManager menuManager)
   {
     boolean populated = false;
-    CDOPackage[] cdoPackages = view.getSession().getPackageManager().getPackages();
+    List<CDOPackage> cdoPackages = Arrays.asList(view.getSession().getPackageManager().getPackages());
+    Collections.sort(cdoPackages);
+
     for (CDOPackage cdoPackage : cdoPackages)
     {
-      CDOClass[] cdoClasses = cdoPackage.getConcreteClasses();
-      if (cdoClasses.length != 0)
+      List<CDOClass> cdoClasses = Arrays.asList(cdoPackage.getConcreteClasses());
+      Collections.sort(cdoClasses);
+
+      if (!cdoClasses.isEmpty())
       {
         MenuManager submenuManager = new MenuManager(cdoPackage.getPackageURI());
         for (CDOClass cdoClass : cdoClasses)

@@ -104,10 +104,14 @@ public class OpenSessionDialog extends TitleAreaDialog
     new Label(composite, SWT.NONE).setText("Server Description:");
     connector = new HistoryText(composite, SWT.BORDER | SWT.SINGLE, connectorHistory);
     connector.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-    new Label(composite, SWT.NONE);
-    example = new Label(composite, SWT.NONE);
-    example.setText("example: tcp://estepper@dev.eclipse.org:2036");
-    example.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+
+    if (connectorHistory.isEmpty())
+    {
+      new Label(composite, SWT.NONE);
+      example = new Label(composite, SWT.NONE);
+      example.setText("example: tcp://estepper@dev.eclipse.org:2036");
+      example.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+    }
 
     new Label(composite, SWT.NONE).setText("Repository Name:");
     repository = new HistoryText(composite, SWT.BORDER | SWT.SINGLE, repositoryHistory);
@@ -120,12 +124,18 @@ public class OpenSessionDialog extends TitleAreaDialog
     {
       public void focusGained(FocusEvent e)
       {
-        example.setVisible(true);
+        if (example != null)
+        {
+          example.setVisible(true);
+        }
       }
 
       public void focusLost(FocusEvent e)
       {
-        example.setVisible(false);
+        if (example != null)
+        {
+          example.setVisible(false);
+        }
       }
     });
 

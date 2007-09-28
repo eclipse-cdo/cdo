@@ -1,6 +1,7 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenSessionDialog;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
@@ -19,20 +20,17 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class OpenSessionAction extends LongRunningAction
 {
-  private IWorkbenchPage page;
-
   private String description;
 
   public OpenSessionAction(IWorkbenchPage page)
   {
-    super(OpenSessionDialog.TITLE, "Open a new CDO session", CDOSessionsView.getAddImageDescriptor());
-    this.page = page;
+    super(page, OpenSessionDialog.TITLE, "Open a new CDO session", CDOSessionsView.getAddImageDescriptor());
   }
 
   @Override
   protected void preRun() throws Exception
   {
-    OpenSessionDialog dialog = new OpenSessionDialog(page);
+    OpenSessionDialog dialog = new OpenSessionDialog(getPage());
     if (dialog.open() == OpenSessionDialog.OK)
     {
       description = dialog.getServerDescription() + "/" + dialog.getRepositoryName();
@@ -50,12 +48,22 @@ public final class OpenSessionAction extends LongRunningAction
   @Override
   protected void doRun(IProgressMonitor monitor) throws Exception
   {
-    String productGroup = CDOSessionFactory.PRODUCT_GROUP;
-    String type = CDOProtocolConstants.PROTOCOL_NAME;
-    CDOSession session = (CDOSession)IPluginContainer.INSTANCE.getElement(productGroup, type, description);
+    CDOSession session = null;
+
+    try
+    {
+      String productGroup = CDOSessionFactory.PRODUCT_GROUP;
+      String type = CDOProtocolConstants.PROTOCOL_NAME;
+      session = (CDOSession)IPluginContainer.INSTANCE.getElement(productGroup, type, description);
+    }
+    catch (RuntimeException ex)
+    {
+      OM.LOG.error(ex);
+    }
+
     if (session == null)
     {
-      MessageDialog.openError(getShell(), getText(), "Could not open a session to the specified repository.");
+      MessageDialog.openError(getShell(), getText(), "Could not open a session on the specified repository.");
     }
   }
 }

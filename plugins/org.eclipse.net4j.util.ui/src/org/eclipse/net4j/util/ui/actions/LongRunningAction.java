@@ -21,6 +21,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Eike Stepper
@@ -104,12 +105,28 @@ public abstract class LongRunningAction extends SafeAction
 
   public IWorkbenchPage getPage()
   {
-    return page;
+    if (page != null)
+    {
+      return page;
+    }
+
+    IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+    if (window != null)
+    {
+      return window.getActivePage();
+    }
+
+    return null;
   }
 
   public IWorkbenchWindow getWorkbenchWindow()
   {
-    return page.getWorkbenchWindow();
+    if (page != null)
+    {
+      return page.getWorkbenchWindow();
+    }
+
+    return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
   }
 
   public Shell getShell()

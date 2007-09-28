@@ -11,6 +11,7 @@
 package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
@@ -45,10 +46,20 @@ public class ChannelInjector implements IElementProcessor
 
   protected IConnector getConnector(IManagedContainer container, String description)
   {
+
     URI uri = URI.createURI(description);
     String factoryType = uri.scheme();
+    if (StringUtil.isEmpty(factoryType))
+    {
+      throw new IllegalArgumentException("Connector type (scheme) missing: " + description);
+    }
 
     String connectorDescription = uri.authority();
+    if (StringUtil.isEmpty(connectorDescription))
+    {
+      throw new IllegalArgumentException("Illegal connector description: " + description);
+    }
+
     return (IConnector)container.getElement(ConnectorFactory.PRODUCT_GROUP, factoryType, connectorDescription);
   }
 }

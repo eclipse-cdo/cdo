@@ -43,24 +43,36 @@ public class CDOServerApplication extends OSGiApplication
   protected void doStart() throws Exception
   {
     super.doStart();
+    OM.LOG.info("CDO Server starting");
     File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml");
     if (configFile != null && configFile.exists())
     {
       RepositoryConfigurator repositoryConfigurator = new RepositoryConfigurator(IPluginContainer.INSTANCE);
       repositories = repositoryConfigurator.configure(configFile);
+      if (repositories == null || repositories.length == 0)
+      {
+        OM.LOG.warn("No repositories configured");
+      }
 
       Net4jConfigurator net4jConfigurator = new Net4jConfigurator(IPluginContainer.INSTANCE);
       acceptors = net4jConfigurator.configure(configFile);
+      if (acceptors == null || acceptors.length == 0)
+      {
+        OM.LOG.warn("No acceptors configured");
+      }
     }
     else
     {
       OM.LOG.warn("CDO server configuration not found: " + configFile.getAbsolutePath());
     }
+
+    OM.LOG.info("CDO Server started");
   }
 
   @Override
   protected void doStop() throws Exception
   {
+    OM.LOG.info("CDO Server stopping");
     if (acceptors != null)
     {
       for (IAcceptor acceptor : acceptors)
@@ -77,6 +89,7 @@ public class CDOServerApplication extends OSGiApplication
       }
     }
 
+    OM.LOG.info("CDO Server stopped");
     super.doStop();
   }
 }

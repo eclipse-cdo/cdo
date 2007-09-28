@@ -23,9 +23,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
@@ -109,39 +106,9 @@ public class HistoryText
     return combo;
   }
 
-  public void addModifyListener(ModifyListener listener)
-  {
-    combo.addModifyListener(listener);
-  }
-
-  public void addSelectionListener(SelectionListener listener)
-  {
-    combo.addSelectionListener(listener);
-  }
-
-  public void addVerifyListener(VerifyListener listener)
-  {
-    combo.addVerifyListener(listener);
-  }
-
   public void append(String string)
   {
     combo.setText(combo.getText() + string);
-  }
-
-  public void clearSelection()
-  {
-    combo.clearSelection();
-  }
-
-  public void copy()
-  {
-    combo.copy();
-  }
-
-  public void cut()
-  {
-    combo.cut();
   }
 
   public int getCharCount()
@@ -169,39 +136,9 @@ public class HistoryText
     return combo.getText();
   }
 
-  public int getTextLimit()
-  {
-    return combo.getTextLimit();
-  }
-
-  public void paste()
-  {
-    combo.paste();
-  }
-
-  public void removeModifyListener(ModifyListener listener)
-  {
-    combo.removeModifyListener(listener);
-  }
-
-  public void removeSelectionListener(SelectionListener listener)
-  {
-    combo.removeSelectionListener(listener);
-  }
-
-  public void removeVerifyListener(VerifyListener listener)
-  {
-    combo.removeVerifyListener(listener);
-  }
-
   public void setText(String string)
   {
     combo.setText(string);
-  }
-
-  public void setTextLimit(int limit)
-  {
-    combo.setTextLimit(limit);
   }
 
   public boolean setFocus()

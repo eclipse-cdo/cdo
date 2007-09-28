@@ -138,6 +138,14 @@ public class OpenSessionDialog extends TitleAreaDialog
     serverDescription = connector.getText();
     repositoryName = repository.getText();
     legacySupport = legacy.getSelection();
+
+    connectorHistory.add(serverDescription);
+    repositoryHistory.add(repositoryName);
+    OM.PREF_LEGACY_SUPPORT.setValue(legacySupport);
     super.okPressed();
+  }
+
+  public void closeWithSuccess()
+  {
   }
 }

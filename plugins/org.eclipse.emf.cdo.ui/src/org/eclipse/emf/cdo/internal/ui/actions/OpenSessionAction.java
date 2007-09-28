@@ -71,7 +71,7 @@ public final class OpenSessionAction extends LongRunningAction
           {
             try
             {
-              MessageDialog.openError(getShell(), getText(), "Could not open a session on the specified repository:\n"
+              MessageDialog.openError(getShell(), getText(), "Unable to open a session on the specified repository.\n"
                   + description);
             }
             catch (RuntimeException ignoe)

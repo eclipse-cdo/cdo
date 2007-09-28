@@ -49,9 +49,13 @@ public class OpenSessionDialog extends TitleAreaDialog
 
   private HistoryText repository;
 
-  private String description;
-
   private PreferenceButton legacy;
+
+  private String serverDescription;
+
+  private String repositoryName;
+
+  private boolean legacySupport;
 
   public OpenSessionDialog(IWorkbenchPage page)
   {
@@ -65,9 +69,19 @@ public class OpenSessionDialog extends TitleAreaDialog
     return page;
   }
 
-  public String getDescription()
+  public String getServerDescription()
   {
-    return description;
+    return serverDescription;
+  }
+
+  public String getRepositoryName()
+  {
+    return repositoryName;
+  }
+
+  public boolean isLegacySupport()
+  {
+    return legacySupport;
   }
 
   @Override
@@ -121,12 +135,9 @@ public class OpenSessionDialog extends TitleAreaDialog
   @Override
   protected void okPressed()
   {
-    description = connector.getText() + "/" + repository.getText();
-    if (!legacy.getSelection())
-    {
-      description += "?disableLegacyObjects=true";
-    }
-
+    serverDescription = connector.getText();
+    repositoryName = repository.getText();
+    legacySupport = legacy.getSelection();
     super.okPressed();
   }
 }

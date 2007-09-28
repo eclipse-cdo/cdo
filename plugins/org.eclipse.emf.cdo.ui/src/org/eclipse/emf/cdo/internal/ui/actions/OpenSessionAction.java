@@ -33,9 +33,15 @@ public final class OpenSessionAction extends LongRunningAction
   protected void preRun() throws Exception
   {
     OpenSessionDialog dialog = new OpenSessionDialog(page);
-    dialog.open();
-    description = dialog.getDescription();
-    if (description == null)
+    if (dialog.open() == OpenSessionDialog.OK)
+    {
+      description = dialog.getServerDescription() + "/" + dialog.getRepositoryName();
+      if (!dialog.isLegacySupport())
+      {
+        description += "?disableLegacyObjects=true";
+      }
+    }
+    else
     {
       cancel();
     }

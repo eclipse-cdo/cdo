@@ -11,34 +11,28 @@
 package org.eclipse.net4j.util.ui.widgets;
 
 import org.eclipse.net4j.util.om.pref.OMPreference;
-import org.eclipse.net4j.util.ui.UIUtil;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 /**
  * @author Eike Stepper
  */
-public class PreferenceButton extends Composite
+public class PreferenceButton
 {
   private OMPreference<Boolean> preference;
 
   private Button button;
 
-  public PreferenceButton(Composite parent, int buttonStyle, final OMPreference<Boolean> preference)
+  public PreferenceButton(Composite parent, int style, String text, final OMPreference<Boolean> preference)
   {
-    super(parent, SWT.NONE);
-    setLayout(UIUtil.createGridLayout(1));
     this.preference = preference;
 
-    button = createButton(buttonStyle);
-    button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    button = new Button(parent, style);
+    button.setText(text);
     button.setSelection(preference.getValue());
     button.addSelectionListener(new SelectionAdapter()
     {
@@ -58,16 +52,6 @@ public class PreferenceButton extends Composite
   public Button getButton()
   {
     return button;
-  }
-
-  protected Button createButton(int buttonStyle)
-  {
-    return new Button(this, buttonStyle);
-  }
-
-  public void addSelectionListener(SelectionListener listener)
-  {
-    button.addSelectionListener(listener);
   }
 
   public int getAlignment()
@@ -90,11 +74,6 @@ public class PreferenceButton extends Composite
     return button.getText();
   }
 
-  public void removeSelectionListener(SelectionListener listener)
-  {
-    button.removeSelectionListener(listener);
-  }
-
   public void setAlignment(int alignment)
   {
     button.setAlignment(alignment);
@@ -113,5 +92,10 @@ public class PreferenceButton extends Composite
   public void setText(String string)
   {
     button.setText(string);
+  }
+
+  public boolean setFocus()
+  {
+    return button.setFocus();
   }
 }

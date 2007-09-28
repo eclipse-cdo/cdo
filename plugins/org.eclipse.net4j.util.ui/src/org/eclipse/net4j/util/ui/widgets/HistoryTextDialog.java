@@ -74,9 +74,9 @@ public class HistoryTextDialog extends InputDialog
     text.setEnabled(false);
 
     historyText = new HistoryText(composite, SWT.BORDER, history);
-    historyText.moveAbove(text);
-    historyText.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
-    historyText.addModifyListener(new ModifyListener()
+    historyText.getCombo().moveAbove(text);
+    historyText.getCombo().setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
+    historyText.getCombo().addModifyListener(new ModifyListener()
     {
       public void modifyText(ModifyEvent e)
       {

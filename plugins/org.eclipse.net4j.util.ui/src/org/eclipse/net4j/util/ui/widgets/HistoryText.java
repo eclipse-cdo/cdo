@@ -18,12 +18,11 @@ import org.eclipse.net4j.util.collection.IHistoryElement;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
-import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyListener;
@@ -36,7 +35,7 @@ import java.lang.reflect.Method;
 /**
  * @author Eike Stepper
  */
-public class HistoryText extends Composite
+public class HistoryText
 {
   private IHistory<String> history;
 
@@ -55,13 +54,37 @@ public class HistoryText extends Composite
     }
   };
 
-  public HistoryText(Composite parent, int comboStyle, IHistory<String> history)
+  public HistoryText(Composite parent, int style, IHistory<String> history)
   {
-    super(parent, SWT.NONE);
-    setLayout(UIUtil.createGridLayout(1));
+    this.history = history;
+    history.addListener(historyListener);
 
-    combo = createCombo(comboStyle);
+    combo = new CCombo(parent, style);
     combo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    combo.addDisposeListener(new DisposeListener()
+    {
+      public void widgetDisposed(DisposeEvent e)
+      {
+        HistoryText.this.history.removeListener(historyListener);
+      }
+    });
+
+    // TODO Can't get traversal working when keyListener is added ;-(
+    // combo.addKeyListener(new KeyAdapter()
+    // {
+    // @Override
+    // public void keyPressed(KeyEvent event)
+    // {
+    // if (event.character == SWT.DEL && event.stateMask == 0 && isDropped())
+    // {
+    // int index = combo.getSelectionIndex();
+    // if (index != -1)
+    // {
+    // HistoryText.this.history.remove(index);
+    // }
+    // }
+    // }
+    // });
 
     try
     {
@@ -73,9 +96,7 @@ public class HistoryText extends Composite
       OM.LOG.error(ex);
     }
 
-    this.history = history;
     historyChanged();
-    history.addListener(historyListener);
   }
 
   public IHistory<String> getHistory()
@@ -86,13 +107,6 @@ public class HistoryText extends Composite
   public CCombo getCombo()
   {
     return combo;
-  }
-
-  @Override
-  public void dispose()
-  {
-    history.removeListener(historyListener);
-    super.dispose();
   }
 
   public void addModifyListener(ModifyListener listener)
@@ -190,7 +204,6 @@ public class HistoryText extends Composite
     combo.setTextLimit(limit);
   }
 
-  @Override
   public boolean setFocus()
   {
     return combo.setFocus();
@@ -215,7 +228,7 @@ public class HistoryText extends Composite
 
   protected void historyChanged()
   {
-    if (isDisposed())
+    if (combo.isDisposed())
     {
       return;
     }
@@ -231,27 +244,5 @@ public class HistoryText extends Composite
     {
       setText(mostRecent);
     }
-  }
-
-  protected CCombo createCombo(int style)
-  {
-    final CCombo combo = new CCombo(this, style);
-    combo.addKeyListener(new KeyAdapter()
-    {
-      @Override
-      public void keyPressed(KeyEvent event)
-      {
-        if (event.character == SWT.DEL && event.stateMask == 0 && isDropped())
-        {
-          int index = combo.getSelectionIndex();
-          if (index != -1)
-          {
-            history.remove(index);
-          }
-        }
-      }
-    });
-
-    return combo;
   }
 }

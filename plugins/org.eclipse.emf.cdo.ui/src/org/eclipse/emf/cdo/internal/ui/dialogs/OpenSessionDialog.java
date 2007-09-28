@@ -103,23 +103,24 @@ public class OpenSessionDialog extends TitleAreaDialog
 
     new Label(composite, SWT.NONE).setText("Server Description:");
     connector = new HistoryText(composite, SWT.BORDER | SWT.SINGLE, connectorHistory);
-    connector.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+    connector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
     if (connectorHistory.isEmpty())
     {
       new Label(composite, SWT.NONE);
       example = new Label(composite, SWT.NONE);
-      example.setText("example: tcp://estepper@dev.eclipse.org:2036");
+      example.setText("for example 'tcp://estepper@dev.eclipse.org:2036'");
       example.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
     }
 
     new Label(composite, SWT.NONE).setText("Repository Name:");
     repository = new HistoryText(composite, SWT.BORDER | SWT.SINGLE, repositoryHistory);
-    repository.setLayoutData(new GridData(150, SWT.DEFAULT));
+    repository.getCombo().setLayoutData(new GridData(150, SWT.DEFAULT));
 
-    new Label(composite, SWT.NONE).setText("Legacy Support:");
-    legacy = new PreferenceButton(composite, SWT.CHECK, OM.PREF_LEGACY_SUPPORT);
+    new Label(composite, SWT.NONE);
+    legacy = new PreferenceButton(composite, SWT.CHECK, "Legacy Support", OM.PREF_LEGACY_SUPPORT);
 
+    connector.setFocus();
     connector.getCombo().addFocusListener(new FocusListener()
     {
       public void focusGained(FocusEvent e)

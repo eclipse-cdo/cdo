@@ -87,6 +87,7 @@ public class History<T> extends Notifier implements IHistory<T>
 
   public boolean add(T data)
   {
+    lazyLoad();
     boolean changed = internalAdd(data);
     if (changed)
     {
@@ -98,6 +99,7 @@ public class History<T> extends Notifier implements IHistory<T>
 
   public IHistoryElement<T> remove(int index)
   {
+    lazyLoad();
     IHistoryElement<T> element = elements.remove(index);
     if (element != null)
     {
@@ -121,6 +123,7 @@ public class History<T> extends Notifier implements IHistory<T>
 
   public T getMostRecent()
   {
+    lazyLoad();
     if (isEmpty())
     {
       return null;
@@ -131,6 +134,7 @@ public class History<T> extends Notifier implements IHistory<T>
 
   public <D> D[] getData(D[] a)
   {
+    lazyLoad();
     int size = elements.size();
     if (a.length < size)
     {

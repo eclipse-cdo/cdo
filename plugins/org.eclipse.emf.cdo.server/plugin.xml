@@ -39,10 +39,24 @@
     <extension
 		point="org.eclipse.core.runtime.applications"
 		id="app"
-		name="CDO Server">
+		name="%applicationName">
 		<application cardinality="1" thread="any">
 			<run class="org.eclipse.emf.cdo.internal.server.bundle.CDOServerApplication"/>
  		</application>
 	</extension>
 	
+   <extension
+         point="org.eclipse.core.runtime.products">
+         id="server"
+      <product
+            name="%productName"
+            description="%productDescription"
+            application="org.eclipse.emf.cdo.server.app">
+         <property
+               name="appName"
+               value="%applicationName">
+         </property>
+      </product>
+   </extension>
+
 </plugin>

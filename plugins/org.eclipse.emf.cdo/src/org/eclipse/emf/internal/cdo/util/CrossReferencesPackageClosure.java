@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -20,9 +21,9 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class EMFPackageClosure extends PackageClosure
+public class CrossReferencesPackageClosure extends PackageClosure
 {
-  public EMFPackageClosure()
+  public CrossReferencesPackageClosure()
   {
   }
 
@@ -45,7 +46,8 @@ public class EMFPackageClosure extends PackageClosure
 
   protected void collectCrossReferences(EObject content, Set<EPackage> visited)
   {
-    for (EObject crossReference : content.eCrossReferences())
+    EList<EObject> crossReferences = content.eCrossReferences();
+    for (EObject crossReference : crossReferences)
     {
       EPackage crossReferencePackage = crossReference.eClass().getEPackage();
       if (!visited.contains(crossReferencePackage))

@@ -41,7 +41,8 @@ public abstract class PackageClosure implements IPackageClosure
     // Optimize 1 package
     if (ePackages.size() == 1)
     {
-      return calculate(ePackages.iterator().next());
+      EPackage ePackage = ePackages.iterator().next();
+      return calculate(ePackage);
     }
 
     // Handle >1 packages

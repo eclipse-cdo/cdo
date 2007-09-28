@@ -9,7 +9,8 @@
       <programArgs>-console
 -debug
 -noExit</programArgs>
-      <vmArgs>-Dnet4j.config=net4j-config</vmArgs>
+      <vmArgs>-Ddebug=true
+-Dnet4j.config=net4j-config</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 

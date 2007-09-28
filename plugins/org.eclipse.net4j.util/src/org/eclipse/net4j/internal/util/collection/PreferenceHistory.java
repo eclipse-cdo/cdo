@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.collection;
 
+import org.eclipse.net4j.util.collection.IHistoryElement;
 import org.eclipse.net4j.util.om.pref.OMPreference;
 
 /**
@@ -35,7 +36,8 @@ public class PreferenceHistory extends History<String>
     String[] value = preference.getValue();
     for (String data : value)
     {
-      internalAdd(data);
+      IHistoryElement<String> element = createElement(data);
+      elements.add(element);
     }
   }
 

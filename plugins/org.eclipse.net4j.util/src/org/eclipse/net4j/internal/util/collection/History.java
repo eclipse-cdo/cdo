@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class History<T> extends Notifier implements IHistory<T>
 {
-  private List<IHistoryElement<T>> elements = new ArrayList<IHistoryElement<T>>(0);
+  protected List<IHistoryElement<T>> elements = new ArrayList<IHistoryElement<T>>(0);
 
   private boolean loaded;
 
@@ -88,7 +88,11 @@ public class History<T> extends Notifier implements IHistory<T>
   public boolean add(T data)
   {
     lazyLoad();
-    boolean changed = internalAdd(data);
+    int index = indexOf(data);
+    IHistoryElement<T> element = index != -1 ? elements.remove(index) : createElement(data);
+    elements.add(0, element);
+
+    boolean changed = index != 0;
     if (changed)
     {
       changed();
@@ -184,14 +188,6 @@ public class History<T> extends Notifier implements IHistory<T>
   {
     save();
     fireChangedEvent();
-  }
-
-  protected final boolean internalAdd(T data)
-  {
-    int index = indexOf(data);
-    IHistoryElement<T> element = index != -1 ? elements.remove(index) : createElement(data);
-    elements.add(0, element);
-    return index != 0;
   }
 
   private void lazyLoad()

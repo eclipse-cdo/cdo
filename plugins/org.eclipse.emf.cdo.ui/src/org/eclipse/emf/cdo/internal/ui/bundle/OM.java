@@ -33,8 +33,17 @@ public abstract class OM
 
   public static final OMPreferences PREFS = BUNDLE.preferences();
 
-  public static final OMPreference<String[]> PREF_HISTORY_SELECT_PACKAGES = PREFS
-      .initArray("PREF_HISTORY_SELECT_PACKAGES");
+  public static final OMPreference<String[]> PREF_HISTORY_SELECT_PACKAGES = //
+  PREFS.initArray("PREF_HISTORY_SELECT_PACKAGES");
+
+  public static final OMPreference<String[]> PREF_HISTORY_CONNECTORS = //
+  PREFS.initArray("PREF_HISTORY_CONNECTORS");
+
+  public static final OMPreference<String[]> PREF_HISTORY_REPOSITORIES = //
+  PREFS.initArray("PREF_HISTORY_REPOSITORIES");
+
+  public static final OMPreference<Boolean> PREF_LEGACY_SUPPORT = //
+  PREFS.init("PREF_LEGACY_SUPPORT", true);
 
   /**
    * @author Eike Stepper

@@ -135,9 +135,15 @@ public final class CDOUtil
     return session;
   }
 
+  public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects)
+      throws ConnectorException
+  {
+    return openSession(connector, repositoryName, disableLegacyObjects, null, null);
+  }
+
   public static CDOSession openSession(IConnector connector, String repositoryName) throws ConnectorException
   {
-    return openSession(connector, repositoryName, false, null, null);
+    return openSession(connector, repositoryName, false);
   }
 
   public static CDOSession openSession(IManagedContainer container, String description) throws ConnectorException

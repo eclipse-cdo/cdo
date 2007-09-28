@@ -39,6 +39,7 @@ public class CDOSessionFactory extends Factory
   {
     CDOSessionImpl session = new CDOSessionImpl(EPackage.Registry.INSTANCE);
     session.setRepositoryName(getRepositoryName(description));
+    session.setDisableLegacyObjects(isDisableLegacyObjects(description));
     return session;
   }
 
@@ -47,6 +48,11 @@ public class CDOSessionFactory extends Factory
     URI uri = URI.createURI(description);
     IPath path = new Path(uri.path());
     return path.segment(0);
+  }
+
+  public boolean isDisableLegacyObjects(String description)
+  {
+    return description.contains("disableLegacyObjects=true");
   }
 
   public static CDOSession get(IManagedContainer container, String description)

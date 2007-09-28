@@ -63,7 +63,26 @@ public final class OpenSessionAction extends LongRunningAction
 
     if (session == null)
     {
-      MessageDialog.openError(getShell(), getText(), "Could not open a session on the specified repository.");
+      try
+      {
+        getShell().getDisplay().syncExec(new Runnable()
+        {
+          public void run()
+          {
+            try
+            {
+              MessageDialog.openError(getShell(), getText(), "Could not open a session on the specified repository:\n"
+                  + description);
+            }
+            catch (RuntimeException ignoe)
+            {
+            }
+          }
+        });
+      }
+      catch (RuntimeException ignoe)
+      {
+      }
     }
   }
 }

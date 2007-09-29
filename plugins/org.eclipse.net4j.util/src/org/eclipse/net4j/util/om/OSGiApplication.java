@@ -75,6 +75,15 @@ public class OSGiApplication implements IApplication
     stopLatch = new CountDownLatch(1);
     stopLatch.await();
     stopLatch = null;
+    return EXIT_OK;
+  }
+
+  public final void stop()
+  {
+    if (stopLatch != null)
+    {
+      stopLatch.countDown();
+    }
 
     traceStop(applicationID);
 
@@ -93,15 +102,6 @@ public class OSGiApplication implements IApplication
     }
 
     context = null;
-    return EXIT_OK;
-  }
-
-  public final void stop()
-  {
-    if (stopLatch != null)
-    {
-      stopLatch.countDown();
-    }
   }
 
   protected void doStart() throws Exception

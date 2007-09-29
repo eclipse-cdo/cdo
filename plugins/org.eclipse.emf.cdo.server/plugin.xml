@@ -40,7 +40,7 @@
 		id="app"
 		point="org.eclipse.core.runtime.applications"
 		name="CDOServer">
-		<application cardinality="1" thread="any">
+		<application cardinality="1" thread="main">
 			<run class="org.eclipse.emf.cdo.internal.server.bundle.CDOServerApplication"/>
  		</application>
 	</extension>

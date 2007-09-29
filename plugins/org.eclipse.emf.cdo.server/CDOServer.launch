@@ -19,7 +19,7 @@
 <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
 <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}&#13;&#10;-debug&#13;&#10;-console&#13;&#10;--launcher.XXMaxPermSize&#13;&#10;128M"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}&#13;&#10;-debug&#13;&#10;-console&#13;&#10;-consoleLog&#13;&#10;--launcher.XXMaxPermSize&#13;&#10;128M"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Ddebug=true&#13;&#10;-Dnet4j.config=${resource_loc:/org.eclipse.emf.cdo.server.product/rootfiles/configuration}"/>
 <stringAttribute key="pde.version" value="3.3"/>

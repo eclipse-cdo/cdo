@@ -80,11 +80,6 @@ public class OSGiApplication implements IApplication
 
   public final void stop()
   {
-    if (stopLatch != null)
-    {
-      stopLatch.countDown();
-    }
-
     traceStop(applicationID);
 
     try
@@ -102,6 +97,10 @@ public class OSGiApplication implements IApplication
     }
 
     context = null;
+    if (stopLatch != null)
+    {
+      stopLatch.countDown();
+    }
   }
 
   protected void doStart() throws Exception

@@ -36,6 +36,14 @@
       </repositoryFactory>
    </extension>
 
+   <extension
+         point="org.eclipse.emf.cdo.server.storeFactories">
+      <storeFactory
+            class="org.eclipse.emf.cdo.internal.server.NOOPStoreFactory"
+            storeType="noop">
+      </storeFactory>
+   </extension>
+
     <extension
 		id="app"
 		point="org.eclipse.core.runtime.applications"

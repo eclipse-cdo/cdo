@@ -18,7 +18,6 @@
 <plugin>
 
    <extension-point id="factories" name="Factories" schema="schema/factories.exsd"/>
-   
    <extension-point id="elementProcessors" name="Element Processors" schema="schema/elementProcessors.exsd"/>
 
 </plugin>

@@ -3,14 +3,18 @@
 
 <product name="CDOServer" id="org.eclipse.emf.cdo.server.product" application="org.eclipse.emf.cdo.server.app" useFeatures="true">
 
-   <configIni use="default"/>
+   <configIni use="custom" path="/org.eclipse.emf.cdo.server.product/config.ini"/>
 
    <launcherArgs>
       <programArgs>-console
 -debug
--noExit</programArgs>
-      <vmArgs>-Ddebug=true
--Dnet4j.config=net4j-config</vmArgs>
+-noExit
+--launcher.XXMaxPermSize
+256M</programArgs>
+      <vmArgs>-Xms40M
+-Xmx512M
+-Ddebug=true
+-Dnet4j.config=configuration</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 

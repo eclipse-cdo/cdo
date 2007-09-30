@@ -27,6 +27,8 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.net4j.tests.AbstractTransportTest;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -50,9 +52,15 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
 
   protected Repository createRepository()
   {
+    Map<String, String> props = new HashMap<String, String>();
+    // props.put(RevisionManager.PROP_CURRENT_LRU_CAPACITY, "20");
+    // props.put(RevisionManager.PROP_REVISED_LRU_CAPACITY, "20");
+
     IStore store = createStore();
+
     Repository repository = new Repository();
     repository.setName(REPOSITORY_NAME);
+    repository.setProperties(props);
     repository.setStore(store);
 
     store.setRepository(repository);

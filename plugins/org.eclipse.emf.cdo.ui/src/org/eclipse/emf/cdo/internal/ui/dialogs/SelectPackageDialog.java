@@ -133,7 +133,7 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
    */
   private class PackageLabelProvider extends LabelProvider implements ITableLabelProvider, ITableColorProvider
   {
-    private final Color red = Display.getCurrent().getSystemColor(SWT.COLOR_RED);
+    private final Color red = Display.getCurrent().getSystemColor(SWT.COLOR_DARK_MAGENTA);
 
     public PackageLabelProvider()
     {

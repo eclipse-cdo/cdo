@@ -8,6 +8,8 @@
 		<property name="supportingAudits" value="true"/>
 		<property name="verifyingRevisions" value="false"/>
 		<property name="rememberingKnownTypes" value="false"/>
+		<property name="currentLRUCapacity" value="20"/>
+		<property name="revisedLRUCapacity" value="1000"/>
 		
 		<store type="db">
 			<!-- mode: OFF | EXPRESS | NORMAL | GUARANTEED -->

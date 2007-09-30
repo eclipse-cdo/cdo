@@ -597,6 +597,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
     packageManager.addPackageProxies(result.getPackageInfos());
+    packageManager.activate();
+    revisionManager.activate();
     EventUtil.addListener(channel, channelListener);
   }
 
@@ -604,6 +606,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   protected void doDeactivate() throws Exception
   {
     EventUtil.removeListener(channel, channelListener);
+    revisionManager.deactivate();
+    packageManager.deactivate();
     synchronized (views)
     {
       for (CDOViewImpl view : getViews())

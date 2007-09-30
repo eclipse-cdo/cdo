@@ -38,6 +38,10 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   public static final String PROP_REMEMBERING_KNOWN_TYPES = "rememberingKnownTypes";
 
+  public static final String PROP_CURRENT_LRU_CAPACITY = "currentLRUCapacity";
+
+  public static final String PROP_REVISED_LRU_CAPACITY = "revisedLRUCapacity";
+
   private static final long INITIAL_META_ID_VALUE = 1;
 
   private String name;

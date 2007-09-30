@@ -38,6 +38,10 @@ import java.util.List;
  */
 public class RevisionManager extends CDORevisionResolverImpl implements IRevisionManager
 {
+  public static final String PROP_CURRENT_LRU_CAPACITY = "currentLRUCapacity";
+
+  public static final String PROP_REVISED_LRU_CAPACITY = "revisedLRUCapacity";
+
   private Repository repository;
 
   private CDOPathFeatureImpl cdoPathFeature;
@@ -239,7 +243,21 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     return revisions;
   }
 
-  private void registerObjectType(CDORevisionImpl revision)
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    setCurrentLRUCapacity(getLRUCapacity(PROP_CURRENT_LRU_CAPACITY));
+    setRevisedLRUCapacity(getLRUCapacity(PROP_REVISED_LRU_CAPACITY));
+  }
+
+  protected int getLRUCapacity(String prop)
+  {
+    String capacity = repository.getProperties().get(prop);
+    return capacity == null ? 0 : Integer.valueOf(capacity);
+  }
+
+  protected void registerObjectType(CDORevisionImpl revision)
   {
     CDOID id = revision.getID();
     CDOClassRefImpl type = revision.getCDOClass().createClassRef();

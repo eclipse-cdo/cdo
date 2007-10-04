@@ -20,7 +20,7 @@ import java.nio.ByteBuffer;
 /**
  * @author Eike Stepper
  */
-public class ResponseNegotiator extends UserManagerNegotiator implements IChallengeResponse
+public class ResponseNegotiator extends Negotiator implements IChallengeResponse
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, ResponseNegotiator.class);
 

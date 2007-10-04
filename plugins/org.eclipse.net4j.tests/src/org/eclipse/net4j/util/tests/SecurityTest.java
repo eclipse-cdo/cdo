@@ -12,9 +12,12 @@ package org.eclipse.net4j.util.tests;
 
 import org.eclipse.net4j.internal.util.security.ChallengeNegotiator;
 import org.eclipse.net4j.internal.util.security.NegotiationContext;
+import org.eclipse.net4j.internal.util.security.PasswordCredentials;
 import org.eclipse.net4j.internal.util.security.Randomizer;
 import org.eclipse.net4j.internal.util.security.ResponseNegotiator;
 import org.eclipse.net4j.internal.util.security.UserManager;
+import org.eclipse.net4j.util.security.ICredentials;
+import org.eclipse.net4j.util.security.ICredentialsProvider;
 
 import java.nio.ByteBuffer;
 
@@ -23,6 +26,20 @@ import java.nio.ByteBuffer;
  */
 public class SecurityTest extends AbstractOMTest
 {
+  private static final String USER_ID = "stepper";
+
+  private static final char[] PASSWORD = "eike2007".toCharArray();
+
+  private static final PasswordCredentials CREDENTIALS = new PasswordCredentials(USER_ID, PASSWORD);
+
+  private ICredentialsProvider credentialsProvider = new ICredentialsProvider()
+  {
+    public ICredentials getCredentials()
+    {
+      return CREDENTIALS;
+    }
+  };
+
   private Randomizer randomizer = new Randomizer();
 
   private UserManager userManager = new UserManager();
@@ -49,23 +66,26 @@ public class SecurityTest extends AbstractOMTest
   {
     randomizer.activate();
     userManager.activate();
-    userManager.addUser("stepper", "eike2007".toCharArray());
+    userManager.addUser(USER_ID, PASSWORD);
 
-    ResponseNegotiator responseNegotiator = new ResponseNegotiator();
+    ResponseNegotiator client = new ResponseNegotiator();
+    client.setCredentialsProvider(credentialsProvider);
+    client.activate();
+
     new Thread()
     {
       @Override
       public void run()
       {
-        ChallengeNegotiator negotiator = new ChallengeNegotiator();
-        negotiator.setRandomizer(randomizer);
-        negotiator.setUserManager(userManager);
-        negotiator.setTokenLength(1024);
+        ChallengeNegotiator server = new ChallengeNegotiator();
+        server.setRandomizer(randomizer);
+        server.setUserManager(userManager);
+        server.setTokenLength(1024);
 
         try
         {
-          negotiator.activate();
-          negotiator.startNegotiation(challengeContext);
+          server.activate();
+          server.startNegotiation(challengeContext);
           NegotiationContext.State result = challengeContext.waitForResult(2000);
           System.out.println(result);
         }
@@ -76,7 +96,7 @@ public class SecurityTest extends AbstractOMTest
         }
         finally
         {
-          negotiator.deactivate();
+          server.deactivate();
         }
       }
     }.start();

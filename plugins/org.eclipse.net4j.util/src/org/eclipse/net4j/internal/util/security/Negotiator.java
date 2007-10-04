@@ -61,7 +61,7 @@ public abstract class Negotiator extends Lifecycle implements INegotiator, IBuff
     }
   }
 
-  public void receiveBuffer(ByteBuffer buffer)
+  public void receiveBuffer(INegotiationContext context, ByteBuffer buffer)
   {
     checkContext();
 

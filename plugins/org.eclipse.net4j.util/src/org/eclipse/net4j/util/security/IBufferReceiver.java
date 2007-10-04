@@ -17,5 +17,5 @@ import java.nio.ByteBuffer;
  */
 public interface IBufferReceiver
 {
-  public void receiveBuffer(ByteBuffer buffer);
+  public void receiveBuffer(INegotiationContext context, ByteBuffer buffer);
 }

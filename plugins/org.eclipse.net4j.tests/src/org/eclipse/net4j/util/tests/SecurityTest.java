@@ -49,7 +49,7 @@ public class SecurityTest extends AbstractOMTest
     public void transmitBuffer(ByteBuffer buffer)
     {
       buffer.flip();
-      responseContext.getBufferReceiver().receiveBuffer(buffer);
+      responseContext.getBufferReceiver().receiveBuffer(responseContext, buffer);
     }
   };
 
@@ -58,7 +58,7 @@ public class SecurityTest extends AbstractOMTest
     public void transmitBuffer(ByteBuffer buffer)
     {
       buffer.flip();
-      challengeContext.getBufferReceiver().receiveBuffer(buffer);
+      challengeContext.getBufferReceiver().receiveBuffer(challengeContext, buffer);
     }
   };
 

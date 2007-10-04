@@ -26,4 +26,12 @@ public interface INegotiationContext
   public void negotiationSuccess();
 
   public void negotiationFailure();
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface Receiver
+  {
+    public void receiveBuffer(INegotiationContext context, ByteBuffer buffer);
+  }
 }

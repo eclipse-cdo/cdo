@@ -52,28 +52,10 @@ public interface IStoreReader extends IStoreAccessor
    */
   public CDOClassRef readObjectType(CDOID id);
 
-  /**
-   * @param referenceChunk
-   *          Must currently be ignored by the implementor of this method.
-   *          <p>
-   *          TODO Remove this comment when no longer applicable.
-   */
   public CDORevision readRevision(CDOID id, int referenceChunk);
 
-  /**
-   * @param referenceChunk
-   *          Must currently be ignored by the implementor of this method.
-   *          <p>
-   *          TODO Remove this comment when no longer applicable.
-   */
   public CDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp);
 
-  /**
-   * @param referenceChunk
-   *          Must currently be ignored by the implementor of this method.
-   *          <p>
-   *          TODO Remove this comment when no longer applicable.
-   */
   public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version);
 
   public CDOID readResourceID(String path);

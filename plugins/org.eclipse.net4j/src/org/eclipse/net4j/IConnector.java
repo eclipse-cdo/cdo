@@ -73,15 +73,8 @@ public interface IConnector extends IContainer<IChannel>
 
   /**
    * Returns the userID of this connector.
-   * <p>
-   * Same as <code>{@link #getCredentials()}.{@link IConnectorCredentials#getUserID() getUserID()}</code>.
    */
   public String getUserID();
-
-  /**
-   * Returns the credentials of this connector.
-   */
-  public IConnectorCredentials getCredentials();
 
   /**
    * Returns the factory registry used by this connector to lookup factories that can create {@link IProtocol}s for

@@ -8,18 +8,18 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j;
+package org.eclipse.net4j.internal.util.security;
 
-import org.eclipse.net4j.IConnectorCredentials;
+import org.eclipse.net4j.util.security.ICredentials;
 
 /**
  * @author Eike Stepper
  */
-public class ConnectorCredentials implements IConnectorCredentials
+public class Credentials implements ICredentials
 {
   private String userID;
 
-  public ConnectorCredentials(String userID)
+  public Credentials(String userID)
   {
     this.userID = userID;
   }

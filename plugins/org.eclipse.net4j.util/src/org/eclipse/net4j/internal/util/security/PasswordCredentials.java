@@ -8,19 +8,28 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
+package org.eclipse.net4j.internal.util.security;
 
 /**
- * Provides the ability to execute a negotitation phase between two connectors.
- * 
  * @author Eike Stepper
  */
-public interface IConnectorNegotiator
+public class PasswordCredentials extends Credentials
 {
-  /**
-   * Executes the negotitation phase between the given connector and ts peer connector.
-   * 
-   * @return <code>true</code> if the negotiation succeeded, <code>false</code> otherwise.
-   */
-  public boolean negotiate(IConnector connector);
+  private char[] password;
+
+  public PasswordCredentials(String userID, char[] password)
+  {
+    super(userID);
+    this.password = password;
+  }
+
+  public char[] getPassword()
+  {
+    return password;
+  }
+
+  public void setPassword(char[] password)
+  {
+    this.password = password;
+  }
 }

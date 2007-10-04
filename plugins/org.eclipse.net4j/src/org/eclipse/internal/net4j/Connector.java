@@ -17,7 +17,6 @@ import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.IConnectorCredentials;
 import org.eclipse.net4j.IConnectorStateEvent;
 import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.internal.util.container.Container;
@@ -58,8 +57,6 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONNECTOR, Connector.class);
 
   private String userID;
-
-  private IConnectorCredentials credentials;
 
   private IRegistry<IFactoryKey, IFactory> protocolFactoryRegistry;
 
@@ -162,16 +159,6 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   public void setUserID(String userID)
   {
     this.userID = userID;
-  }
-
-  public IConnectorCredentials getCredentials()
-  {
-    return credentials;
-  }
-
-  public void setCredentials(IConnectorCredentials credentials)
-  {
-    this.credentials = credentials;
   }
 
   public ConnectorState getState()

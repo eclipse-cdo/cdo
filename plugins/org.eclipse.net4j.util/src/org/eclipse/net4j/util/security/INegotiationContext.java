@@ -8,15 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
+package org.eclipse.net4j.util.security;
+
+import java.nio.ByteBuffer;
 
 /**
  * @author Eike Stepper
  */
-public interface IConnectorCredentials
+public interface INegotiationContext
 {
-  /**
-   * Returns the userID of this connector.
-   */
-  public String getUserID();
+  public ByteBuffer getBuffer();
+
+  public void transmitBuffer(ByteBuffer buffer);
+
+  public void setBufferReceiver(IBufferReceiver receiver);
+
+  public void negotiationSuccess();
+
+  public void negotiationFailure();
 }

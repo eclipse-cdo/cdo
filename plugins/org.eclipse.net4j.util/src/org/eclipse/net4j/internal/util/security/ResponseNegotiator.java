@@ -10,8 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.security;
 
-import org.eclipse.net4j.util.security.ICredentialsProvider;
 import org.eclipse.net4j.util.security.INegotiationContext;
+import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.SecurityUtil;
 
 import java.nio.ByteBuffer;
@@ -21,18 +22,18 @@ import java.nio.ByteBuffer;
  */
 public class ResponseNegotiator extends ChallengeResponseNegotiator
 {
-  private ICredentialsProvider credentialsProvider;
+  private IPasswordCredentialsProvider credentialsProvider;
 
   public ResponseNegotiator()
   {
   }
 
-  public ICredentialsProvider getCredentialsProvider()
+  public IPasswordCredentialsProvider getCredentialsProvider()
   {
     return credentialsProvider;
   }
 
-  public void setCredentialsProvider(ICredentialsProvider credentialsProvider)
+  public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
   {
     this.credentialsProvider = credentialsProvider;
   }
@@ -62,7 +63,7 @@ public class ResponseNegotiator extends ChallengeResponseNegotiator
     challenge.get(randomToken);
 
     // Get credentials and encrypt token
-    PasswordCredentials credentials = (PasswordCredentials)credentialsProvider.getCredentials();
+    IPasswordCredentials credentials = credentialsProvider.getCredentials();
 
     // Set crypted token into response
     byte[] cryptedToken = encryptToken(credentials.getPassword(), randomToken);

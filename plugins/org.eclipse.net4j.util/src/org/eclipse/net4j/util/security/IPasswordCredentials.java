@@ -8,30 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.security;
-
-import org.eclipse.net4j.util.security.IPasswordCredentials;
+package org.eclipse.net4j.util.security;
 
 /**
  * @author Eike Stepper
  */
-public class PasswordCredentials extends Credentials implements IPasswordCredentials
+public interface IPasswordCredentials extends ICredentials
 {
-  private char[] password;
+  public String getUserID();
 
-  public PasswordCredentials(String userID, char[] password)
-  {
-    super(userID);
-    this.password = password;
-  }
-
-  public char[] getPassword()
-  {
-    return password;
-  }
-
-  public void setPassword(char[] password)
-  {
-    this.password = password;
-  }
+  public char[] getPassword();
 }

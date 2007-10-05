@@ -18,8 +18,8 @@ import org.eclipse.net4j.internal.util.security.ResponseNegotiator;
 import org.eclipse.net4j.internal.util.security.UserManager;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.security.IChallengeResponse;
-import org.eclipse.net4j.util.security.ICredentials;
-import org.eclipse.net4j.util.security.ICredentialsProvider;
+import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.BlockingQueue;
@@ -41,9 +41,9 @@ public class SecurityTest extends AbstractOMTest
 
   private static final PasswordCredentials CREDENTIALS = new PasswordCredentials(USER_ID, PASSWORD1);
 
-  private ICredentialsProvider credentialsProvider = new ICredentialsProvider()
+  private IPasswordCredentialsProvider credentialsProvider = new IPasswordCredentialsProvider()
   {
-    public ICredentials getCredentials()
+    public IPasswordCredentials getCredentials()
     {
       return CREDENTIALS;
     }

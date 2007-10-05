@@ -19,6 +19,7 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
 import org.eclipse.net4j.util.security.INegotiationContext;
+import org.eclipse.net4j.util.security.INegotiationContext.Receiver;
 
 import org.eclipse.internal.net4j.BufferUtil;
 import org.eclipse.internal.net4j.Channel;
@@ -125,7 +126,9 @@ public final class ControlChannel extends Channel
           ConcurrencyUtil.sleep(20);
           negotiationContext = getConnector().getNegotiationContext();
         }
-        negotiationContext.getBuffer();
+
+        Receiver receiver = negotiationContext.getReceiver();
+        receiver.receiveBuffer(negotiationContext, byteBuffer);
         break;
       }
 

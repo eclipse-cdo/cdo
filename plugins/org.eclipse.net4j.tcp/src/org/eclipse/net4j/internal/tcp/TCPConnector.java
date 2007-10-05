@@ -391,6 +391,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     {
       IBuffer buffer = getBufferProvider().provideBuffer();
       ByteBuffer byteBuffer = buffer.startPutting(ControlChannel.CONTROL_CHANNEL_INDEX);
+      byteBuffer.put(ControlChannel.OPCODE_NEGOTIATION);
       buffers.put(byteBuffer, buffer);
       return byteBuffer;
     }
@@ -406,9 +407,12 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     {
       if (success)
       {
+        setState(ConnectorState.CONNECTED);
       }
       else
       {
+        OM.LOG.error("Connector negotiation failed: " + TCPConnector.this);
+        deactivate();
       }
 
       super.setFinished(success);

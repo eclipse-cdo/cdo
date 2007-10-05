@@ -10,6 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.util.ui;
 
+import org.eclipse.net4j.util.internal.ui.security.InteractiveCredentialsProvider;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -21,6 +24,11 @@ public final class UIUtil
 {
   private UIUtil()
   {
+  }
+
+  public static IPasswordCredentialsProvider createInteractiveCredentialsProvider()
+  {
+    return new InteractiveCredentialsProvider();
   }
 
   public static Composite createGridComposite(Composite parent, int columns)

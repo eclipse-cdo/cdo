@@ -43,6 +43,11 @@ public class SecurityTest extends AbstractOMTest
 
   private IPasswordCredentialsProvider credentialsProvider = new IPasswordCredentialsProvider()
   {
+    public boolean isInteractive()
+    {
+      return false;
+    }
+
     public IPasswordCredentials getCredentials()
     {
       return CREDENTIALS;

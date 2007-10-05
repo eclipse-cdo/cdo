@@ -15,5 +15,7 @@ package org.eclipse.net4j.util.security;
  */
 public interface ICredentialsProvider
 {
+  public boolean isInteractive();
+
   public ICredentials getCredentials();
 }

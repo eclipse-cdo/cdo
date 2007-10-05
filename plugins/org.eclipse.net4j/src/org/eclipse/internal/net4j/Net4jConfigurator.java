@@ -12,7 +12,9 @@ package org.eclipse.internal.net4j;
 
 import org.eclipse.net4j.IAcceptor;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.internal.util.security.NegotiatorFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.security.INegotiator;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.internal.net4j.bundle.OM;
@@ -63,20 +65,47 @@ public class Net4jConfigurator
 
     List<IAcceptor> acceptors = new ArrayList<IAcceptor>();
     Document document = getDocument(configFile);
-    NodeList elements = document.getElementsByTagName("acceptor");
-    for (int i = 0; i < elements.getLength(); i++)
+    NodeList acceptorConfigs = document.getElementsByTagName("acceptor");
+    for (int i = 0; i < acceptorConfigs.getLength(); i++)
     {
-      Element acceptorConfig = (Element)elements.item(i);
-      String type = acceptorConfig.getAttribute("type");
-      String listenAddr = acceptorConfig.getAttribute("listenAddr");
-      String port = acceptorConfig.getAttribute("port");
-      String description = (listenAddr == null ? "" : listenAddr) + (port == null ? "" : ":" + port);
-
-      IAcceptor acceptor = (IAcceptor)container.getElement(AcceptorFactory.PRODUCT_GROUP, type, description);
+      Element acceptorConfig = (Element)acceptorConfigs.item(i);
+      IAcceptor acceptor = configureAcceptor(acceptorConfig);
       acceptors.add(acceptor);
     }
 
     return acceptors.toArray(new IAcceptor[acceptors.size()]);
+  }
+
+  protected IAcceptor configureAcceptor(Element acceptorConfig)
+  {
+    String type = acceptorConfig.getAttribute("type");
+    String listenAddr = acceptorConfig.getAttribute("listenAddr");
+    String port = acceptorConfig.getAttribute("port");
+    String description = (listenAddr == null ? "" : listenAddr) + (port == null ? "" : ":" + port);
+    Acceptor acceptor = (Acceptor)container.getElement(AcceptorFactory.PRODUCT_GROUP, type, description);
+
+    NodeList negotiatorConfigs = acceptorConfig.getElementsByTagName("negotiator");
+    if (negotiatorConfigs.getLength() > 1)
+    {
+      throw new IllegalStateException("A maximum of one negotiator can be configured for acceptor " + acceptor);
+    }
+
+    if (negotiatorConfigs.getLength() == 1)
+    {
+      Element negotiatorConfig = (Element)negotiatorConfigs.item(0);
+      INegotiator negotiator = configureNegotiator(negotiatorConfig);
+      acceptor.setNegotiator(negotiator);
+    }
+
+    return acceptor;
+  }
+
+  protected INegotiator configureNegotiator(Element negotiatorConfig)
+  {
+    String type = negotiatorConfig.getAttribute("type");
+    String description = negotiatorConfig.getAttribute("description");
+    INegotiator negotiator = (INegotiator)container.getElement(NegotiatorFactory.PRODUCT_GROUP, type, description);
+    return negotiator;
   }
 
   protected Document getDocument(File configFile) throws ParserConfigurationException, SAXException, IOException

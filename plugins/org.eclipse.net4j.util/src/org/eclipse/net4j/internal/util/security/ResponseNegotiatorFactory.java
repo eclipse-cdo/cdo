@@ -8,12 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.security;
+package org.eclipse.net4j.internal.util.security;
 
 /**
  * @author Eike Stepper
  */
-public interface IPasswordCredentialsProvider extends ICredentialsProvider
+public class ResponseNegotiatorFactory extends NegotiatorFactory
 {
-  public IPasswordCredentials getCredentials();
+  public static final String TYPE = "response";
+
+  public ResponseNegotiatorFactory()
+  {
+    super(TYPE);
+  }
+
+  public ResponseNegotiator create(String description)
+  {
+    return new ResponseNegotiator();
+  }
 }

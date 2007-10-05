@@ -8,12 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.security;
+package org.eclipse.net4j.internal.util.security;
+
+import org.eclipse.net4j.internal.util.factory.Factory;
 
 /**
  * @author Eike Stepper
  */
-public interface IPasswordCredentialsProvider extends ICredentialsProvider
+public abstract class UserManagerFactory extends Factory
 {
-  public IPasswordCredentials getCredentials();
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.userManagers";
+
+  public UserManagerFactory(String type)
+  {
+    super(PRODUCT_GROUP, type);
+  }
 }

@@ -8,12 +8,26 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.security;
+package org.eclipse.net4j.internal.util.security;
 
 /**
+ * TODO Consider file attributes when creating initially empty file
+ * 
  * @author Eike Stepper
  */
-public interface IPasswordCredentialsProvider extends ICredentialsProvider
+public class FileUserManagerFactory extends UserManagerFactory
 {
-  public IPasswordCredentials getCredentials();
+  public static final String TYPE = "file";
+
+  public FileUserManagerFactory()
+  {
+    super(TYPE);
+  }
+
+  public FileUserManager create(String description)
+  {
+    FileUserManager userManager = new FileUserManager();
+    userManager.setFileName(description);
+    return userManager;
+  }
 }

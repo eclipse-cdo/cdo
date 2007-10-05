@@ -21,6 +21,8 @@ public interface INegotiationContext
 
   public void transmitBuffer(ByteBuffer buffer);
 
+  public Receiver getReceiver();
+
   public void setReceiver(Receiver receiver);
 
   public Enum<?> getState();

@@ -210,7 +210,7 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
           return false;
         }
 
-        Thread.sleep(interval);
+        sleep(interval);
       }
 
       return true;

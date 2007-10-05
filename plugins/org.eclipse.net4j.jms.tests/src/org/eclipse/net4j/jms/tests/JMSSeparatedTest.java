@@ -26,6 +26,7 @@ import org.eclipse.net4j.jms.server.IStore;
 import org.eclipse.net4j.jms.server.JMSServerUtil;
 import org.eclipse.net4j.jms.server.jdbc.JDBCUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
 
@@ -72,7 +73,7 @@ public class JMSSeparatedTest
     }
     finally
     {
-      Thread.sleep(500);
+      ConcurrencyUtil.sleep(500);
       Server.INSTANCE.deactivate();
     }
   }

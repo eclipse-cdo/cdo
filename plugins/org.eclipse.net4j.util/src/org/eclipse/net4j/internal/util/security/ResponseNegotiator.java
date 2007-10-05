@@ -26,6 +26,7 @@ public class ResponseNegotiator extends ChallengeResponseNegotiator
 
   public ResponseNegotiator()
   {
+    super(false);
   }
 
   public IPasswordCredentialsProvider getCredentialsProvider()

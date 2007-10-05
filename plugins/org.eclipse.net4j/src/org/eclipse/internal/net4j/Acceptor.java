@@ -25,6 +25,7 @@ import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.IRegistry;
+import org.eclipse.net4j.util.security.INegotiator;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
@@ -39,6 +40,8 @@ import java.util.concurrent.ExecutorService;
 public abstract class Acceptor extends Container<IConnector> implements IAcceptor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_ACCEPTOR, Acceptor.class);
+
+  private INegotiator negotiator;
 
   private IBufferProvider bufferProvider;
 
@@ -65,6 +68,16 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
 
   public Acceptor()
   {
+  }
+
+  public INegotiator getNegotiator()
+  {
+    return negotiator;
+  }
+
+  public void setNegotiator(INegotiator negotiator)
+  {
+    this.negotiator = negotiator;
   }
 
   public IBufferProvider getBufferProvider()
@@ -130,6 +143,7 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
   {
     try
     {
+      connector.setNegotiator(negotiator);
       connector.setBufferProvider(bufferProvider);
       connector.setReceiveExecutor(receiveExecutor);
       connector.setProtocolFactoryRegistry(protocolFactoryRegistry);

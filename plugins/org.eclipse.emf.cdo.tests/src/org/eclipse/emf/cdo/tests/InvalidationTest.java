@@ -108,7 +108,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     msg("Changing name");
     category1A.setName("CHANGED NAME");
-    Thread.sleep(500);
+    sleep(500);
 
     msg("Checking before commit");
     assertEquals("category1", category1B.getName());

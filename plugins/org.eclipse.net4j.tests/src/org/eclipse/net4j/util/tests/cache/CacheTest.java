@@ -41,11 +41,11 @@ public class CacheTest extends AbstractOMTest
       for (int id = 1; id <= 100; id++)
       {
         revisionManager.getRevision(id, version);
-        Thread.sleep(200);
+        sleep(200);
       }
 
       System.gc();
-      Thread.sleep(1000);
+      sleep(1000);
     }
 
     revisionManager.deactivate();

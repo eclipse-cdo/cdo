@@ -37,6 +37,8 @@ import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.IRegistry;
+import org.eclipse.net4j.util.security.INegotiationContext;
+import org.eclipse.net4j.util.security.INegotiator;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
@@ -61,6 +63,10 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   private IRegistry<IFactoryKey, IFactory> protocolFactoryRegistry;
 
   private List<IElementProcessor> protocolPostProcessors;
+
+  private INegotiator negotiator;
+
+  private INegotiationContext negotiationContext;
 
   private IBufferProvider bufferProvider;
 
@@ -136,6 +142,21 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     return bufferProvider;
   }
 
+  public INegotiator getNegotiator()
+  {
+    return negotiator;
+  }
+
+  public void setNegotiator(INegotiator negotiator)
+  {
+    this.negotiator = negotiator;
+  }
+
+  public INegotiationContext getNegotiationContext()
+  {
+    return negotiationContext;
+  }
+
   public void setBufferProvider(IBufferProvider bufferProvider)
   {
     this.bufferProvider = bufferProvider;
@@ -206,10 +227,19 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
       case NEGOTIATING:
         finishedConnecting.countDown();
-        setState(ConnectorState.CONNECTED); // TODO Implement negotiation
+        if (negotiator != null)
+        {
+          negotiationContext = createNegotiationContext();
+          negotiator.negotiate(negotiationContext);
+        }
+        else
+        {
+          setState(ConnectorState.CONNECTED);
+        }
         break;
 
       case CONNECTED:
+        negotiationContext = null;
         finishedConnecting.countDown(); // Just in case of suspicion
         finishedNegotiating.countDown();
         break;
@@ -560,6 +590,8 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
       OM.LOG.warn(ex);
     }
   }
+
+  protected abstract INegotiationContext createNegotiationContext();
 
   /**
    * TODO Use IProtocolProvider and make the protocols real container elements, so that the post processors can reach

@@ -27,9 +27,9 @@ public abstract class ChallengeResponseNegotiator extends
 
   private String algorithmName = DEFAULT_ALGORITHM_NAME;
 
-  public ChallengeResponseNegotiator()
+  public ChallengeResponseNegotiator(boolean initiator)
   {
-    super(State.class, Event.class, State.INITIAL, State.SUCCESS, State.FAILURE, Event.START, Event.BUFFER);
+    super(State.class, Event.class, State.INITIAL, State.SUCCESS, State.FAILURE, Event.START, Event.BUFFER, initiator);
 
     init(State.INITIAL, Event.START, new Transition()
     {

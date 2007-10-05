@@ -8,12 +8,40 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.security;
+package org.eclipse.net4j.util.concurrent;
+
+import org.eclipse.net4j.util.WrappedException;
 
 /**
  * @author Eike Stepper
  */
-public interface INegotiator
+public final class ConcurrencyUtil
 {
-  public void negotiate(INegotiationContext context);
+  private ConcurrencyUtil()
+  {
+  }
+
+  public static void sleep(long millis)
+  {
+    try
+    {
+      Thread.sleep(millis);
+    }
+    catch (InterruptedException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+  }
+
+  public static void sleep(long millis, int nanos)
+  {
+    try
+    {
+      Thread.sleep(millis, nanos);
+    }
+    catch (InterruptedException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+  }
 }

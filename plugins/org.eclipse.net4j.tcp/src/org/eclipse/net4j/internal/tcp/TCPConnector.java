@@ -17,11 +17,13 @@ import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.internal.util.security.NegotiationContext;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelectorListener;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.security.INegotiationContext;
 
 import org.eclipse.internal.net4j.Channel;
 import org.eclipse.internal.net4j.Connector;
@@ -30,7 +32,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -323,6 +327,12 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
+  protected INegotiationContext createNegotiationContext()
+  {
+    return new TCPNegotiationContext();
+  }
+
+  @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
@@ -363,6 +373,45 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     if (selectionKey == null)
     {
       throw new IllegalStateException("selectionKey == null");
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class TCPNegotiationContext extends NegotiationContext
+  {
+    private Map<ByteBuffer, IBuffer> buffers = new HashMap<ByteBuffer, IBuffer>();
+
+    public TCPNegotiationContext()
+    {
+    }
+
+    public ByteBuffer getBuffer()
+    {
+      IBuffer buffer = getBufferProvider().provideBuffer();
+      ByteBuffer byteBuffer = buffer.startPutting(ControlChannel.CONTROL_CHANNEL_INDEX);
+      buffers.put(byteBuffer, buffer);
+      return byteBuffer;
+    }
+
+    public void transmitBuffer(ByteBuffer byteBuffer)
+    {
+      IBuffer buffer = buffers.remove(byteBuffer);
+      controlChannel.sendBuffer(buffer);
+    }
+
+    @Override
+    public void setFinished(boolean success)
+    {
+      if (success)
+      {
+      }
+      else
+      {
+      }
+
+      super.setFinished(success);
     }
   }
 }

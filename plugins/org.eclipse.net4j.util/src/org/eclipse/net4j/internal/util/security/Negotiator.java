@@ -32,8 +32,10 @@ public abstract class Negotiator<STATE extends Enum<?>, EVENT extends Enum<?>> e
 
   private EVENT bufferEvent;
 
+  private boolean initiator;
+
   public Negotiator(Class<STATE> stateEnum, Class<EVENT> eventEnum, STATE initialState, STATE successState,
-      STATE failureState, EVENT startEvent, EVENT bufferEvent)
+      STATE failureState, EVENT startEvent, EVENT bufferEvent, boolean initiator)
   {
     super(stateEnum, eventEnum);
 
@@ -48,6 +50,7 @@ public abstract class Negotiator<STATE extends Enum<?>, EVENT extends Enum<?>> e
     this.failureState = failureState;
     this.startEvent = startEvent;
     this.bufferEvent = bufferEvent;
+    this.initiator = initiator;
 
   }
 
@@ -76,7 +79,12 @@ public abstract class Negotiator<STATE extends Enum<?>, EVENT extends Enum<?>> e
     return startEvent;
   }
 
-  public void negotiate(INegotiationContext context, boolean initiator)
+  public boolean isInitiator()
+  {
+    return initiator;
+  }
+
+  public void negotiate(INegotiationContext context)
   {
     context.setReceiver(this);
     context.setState(initialState);

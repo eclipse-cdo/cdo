@@ -32,6 +32,7 @@ public class ChallengeNegotiator extends ChallengeResponseNegotiator
 
   public ChallengeNegotiator()
   {
+    super(true);
   }
 
   public int getTokenLength()

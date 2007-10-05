@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.io;
 
 import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,6 +59,9 @@ public class GZIPStreamWrapper implements IStreamWrapper
     ((GZIPOutputStream)out).finish();
   }
 
+  /**
+   * TODO Move or remove me
+   */
   public static void main(String[] args) throws Exception
   {
     final PipedOutputStream pos = new PipedOutputStream();
@@ -88,12 +92,12 @@ public class GZIPStreamWrapper implements IStreamWrapper
     };
 
     thread.start();
-    Thread.sleep(1000);
+    ConcurrencyUtil.sleep(1000);
 
     gos.write(out);
     gos.close();
     System.out.println("Written: " + HexUtil.bytesToHex(out));
 
-    Thread.sleep(2000);
+    ConcurrencyUtil.sleep(2000);
   }
 }

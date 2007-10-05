@@ -34,7 +34,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     };
 
     consumer.start();
-    Thread.sleep(50);
+    sleep(50);
 
     correlator.put("eike", true);
     consumer.join(100);

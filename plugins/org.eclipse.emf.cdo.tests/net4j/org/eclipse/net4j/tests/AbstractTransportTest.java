@@ -45,7 +45,7 @@ public abstract class AbstractTransportTest extends AbstractOMTest
   {
     try
     {
-      Thread.sleep(20);
+      sleep(20);
       LifecycleUtil.deactivate(container);
     }
     finally

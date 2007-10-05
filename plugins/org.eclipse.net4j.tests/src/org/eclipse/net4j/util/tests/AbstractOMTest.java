@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.tests;
 
 import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import junit.framework.TestCase;
@@ -48,7 +49,7 @@ public abstract class AbstractOMTest extends TestCase
   @Override
   public final void tearDown() throws Exception
   {
-    Thread.sleep(200);
+    sleep(200);
     System.out.println("------------------------ END --------------------------");
     System.out.println();
 
@@ -111,5 +112,10 @@ public abstract class AbstractOMTest extends TestCase
       System.out.println();
       System.out.println("--> " + m);
     }
+  }
+
+  protected static void sleep(long millis)
+  {
+    ConcurrencyUtil.sleep(millis);
   }
 }

@@ -78,14 +78,14 @@ public class SecurityTest extends AbstractOMTest
     ResponseNegotiator responseNegotiator = new ResponseNegotiator();
     responseNegotiator.setCredentialsProvider(credentialsProvider);
     responseNegotiator.activate();
-    responseNegotiator.negotiate(responseContext, false);
+    responseNegotiator.negotiate(responseContext);
 
     // Prepare challenge negotiator
     ChallengeNegotiator challengeNegotiator = new ChallengeNegotiator();
     challengeNegotiator.setRandomizer(randomizer);
     challengeNegotiator.setUserManager(userManager);
     challengeNegotiator.activate();
-    challengeNegotiator.negotiate(challengeContext, true);
+    challengeNegotiator.negotiate(challengeContext);
 
     Enum<?> responseState = responseContext.waitUntilFinished(TIMEOUT);
     assertEquals(IChallengeResponse.State.SUCCESS, responseState);
@@ -130,14 +130,14 @@ public class SecurityTest extends AbstractOMTest
     ResponseNegotiator responseNegotiator = new ResponseNegotiator();
     responseNegotiator.setCredentialsProvider(credentialsProvider);
     responseNegotiator.activate();
-    responseNegotiator.negotiate(responseContext, false);
+    responseNegotiator.negotiate(responseContext);
 
     // Prepare challenge negotiator
     ChallengeNegotiator challengeNegotiator = new ChallengeNegotiator();
     challengeNegotiator.setRandomizer(randomizer);
     challengeNegotiator.setUserManager(userManager);
     challengeNegotiator.activate();
-    challengeNegotiator.negotiate(challengeContext, true);
+    challengeNegotiator.negotiate(challengeContext);
 
     Enum<?> responseState = responseContext.waitUntilFinished(TIMEOUT);
     assertEquals(IChallengeResponse.State.FAILURE, responseState);

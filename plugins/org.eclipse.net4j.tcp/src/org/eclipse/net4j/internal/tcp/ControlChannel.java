@@ -10,12 +10,15 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
+import org.eclipse.net4j.ConnectorState;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.util.concurrent.SynchronizingCorrelator;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
+import org.eclipse.net4j.util.security.INegotiationContext;
 
 import org.eclipse.internal.net4j.BufferUtil;
 import org.eclipse.internal.net4j.Channel;
@@ -31,11 +34,13 @@ public final class ControlChannel extends Channel
 
   public static final long REGISTRATION_TIMEOUT = 500000;
 
-  public static final byte OPCODE_REGISTRATION = 1;
+  public static final byte OPCODE_NEGOTIATION = 1;
 
-  public static final byte OPCODE_REGISTRATION_ACK = 2;
+  public static final byte OPCODE_REGISTRATION = 2;
 
-  public static final byte OPCODE_DEREGISTRATION = 3;
+  public static final byte OPCODE_REGISTRATION_ACK = 3;
+
+  public static final byte OPCODE_DEREGISTRATION = 4;
 
   public static final byte SUCCESS = 1;
 
@@ -111,8 +116,22 @@ public final class ControlChannel extends Channel
       byte opcode = byteBuffer.get();
       switch (opcode)
       {
+      case OPCODE_NEGOTIATION:
+      {
+        assertNegotiating();
+        INegotiationContext negotiationContext = getConnector().getNegotiationContext();
+        while (negotiationContext == null)
+        {
+          ConcurrencyUtil.sleep(20);
+          negotiationContext = getConnector().getNegotiationContext();
+        }
+        negotiationContext.getBuffer();
+        break;
+      }
+
       case OPCODE_REGISTRATION:
       {
+        assertConnected();
         int channelID = byteBuffer.getInt();
         short channelIndex = byteBuffer.getShort();
         assertValidChannelIndex(channelIndex);
@@ -144,6 +163,7 @@ public final class ControlChannel extends Channel
 
       case OPCODE_REGISTRATION_ACK:
       {
+        assertConnected();
         short channelIndex = byteBuffer.getShort();
         boolean success = byteBuffer.get() == SUCCESS;
         registrations.put(channelIndex, success);
@@ -152,6 +172,7 @@ public final class ControlChannel extends Channel
 
       case OPCODE_DEREGISTRATION:
       {
+        assertConnected();
         int channelID = byteBuffer.getInt();
         short channelIndex = byteBuffer.getShort();
         if (channelIndex != CONTROL_CHANNEL_INDEX)
@@ -194,6 +215,22 @@ public final class ControlChannel extends Channel
     byteBuffer.putShort(channelIndex);
     byteBuffer.put(status ? SUCCESS : FAILURE);
     handleBuffer(buffer);
+  }
+
+  private void assertNegotiating()
+  {
+    if (getConnector().getState() != ConnectorState.NEGOTIATING)
+    {
+      throw new IllegalStateException("Connector is not negotiating");
+    }
+  }
+
+  private void assertConnected()
+  {
+    if (!getConnector().isConnected())
+    {
+      throw new IllegalStateException("Connector is not connected");
+    }
   }
 
   private void assertValidChannelIndex(short channelIndex)

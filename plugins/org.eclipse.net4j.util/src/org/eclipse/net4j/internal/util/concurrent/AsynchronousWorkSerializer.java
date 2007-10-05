@@ -107,14 +107,7 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, Runnable
           }
         }
 
-        // try
-        // {
-        // Thread.sleep(500);
-        // }
-        // catch (InterruptedException ex)
-        // {
-        // throw WrappedException.wrap(ex);
-        // }
+        // ConcurrencyUtil.sleep(500);
 
         // Could put the sync in the while loop... but not efficient.
         // Doing a last check to make sure that no one added something in the

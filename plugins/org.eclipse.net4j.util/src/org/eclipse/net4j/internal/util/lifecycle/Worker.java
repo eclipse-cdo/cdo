@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.util.lifecycle;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -226,21 +227,11 @@ public abstract class Worker extends Lifecycle
       this.pauseMillis = pauseMillis;
     }
 
-    public boolean pause()
+    public void pause()
     {
-      if (pauseMillis <= 0)
+      if (pauseMillis > 0)
       {
-        return true;
-      }
-
-      try
-      {
-        Thread.sleep(pauseMillis);
-        return true;
-      }
-      catch (InterruptedException ex)
-      {
-        return false;
+        ConcurrencyUtil.sleep(pauseMillis);
       }
     }
   }

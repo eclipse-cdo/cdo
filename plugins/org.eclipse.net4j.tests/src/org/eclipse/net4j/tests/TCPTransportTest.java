@@ -89,7 +89,7 @@ public class TCPTransportTest extends AbstractTransportTest
       ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
       byteBuffer.putInt(1970);
       channel.sendBuffer(buffer);
-      Thread.sleep(50);
+      sleep(50);
     }
 
     assertTrue(counter.await(2, TimeUnit.SECONDS));

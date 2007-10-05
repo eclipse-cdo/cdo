@@ -10,8 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.security;
 
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.util.security.IBufferReceiver;
+import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.INegotiator;
 
@@ -20,99 +19,90 @@ import java.nio.ByteBuffer;
 /**
  * @author Eike Stepper
  */
-public abstract class Negotiator extends Lifecycle implements INegotiator, IBufferReceiver
+public abstract class Negotiator<STATE extends Enum<?>, EVENT extends Enum<?>> extends
+    FiniteStateMachine<STATE, EVENT, INegotiationContext> implements INegotiator, INegotiationContext.Receiver
 {
-  public static final int INITIAL = 0;
+  private STATE initialState;
 
-  public static final int SUCCESS = -1;
+  private STATE successState;
 
-  public static final int FAILURE = -2;
+  private STATE failureState;
 
-  public static final int NEED_MORE_BUFFERS = -3;
+  private EVENT startEvent;
 
-  private int phase = INITIAL;
+  private EVENT bufferEvent;
 
-  private boolean initiator;
-
-  private INegotiationContext context;
-
-  public Negotiator(boolean initiator)
+  public Negotiator(Class<STATE> stateEnum, Class<EVENT> eventEnum, STATE initialState, STATE successState,
+      STATE failureState, EVENT startEvent, EVENT bufferEvent)
   {
-    this.initiator = initiator;
+    super(stateEnum, eventEnum);
+
+    if (initialState == null) throw new IllegalStateException("initialState == null");
+    if (successState == null) throw new IllegalStateException("successState == null");
+    if (failureState == null) throw new IllegalStateException("failureState == null");
+    if (startEvent == null) throw new IllegalStateException("startEvent == null");
+    if (bufferEvent == null) throw new IllegalStateException("bufferEvent == null");
+
+    this.initialState = initialState;
+    this.successState = successState;
+    this.failureState = failureState;
+    this.startEvent = startEvent;
+    this.bufferEvent = bufferEvent;
+
   }
 
-  public int getPhase()
+  public STATE getInitialState()
   {
-    return phase;
+    return initialState;
   }
 
-  public boolean isInitiator()
+  public STATE getSuccessState()
   {
-    return initiator;
+    return successState;
   }
 
-  public void startNegotiation(INegotiationContext context)
+  public STATE getFailureState()
   {
-    this.context = context;
-    context.setBufferReceiver(this);
+    return failureState;
+  }
+
+  public EVENT getBufferEvent()
+  {
+    return bufferEvent;
+  }
+
+  public EVENT getStartEvent()
+  {
+    return startEvent;
+  }
+
+  public void negotiate(INegotiationContext context, boolean initiator)
+  {
+    context.setReceiver(this);
+    context.setState(initialState);
     if (initiator)
     {
-      doNegotiation(null);
+      process(context, startEvent, null);
+      postProcess(context);
     }
   }
 
   public void receiveBuffer(INegotiationContext context, ByteBuffer buffer)
   {
-    checkContext();
+    process(context, bufferEvent, buffer);
+    postProcess(context);
+  }
 
-    try
+  protected void postProcess(INegotiationContext context)
+  {
+    Enum<?> state = context.getState();
+    if (state == successState)
     {
-      doNegotiation(buffer);
+      context.setFinished(true);
     }
-    catch (SecurityException ex)
+    else if (state == failureState)
     {
-      context.negotiationFailure();
-    }
-  }
-
-  protected void doNegotiation(ByteBuffer buffer)
-  {
-    int result = negotiate(phase, buffer);
-    switch (result)
-    {
-    case SUCCESS:
-      context.negotiationSuccess();
-      break;
-    case FAILURE:
-      context.negotiationSuccess();
-      break;
-    case NEED_MORE_BUFFERS:
-      break;
-    default:
-      phase = result;
-      break;
-    }
-  }
-
-  protected abstract int negotiate(int phase, ByteBuffer buffer);
-
-  protected ByteBuffer getBuffer()
-  {
-    checkContext();
-    return context.getBuffer();
-  }
-
-  protected void transmitBuffer(ByteBuffer buffer)
-  {
-    checkContext();
-    context.transmitBuffer(buffer);
-  }
-
-  private void checkContext()
-  {
-    if (context == null)
-    {
-      throw new IllegalStateException("context == null");
+      context.setFinished(false);
     }
   }
 }

@@ -21,11 +21,17 @@ public interface INegotiationContext
 
   public void transmitBuffer(ByteBuffer buffer);
 
-  public void setBufferReceiver(IBufferReceiver receiver);
+  public void setReceiver(Receiver receiver);
 
-  public void negotiationSuccess();
+  public Enum<?> getState();
 
-  public void negotiationFailure();
+  public void setState(Enum<?> state);
+
+  public void setFinished(boolean success);
+
+  public Object getInfo();
+
+  public void setInfo(Object info);
 
   /**
    * @author Eike Stepper

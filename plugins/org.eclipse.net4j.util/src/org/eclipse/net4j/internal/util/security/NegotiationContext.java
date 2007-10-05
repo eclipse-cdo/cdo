@@ -10,10 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.security;
 
-import org.eclipse.net4j.util.security.IBufferReceiver;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
-import java.nio.ByteBuffer;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -22,74 +21,83 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class NegotiationContext implements INegotiationContext
 {
-  private IBufferReceiver bufferReceiver;
+  private Receiver receiver;
 
-  private State state = State.ONGOING;
+  private Enum<?> state;
 
-  private CountDownLatch ongoingLatch = new CountDownLatch(1);
+  private Object info;
+
+  private CountDownLatch finishedLatch = new CountDownLatch(1);
 
   public NegotiationContext()
   {
   }
 
-  public IBufferReceiver getBufferReceiver()
+  public Receiver getReceiver()
   {
-    return bufferReceiver;
+    return receiver;
   }
 
-  public void setBufferReceiver(IBufferReceiver bufferReceiver)
+  public void setReceiver(Receiver receiver)
   {
-    this.bufferReceiver = bufferReceiver;
+    this.receiver = receiver;
   }
 
-  public State getState()
+  public Enum<?> getState()
   {
     return state;
   }
 
-  public ByteBuffer getBuffer()
+  public void setState(Enum<?> state)
   {
-    return ByteBuffer.allocateDirect(4096);
+    this.state = state;
   }
 
-  public void negotiationSuccess()
+  public Object getInfo()
   {
-    state = State.SUCCESS;
-    ongoingLatch.countDown();
+    return info;
   }
 
-  public void negotiationFailure()
+  public void setInfo(Object info)
   {
-    state = State.FAILURE;
-    ongoingLatch.countDown();
+    this.info = info;
   }
 
-  public State waitForResult(long timeout)
+  public void setFinished(boolean success)
   {
+    if (finishedLatch != null)
+    {
+      finishedLatch.countDown();
+    }
+  }
+
+  public Enum<?> waitUntilFinished(long timeout)
+  {
+    if (finishedLatch == null)
+    {
+      throw new IllegalStateException("finishedLatch == null");
+    }
+
     try
     {
       if (timeout == -1)
       {
-        ongoingLatch.await();
+        finishedLatch.await();
       }
       else
       {
-        ongoingLatch.await(timeout, TimeUnit.MILLISECONDS);
+        finishedLatch.await(timeout, TimeUnit.MILLISECONDS);
       }
     }
     catch (InterruptedException ex)
     {
-      state = State.INTERRUPTED;
+      throw WrappedException.wrap(ex);
+    }
+    finally
+    {
+      finishedLatch = null;
     }
 
     return state;
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static enum State
-  {
-    ONGOING, SUCCESS, FAILURE, INTERRUPTED;
   }
 }

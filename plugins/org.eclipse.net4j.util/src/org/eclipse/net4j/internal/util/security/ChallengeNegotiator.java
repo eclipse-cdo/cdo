@@ -10,10 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.security;
 
-import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.security.IChallengeResponse;
+import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.IRandomizer;
+import org.eclipse.net4j.util.security.IUserManager;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
@@ -21,21 +20,18 @@ import java.util.Arrays;
 /**
  * @author Eike Stepper
  */
-public class ChallengeNegotiator extends UserManagerNegotiator implements IChallengeResponse
+public class ChallengeNegotiator extends ChallengeResponseNegotiator
 {
-  public static final int DEFAULT_TOKEN_LENGTH = 128;
-
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, ChallengeNegotiator.class);
+  public static final int DEFAULT_TOKEN_LENGTH = 1024;
 
   private int tokenLength = DEFAULT_TOKEN_LENGTH;
 
   private IRandomizer randomizer;
 
-  private transient byte[] randomToken;
+  private IUserManager userManager;
 
   public ChallengeNegotiator()
   {
-    super(true);
   }
 
   public int getTokenLength()
@@ -58,101 +54,14 @@ public class ChallengeNegotiator extends UserManagerNegotiator implements IChall
     this.randomizer = randomizer;
   }
 
-  @Override
-  protected int negotiate(int phase, ByteBuffer buffer)
+  public IUserManager getUserManager()
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Negotiating phase {0}", phase);
-    }
-
-    switch (phase)
-    {
-    case INITIAL:
-      challenge();
-      return PHASE_RESPONSE;
-
-    case PHASE_RESPONSE:
-      try
-      {
-        if (verifyResponse(buffer))
-        {
-          acknowledge(true);
-          return SUCCESS;
-        }
-        else
-        {
-          return NEED_MORE_BUFFERS;
-        }
-      }
-      catch (SecurityException ex)
-      {
-        acknowledge(false);
-        return FAILURE;
-      }
-
-    case PHASE_ACKNOWLEDGE:
-      break;
-
-    default:
-      break;
-    }
-    return 0;
+    return userManager;
   }
 
-  /**
-   * Use {@link #getBuffer()} and {@link #transmitBuffer(ByteBuffer)} to send the challenge.
-   */
-  protected void challenge()
+  public void setUserManager(IUserManager userManager)
   {
-    if (TRACER.isEnabled()) TRACER.trace("Transmitting token");
-    randomToken = createRandomToken();
-    ByteBuffer buffer = getBuffer();
-    buffer.putInt(randomToken.length);
-    buffer.put(randomToken);
-    transmitBuffer(buffer);
-  }
-
-  /**
-   * Use the passed <code>ByteBuffer</code> to authenticate the user.
-   * 
-   * @return <code>true</code> if authentication was successful, <code>false</code> if more buffers are needed.
-   * @throws SecurityException
-   *           if authentication was not successful.
-   */
-  protected boolean verifyResponse(ByteBuffer buffer) throws SecurityException
-  {
-    if (TRACER.isEnabled()) TRACER.trace("Received cryptedToken");
-    int size = buffer.getInt();
-    byte[] cryptedTokenFromClient = new byte[size];
-    buffer.get(cryptedTokenFromClient);
-
-    if (TRACER.isEnabled()) TRACER.trace("Received userID");
-    size = buffer.getInt();
-    byte[] userIDBytes = new byte[size];
-    buffer.get(userIDBytes);
-
-    String userID = new String(userIDBytes);
-    byte[] cryptedToken = encrypt(userID, randomToken);
-
-    if (Arrays.equals(cryptedToken, cryptedTokenFromClient))
-    {
-      return true;
-    }
-
-    throw new SecurityException("User could not be authenticated: " + userID);
-  }
-
-  /**
-   * Use {@link #getBuffer()} and {@link #transmitBuffer(ByteBuffer)} to send the acknowledgement. The default
-   * implementation of this method jsut sends a buffer with <code>(byte)1</code> if <code>success == true</code> or
-   * <code>(byte)0</code> if <code>success == false</code>.
-   */
-  protected void acknowledge(boolean success)
-  {
-    ByteBuffer buffer = getBuffer();
-    buffer.put(success ? ACKNOWLEDGE_SUCCESS : ACKNOWLEDGE_FAILURE);
-    transmitBuffer(buffer);
+    this.userManager = userManager;
   }
 
   @Override
@@ -168,6 +77,11 @@ public class ChallengeNegotiator extends UserManagerNegotiator implements IChall
     {
       throw new IllegalStateException("randomizer == null");
     }
+
+    if (userManager == null)
+    {
+      throw new IllegalStateException("userManager == null");
+    }
   }
 
   protected byte[] createRandomToken()
@@ -175,5 +89,50 @@ public class ChallengeNegotiator extends UserManagerNegotiator implements IChall
     byte[] token = new byte[tokenLength];
     randomizer.nextBytes(token);
     return token;
+  }
+
+  protected byte[] encryptToken(String userID, byte[] token) throws SecurityException
+  {
+    return userManager.encrypt(userID, token, getAlgorithmName());
+  }
+
+  @Override
+  protected void createChallenge(INegotiationContext context, ByteBuffer challenge)
+  {
+    // Create and remember a random token
+    byte[] randomToken = createRandomToken();
+    context.setInfo(randomToken);
+
+    // Set the token into challenge
+    challenge.putInt(randomToken.length);
+    challenge.put(randomToken);
+  }
+
+  @Override
+  protected void handleChallenge(INegotiationContext context, ByteBuffer challenge, ByteBuffer response)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected boolean handleResponse(INegotiationContext context, ByteBuffer response)
+  {
+    // Get remembered random token
+    byte[] randomToken = (byte[])context.getInfo();
+
+    // Get crypted token from response
+    int size = response.getInt();
+    byte[] responseToken = new byte[size];
+    response.get(responseToken);
+
+    // Get userID from response
+    size = response.getInt();
+    byte[] userIDBytes = new byte[size];
+    response.get(userIDBytes);
+    String userID = new String(userIDBytes);
+
+    // Encrypt the remembered token and compare to crypted token from response
+    byte[] cryptedToken = encryptToken(userID, randomToken);
+    return Arrays.equals(responseToken, cryptedToken);
   }
 }

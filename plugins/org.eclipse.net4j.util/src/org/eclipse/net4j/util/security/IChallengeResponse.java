@@ -15,13 +15,23 @@ package org.eclipse.net4j.util.security;
  */
 public interface IChallengeResponse
 {
-  public static final int PHASE_CHALLENGE = 1;
-
-  public static final int PHASE_RESPONSE = 2;
-
-  public static final int PHASE_ACKNOWLEDGE = 3;
-
   public static final byte ACKNOWLEDGE_SUCCESS = 1;
 
   public static final byte ACKNOWLEDGE_FAILURE = 0;
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum State
+  {
+    INITIAL, CHALLENGE, RESPONSE, SUCCESS, FAILURE
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum Event
+  {
+    START, BUFFER
+  }
 }

@@ -1,14 +1,17 @@
 package org.eclipse.net4j.util.fsm;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.INotifier;
 
 import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
  */
-public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends Enum<?>, SUBJECT>
+public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends Enum<?>, SUBJECT> extends Lifecycle
 {
   @SuppressWarnings("unchecked")
   public static final ITransition IGNORE = new IgnoreTransition();
@@ -36,12 +39,12 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     states = stateEnum.getEnumConstants();
     events = eventEnum.getEnumConstants();
     transitions = new ITransition[states.length][events.length];
-    transitAll(defaultTransition);
+    initAll(defaultTransition);
   }
 
   public FiniteStateMachine(Class<STATE> stateEnum, Class<EVENT> eventEnum)
   {
-    this(stateEnum, eventEnum, IGNORE);
+    this(stateEnum, eventEnum, FAIL);
   }
 
   public final STATE[] getStates()
@@ -61,7 +64,12 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     return transitions[s][e];
   }
 
-  public final void transit(STATE state, EVENT event, ITransition<STATE, EVENT, SUBJECT, ?> transition)
+  public final void init(STATE state, EVENT event, STATE targetState)
+  {
+    init(state, event, new ChangeStateTransition(targetState));
+  }
+
+  public final void init(STATE state, EVENT event, ITransition<STATE, EVENT, SUBJECT, ?> transition)
   {
     checkTransition(transition);
     int s = state.ordinal();
@@ -69,7 +77,12 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     transitions[s][e] = transition;
   }
 
-  public final void transitEvents(STATE state, ITransition<STATE, EVENT, SUBJECT, ?> transition)
+  public final void initEvents(STATE state, STATE targetState)
+  {
+    initEvents(state, new ChangeStateTransition(targetState));
+  }
+
+  public final void initEvents(STATE state, ITransition<STATE, EVENT, SUBJECT, ?> transition)
   {
     checkTransition(transition);
     int s = state.ordinal();
@@ -79,7 +92,12 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     }
   }
 
-  public final void transitStates(EVENT event, ITransition<STATE, EVENT, SUBJECT, ?> transition)
+  public final void initStates(EVENT event, STATE targetState)
+  {
+    initStates(event, new ChangeStateTransition(targetState));
+  }
+
+  public final void initStates(EVENT event, ITransition<STATE, EVENT, SUBJECT, ?> transition)
   {
     checkTransition(transition);
     int e = event.ordinal();
@@ -89,7 +107,12 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     }
   }
 
-  public final void transitAll(ITransition<STATE, EVENT, SUBJECT, ?> transition)
+  public final void initAll(STATE targetState)
+  {
+    initAll(new ChangeStateTransition(targetState));
+  }
+
+  public final void initAll(ITransition<STATE, EVENT, SUBJECT, ?> transition)
   {
     checkTransition(transition);
     for (int s = 0; s < states.length; s++)
@@ -156,6 +179,18 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
 
   protected abstract STATE getState(SUBJECT subject);
 
+  protected abstract void setState(SUBJECT subject, STATE state);
+
+  protected void changeState(SUBJECT subject, STATE state)
+  {
+    STATE oldState = getState(subject);
+    setState(subject, state);
+    if (oldState != state)
+    {
+      fireEvent(new StateChangedEvent(subject, oldState, state));
+    }
+  }
+
   private void checkTransition(ITransition<STATE, EVENT, SUBJECT, ?> transition)
   {
     if (transition == null)
@@ -195,6 +230,74 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     public String toString()
     {
       return "FAIL";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public class ChangeStateTransition implements ITransition<STATE, EVENT, SUBJECT, Object>
+  {
+    private STATE targetState;
+
+    public ChangeStateTransition(STATE targetState)
+    {
+      this.targetState = targetState;
+    }
+
+    public STATE getTargetState()
+    {
+      return targetState;
+    }
+
+    public void execute(SUBJECT subject, STATE state, EVENT event, Object data)
+    {
+      changeState(subject, targetState);
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("CHANGE_STATE[{0}]", targetState);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public class StateChangedEvent implements IEvent
+  {
+    private Object subject;
+
+    private Enum<?> oldState;
+
+    private Enum<?> newState;
+
+    public StateChangedEvent(Object subject, Enum<?> oldState, Enum<?> newState)
+    {
+      this.subject = subject;
+      this.oldState = oldState;
+      this.newState = newState;
+    }
+
+    public INotifier getSource()
+    {
+      return FiniteStateMachine.this;
+    }
+
+    public Object getSubject()
+    {
+      return subject;
+    }
+
+    public Enum<?> getOldState()
+    {
+      return oldState;
+    }
+
+    public Enum<?> getNewState()
+    {
+      return newState;
     }
   }
 }

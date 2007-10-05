@@ -32,7 +32,7 @@ public abstract class AbstractOMTest extends TestCase
   {
     super.setUp();
     System.out.println("************************************************");
-    System.out.println("START " + getName());
+    System.out.println(getName());
     System.out.println("************************************************");
 
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);

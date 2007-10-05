@@ -11,6 +11,7 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.util.tests.MonitorTest;
+import org.eclipse.net4j.util.tests.SecurityTest;
 import org.eclipse.net4j.util.tests.SortedFileMapTest;
 import org.eclipse.net4j.util.tests.SynchronizingCorrelatorTest;
 
@@ -27,6 +28,7 @@ public class AllTests
     TestSuite suite = new TestSuite("Tests for Net4j");
 
     // $JUnit-BEGIN$
+    suite.addTestSuite(SecurityTest.class);
     suite.addTestSuite(MonitorTest.class);
     suite.addTestSuite(SortedFileMapTest.class);
     suite.addTestSuite(SynchronizingCorrelatorTest.class);

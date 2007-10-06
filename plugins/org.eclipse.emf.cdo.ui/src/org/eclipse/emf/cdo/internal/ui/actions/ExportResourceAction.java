@@ -1,6 +1,5 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * @author Eike Stepper
@@ -13,7 +12,7 @@ public class ExportResourceAction extends EditingDomainAction
   }
 
   @Override
-  protected void doRun(IProgressMonitor monitor) throws Exception
+  protected void doRun() throws Exception
   {
   }
 }

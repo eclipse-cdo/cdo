@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.om.monitor;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.internal.util.om.monitor.MON;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -31,9 +32,17 @@ public abstract class MonitoredJob extends Job
   }
 
   @Override
+  protected void canceling()
+  {
+    MON.setCanceled(true);
+    super.canceling();
+  }
+
+  @Override
   protected final IStatus run(IProgressMonitor monitor)
   {
     MonitorUtil.Eclipse.startMonitoring(monitor);
+
     try
     {
       run();

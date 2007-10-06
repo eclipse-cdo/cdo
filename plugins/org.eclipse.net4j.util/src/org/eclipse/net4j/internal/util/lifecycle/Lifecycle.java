@@ -49,12 +49,12 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
       lifecycleState = ILifecycleState.ACTIVATING;
       fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE));
       doBeforeActivate();
-
-      dump();
-
       doActivate();
-      lifecycleState = ILifecycleState.ACTIVE;
-      fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ACTIVATED));
+
+      if (!isDeferredActivation())
+      {
+        deferredActivate();
+      }
     }
     else
     {
@@ -67,7 +67,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
 
   public final Exception deactivate()
   {
-    if (lifecycleState == ILifecycleState.ACTIVE)
+    if (lifecycleState == ILifecycleState.ACTIVE || lifecycleState == ILifecycleState.ACTIVATING)
     {
       if (TRACER.isEnabled())
       {
@@ -80,8 +80,10 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
         doBeforeDeactivate();
         fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_DEACTIVATE));
 
-        doDeactivate();
-        fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED));
+        if (!isDeferredDeactivation())
+        {
+          deferredDeactivate();
+        }
       }
       catch (Exception ex)
       {
@@ -114,14 +116,6 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
     return lifecycleState == ILifecycleState.ACTIVE;
   }
 
-  public void dump()
-  {
-    if (DUMPER.isEnabled())
-    {
-      DUMPER.trace("DUMP" + ReflectUtil.toString(this)); //$NON-NLS-1$
-    }
-  }
-
   @Override
   public String toString()
   {
@@ -135,12 +129,43 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
     }
   }
 
-  protected void checkActive()
+  protected final void dump()
+  {
+    if (DUMPER.isEnabled())
+    {
+      DUMPER.trace("DUMP" + ReflectUtil.toString(this)); //$NON-NLS-1$
+    }
+  }
+
+  protected final void checkActive()
   {
     if (lifecycleState != ILifecycleState.ACTIVE)
     {
       throw new IllegalStateException("Not active: " + this);
     }
+  }
+
+  protected final void deferredActivate()
+  {
+    lifecycleState = ILifecycleState.ACTIVE;
+    fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ACTIVATED));
+    dump();
+  }
+
+  protected final void deferredDeactivate() throws Exception
+  {
+    doDeactivate();
+    fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED));
+  }
+
+  protected boolean isDeferredActivation()
+  {
+    return false;
+  }
+
+  protected boolean isDeferredDeactivation()
+  {
+    return false;
   }
 
   protected void doBeforeActivate() throws Exception

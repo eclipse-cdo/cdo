@@ -28,11 +28,12 @@ public class AllTests
     TestSuite suite = new TestSuite("Tests for Net4j");
 
     // $JUnit-BEGIN$
-    suite.addTestSuite(SecurityTest.class);
     suite.addTestSuite(MonitorTest.class);
     suite.addTestSuite(SortedFileMapTest.class);
     suite.addTestSuite(SynchronizingCorrelatorTest.class);
     suite.addTestSuite(TestBufferPool.class);
+    suite.addTestSuite(SecurityTest.class);
+    suite.addTestSuite(ConnectorTest.class);
     // $JUnit-END$
 
     return suite;

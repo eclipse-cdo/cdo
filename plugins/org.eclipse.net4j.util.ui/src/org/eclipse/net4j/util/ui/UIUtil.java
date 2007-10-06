@@ -16,6 +16,8 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Eike Stepper
@@ -24,6 +26,38 @@ public final class UIUtil
 {
   private UIUtil()
   {
+  }
+
+  public static Display getDisplay()
+  {
+    Display display = Display.getCurrent();
+    if (display == null)
+    {
+      try
+      {
+        display = PlatformUI.getWorkbench().getDisplay();
+      }
+      catch (RuntimeException ignore)
+      {
+      }
+    }
+
+    if (display == null)
+    {
+      display = Display.getDefault();
+    }
+
+    if (display == null)
+    {
+      display = new Display();
+    }
+
+    if (display == null)
+    {
+      throw new IllegalStateException("No display available");
+    }
+
+    return display;
   }
 
   public static IPasswordCredentialsProvider createInteractiveCredentialsProvider()

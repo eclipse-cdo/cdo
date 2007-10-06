@@ -32,7 +32,7 @@ public class ChallengeNegotiatorConfigurer implements IElementProcessor
       ChallengeNegotiator negotiator = (ChallengeNegotiator)element;
       if (negotiator.getRandomizer() == null)
       {
-        IRandomizer randomizer = getRandomizer(container);
+        IRandomizer randomizer = getRandomizer(container, description);
         negotiator.setRandomizer(randomizer);
       }
 
@@ -46,17 +46,37 @@ public class ChallengeNegotiatorConfigurer implements IElementProcessor
     return element;
   }
 
-  protected IRandomizer getRandomizer(IManagedContainer container)
+  protected IRandomizer getRandomizer(IManagedContainer container, String description)
   {
     String productGroup = RandomizerFactory.PRODUCT_GROUP;
-    String type = RandomizerFactory.TYPE;
-    return (IRandomizer)container.getElement(productGroup, type, null);
+    String type = getRandomizerType(description);
+    return (IRandomizer)container.getElement(productGroup, type, getRandomizerDescription(description));
   }
 
-  protected IUserManager getUserManager(IManagedContainer container, String fileName)
+  protected String getRandomizerType(String description)
+  {
+    return RandomizerFactory.TYPE;
+  }
+
+  protected String getRandomizerDescription(String description)
+  {
+    return null;
+  }
+
+  protected IUserManager getUserManager(IManagedContainer container, String description)
   {
     String productGroup = FileUserManagerFactory.PRODUCT_GROUP;
-    String type = FileUserManagerFactory.TYPE;
-    return (IUserManager)container.getElement(productGroup, type, fileName);
+    String type = getUserManagerType(description);
+    return (IUserManager)container.getElement(productGroup, type, getUserManagerDescription(description));
+  }
+
+  protected String getUserManagerType(String description)
+  {
+    return FileUserManagerFactory.TYPE;
+  }
+
+  protected String getUserManagerDescription(String description)
+  {
+    return description;
   }
 }

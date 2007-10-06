@@ -2149,7 +2149,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     }
 
     @Override
-    protected void doRun(IProgressMonitor monitor) throws Exception
+    protected void doRun() throws Exception
     {
       Resource resource = null;
       IStructuredSelection ssel = (IStructuredSelection)editorSelection;

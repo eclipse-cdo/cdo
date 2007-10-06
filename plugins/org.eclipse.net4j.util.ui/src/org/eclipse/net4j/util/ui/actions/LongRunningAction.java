@@ -11,12 +11,13 @@
 package org.eclipse.net4j.util.ui.actions;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.om.monitor.MonitorUtil;
+import org.eclipse.net4j.util.om.monitor.MonitoredJob;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
@@ -29,8 +30,6 @@ import org.eclipse.ui.PlatformUI;
 public abstract class LongRunningAction extends SafeAction
 {
   private IWorkbenchPage page;
-
-  private IStatus status;
 
   private int totalWork;
 
@@ -149,38 +148,20 @@ public abstract class LongRunningAction extends SafeAction
     totalWork = 0;
   }
 
-  protected final void setStatus(IStatus status)
-  {
-    this.status = status;
-  }
-
   @Override
-  protected final void doRun() throws Exception
+  protected final void safeRun() throws Exception
   {
     totalWork = IProgressMonitor.UNKNOWN;
     preRun();
     if (totalWork != 0)
     {
-      new Job(getText())
+      new MonitoredJob(getBundleID(), getText())
       {
         @Override
-        protected IStatus run(IProgressMonitor monitor)
+        protected void run() throws Exception
         {
-          monitor.beginTask("", totalWork);
-          try
-          {
-            setStatus(Status.OK_STATUS);
-            doRun(monitor);
-            return status;
-          }
-          catch (Exception ex)
-          {
-            return handleException(ex);
-          }
-          finally
-          {
-            monitor.done();
-          }
+          MonitorUtil.begin(totalWork);
+          doRun();
         }
       }.schedule();
     }
@@ -190,7 +171,12 @@ public abstract class LongRunningAction extends SafeAction
   {
   }
 
-  protected abstract void doRun(IProgressMonitor monitor) throws Exception;
+  protected String getBundleID()
+  {
+    return OM.BUNDLE_ID;
+  }
+
+  protected abstract void doRun() throws Exception;
 
   protected IStatus handleException(Exception ex)
   {

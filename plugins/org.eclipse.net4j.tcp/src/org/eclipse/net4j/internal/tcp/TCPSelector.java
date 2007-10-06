@@ -365,7 +365,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
     try
     {
-      int interest = SelectionKey.OP_CONNECT | SelectionKey.OP_READ;
+      int interest = SelectionKey.OP_CONNECT | SelectionKey.OP_WRITE | SelectionKey.OP_READ;
       SelectionKey selectionKey = channel.register(selector, interest, listener);
       listener.registered(selectionKey);
     }

@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.util.concurrent;
 
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
+import org.eclipse.net4j.util.om.monitor.MonitorUtil;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -47,7 +48,12 @@ public final class ResultSynchronizer<RESULT> implements ISynchronizer<RESULT>
               return null;
             }
 
-            consumerLock.wait(Math.min(remaining, 100));
+            if (MonitorUtil.isCanceled())
+            {
+              return null;
+            }
+
+            consumerLock.wait(Math.min(remaining, 100L));
           }
           catch (InterruptedException ex)
           {

@@ -121,19 +121,25 @@ public class ChallengeNegotiator extends ChallengeResponseNegotiator
     // Get remembered random token
     byte[] randomToken = (byte[])context.getInfo();
 
-    // Get crypted token from response
-    int size = response.getInt();
-    byte[] responseToken = new byte[size];
-    response.get(responseToken);
-
     // Get userID from response
-    size = response.getInt();
+    int size = response.getInt();
     byte[] userIDBytes = new byte[size];
     response.get(userIDBytes);
     String userID = new String(userIDBytes);
 
+    // Get crypted token from response
+    size = response.getInt();
+    byte[] responseToken = new byte[size];
+    response.get(responseToken);
+
     // Encrypt the remembered token and compare to crypted token from response
     byte[] cryptedToken = encryptToken(userID, randomToken);
-    return Arrays.equals(responseToken, cryptedToken);
+    boolean success = Arrays.equals(responseToken, cryptedToken);
+    if (success)
+    {
+      context.setUserID(userID);
+    }
+
+    return success;
   }
 }

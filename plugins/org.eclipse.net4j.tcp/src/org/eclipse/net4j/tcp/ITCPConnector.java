@@ -17,6 +17,8 @@ import org.eclipse.net4j.IConnector;
  */
 public interface ITCPConnector extends IConnector
 {
+  public static final int DEFAULT_PORT = ITCPAcceptor.DEFAULT_PORT;
+
   public String getHost();
 
   public int getPort();

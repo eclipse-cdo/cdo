@@ -29,6 +29,26 @@ public final class MON
   {
   }
 
+  public static boolean isCanceled()
+  {
+    Monitor current = CURRENT.get();
+    if (current == null)
+    {
+      return false;
+    }
+
+    return current.isCanceled();
+  }
+
+  public static void setCanceled(boolean canceled)
+  {
+    Monitor current = CURRENT.get();
+    if (current != null)
+    {
+      current.setCanceled(canceled);
+    }
+  }
+
   public static void startMonitoring(Monitor rootMonitor)
   {
     Monitor current = CURRENT.get();

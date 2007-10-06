@@ -10,7 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
+import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.ConnectorLocation;
+import org.eclipse.net4j.ConnectorState;
 
 import java.text.MessageFormat;
 
@@ -28,6 +30,13 @@ public class TCPServerConnector extends TCPConnector
     return ConnectorLocation.SERVER;
   }
 
+  @Override
+  public void setState(ConnectorState newState) throws ConnectorException
+  {
+    super.setState(newState);
+  }
+
+  @Override
   public String getHost()
   {
     try
@@ -40,6 +49,7 @@ public class TCPServerConnector extends TCPConnector
     }
   }
 
+  @Override
   public int getPort()
   {
     try

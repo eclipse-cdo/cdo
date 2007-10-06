@@ -47,7 +47,7 @@ public abstract class SafeAction extends Action
   {
     try
     {
-      doRun();
+      safeRun();
     }
     catch (Exception ex)
     {
@@ -56,5 +56,5 @@ public abstract class SafeAction extends Action
     }
   }
 
-  protected abstract void doRun() throws Exception;
+  protected abstract void safeRun() throws Exception;
 }

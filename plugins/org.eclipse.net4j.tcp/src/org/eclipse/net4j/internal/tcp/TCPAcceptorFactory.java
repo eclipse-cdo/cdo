@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
+import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.internal.net4j.AcceptorFactory;
@@ -21,10 +22,6 @@ public class TCPAcceptorFactory extends AcceptorFactory
 {
   public static final String TYPE = "tcp";
 
-  public static final String DEFAULT_ADDRESS = "0.0.0.0"; //$NON-NLS-1$
-
-  public static final int DEFAULT_PORT = 2036;
-
   private static final String SEPARATOR = ":"; //$NON-NLS-1$
 
   public TCPAcceptorFactory()
@@ -34,8 +31,8 @@ public class TCPAcceptorFactory extends AcceptorFactory
 
   public TCPAcceptor create(String description)
   {
-    String address = DEFAULT_ADDRESS;
-    int port = DEFAULT_PORT;
+    String address = ITCPAcceptor.DEFAULT_ADDRESS;
+    int port = ITCPAcceptor.DEFAULT_PORT;
 
     if (!StringUtil.isEmpty(description))
     {

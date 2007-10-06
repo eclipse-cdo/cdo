@@ -32,9 +32,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -144,21 +142,16 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       return;
     }
 
-    try
-    {
-      checkSelectionKey();
-      selector.setConnectInterest(selectionKey, false);
-      setState(ConnectorState.NEGOTIATING);
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-      deactivate();
-    }
+    setNegotiating(selector);
   }
 
   public void handleRead(ITCPSelector selector, SocketChannel socketChannel)
   {
+    if (isConnecting())
+    {
+      setNegotiating(selector);
+    }
+
     try
     {
       if (inputBuffer == null)
@@ -202,6 +195,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
 
   public void handleWrite(ITCPSelector selector, SocketChannel socketChannel)
   {
+    if (isConnecting())
+    {
+      setNegotiating(selector);
+    }
+
     try
     {
       boolean moreToWrite = false;
@@ -350,15 +348,20 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   @Override
   protected void doActivate() throws Exception
   {
-    super.doActivate();
     controlChannel = new ControlChannel(getNextChannelID(), this);
     controlChannel.activate();
     selector.registerAsync(socketChannel, this);
+    super.doActivate();
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
+    selector.setConnectInterest(selectionKey, false);
+    selector.setWriteInterest(selectionKey, false);
+    selector.setReadInterest(selectionKey, false);
+    selectionKey.cancel();
+
     LifecycleUtil.deactivate(controlChannel);
     controlChannel = null;
 
@@ -376,29 +379,53 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
   }
 
+  private void setNegotiating(ITCPSelector selector)
+  {
+    try
+    {
+      checkSelectionKey();
+      selector.setConnectInterest(selectionKey, false);
+      selector.setWriteInterest(selectionKey, false);
+      setState(ConnectorState.NEGOTIATING);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      deactivate();
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
   private final class TCPNegotiationContext extends NegotiationContext
   {
-    private Map<ByteBuffer, IBuffer> buffers = new HashMap<ByteBuffer, IBuffer>();
+    private IBuffer buffer;
 
     public TCPNegotiationContext()
     {
     }
 
+    public void setUserID(String userID)
+    {
+      TCPConnector.this.setUserID(userID);
+    }
+
     public ByteBuffer getBuffer()
     {
-      IBuffer buffer = getBufferProvider().provideBuffer();
+      buffer = getBufferProvider().provideBuffer();
       ByteBuffer byteBuffer = buffer.startPutting(ControlChannel.CONTROL_CHANNEL_INDEX);
       byteBuffer.put(ControlChannel.OPCODE_NEGOTIATION);
-      buffers.put(byteBuffer, buffer);
       return byteBuffer;
     }
 
     public void transmitBuffer(ByteBuffer byteBuffer)
     {
-      IBuffer buffer = buffers.remove(byteBuffer);
+      if (buffer.getByteBuffer() != byteBuffer)
+      {
+        throw new IllegalArgumentException("The passed buffer is not the last that was produced");
+      }
+
       controlChannel.sendBuffer(buffer);
     }
 
@@ -407,7 +434,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     {
       if (success)
       {
-        setState(ConnectorState.CONNECTED);
+        TCPConnector.this.setState(ConnectorState.CONNECTED);
       }
       else
       {

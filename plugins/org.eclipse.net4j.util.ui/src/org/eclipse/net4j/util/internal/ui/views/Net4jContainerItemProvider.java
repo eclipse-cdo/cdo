@@ -18,7 +18,6 @@ import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.swt.graphics.Image;
@@ -65,7 +64,7 @@ public class Net4jContainerItemProvider extends ContainerItemProvider<IContainer
     }
 
     @Override
-    protected void doRun(IProgressMonitor monitor) throws Exception
+    protected void doRun() throws Exception
     {
       for (Iterator<?> it = selection.iterator(); it.hasNext();)
       {

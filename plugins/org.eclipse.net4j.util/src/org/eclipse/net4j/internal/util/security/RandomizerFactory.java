@@ -22,9 +22,9 @@ public class RandomizerFactory extends Factory
 
   public static final String TYPE = "default";
 
-  public RandomizerFactory(String type)
+  public RandomizerFactory()
   {
-    super(PRODUCT_GROUP, type);
+    super(PRODUCT_GROUP, TYPE);
   }
 
   public Randomizer create(String description) throws ProductCreationException

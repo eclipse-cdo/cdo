@@ -36,6 +36,7 @@ import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.MonitorUtil;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.INegotiator;
@@ -199,7 +200,6 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
       }
 
       connectorState = newState;
-      fireEvent(new ConnectorStateEvent(this, oldState, newState));
       switch (newState)
       {
       case DISCONNECTED:
@@ -219,10 +219,6 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
       case CONNECTING:
         finishedConnecting = new CountDownLatch(1);
         finishedNegotiating = new CountDownLatch(1);
-        if (isServer())
-        {
-          setState(ConnectorState.NEGOTIATING);
-        }
         break;
 
       case NEGOTIATING:
@@ -239,18 +235,36 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
         break;
 
       case CONNECTED:
+        if (TRACER.isEnabled()) TRACER.format("Connected user " + userID);
         negotiationContext = null;
         finishedConnecting.countDown(); // Just in case of suspicion
         finishedNegotiating.countDown();
+        deferredActivate();
         break;
-
       }
+
+      fireEvent(new ConnectorStateEvent(this, oldState, newState));
     }
+  }
+
+  public boolean isDisconnected()
+  {
+    return connectorState == ConnectorState.DISCONNECTED;
+  }
+
+  public boolean isConnecting()
+  {
+    return connectorState == ConnectorState.CONNECTING;
+  }
+
+  public boolean isNegotiating()
+  {
+    return connectorState == ConnectorState.NEGOTIATING;
   }
 
   public boolean isConnected()
   {
-    return getState() == ConnectorState.CONNECTED;
+    return connectorState == ConnectorState.CONNECTED;
   }
 
   public void connectAsync() throws ConnectorException
@@ -271,13 +285,12 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
   public boolean waitForConnection(long timeout) throws ConnectorException
   {
-    ConnectorState connectorState = getState();
-    if (connectorState == ConnectorState.DISCONNECTED)
+    if (isDisconnected())
     {
       return false;
     }
 
-    if (connectorState == ConnectorState.CONNECTED)
+    if (isConnected())
     {
       return true;
     }
@@ -289,7 +302,23 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
         TRACER.trace("Waiting for connection..."); //$NON-NLS-1$
       }
 
-      return finishedNegotiating.await(timeout, TimeUnit.MILLISECONDS);
+      do
+      {
+        boolean finished = finishedNegotiating.await(Math.min(100L, timeout), TimeUnit.MILLISECONDS);
+        if (finished)
+        {
+          break;
+        }
+
+        if (MonitorUtil.isCanceled())
+        {
+          break;
+        }
+
+        timeout -= 100L;
+      } while (timeout > 0);
+
+      return isConnected();
     }
     catch (InterruptedException ex)
     {
@@ -368,7 +397,11 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
   public IChannel openChannel(IProtocol protocol) throws ConnectorException
   {
-    waitForConnection(Long.MAX_VALUE);
+    if (!waitForConnection(Long.MAX_VALUE))
+    {
+      throw new ConnectorException("Connector not connected");
+    }
+
     int channelID = getNextChannelID();
     short channelIndex = findFreeChannelIndex();
     Channel channel = createChannel(channelID, channelIndex, protocol);
@@ -651,6 +684,12 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     default:
       throw new IllegalStateException();
     }
+  }
+
+  @Override
+  protected boolean isDeferredActivation()
+  {
+    return true;
   }
 
   @Override

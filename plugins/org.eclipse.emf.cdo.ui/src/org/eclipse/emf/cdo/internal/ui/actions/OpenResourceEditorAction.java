@@ -4,7 +4,6 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -22,7 +21,7 @@ public final class OpenResourceEditorAction extends EntryAction
   }
 
   @Override
-  protected void doRun(IProgressMonitor monitor) throws Exception
+  protected void doRun() throws Exception
   {
     CDOView view = getEntry().getView();
     String resourcePath = getEntry().getResourcePath();

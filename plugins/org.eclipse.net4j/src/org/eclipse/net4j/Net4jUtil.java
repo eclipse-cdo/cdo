@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j;
 
+import org.eclipse.net4j.internal.util.security.RandomizerFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.internal.net4j.AcceptorFactory;
@@ -37,6 +38,7 @@ public final class Net4jUtil
   {
     container.registerFactory(new ExecutorServiceFactory());
     container.registerFactory(new BufferProviderFactory());
+    container.registerFactory(new RandomizerFactory());
     container.addPostProcessor(new Net4jTransportInjector());
   }
 

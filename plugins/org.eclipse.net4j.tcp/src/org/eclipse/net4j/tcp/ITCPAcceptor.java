@@ -17,6 +17,10 @@ import org.eclipse.net4j.IAcceptor;
  */
 public interface ITCPAcceptor extends IAcceptor
 {
+  public static final String DEFAULT_ADDRESS = "0.0.0.0"; //$NON-NLS-1$
+
+  public static final int DEFAULT_PORT = 2036;
+
   public String getAddress();
 
   public int getPort();

@@ -13,12 +13,12 @@ package org.eclipse.net4j.util.tests;
 import org.eclipse.net4j.internal.util.security.ChallengeNegotiator;
 import org.eclipse.net4j.internal.util.security.NegotiationContext;
 import org.eclipse.net4j.internal.util.security.PasswordCredentials;
+import org.eclipse.net4j.internal.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.internal.util.security.Randomizer;
 import org.eclipse.net4j.internal.util.security.ResponseNegotiator;
 import org.eclipse.net4j.internal.util.security.UserManager;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.security.IChallengeResponse;
-import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import java.nio.ByteBuffer;
@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class SecurityTest extends AbstractOMTest
 {
-  private static final int TIMEOUT = 10000;
+  private static final int TIMEOUT = 1000;
 
   private static final String USER_ID = "stepper";
 
@@ -41,18 +41,7 @@ public class SecurityTest extends AbstractOMTest
 
   private static final PasswordCredentials CREDENTIALS = new PasswordCredentials(USER_ID, PASSWORD1);
 
-  private IPasswordCredentialsProvider credentialsProvider = new IPasswordCredentialsProvider()
-  {
-    public boolean isInteractive()
-    {
-      return false;
-    }
-
-    public IPasswordCredentials getCredentials()
-    {
-      return CREDENTIALS;
-    }
-  };
+  private IPasswordCredentialsProvider credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
 
   public void testSuccess() throws Exception
   {
@@ -165,6 +154,8 @@ public class SecurityTest extends AbstractOMTest
   {
     private PeerNegotiationContext peer;
 
+    private String userID;
+
     private BlockingQueue<ByteBuffer> queue = new LinkedBlockingQueue<ByteBuffer>();
 
     private boolean running;
@@ -181,6 +172,16 @@ public class SecurityTest extends AbstractOMTest
     public void setPeer(PeerNegotiationContext peer)
     {
       this.peer = peer;
+    }
+
+    public String getUserID()
+    {
+      return userID;
+    }
+
+    public void setUserID(String userID)
+    {
+      this.userID = userID;
     }
 
     public ByteBuffer getBuffer()

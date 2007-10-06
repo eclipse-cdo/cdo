@@ -74,6 +74,7 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator
 
   protected ISynchronizer<RESULT> createSynchronizer(final CORRELATION correlation)
   {
+    // TODO Make top level class
     return new ISynchronizer<RESULT>()
     {
       private ISynchronizer<RESULT> delegate = new ResultSynchronizer<RESULT>();

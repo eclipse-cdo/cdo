@@ -26,6 +26,11 @@ public final class MonitorUtil
   {
   }
 
+  public static boolean isCanceled()
+  {
+    return MON.isCanceled();
+  }
+
   public static OMMonitor begin()
   {
     return MON.begin(OMMonitor.UNKNOWN, null);
@@ -88,7 +93,7 @@ public final class MonitorUtil
 
     public static void startMonitoring(IProgressMonitor progressMonitor)
     {
-      startMonitoring(null);
+      startMonitoring(progressMonitor, null);
     }
 
     public static void stopMonitoring()

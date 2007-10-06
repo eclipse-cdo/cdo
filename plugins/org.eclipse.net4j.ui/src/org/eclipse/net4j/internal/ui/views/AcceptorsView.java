@@ -19,7 +19,7 @@ public class AcceptorsView extends ContainerView
       getAddImageDescriptor())
   {
     @Override
-    protected void doRun() throws Exception
+    protected void safeRun() throws Exception
     {
       Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "tcp", "0.0.0.0:2036");
     }
@@ -29,7 +29,7 @@ public class AcceptorsView extends ContainerView
       getAddImageDescriptor())
   {
     @Override
-    protected void doRun() throws Exception
+    protected void safeRun() throws Exception
     {
       Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "tcp", "0.0.0.0:2037");
     }

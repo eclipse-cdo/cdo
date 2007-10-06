@@ -263,7 +263,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     }
 
     @Override
-    protected void doRun() throws Exception
+    protected void safeRun() throws Exception
     {
       viewer.refresh(false);
     }

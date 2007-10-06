@@ -65,16 +65,18 @@ public class ResponseNegotiator extends ChallengeResponseNegotiator
 
     // Get credentials and encrypt token
     IPasswordCredentials credentials = credentialsProvider.getCredentials();
+    String userID = credentials.getUserID();
+    context.setUserID(userID);
+
+    // Set userID into response
+    byte[] userIDBytes = userID.getBytes();
+    response.putInt(userIDBytes.length);
+    response.put(userIDBytes);
 
     // Set crypted token into response
     byte[] cryptedToken = encryptToken(credentials.getPassword(), randomToken);
     response.putInt(cryptedToken.length);
     response.put(cryptedToken);
-
-    // Set userID into response
-    byte[] userID = credentials.getUserID().getBytes();
-    response.putInt(userID.length);
-    response.put(userID);
   }
 
   @Override

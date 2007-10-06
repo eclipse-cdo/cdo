@@ -2,7 +2,6 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOSession;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -16,7 +15,7 @@ public final class CloseSessionAction extends SessionAction
   }
 
   @Override
-  protected void doRun(IProgressMonitor monitor) throws Exception
+  protected void doRun() throws Exception
   {
     getSession().close();
   }

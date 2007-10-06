@@ -34,7 +34,7 @@ public abstract class ChallengeResponseNegotiator extends
     init(State.INITIAL, Event.START, new Transition()
     {
       @Override
-      protected void execute(INegotiationContext context, ByteBuffer buffer)
+      protected void execute(INegotiationContext context, ByteBuffer NULL)
       {
         // Create and transmit challenge
         ByteBuffer challenge = context.getBuffer();

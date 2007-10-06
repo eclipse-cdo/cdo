@@ -44,6 +44,18 @@ public class TCPClientConnector extends TCPConnector
   }
 
   @Override
+  public void setHost(String host)
+  {
+    super.setHost(host);
+  }
+
+  @Override
+  public void setPort(int port)
+  {
+    super.setPort(port);
+  }
+
+  @Override
   public String toString()
   {
     if (getUserID() == null)

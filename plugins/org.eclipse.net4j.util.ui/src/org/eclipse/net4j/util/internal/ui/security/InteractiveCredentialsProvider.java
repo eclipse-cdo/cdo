@@ -12,6 +12,10 @@ package org.eclipse.net4j.util.internal.ui.security;
 
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
+import org.eclipse.net4j.util.ui.UIUtil;
+
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Eike Stepper
@@ -29,12 +33,20 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
 
   public IPasswordCredentials getCredentials()
   {
-    CredentialsDialog dialog = new CredentialsDialog();
-    if (dialog.open() == CredentialsDialog.OK)
+    final IPasswordCredentials[] credentials = new IPasswordCredentials[1];
+    final Display display = UIUtil.getDisplay();
+    display.syncExec(new Runnable()
     {
-      return dialog.getCredentials();
-    }
+      public void run()
+      {
+        CredentialsDialog dialog = new CredentialsDialog(new Shell(display));
+        if (dialog.open() == CredentialsDialog.OK)
+        {
+          credentials[0] = dialog.getCredentials();
+        }
+      }
+    });
 
-    return null;
+    return credentials[0];
   }
 }

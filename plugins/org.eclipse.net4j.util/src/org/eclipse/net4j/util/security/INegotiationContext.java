@@ -29,6 +29,8 @@ public interface INegotiationContext
 
   public void setState(Enum<?> state);
 
+  public void setUserID(String userID);
+
   public void setFinished(boolean success);
 
   public Object getInfo();
@@ -42,4 +44,5 @@ public interface INegotiationContext
   {
     public void receiveBuffer(INegotiationContext context, ByteBuffer buffer);
   }
+
 }

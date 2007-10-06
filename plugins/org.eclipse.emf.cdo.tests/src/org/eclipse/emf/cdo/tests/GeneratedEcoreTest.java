@@ -26,6 +26,9 @@ import org.eclipse.emf.ecore.EcorePackage;
  */
 public class GeneratedEcoreTest extends AbstractCDOTest
 {
+  /**
+   * TODO Fix me
+   */
   public void testGeneratedEcore() throws Exception
   {
     // Obtain model
@@ -51,7 +54,7 @@ public class GeneratedEcoreTest extends AbstractCDOTest
     assertFalse("Unresolved proxy", root2.eIsProxy());
     assertEquals(res2, root2.eResource());
 
-    CDOUtil.load(root2, transaction2);// FIXME
+    CDOUtil.load(root2, transaction2);
     EMFUtil.saveEcore("model1X.ecore", root2);
     // assertTrue("Models differ", EcoreUtil.equals(root1, root2));
   }

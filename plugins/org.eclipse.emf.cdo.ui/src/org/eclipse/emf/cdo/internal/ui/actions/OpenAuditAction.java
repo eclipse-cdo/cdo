@@ -6,7 +6,6 @@ import org.eclipse.emf.cdo.internal.ui.dialogs.OpenAuditDialog;
 
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -37,7 +36,7 @@ public final class OpenAuditAction extends AbstractOpenViewAction
   }
 
   @Override
-  protected void doRun(IProgressMonitor monitor) throws Exception
+  protected void doRun() throws Exception
   {
     getSession().openAudit(new ResourceSetImpl(), timeStamp);
   }

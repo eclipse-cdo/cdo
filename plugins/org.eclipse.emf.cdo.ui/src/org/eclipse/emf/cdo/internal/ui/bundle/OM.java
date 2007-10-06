@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.bundle;
 
+import org.eclipse.net4j.internal.util.security.ResponseNegotiator;
+import org.eclipse.net4j.util.internal.ui.security.InteractiveCredentialsProvider;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -17,6 +19,8 @@ import org.eclipse.net4j.util.om.pref.OMPreference;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
+
+import org.eclipse.internal.net4j.Net4jTransportInjector;
 
 /**
  * @author Eike Stepper
@@ -44,6 +48,25 @@ public abstract class OM
 
   public static final OMPreference<Boolean> PREF_LEGACY_SUPPORT = //
   PREFS.init("PREF_LEGACY_SUPPORT", true);
+
+  static void start()
+  {
+    if (false)
+    {
+      try
+      {
+        ResponseNegotiator responseNegotiator = new ResponseNegotiator();
+        responseNegotiator.setCredentialsProvider(new InteractiveCredentialsProvider());
+        responseNegotiator.activate();
+
+        Net4jTransportInjector.clientNegotiator = responseNegotiator;
+      }
+      catch (Exception ex)
+      {
+        LOG.error(ex);
+      }
+    }
+  }
 
   /**
    * @author Eike Stepper

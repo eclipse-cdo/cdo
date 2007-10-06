@@ -3,7 +3,6 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -38,7 +37,7 @@ public final class CreateResourceAction extends ViewAction
   }
 
   @Override
-  protected void doRun(IProgressMonitor monitor) throws Exception
+  protected void doRun() throws Exception
   {
     getTransaction().createResource(resourcePath);
     CDOEditor.open(getPage(), getView(), resourcePath);

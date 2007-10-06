@@ -2,6 +2,7 @@ package org.eclipse.internal.net4j;
 
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.security.INegotiator;
 
 import java.util.concurrent.ExecutorService;
 
@@ -10,65 +11,94 @@ import java.util.concurrent.ExecutorService;
  */
 public class Net4jTransportInjector implements IElementProcessor
 {
-  public Object process(IManagedContainer container, String productGroup, String factoryType, final String description,
-      final Object element)
+  public static INegotiator serverNegotiator;
+
+  public static INegotiator clientNegotiator;
+
+  public Net4jTransportInjector()
+  {
+  }
+
+  public Object process(IManagedContainer container, String productGroup, String factoryType, String description,
+      Object element)
   {
     if (element instanceof Acceptor)
     {
       Acceptor acceptor = (Acceptor)element;
-      if (acceptor.getBufferProvider() == null)
-      {
-        acceptor.setBufferProvider(getBufferProvider(container));
-      }
-
-      if (acceptor.getReceiveExecutor() == null)
-      {
-        acceptor.setReceiveExecutor(getExecutorService(container));
-      }
-
-      if (acceptor.getProtocolFactoryRegistry() == null)
-      {
-        acceptor.setProtocolFactoryRegistry(container.getFactoryRegistry());
-      }
-
-      if (acceptor.getProtocolPostProcessors() == null)
-      {
-        acceptor.setProtocolPostProcessors(container.getPostProcessors());
-      }
+      processAcceptor(container, factoryType, description, acceptor);
     }
     else if (element instanceof Connector)
     {
       Connector connector = (Connector)element;
-      if (connector.getBufferProvider() == null)
-      {
-        connector.setBufferProvider(getBufferProvider(container));
-      }
-
-      if (connector.getReceiveExecutor() == null)
-      {
-        connector.setReceiveExecutor(getExecutorService(container));
-      }
-
-      if (connector.getProtocolFactoryRegistry() == null)
-      {
-        connector.setProtocolFactoryRegistry(container.getFactoryRegistry());
-      }
-
-      if (connector.getProtocolPostProcessors() == null)
-      {
-        connector.setProtocolPostProcessors(container.getPostProcessors());
-      }
+      processConnector(container, factoryType, description, connector);
     }
 
     return element;
   }
 
-  public BufferProvider getBufferProvider(IManagedContainer container)
+  protected void processAcceptor(IManagedContainer container, String factoryType, String description, Acceptor acceptor)
+  {
+    if (acceptor.getBufferProvider() == null)
+    {
+      acceptor.setBufferProvider(getBufferProvider(container));
+    }
+
+    if (acceptor.getReceiveExecutor() == null)
+    {
+      acceptor.setReceiveExecutor(getExecutorService(container));
+    }
+
+    if (acceptor.getProtocolFactoryRegistry() == null)
+    {
+      acceptor.setProtocolFactoryRegistry(container.getFactoryRegistry());
+    }
+
+    if (acceptor.getProtocolPostProcessors() == null)
+    {
+      acceptor.setProtocolPostProcessors(container.getPostProcessors());
+    }
+
+    if (serverNegotiator != null && acceptor.getNegotiator() == null)
+    {
+      acceptor.setNegotiator(serverNegotiator);
+    }
+  }
+
+  protected void processConnector(IManagedContainer container, String factoryType, String description,
+      Connector connector)
+  {
+    if (connector.getBufferProvider() == null)
+    {
+      connector.setBufferProvider(getBufferProvider(container));
+    }
+
+    if (connector.getReceiveExecutor() == null)
+    {
+      connector.setReceiveExecutor(getExecutorService(container));
+    }
+
+    if (connector.getProtocolFactoryRegistry() == null)
+    {
+      connector.setProtocolFactoryRegistry(container.getFactoryRegistry());
+    }
+
+    if (connector.getProtocolPostProcessors() == null)
+    {
+      connector.setProtocolPostProcessors(container.getPostProcessors());
+    }
+
+    if (clientNegotiator != null && connector.isClient() && connector.getNegotiator() == null)
+    {
+      connector.setNegotiator(clientNegotiator);
+    }
+  }
+
+  protected BufferProvider getBufferProvider(IManagedContainer container)
   {
     return (BufferProvider)container.getElement(BufferProviderFactory.PRODUCT_GROUP, BufferProviderFactory.TYPE, null);
   }
 
-  public ExecutorService getExecutorService(IManagedContainer container)
+  protected ExecutorService getExecutorService(IManagedContainer container)
   {
     return (ExecutorService)container.getElement(ExecutorServiceFactory.PRODUCT_GROUP, ExecutorServiceFactory.TYPE,
         null);

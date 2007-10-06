@@ -21,8 +21,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Eike Stepper
@@ -39,10 +39,9 @@ public class CredentialsDialog extends BaseDialog<Viewer>
 
   private IPasswordCredentials credentials;
 
-  public CredentialsDialog()
+  public CredentialsDialog(Shell shell)
   {
-    super(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL,
-        TITLE, MESSAGE, OM.Activator.INSTANCE.getDialogSettings());
+    super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, TITLE, MESSAGE, OM.Activator.INSTANCE.getDialogSettings());
   }
 
   public IPasswordCredentials getCredentials()

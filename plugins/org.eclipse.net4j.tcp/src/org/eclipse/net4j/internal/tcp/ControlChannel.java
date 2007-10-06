@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.ConnectorState;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
@@ -222,8 +221,10 @@ public final class ControlChannel extends Channel
 
   private void assertNegotiating()
   {
-    if (getConnector().getState() != ConnectorState.NEGOTIATING)
+    TCPConnector connector = getConnector();
+    if (!connector.isNegotiating())
     {
+      connector.deactivate();
       throw new IllegalStateException("Connector is not negotiating");
     }
   }

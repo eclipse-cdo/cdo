@@ -56,9 +56,9 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
 
   private ServerSocketChannel serverSocketChannel;
 
-  private String address;
+  private String address = DEFAULT_ADDRESS;
 
-  private int port;
+  private int port = DEFAULT_PORT;
 
   public TCPAcceptor()
   {

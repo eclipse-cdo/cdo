@@ -192,14 +192,6 @@ public final class LifecycleUtil
     }
   }
 
-  public static void dump(Object object)
-  {
-    if (object instanceof Lifecycle)
-    {
-      ((Lifecycle)object).dump();
-    }
-  }
-
   private static <T extends Annotation> void invokeAnnotation(Object object, Class<T> annotationClass)
   {
     Class<?> c = object.getClass();

@@ -28,13 +28,14 @@ public class EclipseMonitor extends Monitor
       throw new IllegalArgumentException("progressMonitor == null");
     }
 
-    this.progressMonitor = progressMonitor;
+    this.progressMonitor = new DelegatingProgressMonitor(progressMonitor);
   }
 
   private EclipseMonitor(EclipseMonitor parent, int workFromParent)
   {
     super(parent, workFromParent);
-    progressMonitor = new SubProgressMonitor(parent.getProgressMonitor(), workFromParent);
+    progressMonitor = new SubProgressMonitor(new SubProgressMonitor(parent.getProgressMonitor(), workFromParent),
+        workFromParent);
   }
 
   public IProgressMonitor getProgressMonitor()
@@ -85,5 +86,64 @@ public class EclipseMonitor extends Monitor
   protected EclipseMonitor subMonitor(int workFromParent)
   {
     return new EclipseMonitor(this, workFromParent);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class DelegatingProgressMonitor implements IProgressMonitor
+  {
+    private IProgressMonitor delegate;
+
+    public DelegatingProgressMonitor(IProgressMonitor delegate)
+    {
+      this.delegate = delegate;
+    }
+
+    public IProgressMonitor getDelegate()
+    {
+      return delegate;
+    }
+
+    public void beginTask(String name, int totalWork)
+    {
+      delegate.beginTask(name, totalWork);
+    }
+
+    public void done()
+    {
+      delegate.done();
+    }
+
+    public void internalWorked(double work)
+    {
+      delegate.internalWorked(work);
+    }
+
+    public boolean isCanceled()
+    {
+      return delegate.isCanceled();
+    }
+
+    public void setCanceled(boolean value)
+    {
+      EclipseMonitor.this.setCanceled(value);
+      delegate.setCanceled(value);
+    }
+
+    public void setTaskName(String name)
+    {
+      delegate.setTaskName(name);
+    }
+
+    public void subTask(String name)
+    {
+      delegate.subTask(name);
+    }
+
+    public void worked(int work)
+    {
+      delegate.worked(work);
+    }
   }
 }

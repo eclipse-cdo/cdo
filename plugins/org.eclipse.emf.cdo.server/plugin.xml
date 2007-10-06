@@ -20,33 +20,36 @@
    <extension-point id="storeFactories" name="CDO Store Factories" schema="schema/storeFactories.exsd"/>
    <extension-point id="repositoryFactories" name="CDO Repository Factories" schema="schema/repositoryFactories.exsd"/>
 
-    <extension
-    	point="org.eclipse.net4j.util.factories">
-      <factory
-            productGroup="org.eclipse.net4j.serverProtocols"
+	<extension
+		point="org.eclipse.net4j.util.factories">
+		<factory
+        	productGroup="org.eclipse.net4j.serverProtocols"
             type="cdo"
             class="org.eclipse.emf.cdo.internal.server.protocol.CDOPluginProtocolFactory"/>
-      <factory
+      	<factory
             type="challenge"
             productGroup="org.eclipse.net4j.Negotiators"
             class="org.eclipse.net4j.internal.util.security.ChallengeNegotiatorFactory"/>
-   </extension>
+   	</extension>
    
-   <extension
-         point="org.eclipse.emf.cdo.server.repositoryFactories">
-      <repositoryFactory
-            class="org.eclipse.emf.cdo.internal.server.RepositoryFactory"
-            repositoryType="default">
-      </repositoryFactory>
-   </extension>
+	<extension 
+		point="org.eclipse.net4j.util.elementProcessors">
+		<elementProcessor class="org.eclipse.net4j.internal.util.security.ChallengeNegotiatorConfigurer"/>
+    </extension>
+   
+   	<extension 
+   		point="org.eclipse.emf.cdo.server.repositoryFactories">
+      	<repositoryFactory
+        	class="org.eclipse.emf.cdo.internal.server.RepositoryFactory"
+            repositoryType="default"/>
+	</extension>
 
-   <extension
-         point="org.eclipse.emf.cdo.server.storeFactories">
-      <storeFactory
-            class="org.eclipse.emf.cdo.internal.server.NOOPStoreFactory"
-            storeType="noop">
-      </storeFactory>
-   </extension>
+   	<extension 
+   		point="org.eclipse.emf.cdo.server.storeFactories">
+      	<storeFactory
+        	class="org.eclipse.emf.cdo.internal.server.NOOPStoreFactory"
+            storeType="noop"/>
+   	</extension>
 
     <extension
 		id="app"
@@ -57,18 +60,15 @@
  		</application>
 	</extension>
 	
-   <extension
-         id="product"
-         point="org.eclipse.core.runtime.products">
-      <product
-            name="CDOServer"
+   	<extension
+        id="product"
+        point="org.eclipse.core.runtime.products">
+      	<product
+        	name="CDOServer"
             description="An example of a CDO server"
             application="org.eclipse.emf.cdo.server.app">
-         <property
-               name="appName"
-               value="CDOServer">
-         </property>
-      </product>
-   </extension>
+         	<property name="appName" value="CDOServer"/>
+      	</product>
+   	</extension>
 
 </plugin>

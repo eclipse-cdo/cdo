@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
+import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
@@ -24,8 +25,6 @@ import java.net.URL;
 public class TCPConnectorFactory extends ConnectorFactory
 {
   public static final String TYPE = "tcp";
-
-  public static final int DEFAULT_PORT = 2036;
 
   private static final String URL_SCHEME = "http://";
 
@@ -46,7 +45,7 @@ public class TCPConnectorFactory extends ConnectorFactory
       int port = url.getPort();
       if (port == -1)
       {
-        port = DEFAULT_PORT;
+        port = ITCPConnector.DEFAULT_PORT;
       }
 
       TCPClientConnector connector = new TCPClientConnector();
@@ -75,7 +74,7 @@ public class TCPConnectorFactory extends ConnectorFactory
       }
 
       int port = connector.getPort();
-      if (port != DEFAULT_PORT)
+      if (port != ITCPConnector.DEFAULT_PORT)
       {
         description = description + ":" + port;
       }

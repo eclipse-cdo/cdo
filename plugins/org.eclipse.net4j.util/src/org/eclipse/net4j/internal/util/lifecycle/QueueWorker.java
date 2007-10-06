@@ -78,7 +78,10 @@ public abstract class QueueWorker<E> extends Worker
   protected void doDeactivate() throws Exception
   {
     super.doDeactivate();
-    queue.clear();
-    queue = null;
+    if (queue != null)
+    {
+      queue.clear();
+      queue = null;
+    }
   }
 }

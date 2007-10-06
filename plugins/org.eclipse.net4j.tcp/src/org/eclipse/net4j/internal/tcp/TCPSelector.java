@@ -140,6 +140,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
   public void run()
   {
+    selector.wakeup();
     while (running && !Thread.interrupted())
     {
       try
@@ -182,6 +183,10 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
             }
           }
         }
+      }
+      catch (NullPointerException ex)
+      {
+        break;
       }
       catch (ClosedSelectorException ex)
       {
@@ -334,7 +339,10 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     }
 
     pendingOperations.add(operation);
-    selector.wakeup();
+    if (selector != null)
+    {
+      selector.wakeup();
+    }
   }
 
   private void doRegister(final ServerSocketChannel channel, final ITCPSelectorListener.Passive listener)

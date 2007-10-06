@@ -180,6 +180,11 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
   public void setUserID(String userID)
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Setting userID {0} for {2}", userID, this); //$NON-NLS-1$ 
+    }
+
     this.userID = userID;
   }
 
@@ -195,8 +200,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Setting state " + newState + " (was " + oldState.toString().toLowerCase() //$NON-NLS-1$ //$NON-NLS-2$
-            + ")"); //$NON-NLS-1$
+        TRACER.format("Setting state {0} (was {1}) for {2}", newState, oldState.toString().toLowerCase(), this); //$NON-NLS-1$ 
       }
 
       connectorState = newState;
@@ -235,7 +239,6 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
         break;
 
       case CONNECTED:
-        if (TRACER.isEnabled()) TRACER.format("Connected user " + userID);
         negotiationContext = null;
         finishedConnecting.countDown(); // Just in case of suspicion
         finishedNegotiating.countDown();
@@ -285,16 +288,6 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
   public boolean waitForConnection(long timeout) throws ConnectorException
   {
-    if (isDisconnected())
-    {
-      return false;
-    }
-
-    if (isConnected())
-    {
-      return true;
-    }
-
     try
     {
       if (TRACER.isEnabled())
@@ -304,10 +297,20 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
       do
       {
-        boolean finished = finishedNegotiating.await(Math.min(100L, timeout), TimeUnit.MILLISECONDS);
-        if (finished)
+        System.out.println(connectorState);
+        if (isDisconnected())
         {
-          break;
+          return false;
+        }
+
+        if (isConnected())
+        {
+          return true;
+        }
+
+        if (finishedNegotiating != null)
+        {
+          finishedNegotiating.await(Math.min(100L, timeout), TimeUnit.MILLISECONDS);
         }
 
         if (MonitorUtil.isCanceled())

@@ -139,6 +139,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
     catch (Exception ex)
     {
+      OM.LOG.error(ex);
       return;
     }
 

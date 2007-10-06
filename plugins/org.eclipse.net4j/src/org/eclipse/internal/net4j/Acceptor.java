@@ -143,13 +143,13 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
   {
     try
     {
+      connector.addListener(lifecycleEventConverter);
       connector.setNegotiator(negotiator);
       connector.setBufferProvider(bufferProvider);
       connector.setReceiveExecutor(receiveExecutor);
       connector.setProtocolFactoryRegistry(protocolFactoryRegistry);
       connector.setProtocolPostProcessors(protocolPostProcessors);
       connector.activate();
-      connector.addListener(lifecycleEventConverter);
 
       synchronized (acceptedConnectors)
       {

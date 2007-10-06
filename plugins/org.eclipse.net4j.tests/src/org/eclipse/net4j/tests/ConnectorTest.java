@@ -35,7 +35,7 @@ import java.util.concurrent.Executors;
  */
 public class ConnectorTest extends AbstractOMTest
 {
-  private static final int TIMEOUT = 5000;
+  private static final int TIMEOUT = 1000;
 
   private static final String USER_ID = "stepper";
 
@@ -68,7 +68,7 @@ public class ConnectorTest extends AbstractOMTest
   @Override
   protected void doTearDown() throws Exception
   {
-    sleep(100);
+    sleep(TIMEOUT);
 
     LifecycleUtil.deactivate(responseNegotiator);
     LifecycleUtil.deactivate(credentialsProvider);
@@ -194,7 +194,7 @@ public class ConnectorTest extends AbstractOMTest
     assertEquals(true, connected);
   }
 
-  public void _testNegotiationFailure() throws Exception
+  public void testNegotiationFailure() throws Exception
   {
     ExecutorService threadPool = Executors.newCachedThreadPool();
     LifecycleUtil.activate(threadPool);

@@ -37,7 +37,7 @@
             class="org.eclipse.net4j.buddies.internal.ui.views.BuddiesView"
             icon="icons/full/view16/cdo_sessions.gif"
             id="org.eclipse.net4j.BuddiesView"
-            name="Net4j Buddies">
+            name="Buddies">
       </view>
    </extension>
 

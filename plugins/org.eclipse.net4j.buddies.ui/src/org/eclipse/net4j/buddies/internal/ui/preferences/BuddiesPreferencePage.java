@@ -50,7 +50,7 @@ public class BuddiesPreferencePage extends OMPreferencePage
   @Override
   protected Control createContents(Composite parent)
   {
-    GridLayout grid = new GridLayout(1, false);
+    GridLayout grid = new GridLayout(2, false);
     grid.marginHeight = 0;
     grid.marginWidth = 0;
 
@@ -65,12 +65,12 @@ public class BuddiesPreferencePage extends OMPreferencePage
 
     new Label(composite, SWT.NONE).setText("User ID:");
     userID = new Text(composite, SWT.BORDER);
-    userID.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    userID.setLayoutData(new GridData(100, SWT.DEFAULT));
     userID.addModifyListener(modifyListener);
 
     new Label(composite, SWT.NONE).setText("Password:");
     password = new Text(composite, SWT.BORDER | SWT.PASSWORD);
-    password.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    password.setLayoutData(new GridData(100, SWT.DEFAULT));
     password.addModifyListener(modifyListener);
 
     initValues();

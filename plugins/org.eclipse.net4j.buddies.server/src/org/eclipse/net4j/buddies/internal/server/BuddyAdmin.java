@@ -12,10 +12,15 @@ package org.eclipse.net4j.buddies.internal.server;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyAccount;
+import org.eclipse.net4j.buddies.internal.server.bundle.OM;
+import org.eclipse.net4j.buddies.internal.server.protocol.BuddyRemovedNotification;
 import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.buddies.server.IBuddySession;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.HashMap;
@@ -24,7 +29,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class BuddyAdmin extends Lifecycle implements IBuddyAdmin
+public class BuddyAdmin extends Lifecycle implements IBuddyAdmin, IListener
 {
   public static final BuddyAdmin INSTANCE = new BuddyAdmin();
 
@@ -70,6 +75,38 @@ public class BuddyAdmin extends Lifecycle implements IBuddyAdmin
 
     BuddySession session = new BuddySession(channel, account);
     sessions.put(userID, session);
+    session.addListener(this);
     return session;
+  }
+
+  public void notifyEvent(IEvent event)
+  {
+    if (event.getSource() instanceof IBuddySession)
+    {
+      if (event instanceof ILifecycleEvent)
+      {
+        if (((ILifecycleEvent)event).getKind() == ILifecycleEvent.Kind.DEACTIVATED)
+        {
+          String userID = ((IBuddySession)event.getSource()).getAccount().getUserID();
+          synchronized (this)
+          {
+            if (sessions.remove(userID) != null)
+            {
+              for (IBuddySession session : sessions.values())
+              {
+                try
+                {
+                  new BuddyRemovedNotification(session.getChannel(), userID).send();
+                }
+                catch (Exception ex)
+                {
+                  OM.LOG.error(ex);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

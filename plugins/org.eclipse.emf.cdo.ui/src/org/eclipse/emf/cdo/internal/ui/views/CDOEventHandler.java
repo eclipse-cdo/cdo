@@ -17,18 +17,16 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 import org.eclipse.emf.cdo.protocol.CDOID;
 
+import org.eclipse.emf.internal.cdo.InternalCDOObject;
+
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
-
 import org.eclipse.jface.viewers.TreeViewer;
 
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -77,21 +75,21 @@ public class CDOEventHandler
     {
       if (event instanceof CDOTransactionFinishedEvent)
       {
-        CDOTransactionFinishedEvent e = (CDOTransactionFinishedEvent)event;
-        if (e.getType() == CDOTransactionFinishedEvent.Type.COMMITTED)
-        {
-          Map<CDOID, CDOID> idMappings = e.getIDMappings();
-          HashSet<CDOID> newOIDs = new HashSet<CDOID>(idMappings.values());
-          new ItemsProcessor(view)
-          {
-            @Override
-            protected void processCDOObject(TreeViewer viewer, InternalCDOObject cdoObject)
-            {
-              viewer.update(cdoObject.cdoInternalInstance(), null);
-            }
-          }.processCDOObjects(treeViewer, newOIDs);
-        }
-        else
+        // CDOTransactionFinishedEvent e = (CDOTransactionFinishedEvent)event;
+        // if (e.getType() == CDOTransactionFinishedEvent.Type.COMMITTED)
+        // {
+        // Map<CDOID, CDOID> idMappings = e.getIDMappings();
+        // HashSet<CDOID> newOIDs = new HashSet<CDOID>(idMappings.values());
+        // new ItemsProcessor(view)
+        // {
+        // @Override
+        // protected void processCDOObject(TreeViewer viewer, InternalCDOObject cdoObject)
+        // {
+        // viewer.update(cdoObject.cdoInternalInstance(), null);
+        // }
+        // }.processCDOObjects(treeViewer, newOIDs);
+        // }
+        // else
         {
           try
           {

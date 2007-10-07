@@ -3,6 +3,7 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 import org.eclipse.emf.cdo.CDOView;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -62,6 +63,32 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
   {
     bold.dispose();
     super.dispose();
+  }
+
+  @Override
+  public void notifyChanged(final Notification notification)
+  {
+    super.notifyChanged(notification);
+
+    try
+    {
+      viewer.getControl().getDisplay().syncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            viewer.refresh(notification.getNotifier(), true);
+          }
+          catch (Exception ignore)
+          {
+          }
+        }
+      });
+    }
+    catch (Exception ignore)
+    {
+    }
   }
 
   @Override

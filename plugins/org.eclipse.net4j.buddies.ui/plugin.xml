@@ -17,4 +17,19 @@
 
 <plugin>
 
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.eclipse.net4j"
+            name="Net4j">
+      </category>
+      <view
+            category="org.eclipse.net4j"
+            class="org.eclipse.net4j.buddies.internal.ui.BuddiesView"
+            icon="icons/full/view16/cdo_sessions.gif"
+            id="org.eclipse.net4j.BuddiesView"
+            name="Net4j Buddies">
+      </view>
+   </extension>
+   
 </plugin>

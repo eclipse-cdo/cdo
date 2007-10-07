@@ -27,8 +27,8 @@ public final class RollbackTransactionAction extends ViewAction
   protected void preRun() throws Exception
   {
     CDOTransaction transaction = (CDOTransaction)getView();
-    String msg = MessageFormat.format("This transaction contains:\n" + "{0} new resources\n" + "{1} new objects\n"
-        + "{2} dirty objects\n\n" + "Are you sure to rollback this transaction", transaction.getNewResources().size(),
+    String msg = MessageFormat.format("This transaction contains " + "{0} new resources, " + "{1} new objects and "
+        + "{2} dirty objects.\n" + "Are you sure to rollback this transaction?", transaction.getNewResources().size(),
         transaction.getNewObjects().size(), transaction.getDirtyObjects().size());
     if (!MessageDialog.openQuestion(getShell(), TITLE, msg))
     {

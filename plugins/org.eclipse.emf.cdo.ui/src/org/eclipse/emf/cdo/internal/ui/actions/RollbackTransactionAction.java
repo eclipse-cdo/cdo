@@ -7,11 +7,11 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public final class CreateRollbackAction extends ViewAction
+public final class RollbackTransactionAction extends ViewAction
 {
   private static final String TITLE = "Rollback";
 
-  public CreateRollbackAction(IWorkbenchPage page, CDOView view)
+  public RollbackTransactionAction(IWorkbenchPage page, CDOView view)
   {
     super(page, TITLE, "Rollback this transaction", null, view);
     setEnabled(getTransaction().isDirty());

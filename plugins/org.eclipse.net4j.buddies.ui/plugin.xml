@@ -25,11 +25,20 @@
       </category>
       <view
             category="org.eclipse.net4j"
-            class="org.eclipse.net4j.buddies.internal.ui.BuddiesView"
+            class="org.eclipse.net4j.buddies.internal.ui.views.BuddiesView"
             icon="icons/full/view16/cdo_sessions.gif"
             id="org.eclipse.net4j.BuddiesView"
             name="Net4j Buddies">
       </view>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.eclipse.net4j.buddies.internal.ui.preferences.BuddiesPreferencePage"
+            id="org.eclipse.net4j.buddies.ui.preferences.BuddiesPreferencePage"
+            name="Buddies">
+      </page>
    </extension>
    
 </plugin>

@@ -20,7 +20,9 @@ import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
+import org.eclipse.emf.cdo.internal.ui.actions.CreateCommitAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CreateResourceAction;
+import org.eclipse.emf.cdo.internal.ui.actions.CreateRollbackAction;
 import org.eclipse.emf.cdo.internal.ui.actions.LoadResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ManagePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenAuditAction;
@@ -281,13 +283,16 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
   protected void fillView(IMenuManager manager, CDOView view)
   {
+    manager.add(new OpenViewEditorAction(page, view));
     manager.add(new LoadResourceAction(page, view));
+    manager.add(new Separator());
     if (view.getViewType() == CDOView.Type.TRANSACTION)
     {
       manager.add(new CreateResourceAction(page, view));
+      manager.add(new CreateCommitAction(page, view));
+      manager.add(new CreateRollbackAction(page, view));
     }
 
-    manager.add(new OpenViewEditorAction(page, view));
     manager.add(new Separator());
     manager.add(new CloseViewAction(page, view));
   }

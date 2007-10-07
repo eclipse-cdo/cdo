@@ -31,6 +31,11 @@ public class BuddiesView extends ContainerView implements IListener
     String userID = OM.PREF_USER_ID.getValue();
     String password = OM.PREF_PASSWORD.getValue();
     session = BuddiesUtil.openSession(connector, userID, password);
+    if (session == null)
+    {
+      throw new IllegalStateException("session == null");
+    }
+
     session.addListener(this);
   }
 

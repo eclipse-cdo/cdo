@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.buddies.protocol;
 
 import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
+import org.eclipse.net4j.internal.buddies.BuddySession;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
@@ -34,5 +35,8 @@ public class BuddyAddedIndication extends Indication
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
+    String buddy = in.readString();
+    BuddySession session = (BuddySession)getProtocol().getInfraStructure();
+    session.buddyAdded(buddy);
   }
 }

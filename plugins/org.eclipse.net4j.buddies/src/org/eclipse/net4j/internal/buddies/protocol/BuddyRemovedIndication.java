@@ -11,36 +11,32 @@
 package org.eclipse.net4j.internal.buddies.protocol;
 
 import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
+import org.eclipse.net4j.internal.buddies.BuddySession;
+import org.eclipse.net4j.signal.Indication;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
-import org.eclipse.net4j.signal.SignalProtocol;
-import org.eclipse.net4j.signal.SignalReactor;
+import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class BuddiesClientProtocol extends SignalProtocol
+public class BuddyRemovedIndication extends Indication
 {
-  public BuddiesClientProtocol()
+  public BuddyRemovedIndication()
   {
-  }
-
-  public String getType()
-  {
-    return BuddiesProtocolConstants.PROTOCOL_NAME;
   }
 
   @Override
-  protected SignalReactor doCreateSignalReactor(short signalID)
+  protected short getSignalID()
   {
-    switch (signalID)
-    {
-    case BuddiesProtocolConstants.SIGNAL_BUDDY_ADDED:
-      return new BuddyAddedIndication();
+    return BuddiesProtocolConstants.SIGNAL_BUDDY_REMOVED;
+  }
 
-    case BuddiesProtocolConstants.SIGNAL_BUDDY_REMOVED:
-      return new BuddyRemovedIndication();
-    }
-
-    return null;
+  @Override
+  protected void indicating(ExtendedDataInputStream in) throws IOException
+  {
+    String buddy = in.readString();
+    BuddySession session = (BuddySession)getProtocol().getInfraStructure();
+    session.buddyRemoved(buddy);
   }
 }

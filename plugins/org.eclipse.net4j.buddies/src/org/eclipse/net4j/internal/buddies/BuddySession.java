@@ -13,7 +13,9 @@ package org.eclipse.net4j.internal.buddies;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
+import org.eclipse.net4j.internal.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
@@ -98,6 +100,26 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
         }
       }
     }
+  }
+
+  public void buddyAdded(String buddy)
+  {
+    synchronized (buddies)
+    {
+      buddies.add(buddy);
+    }
+
+    fireEvent(new SingleDeltaContainerEvent<String>(this, buddy, IContainerDelta.Kind.ADDED));
+  }
+
+  public void buddyRemoved(String buddy)
+  {
+    synchronized (buddies)
+    {
+      buddies.remove(buddy);
+    }
+
+    fireEvent(new SingleDeltaContainerEvent<String>(this, buddy, IContainerDelta.Kind.REMOVED));
   }
 
   @Override

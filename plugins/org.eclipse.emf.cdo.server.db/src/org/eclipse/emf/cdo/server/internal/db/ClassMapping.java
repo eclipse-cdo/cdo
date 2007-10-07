@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
+import org.eclipse.emf.cdo.protocol.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -27,6 +28,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBField;
+import org.eclipse.net4j.db.IDBIndex;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
@@ -69,11 +71,30 @@ public abstract class ClassMapping implements IClassMapping
 
     table = addTable(cdoClass.getName());
     initTable(table, hasFullRevisionInfo());
-
     if (features != null)
     {
       attributeMappings = createAttributeMappings(features);
       referenceMappings = createReferenceMappings(features);
+
+      // Special handling of CDOResource table
+      CDOResourceClass resourceClass = cdoClass.getPackageManager().getCDOResourcePackage().getCDOResourceClass();
+      if (cdoClass == resourceClass)
+      {
+        // Create a unique index to prevent duplicate resource paths
+        for (IAttributeMapping attributeMapping : attributeMappings)
+        {
+          if (attributeMapping.getFeature() == resourceClass.getCDOPathFeature())
+          {
+            IDBField versionField = table.getField(CDODBSchema.ATTRIBUTES_VERSION);
+            IDBField pathField = attributeMapping.getField();
+            pathField.setNotNull(true);
+
+            // Create a unique index to prevent duplicate resource paths
+            table.addIndex(IDBIndex.Type.UNIQUE, versionField, pathField);
+            break;
+          }
+        }
+      }
     }
 
     selectPrefix = createSelectPrefix(false);
@@ -102,16 +123,16 @@ public abstract class ClassMapping implements IClassMapping
 
   protected void initTable(IDBTable table, boolean full)
   {
-    table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT);
-    table.addField(CDODBSchema.ATTRIBUTES_VERSION, DBType.INTEGER);
+    table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT, true);
+    table.addField(CDODBSchema.ATTRIBUTES_VERSION, DBType.INTEGER, true);
     if (full)
     {
-      table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.INTEGER);
-      table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT);
-      table.addField(CDODBSchema.ATTRIBUTES_REVISED, DBType.BIGINT);
-      table.addField(CDODBSchema.ATTRIBUTES_RESOURCE, DBType.BIGINT);
-      table.addField(CDODBSchema.ATTRIBUTES_CONTAINER, DBType.BIGINT);
-      table.addField(CDODBSchema.ATTRIBUTES_FEATURE, DBType.INTEGER);
+      table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.INTEGER, true);
+      table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT, true);
+      table.addField(CDODBSchema.ATTRIBUTES_REVISED, DBType.BIGINT, true);
+      table.addField(CDODBSchema.ATTRIBUTES_RESOURCE, DBType.BIGINT, true);
+      table.addField(CDODBSchema.ATTRIBUTES_CONTAINER, DBType.BIGINT, true);
+      table.addField(CDODBSchema.ATTRIBUTES_FEATURE, DBType.INTEGER, true);
     }
   }
 

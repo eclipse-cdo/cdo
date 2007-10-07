@@ -73,6 +73,8 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   private View view;
 
+  private String rollbackMessage;
+
   public CommitTransactionIndication()
   {
   }
@@ -108,12 +110,20 @@ public class CommitTransactionIndication extends CDOServerIndication
       newObjects = readNewObjects(in, storeWriter);
       dirtyObjects = readDirtyObjects(in, storeWriter);
 
-      ITransaction<IStoreWriter> storeTransaction = new Transaction<IStoreWriter>(storeWriter);
-      addPackages(storeTransaction, newPackages);
-      addRevisions(storeTransaction, newResources);
-      addRevisions(storeTransaction, newObjects);
-      addRevisions(storeTransaction, dirtyObjects);
-      storeTransaction.commit();
+      ITransaction<IStoreWriter> storeTransaction = new Transaction<IStoreWriter>(storeWriter, false);
+      try
+      {
+        addPackages(storeTransaction, newPackages);
+        addRevisions(storeTransaction, newResources);
+        addRevisions(storeTransaction, newObjects);
+        addRevisions(storeTransaction, dirtyObjects);
+        storeTransaction.commit();
+      }
+      catch (RuntimeException ex)
+      {
+        rollbackMessage = ex.getLocalizedMessage();
+        storeWriter.rollback(view, storeTransaction);
+      }
     }
     finally
     {
@@ -125,16 +135,25 @@ public class CommitTransactionIndication extends CDOServerIndication
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    out.writeLong(timeStamp);
-    for (CDOPackageImpl newPackage : newPackages)
+    if (rollbackMessage != null)
     {
-      CDOIDRangeImpl.write(out, newPackage.getMetaIDRange());
+      out.writeBoolean(false);
+      out.writeString(rollbackMessage);
     }
-
-    writeIDMappings(out);
-    if (dirtyObjects.length > 0)
+    else
     {
-      getSessionManager().notifyInvalidation(timeStamp, dirtyObjects, getSession());
+      out.writeBoolean(true);
+      out.writeLong(timeStamp);
+      for (CDOPackageImpl newPackage : newPackages)
+      {
+        CDOIDRangeImpl.write(out, newPackage.getMetaIDRange());
+      }
+
+      writeIDMappings(out);
+      if (dirtyObjects.length > 0)
+      {
+        getSessionManager().notifyInvalidation(timeStamp, dirtyObjects, getSession());
+      }
     }
   }
 

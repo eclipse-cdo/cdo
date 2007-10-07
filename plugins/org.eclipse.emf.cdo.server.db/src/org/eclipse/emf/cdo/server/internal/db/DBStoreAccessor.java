@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
+import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -43,6 +44,7 @@ import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.CloseableIterator;
+import org.eclipse.net4j.util.transaction.ITransaction;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -365,6 +367,18 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.writeRevision(this, revision);
+  }
+
+  public void rollback(IView view, ITransaction<IStoreWriter> storeTransaction)
+  {
+    try
+    {
+      connection.rollback();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
   }
 
   public CloseableIterator<CDOID> readObjectIDs(boolean withTypes)

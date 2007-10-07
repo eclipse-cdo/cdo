@@ -26,9 +26,22 @@ public class Transaction<CONTEXT> implements ITransaction<CONTEXT>
 
   private CONTEXT context;
 
-  public Transaction(CONTEXT context)
+  private boolean undoPhase1OnRollback;
+
+  public Transaction(CONTEXT context, boolean undoPhase1OnRollback)
   {
     this.context = context;
+    this.undoPhase1OnRollback = undoPhase1OnRollback;
+  }
+
+  public Transaction(CONTEXT context)
+  {
+    this(context, true);
+  }
+
+  public boolean isUndoPhase1OnRollback()
+  {
+    return undoPhase1OnRollback;
   }
 
   public boolean isActive()
@@ -75,9 +88,12 @@ public class Transaction<CONTEXT> implements ITransaction<CONTEXT>
 
   public void rollback()
   {
-    for (ITransactionalOperation<CONTEXT> operation : end())
+    if (undoPhase1OnRollback)
     {
-      operation.undoPhase1(context);
+      for (ITransactionalOperation<CONTEXT> operation : end())
+      {
+        operation.undoPhase1(context);
+      }
     }
   }
 

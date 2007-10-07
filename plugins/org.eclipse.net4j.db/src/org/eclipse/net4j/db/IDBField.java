@@ -27,6 +27,8 @@ public interface IDBField extends IDBElement
 
   public boolean isNotNull();
 
+  public void setNotNull(boolean on);
+
   public int getPosition();
 
   public String getFullName();

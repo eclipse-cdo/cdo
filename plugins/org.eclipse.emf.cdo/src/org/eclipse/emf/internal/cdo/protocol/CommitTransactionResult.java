@@ -20,13 +20,25 @@ import java.util.Map;
  */
 public final class CommitTransactionResult
 {
+  private String rollbackMessage;
+
   private long timeStamp;
 
   private Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
 
+  public CommitTransactionResult(String rollbackMessage)
+  {
+    this.rollbackMessage = rollbackMessage;
+  }
+
   public CommitTransactionResult(long timeStamp)
   {
     this.timeStamp = timeStamp;
+  }
+
+  public String getRollbackMessage()
+  {
+    return rollbackMessage;
   }
 
   public long getTimeStamp()

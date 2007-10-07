@@ -19,9 +19,11 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
+import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.util.io.CloseableIterator;
+import org.eclipse.net4j.util.transaction.ITransaction;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -102,6 +104,10 @@ public class NOOPStoreAccessor extends StoreAccessor
   }
 
   public void writeRevision(CDORevisionImpl revision)
+  {
+  }
+
+  public void rollback(IView view, ITransaction<IStoreWriter> storeTransaction)
   {
   }
 }

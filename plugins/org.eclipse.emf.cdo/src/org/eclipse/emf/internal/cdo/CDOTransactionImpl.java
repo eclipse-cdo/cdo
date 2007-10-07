@@ -37,6 +37,7 @@ import org.eclipse.net4j.internal.util.event.Notifier;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.transaction.TransactionException;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -147,7 +148,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     return (CDOResource)getResourceSet().createResource(createURI);
   }
 
-  public void commit()
+  public void commit() throws TransactionException
   {
     checkWritable();
     if (dirty)
@@ -173,8 +174,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
         IChannel channel = session.getChannel();
         IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
         CommitTransactionRequest request = new CommitTransactionRequest(channel, this);
-        CommitTransactionResult result = failOverStrategy.send(request, 100000L);
+
         // TODO Change timeout semantics in Net4j
+        CommitTransactionResult result = failOverStrategy.send(request, 100000L);
+        String rollbackMessage = result.getRollbackMessage();
+        if (rollbackMessage != null)
+        {
+          throw new TransactionException(rollbackMessage);
+        }
 
         postCommit(newResources, result);
         postCommit(newObjects, result);

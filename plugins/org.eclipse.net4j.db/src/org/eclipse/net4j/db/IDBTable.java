@@ -37,9 +37,7 @@ public interface IDBTable extends IDBElement
 
   public IDBField[] getFields();
 
-  public IDBIndex addIndex(IDBIndex.Type type, IDBField field);
-
-  public IDBIndex addIndex(IDBIndex.Type type, IDBField[] fields);
+  public IDBIndex addIndex(IDBIndex.Type type, IDBField... fields);
 
   public int getIndexCount();
 

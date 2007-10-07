@@ -116,13 +116,7 @@ public class DBTable extends DBElement implements IDBTable
     return fields.toArray(new DBField[fields.size()]);
   }
 
-  public DBIndex addIndex(Type type, IDBField field)
-  {
-    IDBField[] fields = { field };
-    return addIndex(type, fields);
-  }
-
-  public DBIndex addIndex(Type type, IDBField[] fields)
+  public DBIndex addIndex(Type type, IDBField... fields)
   {
     schema.assertUnlocked();
     DBIndex index = new DBIndex(this, type, fields, indices.size());

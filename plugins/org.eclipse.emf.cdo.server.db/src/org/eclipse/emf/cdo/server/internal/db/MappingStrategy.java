@@ -406,6 +406,9 @@ public abstract class MappingStrategy implements IMappingStrategy
     return getType();
   }
 
+  /**
+   * The implementation of this method must take care of creating a unique index to prevent duplicate resource paths.
+   */
   protected abstract IClassMapping createClassMapping(CDOClass cdoClass);
 
   protected abstract List<CDOClass> getClassesWithObjectInfo();

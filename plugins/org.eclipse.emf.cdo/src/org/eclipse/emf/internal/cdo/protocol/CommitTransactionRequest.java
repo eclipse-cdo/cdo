@@ -67,6 +67,49 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     writeDirtyObjects(out);
   }
 
+  @Override
+  protected CommitTransactionResult confirming(ExtendedDataInputStream in) throws IOException
+  {
+    boolean success = in.readBoolean();
+    if (!success)
+    {
+      String rollbackMessage = in.readString();
+      return new CommitTransactionResult(rollbackMessage);
+    }
+
+    long timeStamp = in.readLong();
+    CommitTransactionResult result = new CommitTransactionResult(timeStamp);
+
+    List<CDOPackage> newPackages = transaction.getNewPackages();
+    for (CDOPackage newPackage : newPackages)
+    {
+      CDOIDRange oldRange = newPackage.getMetaIDRange();
+      CDOIDRange newRange = CDOIDRangeImpl.read(in);
+      ((CDOPackageImpl)newPackage).setMetaIDRange(newRange);
+      for (long i = 0; i < oldRange.getCount(); i++)
+      {
+        CDOID oldID = oldRange.get(i);
+        CDOID newID = newRange.get(i);
+        transaction.getSession().remapMetaInstance(oldID, newID);
+        result.addIDMapping(oldID, newID);
+      }
+    }
+
+    for (;;)
+    {
+      CDOID oldID = CDOIDImpl.read(in);
+      if (oldID.isNull())
+      {
+        break;
+      }
+
+      CDOID newID = CDOIDImpl.read(in);
+      result.addIDMapping(oldID, newID);
+    }
+
+    return result;
+  }
+
   private void writeNewPackages(ExtendedDataOutputStream out) throws IOException
   {
     List<CDOPackage> newPackages = transaction.getNewPackages();
@@ -124,41 +167,5 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
       CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
       revision.write(out, transaction, CDORevision.UNCHUNKED);
     }
-  }
-
-  @Override
-  protected CommitTransactionResult confirming(ExtendedDataInputStream in) throws IOException
-  {
-    long timeStamp = in.readLong();
-    CommitTransactionResult result = new CommitTransactionResult(timeStamp);
-
-    List<CDOPackage> newPackages = transaction.getNewPackages();
-    for (CDOPackage newPackage : newPackages)
-    {
-      CDOIDRange oldRange = newPackage.getMetaIDRange();
-      CDOIDRange newRange = CDOIDRangeImpl.read(in);
-      ((CDOPackageImpl)newPackage).setMetaIDRange(newRange);
-      for (long i = 0; i < oldRange.getCount(); i++)
-      {
-        CDOID oldID = oldRange.get(i);
-        CDOID newID = newRange.get(i);
-        transaction.getSession().remapMetaInstance(oldID, newID);
-        result.addIDMapping(oldID, newID);
-      }
-    }
-
-    for (;;)
-    {
-      CDOID oldID = CDOIDImpl.read(in);
-      if (oldID.isNull())
-      {
-        break;
-      }
-
-      CDOID newID = CDOIDImpl.read(in);
-      result.addIDMapping(oldID, newID);
-    }
-
-    return result;
   }
 }

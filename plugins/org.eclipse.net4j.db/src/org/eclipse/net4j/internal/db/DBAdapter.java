@@ -15,6 +15,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBField;
+import org.eclipse.net4j.db.IDBIndex;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -140,11 +141,47 @@ public abstract class DBAdapter implements IDBAdapter
 
     builder.append(")");
     String sql = builder.toString();
-    if (TRACER.isEnabled())
+    if (TRACER.isEnabled()) TRACER.trace(sql);
+    statement.execute(sql);
+
+    DBIndex[] indices = table.getIndices();
+    for (int i = 0; i < indices.length; i++)
     {
-      TRACER.trace(sql);
+      createIndex(indices[i], statement, i);
+    }
+  }
+
+  protected void createIndex(DBIndex index, Statement statement, int num) throws SQLException
+  {
+    DBTable table = index.getTable();
+    StringBuilder builder = new StringBuilder();
+    builder.append("CREATE ");
+    if (index.getType() == IDBIndex.Type.UNIQUE)
+    {
+      builder.append("UNIQUE ");
     }
 
+    builder.append("INDEX ");
+    builder.append(table);
+    builder.append("_idx");
+    builder.append(num);
+    builder.append(" ON ");
+    builder.append(table);
+    builder.append(" (");
+    IDBField[] fields = index.getFields();
+    for (int i = 0; i < fields.length; i++)
+    {
+      if (i != 0)
+      {
+        builder.append(", ");
+      }
+
+      builder.append(fields[i]);
+    }
+
+    builder.append(")");
+    String sql = builder.toString();
+    if (TRACER.isEnabled()) TRACER.trace(sql);
     statement.execute(sql);
   }
 

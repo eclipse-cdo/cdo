@@ -81,6 +81,11 @@ public class DBField extends DBElement implements IDBField
     return notNull;
   }
 
+  public void setNotNull(boolean on)
+  {
+    notNull = on;
+  }
+
   public int getPosition()
   {
     return position;

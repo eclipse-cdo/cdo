@@ -19,6 +19,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import org.eclipse.net4j.util.transaction.TransactionException;
+
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +41,7 @@ public interface CDOTransaction extends CDOView
   /**
    * @see CDOTransaction#commit()
    */
-  public void commit();
+  public void commit() throws TransactionException;
 
   /**
    * @see CDOTransaction#rollback()

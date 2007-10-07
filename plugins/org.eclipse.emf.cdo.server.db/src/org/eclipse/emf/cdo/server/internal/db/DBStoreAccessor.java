@@ -357,11 +357,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 
   public void writeRevision(CDORevisionImpl revision)
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Inserting revision: {0}", revision);
-    }
-
+    if (TRACER.isEnabled()) TRACER.format("Inserting revision: {0}", revision);
     CDOClassImpl cdoClass = revision.getCDOClass();
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
@@ -373,6 +369,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   {
     try
     {
+      if (TRACER.isEnabled()) TRACER.format("Rolling back transaction: {0}", view);
       connection.rollback();
     }
     catch (SQLException ex)

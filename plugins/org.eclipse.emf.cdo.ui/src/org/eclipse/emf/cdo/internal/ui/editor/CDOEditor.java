@@ -15,9 +15,6 @@ import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.ui.actions.LongRunningAction;
-
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
@@ -62,6 +59,10 @@ import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.transaction.TransactionException;
+import org.eclipse.net4j.util.ui.actions.LongRunningAction;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
@@ -101,6 +102,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
@@ -1561,6 +1563,18 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
             {
               savedResources.add(resource);
               resource.save(saveOptions);
+            }
+            catch (final TransactionException exception)
+            {
+              OM.LOG.error(exception);
+              final Shell shell = getSite().getShell();
+              shell.getDisplay().syncExec(new Runnable()
+              {
+                public void run()
+                {
+                  MessageDialog.openError(shell, "Transaction Error", exception.getMessage());
+                }
+              });
             }
             catch (Exception exception)
             {

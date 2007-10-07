@@ -165,12 +165,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     throw new ReadOnlyException("CDO view is read only: " + this);
   }
 
-  public CDOResource createResource(String path)
-  {
-    URI createURI = CDOUtil.createResourceURI(path);
-    return (CDOResource)getResourceSet().createResource(createURI);
-  }
-
   public CDOResource getResource(String path)
   {
     URI uri = CDOUtil.createResourceURI(path);

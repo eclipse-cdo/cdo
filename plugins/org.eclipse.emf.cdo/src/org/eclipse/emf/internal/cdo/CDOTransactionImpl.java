@@ -22,7 +22,9 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -137,6 +139,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     --nextTemporaryID;
     --nextTemporaryID;
     return CDOIDImpl.create(id);
+  }
+
+  public CDOResource createResource(String path)
+  {
+    URI createURI = CDOUtil.createResourceURI(path);
+    return (CDOResource)getResourceSet().createResource(createURI);
   }
 
   public void commit()

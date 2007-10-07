@@ -6,8 +6,6 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IWorkbenchPage;
 
-import java.text.MessageFormat;
-
 /**
  * @author Eike Stepper
  */
@@ -27,10 +25,62 @@ public final class RollbackTransactionAction extends ViewAction
   protected void preRun() throws Exception
   {
     CDOTransaction transaction = (CDOTransaction)getView();
-    String msg = MessageFormat.format("This transaction contains " + "{0} new resources, " + "{1} new objects and "
-        + "{2} dirty objects.\n" + "Are you sure to rollback this transaction?", transaction.getNewResources().size(),
-        transaction.getNewObjects().size(), transaction.getDirtyObjects().size());
-    if (!MessageDialog.openQuestion(getShell(), TITLE, msg))
+    int newResources = transaction.getNewResources().size();
+    int newObjects = transaction.getNewObjects().size();
+    int dirtyObjects = transaction.getDirtyObjects().size();
+    int count = (newResources > 0 ? 1 : 0) + (newObjects > 0 ? 1 : 0) + (dirtyObjects > 0 ? 1 : 0);
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("This transaction contains ");
+    if (newResources > 0)
+    {
+      builder.append(newResources);
+      builder.append(" new resource");
+      if (newResources > 1)
+      {
+        builder.append("s");
+      }
+    }
+
+    if (newObjects > 0)
+    {
+      if (newResources > 0)
+      {
+        if (count > 2)
+        {
+          builder.append(", ");
+        }
+        else
+        {
+          builder.append(" and ");
+        }
+      }
+
+      builder.append(newObjects);
+      builder.append(" new object");
+      if (newObjects > 1)
+      {
+        builder.append("s");
+      }
+    }
+
+    if (dirtyObjects > 0)
+    {
+      if (count > 1)
+      {
+        builder.append(" and ");
+      }
+
+      builder.append(dirtyObjects);
+      builder.append(" dirty object");
+      if (dirtyObjects > 1)
+      {
+        builder.append("s");
+      }
+    }
+
+    builder.append(".\nAre you sure to rollback this transaction?");
+    if (!MessageDialog.openQuestion(getShell(), TITLE, builder.toString()))
     {
       cancel();
     }

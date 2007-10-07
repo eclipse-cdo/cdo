@@ -223,6 +223,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
         for (CDOObject newResource : newResources.values())
         {
           removeObject(newResource.cdoID());
+          getResourceSet().getResources().remove(newResource);
         }
       }
 
@@ -240,8 +241,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
         {
           CDOStateMachine.INSTANCE.rollback((InternalCDOObject)dirtyObject);
         }
-
-        // getSession().fireInvalidationEvent(CDOSessionInvalidationEvent.LOCAL_ROLLBACK, dirtyObjects.keySet(), null);
       }
 
       cleanUp();

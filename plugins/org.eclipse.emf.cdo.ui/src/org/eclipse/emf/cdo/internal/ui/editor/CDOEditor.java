@@ -8,6 +8,7 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.views.CDOEventHandler;
@@ -1207,6 +1208,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         {
           if (cdoObject instanceof CDOLegacyImpl)
           {
+            // TODO Consider CDOObject.cdoRefresh(boolean force)
             CDOStateMachine.INSTANCE.read(cdoObject);
           }
         }
@@ -1220,6 +1222,16 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         @Override
         protected void viewDirtyStateChanged()
         {
+          if (viewerInput instanceof CDOResource)
+          {
+            CDOResource resource = (CDOResource)viewerInput;
+            if (!view.isObjectRegistered(resource.cdoID()))
+            {
+              closeEditor();
+              return;
+            }
+          }
+
           fireDirtyPropertyChange();
         }
       };

@@ -495,6 +495,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
       }
     }
 
+    fireInvalidationEvent(timeStamp, dirtyOIDs, excludedView);
+  }
+
+  public void fireInvalidationEvent(long timeStamp, Set<CDOID> dirtyOIDs, CDOViewImpl excludedView)
+  {
     fireEvent(new InvalidationEvent(excludedView, timeStamp, dirtyOIDs));
   }
 

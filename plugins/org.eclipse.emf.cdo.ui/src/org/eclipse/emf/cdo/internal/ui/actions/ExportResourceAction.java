@@ -1,14 +1,15 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-
 /**
  * @author Eike Stepper
  */
 public class ExportResourceAction extends EditingDomainAction
 {
+  private static final String TITLE = "Export Resource";
+
   public ExportResourceAction()
   {
-    super("Export Resource...");
+    super(TITLE + INTERACTIVE);
   }
 
   @Override

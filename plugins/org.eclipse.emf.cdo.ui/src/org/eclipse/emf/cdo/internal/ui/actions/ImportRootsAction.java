@@ -30,7 +30,7 @@ public class ImportRootsAction extends EditingDomainAction
 
   public ImportRootsAction()
   {
-    super(TITLE + "...");
+    super(TITLE + INTERACTIVE);
   }
 
   public CDOResource getTargetResource()

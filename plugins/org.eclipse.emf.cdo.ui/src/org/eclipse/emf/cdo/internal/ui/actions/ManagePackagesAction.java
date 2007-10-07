@@ -16,7 +16,7 @@ public class ManagePackagesAction extends SessionAction
 
   public ManagePackagesAction(IWorkbenchPage page, CDOSession session)
   {
-    super(page, TITLE, TOOL_TIP, null, session);
+    super(page, TITLE + INTERACTIVE, TOOL_TIP, null, session);
   }
 
   @Override

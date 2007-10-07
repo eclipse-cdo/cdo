@@ -14,10 +14,12 @@ public final class OpenResourceEditorAction extends EntryAction
 {
   private static final String TITLE = "Open Editor";
 
+  private static final String TOOL_TIP = "Open a CDO editor for this resource";
+
   public OpenResourceEditorAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
       CDOViewHistory.Entry entry)
   {
-    super(page, TITLE, "Open a CDO editor for this resource", null, entry);
+    super(page, TITLE, TOOL_TIP, null, entry);
   }
 
   @Override

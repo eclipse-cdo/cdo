@@ -11,9 +11,11 @@ public final class RollbackTransactionAction extends ViewAction
 {
   private static final String TITLE = "Rollback";
 
+  private static final String TOOL_TIP = "Rollback this transaction";
+
   public RollbackTransactionAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, TITLE, "Rollback this transaction", null, view);
+    super(page, TITLE + INTERACTIVE, TOOL_TIP, null, view);
     setEnabled(getTransaction().isDirty());
   }
 

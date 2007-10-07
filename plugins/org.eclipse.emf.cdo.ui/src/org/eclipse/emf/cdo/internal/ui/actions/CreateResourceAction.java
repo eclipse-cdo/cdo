@@ -13,11 +13,13 @@ public final class CreateResourceAction extends ViewAction
 {
   private static final String TITLE = "Create Resource";
 
+  private static final String TOOL_TIP = "Create a CDO resource";
+
   private String resourcePath;
 
   public CreateResourceAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, TITLE, "Create a CDO resource", null, view);
+    super(page, TITLE + INTERACTIVE, TOOL_TIP, null, view);
   }
 
   @Override

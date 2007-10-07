@@ -286,6 +286,11 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return objects.containsKey(id);
   }
 
+  public InternalCDOObject removeObject(CDOID id)
+  {
+    return objects.remove(id);
+  }
+
   /**
    * @return Never <code>null</code>
    */
@@ -527,7 +532,8 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
    * propagated to the caller of this method but this should not happen in the absence of implementation errors.
    * 
    * @param timeStamp
-   *          The point in time when the newly committed revision have been created.
+   *          The time stamp of the server transaction if this event was sent as a result of a successfully committed
+   *          transaction or <code>LOCAL_ROLLBACK</code> if this event was sent due to a local rollback.
    * @param dirtyOIDs
    *          A set of the object IDs to be invalidated. <b>Implementation note:</b> This implementation expects the
    *          dirtyOIDs set to be unmodifiable. It does not wrap the set (again).

@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.internal.ui.views;
 import org.eclipse.emf.cdo.CDOAudit;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOTransactionCommittedEvent;
-import org.eclipse.emf.cdo.CDOTransactionDirtyEvent;
+import org.eclipse.emf.cdo.CDOTransactionFinishedEvent;
+import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
@@ -61,7 +61,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   {
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof CDOTransactionDirtyEvent || event instanceof CDOTransactionCommittedEvent)
+      if (event instanceof CDOTransactionStartedEvent || event instanceof CDOTransactionFinishedEvent)
       {
         try
         {

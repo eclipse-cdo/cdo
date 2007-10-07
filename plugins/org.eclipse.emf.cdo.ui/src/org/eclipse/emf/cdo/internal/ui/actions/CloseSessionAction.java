@@ -9,9 +9,13 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class CloseSessionAction extends SessionAction
 {
+  private static final String TITLE = "Close";
+
+  private static final String TOOL_TIP = "Close the CDO session";
+
   public CloseSessionAction(IWorkbenchPage page, CDOSession session)
   {
-    super(page, "Close", "Close the CDO session", null, session);
+    super(page, TITLE, TOOL_TIP, null, session);
   }
 
   @Override

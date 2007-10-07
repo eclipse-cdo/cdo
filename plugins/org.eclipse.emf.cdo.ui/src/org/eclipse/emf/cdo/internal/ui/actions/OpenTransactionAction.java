@@ -12,10 +12,13 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class OpenTransactionAction extends AbstractOpenViewAction
 {
+  private static final String TITLE = "Open Transaction";
+
+  private static final String TOOL_TIP = "Open a read-write CDO view";
+
   public OpenTransactionAction(IWorkbenchPage page, CDOSession session)
   {
-    super(page, "Open Transaction", "Open a read-write CDO view", SharedIcons
-        .getDescriptor(SharedIcons.ETOOL_OPEN_EDITOR), session);
+    super(page, TITLE, TOOL_TIP, SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_EDITOR), session);
   }
 
   @Override

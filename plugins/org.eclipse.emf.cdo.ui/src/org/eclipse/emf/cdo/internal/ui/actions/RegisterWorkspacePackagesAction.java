@@ -33,9 +33,11 @@ public class RegisterWorkspacePackagesAction extends RegisterPackagesAction
 {
   private static final String TITLE = "Register Workspace Packages";
 
+  private static final String TOOL_TIP = "Register dynamic packages from the workspace";
+
   public RegisterWorkspacePackagesAction(IWorkbenchPage page, CDOSession session)
   {
-    super(page, TITLE, "Register dynamic packages from the workspace", null, session);
+    super(page, TITLE, TOOL_TIP, null, session);
   }
 
   @Override

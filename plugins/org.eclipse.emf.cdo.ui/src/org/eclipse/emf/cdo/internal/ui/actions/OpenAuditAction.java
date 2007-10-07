@@ -13,12 +13,15 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class OpenAuditAction extends AbstractOpenViewAction
 {
+  private static final String TITLE = "Open Audit";
+
+  private static final String TOOL_TIP = "Open a historical CDO view";
+
   private long timeStamp;
 
   public OpenAuditAction(IWorkbenchPage page, CDOSession session)
   {
-    super(page, "Open Audit", "Open a historical CDO view", SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_EDITOR),
-        session);
+    super(page, TITLE + INTERACTIVE, TOOL_TIP, SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_EDITOR), session);
   }
 
   @Override

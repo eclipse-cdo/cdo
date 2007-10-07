@@ -17,7 +17,7 @@ public final class LoadResourceAction extends ViewAction
 
   public LoadResourceAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, TITLE, "Load a CDO resource", null, view);
+    super(page, TITLE + INTERACTIVE, "Load a CDO resource", null, view);
   }
 
   @Override

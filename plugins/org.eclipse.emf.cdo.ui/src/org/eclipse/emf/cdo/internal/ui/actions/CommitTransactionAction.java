@@ -11,9 +11,11 @@ public final class CommitTransactionAction extends ViewAction
 {
   private static final String TITLE = "Commit";
 
+  private static final String TOOL_TIP = "Commit this transaction";
+
   public CommitTransactionAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, TITLE, "Commit this transaction", null, view);
+    super(page, TITLE, TOOL_TIP, null, view);
     setEnabled(getTransaction().isDirty());
   }
 

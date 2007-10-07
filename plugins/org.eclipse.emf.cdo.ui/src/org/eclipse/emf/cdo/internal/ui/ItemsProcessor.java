@@ -56,16 +56,14 @@ public abstract class ItemsProcessor
             processObject(viewer, ids, viewer.getInput());
             processItems(viewer, ids, viewer.getTree().getItems());
           }
-          catch (Exception ex)
+          catch (Exception ignore)
           {
-            ex.printStackTrace();
           }
         }
       });
     }
-    catch (Exception ex)
+    catch (Exception ignore)
     {
-      ex.printStackTrace();
     }
   }
 

@@ -11,6 +11,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
  */
 public abstract class SafeAction extends Action
 {
+  public static final String INTERACTIVE = "...";
+
   public SafeAction()
   {
   }

@@ -12,9 +12,11 @@ public final class OpenViewEditorAction extends ViewAction
 {
   private static final String TITLE = "Open Editor";
 
+  private static final String TOOL_TIP = "Open a CDO editor for this view";
+
   public OpenViewEditorAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, TITLE, "Open a CDO editor for this view", null, view);
+    super(page, TITLE, TOOL_TIP, null, view);
   }
 
   @Override

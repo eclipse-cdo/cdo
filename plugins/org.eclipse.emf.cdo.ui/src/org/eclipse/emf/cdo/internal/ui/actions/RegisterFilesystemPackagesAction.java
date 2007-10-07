@@ -34,6 +34,8 @@ public class RegisterFilesystemPackagesAction extends RegisterPackagesAction
 {
   private static final String TITLE = "Register Filesystem Packages";
 
+  private static final String TOOL_TIP = "Register dynamic packages from the filesystem";
+
   private static final String[] FILTER_NAMES = { "Ecore models (*.ecore)", "XMI files (*.xmi)", "XML files (*.xml)",
       "All files (*.*)" };
 
@@ -41,7 +43,7 @@ public class RegisterFilesystemPackagesAction extends RegisterPackagesAction
 
   public RegisterFilesystemPackagesAction(IWorkbenchPage page, CDOSession session)
   {
-    super(page, TITLE, "Register dynamic packages from the filesystem", null, session);
+    super(page, TITLE, TOOL_TIP, null, session);
   }
 
   @Override

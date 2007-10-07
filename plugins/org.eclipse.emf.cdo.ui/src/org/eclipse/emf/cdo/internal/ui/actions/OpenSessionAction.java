@@ -19,11 +19,15 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class OpenSessionAction extends LongRunningAction
 {
+  private static final String TITLE = OpenSessionDialog.TITLE;
+
+  private static final String TOOL_TIP = "Open a new CDO session";
+
   private String description;
 
   public OpenSessionAction(IWorkbenchPage page)
   {
-    super(page, OpenSessionDialog.TITLE, "Open a new CDO session", CDOSessionsView.getAddImageDescriptor());
+    super(page, TITLE + INTERACTIVE, TOOL_TIP, CDOSessionsView.getAddImageDescriptor());
   }
 
   @Override

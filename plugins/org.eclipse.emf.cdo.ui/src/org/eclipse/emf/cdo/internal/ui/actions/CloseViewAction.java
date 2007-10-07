@@ -9,9 +9,13 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class CloseViewAction extends ViewAction
 {
+  private static final String TITLE = "Close";
+
+  private static final String TOOL_TIP = "Close the CDO view";
+
   public CloseViewAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, "Close", "Close the CDO view", null, view);
+    super(page, TITLE, TOOL_TIP, null, view);
   }
 
   @Override

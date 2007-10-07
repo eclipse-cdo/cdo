@@ -5,19 +5,20 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ServerException;
-
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.signal.IFailOverStrategy;
-import org.eclipse.net4j.util.fsm.FiniteStateMachine;
-import org.eclipse.net4j.util.fsm.ITransition;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.ResourceIDRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.signal.IFailOverStrategy;
+import org.eclipse.net4j.util.fsm.FiniteStateMachine;
+import org.eclipse.net4j.util.fsm.ITransition;
 
 import java.text.MessageFormat;
 import java.util.Iterator;
@@ -84,7 +85,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.DIRTY, CDOEvent.READ, IGNORE);
     init(CDOState.DIRTY, CDOEvent.WRITE, IGNORE);
     init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition());
-    init(CDOState.DIRTY, CDOEvent.ROLLBACK, FAIL);
+    init(CDOState.DIRTY, CDOEvent.ROLLBACK, new RollbackTransition());
     init(CDOState.DIRTY, CDOEvent.INVALIDATE, FAIL);
     init(CDOState.DIRTY, CDOEvent.FINALIZE_ATTACH, FAIL);
 
@@ -242,7 +243,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private final class FinalizeAttachTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object data)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
       CDOTransactionImpl transaction = (CDOTransactionImpl)object.cdoView();
       object.cdoInternalPostAttach();
@@ -252,7 +253,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       for (Iterator<?> it = FSMUtil.iterator(object.eContents(), transaction); it.hasNext();)
       {
         InternalCDOObject content = (InternalCDOObject)it.next();
-        INSTANCE.process(content, CDOEvent.FINALIZE_ATTACH, data);
+        INSTANCE.process(content, CDOEvent.FINALIZE_ATTACH, null);
       }
     }
   }
@@ -262,7 +263,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private final class DetachTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object data)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
       // TODO Implement method DetachTransition.execute()
       throw new UnsupportedOperationException("Not yet implemented");
@@ -307,9 +308,31 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
+  private final class RollbackTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  {
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
+    {
+      CDOViewImpl view = (CDOViewImpl)object.cdoView();
+
+      // Adjust object
+      CDOID id = object.cdoID();
+      CDORevision transactionalRevision = object.cdoRevision();
+      int version = transactionalRevision.getVersion();
+
+      CDORevisionManagerImpl revisionManager = view.getSession().getRevisionManager();
+      CDORevisionImpl previousRevision = revisionManager.getRevisionByVersion(id, 0, version - 1);
+      object.cdoInternalSetRevision(previousRevision);
+
+      changeState(object, CDOState.PROXY);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private final class WriteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object data)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
       // Copy revision
       CDORevisionImpl revision = new CDORevisionImpl((CDORevisionImpl)object.cdoRevision());
@@ -348,7 +371,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       this.forWrite = forWrite;
     }
 
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object data)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
       CDOID id = object.cdoID();
       CDOViewImpl view = (CDOViewImpl)object.cdoView();

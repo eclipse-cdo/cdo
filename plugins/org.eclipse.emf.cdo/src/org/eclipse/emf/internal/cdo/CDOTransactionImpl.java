@@ -12,16 +12,15 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOTransactionCommittedEvent;
-import org.eclipse.emf.cdo.CDOTransactionDirtyEvent;
+import org.eclipse.emf.cdo.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.CDOTransactionHandler;
+import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
-import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.URI;
@@ -41,6 +40,7 @@ import org.eclipse.net4j.util.transaction.TransactionException;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -187,25 +187,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
         postCommit(newObjects, result);
         postCommit(dirtyObjects, result);
 
-        if (!dirtyObjects.isEmpty())
-        {
-          session.notifyInvalidation(result.getTimeStamp(), dirtyObjects.keySet(), this);
-        }
-
         for (CDOPackage newPackage : newPackages)
         {
           ((CDOPackageImpl)newPackage).setPersistent(true);
         }
 
-        newPackages = null;
-        newResources.clear();
-        newObjects.clear();
-        dirtyObjects.clear();
-        dirty = false;
-        nextTemporaryID = INITIAL_TEMPORARY_ID;
+        if (!dirtyObjects.isEmpty())
+        {
+          session.notifyInvalidation(result.getTimeStamp(), dirtyObjects.keySet(), this);
+        }
 
+        cleanUp();
         Map<CDOID, CDOID> idMappings = result.getIDMappings();
-        fireEvent(new CommittedEvent(idMappings));
+        fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings));
       }
       catch (RuntimeException ex)
       {
@@ -213,7 +207,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       }
       catch (Exception ex)
       {
-        throw new TransportException(ex);
+        throw new TransactionException(ex);
       }
     }
   }
@@ -224,8 +218,35 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
     try
     {
-      // TODO Implement method CDOTransactionImpl.rollback()
-      throw new UnsupportedOperationException("Not yet implemented");
+      if (!newResources.isEmpty())
+      {
+        for (CDOObject newResource : newResources.values())
+        {
+          removeObject(newResource.cdoID());
+        }
+      }
+
+      if (!newObjects.isEmpty())
+      {
+        for (CDOObject newObject : newObjects.values())
+        {
+          removeObject(newObject.cdoID());
+        }
+      }
+
+      if (!dirtyObjects.isEmpty())
+      {
+        for (CDOObject dirtyObject : dirtyObjects.values())
+        {
+          CDOStateMachine.INSTANCE.rollback((InternalCDOObject)dirtyObject);
+        }
+
+        // getSession().fireInvalidationEvent(CDOSessionInvalidationEvent.LOCAL_ROLLBACK, dirtyObjects.keySet(), null);
+      }
+
+      cleanUp();
+      Map<CDOID, CDOID> idMappings = Collections.emptyMap();
+      fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.ROLLED_BACK, idMappings));
     }
     catch (RuntimeException ex)
     {
@@ -233,7 +254,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
     catch (Exception ex)
     {
-      throw new TransportException(ex);
+      throw new TransactionException(ex);
     }
   }
 
@@ -292,7 +313,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     if (!dirty)
     {
       dirty = true;
-      fireEvent(new DirtyEvent());
+      fireEvent(new StartedEvent());
     }
   }
 
@@ -363,14 +384,24 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
   }
 
+  private void cleanUp()
+  {
+    newPackages = null;
+    newResources.clear();
+    newObjects.clear();
+    dirtyObjects.clear();
+    dirty = false;
+    nextTemporaryID = INITIAL_TEMPORARY_ID;
+  }
+
   /**
    * @author Eike Stepper
    */
-  private final class DirtyEvent extends Event implements CDOTransactionDirtyEvent
+  private final class StartedEvent extends Event implements CDOTransactionStartedEvent
   {
     private static final long serialVersionUID = 1L;
 
-    private DirtyEvent()
+    private StartedEvent()
     {
     }
   }
@@ -378,15 +409,23 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   /**
    * @author Eike Stepper
    */
-  private final class CommittedEvent extends Event implements CDOTransactionCommittedEvent
+  private final class FinishedEvent extends Event implements CDOTransactionFinishedEvent
   {
     private static final long serialVersionUID = 1L;
 
+    private Type type;
+
     private Map<CDOID, CDOID> idMappings;
 
-    private CommittedEvent(Map<CDOID, CDOID> idMappings)
+    private FinishedEvent(Type type, Map<CDOID, CDOID> idMappings)
     {
+      this.type = type;
       this.idMappings = idMappings;
+    }
+
+    public Type getType()
+    {
+      return type;
     }
 
     public Map<CDOID, CDOID> getIDMappings()
@@ -394,48 +433,4 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       return idMappings;
     }
   }
-
-  // private Collection<CDOPackageImpl> calculateNewPackages()
-  // {
-  // CDOSessionImpl session = view.getSession();
-  // CDOPackageManagerImpl packageManager = session.getPackageManager();
-  // return packageManager.getTransientPackages();
-  //
-  // CDOCorePackageImpl corePackage = packageManager.getCDOCorePackage();
-  // CDOResourcePackageImpl resourcePackage =
-  // packageManager.getCDOResourcePackage();
-  //
-  // Set<String> knownPackages = session.getPackageURIs();
-  // Map<String, CDOPackageImpl> newPackages = new HashMap();
-  // for (InternalCDOObject cdoObject : newObjects.values())
-  // {
-  // CDOPackageImpl cdoPackage = cdoObject.cdoClass().getContainingPackage();
-  // String uri = cdoPackage.getPackageURI();
-  // if (!newPackages.containsKey(uri) && !knownPackages.contains(uri))
-  // {
-  // EPackage ePackage = EMFUtil.getEPackage(cdoPackage);
-  // Set<EPackage> ePackages = PackageClosure.calculate(ePackage);
-  // for (EPackage eP : ePackages)
-  // {
-  // CDOPackageImpl cdoP = eP == ePackage ? cdoPackage :
-  // EMFUtil.getCDOPackage(eP, packageManager);
-  // if (cdoP == null)
-  // {
-  // throw new IllegalStateException("Not a CDO package: " + eP);
-  // }
-  //
-  // if (cdoP != corePackage && cdoP != resourcePackage)
-  // {
-  // uri = cdoP.getPackageURI();
-  // if (!newPackages.containsKey(uri) && !knownPackages.contains(uri))
-  // {
-  // newPackages.put(uri, cdoP);
-  // }
-  // }
-  // }
-  // }
-  // }
-  //
-  // return newPackages.values();
-  // }
 }

@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
-import org.eclipse.emf.cdo.CDOTransactionCommittedEvent;
-import org.eclipse.emf.cdo.CDOTransactionDirtyEvent;
+import org.eclipse.emf.cdo.CDOTransactionFinishedEvent;
+import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -75,22 +75,48 @@ public class CDOEventHandler
   {
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof CDOTransactionCommittedEvent)
+      if (event instanceof CDOTransactionFinishedEvent)
       {
-        Map<CDOID, CDOID> idMappings = ((CDOTransactionCommittedEvent)event).getIDMappings();
-        HashSet<CDOID> newOIDs = new HashSet<CDOID>(idMappings.values());
-        new ItemsProcessor(view)
+        CDOTransactionFinishedEvent e = (CDOTransactionFinishedEvent)event;
+        if (e.getType() == CDOTransactionFinishedEvent.Type.COMMITTED)
         {
-          @Override
-          protected void processCDOObject(TreeViewer viewer, InternalCDOObject cdoObject)
+          Map<CDOID, CDOID> idMappings = e.getIDMappings();
+          HashSet<CDOID> newOIDs = new HashSet<CDOID>(idMappings.values());
+          new ItemsProcessor(view)
           {
-            viewer.update(cdoObject.cdoInternalInstance(), null);
+            @Override
+            protected void processCDOObject(TreeViewer viewer, InternalCDOObject cdoObject)
+            {
+              viewer.update(cdoObject.cdoInternalInstance(), null);
+            }
+          }.processCDOObjects(treeViewer, newOIDs);
+        }
+        else
+        {
+          try
+          {
+            treeViewer.getControl().getDisplay().syncExec(new Runnable()
+            {
+              public void run()
+              {
+                try
+                {
+                  treeViewer.refresh(true);
+                }
+                catch (Exception ignore)
+                {
+                }
+              }
+            });
           }
-        }.processCDOObjects(treeViewer, newOIDs);
+          catch (Exception ignore)
+          {
+          }
+        }
 
         viewDirtyStateChanged();
       }
-      else if (event instanceof CDOTransactionDirtyEvent)
+      else if (event instanceof CDOTransactionStartedEvent)
       {
         viewDirtyStateChanged();
       }

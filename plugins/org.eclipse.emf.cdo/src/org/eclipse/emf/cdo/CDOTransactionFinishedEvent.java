@@ -17,7 +17,14 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public interface CDOTransactionCommittedEvent extends CDOViewEvent
+public interface CDOTransactionFinishedEvent extends CDOViewEvent
 {
+  public Type getType();
+
   public Map<CDOID, CDOID> getIDMappings();
+
+  public enum Type
+  {
+    COMMITTED, ROLLED_BACK
+  }
 }

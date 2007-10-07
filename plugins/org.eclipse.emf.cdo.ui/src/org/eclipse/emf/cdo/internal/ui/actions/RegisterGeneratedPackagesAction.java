@@ -30,11 +30,13 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
 {
   private static final String TITLE = "Register Generated Packages";
 
+  private static final String TOOL_TIP = "Register native, legacy or converted packages";
+
   private EPackage.Registry registry = EPackage.Registry.INSTANCE;
 
   public RegisterGeneratedPackagesAction(IWorkbenchPage page, CDOSession session)
   {
-    super(page, TITLE, "Register native, legacy or converted packages", null, session);
+    super(page, TITLE, TOOL_TIP, null, session);
   }
 
   @Override

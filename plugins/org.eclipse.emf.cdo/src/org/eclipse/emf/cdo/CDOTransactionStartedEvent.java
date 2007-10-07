@@ -13,6 +13,6 @@ package org.eclipse.emf.cdo;
 /**
  * @author Eike Stepper
  */
-public interface CDOTransactionDirtyEvent extends CDOViewEvent
+public interface CDOTransactionStartedEvent extends CDOViewEvent
 {
 }

@@ -296,5 +296,4 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     {
     }
   }
-
 }

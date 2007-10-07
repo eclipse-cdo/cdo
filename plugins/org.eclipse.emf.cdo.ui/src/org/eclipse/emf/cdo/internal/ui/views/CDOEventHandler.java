@@ -10,7 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.views;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
+import org.eclipse.emf.cdo.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.CDOView;
@@ -118,6 +120,11 @@ public class CDOEventHandler
       {
         viewDirtyStateChanged();
       }
+      else if (event instanceof CDOTransactionConflictEvent)
+      {
+        CDOTransactionConflictEvent e = (CDOTransactionConflictEvent)event;
+        viewConflict(e.getConflictingObject(), e.isFirstConflict());
+      }
     }
   };
 
@@ -170,6 +177,10 @@ public class CDOEventHandler
   }
 
   protected void viewDirtyStateChanged()
+  {
+  }
+
+  protected void viewConflict(CDOObject conflictingObject, boolean firstConflict)
   {
   }
 

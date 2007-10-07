@@ -140,6 +140,7 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
       {
       case NEW:
       case DIRTY:
+      case CONFLICT:
         return bold;
       }
     }

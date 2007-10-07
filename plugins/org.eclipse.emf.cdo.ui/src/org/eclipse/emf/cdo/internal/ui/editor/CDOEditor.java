@@ -6,6 +6,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui.editor;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -1193,6 +1194,30 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           {
             // TODO Consider CDOObject.cdoRefresh(boolean force)
             CDOStateMachine.INSTANCE.read(cdoObject);
+          }
+        }
+
+        @Override
+        protected void viewConflict(final CDOObject conflictingObject, boolean firstConflict)
+        {
+          try
+          {
+            selectionViewer.getControl().getDisplay().syncExec(new Runnable()
+            {
+              public void run()
+              {
+                try
+                {
+                  selectionViewer.refresh(conflictingObject, true);
+                }
+                catch (Exception ignore)
+                {
+                }
+              }
+            });
+          }
+          catch (Exception ignore)
+          {
           }
         }
 

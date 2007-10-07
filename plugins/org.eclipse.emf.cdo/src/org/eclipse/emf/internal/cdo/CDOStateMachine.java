@@ -98,14 +98,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.PROXY, CDOEvent.INVALIDATE, IGNORE);
     init(CDOState.PROXY, CDOEvent.FINALIZE_ATTACH, IGNORE);
 
-    init(CDOState.CONFLICT, CDOEvent.ATTACH, FAIL);
-    init(CDOState.CONFLICT, CDOEvent.DETACH, FAIL);
-    init(CDOState.CONFLICT, CDOEvent.READ, FAIL);
-    init(CDOState.CONFLICT, CDOEvent.WRITE, FAIL);
-    init(CDOState.CONFLICT, CDOEvent.COMMIT, FAIL);
-    init(CDOState.CONFLICT, CDOEvent.ROLLBACK, FAIL);
-    init(CDOState.CONFLICT, CDOEvent.INVALIDATE, FAIL);
-    init(CDOState.CONFLICT, CDOEvent.FINALIZE_ATTACH, FAIL);
+    init(CDOState.CONFLICT, CDOEvent.ATTACH, IGNORE);
+    init(CDOState.CONFLICT, CDOEvent.DETACH, IGNORE);
+    init(CDOState.CONFLICT, CDOEvent.READ, IGNORE);
+    init(CDOState.CONFLICT, CDOEvent.WRITE, IGNORE);
+    init(CDOState.CONFLICT, CDOEvent.COMMIT, IGNORE);
+    init(CDOState.CONFLICT, CDOEvent.ROLLBACK, new RollbackTransition());
+    init(CDOState.CONFLICT, CDOEvent.INVALIDATE, IGNORE);
+    init(CDOState.CONFLICT, CDOEvent.FINALIZE_ATTACH, IGNORE);
   }
 
   public void attach(InternalCDOObject object, CDOResource resource, CDOViewImpl view)

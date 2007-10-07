@@ -105,11 +105,11 @@ public abstract class ItemsProcessor
       if (ids == null || ids.contains(cdoObject.cdoID()))
       {
         processCDOObject(viewer, cdoObject);
-        InternalCDOObject container = getCDOObject(cdoObject.eContainer());
-        if (container != null)
-        {
-          processCDOObject(viewer, container);
-        }
+        // InternalCDOObject container = getCDOObject(cdoObject.eContainer());
+        // if (container != null)
+        // {
+        // processCDOObject(viewer, container);
+        // }
       }
     }
   }

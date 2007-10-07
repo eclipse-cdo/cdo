@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.CDOTransactionHandler;
 import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
@@ -73,6 +74,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   private boolean dirty;
 
+  private boolean conflict;
+
   public CDOTransactionImpl(int id, CDOSessionImpl session)
   {
     super(id, session);
@@ -112,6 +115,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   public boolean isDirty()
   {
     return dirty;
+  }
+
+  public boolean hasConflict()
+  {
+    return conflict;
+  }
+
+  public void setConflict(InternalCDOObject object)
+  {
+    ConflictEvent event = new ConflictEvent(object, !conflict);
+    conflict = true;
+    fireEvent(event);
   }
 
   public List<CDOPackage> getNewPackages()
@@ -390,6 +405,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     newObjects.clear();
     dirtyObjects.clear();
     dirty = false;
+    conflict = false;
     nextTemporaryID = INITIAL_TEMPORARY_ID;
   }
 
@@ -430,6 +446,34 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     public Map<CDOID, CDOID> getIDMappings()
     {
       return idMappings;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ConflictEvent extends Event implements CDOTransactionConflictEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private InternalCDOObject conflictingObject;
+
+    private boolean firstConflict;
+
+    public ConflictEvent(InternalCDOObject conflictingObject, boolean firstConflict)
+    {
+      this.conflictingObject = conflictingObject;
+      this.firstConflict = firstConflict;
+    }
+
+    public InternalCDOObject getConflictingObject()
+    {
+      return conflictingObject;
+    }
+
+    public boolean isFirstConflict()
+    {
+      return firstConflict;
     }
   }
 }

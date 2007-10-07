@@ -86,7 +86,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.DIRTY, CDOEvent.WRITE, IGNORE);
     init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition());
     init(CDOState.DIRTY, CDOEvent.ROLLBACK, new RollbackTransition());
-    init(CDOState.DIRTY, CDOEvent.INVALIDATE, FAIL);
+    init(CDOState.DIRTY, CDOEvent.INVALIDATE, new ConflictTransition());
     init(CDOState.DIRTY, CDOEvent.FINALIZE_ATTACH, FAIL);
 
     init(CDOState.PROXY, CDOEvent.ATTACH, new LoadResourceTransition());
@@ -356,6 +356,20 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       ((CDORevisionImpl)object.cdoRevision()).setRevised(timeStamp - 1);
       changeState(object, CDOState.PROXY);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ConflictTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Long>
+  {
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Long timeStamp)
+    {
+      CDOViewImpl view = (CDOViewImpl)object.cdoView();
+      CDOTransactionImpl transaction = view.toTransaction();
+      transaction.setConflict(object);
+      changeState(object, CDOState.CONFLICT);
     }
   }
 

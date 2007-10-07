@@ -132,10 +132,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     ITransition<STATE, EVENT, SUBJECT, DATA> transition = (ITransition<STATE, EVENT, SUBJECT, DATA>)transitions[s][e];
     if (transition == IGNORE)
     {
-      // TODO if (TRACER.isEnabled())
-      // {
-      // TRACER.trace(formatIgnoreMessage(subject, state, event, data));
-      // }
+      // Do nothing
     }
     else if (transition == FAIL)
     {

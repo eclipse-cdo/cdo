@@ -31,7 +31,7 @@ public final class BuddiesUtil
     {
       IChannel channel = connector.openChannel(BuddiesProtocolConstants.PROTOCOL_NAME, null);
       OpenSessionRequest request = new OpenSessionRequest(channel, userID, password);
-      return request.send(5000L);
+      return request.send();
     }
     catch (Exception ex)
     {

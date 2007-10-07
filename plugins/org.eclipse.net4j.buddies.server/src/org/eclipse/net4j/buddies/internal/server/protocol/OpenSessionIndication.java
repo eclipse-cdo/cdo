@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
+import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
 import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
@@ -21,6 +22,8 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,14 +74,32 @@ public class OpenSessionIndication extends IndicationWithResponse
     if (account != null)
     {
       out.writeBoolean(true);
+      List<IChannel> channels = new ArrayList<IChannel>();
       out.writeInt(buddies.length);
       for (String buddy : buddies)
       {
         out.writeString(buddy);
+        IBuddySession buddySession = IBuddyAdmin.INSTANCE.getSessions().get(buddy);
+        if (buddySession != null)
+        {
+          channels.add(buddySession.getChannel());
+        }
       }
 
       ObjectOutputStream oos = new ObjectOutputStream(out);
       oos.writeObject(account);
+
+      for (IChannel channel : channels)
+      {
+        try
+        {
+          new BuddyAddedNotification(channel, account.getUserID()).send();
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
     }
     else
     {

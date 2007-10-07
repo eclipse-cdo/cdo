@@ -46,7 +46,6 @@ public class ChannelInjector implements IElementProcessor
 
   protected IConnector getConnector(IManagedContainer container, String description)
   {
-
     URI uri = URI.createURI(description);
     String factoryType = uri.scheme();
     if (StringUtil.isEmpty(factoryType))

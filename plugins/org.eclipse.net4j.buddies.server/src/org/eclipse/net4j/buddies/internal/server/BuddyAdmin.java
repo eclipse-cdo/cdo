@@ -16,6 +16,7 @@ import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.buddies.server.IBuddySession;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +34,7 @@ public class BuddyAdmin extends Lifecycle implements IBuddyAdmin
 
   public BuddyAdmin()
   {
+    LifecycleUtil.activate(this);
   }
 
   public Map<String, IBuddyAccount> getAccounts()

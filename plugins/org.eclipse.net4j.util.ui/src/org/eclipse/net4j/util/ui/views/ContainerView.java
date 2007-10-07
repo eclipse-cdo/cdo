@@ -1,7 +1,6 @@
 package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
@@ -124,7 +123,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     return null;
   }
 
-  protected abstract IManagedContainer getContainer();
+  protected abstract IContainer<?> getContainer();
 
   protected void hookDoubleClick()
   {

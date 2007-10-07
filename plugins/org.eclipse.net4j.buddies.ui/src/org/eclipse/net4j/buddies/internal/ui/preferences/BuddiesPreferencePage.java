@@ -58,7 +58,7 @@ public class BuddiesPreferencePage extends OMPreferencePage
     composite.setLayout(grid);
     composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-    new Label(composite, SWT.NONE).setText("Connector description:");
+    new Label(composite, SWT.NONE).setText("Server:");
     connectorDescription = new Text(composite, SWT.BORDER);
     connectorDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
     connectorDescription.addModifyListener(modifyListener);

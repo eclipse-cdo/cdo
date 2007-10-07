@@ -11,6 +11,7 @@
 package org.eclipse.net4j;
 
 import org.eclipse.net4j.internal.util.security.RandomizerFactory;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.internal.net4j.AcceptorFactory;
@@ -28,6 +29,8 @@ import java.util.concurrent.ExecutorService;
  */
 public final class Net4jUtil
 {
+  public static final String SCHEME_SEPARATOR = "://";
+
   public static final short DEFAULT_BUFFER_CAPACITY = 4096;
 
   private Net4jUtil()
@@ -60,6 +63,25 @@ public final class Net4jUtil
   public static IConnector getConnector(IManagedContainer container, String type, String description)
   {
     return (IConnector)container.getElement(ConnectorFactory.PRODUCT_GROUP, type, description);
+  }
+
+  public static IConnector getConnector(IManagedContainer container, String description)
+  {
+    int pos = description.indexOf(SCHEME_SEPARATOR);
+    if (pos <= 0)
+    {
+      throw new IllegalArgumentException("Connector type (scheme) missing: " + description);
+    }
+
+    String factoryType = description.substring(0, pos);
+
+    String connectorDescription = description.substring(pos + SCHEME_SEPARATOR.length());
+    if (StringUtil.isEmpty(connectorDescription))
+    {
+      throw new IllegalArgumentException("Illegal connector description: " + description);
+    }
+
+    return (IConnector)container.getElement(ConnectorFactory.PRODUCT_GROUP, factoryType, connectorDescription);
   }
 
   public static IBufferProvider getBufferProvider(Object object)

@@ -1,0 +1,12 @@
+org.eclipse.net4j.buddies/debug = true
+org.eclipse.net4j.buddies/debug.util = true
+org.eclipse.net4j.buddies/debug.model = true
+org.eclipse.net4j.buddies/debug.protocol = true
+org.eclipse.net4j.buddies/debug.repository = true
+org.eclipse.net4j.buddies/debug.session = true
+org.eclipse.net4j.buddies/debug.adapter = true
+org.eclipse.net4j.buddies/debug.view = true
+org.eclipse.net4j.buddies/debug.transaction = true
+org.eclipse.net4j.buddies/debug.object = true
+org.eclipse.net4j.buddies/debug.resource = true
+org.eclipse.net4j.buddies/debug.revision = true

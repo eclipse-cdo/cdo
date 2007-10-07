@@ -58,7 +58,6 @@ import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
-import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -1152,23 +1151,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       setCurrentViewer(selectionViewer);
 
       selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-      selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory)
-      {
-        @Override
-        public String getColumnText(Object object, int columnIndex)
-        {
-          try
-          {
-            InternalCDOObject cdoObject = FSMUtil.adapt(object, view);
-            return super.getColumnText(object, columnIndex) + " [" + cdoObject.cdoID() + "]";
-          }
-          catch (RuntimeException ex)
-          {
-            return super.getColumnText(object, columnIndex);
-          }
-        }
-      });
-
+      selectionViewer.setLabelProvider(new CDOLabelProvider(adapterFactory, view, selectionViewer));
       selectionViewer.setInput(viewerInput);
       // selectionViewer.setSelection(new StructuredSelection(viewerInput),
       // true);

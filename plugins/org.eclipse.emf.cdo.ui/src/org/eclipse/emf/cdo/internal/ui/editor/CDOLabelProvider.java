@@ -16,9 +16,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Eike Stepper
@@ -40,12 +37,7 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     super(adapterFactory);
     this.view = view;
     this.viewer = viewer;
-
-    Control control = viewer.getControl();
-    FontData[] datas = control.getFont().getFontData().clone();
-    datas[0].setStyle(SWT.BOLD);
-    Display display = control.getShell().getDisplay();
-    bold = new Font(display, datas);
+    bold = UIUtil.getBoldFont(viewer.getControl());
   }
 
   public CDOView getView()

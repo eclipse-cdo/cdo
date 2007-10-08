@@ -14,6 +14,7 @@ import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
@@ -21,6 +22,10 @@ import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -28,6 +33,10 @@ import org.eclipse.swt.graphics.Image;
  */
 public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object>>
 {
+  private static final Color GRAY = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
+
+  private Font bold;
+
   public BuddiesItemProvider()
   {
   }
@@ -35,6 +44,13 @@ public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object
   public BuddiesItemProvider(IElementFilter rootElementFilter)
   {
     super(rootElementFilter);
+  }
+
+  @Override
+  public void dispose()
+  {
+    UIUtil.dispose(bold);
+    super.dispose();
   }
 
   @Override
@@ -60,6 +76,9 @@ public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object
       case AVAILABLE:
         return SharedIcons.getImage(SharedIcons.OBJ_BUDDY);
 
+      case LONESOME:
+        return SharedIcons.getImage(SharedIcons.OBJ_BUDDY_LONESOME);
+
       case AWAY:
         return SharedIcons.getImage(SharedIcons.OBJ_BUDDY_AWAY);
 
@@ -69,6 +88,39 @@ public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object
     }
 
     return super.getImage(obj);
+  }
+
+  @Override
+  public Color getForeground(Object obj)
+  {
+    if (obj instanceof IBuddy)
+    {
+      IBuddy buddy = (IBuddy)obj;
+      switch (buddy.getState())
+      {
+      case AWAY:
+      case DO_NOT_DISTURB:
+        return GRAY;
+      }
+    }
+
+    return super.getForeground(obj);
+  }
+
+  @Override
+  public Font getFont(Object obj)
+  {
+    if (obj instanceof IBuddy)
+    {
+      IBuddy buddy = (IBuddy)obj;
+      switch (buddy.getState())
+      {
+      case LONESOME:
+        return bold;
+      }
+    }
+
+    return super.getFont(obj);
   }
 
   @Override
@@ -82,6 +134,14 @@ public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object
         manager.add(new RemoveAction(obj));
       }
     }
+  }
+
+  @Override
+  public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
+  {
+    UIUtil.dispose(bold);
+    super.inputChanged(viewer, oldInput, newInput);
+    bold = UIUtil.getBoldFont(getViewer().getControl());
   }
 
   /**

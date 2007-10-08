@@ -14,8 +14,11 @@ import org.eclipse.net4j.util.internal.ui.security.InteractiveCredentialsProvide
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
@@ -26,6 +29,23 @@ public final class UIUtil
 {
   private UIUtil()
   {
+  }
+
+  public static void dispose(Font font)
+  {
+    if (font!= null)
+    {
+      font.dispose();
+    }
+  }
+
+  public static Font getBoldFont(Control control)
+  {
+    FontData[] datas = control.getFont().getFontData().clone();
+    datas[0].setStyle(SWT.BOLD);
+    Display display = control.getShell().getDisplay();
+    Font font = new Font(display, datas);
+    return font;
   }
 
   public static Display getDisplay()

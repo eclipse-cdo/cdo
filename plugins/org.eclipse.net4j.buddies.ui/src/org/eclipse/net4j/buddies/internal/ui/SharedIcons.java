@@ -39,6 +39,8 @@ public class SharedIcons
 
   public static final String OBJ_BUDDY = OBJ + "buddy";
 
+  public static final String OBJ_BUDDY_LONESOME = OBJ + "buddy_lonesome";
+
   public static final String OBJ_BUDDY_AWAY = OBJ + "buddy_away";
 
   public static final String OBJ_BUDDY_DO_NOT_DISTURB = OBJ + "buddy_do_not_disturb";

@@ -7,7 +7,6 @@ import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.util.container.ContainerUtil;
@@ -34,6 +33,8 @@ public class BuddiesView extends ContainerView implements IListener
   private DisconnectAction disconnectAction = new DisconnectAction();
 
   private StateAction availableAction = new StateAction("Available", State.AVAILABLE, SharedIcons.OBJ_BUDDY);
+
+  private StateAction lonesomeAction = new StateAction("Lonesome", State.LONESOME, SharedIcons.OBJ_BUDDY);
 
   private StateAction awayAction = new StateAction("Away", State.AWAY, SharedIcons.OBJ_BUDDY_AWAY);
 
@@ -171,11 +172,11 @@ public class BuddiesView extends ContainerView implements IListener
         }
       }
     }
-    else if (event instanceof IBuddyStateChangedEvent)
-    {
-      IBuddyStateChangedEvent e = (IBuddyStateChangedEvent)event;
-      updateLabels(e.getBuddy());
-    }
+    // else if (event instanceof IBuddyStateChangedEvent)
+    // {
+    // IBuddyStateChangedEvent e = (IBuddyStateChangedEvent)event;
+    // updateLabels(e.getBuddy());
+    // }
   }
 
   protected void closeView()
@@ -218,6 +219,7 @@ public class BuddiesView extends ContainerView implements IListener
   protected void fillLocalToolBar(IToolBarManager manager)
   {
     manager.add(availableAction);
+    manager.add(lonesomeAction);
     manager.add(awayAction);
     manager.add(doNotDisturbAction);
     super.fillLocalToolBar(manager);

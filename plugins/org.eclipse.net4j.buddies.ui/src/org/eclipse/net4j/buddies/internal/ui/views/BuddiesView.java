@@ -9,6 +9,7 @@ import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
 import org.eclipse.net4j.internal.buddies.Self;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerDelta;
@@ -25,12 +26,15 @@ import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 
 public class BuddiesView extends ContainerView implements IListener
 {
   private ConnectAction connectAction = new ConnectAction();
 
   private DisconnectAction disconnectAction = new DisconnectAction();
+
+  private FlashAction flashAction = new FlashAction();
 
   private StateAction availableAction = new StateAction("Available", State.AVAILABLE, SharedIcons.OBJ_BUDDY);
 
@@ -44,6 +48,8 @@ public class BuddiesView extends ContainerView implements IListener
   private IBuddySession session;
 
   private boolean connecting;
+
+  private boolean flashing;
 
   public BuddiesView()
   {
@@ -234,6 +240,8 @@ public class BuddiesView extends ContainerView implements IListener
   {
     manager.add(connectAction);
     manager.add(disconnectAction);
+    manager.add(new Separator());
+    manager.add(flashAction);
     super.fillLocalPullDown(manager);
   }
 
@@ -293,6 +301,44 @@ public class BuddiesView extends ContainerView implements IListener
       {
         Self self = (Self)session.getSelf();
         self.setState(state);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class FlashAction extends SafeAction
+  {
+    private FlashAction()
+    {
+      super("Flash Me", "Flash Me");
+    }
+
+    @Override
+    protected void safeRun() throws Exception
+    {
+      if (session != null && !flashing)
+      {
+        final Self self = (Self)session.getSelf();
+        final State original = self.getState();
+        new Thread("buddies-flasher")
+        {
+          @Override
+          public void run()
+          {
+            flashing = true;
+            IBuddy.State state = original == IBuddy.State.AVAILABLE ? IBuddy.State.LONESOME : IBuddy.State.AVAILABLE;
+            for (int i = 0; i < 10; i++)
+            {
+              self.setState(state);
+              ConcurrencyUtil.sleep(400);
+            }
+
+            self.setState(original);
+            flashing = false;
+          }
+        }.start();
       }
     }
   }

@@ -10,9 +10,16 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
+import org.eclipse.net4j.buddies.internal.protocol.BuddyStateIndication;
+import org.eclipse.net4j.buddies.internal.server.Buddy;
 import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.IBuddy.State;
+import org.eclipse.net4j.buddies.server.IBuddyAdmin;
+import org.eclipse.net4j.buddies.server.IBuddySession;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -35,6 +42,25 @@ public class BuddiesServerProtocol extends SignalProtocol
     {
     case ProtocolConstants.SIGNAL_OPEN_SESSION:
       return new OpenSessionIndication();
+
+    case ProtocolConstants.SIGNAL_BUDDY_STATE:
+      return new BuddyStateIndication()
+      {
+        @Override
+        protected void stateChanged(String userID, State state)
+        {
+          synchronized (IBuddyAdmin.INSTANCE)
+          {
+            Map<String, IBuddySession> sessions = IBuddyAdmin.INSTANCE.getSessions();
+            IBuddySession session = sessions.get(userID);
+            if (session != null)
+            {
+              Buddy buddy = (Buddy)session.getBuddy();
+              buddy.setState(state);
+            }
+          }
+        }
+      };
     }
 
     return null;

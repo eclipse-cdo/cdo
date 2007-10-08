@@ -10,7 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies.protocol;
 
+import org.eclipse.net4j.buddies.internal.protocol.BuddyStateIndication;
 import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.IBuddy.State;
 
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
@@ -39,6 +41,15 @@ public class BuddiesClientProtocol extends SignalProtocol
 
     case ProtocolConstants.SIGNAL_BUDDY_REMOVED:
       return new BuddyRemovedIndication();
+
+    case ProtocolConstants.SIGNAL_BUDDY_STATE:
+      return new BuddyStateIndication()
+      {
+        @Override
+        protected void stateChanged(String userID, State state)
+        {
+        }
+      };
     }
 
     return null;

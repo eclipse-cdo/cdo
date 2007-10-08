@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
-import org.eclipse.net4j.buddies.protocol.AccountUtil;
-import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.ProtocolUtil;
+import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.signal.IndicationWithResponse;
@@ -34,7 +34,7 @@ public class LoadAccountIndication extends IndicationWithResponse
   @Override
   protected short getSignalID()
   {
-    return BuddiesProtocolConstants.SIGNAL_LOAD_ACCOUNT;
+    return ProtocolConstants.SIGNAL_LOAD_ACCOUNT;
   }
 
   @Override
@@ -47,6 +47,6 @@ public class LoadAccountIndication extends IndicationWithResponse
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    AccountUtil.writeAccount(out, account);
+    ProtocolUtil.writeAccount(out, account);
   }
 }

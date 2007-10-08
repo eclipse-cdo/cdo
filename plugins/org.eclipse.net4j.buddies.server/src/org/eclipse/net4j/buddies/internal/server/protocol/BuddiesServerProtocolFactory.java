@@ -1,6 +1,6 @@
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
-import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.internal.net4j.ServerProtocolFactory;
@@ -10,7 +10,7 @@ import org.eclipse.internal.net4j.ServerProtocolFactory;
  */
 public class BuddiesServerProtocolFactory extends ServerProtocolFactory
 {
-  public static final String TYPE = BuddiesProtocolConstants.PROTOCOL_NAME;
+  public static final String TYPE = ProtocolConstants.PROTOCOL_NAME;
 
   public BuddiesServerProtocolFactory()
   {

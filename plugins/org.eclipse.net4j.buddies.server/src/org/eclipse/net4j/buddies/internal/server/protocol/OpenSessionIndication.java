@@ -12,8 +12,8 @@ package org.eclipse.net4j.buddies.internal.server.protocol;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
-import org.eclipse.net4j.buddies.protocol.AccountUtil;
-import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.ProtocolUtil;
+import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.buddies.server.IBuddySession;
@@ -42,7 +42,7 @@ public class OpenSessionIndication extends IndicationWithResponse
   @Override
   protected short getSignalID()
   {
-    return BuddiesProtocolConstants.SIGNAL_OPEN_SESSION;
+    return ProtocolConstants.SIGNAL_OPEN_SESSION;
   }
 
   @Override
@@ -71,7 +71,7 @@ public class OpenSessionIndication extends IndicationWithResponse
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    AccountUtil.writeAccount(out, account);
+    ProtocolUtil.writeAccount(out, account);
     if (account != null)
     {
       List<IChannel> channels = new ArrayList<IChannel>();

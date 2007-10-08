@@ -11,7 +11,7 @@
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
 import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -33,7 +33,7 @@ public class BuddyRemovedNotification extends Request
   @Override
   protected short getSignalID()
   {
-    return BuddiesProtocolConstants.SIGNAL_BUDDY_REMOVED;
+    return ProtocolConstants.SIGNAL_BUDDY_REMOVED;
   }
 
   @Override

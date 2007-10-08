@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.server;
 
-import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
 
 /**
  * @author Eike Stepper
  */
 public interface ServerConstants
 {
-  public static final String TYPE = BuddiesProtocolConstants.PROTOCOL_NAME + "server";
+  public static final String TYPE = ProtocolConstants.PROTOCOL_NAME + "server";
 }

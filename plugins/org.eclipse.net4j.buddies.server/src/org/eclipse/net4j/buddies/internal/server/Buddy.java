@@ -8,24 +8,30 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.buddies;
+package org.eclipse.net4j.buddies.internal.server;
 
-import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.util.container.IContainer;
-
-import java.util.Map;
+import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
 
 /**
  * @author Eike Stepper
  */
-public interface IBuddySession extends IContainer<IBuddy>
+public class Buddy implements IBuddy
 {
-  public IChannel getChannel();
+  private IBuddyAccount account;
 
-  public IBuddy getSelf();
+  public Buddy(IBuddyAccount account)
+  {
+    this.account = account;
+  }
 
-  public Map<String, IBuddy> getBuddies();
+  public String getUserID()
+  {
+    return account.getUserID();
+  }
 
-  public void close();
+  public IBuddyAccount getAccount()
+  {
+    return account;
+  }
 }

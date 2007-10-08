@@ -19,6 +19,7 @@ import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -61,11 +62,13 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
       return null;
     }
 
+    BuddySession session = new BuddySession(getProtocol().getChannel());
+    getProtocol().setInfraStructure(session);
+
     int size = in.readInt();
-    String[] buddies = new String[size];
     for (int i = 0; i < size; i++)
     {
-      buddies[i] = in.readString();
+      session.addBuddy(in.readString());
     }
 
     IBuddyAccount account;
@@ -83,8 +86,8 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
       throw WrappedException.wrap(ex);
     }
 
-    BuddySession session = new BuddySession(getProtocol().getChannel(), account, buddies);
-    getProtocol().setInfraStructure(session);
+    session.setSelf(account);
+    LifecycleUtil.activate(session);
     return session;
   }
 }

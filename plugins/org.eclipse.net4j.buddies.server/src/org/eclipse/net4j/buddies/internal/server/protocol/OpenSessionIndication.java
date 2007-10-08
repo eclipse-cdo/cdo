@@ -59,7 +59,7 @@ public class OpenSessionIndication extends IndicationWithResponse
       if (session != null)
       {
         getProtocol().setInfraStructure(session);
-        account = session.getAccount();
+        account = session.getBuddy().getAccount();
       }
       else
       {

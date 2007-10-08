@@ -73,7 +73,8 @@ public class BuddyAdmin extends Lifecycle implements IBuddyAdmin, IListener
       accounts.put(userID, account);
     }
 
-    BuddySession session = new BuddySession(channel, account);
+    Buddy buddy = new Buddy(account);
+    BuddySession session = new BuddySession(channel, buddy);
     sessions.put(userID, session);
     session.addListener(this);
     return session;
@@ -87,7 +88,7 @@ public class BuddyAdmin extends Lifecycle implements IBuddyAdmin, IListener
       {
         if (((ILifecycleEvent)event).getKind() == ILifecycleEvent.Kind.DEACTIVATED)
         {
-          String userID = ((IBuddySession)event.getSource()).getAccount().getUserID();
+          String userID = ((IBuddySession)event.getSource()).getBuddy().getUserID();
           synchronized (this)
           {
             if (sessions.remove(userID) != null)

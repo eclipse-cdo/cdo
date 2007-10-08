@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.buddies;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.IBuddySession;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
 import org.eclipse.net4j.internal.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
@@ -19,11 +20,10 @@ import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -32,20 +32,13 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
 {
   private IChannel channel;
 
-  private IBuddyAccount account;
+  private IBuddy self;
 
-  private Set<String> buddies = new HashSet<String>();
+  private Map<String, IBuddy> buddies = new HashMap<String, IBuddy>();
 
-  public BuddySession(IChannel channel, IBuddyAccount account, String[] buddies)
+  public BuddySession(IChannel channel)
   {
     this.channel = channel;
-    this.account = account;
-    for (String buddy : buddies)
-    {
-      this.buddies.add(buddy);
-    }
-
-    LifecycleUtil.activate(this);
   }
 
   public IChannel getChannel()
@@ -53,24 +46,44 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
     return channel;
   }
 
-  public IBuddyAccount getAccount()
+  public IBuddy getSelf()
   {
-    return account;
+    return self;
   }
 
-  public Set<String> getBuddies()
+  public void setSelf(IBuddyAccount account)
+  {
+    this.self = new Buddy(this, account);
+  }
+
+  public IBuddy addBuddy(String userID)
+  {
+    Buddy buddy = null;
+    synchronized (buddies)
+    {
+      if (!buddies.containsKey(userID))
+      {
+        buddy = new Buddy(this, userID);
+        buddies.put(userID, buddy);
+      }
+    }
+
+    return buddy;
+  }
+
+  public Map<String, IBuddy> getBuddies()
   {
     synchronized (buddies)
     {
-      return Collections.unmodifiableSet(buddies);
+      return Collections.unmodifiableMap(buddies);
     }
   }
 
-  public String[] getElements()
+  public IBuddy[] getElements()
   {
     synchronized (buddies)
     {
-      return buddies.toArray(new String[buddies.size()]);
+      return buddies.values().toArray(new IBuddy[buddies.size()]);
     }
   }
 
@@ -102,24 +115,27 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
     }
   }
 
-  public void buddyAdded(String buddy)
+  public void buddyAdded(String userID)
   {
-    synchronized (buddies)
+    IBuddy buddy = addBuddy(userID);
+    if (buddy != null)
     {
-      buddies.add(buddy);
+      fireEvent(new SingleDeltaContainerEvent<IBuddy>(this, buddy, IContainerDelta.Kind.ADDED));
     }
-
-    fireEvent(new SingleDeltaContainerEvent<String>(this, buddy, IContainerDelta.Kind.ADDED));
   }
 
-  public void buddyRemoved(String buddy)
+  public void buddyRemoved(String userID)
   {
+    IBuddy buddy;
     synchronized (buddies)
     {
-      buddies.remove(buddy);
+      buddy = buddies.remove(userID);
     }
 
-    fireEvent(new SingleDeltaContainerEvent<String>(this, buddy, IContainerDelta.Kind.REMOVED));
+    if (buddy != null)
+    {
+      fireEvent(new SingleDeltaContainerEvent<IBuddy>(this, buddy, IContainerDelta.Kind.REMOVED));
+    }
   }
 
   @Override

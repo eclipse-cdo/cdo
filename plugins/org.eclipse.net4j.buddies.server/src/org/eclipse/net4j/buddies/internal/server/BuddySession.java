@@ -11,7 +11,7 @@
 package org.eclipse.net4j.buddies.internal.server;
 
 import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.server.IBuddySession;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.event.IEvent;
@@ -26,12 +26,12 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
 {
   private IChannel channel;
 
-  private IBuddyAccount account;
+  private IBuddy buddy;
 
-  public BuddySession(IChannel channel, IBuddyAccount account)
+  public BuddySession(IChannel channel, IBuddy buddy)
   {
     this.channel = channel;
-    this.account = account;
+    this.buddy = buddy;
     LifecycleUtil.activate(this);
   }
 
@@ -40,9 +40,9 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
     return channel;
   }
 
-  public IBuddyAccount getAccount()
+  public IBuddy getBuddy()
   {
-    return account;
+    return buddy;
   }
 
   public void close()
@@ -70,13 +70,13 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
   {
     super.doActivate();
     channel.addListener(this);
-    account.touch();
+    buddy.getAccount().touch();
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    account.touch();
+    buddy.getAccount().touch();
     channel.removeListener(this);
     super.doDeactivate();
   }

@@ -11,7 +11,7 @@
 package org.eclipse.net4j.buddies.server;
 
 import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
 
 /**
  * @author Eike Stepper
@@ -20,7 +20,7 @@ public interface IBuddySession
 {
   public IChannel getChannel();
 
-  public IBuddyAccount getAccount();
+  public IBuddy getBuddy();
 
   public void close();
 }

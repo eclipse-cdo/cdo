@@ -12,7 +12,7 @@ package org.eclipse.net4j.buddies;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
 import org.eclipse.net4j.internal.buddies.protocol.OpenSessionRequest;
 import org.eclipse.net4j.signal.SignalActor;
 import org.eclipse.net4j.util.WrappedException;
@@ -30,7 +30,7 @@ public final class BuddiesUtil
   {
     try
     {
-      IChannel channel = connector.openChannel(BuddiesProtocolConstants.PROTOCOL_NAME, null);
+      IChannel channel = connector.openChannel(ProtocolConstants.PROTOCOL_NAME, null);
       OpenSessionRequest request = new OpenSessionRequest(channel, userID, password);
       return request.send(timeout);
     }

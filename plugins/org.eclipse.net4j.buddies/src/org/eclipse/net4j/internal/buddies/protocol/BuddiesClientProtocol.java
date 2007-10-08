@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies.protocol;
 
-import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
 
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
@@ -26,7 +26,7 @@ public class BuddiesClientProtocol extends SignalProtocol
 
   public String getType()
   {
-    return BuddiesProtocolConstants.PROTOCOL_NAME;
+    return ProtocolConstants.PROTOCOL_NAME;
   }
 
   @Override
@@ -34,10 +34,10 @@ public class BuddiesClientProtocol extends SignalProtocol
   {
     switch (signalID)
     {
-    case BuddiesProtocolConstants.SIGNAL_BUDDY_ADDED:
+    case ProtocolConstants.SIGNAL_BUDDY_ADDED:
       return new BuddyAddedIndication();
 
-    case BuddiesProtocolConstants.SIGNAL_BUDDY_REMOVED:
+    case ProtocolConstants.SIGNAL_BUDDY_REMOVED:
       return new BuddyRemovedIndication();
     }
 

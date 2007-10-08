@@ -11,8 +11,8 @@
 package org.eclipse.net4j.internal.buddies.protocol;
 
 import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.buddies.protocol.AccountUtil;
-import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.ProtocolUtil;
+import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -36,7 +36,7 @@ public class LoadAccountRequest extends RequestWithConfirmation<IBuddyAccount>
   @Override
   protected short getSignalID()
   {
-    return BuddiesProtocolConstants.SIGNAL_LOAD_ACCOUNT;
+    return ProtocolConstants.SIGNAL_LOAD_ACCOUNT;
   }
 
   @Override
@@ -48,6 +48,6 @@ public class LoadAccountRequest extends RequestWithConfirmation<IBuddyAccount>
   @Override
   protected IBuddyAccount confirming(ExtendedDataInputStream in) throws IOException
   {
-    return AccountUtil.readAccount(in);
+    return ProtocolUtil.readAccount(in);
   }
 }

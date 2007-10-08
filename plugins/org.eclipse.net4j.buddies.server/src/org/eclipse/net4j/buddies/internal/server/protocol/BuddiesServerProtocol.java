@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
-import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 
@@ -25,7 +25,7 @@ public class BuddiesServerProtocol extends SignalProtocol
 
   public String getType()
   {
-    return BuddiesProtocolConstants.PROTOCOL_NAME;
+    return ProtocolConstants.PROTOCOL_NAME;
   }
 
   @Override
@@ -33,7 +33,7 @@ public class BuddiesServerProtocol extends SignalProtocol
   {
     switch (signalID)
     {
-    case BuddiesProtocolConstants.SIGNAL_OPEN_SESSION:
+    case ProtocolConstants.SIGNAL_OPEN_SESSION:
       return new OpenSessionIndication();
     }
 

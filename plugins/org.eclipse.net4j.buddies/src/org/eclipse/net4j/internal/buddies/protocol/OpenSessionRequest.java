@@ -12,8 +12,8 @@ package org.eclipse.net4j.internal.buddies.protocol;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.IBuddySession;
-import org.eclipse.net4j.buddies.protocol.AccountUtil;
-import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.ProtocolUtil;
+import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
 import org.eclipse.net4j.internal.buddies.BuddySession;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
@@ -42,7 +42,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
   @Override
   protected short getSignalID()
   {
-    return BuddiesProtocolConstants.SIGNAL_OPEN_SESSION;
+    return ProtocolConstants.SIGNAL_OPEN_SESSION;
   }
 
   @Override
@@ -55,7 +55,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
   @Override
   protected IBuddySession confirming(ExtendedDataInputStream in) throws IOException
   {
-    IBuddyAccount account = AccountUtil.readAccount(in);
+    IBuddyAccount account = ProtocolUtil.readAccount(in);
     if (account == null)
     {
       return null;

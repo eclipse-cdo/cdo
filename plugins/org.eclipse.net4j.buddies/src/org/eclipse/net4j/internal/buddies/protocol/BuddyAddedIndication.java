@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies.protocol;
 
-import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
 import org.eclipse.net4j.internal.buddies.BuddySession;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -29,7 +29,7 @@ public class BuddyAddedIndication extends Indication
   @Override
   protected short getSignalID()
   {
-    return BuddiesProtocolConstants.SIGNAL_BUDDY_ADDED;
+    return ProtocolConstants.SIGNAL_BUDDY_ADDED;
   }
 
   @Override

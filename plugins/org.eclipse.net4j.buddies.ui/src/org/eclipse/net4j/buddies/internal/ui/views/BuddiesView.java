@@ -10,6 +10,7 @@ import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
 import org.eclipse.net4j.internal.buddies.Self;
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
@@ -81,6 +82,7 @@ public class BuddiesView extends ContainerView implements IListener
             {
               if (connecting)
               {
+                resetInput();
                 connectAction.setEnabled(false);
                 disconnectAction.setEnabled(true);
                 availableAction.setEnabled(true);
@@ -113,6 +115,7 @@ public class BuddiesView extends ContainerView implements IListener
     session.removeListener(this);
     session.close();
     session = null;
+    resetInput();
 
     connectAction.setEnabled(true);
     disconnectAction.setEnabled(false);
@@ -158,11 +161,11 @@ public class BuddiesView extends ContainerView implements IListener
           e.getDeltaElement().removeListener(this);
         }
       }
-      else if (event instanceof IBuddyStateChangedEvent)
-      {
-        IBuddyStateChangedEvent e = (IBuddyStateChangedEvent)event;
-        updateLabels(e.getBuddy());
-      }
+    }
+    else if (event instanceof IBuddyStateChangedEvent)
+    {
+      IBuddyStateChangedEvent e = (IBuddyStateChangedEvent)event;
+      updateLabels(e.getBuddy());
     }
   }
 
@@ -193,7 +196,7 @@ public class BuddiesView extends ContainerView implements IListener
   @Override
   protected IContainer<?> getContainer()
   {
-    return session;
+    return session != null ? session : ContainerUtil.emptyContainer();
   }
 
   @Override

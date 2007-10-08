@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.container;
 
 import org.eclipse.net4j.internal.util.container.ManagedContainer;
+import org.eclipse.net4j.util.event.IListener;
 
 /**
  * @author Eike Stepper
@@ -19,8 +20,34 @@ public final class ContainerUtil
 {
   private static final Object[] NO_ELEMENTS = {};
 
+  private static final IContainer<Object> EMPTY = new IContainer<Object>()
+  {
+    public Object[] getElements()
+    {
+      return NO_ELEMENTS;
+    }
+
+    public boolean isEmpty()
+    {
+      return true;
+    }
+
+    public void addListener(IListener listener)
+    {
+    }
+
+    public void removeListener(IListener listener)
+    {
+    }
+  };
+
   private ContainerUtil()
   {
+  }
+
+  public static IContainer<Object> emptyContainer()
+  {
+    return EMPTY;
   }
 
   public static IManagedContainer createContainer()

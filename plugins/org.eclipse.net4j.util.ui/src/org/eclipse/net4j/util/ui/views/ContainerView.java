@@ -58,6 +58,29 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     viewer.getControl().setFocus();
   }
 
+  public void resetInput()
+  {
+    try
+    {
+      getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            viewer.setInput(getContainer());
+          }
+          catch (RuntimeException ignore)
+          {
+          }
+        }
+      });
+    }
+    catch (RuntimeException ignore)
+    {
+    }
+  }
+
   public void selectReveal(ISelection selection)
   {
     viewer.setSelection(selection, true);
@@ -71,7 +94,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     viewer.setContentProvider(itemProvider);
     viewer.setLabelProvider(itemProvider);
     viewer.setSorter(new ContainerNameSorter());
-    viewer.setInput(getContainer());
+    resetInput();
     viewer.addSelectionChangedListener(selectionListener);
     getSite().setSelectionProvider(viewer);
 

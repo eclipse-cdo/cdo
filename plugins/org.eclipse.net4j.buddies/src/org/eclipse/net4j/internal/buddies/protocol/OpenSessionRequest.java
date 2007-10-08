@@ -62,6 +62,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
     }
 
     BuddySession session = new BuddySession(getProtocol().getChannel());
+    getProtocol().setInfraStructure(session);
     session.setSelf(account);
 
     int size = in.readInt();
@@ -70,7 +71,6 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
       session.buddyAdded(in.readString());
     }
 
-    getProtocol().setInfraStructure(session);
     LifecycleUtil.activate(session);
     return session;
   }

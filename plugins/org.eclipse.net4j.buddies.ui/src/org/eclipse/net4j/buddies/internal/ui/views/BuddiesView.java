@@ -92,6 +92,8 @@ public class BuddiesView extends ContainerView implements IListener
                   disconnectAction.setEnabled(true);
                   availableAction.setEnabled(true);
                   availableAction.setChecked(session.getSelf().getState() == IBuddy.State.AVAILABLE);
+                  lonesomeAction.setEnabled(true);
+                  lonesomeAction.setChecked(session.getSelf().getState() == IBuddy.State.LONESOME);
                   awayAction.setEnabled(true);
                   awayAction.setChecked(session.getSelf().getState() == IBuddy.State.AWAY);
                   doNotDisturbAction.setEnabled(true);
@@ -131,6 +133,8 @@ public class BuddiesView extends ContainerView implements IListener
     disconnectAction.setEnabled(false);
     availableAction.setEnabled(false);
     availableAction.setChecked(false);
+    lonesomeAction.setEnabled(false);
+    lonesomeAction.setChecked(false);
     awayAction.setEnabled(false);
     awayAction.setChecked(false);
     doNotDisturbAction.setEnabled(false);

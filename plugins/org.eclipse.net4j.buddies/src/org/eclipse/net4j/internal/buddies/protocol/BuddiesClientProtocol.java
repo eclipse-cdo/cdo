@@ -17,6 +17,7 @@ import org.eclipse.net4j.internal.buddies.Buddy;
 import org.eclipse.net4j.internal.buddies.BuddySession;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 /**
  * @author Eike Stepper
@@ -49,11 +50,23 @@ public class BuddiesClientProtocol extends SignalProtocol
         @Override
         protected void stateChanged(String userID, State state)
         {
-          BuddySession session = (BuddySession)getInfraStructure();
-          Buddy buddy = (Buddy)session.getBuddies().get(userID);
-          if (buddy != null)
+          for (int i = 0; i < 50; i++)
           {
-            buddy.setState(state);
+            BuddySession session = (BuddySession)getProtocol().getInfraStructure();
+            if (session == null)
+            {
+              ConcurrencyUtil.sleep(100);
+            }
+            else
+            {
+              Buddy buddy = (Buddy)session.getBuddies().get(userID);
+              if (buddy != null)
+              {
+                buddy.setState(state);
+              }
+
+              break;
+            }
           }
         }
       };

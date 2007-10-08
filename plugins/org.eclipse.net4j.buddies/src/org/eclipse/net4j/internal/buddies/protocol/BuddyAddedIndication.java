@@ -13,6 +13,7 @@ package org.eclipse.net4j.internal.buddies.protocol;
 import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
 import org.eclipse.net4j.internal.buddies.BuddySession;
 import org.eclipse.net4j.signal.Indication;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
 import java.io.IOException;
@@ -36,18 +37,18 @@ public class BuddyAddedIndication extends Indication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     String buddy = in.readString();
-    // for (int i = 0; i < 5; i++)
-    // {
-    BuddySession session = (BuddySession)getProtocol().getInfraStructure();
-    // if (session == null)
-    // {
-    // ConcurrencyUtil.sleep(1000);
-    // }
-    // else
-    // {
-    session.buddyAdded(buddy);
-    // break;
-    // }
-    // }
+    for (int i = 0; i < 50; i++)
+    {
+      BuddySession session = (BuddySession)getProtocol().getInfraStructure();
+      if (session == null)
+      {
+        ConcurrencyUtil.sleep(100);
+      }
+      else
+      {
+        session.buddyAdded(buddy);
+        break;
+      }
+    }
   }
 }

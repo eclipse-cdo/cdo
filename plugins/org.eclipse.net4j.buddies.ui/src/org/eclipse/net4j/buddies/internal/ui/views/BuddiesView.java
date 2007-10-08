@@ -333,6 +333,7 @@ public class BuddiesView extends ContainerView implements IListener
             {
               self.setState(state);
               ConcurrencyUtil.sleep(400);
+              state = state == IBuddy.State.AVAILABLE ? IBuddy.State.LONESOME : IBuddy.State.AVAILABLE;
             }
 
             self.setState(original);

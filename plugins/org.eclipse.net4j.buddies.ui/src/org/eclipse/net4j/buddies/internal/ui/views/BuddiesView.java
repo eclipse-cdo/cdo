@@ -34,7 +34,7 @@ public class BuddiesView extends ContainerView implements IListener
 
   private StateAction availableAction = new StateAction("Available", State.AVAILABLE, SharedIcons.OBJ_BUDDY);
 
-  private StateAction lonesomeAction = new StateAction("Lonesome", State.LONESOME, SharedIcons.OBJ_BUDDY);
+  private StateAction lonesomeAction = new StateAction("Lonesome", State.LONESOME, SharedIcons.OBJ_BUDDY_LONESOME);
 
   private StateAction awayAction = new StateAction("Away", State.AWAY, SharedIcons.OBJ_BUDDY_AWAY);
 

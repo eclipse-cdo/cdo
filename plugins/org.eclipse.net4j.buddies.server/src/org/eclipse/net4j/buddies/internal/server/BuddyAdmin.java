@@ -11,6 +11,7 @@
 package org.eclipse.net4j.buddies.internal.server;
 
 import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyAccount;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateNotification;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
@@ -83,6 +84,8 @@ public class BuddyAdmin extends Lifecycle implements IBuddyAdmin, IListener
     buddy.addListener(this);
 
     BuddySession session = new BuddySession(channel, buddy);
+    ((IProtocol)channel.getReceiveHandler()).setInfraStructure(session);
+
     sessions.put(userID, session);
     session.addListener(this);
     if (TRACER.isEnabled()) TRACER.trace("Opened session: " + userID);

@@ -58,7 +58,6 @@ public class OpenSessionIndication extends IndicationWithResponse
       IBuddySession session = IBuddyAdmin.INSTANCE.openSession(getProtocol().getChannel(), userID, password);
       if (session != null)
       {
-        getProtocol().setInfraStructure(session);
         account = session.getBuddy().getAccount();
       }
       else

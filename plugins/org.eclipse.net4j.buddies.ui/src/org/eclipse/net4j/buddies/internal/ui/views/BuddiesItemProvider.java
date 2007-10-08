@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
+import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
@@ -36,10 +37,23 @@ public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object
   }
 
   @Override
+  public String getText(Object obj)
+  {
+    if (obj instanceof IBuddy)
+    {
+      IBuddy buddy = (IBuddy)obj;
+      return buddy.getUserID();
+    }
+
+    return super.getText(obj);
+  }
+
+  @Override
   public Image getImage(Object obj)
   {
-    if (obj instanceof String)
+    if (obj instanceof IBuddy)
     {
+      IBuddy buddy = (IBuddy)obj;
       // return SharedIcons.getImage(SharedIcons.OBJ_ACCEPTOR);
     }
 
@@ -52,7 +66,7 @@ public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object
     if (selection.size() == 1)
     {
       Object obj = selection.getFirstElement();
-      if (obj instanceof String)
+      if (obj instanceof IBuddy)
       {
         manager.add(new RemoveAction(obj));
       }

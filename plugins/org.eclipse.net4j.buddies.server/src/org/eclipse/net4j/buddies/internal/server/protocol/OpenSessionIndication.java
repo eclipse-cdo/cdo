@@ -12,6 +12,7 @@ package org.eclipse.net4j.buddies.internal.server.protocol;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
+import org.eclipse.net4j.buddies.protocol.AccountUtil;
 import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
@@ -21,7 +22,6 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -71,9 +71,9 @@ public class OpenSessionIndication extends IndicationWithResponse
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
+    AccountUtil.writeAccount(out, account);
     if (account != null)
     {
-      out.writeBoolean(true);
       List<IChannel> channels = new ArrayList<IChannel>();
       out.writeInt(buddies.length);
       for (String buddy : buddies)
@@ -86,9 +86,6 @@ public class OpenSessionIndication extends IndicationWithResponse
         }
       }
 
-      ObjectOutputStream oos = new ObjectOutputStream(out);
-      oos.writeObject(account);
-
       for (IChannel channel : channels)
       {
         try
@@ -100,10 +97,6 @@ public class OpenSessionIndication extends IndicationWithResponse
           OM.LOG.error(ex);
         }
       }
-    }
-    else
-    {
-      out.writeBoolean(false);
     }
   }
 }

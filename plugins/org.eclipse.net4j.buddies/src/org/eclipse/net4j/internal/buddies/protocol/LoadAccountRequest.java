@@ -11,67 +11,43 @@
 package org.eclipse.net4j.internal.buddies.protocol;
 
 import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.protocol.AccountUtil;
 import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
-import org.eclipse.net4j.internal.buddies.BuddySession;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
+public class LoadAccountRequest extends RequestWithConfirmation<IBuddyAccount>
 {
   private String userID;
 
-  private String password;
-
-  public OpenSessionRequest(IChannel channel, String userID, String password)
+  public LoadAccountRequest(IChannel channel, String userID)
   {
     super(channel);
     this.userID = userID;
-    this.password = password;
   }
 
   @Override
   protected short getSignalID()
   {
-    return BuddiesProtocolConstants.SIGNAL_OPEN_SESSION;
+    return BuddiesProtocolConstants.SIGNAL_LOAD_ACCOUNT;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
     out.writeString(userID);
-    out.writeString(password);
   }
 
   @Override
-  protected IBuddySession confirming(ExtendedDataInputStream in) throws IOException
+  protected IBuddyAccount confirming(ExtendedDataInputStream in) throws IOException
   {
-    IBuddyAccount account = AccountUtil.readAccount(in);
-    if (account == null)
-    {
-      return null;
-    }
-
-    BuddySession session = new BuddySession(getProtocol().getChannel());
-    getProtocol().setInfraStructure(session);
-    session.setSelf(account);
-
-    int size = in.readInt();
-    for (int i = 0; i < size; i++)
-    {
-      session.addBuddy(in.readString());
-    }
-
-    LifecycleUtil.activate(session);
-    return session;
+    return AccountUtil.readAccount(in);
   }
 }

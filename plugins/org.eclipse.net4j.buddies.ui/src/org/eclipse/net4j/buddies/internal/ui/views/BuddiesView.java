@@ -66,6 +66,8 @@ public class BuddiesView extends ContainerView implements IListener
               if (connecting)
               {
                 session.addListener(BuddiesView.this);
+                connectAction.setEnabled(false);
+                disconnectAction.setEnabled(true);
               }
               else
               {
@@ -89,6 +91,8 @@ public class BuddiesView extends ContainerView implements IListener
     session.close();
     session = null;
     connecting = false;
+    connectAction.setEnabled(true);
+    disconnectAction.setEnabled(false);
   }
 
   @Override
@@ -177,12 +181,6 @@ public class BuddiesView extends ContainerView implements IListener
     }
 
     @Override
-    public boolean isEnabled()
-    {
-      return session == null && !connecting;
-    }
-
-    @Override
     protected void safeRun() throws Exception
     {
       connect();
@@ -197,12 +195,6 @@ public class BuddiesView extends ContainerView implements IListener
     private DisconnectAction()
     {
       super("Disonnect", "Disconnect from buddies server");
-    }
-
-    @Override
-    public boolean isEnabled()
-    {
-      return session != null || connecting;
     }
 
     @Override

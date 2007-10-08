@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.server;
 
-import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.internal.protocol.AbstractBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
 
 /**
  * @author Eike Stepper
  */
-public class Buddy implements IBuddy
+public class Buddy extends AbstractBuddy
 {
   private IBuddyAccount account;
 

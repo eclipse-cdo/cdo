@@ -55,7 +55,17 @@ public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object
     if (obj instanceof IBuddy)
     {
       IBuddy buddy = (IBuddy)obj;
-      return SharedIcons.getImage(SharedIcons.OBJ_BUDDY);
+      switch (buddy.getState())
+      {
+      case AVAILABLE:
+        return SharedIcons.getImage(SharedIcons.OBJ_BUDDY);
+
+      case AWAY:
+        return SharedIcons.getImage(SharedIcons.OBJ_BUDDY_AWAY);
+
+      case DO_NOT_DISTURB:
+        return SharedIcons.getImage(SharedIcons.OBJ_BUDDY_DO_NOT_DISTURB);
+      }
     }
 
     return super.getImage(obj);

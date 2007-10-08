@@ -12,20 +12,16 @@ package org.eclipse.net4j.buddies;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.util.container.IContainer;
-
-import java.util.Map;
+import org.eclipse.net4j.buddies.protocol.IBuddyContainer;
 
 /**
  * @author Eike Stepper
  */
-public interface IBuddySession extends IContainer<IBuddy>
+public interface IBuddySession extends IBuddyContainer
 {
   public IChannel getChannel();
 
   public IBuddy getSelf();
-
-  public Map<String, IBuddy> getBuddies();
 
   public void close();
 }

@@ -43,7 +43,6 @@ public abstract class IndicationWithResponse extends SignalReactor
     }
 
     InputStream wrappedInputStream = wrapInputStream(in);
-    getProtocol().getChannel().getConnector().waitForConnection(5000L);
     indicating(ExtendedDataInputStream.wrap(wrappedInputStream));
     finishInputStream(wrappedInputStream);
     if (TRACER.isEnabled())

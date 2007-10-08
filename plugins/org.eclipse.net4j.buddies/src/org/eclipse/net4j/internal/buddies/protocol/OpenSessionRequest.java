@@ -67,7 +67,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
     int size = in.readInt();
     for (int i = 0; i < size; i++)
     {
-      session.addBuddy(in.readString());
+      session.buddyAdded(in.readString());
     }
 
     getProtocol().setInfraStructure(session);

@@ -36,7 +36,18 @@ public class BuddyAddedIndication extends Indication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     String buddy = in.readString();
+    // for (int i = 0; i < 5; i++)
+    // {
     BuddySession session = (BuddySession)getProtocol().getInfraStructure();
+    // if (session == null)
+    // {
+    // ConcurrencyUtil.sleep(1000);
+    // }
+    // else
+    // {
     session.buddyAdded(buddy);
+    // break;
+    // }
+    // }
   }
 }

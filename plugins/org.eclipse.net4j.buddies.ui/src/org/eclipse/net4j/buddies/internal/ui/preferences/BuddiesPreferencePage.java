@@ -14,8 +14,6 @@ import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -37,21 +35,13 @@ public class BuddiesPreferencePage extends OMPreferencePage
 
   private Button autoConnect;
 
-  private ModifyListener modifyListener = new ModifyListener()
-  {
-    public void modifyText(ModifyEvent e)
-    {
-      dialogChanged();
-    }
-  };
-
   public BuddiesPreferencePage()
   {
     super(OM.PREFS);
   }
 
   @Override
-  protected Control createContents(Composite parent)
+  protected Control createUI(Composite parent)
   {
     GridLayout grid = new GridLayout(2, false);
     grid.marginHeight = 0;
@@ -64,20 +54,18 @@ public class BuddiesPreferencePage extends OMPreferencePage
     new Label(composite, SWT.NONE).setText("Server:");
     connectorDescription = new Text(composite, SWT.BORDER);
     connectorDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-    connectorDescription.addModifyListener(modifyListener);
 
     new Label(composite, SWT.NONE).setText("User ID:");
     userID = new Text(composite, SWT.BORDER);
     userID.setLayoutData(new GridData(100, SWT.DEFAULT));
-    userID.addModifyListener(modifyListener);
 
     new Label(composite, SWT.NONE).setText("Password:");
     password = new Text(composite, SWT.BORDER | SWT.PASSWORD);
     password.setLayoutData(new GridData(100, SWT.DEFAULT));
-    password.addModifyListener(modifyListener);
 
     new Label(composite, SWT.NONE);
     autoConnect = new Button(composite, SWT.CHECK);
+    autoConnect.setText("Auto Connect");
 
     initValues();
     return composite;
@@ -99,9 +87,5 @@ public class BuddiesPreferencePage extends OMPreferencePage
     OM.PREF_PASSWORD.setValue(password.getText());
     OM.PREF_AUTO_CONNECT.setValue(autoConnect.getSelection());
     return super.performOk();
-  }
-
-  protected void dialogChanged()
-  {
   }
 }

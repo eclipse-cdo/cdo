@@ -47,35 +47,13 @@ public class CDOPreferencePage extends OMPreferencePage
 
   private Button invalidationNotifications;
 
-  private SelectionListener selectionListener = new SelectionListener()
-  {
-    public void widgetDefaultSelected(SelectionEvent e)
-    {
-      dialogChanged();
-    }
-
-    public void widgetSelected(SelectionEvent e)
-    {
-      dialogChanged();
-    }
-  };
-
-  private ModifyListener modifyListener = new ModifyListener()
-  {
-    public void modifyText(ModifyEvent e)
-    {
-      dialogChanged();
-    }
-  };
-
   public CDOPreferencePage()
   {
     super(org.eclipse.emf.internal.cdo.bundle.OM.PREFS);
-    // setDescription("CDO Preferences");
   }
 
   @Override
-  protected Control createContents(Composite parent)
+  protected Control createUI(Composite parent)
   {
     GridLayout grid = new GridLayout(1, false);
     grid.marginHeight = 0;
@@ -93,23 +71,18 @@ public class CDOPreferencePage extends OMPreferencePage
     new Label(sessionGroup, SWT.NONE).setText("Repository name:");
     repositoryName = new Text(sessionGroup, SWT.BORDER);
     repositoryName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-    repositoryName.addModifyListener(modifyListener);
 
     new Label(sessionGroup, SWT.NONE).setText("User name:");
     userName = new Text(sessionGroup, SWT.BORDER);
     userName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-    userName.addModifyListener(modifyListener);
 
     new Label(sessionGroup, SWT.NONE).setText("Connector description:");
     connectorDescription = new Text(sessionGroup, SWT.BORDER);
     connectorDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-    connectorDescription.addModifyListener(modifyListener);
 
     new Label(sessionGroup, SWT.NONE).setText("Reference chunk size:");
     referenceChunkSize = new TextAndDisable(sessionGroup, SWT.BORDER, String.valueOf(CDORevision.UNCHUNKED));
     referenceChunkSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-    referenceChunkSize.getText().addModifyListener(modifyListener);
-    referenceChunkSize.getButton().addSelectionListener(selectionListener);
 
     Group viewGroup = new Group(composite, SWT.NONE);
     viewGroup.setText("View Defaults");
@@ -119,12 +92,9 @@ public class CDOPreferencePage extends OMPreferencePage
     new Label(viewGroup, SWT.NONE).setText("Preload chunk size:");
     preloadChunkSize = new TextAndDisable(viewGroup, SWT.BORDER, String.valueOf(CDOView.NO_PRELOAD));
     preloadChunkSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-    preloadChunkSize.getText().addModifyListener(modifyListener);
-    preloadChunkSize.getButton().addSelectionListener(selectionListener);
 
     new Label(viewGroup, SWT.NONE).setText("EMF invalidation notifications:");
     invalidationNotifications = new Button(viewGroup, SWT.CHECK);
-    invalidationNotifications.addSelectionListener(selectionListener);
 
     initValues();
     return composite;
@@ -160,10 +130,6 @@ public class CDOPreferencePage extends OMPreferencePage
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.setValue(v3);
 
     return super.performOk();
-  }
-
-  protected void dialogChanged()
-  {
   }
 
   private static final class TextAndDisable extends Composite implements SelectionListener, ModifyListener

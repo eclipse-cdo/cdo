@@ -32,7 +32,7 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
 {
   private IChannel channel;
 
-  private IBuddy self;
+  private Self self;
 
   private Map<String, IBuddy> buddies = new HashMap<String, IBuddy>();
 
@@ -53,7 +53,7 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
 
   public void setSelf(IBuddyAccount account)
   {
-    this.self = new Buddy(this, account);
+    this.self = new Self(this, account);
   }
 
   public IBuddy addBuddy(String userID)

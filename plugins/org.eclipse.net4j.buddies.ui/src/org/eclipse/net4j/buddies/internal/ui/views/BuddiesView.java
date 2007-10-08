@@ -4,7 +4,11 @@ import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buddies.BuddiesUtil;
 import org.eclipse.net4j.buddies.IBuddySession;
+import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.protocol.IBuddy.State;
+import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
@@ -15,12 +19,20 @@ import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.Separator;
 
 public class BuddiesView extends ContainerView implements IListener
 {
   private ConnectAction connectAction = new ConnectAction();
 
   private DisconnectAction disconnectAction = new DisconnectAction();
+
+  private StateAction availableAction = new StateAction("Available", State.AVAILABLE, SharedIcons.OBJ_BUDDY);
+
+  private StateAction awayAction = new StateAction("Away", State.AWAY, SharedIcons.OBJ_BUDDY_AWAY);
+
+  private StateAction doNotDisturbAction = new StateAction("Do Not Disturb", State.DO_NOT_DISTURB,
+      SharedIcons.OBJ_BUDDY_DO_NOT_DISTURB);
 
   private IBuddySession session;
 
@@ -68,6 +80,12 @@ public class BuddiesView extends ContainerView implements IListener
                 session.addListener(BuddiesView.this);
                 connectAction.setEnabled(false);
                 disconnectAction.setEnabled(true);
+                availableAction.setEnabled(true);
+                availableAction.setChecked(session.getSelf().getState() == IBuddy.State.AVAILABLE);
+                awayAction.setEnabled(true);
+                awayAction.setChecked(session.getSelf().getState() == IBuddy.State.AWAY);
+                doNotDisturbAction.setEnabled(true);
+                doNotDisturbAction.setChecked(session.getSelf().getState() == IBuddy.State.DO_NOT_DISTURB);
               }
               else
               {
@@ -93,6 +111,9 @@ public class BuddiesView extends ContainerView implements IListener
     connecting = false;
     connectAction.setEnabled(true);
     disconnectAction.setEnabled(false);
+    availableAction.setEnabled(false);
+    awayAction.setEnabled(false);
+    doNotDisturbAction.setEnabled(false);
   }
 
   @Override
@@ -160,13 +181,10 @@ public class BuddiesView extends ContainerView implements IListener
   {
     manager.add(connectAction);
     manager.add(disconnectAction);
-    if (session == null && !connecting)
-    {
-    }
-    else
-    {
-    }
-
+    manager.add(new Separator());
+    manager.add(availableAction);
+    manager.add(awayAction);
+    manager.add(doNotDisturbAction);
     super.fillLocalPullDown(manager);
   }
 
@@ -201,6 +219,30 @@ public class BuddiesView extends ContainerView implements IListener
     protected void safeRun() throws Exception
     {
       disconnect();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class StateAction extends SafeAction
+  {
+    private State state;
+
+    private StateAction(String text, State state, String key)
+    {
+      super(text, "Set own state to '" + text.toLowerCase() + "'", SharedIcons.getDescriptor(key));
+      this.state = state;
+    }
+
+    @Override
+    protected void safeRun() throws Exception
+    {
+      if (session != null)
+      {
+        Self self = (Self)session.getSelf();
+        self.setState(state);
+      }
     }
   }
 }

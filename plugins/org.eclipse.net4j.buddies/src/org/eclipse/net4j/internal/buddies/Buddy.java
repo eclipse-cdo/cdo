@@ -30,10 +30,6 @@ public class Buddy extends AbstractBuddy
     this.userID = userID;
   }
 
-  protected Buddy(BuddySession session, IBuddyAccount account)
-  {
-  }
-
   public BuddySession getSession()
   {
     return session;

@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
 
@@ -231,7 +232,9 @@ public class BuddiesView extends ContainerView implements IListener
 
     private StateAction(String text, State state, String key)
     {
-      super(text, "Set own state to '" + text.toLowerCase() + "'", SharedIcons.getDescriptor(key));
+      super(text, Action.AS_RADIO_BUTTON);
+      setToolTipText("Set own state to '" + text.toLowerCase() + "'");
+      setImageDescriptor(SharedIcons.getDescriptor(key));
       this.state = state;
     }
 

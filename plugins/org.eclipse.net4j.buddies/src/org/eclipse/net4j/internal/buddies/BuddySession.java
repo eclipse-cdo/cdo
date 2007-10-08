@@ -46,7 +46,7 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
     return channel;
   }
 
-  public IBuddy getSelf()
+  public Self getSelf()
   {
     return self;
   }
@@ -56,7 +56,7 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
     this.self = new Self(this, account);
   }
 
-  public IBuddy addBuddy(String userID)
+  public Buddy addBuddy(String userID)
   {
     Buddy buddy = null;
     synchronized (buddies)
@@ -83,7 +83,7 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
   {
     synchronized (buddies)
     {
-      return buddies.values().toArray(new IBuddy[buddies.size()]);
+      return buddies.values().toArray(new Buddy[buddies.size()]);
     }
   }
 
@@ -117,7 +117,7 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
 
   public void buddyAdded(String userID)
   {
-    IBuddy buddy = addBuddy(userID);
+    Buddy buddy = addBuddy(userID);
     if (buddy != null)
     {
       fireEvent(new SingleDeltaContainerEvent<IBuddy>(this, buddy, IContainerDelta.Kind.ADDED));

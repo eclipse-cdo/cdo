@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
@@ -75,29 +76,37 @@ public class BuddiesView extends ContainerView implements IListener
               throw new IllegalStateException("connector == null");
             }
 
-            String userID = OM.PREF_USER_ID.getValue();
-            String password = OM.PREF_PASSWORD.getValue();
-            session = BuddiesUtil.openSession(connector, userID, password, 5000L);
-            if (session != null)
+            boolean connected = connector.waitForConnection(5000L);
+            if (connected)
             {
-              if (connecting)
+              String userID = OM.PREF_USER_ID.getValue();
+              String password = OM.PREF_PASSWORD.getValue();
+              session = BuddiesUtil.openSession(connector, userID, password, 5000L);
+              if (session != null)
               {
-                resetInput();
-                connectAction.setEnabled(false);
-                disconnectAction.setEnabled(true);
-                availableAction.setEnabled(true);
-                availableAction.setChecked(session.getSelf().getState() == IBuddy.State.AVAILABLE);
-                awayAction.setEnabled(true);
-                awayAction.setChecked(session.getSelf().getState() == IBuddy.State.AWAY);
-                doNotDisturbAction.setEnabled(true);
-                doNotDisturbAction.setChecked(session.getSelf().getState() == IBuddy.State.DO_NOT_DISTURB);
-                session.addListener(BuddiesView.this);
+                if (connecting)
+                {
+                  resetInput();
+                  connectAction.setEnabled(false);
+                  disconnectAction.setEnabled(true);
+                  availableAction.setEnabled(true);
+                  availableAction.setChecked(session.getSelf().getState() == IBuddy.State.AVAILABLE);
+                  awayAction.setEnabled(true);
+                  awayAction.setChecked(session.getSelf().getState() == IBuddy.State.AWAY);
+                  doNotDisturbAction.setEnabled(true);
+                  doNotDisturbAction.setChecked(session.getSelf().getState() == IBuddy.State.DO_NOT_DISTURB);
+                  session.addListener(BuddiesView.this);
+                }
+                else
+                {
+                  session.close();
+                  session = null;
+                }
               }
-              else
-              {
-                session.close();
-                session = null;
-              }
+            }
+            else
+            {
+              LifecycleUtil.deactivate(connector);
             }
           }
         }

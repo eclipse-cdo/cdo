@@ -25,7 +25,7 @@ import org.eclipse.net4j.util.ui.views.ContainerView;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.action.IToolBarManager;
 
 public class BuddiesView extends ContainerView implements IListener
 {
@@ -215,14 +215,19 @@ public class BuddiesView extends ContainerView implements IListener
   }
 
   @Override
+  protected void fillLocalToolBar(IToolBarManager manager)
+  {
+    manager.add(availableAction);
+    manager.add(awayAction);
+    manager.add(doNotDisturbAction);
+    super.fillLocalToolBar(manager);
+  }
+
+  @Override
   protected void fillLocalPullDown(IMenuManager manager)
   {
     manager.add(connectAction);
     manager.add(disconnectAction);
-    manager.add(new Separator());
-    manager.add(availableAction);
-    manager.add(awayAction);
-    manager.add(doNotDisturbAction);
     super.fillLocalPullDown(manager);
   }
 

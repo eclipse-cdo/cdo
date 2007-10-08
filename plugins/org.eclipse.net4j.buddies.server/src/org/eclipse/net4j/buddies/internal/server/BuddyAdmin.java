@@ -20,6 +20,7 @@ import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.buddies.server.IBuddySession;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -35,6 +36,8 @@ import java.util.Map;
 public class BuddyAdmin extends Lifecycle implements IBuddyAdmin, IListener
 {
   public static final BuddyAdmin INSTANCE = new BuddyAdmin();
+
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BuddyAdmin.class);
 
   private Map<String, IBuddyAccount> accounts = new HashMap<String, IBuddyAccount>();
 
@@ -82,6 +85,7 @@ public class BuddyAdmin extends Lifecycle implements IBuddyAdmin, IListener
     BuddySession session = new BuddySession(channel, buddy);
     sessions.put(userID, session);
     session.addListener(this);
+    if (TRACER.isEnabled()) TRACER.trace("Opened session: " + userID);
     return session;
   }
 

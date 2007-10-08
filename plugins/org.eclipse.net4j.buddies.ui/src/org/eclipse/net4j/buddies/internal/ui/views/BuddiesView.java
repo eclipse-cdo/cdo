@@ -81,7 +81,6 @@ public class BuddiesView extends ContainerView implements IListener
             {
               if (connecting)
               {
-                session.addListener(BuddiesView.this);
                 connectAction.setEnabled(false);
                 disconnectAction.setEnabled(true);
                 availableAction.setEnabled(true);
@@ -90,6 +89,7 @@ public class BuddiesView extends ContainerView implements IListener
                 awayAction.setChecked(session.getSelf().getState() == IBuddy.State.AWAY);
                 doNotDisturbAction.setEnabled(true);
                 doNotDisturbAction.setChecked(session.getSelf().getState() == IBuddy.State.DO_NOT_DISTURB);
+                session.addListener(BuddiesView.this);
               }
               else
               {
@@ -109,15 +109,19 @@ public class BuddiesView extends ContainerView implements IListener
 
   protected void disconnect()
   {
+    connecting = false;
     session.removeListener(this);
     session.close();
     session = null;
-    connecting = false;
+
     connectAction.setEnabled(true);
     disconnectAction.setEnabled(false);
     availableAction.setEnabled(false);
+    availableAction.setChecked(false);
     awayAction.setEnabled(false);
+    awayAction.setChecked(false);
     doNotDisturbAction.setEnabled(false);
+    doNotDisturbAction.setChecked(false);
   }
 
   @Override

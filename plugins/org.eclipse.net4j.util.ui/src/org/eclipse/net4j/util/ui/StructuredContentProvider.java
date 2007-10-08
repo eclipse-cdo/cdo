@@ -170,17 +170,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
     Display display = viewer.getControl().getDisplay();
     if (display == null)
     {
-      display = Display.getCurrent();
-    }
-
-    if (display == null)
-    {
-      display = Display.getDefault();
-    }
-
-    if (display == null)
-    {
-      throw new IllegalStateException("display == null");
+      display = UIUtil.getDisplay();
     }
 
     return display;

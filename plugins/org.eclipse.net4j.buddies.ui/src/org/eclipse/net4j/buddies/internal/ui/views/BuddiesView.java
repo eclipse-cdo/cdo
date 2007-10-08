@@ -7,9 +7,12 @@ import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -132,11 +135,29 @@ public class BuddiesView extends ContainerView implements IListener
       {
         if (((ILifecycleEvent)event).getKind() == ILifecycleEvent.Kind.DEACTIVATED)
         {
+          disconnect();
           if (isAutoConnect())
           {
             connect();
           }
         }
+      }
+      else if (event instanceof IContainerEvent)
+      {
+        IContainerEvent<IBuddy> e = (IContainerEvent<IBuddy>)event;
+        if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
+        {
+          e.getDeltaElement().addListener(this);
+        }
+        else if (e.getDeltaKind() == IContainerDelta.Kind.REMOVED)
+        {
+          e.getDeltaElement().removeListener(this);
+        }
+      }
+      else if (event instanceof IBuddyStateChangedEvent)
+      {
+        IBuddyStateChangedEvent e = (IBuddyStateChangedEvent)event;
+        updateLabels(e.getBuddy());
       }
     }
   }

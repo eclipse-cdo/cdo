@@ -12,12 +12,15 @@ package org.eclipse.net4j.buddies.internal.server;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyAccount;
+import org.eclipse.net4j.buddies.internal.protocol.BuddyStateNotification;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
 import org.eclipse.net4j.buddies.internal.server.protocol.BuddyRemovedNotification;
 import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
+import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.buddies.server.IBuddySession;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
@@ -74,6 +77,8 @@ public class BuddyAdmin extends Lifecycle implements IBuddyAdmin, IListener
     }
 
     Buddy buddy = new Buddy(account);
+    buddy.addListener(this);
+
     BuddySession session = new BuddySession(channel, buddy);
     sessions.put(userID, session);
     session.addListener(this);
@@ -82,17 +87,20 @@ public class BuddyAdmin extends Lifecycle implements IBuddyAdmin, IListener
 
   public void notifyEvent(IEvent event)
   {
-    if (event.getSource() instanceof IBuddySession)
+    if (event.getSource() instanceof BuddySession)
     {
       if (event instanceof ILifecycleEvent)
       {
         if (((ILifecycleEvent)event).getKind() == ILifecycleEvent.Kind.DEACTIVATED)
         {
-          String userID = ((IBuddySession)event.getSource()).getBuddy().getUserID();
+          String userID = ((BuddySession)event.getSource()).getBuddy().getUserID();
           synchronized (this)
           {
-            if (sessions.remove(userID) != null)
+            BuddySession removed = (BuddySession)sessions.remove(userID);
+            if (removed != null)
             {
+              removed.removeListener(this);
+              removed.getBuddy().removeListener(this);
               for (IBuddySession session : sessions.values())
               {
                 try
@@ -104,6 +112,30 @@ public class BuddyAdmin extends Lifecycle implements IBuddyAdmin, IListener
                   OM.LOG.error(ex);
                 }
               }
+            }
+          }
+        }
+      }
+    }
+    else if (event.getSource() instanceof Buddy)
+    {
+      if (event instanceof IBuddyStateChangedEvent)
+      {
+        IBuddyStateChangedEvent e = (IBuddyStateChangedEvent)event;
+        synchronized (this)
+        {
+          for (IBuddySession session : sessions.values())
+          {
+            try
+            {
+              if (!ObjectUtil.equals(session.getBuddy(), e.getBuddy()))
+              {
+                new BuddyStateNotification(session.getChannel(), e.getBuddy().getUserID(), e.getNewState()).send();
+              }
+            }
+            catch (Exception ex)
+            {
+              OM.LOG.error(ex);
             }
           }
         }

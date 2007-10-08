@@ -13,7 +13,8 @@ package org.eclipse.net4j.internal.buddies.protocol;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateIndication;
 import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
-
+import org.eclipse.net4j.internal.buddies.Buddy;
+import org.eclipse.net4j.internal.buddies.BuddySession;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 
@@ -48,6 +49,12 @@ public class BuddiesClientProtocol extends SignalProtocol
         @Override
         protected void stateChanged(String userID, State state)
         {
+          BuddySession session = (BuddySession)getInfraStructure();
+          Buddy buddy = (Buddy)session.getBuddies().get(userID);
+          if (buddy != null)
+          {
+            buddy.setState(state);
+          }
         }
       };
     }

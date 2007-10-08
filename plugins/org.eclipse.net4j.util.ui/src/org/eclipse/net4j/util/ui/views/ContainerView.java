@@ -2,6 +2,7 @@ package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.internal.ui.SharedIcons;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
 import org.eclipse.jface.action.Action;
@@ -22,6 +23,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -229,6 +231,98 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     default:
       return true;
     }
+  }
+
+  protected void refreshViewer(boolean updateLabels)
+  {
+    refreshElement(null, updateLabels);
+  }
+
+  protected void refreshElement(final Object element, final boolean updateLabels)
+  {
+    try
+    {
+      getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            if (element != null)
+            {
+              viewer.refresh(element, updateLabels);
+            }
+            else
+            {
+              viewer.refresh(updateLabels);
+            }
+          }
+          catch (RuntimeException ignore)
+          {
+          }
+        }
+      });
+    }
+    catch (RuntimeException ignore)
+    {
+    }
+  }
+
+  protected void updateLabels(final Object element)
+  {
+    try
+    {
+      getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            viewer.update(element, null);
+          }
+          catch (RuntimeException ignore)
+          {
+          }
+        }
+      });
+    }
+    catch (RuntimeException ignore)
+    {
+    }
+  }
+
+  protected void revealElement(final Object element)
+  {
+    try
+    {
+      getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            viewer.reveal(element);
+          }
+          catch (RuntimeException ignore)
+          {
+          }
+        }
+      });
+    }
+    catch (RuntimeException ignore)
+    {
+    }
+  }
+
+  protected Display getDisplay()
+  {
+    Display display = viewer.getControl().getDisplay();
+    if (display == null)
+    {
+      display = UIUtil.getDisplay();
+    }
+
+    return display;
   }
 
   public static ImageDescriptor getAddImageDescriptor()

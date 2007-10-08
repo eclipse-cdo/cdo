@@ -18,6 +18,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -33,6 +34,8 @@ public class BuddiesPreferencePage extends OMPreferencePage
   private Text userID;
 
   private Text password;
+
+  private Button autoConnect;
 
   private ModifyListener modifyListener = new ModifyListener()
   {
@@ -73,6 +76,9 @@ public class BuddiesPreferencePage extends OMPreferencePage
     password.setLayoutData(new GridData(100, SWT.DEFAULT));
     password.addModifyListener(modifyListener);
 
+    new Label(composite, SWT.NONE);
+    autoConnect = new Button(composite, SWT.CHECK);
+
     initValues();
     return composite;
   }
@@ -82,6 +88,7 @@ public class BuddiesPreferencePage extends OMPreferencePage
     connectorDescription.setText(OM.PREF_CONNECTOR_DESCRIPTION.getValue());
     userID.setText(OM.PREF_USER_ID.getValue());
     password.setText(OM.PREF_PASSWORD.getValue());
+    autoConnect.setSelection(OM.PREF_AUTO_CONNECT.getValue());
   }
 
   @Override
@@ -90,6 +97,7 @@ public class BuddiesPreferencePage extends OMPreferencePage
     OM.PREF_CONNECTOR_DESCRIPTION.setValue(connectorDescription.getText());
     OM.PREF_USER_ID.setValue(userID.getText());
     OM.PREF_PASSWORD.setValue(password.getText());
+    OM.PREF_AUTO_CONNECT.setValue(autoConnect.getSelection());
     return super.performOk();
   }
 

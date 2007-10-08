@@ -14,6 +14,7 @@ import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.buddies.protocol.BuddiesProtocolConstants;
 import org.eclipse.net4j.internal.buddies.protocol.OpenSessionRequest;
+import org.eclipse.net4j.signal.SignalActor;
 import org.eclipse.net4j.util.WrappedException;
 
 /**
@@ -25,17 +26,22 @@ public final class BuddiesUtil
   {
   }
 
-  public static IBuddySession openSession(IConnector connector, String userID, String password)
+  public static IBuddySession openSession(IConnector connector, String userID, String password, long timeout)
   {
     try
     {
       IChannel channel = connector.openChannel(BuddiesProtocolConstants.PROTOCOL_NAME, null);
       OpenSessionRequest request = new OpenSessionRequest(channel, userID, password);
-      return request.send();
+      return request.send(timeout);
     }
     catch (Exception ex)
     {
       throw WrappedException.wrap(ex);
     }
+  }
+
+  public static IBuddySession openSession(IConnector connector, String userID, String password)
+  {
+    return openSession(connector, userID, password, SignalActor.NO_TIMEOUT);
   }
 }

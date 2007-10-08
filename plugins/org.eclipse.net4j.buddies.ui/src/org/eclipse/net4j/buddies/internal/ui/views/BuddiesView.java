@@ -10,6 +10,7 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
+import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
@@ -19,30 +20,77 @@ public class BuddiesView extends ContainerView implements IListener
 {
   private IBuddySession session;
 
+  private boolean connecting;
+
   public BuddiesView()
   {
-    String connectorDescription = OM.PREF_CONNECTOR_DESCRIPTION.getValue();
-    IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, connectorDescription);
-    if (connector == null)
+    if (isAutoConnect())
     {
-      throw new IllegalStateException("connector == null");
+      connect();
     }
+  }
 
-    String userID = OM.PREF_USER_ID.getValue();
-    String password = OM.PREF_PASSWORD.getValue();
-    session = BuddiesUtil.openSession(connector, userID, password);
-    if (session == null)
+  protected Boolean isAutoConnect()
+  {
+    return OM.PREF_AUTO_CONNECT.getValue();
+  }
+
+  protected void connect()
+  {
+    new Thread("buddies-connector")
     {
-      throw new IllegalStateException("session == null");
-    }
+      @Override
+      public void run()
+      {
+        try
+        {
+          connecting = true;
+          while (session == null && connecting && isAutoConnect())
+          {
+            String connectorDescription = OM.PREF_CONNECTOR_DESCRIPTION.getValue();
+            IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, connectorDescription);
+            if (connector == null)
+            {
+              throw new IllegalStateException("connector == null");
+            }
 
-    session.addListener(this);
+            String userID = OM.PREF_USER_ID.getValue();
+            String password = OM.PREF_PASSWORD.getValue();
+            session = BuddiesUtil.openSession(connector, userID, password, 5000L);
+            if (session != null)
+            {
+              if (connecting)
+              {
+                session.addListener(BuddiesView.this);
+              }
+              else
+              {
+                session.close();
+                session = null;
+              }
+            }
+          }
+        }
+        finally
+        {
+          connecting = false;
+        }
+      }
+    }.start();
+  }
+
+  protected void disconnect()
+  {
+    session.removeListener(this);
+    session.close();
+    session = null;
+    connecting = false;
   }
 
   @Override
   public void dispose()
   {
-    session.removeListener(this);
+    disconnect();
     super.dispose();
   }
 
@@ -54,7 +102,10 @@ public class BuddiesView extends ContainerView implements IListener
       {
         if (((ILifecycleEvent)event).getKind() == ILifecycleEvent.Kind.DEACTIVATED)
         {
-          closeView();
+          if (isAutoConnect())
+          {
+            connect();
+          }
         }
       }
     }
@@ -99,7 +150,29 @@ public class BuddiesView extends ContainerView implements IListener
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
-    // manager.add(addConnectorAction);
+    if (session == null && !connecting)
+    {
+      manager.add(new SafeAction("Connect", "Connect to buddies server")
+      {
+        @Override
+        protected void safeRun() throws Exception
+        {
+          connect();
+        }
+      });
+    }
+    else
+    {
+      manager.add(new SafeAction("Disonnect", "Disconnect from buddies server")
+      {
+        @Override
+        protected void safeRun() throws Exception
+        {
+          disconnect();
+        }
+      });
+    }
+
     super.fillLocalToolBar(manager);
   }
 }

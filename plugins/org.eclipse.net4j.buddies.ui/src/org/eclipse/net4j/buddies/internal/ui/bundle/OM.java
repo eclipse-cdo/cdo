@@ -42,6 +42,9 @@ public abstract class OM
   public static final OMPreference<String> PREF_PASSWORD = // 
   PREFS.initString("PREF_PASSWORD"); //$NON-NLS-1$
 
+  public static final OMPreference<Boolean> PREF_AUTO_CONNECT = // 
+  PREFS.init("PREF_AUTO_CONNECT", true); //$NON-NLS-1$
+
   /**
    * @author Eike Stepper
    */

@@ -7,6 +7,7 @@ import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
@@ -96,15 +97,10 @@ public class BuddiesView extends ContainerView implements IListener
                   resetInput();
                   connectAction.setEnabled(false);
                   disconnectAction.setEnabled(true);
-                  availableAction.setEnabled(true);
-                  availableAction.setChecked(session.getSelf().getState() == IBuddy.State.AVAILABLE);
-                  lonesomeAction.setEnabled(true);
-                  lonesomeAction.setChecked(session.getSelf().getState() == IBuddy.State.LONESOME);
-                  awayAction.setEnabled(true);
-                  awayAction.setChecked(session.getSelf().getState() == IBuddy.State.AWAY);
-                  doNotDisturbAction.setEnabled(true);
-                  doNotDisturbAction.setChecked(session.getSelf().getState() == IBuddy.State.DO_NOT_DISTURB);
+                  flashAction.setEnabled(true);
+                  updateState();
                   session.addListener(BuddiesView.this);
+                  session.getSelf().addListener(BuddiesView.this);
                 }
                 else
                 {
@@ -130,6 +126,7 @@ public class BuddiesView extends ContainerView implements IListener
   protected void disconnect()
   {
     connecting = false;
+    session.getSelf().removeListener(BuddiesView.this);
     session.removeListener(this);
     session.close();
     session = null;
@@ -137,6 +134,7 @@ public class BuddiesView extends ContainerView implements IListener
 
     connectAction.setEnabled(true);
     disconnectAction.setEnabled(false);
+    flashAction.setEnabled(false);
     availableAction.setEnabled(false);
     availableAction.setChecked(false);
     lonesomeAction.setEnabled(false);
@@ -182,11 +180,13 @@ public class BuddiesView extends ContainerView implements IListener
         }
       }
     }
-    // else if (event instanceof IBuddyStateChangedEvent)
-    // {
-    // IBuddyStateChangedEvent e = (IBuddyStateChangedEvent)event;
-    // updateLabels(e.getBuddy());
-    // }
+    else if (event instanceof IBuddyStateChangedEvent)
+    {
+      if (session != null && event.getSource() == session.getSelf())
+      {
+        updateState();
+      }
+    }
   }
 
   protected void closeView()
@@ -243,6 +243,18 @@ public class BuddiesView extends ContainerView implements IListener
     manager.add(new Separator());
     manager.add(flashAction);
     super.fillLocalPullDown(manager);
+  }
+
+  protected void updateState()
+  {
+    availableAction.setEnabled(true);
+    availableAction.setChecked(session.getSelf().getState() == IBuddy.State.AVAILABLE);
+    lonesomeAction.setEnabled(true);
+    lonesomeAction.setChecked(session.getSelf().getState() == IBuddy.State.LONESOME);
+    awayAction.setEnabled(true);
+    awayAction.setChecked(session.getSelf().getState() == IBuddy.State.AWAY);
+    doNotDisturbAction.setEnabled(true);
+    doNotDisturbAction.setChecked(session.getSelf().getState() == IBuddy.State.DO_NOT_DISTURB);
   }
 
   /**
@@ -329,10 +341,10 @@ public class BuddiesView extends ContainerView implements IListener
           {
             flashing = true;
             IBuddy.State state = original == IBuddy.State.AVAILABLE ? IBuddy.State.LONESOME : IBuddy.State.AVAILABLE;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 15; i++)
             {
               self.setState(state);
-              ConcurrencyUtil.sleep(400);
+              ConcurrencyUtil.sleep(200);
               state = state == IBuddy.State.AVAILABLE ? IBuddy.State.LONESOME : IBuddy.State.AVAILABLE;
             }
 

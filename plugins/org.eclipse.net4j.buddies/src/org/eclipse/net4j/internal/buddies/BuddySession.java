@@ -12,8 +12,11 @@ package org.eclipse.net4j.internal.buddies;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.IBuddySession;
+import org.eclipse.net4j.buddies.internal.protocol.BuddyStateNotification;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
+import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
+import org.eclipse.net4j.internal.buddies.bundle.OM;
 import org.eclipse.net4j.internal.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.container.IContainerDelta;
@@ -53,7 +56,8 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
 
   public void setSelf(IBuddyAccount account)
   {
-    this.self = new Self(this, account);
+    self = new Self(this, account);
+    self.addListener(this);
   }
 
   public Buddy addBuddy(String userID)
@@ -110,6 +114,20 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
         if (((ILifecycleEvent)event).getKind() == ILifecycleEvent.Kind.DEACTIVATED)
         {
           deactivate();
+        }
+      }
+    }
+    else if (event.getSource() == self)
+    {
+      if (event instanceof IBuddyStateChangedEvent)
+      {
+        try
+        {
+          new BuddyStateNotification(channel, self.getUserID(), ((IBuddyStateChangedEvent)event).getNewState()).send();
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
         }
       }
     }

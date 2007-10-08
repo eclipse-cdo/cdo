@@ -269,7 +269,7 @@ public class BuddiesView extends ContainerView implements IListener
     @Override
     protected void safeRun() throws Exception
     {
-      if (session != null)
+      if (session != null && isChecked())
       {
         Self self = (Self)session.getSelf();
         self.setState(state);

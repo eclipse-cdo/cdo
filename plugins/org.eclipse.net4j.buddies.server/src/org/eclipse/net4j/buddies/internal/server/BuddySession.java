@@ -70,11 +70,13 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
   {
     super.doActivate();
     channel.addListener(this);
+    account.touch();
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
+    account.touch();
     channel.removeListener(this);
     super.doDeactivate();
   }

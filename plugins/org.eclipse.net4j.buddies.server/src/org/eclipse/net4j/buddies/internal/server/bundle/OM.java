@@ -44,7 +44,7 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  void stop() throws Exception
+  static void stop() throws Exception
   {
     BuddyAdmin.INSTANCE.deactivate();
   }

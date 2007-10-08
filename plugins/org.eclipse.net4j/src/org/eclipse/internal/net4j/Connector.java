@@ -297,7 +297,6 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
       do
       {
-        System.out.println(connectorState);
         if (isDisconnected())
         {
           return false;

@@ -14,10 +14,14 @@ import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
-import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.IMenuManager;
 
 public class BuddiesView extends ContainerView implements IListener
 {
+  private ConnectAction connectAction = new ConnectAction();
+
+  private DisconnectAction disconnectAction = new DisconnectAction();
+
   private IBuddySession session;
 
   private boolean connecting;
@@ -45,7 +49,7 @@ public class BuddiesView extends ContainerView implements IListener
         try
         {
           connecting = true;
-          while (session == null && connecting && isAutoConnect())
+          while (session == null && connecting)
           {
             String connectorDescription = OM.PREF_CONNECTOR_DESCRIPTION.getValue();
             IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, connectorDescription);
@@ -148,31 +152,63 @@ public class BuddiesView extends ContainerView implements IListener
   }
 
   @Override
-  protected void fillLocalToolBar(IToolBarManager manager)
+  protected void fillLocalPullDown(IMenuManager manager)
   {
+    manager.add(connectAction);
+    manager.add(disconnectAction);
     if (session == null && !connecting)
     {
-      manager.add(new SafeAction("Connect", "Connect to buddies server")
-      {
-        @Override
-        protected void safeRun() throws Exception
-        {
-          connect();
-        }
-      });
     }
     else
     {
-      manager.add(new SafeAction("Disonnect", "Disconnect from buddies server")
-      {
-        @Override
-        protected void safeRun() throws Exception
-        {
-          disconnect();
-        }
-      });
     }
 
-    super.fillLocalToolBar(manager);
+    super.fillLocalPullDown(manager);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ConnectAction extends SafeAction
+  {
+    private ConnectAction()
+    {
+      super("Connect", "Connect to buddies server");
+    }
+
+    @Override
+    public boolean isEnabled()
+    {
+      return session == null && !connecting;
+    }
+
+    @Override
+    protected void safeRun() throws Exception
+    {
+      connect();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class DisconnectAction extends SafeAction
+  {
+    private DisconnectAction()
+    {
+      super("Disonnect", "Disconnect from buddies server");
+    }
+
+    @Override
+    public boolean isEnabled()
+    {
+      return session != null || connecting;
+    }
+
+    @Override
+    protected void safeRun() throws Exception
+    {
+      disconnect();
+    }
   }
 }

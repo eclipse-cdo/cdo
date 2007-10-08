@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
+import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -54,7 +55,7 @@ public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object
     if (obj instanceof IBuddy)
     {
       IBuddy buddy = (IBuddy)obj;
-      // return SharedIcons.getImage(SharedIcons.OBJ_ACCEPTOR);
+      return SharedIcons.getImage(SharedIcons.OBJ_BUDDY);
     }
 
     return super.getImage(obj);

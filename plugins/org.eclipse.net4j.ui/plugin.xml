@@ -28,14 +28,14 @@
             class="org.eclipse.net4j.internal.ui.views.AcceptorsView"
             icon="icons/full/view16/acceptors.gif"
             id="org.eclipse.net4j.AcceptorsView"
-            name="Net4j Acceptors">
+            name="Acceptors">
       </view>
       <view
             category="org.eclipse.net4j"
             class="org.eclipse.net4j.internal.ui.views.ConnectorsView"
             icon="icons/full/view16/connectors.gif"
             id="org.eclipse.net4j.ConnectorsView"
-            name="Net4j Connectors">
+            name="Connectors">
       </view>
    </extension>
    

@@ -35,7 +35,7 @@
       <view
             category="org.eclipse.net4j"
             class="org.eclipse.net4j.buddies.internal.ui.views.BuddiesView"
-            icon="icons/full/view16/contacts.gif"
+            icon="icons/full/view16/buddies_view.gif"
             id="org.eclipse.net4j.BuddiesView"
             name="Buddies">
       </view>

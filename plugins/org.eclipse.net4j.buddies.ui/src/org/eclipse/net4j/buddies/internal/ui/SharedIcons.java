@@ -37,6 +37,8 @@ public class SharedIcons
   @SuppressWarnings("unused")
   private static final String WIZBAN = "wizban/";
 
+  public static final String OBJ_BUDDY = OBJ + "buddy";
+
   public static Image getImage(String key)
   {
     key = mangleKey(key);

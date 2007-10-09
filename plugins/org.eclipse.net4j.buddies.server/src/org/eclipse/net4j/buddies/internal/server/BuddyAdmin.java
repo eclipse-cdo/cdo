@@ -18,6 +18,7 @@ import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
 import org.eclipse.net4j.buddies.internal.protocol.CollaborationContainer;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
 import org.eclipse.net4j.buddies.internal.server.protocol.BuddyRemovedNotification;
+import org.eclipse.net4j.buddies.internal.server.protocol.CollaborationInitiatedNotification;
 import org.eclipse.net4j.buddies.protocol.IAccount;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
@@ -102,26 +103,46 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
     return session;
   }
 
-  public ICollaboration initiateCollaboration(String... userIDs)
+  public ICollaboration initiateCollaboration(IBuddy initiator, String... userIDs)
   {
-    long id;
+    long collaborationID;
     Set<IBuddy> buddies = new HashSet<IBuddy>();
+    buddies.add(initiator);
     synchronized (this)
     {
-      id = ++lastCollaborationID;
+      collaborationID = ++lastCollaborationID;
       for (String userID : userIDs)
       {
         ISession session = sessions.get(userID);
         if (session != null)
         {
           buddies.add(session.getSelf());
-
         }
       }
     }
 
-    Collaboration collaboration = new Collaboration(id, buddies);
+    Collaboration collaboration = new Collaboration(collaborationID, buddies);
     addCollaboration(collaboration);
+    for (IBuddy buddy : buddies)
+    {
+      if (buddy != initiator)
+      {
+        try
+        {
+          buddies.remove(buddy);
+          new CollaborationInitiatedNotification(buddy.getSession().getChannel(), collaborationID, buddies).send();
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+        finally
+        {
+          buddies.add(buddy);
+        }
+      }
+    }
+
     return collaboration;
   }
 

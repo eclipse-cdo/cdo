@@ -12,33 +12,50 @@ package org.eclipse.net4j.buddies.internal.server.protocol;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public class CollaborationInitiatedNotification extends Request
 {
-  private String buddy;
+  private long collaborationID;
 
-  public CollaborationInitiatedNotification(IChannel channel, String buddy)
+  private Set<IBuddy> buddies;
+
+  public CollaborationInitiatedNotification(IChannel channel, long collaborationID, Set<IBuddy> buddies)
   {
     super(channel);
-    this.buddy = buddy;
+    this.collaborationID = collaborationID;
+    this.buddies = buddies;
   }
 
   @Override
   protected short getSignalID()
   {
-    return ProtocolConstants.SIGNAL_BUDDY_ADDED;
+    return ProtocolConstants.SIGNAL_COLLABORATION_INITIATED;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    out.writeString(buddy);
+    out.writeLong(collaborationID);
+    if (buddies == null)
+    {
+      out.writeInt(0);
+    }
+    else
+    {
+      out.writeInt(buddies.size());
+      for (IBuddy buddy : buddies)
+      {
+        out.writeString(buddy.getUserID());
+      }
+    }
   }
 }

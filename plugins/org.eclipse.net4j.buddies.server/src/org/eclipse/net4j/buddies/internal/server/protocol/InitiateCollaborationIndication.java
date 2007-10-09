@@ -11,7 +11,9 @@
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
+import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -46,7 +48,9 @@ public class InitiateCollaborationIndication extends IndicationWithResponse
       userIDs[i] = in.readString();
     }
 
-    collaboration = IBuddyAdmin.INSTANCE.initiateCollaboration(userIDs);
+    ISession session = (ISession)getProtocol().getInfraStructure();
+    IBuddy initiator = session.getSelf();
+    collaboration = IBuddyAdmin.INSTANCE.initiateCollaboration(initiator, userIDs);
   }
 
   @Override

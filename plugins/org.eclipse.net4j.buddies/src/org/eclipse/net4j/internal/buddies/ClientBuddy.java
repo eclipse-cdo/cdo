@@ -53,7 +53,7 @@ public class ClientBuddy extends Buddy
     return account;
   }
 
-  public ICollaboration initiate(IBuddy... buddies)
+  public ICollaboration initiate(Set<IBuddy> buddies)
   {
     throw new UnsupportedOperationException();
   }

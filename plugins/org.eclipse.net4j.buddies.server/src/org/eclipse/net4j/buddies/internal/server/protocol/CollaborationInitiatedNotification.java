@@ -8,57 +8,37 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.buddies.protocol;
+package org.eclipse.net4j.buddies.internal.server.protocol;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
-import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public class InitiateCollaborationRequest extends RequestWithConfirmation<Long>
+public class CollaborationInitiatedNotification extends Request
 {
-  private Set<IBuddy> buddies;
+  private String buddy;
 
-  public InitiateCollaborationRequest(IChannel channel, Set<IBuddy> buddies)
+  public CollaborationInitiatedNotification(IChannel channel, String buddy)
   {
     super(channel);
-    this.buddies = buddies;
+    this.buddy = buddy;
   }
 
   @Override
   protected short getSignalID()
   {
-    return ProtocolConstants.SIGNAL_INITIATE_COLLABORATION;
+    return ProtocolConstants.SIGNAL_BUDDY_ADDED;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (buddies == null)
-    {
-      out.writeInt(0);
-    }
-    else
-    {
-      out.writeInt(buddies.size());
-      for (IBuddy buddy : buddies)
-      {
-        out.writeString(buddy.getUserID());
-      }
-    }
-  }
-
-  @Override
-  protected Long confirming(ExtendedDataInputStream in) throws IOException
-  {
-    return in.readLong();
+    out.writeString(buddy);
   }
 }

@@ -32,9 +32,8 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -106,7 +105,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
   public ICollaboration initiateCollaboration(String... userIDs)
   {
     long id;
-    List<IBuddy> buddies = new ArrayList<IBuddy>();
+    Set<IBuddy> buddies = new HashSet<IBuddy>();
     synchronized (this)
     {
       id = ++lastCollaborationID;
@@ -116,11 +115,12 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
         if (session != null)
         {
           buddies.add(session.getSelf());
+
         }
       }
     }
 
-    Collaboration collaboration = new Collaboration(id, buddies.toArray(new IBuddy[buddies.size()]));
+    Collaboration collaboration = new Collaboration(id, buddies);
     addCollaboration(collaboration);
     return collaboration;
   }

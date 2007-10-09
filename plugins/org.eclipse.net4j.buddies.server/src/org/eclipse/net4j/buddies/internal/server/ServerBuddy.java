@@ -17,6 +17,7 @@ import org.eclipse.net4j.buddies.protocol.ICollaboration;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -41,7 +42,7 @@ public class ServerBuddy extends Buddy
     return account;
   }
 
-  public ICollaboration initiate(IBuddy... buddies)
+  public ICollaboration initiate(Set<IBuddy> buddies)
   {
     // TODO Implement method ServerBuddy.initiate()
     throw new UnsupportedOperationException("Not yet implemented");

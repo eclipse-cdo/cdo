@@ -22,6 +22,8 @@ import org.eclipse.net4j.internal.buddies.protocol.InstallFacilityRequest;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
@@ -31,7 +33,7 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
 
   private IBuddySession session;
 
-  public BuddyCollaboration(long id, IBuddy[] buddies)
+  public BuddyCollaboration(long id, Set<IBuddy> buddies)
   {
     super(id, buddies);
   }

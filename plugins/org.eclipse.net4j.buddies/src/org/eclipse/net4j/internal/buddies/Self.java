@@ -48,7 +48,7 @@ public class Self extends Buddy
     return account;
   }
 
-  public ICollaboration initiate(IBuddy... buddies)
+  public ICollaboration initiate(Set<IBuddy> buddies)
   {
     try
     {

@@ -11,7 +11,7 @@
 package org.eclipse.net4j.internal.buddies.protocol;
 
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateIndication;
-import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
 import org.eclipse.net4j.internal.buddies.Buddy;
 import org.eclipse.net4j.internal.buddies.BuddySession;

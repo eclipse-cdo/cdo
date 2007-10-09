@@ -10,12 +10,16 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.server;
 
-import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.IBuddyContainer;
 
 /**
  * @author Eike Stepper
  */
-public interface ServerConstants
+public interface ICollaboration extends IBuddyContainer
 {
-  public static final String TYPE = ProtocolConstants.PROTOCOL_NAME + "server";
+  public int getID();
+
+  public String getType();
+
+  public boolean isPublic();
 }

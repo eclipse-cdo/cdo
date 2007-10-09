@@ -1,6 +1,6 @@
 package org.eclipse.net4j.internal.buddies.protocol;
 
-import org.eclipse.net4j.buddies.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 

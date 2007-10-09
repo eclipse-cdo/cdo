@@ -259,10 +259,6 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       element = postProcessElement(productGroup, factoryType, description, element);
       LifecycleUtil.activate(element);
       putElement(key, element);
-      // EventUtil.addListener(element, elementListener);
-      // key.setID(++maxElementID);
-      // elementRegistry.put(key, element);
-      // fireEvent(new SingleDeltaContainerEvent<Object>(this, element, IContainerDelta.Kind.ADDED));
     }
 
     return element;

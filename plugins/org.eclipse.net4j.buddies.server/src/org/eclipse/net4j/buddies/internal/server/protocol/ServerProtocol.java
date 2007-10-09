@@ -66,6 +66,9 @@ public class ServerProtocol extends SignalProtocol
         }
       };
 
+    case ProtocolConstants.SIGNAL_INSTALL_FACILITY:
+      return new InstallFacilityIndication();
+
     case ProtocolConstants.SIGNAL_MESSAGE:
       return new MessageIndication()
       {

@@ -15,7 +15,6 @@ import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.buddies.internal.protocol.Account;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateNotification;
 import org.eclipse.net4j.buddies.internal.protocol.CollaborationContainer;
-import org.eclipse.net4j.buddies.internal.protocol.ServerFacilityFactory;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
 import org.eclipse.net4j.buddies.internal.server.protocol.BuddyRemovedNotification;
 import org.eclipse.net4j.buddies.protocol.IAccount;

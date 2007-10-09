@@ -8,17 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.buddies;
+package org.eclipse.net4j.internal.buddies;
 
-import org.eclipse.net4j.buddies.protocol.ICollaboration;
-import org.eclipse.net4j.buddies.protocol.IFacility;
+import org.eclipse.net4j.internal.util.factory.Factory;
 
 /**
  * @author Eike Stepper
  */
-public interface IBuddyCollaboration extends ICollaboration
+public abstract class ClientFacilityFactory extends Factory
 {
-  public IBuddySession getSession();
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.buddies.clientFacilities";
 
-  public IFacility installFacility(String type);
+  public ClientFacilityFactory(String type)
+  {
+    super(PRODUCT_GROUP, type);
+  }
 }

@@ -17,7 +17,9 @@ import org.eclipse.net4j.buddies.internal.protocol.Message;
 import org.eclipse.net4j.buddies.internal.protocol.MessageNotification;
 import org.eclipse.net4j.buddies.protocol.IFacility;
 import org.eclipse.net4j.buddies.protocol.IMessage;
+import org.eclipse.net4j.internal.buddies.protocol.InstallFacilityRequest;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.container.IPluginContainer;
 
 import java.util.UUID;
 
@@ -26,6 +28,8 @@ import java.util.UUID;
  */
 public class BuddyCollaboration extends Collaboration implements IBuddyCollaboration
 {
+  private static final String FACILITY_GROUP = ClientFacilityFactory.PRODUCT_GROUP;
+
   private IBuddySession session;
 
   public BuddyCollaboration()
@@ -38,9 +42,24 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
     return session;
   }
 
-  public IFacility installFacility(String facilityType)
+  public IFacility installFacility(String type)
   {
-    return null;
+    try
+    {
+      IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, type, getID());
+      boolean success = new InstallFacilityRequest(session.getChannel(), getID(), type).send(5000L);
+      if (success)
+      {
+        addFacility(facility);
+        return facility;
+      }
+
+      return null;
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 
   public void sendMessage(IMessage message)

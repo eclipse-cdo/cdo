@@ -13,6 +13,7 @@ package org.eclipse.net4j.buddies.server;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.server.BuddyAdmin;
 import org.eclipse.net4j.buddies.protocol.IAccount;
+import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.ICollaborationContainer;
 import org.eclipse.net4j.buddies.protocol.ISession;
 
@@ -30,4 +31,6 @@ public interface IBuddyAdmin extends ICollaborationContainer
   public Map<String, ISession> getSessions();
 
   public ISession openSession(IChannel channel, String userID, String password, String[] facilityTypes);
+
+  public ICollaboration initiateCollaboration(String... userIDs);
 }

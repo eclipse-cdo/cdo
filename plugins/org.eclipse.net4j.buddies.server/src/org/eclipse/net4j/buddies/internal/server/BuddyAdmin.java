@@ -14,11 +14,14 @@ import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.buddies.internal.protocol.Account;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateNotification;
+import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
 import org.eclipse.net4j.buddies.internal.protocol.CollaborationContainer;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
 import org.eclipse.net4j.buddies.internal.server.protocol.BuddyRemovedNotification;
 import org.eclipse.net4j.buddies.protocol.IAccount;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
+import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -29,7 +32,9 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,6 +50,8 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
   private Map<String, IAccount> accounts = new HashMap<String, IAccount>();
 
   private Map<String, ISession> sessions = new HashMap<String, ISession>();
+
+  private long lastCollaborationID;
 
   public BuddyAdmin()
   {
@@ -94,6 +101,28 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
     if (TRACER.isEnabled()) TRACER.trace("Opened session: " + userID);
     sessions.put(userID, session);
     return session;
+  }
+
+  public ICollaboration initiateCollaboration(String... userIDs)
+  {
+    long id;
+    List<IBuddy> buddies = new ArrayList<IBuddy>();
+    synchronized (this)
+    {
+      id = ++lastCollaborationID;
+      for (String userID : userIDs)
+      {
+        ISession session = sessions.get(userID);
+        if (session != null)
+        {
+          buddies.add(session.getSelf());
+        }
+      }
+    }
+
+    Collaboration collaboration = new Collaboration(id, buddies.toArray(new IBuddy[buddies.size()]));
+    addCollaboration(collaboration);
+    return collaboration;
   }
 
   @Override

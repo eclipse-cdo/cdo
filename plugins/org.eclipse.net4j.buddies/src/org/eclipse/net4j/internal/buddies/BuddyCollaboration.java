@@ -31,9 +31,9 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
 
   private IBuddySession session;
 
-  public BuddyCollaboration(long id)
+  public BuddyCollaboration(long id, IBuddy[] buddies)
   {
-    super(id);
+    super(id, buddies);
   }
 
   public IBuddySession getSession()
@@ -62,6 +62,7 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
     }
   }
 
+  @Override
   public void sendMessage(IMessage message)
   {
     if (message instanceof Message)
@@ -69,6 +70,7 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
       ((Message)message).setSenderID(session.getSelf().getUserID());
 
     }
+
     try
     {
       new MessageNotification(session.getChannel(), message).send();

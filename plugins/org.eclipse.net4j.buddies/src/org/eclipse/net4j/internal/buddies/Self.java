@@ -53,7 +53,7 @@ public class Self extends Buddy
     try
     {
       long id = new InitiateCollaborationRequest(getSession().getChannel(), buddies).send(5000L);
-      BuddyCollaboration collaboration = new BuddyCollaboration(id);
+      BuddyCollaboration collaboration = new BuddyCollaboration(id, buddies);
       addCollaboration(collaboration);
       return collaboration;
     }

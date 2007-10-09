@@ -10,13 +10,17 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies.protocol;
 
+import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
-import org.eclipse.net4j.internal.buddies.ClientSession;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.internal.buddies.BuddyCollaboration;
+import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.signal.Indication;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -30,25 +34,29 @@ public class CollaborationInitiatedIndication extends Indication
   @Override
   protected short getSignalID()
   {
-    return ProtocolConstants.SIGNAL_BUDDY_REMOVED;
+    return ProtocolConstants.SIGNAL_COLLABORATION_INITIATED;
   }
 
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    String buddy = in.readString();
-    for (int i = 0; i < 50; i++)
+    IBuddySession session = (IBuddySession)getProtocol().getInfraStructure();
+    Self self = (Self)session.getSelf();
+
+    long collaborationID = in.readLong();
+    int size = in.readInt();
+    Set<IBuddy> buddies = new HashSet<IBuddy>();
+    for (int i = 0; i < size; i++)
     {
-      ClientSession session = (ClientSession)getProtocol().getInfraStructure();
-      if (session == null)
+      String userID = in.readString();
+      IBuddy buddy = session.getBuddies().get(userID);
+      if (buddy != null)
       {
-        ConcurrencyUtil.sleep(100);
-      }
-      else
-      {
-        session.buddyRemoved(buddy);
-        break;
+        buddies.add(buddy);
       }
     }
+
+    BuddyCollaboration collaboration = new BuddyCollaboration(collaborationID, buddies);
+    self.addCollaboration(collaboration);
   }
 }

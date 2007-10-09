@@ -42,6 +42,9 @@ public class ClientProtocol extends SignalProtocol
     case ProtocolConstants.SIGNAL_BUDDY_STATE:
       return new ClientBuddyStateIndication();
 
+    case ProtocolConstants.SIGNAL_COLLABORATION_INITIATED:
+      return new CollaborationInitiatedIndication();
+
     case ProtocolConstants.SIGNAL_MESSAGE:
       return new ClientMessageIndication();
     }

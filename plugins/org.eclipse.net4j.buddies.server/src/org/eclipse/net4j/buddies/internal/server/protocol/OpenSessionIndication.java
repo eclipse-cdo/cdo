@@ -13,10 +13,10 @@ package org.eclipse.net4j.buddies.internal.server.protocol;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
+import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.protocol.ProtocolUtil;
-import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
+import org.eclipse.net4j.buddies.protocol.IAccount;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
-import org.eclipse.net4j.buddies.server.IBuddySession;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class OpenSessionIndication extends IndicationWithResponse
 {
-  private IBuddyAccount account;
+  private IAccount account;
 
   private String[] buddies;
 
@@ -52,13 +52,13 @@ public class OpenSessionIndication extends IndicationWithResponse
     String password = in.readString();
     synchronized (IBuddyAdmin.INSTANCE)
     {
-      Map<String, IBuddySession> sessions = IBuddyAdmin.INSTANCE.getSessions();
+      Map<String, ISession> sessions = IBuddyAdmin.INSTANCE.getSessions();
       buddies = sessions.keySet().toArray(new String[sessions.size()]);
 
-      IBuddySession session = IBuddyAdmin.INSTANCE.openSession(getProtocol().getChannel(), userID, password);
+      ISession session = IBuddyAdmin.INSTANCE.openSession(getProtocol().getChannel(), userID, password);
       if (session != null)
       {
-        account = session.getBuddy().getAccount();
+        account = session.getSelf().getAccount();
       }
       else
       {
@@ -78,7 +78,7 @@ public class OpenSessionIndication extends IndicationWithResponse
       for (String buddy : buddies)
       {
         out.writeString(buddy);
-        IBuddySession buddySession = IBuddyAdmin.INSTANCE.getSessions().get(buddy);
+        ISession buddySession = IBuddyAdmin.INSTANCE.getSessions().get(buddy);
         if (buddySession != null)
         {
           channels.add(buddySession.getChannel());

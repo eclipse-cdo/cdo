@@ -13,8 +13,8 @@ package org.eclipse.net4j.internal.buddies.protocol;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateIndication;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
-import org.eclipse.net4j.internal.buddies.Buddy;
-import org.eclipse.net4j.internal.buddies.BuddySession;
+import org.eclipse.net4j.internal.buddies.ClientBuddy;
+import org.eclipse.net4j.internal.buddies.ClientSession;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
@@ -52,14 +52,14 @@ public class BuddiesClientProtocol extends SignalProtocol
         {
           for (int i = 0; i < 50; i++)
           {
-            BuddySession session = (BuddySession)getProtocol().getInfraStructure();
+            ClientSession session = (ClientSession)getProtocol().getInfraStructure();
             if (session == null)
             {
               ConcurrencyUtil.sleep(100);
             }
             else
             {
-              Buddy buddy = (Buddy)session.getBuddies().get(userID);
+              ClientBuddy buddy = (ClientBuddy)session.getBuddies().get(userID);
               if (buddy != null)
               {
                 buddy.setState(state);

@@ -12,10 +12,10 @@ package org.eclipse.net4j.buddies.internal.server.protocol;
 
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateIndication;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
-import org.eclipse.net4j.buddies.internal.server.Buddy;
+import org.eclipse.net4j.buddies.internal.server.ServerBuddy;
+import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
-import org.eclipse.net4j.buddies.server.IBuddySession;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 
@@ -51,11 +51,11 @@ public class BuddiesServerProtocol extends SignalProtocol
         {
           synchronized (IBuddyAdmin.INSTANCE)
           {
-            Map<String, IBuddySession> sessions = IBuddyAdmin.INSTANCE.getSessions();
-            IBuddySession session = sessions.get(userID);
+            Map<String, ISession> sessions = IBuddyAdmin.INSTANCE.getSessions();
+            ISession session = sessions.get(userID);
             if (session != null)
             {
-              Buddy buddy = (Buddy)session.getBuddy();
+              ServerBuddy buddy = (ServerBuddy)session.getSelf();
               buddy.setState(state);
             }
           }

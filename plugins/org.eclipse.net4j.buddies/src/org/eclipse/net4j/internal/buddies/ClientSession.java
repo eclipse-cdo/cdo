@@ -14,23 +14,26 @@ import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyContainer;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateNotification;
-import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
+import org.eclipse.net4j.buddies.protocol.IAccount;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
 import org.eclipse.net4j.internal.buddies.bundle.OM;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.PlatformObject;
+
 /**
  * @author Eike Stepper
  */
-public class BuddySession extends BuddyContainer implements IBuddySession, IListener
+public class ClientSession extends BuddyContainer implements IBuddySession, IListener
 {
   private IChannel channel;
 
   private Self self;
 
-  public BuddySession(IChannel channel)
+  public ClientSession(IChannel channel)
   {
     this.channel = channel;
   }
@@ -45,7 +48,7 @@ public class BuddySession extends BuddyContainer implements IBuddySession, IList
     return self;
   }
 
-  public void setSelf(IBuddyAccount account)
+  public void setSelf(IAccount account)
   {
     self = new Self(this, account);
     self.addListener(this);
@@ -57,6 +60,16 @@ public class BuddySession extends BuddyContainer implements IBuddySession, IList
     deactivate();
   }
 
+  /**
+   * @see PlatformObject#getAdapter(Class)
+   */
+  @SuppressWarnings("unchecked")
+  public Object getAdapter(Class adapter)
+  {
+    return Platform.getAdapterManager().getAdapter(this, adapter);
+  }
+
+  @Override
   public void notifyEvent(IEvent event)
   {
     if (event.getSource() == channel)
@@ -87,7 +100,7 @@ public class BuddySession extends BuddyContainer implements IBuddySession, IList
 
   public void buddyAdded(String userID)
   {
-    Buddy buddy = new Buddy(this, userID);
+    ClientBuddy buddy = new ClientBuddy(this, userID);
     addBuddy(buddy);
   }
 

@@ -11,7 +11,7 @@
 package org.eclipse.net4j.internal.buddies.protocol;
 
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
-import org.eclipse.net4j.internal.buddies.BuddySession;
+import org.eclipse.net4j.internal.buddies.ClientSession;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -39,7 +39,7 @@ public class BuddyRemovedIndication extends Indication
     String buddy = in.readString();
     for (int i = 0; i < 50; i++)
     {
-      BuddySession session = (BuddySession)getProtocol().getInfraStructure();
+      ClientSession session = (ClientSession)getProtocol().getInfraStructure();
       if (session == null)
       {
         ConcurrencyUtil.sleep(100);

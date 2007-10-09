@@ -10,27 +10,27 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies;
 
-import org.eclipse.net4j.buddies.internal.protocol.AbstractBuddy;
-import org.eclipse.net4j.buddies.protocol.IBuddyAccount;
+import org.eclipse.net4j.buddies.internal.protocol.Buddy;
+import org.eclipse.net4j.buddies.protocol.IAccount;
 
 /**
  * @author Eike Stepper
  */
-public class Buddy extends AbstractBuddy
+public class ClientBuddy extends Buddy
 {
-  private BuddySession session;
+  private ClientSession session;
 
   private String userID;
 
-  private IBuddyAccount account;
+  private IAccount account;
 
-  public Buddy(BuddySession session, String userID)
+  public ClientBuddy(ClientSession session, String userID)
   {
     this.session = session;
     this.userID = userID;
   }
 
-  public BuddySession getSession()
+  public ClientSession getSession()
   {
     return session;
   }
@@ -40,7 +40,7 @@ public class Buddy extends AbstractBuddy
     return userID;
   }
 
-  public IBuddyAccount getAccount()
+  public IAccount getAccount()
   {
     if (account == null)
     {
@@ -50,7 +50,7 @@ public class Buddy extends AbstractBuddy
     return account;
   }
 
-  protected IBuddyAccount loadAccount(String userID)
+  protected IAccount loadAccount(String userID)
   {
     return null;
   }

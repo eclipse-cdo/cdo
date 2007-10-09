@@ -12,26 +12,29 @@ package org.eclipse.net4j.buddies.internal.server;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.server.IBuddySession;
+import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.PlatformObject;
+
 /**
  * @author Eike Stepper
  */
-public class BuddySession extends Lifecycle implements IBuddySession, IListener
+public class ServerSession extends Lifecycle implements ISession, IListener
 {
   private IChannel channel;
 
-  private IBuddy buddy;
+  private IBuddy self;
 
-  public BuddySession(IChannel channel, IBuddy buddy)
+  public ServerSession(IChannel channel, IBuddy self)
   {
     this.channel = channel;
-    this.buddy = buddy;
+    this.self = self;
     LifecycleUtil.activate(this);
   }
 
@@ -40,15 +43,24 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
     return channel;
   }
 
-  public IBuddy getBuddy()
+  public IBuddy getSelf()
   {
-    return buddy;
+    return self;
   }
 
   public void close()
   {
     channel.close();
     deactivate();
+  }
+
+  /**
+   * @see PlatformObject#getAdapter(Class)
+   */
+  @SuppressWarnings("unchecked")
+  public Object getAdapter(Class adapter)
+  {
+    return Platform.getAdapterManager().getAdapter(this, adapter);
   }
 
   public void notifyEvent(IEvent event)
@@ -70,13 +82,13 @@ public class BuddySession extends Lifecycle implements IBuddySession, IListener
   {
     super.doActivate();
     channel.addListener(this);
-    buddy.getAccount().touch();
+    self.getAccount().touch();
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    buddy.getAccount().touch();
+    self.getAccount().touch();
     channel.removeListener(this);
     super.doDeactivate();
   }

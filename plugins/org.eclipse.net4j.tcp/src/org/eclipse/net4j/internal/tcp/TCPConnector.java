@@ -30,6 +30,7 @@ import org.eclipse.internal.net4j.Connector;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
+import java.nio.channels.NoConnectionPendingException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.List;
@@ -136,6 +137,10 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       {
         return;
       }
+    }
+    catch (NoConnectionPendingException ignore)
+    {
+      // This must be on server side
     }
     catch (java.net.ConnectException ex)
     {

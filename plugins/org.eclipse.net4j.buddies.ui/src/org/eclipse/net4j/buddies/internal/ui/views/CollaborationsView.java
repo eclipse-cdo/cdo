@@ -60,7 +60,7 @@ public class CollaborationsView extends ContainerView implements IListener
     composite.setLayout(form);
 
     leftControl = super.createUI(composite);
-    sash = new Sash(composite, SWT.VERTICAL);
+    sash = new Sash(composite, SWT.BORDER | SWT.VERTICAL);
     rightControl = new Tree(composite, SWT.NONE);
 
     FormData leftControlData = new FormData();

@@ -63,8 +63,15 @@ public class Self extends Buddy
     }
   }
 
-  public ICollaboration join(String collaborationID)
+  public ICollaboration join(long collaborationID)
   {
-    return null;
+    // TODO Implement method Self.join()
+    throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  public ICollaboration join(Object invitationToken)
+  {
+    // TODO Implement method Self.join()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 }

@@ -47,7 +47,13 @@ public class ServerBuddy extends Buddy
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
-  public ICollaboration join(String collaborationID)
+  public ICollaboration join(long collaborationID)
+  {
+    // TODO Implement method ServerBuddy.join()
+    throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  public ICollaboration join(Object invitationToken)
   {
     // TODO Implement method ServerBuddy.join()
     throw new UnsupportedOperationException("Not yet implemented");

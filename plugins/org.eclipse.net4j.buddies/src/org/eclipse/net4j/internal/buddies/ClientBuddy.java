@@ -58,7 +58,12 @@ public class ClientBuddy extends Buddy
     throw new UnsupportedOperationException();
   }
 
-  public ICollaboration join(String collaborationID)
+  public ICollaboration join(long collaborationID)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public ICollaboration join(Object invitationToken)
   {
     throw new UnsupportedOperationException();
   }

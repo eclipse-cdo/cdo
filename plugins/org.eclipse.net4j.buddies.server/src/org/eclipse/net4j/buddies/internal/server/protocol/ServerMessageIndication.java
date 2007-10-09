@@ -22,7 +22,7 @@ public class ServerMessageIndication extends MessageIndication
   {
     synchronized (IBuddyAdmin.INSTANCE)
     {
-      Map<String, ICollaboration> collaborations = IBuddyAdmin.INSTANCE.getCollaborations();
+      Map<Long, ICollaboration> collaborations = IBuddyAdmin.INSTANCE.getCollaborations();
       Collaboration collaboration = (Collaboration)collaborations.get(message.getCollaborationID());
       if (collaboration != null)
       {

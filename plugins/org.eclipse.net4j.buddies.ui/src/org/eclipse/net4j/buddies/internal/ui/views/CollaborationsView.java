@@ -11,7 +11,8 @@ import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Sash;
@@ -42,12 +43,23 @@ public class CollaborationsView extends ContainerView implements IListener
   @Override
   protected synchronized Control createUI(Composite parent)
   {
+    GridLayout grid = new GridLayout(3, false);
+    grid.marginWidth = 0;
+    grid.marginHeight = 0;
+    grid.horizontalSpacing = 0;
+
     Composite composite = new Composite(parent, SWT.NONE);
-    composite.setLayout(new RowLayout());
+    composite.setLayout(grid);
 
     Control control = super.createUI(composite);
+    control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
     sash = new Sash(composite, SWT.VERTICAL);
+    sash.setLayoutData(new GridData(GridData.FILL_VERTICAL));
+
     Tree pane = new Tree(composite, SWT.NONE);
+    pane.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
     INSTANCE = this;
     return composite;
   }

@@ -22,6 +22,7 @@ public class ServerBuddy extends Buddy
 
   public ServerBuddy(IAccount account)
   {
+    super(null);
     this.account = account;
   }
 

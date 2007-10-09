@@ -85,10 +85,12 @@ public class BuddyAdmin extends Lifecycle implements IBuddyAdmin, IListener
 
     ServerSession session = new ServerSession(channel, buddy);
     ((IProtocol)channel.getReceiveHandler()).setInfraStructure(session);
-
-    sessions.put(userID, session);
     session.addListener(this);
+    buddy.setSession(session);
+    LifecycleUtil.activate(session);
+
     if (TRACER.isEnabled()) TRACER.trace("Opened session: " + userID);
+    sessions.put(userID, session);
     return session;
   }
 

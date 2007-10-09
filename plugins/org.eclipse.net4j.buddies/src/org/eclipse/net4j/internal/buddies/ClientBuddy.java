@@ -18,21 +18,20 @@ import org.eclipse.net4j.buddies.protocol.IAccount;
  */
 public class ClientBuddy extends Buddy
 {
-  private ClientSession session;
-
   private String userID;
 
   private IAccount account;
 
   public ClientBuddy(ClientSession session, String userID)
   {
-    this.session = session;
+    super(session);
     this.userID = userID;
   }
 
+  @Override
   public ClientSession getSession()
   {
-    return session;
+    return (ClientSession)super.getSession();
   }
 
   public String getUserID()

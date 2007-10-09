@@ -18,19 +18,18 @@ import org.eclipse.net4j.buddies.protocol.IAccount;
  */
 public class Self extends Buddy
 {
-  private ClientSession session;
-
   private IAccount account;
 
   protected Self(ClientSession session, IAccount account)
   {
-    this.session = session;
+    super(session);
     this.account = account;
   }
 
+  @Override
   public ClientSession getSession()
   {
-    return session;
+    return (ClientSession)super.getSession();
   }
 
   public String getUserID()

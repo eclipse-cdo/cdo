@@ -50,12 +50,19 @@ public class OpenSessionIndication extends IndicationWithResponse
   {
     String userID = in.readString();
     String password = in.readString();
+    int size = in.readInt();
+    String[] facilityTypes = new String[size];
+    for (int i = 0; i < size; i++)
+    {
+      facilityTypes[i] = in.readString();
+    }
+
     synchronized (IBuddyAdmin.INSTANCE)
     {
       Map<String, ISession> sessions = IBuddyAdmin.INSTANCE.getSessions();
       buddies = sessions.keySet().toArray(new String[sessions.size()]);
 
-      ISession session = IBuddyAdmin.INSTANCE.openSession(getProtocol().getChannel(), userID, password);
+      ISession session = IBuddyAdmin.INSTANCE.openSession(getProtocol().getChannel(), userID, password, facilityTypes);
       if (session != null)
       {
         account = session.getSelf().getAccount();

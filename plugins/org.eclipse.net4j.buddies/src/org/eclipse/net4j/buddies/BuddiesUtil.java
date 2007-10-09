@@ -12,10 +12,14 @@ package org.eclipse.net4j.buddies;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.buddies.internal.protocol.ClientFacilityFactory;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.internal.buddies.protocol.OpenSessionRequest;
 import org.eclipse.net4j.signal.SignalActor;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.container.IPluginContainer;
+
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -26,12 +30,17 @@ public final class BuddiesUtil
   {
   }
 
+  public static Set<String> getFacilityTypes()
+  {
+    return IPluginContainer.INSTANCE.getFactoryTypes(ClientFacilityFactory.PRODUCT_GROUP);
+  }
+
   public static IBuddySession openSession(IConnector connector, String userID, String password, long timeout)
   {
     try
     {
       IChannel channel = connector.openChannel(ProtocolConstants.PROTOCOL_NAME, null);
-      OpenSessionRequest request = new OpenSessionRequest(channel, userID, password);
+      OpenSessionRequest request = new OpenSessionRequest(channel, userID, password, getFacilityTypes());
       return request.send(timeout);
     }
     catch (Exception ex)

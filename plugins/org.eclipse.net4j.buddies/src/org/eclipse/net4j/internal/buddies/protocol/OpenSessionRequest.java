@@ -22,6 +22,7 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -32,11 +33,14 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
 
   private String password;
 
-  public OpenSessionRequest(IChannel channel, String userID, String password)
+  private Set<String> facilityTypes;
+
+  public OpenSessionRequest(IChannel channel, String userID, String password, Set<String> facilityTypes)
   {
     super(channel);
     this.userID = userID;
     this.password = password;
+    this.facilityTypes = facilityTypes;
   }
 
   @Override
@@ -50,6 +54,11 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
   {
     out.writeString(userID);
     out.writeString(password);
+    out.writeInt(facilityTypes.size());
+    for (String facilityType : facilityTypes)
+    {
+      out.writeString(facilityType);
+    }
   }
 
   @Override
@@ -63,7 +72,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
 
     ClientSession session = new ClientSession(getProtocol().getChannel());
     getProtocol().setInfraStructure(session);
-    session.setSelf(account);
+    session.setSelf(account, facilityTypes);
 
     int size = in.readInt();
     for (int i = 0; i < size; i++)

@@ -13,6 +13,8 @@ package org.eclipse.net4j.internal.buddies;
 import org.eclipse.net4j.buddies.internal.protocol.Buddy;
 import org.eclipse.net4j.buddies.protocol.IAccount;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
@@ -20,9 +22,9 @@ public class Self extends Buddy
 {
   private IAccount account;
 
-  protected Self(ClientSession session, IAccount account)
+  protected Self(ClientSession session, IAccount account, Set<String> facilityTypes)
   {
-    super(session);
+    super(session, facilityTypes);
     this.account = account;
   }
 

@@ -13,6 +13,8 @@ package org.eclipse.net4j.internal.buddies;
 import org.eclipse.net4j.buddies.internal.protocol.Buddy;
 import org.eclipse.net4j.buddies.protocol.IAccount;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
@@ -24,7 +26,7 @@ public class ClientBuddy extends Buddy
 
   public ClientBuddy(ClientSession session, String userID)
   {
-    super(session);
+    super(session, null);
     this.userID = userID;
   }
 
@@ -51,6 +53,14 @@ public class ClientBuddy extends Buddy
 
   protected IAccount loadAccount(String userID)
   {
-    return null;
+    // TODO Implement method ClientBuddy.loadAccount()
+    throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  @Override
+  protected Set<String> loadFacilityTypes()
+  {
+    // TODO Implement method ClientBuddy.loadFacilityTypes()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 }

@@ -29,5 +29,5 @@ public interface IBuddyAdmin extends ICollaborationContainer
 
   public Map<String, ISession> getSessions();
 
-  public ISession openSession(IChannel channel, String userID, String password);
+  public ISession openSession(IChannel channel, String userID, String password, String[] facilityTypes);
 }

@@ -13,6 +13,9 @@ package org.eclipse.net4j.buddies.internal.server;
 import org.eclipse.net4j.buddies.internal.protocol.Buddy;
 import org.eclipse.net4j.buddies.protocol.IAccount;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 /**
  * @author Eike Stepper
  */
@@ -20,9 +23,9 @@ public class ServerBuddy extends Buddy
 {
   private IAccount account;
 
-  public ServerBuddy(IAccount account)
+  public ServerBuddy(IAccount account, String[] facilityTypes)
   {
-    super(null);
+    super(null, new HashSet<String>(Arrays.asList(facilityTypes)));
     this.account = account;
   }
 

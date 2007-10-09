@@ -24,6 +24,8 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.PlatformObject;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
@@ -48,9 +50,9 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
     return self;
   }
 
-  public void setSelf(IAccount account)
+  public void setSelf(IAccount account, Set<String> facilityTypes)
   {
-    self = new Self(this, account);
+    self = new Self(this, account, facilityTypes);
     self.addListener(this);
   }
 

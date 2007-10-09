@@ -15,6 +15,7 @@ import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.buddies.internal.protocol.Account;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateNotification;
 import org.eclipse.net4j.buddies.internal.protocol.CollaborationContainer;
+import org.eclipse.net4j.buddies.internal.protocol.ServerFacilityFactory;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
 import org.eclipse.net4j.buddies.internal.server.protocol.BuddyRemovedNotification;
 import org.eclipse.net4j.buddies.protocol.IAccount;
@@ -23,6 +24,7 @@ import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
@@ -30,6 +32,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -59,7 +62,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
     return sessions;
   }
 
-  public synchronized ISession openSession(IChannel channel, String userID, String password)
+  public synchronized ISession openSession(IChannel channel, String userID, String password, String[] facilityTypes)
   {
     if (sessions.containsKey(userID))
     {
@@ -80,7 +83,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
       accounts.put(userID, account);
     }
 
-    ServerBuddy buddy = new ServerBuddy(account);
+    ServerBuddy buddy = new ServerBuddy(account, facilityTypes);
     buddy.addListener(this);
 
     ServerSession session = new ServerSession(channel, buddy);
@@ -151,5 +154,10 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
         }
       }
     }
+  }
+
+  public static Set<String> getFacilityTypes()
+  {
+    return IPluginContainer.INSTANCE.getFactoryTypes(ServerFacilityFactory.PRODUCT_GROUP);
   }
 }

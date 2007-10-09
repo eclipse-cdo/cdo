@@ -15,6 +15,7 @@ import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
 import org.eclipse.net4j.buddies.internal.protocol.Message;
 import org.eclipse.net4j.buddies.internal.protocol.MessageNotification;
+import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IFacility;
 import org.eclipse.net4j.buddies.protocol.IMessage;
@@ -49,7 +50,7 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
     {
       String description = String.valueOf(getID());
       IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, type, description);
-      boolean success = new InstallFacilityRequest(session.getChannel(), getID(), type).send(5000L);
+      boolean success = new InstallFacilityRequest(session.getChannel(), getID(), type).send(ProtocolConstants.TIMEOUT);
       if (success)
       {
         addFacility(facility);

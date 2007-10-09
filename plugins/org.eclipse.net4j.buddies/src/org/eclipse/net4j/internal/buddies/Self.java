@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.buddies;
 
 import org.eclipse.net4j.buddies.internal.protocol.Buddy;
+import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IAccount;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
@@ -53,7 +54,7 @@ public class Self extends Buddy
   {
     try
     {
-      long id = new InitiateCollaborationRequest(getSession().getChannel(), buddies).send(5000L);
+      long id = new InitiateCollaborationRequest(getSession().getChannel(), buddies).send(ProtocolConstants.TIMEOUT);
       BuddyCollaboration collaboration = new BuddyCollaboration(id, buddies);
       LifecycleUtil.activate(collaboration);
       addCollaboration(collaboration);

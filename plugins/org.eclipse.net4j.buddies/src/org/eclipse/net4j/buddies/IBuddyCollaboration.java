@@ -11,6 +11,7 @@
 package org.eclipse.net4j.buddies;
 
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
+import org.eclipse.net4j.buddies.protocol.IFacility;
 
 /**
  * @author Eike Stepper
@@ -18,4 +19,6 @@ import org.eclipse.net4j.buddies.protocol.ICollaboration;
 public interface IBuddyCollaboration extends ICollaboration
 {
   public IBuddySession getSession();
+
+  public IFacility installFacility(String facilityType);
 }

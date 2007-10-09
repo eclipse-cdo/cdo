@@ -15,6 +15,7 @@ import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
 import org.eclipse.net4j.buddies.internal.protocol.Message;
 import org.eclipse.net4j.buddies.internal.protocol.MessageNotification;
+import org.eclipse.net4j.buddies.protocol.IFacility;
 import org.eclipse.net4j.buddies.protocol.IMessage;
 import org.eclipse.net4j.util.WrappedException;
 
@@ -35,6 +36,11 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
   public IBuddySession getSession()
   {
     return session;
+  }
+
+  public IFacility installFacility(String facilityType)
+  {
+    return null;
   }
 
   public void sendMessage(IMessage message)

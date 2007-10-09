@@ -90,6 +90,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
     }
 
     ServerBuddy buddy = new ServerBuddy(account, facilityTypes);
+    LifecycleUtil.activate(buddy);
     buddy.addListener(this);
 
     ServerSession session = new ServerSession(channel, buddy);

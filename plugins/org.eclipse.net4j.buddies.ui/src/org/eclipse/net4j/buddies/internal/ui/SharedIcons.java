@@ -37,6 +37,8 @@ public class SharedIcons
   @SuppressWarnings("unused")
   private static final String WIZBAN = "wizban/";
 
+  public static final String OBJ_COLLABORATION = OBJ + "collaboration";
+
   public static final String OBJ_BUDDY = OBJ + "buddy";
 
   public static final String OBJ_BUDDY_LONESOME = OBJ + "buddy_lonesome";

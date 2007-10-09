@@ -16,6 +16,7 @@ import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.internal.buddies.protocol.InitiateCollaborationRequest;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.Set;
 
@@ -54,6 +55,7 @@ public class Self extends Buddy
     {
       long id = new InitiateCollaborationRequest(getSession().getChannel(), buddies).send(5000L);
       BuddyCollaboration collaboration = new BuddyCollaboration(id, buddies);
+      LifecycleUtil.activate(collaboration);
       addCollaboration(collaboration);
       return collaboration;
     }

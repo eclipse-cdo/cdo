@@ -226,6 +226,17 @@ public class BuddiesView extends ContainerView implements IListener
   }
 
   @Override
+  protected void doubleClicked(Object object)
+  {
+    if (session != null && object instanceof IBuddy)
+    {
+      IBuddy buddy = (IBuddy)object;
+      IBuddy self = session.getSelf();
+      self.initiate(buddy);
+    }
+  }
+
+  @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
     manager.add(availableAction);

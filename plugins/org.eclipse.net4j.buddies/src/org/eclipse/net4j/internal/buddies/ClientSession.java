@@ -20,6 +20,7 @@ import org.eclipse.net4j.internal.buddies.bundle.OM;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.PlatformObject;
@@ -53,6 +54,7 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
   public void setSelf(IAccount account, Set<String> facilityTypes)
   {
     self = new Self(this, account, facilityTypes);
+    LifecycleUtil.activate(self);
     self.addListener(this);
   }
 
@@ -103,6 +105,7 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
   public void buddyAdded(String userID)
   {
     ClientBuddy buddy = new ClientBuddy(this, userID);
+    LifecycleUtil.activate(buddy);
     addBuddy(buddy);
   }
 

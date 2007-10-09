@@ -12,6 +12,7 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -62,6 +63,12 @@ public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object
       return buddy.getUserID();
     }
 
+    if (obj instanceof ICollaboration)
+    {
+      ICollaboration collaboration = (ICollaboration)obj;
+      return collaboration.getTitle();
+    }
+
     return super.getText(obj);
   }
 
@@ -85,6 +92,11 @@ public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object
       case DO_NOT_DISTURB:
         return SharedIcons.getImage(SharedIcons.OBJ_BUDDY_DO_NOT_DISTURB);
       }
+    }
+
+    if (obj instanceof ICollaboration)
+    {
+      return SharedIcons.getImage(SharedIcons.OBJ_COLLABORATION);
     }
 
     return super.getImage(obj);

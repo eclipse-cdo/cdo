@@ -17,6 +17,7 @@ import org.eclipse.net4j.internal.buddies.BuddyCollaboration;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -57,6 +58,7 @@ public class CollaborationInitiatedIndication extends Indication
     }
 
     BuddyCollaboration collaboration = new BuddyCollaboration(collaborationID, buddies);
+    LifecycleUtil.activate(collaboration);
     self.addCollaboration(collaboration);
   }
 }

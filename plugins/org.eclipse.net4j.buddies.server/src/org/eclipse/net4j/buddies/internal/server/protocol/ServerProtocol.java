@@ -14,7 +14,6 @@ import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 
-
 /**
  * @author Eike Stepper
  */
@@ -42,6 +41,9 @@ public class ServerProtocol extends SignalProtocol
 
     case ProtocolConstants.SIGNAL_INSTALL_FACILITY:
       return new InstallFacilityIndication();
+
+    case ProtocolConstants.SIGNAL_INITIATE_COLLABORATION:
+      return new InitiateCollaborationIndication();
 
     case ProtocolConstants.SIGNAL_MESSAGE:
       return new ServerMessageIndication();

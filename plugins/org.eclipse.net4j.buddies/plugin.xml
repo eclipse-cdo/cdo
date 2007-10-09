@@ -20,7 +20,7 @@
    <extension
          point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.net4j.internal.buddies.protocol.BuddiesClientProtocolFactory"
+            class="org.eclipse.net4j.internal.buddies.protocol.ClientProtocolFactory"
             productGroup="org.eclipse.net4j.clientProtocols"
             type="buddies"/>
    </extension>

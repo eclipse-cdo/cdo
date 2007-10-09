@@ -8,23 +8,25 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.buddies.protocol;
+package org.eclipse.net4j.buddies.internal.server.protocol;
 
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateIndication;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.internal.server.ServerBuddy;
+import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
-import org.eclipse.net4j.internal.buddies.ClientBuddy;
-import org.eclipse.net4j.internal.buddies.ClientSession;
+import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public class BuddiesClientProtocol extends SignalProtocol
+public class ServerProtocol extends SignalProtocol
 {
-  public BuddiesClientProtocol()
+  public ServerProtocol()
   {
   }
 
@@ -38,11 +40,8 @@ public class BuddiesClientProtocol extends SignalProtocol
   {
     switch (signalID)
     {
-    case ProtocolConstants.SIGNAL_BUDDY_ADDED:
-      return new BuddyAddedIndication();
-
-    case ProtocolConstants.SIGNAL_BUDDY_REMOVED:
-      return new BuddyRemovedIndication();
+    case ProtocolConstants.SIGNAL_OPEN_SESSION:
+      return new OpenSessionIndication();
 
     case ProtocolConstants.SIGNAL_BUDDY_STATE:
       return new BuddyStateIndication()
@@ -50,22 +49,14 @@ public class BuddiesClientProtocol extends SignalProtocol
         @Override
         protected void stateChanged(String userID, State state)
         {
-          for (int i = 0; i < 50; i++)
+          synchronized (IBuddyAdmin.INSTANCE)
           {
-            ClientSession session = (ClientSession)getProtocol().getInfraStructure();
-            if (session == null)
+            Map<String, ISession> sessions = IBuddyAdmin.INSTANCE.getSessions();
+            ISession session = sessions.get(userID);
+            if (session != null)
             {
-              ConcurrencyUtil.sleep(100);
-            }
-            else
-            {
-              ClientBuddy buddy = (ClientBuddy)session.getBuddies().get(userID);
-              if (buddy != null)
-              {
-                buddy.setState(state);
-              }
-
-              break;
+              ServerBuddy buddy = (ServerBuddy)session.getSelf();
+              buddy.setState(state);
             }
           }
         }

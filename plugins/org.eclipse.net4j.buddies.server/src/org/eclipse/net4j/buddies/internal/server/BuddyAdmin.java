@@ -14,13 +14,13 @@ import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.buddies.internal.protocol.Account;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateNotification;
+import org.eclipse.net4j.buddies.internal.protocol.CollaborationContainer;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
 import org.eclipse.net4j.buddies.internal.server.protocol.BuddyRemovedNotification;
 import org.eclipse.net4j.buddies.protocol.IAccount;
-import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
+import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.IEvent;
@@ -34,7 +34,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class BuddyAdmin extends Lifecycle implements IBuddyAdmin, IListener
+public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, IListener
 {
   public static final BuddyAdmin INSTANCE = new BuddyAdmin();
 
@@ -94,6 +94,7 @@ public class BuddyAdmin extends Lifecycle implements IBuddyAdmin, IListener
     return session;
   }
 
+  @Override
   public void notifyEvent(IEvent event)
   {
     if (event.getSource() instanceof ServerSession)

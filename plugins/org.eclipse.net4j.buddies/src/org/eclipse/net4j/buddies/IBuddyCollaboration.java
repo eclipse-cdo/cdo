@@ -8,31 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.buddies.server;
+package org.eclipse.net4j.buddies;
 
-import org.eclipse.net4j.buddies.internal.protocol.BuddyContainer;
+import org.eclipse.net4j.buddies.protocol.ICollaboration;
 
 /**
  * @author Eike Stepper
  */
-public class Collaboration extends BuddyContainer implements ICollaboration
+public interface IBuddyCollaboration extends ICollaboration
 {
-  public Collaboration()
-  {
-  }
-
-  public int getID()
-  {
-    return 0;
-  }
-
-  public String getType()
-  {
-    return null;
-  }
-
-  public boolean isPublic()
-  {
-    return false;
-  }
+  public IBuddySession getSession();
 }

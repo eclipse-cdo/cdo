@@ -13,6 +13,7 @@ package org.eclipse.net4j.buddies.server;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.server.BuddyAdmin;
 import org.eclipse.net4j.buddies.protocol.IAccount;
+import org.eclipse.net4j.buddies.protocol.ICollaborationContainer;
 import org.eclipse.net4j.buddies.protocol.ISession;
 
 import java.util.Map;
@@ -20,7 +21,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public interface IBuddyAdmin
+public interface IBuddyAdmin extends ICollaborationContainer
 {
   public static final IBuddyAdmin INSTANCE = BuddyAdmin.INSTANCE;
 

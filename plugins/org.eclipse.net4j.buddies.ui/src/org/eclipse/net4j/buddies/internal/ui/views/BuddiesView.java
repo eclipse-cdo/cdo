@@ -171,6 +171,7 @@ public class BuddiesView extends ContainerView implements IListener
   protected Control createUI(Composite parent)
   {
     Control control = super.createUI(parent);
+    updateState();
     INSTANCE = this;
     return control;
   }
@@ -246,14 +247,16 @@ public class BuddiesView extends ContainerView implements IListener
 
   protected void updateState()
   {
-    availableAction.setEnabled(true);
-    availableAction.setChecked(session.getSelf().getState() == IBuddy.State.AVAILABLE);
-    lonesomeAction.setEnabled(true);
-    lonesomeAction.setChecked(session.getSelf().getState() == IBuddy.State.LONESOME);
-    awayAction.setEnabled(true);
-    awayAction.setChecked(session.getSelf().getState() == IBuddy.State.AWAY);
-    doNotDisturbAction.setEnabled(true);
-    doNotDisturbAction.setChecked(session.getSelf().getState() == IBuddy.State.DO_NOT_DISTURB);
+    updateState(availableAction, IBuddy.State.AVAILABLE);
+    updateState(lonesomeAction, IBuddy.State.LONESOME);
+    updateState(awayAction, IBuddy.State.AWAY);
+    updateState(doNotDisturbAction, IBuddy.State.DO_NOT_DISTURB);
+  }
+
+  protected void updateState(StateAction action, State state)
+  {
+    action.setEnabled(session != null);
+    action.setChecked(session != null && session.getSelf().getState() == state);
   }
 
   /**

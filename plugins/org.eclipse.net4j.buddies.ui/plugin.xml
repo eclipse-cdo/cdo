@@ -30,15 +30,19 @@
          point="org.eclipse.ui.views">
       <category
             id="org.eclipse.net4j"
-            name="Net4j">
-      </category>
+            name="Net4j"/>
       <view
             category="org.eclipse.net4j"
             class="org.eclipse.net4j.buddies.internal.ui.views.BuddiesView"
             icon="icons/full/view16/buddies_view.gif"
             id="org.eclipse.net4j.BuddiesView"
-            name="Buddies">
-      </view>
+            name="Buddies"/>
+      <view
+            category="org.eclipse.net4j"
+            class="org.eclipse.net4j.buddies.internal.ui.views.CollaborationsView"
+            icon="icons/full/view16/collaborations_view.gif"
+            id="org.eclipse.net4j.CollaborationsView"
+            name="Collaborations"/>
    </extension>
 
    <extension

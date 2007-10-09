@@ -28,6 +28,8 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
 public class BuddiesView extends ContainerView implements IListener
 {
@@ -52,12 +54,24 @@ public class BuddiesView extends ContainerView implements IListener
 
   private boolean flashing;
 
+  private static BuddiesView INSTANCE;
+
   public BuddiesView()
   {
     if (isAutoConnect())
     {
       connect();
     }
+  }
+
+  public static synchronized BuddiesView getINSTANCE()
+  {
+    return INSTANCE;
+  }
+
+  public IBuddySession getSession()
+  {
+    return session;
   }
 
   protected Boolean isAutoConnect()
@@ -146,10 +160,19 @@ public class BuddiesView extends ContainerView implements IListener
   }
 
   @Override
-  public void dispose()
+  public synchronized void dispose()
   {
+    INSTANCE = null;
     disconnect();
     super.dispose();
+  }
+
+  @Override
+  protected Control createUI(Composite parent)
+  {
+    Control control = super.createUI(parent);
+    INSTANCE = this;
+    return control;
   }
 
   public void notifyEvent(IEvent event)
@@ -186,30 +209,6 @@ public class BuddiesView extends ContainerView implements IListener
       {
         updateState();
       }
-    }
-  }
-
-  protected void closeView()
-  {
-    try
-    {
-      getSite().getShell().getDisplay().syncExec(new Runnable()
-      {
-        public void run()
-        {
-          try
-          {
-            getSite().getPage().hideView(BuddiesView.this);
-            BuddiesView.this.dispose();
-          }
-          catch (Exception ignore)
-          {
-          }
-        }
-      });
-    }
-    catch (Exception ignore)
-    {
     }
   }
 

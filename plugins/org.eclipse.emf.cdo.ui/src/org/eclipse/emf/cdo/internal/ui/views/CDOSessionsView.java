@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPage;
 
 public class CDOSessionsView extends ContainerView
@@ -25,10 +26,10 @@ public class CDOSessionsView extends ContainerView
   }
 
   @Override
-  public void createPartControl(Composite parent)
+  protected Control createUI(Composite parent)
   {
     openSessionAction = new OpenSessionAction(getViewSite().getPage());
-    super.createPartControl(parent);
+    return super.createUI(parent);
   }
 
   @Override

@@ -23,6 +23,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
@@ -87,7 +88,12 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
   }
 
   @Override
-  public void createPartControl(Composite parent)
+  public final void createPartControl(Composite parent)
+  {
+    createUI(parent);
+  }
+
+  protected Control createUI(Composite parent)
   {
     itemProvider = createContainerItemProvider();
     viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -101,6 +107,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     hookContextMenu();
     hookDoubleClick();
     contributeToActionBars();
+    return viewer.getControl();
   }
 
   protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
@@ -221,6 +228,30 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
       {
         viewer.expandToLevel(object, 1);
       }
+    }
+  }
+
+  protected void closeView()
+  {
+    try
+    {
+      getSite().getShell().getDisplay().syncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            getSite().getPage().hideView(ContainerView.this);
+            ContainerView.this.dispose();
+          }
+          catch (Exception ignore)
+          {
+          }
+        }
+      });
+    }
+    catch (Exception ignore)
+    {
     }
   }
 

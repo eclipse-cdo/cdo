@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies;
 
+import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.IFacility;
 
@@ -21,4 +22,9 @@ public interface IBuddyCollaboration extends ICollaboration
   public IBuddySession getSession();
 
   public IFacility installFacility(String type);
+
+  public IBuddy invite(String userID);
+
+  public void leave();
+
 }

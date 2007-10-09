@@ -15,13 +15,12 @@ import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
 import org.eclipse.net4j.buddies.internal.protocol.Message;
 import org.eclipse.net4j.buddies.internal.protocol.MessageNotification;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IFacility;
 import org.eclipse.net4j.buddies.protocol.IMessage;
 import org.eclipse.net4j.internal.buddies.protocol.InstallFacilityRequest;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
-
-import java.util.UUID;
 
 /**
  * @author Eike Stepper
@@ -32,9 +31,9 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
 
   private IBuddySession session;
 
-  public BuddyCollaboration()
+  public BuddyCollaboration(long id)
   {
-    super(createID());
+    super(id);
   }
 
   public IBuddySession getSession()
@@ -46,7 +45,8 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
   {
     try
     {
-      IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, type, getID());
+      String description = String.valueOf(getID());
+      IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, type, description);
       boolean success = new InstallFacilityRequest(session.getChannel(), getID(), type).send(5000L);
       if (success)
       {
@@ -79,8 +79,12 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
     }
   }
 
-  private static String createID()
+  public IBuddy invite(String userID)
   {
-    return UUID.randomUUID().toString();
+    return null;
+  }
+
+  public void leave()
+  {
   }
 }

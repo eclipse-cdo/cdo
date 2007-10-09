@@ -12,6 +12,8 @@ package org.eclipse.net4j.internal.buddies;
 
 import org.eclipse.net4j.buddies.internal.protocol.Buddy;
 import org.eclipse.net4j.buddies.protocol.IAccount;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.protocol.ICollaboration;
 
 import java.util.Set;
 
@@ -49,6 +51,16 @@ public class ClientBuddy extends Buddy
     }
 
     return account;
+  }
+
+  public ICollaboration initiate(IBuddy... buddies)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public ICollaboration join(String collaborationID)
+  {
+    throw new UnsupportedOperationException();
   }
 
   protected IAccount loadAccount(String userID)

@@ -45,13 +45,13 @@ public class InstallFacilityIndication extends IndicationWithResponse
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    String collaborationID = in.readString();
+    long collaborationID = in.readLong();
     String facilityType = in.readString();
 
     try
     {
-      IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, facilityType,
-          collaborationID);
+      String description = String.valueOf(collaborationID);
+      IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, facilityType, description);
       Collaboration collaboration = (Collaboration)BuddyAdmin.INSTANCE.getCollaborations().get(collaborationID);
       collaboration.addFacility(facility);
       success = true;

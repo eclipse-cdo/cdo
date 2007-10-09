@@ -12,6 +12,8 @@ package org.eclipse.net4j.buddies.internal.server;
 
 import org.eclipse.net4j.buddies.internal.protocol.Buddy;
 import org.eclipse.net4j.buddies.protocol.IAccount;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.protocol.ICollaboration;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -37,5 +39,17 @@ public class ServerBuddy extends Buddy
   public IAccount getAccount()
   {
     return account;
+  }
+
+  public ICollaboration initiate(IBuddy... buddies)
+  {
+    // TODO Implement method ServerBuddy.initiate()
+    throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  public ICollaboration join(String collaborationID)
+  {
+    // TODO Implement method ServerBuddy.join()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 }

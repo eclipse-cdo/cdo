@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.buddies.protocol;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -21,35 +22,35 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class InstallFacilityRequest extends RequestWithConfirmation<Boolean>
+public class InitiateCollaborationRequest extends RequestWithConfirmation<Long>
 {
-  private long collaborationID;
+  private IBuddy[] buddies;
 
-  private String facilityType;
-
-  public InstallFacilityRequest(IChannel channel, long collaborationID, String facilityType)
+  public InitiateCollaborationRequest(IChannel channel, IBuddy[] buddies)
   {
     super(channel);
-    this.collaborationID = collaborationID;
-    this.facilityType = facilityType;
+    this.buddies = buddies;
   }
 
   @Override
   protected short getSignalID()
   {
-    return ProtocolConstants.SIGNAL_INSTALL_FACILITY;
+    return ProtocolConstants.SIGNAL_INITIATE_COLLABORATION;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    out.writeLong(collaborationID);
-    out.writeString(facilityType);
+    out.writeInt(buddies.length);
+    for (IBuddy buddy : buddies)
+    {
+      out.writeString(buddy.getUserID());
+    }
   }
 
   @Override
-  protected Boolean confirming(ExtendedDataInputStream in) throws IOException
+  protected Long confirming(ExtendedDataInputStream in) throws IOException
   {
-    return in.readBoolean();
+    return in.readLong();
   }
 }

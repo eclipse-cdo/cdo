@@ -29,7 +29,7 @@ public class ClientMessageIndication extends MessageIndication
       else
       {
         Self self = session.getSelf();
-        String collaborationID = message.getCollaborationID();
+        long collaborationID = message.getCollaborationID();
 
         Collaboration collaboration = (Collaboration)self.getCollaborations().get(collaborationID);
         collaboration.notifyMessage(message);

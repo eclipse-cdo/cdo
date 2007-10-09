@@ -12,6 +12,10 @@ package org.eclipse.net4j.internal.buddies;
 
 import org.eclipse.net4j.buddies.internal.protocol.Buddy;
 import org.eclipse.net4j.buddies.protocol.IAccount;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.protocol.ICollaboration;
+import org.eclipse.net4j.internal.buddies.protocol.InitiateCollaborationRequest;
+import org.eclipse.net4j.util.WrappedException;
 
 import java.util.Set;
 
@@ -42,5 +46,25 @@ public class Self extends Buddy
   public IAccount getAccount()
   {
     return account;
+  }
+
+  public ICollaboration initiate(IBuddy... buddies)
+  {
+    try
+    {
+      long id = new InitiateCollaborationRequest(getSession().getChannel(), buddies).send(5000L);
+      BuddyCollaboration collaboration = new BuddyCollaboration(id);
+      addCollaboration(collaboration);
+      return collaboration;
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+  }
+
+  public ICollaboration join(String collaborationID)
+  {
+    return null;
   }
 }

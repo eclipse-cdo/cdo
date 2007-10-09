@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ISetSelectionTarget;
@@ -35,6 +36,8 @@ import org.eclipse.ui.part.ViewPart;
 
 public abstract class ContainerView extends ViewPart implements ISetSelectionTarget
 {
+  private Shell shell;
+
   private ContainerItemProvider<IContainer<Object>> itemProvider;
 
   private TreeViewer viewer;
@@ -53,6 +56,11 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
 
   public ContainerView()
   {
+  }
+
+  public Shell getShell()
+  {
+    return shell;
   }
 
   @Override
@@ -92,6 +100,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
   @Override
   public final void createPartControl(Composite parent)
   {
+    shell = parent.getShell();
     GridLayout grid = new GridLayout(1, false);
     grid.marginWidth = 0;
     grid.marginHeight = 0;

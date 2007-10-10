@@ -236,7 +236,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
     super.doActivate();
     serverSocketChannel = ServerSocketChannel.open();
     serverSocketChannel.configureBlocking(false);
-    selector.register(serverSocketChannel, this);
+    selector.orderRegistration(serverSocketChannel, this);
 
     if (startSynchronously)
     {

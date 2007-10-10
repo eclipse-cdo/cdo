@@ -52,7 +52,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
   {
   }
 
-  public void register(final ServerSocketChannel channel, final Passive listener)
+  public void orderRegistration(final ServerSocketChannel channel, final Passive listener)
   {
     assertValidListener(listener);
     order(false, new Runnable()
@@ -70,7 +70,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
-  public void register(final SocketChannel channel, final boolean client, final Active listener)
+  public void orderRegistration(final SocketChannel channel, final boolean client, final Active listener)
   {
     assertValidListener(listener);
     order(client, new Runnable()
@@ -88,7 +88,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
-  public void setConnectInterest(final SelectionKey selectionKey, boolean client, final boolean on)
+  public void orderConnectInterest(final SelectionKey selectionKey, boolean client, final boolean on)
   {
     order(client, new Runnable()
     {
@@ -105,7 +105,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
-  public void setReadInterest(final SelectionKey selectionKey, boolean client, final boolean on)
+  public void orderReadInterest(final SelectionKey selectionKey, boolean client, final boolean on)
   {
     order(client, new Runnable()
     {
@@ -122,7 +122,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
-  public void setWriteInterest(final SelectionKey selectionKey, boolean client, final boolean on)
+  public void orderWriteInterest(final SelectionKey selectionKey, boolean client, final boolean on)
   {
     order(client, new Runnable()
     {

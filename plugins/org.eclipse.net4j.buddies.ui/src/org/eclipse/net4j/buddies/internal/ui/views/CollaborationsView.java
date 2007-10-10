@@ -63,7 +63,7 @@ public class CollaborationsView extends ContainerView implements IListener
   {
     if (event instanceof IBuddiesManagerStateChangedEvent)
     {
-      session = IBuddiesManager.INSTANCE.getSession();
+      queryBuddiesManager();
       updateState();
     }
     else if (event instanceof IBuddyStateChangedEvent)
@@ -121,7 +121,7 @@ public class CollaborationsView extends ContainerView implements IListener
     rightControlData.bottom = new FormAttachment(100, 0);
     rightControl.setLayoutData(rightControlData);
 
-    session = IBuddiesManager.INSTANCE.getSession();
+    queryBuddiesManager();
     IBuddiesManager.INSTANCE.addListener(this);
     INSTANCE = this;
     updateState();
@@ -150,6 +150,23 @@ public class CollaborationsView extends ContainerView implements IListener
   protected void fillLocalPullDown(IMenuManager manager)
   {
     super.fillLocalPullDown(manager);
+  }
+
+  protected void queryBuddiesManager()
+  {
+    IBuddySession oldSession = session;
+    session = IBuddiesManager.INSTANCE.getSession();
+    if (oldSession != null && oldSession != session)
+    {
+      oldSession.removeListener(this);
+      oldSession.getSelf().removeListener(this);
+    }
+
+    if (session != null && session != oldSession)
+    {
+      session.addListener(this);
+      session.getSelf().addListener(this);
+    }
   }
 
   protected void updateState()

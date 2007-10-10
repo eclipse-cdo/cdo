@@ -122,9 +122,45 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
   public void handleRegistration(SelectionKey selectionKey)
   {
     this.selectionKey = selectionKey;
-    if (startSynchronously)
+
+    try
     {
-      startLatch.countDown();
+      InetSocketAddress addr = null;
+      if (address != null)
+      {
+        addr = new InetSocketAddress(InetAddress.getByName(address), port);
+      }
+
+      ServerSocket socket = serverSocketChannel.socket();
+      socket.bind(addr);
+
+      if (address == null)
+      {
+        address = socket.getInetAddress().toString();
+        if (address.startsWith("/"))
+        {
+          address = address.substring(1);
+        }
+
+        int colon = address.indexOf(':');
+        if (colon != -1)
+        {
+          port = Integer.parseInt(address.substring(colon + 1));
+          address = address.substring(0, colon);
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      deactivate();
+    }
+    finally
+    {
+      if (startLatch != null)
+      {
+        startLatch.countDown();
+      }
     }
   }
 
@@ -198,35 +234,10 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    InetSocketAddress addr = null;
-    if (address != null)
-    {
-      addr = new InetSocketAddress(InetAddress.getByName(address), port);
-    }
-
     serverSocketChannel = ServerSocketChannel.open();
     serverSocketChannel.configureBlocking(false);
-
-    ServerSocket socket = serverSocketChannel.socket();
-    socket.bind(addr);
-
-    if (address == null)
-    {
-      address = socket.getInetAddress().toString();
-      if (address.startsWith("/"))
-      {
-        address = address.substring(1);
-      }
-
-      int colon = address.indexOf(':');
-      if (colon != -1)
-      {
-        port = Integer.parseInt(address.substring(colon + 1));
-        address = address.substring(0, colon);
-      }
-    }
-
     selector.register(serverSocketChannel, this);
+
     if (startSynchronously)
     {
       if (!startLatch.await(synchronousStartTimeout, TimeUnit.MILLISECONDS))
@@ -235,8 +246,6 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
         IOUtil.closeSilent(serverSocketChannel);
         throw new IOException("Registration with selector timed out after " + synchronousStartTimeout + " millis");
       }
-
-      startLatch = null;
     }
   }
 

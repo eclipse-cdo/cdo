@@ -35,7 +35,7 @@ import java.util.concurrent.Executors;
  */
 public class ConnectorTest extends AbstractOMTest
 {
-  private static final int TIMEOUT = 2000;
+  private static final int TIMEOUT = 10000;
 
   private static final String USER_ID = "stepper";
 
@@ -96,6 +96,7 @@ public class ConnectorTest extends AbstractOMTest
 
   public void testDeferredActivation() throws Exception
   {
+    final long DELAY = 1000L;
     threadPool = Executors.newCachedThreadPool();
     LifecycleUtil.activate(threadPool);
 
@@ -110,7 +111,7 @@ public class ConnectorTest extends AbstractOMTest
       @Override
       protected TCPServerConnector createConnector(SocketChannel socketChannel)
       {
-        ConcurrencyUtil.sleep(1000);
+        ConcurrencyUtil.sleep(DELAY);
         return super.createConnector(socketChannel);
       }
     };
@@ -133,7 +134,7 @@ public class ConnectorTest extends AbstractOMTest
     connector.activate();
     assertEquals(false, connector.isActive());
 
-    boolean connected = connector.waitForConnection(10 * TIMEOUT);
+    boolean connected = connector.waitForConnection(DELAY + TIMEOUT);
     assertEquals(true, connected);
     assertEquals(true, connector.isActive());
   }

@@ -74,10 +74,4 @@ public class TCPServerConnector extends TCPConnector
       return MessageFormat.format("ServerTCPConnector[{3}@{0}:{1}]", getHost(), getPort(), getUserID()); //$NON-NLS-1$
     }
   }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    super.doDeactivate();
-  }
 }

@@ -26,7 +26,6 @@ import org.eclipse.net4j.internal.util.factory.FactoryKey;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.RWLock;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerEvent;
@@ -297,7 +296,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
           break;
         }
 
-        if (finishedNegotiating.await(Math.min(99L, timeout), TimeUnit.MILLISECONDS))
+        if (finishedNegotiating.await(Math.min(100L, timeout), TimeUnit.MILLISECONDS))
         {
           break;
         }
@@ -307,9 +306,6 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
           break;
         }
 
-        // Enable thread switch
-        // TODO Clarify why this is needed
-        ConcurrencyUtil.sleep(1L);
         timeout -= 100L;
       } while (timeout > 0);
 

@@ -146,8 +146,8 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     {
       try
       {
-        execute(clientOperations);
-        execute(serverOperations);
+        execute(true);
+        execute(false);
         if (selector != null && selector.select() > 0)
         {
           Iterator<SelectionKey> it = selector.selectedKeys().iterator();
@@ -327,7 +327,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Ordering operation " + operation);
+      TRACER.format("Ordering {0} operation {1}", client, operation);
     }
 
     if (client)
@@ -345,14 +345,15 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     }
   }
 
-  private void execute(Queue<Runnable> operations)
+  private void execute(boolean client)
   {
     Runnable operation;
+    Queue<Runnable> operations = client ? clientOperations : serverOperations;
     while ((operation = operations.poll()) != null)
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Executing operation " + operation);
+        TRACER.format("Ordering {0} operation {1}", client, operation);
       }
 
       operation.run();

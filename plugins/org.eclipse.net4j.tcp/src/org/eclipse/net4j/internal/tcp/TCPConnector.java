@@ -28,7 +28,6 @@ import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.internal.net4j.Channel;
 import org.eclipse.internal.net4j.Connector;
 
-import java.net.ConnectException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
@@ -140,25 +139,19 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
         leaveConnecting();
       }
     }
-    catch (ConnectException ex)
+    // catch (ConnectException ex)
+    // {
+    // // if (TRACER.isEnabled()) TRACER.trace(ex.getMessage());
+    // OM.LOG.error(ex);
+    // }
+    catch (ClosedChannelException ex)
     {
-      if (TRACER.isEnabled()) TRACER.trace(ex.getMessage());
+      deactivate();
     }
     catch (Exception ex)
     {
       OM.LOG.error(ex);
-    }
-  }
-
-  private void leaveConnecting()
-  {
-    if (getNegotiator() == null)
-    {
-      setState(ConnectorState.CONNECTED);
-    }
-    else
-    {
-      setState(ConnectorState.NEGOTIATING);
+      deactivate();
     }
   }
 
@@ -378,6 +371,18 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     if (selectionKey == null)
     {
       throw new IllegalStateException("selectionKey == null");
+    }
+  }
+
+  private void leaveConnecting()
+  {
+    if (getNegotiator() == null)
+    {
+      setState(ConnectorState.CONNECTED);
+    }
+    else
+    {
+      setState(ConnectorState.NEGOTIATING);
     }
   }
 

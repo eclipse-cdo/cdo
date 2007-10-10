@@ -16,7 +16,6 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelectorListener;
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.internal.net4j.Acceptor;
@@ -134,7 +133,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
       ServerSocket socket = serverSocketChannel.socket();
       socket.bind(addr);
 
-      if (address == null)
+      if (addr == null)
       {
         address = socket.getInetAddress().toString();
         if (address.startsWith("/"))
@@ -177,8 +176,11 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
         }
 
         socketChannel.configureBlocking(false);
-        TCPServerConnector connector = createConnector(socketChannel);
-        addConnector(connector);
+        TCPServerConnector connector = new TCPServerConnector(this);
+        prepareConnector(connector);
+        connector.setSocketChannel(socketChannel);
+        connector.setSelector(selector);
+        connector.activate();
       }
     }
     catch (ClosedChannelException ex)
@@ -187,11 +189,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
     }
     catch (Exception ex)
     {
-      if (isActive())
-      {
-        OM.LOG.error(ex);
-      }
-
+      if (isActive()) OM.LOG.error(ex);
       deactivate();
     }
   }
@@ -202,23 +200,10 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
     return MessageFormat.format("TCPAcceptor[{0}:{1}]", address, port); //$NON-NLS-1$ 
   }
 
-  protected TCPServerConnector createConnector(SocketChannel socketChannel)
-  {
-    TCPServerConnector connector = new TCPServerConnector();
-    connector.setSocketChannel(socketChannel);
-    connector.setSelector(selector);
-    return connector;
-  }
-
   @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (StringUtil.isEmpty(address))
-    {
-      throw new IllegalStateException("No address"); //$NON-NLS-1$
-    }
-
     if (selector == null)
     {
       throw new IllegalStateException("selector == null");
@@ -238,7 +223,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
     serverSocketChannel.configureBlocking(false);
     selector.orderRegistration(serverSocketChannel, this);
 
-    if (startSynchronously)
+    if (startLatch != null)
     {
       if (!startLatch.await(synchronousStartTimeout, TimeUnit.MILLISECONDS))
       {

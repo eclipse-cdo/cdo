@@ -15,18 +15,18 @@ import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.internal.tcp.TCPAcceptor;
 import org.eclipse.net4j.internal.tcp.TCPClientConnector;
 import org.eclipse.net4j.internal.tcp.TCPSelector;
-import org.eclipse.net4j.internal.tcp.TCPServerConnector;
 import org.eclipse.net4j.internal.util.security.ChallengeNegotiator;
 import org.eclipse.net4j.internal.util.security.PasswordCredentials;
 import org.eclipse.net4j.internal.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.internal.util.security.Randomizer;
 import org.eclipse.net4j.internal.util.security.ResponseNegotiator;
 import org.eclipse.net4j.internal.util.security.UserManager;
+import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
-import java.nio.channels.SocketChannel;
+import java.nio.channels.ServerSocketChannel;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -68,21 +68,28 @@ public class ConnectorTest extends AbstractOMTest
   @Override
   protected void doTearDown() throws Exception
   {
+    cleanup();
+    super.doTearDown();
+  }
+
+  private void cleanup() throws Exception
+  {
+    sleep(100);
+    LifecycleUtil.deactivate(connector);
     LifecycleUtil.deactivate(responseNegotiator);
     LifecycleUtil.deactivate(credentialsProvider);
-    LifecycleUtil.deactivate(connector);
+    connector = null;
     responseNegotiator = null;
     credentialsProvider = null;
-    connector = null;
 
+    LifecycleUtil.deactivate(acceptor);
     LifecycleUtil.deactivate(challengeNegotiator);
     LifecycleUtil.deactivate(userManager);
     LifecycleUtil.deactivate(randomizer);
-    LifecycleUtil.deactivate(acceptor);
+    acceptor = null;
     challengeNegotiator = null;
     userManager = null;
     randomizer = null;
-    acceptor = null;
 
     LifecycleUtil.deactivate(selector);
     LifecycleUtil.deactivate(bufferPool);
@@ -90,13 +97,11 @@ public class ConnectorTest extends AbstractOMTest
     selector = null;
     bufferPool = null;
     threadPool = null;
-
-    super.doTearDown();
   }
 
   public void testDeferredActivation() throws Exception
   {
-    final long DELAY = 1000L;
+    final long DELAY = 500L;
     threadPool = Executors.newCachedThreadPool();
     LifecycleUtil.activate(threadPool);
 
@@ -109,10 +114,10 @@ public class ConnectorTest extends AbstractOMTest
     acceptor = new TCPAcceptor()
     {
       @Override
-      protected TCPServerConnector createConnector(SocketChannel socketChannel)
+      public void handleAccept(ITCPSelector selector, ServerSocketChannel serverSocketChannel)
       {
         ConcurrencyUtil.sleep(DELAY);
-        return super.createConnector(socketChannel);
+        super.handleAccept(selector, serverSocketChannel);
       }
     };
 
@@ -137,6 +142,24 @@ public class ConnectorTest extends AbstractOMTest
     boolean connected = connector.waitForConnection(DELAY + TIMEOUT);
     assertEquals(true, connected);
     assertEquals(true, connector.isActive());
+  }
+
+  public void testDeferredActivation100() throws Exception
+  {
+    for (int i = 0; i < 100; i++)
+    {
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println("#####################################################");
+      System.out.println(" RUN = " + i);
+      System.out.println("#####################################################");
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      testDeferredActivation();
+      cleanup();
+    }
   }
 
   public void testNegotiationSuccess() throws Exception
@@ -167,7 +190,7 @@ public class ConnectorTest extends AbstractOMTest
     acceptor.setSynchronousStartTimeout(TIMEOUT);
     acceptor.setBufferProvider(bufferPool);
     acceptor.setReceiveExecutor(threadPool);
-    acceptor.setNegotiator(challengeNegotiator);
+    // acceptor.setNegotiator(challengeNegotiator);
     acceptor.setSelector(selector);
     acceptor.setAddress("0.0.0.0");
     acceptor.setPort(2036);
@@ -183,7 +206,7 @@ public class ConnectorTest extends AbstractOMTest
     connector = new TCPClientConnector();
     connector.setBufferProvider(bufferPool);
     connector.setReceiveExecutor(threadPool);
-    connector.setNegotiator(responseNegotiator);
+    // connector.setNegotiator(responseNegotiator);
     connector.setSelector(selector);
     connector.setHost("localhost");
     connector.setPort(2036);
@@ -191,6 +214,24 @@ public class ConnectorTest extends AbstractOMTest
 
     boolean connected = connector.waitForConnection(TIMEOUT);
     assertEquals(true, connected);
+  }
+
+  public void testNegotiationSuccess100() throws Exception
+  {
+    for (int i = 0; i < 100; i++)
+    {
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println("#####################################################");
+      System.out.println("                          RUN = " + i);
+      System.out.println("#####################################################");
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      testNegotiationSuccess();
+      cleanup();
+    }
   }
 
   public void testNegotiationFailure() throws Exception

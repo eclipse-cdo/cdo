@@ -139,37 +139,32 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
     return getAcceptedConnectors();
   }
 
-  protected void addConnector(Connector connector)
+  public void prepareConnector(Connector connector)
   {
-    try
-    {
-      connector.addListener(lifecycleEventConverter);
-      connector.setNegotiator(negotiator);
-      connector.setBufferProvider(bufferProvider);
-      connector.setReceiveExecutor(receiveExecutor);
-      connector.setProtocolFactoryRegistry(protocolFactoryRegistry);
-      connector.setProtocolPostProcessors(protocolPostProcessors);
-      connector.activate();
-
-      synchronized (acceptedConnectors)
-      {
-        acceptedConnectors.add(connector);
-      }
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Added connector " + connector); //$NON-NLS-1$
-      }
-
-      fireElementAddedEvent(connector);
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-    }
+    connector.setNegotiator(negotiator);
+    connector.setBufferProvider(bufferProvider);
+    connector.setReceiveExecutor(receiveExecutor);
+    connector.setProtocolFactoryRegistry(protocolFactoryRegistry);
+    connector.setProtocolPostProcessors(protocolPostProcessors);
   }
 
-  protected void removeConnector(IConnector connector)
+  public void addConnector(Connector connector)
+  {
+    synchronized (acceptedConnectors)
+    {
+      acceptedConnectors.add(connector);
+    }
+
+    connector.addListener(lifecycleEventConverter);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Added connector " + connector); //$NON-NLS-1$
+    }
+
+    fireElementAddedEvent(connector);
+  }
+
+  public void removeConnector(IConnector connector)
   {
     connector.removeListener(lifecycleEventConverter);
     synchronized (acceptedConnectors)

@@ -33,7 +33,7 @@ public class AllTests
     suite.addTestSuite(SynchronizingCorrelatorTest.class);
     suite.addTestSuite(TestBufferPool.class);
     suite.addTestSuite(SecurityTest.class);
-    // TODO suite.addTestSuite(ConnectorTest.class);
+    suite.addTestSuite(ConnectorTest.class);
     // $JUnit-END$
 
     return suite;

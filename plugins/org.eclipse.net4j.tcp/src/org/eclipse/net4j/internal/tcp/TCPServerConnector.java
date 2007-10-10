@@ -14,6 +14,7 @@ import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.ConnectorLocation;
 import org.eclipse.net4j.ConnectorState;
 
+import java.nio.channels.SelectionKey;
 import java.text.MessageFormat;
 
 /**
@@ -21,8 +22,16 @@ import java.text.MessageFormat;
  */
 public class TCPServerConnector extends TCPConnector
 {
-  public TCPServerConnector()
+  private TCPAcceptor acceptor;
+
+  public TCPServerConnector(TCPAcceptor acceptor)
   {
+    this.acceptor = acceptor;
+  }
+
+  public TCPAcceptor getAcceptor()
+  {
+    return acceptor;
   }
 
   public ConnectorLocation getLocation()
@@ -73,5 +82,12 @@ public class TCPServerConnector extends TCPConnector
     {
       return MessageFormat.format("ServerTCPConnector[{3}@{0}:{1}]", getHost(), getPort(), getUserID()); //$NON-NLS-1$
     }
+  }
+
+  @Override
+  public void handleRegistration(SelectionKey selectionKey)
+  {
+    super.handleRegistration(selectionKey);
+    acceptor.addConnector(this);
   }
 }

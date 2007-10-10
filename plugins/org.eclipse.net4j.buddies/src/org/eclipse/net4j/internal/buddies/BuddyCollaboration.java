@@ -50,6 +50,7 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
     {
       String description = String.valueOf(getID());
       IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, type, description);
+      facility.setCollaboration(this);
       boolean success = new InstallFacilityRequest(session.getChannel(), getID(), type).send(ProtocolConstants.TIMEOUT);
       if (success)
       {

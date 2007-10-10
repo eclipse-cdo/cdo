@@ -59,7 +59,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     {
       public void run()
       {
-        registerAcceptor(channel, listener);
+        executeRegistration(channel, listener);
       }
 
       @Override
@@ -77,7 +77,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     {
       public void run()
       {
-        registerConnector(channel, listener, client);
+        executeRegistration(channel, listener, client);
       }
 
       @Override
@@ -146,8 +146,8 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     {
       try
       {
-        execute(true);
-        execute(false);
+        processOperations(true);
+        processOperations(false);
         if (selector != null && selector.select() > 0)
         {
           Iterator<SelectionKey> it = selector.selectedKeys().iterator();
@@ -345,7 +345,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     }
   }
 
-  private void execute(boolean client)
+  private void processOperations(boolean client)
   {
     Runnable operation;
     Queue<Runnable> operations = client ? clientOperations : serverOperations;
@@ -360,7 +360,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     }
   }
 
-  private void registerAcceptor(final ServerSocketChannel channel, final ITCPSelectorListener.Passive listener)
+  private void executeRegistration(final ServerSocketChannel channel, final ITCPSelectorListener.Passive listener)
   {
     if (TRACER.isEnabled())
     {
@@ -378,7 +378,8 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     }
   }
 
-  private void registerConnector(final SocketChannel channel, final ITCPSelectorListener.Active listener, boolean client)
+  private void executeRegistration(final SocketChannel channel, final ITCPSelectorListener.Active listener,
+      boolean client)
   {
     if (TRACER.isEnabled())
     {
@@ -387,12 +388,6 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
     try
     {
-      // int interest = SelectionKey.OP_READ;
-      // if (connect)
-      // {
-      // interest |= SelectionKey.OP_CONNECT;
-      // }
-
       int interest = client ? SelectionKey.OP_CONNECT : SelectionKey.OP_READ;
       SelectionKey selectionKey = channel.register(selector, interest, listener);
       listener.handleRegistration(selectionKey);

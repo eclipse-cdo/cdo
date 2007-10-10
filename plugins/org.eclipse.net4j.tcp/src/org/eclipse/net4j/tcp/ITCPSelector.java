@@ -22,13 +22,13 @@ import java.nio.channels.SocketChannel;
  */
 public interface ITCPSelector
 {
-  public void register(ServerSocketChannel channel, Passive listener);
+  public void orderRegistration(ServerSocketChannel channel, Passive listener);
 
-  public void register(SocketChannel channel, boolean client, Active listener);
+  public void orderRegistration(SocketChannel channel, boolean client, Active listener);
 
-  public void setConnectInterest(SelectionKey selectionKey, boolean client, boolean on);
+  public void orderConnectInterest(SelectionKey selectionKey, boolean client, boolean on);
 
-  public void setReadInterest(SelectionKey selectionKey, boolean client, boolean on);
+  public void orderReadInterest(SelectionKey selectionKey, boolean client, boolean on);
 
-  public void setWriteInterest(SelectionKey selectionKey, boolean client, boolean on);
+  public void orderWriteInterest(SelectionKey selectionKey, boolean client, boolean on);
 }

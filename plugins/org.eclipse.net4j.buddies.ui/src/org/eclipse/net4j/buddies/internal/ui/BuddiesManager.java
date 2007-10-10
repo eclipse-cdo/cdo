@@ -26,7 +26,9 @@ public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListe
 
   private IBuddySession session;
 
-  private State state;
+  private State state = State.DISCONNECTED;
+
+  private boolean connecting;
 
   private boolean flashing;
 
@@ -52,6 +54,11 @@ public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListe
       this.state = state;
       fireEvent(event);
     }
+  }
+
+  public boolean isFlashing()
+  {
+    return flashing;
   }
 
   public boolean isConnecting()
@@ -89,7 +96,8 @@ public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListe
         try
         {
           setState(IBuddiesManager.State.CONNECTING);
-          while (session == null && isConnecting())
+          connecting = true;
+          while (session == null && connecting)
           {
             IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, getConnectorDescription());
             if (connector == null)
@@ -103,7 +111,7 @@ public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListe
               session = BuddiesUtil.openSession(connector, getUserID(), getPassword(), 5000L);
               if (session != null)
               {
-                if (isConnecting())
+                if (connecting)
                 {
                   session.addListener(BuddiesManager.this);
                   setState(IBuddiesManager.State.CONNECTED);
@@ -124,7 +132,7 @@ public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListe
         }
         finally
         {
-          setState(IBuddiesManager.State.DISCONNECTED);
+          connecting = false;
         }
       }
     }.start();
@@ -132,6 +140,7 @@ public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListe
 
   public void disconnect()
   {
+    connecting = false;
     if (session != null)
     {
       session.removeListener(this);

@@ -124,15 +124,17 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
 
     Collaboration collaboration = new Collaboration(collaborationID, buddies);
     addCollaboration(collaboration);
+
+    Set<IBuddy> invitations = new HashSet<IBuddy>(buddies);
     for (IBuddy buddy : buddies)
     {
       if (buddy != initiator)
       {
         try
         {
-          buddies.remove(buddy);
+          invitations.remove(buddy);
           IChannel channel = buddy.getSession().getChannel();
-          new CollaborationInitiatedNotification(channel, collaborationID, buddies).send();
+          new CollaborationInitiatedNotification(channel, collaborationID, invitations).send();
         }
         catch (Exception ex)
         {
@@ -140,7 +142,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
         }
         finally
         {
-          buddies.add(buddy);
+          invitations.add(buddy);
         }
       }
     }

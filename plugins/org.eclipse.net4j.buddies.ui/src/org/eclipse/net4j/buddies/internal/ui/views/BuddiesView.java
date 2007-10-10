@@ -1,3 +1,13 @@
+/***************************************************************************
+ * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddySession;
@@ -67,7 +77,6 @@ public class BuddiesView extends ContainerView implements IListener
     if (event instanceof IBuddiesManagerStateChangedEvent)
     {
       queryBuddiesManager();
-      updateState();
     }
     else if (event instanceof IBuddyStateChangedEvent)
     {
@@ -85,7 +94,6 @@ public class BuddiesView extends ContainerView implements IListener
     queryBuddiesManager();
     IBuddiesManager.INSTANCE.addListener(this);
     INSTANCE = this;
-    updateState();
     return control;
   }
 
@@ -136,21 +144,31 @@ public class BuddiesView extends ContainerView implements IListener
   {
     IBuddySession oldSession = session;
     session = IBuddiesManager.INSTANCE.getSession();
-    if (oldSession != null && oldSession != session)
+    if (oldSession != session)
     {
-      oldSession.removeListener(this);
-      oldSession.getSelf().removeListener(this);
+      if (oldSession != null)
+      {
+        oldSession.removeListener(this);
+        oldSession.getSelf().removeListener(this);
+      }
+
+      if (session != null)
+      {
+        session.addListener(this);
+        session.getSelf().addListener(this);
+      }
     }
 
-    if (session != null && session != oldSession)
-    {
-      session.addListener(this);
-      session.getSelf().addListener(this);
-    }
+    resetInput();
+    updateState();
   }
 
   protected void updateState()
   {
+    connectAction.setEnabled(session == null);
+    disconnectAction.setEnabled(session != null);
+    flashAction.setEnabled(session != null && !IBuddiesManager.INSTANCE.isFlashing());
+
     updateState(availableAction, IBuddy.State.AVAILABLE);
     updateState(lonesomeAction, IBuddy.State.LONESOME);
     updateState(awayAction, IBuddy.State.AWAY);

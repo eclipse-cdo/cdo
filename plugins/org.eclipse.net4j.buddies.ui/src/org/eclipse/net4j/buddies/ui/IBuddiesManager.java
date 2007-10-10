@@ -25,11 +25,15 @@ public interface IBuddiesManager extends INotifier
 
   public State getState();
 
+  public boolean isConnecting();
+
   public void connect();
 
   public void disconnect();
 
   public void flashMe();
+
+  public boolean isFlashing();
 
   /**
    * @author Eike Stepper

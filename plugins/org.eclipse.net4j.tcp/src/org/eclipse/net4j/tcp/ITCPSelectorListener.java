@@ -19,7 +19,7 @@ import java.nio.channels.SocketChannel;
  */
 public interface ITCPSelectorListener
 {
-  public void registered(SelectionKey selectionKey);
+  public void handleRegistration(SelectionKey selectionKey);
 
   /**
    * @author Eike Stepper

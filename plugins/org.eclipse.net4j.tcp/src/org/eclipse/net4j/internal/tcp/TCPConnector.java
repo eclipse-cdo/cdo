@@ -28,9 +28,9 @@ import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.internal.net4j.Channel;
 import org.eclipse.internal.net4j.Connector;
 
+import java.net.ConnectException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
-import java.nio.channels.NoConnectionPendingException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.List;
@@ -120,12 +120,12 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     selector.setWriteInterest(selectionKey, true);
   }
 
-  public void registered(SelectionKey selectionKey)
+  public void handleRegistration(SelectionKey selectionKey)
   {
     this.selectionKey = selectionKey;
     if (isServer())
     {
-      selector.setConnectInterest(selectionKey, false);
+      leaveConnecting();
     }
   }
 
@@ -133,36 +133,37 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   {
     try
     {
-      if (!channel.finishConnect())
+      if (channel.finishConnect())
       {
-        return;
+        selector.setConnectInterest(selectionKey, false);
+        selector.setReadInterest(selectionKey, true);
+        leaveConnecting();
       }
     }
-    catch (NoConnectionPendingException ignore)
-    {
-      // This must be on server side
-    }
-    catch (java.net.ConnectException ex)
+    catch (ConnectException ex)
     {
       if (TRACER.isEnabled()) TRACER.trace(ex.getMessage());
-      return;
     }
     catch (Exception ex)
     {
       OM.LOG.error(ex);
-      return;
     }
+  }
 
-    setNegotiating(selector);
+  private void leaveConnecting()
+  {
+    if (getNegotiator() == null)
+    {
+      setState(ConnectorState.CONNECTED);
+    }
+    else
+    {
+      setState(ConnectorState.NEGOTIATING);
+    }
   }
 
   public void handleRead(ITCPSelector selector, SocketChannel socketChannel)
   {
-    if (isConnecting())
-    {
-      setNegotiating(selector);
-    }
-
     try
     {
       if (inputBuffer == null)
@@ -206,11 +207,6 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
 
   public void handleWrite(ITCPSelector selector, SocketChannel socketChannel)
   {
-    if (isConnecting())
-    {
-      setNegotiating(selector);
-    }
-
     try
     {
       boolean moreToWrite = false;
@@ -359,26 +355,21 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   @Override
   protected void doActivate() throws Exception
   {
+    super.doActivate();
     controlChannel = new ControlChannel(getNextChannelID(), this);
     controlChannel.activate();
-    selector.registerAsync(socketChannel, this);
-    super.doActivate();
+    selector.register(socketChannel, this, isClient());
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    selector.setConnectInterest(selectionKey, false);
-    selector.setWriteInterest(selectionKey, false);
-    selector.setReadInterest(selectionKey, false);
     selectionKey.cancel();
 
     LifecycleUtil.deactivate(controlChannel);
-    controlChannel = null;
-
     IOUtil.closeSilent(socketChannel);
+    controlChannel = null;
     socketChannel = null;
-
     super.doDeactivate();
   }
 
@@ -387,22 +378,6 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     if (selectionKey == null)
     {
       throw new IllegalStateException("selectionKey == null");
-    }
-  }
-
-  private void setNegotiating(ITCPSelector selector)
-  {
-    try
-    {
-      checkSelectionKey();
-      selector.setConnectInterest(selectionKey, false);
-      selector.setWriteInterest(selectionKey, false);
-      setState(ConnectorState.NEGOTIATING);
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-      deactivate();
     }
   }
 

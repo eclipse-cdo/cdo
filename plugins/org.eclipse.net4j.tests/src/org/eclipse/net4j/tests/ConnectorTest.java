@@ -35,7 +35,7 @@ import java.util.concurrent.Executors;
  */
 public class ConnectorTest extends AbstractOMTest
 {
-  private static final int TIMEOUT = 1000;
+  private static final int TIMEOUT = 2000;
 
   private static final String USER_ID = "stepper";
 
@@ -68,25 +68,28 @@ public class ConnectorTest extends AbstractOMTest
   @Override
   protected void doTearDown() throws Exception
   {
-    sleep(TIMEOUT);
-
     LifecycleUtil.deactivate(responseNegotiator);
     LifecycleUtil.deactivate(credentialsProvider);
+    LifecycleUtil.deactivate(connector);
+
     LifecycleUtil.deactivate(challengeNegotiator);
     LifecycleUtil.deactivate(userManager);
     LifecycleUtil.deactivate(randomizer);
-    LifecycleUtil.deactivate(connector);
     LifecycleUtil.deactivate(acceptor);
+
     LifecycleUtil.deactivate(selector);
     LifecycleUtil.deactivate(bufferPool);
     LifecycleUtil.deactivate(threadPool);
+
     responseNegotiator = null;
     credentialsProvider = null;
+    connector = null;
+
     challengeNegotiator = null;
     userManager = null;
     randomizer = null;
-    connector = null;
     acceptor = null;
+
     selector = null;
     bufferPool = null;
     threadPool = null;
@@ -123,7 +126,6 @@ public class ConnectorTest extends AbstractOMTest
     acceptor.setAddress("0.0.0.0");
     acceptor.setPort(2036);
     acceptor.activate();
-    sleep(200);
 
     connector = new TCPClientConnector();
     connector.setBufferProvider(bufferPool);
@@ -172,7 +174,6 @@ public class ConnectorTest extends AbstractOMTest
     acceptor.setAddress("0.0.0.0");
     acceptor.setPort(2036);
     acceptor.activate();
-    sleep(200);
 
     credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
     LifecycleUtil.activate(credentialsProvider);
@@ -227,7 +228,6 @@ public class ConnectorTest extends AbstractOMTest
     acceptor.setAddress("0.0.0.0");
     acceptor.setPort(2036);
     acceptor.activate();
-    sleep(200);
 
     PasswordCredentialsProvider credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
     LifecycleUtil.activate(credentialsProvider);

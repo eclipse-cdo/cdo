@@ -26,6 +26,7 @@ import org.eclipse.net4j.internal.util.factory.FactoryKey;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.RWLock;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerEvent;
@@ -223,26 +224,20 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
       case CONNECTING:
         finishedConnecting = new CountDownLatch(1);
         finishedNegotiating = new CountDownLatch(1);
+        // The concrete implementation must advance state to NEGOTIATING or CONNECTED
         break;
 
       case NEGOTIATING:
         finishedConnecting.countDown();
-        if (negotiator != null)
-        {
-          negotiationContext = createNegotiationContext();
-          negotiator.negotiate(negotiationContext);
-        }
-        else
-        {
-          setState(ConnectorState.CONNECTED);
-        }
+        negotiationContext = createNegotiationContext();
+        negotiator.negotiate(negotiationContext);
         break;
 
       case CONNECTED:
         negotiationContext = null;
-        finishedConnecting.countDown(); // Just in case of suspicion
-        finishedNegotiating.countDown();
         deferredActivate();
+        finishedConnecting.countDown();
+        finishedNegotiating.countDown();
         break;
       }
 
@@ -297,19 +292,14 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
       do
       {
-        if (isDisconnected())
+        if (finishedNegotiating == null)
         {
-          return false;
+          break;
         }
 
-        if (isConnected())
+        if (finishedNegotiating.await(Math.min(99L, timeout), TimeUnit.MILLISECONDS))
         {
-          return true;
-        }
-
-        if (finishedNegotiating != null)
-        {
-          finishedNegotiating.await(Math.min(100L, timeout), TimeUnit.MILLISECONDS);
+          break;
         }
 
         if (MonitorUtil.isCanceled())
@@ -317,6 +307,9 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
           break;
         }
 
+        // Enable thread switch
+        // TODO Clarify why this is needed
+        ConcurrencyUtil.sleep(1L);
         timeout -= 100L;
       } while (timeout > 0);
 

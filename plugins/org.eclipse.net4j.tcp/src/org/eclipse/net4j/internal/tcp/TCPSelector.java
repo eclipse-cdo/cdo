@@ -50,7 +50,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
   {
   }
 
-  public void registerAsync(final ServerSocketChannel channel, final Passive listener)
+  public void register(final ServerSocketChannel channel, final Passive listener)
   {
     assertValidListener(listener);
     invokeAsync(new Runnable()
@@ -68,14 +68,14 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
-  public void registerAsync(final SocketChannel channel, final Active listener)
+  public void register(final SocketChannel channel, final Active listener, final boolean connect)
   {
     assertValidListener(listener);
     invokeAsync(new Runnable()
     {
       public void run()
       {
-        doRegister(channel, listener);
+        doRegister(channel, listener, connect);
       }
 
       @Override
@@ -86,53 +86,53 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
-  public void setConnectInterest(final SelectionKey selectionKey, final boolean on)
+  public void setConnectInterest(final SelectionKey selectionKey, final boolean connect)
   {
     invokeAsync(new Runnable()
     {
       public void run()
       {
-        SelectorUtil.setConnectInterest(selectionKey, on);
+        SelectorUtil.setConnectInterest(selectionKey, connect);
       }
 
       @Override
       public String toString()
       {
-        return "INTEREST CONNECT " + selectionKey.channel() + " = " + on;
+        return "INTEREST CONNECT " + selectionKey.channel() + " = " + connect;
       }
     });
   }
 
-  public void setReadInterest(final SelectionKey selectionKey, final boolean on)
+  public void setReadInterest(final SelectionKey selectionKey, final boolean read)
   {
     invokeAsync(new Runnable()
     {
       public void run()
       {
-        SelectorUtil.setReadInterest(selectionKey, on);
+        SelectorUtil.setReadInterest(selectionKey, read);
       }
 
       @Override
       public String toString()
       {
-        return "INTEREST READ " + selectionKey.channel() + " = " + on;
+        return "INTEREST READ " + selectionKey.channel() + " = " + read;
       }
     });
   }
 
-  public void setWriteInterest(final SelectionKey selectionKey, final boolean on)
+  public void setWriteInterest(final SelectionKey selectionKey, final boolean write)
   {
     invokeAsync(new Runnable()
     {
       public void run()
       {
-        SelectorUtil.setWriteInterest(selectionKey, on);
+        SelectorUtil.setWriteInterest(selectionKey, write);
       }
 
       @Override
       public String toString()
       {
-        return "INTEREST WRITE " + selectionKey.channel() + " = " + on;
+        return "INTEREST WRITE " + selectionKey.channel() + " = " + write;
       }
 
     });
@@ -356,15 +356,14 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     {
       int interest = SelectionKey.OP_ACCEPT;
       SelectionKey selectionKey = channel.register(selector, interest, listener);
-      listener.registered(selectionKey);
+      listener.handleRegistration(selectionKey);
     }
     catch (ClosedChannelException ignore)
     {
-      ;
     }
   }
 
-  private void doRegister(final SocketChannel channel, final ITCPSelectorListener.Active listener)
+  private void doRegister(final SocketChannel channel, final ITCPSelectorListener.Active listener, boolean connect)
   {
     if (TRACER.isEnabled())
     {
@@ -373,13 +372,18 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
     try
     {
-      int interest = SelectionKey.OP_CONNECT | SelectionKey.OP_WRITE | SelectionKey.OP_READ;
+      // int interest = SelectionKey.OP_READ;
+      // if (connect)
+      // {
+      // interest |= SelectionKey.OP_CONNECT;
+      // }
+
+      int interest = connect ? SelectionKey.OP_CONNECT : SelectionKey.OP_READ;
       SelectionKey selectionKey = channel.register(selector, interest, listener);
-      listener.registered(selectionKey);
+      listener.handleRegistration(selectionKey);
     }
     catch (ClosedChannelException ignore)
     {
-      ;
     }
   }
 }

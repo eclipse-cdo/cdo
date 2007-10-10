@@ -119,7 +119,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
     this.synchronousStartTimeout = synchronousStartTimeout;
   }
 
-  public void registered(SelectionKey selectionKey)
+  public void handleRegistration(SelectionKey selectionKey)
   {
     this.selectionKey = selectionKey;
     if (startSynchronously)
@@ -187,6 +187,11 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
     {
       throw new IllegalStateException("selector == null");
     }
+
+    if (startSynchronously)
+    {
+      startLatch = new CountDownLatch(1);
+    }
   }
 
   @Override
@@ -221,20 +226,17 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
       }
     }
 
-    if (startSynchronously)
-    {
-      startLatch = new CountDownLatch(1);
-    }
-
-    // LifecycleUtil.waitForActive(selector, 2000L);
-    selector.registerAsync(serverSocketChannel, this);
+    selector.register(serverSocketChannel, this);
     if (startSynchronously)
     {
       if (!startLatch.await(synchronousStartTimeout, TimeUnit.MILLISECONDS))
       {
+        startLatch = null;
         IOUtil.closeSilent(serverSocketChannel);
         throw new IOException("Registration with selector timed out after " + synchronousStartTimeout + " millis");
       }
+
+      startLatch = null;
     }
   }
 

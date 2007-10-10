@@ -22,15 +22,15 @@ import java.nio.ByteBuffer;
 public abstract class Negotiator<STATE extends Enum<?>, EVENT extends Enum<?>> extends
     FiniteStateMachine<STATE, EVENT, INegotiationContext> implements INegotiator, INegotiationContext.Receiver
 {
-  private STATE initialState;
+  private transient STATE initialState;
 
-  private STATE successState;
+  private transient STATE successState;
 
-  private STATE failureState;
+  private transient STATE failureState;
 
-  private EVENT startEvent;
+  private transient EVENT startEvent;
 
-  private EVENT bufferEvent;
+  private transient EVENT bufferEvent;
 
   private boolean initiator;
 

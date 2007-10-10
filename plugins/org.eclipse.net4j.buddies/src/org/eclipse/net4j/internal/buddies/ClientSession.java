@@ -15,6 +15,7 @@ import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyContainer;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateNotification;
 import org.eclipse.net4j.buddies.protocol.IAccount;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
 import org.eclipse.net4j.internal.buddies.bundle.OM;
 import org.eclipse.net4j.util.event.IEvent;
@@ -111,7 +112,8 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
 
   public void buddyRemoved(String userID)
   {
-    removeBuddy(userID);
+    IBuddy buddy = removeBuddy(userID);
+    LifecycleUtil.deactivate(buddy);
   }
 
   @Override

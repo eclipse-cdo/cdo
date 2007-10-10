@@ -28,26 +28,6 @@ public abstract class OM
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
-  public static final OMTracer DEBUG_UTIL = DEBUG.tracer("util"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_MODEL = DEBUG.tracer("model"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_PROTOCOL = DEBUG.tracer("protocol"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_REPOSITORY = DEBUG.tracer("repository"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_SESSION = DEBUG.tracer("session"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_VIEW = DEBUG.tracer("view"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_TRANSCTION = DEBUG.tracer("transaction"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_OBJECT = DEBUG.tracer("object"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_RESOURCE = DEBUG.tracer("resource"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_REVISION = DEBUG.tracer("revision"); //$NON-NLS-1$
-
   public static final OMLogger LOG = BUNDLE.logger();
 
   public static final OMPreferences PREFS = BUNDLE.preferences();

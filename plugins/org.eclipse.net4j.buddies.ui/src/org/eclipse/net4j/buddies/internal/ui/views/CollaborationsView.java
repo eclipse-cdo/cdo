@@ -1,6 +1,9 @@
 package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddySession;
+import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
+import org.eclipse.net4j.buddies.ui.IBuddiesManager;
+import org.eclipse.net4j.buddies.ui.IBuddiesManagerStateChangedEvent;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
@@ -30,6 +33,8 @@ public class CollaborationsView extends ContainerView implements IListener
 
   private static CollaborationsView INSTANCE;
 
+  private IBuddySession session;
+
   private Sash sash;
 
   private Control leftControl;
@@ -49,7 +54,25 @@ public class CollaborationsView extends ContainerView implements IListener
   public synchronized void dispose()
   {
     INSTANCE = null;
+    IBuddiesManager.INSTANCE.removeListener(this);
+    session = null;
     super.dispose();
+  }
+
+  public void notifyEvent(IEvent event)
+  {
+    if (event instanceof IBuddiesManagerStateChangedEvent)
+    {
+      session = IBuddiesManager.INSTANCE.getSession();
+      updateState();
+    }
+    else if (event instanceof IBuddyStateChangedEvent)
+    {
+      if (session != null && event.getSource() == session.getSelf())
+      {
+        updateState();
+      }
+    }
   }
 
   @Override
@@ -98,19 +121,16 @@ public class CollaborationsView extends ContainerView implements IListener
     rightControlData.bottom = new FormAttachment(100, 0);
     rightControl.setLayoutData(rightControlData);
 
+    session = IBuddiesManager.INSTANCE.getSession();
+    IBuddiesManager.INSTANCE.addListener(this);
     INSTANCE = this;
+    updateState();
     return composite;
-  }
-
-  public void notifyEvent(IEvent event)
-  {
   }
 
   @Override
   protected IContainer<?> getContainer()
   {
-    BuddiesView buddiesView = BuddiesView.getINSTANCE();
-    IBuddySession session = buddiesView == null ? null : buddiesView.getSession();
     return session != null ? session.getSelf() : ContainerUtil.emptyContainer();
   }
 

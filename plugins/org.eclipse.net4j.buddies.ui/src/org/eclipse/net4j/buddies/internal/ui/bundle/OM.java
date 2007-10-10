@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.bundle;
 
+import org.eclipse.net4j.buddies.internal.ui.BuddiesManager;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -44,6 +45,16 @@ public abstract class OM
 
   public static final OMPreference<Boolean> PREF_AUTO_CONNECT = // 
   PREFS.init("PREF_AUTO_CONNECT", true); //$NON-NLS-1$
+
+  static void start() throws Exception
+  {
+    BuddiesManager.INSTANCE.activate();
+  }
+
+  static void stop() throws Exception
+  {
+    BuddiesManager.INSTANCE.deactivate();
+  }
 
   /**
    * @author Eike Stepper

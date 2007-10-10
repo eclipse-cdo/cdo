@@ -1,25 +1,17 @@
 package org.eclipse.net4j.buddies.internal.ui.views;
 
-import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.Net4jUtil;
-import org.eclipse.net4j.buddies.BuddiesUtil;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
-import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
+import org.eclipse.net4j.buddies.ui.IBuddiesManager;
+import org.eclipse.net4j.buddies.ui.IBuddiesManagerStateChangedEvent;
 import org.eclipse.net4j.internal.buddies.Self;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IContainerDelta;
-import org.eclipse.net4j.util.container.IContainerEvent;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
@@ -33,6 +25,10 @@ import org.eclipse.swt.widgets.Control;
 
 public class BuddiesView extends ContainerView implements IListener
 {
+  private static BuddiesView INSTANCE;
+
+  private IBuddySession session;
+
   private ConnectAction connectAction = new ConnectAction();
 
   private DisconnectAction disconnectAction = new DisconnectAction();
@@ -48,20 +44,8 @@ public class BuddiesView extends ContainerView implements IListener
   private StateAction doNotDisturbAction = new StateAction("Do Not Disturb", State.DO_NOT_DISTURB,
       SharedIcons.OBJ_BUDDY_DO_NOT_DISTURB);
 
-  private IBuddySession session;
-
-  private boolean connecting;
-
-  private boolean flashing;
-
-  private static BuddiesView INSTANCE;
-
   public BuddiesView()
   {
-    if (isAutoConnect())
-    {
-      connect();
-    }
   }
 
   public static synchronized BuddiesView getINSTANCE()
@@ -69,140 +53,21 @@ public class BuddiesView extends ContainerView implements IListener
     return INSTANCE;
   }
 
-  public IBuddySession getSession()
-  {
-    return session;
-  }
-
-  protected Boolean isAutoConnect()
-  {
-    return OM.PREF_AUTO_CONNECT.getValue();
-  }
-
-  protected void connect()
-  {
-    new Thread("buddies-connector")
-    {
-      @Override
-      public void run()
-      {
-        try
-        {
-          connecting = true;
-          while (session == null && connecting)
-          {
-            String connectorDescription = OM.PREF_CONNECTOR_DESCRIPTION.getValue();
-            IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, connectorDescription);
-            if (connector == null)
-            {
-              throw new IllegalStateException("connector == null");
-            }
-
-            boolean connected = connector.waitForConnection(5000L);
-            if (connected)
-            {
-              String userID = OM.PREF_USER_ID.getValue();
-              String password = OM.PREF_PASSWORD.getValue();
-              session = BuddiesUtil.openSession(connector, userID, password, 5000L);
-              if (session != null)
-              {
-                if (connecting)
-                {
-                  resetInput();
-                  connectAction.setEnabled(false);
-                  disconnectAction.setEnabled(true);
-                  flashAction.setEnabled(true);
-                  updateState();
-                  session.addListener(BuddiesView.this);
-                  session.getSelf().addListener(BuddiesView.this);
-                }
-                else
-                {
-                  session.close();
-                  session = null;
-                }
-              }
-            }
-            else
-            {
-              LifecycleUtil.deactivate(connector);
-            }
-          }
-        }
-        finally
-        {
-          connecting = false;
-        }
-      }
-    }.start();
-  }
-
-  protected void disconnect()
-  {
-    connecting = false;
-    session.getSelf().removeListener(BuddiesView.this);
-    session.removeListener(this);
-    session.close();
-    session = null;
-    resetInput();
-
-    connectAction.setEnabled(true);
-    disconnectAction.setEnabled(false);
-    flashAction.setEnabled(false);
-    availableAction.setEnabled(false);
-    availableAction.setChecked(false);
-    lonesomeAction.setEnabled(false);
-    lonesomeAction.setChecked(false);
-    awayAction.setEnabled(false);
-    awayAction.setChecked(false);
-    doNotDisturbAction.setEnabled(false);
-    doNotDisturbAction.setChecked(false);
-  }
-
   @Override
   public synchronized void dispose()
   {
     INSTANCE = null;
-    disconnect();
+    IBuddiesManager.INSTANCE.removeListener(this);
+    session = null;
     super.dispose();
-  }
-
-  @Override
-  protected Control createUI(Composite parent)
-  {
-    Control control = super.createUI(parent);
-    updateState();
-    INSTANCE = this;
-    return control;
   }
 
   public void notifyEvent(IEvent event)
   {
-    if (event.getSource() == session)
+    if (event instanceof IBuddiesManagerStateChangedEvent)
     {
-      if (event instanceof ILifecycleEvent)
-      {
-        if (((ILifecycleEvent)event).getKind() == ILifecycleEvent.Kind.DEACTIVATED)
-        {
-          disconnect();
-          if (isAutoConnect())
-          {
-            connect();
-          }
-        }
-      }
-      else if (event instanceof IContainerEvent)
-      {
-        IContainerEvent<IBuddy> e = (IContainerEvent<IBuddy>)event;
-        if (e.getDeltaKind() == IContainerDelta.Kind.ADDED)
-        {
-          e.getDeltaElement().addListener(this);
-        }
-        else if (e.getDeltaKind() == IContainerDelta.Kind.REMOVED)
-        {
-          e.getDeltaElement().removeListener(this);
-        }
-      }
+      session = IBuddiesManager.INSTANCE.getSession();
+      updateState();
     }
     else if (event instanceof IBuddyStateChangedEvent)
     {
@@ -211,6 +76,17 @@ public class BuddiesView extends ContainerView implements IListener
         updateState();
       }
     }
+  }
+
+  @Override
+  protected Control createUI(Composite parent)
+  {
+    Control control = super.createUI(parent);
+    session = IBuddiesManager.INSTANCE.getSession();
+    IBuddiesManager.INSTANCE.addListener(this);
+    INSTANCE = this;
+    updateState();
+    return control;
   }
 
   @Override
@@ -283,7 +159,7 @@ public class BuddiesView extends ContainerView implements IListener
     @Override
     protected void safeRun() throws Exception
     {
-      connect();
+      IBuddiesManager.INSTANCE.connect();
     }
   }
 
@@ -300,7 +176,7 @@ public class BuddiesView extends ContainerView implements IListener
     @Override
     protected void safeRun() throws Exception
     {
-      disconnect();
+      IBuddiesManager.INSTANCE.disconnect();
     }
   }
 
@@ -343,29 +219,7 @@ public class BuddiesView extends ContainerView implements IListener
     @Override
     protected void safeRun() throws Exception
     {
-      if (session != null && !flashing)
-      {
-        final Self self = (Self)session.getSelf();
-        final State original = self.getState();
-        new Thread("buddies-flasher")
-        {
-          @Override
-          public void run()
-          {
-            flashing = true;
-            IBuddy.State state = original == IBuddy.State.AVAILABLE ? IBuddy.State.LONESOME : IBuddy.State.AVAILABLE;
-            for (int i = 0; i < 15; i++)
-            {
-              self.setState(state);
-              ConcurrencyUtil.sleep(200);
-              state = state == IBuddy.State.AVAILABLE ? IBuddy.State.LONESOME : IBuddy.State.AVAILABLE;
-            }
-
-            self.setState(original);
-            flashing = false;
-          }
-        }.start();
-      }
+      IBuddiesManager.INSTANCE.flashMe();
     }
   }
 }

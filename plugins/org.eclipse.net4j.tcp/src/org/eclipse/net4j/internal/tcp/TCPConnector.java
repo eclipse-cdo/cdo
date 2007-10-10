@@ -139,11 +139,6 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
         leaveConnecting();
       }
     }
-    // catch (ConnectException ex)
-    // {
-    // // if (TRACER.isEnabled()) TRACER.trace(ex.getMessage());
-    // OM.LOG.error(ex);
-    // }
     catch (ClosedChannelException ex)
     {
       deactivate();

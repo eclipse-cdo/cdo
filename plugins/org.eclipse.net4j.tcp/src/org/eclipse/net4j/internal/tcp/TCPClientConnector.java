@@ -16,6 +16,7 @@ import org.eclipse.net4j.internal.tcp.bundle.OM;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.text.MessageFormat;
 
@@ -84,11 +85,20 @@ public class TCPClientConnector extends TCPConnector
   }
 
   @Override
-  protected void doActivate() throws Exception
+  public void handleRegistration(SelectionKey selectionKey)
   {
-    super.doActivate();
-    InetAddress addr = InetAddress.getByName(getHost());
-    InetSocketAddress sAddr = new InetSocketAddress(addr, getPort());
-    getSocketChannel().connect(sAddr);
+    super.handleRegistration(selectionKey);
+
+    try
+    {
+      InetAddress addr = InetAddress.getByName(getHost());
+      InetSocketAddress sAddr = new InetSocketAddress(addr, getPort());
+      getSocketChannel().connect(sAddr);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      deactivate();
+    }
   }
 }

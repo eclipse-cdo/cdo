@@ -40,7 +40,9 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
   private Selector selector;
 
-  private transient Queue<Runnable> pendingOperations = new ConcurrentLinkedQueue<Runnable>();
+  private transient Queue<Runnable> clientOperations = new ConcurrentLinkedQueue<Runnable>();
+
+  private transient Queue<Runnable> serverOperations = new ConcurrentLinkedQueue<Runnable>();
 
   private transient Thread thread;
 
@@ -53,11 +55,11 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
   public void register(final ServerSocketChannel channel, final Passive listener)
   {
     assertValidListener(listener);
-    invokeAsync(new Runnable()
+    order(false, new Runnable()
     {
       public void run()
       {
-        doRegister(channel, listener);
+        registerAcceptor(channel, listener);
       }
 
       @Override
@@ -68,14 +70,14 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
-  public void register(final SocketChannel channel, final Active listener, final boolean connect)
+  public void register(final SocketChannel channel, final boolean client, final Active listener)
   {
     assertValidListener(listener);
-    invokeAsync(new Runnable()
+    order(client, new Runnable()
     {
       public void run()
       {
-        doRegister(channel, listener, connect);
+        registerConnector(channel, listener, client);
       }
 
       @Override
@@ -86,53 +88,53 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
-  public void setConnectInterest(final SelectionKey selectionKey, final boolean connect)
+  public void setConnectInterest(final SelectionKey selectionKey, boolean client, final boolean on)
   {
-    invokeAsync(new Runnable()
+    order(client, new Runnable()
     {
       public void run()
       {
-        SelectorUtil.setConnectInterest(selectionKey, connect);
+        SelectorUtil.setConnectInterest(selectionKey, on);
       }
 
       @Override
       public String toString()
       {
-        return "INTEREST CONNECT " + selectionKey.channel() + " = " + connect;
+        return "INTEREST CONNECT " + selectionKey.channel() + " = " + on;
       }
     });
   }
 
-  public void setReadInterest(final SelectionKey selectionKey, final boolean read)
+  public void setReadInterest(final SelectionKey selectionKey, boolean client, final boolean on)
   {
-    invokeAsync(new Runnable()
+    order(client, new Runnable()
     {
       public void run()
       {
-        SelectorUtil.setReadInterest(selectionKey, read);
+        SelectorUtil.setReadInterest(selectionKey, on);
       }
 
       @Override
       public String toString()
       {
-        return "INTEREST READ " + selectionKey.channel() + " = " + read;
+        return "INTEREST READ " + selectionKey.channel() + " = " + on;
       }
     });
   }
 
-  public void setWriteInterest(final SelectionKey selectionKey, final boolean write)
+  public void setWriteInterest(final SelectionKey selectionKey, boolean client, final boolean on)
   {
-    invokeAsync(new Runnable()
+    order(client, new Runnable()
     {
       public void run()
       {
-        SelectorUtil.setWriteInterest(selectionKey, write);
+        SelectorUtil.setWriteInterest(selectionKey, on);
       }
 
       @Override
       public String toString()
       {
-        return "INTEREST WRITE " + selectionKey.channel() + " = " + write;
+        return "INTEREST WRITE " + selectionKey.channel() + " = " + on;
       }
 
     });
@@ -140,22 +142,12 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
   public void run()
   {
-    selector.wakeup();
     while (running && !Thread.interrupted())
     {
       try
       {
-        Runnable operation;
-        while ((operation = pendingOperations.poll()) != null)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.trace("Executing operation " + operation);
-          }
-
-          operation.run();
-        }
-
+        execute(clientOperations);
+        execute(serverOperations);
         if (selector != null && selector.select() > 0)
         {
           Iterator<SelectionKey> it = selector.selectedKeys().iterator();
@@ -331,21 +323,43 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     }
   }
 
-  private void invokeAsync(final Runnable operation)
+  private void order(boolean client, Runnable operation)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Pending operation " + operation);
+      TRACER.trace("Ordering operation " + operation);
     }
 
-    pendingOperations.add(operation);
+    if (client)
+    {
+      clientOperations.add(operation);
+    }
+    else
+    {
+      serverOperations.add(operation);
+    }
+
     if (selector != null)
     {
       selector.wakeup();
     }
   }
 
-  private void doRegister(final ServerSocketChannel channel, final ITCPSelectorListener.Passive listener)
+  private void execute(Queue<Runnable> operations)
+  {
+    Runnable operation;
+    while ((operation = operations.poll()) != null)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Executing operation " + operation);
+      }
+
+      operation.run();
+    }
+  }
+
+  private void registerAcceptor(final ServerSocketChannel channel, final ITCPSelectorListener.Passive listener)
   {
     if (TRACER.isEnabled())
     {
@@ -363,7 +377,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     }
   }
 
-  private void doRegister(final SocketChannel channel, final ITCPSelectorListener.Active listener, boolean connect)
+  private void registerConnector(final SocketChannel channel, final ITCPSelectorListener.Active listener, boolean client)
   {
     if (TRACER.isEnabled())
     {
@@ -378,7 +392,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       // interest |= SelectionKey.OP_CONNECT;
       // }
 
-      int interest = connect ? SelectionKey.OP_CONNECT : SelectionKey.OP_READ;
+      int interest = client ? SelectionKey.OP_CONNECT : SelectionKey.OP_READ;
       SelectionKey selectionKey = channel.register(selector, interest, listener);
       listener.handleRegistration(selectionKey);
     }

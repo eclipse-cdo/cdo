@@ -71,25 +71,22 @@ public class ConnectorTest extends AbstractOMTest
     LifecycleUtil.deactivate(responseNegotiator);
     LifecycleUtil.deactivate(credentialsProvider);
     LifecycleUtil.deactivate(connector);
+    responseNegotiator = null;
+    credentialsProvider = null;
+    connector = null;
 
     LifecycleUtil.deactivate(challengeNegotiator);
     LifecycleUtil.deactivate(userManager);
     LifecycleUtil.deactivate(randomizer);
     LifecycleUtil.deactivate(acceptor);
-
-    LifecycleUtil.deactivate(selector);
-    LifecycleUtil.deactivate(bufferPool);
-    LifecycleUtil.deactivate(threadPool);
-
-    responseNegotiator = null;
-    credentialsProvider = null;
-    connector = null;
-
     challengeNegotiator = null;
     userManager = null;
     randomizer = null;
     acceptor = null;
 
+    LifecycleUtil.deactivate(selector);
+    LifecycleUtil.deactivate(bufferPool);
+    LifecycleUtil.deactivate(threadPool);
     selector = null;
     bufferPool = null;
     threadPool = null;

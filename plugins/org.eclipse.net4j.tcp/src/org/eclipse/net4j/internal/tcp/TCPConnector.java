@@ -117,7 +117,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   public void multiplexBuffer(IChannel channel)
   {
     checkSelectionKey();
-    selector.setWriteInterest(selectionKey, true);
+    selector.setWriteInterest(selectionKey, isClient(), true);
   }
 
   public void handleRegistration(SelectionKey selectionKey)
@@ -135,8 +135,8 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     {
       if (channel.finishConnect())
       {
-        selector.setConnectInterest(selectionKey, false);
-        selector.setReadInterest(selectionKey, true);
+        selector.setConnectInterest(selectionKey, true, false);
+        selector.setReadInterest(selectionKey, true, true);
         leaveConnecting();
       }
     }
@@ -236,7 +236,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       if (!moreToWrite)
       {
         checkSelectionKey();
-        selector.setWriteInterest(selectionKey, false);
+        selector.setWriteInterest(selectionKey, isClient(), false);
       }
     }
     catch (NullPointerException ignore)
@@ -358,7 +358,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     super.doActivate();
     controlChannel = new ControlChannel(getNextChannelID(), this);
     controlChannel.activate();
-    selector.register(socketChannel, this, isClient());
+    selector.register(socketChannel, isClient(), this);
   }
 
   @Override

@@ -24,11 +24,11 @@ public interface ITCPSelector
 {
   public void register(ServerSocketChannel channel, Passive listener);
 
-  public void register(SocketChannel channel, Active listener, boolean connect);
+  public void register(SocketChannel channel, boolean client, Active listener);
 
-  public void setConnectInterest(SelectionKey selectionKey, boolean connect);
+  public void setConnectInterest(SelectionKey selectionKey, boolean client, boolean on);
 
-  public void setReadInterest(SelectionKey selectionKey, boolean read);
+  public void setReadInterest(SelectionKey selectionKey, boolean client, boolean on);
 
-  public void setWriteInterest(SelectionKey selectionKey, boolean write);
+  public void setWriteInterest(SelectionKey selectionKey, boolean client, boolean on);
 }

@@ -118,6 +118,16 @@ public class CollaborationsView extends SessionManagerView
   }
 
   @Override
+  protected void doubleClicked(Object object)
+  {
+    if (object instanceof IBuddyCollaboration)
+    {
+      IBuddyCollaboration collaboration = (IBuddyCollaboration)object;
+      getCollaborationsPane().setActiveCollaboration(collaboration);
+    }
+  }
+
+  @Override
   protected IContainer<?> getContainer()
   {
     return getSession() != null ? getSession().getSelf() : ContainerUtil.emptyContainer();

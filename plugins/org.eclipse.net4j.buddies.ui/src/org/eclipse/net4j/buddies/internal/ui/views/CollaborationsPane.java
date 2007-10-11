@@ -311,11 +311,10 @@ public class CollaborationsPane extends Composite implements IListener
       else
       {
         String type = action.getType();
-        boolean installed = activeCollaboration.getFacility(type) != null;
-        action.setEnabled(!installed);
+        action.setEnabled(activeCollaboration.getFacility(type) != null);
 
         IFacility activeFacility = activeFacilities.get(activeCollaboration);
-        action.setChecked(ObjectUtil.equals(activeFacility.getType(), type));
+        action.setChecked(activeFacility != null && ObjectUtil.equals(activeFacility.getType(), type));
       }
     }
   }

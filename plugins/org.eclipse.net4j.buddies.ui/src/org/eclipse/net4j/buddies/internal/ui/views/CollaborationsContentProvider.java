@@ -10,15 +10,15 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
-import org.eclipse.net4j.buddies.protocol.IBuddyContainer;
+import org.eclipse.net4j.buddies.protocol.ICollaborationContainer;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
 /**
  * @author Eike Stepper
  */
-public class BuddiesContentProvider extends StructuredContentProvider<IBuddyContainer>
+public class CollaborationsContentProvider extends StructuredContentProvider<ICollaborationContainer>
 {
-  public BuddiesContentProvider()
+  public CollaborationsContentProvider()
   {
   }
 
@@ -28,13 +28,13 @@ public class BuddiesContentProvider extends StructuredContentProvider<IBuddyCont
   }
 
   @Override
-  protected void connectInput(IBuddyContainer input)
+  protected void connectInput(ICollaborationContainer input)
   {
     input.addListener(this);
   }
 
   @Override
-  protected void disconnectInput(IBuddyContainer input)
+  protected void disconnectInput(ICollaborationContainer input)
   {
     input.removeListener(this);
   }

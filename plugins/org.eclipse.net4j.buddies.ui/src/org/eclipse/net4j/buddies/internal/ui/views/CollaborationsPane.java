@@ -22,12 +22,12 @@ import org.eclipse.swt.widgets.List;
  */
 public class CollaborationsPane extends Composite
 {
-  private CollaborationsView viewPart;
+  private CollaborationsView collaborationsView;
 
-  public CollaborationsPane(CollaborationsView viewPart, Composite parent)
+  public CollaborationsPane(CollaborationsView collaborationsView, Composite parent)
   {
     super(parent, SWT.NONE);
-    this.viewPart = viewPart;
+    this.collaborationsView = collaborationsView;
     setLayout(UIUtil.createGridLayout(1));
 
     List list = new List(this, SWT.NONE);
@@ -38,9 +38,8 @@ public class CollaborationsPane extends Composite
     }
   }
 
-  public CollaborationsView getViewPart()
+  public CollaborationsView getCollaborationsView()
   {
-    return viewPart;
+    return collaborationsView;
   }
-
 }

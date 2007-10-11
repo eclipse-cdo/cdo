@@ -119,10 +119,7 @@ public class CollaborationsPane extends Composite implements IListener
     {
       activeCollaboration = collaboration;
       IFacility facility = activeFacilities.get(collaboration);
-      if (facility != null)
-      {
-        setActiveFacility(collaboration, facility);
-      }
+      setActiveFacility(collaboration, facility);
     }
   }
 

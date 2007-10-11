@@ -12,21 +12,22 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
+import org.eclipse.net4j.buddies.internal.ui.actions.ConnectAction;
+import org.eclipse.net4j.buddies.internal.ui.actions.DisconnectAction;
+import org.eclipse.net4j.buddies.internal.ui.actions.FlashAction;
+import org.eclipse.net4j.buddies.internal.ui.actions.StateAction;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
 import org.eclipse.net4j.buddies.ui.IBuddiesManager;
 import org.eclipse.net4j.buddies.ui.IBuddiesManagerStateChangedEvent;
-import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
@@ -179,82 +180,5 @@ public class BuddiesView extends ContainerView implements IListener
   {
     action.setEnabled(session != null);
     action.setChecked(session != null && session.getSelf().getState() == state);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class ConnectAction extends SafeAction
-  {
-    private ConnectAction()
-    {
-      super("Connect", "Connect to buddies server");
-    }
-
-    @Override
-    protected void safeRun() throws Exception
-    {
-      IBuddiesManager.INSTANCE.connect();
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class DisconnectAction extends SafeAction
-  {
-    private DisconnectAction()
-    {
-      super("Disonnect", "Disconnect from buddies server");
-    }
-
-    @Override
-    protected void safeRun() throws Exception
-    {
-      IBuddiesManager.INSTANCE.disconnect();
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class StateAction extends SafeAction
-  {
-    private State state;
-
-    private StateAction(String text, State state, String key)
-    {
-      super(text, Action.AS_RADIO_BUTTON);
-      setToolTipText("Set own state to '" + text.toLowerCase() + "'");
-      setImageDescriptor(SharedIcons.getDescriptor(key));
-      this.state = state;
-    }
-
-    @Override
-    protected void safeRun() throws Exception
-    {
-      if (session != null && isChecked())
-      {
-        Self self = (Self)session.getSelf();
-        self.setState(state);
-      }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class FlashAction extends SafeAction
-  {
-    private FlashAction()
-    {
-      super("Flash Me", "Flash Me");
-    }
-
-    @Override
-    protected void safeRun() throws Exception
-    {
-      IBuddiesManager.INSTANCE.flashMe();
-    }
   }
 }

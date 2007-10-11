@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
+import org.eclipse.net4j.buddies.BuddiesUtil;
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
@@ -22,18 +23,23 @@ import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IContainerEventVisitor;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.ui.actions.SafeAction;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,6 +65,8 @@ public class CollaborationsPane extends Composite implements IListener
   private Map<IBuddyCollaboration, IFacility> activeFacilities = new HashMap<IBuddyCollaboration, IFacility>();
 
   private Map<IFacility, FacilityPane> facilityPanes = new HashMap<IFacility, FacilityPane>();
+
+  private List<IAction> activateFacilityActions = new ArrayList<IAction>();
 
   private StackLayout paneStack;
 
@@ -142,6 +150,29 @@ public class CollaborationsPane extends Composite implements IListener
       {
         newPane.showed(oldPane);
       }
+    }
+  }
+
+  public void fillLocalToolBar(IToolBarManager manager)
+  {
+    for (String type : BuddiesUtil.getFacilityTypes())
+    {
+      final String facilityType = type;
+      IAction action = new SafeAction()
+      {
+        @Override
+        protected void safeRun() throws Exception
+        {
+          if (activeCollaboration != null)
+          {
+            IFacility facility = activeCollaboration.getFacility(facilityType);
+            setActiveFacility(activeCollaboration, facility);
+          }
+        }
+      };
+
+      activateFacilityActions.add(action);
+      manager.add(action);
     }
   }
 

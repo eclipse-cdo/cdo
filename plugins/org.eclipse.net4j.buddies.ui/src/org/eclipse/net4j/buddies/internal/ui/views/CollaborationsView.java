@@ -56,6 +56,7 @@ public class CollaborationsView extends SessionManagerView
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
+    getCollaborationsPane().fillLocalToolBar(manager);
     manager.add(new Separator());
     super.fillLocalToolBar(manager);
   }

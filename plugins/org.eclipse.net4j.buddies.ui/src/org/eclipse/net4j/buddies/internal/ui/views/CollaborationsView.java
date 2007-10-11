@@ -14,6 +14,8 @@ import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -48,6 +50,15 @@ public class CollaborationsView extends SessionManagerView
         return new CollaborationsPane(CollaborationsView.this, parent);
       }
     };
+  }
+
+  @Override
+  protected void fillLocalToolBar(IToolBarManager manager)
+  {
+    // manager.add(new AvailableAction());
+    // manager.add(new AwayAction());
+    manager.add(new Separator());
+    super.fillLocalToolBar(manager);
   }
 
   @Override

@@ -3,7 +3,7 @@ package org.eclipse.net4j.buddies.internal.ui.actions;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
-import org.eclipse.net4j.buddies.ui.IBuddiesManager;
+import org.eclipse.net4j.buddies.ui.ISessionManager;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
@@ -30,7 +30,7 @@ public class StateAction extends SafeAction
 
   public void updateState()
   {
-    IBuddySession session = IBuddiesManager.INSTANCE.getSession();
+    IBuddySession session = ISessionManager.INSTANCE.getSession();
     setEnabled(session != null);
     setChecked(session != null && session.getSelf().getState() == state);
   }
@@ -38,7 +38,7 @@ public class StateAction extends SafeAction
   @Override
   protected void safeRun() throws Exception
   {
-    IBuddySession session = IBuddiesManager.INSTANCE.getSession();
+    IBuddySession session = ISessionManager.INSTANCE.getSession();
     if (session != null && isChecked())
     {
       Self self = (Self)session.getSelf();
@@ -80,7 +80,7 @@ public class StateAction extends SafeAction
       awayAction.updateState();
       doNotDisturbAction.updateState();
 
-      IBuddySession session = IBuddiesManager.INSTANCE.getSession();
+      IBuddySession session = ISessionManager.INSTANCE.getSession();
       if (session != null)
       {
         setEnabled(true);

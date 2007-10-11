@@ -11,15 +11,15 @@
 package org.eclipse.net4j.buddies.ui;
 
 import org.eclipse.net4j.buddies.IBuddySession;
-import org.eclipse.net4j.buddies.internal.ui.BuddiesManager;
+import org.eclipse.net4j.buddies.internal.ui.SessionManager;
 import org.eclipse.net4j.util.event.INotifier;
 
 /**
  * @author Eike Stepper
  */
-public interface IBuddiesManager extends INotifier
+public interface ISessionManager extends INotifier
 {
-  public static final IBuddiesManager INSTANCE = BuddiesManager.INSTANCE;
+  public static final ISessionManager INSTANCE = SessionManager.INSTANCE;
 
   public IBuddySession getSession();
 

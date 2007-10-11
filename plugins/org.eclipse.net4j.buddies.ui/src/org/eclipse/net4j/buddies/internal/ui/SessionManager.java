@@ -6,8 +6,8 @@ import org.eclipse.net4j.buddies.BuddiesUtil;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.ui.IBuddiesManager;
-import org.eclipse.net4j.buddies.ui.IBuddiesManagerStateChangedEvent;
+import org.eclipse.net4j.buddies.ui.ISessionManager;
+import org.eclipse.net4j.buddies.ui.ISessionManagerEvent;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
@@ -20,9 +20,9 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListener
+public class SessionManager extends Lifecycle implements ISessionManager, IListener
 {
-  public static final BuddiesManager INSTANCE = new BuddiesManager();
+  public static final SessionManager INSTANCE = new SessionManager();
 
   private IBuddySession session;
 
@@ -32,7 +32,7 @@ public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListe
 
   private boolean flashing;
 
-  private BuddiesManager()
+  private SessionManager()
   {
   }
 
@@ -63,7 +63,7 @@ public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListe
 
   public boolean isConnecting()
   {
-    return state == IBuddiesManager.State.CONNECTING;
+    return state == ISessionManager.State.CONNECTING;
   }
 
   public String getConnectorDescription()
@@ -95,7 +95,7 @@ public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListe
       {
         try
         {
-          setState(IBuddiesManager.State.CONNECTING);
+          setState(ISessionManager.State.CONNECTING);
           connecting = true;
           while (session == null && connecting)
           {
@@ -113,14 +113,14 @@ public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListe
               {
                 if (connecting)
                 {
-                  session.addListener(BuddiesManager.this);
-                  setState(IBuddiesManager.State.CONNECTED);
+                  session.addListener(SessionManager.this);
+                  setState(ISessionManager.State.CONNECTED);
                 }
                 else
                 {
                   session.close();
                   session = null;
-                  setState(IBuddiesManager.State.DISCONNECTED);
+                  setState(ISessionManager.State.DISCONNECTED);
                 }
               }
             }
@@ -148,7 +148,7 @@ public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListe
       session = null;
     }
 
-    setState(IBuddiesManager.State.DISCONNECTED);
+    setState(ISessionManager.State.DISCONNECTED);
   }
 
   public void flashMe()
@@ -228,7 +228,7 @@ public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListe
   /**
    * @author Eike Stepper
    */
-  private final class StateChangedEvent extends Event implements IBuddiesManagerStateChangedEvent
+  private final class StateChangedEvent extends Event implements ISessionManagerEvent
   {
     private static final long serialVersionUID = 1L;
 
@@ -240,7 +240,7 @@ public class BuddiesManager extends Lifecycle implements IBuddiesManager, IListe
 
     public StateChangedEvent(State oldState, State newState, IBuddySession session)
     {
-      super(BuddiesManager.this);
+      super(SessionManager.this);
       this.oldState = oldState;
       this.newState = newState;
       this.session = session;

@@ -11,19 +11,9 @@
 package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.BuddiesUtil;
-import org.eclipse.net4j.buddies.IBuddySession;
-import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
-import org.eclipse.net4j.buddies.ui.IBuddiesManager;
-import org.eclipse.net4j.buddies.ui.IBuddiesManagerStateChangedEvent;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
-import org.eclipse.net4j.util.ui.views.ContainerView;
 
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FormAttachment;
@@ -36,15 +26,13 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Sash;
 
-public class CollaborationsView extends ContainerView implements IListener
+public class CollaborationsView extends SessionManagerView
 {
   private static final int LIMIT = 10;
 
   private static final int PERCENT = 30;
 
   private static CollaborationsView INSTANCE;
-
-  private IBuddySession session;
 
   private Sash sash;
 
@@ -65,34 +53,17 @@ public class CollaborationsView extends ContainerView implements IListener
   public synchronized void dispose()
   {
     INSTANCE = null;
-    IBuddiesManager.INSTANCE.removeListener(this);
-    session = null;
     super.dispose();
   }
 
-  public void notifyEvent(IEvent event)
-  {
-    if (event instanceof IBuddiesManagerStateChangedEvent)
-    {
-      queryBuddiesManager();
-    }
-    else if (event instanceof IBuddyStateChangedEvent)
-    {
-      if (session != null && event.getSource() == session.getSelf())
-      {
-        updateState();
-      }
-    }
-  }
-
   @Override
-  protected synchronized Control createUI(final Composite parent)
+  protected Control createControl(Composite parent)
   {
     final FormLayout form = new FormLayout();
     final Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayout(form);
 
-    leftControl = super.createUI(composite);
+    leftControl = super.createControl(composite);
     sash = new Sash(composite, SWT.VERTICAL);
     rightControl = createPane(composite);
 
@@ -131,8 +102,6 @@ public class CollaborationsView extends ContainerView implements IListener
     rightControlData.bottom = new FormAttachment(100, 0);
     rightControl.setLayoutData(rightControlData);
 
-    queryBuddiesManager();
-    IBuddiesManager.INSTANCE.addListener(this);
     INSTANCE = this;
     return composite;
   }
@@ -151,59 +120,6 @@ public class CollaborationsView extends ContainerView implements IListener
   @Override
   protected IContainer<?> getContainer()
   {
-    return session != null ? session.getSelf() : ContainerUtil.emptyContainer();
-  }
-
-  @Override
-  protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
-  {
-    return new BuddiesItemProvider();
-  }
-
-  @Override
-  protected void fillLocalToolBar(IToolBarManager manager)
-  {
-    super.fillLocalToolBar(manager);
-  }
-
-  @Override
-  protected void fillLocalPullDown(IMenuManager manager)
-  {
-    super.fillLocalPullDown(manager);
-  }
-
-  protected void queryBuddiesManager()
-  {
-    IBuddySession oldSession = session;
-    session = IBuddiesManager.INSTANCE.getSession();
-    if (oldSession != session)
-    {
-      if (oldSession != null)
-      {
-        oldSession.removeListener(this);
-        oldSession.getSelf().removeListener(this);
-      }
-
-      if (session != null)
-      {
-        session.addListener(this);
-        session.getSelf().addListener(this);
-      }
-    }
-
-    resetInput();
-    updateState();
-  }
-
-  protected void updateState()
-  {
-    // connectAction.setEnabled(session == null);
-    // disconnectAction.setEnabled(session != null);
-    // flashAction.setEnabled(session != null && !IBuddiesManager.INSTANCE.isFlashing());
-
-    // availableAction.updateState();
-    // lonesomeAction.updateState();
-    // awayAction.updateState();
-    // doNotDisturbAction.updateState();
+    return getSession() != null ? getSession().getSelf() : ContainerUtil.emptyContainer();
   }
 }

@@ -16,11 +16,11 @@ import org.eclipse.net4j.util.event.IEvent;
 /**
  * @author Eike Stepper
  */
-public interface IBuddiesManagerStateChangedEvent extends IEvent
+public interface ISessionManagerEvent extends IEvent
 {
-  public IBuddiesManager.State getOldState();
+  public ISessionManager.State getOldState();
 
-  public IBuddiesManager.State getNewState();
+  public ISessionManager.State getNewState();
 
   public IBuddySession getSession();
 }

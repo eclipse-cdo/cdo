@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.bundle;
 
-import org.eclipse.net4j.buddies.internal.ui.BuddiesManager;
+import org.eclipse.net4j.buddies.internal.ui.SessionManager;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -48,12 +48,12 @@ public abstract class OM
 
   static void start() throws Exception
   {
-    BuddiesManager.INSTANCE.activate();
+    SessionManager.INSTANCE.activate();
   }
 
   static void stop() throws Exception
   {
-    BuddiesManager.INSTANCE.deactivate();
+    SessionManager.INSTANCE.deactivate();
   }
 
   /**

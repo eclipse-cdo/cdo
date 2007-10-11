@@ -14,35 +14,10 @@ import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-
 public class BuddiesView extends SessionManagerView
 {
-  private static BuddiesView INSTANCE;
-
   public BuddiesView()
   {
-  }
-
-  public static synchronized BuddiesView getINSTANCE()
-  {
-    return INSTANCE;
-  }
-
-  @Override
-  public synchronized void dispose()
-  {
-    INSTANCE = null;
-    super.dispose();
-  }
-
-  @Override
-  protected Control createControl(Composite parent)
-  {
-    Control control = super.createControl(parent);
-    INSTANCE = this;
-    return control;
   }
 
   @Override
@@ -61,5 +36,4 @@ public class BuddiesView extends SessionManagerView
       self.initiate(buddy);
     }
   }
-
 }

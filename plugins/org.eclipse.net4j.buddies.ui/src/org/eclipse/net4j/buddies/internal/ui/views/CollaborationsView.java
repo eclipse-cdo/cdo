@@ -22,34 +22,21 @@ import org.eclipse.swt.widgets.List;
 
 public class CollaborationsView extends SessionManagerView
 {
-  private static final int LIMIT = 10;
-
-  private static final int PERCENT = 30;
-
-  private static CollaborationsView INSTANCE;
-
   private SashComposite sashComposite;
 
   public CollaborationsView()
   {
   }
 
-  public static synchronized CollaborationsView getINSTANCE()
+  public Control getPane()
   {
-    return INSTANCE;
-  }
-
-  @Override
-  public synchronized void dispose()
-  {
-    INSTANCE = null;
-    super.dispose();
+    return sashComposite.getControl2();
   }
 
   @Override
   protected Control createControl(Composite parent)
   {
-    sashComposite = new SashComposite(parent, SWT.NONE, LIMIT, PERCENT)
+    return sashComposite = new SashComposite(parent, SWT.NONE, 10, 30)
     {
       @Override
       protected Control createControl1(Composite parent)
@@ -63,9 +50,6 @@ public class CollaborationsView extends SessionManagerView
         return createPane(parent);
       }
     };
-
-    INSTANCE = this;
-    return sashComposite;
   }
 
   protected Control createPane(Composite parent)

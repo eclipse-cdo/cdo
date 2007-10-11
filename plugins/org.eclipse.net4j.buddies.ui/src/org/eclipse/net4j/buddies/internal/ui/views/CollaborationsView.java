@@ -28,9 +28,9 @@ public class CollaborationsView extends SessionManagerView
   {
   }
 
-  public Control getPane()
+  public CollaborationsPane getPane()
   {
-    return sashComposite.getControl2();
+    return (CollaborationsPane)sashComposite.getControl2();
   }
 
   @Override

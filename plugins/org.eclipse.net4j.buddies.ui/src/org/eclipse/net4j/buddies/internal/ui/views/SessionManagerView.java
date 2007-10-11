@@ -99,8 +99,8 @@ public abstract class SessionManagerView extends ContainerView implements IListe
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
-    manager.add(dropDownAction);
     super.fillLocalToolBar(manager);
+    manager.add(dropDownAction);
   }
 
   @Override

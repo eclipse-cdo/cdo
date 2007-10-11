@@ -11,11 +11,14 @@
 package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddySession;
-import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
 import org.eclipse.net4j.buddies.internal.ui.actions.ConnectAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.DisconnectAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.FlashAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.StateAction;
+import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.AvailableAction;
+import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.AwayAction;
+import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.DoNotDisturbAction;
+import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.LonesomeAction;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
@@ -46,14 +49,13 @@ public class BuddiesView extends ContainerView implements IListener
 
   private FlashAction flashAction = new FlashAction();
 
-  private StateAction availableAction = new StateAction("Available", State.AVAILABLE, SharedIcons.OBJ_BUDDY);
+  private StateAction availableAction = new AvailableAction();
 
-  private StateAction lonesomeAction = new StateAction("Lonesome", State.LONESOME, SharedIcons.OBJ_BUDDY_LONESOME);
+  private StateAction lonesomeAction = new LonesomeAction();
 
-  private StateAction awayAction = new StateAction("Away", State.AWAY, SharedIcons.OBJ_BUDDY_AWAY);
+  private StateAction awayAction = new AwayAction();
 
-  private StateAction doNotDisturbAction = new StateAction("Do Not Disturb", State.DO_NOT_DISTURB,
-      SharedIcons.OBJ_BUDDY_DO_NOT_DISTURB);
+  private StateAction doNotDisturbAction = new DoNotDisturbAction();
 
   public BuddiesView()
   {

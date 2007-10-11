@@ -12,6 +12,7 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
 import org.eclipse.jface.action.IToolBarManager;
@@ -64,6 +65,13 @@ public class CollaborationsView extends SessionManagerView
   {
     super.queryBuddiesManager();
     getCollaborationsPane().setSession(getSession());
+  }
+
+  @Override
+  public void notifyEvent(IEvent event)
+  {
+    super.notifyEvent(event);
+    getCollaborationsPane().notifyEvent(event);
   }
 
   @Override

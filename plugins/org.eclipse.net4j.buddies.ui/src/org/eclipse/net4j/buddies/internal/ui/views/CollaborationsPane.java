@@ -13,6 +13,8 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.protocol.IFacility;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -26,7 +28,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class CollaborationsPane extends Composite
+public class CollaborationsPane extends Composite implements IListener
 {
   private CollaborationsView collaborationsView;
 
@@ -52,6 +54,13 @@ public class CollaborationsPane extends Composite
     collaborationsView.getViewer().addSelectionChangedListener(collaborationsViewerListener);
   }
 
+  @Override
+  public void dispose()
+  {
+    collaborationsView.getViewer().removeSelectionChangedListener(collaborationsViewerListener);
+    super.dispose();
+  }
+
   public CollaborationsView getCollaborationsView()
   {
     return collaborationsView;
@@ -67,10 +76,7 @@ public class CollaborationsPane extends Composite
     this.session = session;
   }
 
-  @Override
-  public void dispose()
+  public void notifyEvent(IEvent event)
   {
-    collaborationsView.getViewer().removeSelectionChangedListener(collaborationsViewerListener);
-    super.dispose();
   }
 }

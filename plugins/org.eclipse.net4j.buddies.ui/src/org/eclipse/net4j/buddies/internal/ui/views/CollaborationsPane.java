@@ -30,7 +30,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -67,7 +66,7 @@ public class CollaborationsPane extends Composite implements IListener
 
   private Map<IFacility, FacilityPane> facilityPanes = new HashMap<IFacility, FacilityPane>();
 
-  private List<IAction> activateFacilityActions = new ArrayList<IAction>();
+  private List<ActivateFacilityAction> activateFacilityActions = new ArrayList<ActivateFacilityAction>();
 
   private StackLayout paneStack;
 
@@ -110,6 +109,8 @@ public class CollaborationsPane extends Composite implements IListener
     else
     {
     }
+
+    updateState();
   }
 
   public void setActiveCollaboration(IBuddyCollaboration collaboration)
@@ -165,7 +166,7 @@ public class CollaborationsPane extends Composite implements IListener
         String type = element.getAttribute("type");
         String icon = element.getAttribute("icon");
         ImageDescriptor descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(OM.BUNDLE_ID, icon);
-        IAction action = new ActivateFacilityAction(type, descriptor);
+        ActivateFacilityAction action = new ActivateFacilityAction(type, descriptor);
         activateFacilityActions.add(action);
         bars.getToolBarManager().add(action);
       }
@@ -217,11 +218,13 @@ public class CollaborationsPane extends Composite implements IListener
     }
 
     collaboration.addListener(this);
+    updateState();
   }
 
   protected void collaborationRemoved(IBuddyCollaboration collaboration)
   {
     collaboration.removeListener(this);
+    updateState();
   }
 
   protected void facilityInstalled(final IFacility facility, boolean fromRemote)
@@ -260,6 +263,8 @@ public class CollaborationsPane extends Composite implements IListener
       setActiveCollaboration(collaboration);
       setActiveFacility(collaboration, facility);
     }
+
+    updateState();
   }
 
   protected FacilityPane addFacilityPane(IFacility facility)
@@ -295,6 +300,26 @@ public class CollaborationsPane extends Composite implements IListener
     throw new IllegalStateException("No facility pane creator for type " + type);
   }
 
+  protected void updateState()
+  {
+    for (ActivateFacilityAction action : activateFacilityActions)
+    {
+      if (activeCollaboration == null)
+      {
+        action.setEnabled(false);
+      }
+      else
+      {
+        String type = action.getType();
+        boolean installed = activeCollaboration.getFacility(type) != null;
+        action.setEnabled(!installed);
+
+        IFacility activeFacility = activeFacilities.get(activeCollaboration);
+        action.setChecked(ObjectUtil.equals(activeFacility.getType(), type));
+      }
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -308,6 +333,11 @@ public class CollaborationsPane extends Composite implements IListener
       setToolTipText("Activate " + type + " facility");
       setImageDescriptor(descriptor);
       this.type = type;
+    }
+
+    public String getType()
+    {
+      return type;
     }
 
     @Override

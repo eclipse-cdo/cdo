@@ -12,6 +12,7 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
@@ -133,7 +134,7 @@ public class CollaborationsView extends SessionManagerView
 
     private InstallFacilityAction(IBuddyCollaboration collaboration, String type, ImageDescriptor descriptor)
     {
-      super("Install " + type, AS_RADIO_BUTTON);
+      super("Install " + StringUtil.cap(type), AS_RADIO_BUTTON);
       setToolTipText("Install " + type + " facility");
       setImageDescriptor(descriptor);
       this.collaboration = collaboration;

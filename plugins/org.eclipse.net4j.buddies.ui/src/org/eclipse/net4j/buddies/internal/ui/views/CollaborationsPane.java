@@ -13,11 +13,13 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 import org.eclipse.net4j.buddies.BuddiesUtil;
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.IBuddySession;
+import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.IFacility;
 import org.eclipse.net4j.buddies.ui.IFacilityPaneCreator;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IContainerEventVisitor;
@@ -30,12 +32,12 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IActionBars;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -153,26 +155,13 @@ public class CollaborationsPane extends Composite implements IListener
     }
   }
 
-  public void fillLocalToolBar(IToolBarManager manager)
+  public void fillActionBars(IActionBars bars)
   {
     for (String type : BuddiesUtil.getFacilityTypes())
     {
-      final String facilityType = type;
-      IAction action = new SafeAction()
-      {
-        @Override
-        protected void safeRun() throws Exception
-        {
-          if (activeCollaboration != null)
-          {
-            IFacility facility = activeCollaboration.getFacility(facilityType);
-            setActiveFacility(activeCollaboration, facility);
-          }
-        }
-      };
-
+      IAction action = new ActivateFacilityAction(type);
       activateFacilityActions.add(action);
-      manager.add(action);
+      bars.getToolBarManager().add(action);
     }
   }
 
@@ -254,5 +243,30 @@ public class CollaborationsPane extends Composite implements IListener
     }
 
     throw new IllegalStateException("No facility pane creator for type " + type);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ActivateFacilityAction extends SafeAction
+  {
+    private final String type;
+
+    private ActivateFacilityAction(String type)
+    {
+      super(StringUtil.cap(type), "Activate " + type + " facility");
+      setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.OBJ_COLLABORATION));
+      this.type = type;
+    }
+
+    @Override
+    protected void safeRun() throws Exception
+    {
+      if (activeCollaboration != null)
+      {
+        IFacility facility = activeCollaboration.getFacility(type);
+        setActiveFacility(activeCollaboration, facility);
+      }
+    }
   }
 }

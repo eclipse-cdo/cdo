@@ -108,6 +108,10 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
 
     Control control = createUI(composite);
     control.setLayoutData(UIUtil.createGridData());
+
+    hookContextMenu();
+    hookDoubleClick();
+    contributeToActionBars();
   }
 
   protected Control createUI(Composite parent)
@@ -120,10 +124,6 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     resetInput();
     viewer.addSelectionChangedListener(selectionListener);
     getSite().setSelectionProvider(viewer);
-
-    hookContextMenu();
-    hookDoubleClick();
-    contributeToActionBars();
     return viewer.getControl();
   }
 

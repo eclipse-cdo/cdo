@@ -6,8 +6,6 @@ import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.IMessage;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 
-import java.util.Map;
-
 /**
  * @author Eike Stepper
  */
@@ -20,14 +18,10 @@ public class ServerMessageIndication extends MessageIndication
   @Override
   protected void messageReceived(IMessage message)
   {
-    synchronized (IBuddyAdmin.INSTANCE)
+    ICollaboration collaboration = IBuddyAdmin.INSTANCE.getCollaboration(message.getCollaborationID());
+    if (collaboration != null)
     {
-      Map<Long, ICollaboration> collaborations = IBuddyAdmin.INSTANCE.getCollaborations();
-      Collaboration collaboration = (Collaboration)collaborations.get(message.getCollaborationID());
-      if (collaboration != null)
-      {
-        collaboration.notifyMessage(message);
-      }
+      ((Collaboration)collaboration).notifyMessage(message);
     }
   }
 }

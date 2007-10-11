@@ -209,18 +209,21 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
 
   protected void fillLocalPullDown(IMenuManager manager)
   {
+    manager.add(new Separator());
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
     manager.add(refreshAction);
   }
 
   protected void fillLocalToolBar(IToolBarManager manager)
   {
+    manager.add(new Separator());
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
   }
 
   protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
     itemProvider.fillContextMenu(manager, selection);
+    manager.add(new Separator());
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
   }
 

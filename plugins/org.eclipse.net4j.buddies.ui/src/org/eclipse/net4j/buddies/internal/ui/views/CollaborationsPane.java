@@ -12,14 +12,17 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.IBuddySession;
+import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.IFacility;
+import org.eclipse.net4j.util.container.IContainerEvent;
+import org.eclipse.net4j.util.container.IContainerEventVisitor;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import java.util.HashMap;
@@ -41,14 +44,16 @@ public class CollaborationsPane extends Composite implements IListener
 
   private IBuddySession session;
 
+  private Map<IBuddyCollaboration, IFacility> activeFacilities = new HashMap<IBuddyCollaboration, IFacility>();
+
   private Map<IFacility, FacilityPane> facilityPanes = new HashMap<IFacility, FacilityPane>();
 
-  private Map<IBuddyCollaboration, IFacility> activeFacilities = new HashMap<IBuddyCollaboration, IFacility>();
+  private StackLayout paneStack;
 
   public CollaborationsPane(Composite parent, CollaborationsView collaborationsView)
   {
     super(parent, SWT.NONE);
-    setLayout(UIUtil.createGridLayout(1));
+    setLayout(paneStack = new StackLayout());
 
     this.collaborationsView = collaborationsView;
     collaborationsView.getViewer().addSelectionChangedListener(collaborationsViewerListener);
@@ -78,5 +83,45 @@ public class CollaborationsPane extends Composite implements IListener
 
   public void notifyEvent(IEvent event)
   {
+    if (session != null && event.getSource() == session.getSelf() && event instanceof IContainerEvent)
+    {
+      IContainerEvent<ICollaboration> e = (IContainerEvent<ICollaboration>)event;
+      e.accept(new IContainerEventVisitor<ICollaboration>()
+      {
+        public void added(ICollaboration collaboration)
+        {
+          collaborationAdded(collaboration);
+        }
+
+        public void removed(ICollaboration collaboration)
+        {
+          collaborationRemoved(collaboration);
+        }
+      });
+    }
+  }
+
+  protected void collaborationAdded(ICollaboration collaboration)
+  {
+    for (IFacility facility : collaboration.getFacilities())
+    {
+      addFacilityPane(facility);
+    }
+  }
+
+  protected void collaborationRemoved(ICollaboration collaboration)
+  {
+  }
+
+  protected FacilityPane addFacilityPane(IFacility facility)
+  {
+    FacilityPane pane = createFacilityPane(facility.getType());
+    facilityPanes.put(facility, pane);
+    return pane;
+  }
+
+  protected FacilityPane createFacilityPane(String type)
+  {
+    return null;
   }
 }

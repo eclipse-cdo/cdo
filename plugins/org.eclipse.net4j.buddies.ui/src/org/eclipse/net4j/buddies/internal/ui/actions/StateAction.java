@@ -24,6 +24,13 @@ public class StateAction extends SafeAction
     this.state = state;
   }
 
+  public void updateState()
+  {
+    IBuddySession session = IBuddiesManager.INSTANCE.getSession();
+    setEnabled(session != null);
+    setChecked(session != null && session.getSelf().getState() == state);
+  }
+
   @Override
   protected void safeRun() throws Exception
   {

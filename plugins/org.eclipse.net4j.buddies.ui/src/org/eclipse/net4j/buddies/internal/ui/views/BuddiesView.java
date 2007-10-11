@@ -21,7 +21,6 @@ import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.DoNotDisturbAct
 import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.LonesomeAction;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
-import org.eclipse.net4j.buddies.protocol.IBuddy.State;
 import org.eclipse.net4j.buddies.ui.IBuddiesManager;
 import org.eclipse.net4j.buddies.ui.IBuddiesManagerStateChangedEvent;
 import org.eclipse.net4j.util.container.ContainerUtil;
@@ -172,15 +171,9 @@ public class BuddiesView extends ContainerView implements IListener
     disconnectAction.setEnabled(session != null);
     flashAction.setEnabled(session != null && !IBuddiesManager.INSTANCE.isFlashing());
 
-    updateState(availableAction, IBuddy.State.AVAILABLE);
-    updateState(lonesomeAction, IBuddy.State.LONESOME);
-    updateState(awayAction, IBuddy.State.AWAY);
-    updateState(doNotDisturbAction, IBuddy.State.DO_NOT_DISTURB);
-  }
-
-  protected void updateState(StateAction action, State state)
-  {
-    action.setEnabled(session != null);
-    action.setChecked(session != null && session.getSelf().getState() == state);
+    availableAction.updateState();
+    lonesomeAction.updateState();
+    awayAction.updateState();
+    doNotDisturbAction.updateState();
   }
 }

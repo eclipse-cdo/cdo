@@ -200,5 +200,10 @@ public class CollaborationsView extends ContainerView implements IListener
     // connectAction.setEnabled(session == null);
     // disconnectAction.setEnabled(session != null);
     // flashAction.setEnabled(session != null && !IBuddiesManager.INSTANCE.isFlashing());
+
+    // availableAction.updateState();
+    // lonesomeAction.updateState();
+    // awayAction.updateState();
+    // doNotDisturbAction.updateState();
   }
 }

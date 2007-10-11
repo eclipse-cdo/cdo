@@ -90,7 +90,7 @@ public abstract class SashComposite extends Composite
     return control2;
   }
 
-  protected abstract Control createControl2(Composite parent);
-
   protected abstract Control createControl1(Composite parent);
+
+  protected abstract Control createControl2(Composite parent);
 }

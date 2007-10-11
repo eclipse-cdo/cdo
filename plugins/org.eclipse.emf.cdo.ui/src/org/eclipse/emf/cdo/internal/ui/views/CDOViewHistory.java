@@ -14,12 +14,14 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewResourcesEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 
+import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.event.Notifier;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.ecore.resource.Resource;
 
+import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -100,7 +102,7 @@ public final class CDOViewHistory extends Notifier
 
     if (changed)
     {
-      fireEvent(new Event(null));
+      fireEvent(new ViewHistoryEvent(null));
     }
   }
 
@@ -115,20 +117,20 @@ public final class CDOViewHistory extends Notifier
 
     if (changed)
     {
-      fireEvent(new Event(entry));
+      fireEvent(new ViewHistoryEvent(entry));
     }
   }
 
   /**
    * @author Eike Stepper
    */
-  private final class Event extends org.eclipse.net4j.internal.util.event.Event implements CDOViewHistoryEvent
+  private final class ViewHistoryEvent extends Event implements CDOViewHistoryEvent
   {
     private static final long serialVersionUID = 1L;
 
     Entry addedEntry;
 
-    public Event(Entry addedEntry)
+    public ViewHistoryEvent(Entry addedEntry)
     {
       super(CDOViewHistory.this);
       this.addedEntry = addedEntry;
@@ -142,6 +144,12 @@ public final class CDOViewHistory extends Notifier
     public Entry getAddedEntry()
     {
       return addedEntry;
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("CDOViewHistoryEvent[source={0}, addedEntry={1}]", getSource(), getAddedEntry());
     }
   }
 

@@ -15,7 +15,7 @@ import org.eclipse.net4j.buddies.internal.ui.actions.ConnectAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.DisconnectAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.FlashAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.DropDownAction;
-import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
+import org.eclipse.net4j.buddies.protocol.IBuddyStateEvent;
 import org.eclipse.net4j.buddies.ui.ISessionManager;
 import org.eclipse.net4j.buddies.ui.ISessionManagerEvent;
 import org.eclipse.net4j.util.container.IContainer;
@@ -67,7 +67,7 @@ public abstract class SessionManagerView extends ContainerView implements IListe
     {
       queryBuddiesManager();
     }
-    else if (event instanceof IBuddyStateChangedEvent)
+    else if (event instanceof IBuddyStateEvent)
     {
       if (session != null && event.getSource() == session.getSelf())
       {

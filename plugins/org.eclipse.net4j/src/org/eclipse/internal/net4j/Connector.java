@@ -43,6 +43,7 @@ import org.eclipse.net4j.util.security.INegotiator;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -770,6 +771,13 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     public ConnectorState getNewState()
     {
       return newState;
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("ConnectorStateEvent[source={0}, oldState={1}, newState={2}]", getSource(),
+          getOldState(), getNewState());
     }
   }
 }

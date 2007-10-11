@@ -20,6 +20,8 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import java.text.MessageFormat;
+
 public class SessionManager extends Lifecycle implements ISessionManager, IListener
 {
   public static final SessionManager INSTANCE = new SessionManager();
@@ -50,7 +52,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
   {
     if (this.state != state)
     {
-      IEvent event = new StateChangedEvent(this.state, state, session);
+      IEvent event = new SessionManagerEvent(this.state, state, session);
       this.state = state;
       fireEvent(event);
     }
@@ -228,7 +230,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
   /**
    * @author Eike Stepper
    */
-  private final class StateChangedEvent extends Event implements ISessionManagerEvent
+  private final class SessionManagerEvent extends Event implements ISessionManagerEvent
   {
     private static final long serialVersionUID = 1L;
 
@@ -238,7 +240,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
 
     private IBuddySession session;
 
-    public StateChangedEvent(State oldState, State newState, IBuddySession session)
+    public SessionManagerEvent(State oldState, State newState, IBuddySession session)
     {
       super(SessionManager.this);
       this.oldState = oldState;
@@ -259,6 +261,13 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
     public IBuddySession getSession()
     {
       return session;
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("SessionManagerEvent[source={0}, oldState={1}, newState={2}, session={3}]",
+          getSource(), getOldState(), getNewState(), getSession());
     }
   }
 }

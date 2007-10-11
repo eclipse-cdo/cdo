@@ -127,6 +127,6 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
       builder.append(delta.getElement());
     }
 
-    return MessageFormat.format("{0}[source={1}{2}]", getClass().getSimpleName(), getSource(), builder.toString());
+    return MessageFormat.format("ContainerEvent[source={0}{1}]", getSource(), builder.toString());
   }
 }

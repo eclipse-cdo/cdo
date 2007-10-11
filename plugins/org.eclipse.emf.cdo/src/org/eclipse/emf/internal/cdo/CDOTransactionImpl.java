@@ -419,6 +419,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     private StartedEvent()
     {
     }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("CDOTransactionStartedEvent[source={0}]", getSource());
+    }
   }
 
   /**
@@ -447,6 +453,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     {
       return idMappings;
     }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("CDOTransactionFinishedEvent[source={0}, type={1}, idMappings={2}]", getSource(),
+          getType(), idMappings == null ? 0 : idMappings.size());
+    }
   }
 
   /**
@@ -474,6 +487,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     public boolean isFirstConflict()
     {
       return firstConflict;
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("CDOTransactionConflictEvent[source={0}, conflictingObject={1}, firstConflict={2}]",
+          getSource(), getConflictingObject(), isFirstConflict());
     }
   }
 }

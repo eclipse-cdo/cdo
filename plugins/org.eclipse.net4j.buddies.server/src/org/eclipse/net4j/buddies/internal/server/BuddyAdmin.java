@@ -21,7 +21,7 @@ import org.eclipse.net4j.buddies.internal.server.protocol.BuddyRemovedNotificati
 import org.eclipse.net4j.buddies.internal.server.protocol.CollaborationInitiatedNotification;
 import org.eclipse.net4j.buddies.protocol.IAccount;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
+import org.eclipse.net4j.buddies.protocol.IBuddyStateEvent;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
@@ -185,9 +185,9 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
     }
     else if (event.getSource() instanceof ServerBuddy)
     {
-      if (event instanceof IBuddyStateChangedEvent)
+      if (event instanceof IBuddyStateEvent)
       {
-        IBuddyStateChangedEvent e = (IBuddyStateChangedEvent)event;
+        IBuddyStateEvent e = (IBuddyStateEvent)event;
         synchronized (this)
         {
           for (ISession session : sessions.values())

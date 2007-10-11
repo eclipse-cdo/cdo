@@ -789,7 +789,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     @Override
     public String toString()
     {
-      return MessageFormat.format("CDOViewResourcesEvent[{0}, {1}, {2}]", getView(), resourcePath, kind);
+      return MessageFormat.format("CDOViewResourcesEvent[source={0}, {1}={2}]", getSource(), resourcePath, kind);
     }
   }
 }

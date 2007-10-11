@@ -91,6 +91,16 @@ public class CollaborationsPane extends Composite implements IListener
   public void setSession(IBuddySession session)
   {
     this.session = session;
+    if (session != null)
+    {
+      for (ICollaboration collaboration : session.getSelf().getCollaborations())
+      {
+        collaborationAdded((IBuddyCollaboration)collaboration);
+      }
+    }
+    else
+    {
+    }
   }
 
   public void setActiveCollaboration(IBuddyCollaboration collaboration)

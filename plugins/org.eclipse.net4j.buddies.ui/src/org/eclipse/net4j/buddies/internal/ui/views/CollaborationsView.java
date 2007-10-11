@@ -37,7 +37,7 @@ public class CollaborationsView extends SessionManagerView
   @Override
   protected Control createControl(Composite parent)
   {
-    return new SashComposite(parent, SWT.NONE, 10, 30)
+    return sashComposite = new SashComposite(parent, SWT.NONE, 10, 30)
     {
       @Override
       protected Control createControl1(Composite parent)

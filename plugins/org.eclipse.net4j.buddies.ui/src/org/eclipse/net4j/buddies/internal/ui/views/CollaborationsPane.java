@@ -251,6 +251,10 @@ public class CollaborationsPane extends Composite implements IListener
               {
                 setActiveFacility(collaboration, facility);
               }
+              else
+              {
+                updateState();
+              }
             }
             catch (RuntimeException ignore)
             {

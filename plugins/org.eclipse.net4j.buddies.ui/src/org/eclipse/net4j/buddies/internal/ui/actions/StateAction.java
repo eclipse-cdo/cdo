@@ -60,7 +60,7 @@ public class StateAction extends SafeAction
 
     public DropDownAction()
     {
-      setText("My Actions");
+      setText("Set My State");
       setMenuCreator(this);
     }
 
@@ -106,7 +106,7 @@ public class StateAction extends SafeAction
       }
       else
       {
-        setImageDescriptor(availableAction.getImageDescriptor());
+        setImageDescriptor(awayAction.getImageDescriptor());
         setEnabled(false);
       }
     }

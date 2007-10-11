@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
+import org.eclipse.net4j.buddies.BuddiesUtil;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
 import org.eclipse.net4j.buddies.ui.IBuddiesManager;
@@ -31,9 +32,9 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Sash;
-import org.eclipse.swt.widgets.Tree;
 
 public class CollaborationsView extends ContainerView implements IListener
 {
@@ -49,7 +50,7 @@ public class CollaborationsView extends ContainerView implements IListener
 
   private Control leftControl;
 
-  private Tree rightControl;
+  private Control rightControl;
 
   public CollaborationsView()
   {
@@ -93,7 +94,7 @@ public class CollaborationsView extends ContainerView implements IListener
 
     leftControl = super.createUI(composite);
     sash = new Sash(composite, SWT.VERTICAL);
-    rightControl = new Tree(composite, SWT.NONE);
+    rightControl = createPane(composite);
 
     FormData leftControlData = new FormData();
     leftControlData.left = new FormAttachment(0, 0);
@@ -134,6 +135,17 @@ public class CollaborationsView extends ContainerView implements IListener
     IBuddiesManager.INSTANCE.addListener(this);
     INSTANCE = this;
     return composite;
+  }
+
+  protected Control createPane(Composite parent)
+  {
+    List list = new List(parent, SWT.NONE);
+    for (String facilityType : BuddiesUtil.getFacilityTypes())
+    {
+      list.add(facilityType);
+    }
+
+    return list;
   }
 
   @Override

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies;
 
+import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.protocol.Buddy;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IAccount;
@@ -54,8 +55,11 @@ public class Self extends Buddy
   {
     try
     {
-      long id = new InitiateCollaborationRequest(getSession().getChannel(), buddies).send(ProtocolConstants.TIMEOUT);
-      BuddyCollaboration collaboration = new BuddyCollaboration(id, buddies);
+      ClientSession session = getSession();
+      IChannel channel = session.getChannel();
+      long id = new InitiateCollaborationRequest(channel, buddies).send(ProtocolConstants.TIMEOUT);
+
+      BuddyCollaboration collaboration = new BuddyCollaboration(session, id, buddies);
       LifecycleUtil.activate(collaboration);
       addCollaboration(collaboration);
       return collaboration;

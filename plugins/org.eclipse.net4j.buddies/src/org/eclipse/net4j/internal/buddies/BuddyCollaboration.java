@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies;
 
+import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.protocol.ClientFacilityFactory;
@@ -35,9 +36,10 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
 
   private IBuddySession session;
 
-  public BuddyCollaboration(long id, Set<IBuddy> buddies)
+  public BuddyCollaboration(IBuddySession session, long id, Set<IBuddy> buddies)
   {
     super(id, buddies);
+    this.session = session;
   }
 
   public IBuddySession getSession()
@@ -49,13 +51,15 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
   {
     try
     {
-      String description = String.valueOf(getID());
-      IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, type, description);
+      IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, type, String
+          .valueOf(getID()));
       facility.setCollaboration(this);
-      boolean success = new InstallFacilityRequest(session.getChannel(), getID(), type).send(ProtocolConstants.TIMEOUT);
+
+      IChannel channel = session.getChannel();
+      boolean success = new InstallFacilityRequest(channel, getID(), type).send(ProtocolConstants.TIMEOUT);
       if (success)
       {
-        addFacility(facility);
+        addFacility(facility, false);
         return facility;
       }
 

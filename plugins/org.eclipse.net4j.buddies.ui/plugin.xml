@@ -22,14 +22,17 @@
 	<extension
     	point="org.eclipse.net4j.buddies.ui.facilityPaneCreators">
       	<facilityPaneCreator
-        	class="org.eclipse.net4j.buddies.internal.ui.Test1PaneCreator"
-            type="Test1Facility"/>
+             class="org.eclipse.net4j.buddies.internal.ui.Test1PaneCreator"
+             icon="icons/full/TypeManyToOneMapping.gif"
+             type="Test1Facility"/>
       	<facilityPaneCreator
-        	class="org.eclipse.net4j.buddies.internal.ui.Test2PaneCreator"
-            type="Test2Facility"/>
+             class="org.eclipse.net4j.buddies.internal.ui.Test2PaneCreator"
+             icon="icons/full/TypeOneToManyMapping.gif"
+             type="Test2Facility"/>
       	<facilityPaneCreator
-        	class="org.eclipse.net4j.buddies.internal.ui.Test3PaneCreator"
-            type="Test3Facility"/>
+             class="org.eclipse.net4j.buddies.internal.ui.Test3PaneCreator"
+             icon="icons/full/TypeOneToOneMapping.gif"
+             type="Test3Facility"/>
    	</extension>
 
    <extension

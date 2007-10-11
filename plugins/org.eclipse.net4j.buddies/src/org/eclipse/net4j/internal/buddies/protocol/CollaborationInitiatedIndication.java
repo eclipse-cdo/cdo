@@ -58,7 +58,7 @@ public class CollaborationInitiatedIndication extends Indication
       }
     }
 
-    BuddyCollaboration collaboration = new BuddyCollaboration(collaborationID, buddies);
+    BuddyCollaboration collaboration = new BuddyCollaboration(session, collaborationID, buddies);
     LifecycleUtil.activate(collaboration);
     self.addCollaboration(collaboration);
     for (IBuddy buddy : buddies)

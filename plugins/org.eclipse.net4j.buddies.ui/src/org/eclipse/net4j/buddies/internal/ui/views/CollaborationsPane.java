@@ -10,13 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
-import org.eclipse.net4j.buddies.BuddiesUtil;
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.IBuddySession;
-import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.IFacility;
+import org.eclipse.net4j.buddies.protocol.IFacilityInstalledEvent;
 import org.eclipse.net4j.buddies.ui.IFacilityPaneCreator;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -32,26 +31,25 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public class CollaborationsPane extends Composite implements IListener
 {
-  public static final String EXT_POINT = "facilityPaneCreators";
-
   private CollaborationsView collaborationsView;
 
   private ISelectionChangedListener collaborationsViewerListener = new ISelectionChangedListener()
@@ -158,16 +156,25 @@ public class CollaborationsPane extends Composite implements IListener
 
   public void fillActionBars(IActionBars bars)
   {
-    for (String type : BuddiesUtil.getFacilityTypes())
+    IExtensionRegistry registry = Platform.getExtensionRegistry();
+    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, OM.EXT_POINT);
+    for (final IConfigurationElement element : elements)
     {
-      IAction action = new ActivateFacilityAction(type);
-      activateFacilityActions.add(action);
-      bars.getToolBarManager().add(action);
+      if ("facilityPaneCreator".equals(element.getName()))
+      {
+        String type = element.getAttribute("type");
+        String icon = element.getAttribute("icon");
+        ImageDescriptor descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(OM.BUNDLE_ID, icon);
+        IAction action = new ActivateFacilityAction(type, descriptor);
+        activateFacilityActions.add(action);
+        bars.getToolBarManager().add(action);
+      }
     }
   }
 
   public void notifyEvent(IEvent event)
   {
+    System.out.println("EVENT: " + event);
     if (session != null && event.getSource() == session.getSelf() && event instanceof IContainerEvent)
     {
       IContainerEvent<ICollaboration> e = (IContainerEvent<ICollaboration>)event;
@@ -184,9 +191,10 @@ public class CollaborationsPane extends Composite implements IListener
         }
       });
     }
-    else
+    else if (event instanceof IFacilityInstalledEvent)
     {
-      System.out.println("EVENT: " + event);
+      IFacilityInstalledEvent e = (IFacilityInstalledEvent)event;
+      facilityInstalled(e.getFacility(), e.fromRemote());
     }
   }
 
@@ -213,6 +221,17 @@ public class CollaborationsPane extends Composite implements IListener
   {
   }
 
+  protected void facilityInstalled(IFacility facility, boolean fromRemote)
+  {
+    addFacilityPane(facility);
+    if (!fromRemote)
+    {
+      IBuddyCollaboration collaboration = (IBuddyCollaboration)facility.getCollaboration();
+      setActiveCollaboration(collaboration);
+      setActiveFacility(collaboration, facility);
+    }
+  }
+
   protected FacilityPane addFacilityPane(IFacility facility)
   {
     IFacilityPaneCreator creator = getFacilityPaneCreator(facility.getType());
@@ -224,7 +243,7 @@ public class CollaborationsPane extends Composite implements IListener
   protected IFacilityPaneCreator getFacilityPaneCreator(String type)
   {
     IExtensionRegistry registry = Platform.getExtensionRegistry();
-    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT);
+    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, OM.EXT_POINT);
     for (final IConfigurationElement element : elements)
     {
       if ("facilityPaneCreator".equals(element.getName()))
@@ -253,11 +272,11 @@ public class CollaborationsPane extends Composite implements IListener
   {
     private final String type;
 
-    private ActivateFacilityAction(String type)
+    private ActivateFacilityAction(String type, ImageDescriptor descriptor)
     {
       super(StringUtil.cap(type), AS_RADIO_BUTTON);
       setToolTipText("Activate " + type + " facility");
-      setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.OBJ_COLLABORATION));
+      setImageDescriptor(descriptor);
       this.type = type;
     }
 

@@ -10,16 +10,27 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
+import org.eclipse.net4j.buddies.IBuddyCollaboration;
+import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 public class CollaborationsView extends SessionManagerView
 {
@@ -74,8 +85,65 @@ public class CollaborationsView extends SessionManagerView
   }
 
   @Override
+  protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
+  {
+    super.fillContextMenu(manager, selection);
+    if (selection.size() == 1)
+    {
+      Object firstElement = selection.getFirstElement();
+      if (firstElement instanceof IBuddyCollaboration)
+      {
+        IBuddyCollaboration collaboration = (IBuddyCollaboration)firstElement;
+        manager.add(new Separator());
+
+        IExtensionRegistry registry = Platform.getExtensionRegistry();
+        IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, OM.EXT_POINT);
+        for (final IConfigurationElement element : elements)
+        {
+          if ("facilityPaneCreator".equals(element.getName()))
+          {
+            String type = element.getAttribute("type");
+            if (collaboration.getFacility(type) == null)
+            {
+              String icon = element.getAttribute("icon");
+              ImageDescriptor descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(OM.BUNDLE_ID, icon);
+              IAction action = new InstallFacilityAction(collaboration, type, descriptor);
+              manager.add(action);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @Override
   protected IContainer<?> getContainer()
   {
     return getSession() != null ? getSession().getSelf() : ContainerUtil.emptyContainer();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class InstallFacilityAction extends SafeAction
+  {
+    private final String type;
+
+    private IBuddyCollaboration collaboration;
+
+    private InstallFacilityAction(IBuddyCollaboration collaboration, String type, ImageDescriptor descriptor)
+    {
+      super("Install " + type, AS_RADIO_BUTTON);
+      setToolTipText("Install " + type + " facility");
+      setImageDescriptor(descriptor);
+      this.collaboration = collaboration;
+      this.type = type;
+    }
+
+    @Override
+    protected void safeRun() throws Exception
+    {
+      collaboration.installFacility(type);
+    }
   }
 }

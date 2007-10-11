@@ -54,7 +54,7 @@ public class InstallFacilityIndication extends IndicationWithResponse
       IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, facilityType, description);
       Collaboration collaboration = (Collaboration)BuddyAdmin.INSTANCE.getCollaboration(collaborationID);
       facility.setCollaboration(collaboration);
-      collaboration.addFacility(facility);
+      collaboration.addFacility(facility, true);
       success = true;
     }
     catch (RuntimeException ex)

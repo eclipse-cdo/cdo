@@ -121,6 +121,8 @@ public class CollaborationsPane extends Composite implements IListener
       IFacility facility = activeFacilities.get(collaboration);
       setActiveFacility(collaboration, facility);
     }
+
+    updateState();
   }
 
   public void setActiveFacility(IBuddyCollaboration collaboration, IFacility facility)
@@ -131,6 +133,8 @@ public class CollaborationsPane extends Composite implements IListener
       FacilityPane facilityPane = facilityPanes.get(facility);
       setActiveFacilityPane(facilityPane);
     }
+
+    updateState();
   }
 
   protected void setActiveFacilityPane(FacilityPane newPane)
@@ -150,6 +154,8 @@ public class CollaborationsPane extends Composite implements IListener
         newPane.showed(oldPane);
       }
     }
+
+    updateState();
   }
 
   public void fillActionBars(IActionBars bars)
@@ -215,13 +221,11 @@ public class CollaborationsPane extends Composite implements IListener
     }
 
     collaboration.addListener(this);
-    updateState();
   }
 
   protected void collaborationRemoved(IBuddyCollaboration collaboration)
   {
     collaboration.removeListener(this);
-    updateState();
   }
 
   protected void facilityInstalled(final IFacility facility, boolean fromRemote)
@@ -260,8 +264,6 @@ public class CollaborationsPane extends Composite implements IListener
       setActiveCollaboration(collaboration);
       setActiveFacility(collaboration, facility);
     }
-
-    updateState();
   }
 
   protected FacilityPane addFacilityPane(IFacility facility)
@@ -297,7 +299,7 @@ public class CollaborationsPane extends Composite implements IListener
     throw new IllegalStateException("No facility pane creator for type " + type);
   }
 
-  protected void updateState()
+  public void updateState()
   {
     for (ActivateFacilityAction action : activateFacilityActions)
     {

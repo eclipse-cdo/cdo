@@ -18,6 +18,8 @@ import org.eclipse.net4j.util.container.IContainerEventVisitor;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.container.IContainerEventVisitor.Filtered;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -85,5 +87,12 @@ public class SingleDeltaContainerEvent<E> extends Event implements IContainerEve
         break;
       }
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("{0}[source={1}, {2}={3}]", getClass().getSimpleName(), getSource(), getDeltaElement(),
+        getDeltaKind());
   }
 }

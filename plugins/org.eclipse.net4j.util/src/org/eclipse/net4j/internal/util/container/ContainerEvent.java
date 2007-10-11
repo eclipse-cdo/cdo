@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.container.IContainerEventVisitor;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.container.IContainerEventVisitor.Filtered;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,5 +113,20 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
         }
       }
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    StringBuilder builder = new StringBuilder();
+    for (IContainerDelta<E> delta : getDeltas())
+    {
+      builder.append(", ");
+      builder.append(delta.getKind());
+      builder.append("=");
+      builder.append(delta.getElement());
+    }
+
+    return MessageFormat.format("{0}[source={1}{2}]", getClass().getSimpleName(), getSource(), builder.toString());
   }
 }

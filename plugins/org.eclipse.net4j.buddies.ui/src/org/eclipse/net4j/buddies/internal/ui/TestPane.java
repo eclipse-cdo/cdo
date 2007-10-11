@@ -11,6 +11,7 @@
 package org.eclipse.net4j.buddies.internal.ui;
 
 import org.eclipse.net4j.buddies.internal.ui.views.FacilityPane;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -24,6 +25,10 @@ public class TestPane extends FacilityPane
   public TestPane(Composite parent, int style, String type)
   {
     super(parent, style);
-    new Text(this, SWT.CENTER).setText(type);
+    setLayout(UIUtil.createGridLayout(1));
+
+    Text text = new Text(this, SWT.CENTER);
+    text.setLayoutData(UIUtil.createGridData());
+    text.setText(type);
   }
 }

@@ -10,12 +10,15 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
+import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.protocol.ServerFacilityFactory;
 import org.eclipse.net4j.buddies.internal.server.BuddyAdmin;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IFacility;
+import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -56,6 +59,26 @@ public class InstallFacilityIndication extends IndicationWithResponse
       Collaboration collaboration = (Collaboration)BuddyAdmin.INSTANCE.getCollaboration(collaborationID);
       facility.setCollaboration(collaboration);
       collaboration.addFacility(facility, true);
+
+      ISession session = (ISession)getProtocol().getInfraStructure();
+      IBuddy initiator = session.getSelf();
+
+      for (IBuddy buddy : collaboration.getBuddies())
+      {
+        if (buddy != initiator)
+        {
+          try
+          {
+            IChannel channel = buddy.getSession().getChannel();
+            new FacilityInstalledNotification(channel, collaborationID, facilityType).send();
+          }
+          catch (Exception ex)
+          {
+            OM.LOG.error(ex);
+          }
+        }
+      }
+
       success = true;
     }
     catch (RuntimeException ex)

@@ -45,6 +45,9 @@ public class ClientProtocol extends SignalProtocol
     case ProtocolConstants.SIGNAL_COLLABORATION_INITIATED:
       return new CollaborationInitiatedIndication();
 
+    case ProtocolConstants.SIGNAL_FACILITY_INSTALLED:
+      return new FacilityInstalledIndication();
+
     case ProtocolConstants.SIGNAL_MESSAGE:
       return new ClientMessageIndication();
     }

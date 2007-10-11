@@ -215,10 +215,13 @@ public class CollaborationsPane extends Composite implements IListener
     {
       setActiveFacility(collaboration, facilities[0]);
     }
+
+    collaboration.addListener(this);
   }
 
   protected void collaborationRemoved(IBuddyCollaboration collaboration)
   {
+    collaboration.removeListener(this);
   }
 
   protected void facilityInstalled(IFacility facility, boolean fromRemote)

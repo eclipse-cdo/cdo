@@ -11,6 +11,7 @@
 package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
+import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.protocol.IFacility;
 import org.eclipse.net4j.util.ui.UIUtil;
 
@@ -36,6 +37,8 @@ public class CollaborationsPane extends Composite
     }
   };
 
+  private IBuddySession session;
+
   private Map<IFacility, FacilityPane> facilityPanes = new HashMap<IFacility, FacilityPane>();
 
   private Map<IBuddyCollaboration, IFacility> activeFacilities = new HashMap<IBuddyCollaboration, IFacility>();
@@ -52,6 +55,16 @@ public class CollaborationsPane extends Composite
   public CollaborationsView getCollaborationsView()
   {
     return collaborationsView;
+  }
+
+  public IBuddySession getSession()
+  {
+    return session;
+  }
+
+  public void setSession(IBuddySession session)
+  {
+    this.session = session;
   }
 
   @Override

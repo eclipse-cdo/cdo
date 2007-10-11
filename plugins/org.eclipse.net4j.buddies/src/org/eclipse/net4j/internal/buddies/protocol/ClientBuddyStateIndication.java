@@ -27,7 +27,7 @@ public class ClientBuddyStateIndication extends BuddyStateIndication
       }
       else
       {
-        ClientBuddy buddy = (ClientBuddy)session.getBuddies().get(userID);
+        ClientBuddy buddy = (ClientBuddy)session.getBuddy(userID);
         if (buddy != null)
         {
           buddy.setState(state);

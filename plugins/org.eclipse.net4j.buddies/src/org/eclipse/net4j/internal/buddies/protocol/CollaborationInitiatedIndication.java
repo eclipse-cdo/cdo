@@ -51,7 +51,7 @@ public class CollaborationInitiatedIndication extends Indication
     for (int i = 0; i < size; i++)
     {
       String userID = in.readString();
-      IBuddy buddy = session.getBuddies().get(userID);
+      IBuddy buddy = session.getBuddy(userID);
       if (buddy != null)
       {
         buddies.add(buddy);

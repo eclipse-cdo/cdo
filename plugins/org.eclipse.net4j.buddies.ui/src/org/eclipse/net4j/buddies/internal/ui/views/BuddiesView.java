@@ -14,11 +14,7 @@ import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.ui.actions.ConnectAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.DisconnectAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.FlashAction;
-import org.eclipse.net4j.buddies.internal.ui.actions.StateAction;
-import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.AvailableAction;
-import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.AwayAction;
-import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.DoNotDisturbAction;
-import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.LonesomeAction;
+import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.DropDownAction;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateChangedEvent;
 import org.eclipse.net4j.buddies.ui.IBuddiesManager;
@@ -48,13 +44,7 @@ public class BuddiesView extends ContainerView implements IListener
 
   private FlashAction flashAction = new FlashAction();
 
-  private StateAction availableAction = new AvailableAction();
-
-  private StateAction lonesomeAction = new LonesomeAction();
-
-  private StateAction awayAction = new AwayAction();
-
-  private StateAction doNotDisturbAction = new DoNotDisturbAction();
+  private DropDownAction dropDownAction = new DropDownAction();
 
   public BuddiesView()
   {
@@ -125,10 +115,7 @@ public class BuddiesView extends ContainerView implements IListener
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
-    manager.add(availableAction);
-    manager.add(lonesomeAction);
-    manager.add(awayAction);
-    manager.add(doNotDisturbAction);
+    manager.add(dropDownAction);
     super.fillLocalToolBar(manager);
   }
 
@@ -170,10 +157,6 @@ public class BuddiesView extends ContainerView implements IListener
     connectAction.setEnabled(session == null);
     disconnectAction.setEnabled(session != null);
     flashAction.setEnabled(session != null && !IBuddiesManager.INSTANCE.isFlashing());
-
-    availableAction.updateState();
-    lonesomeAction.updateState();
-    awayAction.updateState();
-    doNotDisturbAction.updateState();
+    dropDownAction.updateState();
   }
 }

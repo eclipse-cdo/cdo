@@ -134,6 +134,7 @@ public class StateAction extends SafeAction
     @Override
     public void run()
     {
+
     }
 
     protected void addActionToMenu(Menu parent, Action action)

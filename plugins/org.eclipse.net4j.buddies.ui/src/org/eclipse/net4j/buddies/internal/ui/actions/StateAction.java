@@ -8,6 +8,10 @@ import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
+import org.eclipse.jface.action.IMenuCreator;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Menu;
 
 /**
  * @author Eike Stepper
@@ -39,6 +43,103 @@ public class StateAction extends SafeAction
     {
       Self self = (Self)session.getSelf();
       self.setState(state);
+    }
+  }
+
+  public static class DropDownAction extends Action implements IMenuCreator
+  {
+    private Menu fMenu;
+
+    private StateAction availableAction = new AvailableAction();
+
+    private StateAction lonesomeAction = new LonesomeAction();
+
+    private StateAction awayAction = new AwayAction();
+
+    private StateAction doNotDisturbAction = new DoNotDisturbAction();
+
+    public DropDownAction()
+    {
+      setText("My Actions");
+      setMenuCreator(this);
+    }
+
+    public void dispose()
+    {
+      if (fMenu != null)
+      {
+        fMenu.dispose();
+        fMenu = null;
+      }
+    }
+
+    public void updateState()
+    {
+      availableAction.updateState();
+      lonesomeAction.updateState();
+      awayAction.updateState();
+      doNotDisturbAction.updateState();
+
+      IBuddySession session = IBuddiesManager.INSTANCE.getSession();
+      if (session != null)
+      {
+        setEnabled(true);
+        State state = session.getSelf().getState();
+        switch (state)
+        {
+        case AVAILABLE:
+          setImageDescriptor(availableAction.getImageDescriptor());
+          break;
+
+        case LONESOME:
+          setImageDescriptor(lonesomeAction.getImageDescriptor());
+          break;
+
+        case AWAY:
+          setImageDescriptor(awayAction.getImageDescriptor());
+          break;
+
+        case DO_NOT_DISTURB:
+          setImageDescriptor(doNotDisturbAction.getImageDescriptor());
+          break;
+        }
+      }
+      else
+      {
+        setImageDescriptor(availableAction.getImageDescriptor());
+        setEnabled(false);
+      }
+    }
+
+    public Menu getMenu(Control parent)
+    {
+      if (fMenu != null)
+      {
+        fMenu.dispose();
+      }
+
+      fMenu = new Menu(parent);
+      addActionToMenu(fMenu, availableAction);
+      addActionToMenu(fMenu, lonesomeAction);
+      addActionToMenu(fMenu, awayAction);
+      addActionToMenu(fMenu, doNotDisturbAction);
+      return fMenu;
+    }
+
+    public Menu getMenu(Menu parent)
+    {
+      return null;
+    }
+
+    @Override
+    public void run()
+    {
+    }
+
+    protected void addActionToMenu(Menu parent, Action action)
+    {
+      ActionContributionItem item = new ActionContributionItem(action);
+      item.fill(parent, -1);
     }
   }
 

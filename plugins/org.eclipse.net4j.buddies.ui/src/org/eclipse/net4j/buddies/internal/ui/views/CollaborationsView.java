@@ -47,7 +47,7 @@ public class CollaborationsView extends SessionManagerView
       @Override
       protected Control createControl2(Composite parent)
       {
-        return new CollaborationsPane(CollaborationsView.this, parent);
+        return new CollaborationsPane(parent, CollaborationsView.this);
       }
     };
   }

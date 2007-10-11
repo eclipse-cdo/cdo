@@ -47,13 +47,6 @@ public class CollaborationsPane extends Composite
 
     this.collaborationsView = collaborationsView;
     collaborationsView.getViewer().addSelectionChangedListener(collaborationsViewerListener);
-
-    // List list = new List(this, SWT.NONE);
-    // list.setLayoutData(UIUtil.createGridData());
-    // for (String facilityType : BuddiesUtil.getFacilityTypes())
-    // {
-    // list.add(facilityType);
-    // }
   }
 
   public CollaborationsView getCollaborationsView()

@@ -61,6 +61,11 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     return shell;
   }
 
+  public TreeViewer getViewer()
+  {
+    return viewer;
+  }
+
   @Override
   public void setFocus()
   {

@@ -10,12 +10,17 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
-import org.eclipse.net4j.buddies.BuddiesUtil;
+import org.eclipse.net4j.buddies.IBuddyCollaboration;
+import org.eclipse.net4j.buddies.protocol.IFacility;
 import org.eclipse.net4j.util.ui.UIUtil;
 
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.List;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -24,22 +29,42 @@ public class CollaborationsPane extends Composite
 {
   private CollaborationsView collaborationsView;
 
-  public CollaborationsPane(CollaborationsView collaborationsView, Composite parent)
+  private ISelectionChangedListener collaborationsViewerListener = new ISelectionChangedListener()
+  {
+    public void selectionChanged(SelectionChangedEvent event)
+    {
+    }
+  };
+
+  private Map<IFacility, FacilityPane> facilityPanes = new HashMap<IFacility, FacilityPane>();
+
+  private Map<IBuddyCollaboration, IFacility> activeFacilities = new HashMap<IBuddyCollaboration, IFacility>();
+
+  public CollaborationsPane(Composite parent, CollaborationsView collaborationsView)
   {
     super(parent, SWT.NONE);
-    this.collaborationsView = collaborationsView;
     setLayout(UIUtil.createGridLayout(1));
 
-    List list = new List(this, SWT.NONE);
-    list.setLayoutData(UIUtil.createGridData());
-    for (String facilityType : BuddiesUtil.getFacilityTypes())
-    {
-      list.add(facilityType);
-    }
+    this.collaborationsView = collaborationsView;
+    collaborationsView.getViewer().addSelectionChangedListener(collaborationsViewerListener);
+
+    // List list = new List(this, SWT.NONE);
+    // list.setLayoutData(UIUtil.createGridData());
+    // for (String facilityType : BuddiesUtil.getFacilityTypes())
+    // {
+    // list.add(facilityType);
+    // }
   }
 
   public CollaborationsView getCollaborationsView()
   {
     return collaborationsView;
+  }
+
+  @Override
+  public void dispose()
+  {
+    collaborationsView.getViewer().removeSelectionChangedListener(collaborationsViewerListener);
+    super.dispose();
   }
 }

@@ -224,12 +224,39 @@ public class CollaborationsPane extends Composite implements IListener
     collaboration.removeListener(this);
   }
 
-  protected void facilityInstalled(IFacility facility, boolean fromRemote)
+  protected void facilityInstalled(final IFacility facility, boolean fromRemote)
   {
-    addFacilityPane(facility);
-    if (!fromRemote)
+    final IBuddyCollaboration collaboration = (IBuddyCollaboration)facility.getCollaboration();
+    if (fromRemote)
     {
-      IBuddyCollaboration collaboration = (IBuddyCollaboration)facility.getCollaboration();
+      try
+      {
+        getDisplay().syncExec(new Runnable()
+        {
+          public void run()
+          {
+            try
+            {
+              addFacilityPane(facility);
+              IFacility activeFacility = activeFacilities.get(collaboration);
+              if (activeFacility == null)
+              {
+                setActiveFacility(collaboration, facility);
+              }
+            }
+            catch (RuntimeException ignore)
+            {
+            }
+          }
+        });
+      }
+      catch (RuntimeException ignore)
+      {
+      }
+    }
+    else
+    {
+      addFacilityPane(facility);
       setActiveCollaboration(collaboration);
       setActiveFacility(collaboration, facility);
     }

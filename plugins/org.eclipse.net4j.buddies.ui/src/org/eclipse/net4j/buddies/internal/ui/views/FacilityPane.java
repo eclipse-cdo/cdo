@@ -21,4 +21,12 @@ public class FacilityPane extends Composite
   {
     super(parent, style);
   }
+
+  public void hidden(FacilityPane newPane)
+  {
+  }
+
+  public void showed(FacilityPane oldPane)
+  {
+  }
 }

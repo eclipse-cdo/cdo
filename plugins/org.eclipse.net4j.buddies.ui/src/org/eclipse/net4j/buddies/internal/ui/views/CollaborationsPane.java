@@ -93,14 +93,45 @@ public class CollaborationsPane extends Composite implements IListener
     this.session = session;
   }
 
+  public void setActiveCollaboration(IBuddyCollaboration collaboration)
+  {
+    if (activeCollaboration != collaboration)
+    {
+      activeCollaboration = collaboration;
+      IFacility facility = activeFacilities.get(collaboration);
+      if (facility != null)
+      {
+        setActiveFacility(collaboration, facility);
+      }
+    }
+  }
+
   public void setActiveFacility(IBuddyCollaboration collaboration, IFacility facility)
   {
     activeFacilities.put(collaboration, facility);
     if (collaboration == activeCollaboration)
     {
       FacilityPane facilityPane = facilityPanes.get(facility);
-      paneStack.topControl = facilityPane;
+      setActiveFacilityPane(facilityPane);
+    }
+  }
+
+  protected void setActiveFacilityPane(FacilityPane newPane)
+  {
+    if (paneStack.topControl != newPane)
+    {
+      FacilityPane oldPane = (FacilityPane)paneStack.topControl;
+      if (oldPane != null)
+      {
+        oldPane.hidden(newPane);
+      }
+
+      paneStack.topControl = newPane;
       layout();
+      if (newPane != null)
+      {
+        newPane.showed(oldPane);
+      }
     }
   }
 
@@ -113,26 +144,41 @@ public class CollaborationsPane extends Composite implements IListener
       {
         public void added(ICollaboration collaboration)
         {
-          collaborationAdded(collaboration);
+          collaborationAdded((IBuddyCollaboration)collaboration);
         }
 
         public void removed(ICollaboration collaboration)
         {
-          collaborationRemoved(collaboration);
+          collaborationRemoved((IBuddyCollaboration)collaboration);
         }
       });
     }
-  }
-
-  protected void collaborationAdded(ICollaboration collaboration)
-  {
-    for (IFacility facility : collaboration.getFacilities())
+    else
     {
-      addFacilityPane(facility);
+      System.out.println("EVENT: " + event);
     }
   }
 
-  protected void collaborationRemoved(ICollaboration collaboration)
+  protected void collaborationAdded(IBuddyCollaboration collaboration)
+  {
+    IFacility[] facilities = collaboration.getFacilities();
+    for (IFacility facility : facilities)
+    {
+      addFacilityPane(facility);
+    }
+
+    if (activeCollaboration == null)
+    {
+      setActiveCollaboration(collaboration);
+    }
+
+    if (facilities.length != 0)
+    {
+      setActiveFacility(collaboration, facilities[0]);
+    }
+  }
+
+  protected void collaborationRemoved(IBuddyCollaboration collaboration)
   {
   }
 

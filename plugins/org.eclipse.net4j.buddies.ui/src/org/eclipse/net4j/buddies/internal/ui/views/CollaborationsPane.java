@@ -254,7 +254,8 @@ public class CollaborationsPane extends Composite implements IListener
 
     private ActivateFacilityAction(String type)
     {
-      super(StringUtil.cap(type), "Activate " + type + " facility");
+      super(StringUtil.cap(type), AS_RADIO_BUTTON);
+      setToolTipText("Activate " + type + " facility");
       setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.OBJ_COLLABORATION));
       this.type = type;
     }

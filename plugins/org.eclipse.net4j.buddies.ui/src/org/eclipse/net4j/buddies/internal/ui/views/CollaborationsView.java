@@ -15,11 +15,11 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IActionBars;
 
 public class CollaborationsView extends SessionManagerView
 {
@@ -37,7 +37,7 @@ public class CollaborationsView extends SessionManagerView
   @Override
   protected Control createControl(Composite parent)
   {
-    return sashComposite = new SashComposite(parent, SWT.NONE, 10, 30)
+    sashComposite = new SashComposite(parent, SWT.NONE, 10, 30)
     {
       @Override
       protected Control createControl1(Composite parent)
@@ -51,14 +51,12 @@ public class CollaborationsView extends SessionManagerView
         return new CollaborationsPane(parent, CollaborationsView.this);
       }
     };
-  }
 
-  @Override
-  protected void fillLocalToolBar(IToolBarManager manager)
-  {
-    getCollaborationsPane().fillLocalToolBar(manager);
-    manager.add(new Separator());
-    super.fillLocalToolBar(manager);
+    IActionBars bars = getViewSite().getActionBars();
+    bars.getMenuManager().add(new Separator());
+    bars.getToolBarManager().add(new Separator());
+    getCollaborationsPane().fillActionBars(bars);
+    return sashComposite;
   }
 
   @Override

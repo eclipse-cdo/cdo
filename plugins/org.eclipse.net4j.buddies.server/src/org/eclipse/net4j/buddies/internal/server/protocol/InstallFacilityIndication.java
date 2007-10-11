@@ -52,6 +52,7 @@ public class InstallFacilityIndication extends IndicationWithResponse
     {
       String description = String.valueOf(collaborationID);
       IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, facilityType, description);
+
       Collaboration collaboration = (Collaboration)BuddyAdmin.INSTANCE.getCollaboration(collaborationID);
       facility.setCollaboration(collaboration);
       collaboration.addFacility(facility, true);

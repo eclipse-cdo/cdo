@@ -51,10 +51,7 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
   {
     try
     {
-      IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, type, String
-          .valueOf(getID()));
-      facility.setCollaboration(this);
-
+      IFacility facility = createFacility(type);
       IChannel channel = session.getChannel();
       boolean success = new InstallFacilityRequest(channel, getID(), type).send(ProtocolConstants.TIMEOUT);
       if (success)
@@ -69,6 +66,13 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
     {
       throw WrappedException.wrap(ex);
     }
+  }
+
+  public IFacility createFacility(String type)
+  {
+    IFacility facility = (IFacility)getContainer().getElement(FACILITY_GROUP, type, String.valueOf(getID()));
+    facility.setCollaboration(this);
+    return facility;
   }
 
   @Override
@@ -97,5 +101,10 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
 
   public void leave()
   {
+  }
+
+  protected IPluginContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
   }
 }

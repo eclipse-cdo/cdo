@@ -34,7 +34,7 @@ import org.eclipse.swt.graphics.Image;
  */
 public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object>>
 {
-  private static final Color GRAY = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
+  public static final Color GRAY = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
 
   private Font bold;
 
@@ -52,6 +52,11 @@ public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object
   {
     UIUtil.dispose(bold);
     super.dispose();
+  }
+
+  public Font getBold()
+  {
+    return bold;
   }
 
   @Override

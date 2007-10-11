@@ -113,6 +113,11 @@ public class CollaborationsPane extends Composite implements IListener
     updateState();
   }
 
+  public IBuddyCollaboration getActiveCollaboration()
+  {
+    return activeCollaboration;
+  }
+
   public void setActiveCollaboration(IBuddyCollaboration collaboration)
   {
     if (activeCollaboration != collaboration)
@@ -120,9 +125,9 @@ public class CollaborationsPane extends Composite implements IListener
       activeCollaboration = collaboration;
       IFacility facility = activeFacilities.get(collaboration);
       setActiveFacility(collaboration, facility);
+      updateState();
+      collaborationsView.refreshViewer(true);
     }
-
-    updateState();
   }
 
   public void setActiveFacility(IBuddyCollaboration collaboration, IFacility facility)
@@ -132,9 +137,8 @@ public class CollaborationsPane extends Composite implements IListener
     {
       FacilityPane facilityPane = facilityPanes.get(facility);
       setActiveFacilityPane(facilityPane);
+      updateState();
     }
-
-    updateState();
   }
 
   protected void setActiveFacilityPane(FacilityPane newPane)
@@ -153,9 +157,9 @@ public class CollaborationsPane extends Composite implements IListener
       {
         newPane.showed(oldPane);
       }
-    }
 
-    updateState();
+      updateState();
+    }
   }
 
   public void fillActionBars(IActionBars bars)
@@ -235,7 +239,7 @@ public class CollaborationsPane extends Composite implements IListener
     {
       try
       {
-        getDisplay().syncExec(new Runnable()
+        getDisplay().asyncExec(new Runnable()
         {
           public void run()
           {

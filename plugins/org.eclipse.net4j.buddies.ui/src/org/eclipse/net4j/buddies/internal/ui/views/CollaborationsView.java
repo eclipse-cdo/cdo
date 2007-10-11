@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
+import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -28,6 +29,7 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IActionBars;
@@ -131,6 +133,27 @@ public class CollaborationsView extends SessionManagerView
   protected IContainer<?> getContainer()
   {
     return getSession() != null ? getSession().getSelf() : ContainerUtil.emptyContainer();
+  }
+
+  @Override
+  protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
+  {
+    return new BuddiesItemProvider()
+    {
+      @Override
+      public Font getFont(Object obj)
+      {
+        if (obj instanceof IBuddyCollaboration)
+        {
+          if (obj == getCollaborationsPane().getActiveCollaboration())
+          {
+            return getBold();
+          }
+        }
+
+        return super.getFont(obj);
+      }
+    };
   }
 
   /**

@@ -304,12 +304,12 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     }
   }
 
-  protected void refreshViewer(boolean updateLabels)
+  public void refreshViewer(boolean updateLabels)
   {
     refreshElement(null, updateLabels);
   }
 
-  protected void refreshElement(final Object element, final boolean updateLabels)
+  public void refreshElement(final Object element, final boolean updateLabels)
   {
     try
     {
@@ -339,7 +339,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     }
   }
 
-  protected void updateLabels(final Object element)
+  public void updateLabels(final Object element)
   {
     try
     {
@@ -362,7 +362,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     }
   }
 
-  protected void revealElement(final Object element)
+  public void revealElement(final Object element)
   {
     try
     {

@@ -11,11 +11,11 @@
 package org.eclipse.net4j.buddies.internal.ui.preferences;
 
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -43,17 +43,12 @@ public class BuddiesPreferencePage extends OMPreferencePage
   @Override
   protected Control createUI(Composite parent)
   {
-    GridLayout grid = new GridLayout(2, false);
-    grid.marginHeight = 0;
-    grid.marginWidth = 0;
-
-    Composite composite = new Composite(parent, SWT.NONE);
-    composite.setLayout(grid);
-    composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    Composite composite = UIUtil.createGridComposite(parent, 2);
+    composite.setLayoutData(UIUtil.createGridData());
 
     new Label(composite, SWT.NONE).setText("Server:");
     connectorDescription = new Text(composite, SWT.BORDER);
-    connectorDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    connectorDescription.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(composite, SWT.NONE).setText("User ID:");
     userID = new Text(composite, SWT.BORDER);

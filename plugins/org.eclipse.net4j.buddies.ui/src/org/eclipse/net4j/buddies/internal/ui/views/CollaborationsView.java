@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
-import org.eclipse.net4j.buddies.BuddiesUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
@@ -18,7 +17,6 @@ import org.eclipse.net4j.util.ui.widgets.SashComposite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.List;
 
 public class CollaborationsView extends SessionManagerView
 {
@@ -36,7 +34,7 @@ public class CollaborationsView extends SessionManagerView
   @Override
   protected Control createControl(Composite parent)
   {
-    return sashComposite = new SashComposite(parent, SWT.NONE, 10, 30)
+    return new SashComposite(parent, SWT.NONE, 10, 30)
     {
       @Override
       protected Control createControl1(Composite parent)
@@ -47,20 +45,9 @@ public class CollaborationsView extends SessionManagerView
       @Override
       protected Control createControl2(Composite parent)
       {
-        return createPane(parent);
+        return new CollaborationsPane(CollaborationsView.this, parent);
       }
     };
-  }
-
-  protected Control createPane(Composite parent)
-  {
-    List list = new List(parent, SWT.NONE);
-    for (String facilityType : BuddiesUtil.getFacilityTypes())
-    {
-      list.add(facilityType);
-    }
-
-    return list;
   }
 
   @Override

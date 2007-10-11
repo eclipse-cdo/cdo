@@ -18,12 +18,11 @@ import org.eclipse.net4j.util.collection.IHistoryElement;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.ui.UIUtil;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
@@ -57,7 +56,7 @@ public class HistoryText
     history.addListener(historyListener);
 
     combo = new CCombo(parent, style);
-    combo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    combo.setLayoutData(UIUtil.createGridData());
     combo.addDisposeListener(new DisposeListener()
     {
       public void widgetDisposed(DisposeEvent e)

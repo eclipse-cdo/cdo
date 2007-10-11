@@ -15,9 +15,10 @@ import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.net4j.util.ui.widgets.BaseDialog;
-
 import org.eclipse.emf.ecore.EcorePackage;
+
+import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.widgets.BaseDialog;
 
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -28,7 +29,6 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -73,7 +73,7 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
   protected void createUI(Composite parent)
   {
     CheckboxTableViewer viewer = CheckboxTableViewer.newCheckList(parent, SWT.SINGLE | SWT.BORDER);
-    viewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    viewer.getTable().setLayoutData(UIUtil.createGridData());
     viewer.setContentProvider(new PackageContentProvider());
     viewer.setLabelProvider(new PackageLabelProvider());
     viewer.setInput(packageTypes);

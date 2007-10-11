@@ -13,11 +13,11 @@ package org.eclipse.net4j.util.internal.ui.security;
 import org.eclipse.net4j.internal.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.BaseDialog;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -54,7 +54,7 @@ public class CredentialsDialog extends BaseDialog<Viewer>
   {
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayout(new GridLayout(2, false));
-    composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    composite.setLayoutData(UIUtil.createGridData());
 
     new Label(composite, SWT.NONE).setText("User ID:");
     userIDControl = new Text(composite, SWT.BORDER);

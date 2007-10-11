@@ -22,8 +22,6 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -101,15 +99,10 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
   public final void createPartControl(Composite parent)
   {
     shell = parent.getShell();
-    GridLayout grid = new GridLayout(1, false);
-    grid.marginWidth = 0;
-    grid.marginHeight = 0;
-
-    Composite composite = new Composite(parent, SWT.NONE);
-    composite.setLayout(grid);
+    Composite composite = UIUtil.createGridComposite(parent, 1);
 
     Control control = createUI(composite);
-    control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    control.setLayoutData(UIUtil.createGridData());
   }
 
   protected Control createUI(Composite parent)

@@ -12,9 +12,10 @@ package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 
+import org.eclipse.net4j.util.ui.UIUtil;
+
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -69,7 +70,7 @@ public class OpenAuditDialog extends TitleAreaDialog
   protected Control createDialogArea(Composite parent)
   {
     Composite composite = new Composite((Composite)super.createDialogArea(parent), SWT.NONE);
-    composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    composite.setLayoutData(UIUtil.createGridData());
     composite.setLayout(new GridLayout(3, false));
 
     setTitle(TITLE);

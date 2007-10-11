@@ -20,11 +20,12 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.net4j.util.ObjectUtil;
-
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -35,7 +36,6 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -97,7 +97,7 @@ public class PackageManagerDialog extends TitleAreaDialog
     Table table = viewer.getTable();
 
     table.setHeaderVisible(true);
-    table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    table.setLayoutData(UIUtil.createGridData());
     addColumn(table, "Package", 400, SWT.LEFT);
     addColumn(table, "Registry", 80, SWT.CENTER);
     addColumn(table, "Repository", 80, SWT.CENTER);

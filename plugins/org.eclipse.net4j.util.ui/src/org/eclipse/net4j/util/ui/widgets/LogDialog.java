@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.ui.widgets;
 
 import org.eclipse.net4j.util.io.IORuntimeException;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -20,7 +21,6 @@ import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.TextStyle;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -136,7 +136,7 @@ public class LogDialog extends BaseDialog<Viewer>
 
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayout(grid);
-    composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    composite.setLayoutData(UIUtil.createGridData());
 
     font = new Font(getShell().getDisplay(), "Courier New", 9, SWT.NORMAL);
     checkStyleRange();
@@ -144,7 +144,7 @@ public class LogDialog extends BaseDialog<Viewer>
     checkStyleRange();
 
     text = new StyledText(composite, SWT.MULTI | SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-    text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    text.setLayoutData(UIUtil.createGridData());
     text.setText(log.toString());
     text.setStyleRanges(styleRanges.toArray(new StyleRange[styleRanges.size()]));
     text.setBackground(getShell().getDisplay().getSystemColor(SWT.COLOR_WHITE));

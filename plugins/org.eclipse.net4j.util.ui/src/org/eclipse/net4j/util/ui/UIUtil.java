@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -33,7 +34,7 @@ public final class UIUtil
 
   public static void dispose(Font font)
   {
-    if (font!= null)
+    if (font != null)
     {
       font.dispose();
     }
@@ -101,5 +102,15 @@ public final class UIUtil
     layout.verticalSpacing = 0;
     layout.horizontalSpacing = 0;
     return layout;
+  }
+
+  public static GridData createGridData()
+  {
+    return new GridData(SWT.FILL, SWT.FILL, true, true);
+  }
+
+  public static GridData createGridData(boolean grabHorizontal, boolean grabVertical)
+  {
+    return new GridData(SWT.FILL, SWT.FILL, grabHorizontal, grabVertical);
   }
 }

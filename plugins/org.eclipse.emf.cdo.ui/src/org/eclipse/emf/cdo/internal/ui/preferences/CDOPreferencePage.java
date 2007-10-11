@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;
 
 import org.eclipse.swt.SWT;
@@ -55,43 +56,38 @@ public class CDOPreferencePage extends OMPreferencePage
   @Override
   protected Control createUI(Composite parent)
   {
-    GridLayout grid = new GridLayout(1, false);
-    grid.marginHeight = 0;
-    grid.marginWidth = 0;
-
-    Composite composite = new Composite(parent, SWT.NONE);
-    composite.setLayout(grid);
-    composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    Composite composite = UIUtil.createGridComposite(parent, 1);
+    composite.setLayoutData(UIUtil.createGridData());
 
     Group sessionGroup = new Group(composite, SWT.NONE);
-    sessionGroup.setText("Session Defaults");
-    sessionGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
     sessionGroup.setLayout(new GridLayout(2, false));
+    sessionGroup.setText("Session Defaults");
+    sessionGroup.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(sessionGroup, SWT.NONE).setText("Repository name:");
     repositoryName = new Text(sessionGroup, SWT.BORDER);
-    repositoryName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    repositoryName.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(sessionGroup, SWT.NONE).setText("User name:");
     userName = new Text(sessionGroup, SWT.BORDER);
-    userName.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    userName.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(sessionGroup, SWT.NONE).setText("Connector description:");
     connectorDescription = new Text(sessionGroup, SWT.BORDER);
-    connectorDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    connectorDescription.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(sessionGroup, SWT.NONE).setText("Reference chunk size:");
     referenceChunkSize = new TextAndDisable(sessionGroup, SWT.BORDER, String.valueOf(CDORevision.UNCHUNKED));
-    referenceChunkSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    referenceChunkSize.setLayoutData(UIUtil.createGridData(true, false));
 
     Group viewGroup = new Group(composite, SWT.NONE);
-    viewGroup.setText("View Defaults");
-    viewGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
     viewGroup.setLayout(new GridLayout(2, false));
+    viewGroup.setText("View Defaults");
+    viewGroup.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(viewGroup, SWT.NONE).setText("Preload chunk size:");
     preloadChunkSize = new TextAndDisable(viewGroup, SWT.BORDER, String.valueOf(CDOView.NO_PRELOAD));
-    preloadChunkSize.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    preloadChunkSize.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(viewGroup, SWT.NONE).setText("EMF invalidation notifications:");
     invalidationNotifications = new Button(viewGroup, SWT.CHECK);
@@ -160,7 +156,7 @@ public class CDOPreferencePage extends OMPreferencePage
       disabled = new Button(this, SWT.CHECK);
       disabled.setText("Disabled");
       disabled.addSelectionListener(this);
-      disabled.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+      disabled.setLayoutData(UIUtil.createGridData(false, false));
     }
 
     public Text getText()

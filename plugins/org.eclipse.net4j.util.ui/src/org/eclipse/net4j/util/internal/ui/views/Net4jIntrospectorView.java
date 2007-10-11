@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -35,8 +36,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -99,24 +98,24 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     Color gray = parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE);
 
     Composite composite = new Composite(parent, SWT.NONE);
-    composite.setLayout(newGrid(1));
+    composite.setLayout(UIUtil.createGridLayout(1));
 
     Composite c = new Composite(composite, SWT.BORDER);
-    c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-    c.setLayout(newGrid(2));
+    c.setLayout(UIUtil.createGridLayout(2));
+    c.setLayoutData(UIUtil.createGridData(true, false));
 
     classLabel = new Text(c, SWT.READ_ONLY);
-    classLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+    classLabel.setLayoutData(UIUtil.createGridData(false, false));
     classLabel.setBackground(bg);
     classLabel.setForeground(gray);
 
     objectLabel = new Text(c, SWT.READ_ONLY);
-    objectLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    objectLabel.setLayoutData(UIUtil.createGridData(true, false));
     objectLabel.setBackground(bg);
 
     stackLayout = new StackLayout();
     stacked = new Composite(composite, SWT.NONE);
-    stacked.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    stacked.setLayoutData(UIUtil.createGridData());
     stacked.setLayout(stackLayout);
 
     objectViewer = createViewer(stacked);
@@ -159,7 +158,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   private TableViewer createViewer(Composite parent)
   {
     TableViewer viewer = new TableViewer(parent, SWT.FULL_SELECTION | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-    viewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    viewer.getTable().setLayoutData(UIUtil.createGridData());
     viewer.getTable().setHeaderVisible(true);
     viewer.getTable().setLinesVisible(true);
     return viewer;
@@ -315,20 +314,6 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     }
 
     refreshViewer();
-  }
-
-  private GridLayout newGrid(int numColumns)
-  {
-    GridLayout grid = new GridLayout(numColumns, false);
-    grid.marginTop = 0;
-    grid.marginLeft = 0;
-    grid.marginRight = 0;
-    grid.marginBottom = 0;
-    grid.marginWidth = 0;
-    grid.marginHeight = 0;
-    grid.horizontalSpacing = 0;
-    grid.verticalSpacing = 0;
-    return grid;
   }
 
   private void createObjectColmuns()

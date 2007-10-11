@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 
 import org.eclipse.net4j.internal.util.collection.PreferenceHistory;
 import org.eclipse.net4j.util.collection.IHistory;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.HistoryText;
 import org.eclipse.net4j.util.ui.widgets.PreferenceButton;
 
@@ -95,7 +96,7 @@ public class OpenSessionDialog extends TitleAreaDialog
   protected Control createDialogArea(Composite parent)
   {
     Composite composite = new Composite((Composite)super.createDialogArea(parent), SWT.NONE);
-    composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    composite.setLayoutData(UIUtil.createGridData());
     composite.setLayout(new GridLayout(2, false));
 
     setTitle(TITLE);

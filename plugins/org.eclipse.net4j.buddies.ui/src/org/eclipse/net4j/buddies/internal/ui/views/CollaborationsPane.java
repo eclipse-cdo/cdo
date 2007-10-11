@@ -12,13 +12,21 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.IBuddySession;
+import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.IFacility;
+import org.eclipse.net4j.buddies.ui.IFacilityPaneCreator;
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IContainerEventVisitor;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -33,6 +41,8 @@ import java.util.Map;
  */
 public class CollaborationsPane extends Composite implements IListener
 {
+  public static final String EXT_POINT = "facilityPaneCreators";
+
   private CollaborationsView collaborationsView;
 
   private ISelectionChangedListener collaborationsViewerListener = new ISelectionChangedListener()
@@ -43,6 +53,8 @@ public class CollaborationsPane extends Composite implements IListener
   };
 
   private IBuddySession session;
+
+  private IBuddyCollaboration activeCollaboration;
 
   private Map<IBuddyCollaboration, IFacility> activeFacilities = new HashMap<IBuddyCollaboration, IFacility>();
 
@@ -81,6 +93,17 @@ public class CollaborationsPane extends Composite implements IListener
     this.session = session;
   }
 
+  public void setActiveFacility(IBuddyCollaboration collaboration, IFacility facility)
+  {
+    activeFacilities.put(collaboration, facility);
+    if (collaboration == activeCollaboration)
+    {
+      FacilityPane facilityPane = facilityPanes.get(facility);
+      paneStack.topControl = facilityPane;
+      layout();
+    }
+  }
+
   public void notifyEvent(IEvent event)
   {
     if (session != null && event.getSource() == session.getSelf() && event instanceof IContainerEvent)
@@ -115,13 +138,34 @@ public class CollaborationsPane extends Composite implements IListener
 
   protected FacilityPane addFacilityPane(IFacility facility)
   {
-    FacilityPane pane = createFacilityPane(facility.getType());
+    IFacilityPaneCreator creator = getFacilityPaneCreator(facility.getType());
+    FacilityPane pane = creator.createFacilityPane(this, SWT.NONE);
     facilityPanes.put(facility, pane);
     return pane;
   }
 
-  protected FacilityPane createFacilityPane(String type)
+  protected IFacilityPaneCreator getFacilityPaneCreator(String type)
   {
-    return null;
+    IExtensionRegistry registry = Platform.getExtensionRegistry();
+    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT);
+    for (final IConfigurationElement element : elements)
+    {
+      if ("facilityPaneCreator".equals(element.getName()))
+      {
+        if (ObjectUtil.equals(element.getAttribute("type"), type))
+        {
+          try
+          {
+            return (IFacilityPaneCreator)element.createExecutableExtension("class");
+          }
+          catch (CoreException ex)
+          {
+            throw WrappedException.wrap(ex);
+          }
+        }
+      }
+    }
+
+    throw new IllegalStateException("No facility pane creator for type " + type);
   }
 }

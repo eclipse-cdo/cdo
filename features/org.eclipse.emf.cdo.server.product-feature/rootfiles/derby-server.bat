@@ -1,2 +1,2 @@
 @echo off
-call %~dp0\derby\bin\startNetworkServer.bat
+call %~dp0\derby\windows\startNetworkServer.bat

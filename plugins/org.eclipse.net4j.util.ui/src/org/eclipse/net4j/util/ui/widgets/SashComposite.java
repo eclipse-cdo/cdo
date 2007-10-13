@@ -23,56 +23,73 @@ import org.eclipse.swt.widgets.Sash;
 
 public abstract class SashComposite extends Composite
 {
+  private boolean vertical;
+
+  private FormLayout form;
+
   private Sash sash;
 
   private Control control1;
 
   private Control control2;
 
-  public SashComposite(Composite parent, int style, final int limit, final int percent)
+  private FormData sashData;
+
+  private FormData control1Data;
+
+  private FormData control2Data;
+
+  private int limit;
+
+  private int percent;
+
+  public SashComposite(Composite parent, int style, int limit, int percent)
+  {
+    this(parent, style, limit, percent, true);
+  }
+
+  public SashComposite(Composite parent, int style, int limit, int percent, boolean vertical)
   {
     super(parent, style);
-    final FormLayout form = new FormLayout();
+    this.vertical = vertical;
+    this.limit = limit;
+    this.percent = percent;
+
+    form = new FormLayout();
     setLayout(form);
 
+    control1Data = new FormData();
     control1 = createControl1(this);
-    sash = new Sash(this, SWT.VERTICAL);
-    control2 = createControl2(this);
+    control1.setLayoutData(control1Data);
 
-    FormData leftControlData = new FormData();
-    leftControlData.left = new FormAttachment(0, 0);
-    leftControlData.right = new FormAttachment(sash, 0);
-    leftControlData.top = new FormAttachment(0, 0);
-    leftControlData.bottom = new FormAttachment(100, 0);
-    control1.setLayoutData(leftControlData);
-
-    final FormData sashData = new FormData();
-    sashData.left = new FormAttachment(percent, 0);
-    sashData.top = new FormAttachment(0, 0);
-    sashData.bottom = new FormAttachment(100, 0);
+    sashData = new FormData();
+    sash = createSash(this);
     sash.setLayoutData(sashData);
-    sash.addListener(SWT.Selection, new Listener()
-    {
-      public void handleEvent(Event e)
-      {
-        Rectangle sashRect = sash.getBounds();
-        Rectangle shellRect = SashComposite.this.getClientArea();
-        int right = shellRect.width - sashRect.width - limit;
-        e.x = Math.max(Math.min(e.x, right), limit);
-        if (e.x != sashRect.x)
-        {
-          sashData.left = new FormAttachment(0, e.x);
-          SashComposite.this.layout();
-        }
-      }
-    });
 
-    FormData rightControlData = new FormData();
-    rightControlData.left = new FormAttachment(sash, 0);
-    rightControlData.right = new FormAttachment(100, 0);
-    rightControlData.top = new FormAttachment(0, 0);
-    rightControlData.bottom = new FormAttachment(100, 0);
-    control2.setLayoutData(rightControlData);
+    control2Data = new FormData();
+    control2 = createControl2(this);
+    control2.setLayoutData(control2Data);
+
+    init();
+    if (!vertical)
+    {
+      swap();
+    }
+  }
+
+  public boolean isVertical()
+  {
+    return vertical;
+  }
+
+  public void setVertical(boolean vertical)
+  {
+    if (this.vertical != vertical)
+    {
+      this.vertical = vertical;
+      swap();
+      layout();
+    }
   }
 
   public Sash getSash()
@@ -88,6 +105,77 @@ public abstract class SashComposite extends Composite
   public Control getControl2()
   {
     return control2;
+  }
+
+  protected void init()
+  {
+    control1Data.left = new FormAttachment(0, 0);
+    control1Data.right = new FormAttachment(sash, 0);
+    control1Data.top = new FormAttachment(0, 0);
+    control1Data.bottom = new FormAttachment(100, 0);
+
+    sashData.left = new FormAttachment(percent, 0);
+    sashData.right = null;
+    sashData.top = new FormAttachment(0, 0);
+    sashData.bottom = new FormAttachment(100, 0);
+
+    control2Data.left = new FormAttachment(sash, 0);
+    control2Data.right = new FormAttachment(100, 0);
+    control2Data.top = new FormAttachment(0, 0);
+    control2Data.bottom = new FormAttachment(100, 0);
+  }
+
+  protected void swap()
+  {
+    swap(control1Data);
+    swap(sashData);
+    swap(control2Data);
+  }
+
+  protected void swap(FormData formData)
+  {
+    FormAttachment tmp = formData.left;
+    formData.left = formData.top;
+    formData.top = tmp;
+
+    tmp = formData.right;
+    formData.right = formData.bottom;
+    formData.bottom = tmp;
+  }
+
+  protected Sash createSash(Composite parent)
+  {
+    final Sash sash = new Sash(parent, vertical ? SWT.VERTICAL : SWT.HORIZONTAL);
+    sash.addListener(SWT.Selection, new Listener()
+    {
+      public void handleEvent(Event e)
+      {
+        Rectangle sashRect = sash.getBounds();
+        Rectangle shellRect = SashComposite.this.getClientArea();
+        if (vertical)
+        {
+          int right = shellRect.width - sashRect.width - limit;
+          e.x = Math.max(Math.min(e.x, right), limit);
+          if (e.x != sashRect.x)
+          {
+            sashData.left = new FormAttachment(0, e.x);
+            SashComposite.this.layout();
+          }
+        }
+        else
+        {
+          int bottom = shellRect.height - sashRect.height - limit;
+          e.y = Math.max(Math.min(e.y, bottom), limit);
+          if (e.y != sashRect.y)
+          {
+            sashData.top = new FormAttachment(0, e.y);
+            SashComposite.this.layout();
+          }
+        }
+      }
+    });
+
+    return sash;
   }
 
   protected abstract Control createControl1(Composite parent);

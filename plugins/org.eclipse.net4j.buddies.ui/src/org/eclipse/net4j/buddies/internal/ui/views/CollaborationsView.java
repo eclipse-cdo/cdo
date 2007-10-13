@@ -88,6 +88,31 @@ public class CollaborationsView extends SessionManagerView
   }
 
   @Override
+  protected void fillLocalPullDown(IMenuManager manager)
+  {
+    super.fillLocalPullDown(manager);
+    manager.add(new Separator());
+    SafeAction verticalLayout = new SafeAction("Vertical Layout", IAction.AS_RADIO_BUTTON)
+    {
+      @Override
+      protected void safeRun() throws Exception
+      {
+        sashComposite.setVertical(true);
+      }
+    };
+    verticalLayout.setChecked(true);
+    manager.add(verticalLayout);
+    manager.add(new SafeAction("Horizontal Layout", IAction.AS_RADIO_BUTTON)
+    {
+      @Override
+      protected void safeRun() throws Exception
+      {
+        sashComposite.setVertical(false);
+      }
+    });
+  }
+
+  @Override
   protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
     super.fillContextMenu(manager, selection);

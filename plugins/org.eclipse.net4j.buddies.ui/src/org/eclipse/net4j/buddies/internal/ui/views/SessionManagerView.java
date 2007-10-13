@@ -110,7 +110,6 @@ public abstract class SessionManagerView extends ContainerView implements IListe
     manager.add(disconnectAction);
     manager.add(new Separator());
     manager.add(flashAction);
-    super.fillLocalPullDown(manager);
   }
 
   protected void queryBuddiesManager()

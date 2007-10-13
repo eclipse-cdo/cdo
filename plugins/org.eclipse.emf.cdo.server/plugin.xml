@@ -64,10 +64,10 @@
         id="product"
         point="org.eclipse.core.runtime.products">
       	<product
-        	name="CDOServer"
+        	name="CDO Server"
             description="An example of a CDO server"
             application="org.eclipse.emf.cdo.server.app">
-         	<property name="appName" value="CDOServer"/>
+         	<property name="appName" value="CDO Server"/>
       	</product>
    	</extension>
 

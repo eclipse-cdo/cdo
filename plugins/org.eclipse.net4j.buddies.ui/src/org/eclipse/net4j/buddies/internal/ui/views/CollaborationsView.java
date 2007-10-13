@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
+import org.eclipse.net4j.util.ui.actions.SashLayoutAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
@@ -92,24 +93,14 @@ public class CollaborationsView extends SessionManagerView
   {
     super.fillLocalPullDown(manager);
     manager.add(new Separator());
-    SafeAction verticalLayout = new SafeAction("Vertical Layout", IAction.AS_RADIO_BUTTON)
-    {
-      @Override
-      protected void safeRun() throws Exception
-      {
-        sashComposite.setVertical(true);
-      }
-    };
+
+    SafeAction verticalLayout = new SashLayoutAction.Vertical(sashComposite);
     verticalLayout.setChecked(true);
     manager.add(verticalLayout);
-    manager.add(new SafeAction("Horizontal Layout", IAction.AS_RADIO_BUTTON)
-    {
-      @Override
-      protected void safeRun() throws Exception
-      {
-        sashComposite.setVertical(false);
-      }
-    });
+
+    SafeAction horizontalLayout = new SashLayoutAction.Horizontal(sashComposite);
+    horizontalLayout.setChecked(false);
+    manager.add(horizontalLayout);
   }
 
   @Override

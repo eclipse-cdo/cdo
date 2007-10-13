@@ -71,10 +71,6 @@ public abstract class SashComposite extends Composite
     control2.setLayoutData(control2Data);
 
     init();
-    if (!vertical)
-    {
-      swap();
-    }
   }
 
   public boolean isVertical()
@@ -87,7 +83,16 @@ public abstract class SashComposite extends Composite
     if (this.vertical != vertical)
     {
       this.vertical = vertical;
-      swap();
+
+      Sash newSash = createSash(this);
+      newSash.moveBelow(control1);
+      newSash.setLayoutData(sash.getLayoutData());
+
+      sash.setLayoutData(null);
+      sash.dispose();
+      sash = newSash;
+
+      init();
       layout();
     }
   }
@@ -123,6 +128,11 @@ public abstract class SashComposite extends Composite
     control2Data.right = new FormAttachment(100, 0);
     control2Data.top = new FormAttachment(0, 0);
     control2Data.bottom = new FormAttachment(100, 0);
+
+    if (!vertical)
+    {
+      swap();
+    }
   }
 
   protected void swap()

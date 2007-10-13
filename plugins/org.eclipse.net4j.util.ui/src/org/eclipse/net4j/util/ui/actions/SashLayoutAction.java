@@ -3,6 +3,7 @@ package org.eclipse.net4j.util.ui.actions;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.MenuManager;
 
 /**
  * @author Eike Stepper
@@ -52,6 +53,43 @@ public abstract class SashLayoutAction extends SafeAction
     protected void safeRun() throws Exception
     {
       getSashComposite().setVertical(false);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class LayoutMenu extends MenuManager
+  {
+    private SafeAction verticalAction;
+
+    private SafeAction horizontalAction;
+
+    public LayoutMenu(SashComposite sashComposite)
+    {
+      this(sashComposite, true);
+    }
+
+    public LayoutMenu(SashComposite sashComposite, boolean defaultVertical)
+    {
+      super("Layout");
+      verticalAction = new SashLayoutAction.Vertical(sashComposite);
+      verticalAction.setChecked(defaultVertical);
+      add(verticalAction);
+
+      horizontalAction = new SashLayoutAction.Horizontal(sashComposite);
+      horizontalAction.setChecked(!defaultVertical);
+      add(horizontalAction);
+    }
+
+    public SafeAction getVerticalAction()
+    {
+      return verticalAction;
+    }
+
+    public SafeAction getHorizontalAction()
+    {
+      return horizontalAction;
     }
   }
 }

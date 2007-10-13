@@ -93,14 +93,7 @@ public class CollaborationsView extends SessionManagerView
   {
     super.fillLocalPullDown(manager);
     manager.add(new Separator());
-
-    SafeAction verticalLayout = new SashLayoutAction.Vertical(sashComposite);
-    verticalLayout.setChecked(true);
-    manager.add(verticalLayout);
-
-    SafeAction horizontalLayout = new SashLayoutAction.Horizontal(sashComposite);
-    horizontalLayout.setChecked(false);
-    manager.add(horizontalLayout);
+    manager.add(new SashLayoutAction.LayoutMenu(sashComposite));
   }
 
   @Override

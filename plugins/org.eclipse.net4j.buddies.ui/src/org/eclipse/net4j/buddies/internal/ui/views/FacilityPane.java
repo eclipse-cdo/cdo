@@ -11,11 +11,12 @@
 package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
 /**
  * @author Eike Stepper
  */
-public class FacilityPane extends Composite
+public abstract class FacilityPane extends Composite
 {
   public FacilityPane(Composite parent, int style)
   {
@@ -29,4 +30,6 @@ public class FacilityPane extends Composite
   public void showed(FacilityPane oldPane)
   {
   }
+
+  protected abstract Control createUI(Composite parent);
 }

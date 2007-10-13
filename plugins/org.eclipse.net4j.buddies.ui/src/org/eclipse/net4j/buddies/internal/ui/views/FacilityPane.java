@@ -11,6 +11,7 @@
 package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.jface.action.CoolBarManager;
+import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -28,8 +29,6 @@ public abstract class FacilityPane extends Composite
 {
   private CoolBarManager coolBarManager;
 
-  private CoolBar coolBarControl;
-
   private Label separator;
 
   private Control control;
@@ -39,8 +38,6 @@ public abstract class FacilityPane extends Composite
     super(parent, style);
     setLayout(new FacilityPaneLayout());
 
-    coolBarManager = new CoolBarManager(SWT.NONE);
-    coolBarControl = coolBarManager.createControl(this);
     if (showTopSeperator())
     {
       separator = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
@@ -49,7 +46,11 @@ public abstract class FacilityPane extends Composite
     Composite composite = new Composite(this, SWT.NONE);
     control = createUI(composite);
 
+    coolBarManager = new CoolBarManager(SWT.FLAT | SWT.RIGHT | SWT.WRAP);
     fillCoolBar(coolBarManager);
+    coolBarManager.createControl(this);
+    coolBarManager.resetItemOrder();
+    coolBarManager.update(true);
   }
 
   @Override
@@ -79,7 +80,17 @@ public abstract class FacilityPane extends Composite
 
   protected abstract Control createUI(Composite parent);
 
-  protected void fillCoolBar(ICoolBarManager manager)
+  protected CoolBar getCoolBarControl()
+  {
+    if (coolBarManager != null)
+    {
+      return coolBarManager.getControl();
+    }
+
+    return null;
+  }
+
+  protected void fillCoolBar(IContributionManager manager)
   {
   }
 
@@ -118,7 +129,7 @@ public abstract class FacilityPane extends Composite
       {
         Control w = ws[i];
         boolean hide = false;
-        if (w == coolBarControl)
+        if (w == getCoolBarControl())
         {
           if (!coolBarChildrenExist())
           {
@@ -126,13 +137,9 @@ public abstract class FacilityPane extends Composite
             result.y += BAR_SIZE;
           }
         }
-        else if (w == separator)
+        else if (i > 0)
         {
-          if (!coolBarChildrenExist())
-          {
-            hide = true;
-            // result.y += BAR_SIZE;
-          }
+          hide = false;
         }
 
         if (!hide)
@@ -147,10 +154,12 @@ public abstract class FacilityPane extends Composite
       {
         result.x = wHint;
       }
+
       if (hHint != SWT.DEFAULT)
       {
         result.y = hHint;
       }
+
       return result;
     }
 
@@ -162,8 +171,7 @@ public abstract class FacilityPane extends Composite
       for (int i = 0; i < ws.length; i++)
       {
         Control w = ws[i];
-
-        if (w == coolBarControl)
+        if (w == getCoolBarControl())
         {
           if (coolBarChildrenExist())
           {
@@ -175,13 +183,10 @@ public abstract class FacilityPane extends Composite
         }
         else if (w == separator)
         {
-          if (coolBarChildrenExist())
-          {
-            Point e = w.computeSize(SWT.DEFAULT, SWT.DEFAULT, flushCache);
-            w.setBounds(clientArea.x, clientArea.y, clientArea.width, e.y);
-            clientArea.y += e.y;
-            clientArea.height -= e.y;
-          }
+          Point e = w.computeSize(SWT.DEFAULT, SWT.DEFAULT, flushCache);
+          w.setBounds(clientArea.x, clientArea.y, clientArea.width, e.y);
+          clientArea.y += e.y;
+          clientArea.height -= e.y;
         }
         else
         {
@@ -192,7 +197,18 @@ public abstract class FacilityPane extends Composite
 
     protected boolean coolBarChildrenExist()
     {
-      return coolBarControl.getItemCount() > 0;
+      CoolBar coolBarControl = getCoolBarControl();
+      if (coolBarControl != null)
+      {
+        if (coolBarControl.getItemCount() == 0)
+        {
+          System.out.println("FALSE");
+        }
+
+        return coolBarControl.getItemCount() > 0;
+      }
+
+      return false;
     }
   }
 }

@@ -12,24 +12,18 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.IBuddySession;
-import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.IFacility;
 import org.eclipse.net4j.buddies.protocol.IFacilityInstalledEvent;
 import org.eclipse.net4j.buddies.ui.IFacilityPaneCreator;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IContainerEventVisitor;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -37,7 +31,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -164,18 +157,29 @@ public class CollaborationsPane extends Composite implements IListener
 
   public void fillActionBars(IActionBars bars)
   {
-    IExtensionRegistry registry = Platform.getExtensionRegistry();
-    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, OM.EXT_POINT);
-    for (final IConfigurationElement element : elements)
+    for (IFacilityPaneCreator c : collaborationsView.getFacilityPaneCreators().values())
     {
-      if ("facilityPaneCreator".equals(element.getName()))
+      ActivateFacilityAction action = new ActivateFacilityAction(c.getType(), c.getImageDescriptor());
+      activateFacilityActions.add(action);
+      bars.getToolBarManager().add(action);
+    }
+  }
+
+  public void updateState()
+  {
+    for (ActivateFacilityAction action : activateFacilityActions)
+    {
+      if (activeCollaboration == null)
       {
-        String type = element.getAttribute("type");
-        String icon = element.getAttribute("icon");
-        ImageDescriptor descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(OM.BUNDLE_ID, icon);
-        ActivateFacilityAction action = new ActivateFacilityAction(type, descriptor);
-        activateFacilityActions.add(action);
-        bars.getToolBarManager().add(action);
+        action.setEnabled(false);
+      }
+      else
+      {
+        String type = action.getType();
+        action.setEnabled(activeCollaboration.getFacility(type) != null);
+
+        IFacility activeFacility = activeFacilities.get(activeCollaboration);
+        action.setChecked(activeFacility != null && ObjectUtil.equals(activeFacility.getType(), type));
       }
     }
   }
@@ -276,54 +280,10 @@ public class CollaborationsPane extends Composite implements IListener
 
   protected FacilityPane addFacilityPane(IFacility facility)
   {
-    IFacilityPaneCreator creator = getFacilityPaneCreator(facility.getType());
-    FacilityPane pane = creator.createFacilityPane(this, SWT.NONE);
+    IFacilityPaneCreator creator = collaborationsView.getFacilityPaneCreators().get(facility.getType());
+    FacilityPane pane = creator.createPane(this, SWT.NONE);
     facilityPanes.put(facility, pane);
     return pane;
-  }
-
-  protected IFacilityPaneCreator getFacilityPaneCreator(String type)
-  {
-    IExtensionRegistry registry = Platform.getExtensionRegistry();
-    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, OM.EXT_POINT);
-    for (final IConfigurationElement element : elements)
-    {
-      if ("facilityPaneCreator".equals(element.getName()))
-      {
-        if (ObjectUtil.equals(element.getAttribute("type"), type))
-        {
-          try
-          {
-            return (IFacilityPaneCreator)element.createExecutableExtension("class");
-          }
-          catch (CoreException ex)
-          {
-            throw WrappedException.wrap(ex);
-          }
-        }
-      }
-    }
-
-    throw new IllegalStateException("No facility pane creator for type " + type);
-  }
-
-  public void updateState()
-  {
-    for (ActivateFacilityAction action : activateFacilityActions)
-    {
-      if (activeCollaboration == null)
-      {
-        action.setEnabled(false);
-      }
-      else
-      {
-        String type = action.getType();
-        action.setEnabled(activeCollaboration.getFacility(type) != null);
-
-        IFacility activeFacility = activeFacilities.get(activeCollaboration);
-        action.setChecked(activeFacility != null && ObjectUtil.equals(activeFacility.getType(), type));
-      }
-    }
   }
 
   /**

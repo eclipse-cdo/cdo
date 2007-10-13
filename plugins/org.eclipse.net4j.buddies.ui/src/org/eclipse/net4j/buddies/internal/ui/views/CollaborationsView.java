@@ -12,6 +12,7 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
+import org.eclipse.net4j.buddies.ui.IFacilityPaneCreator;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
@@ -34,19 +35,29 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CollaborationsView extends SessionManagerView
 {
   private SashComposite sashComposite;
 
+  private Map<String, IFacilityPaneCreator> facilityPaneCreators = new HashMap<String, IFacilityPaneCreator>();
+
   public CollaborationsView()
   {
+    initFacilityPaneCreators();
   }
 
   public CollaborationsPane getCollaborationsPane()
   {
     return (CollaborationsPane)sashComposite.getControl2();
+  }
+
+  public Map<String, IFacilityPaneCreator> getFacilityPaneCreators()
+  {
+    return facilityPaneCreators;
   }
 
   @Override
@@ -107,21 +118,13 @@ public class CollaborationsView extends SessionManagerView
       {
         IBuddyCollaboration collaboration = (IBuddyCollaboration)firstElement;
         manager.add(new Separator());
-
-        IExtensionRegistry registry = Platform.getExtensionRegistry();
-        IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, OM.EXT_POINT);
-        for (final IConfigurationElement element : elements)
+        for (IFacilityPaneCreator c : facilityPaneCreators.values())
         {
-          if ("facilityPaneCreator".equals(element.getName()))
+          String type = c.getType();
+          if (collaboration.getFacility(type) == null)
           {
-            String type = element.getAttribute("type");
-            if (collaboration.getFacility(type) == null)
-            {
-              String icon = element.getAttribute("icon");
-              ImageDescriptor descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(OM.BUNDLE_ID, icon);
-              IAction action = new InstallFacilityAction(collaboration, type, descriptor);
-              manager.add(action);
-            }
+            IAction action = new InstallFacilityAction(collaboration, type, c.getImageDescriptor());
+            manager.add(action);
           }
         }
       }
@@ -163,6 +166,27 @@ public class CollaborationsView extends SessionManagerView
         return super.getFont(obj);
       }
     };
+  }
+
+  protected void initFacilityPaneCreators()
+  {
+    IExtensionRegistry registry = Platform.getExtensionRegistry();
+    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, OM.EXT_POINT);
+    for (final IConfigurationElement element : elements)
+    {
+      if ("facilityPaneCreator".equals(element.getName()))
+      {
+        try
+        {
+          IFacilityPaneCreator creator = (IFacilityPaneCreator)element.createExecutableExtension("class");
+          facilityPaneCreators.put(creator.getType(), creator);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+    }
   }
 
   /**

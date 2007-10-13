@@ -15,6 +15,7 @@ public abstract class SashLayoutAction extends SafeAction
   public SashLayoutAction(SashComposite sashComposite, String text)
   {
     super(text, IAction.AS_RADIO_BUTTON);
+    this.sashComposite = sashComposite;
   }
 
   public SashComposite getSashComposite()

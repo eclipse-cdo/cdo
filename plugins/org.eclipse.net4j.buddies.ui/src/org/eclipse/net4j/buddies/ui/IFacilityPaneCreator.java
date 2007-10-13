@@ -12,6 +12,7 @@ package org.eclipse.net4j.buddies.ui;
 
 import org.eclipse.net4j.buddies.internal.ui.views.FacilityPane;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -19,7 +20,9 @@ import org.eclipse.swt.widgets.Composite;
  */
 public interface IFacilityPaneCreator
 {
-  public String getFacilityType();
+  public String getType();
 
-  public FacilityPane createFacilityPane(Composite parent, int style);
+  public ImageDescriptor getImageDescriptor();
+
+  public FacilityPane createPane(Composite parent, int style);
 }

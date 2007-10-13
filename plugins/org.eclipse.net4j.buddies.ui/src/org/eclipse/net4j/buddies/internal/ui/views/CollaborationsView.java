@@ -123,7 +123,7 @@ public class CollaborationsView extends SessionManagerView
           String type = c.getType();
           if (collaboration.getFacility(type) == null)
           {
-            IAction action = new InstallFacilityAction(collaboration, type, c.getImageDescriptor());
+            IAction action = new StartFacilityAction(collaboration, type, c.getImageDescriptor());
             manager.add(action);
           }
         }
@@ -192,16 +192,16 @@ public class CollaborationsView extends SessionManagerView
   /**
    * @author Eike Stepper
    */
-  private final class InstallFacilityAction extends SafeAction
+  private final class StartFacilityAction extends SafeAction
   {
     private final String type;
 
     private IBuddyCollaboration collaboration;
 
-    private InstallFacilityAction(IBuddyCollaboration collaboration, String type, ImageDescriptor descriptor)
+    private StartFacilityAction(IBuddyCollaboration collaboration, String type, ImageDescriptor descriptor)
     {
-      super("Install " + StringUtil.cap(type), AS_RADIO_BUTTON);
-      setToolTipText("Install " + type + " facility");
+      super("Start " + StringUtil.cap(type), AS_RADIO_BUTTON);
+      setToolTipText("Start a " + type + " facility");
       setImageDescriptor(descriptor);
       this.collaboration = collaboration;
       this.type = type;

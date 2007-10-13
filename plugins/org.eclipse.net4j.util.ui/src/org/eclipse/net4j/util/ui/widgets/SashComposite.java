@@ -145,40 +145,48 @@ public abstract class SashComposite extends Composite
 
   protected Sash createSash(Composite parent)
   {
-    final Sash sash = new Sash(parent, vertical ? SWT.VERTICAL : SWT.HORIZONTAL);
-    sash.addListener(SWT.Selection, new Listener()
-    {
-      public void handleEvent(Event e)
-      {
-        Rectangle sashRect = sash.getBounds();
-        Rectangle shellRect = SashComposite.this.getClientArea();
-        if (vertical)
-        {
-          int right = shellRect.width - sashRect.width - limit;
-          e.x = Math.max(Math.min(e.x, right), limit);
-          if (e.x != sashRect.x)
-          {
-            sashData.left = new FormAttachment(0, e.x);
-            SashComposite.this.layout();
-          }
-        }
-        else
-        {
-          int bottom = shellRect.height - sashRect.height - limit;
-          e.y = Math.max(Math.min(e.y, bottom), limit);
-          if (e.y != sashRect.y)
-          {
-            sashData.top = new FormAttachment(0, e.y);
-            SashComposite.this.layout();
-          }
-        }
-      }
-    });
-
+    Sash sash = new Sash(parent, vertical ? SWT.VERTICAL : SWT.HORIZONTAL);
+    sash.addListener(SWT.Selection, new SashListener());
     return sash;
   }
 
   protected abstract Control createControl1(Composite parent);
 
   protected abstract Control createControl2(Composite parent);
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class SashListener implements Listener
+  {
+    public SashListener()
+    {
+    }
+
+    public void handleEvent(Event e)
+    {
+      Rectangle sashRect = sash.getBounds();
+      Rectangle shellRect = SashComposite.this.getClientArea();
+      if (vertical)
+      {
+        int right = shellRect.width - sashRect.width - limit;
+        e.x = Math.max(Math.min(e.x, right), limit);
+        if (e.x != sashRect.x)
+        {
+          sashData.left = new FormAttachment(0, e.x);
+          SashComposite.this.layout();
+        }
+      }
+      else
+      {
+        int bottom = shellRect.height - sashRect.height - limit;
+        e.y = Math.max(Math.min(e.y, bottom), limit);
+        if (e.y != sashRect.y)
+        {
+          sashData.top = new FormAttachment(0, e.y);
+          SashComposite.this.layout();
+        }
+      }
+    }
+  }
 }

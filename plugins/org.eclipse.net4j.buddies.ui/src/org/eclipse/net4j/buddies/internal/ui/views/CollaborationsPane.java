@@ -282,6 +282,7 @@ public class CollaborationsPane extends Composite implements IListener
   {
     IFacilityPaneCreator creator = collaborationsView.getFacilityPaneCreators().get(facility.getType());
     FacilityPane pane = creator.createPane(this, SWT.NONE);
+    pane.setFacility(facility);
     facilityPanes.put(facility, pane);
     return pane;
   }

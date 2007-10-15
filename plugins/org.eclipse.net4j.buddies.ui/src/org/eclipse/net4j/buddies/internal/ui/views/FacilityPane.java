@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
+import org.eclipse.net4j.buddies.protocol.IFacility;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.action.CoolBarManager;
@@ -27,8 +29,10 @@ import org.eclipse.swt.widgets.Layout;
 /**
  * @author Eike Stepper
  */
-public abstract class FacilityPane extends Composite
+public abstract class FacilityPane extends Composite implements IListener
 {
+  private IFacility facility;
+
   private CoolBarManager coolBarManager;
 
   private Control control;
@@ -57,8 +61,20 @@ public abstract class FacilityPane extends Composite
   @Override
   public void dispose()
   {
+    facility.removeListener(this);
     coolBarManager.dispose();
     super.dispose();
+  }
+
+  public IFacility getFacility()
+  {
+    return facility;
+  }
+
+  public void setFacility(IFacility facility)
+  {
+    this.facility = facility;
+    facility.addListener(this);
   }
 
   public ICoolBarManager getCoolBarManager()

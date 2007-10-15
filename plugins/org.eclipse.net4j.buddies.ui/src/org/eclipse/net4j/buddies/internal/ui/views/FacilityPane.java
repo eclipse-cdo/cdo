@@ -13,6 +13,7 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 import org.eclipse.jface.action.CoolBarManager;
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.ICoolBarManager;
+import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -27,6 +28,8 @@ import org.eclipse.swt.widgets.Layout;
  */
 public abstract class FacilityPane extends Composite
 {
+  // private CoolBar coolBar;
+
   private CoolBarManager coolBarManager;
 
   private Label separator;
@@ -38,6 +41,17 @@ public abstract class FacilityPane extends Composite
     super(parent, style);
     setLayout(new FacilityPaneLayout());
 
+    // coolBar = new CoolBar(this, SWT.FLAT | SWT.RIGHT | SWT.WRAP);
+    // coolBar.setEnabled(true);
+
+    ToolBarManager toolBarManager = new ToolBarManager(SWT.NONE);
+    fillCoolBar(toolBarManager);
+
+    coolBarManager = new CoolBarManager(SWT.FLAT | SWT.RIGHT | SWT.WRAP);
+    coolBarManager.add(toolBarManager);
+    coolBarManager.createControl(this);
+    coolBarManager.update(true);
+
     if (showTopSeperator())
     {
       separator = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
@@ -45,12 +59,6 @@ public abstract class FacilityPane extends Composite
 
     Composite composite = new Composite(this, SWT.NONE);
     control = createUI(composite);
-
-    coolBarManager = new CoolBarManager(SWT.FLAT | SWT.RIGHT | SWT.WRAP);
-    fillCoolBar(coolBarManager);
-    coolBarManager.createControl(this);
-    coolBarManager.resetItemOrder();
-    coolBarManager.update(true);
   }
 
   @Override

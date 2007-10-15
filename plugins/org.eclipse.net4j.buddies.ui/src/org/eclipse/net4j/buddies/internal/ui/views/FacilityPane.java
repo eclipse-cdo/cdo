@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
+import org.eclipse.net4j.util.ui.UIUtil;
+
 import org.eclipse.jface.action.CoolBarManager;
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.ICoolBarManager;
@@ -20,7 +22,6 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.CoolBar;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
 
 /**
@@ -28,11 +29,7 @@ import org.eclipse.swt.widgets.Layout;
  */
 public abstract class FacilityPane extends Composite
 {
-  // private CoolBar coolBar;
-
   private CoolBarManager coolBarManager;
-
-  private Label separator;
 
   private Control control;
 
@@ -41,24 +38,20 @@ public abstract class FacilityPane extends Composite
     super(parent, style);
     setLayout(new FacilityPaneLayout());
 
-    // coolBar = new CoolBar(this, SWT.FLAT | SWT.RIGHT | SWT.WRAP);
-    // coolBar.setEnabled(true);
-
-    ToolBarManager toolBarManager = new ToolBarManager(SWT.NONE);
+    ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT | SWT.RIGHT | SWT.WRAP);
     fillCoolBar(toolBarManager);
 
     coolBarManager = new CoolBarManager(SWT.FLAT | SWT.RIGHT | SWT.WRAP);
     coolBarManager.add(toolBarManager);
+    coolBarManager.setLockLayout(true);
     coolBarManager.createControl(this);
     coolBarManager.update(true);
 
-    if (showTopSeperator())
-    {
-      separator = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
-    }
-
     Composite composite = new Composite(this, SWT.NONE);
+    composite.setLayout(UIUtil.createGridLayout(1));
+
     control = createUI(composite);
+    control.setLayoutData(UIUtil.createGridData());
   }
 
   @Override
@@ -103,24 +96,11 @@ public abstract class FacilityPane extends Composite
   }
 
   /**
-   * Returns whether to show a top separator line between the menu bar and the rest of the window contents. On some
-   * platforms such as the Mac, the menu is separated from the main window already, so a separator line is not desired.
-   * 
-   * @return <code>true</code> to show the top separator, <code>false</code> to not show it
-   */
-  private boolean showTopSeperator()
-  {
-    return !"carbon".equals(SWT.getPlatform()); //$NON-NLS-1$
-  }
-
-  /**
    * @author Eike Stepper
    * @see org.eclipse.jface.window.ApplicationWindow.ApplicationWindowLayout
    */
   public class FacilityPaneLayout extends Layout
   {
-    static final int VGAP = 2;
-
     static final int BAR_SIZE = 23;
 
     @Override
@@ -154,7 +134,7 @@ public abstract class FacilityPane extends Composite
         {
           Point e = w.computeSize(wHint, hHint, flushCache);
           result.x = Math.max(result.x, e.x);
-          result.y += e.y + VGAP;
+          result.y += e.y;
         }
       }
 
@@ -185,20 +165,13 @@ public abstract class FacilityPane extends Composite
           {
             Point e = w.computeSize(clientArea.width, SWT.DEFAULT, flushCache);
             w.setBounds(clientArea.x, clientArea.y, clientArea.width, e.y);
-            clientArea.y += e.y + VGAP;
-            clientArea.height -= e.y + VGAP;
+            clientArea.y += e.y;
+            clientArea.height -= e.y;
           }
-        }
-        else if (w == separator)
-        {
-          Point e = w.computeSize(SWT.DEFAULT, SWT.DEFAULT, flushCache);
-          w.setBounds(clientArea.x, clientArea.y, clientArea.width, e.y);
-          clientArea.y += e.y;
-          clientArea.height -= e.y;
         }
         else
         {
-          w.setBounds(clientArea.x, clientArea.y + VGAP, clientArea.width, clientArea.height - VGAP);
+          w.setBounds(clientArea.x, clientArea.y, clientArea.width, clientArea.height);
         }
       }
     }

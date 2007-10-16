@@ -113,10 +113,9 @@ public class CollaborationsView extends SessionManagerView
     super.fillContextMenu(manager, selection);
     if (selection.size() == 1)
     {
-      Object firstElement = selection.getFirstElement();
-      if (firstElement instanceof IBuddyCollaboration)
+      final IBuddyCollaboration collaboration = (IBuddyCollaboration)selection.getFirstElement();
+      if (collaboration != null)
       {
-        IBuddyCollaboration collaboration = (IBuddyCollaboration)firstElement;
         manager.add(new Separator());
         for (IFacilityPaneCreator c : facilityPaneCreators.values())
         {
@@ -127,6 +126,17 @@ public class CollaborationsView extends SessionManagerView
             manager.add(action);
           }
         }
+
+        manager.add(new Separator());
+        manager.add(new SafeAction("Leave", "Leave this collaboration")
+        {
+          @Override
+          protected void safeRun() throws Exception
+          {
+            collaboration.leave();
+          }
+        });
+
       }
     }
   }

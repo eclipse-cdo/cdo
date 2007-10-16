@@ -24,6 +24,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -139,11 +140,12 @@ public class CollaborationsPane extends Composite implements IListener
 
   public void fillActionBars(IActionBars bars)
   {
+    IToolBarManager manager = bars.getToolBarManager();
     for (IFacilityPaneCreator c : collaborationsView.getFacilityPaneCreators().values())
     {
       ActivateFacilityAction action = new ActivateFacilityAction(c.getType(), c.getImageDescriptor());
       activateFacilityActions.add(action);
-      bars.getToolBarManager().add(action);
+      manager.add(action);
     }
   }
 

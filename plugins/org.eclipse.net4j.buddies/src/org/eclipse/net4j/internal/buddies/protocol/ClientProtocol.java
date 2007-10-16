@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies.protocol;
 
+import org.eclipse.net4j.buddies.internal.protocol.CollaborationLeftIndication;
 import org.eclipse.net4j.buddies.internal.protocol.MessageIndication;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
@@ -47,6 +48,9 @@ public class ClientProtocol extends SignalProtocol
 
     case ProtocolConstants.SIGNAL_COLLABORATION_INITIATED:
       return new CollaborationInitiatedIndication();
+
+    case ProtocolConstants.SIGNAL_COLLABORATION_LEFT:
+      return new CollaborationLeftIndication(getSelf());
 
     case ProtocolConstants.SIGNAL_FACILITY_INSTALLED:
       return new FacilityInstalledIndication();

@@ -15,6 +15,7 @@ import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.protocol.ClientFacilityFactory;
 import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
+import org.eclipse.net4j.buddies.internal.protocol.CollaborationLeftNotification;
 import org.eclipse.net4j.buddies.internal.protocol.Message;
 import org.eclipse.net4j.buddies.internal.protocol.MessageNotification;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
@@ -95,11 +96,22 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
 
   public IBuddy invite(String userID)
   {
-    return null;
+    // TODO Implement method BuddyCollaboration.invite()
+    throw new UnsupportedOperationException("Not yet implemented");
   }
 
   public void leave()
   {
+    try
+    {
+      new CollaborationLeftNotification(session.getChannel(), getID(), session.getSelf().getUserID()).send();
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
+    deactivate();
   }
 
   protected IPluginContainer getContainer()

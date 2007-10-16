@@ -168,7 +168,13 @@ public class CollaborationsPane extends Composite implements IListener
 
   public void notifyEvent(IEvent event)
   {
-    if (session != null && event.getSource() == session.getSelf() && event instanceof IContainerEvent)
+    if (session == null)
+    {
+      return;
+    }
+
+    System.out.println("EVENT: " + event);
+    if (event.getSource() == session.getSelf() && event instanceof IContainerEvent)
     {
       IContainerEvent<ICollaboration> e = (IContainerEvent<ICollaboration>)event;
       e.accept(new IContainerEventVisitor<ICollaboration>()
@@ -184,6 +190,22 @@ public class CollaborationsPane extends Composite implements IListener
         }
       });
     }
+    // else if (event.getSource() == session && event instanceof IContainerEvent)
+    // {
+    // IContainerEvent<ICollaboration> e = (IContainerEvent<ICollaboration>)event;
+    // e.accept(new IContainerEventVisitor<ICollaboration>()
+    // {
+    // public void added(ICollaboration collaboration)
+    // {
+    // collaborationAdded((IBuddyCollaboration)collaboration);
+    // }
+    //
+    // public void removed(ICollaboration collaboration)
+    // {
+    // collaborationRemoved((IBuddyCollaboration)collaboration);
+    // }
+    // });
+    // }
     else if (event instanceof IFacilityInstalledEvent)
     {
       IFacilityInstalledEvent e = (IFacilityInstalledEvent)event;
@@ -215,6 +237,20 @@ public class CollaborationsPane extends Composite implements IListener
   protected void collaborationRemoved(IBuddyCollaboration collaboration)
   {
     collaboration.removeListener(this);
+    if (activeCollaboration == collaboration)
+    {
+      setActiveCollaboration(activeFacilities.isEmpty() ? null : activeFacilities.keySet().iterator().next());
+    }
+
+    activeFacilities.remove(collaboration);
+    for (IFacility facility : collaboration.getFacilities())
+    {
+      FacilityPane pane = facilityPanes.remove(facility);
+      if (pane != null)
+      {
+        pane.dispose();
+      }
+    }
   }
 
   protected void facilityInstalled(final IFacility facility, boolean fromRemote)

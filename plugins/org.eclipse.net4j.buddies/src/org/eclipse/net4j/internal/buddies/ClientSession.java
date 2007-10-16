@@ -14,9 +14,11 @@ import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyContainer;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateNotification;
+import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
 import org.eclipse.net4j.buddies.protocol.IAccount;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateEvent;
+import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.internal.buddies.bundle.OM;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -114,6 +116,10 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
   {
     IBuddy buddy = removeBuddy(userID);
     LifecycleUtil.deactivate(buddy);
+    for (ICollaboration collaboration : self.getCollaborations())
+    {
+      ((Collaboration)collaboration).removeBuddy(userID);
+    }
   }
 
   @Override
@@ -127,6 +133,7 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
   protected void doDeactivate() throws Exception
   {
     channel.removeListener(this);
+    LifecycleUtil.deactivate(self);
     super.doDeactivate();
   }
 }

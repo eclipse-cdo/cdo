@@ -25,8 +25,6 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -43,13 +41,6 @@ import java.util.Map;
 public class CollaborationsPane extends Composite implements IListener
 {
   private CollaborationsView collaborationsView;
-
-  private ISelectionChangedListener collaborationsViewerListener = new ISelectionChangedListener()
-  {
-    public void selectionChanged(SelectionChangedEvent event)
-    {
-    }
-  };
 
   private IBuddySession session;
 
@@ -69,14 +60,6 @@ public class CollaborationsPane extends Composite implements IListener
     setLayout(paneStack = new StackLayout());
 
     this.collaborationsView = collaborationsView;
-    collaborationsView.getViewer().addSelectionChangedListener(collaborationsViewerListener);
-  }
-
-  @Override
-  public void dispose()
-  {
-    collaborationsView.getViewer().removeSelectionChangedListener(collaborationsViewerListener);
-    super.dispose();
   }
 
   public CollaborationsView getCollaborationsView()

@@ -186,7 +186,6 @@ public class CollaborationsPane extends Composite implements IListener
 
   public void notifyEvent(IEvent event)
   {
-    System.out.println("EVENT: " + event);
     if (session != null && event.getSource() == session.getSelf() && event instanceof IContainerEvent)
     {
       IContainerEvent<ICollaboration> e = (IContainerEvent<ICollaboration>)event;

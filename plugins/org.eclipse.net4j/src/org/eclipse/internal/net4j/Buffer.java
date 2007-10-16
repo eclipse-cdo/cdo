@@ -16,6 +16,7 @@ import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
@@ -34,8 +35,6 @@ public class Buffer implements IBuffer
   private static final int EOS_OFFSET = 1;
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER, Buffer.class);
-
-  private static final String NL = System.getProperty("line.separator"); //$NON-NLS-1$
 
   private IBufferProvider bufferProvider;
 
@@ -184,7 +183,7 @@ public class Buffer implements IBuffer
     if (TRACER.isEnabled())
     {
       TRACER.trace("Read " + byteBuffer.limit() + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
-          + (eos ? " (EOS)" : "") + NL + formatContent()); //$NON-NLS-1$ //$NON-NLS-2$
+          + (eos ? " (EOS)" : "") + StringUtil.NL + formatContent()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     byteBuffer.flip();
@@ -243,7 +242,7 @@ public class Buffer implements IBuffer
       if (TRACER.isEnabled())
       {
         TRACER.trace("Writing " + (Math.abs(payloadSize) - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
-            + (eos ? " (EOS)" : "") + NL + formatContent()); //$NON-NLS-1$ //$NON-NLS-2$
+            + (eos ? " (EOS)" : "") + StringUtil.NL + formatContent()); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
       byteBuffer.flip();

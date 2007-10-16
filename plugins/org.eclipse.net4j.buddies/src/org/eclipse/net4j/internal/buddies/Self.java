@@ -81,4 +81,15 @@ public class Self extends Buddy
     // TODO Implement method Self.join()
     throw new UnsupportedOperationException("Not yet implemented");
   }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    for (ICollaboration collaboration : getCollaborations())
+    {
+      LifecycleUtil.deactivate(collaboration);
+    }
+
+    super.doDeactivate();
+  }
 }

@@ -115,10 +115,14 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
   public void buddyRemoved(String userID)
   {
     IBuddy buddy = removeBuddy(userID);
-    LifecycleUtil.deactivate(buddy);
-    for (ICollaboration collaboration : self.getCollaborations())
+    if (buddy != null)
     {
-      ((Collaboration)collaboration).removeBuddy(userID);
+      for (ICollaboration collaboration : self.getCollaborations())
+      {
+        ((Collaboration)collaboration).removeBuddy(userID);
+      }
+
+      LifecycleUtil.deactivate(buddy);
     }
   }
 

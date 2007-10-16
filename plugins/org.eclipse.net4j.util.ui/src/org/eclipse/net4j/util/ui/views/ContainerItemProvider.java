@@ -71,8 +71,9 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       List<Node> children = node.getChildren();
       for (Iterator<Node> it = children.iterator(); it.hasNext();)
       {
-        Object child = it.next();
-        if (!LifecycleUtil.isActive(child))
+        Node child = it.next();
+        Object childElement = child.getElement();
+        if (!LifecycleUtil.isActive(childElement))
         {
           it.remove();
         }

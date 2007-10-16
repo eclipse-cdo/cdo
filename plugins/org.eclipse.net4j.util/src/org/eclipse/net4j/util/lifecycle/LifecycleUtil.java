@@ -53,7 +53,7 @@ public final class LifecycleUtil
       return ((ILifecycle.Introspection)object).isActive();
     }
 
-    return true;
+    return object != null;
   }
 
   public static void activate(Object object) throws LifecycleException

@@ -175,7 +175,6 @@ public class CollaborationsPane extends Composite implements IListener
       return;
     }
 
-    System.out.println("EVENT: " + event);
     if (event.getSource() == session.getSelf() && event instanceof IContainerEvent)
     {
       IContainerEvent<ICollaboration> e = (IContainerEvent<ICollaboration>)event;
@@ -192,22 +191,6 @@ public class CollaborationsPane extends Composite implements IListener
         }
       });
     }
-    // else if (event.getSource() == session && event instanceof IContainerEvent)
-    // {
-    // IContainerEvent<ICollaboration> e = (IContainerEvent<ICollaboration>)event;
-    // e.accept(new IContainerEventVisitor<ICollaboration>()
-    // {
-    // public void added(ICollaboration collaboration)
-    // {
-    // collaborationAdded((IBuddyCollaboration)collaboration);
-    // }
-    //
-    // public void removed(ICollaboration collaboration)
-    // {
-    // collaborationRemoved((IBuddyCollaboration)collaboration);
-    // }
-    // });
-    // }
     else if (event instanceof IFacilityInstalledEvent)
     {
       IFacilityInstalledEvent e = (IFacilityInstalledEvent)event;

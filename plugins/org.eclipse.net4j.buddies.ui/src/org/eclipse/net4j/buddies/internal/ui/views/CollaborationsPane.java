@@ -58,7 +58,6 @@ public class CollaborationsPane extends Composite implements IListener
   {
     super(parent, SWT.NONE);
     setLayout(paneStack = new StackLayout());
-
     this.collaborationsView = collaborationsView;
   }
 

@@ -10,11 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies.protocol;
 
-import org.eclipse.net4j.buddies.internal.protocol.CollaborationLeftIndication;
 import org.eclipse.net4j.buddies.internal.protocol.MessageIndication;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
-import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.ISession;
+import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 
@@ -50,7 +49,7 @@ public class ClientProtocol extends SignalProtocol
       return new CollaborationInitiatedIndication();
 
     case ProtocolConstants.SIGNAL_COLLABORATION_LEFT:
-      return new CollaborationLeftIndication(getSelf());
+      return new ClientCollaborationLeftIndication(getSelf());
 
     case ProtocolConstants.SIGNAL_FACILITY_INSTALLED:
       return new FacilityInstalledIndication();
@@ -62,9 +61,9 @@ public class ClientProtocol extends SignalProtocol
     return null;
   }
 
-  protected IBuddy getSelf()
+  protected Self getSelf()
   {
     ISession session = (ISession)getInfraStructure();
-    return session.getSelf();
+    return (Self)session.getSelf();
   }
 }

@@ -3,6 +3,7 @@ package org.eclipse.net4j.buddies.internal.server.protocol;
 import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
 import org.eclipse.net4j.buddies.internal.protocol.CollaborationLeftIndication;
 import org.eclipse.net4j.buddies.internal.protocol.CollaborationLeftNotification;
+import org.eclipse.net4j.buddies.internal.server.BuddyAdmin;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -37,5 +38,9 @@ public class ServerCollaborationLeftIndication extends CollaborationLeftIndicati
     }
 
     super.collaborationLeft(collaboration, userID);
+    if (collaboration.getBuddies().length == 0 && !collaboration.isPublic())
+    {
+      BuddyAdmin.INSTANCE.removeCollaboration(collaboration.getID());
+    }
   }
 }

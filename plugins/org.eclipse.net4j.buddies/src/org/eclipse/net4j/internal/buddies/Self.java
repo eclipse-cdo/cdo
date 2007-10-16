@@ -62,6 +62,11 @@ public class Self extends Buddy
       BuddyCollaboration collaboration = new BuddyCollaboration(session, id, buddies);
       LifecycleUtil.activate(collaboration);
       addCollaboration(collaboration);
+      for (IBuddy buddy : buddies)
+      {
+        ((Buddy)buddy).addCollaboration(collaboration);
+      }
+
       return collaboration;
     }
     catch (Exception ex)

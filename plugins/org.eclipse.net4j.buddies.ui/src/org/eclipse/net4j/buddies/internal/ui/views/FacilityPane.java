@@ -10,7 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
+import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.protocol.IFacility;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.UIUtil;
 
@@ -86,6 +88,32 @@ public abstract class FacilityPane extends Composite implements IListener
   {
     return control;
   }
+
+  public final void notifyEvent(final IEvent event)
+  {
+    try
+    {
+      control.getDisplay().syncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            handleEvent(event);
+          }
+          catch (Exception ex)
+          {
+            OM.LOG.error(ex);
+          }
+        }
+      });
+    }
+    catch (RuntimeException ignore)
+    {
+    }
+  }
+
+  protected abstract void handleEvent(IEvent event) throws Exception;
 
   public void hidden(FacilityPane newPane)
   {

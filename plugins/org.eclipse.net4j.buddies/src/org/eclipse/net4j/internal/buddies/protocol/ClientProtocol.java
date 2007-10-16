@@ -10,7 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies.protocol;
 
+import org.eclipse.net4j.buddies.internal.protocol.MessageIndication;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 
@@ -49,9 +52,15 @@ public class ClientProtocol extends SignalProtocol
       return new FacilityInstalledIndication();
 
     case ProtocolConstants.SIGNAL_MESSAGE:
-      return new ClientMessageIndication();
+      return new MessageIndication(getSelf());
     }
 
     return null;
+  }
+
+  protected IBuddy getSelf()
+  {
+    ISession session = (ISession)getInfraStructure();
+    return session.getSelf();
   }
 }

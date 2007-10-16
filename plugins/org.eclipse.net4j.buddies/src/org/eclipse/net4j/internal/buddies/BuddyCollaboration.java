@@ -76,17 +76,16 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
   }
 
   @Override
-  public void sendMessage(IMessage message)
+  public void sendMessage(long collaborationID, String facilityType, IMessage message)
   {
     if (message instanceof Message)
     {
       ((Message)message).setSenderID(session.getSelf().getUserID());
-
     }
 
     try
     {
-      new MessageNotification(session.getChannel(), message).send();
+      new MessageNotification(session.getChannel(), collaborationID, facilityType, message).send();
     }
     catch (Exception ex)
     {

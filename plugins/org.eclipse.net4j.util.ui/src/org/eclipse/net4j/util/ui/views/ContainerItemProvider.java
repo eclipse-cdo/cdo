@@ -388,7 +388,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
     public List<Node> getChildren()
     {
-      return Collections.EMPTY_LIST;
+      return Collections.emptyList();
     }
 
     public void notifyEvent(IEvent event)

@@ -31,16 +31,16 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            id="org.eclipse.net4j"
-            name="Net4j"/>
+            id="org.eclipse.net4j.buddies"
+            name="Net4j Buddies"/>
       <view
-            category="org.eclipse.net4j"
+            category="org.eclipse.net4j.buddies"
             class="org.eclipse.net4j.buddies.internal.ui.views.BuddiesView"
             icon="icons/full/view16/buddies_view.gif"
             id="org.eclipse.net4j.BuddiesView"
             name="Buddies"/>
       <view
-            category="org.eclipse.net4j"
+            category="org.eclipse.net4j.buddies"
             class="org.eclipse.net4j.buddies.internal.ui.views.CollaborationsView"
             icon="icons/full/view16/collaborations_view.gif"
             id="org.eclipse.net4j.CollaborationsView"

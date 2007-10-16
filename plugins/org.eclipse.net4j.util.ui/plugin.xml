@@ -34,7 +34,7 @@
             id="org.eclipse.net4j.util.Net4jIntrospectorView"
             class="org.eclipse.net4j.util.internal.ui.views.Net4jIntrospectorView"
             name="Introspector"
-            icon="icons/full/view16/javabean_light.gif"/>
+            icon="icons/full/view16/javabean.gif"/>
    </extension>
    
 </plugin>

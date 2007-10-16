@@ -10,7 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
+import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 
@@ -33,7 +35,15 @@ public class BuddiesView extends SessionManagerView
     {
       IBuddy buddy = (IBuddy)object;
       IBuddy self = getSession().getSelf();
-      self.initiate(buddy);
+      ICollaboration collaboration = self.initiate(buddy);
+
+      try
+      {
+        ChatInstaller.installChat((IBuddyCollaboration)collaboration);
+      }
+      catch (Throwable ignore)
+      {
+      }
     }
   }
 }

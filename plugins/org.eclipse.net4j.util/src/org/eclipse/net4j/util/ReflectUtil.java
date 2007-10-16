@@ -46,8 +46,6 @@ public final class ReflectUtil
 
   public static final Object[] NO_ARGUMENTS = null;
 
-  private static final String NL = System.getProperty("line.separator"); //$NON-NLS-1$
-
   private static final Method HASH_CODE_METHOD = lookupHashCodeMethod();
 
   private static final Map<Object, Long> ids = new WeakHashMap<Object, Long>();
@@ -500,7 +498,7 @@ public final class ReflectUtil
     StringBuilder builder = new StringBuilder();
     builder.append(prefix);
     builder.append(getLabel(object));
-    builder.append(NL);
+    builder.append(StringUtil.NL);
     toString(object.getClass(), object, prefix, builder);
     return builder.toString();
   }
@@ -547,18 +545,18 @@ public final class ReflectUtil
 
       if (value instanceof Collection)
       {
-        builder.append(NL);
+        builder.append(StringUtil.NL);
         for (Object element : (Collection<?>)value)
         {
           builder.append("    ");
           builder.append(element);
-          builder.append(NL);
+          builder.append(StringUtil.NL);
         }
       }
       else
       {
         builder.append(value);
-        builder.append(NL);
+        builder.append(StringUtil.NL);
       }
     }
   }

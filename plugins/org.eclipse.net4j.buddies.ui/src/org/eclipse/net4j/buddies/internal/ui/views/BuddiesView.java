@@ -39,6 +39,7 @@ public class BuddiesView extends SessionManagerView
 
       try
       {
+        // The chat dependency is optional
         ChatInstaller.installChat((IBuddyCollaboration)collaboration);
       }
       catch (Throwable ignore)

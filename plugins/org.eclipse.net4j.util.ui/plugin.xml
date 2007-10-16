@@ -20,21 +20,21 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            id="org.eclipse.net4j"
-            name="Net4j">
+            id="org.eclipse.net4j.debug"
+            name="Net4j Debug">
       </category>
       <view
-            category="org.eclipse.net4j"
+            category="org.eclipse.net4j.debug"
             id="org.eclipse.net4j.util.Net4jContainerView"
             class="org.eclipse.net4j.util.internal.ui.views.Net4jContainerView"
             name="Container"
             icon="icons/full/view16/container.gif"/>
       <view
-            category="org.eclipse.net4j"
+            category="org.eclipse.net4j.debug"
             id="org.eclipse.net4j.util.Net4jIntrospectorView"
             class="org.eclipse.net4j.util.internal.ui.views.Net4jIntrospectorView"
             name="Introspector"
-            icon="icons/full/view16/javabean.gif"/>
+            icon="icons/full/view16/javabean_light.gif"/>
    </extension>
    
 </plugin>

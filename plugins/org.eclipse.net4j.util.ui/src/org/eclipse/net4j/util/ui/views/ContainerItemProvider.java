@@ -72,10 +72,18 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       for (Iterator<Node> it = children.iterator(); it.hasNext();)
       {
         Node child = it.next();
-        Object childElement = child.getElement();
-        if (!LifecycleUtil.isActive(childElement))
+        if (child.isDisposed())
         {
           it.remove();
+        }
+        else
+        {
+          Object childElement = child.getElement();
+          if (!LifecycleUtil.isActive(childElement))
+          {
+            it.remove();
+            child.dispose();
+          }
         }
       }
 
@@ -183,6 +191,8 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   {
     public void dispose();
 
+    public boolean isDisposed();
+
     public Object getElement();
 
     public Node getParent();
@@ -198,6 +208,8 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     private Node parent;
 
     private List<Node> children;
+
+    private boolean disposed;
 
     public AbstractNode(Node parent)
     {
@@ -217,6 +229,13 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
         children.clear();
         children = null;
       }
+
+      disposed = true;
+    }
+
+    public boolean isDisposed()
+    {
+      return disposed;
     }
 
     @Override
@@ -375,6 +394,11 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       EventUtil.removeListener(element, this);
       element = null;
       parent = null;
+    }
+
+    public boolean isDisposed()
+    {
+      return element == null;
     }
 
     public Node getParent()

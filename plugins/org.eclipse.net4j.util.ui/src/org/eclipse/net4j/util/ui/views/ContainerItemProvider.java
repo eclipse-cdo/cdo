@@ -116,6 +116,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   }
 
   @Override
+  public void dispose()
+  {
+    super.dispose();
+  }
+
+  @Override
   protected void connectInput(CONTAINER input)
   {
     root = (ContainerNode)createNode(null, input);
@@ -218,19 +224,23 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
     public void dispose()
     {
-      parent = null;
-      if (children != null)
+      if (!disposed)
       {
-        for (Node child : children)
+        nodes.remove(getElement());
+        parent = null;
+        if (children != null)
         {
-          child.dispose();
+          for (Node child : children)
+          {
+            child.dispose();
+          }
+
+          children.clear();
+          children = null;
         }
 
-        children.clear();
-        children = null;
+        disposed = true;
       }
-
-      disposed = true;
     }
 
     public boolean isDisposed()
@@ -246,17 +256,27 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
     public final Node getParent()
     {
+      checkNotDisposed();
       return parent;
     }
 
     public final List<Node> getChildren()
     {
+      checkNotDisposed();
       if (children == null)
       {
         children = createChildren();
       }
 
       return children;
+    }
+
+    protected void checkNotDisposed()
+    {
+      if (disposed)
+      {
+        throw new IllegalStateException("Node is already disposed of");
+      }
     }
 
     protected abstract List<Node> createChildren();
@@ -295,9 +315,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
           if (node != null)
           {
             getChildren().remove(node);
-            node.dispose();
-            refreshElement(container, true);
             elementRemoved(element, container);
+
+            Object rootElement = root.getElement();
+            Object refreshElement = container == rootElement ? null : container;
+            refreshElement(refreshElement, true);
+            node.dispose();
           }
         }
       }
@@ -313,23 +336,33 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     {
       super(parent);
       this.container = container;
+      if (container == null)
+      {
+        throw new IllegalArgumentException("container == null");
+      }
     }
 
     @Override
     public void dispose()
     {
-      container.removeListener(containerListener);
-      container = null;
-      super.dispose();
+      if (!isDisposed())
+      {
+        container.removeListener(containerListener);
+        containerListener = null;
+        container = null;
+        super.dispose();
+      }
     }
 
     public IContainer<Object> getContainer()
     {
+      checkNotDisposed();
       return container;
     }
 
     public Object getElement()
     {
+      checkNotDisposed();
       return container;
     }
 
@@ -342,6 +375,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     @Override
     protected List<Node> createChildren()
     {
+      checkNotDisposed();
       Object[] elements = container.getElements();
       List<Node> children = new ArrayList<Node>(elements.length);
       for (int i = 0; i < elements.length; i++)
@@ -391,9 +425,13 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
     public void dispose()
     {
-      EventUtil.removeListener(element, this);
-      element = null;
-      parent = null;
+      if (!isDisposed())
+      {
+        nodes.remove(element);
+        EventUtil.removeListener(element, this);
+        element = null;
+        parent = null;
+      }
     }
 
     public boolean isDisposed()
@@ -403,16 +441,19 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
     public Node getParent()
     {
+      checkNotDisposed();
       return parent;
     }
 
     public Object getElement()
     {
+      checkNotDisposed();
       return element;
     }
 
     public List<Node> getChildren()
     {
+      checkNotDisposed();
       return Collections.emptyList();
     }
 
@@ -425,6 +466,14 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     public String toString()
     {
       return element == null ? super.toString() : element.toString();
+    }
+
+    protected void checkNotDisposed()
+    {
+      if (isDisposed())
+      {
+        throw new IllegalStateException("Node is already disposed of");
+      }
     }
   }
 }

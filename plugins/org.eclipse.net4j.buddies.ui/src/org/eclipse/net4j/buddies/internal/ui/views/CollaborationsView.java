@@ -13,6 +13,7 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.ui.IFacilityPaneCreator;
+import org.eclipse.net4j.internal.buddies.ClientBuddy;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
@@ -162,6 +163,17 @@ public class CollaborationsView extends SessionManagerView
   {
     return new BuddiesItemProvider()
     {
+      @Override
+      protected Node createNode(Node parent, Object element)
+      {
+        if (element instanceof ClientBuddy)
+        {
+          return new LeafNode(parent, element);
+        }
+
+        return super.createNode(parent, element);
+      }
+
       @Override
       public Font getFont(Object obj)
       {

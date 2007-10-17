@@ -36,6 +36,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IWorkbenchActionConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -117,27 +118,16 @@ public class CollaborationsView extends SessionManagerView
       final IBuddyCollaboration collaboration = (IBuddyCollaboration)selection.getFirstElement();
       if (collaboration != null)
       {
-        manager.add(new Separator());
+        manager.insertBefore(IWorkbenchActionConstants.MB_ADDITIONS, new Separator());
         for (IFacilityPaneCreator c : facilityPaneCreators.values())
         {
           String type = c.getType();
           if (collaboration.getFacility(type) == null)
           {
             IAction action = new StartFacilityAction(collaboration, type, c.getImageDescriptor());
-            manager.add(action);
+            manager.insertBefore(IWorkbenchActionConstants.MB_ADDITIONS, action);
           }
         }
-
-        manager.add(new Separator());
-        manager.add(new SafeAction("Leave", "Leave this collaboration")
-        {
-          @Override
-          protected void safeRun() throws Exception
-          {
-            collaboration.leave();
-          }
-        });
-
       }
     }
   }

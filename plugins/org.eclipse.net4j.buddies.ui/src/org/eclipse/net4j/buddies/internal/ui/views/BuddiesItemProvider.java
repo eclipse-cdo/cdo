@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
+import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
@@ -17,11 +18,13 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
+import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -143,12 +146,25 @@ public class BuddiesItemProvider extends ContainerItemProvider<IContainer<Object
   @Override
   protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
+    manager.add(new Separator());
     if (selection.size() == 1)
     {
       Object obj = selection.getFirstElement();
       if (obj instanceof IBuddy)
       {
         manager.add(new RemoveAction(obj));
+      }
+      else if (obj instanceof IBuddyCollaboration)
+      {
+        final IBuddyCollaboration collaboration = (IBuddyCollaboration)obj;
+        manager.add(new SafeAction("Leave", "Leave this collaboration")
+        {
+          @Override
+          protected void safeRun() throws Exception
+          {
+            collaboration.leave();
+          }
+        });
       }
     }
   }

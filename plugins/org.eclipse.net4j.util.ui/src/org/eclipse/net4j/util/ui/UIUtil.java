@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.internal.ui.security.InteractiveCredentialsProvide
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
@@ -21,6 +22,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -37,6 +39,22 @@ public final class UIUtil
     if (font != null)
     {
       font.dispose();
+    }
+  }
+
+  public static void dispose(Color color)
+  {
+    if (color != null)
+    {
+      color.dispose();
+    }
+  }
+
+  public static void dispose(Widget widget)
+  {
+    if (widget != null)
+    {
+      widget.dispose();
     }
   }
 

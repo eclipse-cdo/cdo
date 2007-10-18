@@ -40,6 +40,10 @@ public class NOOPStore extends Store
     return true;
   }
 
+  public void repairAfterCrash()
+  {
+  }
+
   public NOOPStoreAccessor getReader(ISession session)
   {
     return new NOOPStoreAccessor(this, session);

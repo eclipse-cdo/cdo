@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 
 import org.eclipse.net4j.util.io.CloseableIterator;
 
+import java.sql.Connection;
 import java.util.Map;
 
 /**
@@ -48,4 +49,9 @@ public interface IMappingStrategy
   public CDOID readResourceID(IDBStoreAccessor storeAccessor, String path);
 
   public String readResourcePath(IDBStoreAccessor storeAccessor, CDOID id);
+
+  /**
+   * Must return the next CDOID value to be used for new objects.
+   */
+  public long repairAfterCrash(Connection connection);
 }

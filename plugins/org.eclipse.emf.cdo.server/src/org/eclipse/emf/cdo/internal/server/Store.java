@@ -67,4 +67,9 @@ public abstract class Store extends Lifecycle implements IStore
   {
     this.nextOIDValue = nextOIDValue;
   }
+
+  public boolean hasCrashed()
+  {
+    return nextOIDValue == 0L;
+  }
 }

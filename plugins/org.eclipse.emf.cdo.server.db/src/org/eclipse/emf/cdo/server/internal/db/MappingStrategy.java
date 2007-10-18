@@ -31,6 +31,7 @@ import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.CloseableIterator;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -398,6 +399,26 @@ public abstract class MappingStrategy implements IMappingStrategy
     {
       DBUtil.close(resultSet);
     }
+  }
+
+  public long repairAfterCrash(Connection connection)
+  {
+    long max = 0L;
+    for (CDOClass idClass : getClassesWithObjectInfo())
+    {
+      IClassMapping classMapping = getClassMapping(idClass);
+      IDBTable table = classMapping.getTable();
+      IDBField idField = table.getField(CDODBSchema.ATTRIBUTES_ID);
+      long classMax = DBUtil.selectMaximumLong(connection, idField);
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Max CDOID of table {0}: {1}", table, classMax);
+      }
+
+      max = Math.max(max, classMax);
+    }
+
+    return max + 2L;
   }
 
   @Override

@@ -136,7 +136,29 @@ public final class DBUtil
     return null;
   }
 
-  public static int selectMaximum(Connection connection, IDBField field) throws DBException
+  public static int selectMaximumInt(Connection connection, IDBField field) throws DBException
+  {
+    Number number = getMaximumNumber(connection, field);
+    if (number instanceof Integer)
+    {
+      return (Integer)number;
+    }
+
+    return 0;
+  }
+
+  public static long selectMaximumLong(Connection connection, IDBField field) throws DBException
+  {
+    Number number = getMaximumNumber(connection, field);
+    if (number instanceof Long)
+    {
+      return (Long)number;
+    }
+
+    return 0;
+  }
+
+  private static Number getMaximumNumber(Connection connection, IDBField field) throws DBException
   {
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT MAX(");
@@ -145,11 +167,7 @@ public final class DBUtil
     builder.append(field.getTable());
 
     String sql = builder.toString();
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace(sql);
-    }
-
+    if (TRACER.isEnabled()) TRACER.trace(sql);
     Statement statement = null;
     ResultSet resultSet = null;
 
@@ -162,10 +180,10 @@ public final class DBUtil
         resultSet = statement.executeQuery(sql);
         if (!resultSet.next())
         {
-          return 0;
+          return null;
         }
 
-        return resultSet.getInt(1);
+        return (Number)resultSet.getObject(1);
       }
       catch (SQLException ex)
       {

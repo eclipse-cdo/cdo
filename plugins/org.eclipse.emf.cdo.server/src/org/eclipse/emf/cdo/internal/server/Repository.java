@@ -283,6 +283,11 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     typeManager.setPersistent(!store.hasEfficientTypeLookup());
     typeManager.activate();
     packageManager.activate();
+    if (store.hasCrashed())
+    {
+      store.repairAfterCrash();
+    }
+
     sessionManager.activate();
     resourceManager.activate();
     revisionManager.activate();

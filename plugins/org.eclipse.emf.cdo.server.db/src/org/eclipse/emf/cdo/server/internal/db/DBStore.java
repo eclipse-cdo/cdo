@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.Store;
+import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
@@ -31,6 +32,7 @@ import org.eclipse.net4j.internal.db.DBSchema;
 import org.eclipse.net4j.util.ImplementationError;
 
 import java.sql.Connection;
+import java.text.MessageFormat;
 import java.util.Set;
 
 /**
@@ -193,12 +195,11 @@ public class DBStore extends Store implements IDBStore
     else
     {
       // Restart
-
-      int nextCDOID = DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_NEXT_CDOID);
-      int nextMetaID = DBUtil.selectMaximum(connection, CDODBSchema.REPOSITORY_NEXT_METAID);
+      int nextCDOID = DBUtil.selectMaximumInt(connection, CDODBSchema.REPOSITORY_NEXT_CDOID);
+      int nextMetaID = DBUtil.selectMaximumInt(connection, CDODBSchema.REPOSITORY_NEXT_METAID);
       if (nextCDOID == 0 || nextMetaID == 0)
       {
-        repairAfterCrash(repository, connection);
+        OM.LOG.warn("Detected restart after crash");
       }
 
       setNextOIDValue(nextCDOID);
@@ -231,9 +232,9 @@ public class DBStore extends Store implements IDBStore
       }
     }
 
-    nextPackageID = DBUtil.selectMaximum(connection, CDODBSchema.PACKAGES_ID) + 1;
-    nextClassID = DBUtil.selectMaximum(connection, CDODBSchema.CLASSES_ID) + 1;
-    nextFeatureID = DBUtil.selectMaximum(connection, CDODBSchema.FEATURES_ID) + 1;
+    nextPackageID = DBUtil.selectMaximumInt(connection, CDODBSchema.PACKAGES_ID) + 1;
+    nextClassID = DBUtil.selectMaximumInt(connection, CDODBSchema.CLASSES_ID) + 1;
+    nextFeatureID = DBUtil.selectMaximumInt(connection, CDODBSchema.FEATURES_ID) + 1;
   }
 
   protected void deactivateStore(Repository repository, Connection connection)
@@ -262,12 +263,31 @@ public class DBStore extends Store implements IDBStore
     }
   }
 
-  protected void repairAfterCrash(Repository repository, Connection connection)
+  public void repairAfterCrash()
   {
-    OM.LOG.warn("Detected restart after crash");
+    Repository repository = (Repository)getRepository();
+    DBStoreAccessor storeReader = getReader(null);
+    StoreUtil.setReader(storeReader);
 
-    // TODO repairAfterCrash not yet implemented
-    OM.LOG.error("repairAfterCrash not yet implemented");
+    try
+    {
+      Connection connection = storeReader.getConnection();
+      long nextCDOID = mappingStrategy.repairAfterCrash(connection);
+      long nextMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGES_RANGE_UB) + 2L;
+      if (nextMetaID == 2L)
+      {
+        nextMetaID = 1L;
+      }
+
+      OM.LOG.info(MessageFormat.format("Repaired after crash: nextCDOID={0}, nextMetaID={1}", nextCDOID, nextMetaID));
+      setNextOIDValue(nextCDOID);
+      repository.setNextMetaIDValue(nextMetaID);
+    }
+    finally
+    {
+      storeReader.release();
+      StoreUtil.setReader(null);
+    }
   }
 
   protected IDBSchema createSchema()

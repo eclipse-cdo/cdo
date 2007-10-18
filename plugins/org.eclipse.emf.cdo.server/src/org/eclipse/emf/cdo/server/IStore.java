@@ -39,6 +39,10 @@ public interface IStore extends IRepositoryElement
    */
   public boolean hasEfficientTypeLookup();
 
+  public boolean hasCrashed();
+
+  public void repairAfterCrash();
+
   /**
    * Returns a reader that can be used to read from this store in the context of the given session.
    * 

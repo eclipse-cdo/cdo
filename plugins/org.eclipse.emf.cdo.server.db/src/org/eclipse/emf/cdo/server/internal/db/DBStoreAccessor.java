@@ -47,6 +47,7 @@ import org.eclipse.net4j.util.io.CloseableIterator;
 import org.eclipse.net4j.util.transaction.ITransaction;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -148,31 +149,68 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   {
     for (CDOPackageImpl cdoPackage : cdoPackages)
     {
-      int id = getStore().getNextPackageID();
-      PackageServerInfo.setDBID(cdoPackage, id);
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Inserting package: {0} --> {1}", cdoPackage, id);
-      }
-
-      String packageURI = cdoPackage.getPackageURI();
-      String name = cdoPackage.getName();
-      String ecore = cdoPackage.getEcore();
-      boolean dynamic = cdoPackage.isDynamic();
-      CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
-      long lb = metaIDRange == null ? 0L : metaIDRange.getLowerBound().getValue();
-      long ub = metaIDRange == null ? 0L : metaIDRange.getUpperBound().getValue();
-      DBUtil.insertRow(connection, getStore().getDBAdapter(), CDODBSchema.PACKAGES, id, packageURI, name, ecore,
-          dynamic, lb, ub);
-
-      for (CDOClassImpl cdoClass : cdoPackage.getClasses())
-      {
-        writeClass(cdoClass);
-      }
+      writePackage(cdoPackage);
     }
 
     Set<IDBTable> affectedTables = mapPackages(cdoPackages);
     getStore().getDBAdapter().createTables(affectedTables, connection);
+  }
+
+  protected void writePackage(CDOPackageImpl cdoPackage)
+  {
+    int id = getStore().getNextPackageID();
+    PackageServerInfo.setDBID(cdoPackage, id);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Inserting package: {0} --> {1}", cdoPackage, id);
+    }
+
+    String packageURI = cdoPackage.getPackageURI();
+    String name = cdoPackage.getName();
+    String ecore = cdoPackage.getEcore();
+    boolean dynamic = cdoPackage.isDynamic();
+    CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
+    long lb = metaIDRange == null ? 0L : metaIDRange.getLowerBound().getValue();
+    long ub = metaIDRange == null ? 0L : metaIDRange.getUpperBound().getValue();
+
+    String sql = "INSERT INTO " + CDODBSchema.PACKAGES + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+    DBUtil.trace(sql);
+    PreparedStatement pstmt = null;
+
+    try
+    {
+      pstmt = connection.prepareStatement(sql);
+      pstmt.setInt(1, id);
+      pstmt.setString(2, packageURI);
+      pstmt.setString(3, name);
+      pstmt.setString(4, ecore);
+      pstmt.setBoolean(5, dynamic);
+      pstmt.setLong(6, lb);
+      pstmt.setLong(7, ub);
+
+      if (pstmt.execute())
+      {
+        throw new DBException("No result set expected");
+      }
+
+      if (pstmt.getUpdateCount() == 0)
+      {
+        throw new DBException("No row inserted into table " + CDODBSchema.PACKAGES);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(pstmt);
+    }
+
+    for (CDOClassImpl cdoClass : cdoPackage.getClasses())
+    {
+      writeClass(cdoClass);
+    }
   }
 
   protected void writeClass(CDOClassImpl cdoClass)

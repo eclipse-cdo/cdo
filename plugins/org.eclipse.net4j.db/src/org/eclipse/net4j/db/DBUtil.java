@@ -167,7 +167,7 @@ public final class DBUtil
     builder.append(field.getTable());
 
     String sql = builder.toString();
-    if (TRACER.isEnabled()) TRACER.trace(sql);
+    trace(sql);
     Statement statement = null;
     ResultSet resultSet = null;
 
@@ -206,7 +206,7 @@ public final class DBUtil
 
   public static int update(Connection connection, String sql)
   {
-    if (TRACER.isEnabled()) TRACER.trace(sql);
+    trace(sql);
     Statement statement = null;
 
     try
@@ -292,7 +292,7 @@ public final class DBUtil
     }
 
     String sql = builder.toString();
-    if (TRACER.isEnabled()) TRACER.trace(sql);
+    trace(sql);
     Statement statement = null;
     ResultSet resultSet = null;
 
@@ -356,5 +356,10 @@ public final class DBUtil
 
     select(connection, rowHandler, where, fields);
     return result[0];
+  }
+
+  public static void trace(String sql)
+  {
+    if (TRACER.isEnabled()) TRACER.trace(sql);
   }
 }

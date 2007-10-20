@@ -109,8 +109,8 @@ public class CommitTransactionIndication extends CDOServerIndication
       newResources = readNewResources(in, storeWriter);
       newObjects = readNewObjects(in, storeWriter);
       dirtyObjects = readDirtyObjects(in, storeWriter);
-
       ITransaction<IStoreWriter> storeTransaction = new Transaction<IStoreWriter>(storeWriter, false);
+
       try
       {
         addPackages(storeTransaction, newPackages);
@@ -121,6 +121,7 @@ public class CommitTransactionIndication extends CDOServerIndication
       }
       catch (RuntimeException ex)
       {
+        OM.LOG.error(ex);
         rollbackMessage = ex.getLocalizedMessage();
         storeWriter.rollback(view, storeTransaction);
       }

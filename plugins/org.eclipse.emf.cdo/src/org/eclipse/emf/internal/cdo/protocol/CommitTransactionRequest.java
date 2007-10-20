@@ -74,6 +74,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     if (!success)
     {
       String rollbackMessage = in.readString();
+      OM.LOG.error(rollbackMessage);
       return new CommitTransactionResult(rollbackMessage);
     }
 

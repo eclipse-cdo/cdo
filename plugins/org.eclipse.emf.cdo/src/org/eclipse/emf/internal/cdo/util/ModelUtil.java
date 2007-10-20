@@ -197,7 +197,7 @@ public final class ModelUtil
     EReference opposite = eFeature.getEOpposite();
     if (MODEL.isEnabled() && opposite != null)
     {
-      MODEL.format("Opposite info: package={2}, class={3}, id={4}", opposite.getEContainingClass().getEPackage()
+      MODEL.format("Opposite info: package={0}, class={1}, feature={2}", opposite.getEContainingClass().getEPackage()
           .getNsURI(), opposite.getEContainingClass().getName(), opposite.getName());
     }
 

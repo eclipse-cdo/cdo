@@ -195,8 +195,12 @@ public final class ModelUtil
         packageManager), many, containment);
     if (MODEL.isEnabled())
     {
-      MODEL.format("Reference info: type={0}, opposite={1}, keys={2}", eFeature.getEType(), eFeature.getEOpposite(),
-          eFeature.getEKeys());
+      EReference opposite = eFeature.getEOpposite();
+      MODEL.format(
+          "Reference info: typePackage={0}, typeID={1}, oppositePackage={2}, oppositeClass={3}, oppositeID={4}",
+          eFeature.getEType().getEPackage().getNsURI(), eFeature.getEType().getClassifierID(),
+          opposite == null ? "null" : opposite.getEContainingClass().getEPackage().getNsURI(), opposite == null ? "0"
+              : opposite.getEContainingClass().getClassifierID(), opposite == null ? "0" : opposite.getFeatureID());
     }
 
     return cdoFeature;
@@ -211,7 +215,8 @@ public final class ModelUtil
     CDOFeatureImpl cdoFeature = new CDOFeatureImpl(containingClass, featureID, name, type, many);
     if (MODEL.isEnabled())
     {
-      MODEL.format("Attribute info: type={0}", eFeature.getEType());
+      MODEL.format("Attribute info: typePackage={0}, typeID={1}", eFeature.getEType().getEPackage().getNsURI(),
+          eFeature.getEType().getClassifierID());
     }
 
     return cdoFeature;

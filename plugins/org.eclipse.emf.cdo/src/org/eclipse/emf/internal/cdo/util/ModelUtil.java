@@ -193,14 +193,12 @@ public final class ModelUtil
     boolean containment = EMFUtil.isContainment(eFeature);
     CDOFeatureImpl cdoFeature = new CDOFeatureImpl(containingClass, featureID, name, new CDOClassProxy(classRef,
         packageManager), many, containment);
-    if (MODEL.isEnabled())
+
+    EReference opposite = eFeature.getEOpposite();
+    if (MODEL.isEnabled() && opposite != null)
     {
-      EReference opposite = eFeature.getEOpposite();
-      MODEL.format(
-          "Reference info: typePackage={0}, typeID={1}, oppositePackage={2}, oppositeClass={3}, oppositeID={4}",
-          eFeature.getEType().getEPackage().getNsURI(), eFeature.getEType().getClassifierID(),
-          opposite == null ? "null" : opposite.getEContainingClass().getEPackage().getNsURI(), opposite == null ? "0"
-              : opposite.getEContainingClass().getClassifierID(), opposite == null ? "0" : opposite.getFeatureID());
+      MODEL.format("Opposite info: package={2}, class={3}, id={4}", opposite.getEContainingClass().getEPackage()
+          .getNsURI(), opposite.getEContainingClass().getName(), opposite.getName());
     }
 
     return cdoFeature;
@@ -212,14 +210,7 @@ public final class ModelUtil
     String name = eFeature.getName();
     CDOTypeImpl type = getCDOType(eFeature);
     boolean many = EMFUtil.isMany(eFeature);
-    CDOFeatureImpl cdoFeature = new CDOFeatureImpl(containingClass, featureID, name, type, many);
-    if (MODEL.isEnabled())
-    {
-      MODEL.format("Attribute info: typePackage={0}, typeID={1}", eFeature.getEType().getEPackage().getNsURI(),
-          eFeature.getEType().getClassifierID());
-    }
-
-    return cdoFeature;
+    return new CDOFeatureImpl(containingClass, featureID, name, type, many);
   }
 
   public static EPackage getEPackage(CDOPackageImpl cdoPackage, CDOPackageRegistryImpl packageRegistry)

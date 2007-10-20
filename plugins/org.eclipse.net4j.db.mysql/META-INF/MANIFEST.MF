@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.net4j.db.mysql;singleton:=true
+Bundle-Version: 0.8.0.qualifier
+Bundle-Vendor: %providerName
+Bundle-Localization: fragment
+Bundle-ClassPath: .,
+ lib/mysql-connector-java-5.1.5-bin.jar
+Fragment-Host: org.eclipse.net4j.db;bundle-version="[0.8.0,0.9.0)"
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.3.0,4.0.0)"
+Export-Package: org.eclipse.net4j.db.internal.mysql;version="0.8.0",
+ org.gjt.mm.mysql;x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.net4j.jms.tests,org.eclipse.net4j.tests"

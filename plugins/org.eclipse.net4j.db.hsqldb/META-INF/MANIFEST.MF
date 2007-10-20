@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.net4j.db.hsqldb;singleton:=true
+Bundle-Version: 0.8.0.qualifier
+Bundle-Vendor: %providerName
+Bundle-Localization: fragment
+Bundle-ClassPath: .,
+ lib/hsqldb.jar
+Fragment-Host: org.eclipse.net4j.db;bundle-version="[0.8.0,0.9.0)"
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.3.0,4.0.0)"
+Export-Package: org.eclipse.net4j.db.internal.hsqldb;version="0.8.0",
+ org.hsqldb.jdbc;x-friends:="org.eclipse.net4j.tests,org.eclipse.emf.cdo.tests,org.eclipse.net4j.jms.tests"

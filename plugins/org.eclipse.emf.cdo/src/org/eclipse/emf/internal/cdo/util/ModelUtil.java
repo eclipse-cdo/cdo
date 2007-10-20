@@ -24,8 +24,7 @@ import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
-import org.eclipse.net4j.util.ImplementationError;
-
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
@@ -36,12 +35,18 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManager;
+import org.eclipse.emf.internal.cdo.bundle.OM;
+
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.ImplementationError;
 
 /**
  * @author Eike Stepper
  */
 public final class ModelUtil
 {
+  private static final ContextTracer MODEL = new ContextTracer(OM.DEBUG_MODEL, ModelUtil.class);
+
   private ModelUtil()
   {
   }
@@ -172,13 +177,13 @@ public final class ModelUtil
 
   private static CDOFeatureImpl createCDOFeature(EStructuralFeature eFeature, CDOClassImpl containingClass)
   {
-    CDOFeatureImpl cdoFeature = EMFUtil.isReference(eFeature) ? createCDOReference(eFeature, containingClass)
-        : createCDOAttribute(eFeature, containingClass);
+    CDOFeatureImpl cdoFeature = EMFUtil.isReference(eFeature) ? createCDOReference((EReference)eFeature,
+        containingClass) : createCDOAttribute((EAttribute)eFeature, containingClass);
     cdoFeature.setClientInfo(eFeature);
     return cdoFeature;
   }
 
-  private static CDOFeatureImpl createCDOReference(EStructuralFeature eFeature, CDOClassImpl containingClass)
+  private static CDOFeatureImpl createCDOReference(EReference eFeature, CDOClassImpl containingClass)
   {
     CDOPackageManager packageManager = containingClass.getPackageManager();
     int featureID = eFeature.getFeatureID();
@@ -186,17 +191,30 @@ public final class ModelUtil
     CDOClassRefImpl classRef = createClassRef(eFeature.getEType());
     boolean many = eFeature.isMany();
     boolean containment = EMFUtil.isContainment(eFeature);
-    return new CDOFeatureImpl(containingClass, featureID, name, new CDOClassProxy(classRef, packageManager), many,
-        containment);
+    CDOFeatureImpl cdoFeature = new CDOFeatureImpl(containingClass, featureID, name, new CDOClassProxy(classRef,
+        packageManager), many, containment);
+    if (MODEL.isEnabled())
+    {
+      MODEL.format("Reference info: type={0}, opposite={1}, keys={2}", eFeature.getEType(), eFeature.getEOpposite(),
+          eFeature.getEKeys());
+    }
+
+    return cdoFeature;
   }
 
-  private static CDOFeatureImpl createCDOAttribute(EStructuralFeature eFeature, CDOClassImpl containingClass)
+  private static CDOFeatureImpl createCDOAttribute(EAttribute eFeature, CDOClassImpl containingClass)
   {
     int featureID = eFeature.getFeatureID();
     String name = eFeature.getName();
     CDOTypeImpl type = getCDOType(eFeature);
     boolean many = EMFUtil.isMany(eFeature);
-    return new CDOFeatureImpl(containingClass, featureID, name, type, many);
+    CDOFeatureImpl cdoFeature = new CDOFeatureImpl(containingClass, featureID, name, type, many);
+    if (MODEL.isEnabled())
+    {
+      MODEL.format("Attribute info: type={0}", eFeature.getEType());
+    }
+
+    return cdoFeature;
   }
 
   public static EPackage getEPackage(CDOPackageImpl cdoPackage, CDOPackageRegistryImpl packageRegistry)

@@ -157,6 +157,10 @@ public class DBStore extends Store implements IDBStore
   {
     Repository repository = (Repository)getRepository();
     Connection connection = connectionProvider.getConnection();
+    if (connection == null)
+    {
+      throw new DBException("No connection from connection provider: " + connectionProvider);
+    }
 
     try
     {

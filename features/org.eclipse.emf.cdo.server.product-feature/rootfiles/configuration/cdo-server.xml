@@ -32,16 +32,20 @@
 			</mappingStrategy>
 			
 			<!-- name: <any user-contributed DBAdapter name> -->
-			<dbAdapter name="derby"/>
+			<dbAdapter name="hsqldb"/>
 			
 			<!-- <dataSource 
 				driverClass="org.apache.derby.jdbc.EmbeddedDataSource" 
 				databaseName="/temp/cdodb1"
 				createDatabase="create"/> -->
-			<dataSource 
+			<!--<dataSource 
 				driverClass="org.apache.derby.jdbc.ClientDataSource" 
 				databaseName="cdodb1"
-				createDatabase="create"/>
+				createDatabase="create"/>-->
+			<dataSource 
+				driverClass="org.eclipse.net4j.db.hsqldb.HSQLDBDataSource" 
+				database="jdbc:hsqldb:mem:cdodb1"
+				user="sa"/>
 		</store>
 	</repository>
 

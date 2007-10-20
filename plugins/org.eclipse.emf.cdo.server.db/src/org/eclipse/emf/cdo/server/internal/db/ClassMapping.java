@@ -87,6 +87,7 @@ public abstract class ClassMapping implements IClassMapping
           {
             IDBField versionField = table.getField(CDODBSchema.ATTRIBUTES_VERSION);
             IDBField pathField = attributeMapping.getField();
+            pathField.setPrecision(760);// MYSQL key limitation 767
             pathField.setNotNull(true);
 
             // Create a unique index to prevent duplicate resource paths

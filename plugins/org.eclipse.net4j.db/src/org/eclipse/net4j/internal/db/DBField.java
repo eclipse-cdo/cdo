@@ -61,9 +61,19 @@ public class DBField extends DBElement implements IDBField
     return name;
   }
 
+  public void setName(String name)
+  {
+    this.name = name;
+  }
+
   public DBType getType()
   {
     return type;
+  }
+
+  public void setType(DBType type)
+  {
+    this.type = type;
   }
 
   public int getPrecision()
@@ -71,9 +81,19 @@ public class DBField extends DBElement implements IDBField
     return precision == DEFAULT ? DEFAULT_PRECISION : precision;
   }
 
+  public void setPrecision(int precision)
+  {
+    this.precision = precision;
+  }
+
   public int getScale()
   {
     return scale;
+  }
+
+  public void setScale(int scale)
+  {
+    this.scale = scale;
   }
 
   public boolean isNotNull()

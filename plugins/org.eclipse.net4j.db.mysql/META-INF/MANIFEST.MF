@@ -9,5 +9,15 @@ Bundle-ClassPath: .,
  lib/mysql-connector-java-5.1.5-bin.jar
 Fragment-Host: org.eclipse.net4j.db;bundle-version="[0.8.0,0.9.0)"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.3.0,4.0.0)"
-Export-Package: org.eclipse.net4j.db.internal.mysql;version="0.8.0",
- org.gjt.mm.mysql;x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.net4j.jms.tests,org.eclipse.net4j.tests"
+Export-Package: com.mysql.jdbc,
+ com.mysql.jdbc.exceptions,
+ com.mysql.jdbc.exceptions.jdbc4,
+ com.mysql.jdbc.integration.c3p0,
+ com.mysql.jdbc.integration.jboss,
+ com.mysql.jdbc.interceptors,
+ com.mysql.jdbc.jdbc2.optional,
+ com.mysql.jdbc.log,
+ com.mysql.jdbc.profiler,
+ com.mysql.jdbc.util,
+ org.eclipse.net4j.db.internal.mysql;version="0.8.0",
+ org.gjt.mm.mysql

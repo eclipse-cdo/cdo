@@ -32,7 +32,7 @@
 			</mappingStrategy>
 			
 			<!-- name: <any user-contributed DBAdapter name> -->
-			<dbAdapter name="hsqldb"/>
+			<dbAdapter name="mysql"/>
 			
 			<!-- <dataSource 
 				driverClass="org.apache.derby.jdbc.EmbeddedDataSource" 
@@ -42,9 +42,13 @@
 				driverClass="org.apache.derby.jdbc.ClientDataSource" 
 				databaseName="cdodb1"
 				createDatabase="create"/>-->
-			<dataSource 
+			<!--<dataSource 
 				driverClass="org.eclipse.net4j.db.hsqldb.HSQLDBDataSource" 
 				database="jdbc:hsqldb:mem:cdodb1"
+				user="sa"/>-->
+			<dataSource 
+				driverClass="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" 
+				url="jdbc:mysql://localhost/cdodb1"
 				user="sa"/>
 		</store>
 	</repository>

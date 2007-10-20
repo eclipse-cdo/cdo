@@ -19,11 +19,19 @@ public interface IDBField extends IDBElement
 
   public IDBTable getTable();
 
+  public void setName(String name);
+
   public DBType getType();
+
+  public void setType(DBType type);
 
   public int getPrecision();
 
+  public void setPrecision(int precision);
+
   public int getScale();
+
+  public void setScale(int scale);
 
   public boolean isNotNull();
 

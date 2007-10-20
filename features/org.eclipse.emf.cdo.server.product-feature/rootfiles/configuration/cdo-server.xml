@@ -31,25 +31,29 @@
 				<property name="mappingPrecedence" value="MODEL"/>
 			</mappingStrategy>
 			
-			<!-- name: <any user-contributed DBAdapter name> -->
-			<dbAdapter name="mysql"/>
-			
-			<!-- <dataSource 
+			<!--<dbAdapter name="derby"/>
+			<dataSource 
 				driverClass="org.apache.derby.jdbc.EmbeddedDataSource" 
 				databaseName="/temp/cdodb1"
 				createDatabase="create"/> -->
-			<!--<dataSource 
+
+			<dbAdapter name="derby"/>
+			<dataSource 
 				driverClass="org.apache.derby.jdbc.ClientDataSource" 
 				databaseName="cdodb1"
-				createDatabase="create"/>-->
-			<!--<dataSource 
+				createDatabase="create"/>
+
+			<!--<dbAdapter name="hsqldb"/>
+			<dataSource 
 				driverClass="org.eclipse.net4j.db.hsqldb.HSQLDBDataSource" 
 				database="jdbc:hsqldb:mem:cdodb1"
 				user="sa"/>-->
+
+			<!--<dbAdapter name="mysql"/>
 			<dataSource 
 				driverClass="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" 
 				url="jdbc:mysql://localhost/cdodb1"
-				user="sa"/>
+				user="sa"/>-->
 		</store>
 	</repository>
 

@@ -211,13 +211,18 @@ public abstract class DBAdapter implements IDBAdapter
         builder.append(", ");
       }
 
-      builder.append(fields[i]);
+      addIndexField(builder, fields[i]);
     }
 
     builder.append(")");
     String sql = builder.toString();
     if (TRACER.isEnabled()) TRACER.trace(sql);
     statement.execute(sql);
+  }
+
+  protected void addIndexField(StringBuilder builder, IDBField field)
+  {
+    builder.append(field);
   }
 
   protected String createConstraints(DBTable table)

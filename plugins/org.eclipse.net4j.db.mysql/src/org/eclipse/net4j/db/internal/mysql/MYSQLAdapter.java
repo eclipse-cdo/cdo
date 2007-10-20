@@ -11,13 +11,13 @@
 package org.eclipse.net4j.db.internal.mysql;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.internal.db.DBAdapter;
+import org.eclipse.net4j.internal.db.DBField;
 
 import org.gjt.mm.mysql.Driver;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.Arrays;
 
@@ -64,6 +64,31 @@ public class MYSQLAdapter extends DBAdapter
     catch (SQLException ex)
     {
       throw new DBException(ex);
+    }
+  }
+
+  @Override
+  protected String getTypeName(DBField field)
+  {
+    DBType type = field.getType();
+    switch (type)
+    {
+    case VARCHAR:
+      return "TEXT";
+    }
+
+    return super.getTypeName(field);
+  }
+
+  @Override
+  protected void addIndexField(StringBuilder builder, IDBField field)
+  {
+    super.addIndexField(builder, field);
+    if (field.getType() == DBType.VARCHAR)
+    {
+      builder.append("(");
+      builder.append(field.getPrecision());
+      builder.append(")");
     }
   }
 

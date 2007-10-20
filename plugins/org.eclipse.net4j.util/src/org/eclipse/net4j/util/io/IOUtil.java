@@ -66,6 +66,11 @@ public final class IOUtil
     print(t, System.err);
   }
 
+  public static FileInputStream openInputStream(String fileName) throws IORuntimeException
+  {
+    return openInputStream(new File(fileName));
+  }
+
   public static FileInputStream openInputStream(File file) throws IORuntimeException
   {
     try
@@ -76,6 +81,11 @@ public final class IOUtil
     {
       throw new IORuntimeException(ex);
     }
+  }
+
+  public static FileOutputStream openOutputStream(String fileName) throws IORuntimeException
+  {
+    return openOutputStream(new File(fileName));
   }
 
   public static FileOutputStream openOutputStream(File file) throws IORuntimeException
@@ -90,6 +100,11 @@ public final class IOUtil
     }
   }
 
+  public static FileReader openReader(String fileName) throws IORuntimeException
+  {
+    return openReader(new File(fileName));
+  }
+
   public static FileReader openReader(File file) throws IORuntimeException
   {
     try
@@ -100,6 +115,11 @@ public final class IOUtil
     {
       throw new IORuntimeException(ex);
     }
+  }
+
+  public static FileWriter openWriter(String fileName) throws IORuntimeException
+  {
+    return openWriter(new File(fileName));
   }
 
   public static FileWriter openWriter(File file) throws IORuntimeException

@@ -18,13 +18,6 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
-import org.eclipse.net4j.ConnectorException;
-import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.signal.IFailOverStrategy;
-import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -46,9 +39,15 @@ import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.LegacyObjectDisabler;
-import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+
+import org.eclipse.net4j.ConnectorException;
+import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.signal.IFailOverStrategy;
+import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -67,8 +66,6 @@ import java.util.Map;
  */
 public final class CDOUtil
 {
-  public static final String EXT_POINT_NAME = "persistent_package";
-
   private static Map<String, CDOPackageType> packageTypes;
 
   public static final String CDO_VERSION_SUFFIX = "-CDO";
@@ -84,43 +81,56 @@ public final class CDOUtil
   {
     if (packageTypes == null)
     {
-      packageTypes = new HashMap<String, CDOPackageType>();
-      IExtensionRegistry registry = Platform.getExtensionRegistry();
-
-      // Collect native packages
-      for (IConfigurationElement element : registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT_NAME))
-      {
-        String uri = element.getAttribute("uri");
-        if (!StringUtil.isEmpty(uri) && !uri.equals(EresourcePackage.eINSTANCE.getNsURI()))
-        {
-          packageTypes.put(uri, CDOPackageType.NATIVE);
-        }
-      }
-
-      // Collect legacy and converted packages
-      for (IConfigurationElement element : registry.getConfigurationElementsFor(EcorePlugin.getPlugin().getBundle()
-          .getSymbolicName(), EcorePlugin.GENERATED_PACKAGE_PPID))
-      {
-        String uri = element.getAttribute("uri");
-        if (!StringUtil.isEmpty(uri) && !packageTypes.containsKey(uri)
-            && !uri.equals(EresourcePackage.eINSTANCE.getNsURI()))
-        {
-          String bundleName = element.getContributor().getName();
-          Bundle bundle = Platform.getBundle(bundleName);
-          String version = (String)bundle.getHeaders().get(Constants.BUNDLE_VERSION);
-          if (version.endsWith(CDOUtil.CDO_VERSION_SUFFIX))
-          {
-            packageTypes.put(uri, CDOPackageType.CONVERTED);
-          }
-          else
-          {
-            packageTypes.put(uri, CDOPackageType.LEGACY);
-          }
-        }
-      }
+      packageTypes = analyzePackageTypes();
     }
 
     return packageTypes;
+  }
+
+  private static HashMap<String, CDOPackageType> analyzePackageTypes()
+  {
+    HashMap<String, CDOPackageType> bundles = new HashMap<String, CDOPackageType>();
+    HashMap<String, CDOPackageType> result = new HashMap<String, CDOPackageType>();
+
+    IExtensionRegistry registry = Platform.getExtensionRegistry();
+    String ecoreID = EcorePlugin.getPlugin().getBundle().getSymbolicName();
+    String extPoint = EcorePlugin.GENERATED_PACKAGE_PPID;
+    IConfigurationElement[] elements = registry.getConfigurationElementsFor(ecoreID, extPoint);
+    for (IConfigurationElement element : elements)
+    {
+      String uri = element.getAttribute("uri");
+      if (!StringUtil.isEmpty(uri) && !uri.equals(EresourcePackage.eINSTANCE.getNsURI()))
+      {
+        String bundleName = element.getContributor().getName();
+        CDOPackageType packageType = bundles.get(bundleName);
+        if (packageType == null)
+        {
+          Bundle bundle = Platform.getBundle(bundleName);
+          if (bundle.getEntry("META-INF/CDO.MF") != null)
+          {
+            packageType = CDOPackageType.NATIVE;
+          }
+          else
+          {
+            String version = (String)bundle.getHeaders().get(Constants.BUNDLE_VERSION);
+            if (version.endsWith(CDOUtil.CDO_VERSION_SUFFIX))
+            {
+              packageType = CDOPackageType.CONVERTED;
+            }
+            else
+            {
+              packageType = CDOPackageType.LEGACY;
+            }
+          }
+
+          bundles.put(bundleName, packageType);
+        }
+
+        result.put(uri, packageType);
+      }
+    }
+
+    return result;
   }
 
   public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects,

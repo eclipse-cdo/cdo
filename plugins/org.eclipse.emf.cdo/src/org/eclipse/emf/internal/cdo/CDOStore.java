@@ -315,9 +315,17 @@ public final class CDOStore implements EStore
     Object[] array = toArray(eObject, eFeature);
     int size = array.length;
 
-    if (a.length < size) a = (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+    if (a.length < size)
+    {
+      a = (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+    }
+
     System.arraycopy(array, 0, a, 0, size);
-    if (a.length > size) a[size] = null;
+    if (a.length > size)
+    {
+      a[size] = null;
+    }
+
     return a;
   }
 

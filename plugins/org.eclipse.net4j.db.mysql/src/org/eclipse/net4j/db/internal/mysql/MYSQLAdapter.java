@@ -74,6 +74,7 @@ public class MYSQLAdapter extends DBAdapter
     switch (type)
     {
     case VARCHAR:
+    case CLOB:
       return "TEXT";
     }
 

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.SelectPackageDialog;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -53,8 +54,15 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
       List<EPackage> ePackages = new ArrayList<EPackage>(checkedURIs.size());
       for (String uri : checkedURIs)
       {
-        EPackage ePackage = registry.getEPackage(uri);
-        ePackages.add(ePackage);
+        try
+        {
+          EPackage ePackage = registry.getEPackage(uri);
+          ePackages.add(ePackage);
+        }
+        catch (RuntimeException ex)
+        {
+          OM.LOG.error(ex);
+        }
       }
 
       return ePackages;

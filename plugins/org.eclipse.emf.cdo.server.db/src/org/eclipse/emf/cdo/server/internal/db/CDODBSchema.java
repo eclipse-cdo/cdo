@@ -64,7 +64,7 @@ public class CDODBSchema extends DBSchema
   PACKAGES.addField("name", DBType.VARCHAR, 255);
 
   public static final IDBField PACKAGES_ECORE = //
-  PACKAGES.addField("ecore", DBType.LONGVARCHAR);
+  PACKAGES.addField("ecore", DBType.CLOB);
 
   public static final IDBField PACKAGES_DYNAMIC = //
   PACKAGES.addField("dynamic", DBType.BOOLEAN);

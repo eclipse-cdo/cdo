@@ -160,8 +160,16 @@ public abstract class LongRunningAction extends SafeAction
         @Override
         protected void run() throws Exception
         {
-          MonitorUtil.begin(totalWork);
-          doRun();
+          try
+          {
+            MonitorUtil.begin(totalWork);
+            doRun();
+          }
+          catch (Exception ex)
+          {
+            OM.LOG.error(ex);
+            throw ex;
+          }
         }
       }.schedule();
     }

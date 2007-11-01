@@ -10,16 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import java.text.MessageFormat;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -28,7 +25,12 @@ import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
+
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+
+import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -308,10 +310,15 @@ public final class CDOStore implements EStore
     return result;
   }
 
-  public <T> T[] toArray(InternalEObject eObject, EStructuralFeature eFeature, T[] array)
+  public <T> T[] toArray(InternalEObject eObject, EStructuralFeature eFeature, T[] a)
   {
-    // TODO Implement method CDOStore.toArray()
-    throw new UnsupportedOperationException("Not yet implemented");
+    Object[] array = toArray(eObject, eFeature);
+    int size = array.length;
+
+    if (a.length < size) a = (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+    System.arraycopy(array, 0, a, 0, size);
+    if (a.length > size) a[size] = null;
+    return a;
   }
 
   public Object set(InternalEObject eObject, EStructuralFeature eFeature, int index, Object value)

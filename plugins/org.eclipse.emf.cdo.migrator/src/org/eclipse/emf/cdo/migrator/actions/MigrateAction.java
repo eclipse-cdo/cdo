@@ -92,6 +92,7 @@ public class MigrateAction implements IObjectActionDelegate
               }
               else
               {
+                genModel.eResource().save(null);
                 showMessage("The selected generator model has been migrated:\n\n" + msg, false);
               }
             }

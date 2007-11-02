@@ -41,16 +41,41 @@ public abstract class CDOMigrator
   {
   }
 
-  public static void adjustGenModel(GenModel genModel, IProject project)
+  public static String adjustGenModel(GenModel genModel, IProject project)
   {
-    genModel.setFeatureDelegation(GenDelegationKind.REFLECTIVE_LITERAL);
-    genModel.setRootExtendsClass(ROOT_EXTENDS_CLASS);
-    genModel.setRootExtendsInterface(ROOT_EXTENDS_INTERFACE);
+    StringBuilder builder = new StringBuilder();
+
+    if (genModel.getFeatureDelegation() != GenDelegationKind.REFLECTIVE_LITERAL)
+    {
+      genModel.setFeatureDelegation(GenDelegationKind.REFLECTIVE_LITERAL);
+      builder.append("Set Feature Delegation = ");
+      builder.append(GenDelegationKind.REFLECTIVE_LITERAL);
+      builder.append("\n");
+    }
+
+    if (!ROOT_EXTENDS_CLASS.equals(genModel.getRootExtendsClass()))
+    {
+      genModel.setRootExtendsClass(ROOT_EXTENDS_CLASS);
+      builder.append("Set Root Extends Class = ");
+      builder.append(ROOT_EXTENDS_CLASS);
+      builder.append("\n");
+    }
+
+    if (!ROOT_EXTENDS_INTERFACE.equals(genModel.getRootExtendsInterface()))
+    {
+      genModel.setRootExtendsInterface(ROOT_EXTENDS_INTERFACE);
+      builder.append("Set Root Extends Interface = ");
+      builder.append(ROOT_EXTENDS_INTERFACE);
+      builder.append("\n");
+    }
 
     EList<String> pluginVariables = genModel.getModelPluginVariables();
     if (!pluginVariables.contains(PLUGIN_VARIABLE))
     {
       pluginVariables.add(PLUGIN_VARIABLE);
+      builder.append("Added Model Plugin Variables = ");
+      builder.append(PLUGIN_VARIABLE);
+      builder.append("\n");
     }
 
     IFolder folder = project.getFolder("META-INF");
@@ -59,6 +84,7 @@ public abstract class CDOMigrator
       try
       {
         folder.create(true, true, new NullProgressMonitor());
+        builder.append("Created META-INF folder\n");
       }
       catch (CoreException ex)
       {
@@ -73,11 +99,14 @@ public abstract class CDOMigrator
       {
         InputStream contents = new ByteArrayInputStream(CDO_MF_CONTENTS.getBytes());
         file.create(contents, true, new NullProgressMonitor());
+        builder.append("Created CDO.MF marker file\n");
       }
       catch (CoreException ex)
       {
         throw new WrappedException(ex);
       }
     }
+
+    return builder.length() == 0 ? null : builder.toString();
   }
 }

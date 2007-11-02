@@ -85,8 +85,15 @@ public class MigrateAction implements IObjectActionDelegate
             }
             else
             {
-              CDOMigrator.adjustGenModel(genModel, file.getProject());
-              showMessage("The selected generator model has been migrated.", false);
+              String msg = CDOMigrator.adjustGenModel(genModel, file.getProject());
+              if (msg == null)
+              {
+                showMessage("The selected generator model was already migrated.", false);
+              }
+              else
+              {
+                showMessage("The selected generator model has been migrated:\n\n" + msg, false);
+              }
             }
           }
         }

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.migrator.ui;
+package org.eclipse.emf.cdo.migrator.wizards;
 
 import org.eclipse.emf.cdo.migrator.CDOImporter;
 
@@ -17,6 +17,9 @@ import org.eclipse.emf.importer.ui.contribution.base.ModelImporterDetailPage;
 import org.eclipse.emf.importer.ui.contribution.base.ModelImporterPackagePage;
 import org.eclipse.emf.importer.ui.contribution.base.ModelImporterWizard;
 
+/**
+ * @author Eike Stepper
+ */
 public class CDOImporterWizard extends ModelImporterWizard
 {
   public CDOImporterWizard()

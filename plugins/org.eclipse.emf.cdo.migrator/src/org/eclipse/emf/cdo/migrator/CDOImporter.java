@@ -10,18 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.migrator;
 
-import org.eclipse.emf.codegen.ecore.genmodel.GenDelegationKind;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.common.util.BasicDiagnostic;
-import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticException;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.UniqueEList;
-import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.converter.ConverterPlugin;
 import org.eclipse.emf.converter.util.ConverterUtil;
 import org.eclipse.emf.ecore.EPackage;
@@ -32,27 +28,17 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.importer.ModelImporter;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.List;
 
+/**
+ * @author Eike Stepper
+ */
 public class CDOImporter extends ModelImporter
 {
   public static final String IMPORTER_ID = "org.eclipse.emf.importer.cdo";
-
-  public static final String PLUGIN_VARIABLE = "CDO=org.eclipse.emf.cdo";
-
-  public static final String ROOT_EXTENDS_CLASS = "org.eclipse.emf.internal.cdo.CDOObjectImpl";
-
-  public static final String ROOT_EXTENDS_INTERFACE = "org.eclipse.emf.cdo.CDOObject";
-
-  public static final String CDO_MF_CONTENTS = "This is a marker file for bundles with CDO native models.\n";
 
   public CDOImporter()
   {
@@ -128,55 +114,15 @@ public class CDOImporter extends ModelImporter
   {
     super.adjustGenModel(monitor);
 
+    GenModel genModel = getGenModel();
     URI genModelURI = createFileURI(getGenModelPath().toString());
     for (URI uri : getModelLocationURIs())
     {
-      GenModel genModel = getGenModel();
       genModel.getForeignModel().add(makeRelative(uri, genModelURI).toString());
-      adjustGenModelCDO(genModel, monitor);
-    }
-  }
-
-  protected void adjustGenModelCDO(GenModel genModel, Monitor monitor)
-  {
-    genModel.setFeatureDelegation(GenDelegationKind.REFLECTIVE_LITERAL);
-    genModel.setRootExtendsClass(ROOT_EXTENDS_CLASS);
-    genModel.setRootExtendsInterface(ROOT_EXTENDS_INTERFACE);
-
-    EList<String> pluginVariables = genModel.getModelPluginVariables();
-    if (!pluginVariables.contains(PLUGIN_VARIABLE))
-    {
-      pluginVariables.add(PLUGIN_VARIABLE);
     }
 
-    String projectName = getModelProjectName();
-    IProject project = getWorkspaceRoot().getProject(projectName);
-    IFolder folder = project.getFolder("META-INF");
-    if (!folder.exists())
-    {
-      try
-      {
-        folder.create(true, true, BasicMonitor.toIProgressMonitor(monitor));
-      }
-      catch (CoreException ex)
-      {
-        throw new WrappedException(ex);
-      }
-    }
-
-    IFile file = folder.getFile("CDO.MF");
-    if (!file.exists())
-    {
-      try
-      {
-        InputStream contents = new ByteArrayInputStream(CDO_MF_CONTENTS.getBytes());
-        file.create(contents, true, BasicMonitor.toIProgressMonitor(monitor));
-      }
-      catch (CoreException ex)
-      {
-        throw new WrappedException(ex);
-      }
-    }
+    IProject project = getWorkspaceRoot().getProject(getModelProjectName());
+    CDOMigrator.adjustGenModel(genModel, project);
   }
 
   @Override

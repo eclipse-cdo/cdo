@@ -186,12 +186,6 @@ public abstract class LongRunningAction extends SafeAction
 
   protected abstract void doRun() throws Exception;
 
-  protected IStatus handleException(Exception ex)
-  {
-    ex.printStackTrace();
-    return new Status(IStatus.ERROR, OM.BUNDLE_ID, "An error has occured.", ex);
-  }
-
   protected final void checkCancelation(IProgressMonitor monitor)
   {
     if (monitor.isCanceled())

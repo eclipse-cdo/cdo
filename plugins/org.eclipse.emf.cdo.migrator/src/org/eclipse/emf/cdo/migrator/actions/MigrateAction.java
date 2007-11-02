@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 
 import java.util.Map;
 
@@ -153,14 +154,14 @@ public class MigrateAction implements IObjectActionDelegate
   {
     try
     {
-      final Shell shell = new Shell();
-      Display display = shell.getDisplay();
+      final Display display = PlatformUI.getWorkbench().getDisplay();
       display.syncExec(new Runnable()
       {
         public void run()
         {
           try
           {
+            final Shell shell = new Shell(display);
             if (error)
             {
               MessageDialog.openError(shell, "CDO Migrator", msg);

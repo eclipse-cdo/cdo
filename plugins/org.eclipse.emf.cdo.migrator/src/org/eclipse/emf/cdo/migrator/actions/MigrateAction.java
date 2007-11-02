@@ -30,6 +30,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
@@ -73,21 +74,19 @@ public class MigrateAction implements IObjectActionDelegate
           IFile file = getFile();
           if (file == null)
           {
-            MessageDialog.openError(new Shell(), "CDO Migrator", "The selected element is not a *.genmodel file.");
+            showMessage("The selected element is not a *.genmodel file.", true);
           }
           else
           {
             GenModel genModel = getGenModel(file);
             if (genModel == null)
             {
-              MessageDialog.openError(new Shell(), "CDO Migrator",
-                  "The selected file does not contain a generator model.");
+              showMessage("The selected file does not contain a generator model.", true);
             }
             else
             {
               CDOMigrator.adjustGenModel(genModel, file.getProject());
-              MessageDialog.openInformation(new Shell(), "CDO Migrator",
-                  "The selected generator model has been migrated.");
+              showMessage("The selected generator model has been migrated.", false);
             }
           }
         }
@@ -140,5 +139,37 @@ public class MigrateAction implements IObjectActionDelegate
     }
 
     return null;
+  }
+
+  protected void showMessage(final String msg, final boolean error)
+  {
+    try
+    {
+      final Shell shell = new Shell();
+      Display display = shell.getDisplay();
+      display.syncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            if (error)
+            {
+              MessageDialog.openError(shell, "CDO Migrator", msg);
+            }
+            else
+            {
+              MessageDialog.openInformation(shell, "CDO Migrator", msg);
+            }
+          }
+          catch (RuntimeException ignore)
+          {
+          }
+        }
+      });
+    }
+    catch (RuntimeException ignore)
+    {
+    }
   }
 }

@@ -31,6 +31,7 @@
         point="org.eclipse.ui.popupMenus">
      <objectContribution
            id="org.eclipse.emf.cdo.migrator.MigrateContribution"
+           nameFilter="*.genmodel"
            objectClass="org.eclipse.core.resources.IFile">
         <menu
               id="org.eclipse.emf.cdo.migrator.menu1"

@@ -8,19 +8,8 @@ import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
-import org.eclipse.jface.action.IToolBarManager;
-
 public class ConnectorsView extends ContainerView
 {
-  // private Action addConnectorAction = new SafeAction("Add Connector", "Add a connector", getAddImageDescriptor())
-  // {
-  // @Override
-  // protected void doRun() throws Exception
-  // {
-  // Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", "127.0.0.1:2036");
-  // }
-  // };
-
   public ConnectorsView()
   {
   }
@@ -41,12 +30,5 @@ public class ConnectorsView extends ContainerView
         return element instanceof IConnector;
       }
     });
-  }
-
-  @Override
-  protected void fillLocalToolBar(IToolBarManager manager)
-  {
-    // manager.add(addConnectorAction);
-    super.fillLocalToolBar(manager);
   }
 }

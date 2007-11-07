@@ -99,7 +99,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
         {
           try
           {
-            if (element != null)
+            if (element != null && element != input)
             {
               viewer.refresh(element, updateLabels);
             }

@@ -266,7 +266,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
         throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
       }
     }
-    catch (ConnectorException ex)
+    catch (RuntimeException ex)
     {
       throw ex;
     }

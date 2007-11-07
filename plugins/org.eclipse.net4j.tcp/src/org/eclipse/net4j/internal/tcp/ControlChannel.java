@@ -17,6 +17,7 @@ import org.eclipse.net4j.internal.util.concurrent.SynchronizingCorrelator;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.INegotiationContext.Receiver;
 
@@ -32,7 +33,7 @@ public final class ControlChannel extends Channel
 {
   public static final short CONTROL_CHANNEL_INDEX = -1;
 
-  public static final long REGISTRATION_TIMEOUT = 500000;
+  public static final long REGISTRATION_TIMEOUT = 5000;
 
   public static final byte OPCODE_NEGOTIATION = 1;
 
@@ -87,7 +88,13 @@ public final class ControlChannel extends Channel
     BufferUtil.putUTF8(byteBuffer, protocol == null ? null : protocol.getType());
     handleBuffer(buffer);
 
-    return registration.get(REGISTRATION_TIMEOUT);
+    Boolean acknowledged = registration.get(REGISTRATION_TIMEOUT);
+    if (acknowledged == null)
+    {
+      throw new TimeoutRuntimeException("Registration timeout after " + REGISTRATION_TIMEOUT + " milliseconds");
+    }
+
+    return acknowledged;
   }
 
   public void deregisterChannel(int channelID, short channelIndex)

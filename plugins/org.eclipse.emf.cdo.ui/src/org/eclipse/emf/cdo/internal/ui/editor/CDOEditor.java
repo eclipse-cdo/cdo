@@ -12,6 +12,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.ui.dialogs.RollbackTransactionDialog;
 import org.eclipse.emf.cdo.internal.ui.views.CDOEventHandler;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
@@ -82,6 +83,7 @@ import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -1586,13 +1588,23 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
             }
             catch (final TransactionException exception)
             {
-              OM.LOG.error(exception);
               final Shell shell = getSite().getShell();
               shell.getDisplay().syncExec(new Runnable()
               {
                 public void run()
                 {
-                  MessageDialog.openError(shell, "Transaction Error", exception.getMessage());
+                  CDOTransaction transaction = (CDOTransaction)view;
+                  Dialog dialog = new RollbackTransactionDialog(getEditorSite().getPage(), "Transaction Error",
+                      exception.getMessage(), transaction);
+                  switch (dialog.open())
+                  {
+                  case RollbackTransactionDialog.REMOTE:
+                    transaction.rollback(true);
+                    break;
+                  case RollbackTransactionDialog.LOCAL:
+                    transaction.rollback(false);
+                    break;
+                  }
                 }
               });
             }

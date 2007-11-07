@@ -33,4 +33,6 @@ public interface CDOObject extends EObject
   public CDOResource cdoResource();
 
   public CDORevision cdoRevision();
+
+  public boolean cdoRefresh(boolean force);
 }

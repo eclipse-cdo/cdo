@@ -50,6 +50,11 @@ public class CDOMetaImpl extends CDOWrapperImpl
     throw new UnsupportedOperationException();
   }
 
+  public boolean cdoRefresh(boolean force)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public boolean cdoTransient()
   {
     return false;

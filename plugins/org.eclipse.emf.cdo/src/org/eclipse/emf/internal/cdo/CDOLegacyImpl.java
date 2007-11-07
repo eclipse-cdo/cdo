@@ -101,6 +101,16 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
     return view;
   }
 
+  public boolean cdoRefresh(boolean force)
+  {
+    return CDOStateMachine.INSTANCE.refresh(this, force);
+  }
+
+  public boolean isAdapterForType(Object type)
+  {
+    return false;
+  }
+
   public CDOState cdoInternalSetState(CDOState state)
   {
     if (this.state != state)

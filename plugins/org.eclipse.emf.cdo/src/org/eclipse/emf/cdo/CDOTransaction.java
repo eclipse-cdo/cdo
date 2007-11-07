@@ -38,15 +38,9 @@ public interface CDOTransaction extends CDOView
 
   public CDOObject newInstance(CDOClass cdoClass);
 
-  /**
-   * @see CDOTransaction#commit()
-   */
   public void commit() throws TransactionException;
 
-  /**
-   * @see CDOTransaction#rollback()
-   */
-  public void rollback();
+  public void rollback(boolean remote);
 
   public void addHandler(CDOTransactionHandler handler);
 

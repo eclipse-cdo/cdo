@@ -227,7 +227,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
   }
 
-  public void rollback()
+  public void rollback(boolean remote)
   {
     checkWritable();
 
@@ -254,7 +254,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       {
         for (CDOObject dirtyObject : dirtyObjects.values())
         {
-          CDOStateMachine.INSTANCE.rollback((InternalCDOObject)dirtyObject);
+          CDOStateMachine.INSTANCE.rollback((InternalCDOObject)dirtyObject, remote);
         }
       }
 

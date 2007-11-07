@@ -22,6 +22,7 @@ public class CDOAdapterImpl extends CDOLegacyImpl
   {
   }
 
+  @Override
   public boolean isAdapterForType(Object type)
   {
     return type == CDOAdapterImpl.class;

@@ -48,63 +48,70 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.TRANSIENT, CDOEvent.DETACH, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.READ, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.WRITE, IGNORE);
+    init(CDOState.TRANSIENT, CDOEvent.INVALIDATE, FAIL);
+    init(CDOState.TRANSIENT, CDOEvent.REFRESH, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.COMMIT, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.ROLLBACK, FAIL);
-    init(CDOState.TRANSIENT, CDOEvent.INVALIDATE, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.FINALIZE_ATTACH, FAIL);
 
     init(CDOState.PREPARED_ATTACH, CDOEvent.ATTACH, FAIL);
     init(CDOState.PREPARED_ATTACH, CDOEvent.DETACH, FAIL);
     init(CDOState.PREPARED_ATTACH, CDOEvent.READ, IGNORE);
     init(CDOState.PREPARED_ATTACH, CDOEvent.WRITE, FAIL);
+    init(CDOState.PREPARED_ATTACH, CDOEvent.INVALIDATE, FAIL);
+    init(CDOState.PREPARED_ATTACH, CDOEvent.REFRESH, FAIL);
     init(CDOState.PREPARED_ATTACH, CDOEvent.COMMIT, FAIL);
     init(CDOState.PREPARED_ATTACH, CDOEvent.ROLLBACK, FAIL);
-    init(CDOState.PREPARED_ATTACH, CDOEvent.INVALIDATE, FAIL);
     init(CDOState.PREPARED_ATTACH, CDOEvent.FINALIZE_ATTACH, new FinalizeAttachTransition());
 
     init(CDOState.NEW, CDOEvent.ATTACH, FAIL);
     init(CDOState.NEW, CDOEvent.DETACH, FAIL);
     init(CDOState.NEW, CDOEvent.READ, IGNORE);
     init(CDOState.NEW, CDOEvent.WRITE, IGNORE);
+    init(CDOState.NEW, CDOEvent.INVALIDATE, FAIL);
+    init(CDOState.NEW, CDOEvent.REFRESH, IGNORE);
     init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition());
     init(CDOState.NEW, CDOEvent.ROLLBACK, FAIL);
-    init(CDOState.NEW, CDOEvent.INVALIDATE, FAIL);
     init(CDOState.NEW, CDOEvent.FINALIZE_ATTACH, FAIL);
 
     init(CDOState.CLEAN, CDOEvent.ATTACH, FAIL);
     init(CDOState.CLEAN, CDOEvent.DETACH, FAIL);
     init(CDOState.CLEAN, CDOEvent.READ, IGNORE);
     init(CDOState.CLEAN, CDOEvent.WRITE, new WriteTransition());
+    init(CDOState.CLEAN, CDOEvent.INVALIDATE, new InvalidateTransition());
+    init(CDOState.CLEAN, CDOEvent.REFRESH, new RefreshTransition());
     init(CDOState.CLEAN, CDOEvent.COMMIT, FAIL);
     init(CDOState.CLEAN, CDOEvent.ROLLBACK, FAIL);
-    init(CDOState.CLEAN, CDOEvent.INVALIDATE, new InvalidateTransition());
     init(CDOState.CLEAN, CDOEvent.FINALIZE_ATTACH, FAIL);
 
     init(CDOState.DIRTY, CDOEvent.ATTACH, FAIL);
     init(CDOState.DIRTY, CDOEvent.DETACH, FAIL);
     init(CDOState.DIRTY, CDOEvent.READ, IGNORE);
     init(CDOState.DIRTY, CDOEvent.WRITE, IGNORE);
+    init(CDOState.DIRTY, CDOEvent.INVALIDATE, new ConflictTransition());
+    init(CDOState.DIRTY, CDOEvent.REFRESH, new RefreshTransition());
     init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition());
     init(CDOState.DIRTY, CDOEvent.ROLLBACK, new RollbackTransition());
-    init(CDOState.DIRTY, CDOEvent.INVALIDATE, new ConflictTransition());
     init(CDOState.DIRTY, CDOEvent.FINALIZE_ATTACH, FAIL);
 
     init(CDOState.PROXY, CDOEvent.ATTACH, new LoadResourceTransition());
     init(CDOState.PROXY, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.PROXY, CDOEvent.READ, new LoadTransition(false));
     init(CDOState.PROXY, CDOEvent.WRITE, new LoadTransition(true));
+    init(CDOState.PROXY, CDOEvent.INVALIDATE, IGNORE);
+    init(CDOState.PROXY, CDOEvent.REFRESH, new RefreshTransition());
     init(CDOState.PROXY, CDOEvent.COMMIT, FAIL);
     init(CDOState.PROXY, CDOEvent.ROLLBACK, FAIL);
-    init(CDOState.PROXY, CDOEvent.INVALIDATE, IGNORE);
     init(CDOState.PROXY, CDOEvent.FINALIZE_ATTACH, IGNORE);
 
     init(CDOState.CONFLICT, CDOEvent.ATTACH, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.DETACH, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.READ, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.WRITE, IGNORE);
+    init(CDOState.CONFLICT, CDOEvent.INVALIDATE, IGNORE);
+    init(CDOState.CONFLICT, CDOEvent.REFRESH, new RefreshTransition());
     init(CDOState.CONFLICT, CDOEvent.COMMIT, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.ROLLBACK, new RollbackTransition());
-    init(CDOState.CONFLICT, CDOEvent.INVALIDATE, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.FINALIZE_ATTACH, IGNORE);
   }
 
@@ -141,6 +148,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     process(object, CDOEvent.WRITE, null);
   }
 
+  public boolean refresh(InternalCDOObject object, boolean force)
+  {
+    if (TRACER.isEnabled()) trace(object, CDOEvent.REFRESH);
+    boolean[] forceAndResult = { force };
+    process(object, CDOEvent.REFRESH, forceAndResult);
+    return forceAndResult[0];
+  }
+
   public void invalidate(InternalCDOObject object, long timeStamp)
   {
     if (TRACER.isEnabled()) trace(object, CDOEvent.INVALIDATE);
@@ -153,10 +168,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     process(object, CDOEvent.COMMIT, result);
   }
 
-  public void rollback(InternalCDOObject object)
+  public void rollback(InternalCDOObject object, boolean remote)
   {
     if (TRACER.isEnabled()) trace(object, CDOEvent.ROLLBACK);
-    process(object, CDOEvent.ROLLBACK, null);
+    process(object, CDOEvent.ROLLBACK, remote);
   }
 
   @Override
@@ -308,9 +323,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private final class RollbackTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  private final class RollbackTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Boolean>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Boolean remote)
     {
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
 
@@ -323,7 +338,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       CDORevisionImpl previousRevision = revisionManager.getRevisionByVersion(id, 0, version - 1);
       object.cdoInternalSetRevision(previousRevision);
 
-      changeState(object, CDOState.PROXY);
+      changeState(object, remote ? CDOState.PROXY : CDOState.CLEAN);
     }
   }
 
@@ -350,22 +365,52 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private final class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Long>
+  private final class RefreshTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, boolean[]>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Long timeStamp)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, boolean[] forceAndResult)
     {
-      ((CDORevisionImpl)object.cdoRevision()).setRevised(timeStamp - 1);
-      changeState(object, CDOState.PROXY);
+      if (forceAndResult[0])
+      {
+      }
+
+      changeState(object, CDOState.CLEAN);
     }
   }
 
   /**
    * @author Eike Stepper
    */
-  private final class ConflictTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Long>
+  private class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Long>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Long timeStamp)
     {
+      reviseObject(object, timeStamp);
+      changeState(object, CDOState.PROXY);
+    }
+
+    protected void reviseObject(InternalCDOObject object, Long timeStamp)
+    {
+      CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
+      revision.setRevised(timeStamp - 1);
+
+      if (revision.isTransactional())
+      {
+        CDOViewImpl view = (CDOViewImpl)object.cdoView();
+        revision = view.getRevision(object.cdoID());
+        revision.setRevised(timeStamp - 1);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ConflictTransition extends InvalidateTransition
+  {
+    @Override
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Long timeStamp)
+    {
+      reviseObject(object, timeStamp);
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDOTransactionImpl transaction = view.toTransaction();
       transaction.setConflict(object);
@@ -452,5 +497,5 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
  */
 enum CDOEvent
 {
-  ATTACH, DETACH, READ, WRITE, COMMIT, ROLLBACK, INVALIDATE, FINALIZE_ATTACH
+  ATTACH, DETACH, READ, WRITE, INVALIDATE, REFRESH, COMMIT, ROLLBACK, FINALIZE_ATTACH
 }

@@ -76,7 +76,7 @@ public class Net4jItemProvider extends ContainerItemProvider<IContainer<Object>>
   /**
    * @author Eike Stepper
    */
-  public class RemoveAction extends LongRunningAction
+  public static class RemoveAction extends LongRunningAction
   {
     private Object object;
 

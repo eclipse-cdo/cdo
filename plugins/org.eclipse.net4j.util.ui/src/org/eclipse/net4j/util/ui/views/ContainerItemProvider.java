@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.ArrayList;
@@ -79,7 +80,8 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
         else
         {
           Object childElement = child.getElement();
-          if (!LifecycleUtil.isActive(childElement))
+          ILifecycleState lifecycleState = LifecycleUtil.getLifecycleState(childElement);
+          if (lifecycleState == ILifecycleState.INACTIVE || lifecycleState == ILifecycleState.DEACTIVATING)
           {
             it.remove();
             child.dispose();

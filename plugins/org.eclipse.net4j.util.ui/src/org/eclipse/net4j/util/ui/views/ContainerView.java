@@ -398,17 +398,17 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
 
   public static ImageDescriptor getAddImageDescriptor()
   {
-    return SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD);
+    return SharedIcons.getDescriptor(SharedIcons.TOOL_ADD);
   }
 
   public static ImageDescriptor getDeleteImageDescriptor()
   {
-    return SharedIcons.getDescriptor(SharedIcons.ETOOL_DELETE);
+    return SharedIcons.getDescriptor(SharedIcons.TOOL_DELETE);
   }
 
   public static ImageDescriptor getRefreshImageDescriptor()
   {
-    return SharedIcons.getDescriptor(SharedIcons.ETOOL_REFRESH);
+    return SharedIcons.getDescriptor(SharedIcons.TOOL_REFRESH);
   }
 
   protected static enum MessageType

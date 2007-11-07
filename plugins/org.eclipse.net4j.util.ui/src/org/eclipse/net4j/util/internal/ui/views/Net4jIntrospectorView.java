@@ -12,9 +12,11 @@ package org.eclipse.net4j.util.internal.ui.views;
 
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.ui.UIUtil;
 
@@ -75,6 +77,8 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   private Text objectLabel;
 
   private IAction backAction = new BackAction();
+
+  private IAction containerAction = new ContainerAction();
 
   private StackLayout stackLayout;
 
@@ -360,6 +364,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   private void fillLocalToolBar(IToolBarManager manager)
   {
     manager.add(backAction);
+    manager.add(containerAction);
   }
 
   /**
@@ -386,6 +391,24 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
           setObject(elements.peek());
         }
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  class ContainerAction extends Action
+  {
+    private ContainerAction()
+    {
+      super("Container");
+      setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.VIEW_CONTAINER));
+    }
+
+    @Override
+    public void run()
+    {
+      setObject(IPluginContainer.INSTANCE);
     }
   }
 

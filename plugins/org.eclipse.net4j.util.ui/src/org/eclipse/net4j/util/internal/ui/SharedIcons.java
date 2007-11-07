@@ -25,7 +25,7 @@ public class SharedIcons
 {
   private static final ImageRegistry REGISTRY = new ImageRegistry(getDisplay());
 
-  private static final String ETOOL = "etool16/";
+  private static final String TOOL = "etool16/";
 
   private static final String OBJ = "obj16/";
 
@@ -41,11 +41,11 @@ public class SharedIcons
 
   public static final String VIEW_CONTAINER = VIEW + "container";
 
-  public static final String ETOOL_ADD = ETOOL + "add";
+  public static final String TOOL_ADD = TOOL + "add";
 
-  public static final String ETOOL_DELETE = ETOOL + "delete";
+  public static final String TOOL_DELETE = TOOL + "delete";
 
-  public static final String ETOOL_REFRESH = ETOOL + "refresh";
+  public static final String TOOL_REFRESH = TOOL + "refresh";
 
   public static Image getImage(String key)
   {

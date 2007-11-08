@@ -2144,10 +2144,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         try
         {
-          IEditorReference reference = find(page, view, resourcePath);
-          if (reference != null)
+          IEditorReference[] references = find(page, view, resourcePath);
+          if (references.length != 0)
           {
-            IEditorPart editor = reference.getEditor(true);
+            IEditorPart editor = references[0].getEditor(true);
             page.activate(editor);
           }
           else
@@ -2167,8 +2167,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  public static IEditorReference find(IWorkbenchPage page, CDOView view, String resourcePath)
+  public static IEditorReference[] find(IWorkbenchPage page, CDOView view, String resourcePath)
   {
+    List<IEditorReference> result = new ArrayList<IEditorReference>();
     IEditorReference[] editorReferences = page.getEditorReferences();
     for (IEditorReference editorReference : editorReferences)
     {
@@ -2180,20 +2181,23 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           if (editorInput instanceof CDOEditorInput)
           {
             CDOEditorInput cdoInput = (CDOEditorInput)editorInput;
-            if (cdoInput.getView() == view && ObjectUtil.equals(cdoInput.getResourcePath(), resourcePath))
+            if (cdoInput.getView() == view)
             {
-              return editorReference;
+              if (resourcePath == null || ObjectUtil.equals(cdoInput.getResourcePath(), resourcePath))
+              {
+                result.add(editorReference);
+              }
             }
           }
         }
       }
       catch (PartInitException ex)
       {
-        ex.printStackTrace();
+        OM.LOG.error(ex);
       }
     }
 
-    return null;
+    return result.toArray(new IEditorReference[result.size()]);
   }
 
   /**

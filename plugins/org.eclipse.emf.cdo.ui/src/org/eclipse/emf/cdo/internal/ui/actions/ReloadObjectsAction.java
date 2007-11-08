@@ -1,11 +1,14 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,24 +23,12 @@ public class ReloadObjectsAction extends EditingDomainAction
 
   private static final String TITLE = "Reload";
 
-  private CDOEditor editor;
-
   private List<InternalCDOObject> objects = new ArrayList<InternalCDOObject>();
 
   public ReloadObjectsAction()
   {
     super(TITLE);
     setId(ID);
-  }
-
-  public CDOEditor getEditor()
-  {
-    return editor;
-  }
-
-  public void setEditor(CDOEditor editor)
-  {
-    this.editor = editor;
   }
 
   public void selectionChanged(IStructuredSelection selection)
@@ -71,9 +62,20 @@ public class ReloadObjectsAction extends EditingDomainAction
     {
       InternalCDOObject[] array = objects.toArray(new InternalCDOObject[objects.size()]);
       CDOStateMachine.INSTANCE.reload(array);
-      if (editor != null)
+
+      IWorkbenchPage page = getPage();
+      if (page != null)
       {
-        editor.refreshViewer(null);
+        CDOView view = array[0].cdoView();
+        IEditorReference[] references = CDOEditor.find(page, view, null);
+        for (IEditorReference reference : references)
+        {
+          CDOEditor editor = (CDOEditor)reference.getEditor(false);
+          if (editor != null)
+          {
+            editor.refreshViewer(null);
+          }
+        }
       }
     }
   }

@@ -255,47 +255,11 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * 
    * @generated
    */
-  public void setActiveEditorGen(IEditorPart part)
-  {
-    super.setActiveEditor(part);
-    activeEditorPart = part;
-
-    // Switch to the new selection provider.
-    //
-    if (selectionProvider != null)
-    {
-      selectionProvider.removeSelectionChangedListener(this);
-    }
-    if (part == null)
-    {
-      selectionProvider = null;
-    }
-    else
-    {
-      selectionProvider = part.getSite().getSelectionProvider();
-      selectionProvider.addSelectionChangedListener(this);
-
-      // Fake a selection changed event to update the menus.
-      //
-      if (selectionProvider.getSelection() != null)
-      {
-        selectionChanged(new SelectionChangedEvent(selectionProvider, selectionProvider.getSelection()));
-      }
-    }
-  }
-
-  /**
-   * @ADDED
-   */
   @Override
   public void setActiveEditor(IEditorPart part)
   {
     super.setActiveEditor(part);
     activeEditorPart = part;
-    if (reloadObjectsAction != null && activeEditor instanceof CDOEditor)
-    {
-      reloadObjectsAction.setEditor((CDOEditor)activeEditorPart);
-    }
 
     // Switch to the new selection provider.
     //
@@ -663,6 +627,11 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
       exportResourceAction.setActiveWorkbenchPart(activeEditor);
     }
 
+    if (reloadObjectsAction != null)
+    {
+      reloadObjectsAction.setActiveWorkbenchPart(activeEditor);
+    }
+
     super.activate();
   }
 
@@ -681,6 +650,11 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     if (exportResourceAction != null)
     {
       exportResourceAction.setActiveWorkbenchPart(null);
+    }
+
+    if (reloadObjectsAction != null)
+    {
+      reloadObjectsAction.setActiveWorkbenchPart(null);
     }
 
     super.deactivate();

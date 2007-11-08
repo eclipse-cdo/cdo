@@ -369,14 +369,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, boolean[] forceAndResult)
     {
-      // TODO Implement method RefreshTransition.execute()
-      throw new UnsupportedOperationException("Not yet implemented");
+      if (forceAndResult[0])
+      {
+        // CDOViewImpl view = (CDOViewImpl)object.cdoView();
+        // view.removeObject(object.cdoID());
+      }
 
-      // if (forceAndResult[0])
-      // {
-      // }
-      //
-      // changeState(object, CDOState.CLEAN);
+      // TODO Implement method RefreshTransition.execute()
+      changeState(object, CDOState.PROXY);
     }
   }
 

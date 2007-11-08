@@ -75,7 +75,7 @@ public class MYSQLAdapter extends DBAdapter
     {
     case VARCHAR:
     case CLOB:
-      return "TEXT";
+      return "LONGTEXT";
     }
 
     return super.getTypeName(field);

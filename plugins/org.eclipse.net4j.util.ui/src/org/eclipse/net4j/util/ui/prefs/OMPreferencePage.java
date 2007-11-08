@@ -89,7 +89,6 @@ public abstract class OMPreferencePage extends PreferencePage implements IWorkbe
 
   protected void dialogChanged()
   {
-    System.out.println("CHANGED");
   }
 
   @Override

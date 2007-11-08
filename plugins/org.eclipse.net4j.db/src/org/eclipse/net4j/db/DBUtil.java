@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.ReflectUtil;
 
 import javax.sql.DataSource;
 
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -311,6 +312,17 @@ public final class DBUtil
           for (int i = 0; i < fields.length; i++)
           {
             values[i] = resultSet.getObject(i + 1);
+            if (values[i] instanceof Clob)
+            {
+              Clob clob = (Clob)values[i];
+              long length = clob.length();
+              if (length > Integer.MAX_VALUE)
+              {
+                throw new IllegalStateException("String too long: " + length);
+              }
+
+              values[i] = clob.getSubString(1, (int)length);
+            }
           }
 
           proceed = rowHandler.handle(rows++, values);

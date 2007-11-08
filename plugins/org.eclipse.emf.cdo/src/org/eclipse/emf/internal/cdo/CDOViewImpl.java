@@ -13,6 +13,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewEvent;
@@ -55,6 +56,7 @@ import org.eclipse.net4j.util.ImplementationError;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -569,6 +571,34 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
         dirtyObject.eNotify(notification);
       }
     }
+  }
+
+  public int reload(CDOObject... objects)
+  {
+    Collection<InternalCDOObject> internalObjects;
+    if (objects != null && objects.length != 0)
+    {
+      internalObjects = new ArrayList<InternalCDOObject>(objects.length);
+      for (CDOObject object : objects)
+      {
+        if (object instanceof InternalCDOObject)
+        {
+          internalObjects.add((InternalCDOObject)object);
+        }
+      }
+    }
+    else
+    {
+      internalObjects = this.objects.values();
+    }
+
+    int result = internalObjects.size();
+    if (result != 0)
+    {
+      CDOStateMachine.INSTANCE.reload(internalObjects.toArray(new InternalCDOObject[result]));
+    }
+
+    return result;
   }
 
   public void close()

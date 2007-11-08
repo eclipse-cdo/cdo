@@ -61,6 +61,8 @@ public interface CDOView extends INotifier
 
   public boolean isObjectRegistered(CDOID id);
 
+  public int reload(CDOObject... objects);
+
   public void close();
 
   /**

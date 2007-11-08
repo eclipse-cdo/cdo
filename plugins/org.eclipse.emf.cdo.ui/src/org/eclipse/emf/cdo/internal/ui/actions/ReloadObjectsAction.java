@@ -7,7 +7,6 @@ import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.ArrayList;
@@ -67,15 +66,7 @@ public class ReloadObjectsAction extends EditingDomainAction
       if (page != null)
       {
         CDOView view = array[0].cdoView();
-        IEditorReference[] references = CDOEditor.find(page, view, null);
-        for (IEditorReference reference : references)
-        {
-          CDOEditor editor = (CDOEditor)reference.getEditor(false);
-          if (editor != null)
-          {
-            editor.refreshViewer(null);
-          }
-        }
+        CDOEditor.refresh(page, view);
       }
     }
   }

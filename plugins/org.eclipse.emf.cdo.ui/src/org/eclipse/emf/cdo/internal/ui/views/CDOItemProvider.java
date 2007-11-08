@@ -22,13 +22,14 @@ import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CommitTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CreateResourceAction;
-import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.LoadResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ManagePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenAuditAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenViewEditorAction;
+import org.eclipse.emf.cdo.internal.ui.actions.ReloadViewAction;
+import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 
 import org.eclipse.net4j.IConnector;
@@ -293,6 +294,8 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       manager.add(new RollbackTransactionAction(page, view));
     }
 
+    manager.add(new Separator());
+    manager.add(new ReloadViewAction(page, view));
     manager.add(new Separator());
     manager.add(new CloseViewAction(page, view));
   }

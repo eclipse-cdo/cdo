@@ -2201,6 +2201,22 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
+   * @ADDED
+   */
+  public static void refresh(IWorkbenchPage page, CDOView view)
+  {
+    IEditorReference[] references = find(page, view, null);
+    for (IEditorReference reference : references)
+    {
+      CDOEditor editor = (CDOEditor)reference.getEditor(false);
+      if (editor != null)
+      {
+        editor.refreshViewer(null);
+      }
+    }
+  }
+
+  /**
    * @author Eike Stepper
    * @ADDED
    */

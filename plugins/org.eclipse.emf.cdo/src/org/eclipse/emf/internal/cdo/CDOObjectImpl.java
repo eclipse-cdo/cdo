@@ -104,9 +104,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return resource;
   }
 
-  public boolean cdoRefresh(boolean force)
+  public void cdoReload()
   {
-    return CDOStateMachine.INSTANCE.refresh(this, force);
+    CDOStateMachine.INSTANCE.reload(this);
   }
 
   public void cdoInternalSetID(CDOID id)

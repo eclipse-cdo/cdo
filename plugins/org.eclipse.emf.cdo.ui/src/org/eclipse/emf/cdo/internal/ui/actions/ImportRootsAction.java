@@ -22,6 +22,8 @@ import java.util.List;
  */
 public class ImportRootsAction extends EditingDomainAction
 {
+  public static final String ID = "import-roots";
+
   private static final String TITLE = "Import Roots";
 
   private CDOResource targetResource;
@@ -31,6 +33,7 @@ public class ImportRootsAction extends EditingDomainAction
   public ImportRootsAction()
   {
     super(TITLE + INTERACTIVE);
+    setId(ID);
   }
 
   public CDOResource getTargetResource()

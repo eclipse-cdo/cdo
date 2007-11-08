@@ -50,7 +50,7 @@ public class CDOMetaImpl extends CDOWrapperImpl
     throw new UnsupportedOperationException();
   }
 
-  public boolean cdoRefresh(boolean force)
+  public void cdoReload()
   {
     throw new UnsupportedOperationException();
   }

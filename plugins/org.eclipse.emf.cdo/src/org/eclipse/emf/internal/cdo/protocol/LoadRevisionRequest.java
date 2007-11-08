@@ -10,12 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
@@ -27,10 +21,17 @@ import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManager;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -100,7 +101,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
   }
 
   @Override
-  public List<CDORevisionImpl> confirming(ExtendedDataInputStream in) throws IOException
+  protected List<CDORevisionImpl> confirming(ExtendedDataInputStream in) throws IOException
   {
     CDOSessionImpl session = getSession();
     CDORevisionManagerImpl revisionManager = session.getRevisionManager();

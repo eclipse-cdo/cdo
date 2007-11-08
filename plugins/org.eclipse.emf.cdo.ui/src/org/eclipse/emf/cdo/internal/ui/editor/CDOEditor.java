@@ -1202,25 +1202,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         @Override
         protected void viewConflict(final CDOObject conflictingObject, boolean firstConflict)
         {
-          try
-          {
-            selectionViewer.getControl().getDisplay().syncExec(new Runnable()
-            {
-              public void run()
-              {
-                try
-                {
-                  selectionViewer.refresh(conflictingObject, true);
-                }
-                catch (Exception ignore)
-                {
-                }
-              }
-            });
-          }
-          catch (Exception ignore)
-          {
-          }
+          refreshViewer(conflictingObject);
         }
 
         @Override
@@ -1920,7 +1902,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     ((IMenuListener)getEditorSite().getActionBarContributor()).menuAboutToShow(menuManager);
     MenuManager submenuManager = new MenuManager("New Root");
-    if (populateManager(submenuManager))
+    if (populateNewRoot(submenuManager))
     {
       menuManager.insertBefore("edit", submenuManager);
     }
@@ -1929,7 +1911,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  private boolean populateManager(MenuManager menuManager)
+  protected boolean populateNewRoot(MenuManager menuManager)
   {
     boolean populated = false;
     List<CDOPackage> cdoPackages = Arrays.asList(view.getSession().getPackageManager().getPackages());
@@ -2105,6 +2087,39 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           {
             getSite().getPage().closeEditor(CDOEditor.this, false);
             CDOEditor.this.dispose();
+          }
+          catch (Exception ignore)
+          {
+          }
+        }
+      });
+    }
+    catch (Exception ignore)
+    {
+    }
+  }
+
+  /**
+   * @ADDED
+   */
+  public void refreshViewer(final Object element)
+  {
+    try
+    {
+      selectionViewer.getControl().getDisplay().syncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            if (element == null)
+            {
+              selectionViewer.refresh(true);
+            }
+            else
+            {
+              selectionViewer.refresh(element, true);
+            }
           }
           catch (Exception ignore)
           {

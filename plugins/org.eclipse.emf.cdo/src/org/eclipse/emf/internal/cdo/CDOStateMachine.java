@@ -1,6 +1,7 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
@@ -13,15 +14,20 @@ import org.eclipse.emf.cdo.util.ServerException;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.ResourceIDRequest;
+import org.eclipse.emf.internal.cdo.protocol.VerifyRevisionRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
+import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.IFailOverStrategy;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,7 +55,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.TRANSIENT, CDOEvent.READ, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.WRITE, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.INVALIDATE, FAIL);
-    init(CDOState.TRANSIENT, CDOEvent.REFRESH, IGNORE);
+    init(CDOState.TRANSIENT, CDOEvent.RELOAD, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.COMMIT, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.ROLLBACK, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.FINALIZE_ATTACH, FAIL);
@@ -59,7 +65,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.PREPARED_ATTACH, CDOEvent.READ, IGNORE);
     init(CDOState.PREPARED_ATTACH, CDOEvent.WRITE, FAIL);
     init(CDOState.PREPARED_ATTACH, CDOEvent.INVALIDATE, FAIL);
-    init(CDOState.PREPARED_ATTACH, CDOEvent.REFRESH, FAIL);
+    init(CDOState.PREPARED_ATTACH, CDOEvent.RELOAD, FAIL);
     init(CDOState.PREPARED_ATTACH, CDOEvent.COMMIT, FAIL);
     init(CDOState.PREPARED_ATTACH, CDOEvent.ROLLBACK, FAIL);
     init(CDOState.PREPARED_ATTACH, CDOEvent.FINALIZE_ATTACH, new FinalizeAttachTransition());
@@ -69,7 +75,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.NEW, CDOEvent.READ, IGNORE);
     init(CDOState.NEW, CDOEvent.WRITE, IGNORE);
     init(CDOState.NEW, CDOEvent.INVALIDATE, FAIL);
-    init(CDOState.NEW, CDOEvent.REFRESH, IGNORE);
+    init(CDOState.NEW, CDOEvent.RELOAD, IGNORE);
     init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition());
     init(CDOState.NEW, CDOEvent.ROLLBACK, FAIL);
     init(CDOState.NEW, CDOEvent.FINALIZE_ATTACH, FAIL);
@@ -79,7 +85,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.CLEAN, CDOEvent.READ, IGNORE);
     init(CDOState.CLEAN, CDOEvent.WRITE, new WriteTransition());
     init(CDOState.CLEAN, CDOEvent.INVALIDATE, new InvalidateTransition());
-    init(CDOState.CLEAN, CDOEvent.REFRESH, new RefreshTransition());
+    init(CDOState.CLEAN, CDOEvent.RELOAD, new ReloadTransition());
     init(CDOState.CLEAN, CDOEvent.COMMIT, FAIL);
     init(CDOState.CLEAN, CDOEvent.ROLLBACK, FAIL);
     init(CDOState.CLEAN, CDOEvent.FINALIZE_ATTACH, FAIL);
@@ -89,7 +95,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.DIRTY, CDOEvent.READ, IGNORE);
     init(CDOState.DIRTY, CDOEvent.WRITE, IGNORE);
     init(CDOState.DIRTY, CDOEvent.INVALIDATE, new ConflictTransition());
-    init(CDOState.DIRTY, CDOEvent.REFRESH, new RefreshTransition());
+    init(CDOState.DIRTY, CDOEvent.RELOAD, new ReloadTransition());
     init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition());
     init(CDOState.DIRTY, CDOEvent.ROLLBACK, new RollbackTransition());
     init(CDOState.DIRTY, CDOEvent.FINALIZE_ATTACH, FAIL);
@@ -99,7 +105,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.PROXY, CDOEvent.READ, new LoadTransition(false));
     init(CDOState.PROXY, CDOEvent.WRITE, new LoadTransition(true));
     init(CDOState.PROXY, CDOEvent.INVALIDATE, IGNORE);
-    init(CDOState.PROXY, CDOEvent.REFRESH, new RefreshTransition());
+    init(CDOState.PROXY, CDOEvent.RELOAD, new ReloadTransition());
     init(CDOState.PROXY, CDOEvent.COMMIT, FAIL);
     init(CDOState.PROXY, CDOEvent.ROLLBACK, FAIL);
     init(CDOState.PROXY, CDOEvent.FINALIZE_ATTACH, IGNORE);
@@ -109,7 +115,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.CONFLICT, CDOEvent.READ, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.WRITE, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.INVALIDATE, IGNORE);
-    init(CDOState.CONFLICT, CDOEvent.REFRESH, new RefreshTransition());
+    init(CDOState.CONFLICT, CDOEvent.RELOAD, new ReloadTransition());
     init(CDOState.CONFLICT, CDOEvent.COMMIT, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.ROLLBACK, new RollbackTransition());
     init(CDOState.CONFLICT, CDOEvent.FINALIZE_ATTACH, IGNORE);
@@ -148,12 +154,34 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     process(object, CDOEvent.WRITE, null);
   }
 
-  public boolean refresh(InternalCDOObject object, boolean force)
+  public void reload(InternalCDOObject... objects)
   {
-    if (TRACER.isEnabled()) trace(object, CDOEvent.REFRESH);
-    boolean[] forceAndResult = { force };
-    process(object, CDOEvent.REFRESH, forceAndResult);
-    return forceAndResult[0];
+    Map<CDOID, InternalCDOObject> ids = new HashMap<CDOID, InternalCDOObject>();
+    List<CDORevisionImpl> revisions = new ArrayList<CDORevisionImpl>();
+    for (InternalCDOObject object : objects)
+    {
+      revisions.add((CDORevisionImpl)object.cdoRevision());
+      ids.put(object.cdoID(), object);
+    }
+
+    try
+    {
+      CDOView view = objects[0].cdoView();
+      IChannel channel = view.getSession().getChannel();
+      VerifyRevisionRequest request = new VerifyRevisionRequest(channel, revisions);
+      revisions = request.send();
+    }
+    catch (Exception ex)
+    {
+      throw new TransportException(ex);
+    }
+
+    for (CDORevisionImpl revision : revisions)
+    {
+      InternalCDOObject object = ids.get(revision.getID());
+      if (TRACER.isEnabled()) trace(object, CDOEvent.RELOAD);
+      process(object, CDOEvent.RELOAD, null);
+    }
   }
 
   public void invalidate(InternalCDOObject object, long timeStamp)
@@ -365,17 +393,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private final class RefreshTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, boolean[]>
+  private final class ReloadTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, boolean[] forceAndResult)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
-      if (forceAndResult[0])
-      {
-        // CDOViewImpl view = (CDOViewImpl)object.cdoView();
-        // view.removeObject(object.cdoID());
-      }
-
-      // TODO Implement method RefreshTransition.execute()
       changeState(object, CDOState.PROXY);
     }
   }
@@ -500,5 +521,5 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
  */
 enum CDOEvent
 {
-  ATTACH, DETACH, READ, WRITE, INVALIDATE, REFRESH, COMMIT, ROLLBACK, FINALIZE_ATTACH
+  ATTACH, DETACH, READ, WRITE, INVALIDATE, RELOAD, COMMIT, ROLLBACK, FINALIZE_ATTACH
 }

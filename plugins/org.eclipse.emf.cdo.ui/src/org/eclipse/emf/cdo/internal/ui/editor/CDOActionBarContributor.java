@@ -9,6 +9,7 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.actions.ExportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportRootsAction;
+import org.eclipse.emf.cdo.internal.ui.actions.ReloadObjectsAction;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -58,12 +59,22 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   /**
    * @ADDED
    */
-  public static final String IMPORT_RESOURCE_ID = "import-resource";
+  public static final String REFRESH_VIEWER_ID = "refresh-viewer";
 
   /**
    * @ADDED
    */
-  public static final String EXPORT_RESOURCE_ID = "export-resource";
+  protected ImportRootsAction importResourceAction;
+
+  /**
+   * @ADDED
+   */
+  protected ExportResourceAction exportResourceAction;
+
+  /**
+   * @ADDED
+   */
+  protected ReloadObjectsAction reloadObjectsAction;
 
   /**
    * This keeps track of the active editor. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -161,10 +172,6 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    */
   protected IMenuManager createSiblingMenuManager;
 
-  protected ImportRootsAction importResourceAction;
-
-  protected ExportResourceAction exportResourceAction;
-
   /**
    * This creates an instance of the contributor. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -177,10 +184,12 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     loadResourceAction.setId(LOAD_RESOURCE_ID);
 
     importResourceAction = new ImportRootsAction();
-    importResourceAction.setId(IMPORT_RESOURCE_ID);
+    importResourceAction.setId(ImportRootsAction.ID);
 
     // exportResourceAction = new ExportResourceAction(); // TODO
     // exportResourceAction.setId(EXPORT_RESOURCE_ID);
+
+    reloadObjectsAction = new ReloadObjectsAction();
 
     validateAction = new ValidateAction();
     controlAction = new ControlAction();
@@ -246,11 +255,47 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * 
    * @generated
    */
+  public void setActiveEditorGen(IEditorPart part)
+  {
+    super.setActiveEditor(part);
+    activeEditorPart = part;
+
+    // Switch to the new selection provider.
+    //
+    if (selectionProvider != null)
+    {
+      selectionProvider.removeSelectionChangedListener(this);
+    }
+    if (part == null)
+    {
+      selectionProvider = null;
+    }
+    else
+    {
+      selectionProvider = part.getSite().getSelectionProvider();
+      selectionProvider.addSelectionChangedListener(this);
+
+      // Fake a selection changed event to update the menus.
+      //
+      if (selectionProvider.getSelection() != null)
+      {
+        selectionChanged(new SelectionChangedEvent(selectionProvider, selectionProvider.getSelection()));
+      }
+    }
+  }
+
+  /**
+   * @ADDED
+   */
   @Override
   public void setActiveEditor(IEditorPart part)
   {
     super.setActiveEditor(part);
     activeEditorPart = part;
+    if (reloadObjectsAction != null && activeEditor instanceof CDOEditor)
+    {
+      reloadObjectsAction.setEditor((CDOEditor)activeEditorPart);
+    }
 
     // Switch to the new selection provider.
     //
@@ -351,24 +396,32 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     Collection<?> newSiblingDescriptors = null;
 
     ISelection selection = event.getSelection();
-    if (selection instanceof IStructuredSelection && ((IStructuredSelection)selection).size() == 1)
+    if (selection instanceof IStructuredSelection)
     {
-      Object object = ((IStructuredSelection)selection).getFirstElement();
-
-      EditingDomain domain = ((IEditingDomainProvider)activeEditorPart).getEditingDomain();
-
-      newChildDescriptors = domain.getNewChildDescriptors(object, null);
-      newSiblingDescriptors = domain.getNewChildDescriptors(null, object);
-
-      if (importResourceAction != null)
+      if (reloadObjectsAction != null)
       {
-        if (object instanceof CDOResource)
+        reloadObjectsAction.selectionChanged((IStructuredSelection)selection);
+      }
+
+      if (((IStructuredSelection)selection).size() == 1)
+      {
+        Object object = ((IStructuredSelection)selection).getFirstElement();
+
+        EditingDomain domain = ((IEditingDomainProvider)activeEditorPart).getEditingDomain();
+
+        newChildDescriptors = domain.getNewChildDescriptors(object, null);
+        newSiblingDescriptors = domain.getNewChildDescriptors(null, object);
+
+        if (importResourceAction != null)
         {
-          importResourceAction.setTargetResource((CDOResource)object);
-        }
-        else
-        {
-          importResourceAction.setTargetResource(null);
+          if (object instanceof CDOResource)
+          {
+            importResourceAction.setTargetResource((CDOResource)object);
+          }
+          else
+          {
+            importResourceAction.setTargetResource(null);
+          }
         }
       }
     }
@@ -540,20 +593,21 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     menuManager.insertAfter("ui-actions", showPropertiesViewAction);
 
     refreshViewerAction.setEnabled(refreshViewerAction.isEnabled());
+    refreshViewerAction.setId(REFRESH_VIEWER_ID);
     menuManager.insertAfter("ui-actions", refreshViewerAction);
-
+    menuManager.insertBefore(refreshViewerAction.getId(), reloadObjectsAction);
     super.addGlobalActions(menuManager);
 
     if (loadResourceAction != null)
     {
       if (exportResourceAction != null)
       {
-        menuManager.insertAfter(LOAD_RESOURCE_ID, exportResourceAction);
+        menuManager.insertAfter(loadResourceAction.getId(), exportResourceAction);
       }
 
       if (importResourceAction != null)
       {
-        menuManager.insertAfter(LOAD_RESOURCE_ID, importResourceAction);
+        menuManager.insertAfter(loadResourceAction.getId(), importResourceAction);
       }
     }
     else
@@ -647,6 +701,11 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     if (exportResourceAction != null)
     {
       exportResourceAction.update();
+    }
+
+    if (reloadObjectsAction != null)
+    {
+      reloadObjectsAction.update();
     }
   }
 }

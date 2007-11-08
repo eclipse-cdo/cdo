@@ -27,6 +27,7 @@ public class AllTests
     suite.addTestSuite(ResourceTest.class);
     suite.addTestSuite(ContainmentTest.class);
     suite.addTestSuite(InvalidationTest.class);
+    suite.addTestSuite(RollbackTest.class);
     suite.addTestSuite(CrossReferenceTest.class);
     suite.addTestSuite(ChunkingTest.class);
     suite.addTestSuite(RandomDeadLockTest.class);

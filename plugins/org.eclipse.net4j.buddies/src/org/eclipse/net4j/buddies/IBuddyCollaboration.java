@@ -23,7 +23,9 @@ public interface IBuddyCollaboration extends ICollaboration
 
   public IFacility installFacility(String type);
 
-  public IBuddy invite(String userID);
+  public IBuddy[] invite(String... userIDs);
+
+  public void invite(IBuddy... buddies);
 
   public void leave();
 

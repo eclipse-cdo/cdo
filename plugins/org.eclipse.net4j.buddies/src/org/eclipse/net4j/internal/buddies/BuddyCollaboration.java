@@ -26,6 +26,8 @@ import org.eclipse.net4j.internal.buddies.protocol.InstallFacilityRequest;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -94,10 +96,26 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
     }
   }
 
-  public IBuddy invite(String userID)
+  public IBuddy[] invite(String... userIDs)
   {
-    // TODO Implement method BuddyCollaboration.invite()
-    throw new UnsupportedOperationException("Not yet implemented");
+    List<IBuddy> buddies = new ArrayList<IBuddy>();
+    for (String userID : userIDs)
+    {
+      IBuddy buddy = session.getBuddy(userID);
+      buddies.add(buddy);
+    }
+
+    IBuddy[] array = buddies.toArray(new IBuddy[buddies.size()]);
+    invite(array);
+    return array;
+  }
+
+  public void invite(IBuddy... buddies)
+  {
+    for (IBuddy buddy : buddies)
+    {
+      System.out.println("INVITING: " + buddy);
+    }
   }
 
   public void leave()

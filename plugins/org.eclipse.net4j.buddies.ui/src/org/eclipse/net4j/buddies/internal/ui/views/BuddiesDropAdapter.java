@@ -10,41 +10,34 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
+import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.internal.ui.dnd.BuddiesTransfer;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.util.ui.dnd.DNDDragListener;
+import org.eclipse.net4j.util.ui.dnd.DNDDropAdapter;
 
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * @author Eike Stepper
  */
-public class BuddiesDragListener extends DNDDragListener<IBuddy[]>
+public class BuddiesDropAdapter extends DNDDropAdapter<IBuddy[]>
 {
-  public BuddiesDragListener(StructuredViewer viewer)
+  public BuddiesDropAdapter(StructuredViewer viewer)
   {
     super(BuddiesTransfer.INSTANCE, viewer);
   }
 
   @Override
-  protected IBuddy[] getObject(IStructuredSelection selection)
+  protected boolean performDrop(IBuddy[] buddies, Object target)
   {
-    Collection<IBuddy> buddies = new ArrayList<IBuddy>();
-    for (Iterator<Object> it = selection.iterator(); it.hasNext();)
-    {
-      Object element = it.next();
-      if (element instanceof IBuddy)
-      {
-        IBuddy buddy = (IBuddy)element;
-        buddies.add(buddy);
-      }
-    }
+    IBuddyCollaboration collaboration = (IBuddyCollaboration)target;
+    collaboration.invite(buddies);
+    return true;
+  }
 
-    return buddies.toArray(new IBuddy[buddies.size()]);
+  @Override
+  protected boolean validateTarget(Object target)
+  {
+    return target instanceof IBuddyCollaboration;
   }
 }

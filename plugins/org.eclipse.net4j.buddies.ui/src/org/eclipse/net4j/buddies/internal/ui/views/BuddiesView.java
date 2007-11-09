@@ -17,6 +17,7 @@ import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
@@ -38,9 +39,9 @@ public class BuddiesView extends SessionManagerView
   protected Control createControl(Composite parent)
   {
     Control control = super.createControl(parent);
+    TreeViewer viewer = getViewer();
     Transfer[] transfers = new Transfer[] { BuddiesTransfer.INSTANCE };
-    getViewer().addDragSupport(DND.DROP_LINK, transfers, new BuddiesDragListener(getViewer()));
-
+    viewer.addDragSupport(DND.DROP_LINK, transfers, new BuddiesDragListener(viewer));
     return control;
   }
 

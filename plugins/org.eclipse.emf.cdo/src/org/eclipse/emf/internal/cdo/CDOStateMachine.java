@@ -158,9 +158,19 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     Map<CDOID, InternalCDOObject> ids = new HashMap<CDOID, InternalCDOObject>();
     List<CDORevisionImpl> revisions = new ArrayList<CDORevisionImpl>();
+    List<CDORevisionImpl> revised = new ArrayList<CDORevisionImpl>();
     for (InternalCDOObject object : objects)
     {
-      revisions.add((CDORevisionImpl)object.cdoRevision());
+      CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
+      if (revision.isCurrent())
+      {
+        revisions.add(revision);
+      }
+      else
+      {
+        revised.add(revision);
+      }
+
       ids.put(object.cdoID(), object);
     }
 
@@ -176,6 +186,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       throw new TransportException(ex);
     }
 
+    revisions.addAll(revised);
     for (CDORevisionImpl revision : revisions)
     {
       InternalCDOObject object = ids.get(revision.getID());

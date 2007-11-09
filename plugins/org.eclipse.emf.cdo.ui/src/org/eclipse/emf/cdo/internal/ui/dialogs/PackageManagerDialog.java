@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterFilesystemPackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterGeneratedPackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
-import org.eclipse.emf.cdo.internal.ui.views.CDOItemProvider;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOUtil;
 

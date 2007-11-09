@@ -13,16 +13,11 @@ package org.eclipse.emf.cdo.internal.ui.preferences;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;
+import org.eclipse.net4j.util.ui.widgets.TextAndDisable;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -116,96 +111,15 @@ public class CDOPreferencePage extends OMPreferencePage
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_USER_NAME.setValue(userName.getText());
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_CONNECTOR_DESCRIPTION.setValue(connectorDescription.getText());
 
-    int v1 = Integer.parseInt(referenceChunkSize.getText().getText());
+    int v1 = Integer.parseInt(referenceChunkSize.getValue());
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_REFERENCE_CHUNK_SIZE.setValue(v1);
 
-    int v2 = Integer.parseInt(preloadChunkSize.getText().getText());
+    int v2 = Integer.parseInt(preloadChunkSize.getValue());
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE.setValue(v2);
 
     boolean v3 = invalidationNotifications.getSelection();
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.setValue(v3);
 
     return super.performOk();
-  }
-
-  private static final class TextAndDisable extends Composite implements SelectionListener, ModifyListener
-  {
-    private Text text;
-
-    private Button disabled;
-
-    private String disabledValue;
-
-    public TextAndDisable(Composite parent, int textStyle, String disabledValue)
-    {
-      super(parent, SWT.NONE);
-      this.disabledValue = disabledValue;
-
-      GridLayout grid = new GridLayout(2, false);
-      grid.marginHeight = 0;
-      grid.marginWidth = 0;
-      setLayout(grid);
-
-      GridData gd = new GridData();
-      gd.widthHint = 32;
-
-      text = new Text(this, textStyle);
-      text.addModifyListener(this);
-      text.setLayoutData(gd);
-
-      disabled = new Button(this, SWT.CHECK);
-      disabled.setText("Disabled");
-      disabled.addSelectionListener(this);
-      disabled.setLayoutData(UIUtil.createGridData(false, false));
-    }
-
-    public Text getText()
-    {
-      return text;
-    }
-
-    public Button getButton()
-    {
-      return disabled;
-    }
-
-    public boolean isDisabled()
-    {
-      return disabled.getSelection();
-    }
-
-    public void setDisabled(boolean disabled)
-    {
-      this.disabled.setSelection(disabled);
-      widgetSelected(null);
-    }
-
-    public void setValue(String value)
-    {
-      text.setText(value);
-      setDisabled(ObjectUtil.equals(value, disabledValue));
-    }
-
-    public void widgetDefaultSelected(SelectionEvent e)
-    {
-      widgetSelected(e);
-    }
-
-    public void widgetSelected(SelectionEvent e)
-    {
-      if (isDisabled())
-      {
-        text.setText(disabledValue);
-        text.setEnabled(false);
-      }
-      else
-      {
-        text.setEnabled(true);
-      }
-    }
-
-    public void modifyText(ModifyEvent e)
-    {
-    }
   }
 }

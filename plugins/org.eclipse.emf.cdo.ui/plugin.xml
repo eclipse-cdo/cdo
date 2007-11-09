@@ -69,6 +69,12 @@
            id="org.eclipse.emf.cdo.ui.CDOPreferencePage"
            name="CDO">
      </page>
+     <page
+           category="org.eclipse.emf.cdo.ui.CDOPreferencePage"
+           class="org.eclipse.emf.cdo.internal.ui.preferences.CDOUIPreferencePage"
+           id="org.eclipse.emf.cdo.ui.CDOUIPreferencePage"
+           name="User Interface">
+     </page>
   </extension>
   
 </plugin>

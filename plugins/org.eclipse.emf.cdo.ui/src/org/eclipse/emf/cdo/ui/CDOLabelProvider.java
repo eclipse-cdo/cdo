@@ -1,6 +1,8 @@
-package org.eclipse.emf.cdo.internal.ui.editor;
+package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -8,6 +10,8 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.viewers.IColorProvider;
@@ -17,11 +21,21 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
 public class CDOLabelProvider extends AdapterFactoryLabelProvider implements IColorProvider, IFontProvider
 {
+  public static final String[] DECORATION_PROPOSALS = { "${element}", "${id}", "${state}", "${created}", "${revised}" };
+
+  public static final String DEFAULT_DECORATION = DECORATION_PROPOSALS[0] + " [" + DECORATION_PROPOSALS[1] + "]";
+
+  public static final String NO_DECORATION = DECORATION_PROPOSALS[0];
+
+  private static final String[] DECORATION_ARGS = { "{0}", "{1}", "{2}", "{3,date} {3,time}", "{4,date} {4,time}" };
+
   private static final Color GRAY = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
 
   private static final Color RED = UIUtil.getDisplay().getSystemColor(SWT.COLOR_RED);
@@ -32,12 +46,24 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
 
   private TreeViewer viewer;
 
+  private String pattern;
+
   public CDOLabelProvider(AdapterFactory adapterFactory, CDOView view, TreeViewer viewer)
   {
     super(adapterFactory);
     this.view = view;
     this.viewer = viewer;
     bold = UIUtil.getBoldFont(viewer.getControl());
+
+    pattern = OM.PREF_LABEL_DECORATION.getValue();
+    if (ObjectUtil.equals(pattern, NO_DECORATION))
+    {
+      pattern = null;
+    }
+    else
+    {
+      pattern = StringUtil.replace(pattern, DECORATION_PROPOSALS, DECORATION_ARGS);
+    }
   }
 
   public CDOView getView()
@@ -84,17 +110,15 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
   }
 
   @Override
+  public String getText(Object object)
+  {
+    return decorateText(super.getText(object), object);
+  }
+
+  @Override
   public String getColumnText(Object object, int columnIndex)
   {
-    try
-    {
-      InternalCDOObject cdoObject = FSMUtil.adapt(object, view);
-      return super.getColumnText(object, columnIndex) + " [" + cdoObject.cdoID() + "]";
-    }
-    catch (RuntimeException ex)
-    {
-      return super.getColumnText(object, columnIndex);
-    }
+    return decorateText(super.getColumnText(object, columnIndex), object);
   }
 
   public Color getBackground(Object object)
@@ -141,5 +165,25 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     }
 
     return null;
+  }
+
+  protected String decorateText(String text, Object object)
+  {
+    try
+    {
+      if (pattern != null)
+      {
+        InternalCDOObject obj = FSMUtil.adapt(object, view);
+        CDORevision rev = obj.cdoRevision();
+        long created = rev == null ? CDORevision.UNSPECIFIED_DATE : rev.getCreated();
+        long revised = rev == null ? CDORevision.UNSPECIFIED_DATE : rev.getRevised();
+        text = MessageFormat.format(pattern, text, obj.cdoID(), obj.cdoState(), created, revised);
+      }
+    }
+    catch (RuntimeException ignore)
+    {
+    }
+
+    return text;
   }
 }

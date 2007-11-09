@@ -13,6 +13,8 @@ package org.eclipse.net4j.util.ui;
 import org.eclipse.net4j.util.internal.ui.security.InteractiveCredentialsProvider;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
+import org.eclipse.jface.fieldassist.FieldDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -130,5 +132,17 @@ public final class UIUtil
   public static GridData createGridData(boolean grabHorizontal, boolean grabVertical)
   {
     return new GridData(SWT.FILL, SWT.FILL, grabHorizontal, grabVertical);
+  }
+
+  public static void addDecorationMargin(Control control)
+  {
+    Object data = control.getLayoutData();
+    if (data instanceof GridData)
+    {
+      GridData gd = (GridData)data;
+      FieldDecorationRegistry registry = FieldDecorationRegistry.getDefault();
+      FieldDecoration dec = registry.getFieldDecoration(FieldDecorationRegistry.DEC_CONTENT_PROPOSAL);
+      gd.horizontalIndent = dec.getImage().getBounds().width;
+    }
   }
 }

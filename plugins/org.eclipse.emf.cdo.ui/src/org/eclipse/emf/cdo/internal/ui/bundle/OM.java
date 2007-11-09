@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.bundle;
 
+import org.eclipse.emf.cdo.ui.CDOLabelProvider;
+
 import org.eclipse.net4j.internal.util.security.ResponseNegotiator;
 import org.eclipse.net4j.util.internal.ui.security.InteractiveCredentialsProvider;
 import org.eclipse.net4j.util.om.OMBundle;
@@ -37,17 +39,20 @@ public abstract class OM
 
   public static final OMPreferences PREFS = BUNDLE.preferences();
 
+  public static final OMPreference<String> PREF_LABEL_DECORATION = // 
+  PREFS.init("PREF_LABEL_DECORATION", CDOLabelProvider.DEFAULT_DECORATION); //$NON-NLS-1$
+
   public static final OMPreference<String[]> PREF_HISTORY_SELECT_PACKAGES = //
-  PREFS.initArray("PREF_HISTORY_SELECT_PACKAGES");
+  PREFS.initArray("PREF_HISTORY_SELECT_PACKAGES"); //$NON-NLS-1$
 
   public static final OMPreference<String[]> PREF_HISTORY_CONNECTORS = //
-  PREFS.initArray("PREF_HISTORY_CONNECTORS");
+  PREFS.initArray("PREF_HISTORY_CONNECTORS"); //$NON-NLS-1$
 
   public static final OMPreference<String[]> PREF_HISTORY_REPOSITORIES = //
-  PREFS.initArray("PREF_HISTORY_REPOSITORIES");
+  PREFS.initArray("PREF_HISTORY_REPOSITORIES"); //$NON-NLS-1$
 
   public static final OMPreference<Boolean> PREF_LEGACY_SUPPORT = //
-  PREFS.init("PREF_LEGACY_SUPPORT", true);
+  PREFS.init("PREF_LEGACY_SUPPORT", true); //$NON-NLS-1$
 
   static void start()
   {

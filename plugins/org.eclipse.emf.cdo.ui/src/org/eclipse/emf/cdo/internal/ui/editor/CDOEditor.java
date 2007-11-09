@@ -13,9 +13,10 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.RollbackTransactionDialog;
-import org.eclipse.emf.cdo.internal.ui.views.CDOEventHandler;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.ui.CDOEventHandler;
+import org.eclipse.emf.cdo.ui.CDOLabelProvider;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.command.BasicCommandStack;

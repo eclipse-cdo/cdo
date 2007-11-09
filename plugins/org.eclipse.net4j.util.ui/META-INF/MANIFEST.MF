@@ -17,6 +17,7 @@ Export-Package: org.eclipse.net4j.util.internal.ui;version="0.8.0",
  org.eclipse.net4j.util.ui;version="0.8.0",
  org.eclipse.net4j.util.ui.actions;version="0.8.0",
  org.eclipse.net4j.util.ui.prefs;version="0.8.0",
+ org.eclipse.net4j.util.ui.proposals;version="0.8.0",
  org.eclipse.net4j.util.ui.views;version="0.8.0",
  org.eclipse.net4j.util.ui.widgets;version="0.8.0"
 Eclipse-LazyStart: true

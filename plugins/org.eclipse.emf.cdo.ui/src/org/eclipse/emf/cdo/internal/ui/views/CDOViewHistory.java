@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.views;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewResourcesEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.ui.CDOViewHistoryEvent;
 
 import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.event.Notifier;

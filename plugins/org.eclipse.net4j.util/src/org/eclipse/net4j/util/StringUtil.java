@@ -22,6 +22,27 @@ public final class StringUtil
   {
   }
 
+  public static String replace(String text, String[] find, String[] replace)
+  {
+    for (int i = 0; i < find.length; i++)
+    {
+      int end = 0;
+      for (;;)
+      {
+        int start = text.indexOf(find[i], end);
+        if (start == -1)
+        {
+          break;
+        }
+  
+        end = start + find[i].length();
+        text = text.substring(0, start) + replace[i] + text.substring(end);
+      }
+    }
+  
+    return text;
+  }
+
   public static String safe(String str)
   {
     if (str == null)

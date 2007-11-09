@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
+ * Copyright (c) 2004, 2005, 2006 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,20 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.ui.views;
-
-import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
-
-import org.eclipse.net4j.util.event.IEvent;
+package org.eclipse.net4j.util.ui.proposals;
 
 /**
+ * The classes in this package are copied from org.eclipse.ui.texteditor because the class
+ * org.eclipse.ui.texteditor.RegExContentProposalProvider is not public.
+ * <p>
+ * TODO We should ask platform guys to open this API.
+ * 
  * @author Eike Stepper
  */
-public interface CDOViewHistoryEvent extends IEvent
+class README
 {
-
-  public CDOViewHistory getViewHistory();
-
-  public Entry getAddedEntry();
-
 }

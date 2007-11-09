@@ -117,6 +117,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     return dirty;
   }
 
+  @Override
   public boolean hasConflict()
   {
     return conflict;
@@ -165,7 +166,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   public void commit() throws TransactionException
   {
-    checkWritable();
     if (dirty)
     {
       if (TRACER.isEnabled())
@@ -229,8 +229,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   public void rollback(boolean remote)
   {
-    checkWritable();
-
     try
     {
       if (!newResources.isEmpty())

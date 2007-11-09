@@ -770,14 +770,6 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.REMOVED));
   }
 
-  protected void checkWritable()
-  {
-    if (getViewType() != Type.TRANSACTION)
-    {
-      throw new IllegalStateException("CDO view is read only");
-    }
-  }
-
   /**
    * @author Eike Stepper
    */

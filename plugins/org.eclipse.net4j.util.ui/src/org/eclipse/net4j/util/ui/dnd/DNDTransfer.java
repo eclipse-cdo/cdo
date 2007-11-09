@@ -30,7 +30,7 @@ public abstract class DNDTransfer<TYPE> extends ByteArrayTransfer
 
   private int typeID;
 
-  private DNDTransfer(String typeName)
+  protected DNDTransfer(String typeName)
   {
     this.typeName = typeName;
     typeID = registerType(typeName);

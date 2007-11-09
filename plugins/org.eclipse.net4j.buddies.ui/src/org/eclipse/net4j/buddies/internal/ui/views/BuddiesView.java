@@ -11,11 +11,14 @@
 package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
+import org.eclipse.net4j.buddies.internal.ui.dnd.BuddiesTransfer;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -35,8 +38,8 @@ public class BuddiesView extends SessionManagerView
   protected Control createControl(Composite parent)
   {
     Control control = super.createControl(parent);
-    // Transfer[] transfers = new Transfer[] { GadgetTransfer.getInstance() };
-    // getViewer().addDragSupport(DND.DROP_LINK, transfers, new GadgetDragListener(viewer));
+    Transfer[] transfers = new Transfer[] { BuddiesTransfer.INSTANCE };
+    getViewer().addDragSupport(DND.DROP_LINK, transfers, new BuddiesDragListener(getViewer()));
 
     return control;
   }

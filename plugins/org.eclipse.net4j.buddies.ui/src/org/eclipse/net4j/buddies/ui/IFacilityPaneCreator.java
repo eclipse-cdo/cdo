@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.ui;
 
+import org.eclipse.net4j.buddies.internal.ui.views.CollaborationsPane;
 import org.eclipse.net4j.buddies.internal.ui.views.FacilityPane;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.widgets.Composite;
 
 /**
  * @author Eike Stepper
@@ -24,5 +24,5 @@ public interface IFacilityPaneCreator
 
   public ImageDescriptor getImageDescriptor();
 
-  public FacilityPane createPane(Composite parent, int style);
+  public FacilityPane createPane(CollaborationsPane collaborationsPane, int style);
 }

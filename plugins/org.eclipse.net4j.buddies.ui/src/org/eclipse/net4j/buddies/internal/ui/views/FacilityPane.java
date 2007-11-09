@@ -35,13 +35,16 @@ public abstract class FacilityPane extends Composite implements IListener
 {
   private IFacility facility;
 
+  private CollaborationsPane collaborationsPane;
+
   private CoolBarManager coolBarManager;
 
   private Control control;
 
-  public FacilityPane(Composite parent, int style)
+  public FacilityPane(CollaborationsPane collaborationsPane, int style)
   {
-    super(parent, style);
+    super(collaborationsPane, style);
+    this.collaborationsPane = collaborationsPane;
     setLayout(new FacilityPaneLayout());
 
     ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT | SWT.RIGHT | SWT.WRAP);
@@ -77,6 +80,11 @@ public abstract class FacilityPane extends Composite implements IListener
   {
     this.facility = facility;
     facility.addListener(this);
+  }
+
+  public CollaborationsPane getCollaborationsPane()
+  {
+    return collaborationsPane;
   }
 
   public ICoolBarManager getCoolBarManager()

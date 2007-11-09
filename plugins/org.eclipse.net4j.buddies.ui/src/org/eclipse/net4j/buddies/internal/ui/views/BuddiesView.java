@@ -16,6 +16,9 @@ import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+
 public class BuddiesView extends SessionManagerView
 {
   public BuddiesView()
@@ -26,6 +29,16 @@ public class BuddiesView extends SessionManagerView
   protected IContainer<?> getContainer()
   {
     return getSession() != null ? getSession() : ContainerUtil.emptyContainer();
+  }
+
+  @Override
+  protected Control createControl(Composite parent)
+  {
+    Control control = super.createControl(parent);
+    // Transfer[] transfers = new Transfer[] { GadgetTransfer.getInstance() };
+    // getViewer().addDragSupport(DND.DROP_LINK, transfers, new GadgetDragListener(viewer));
+
+    return control;
   }
 
   @Override

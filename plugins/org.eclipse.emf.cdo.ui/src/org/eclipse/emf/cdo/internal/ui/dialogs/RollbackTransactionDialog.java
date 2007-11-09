@@ -170,7 +170,7 @@ public class RollbackTransactionDialog extends TitleAreaDialog
       }
     }
 
-    builder.append(".\nBe careful, rolling back to local state can result\n"
+    builder.append(".\n\nBe careful, rolling back to local state can result\n"
         + "in visible state that is different from the remote state!");
     builder.append("\n\nAre you sure to rollback this transaction?");
     return builder.toString();

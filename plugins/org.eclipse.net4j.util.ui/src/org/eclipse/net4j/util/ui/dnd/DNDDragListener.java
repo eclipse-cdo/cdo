@@ -54,7 +54,8 @@ public abstract class DNDDragListener<TYPE> extends DragSourceAdapter
   @Override
   public void dragStart(DragSourceEvent event)
   {
-    event.doit = !viewer.getSelection().isEmpty();
+    IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+    event.doit = !viewer.getSelection().isEmpty() && getObject(selection) != null;
   }
 
   protected abstract TYPE getObject(IStructuredSelection selection);

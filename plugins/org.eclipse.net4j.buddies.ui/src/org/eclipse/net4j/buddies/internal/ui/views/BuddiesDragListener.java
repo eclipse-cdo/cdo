@@ -45,6 +45,11 @@ public class BuddiesDragListener extends DNDDragListener<IBuddy[]>
       }
     }
 
+    if (buddies.isEmpty())
+    {
+      return null;
+    }
+
     return buddies.toArray(new IBuddy[buddies.size()]);
   }
 }

@@ -14,6 +14,7 @@ import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.ISession;
+import org.eclipse.net4j.buddies.protocol.ProtocolUtil;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -41,13 +42,7 @@ public class InitiateCollaborationIndication extends IndicationWithResponse
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    int size = in.readInt();
-    String[] userIDs = new String[size];
-    for (int i = 0; i < size; i++)
-    {
-      userIDs[i] = in.readString();
-    }
-
+    String[] userIDs = ProtocolUtil.readUserIDs(in);
     ISession session = (ISession)getProtocol().getInfraStructure();
     IBuddy initiator = session.getSelf();
     collaboration = IBuddyAdmin.INSTANCE.initiateCollaboration(initiator, userIDs);

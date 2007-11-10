@@ -29,6 +29,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
 
 import java.util.ArrayList;
@@ -243,30 +244,40 @@ public class CollaborationsPane extends Composite implements IListener
     final IBuddyCollaboration collaboration = (IBuddyCollaboration)facility.getCollaboration();
     if (fromRemote)
     {
-      try
+      Runnable runnable = new Runnable()
       {
-        getDisplay().asyncExec(new Runnable()
+        public void run()
         {
-          public void run()
+          try
           {
-            try
+            addFacilityPane(facility);
+            IFacility activeFacility = activeFacilities.get(collaboration);
+            if (activeFacility == null)
             {
-              addFacilityPane(facility);
-              IFacility activeFacility = activeFacilities.get(collaboration);
-              if (activeFacility == null)
-              {
-                setActiveFacility(collaboration, facility);
-              }
-              else
-              {
-                updateState();
-              }
+              setActiveFacility(collaboration, facility);
             }
-            catch (RuntimeException ignore)
+            else
             {
+              updateState();
             }
           }
-        });
+          catch (RuntimeException ignore)
+          {
+          }
+        }
+      };
+
+      try
+      {
+        Display display = getDisplay();
+        if (display.getThread() == Thread.currentThread())
+        {
+          runnable.run();
+        }
+        else
+        {
+          display.asyncExec(runnable);
+        }
       }
       catch (RuntimeException ignore)
       {

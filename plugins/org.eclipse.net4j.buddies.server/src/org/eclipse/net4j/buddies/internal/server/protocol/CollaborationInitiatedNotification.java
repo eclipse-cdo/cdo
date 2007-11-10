@@ -13,11 +13,12 @@ package org.eclipse.net4j.buddies.internal.server.protocol;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.protocol.ProtocolUtil;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -26,9 +27,9 @@ public class CollaborationInitiatedNotification extends Request
 {
   private long collaborationID;
 
-  private Set<IBuddy> buddies;
+  private Collection<IBuddy> buddies;
 
-  public CollaborationInitiatedNotification(IChannel channel, long collaborationID, Set<IBuddy> buddies)
+  public CollaborationInitiatedNotification(IChannel channel, long collaborationID, Collection<IBuddy> buddies)
   {
     super(channel);
     this.collaborationID = collaborationID;
@@ -45,17 +46,6 @@ public class CollaborationInitiatedNotification extends Request
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
     out.writeLong(collaborationID);
-    if (buddies == null)
-    {
-      out.writeInt(0);
-    }
-    else
-    {
-      out.writeInt(buddies.size());
-      for (IBuddy buddy : buddies)
-      {
-        out.writeString(buddy.getUserID());
-      }
-    }
+    ProtocolUtil.writeBuddies(out, buddies);
   }
 }

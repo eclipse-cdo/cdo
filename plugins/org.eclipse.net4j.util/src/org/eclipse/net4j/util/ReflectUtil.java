@@ -11,7 +11,6 @@
 package org.eclipse.net4j.util;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.internal.util.event.Notifier;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -135,7 +134,7 @@ public final class ReflectUtil
 
   public static void collectFields(Class<?> c, List<Field> fields)
   {
-    if (c == ROOT_CLASS || c == Notifier.class)
+    if (c == ROOT_CLASS)
     {
       return;
     }

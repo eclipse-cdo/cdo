@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.internal.ui.views;
 
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -45,6 +46,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -60,7 +62,11 @@ import java.util.Stack;
  */
 public class Net4jIntrospectorView extends ViewPart implements ISelectionListener, IDoubleClickListener, IListener
 {
+  public static final String VIEW_ID = "org.eclipse.net4j.util.Net4jIntrospectorView";
+
   private static final Object[] NO_ELEMENTS = {};
+
+  private static Net4jIntrospectorView instance;
 
   private TableViewer currentViewer;
 
@@ -93,6 +99,29 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   {
     getSite().getPage().removeSelectionListener(this);
     super.dispose();
+  }
+
+  public static Net4jIntrospectorView getInstance()
+  {
+    return instance;
+  }
+
+  public static synchronized Net4jIntrospectorView getInstance(boolean show)
+  {
+    if (instance == null)
+    {
+      try
+      {
+        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        page.showView(VIEW_ID);
+      }
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+    }
+
+    return instance;
   }
 
   @Override
@@ -150,6 +179,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     fillLocalToolBar(bars.getToolBarManager());
     getSite().getPage().addSelectionListener(this);
     setCurrentViewer(objectViewer);
+    instance = this;
   }
 
   private void setCurrentViewer(TableViewer viewer)
@@ -258,7 +288,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     refreshViewer();
   }
 
-  private void setObject(Object object)
+  public void setObject(Object object)
   {
     EventUtil.removeListener(object, this);
     if (object != null)

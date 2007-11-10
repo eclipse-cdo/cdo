@@ -23,6 +23,7 @@ import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IFacility;
 import org.eclipse.net4j.buddies.protocol.IMessage;
 import org.eclipse.net4j.internal.buddies.protocol.InstallFacilityRequest;
+import org.eclipse.net4j.internal.buddies.protocol.InviteBuddiesNotification;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
@@ -112,11 +113,24 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
 
   public void invite(IBuddy... buddies)
   {
+    List<IBuddy> toBeInvited = new ArrayList<IBuddy>();
     for (IBuddy buddy : buddies)
     {
       if (getBuddy(buddy.getUserID()) == null)
       {
-        System.out.println("INVITING: " + buddy);
+        toBeInvited.add(buddy);
+      }
+    }
+
+    if (!toBeInvited.isEmpty())
+    {
+      try
+      {
+        new InviteBuddiesNotification(session.getChannel(), getID(), toBeInvited).send();
+      }
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
       }
     }
   }

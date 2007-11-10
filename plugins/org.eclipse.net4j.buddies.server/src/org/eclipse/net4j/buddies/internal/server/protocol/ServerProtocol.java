@@ -47,6 +47,9 @@ public class ServerProtocol extends SignalProtocol
     case ProtocolConstants.SIGNAL_INITIATE_COLLABORATION:
       return new InitiateCollaborationIndication();
 
+    case ProtocolConstants.SIGNAL_INVITE_BUDDIES:
+      return new InviteBuddiesIndication();
+
     case ProtocolConstants.SIGNAL_COLLABORATION_LEFT:
       return new ServerCollaborationLeftIndication();
 

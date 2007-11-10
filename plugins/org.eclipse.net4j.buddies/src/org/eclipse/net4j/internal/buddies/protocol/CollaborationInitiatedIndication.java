@@ -13,6 +13,7 @@ package org.eclipse.net4j.internal.buddies.protocol;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.protocol.ProtocolUtil;
 import org.eclipse.net4j.internal.buddies.BuddyCollaboration;
 import org.eclipse.net4j.internal.buddies.ClientBuddy;
 import org.eclipse.net4j.internal.buddies.Self;
@@ -21,7 +22,6 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -46,24 +46,26 @@ public class CollaborationInitiatedIndication extends Indication
     Self self = (Self)session.getSelf();
 
     long collaborationID = in.readLong();
-    int size = in.readInt();
-    Set<IBuddy> buddies = new HashSet<IBuddy>();
-    for (int i = 0; i < size; i++)
+    Set<IBuddy> buddies = ProtocolUtil.readBuddies(in, session);
+
+    BuddyCollaboration collaboration = (BuddyCollaboration)self.getCollaboration(collaborationID);
+    if (collaboration == null)
     {
-      String userID = in.readString();
-      IBuddy buddy = session.getBuddy(userID);
-      if (buddy != null)
+      collaboration = new BuddyCollaboration(session, collaborationID, buddies);
+      LifecycleUtil.activate(collaboration);
+      self.addCollaboration(collaboration);
+      for (IBuddy buddy : buddies)
       {
-        buddies.add(buddy);
+        ((ClientBuddy)buddy).addCollaboration(collaboration);
       }
     }
-
-    BuddyCollaboration collaboration = new BuddyCollaboration(session, collaborationID, buddies);
-    LifecycleUtil.activate(collaboration);
-    self.addCollaboration(collaboration);
-    for (IBuddy buddy : buddies)
+    else
     {
-      ((ClientBuddy)buddy).addCollaboration(collaboration);
+      for (IBuddy buddy : buddies)
+      {
+        collaboration.addBuddy(buddy);
+        ((ClientBuddy)buddy).addCollaboration(collaboration);
+      }
     }
   }
 }

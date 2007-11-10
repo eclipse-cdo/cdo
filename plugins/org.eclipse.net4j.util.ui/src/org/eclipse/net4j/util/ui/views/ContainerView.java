@@ -76,7 +76,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
   {
     try
     {
-      getDisplay().asyncExec(new Runnable()
+      getDisplay().syncExec(new Runnable()
       {
         public void run()
         {
@@ -216,6 +216,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
   {
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
     manager.add(refreshAction);
+    // manager.add(new IntrospectAction(getViewer()));
   }
 
   protected void fillLocalToolBar(IToolBarManager manager)

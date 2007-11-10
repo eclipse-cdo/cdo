@@ -52,12 +52,12 @@ public abstract class DNDDropAdapter<TYPE> extends ViewerDropAdapter
   }
 
   @Override
-  public boolean validateDrop(Object target, int op, TransferData type)
+  public boolean validateDrop(Object target, int operation, TransferData type)
   {
-    return transfer.isSupportedType(type) && validateTarget(target);
+    return transfer.isSupportedType(type) && validateTarget(target, operation);
   }
 
   protected abstract boolean performDrop(TYPE data, Object target);
 
-  protected abstract boolean validateTarget(Object target);
+  protected abstract boolean validateTarget(Object target, int operation);
 }

@@ -14,6 +14,7 @@ import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.ui.actions.ConnectAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.DisconnectAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.FlashAction;
+import org.eclipse.net4j.buddies.internal.ui.actions.ReconnectAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.DropDownAction;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateEvent;
 import org.eclipse.net4j.buddies.ui.ISessionManager;
@@ -37,6 +38,8 @@ public abstract class SessionManagerView extends ContainerView implements IListe
   private ConnectAction connectAction = new ConnectAction();
 
   private DisconnectAction disconnectAction = new DisconnectAction();
+
+  private ReconnectAction reconnectAction = new ReconnectAction();
 
   private FlashAction flashAction = new FlashAction();
 
@@ -108,6 +111,7 @@ public abstract class SessionManagerView extends ContainerView implements IListe
   {
     manager.add(connectAction);
     manager.add(disconnectAction);
+    manager.add(reconnectAction);
     manager.add(new Separator());
     manager.add(flashAction);
     super.fillLocalPullDown(manager);
@@ -140,6 +144,7 @@ public abstract class SessionManagerView extends ContainerView implements IListe
   {
     connectAction.setEnabled(session == null);
     disconnectAction.setEnabled(session != null);
+    reconnectAction.setEnabled(session != null);
     flashAction.setEnabled(session != null && !ISessionManager.INSTANCE.isFlashing());
     dropDownAction.updateState();
     // control.setEnabled(session != null);

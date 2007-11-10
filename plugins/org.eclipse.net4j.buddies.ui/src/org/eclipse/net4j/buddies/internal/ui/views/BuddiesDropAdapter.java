@@ -36,8 +36,8 @@ public class BuddiesDropAdapter extends DNDDropAdapter<IBuddy[]>
   }
 
   @Override
-  protected boolean validateTarget(Object target)
+  protected boolean validateTarget(Object target, int operation)
   {
-    return target instanceof IBuddyCollaboration;
+    return true;// target instanceof IBuddyCollaboration;
   }
 }

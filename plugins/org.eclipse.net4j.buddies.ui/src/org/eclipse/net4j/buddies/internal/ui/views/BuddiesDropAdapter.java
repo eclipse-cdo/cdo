@@ -16,12 +16,16 @@ import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.util.ui.dnd.DNDDropAdapter;
 
 import org.eclipse.jface.viewers.StructuredViewer;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.Transfer;
 
 /**
  * @author Eike Stepper
  */
 public class BuddiesDropAdapter extends DNDDropAdapter<IBuddy[]>
 {
+  private static final Transfer[] TRANSFERS = new Transfer[] { BuddiesTransfer.INSTANCE };
+
   public BuddiesDropAdapter(StructuredViewer viewer)
   {
     super(BuddiesTransfer.INSTANCE, viewer);
@@ -40,5 +44,10 @@ public class BuddiesDropAdapter extends DNDDropAdapter<IBuddy[]>
   protected boolean validateTarget(Object target, int operation)
   {
     return target instanceof IBuddyCollaboration;
+  }
+
+  public static void support(StructuredViewer viewer)
+  {
+    viewer.addDropSupport(DND.DROP_MOVE, TRANSFERS, new BuddiesDropAdapter(viewer));
   }
 }

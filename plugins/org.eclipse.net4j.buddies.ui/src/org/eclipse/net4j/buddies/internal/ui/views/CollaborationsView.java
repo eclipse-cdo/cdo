@@ -12,7 +12,6 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
-import org.eclipse.net4j.buddies.internal.ui.dnd.BuddiesTransfer;
 import org.eclipse.net4j.buddies.ui.IFacilityPaneCreator;
 import org.eclipse.net4j.internal.buddies.ClientBuddy;
 import org.eclipse.net4j.util.StringUtil;
@@ -32,10 +31,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -89,10 +85,7 @@ public class CollaborationsView extends SessionManagerView
     bars.getToolBarManager().add(new Separator());
     getCollaborationsPane().fillActionBars(bars);
 
-    TreeViewer viewer = getViewer();
-    Transfer[] transfers = new Transfer[] { BuddiesTransfer.INSTANCE };
-    viewer.addDropSupport(DND.DROP_MOVE, transfers, new BuddiesDropAdapter(viewer));
-
+    BuddiesDropAdapter.support(getViewer());
     return sashComposite;
   }
 

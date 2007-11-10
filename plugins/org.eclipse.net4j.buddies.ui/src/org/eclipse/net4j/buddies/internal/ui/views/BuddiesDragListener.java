@@ -16,6 +16,8 @@ import org.eclipse.net4j.util.ui.dnd.DNDDragListener;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.Transfer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,6 +28,8 @@ import java.util.Iterator;
  */
 public class BuddiesDragListener extends DNDDragListener<IBuddy[]>
 {
+  private static final Transfer[] TRANSFERS = new Transfer[] { BuddiesTransfer.INSTANCE };
+
   public BuddiesDragListener(StructuredViewer viewer)
   {
     super(BuddiesTransfer.INSTANCE, viewer);
@@ -51,5 +55,10 @@ public class BuddiesDragListener extends DNDDragListener<IBuddy[]>
     }
 
     return buddies.toArray(new IBuddy[buddies.size()]);
+  }
+
+  public static void support(StructuredViewer viewer)
+  {
+    viewer.addDragSupport(DND.DROP_MOVE, TRANSFERS, new BuddiesDragListener(viewer));
   }
 }

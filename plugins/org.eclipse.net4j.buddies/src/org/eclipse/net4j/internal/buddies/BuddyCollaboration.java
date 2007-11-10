@@ -114,7 +114,10 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
   {
     for (IBuddy buddy : buddies)
     {
-      System.out.println("INVITING: " + buddy);
+      if (getBuddy(buddy.getUserID()) == null)
+      {
+        System.out.println("INVITING: " + buddy);
+      }
     }
   }
 

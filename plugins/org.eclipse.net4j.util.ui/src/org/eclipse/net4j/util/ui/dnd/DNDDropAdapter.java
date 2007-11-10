@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.ui.dnd;
 
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
+import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
 
@@ -21,6 +22,8 @@ import org.eclipse.swt.dnd.TransferData;
 public abstract class DNDDropAdapter<TYPE> extends ViewerDropAdapter
 {
   private Transfer transfer;
+
+  private boolean dropBetweenEnabled;
 
   protected DNDDropAdapter(Transfer transfer, StructuredViewer viewer)
   {
@@ -37,6 +40,31 @@ public abstract class DNDDropAdapter<TYPE> extends ViewerDropAdapter
   public StructuredViewer getViewer()
   {
     return (StructuredViewer)super.getViewer();
+  }
+
+  public boolean isDropBetweenEnabled()
+  {
+    return dropBetweenEnabled;
+  }
+
+  public void setDropBetweenEnabled(boolean dropBetweenEnabled)
+  {
+    this.dropBetweenEnabled = dropBetweenEnabled;
+  }
+
+  @Override
+  protected int determineLocation(DropTargetEvent event)
+  {
+    int location = super.determineLocation(event);
+    if (location == LOCATION_BEFORE || location == LOCATION_AFTER)
+    {
+      if (!dropBetweenEnabled)
+      {
+        location = LOCATION_ON;
+      }
+    }
+
+    return location;
   }
 
   @Override

@@ -91,7 +91,7 @@ public class CollaborationsView extends SessionManagerView
 
     TreeViewer viewer = getViewer();
     Transfer[] transfers = new Transfer[] { BuddiesTransfer.INSTANCE };
-    viewer.addDropSupport(DND.DROP_LINK, transfers, new BuddiesDropAdapter(viewer));
+    viewer.addDropSupport(DND.DROP_MOVE, transfers, new BuddiesDropAdapter(viewer));
 
     return sashComposite;
   }

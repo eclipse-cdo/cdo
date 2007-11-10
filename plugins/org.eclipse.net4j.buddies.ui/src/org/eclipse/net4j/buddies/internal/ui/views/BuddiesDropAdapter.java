@@ -25,6 +25,7 @@ public class BuddiesDropAdapter extends DNDDropAdapter<IBuddy[]>
   public BuddiesDropAdapter(StructuredViewer viewer)
   {
     super(BuddiesTransfer.INSTANCE, viewer);
+    setExpandEnabled(false);
   }
 
   @Override
@@ -38,6 +39,6 @@ public class BuddiesDropAdapter extends DNDDropAdapter<IBuddy[]>
   @Override
   protected boolean validateTarget(Object target, int operation)
   {
-    return true;// target instanceof IBuddyCollaboration;
+    return target instanceof IBuddyCollaboration;
   }
 }

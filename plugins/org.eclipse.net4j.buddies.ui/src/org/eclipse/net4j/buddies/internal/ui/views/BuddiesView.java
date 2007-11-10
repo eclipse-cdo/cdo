@@ -41,7 +41,7 @@ public class BuddiesView extends SessionManagerView
     Control control = super.createControl(parent);
     TreeViewer viewer = getViewer();
     Transfer[] transfers = new Transfer[] { BuddiesTransfer.INSTANCE };
-    viewer.addDragSupport(DND.DROP_LINK, transfers, new BuddiesDragListener(viewer));
+    viewer.addDragSupport(DND.DROP_MOVE, transfers, new BuddiesDragListener(viewer));
     return control;
   }
 

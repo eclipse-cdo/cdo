@@ -2,6 +2,7 @@ package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.internal.ui.SharedIcons;
+import org.eclipse.net4j.util.internal.ui.actions.IntrospectAction;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
@@ -216,7 +217,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
   {
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
     manager.add(refreshAction);
-    // manager.add(new IntrospectAction(getViewer()));
+    manager.add(new IntrospectAction(getViewer()));
   }
 
   protected void fillLocalToolBar(IToolBarManager manager)

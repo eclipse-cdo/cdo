@@ -18,6 +18,8 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.jface.viewers.TreePath;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -127,7 +129,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   protected void connectInput(CONTAINER input)
   {
     root = (ContainerNode)createNode(null, input);
-    nodes.put(input, root);
+    addNode(input, root);
   }
 
   @Override
@@ -182,6 +184,16 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     return new LeafNode(parent, element);
   }
 
+  protected void addNode(Object element, Node node)
+  {
+    nodes.put(element, node);
+  }
+
+  protected Node removeNode(Object element)
+  {
+    return nodes.remove(element);
+  }
+
   protected boolean filterRootElement(Object element)
   {
     if (rootElementFilter != null)
@@ -206,6 +218,8 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     public Node getParent();
 
     public List<Node> getChildren();
+
+    public TreePath getTreePath();
   }
 
   /**
@@ -228,7 +242,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     {
       if (!disposed)
       {
-        nodes.remove(getElement());
+        removeNode(getElement());
         parent = null;
         if (children != null)
         {
@@ -253,7 +267,8 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     @Override
     public String toString()
     {
-      return getElement().toString();
+      Object element = getElement();
+      return element == null ? "null" : element.toString();
     }
 
     public final Node getParent()
@@ -271,6 +286,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       }
 
       return children;
+    }
+
+    public TreePath getTreePath()
+    {
+      TreePath parentPath = parent == null ? TreePath.EMPTY : parent.getTreePath();
+      return parentPath.createChildPath(getElement());
     }
 
     protected void checkNotDisposed()
@@ -313,7 +334,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       {
         if (container == ContainerNode.this.container)
         {
-          Node node = nodes.remove(element);
+          Node node = removeNode(element);
           if (node != null)
           {
             getChildren().remove(node);
@@ -400,7 +421,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       if (this != root || filterRootElement(element))
       {
         Node node = createNode(this, element);
-        nodes.put(element, node);
+        addNode(element, node);
         children.add(node);
         return node;
       }
@@ -429,7 +450,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     {
       if (!isDisposed())
       {
-        nodes.remove(element);
+        removeNode(element);
         EventUtil.removeListener(element, this);
         element = null;
         parent = null;
@@ -457,6 +478,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     {
       checkNotDisposed();
       return Collections.emptyList();
+    }
+
+    public TreePath getTreePath()
+    {
+      TreePath parentPath = parent == null ? TreePath.EMPTY : parent.getTreePath();
+      return parentPath.createChildPath(element);
     }
 
     public void notifyEvent(IEvent event)

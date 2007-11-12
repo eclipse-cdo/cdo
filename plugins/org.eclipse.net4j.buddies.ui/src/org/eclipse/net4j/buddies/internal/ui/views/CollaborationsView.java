@@ -11,6 +11,7 @@
 package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
+import org.eclipse.net4j.buddies.internal.ui.CollaborationsItemProvider;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.ui.IFacilityPaneCreator;
 import org.eclipse.net4j.util.StringUtil;

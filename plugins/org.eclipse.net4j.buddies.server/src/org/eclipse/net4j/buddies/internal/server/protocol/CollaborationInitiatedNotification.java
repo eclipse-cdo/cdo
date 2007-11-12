@@ -29,11 +29,15 @@ public class CollaborationInitiatedNotification extends Request
 
   private Collection<IBuddy> buddies;
 
-  public CollaborationInitiatedNotification(IChannel channel, long collaborationID, Collection<IBuddy> buddies)
+  private String[] facilityTypes;
+
+  public CollaborationInitiatedNotification(IChannel channel, long collaborationID, Collection<IBuddy> buddies,
+      String[] facilityTypes)
   {
     super(channel);
     this.collaborationID = collaborationID;
     this.buddies = buddies;
+    this.facilityTypes = facilityTypes;
   }
 
   @Override
@@ -47,5 +51,6 @@ public class CollaborationInitiatedNotification extends Request
   {
     out.writeLong(collaborationID);
     ProtocolUtil.writeBuddies(out, buddies);
+    ProtocolUtil.writeFacilityTypes(out, facilityTypes);
   }
 }

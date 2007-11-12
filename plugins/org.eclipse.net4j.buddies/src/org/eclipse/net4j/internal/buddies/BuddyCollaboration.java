@@ -52,23 +52,31 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
 
   public IFacility installFacility(String type)
   {
-    try
-    {
-      IFacility facility = createFacility(type);
-      IChannel channel = session.getChannel();
-      boolean success = new InstallFacilityRequest(channel, getID(), type).send(ProtocolConstants.TIMEOUT);
-      if (success)
-      {
-        addFacility(facility, false);
-        return facility;
-      }
+    return installFacility(type, true);
+  }
 
-      return null;
-    }
-    catch (Exception ex)
+  public IFacility installFacility(String type, boolean request)
+  {
+    IFacility facility = createFacility(type);
+    if (request)
     {
-      throw WrappedException.wrap(ex);
+      try
+      {
+        IChannel channel = session.getChannel();
+        boolean success = new InstallFacilityRequest(channel, getID(), type).send(ProtocolConstants.TIMEOUT);
+        if (!success)
+        {
+          return null;
+        }
+      }
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
     }
+
+    addFacility(facility, !request);
+    return facility;
   }
 
   public IFacility createFacility(String type)

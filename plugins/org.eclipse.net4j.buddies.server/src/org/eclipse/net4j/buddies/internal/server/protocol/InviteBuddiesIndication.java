@@ -65,11 +65,13 @@ public class InviteBuddiesIndication extends Indication
     for (IBuddy buddy : buddies)
     {
       IChannel channel = buddy.getSession().getChannel();
+      String[] facilityTypes = null;
       Set<IBuddy> set = new HashSet<IBuddy>();
       if (added.contains(buddy))
       {
         set.addAll(buddies);
         set.remove(buddy);
+        facilityTypes = collaboration.getFacilityTypes();
       }
       else
       {
@@ -80,7 +82,7 @@ public class InviteBuddiesIndication extends Indication
       {
         try
         {
-          new CollaborationInitiatedNotification(channel, collaborationID, set).send();
+          new CollaborationInitiatedNotification(channel, collaborationID, set, facilityTypes).send();
         }
         catch (Exception ex)
         {

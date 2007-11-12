@@ -177,7 +177,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
         {
           invitations.remove(buddy);
           IChannel channel = buddy.getSession().getChannel();
-          new CollaborationInitiatedNotification(channel, collaborationID, invitations).send();
+          new CollaborationInitiatedNotification(channel, collaborationID, invitations, null).send();
         }
         catch (Exception ex)
         {

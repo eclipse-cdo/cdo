@@ -47,6 +47,7 @@ public class CollaborationInitiatedIndication extends Indication
 
     long collaborationID = in.readLong();
     Set<IBuddy> buddies = ProtocolUtil.readBuddies(in, session);
+    String[] facilityTypes = ProtocolUtil.readFacilityTypes(in);
 
     BuddyCollaboration collaboration = (BuddyCollaboration)self.getCollaboration(collaborationID);
     if (collaboration == null)
@@ -66,6 +67,11 @@ public class CollaborationInitiatedIndication extends Indication
       {
         Membership.create(buddy, collaboration);
       }
+    }
+
+    for (String facilityType : facilityTypes)
+    {
+      collaboration.installFacility(facilityType, false);
     }
   }
 }

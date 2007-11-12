@@ -37,17 +37,17 @@
 				databaseName="/temp/cdodb1"
 				createDatabase="create"/> -->
 
-			<!--<dbAdapter name="derby"/>
+			<dbAdapter name="derby"/>
 			<dataSource 
 				driverClass="org.apache.derby.jdbc.ClientDataSource" 
 				databaseName="cdodb1"
-				createDatabase="create"/>-->
+				createDatabase="create"/>
 
-			<dbAdapter name="hsqldb"/>
+			<!--<dbAdapter name="hsqldb"/>
 			<dataSource 
 				driverClass="org.eclipse.net4j.db.hsqldb.HSQLDBDataSource" 
 				database="jdbc:hsqldb:mem:cdodb1"
-				user="sa"/>
+				user="sa"/>-->
 
 			<!--<dbAdapter name="mysql"/>
 			<dataSource 

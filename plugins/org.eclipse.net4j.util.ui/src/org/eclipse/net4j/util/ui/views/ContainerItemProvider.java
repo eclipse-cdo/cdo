@@ -326,29 +326,13 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       @Override
       protected void onAdded(IContainer<Object> container, Object element)
       {
-        Node node = addChild(getChildren(), element);
-        if (node != null)
-        {
-          refreshElement(container, true);
-          revealElement(element);
-          elementAdded(element, container);
-        }
+        AbstractContainerNode.this.onAdded(container, element);
       }
 
       @Override
       protected void onRemoved(IContainer<Object> container, Object element)
       {
-        Node node = removeNode(element);
-        if (node != null)
-        {
-          getChildren().remove(node);
-          elementRemoved(element, container);
-
-          Object rootElement = root.getElement();
-          Object refreshElement = container == rootElement ? null : container;
-          refreshElement(refreshElement, true);
-          node.dispose();
-        }
+        AbstractContainerNode.this.onRemoved(container, element);
       }
 
       @Override
@@ -413,6 +397,32 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
       getContainer().addListener(containerListener);
       return children;
+    }
+
+    protected void onAdded(IContainer<Object> container, Object element)
+    {
+      Node node = addChild(getChildren(), element);
+      if (node != null)
+      {
+        refreshElement(container, true);
+        revealElement(element);
+        elementAdded(element, container);
+      }
+    }
+
+    protected void onRemoved(IContainer<Object> container, Object element)
+    {
+      Node node = removeNode(element);
+      if (node != null)
+      {
+        getChildren().remove(node);
+        elementRemoved(element, container);
+
+        Object rootElement = root.getElement();
+        Object refreshElement = container == rootElement ? null : container;
+        refreshElement(refreshElement, true);
+        node.dispose();
+      }
     }
   }
 

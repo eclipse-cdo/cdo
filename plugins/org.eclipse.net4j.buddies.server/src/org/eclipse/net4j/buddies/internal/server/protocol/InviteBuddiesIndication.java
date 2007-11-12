@@ -49,44 +49,46 @@ public class InviteBuddiesIndication extends Indication
     String[] userIDs = ProtocolUtil.readUserIDs(in);
 
     Collaboration collaboration = (Collaboration)BuddyAdmin.INSTANCE.getCollaboration(collaborationID);
-    Set<IBuddy> added = new HashSet<IBuddy>();
-
-    for (String userID : userIDs)
+    if (collaboration != null)
     {
-      IBuddy buddy = BuddyAdmin.INSTANCE.getBuddy(userID);
-      if (buddy != null && collaboration.getMembership(buddy) == null)
+      Set<IBuddy> added = new HashSet<IBuddy>();
+      for (String userID : userIDs)
       {
-        Membership.create(buddy, collaboration);
-        added.add(buddy);
-      }
-    }
-
-    List<IBuddy> buddies = Arrays.asList(collaboration.getBuddies());
-    for (IBuddy buddy : buddies)
-    {
-      IChannel channel = buddy.getSession().getChannel();
-      String[] facilityTypes = null;
-      Set<IBuddy> set = new HashSet<IBuddy>();
-      if (added.contains(buddy))
-      {
-        set.addAll(buddies);
-        set.remove(buddy);
-        facilityTypes = collaboration.getFacilityTypes();
-      }
-      else
-      {
-        set.addAll(added);
-      }
-
-      if (!set.isEmpty())
-      {
-        try
+        IBuddy buddy = BuddyAdmin.INSTANCE.getBuddy(userID);
+        if (buddy != null && collaboration.getMembership(buddy) == null)
         {
-          new CollaborationInitiatedNotification(channel, collaborationID, set, facilityTypes).send();
+          Membership.create(buddy, collaboration);
+          added.add(buddy);
         }
-        catch (Exception ex)
+      }
+
+      List<IBuddy> buddies = Arrays.asList(collaboration.getBuddies());
+      for (IBuddy buddy : buddies)
+      {
+        IChannel channel = buddy.getSession().getChannel();
+        String[] facilityTypes = null;
+        Set<IBuddy> set = new HashSet<IBuddy>();
+        if (added.contains(buddy))
         {
-          throw WrappedException.wrap(ex);
+          set.addAll(buddies);
+          set.remove(buddy);
+          facilityTypes = collaboration.getFacilityTypes();
+        }
+        else
+        {
+          set.addAll(added);
+        }
+
+        if (!set.isEmpty())
+        {
+          try
+          {
+            new CollaborationInitiatedNotification(channel, collaborationID, set, facilityTypes).send();
+          }
+          catch (Exception ex)
+          {
+            throw WrappedException.wrap(ex);
+          }
         }
       }
     }

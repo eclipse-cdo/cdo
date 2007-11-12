@@ -44,8 +44,10 @@ public class FacilityInstalledIndication extends Indication
     IBuddySession session = (IBuddySession)getProtocol().getInfraStructure();
     Self self = (Self)session.getSelf();
     BuddyCollaboration collaboration = (BuddyCollaboration)self.getCollaboration(collaborationID);
-
-    IFacility facility = collaboration.createFacility(facilityType);
-    collaboration.addFacility(facility, true);
+    if (collaboration != null)
+    {
+      IFacility facility = collaboration.createFacility(facilityType);
+      collaboration.addFacility(facility, true);
+    }
   }
 }

@@ -57,29 +57,32 @@ public class InstallFacilityIndication extends IndicationWithResponse
       IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, facilityType, description);
 
       Collaboration collaboration = (Collaboration)BuddyAdmin.INSTANCE.getCollaboration(collaborationID);
-      facility.setCollaboration(collaboration);
-      collaboration.addFacility(facility, true);
-
-      ISession session = (ISession)getProtocol().getInfraStructure();
-      IBuddy initiator = session.getSelf();
-
-      for (IBuddy buddy : collaboration.getBuddies())
+      if (collaboration != null)
       {
-        if (buddy != initiator)
+        facility.setCollaboration(collaboration);
+        collaboration.addFacility(facility, true);
+
+        ISession session = (ISession)getProtocol().getInfraStructure();
+        IBuddy initiator = session.getSelf();
+
+        for (IBuddy buddy : collaboration.getBuddies())
         {
-          try
+          if (buddy != initiator)
           {
-            IChannel channel = buddy.getSession().getChannel();
-            new FacilityInstalledNotification(channel, collaborationID, facilityType).send();
-          }
-          catch (Exception ex)
-          {
-            OM.LOG.error(ex);
+            try
+            {
+              IChannel channel = buddy.getSession().getChannel();
+              new FacilityInstalledNotification(channel, collaborationID, facilityType).send();
+            }
+            catch (Exception ex)
+            {
+              OM.LOG.error(ex);
+            }
           }
         }
-      }
 
-      success = true;
+        success = true;
+      }
     }
     catch (RuntimeException ex)
     {

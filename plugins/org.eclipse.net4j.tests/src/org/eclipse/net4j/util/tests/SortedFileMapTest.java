@@ -44,7 +44,7 @@ public class SortedFileMapTest extends AbstractOMTest
       for (int i = 0; i < 500; i++)
       {
         String value = map.get(i);
-        System.out.println(value);
+        IOUtil.OUT().println(value);
       }
     }
     finally

@@ -29,7 +29,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
       {
         ISynchronizer<Boolean> eike = correlator.correlate("eike");
         result[0] = eike.get(5000);
-        System.out.println("RESULT: " + result[0]);
+        msg("RESULT: " + result[0]);
       }
     };
 
@@ -60,7 +60,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
       {
         ISynchronizer<Boolean> eike = correlator.correlate("eike");
         result[0] = eike.get(5000);
-        System.out.println("RESULT: " + result[0]);
+        msg("RESULT: " + result[0]);
       }
     };
 
@@ -68,7 +68,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     Thread.sleep(10);
 
     boolean consumed = correlator.put("eike", true, 1000);
-    System.out.println("Consumed: " + consumed);
+    msg("Consumed: " + consumed);
     assertTrue(consumed);
 
     consumer.join(100);
@@ -96,7 +96,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
       {
         ISynchronizer<Boolean> eike = correlator.correlate("eike");
         result[0] = eike.get(5000);
-        System.out.println("RESULT: " + result[0]);
+        msg("RESULT: " + result[0]);
       }
     };
 
@@ -120,7 +120,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     final Boolean[] result = { false };
     final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
     boolean consumed = correlator.put("eike", true, 50);
-    System.out.println("Consumed: " + consumed);
+    msg("Consumed: " + consumed);
     assertFalse(consumed);
 
     final Thread consumer = new Thread()
@@ -130,7 +130,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
       {
         ISynchronizer<Boolean> eike = correlator.correlate("eike");
         result[0] = eike.get(5000);
-        System.out.println("RESULT: " + result[0]);
+        msg("RESULT: " + result[0]);
       }
     };
 

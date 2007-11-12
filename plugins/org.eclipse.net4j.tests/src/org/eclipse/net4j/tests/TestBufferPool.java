@@ -14,6 +14,7 @@ import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferPool;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
@@ -56,14 +57,14 @@ public class TestBufferPool extends AbstractOMTest
 
   private static void msg()
   {
-    System.out.println("pooledBuffers = " + Net4jUtil.getPooledBuffers(bufferPool));
+    IOUtil.OUT().println("pooledBuffers = " + Net4jUtil.getPooledBuffers(bufferPool));
   }
 
   private static boolean allocate()
   {
     try
     {
-      System.out.println("allocating from " + Runtime.getRuntime().freeMemory());
+      IOUtil.OUT().println("allocating from " + Runtime.getRuntime().freeMemory());
       for (int i = 0; i < 10; i++)
       {
         memory.add(new byte[1000000]);
@@ -82,7 +83,7 @@ public class TestBufferPool extends AbstractOMTest
   private static void gc()
   {
     msg();
-    System.out.println("collecting garbage");
+    IOUtil.OUT().println("collecting garbage");
     System.gc();
     msg();
   }

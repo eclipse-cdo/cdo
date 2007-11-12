@@ -28,6 +28,7 @@ import org.eclipse.net4j.jms.server.jdbc.JDBCUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import javax.jms.Connection;
@@ -137,7 +138,7 @@ public class JMSSeparatedTest
       try
       {
         Object object = ((ObjectMessage)message).getObject();
-        System.out.println("\n------> MESSAGE for " + name + ": " + object + "\n");
+        IOUtil.OUT().println("\n------> MESSAGE for " + name + ": " + object + "\n");
         message.acknowledge();
       }
       catch (JMSException ex)

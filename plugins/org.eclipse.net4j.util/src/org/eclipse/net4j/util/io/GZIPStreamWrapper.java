@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
-import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 import java.io.IOException;
@@ -82,7 +81,6 @@ public class GZIPStreamWrapper implements IStreamWrapper
           byte[] in = new byte[out.length];
           gis.read(in);
           gis.close();
-          System.out.println("Read: " + HexUtil.bytesToHex(in));
         }
         catch (IOException ex)
         {
@@ -96,7 +94,6 @@ public class GZIPStreamWrapper implements IStreamWrapper
 
     gos.write(out);
     gos.close();
-    System.out.println("Written: " + HexUtil.bytesToHex(out));
 
     ConcurrencyUtil.sleep(2000);
   }

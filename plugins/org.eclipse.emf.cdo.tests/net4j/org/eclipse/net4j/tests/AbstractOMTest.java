@@ -13,6 +13,7 @@ package org.eclipse.net4j.tests;
 import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import junit.framework.TestCase;
@@ -32,9 +33,9 @@ public abstract class AbstractOMTest extends TestCase
   public final void setUp() throws Exception
   {
     super.setUp();
-    System.out.println("************************************************");
-    System.out.println(getName());
-    System.out.println("************************************************");
+    IOUtil.OUT().println("************************************************");
+    IOUtil.OUT().println(getName());
+    IOUtil.OUT().println("************************************************");
 
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
@@ -42,21 +43,21 @@ public abstract class AbstractOMTest extends TestCase
     enableConsole();
 
     doSetUp();
-    System.out.println();
-    System.out.println("------------------------ START ------------------------");
+    IOUtil.OUT().println();
+    IOUtil.OUT().println("------------------------ START ------------------------");
   }
 
   @Override
   public final void tearDown() throws Exception
   {
     sleep(200);
-    System.out.println("------------------------ END --------------------------");
-    System.out.println();
+    IOUtil.OUT().println("------------------------ END --------------------------");
+    IOUtil.OUT().println();
 
     doTearDown();
     super.tearDown();
-    System.out.println();
-    System.out.println();
+    IOUtil.OUT().println();
+    IOUtil.OUT().println();
   }
 
   @Override
@@ -68,7 +69,7 @@ public abstract class AbstractOMTest extends TestCase
     }
     catch (Throwable t)
     {
-      t.printStackTrace(System.out);
+      t.printStackTrace(IOUtil.OUT());
       throw t;
     }
   }
@@ -109,8 +110,8 @@ public abstract class AbstractOMTest extends TestCase
   {
     if (consoleEnabled)
     {
-      System.out.println();
-      System.out.println("--> " + m);
+      IOUtil.OUT().println();
+      IOUtil.OUT().println("--> " + m);
     }
   }
 

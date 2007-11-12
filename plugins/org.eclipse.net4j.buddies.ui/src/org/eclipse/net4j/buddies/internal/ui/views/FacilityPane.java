@@ -233,11 +233,6 @@ public abstract class FacilityPane extends Composite implements IListener
       CoolBar coolBarControl = getCoolBarControl();
       if (coolBarControl != null)
       {
-        if (coolBarControl.getItemCount() == 0)
-        {
-          System.out.println("FALSE");
-        }
-
         return coolBarControl.getItemCount() > 0;
       }
 

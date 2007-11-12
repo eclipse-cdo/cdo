@@ -79,7 +79,6 @@ public class NullMonitor implements OMMonitor, OMSubMonitor
 
   public void setTask(String task)
   {
-    // System.out.println("NullMonitor: " + task);
   }
 
   public void worked()

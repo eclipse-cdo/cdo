@@ -276,10 +276,6 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
                 if (instanceElement != null && feature.isReference())
                 {
                   instanceElement = view.convertObjectToID(instanceElement);
-                  if (!(instanceValue instanceof CDOID))
-                  {
-                    System.out.println(instanceValue);
-                  }
                 }
 
                 revisionList.add(instanceElement);
@@ -297,10 +293,6 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
         if (instanceValue != null && feature.isReference())
         {
           instanceValue = view.convertObjectToID(instanceValue);
-          if (!(instanceValue instanceof CDOID))
-          {
-            System.out.println(instanceValue);
-          }
         }
 
         revision.setValue(feature, instanceValue);

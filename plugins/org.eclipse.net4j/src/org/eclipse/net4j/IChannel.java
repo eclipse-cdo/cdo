@@ -63,7 +63,7 @@ import org.eclipse.net4j.util.event.INotifier;
  *   public void handleBuffer(IBuffer buffer)
  *   {
  *     ByteBuffer byteBuffer = buffer.getByteBuffer();
- *     System.out.println(&quot;Received &quot; + byteBuffer.getDouble());
+ *     IOUtil.OUT().println(&quot;Received &quot; + byteBuffer.getDouble());
  *     buffer.release();
  *   }
  * };

@@ -200,7 +200,7 @@ public class TCPTransportTest extends AbstractTransportTest
       String line;
       while ((line = reader.readLine()) != null)
       {
-        System.out.println(line);
+        msg(line);
       }
 
       isr.close();
@@ -269,7 +269,7 @@ public class TCPTransportTest extends AbstractTransportTest
       String line;
       while ((line = reader.readLine()) != null)
       {
-        System.out.println(line);
+        msg(line);
       }
 
       isr.close();
@@ -351,7 +351,7 @@ public class TCPTransportTest extends AbstractTransportTest
       String line;
       while ((line = reader.readLine()) != null)
       {
-        System.out.println(line);
+        msg(line);
       }
 
       isr.close();
@@ -412,6 +412,6 @@ public class TCPTransportTest extends AbstractTransportTest
     dataInput.read(b);
     dataInput.close();
 
-    System.out.println(new String(b));
+    msg(new String(b));
   }
 }

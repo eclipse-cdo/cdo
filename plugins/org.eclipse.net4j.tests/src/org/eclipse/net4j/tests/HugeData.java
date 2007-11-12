@@ -111,7 +111,7 @@ public final class HugeData
         + NL + "    return state;" + NL + "  }" + NL + "" + NL
         + "  public void setState(State newState) throws ConnectorException" + NL + "  {" + NL
         + "    State oldState = getState();" + NL + "    if (newState != oldState)" + NL + "    {" + NL
-        + "      System.out.println(toString() + \": Setting state \" + newState + \" (was \"" + NL
+        + "      IOUtil.OUT().println(toString() + \": Setting state \" + newState + \" (was \"" + NL
         + "          + oldState.toString().toLowerCase() + \")\");" + NL + "      state = newState;" + NL
         + "      fireStateChanged(newState, oldState);" + NL + "" + NL + "      switch (newState)" + NL + "      {"
         + NL + "      case DISCONNECTED:" + NL + "        if (finishedConnecting != null)" + NL + "        {" + NL
@@ -135,7 +135,7 @@ public final class HugeData
         + "  public boolean waitForConnection(long timeout) throws ConnectorException" + NL + "  {" + NL
         + "    State state = getState();" + NL + "    if (state == State.DISCONNECTED)" + NL + "    {" + NL
         + "      return false;" + NL + "    }" + NL + "" + NL + "    try" + NL + "    {" + NL
-        + "      System.out.println(toString() + \": Waiting for connection...\");" + NL
+        + "      IOUtil.OUT().println(toString() + \": Waiting for connection...\");" + NL
         + "      return finishedNegotiating.await(timeout, TimeUnit.MILLISECONDS);" + NL + "    }" + NL
         + "    catch (InterruptedException ex)" + NL + "    {" + NL + "      return false;" + NL + "    }" + NL + "  }"
         + NL + "" + NL + "  public boolean connect(long timeout) throws ConnectorException" + NL + "  {" + NL
@@ -161,9 +161,9 @@ public final class HugeData
         + "      throw new ConnectorException(ex);" + NL + "    }" + NL + "" + NL + "    return channel;" + NL + "  }"
         + NL + "" + NL + "  public ChannelImpl createChannel(short channelIndex, String protocolID)" + NL + "  {" + NL
         + "    Protocol protocol = createProtocol(protocolID);" + NL + "    if (protocol == null)" + NL + "    {" + NL
-        + "      System.out.println(toString() + \": Opening channel without protocol\");" + NL + "    }" + NL
+        + "      IOUtil.OUT().println(toString() + \": Opening channel without protocol\");" + NL + "    }" + NL
         + "    else" + NL + "    {" + NL
-        + "      System.out.println(toString() + \": Opening channel with protocol \" + protocolID);" + NL + "    }"
+        + "      IOUtil.OUT().println(toString() + \": Opening channel with protocol \" + protocolID);" + NL + "    }"
         + NL + "" + NL + "    ChannelImpl channel = new ChannelImpl(receiveExecutor);" + NL
         + "    channel.setChannelIndex(channelIndex);" + NL + "    channel.setMultiplexer(this);" + NL
         + "    channel.setReceiveHandler(protocol);" + NL
@@ -173,7 +173,7 @@ public final class HugeData
         + NL + "      if (channel == null || channel == NULL_CHANNEL)" + NL + "      {" + NL
         + "        throw new NullPointerException();" + NL + "      }" + NL + "" + NL + "      return channel;" + NL
         + "    }" + NL + "    catch (IndexOutOfBoundsException ex)" + NL + "    {" + NL
-        + "      System.out.println(toString() + \": Invalid channelIndex \" + channelIndex);" + NL
+        + "      IOUtil.OUT().println(toString() + \": Invalid channelIndex \" + channelIndex);" + NL
         + "      return null;" + NL + "    }" + NL + "  }" + NL + "" + NL
         + "  protected List<BufferQueue> getChannelBufferQueues()" + NL + "  {" + NL
         + "    final List<BufferQueue> result = new ArrayList<BufferQueue>();" + NL + "    synchronized (channels)"
@@ -193,7 +193,7 @@ public final class HugeData
         + "  protected void removeChannel(ChannelImpl channel)" + NL + "  {" + NL
         + "    channel.removeLifecycleListener(channelLifecycleListener);" + NL
         + "    int channelIndex = channel.getChannelIndex();" + NL + "" + NL
-        + "    System.out.println(toString() + \": Removing channel \" + channelIndex);" + NL
+        + "    IOUtil.OUT().println(toString() + \": Removing channel \" + channelIndex);" + NL
         + "    channels.set(channelIndex, NULL_CHANNEL);" + NL + "  }" + NL + "" + NL
         + "  protected Protocol createProtocol(String protocolID)" + NL + "  {" + NL
         + "    if (protocolID == null || protocolID.length() == 0)" + NL + "    {" + NL + "      return null;" + NL
@@ -201,7 +201,7 @@ public final class HugeData
         + NL + "    if (registry == null)" + NL + "    {" + NL + "      return null;" + NL + "    }" + NL + "" + NL
         + "    ProtocolFactory factory = registry.lookup(protocolID);" + NL + "    if (factory == null)" + NL + "    {"
         + NL + "      return null;" + NL + "    }" + NL + "" + NL
-        + "    System.out.println(toString() + \": Creating protocol \" + protocolID);" + NL
+        + "    IOUtil.OUT().println(toString() + \": Creating protocol \" + protocolID);" + NL
         + "    return factory.createProtocol();" + NL + "  }" + NL + "" + NL
         + "  protected void fireChannelOpened(Channel channel)" + NL + "  {" + NL
         + "    for (ChannelListener listener : channelListeners)" + NL + "    {" + NL + "      try" + NL + "      {"
@@ -220,9 +220,9 @@ public final class HugeData
         + "    super.onAccessBeforeActivate();" + NL + "    if (bufferProvider == null)" + NL + "    {" + NL
         + "      throw new IllegalStateException(\"bufferProvider == null\");" + NL + "    }" + NL + "" + NL
         + "    if (protocolFactoryRegistry == null)" + NL + "    {" + NL
-        + "      System.out.println(toString() + \": (INFO) protocolFactoryRegistry == null\");" + NL + "    }" + NL
+        + "      IOUtil.OUT().println(toString() + \": (INFO) protocolFactoryRegistry == null\");" + NL + "    }" + NL
         + "" + NL + "    if (receiveExecutor == null)" + NL + "    {" + NL
-        + "      System.out.println(toString() + \": (INFO) receiveExecutor == null\");" + NL + "    }" + NL + "  }"
+        + "      IOUtil.OUT().println(toString() + \": (INFO) receiveExecutor == null\");" + NL + "    }" + NL + "  }"
         + NL + "" + NL + "  @Override" + NL + "  protected void onActivate() throws Exception" + NL + "  {" + NL
         + "    super.onActivate();" + NL + "    setState(State.CONNECTING);" + NL + "  }" + NL + "" + NL
         + "  @Override" + NL + "  protected void onDeactivate() throws Exception" + NL + "  {" + NL

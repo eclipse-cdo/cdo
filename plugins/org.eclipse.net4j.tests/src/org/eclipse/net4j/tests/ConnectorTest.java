@@ -23,6 +23,7 @@ import org.eclipse.net4j.internal.util.security.ResponseNegotiator;
 import org.eclipse.net4j.internal.util.security.UserManager;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
@@ -148,15 +149,15 @@ public class ConnectorTest extends AbstractOMTest
   {
     for (int i = 0; i < 100; i++)
     {
-      System.out.println();
-      System.out.println();
-      System.out.println();
-      System.out.println("#####################################################");
-      System.out.println(" RUN = " + i);
-      System.out.println("#####################################################");
-      System.out.println();
-      System.out.println();
-      System.out.println();
+      IOUtil.OUT().println();
+      IOUtil.OUT().println();
+      IOUtil.OUT().println();
+      IOUtil.OUT().println("#####################################################");
+      IOUtil.OUT().println(" RUN = " + i);
+      IOUtil.OUT().println("#####################################################");
+      IOUtil.OUT().println();
+      IOUtil.OUT().println();
+      IOUtil.OUT().println();
       testDeferredActivation();
       cleanup();
     }
@@ -220,15 +221,15 @@ public class ConnectorTest extends AbstractOMTest
   {
     for (int i = 0; i < 100; i++)
     {
-      System.out.println();
-      System.out.println();
-      System.out.println();
-      System.out.println("#####################################################");
-      System.out.println("                          RUN = " + i);
-      System.out.println("#####################################################");
-      System.out.println();
-      System.out.println();
-      System.out.println();
+      IOUtil.OUT().println();
+      IOUtil.OUT().println();
+      IOUtil.OUT().println();
+      IOUtil.OUT().println("#####################################################");
+      IOUtil.OUT().println("                          RUN = " + i);
+      IOUtil.OUT().println("#####################################################");
+      IOUtil.OUT().println();
+      IOUtil.OUT().println();
+      IOUtil.OUT().println();
       testNegotiationSuccess();
       cleanup();
     }

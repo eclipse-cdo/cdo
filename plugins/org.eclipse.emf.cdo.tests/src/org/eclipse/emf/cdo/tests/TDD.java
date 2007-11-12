@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.net4j.tests.AbstractOMTest;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -44,7 +45,7 @@ public class TDD
       }
     }
 
-    System.out.println("******* COMPLETED *******");
+    IOUtil.OUT().println("******* COMPLETED *******");
   }
 
   private static void runTest(AbstractOMTest test, String methodName) throws Exception, Throwable

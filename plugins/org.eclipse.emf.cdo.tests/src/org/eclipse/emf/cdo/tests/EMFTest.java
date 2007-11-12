@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.net4j.tests.AbstractOMTest;
+import org.eclipse.net4j.util.io.IOUtil;
 
 /**
  * @author Eike Stepper
@@ -38,10 +39,10 @@ public class EMFTest extends AbstractOMTest
 
     EClass type = (EClass)reference.getEType();
     dumpProxy(type);
-    System.out.println(type.getName());
+    IOUtil.OUT().println(type.getName());
     dumpProxy(type);
 
-    System.out.println();
+    IOUtil.OUT().println();
 
     if (false)
     {
@@ -58,7 +59,7 @@ public class EMFTest extends AbstractOMTest
     }
 
     dumpProxy(type);
-    System.out.println(type.getName());
+    IOUtil.OUT().println(type.getName());
     dumpProxy(type);
   }
 
@@ -67,7 +68,7 @@ public class EMFTest extends AbstractOMTest
     InternalEObject eObject = (InternalEObject)object;
     String label = eObject.eClass().getName();
 
-    System.out.println(label + ": " + eObject.eIsProxy());
-    System.out.println(label + ": " + eObject.eProxyURI());
+    IOUtil.OUT().println(label + ": " + eObject.eIsProxy());
+    IOUtil.OUT().println(label + ": " + eObject.eProxyURI());
   }
 }

@@ -82,17 +82,16 @@ public final class NIOUtil
    *          overwrite destination file
    * @exception IOException
    *              I/O problem
-   * @exception IllegalArgumentException
-   *              illegal argument
    */
   @SuppressWarnings("unused")
-  private static void copy(final File src, File dst, final boolean overwrite) throws IOException,
-      IllegalArgumentException
+  private static void copy(final File src, File dst, final boolean overwrite) throws IOException
   {
     long q = System.currentTimeMillis();
-    // checks
     if (!src.isFile() || !src.exists())
+    {
       throw new IllegalArgumentException("Source file '" + src.getAbsolutePath() + "' not found!");
+    }
+
     if (dst.exists()) if (dst.isDirectory()) // Directory? -> use source file
         // name
         dst = new File(dst, src.getName());
@@ -189,13 +188,10 @@ public final class NIOUtil
         {
           fos.close();
         }
-        catch (IOException e)
+        catch (IOException ex)
         {
         }
       }
-    } // else
-
-    System.out.println(">>> " + String.valueOf(src.length() / 1024) + " Kb, "
-        + String.valueOf(System.currentTimeMillis() - q));
-  } // copy
+    }
+  }
 }

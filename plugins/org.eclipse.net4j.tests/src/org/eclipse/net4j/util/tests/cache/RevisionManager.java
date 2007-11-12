@@ -15,7 +15,6 @@ import org.eclipse.net4j.internal.util.cache.Cache;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -58,8 +57,6 @@ public class RevisionManager extends Cache<Revision>
   protected Revision loadRevision(int id, int version)
   {
     Revision revision = new Revision(this, id, version);
-    System.out.println(MessageFormat.format("Loaded {0} (free={1}, total={2}, max={3})", revision, Runtime.getRuntime()
-        .freeMemory(), Runtime.getRuntime().totalMemory(), Runtime.getRuntime().maxMemory()));
     return revision;
   }
 
@@ -72,7 +69,6 @@ public class RevisionManager extends Cache<Revision>
   @Override
   protected void unreachableElement(Reference<? extends Revision> reference)
   {
-    System.out.println("Unreachable: " + reference);
   }
 
   /**

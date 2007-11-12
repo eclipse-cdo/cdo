@@ -15,6 +15,7 @@ import org.eclipse.net4j.internal.jms.MessageImpl;
 import org.eclipse.net4j.jms.internal.server.bundle.OM;
 import org.eclipse.net4j.jms.internal.server.protocol.JMSServerMessageRequest;
 import org.eclipse.net4j.jms.server.IStoreTransaction;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -120,7 +121,7 @@ public class ServerConsumer
       for (MessageImpl message : messages.values())
       {
         transaction.messageAcknowledged(message, id);
-        System.out.println("\nMessage acknowledged: " + message.getJMSMessageID() + "  (consumer=" + id + ")\n");
+        IOUtil.OUT().println("\nMessage acknowledged: " + message.getJMSMessageID() + "  (consumer=" + id + ")\n");
       }
 
       messages.clear();
@@ -138,7 +139,7 @@ public class ServerConsumer
 
       for (MessageImpl message : messages.values())
       {
-        System.out.println("\nRecovering message: " + message.getJMSMessageID() + "  (consumer=" + id + ")\n");
+        IOUtil.OUT().println("\nRecovering message: " + message.getJMSMessageID() + "  (consumer=" + id + ")\n");
         session.getConnection().getServer().addWork(message);
       }
     }

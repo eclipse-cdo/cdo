@@ -21,6 +21,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import java.util.Iterator;
 
 /**
@@ -75,9 +77,9 @@ public class ChunkingTest extends AbstractCDOTest
     int i = 0;
     for (Iterator<SalesOrder> it = salesOrders.iterator(); it.hasNext();)
     {
-      System.out.println(i++);
+      IOUtil.OUT().println(i++);
       SalesOrder salesOrder = it.next();
-      System.out.println(salesOrder);
+      IOUtil.OUT().println(salesOrder);
     }
   }
 
@@ -174,7 +176,7 @@ public class ChunkingTest extends AbstractCDOTest
     resource.getContents().add(customer);
     for (EObject element : resource.getContents())
     {
-      System.out.println(element);
+      IOUtil.OUT().println(element);
     }
 
     transaction.commit();

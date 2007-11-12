@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui;
 
+import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.IMembership;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
@@ -101,7 +102,8 @@ public class CollaborationsItemProvider extends AbstractItemProvider
     @Override
     protected Node addChild(Collection<Node> children, Object element)
     {
-      return super.addChild(children, ((IMembership)element).getCollaboration());
+      ICollaboration collaboration = ((IMembership)element).getCollaboration();
+      return super.addChild(children, collaboration);
     }
   }
 }

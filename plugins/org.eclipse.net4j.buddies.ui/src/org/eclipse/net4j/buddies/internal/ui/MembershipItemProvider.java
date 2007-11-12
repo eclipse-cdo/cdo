@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.buddies.internal.ui.views;
+package org.eclipse.net4j.buddies.internal.ui;
 
 import org.eclipse.net4j.buddies.protocol.IMembership;
 import org.eclipse.net4j.util.ui.views.IElementFilter;

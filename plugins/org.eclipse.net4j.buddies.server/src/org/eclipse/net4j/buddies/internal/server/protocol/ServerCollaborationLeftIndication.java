@@ -1,5 +1,6 @@
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
+import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.protocol.Buddy;
 import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
 import org.eclipse.net4j.buddies.internal.protocol.CollaborationLeftIndication;
@@ -30,8 +31,8 @@ public class ServerCollaborationLeftIndication extends CollaborationLeftIndicati
       {
         try
         {
-          new CollaborationLeftNotification(member.getSession().getChannel(), collaboration.getID(), member.getUserID())
-              .send();
+          IChannel channel = member.getSession().getChannel();
+          new CollaborationLeftNotification(channel, collaboration.getID(), buddy.getUserID()).send();
         }
         catch (Exception ex)
         {

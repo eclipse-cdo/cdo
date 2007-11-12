@@ -96,7 +96,8 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
 
     try
     {
-      new MessageNotification(session.getChannel(), collaborationID, facilityType, message).send();
+      IChannel channel = session.getChannel();
+      new MessageNotification(channel, collaborationID, facilityType, message).send();
     }
     catch (Exception ex)
     {
@@ -133,7 +134,8 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
     {
       try
       {
-        new InviteBuddiesNotification(session.getChannel(), getID(), invitations).send();
+        IChannel channel = session.getChannel();
+        new InviteBuddiesNotification(channel, getID(), invitations).send();
       }
       catch (Exception ex)
       {
@@ -146,7 +148,8 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
   {
     try
     {
-      new CollaborationLeftNotification(session.getChannel(), getID(), session.getSelf().getUserID()).send();
+      IChannel channel = session.getChannel();
+      new CollaborationLeftNotification(channel, getID(), session.getSelf().getUserID()).send();
     }
     catch (Exception ex)
     {

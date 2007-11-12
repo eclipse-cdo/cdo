@@ -39,6 +39,12 @@ public final class ContainerUtil
     public void removeListener(IListener listener)
     {
     }
+
+    @Override
+    public String toString()
+    {
+      return "EMPTY_CONTAINER";
+    }
   };
 
   private ContainerUtil()

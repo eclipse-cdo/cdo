@@ -20,19 +20,16 @@ import org.eclipse.net4j.internal.buddies.Self;
  */
 public class ClientCollaborationLeftIndication extends CollaborationLeftIndication
 {
-  private Self self;
-
   public ClientCollaborationLeftIndication(Self self)
   {
-    super(self);
-    this.self = self;
+    super(self.getSession(), self);
   }
 
   @Override
-  protected void collaborationLeft(Collaboration collaboration, String userID)
+  protected void collaborationLeft(Buddy buddy, Collaboration collaboration)
   {
-    Buddy buddy = (Buddy)self.getSession().getBuddy(userID);
-    buddy.removeCollaboration(collaboration.getID());
-    super.collaborationLeft(collaboration, userID);
+    buddy.removeMembership(collaboration);
+    collaboration.removeMembership(buddy);
+    super.collaborationLeft(buddy, collaboration);
   }
 }

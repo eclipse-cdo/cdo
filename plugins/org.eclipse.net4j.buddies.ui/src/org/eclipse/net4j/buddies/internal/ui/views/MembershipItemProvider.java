@@ -18,13 +18,13 @@ import org.eclipse.swt.graphics.Image;
 /**
  * @author Eike Stepper
  */
-public class BuddiesItemProvider extends AbstractItemProvider
+public class MembershipItemProvider extends AbstractItemProvider
 {
-  public BuddiesItemProvider()
+  public MembershipItemProvider()
   {
   }
 
-  public BuddiesItemProvider(IElementFilter rootElementFilter)
+  public MembershipItemProvider(IElementFilter rootElementFilter)
   {
     super(rootElementFilter);
   }
@@ -32,18 +32,18 @@ public class BuddiesItemProvider extends AbstractItemProvider
   @Override
   protected Node createMembershipNode(Node parent, IMembership membership)
   {
-    return createLeafNode(parent, membership);
+    return createContaineNode(parent, membership);
   }
 
   @Override
   protected String getText(IMembership membership)
   {
-    return getText(membership.getCollaboration());
+    return getText(membership.getBuddy()) + "(" + getText(membership.getCollaboration()) + ")";
   }
 
   @Override
   protected Image getImage(IMembership membership)
   {
-    return getImage(membership.getCollaboration());
+    return null;
   }
 }

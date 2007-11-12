@@ -4,7 +4,6 @@ import org.eclipse.net4j.buddies.internal.protocol.BuddyStateIndication;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
 import org.eclipse.net4j.internal.buddies.ClientBuddy;
 import org.eclipse.net4j.internal.buddies.ClientSession;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 /**
  * @author Eike Stepper
@@ -16,25 +15,13 @@ public class ClientBuddyStateIndication extends BuddyStateIndication
   }
 
   @Override
-  protected void stateChanged(String userID, State state)
+  protected void stateChanged(final String userID, final State state)
   {
-    for (int i = 0; i < 50; i++)
+    ClientSession session = ((ClientProtocol)getProtocol()).getSession();
+    ClientBuddy buddy = (ClientBuddy)session.getBuddy(userID);
+    if (buddy != null)
     {
-      ClientSession session = (ClientSession)getProtocol().getInfraStructure();
-      if (session == null)
-      {
-        ConcurrencyUtil.sleep(100);
-      }
-      else
-      {
-        ClientBuddy buddy = (ClientBuddy)session.getBuddy(userID);
-        if (buddy != null)
-        {
-          buddy.setState(state);
-        }
-
-        break;
-      }
+      buddy.setState(state);
     }
   }
 }

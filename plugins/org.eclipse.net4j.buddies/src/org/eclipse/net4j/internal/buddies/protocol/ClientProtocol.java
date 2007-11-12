@@ -13,15 +13,21 @@ package org.eclipse.net4j.internal.buddies.protocol;
 import org.eclipse.net4j.buddies.internal.protocol.MessageIndication;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.ISession;
+import org.eclipse.net4j.internal.buddies.ClientSession;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 /**
  * @author Eike Stepper
  */
 public class ClientProtocol extends SignalProtocol
 {
+  private static final long GET_SESSION_TIMEOUT = 20000;
+
+  private static final int GET_SESSION_INTERVAL = 100;
+
   public ClientProtocol()
   {
   }
@@ -65,5 +71,24 @@ public class ClientProtocol extends SignalProtocol
   {
     ISession session = (ISession)getInfraStructure();
     return (Self)session.getSelf();
+  }
+
+  public ClientSession getSession()
+  {
+    int max = (int)(GET_SESSION_TIMEOUT / GET_SESSION_INTERVAL);
+    for (int i = 0; i < max; i++)
+    {
+      ClientSession session = (ClientSession)getInfraStructure();
+      if (session == null)
+      {
+        ConcurrencyUtil.sleep(GET_SESSION_INTERVAL);
+      }
+      else
+      {
+        return session;
+      }
+    }
+
+    throw new IllegalStateException("No session after " + max + " milliseconds");
   }
 }

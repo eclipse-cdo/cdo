@@ -12,7 +12,7 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.ICollaboration;
+import org.eclipse.net4j.buddies.protocol.IMembership;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 
@@ -47,12 +47,12 @@ public class BuddiesView extends SessionManagerView
     {
       IBuddy buddy = (IBuddy)object;
       IBuddy self = getSession().getSelf();
-      ICollaboration collaboration = self.initiate(buddy);
+      IMembership membership = self.initiate(buddy);
 
       try
       {
         // The chat dependency is optional
-        ChatInstaller.installChat((IBuddyCollaboration)collaboration);
+        ChatInstaller.installChat((IBuddyCollaboration)membership.getCollaboration());
       }
       catch (Throwable ignore)
       {

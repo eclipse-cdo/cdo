@@ -20,7 +20,9 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.jface.viewers.TreePath;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,7 +36,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 {
   private Map<Object, Node> nodes = new HashMap<Object, Node>();
 
-  private ContainerNode root;
+  private Node root;
 
   private IElementFilter rootElementFilter;
 
@@ -128,8 +130,11 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   @Override
   protected void connectInput(CONTAINER input)
   {
-    root = (ContainerNode)createNode(null, input);
-    addNode(input, root);
+    root = createNode(null, input);
+    if (root != null)
+    {
+      addNode(input, root);
+    }
   }
 
   @Override
@@ -148,7 +153,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   {
   }
 
-  protected ContainerNode getRoot()
+  protected Node getRoot()
   {
     return root;
   }
@@ -178,10 +183,20 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   {
     if (element instanceof IContainer)
     {
-      return new ContainerNode(parent, (IContainer<Object>)element);
+      return createContaineNode(parent, element);
     }
 
+    return createLeafNode(parent, element);
+  }
+
+  protected LeafNode createLeafNode(Node parent, Object element)
+  {
     return new LeafNode(parent, element);
+  }
+
+  protected ContainerNode createContaineNode(Node parent, Object element)
+  {
+    return new ContainerNode(parent, (IContainer<Object>)element);
   }
 
   protected void addNode(Object element, Node node)
@@ -229,8 +244,6 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   {
     private Node parent;
 
-    private List<Node> children;
-
     private boolean disposed;
 
     public AbstractNode(Node parent)
@@ -244,17 +257,6 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       {
         removeNode(getElement());
         parent = null;
-        if (children != null)
-        {
-          for (Node child : children)
-          {
-            child.dispose();
-          }
-
-          children.clear();
-          children = null;
-        }
-
         disposed = true;
       }
     }
@@ -267,25 +269,13 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     @Override
     public String toString()
     {
-      Object element = getElement();
-      return element == null ? "null" : element.toString();
+      return MessageFormat.format("{0}[{1}]", getClass().getSimpleName(), getElement());
     }
 
     public final Node getParent()
     {
       checkNotDisposed();
       return parent;
-    }
-
-    public final List<Node> getChildren()
-    {
-      checkNotDisposed();
-      if (children == null)
-      {
-        children = createChildren();
-      }
-
-      return children;
     }
 
     public TreePath getTreePath()
@@ -302,49 +292,62 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       }
     }
 
-    protected abstract List<Node> createChildren();
+    protected Node addChild(Collection<Node> children, Object element)
+    {
+      if (nodes.containsKey(element))
+      {
+        return null;
+      }
+
+      if (this != root || filterRootElement(element))
+      {
+        Node node = createNode(this, element);
+        if (node != null)
+        {
+          addNode(element, node);
+          children.add(node);
+          return node;
+        }
+      }
+
+      return null;
+    }
   }
 
   /**
    * @author Eike Stepper
    */
-  public class ContainerNode extends AbstractNode
+  public abstract class AbstractContainerNode extends AbstractNode
   {
-    private IContainer<Object> container;
+    private List<Node> children;
 
-    private IListener containerListener = new ContainerEventAdapter<Object>()
+    protected IListener containerListener = new ContainerEventAdapter<Object>()
     {
       @Override
       protected void onAdded(IContainer<Object> container, Object element)
       {
-        if (container == ContainerNode.this.container)
+        Node node = addChild(getChildren(), element);
+        if (node != null)
         {
-          Node node = addChild(getChildren(), element);
-          if (node != null)
-          {
-            refreshElement(container, true);
-            revealElement(element);
-            elementAdded(element, container);
-          }
+          refreshElement(container, true);
+          revealElement(element);
+          elementAdded(element, container);
         }
       }
 
       @Override
       protected void onRemoved(IContainer<Object> container, Object element)
       {
-        if (container == ContainerNode.this.container)
+        Node node = removeNode(element);
+        if (node != null)
         {
-          Node node = removeNode(element);
-          if (node != null)
-          {
-            getChildren().remove(node);
-            elementRemoved(element, container);
+          getChildren().remove(node);
+          elementRemoved(element, container);
 
-            Object rootElement = root.getElement();
-            Object refreshElement = container == rootElement ? null : container;
-            refreshElement(refreshElement, true);
-            node.dispose();
-          }
+          Object rootElement = root.getElement();
+          Object refreshElement = container == rootElement ? null : container;
+          refreshElement(refreshElement, true);
+          node.dispose();
         }
       }
 
@@ -354,6 +357,71 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
         updateLabels(event.getSource());
       }
     };
+
+    public AbstractContainerNode(Node parent)
+    {
+      super(parent);
+    }
+
+    @Override
+    public void dispose()
+    {
+      if (!isDisposed())
+      {
+        if (children != null)
+        {
+          for (Node child : children)
+          {
+            child.dispose();
+          }
+
+          children.clear();
+          children = null;
+          containerListener = null;
+
+        }
+
+        super.dispose();
+      }
+    }
+
+    public final List<Node> getChildren()
+    {
+      checkNotDisposed();
+      if (children == null)
+      {
+        children = createChildren();
+      }
+
+      return children;
+    }
+
+    public IContainer<Object> getContainer()
+    {
+      return (IContainer<Object>)getElement();
+    }
+
+    protected List<Node> createChildren()
+    {
+      Object[] elements = getContainer().getElements();
+      List<Node> children = new ArrayList<Node>(elements.length);
+      for (int i = 0; i < elements.length; i++)
+      {
+        Object element = elements[i];
+        addChild(children, element);
+      }
+
+      getContainer().addListener(containerListener);
+      return children;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public class ContainerNode extends AbstractContainerNode
+  {
+    private IContainer<Object> container;
 
     public ContainerNode(Node parent, IContainer<Object> container)
     {
@@ -371,16 +439,9 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       if (!isDisposed())
       {
         container.removeListener(containerListener);
-        containerListener = null;
         container = null;
         super.dispose();
       }
-    }
-
-    public IContainer<Object> getContainer()
-    {
-      checkNotDisposed();
-      return container;
     }
 
     public Object getElement()
@@ -388,84 +449,31 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       checkNotDisposed();
       return container;
     }
-
-    @Override
-    public String toString()
-    {
-      return container == null ? super.toString() : container.toString();
-    }
-
-    @Override
-    protected List<Node> createChildren()
-    {
-      checkNotDisposed();
-      Object[] elements = container.getElements();
-      List<Node> children = new ArrayList<Node>(elements.length);
-      for (int i = 0; i < elements.length; i++)
-      {
-        Object element = elements[i];
-        addChild(children, element);
-      }
-
-      container.addListener(containerListener);
-      return children;
-    }
-
-    protected Node addChild(List<Node> children, Object element)
-    {
-      if (nodes.containsKey(element))
-      {
-        return null;
-      }
-
-      if (this != root || filterRootElement(element))
-      {
-        Node node = createNode(this, element);
-        addNode(element, node);
-        children.add(node);
-        return node;
-      }
-
-      return null;
-    }
   }
 
   /**
    * @author Eike Stepper
    */
-  public class LeafNode implements Node, IListener
+  public class LeafNode extends AbstractNode implements IListener
   {
-    private Node parent;
-
     private Object element;
 
     public LeafNode(Node parent, Object element)
     {
-      this.parent = parent;
+      super(parent);
       this.element = element;
       EventUtil.addListener(element, this);
     }
 
+    @Override
     public void dispose()
     {
       if (!isDisposed())
       {
-        removeNode(element);
         EventUtil.removeListener(element, this);
         element = null;
-        parent = null;
+        super.dispose();
       }
-    }
-
-    public boolean isDisposed()
-    {
-      return element == null;
-    }
-
-    public Node getParent()
-    {
-      checkNotDisposed();
-      return parent;
     }
 
     public Object getElement()
@@ -480,29 +488,9 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       return Collections.emptyList();
     }
 
-    public TreePath getTreePath()
-    {
-      TreePath parentPath = parent == null ? TreePath.EMPTY : parent.getTreePath();
-      return parentPath.createChildPath(element);
-    }
-
     public void notifyEvent(IEvent event)
     {
       updateLabels(event.getSource());
-    }
-
-    @Override
-    public String toString()
-    {
-      return element == null ? super.toString() : element.toString();
-    }
-
-    protected void checkNotDisposed()
-    {
-      if (isDisposed())
-      {
-        throw new IllegalStateException("Node is already disposed of");
-      }
     }
   }
 }

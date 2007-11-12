@@ -107,10 +107,16 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
               throw new IllegalStateException("connector == null");
             }
 
+            System.out.println("********* WAITFORCONNECTION *********");
+            long start = System.currentTimeMillis();
             boolean connected = connector.waitForConnection(5000L);
+            System.out.println("WAITFORCONNECTION = " + (System.currentTimeMillis() - start));
             if (connected)
             {
+              System.out.println("********* OPENSESSION *********");
+              start = System.currentTimeMillis();
               session = BuddiesUtil.openSession(connector, getUserID(), getPassword(), 5000L);
+              System.out.println("OPENSESSION = " + (System.currentTimeMillis() - start));
               if (session != null)
               {
                 if (connecting)

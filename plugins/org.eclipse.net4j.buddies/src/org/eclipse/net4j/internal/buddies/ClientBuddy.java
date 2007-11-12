@@ -13,8 +13,9 @@ package org.eclipse.net4j.internal.buddies;
 import org.eclipse.net4j.buddies.internal.protocol.Buddy;
 import org.eclipse.net4j.buddies.protocol.IAccount;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.ICollaboration;
+import org.eclipse.net4j.buddies.protocol.IMembership;
 
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -53,17 +54,17 @@ public class ClientBuddy extends Buddy
     return account;
   }
 
-  public ICollaboration initiate(Set<IBuddy> buddies)
+  public IMembership[] initiate(Collection<IBuddy> buddies)
   {
     throw new UnsupportedOperationException();
   }
 
-  public ICollaboration join(long collaborationID)
+  public IMembership join(long collaborationID)
   {
     throw new UnsupportedOperationException();
   }
 
-  public ICollaboration join(Object invitationToken)
+  public IMembership join(Object invitationToken)
   {
     throw new UnsupportedOperationException();
   }

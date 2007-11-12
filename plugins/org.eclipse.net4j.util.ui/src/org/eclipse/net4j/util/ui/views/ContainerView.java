@@ -75,21 +75,32 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
 
   public void resetInput()
   {
+    Runnable runnable = new Runnable()
+    {
+      public void run()
+      {
+        try
+        {
+          IContainer<?> container = getContainer();
+          viewer.setInput(container);
+        }
+        catch (RuntimeException ignore)
+        {
+        }
+      }
+    };
+
     try
     {
-      getDisplay().syncExec(new Runnable()
+      Display display = getDisplay();
+      if (display.getThread() == Thread.currentThread())
       {
-        public void run()
-        {
-          try
-          {
-            viewer.setInput(getContainer());
-          }
-          catch (RuntimeException ignore)
-          {
-          }
-        }
-      });
+        runnable.run();
+      }
+      else
+      {
+        display.asyncExec(runnable);
+      }
     }
     catch (RuntimeException ignore)
     {

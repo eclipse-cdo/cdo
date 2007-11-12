@@ -13,9 +13,10 @@ package org.eclipse.net4j.buddies.internal.server.protocol;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
+import org.eclipse.net4j.buddies.protocol.IAccount;
+import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.protocol.ProtocolUtil;
-import org.eclipse.net4j.buddies.protocol.IAccount;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -24,7 +25,6 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -33,7 +33,7 @@ public class OpenSessionIndication extends IndicationWithResponse
 {
   private IAccount account;
 
-  private String[] buddies;
+  private IBuddy[] buddies;
 
   public OpenSessionIndication()
   {
@@ -59,9 +59,7 @@ public class OpenSessionIndication extends IndicationWithResponse
 
     synchronized (IBuddyAdmin.INSTANCE)
     {
-      Map<String, ISession> sessions = IBuddyAdmin.INSTANCE.getSessions();
-      buddies = sessions.keySet().toArray(new String[sessions.size()]);
-
+      buddies = IBuddyAdmin.INSTANCE.getBuddies();
       ISession session = IBuddyAdmin.INSTANCE.openSession(getProtocol().getChannel(), userID, password, facilityTypes);
       if (session != null)
       {
@@ -82,10 +80,10 @@ public class OpenSessionIndication extends IndicationWithResponse
     {
       List<IChannel> channels = new ArrayList<IChannel>();
       out.writeInt(buddies.length);
-      for (String buddy : buddies)
+      for (IBuddy buddy : buddies)
       {
-        out.writeString(buddy);
-        ISession buddySession = IBuddyAdmin.INSTANCE.getSessions().get(buddy);
+        out.writeString(buddy.getUserID());
+        ISession buddySession = IBuddyAdmin.INSTANCE.getSession(buddy);
         if (buddySession != null)
         {
           channels.add(buddySession.getChannel());

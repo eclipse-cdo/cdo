@@ -15,6 +15,7 @@ import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.IFacility;
 import org.eclipse.net4j.buddies.protocol.IFacilityInstalledEvent;
+import org.eclipse.net4j.buddies.protocol.IMembership;
 import org.eclipse.net4j.buddies.ui.IFacilityPaneCreator;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -82,9 +83,6 @@ public class CollaborationsPane extends Composite implements IListener
       {
         collaborationAdded((IBuddyCollaboration)collaboration);
       }
-    }
-    else
-    {
     }
 
     updateState();
@@ -178,17 +176,17 @@ public class CollaborationsPane extends Composite implements IListener
 
     if (event.getSource() == session.getSelf() && event instanceof IContainerEvent)
     {
-      IContainerEvent<ICollaboration> e = (IContainerEvent<ICollaboration>)event;
-      e.accept(new IContainerEventVisitor<ICollaboration>()
+      IContainerEvent<IMembership> e = (IContainerEvent<IMembership>)event;
+      e.accept(new IContainerEventVisitor<IMembership>()
       {
-        public void added(ICollaboration collaboration)
+        public void added(IMembership membership)
         {
-          collaborationAdded((IBuddyCollaboration)collaboration);
+          collaborationAdded((IBuddyCollaboration)membership.getCollaboration());
         }
 
-        public void removed(ICollaboration collaboration)
+        public void removed(IMembership membership)
         {
-          collaborationRemoved((IBuddyCollaboration)collaboration);
+          collaborationRemoved((IBuddyCollaboration)membership.getCollaboration());
         }
       });
     }

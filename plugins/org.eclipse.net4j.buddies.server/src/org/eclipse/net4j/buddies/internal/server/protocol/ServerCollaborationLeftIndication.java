@@ -1,12 +1,13 @@
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
+import org.eclipse.net4j.buddies.internal.protocol.Buddy;
 import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
 import org.eclipse.net4j.buddies.internal.protocol.CollaborationLeftIndication;
 import org.eclipse.net4j.buddies.internal.protocol.CollaborationLeftNotification;
 import org.eclipse.net4j.buddies.internal.server.BuddyAdmin;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.protocol.IMembership;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 
 /**
@@ -16,19 +17,21 @@ public class ServerCollaborationLeftIndication extends CollaborationLeftIndicati
 {
   public ServerCollaborationLeftIndication()
   {
-    super(IBuddyAdmin.INSTANCE);
+    super(IBuddyAdmin.INSTANCE, IBuddyAdmin.INSTANCE);
   }
 
   @Override
-  protected void collaborationLeft(Collaboration collaboration, String userID)
+  protected void collaborationLeft(Buddy buddy, Collaboration collaboration)
   {
-    for (IBuddy buddy : collaboration.getBuddies())
+    for (IMembership membership : collaboration.getMemberships())
     {
-      if (!ObjectUtil.equals(buddy.getUserID(), userID))
+      IBuddy member = membership.getBuddy();
+      if (member != buddy)
       {
         try
         {
-          new CollaborationLeftNotification(buddy.getSession().getChannel(), collaboration.getID(), userID).send();
+          new CollaborationLeftNotification(member.getSession().getChannel(), collaboration.getID(), member.getUserID())
+              .send();
         }
         catch (Exception ex)
         {
@@ -37,7 +40,7 @@ public class ServerCollaborationLeftIndication extends CollaborationLeftIndicati
       }
     }
 
-    super.collaborationLeft(collaboration, userID);
+    super.collaborationLeft(buddy, collaboration);
     if (collaboration.getBuddies().length == 0 && !collaboration.isPublic())
     {
       BuddyAdmin.INSTANCE.removeCollaboration(collaboration.getID());

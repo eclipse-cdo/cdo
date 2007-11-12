@@ -29,7 +29,6 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -40,9 +39,9 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
 
   private IBuddySession session;
 
-  public BuddyCollaboration(IBuddySession session, long id, Set<IBuddy> buddies)
+  public BuddyCollaboration(IBuddySession session, long id)
   {
-    super(id, buddies);
+    super(id);
     this.session = session;
   }
 
@@ -113,20 +112,20 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
 
   public void invite(IBuddy... buddies)
   {
-    List<IBuddy> toBeInvited = new ArrayList<IBuddy>();
+    List<IBuddy> invitations = new ArrayList<IBuddy>();
     for (IBuddy buddy : buddies)
     {
-      if (getBuddy(buddy.getUserID()) == null)
+      if (getMembership(buddy) == null)
       {
-        toBeInvited.add(buddy);
+        invitations.add(buddy);
       }
     }
 
-    if (!toBeInvited.isEmpty())
+    if (!invitations.isEmpty())
     {
       try
       {
-        new InviteBuddiesNotification(session.getChannel(), getID(), toBeInvited).send();
+        new InviteBuddiesNotification(session.getChannel(), getID(), invitations).send();
       }
       catch (Exception ex)
       {

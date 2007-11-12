@@ -18,7 +18,7 @@ import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
 import org.eclipse.net4j.buddies.protocol.IAccount;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyStateEvent;
-import org.eclipse.net4j.buddies.protocol.ICollaboration;
+import org.eclipse.net4j.buddies.protocol.IMembership;
 import org.eclipse.net4j.internal.buddies.bundle.OM;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -117,9 +117,10 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
     IBuddy buddy = removeBuddy(userID);
     if (buddy != null)
     {
-      for (ICollaboration collaboration : self.getCollaborations())
+      for (IMembership membership : self.getMemberships())
       {
-        ((Collaboration)collaboration).removeBuddy(userID);
+        Collaboration collaboration = (Collaboration)membership.getCollaboration();
+        collaboration.removeMembership(buddy);
       }
 
       LifecycleUtil.deactivate(buddy);

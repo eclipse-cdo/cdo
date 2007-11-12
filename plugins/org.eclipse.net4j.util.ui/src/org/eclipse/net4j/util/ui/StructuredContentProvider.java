@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.ui;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.internal.ui.bundle.OM;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -66,6 +67,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
       }
       catch (Exception ex)
       {
+        OM.LOG.error(ex);
         input = null;
       }
     }

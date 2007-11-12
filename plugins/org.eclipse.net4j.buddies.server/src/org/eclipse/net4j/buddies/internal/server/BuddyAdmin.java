@@ -13,9 +13,11 @@ package org.eclipse.net4j.buddies.internal.server;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.buddies.internal.protocol.Account;
+import org.eclipse.net4j.buddies.internal.protocol.Buddy;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateNotification;
 import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
 import org.eclipse.net4j.buddies.internal.protocol.CollaborationContainer;
+import org.eclipse.net4j.buddies.internal.protocol.Membership;
 import org.eclipse.net4j.buddies.internal.protocol.ServerFacilityFactory;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
 import org.eclipse.net4j.buddies.internal.server.protocol.BuddyRemovedNotification;
@@ -34,10 +36,13 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Eike Stepper
@@ -48,9 +53,9 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BuddyAdmin.class);
 
-  private Map<String, IAccount> accounts = new HashMap<String, IAccount>();
+  private ConcurrentMap<String, IAccount> accounts = new ConcurrentHashMap<String, IAccount>();
 
-  private Map<String, ISession> sessions = new HashMap<String, ISession>();
+  private ConcurrentMap<String, ISession> sessions = new ConcurrentHashMap<String, ISession>();
 
   private long lastCollaborationID;
 
@@ -64,9 +69,41 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
     return accounts;
   }
 
-  public Map<String, ISession> getSessions()
+  public ISession getSession(IBuddy buddy)
   {
-    return sessions;
+    return getSession(buddy.getUserID());
+  }
+
+  public ISession getSession(String userID)
+  {
+    return sessions.get(userID);
+  }
+
+  public ISession[] getSessions()
+  {
+    return sessions.values().toArray(new ISession[sessions.size()]);
+  }
+
+  public IBuddy[] getBuddies()
+  {
+    List<IBuddy> buddies = new ArrayList<IBuddy>();
+    for (ISession session : sessions.values())
+    {
+      buddies.add(session.getSelf());
+    }
+
+    return buddies.toArray(new IBuddy[buddies.size()]);
+  }
+
+  public IBuddy getBuddy(String userID)
+  {
+    ISession session = getSession(userID);
+    if (session == null)
+    {
+      return null;
+    }
+
+    return session.getSelf();
   }
 
   public synchronized ISession openSession(IChannel channel, String userID, String password, String[] facilityTypes)
@@ -108,22 +145,27 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
   public ICollaboration initiateCollaboration(IBuddy initiator, String... userIDs)
   {
     long collaborationID;
-    Set<IBuddy> buddies = new HashSet<IBuddy>();
-    buddies.add(initiator);
     synchronized (this)
     {
       collaborationID = ++lastCollaborationID;
-      for (String userID : userIDs)
+    }
+
+    Collaboration collaboration = new Collaboration(collaborationID);
+    LifecycleUtil.activate(collaboration);
+    Membership.create(initiator, collaboration);
+
+    Set<IBuddy> buddies = new HashSet<IBuddy>();
+    buddies.add(initiator);
+    for (String userID : userIDs)
+    {
+      Buddy buddy = (Buddy)getBuddy(userID);
+      if (buddy != null)
       {
-        ISession session = sessions.get(userID);
-        if (session != null)
-        {
-          buddies.add(session.getSelf());
-        }
+        buddies.add(buddy);
+        Membership.create(buddy, collaboration);
       }
     }
 
-    Collaboration collaboration = new Collaboration(collaborationID, buddies);
     addCollaboration(collaboration);
 
     Set<IBuddy> invitations = new HashSet<IBuddy>(buddies);

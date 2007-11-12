@@ -12,14 +12,18 @@ package org.eclipse.net4j.internal.buddies;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.protocol.Buddy;
+import org.eclipse.net4j.buddies.internal.protocol.Membership;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IAccount;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.ICollaboration;
+import org.eclipse.net4j.buddies.protocol.IMembership;
 import org.eclipse.net4j.internal.buddies.protocol.InitiateCollaborationRequest;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -51,7 +55,7 @@ public class Self extends Buddy
     return account;
   }
 
-  public ICollaboration initiate(Set<IBuddy> buddies)
+  public IMembership[] initiate(Collection<IBuddy> buddies)
   {
     try
     {
@@ -59,15 +63,18 @@ public class Self extends Buddy
       IChannel channel = session.getChannel();
       long id = new InitiateCollaborationRequest(channel, buddies).send(ProtocolConstants.TIMEOUT);
 
-      BuddyCollaboration collaboration = new BuddyCollaboration(session, id, buddies);
+      BuddyCollaboration collaboration = new BuddyCollaboration(session, id);
       LifecycleUtil.activate(collaboration);
-      addCollaboration(collaboration);
+      Membership.create(this, collaboration);
+
+      List<IMembership> memberships = new ArrayList<IMembership>();
       for (IBuddy buddy : buddies)
       {
-        ((Buddy)buddy).addCollaboration(collaboration);
+        IMembership membership = Membership.create(buddy, collaboration);
+        memberships.add(membership);
       }
 
-      return collaboration;
+      return memberships.toArray(new IMembership[memberships.size()]);
     }
     catch (Exception ex)
     {
@@ -75,13 +82,13 @@ public class Self extends Buddy
     }
   }
 
-  public ICollaboration join(long collaborationID)
+  public IMembership join(long collaborationID)
   {
     // TODO Implement method Self.join()
     throw new UnsupportedOperationException("Not yet implemented");
   }
 
-  public ICollaboration join(Object invitationToken)
+  public IMembership join(Object invitationToken)
   {
     // TODO Implement method Self.join()
     throw new UnsupportedOperationException("Not yet implemented");
@@ -90,9 +97,9 @@ public class Self extends Buddy
   @Override
   protected void doDeactivate() throws Exception
   {
-    for (ICollaboration collaboration : getCollaborations())
+    for (IMembership membership : getMemberships())
     {
-      LifecycleUtil.deactivate(collaboration);
+      LifecycleUtil.deactivate(membership.getCollaboration());
     }
 
     super.doDeactivate();

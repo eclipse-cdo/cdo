@@ -11,11 +11,11 @@
 package org.eclipse.net4j.internal.buddies.protocol;
 
 import org.eclipse.net4j.buddies.IBuddySession;
+import org.eclipse.net4j.buddies.internal.protocol.Membership;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.ProtocolUtil;
 import org.eclipse.net4j.internal.buddies.BuddyCollaboration;
-import org.eclipse.net4j.internal.buddies.ClientBuddy;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -51,20 +51,20 @@ public class CollaborationInitiatedIndication extends Indication
     BuddyCollaboration collaboration = (BuddyCollaboration)self.getCollaboration(collaborationID);
     if (collaboration == null)
     {
-      collaboration = new BuddyCollaboration(session, collaborationID, buddies);
+      collaboration = new BuddyCollaboration(session, collaborationID);
       LifecycleUtil.activate(collaboration);
-      self.addCollaboration(collaboration);
+
+      Membership.create(self, collaboration);
       for (IBuddy buddy : buddies)
       {
-        ((ClientBuddy)buddy).addCollaboration(collaboration);
+        Membership.create(buddy, collaboration);
       }
     }
     else
     {
       for (IBuddy buddy : buddies)
       {
-        collaboration.addBuddy(buddy);
-        ((ClientBuddy)buddy).addCollaboration(collaboration);
+        Membership.create(buddy, collaboration);
       }
     }
   }

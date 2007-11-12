@@ -11,12 +11,11 @@
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
 import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.buddies.internal.protocol.Buddy;
 import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
+import org.eclipse.net4j.buddies.internal.protocol.Membership;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.server.BuddyAdmin;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.protocol.ProtocolUtil;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.WrappedException;
@@ -26,7 +25,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -51,16 +49,14 @@ public class InviteBuddiesIndication extends Indication
     String[] userIDs = ProtocolUtil.readUserIDs(in);
 
     Collaboration collaboration = (Collaboration)BuddyAdmin.INSTANCE.getCollaboration(collaborationID);
-    Map<String, ISession> sessions = BuddyAdmin.INSTANCE.getSessions();
     Set<IBuddy> added = new HashSet<IBuddy>();
 
     for (String userID : userIDs)
     {
-      ISession session = sessions.get(userID);
-      IBuddy buddy = session.getSelf();
-      if (collaboration.addBuddy(buddy))
+      IBuddy buddy = BuddyAdmin.INSTANCE.getBuddy(userID);
+      if (buddy != null && collaboration.getMembership(buddy) == null)
       {
-        ((Buddy)buddy).addCollaboration(collaboration);
+        Membership.create(buddy, collaboration);
         added.add(buddy);
       }
     }

@@ -6,8 +6,6 @@ import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.protocol.IBuddy.State;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 
-import java.util.Map;
-
 /**
  * @author Eike Stepper
  */
@@ -22,8 +20,7 @@ public class ServerBuddyStateIndication extends BuddyStateIndication
   {
     synchronized (IBuddyAdmin.INSTANCE)
     {
-      Map<String, ISession> sessions = IBuddyAdmin.INSTANCE.getSessions();
-      ISession session = sessions.get(userID);
+      ISession session = IBuddyAdmin.INSTANCE.getSession(userID);
       if (session != null)
       {
         ServerBuddy buddy = (ServerBuddy)session.getSelf();

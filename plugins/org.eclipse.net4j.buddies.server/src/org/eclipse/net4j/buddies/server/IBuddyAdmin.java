@@ -14,22 +14,22 @@ import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.server.BuddyAdmin;
 import org.eclipse.net4j.buddies.protocol.IAccount;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.buddies.protocol.IBuddyProvider;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.ICollaborationContainer;
 import org.eclipse.net4j.buddies.protocol.ISession;
+import org.eclipse.net4j.buddies.protocol.ISessionProvider;
 
 import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public interface IBuddyAdmin extends ICollaborationContainer
+public interface IBuddyAdmin extends ICollaborationContainer, IBuddyProvider, ISessionProvider
 {
   public static final IBuddyAdmin INSTANCE = BuddyAdmin.INSTANCE;
 
   public Map<String, IAccount> getAccounts();
-
-  public Map<String, ISession> getSessions();
 
   public ISession openSession(IChannel channel, String userID, String password, String[] facilityTypes);
 

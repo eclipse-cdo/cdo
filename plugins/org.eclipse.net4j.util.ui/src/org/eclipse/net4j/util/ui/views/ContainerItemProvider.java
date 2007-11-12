@@ -456,7 +456,6 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
     public Object getElement()
     {
-      checkNotDisposed();
       return container;
     }
   }

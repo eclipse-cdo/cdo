@@ -10,8 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui;
 
+import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.IMembership;
 import org.eclipse.net4j.internal.buddies.Self;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.swt.graphics.Image;
@@ -79,7 +83,7 @@ public class CollaborationsItemProvider extends AbstractItemProvider
   /**
    * @author Eike Stepper
    */
-  private class SelfNode extends AbstractContainerNode
+  private class SelfNode extends AbstractContainerNode implements IListener
   {
     private Self self;
 
@@ -104,10 +108,30 @@ public class CollaborationsItemProvider extends AbstractItemProvider
       return self;
     }
 
+    public void notifyEvent(IEvent event)
+    {
+      IMembership membership = (IMembership)event.getSource();
+      if (event instanceof ILifecycleEvent)
+      {
+        ILifecycleEvent e = (ILifecycleEvent)event;
+        if (e.getKind() == ILifecycleEvent.Kind.DEACTIVATED)
+        {
+          membership.removeListener(this);
+          ICollaboration collaboration = membership.getCollaboration();
+          Node node = getNode(collaboration);
+          if (node != null)
+          {
+            node.dispose();
+          }
+        }
+      }
+    }
+
     @Override
     protected Node addChild(Collection<Node> children, Object element)
     {
       IMembership membership = (IMembership)element;
+      membership.addListener(this);
       return super.addChild(children, membership.getCollaboration());
     }
   }

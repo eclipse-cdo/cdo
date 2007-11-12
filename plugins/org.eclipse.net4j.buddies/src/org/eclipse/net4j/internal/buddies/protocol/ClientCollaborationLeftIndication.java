@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies.protocol;
 
-import org.eclipse.net4j.buddies.internal.protocol.Buddy;
-import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
 import org.eclipse.net4j.buddies.internal.protocol.CollaborationLeftIndication;
 import org.eclipse.net4j.internal.buddies.Self;
 
@@ -23,13 +21,5 @@ public class ClientCollaborationLeftIndication extends CollaborationLeftIndicati
   public ClientCollaborationLeftIndication(Self self)
   {
     super(self.getSession(), self);
-  }
-
-  @Override
-  protected void collaborationLeft(Buddy buddy, Collaboration collaboration)
-  {
-    buddy.removeMembership(collaboration);
-    collaboration.removeMembership(buddy);
-    super.collaborationLeft(buddy, collaboration);
   }
 }

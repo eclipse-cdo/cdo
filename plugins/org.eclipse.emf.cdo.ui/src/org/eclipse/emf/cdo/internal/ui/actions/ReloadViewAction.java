@@ -22,8 +22,7 @@ public final class ReloadViewAction extends ViewAction
   @Override
   protected void doRun() throws Exception
   {
-    int num = getView().reload();
-    if (num != 0)
+    if (getView().reload() != 0)
     {
       CDOEditor.refresh(getPage(), getView());
     }

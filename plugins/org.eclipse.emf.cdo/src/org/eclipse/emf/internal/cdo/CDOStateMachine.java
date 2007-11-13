@@ -1,5 +1,6 @@
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -509,7 +510,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       try
       {
         String path = CDOUtil.extractResourcePath(resource.getURI());
-        CDOSessionImpl session = view.getSession();
+        CDOSession session = view.getSession();
 
         IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
         ResourceIDRequest request = new ResourceIDRequest(session.getChannel(), path);

@@ -30,7 +30,7 @@ public class AllTests
     suite.addTestSuite(MonitorTest.class);
     suite.addTestSuite(SortedFileMapTest.class);
     suite.addTestSuite(SynchronizingCorrelatorTest.class);
-    suite.addTestSuite(TestBufferPool.class);
+    suite.addTestSuite(BufferPoolTest.class);
     // suite.addTestSuite(SecurityTest.class);
     // TODO suite.addTestSuite(ConnectorTest.class);
     // $JUnit-END$

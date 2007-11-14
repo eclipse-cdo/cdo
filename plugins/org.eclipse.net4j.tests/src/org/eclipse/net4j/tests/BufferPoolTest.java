@@ -24,11 +24,18 @@ import java.util.Collection;
 /**
  * @author Eike Stepper
  */
-public class TestBufferPool extends AbstractOMTest
+public class BufferPoolTest extends AbstractOMTest
 {
   private static IBufferPool bufferPool = Net4jUtil.createBufferPool();
 
   private static Collection<byte[]> memory = new ArrayList<byte[]>();
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    memory.clear();
+    super.doTearDown();
+  }
 
   public void testBufferPool() throws Exception
   {
@@ -57,7 +64,7 @@ public class TestBufferPool extends AbstractOMTest
 
   private static void msg()
   {
-    IOUtil.OUT().println("pooledBuffers = " + Net4jUtil.getPooledBuffers(bufferPool));
+    msg("pooledBuffers = " + Net4jUtil.getPooledBuffers(bufferPool));
   }
 
   private static boolean allocate()
@@ -73,7 +80,7 @@ public class TestBufferPool extends AbstractOMTest
       msg();
       return true;
     }
-    catch (Exception ex)
+    catch (Throwable t)
     {
       return false;
     }

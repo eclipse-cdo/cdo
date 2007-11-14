@@ -79,6 +79,7 @@ public class Net4jConfigurator
   protected IAcceptor configureAcceptor(Element acceptorConfig)
   {
     String type = acceptorConfig.getAttribute("type");
+    // TODO Make the following dependent on the "type" attribute value
     String listenAddr = acceptorConfig.getAttribute("listenAddr");
     String port = acceptorConfig.getAttribute("port");
     String description = (listenAddr == null ? "" : listenAddr) + (port == null ? "" : ":" + port);

@@ -16,9 +16,6 @@
 		<property name="revisedLRUCapacity" value="100"/>
 		
 		<store type="db">
-			<!-- mode: OFF | EXPRESS | NORMAL | GUARANTEED -->
-			<invalidationStrategy mode="EXPRESS"/>
-			
 			<!-- type: horizontal | vertical | <any user-contributed type> -->
 			<mappingStrategy type="horizontal">
 				<!-- ONE_TABLE_PER_REFERENCE | ONE_TABLE_PER_CLASS | ONE_TABLE_PER_PACKAGE | ONE_TABLE_PER_REPOSITORY | LIKE_ATTRIBUTES -->

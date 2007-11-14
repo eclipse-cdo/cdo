@@ -49,7 +49,7 @@ public final class DBUtil
 
   public static DataSource createDataSource(Map<Object, Object> properties, String namespace)
   {
-    return createDataSource(properties, namespace, "driverClass");
+    return createDataSource(properties, namespace, "class");
   }
 
   public static DataSource createDataSource(Map<Object, Object> properties, String namespace, String driverClassKey)

@@ -53,14 +53,15 @@ import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ref.ReferenceValueMap;
+import org.eclipse.net4j.util.ref.ReferenceValueMap.Soft;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Eike Stepper
@@ -83,7 +84,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private CDOFeatureAnalyzer featureAnalyzer = CDOFeatureAnalyzer.NOOP;
 
-  private Map<CDOID, InternalCDOObject> objects = new HashMap<CDOID, InternalCDOObject>();
+  private ConcurrentMap<CDOID, InternalCDOObject> objects;
 
   private CDOStore store = new CDOStore(this);
 
@@ -97,6 +98,12 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     this.session = session;
     enableInvalidationNotifications = OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.getValue();
     loadRevisionCollectionChunkSize = OM.PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE.getValue();
+    objects = createObjectsMap();
+  }
+
+  protected Soft<CDOID, InternalCDOObject> createObjectsMap()
+  {
+    return new ReferenceValueMap.Soft<CDOID, InternalCDOObject>();
   }
 
   public int getViewID()

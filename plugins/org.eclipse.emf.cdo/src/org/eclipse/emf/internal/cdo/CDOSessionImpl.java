@@ -25,21 +25,6 @@ import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.internal.util.container.Container;
-import org.eclipse.net4j.internal.util.event.Event;
-import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.signal.IFailOverEvent;
-import org.eclipse.net4j.signal.IFailOverStrategy;
-import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.event.EventUtil;
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.lifecycle.ILifecycle;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -55,6 +40,21 @@ import org.eclipse.emf.internal.cdo.protocol.QueryObjectTypesRequest;
 import org.eclipse.emf.internal.cdo.protocol.ViewsChangedNotification;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.emf.internal.cdo.util.ProxyResolverURIResourceMap;
+
+import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.internal.util.container.Container;
+import org.eclipse.net4j.internal.util.event.Event;
+import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.signal.IFailOverEvent;
+import org.eclipse.net4j.signal.IFailOverStrategy;
+import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import java.text.MessageFormat;
 import java.util.Collection;
@@ -248,9 +248,14 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   public CDOTransactionImpl openTransaction(ResourceSet resourceSet)
   {
-    CDOTransactionImpl transaction = new CDOTransactionImpl(++lastViewID, this);
+    CDOTransactionImpl transaction = createTransaction(++lastViewID);
     attach(resourceSet, transaction);
     return transaction;
+  }
+
+  protected CDOTransactionImpl createTransaction(int id)
+  {
+    return new CDOTransactionImpl(id, this);
   }
 
   public CDOTransactionImpl openTransaction()
@@ -260,9 +265,14 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   public CDOViewImpl openView(ResourceSet resourceSet)
   {
-    CDOViewImpl view = new CDOViewImpl(++lastViewID, this);
+    CDOViewImpl view = createView(++lastViewID);
     attach(resourceSet, view);
     return view;
+  }
+
+  protected CDOViewImpl createView(int id)
+  {
+    return new CDOViewImpl(id, this);
   }
 
   public CDOViewImpl openView()
@@ -272,9 +282,14 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   public CDOAuditImpl openAudit(ResourceSet resourceSet, long timeStamp)
   {
-    CDOAuditImpl audit = new CDOAuditImpl(++lastViewID, this, timeStamp);
+    CDOAuditImpl audit = createAudit(++lastViewID, timeStamp);
     attach(resourceSet, audit);
     return audit;
+  }
+
+  protected CDOAuditImpl createAudit(int id, long timeStamp)
+  {
+    return new CDOAuditImpl(id, this, timeStamp);
   }
 
   public CDOAuditImpl openAudit(long timeStamp)

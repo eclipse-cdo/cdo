@@ -54,7 +54,6 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
-import org.eclipse.net4j.util.ref.ReferenceValueMap.Soft;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -101,9 +100,9 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     objects = createObjectsMap();
   }
 
-  protected Soft<CDOID, InternalCDOObject> createObjectsMap()
+  protected ConcurrentMap<CDOID, InternalCDOObject> createObjectsMap()
   {
-    return new ReferenceValueMap.Soft<CDOID, InternalCDOObject>();
+    return new ReferenceValueMap.Weak<CDOID, InternalCDOObject>();
   }
 
   public int getViewID()

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.collection;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.IHistory;
 import org.eclipse.net4j.util.collection.IHistoryElement;
 
@@ -46,10 +47,15 @@ public class HistoryElement<T> implements IHistoryElement<T>
   @Override
   public boolean equals(Object obj)
   {
-    if (obj instanceof HistoryElement)
+    if (obj == this)
     {
-      HistoryElement<T> that = (HistoryElement<T>)obj;
-      return this.history.equals(that.history) && this.data.equals(that.data);
+      return true;
+    }
+
+    if (obj instanceof IHistoryElement)
+    {
+      IHistoryElement<T> that = (IHistoryElement<T>)obj;
+      return ObjectUtil.equals(history, that.getHistory()) && ObjectUtil.equals(data, that.getData());
     }
 
     return false;

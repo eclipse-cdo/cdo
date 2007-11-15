@@ -502,6 +502,11 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     @Override
     public boolean equals(Object obj)
     {
+      if (obj == this)
+      {
+        return true;
+      }
+
       if (obj instanceof ElementKey)
       {
         ElementKey key = (ElementKey)obj;

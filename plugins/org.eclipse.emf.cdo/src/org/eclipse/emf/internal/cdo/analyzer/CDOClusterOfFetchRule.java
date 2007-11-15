@@ -57,11 +57,16 @@ public class CDOClusterOfFetchRule
   }
 
   @Override
-  public boolean equals(Object object)
+  public boolean equals(Object obj)
   {
-    if (object instanceof CDOClusterOfFetchRule)
+    if (obj == this)
     {
-      CDOClusterOfFetchRule featureInfo = (CDOClusterOfFetchRule)object;
+      return true;
+    }
+
+    if (obj instanceof CDOClusterOfFetchRule)
+    {
+      CDOClusterOfFetchRule featureInfo = (CDOClusterOfFetchRule)obj;
       return featureInfo.rootClass == rootClass && featureInfo.rootFeature == rootFeature;
     }
 

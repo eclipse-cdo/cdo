@@ -47,6 +47,11 @@ public final class FactoryKey implements IFactoryKey, Serializable, Comparable<F
   @Override
   public boolean equals(Object obj)
   {
+    if (obj == this)
+    {
+      return true;
+    }
+
     if (obj instanceof FactoryKey)
     {
       FactoryKey key = (FactoryKey)obj;

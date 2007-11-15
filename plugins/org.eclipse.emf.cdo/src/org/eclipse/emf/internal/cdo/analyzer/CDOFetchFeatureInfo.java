@@ -109,11 +109,16 @@ public class CDOFetchFeatureInfo
   }
 
   @Override
-  public boolean equals(Object object)
+  public boolean equals(Object obj)
   {
-    if (object instanceof CDOFetchFeatureInfo)
+    if (obj == this)
     {
-      CDOFetchFeatureInfo featureInfo = (CDOFetchFeatureInfo)object;
+      return true;
+    }
+
+    if (obj instanceof CDOFetchFeatureInfo)
+    {
+      CDOFetchFeatureInfo featureInfo = (CDOFetchFeatureInfo)obj;
       return featureInfo.cdoClass == cdoClass && featureInfo.cdoFeature == cdoFeature;
     }
 

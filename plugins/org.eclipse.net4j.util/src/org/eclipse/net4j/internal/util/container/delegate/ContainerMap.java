@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.util.container.delegate;
 
 import org.eclipse.net4j.internal.util.container.ContainerEvent;
+import org.eclipse.net4j.util.collection.MapEntry;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.delegate.IContainerMap;
 
@@ -82,10 +83,10 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
     V removed = getDelegate().put(key, value);
     if (removed != null)
     {
-      event.addDelta(new MapEntry<K, V>(key, removed), IContainerDelta.Kind.REMOVED);
+      event.addDelta(new ContainerMapEntry<K, V>(key, removed), IContainerDelta.Kind.REMOVED);
     }
 
-    event.addDelta(new MapEntry<K, V>(key, value), IContainerDelta.Kind.ADDED);
+    event.addDelta(new ContainerMapEntry<K, V>(key, value), IContainerDelta.Kind.ADDED);
     fireEvent(event);
     return removed;
   }
@@ -105,10 +106,10 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
       V removed = getDelegate().put(key, value);
       if (removed != null)
       {
-        event.addDelta(new MapEntry<K, V>(key, removed), IContainerDelta.Kind.REMOVED);
+        event.addDelta(new ContainerMapEntry<K, V>(key, removed), IContainerDelta.Kind.REMOVED);
       }
 
-      event.addDelta(new MapEntry<K, V>(key, value), IContainerDelta.Kind.ADDED);
+      event.addDelta(new ContainerMapEntry<K, V>(key, value), IContainerDelta.Kind.ADDED);
     }
 
     dispatchEvent(event);
@@ -122,7 +123,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
     V removed = getDelegate().remove(key);
     if (removed != null)
     {
-      fireRemovedEvent(new MapEntry<Object, V>(key, removed));
+      fireRemovedEvent(new ContainerMapEntry<Object, V>(key, removed));
     }
 
     return removed;
@@ -179,28 +180,14 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @author Eike Stepper
    */
-  private static final class MapEntry<K, V> implements Map.Entry<K, V>
+  private static final class ContainerMapEntry<K, V> extends MapEntry<K, V>
   {
-    private K key;
-
-    private V value;
-
-    private MapEntry(K key, V value)
+    public ContainerMapEntry(K key, V value)
     {
-      this.key = key;
-      this.value = value;
+      super(key, value);
     }
 
-    public K getKey()
-    {
-      return key;
-    }
-
-    public V getValue()
-    {
-      return value;
-    }
-
+    @Override
     public V setValue(V value)
     {
       throw new UnsupportedOperationException();

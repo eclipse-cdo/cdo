@@ -286,6 +286,11 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     @Override
     public boolean equals(Object obj)
     {
+      if (obj == this)
+      {
+        return true;
+      }
+
       if (obj instanceof IChannelID)
       {
         IChannelID that = (IChannelID)obj;

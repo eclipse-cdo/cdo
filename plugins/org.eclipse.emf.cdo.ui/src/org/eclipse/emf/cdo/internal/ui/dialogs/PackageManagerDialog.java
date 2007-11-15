@@ -383,10 +383,15 @@ public class PackageManagerDialog extends TitleAreaDialog
     @Override
     public boolean equals(Object obj)
     {
+      if (obj == this)
+      {
+        return true;
+      }
+
       if (obj instanceof Content)
       {
         Content that = (Content)obj;
-        return ObjectUtil.equals(this.packageURI, that.packageURI);
+        return ObjectUtil.equals(packageURI, that.packageURI);
       }
 
       return false;

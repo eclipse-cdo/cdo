@@ -15,12 +15,12 @@ import org.eclipse.emf.cdo.CDOViewResourcesEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.ui.CDOViewHistoryEvent;
 
+import org.eclipse.emf.ecore.resource.Resource;
+
 import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.event.Notifier;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-
-import org.eclipse.emf.ecore.resource.Resource;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
@@ -189,6 +189,11 @@ public final class CDOViewHistory extends Notifier
     @Override
     public boolean equals(Object obj)
     {
+      if (obj == this)
+      {
+        return true;
+      }
+
       if (obj instanceof Entry)
       {
         Entry that = (Entry)obj;

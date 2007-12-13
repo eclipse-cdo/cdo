@@ -30,6 +30,7 @@ public class AllTests
     suite.addTestSuite(RollbackTest.class);
     suite.addTestSuite(CrossReferenceTest.class);
     suite.addTestSuite(ChunkingTest.class);
+    suite.addTestSuite(ChunkingWithMEMTest.class);
     suite.addTestSuite(RandomDeadLockTest.class);
     suite.addTestSuite(PackageRegistryTest.class);
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);

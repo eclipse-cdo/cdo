@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - bug 210868
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
@@ -103,7 +104,14 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       }
     }
   }
-
+  
+  public IStoreReader ensureChunk(CDORevisionImpl revision, CDOFeature feature, int chunkStart, int chunkEnd)
+  {
+	  MoveableList list = revision.getList(feature);
+	  chunkEnd = Math.min(chunkEnd, list.size());
+	  return this.ensureChunk(revision, feature, StoreUtil.getReader(), list, chunkStart, chunkEnd);
+  }
+  
   protected IStoreReader ensureChunk(CDORevisionImpl revision, CDOFeature feature, IStoreReader storeReader,
       MoveableList list, int chunkStart, int chunkEnd)
   {
@@ -132,8 +140,8 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
             chunkReader = storeReader.createChunkReader(revision, feature);
           }
 
-          int toIndex = j - 1;
-          if (fromIndex == toIndex)
+          int toIndex = j;
+          if (fromIndex == toIndex - 1)
           {
             chunkReader.addSimpleChunk(fromIndex);
           }
@@ -160,8 +168,8 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
         chunkReader = storeReader.createChunkReader(revision, feature);
       }
 
-      int toIndex = chunkEnd - 1;
-      if (fromIndex == toIndex)
+      int toIndex = chunkEnd;
+      if (fromIndex == toIndex - 1)
       {
         chunkReader.addSimpleChunk(fromIndex);
       }

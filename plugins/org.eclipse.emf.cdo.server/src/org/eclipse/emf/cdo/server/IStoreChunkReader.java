@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - bug 210868
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
@@ -58,7 +59,7 @@ public interface IStoreChunkReader
 
     public int size()
     {
-      if (ids instanceof CDOID)
+      if (ids instanceof CDOID || ids == null)
       {
         return 1;
       }
@@ -68,7 +69,7 @@ public interface IStoreChunkReader
 
     public CDOID getID(int indexInChunk)
     {
-      if (ids instanceof CDOID)
+      if (ids instanceof CDOID || ids == null)
       {
         if (indexInChunk == 0)
         {
@@ -83,11 +84,12 @@ public interface IStoreChunkReader
 
     public void addID(int indexInChunk, CDOID id)
     {
-      if (ids instanceof CDOID)
+      if (ids instanceof CDOID || ids == null)
       {
         if (indexInChunk == 0)
         {
           ids = id;
+          return;
         }
 
         throw new ArrayIndexOutOfBoundsException(indexInChunk);

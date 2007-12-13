@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - bug 210868
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
@@ -80,10 +81,12 @@ public class LoadChunkIndication extends CDOReadIndication
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
     CDORevisionImpl revision = getRevisionManager().getRevisionByVersion(id, 0, version);
+    getRevisionManager().ensureChunk(revision, feature, fromIndex, toIndex + 1);
+
     MoveableList list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
-      CDOIDImpl.write(out, (CDOID)list.get(i));
+      CDOIDImpl.write(out, getSession().provideCDOID(list.get(i)));
     }
   }
 }

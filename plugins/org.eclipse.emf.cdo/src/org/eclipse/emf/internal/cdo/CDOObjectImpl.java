@@ -240,13 +240,60 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   @Override
-  protected EList<?> createList(EStructuralFeature eStructuralFeature)
+  protected EList<?> createList(final EStructuralFeature eStructuralFeature)
   {
-    EClassifier eType = eStructuralFeature.getEType();
+    final EClassifier eType = eStructuralFeature.getEType();
     if (eType.getInstanceClassName() == "java.util.Map$Entry")
     {
-      return new EcoreEMap<Object, Object>((EClass)eType, eType.getInstanceClass(),
-          new CDOStoreEList<BasicEMap.Entry<Object, Object>>(eStructuralFeature));
+      class EStoreEcoreEMap extends EcoreEMap<Object, Object>
+      {
+        private static final long serialVersionUID = 1L;
+
+        public EStoreEcoreEMap()
+        {
+          super((EClass)eType, eType.getInstanceClass(), null);
+          delegateEList = new CDOStoreEList<BasicEMap.Entry<Object, Object>>(eStructuralFeature)
+          {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void didAdd(int index, BasicEMap.Entry<Object, Object> newObject)
+            {
+              EStoreEcoreEMap.this.doPut(newObject);
+            }
+
+            @Override
+            protected void didSet(int index, BasicEMap.Entry<Object, Object> newObject,
+                BasicEMap.Entry<Object, Object> oldObject)
+            {
+              didRemove(index, oldObject);
+              didAdd(index, newObject);
+            }
+
+            @Override
+            protected void didRemove(int index, BasicEMap.Entry<Object, Object> oldObject)
+            {
+              EStoreEcoreEMap.this.doRemove(oldObject);
+            }
+
+            @Override
+            protected void didClear(int size, Object[] oldObjects)
+            {
+              EStoreEcoreEMap.this.doClear();
+            }
+
+            @Override
+            protected void didMove(int index, BasicEMap.Entry<Object, Object> movedObject, int oldIndex)
+            {
+              EStoreEcoreEMap.this.doMove(movedObject);
+            }
+          };
+
+          size = delegateEList.size();
+        }
+      }
+
+      return new EStoreEcoreEMap();
     }
 
     return new CDOStoreEList<Object>(eStructuralFeature);

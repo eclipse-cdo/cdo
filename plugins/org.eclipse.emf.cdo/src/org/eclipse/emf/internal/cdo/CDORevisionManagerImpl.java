@@ -11,22 +11,24 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDORevisionManager;
+import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.signal.IFailOverStrategy;
-
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.LoadChunkRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByTimeRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByVersionRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
+
+import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.internal.util.om.trace.PerfTracer;
+import org.eclipse.net4j.signal.IFailOverStrategy;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,6 +39,8 @@ import java.util.List;
  */
 public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements CDORevisionManager
 {
+  private static final PerfTracer LOADING = new PerfTracer(OM.PERF_REVISION_LOADING, CDORevisionManagerImpl.class);
+
   private CDOSessionImpl session;
 
   private CDOFetchRuleManager ruleManager = CDOFetchRuleManager.NOOP;
@@ -238,6 +242,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   {
     try
     {
+      LOADING.start(request);
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
       return failOverStrategy.send(request);
     }
@@ -248,6 +253,10 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
     catch (Exception ex)
     {
       throw new TransportException(ex);
+    }
+    finally
+    {
+      LOADING.stop(request);
     }
   }
 

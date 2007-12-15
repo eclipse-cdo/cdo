@@ -12,6 +12,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.ui.dialogs.BulkAddDialog;
 import org.eclipse.emf.cdo.internal.ui.dialogs.RollbackTransactionDialog;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
@@ -30,8 +31,10 @@ import org.eclipse.emf.common.ui.editor.ProblemEditorPart;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -65,6 +68,7 @@ import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.transaction.TransactionException;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
+import org.eclipse.net4j.util.ui.actions.SafeAction;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -1906,6 +1910,67 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     if (populateNewRoot(submenuManager))
     {
       menuManager.insertBefore("edit", submenuManager);
+    }
+
+    if (OM.TEST_BULK_ADD.isEnabled())
+    {
+      IStructuredSelection sel = (IStructuredSelection)editorSelection;
+      if (sel.size() == 1)
+      {
+        Object element = sel.getFirstElement();
+        if (element instanceof EObject)
+        {
+          final EObject object = (EObject)element;
+          final List<EReference> features = new ArrayList<EReference>();
+          for (EReference containment : object.eClass().getEAllContainments())
+          {
+            if (containment.isMany())
+            {
+              features.add(containment);
+            }
+          }
+
+          if (!features.isEmpty())
+          {
+            final IWorkbenchPage page = getSite().getPage();
+            menuManager.insertBefore("edit", new LongRunningAction(page, "Bulk Add" + SafeAction.INTERACTIVE)
+            {
+              private EReference feature;
+
+              private int instances;
+
+              @Override
+              protected void preRun() throws Exception
+              {
+                BulkAddDialog dialog = new BulkAddDialog(page, features);
+                if (dialog.open() == BulkAddDialog.OK)
+                {
+                  feature = dialog.getFeature();
+                  instances = dialog.getInstances();
+                }
+                else
+                {
+                  cancel();
+                }
+              }
+
+              @Override
+              protected void doRun() throws Exception
+              {
+                List<EObject> children = new ArrayList<EObject>();
+                for (int i = 0; i < instances; i++)
+                {
+                  EObject child = EcoreUtil.create(feature.getEReferenceType());
+                  children.add(child);
+                }
+
+                List<EObject> list = (EList<EObject>)object.eGet(feature);
+                list.addAll(children);
+              }
+            });
+          }
+        }
+      }
     }
   }
 

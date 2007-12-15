@@ -51,6 +51,12 @@ public abstract class OM
 
   public static final OMTracer DEBUG_REVISION = DEBUG.tracer("revision"); //$NON-NLS-1$
 
+  public static final OMTracer PERF = BUNDLE.tracer("perf"); //$NON-NLS-1$
+
+  public static final OMTracer PERF_REVISION = PERF.tracer("revision"); //$NON-NLS-1$
+
+  public static final OMTracer PERF_REVISION_LOADING = PERF_REVISION.tracer("loading"); //$NON-NLS-1$
+
   public static final OMLogger LOG = BUNDLE.logger();
 
   public static final OMPreferences PREFS = BUNDLE.preferences();

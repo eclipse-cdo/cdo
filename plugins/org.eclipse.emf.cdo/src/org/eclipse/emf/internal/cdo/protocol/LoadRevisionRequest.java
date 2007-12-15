@@ -29,6 +29,7 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -138,5 +139,21 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
     }
 
     return revisions;
+  }
+
+  public Collection<CDOID> getIds()
+  {
+    return ids;
+  }
+
+  public int getReferenceChunk()
+  {
+    return referenceChunk;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("{0}(ids={1}, referenceChunk={2})", getClass().getSimpleName(), ids, referenceChunk);
   }
 }

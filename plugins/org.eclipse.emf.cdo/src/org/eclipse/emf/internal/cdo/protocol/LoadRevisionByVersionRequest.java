@@ -13,13 +13,14 @@ package org.eclipse.emf.internal.cdo.protocol;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
+import org.eclipse.emf.internal.cdo.bundle.OM;
+
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import org.eclipse.emf.internal.cdo.bundle.OM;
-
 import java.io.IOException;
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -48,5 +49,12 @@ public class LoadRevisionByVersionRequest extends LoadRevisionRequest
     super.requesting(out);
     if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing version: {0}", version);
     out.writeInt(version);
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("{0}(ids={1}, referenceChunk={2}, version={3})", getClass().getSimpleName(), getIds(),
+        getReferenceChunk(), version);
   }
 }

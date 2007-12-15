@@ -145,6 +145,14 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
     }
   }
 
+  protected final void checkInactive()
+  {
+    if (lifecycleState != ILifecycleState.INACTIVE)
+    {
+      throw new IllegalStateException("Not inactive: " + this);
+    }
+  }
+
   protected final void deferredActivate()
   {
     lifecycleState = ILifecycleState.ACTIVE;

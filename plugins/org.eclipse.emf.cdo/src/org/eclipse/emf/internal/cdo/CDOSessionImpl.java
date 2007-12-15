@@ -149,6 +149,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   public void setDisableLegacyObjects(boolean disableLegacyObjects)
   {
+    checkInactive();
     this.disableLegacyObjects = disableLegacyObjects;
   }
 

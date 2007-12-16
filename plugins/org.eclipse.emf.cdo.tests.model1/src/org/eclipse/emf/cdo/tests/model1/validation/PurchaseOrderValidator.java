@@ -6,9 +6,9 @@
  */
 package org.eclipse.emf.cdo.tests.model1.validation;
 
-import java.util.Date;
-
 import org.eclipse.emf.cdo.tests.model1.Supplier;
+
+import java.util.Date;
 
 /**
  * A sample validator interface for {@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder}. This doesn't really do

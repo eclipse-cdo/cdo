@@ -13,8 +13,6 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.CDOID;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -29,6 +27,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 /**
  * @author Eike Stepper

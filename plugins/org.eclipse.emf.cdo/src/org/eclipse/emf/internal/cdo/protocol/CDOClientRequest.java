@@ -12,10 +12,10 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 
+import org.eclipse.emf.internal.cdo.CDOSessionImpl;
+
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
-
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 
 /**
  * @author Eike Stepper

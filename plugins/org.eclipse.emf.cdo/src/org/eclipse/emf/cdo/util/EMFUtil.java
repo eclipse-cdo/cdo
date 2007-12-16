@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
-import org.eclipse.net4j.util.io.IORuntimeException;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -35,6 +33,8 @@ import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+
+import org.eclipse.net4j.util.io.IORuntimeException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

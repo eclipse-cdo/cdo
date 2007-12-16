@@ -104,14 +104,14 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       }
     }
   }
-  
+
   public IStoreReader ensureChunk(CDORevisionImpl revision, CDOFeature feature, int chunkStart, int chunkEnd)
   {
-	  MoveableList list = revision.getList(feature);
-	  chunkEnd = Math.min(chunkEnd, list.size());
-	  return this.ensureChunk(revision, feature, StoreUtil.getReader(), list, chunkStart, chunkEnd);
+    MoveableList list = revision.getList(feature);
+    chunkEnd = Math.min(chunkEnd, list.size());
+    return this.ensureChunk(revision, feature, StoreUtil.getReader(), list, chunkStart, chunkEnd);
   }
-  
+
   protected IStoreReader ensureChunk(CDORevisionImpl revision, CDOFeature feature, IStoreReader storeReader,
       MoveableList list, int chunkStart, int chunkEnd)
   {

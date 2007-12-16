@@ -17,12 +17,12 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
-import org.eclipse.net4j.signal.IFailOverStrategy;
-
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.LoadPackageRequest;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
+
+import org.eclipse.net4j.signal.IFailOverStrategy;
 
 import java.util.Collection;
 

@@ -7,6 +7,7 @@
 package org.eclipse.emf.cdo.tests.model1.validation;
 
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+
 import org.eclipse.emf.common.util.EList;
 
 /**

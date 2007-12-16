@@ -11,13 +11,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.analyzer;
 
-import java.util.Collection;
-import java.util.List;
-
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
 
 import org.eclipse.emf.internal.cdo.analyzer.NOOPFetchRuleManager;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Simon McDuff

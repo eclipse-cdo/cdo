@@ -3,9 +3,9 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 
-import org.eclipse.net4j.util.ui.actions.LongRunningAction;
-
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
+
+import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPage;

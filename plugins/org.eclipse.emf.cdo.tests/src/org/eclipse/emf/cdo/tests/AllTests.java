@@ -33,6 +33,7 @@ public class AllTests
     suite.addTestSuite(ChunkingWithMEMTest.class);
     suite.addTestSuite(RandomDeadLockTest.class);
     suite.addTestSuite(PackageRegistryTest.class);
+    suite.addTestSuite(RevisionDeltaTest.class);
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);
     // $JUnit-END$
 

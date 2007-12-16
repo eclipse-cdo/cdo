@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
@@ -158,11 +159,11 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     throw new ImplementationError("Invalid kind: " + kind);
   }
 
-  public void notifyInvalidation(long timeStamp, CDORevisionImpl[] dirtyObjects)
+  public void notifyInvalidation(long timeStamp, CDOID[] dirtyIDs)
   {
     try
     {
-      new InvalidationRequest(protocol.getChannel(), timeStamp, dirtyObjects).send();
+      new InvalidationRequest(protocol.getChannel(), timeStamp, dirtyIDs).send();
     }
     catch (Exception ex)
     {

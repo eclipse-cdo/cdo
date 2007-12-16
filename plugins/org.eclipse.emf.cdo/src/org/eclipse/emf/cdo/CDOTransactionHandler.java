@@ -7,8 +7,11 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
  **************************************************************************/
 package org.eclipse.emf.cdo;
+
+import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
 
 /**
  * @author Eike Stepper
@@ -27,7 +30,7 @@ public interface CDOTransactionHandler
    * <p>
    * Note: This method will be called at most once per object until the associated transaction is committed.
    */
-  public void modifyingObject(CDOTransaction transaction, CDOObject object);
+  public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta);
 
   /**
    * Called by a <code>CDOTransaction</code> <b>before</b> it is being committed. The implementor of this method is

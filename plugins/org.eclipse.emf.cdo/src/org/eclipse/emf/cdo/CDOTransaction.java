@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -14,6 +15,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -55,4 +57,6 @@ public interface CDOTransaction extends CDOView
   public Map<CDOID, CDOObject> getNewObjects();
 
   public Map<CDOID, CDOObject> getDirtyObjects();
+
+  public Map<CDOID, CDORevisionDelta> getRevisionDeltas();
 }

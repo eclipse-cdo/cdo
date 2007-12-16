@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
@@ -16,11 +17,13 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
@@ -64,7 +67,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     writeNewPackages(out);
     writeNewResources(out);
     writeNewObjects(out);
-    writeDirtyObjects(out);
+    writeRevisionDeltas(out);
   }
 
   @Override
@@ -157,6 +160,21 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     }
 
     writeRevisions(out, dirtyObjects);
+  }
+
+  private void writeRevisionDeltas(ExtendedDataOutputStream out) throws IOException
+  {
+    Collection<CDORevisionDelta> revisionDeltas = transaction.getRevisionDeltas().values();
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing {0} revision deltas", revisionDeltas.size());
+    }
+
+    out.writeInt(revisionDeltas.size());
+    for (CDORevisionDelta revisionDelta : revisionDeltas)
+    {
+      ((CDORevisionDeltaImpl)revisionDelta).write(out, transaction);
+    }
   }
 
   private void writeRevisions(ExtendedDataOutputStream out, Collection<?> objects) throws IOException

@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
@@ -14,6 +15,7 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
@@ -61,7 +63,9 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   private CDORevisionImpl[] newObjects;
 
-  private CDORevisionImpl[] dirtyObjects;
+  private CDORevisionDeltaImpl[] dirtyObjects;
+
+  private CDOID[] dirtyIDs;
 
   private Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
 
@@ -116,7 +120,9 @@ public class CommitTransactionIndication extends CDOServerIndication
         addPackages(storeTransaction, newPackages);
         addRevisions(storeTransaction, newResources);
         addRevisions(storeTransaction, newObjects);
-        addRevisions(storeTransaction, dirtyObjects);
+        writeRevisions(storeTransaction, dirtyObjects);
+        // addRevisions(storeTransaction, dirtyObjects);
+
         storeTransaction.commit();
       }
       catch (RuntimeException ex)
@@ -151,9 +157,9 @@ public class CommitTransactionIndication extends CDOServerIndication
       }
 
       writeIDMappings(out);
-      if (dirtyObjects.length > 0)
+      if (dirtyIDs.length > 0)
       {
-        getSessionManager().notifyInvalidation(timeStamp, dirtyObjects, getSession());
+        getSessionManager().notifyInvalidation(timeStamp, dirtyIDs, getSession());
       }
     }
   }
@@ -218,7 +224,8 @@ public class CommitTransactionIndication extends CDOServerIndication
     return readRevisions(in, storeWriter, size);
   }
 
-  private CDORevisionImpl[] readDirtyObjects(ExtendedDataInputStream in, IStoreWriter storeWriter) throws IOException
+  private CDORevisionDeltaImpl[] readDirtyObjects(ExtendedDataInputStream in, IStoreWriter storeWriter)
+      throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL.isEnabled())
@@ -226,7 +233,16 @@ public class CommitTransactionIndication extends CDOServerIndication
       PROTOCOL.format("Reading {0} dirty objects", size);
     }
 
-    return readRevisions(in, storeWriter, size);
+    RevisionManager revisionManager = sessionPackageManager.getRepository().getRevisionManager();
+    CDORevisionDeltaImpl[] deltas = new CDORevisionDeltaImpl[size];
+    dirtyIDs = new CDOID[size];
+    for (int i = 0; i < size; i++)
+    {
+      deltas[i] = new CDORevisionDeltaImpl(in, transactionPackageManager);
+      dirtyIDs[i] = deltas[i].getId();
+    }
+
+    return deltas;
   }
 
   private CDORevisionImpl[] readRevisions(ExtendedDataInputStream in, IStoreWriter storeWriter, int size)
@@ -256,6 +272,15 @@ public class CommitTransactionIndication extends CDOServerIndication
       revision.setCreated(timeStamp);
       revision.adjustReferences(idMappings);
       revisionManager.addRevision(storeTransaction, revision);
+    }
+  }
+
+  private void writeRevisions(ITransaction<IStoreWriter> storeTransaction, CDORevisionDeltaImpl[] deltas)
+  {
+    for (CDORevisionDeltaImpl delta : deltas)
+    {
+      delta.adjustReferences(idMappings);
+      getRevisionManager().writeRevisionDelta(storeTransaction, delta);
     }
   }
 

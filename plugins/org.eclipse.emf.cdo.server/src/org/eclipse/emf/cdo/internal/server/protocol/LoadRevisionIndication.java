@@ -48,7 +48,7 @@ public class LoadRevisionIndication extends CDOReadIndication
 
   protected Map<CDOClass, CDOFetchRule> fetchRules = new HashMap<CDOClass, CDOFetchRule>();
 
-  protected CDOID contextID = CDOIDNull.NULL;
+  protected CDOID contextID = CDOID.NULL;
 
   protected int loadRevisionCollectionChunkSize = 1;
 

@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * @author Simon McDuff
- * @author Eike Stepper
  */
 public class CDOInvalidationNotificationImpl implements CDOInvalidationNotification
 {
@@ -56,26 +55,22 @@ public class CDOInvalidationNotificationImpl implements CDOInvalidationNotificat
 
   public boolean wasSet()
   {
-    // TODO Clarify return value or throw UOE
     throw new UnsupportedOperationException();
   }
 
   public boolean isReset()
   {
-    // TODO Clarify return value or throw UOE
     throw new UnsupportedOperationException();
   }
 
   public boolean isTouch()
   {
-    // TODO Clarify return value or throw UOE
-    return false;
+    throw new UnsupportedOperationException();
   }
 
   public boolean merge(Notification notification)
   {
-    // TODO Clarify return value or throw UOE
-    return false;
+    throw new UnsupportedOperationException();
   }
 
   public boolean getNewBooleanValue()

@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
@@ -32,6 +33,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 {
   public static final String PROP_OVERRIDE_UUID = "overrideUUID";
 
+  public static final String PROP_SUPPORTING_REVISION_DELTAS = "supportingRevisionDeltas";
+
   public static final String PROP_SUPPORTING_AUDITS = "supportingAudits";
 
   public static final String PROP_VERIFYING_REVISIONS = "verifyingRevisions";
@@ -51,6 +54,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   private String uuid;
 
   private Map<String, String> properties;
+
+  private Boolean supportingRevisionDeltas;
 
   private Boolean supportingAudits;
 
@@ -120,6 +125,17 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   public void setProperties(Map<String, String> properties)
   {
     this.properties = properties;
+  }
+
+  public boolean isSupportingRevisionDeltas()
+  {
+    if (supportingRevisionDeltas == null)
+    {
+      String value = getProperties().get(PROP_SUPPORTING_REVISION_DELTAS);
+      supportingRevisionDeltas = value == null ? false : Boolean.valueOf(value);
+    }
+  
+    return supportingRevisionDeltas;
   }
 
   public boolean isSupportingAudits()

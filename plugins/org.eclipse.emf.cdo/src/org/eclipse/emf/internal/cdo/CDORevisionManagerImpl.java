@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableLi
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -64,7 +65,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
 
     // Get appropriate chunk size
     int chunkSize = session.getReferenceChunkSize();
-    if (chunkSize == CDORevisionImpl.UNCHUNKED)
+    if (chunkSize == CDORevision.UNCHUNKED)
     {
       // Can happen if CDOSession.setReferenceChunkSize() was called meanwhile
       chunkSize = Integer.MAX_VALUE;

@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.analyzer;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDNull;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
@@ -24,7 +23,6 @@ import java.util.List;
 
 /**
  * @author Simon McDuff
- * @author Eike Stepper
  */
 public class CDOFeatureAnalyzerModelBased extends CDOAbstractFeatureRuleAnalyzer
 {
@@ -50,7 +48,7 @@ public class CDOFeatureAnalyzerModelBased extends CDOAbstractFeatureRuleAnalyzer
 
   public CDOID getContext()
   {
-    return CDOIDNull.NULL;
+    return CDOID.NULL;
   }
 
   public List<CDOFetchRule> getFetchRules(Collection<CDOID> ids)

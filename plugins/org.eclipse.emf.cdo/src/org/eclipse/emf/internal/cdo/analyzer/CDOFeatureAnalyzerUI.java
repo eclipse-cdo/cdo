@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.analyzer;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDNull;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -27,7 +26,6 @@ import java.util.Map;
 
 /**
  * @author Simon McDuff
- * @author Eike Stepper
  */
 public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
 {
@@ -53,7 +51,7 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
   {
     if (this.lastTraverseFeature.isMany())
     {
-      return CDOIDNull.NULL;
+      return CDOID.NULL;
     }
 
     return lastTraverseCDOObject.cdoID();

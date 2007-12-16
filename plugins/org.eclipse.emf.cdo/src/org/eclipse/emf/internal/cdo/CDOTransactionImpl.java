@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -20,8 +21,11 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.URI;
@@ -71,6 +75,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   private Map<CDOID, CDOObject> newObjects = new HashMap<CDOID, CDOObject>();
 
   private Map<CDOID, CDOObject> dirtyObjects = new HashMap<CDOID, CDOObject>();
+
+  private Map<CDOID, CDORevisionDelta> revisionDeltas = new HashMap<CDOID, CDORevisionDelta>();
 
   private boolean dirty;
 
@@ -148,6 +154,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   public Map<CDOID, CDOObject> getDirtyObjects()
   {
     return dirtyObjects;
+  }
+
+  public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
+  {
+    return revisionDeltas;
   }
 
   public CDOID getNextTemporaryID()
@@ -298,18 +309,39 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
   }
 
-  public void registerDirty(InternalCDOObject object)
+  public void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta)
+  {
+    CDORevisionDeltaImpl revisionDelta = (CDORevisionDeltaImpl)revisionDeltas.get(object.cdoID());
+    if (revisionDelta == null)
+    {
+      revisionDelta = new CDORevisionDeltaImpl(object.cdoRevision());
+      revisionDeltas.put(object.cdoID(), revisionDelta);
+    }
+
+    revisionDelta.addFeatureDelta(featureDelta);
+    for (CDOTransactionHandler handler : getHandlers())
+    {
+      handler.modifyingObject(this, object, featureDelta);
+    }
+  }
+
+  public void registerRevisionDelta(CDORevisionDelta delta)
+  {
+    CDORevisionDelta changeSet = revisionDeltas.get(delta.getId());
+    if (changeSet == null)
+    {
+      revisionDeltas.put(delta.getId(), changeSet);
+    }
+  }
+
+  public void registerDirty(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Registering dirty object {0}", object);
     }
 
-    for (CDOTransactionHandler handler : getHandlers())
-    {
-      handler.modifyingObject(this, object);
-    }
-
+    registerFeatureDelta(object, featureDelta);
     register(dirtyObjects, object);
   }
 
@@ -402,6 +434,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     newResources.clear();
     newObjects.clear();
     dirtyObjects.clear();
+    revisionDeltas.clear();
     dirty = false;
     conflict = false;
     nextTemporaryID = INITIAL_TEMPORARY_ID;

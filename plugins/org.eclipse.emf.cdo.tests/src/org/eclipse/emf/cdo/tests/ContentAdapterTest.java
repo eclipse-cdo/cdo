@@ -125,7 +125,7 @@ public class ContentAdapterTest extends AbstractCDOTest
 
     public CDOID getContext()
     {
-      return CDOIDNull.NULL;
+      return CDOID.NULL;
     }
 
     public void clear()

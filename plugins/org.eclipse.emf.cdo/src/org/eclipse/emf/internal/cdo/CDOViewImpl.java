@@ -7,9 +7,10 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - EMF invalidation notifications,
- *                   IFeatureAnalyzer,
- *                   LoadRevisionCollectionChunk
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201265
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201997
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=202064
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -64,7 +65,6 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Eike Stepper
- * @author Simon McDuff
  */
 public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier implements CDOView, CDOIDProvider,
     Adapter.Internal

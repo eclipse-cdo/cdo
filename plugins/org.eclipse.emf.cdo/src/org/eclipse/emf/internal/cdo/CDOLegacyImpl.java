@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -162,6 +163,14 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
   public void cdoInternalPreCommit()
   {
     transferInstanceToRevision();
+
+    CDORevisionManagerImpl revisionManager = view.getSession().getRevisionManager();
+    CDORevisionImpl revision = cdoRevision();
+    CDORevisionImpl originRevision = revisionManager.getRevisionByVersion(revision.getID(), CDORevision.UNCHUNKED,
+        revision.getVersion() - 1, false);
+
+    CDOTransactionImpl transaction = cdoView().toTransaction();
+    transaction.registerRevisionDelta(this.cdoRevision().createDelta(originRevision));
   }
 
   public void cdoInternalPostLoad()

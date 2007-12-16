@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
@@ -15,6 +16,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
@@ -45,6 +47,8 @@ public interface IStoreWriter extends IStoreReader
   public void writePackages(CDOPackageImpl... cdoPackages);
 
   public void writeRevision(CDORevisionImpl revision);
+
+  public void writeRevisionDelta(CDORevisionDeltaImpl delta);
 
   public CDOID primeNewObject(CDOClass cdoClass);
 

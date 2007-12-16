@@ -7,12 +7,13 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.IChannel;
@@ -31,13 +32,13 @@ public class InvalidationRequest extends Request
 
   private long timeStamp;
 
-  private CDORevisionImpl[] dirtyObjects;
+  private CDOID[] dirtyIDs;
 
-  public InvalidationRequest(IChannel channel, long timeStamp, CDORevisionImpl[] dirtyObjects)
+  public InvalidationRequest(IChannel channel, long timeStamp, CDOID[] dirtyIDs)
   {
     super(channel);
     this.timeStamp = timeStamp;
-    this.dirtyObjects = dirtyObjects;
+    this.dirtyIDs = dirtyIDs;
   }
 
   @Override
@@ -56,17 +57,16 @@ public class InvalidationRequest extends Request
 
     out.writeLong(timeStamp);
 
-    int size = dirtyObjects.length;
+    int size = dirtyIDs.length;
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Writing {0} IDs", size);
     }
 
     out.writeInt(size);
-    for (int i = 0; i < dirtyObjects.length; i++)
+    for (int i = 0; i < dirtyIDs.length; i++)
     {
-      CDORevisionImpl dirty = dirtyObjects[i];
-      CDOIDImpl.write(out, dirty.getID());
+      CDOIDImpl.write(out, dirtyIDs[i]);
     }
   }
 }

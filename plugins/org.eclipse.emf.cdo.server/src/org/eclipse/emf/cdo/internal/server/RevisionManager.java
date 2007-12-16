@@ -7,7 +7,8 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - bug 210868
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=210868
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
@@ -18,9 +19,12 @@ import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOPathFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.revision.CDODuplicateRevisionException;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreReader;
@@ -61,6 +65,11 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   public void addRevision(ITransaction<IStoreWriter> storeTransaction, CDORevisionImpl revision)
   {
     storeTransaction.execute(new AddRevisionOperation(revision));
+  }
+
+  public void writeRevisionDelta(ITransaction<IStoreWriter> storeTransaction, CDORevisionDeltaImpl revision)
+  {
+    storeTransaction.execute(new WriteRevisionOperation(revision));
   }
 
   public CDOID resolveReferenceProxy(CDOReferenceProxy referenceProxy)
@@ -297,6 +306,69 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       {
         String path = (String)revision.getData().get(cdoPathFeature, -1);
         repository.getResourceManager().registerResource(revision.getID(), path);
+      }
+    }
+
+    public void undoPhase1(IStoreWriter storeWriter)
+    {
+    }
+  }
+
+  /**
+   * @author Simon McDuff
+   */
+  private final class WriteRevisionOperation implements ITransactionalOperation<IStoreWriter>
+  {
+    private CDORevisionDeltaImpl revisionDelta;
+
+    private CDORevisionImpl dirtyRevision = null;
+
+    private WriteRevisionOperation(CDORevisionDeltaImpl revisionDelta)
+    {
+      this.revisionDelta = revisionDelta;
+      CDORevisionImpl oldRevision = getRevisionByVersion(revisionDelta.getId(), CDORevision.UNCHUNKED, revisionDelta
+          .getOriginVersion(), true);
+      if (oldRevision == null)
+      {
+        if (!getRepository().isSupportingRevisionDeltas())
+        {
+          throw new IllegalArgumentException("Cannot retrieved origin revision");
+        }
+      }
+      else
+      {
+        dirtyRevision = new CDORevisionImpl(oldRevision);
+        revisionDelta.applyChanges(dirtyRevision);
+      }
+    }
+
+    public void phase1(IStoreWriter storeWriter) throws Exception
+    {
+      if (getRepository().isSupportingRevisionDeltas())
+      {
+        // Can throw an exception if duplicate
+        storeWriter.writeRevisionDelta(revisionDelta);
+      }
+      else
+      {
+        storeWriter.writeRevision(dirtyRevision);
+      }
+
+      // Look if we already have it in our cache revision
+      CDORevisionImpl currentVersion = getRevisionByVersion(revisionDelta.getId(), 0, revisionDelta.getDirtyVersion(),
+          false);
+
+      if (currentVersion != null)
+      {
+        throw new CDODuplicateRevisionException(currentVersion);
+      }
+    }
+
+    public void phase2(IStoreWriter storeWriter)
+    {
+      if (dirtyRevision != null)
+      {
+        addRevision(dirtyRevision);
       }
     }
 

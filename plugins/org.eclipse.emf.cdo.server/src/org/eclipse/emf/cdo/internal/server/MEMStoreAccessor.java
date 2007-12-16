@@ -13,10 +13,12 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.protocol.revision.CDODuplicateRevisionException;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
@@ -26,14 +28,18 @@ import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.net4j.util.io.CloseableIterator;
 import org.eclipse.net4j.util.transaction.ITransaction;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Simon McDuff
  */
 public class MEMStoreAccessor extends StoreAccessor
 {
+  List<CDORevisionImpl> listToCommit = new ArrayList<CDORevisionImpl>();
+
   public MEMStoreAccessor(MEMStore store, ISession session)
   {
     super(store, session);
@@ -125,7 +131,29 @@ public class MEMStoreAccessor extends StoreAccessor
     getStore().addRevision(revision);
   }
 
+  @Override
+  public void writeRevisionDelta(CDORevisionDeltaImpl delta)
+  {
+    CDORevisionImpl revision2 = (CDORevisionImpl)getStore().getRevision(delta.getId());
+    if (delta.getOriginVersion() != revision2.getVersion())
+    {
+      throw new CDODuplicateRevisionException(revision2);
+    }
+
+    CDORevisionImpl newRevision = new CDORevisionImpl(revision2);
+    delta.applyChanges(newRevision);
+    listToCommit.add(newRevision);
+  }
+
+  @Override
+  public void release()
+  {
+    for (CDORevisionImpl rev : listToCommit)
+      getStore().addRevision(rev);
+  }
+
   public void rollback(IView view, ITransaction<IStoreWriter> storeTransaction)
   {
+    listToCommit.clear();
   }
 }

@@ -44,6 +44,7 @@ public class CDOCallbackImpl extends CDOLegacyImpl implements CDOCallback
     CDOStateMachine.INSTANCE.write(this);
   }
 
+  @Override
   public boolean isAdapterForType(Object type)
   {
     return type == CDOCallbackImpl.class;

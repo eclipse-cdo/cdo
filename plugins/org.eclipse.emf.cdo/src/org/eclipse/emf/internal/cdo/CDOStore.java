@@ -7,15 +7,24 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOAddFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOClearFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOContainerFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOMoveFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORemoveFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOSetFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
+import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -61,7 +70,8 @@ public final class CDOStore implements EStore
 
     CDOID containerID = (CDOID)((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(newContainer);
 
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject);
+    CDOContainerFeatureDeltaImpl delta = new CDOContainerFeatureDeltaImpl(containerID, newContainerFeatureID);
+    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
     revision.setContainerID(containerID);
     revision.setContainingFeature(newContainerFeatureID);
   }
@@ -338,7 +348,8 @@ public final class CDOStore implements EStore
       TRACER.format("set({0}, {1}, {2}, {3})", cdoObject, cdoFeature, index, value);
     }
 
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject);
+    CDOSetFeatureDeltaImpl delta = new CDOSetFeatureDeltaImpl(cdoFeature, index, value);
+    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
     if (cdoFeature.isReference())
     {
       Object oldValue = revision.get(cdoFeature, index);
@@ -351,11 +362,10 @@ public final class CDOStore implements EStore
       {
         handleContainmentAdd(cdoObject, cdoFeature, value);
       }
-
-      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
     }
 
     Object result = revision.set(cdoFeature, index, value);
+
     if (cdoFeature.isReference())
     {
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
@@ -373,7 +383,8 @@ public final class CDOStore implements EStore
       TRACER.format("unset({0}, {1})", cdoObject, cdoFeature);
     }
 
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject);
+    CDOUnsetFeatureDeltaImpl delta = new CDOUnsetFeatureDeltaImpl(cdoFeature);
+    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
     revision.unset(cdoFeature);
   }
 
@@ -396,7 +407,8 @@ public final class CDOStore implements EStore
       value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
     }
 
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject);
+    CDOAddFeatureDeltaImpl delta = new CDOAddFeatureDeltaImpl(cdoFeature, index, value);
+    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
     revision.add(cdoFeature, index, value);
   }
 
@@ -409,7 +421,8 @@ public final class CDOStore implements EStore
       TRACER.format("remove({0}, {1}, {2})", cdoObject, cdoFeature, index);
     }
 
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject);
+    CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(cdoFeature, index);
+    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
     Object result = revision.remove(cdoFeature, index);
     if (cdoFeature.isReference())
     {
@@ -433,7 +446,8 @@ public final class CDOStore implements EStore
       TRACER.format("clear({0}, {1})", cdoObject, cdoFeature);
     }
 
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject);
+    CDOClearFeatureDeltaImpl delta = new CDOClearFeatureDeltaImpl(cdoFeature);
+    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
     revision.clear(cdoFeature);
   }
 
@@ -446,7 +460,8 @@ public final class CDOStore implements EStore
       TRACER.format("move({0}, {1}, {2}, {3})", cdoObject, cdoFeature, target, source);
     }
 
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject);
+    CDOMoveFeatureDeltaImpl delta = new CDOMoveFeatureDeltaImpl(cdoFeature, target, source);
+    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
     Object result = revision.move(cdoFeature, target, source);
     if (cdoFeature.isReference())
     {
@@ -495,9 +510,9 @@ public final class CDOStore implements EStore
     return getRevision(cdoObject);
   }
 
-  private static CDORevisionImpl getRevisionForWriting(InternalCDOObject cdoObject)
+  private static CDORevisionImpl getRevisionForWriting(InternalCDOObject cdoObject, CDOFeatureDelta delta)
   {
-    CDOStateMachine.INSTANCE.write(cdoObject);
+    CDOStateMachine.INSTANCE.write(cdoObject, delta);
     return getRevision(cdoObject);
   }
 

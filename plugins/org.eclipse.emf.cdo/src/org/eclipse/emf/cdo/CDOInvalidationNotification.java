@@ -15,7 +15,6 @@ import org.eclipse.emf.common.notify.Notification;
 
 /**
  * @author Simon McDuff
- * @author Eike Stepper
  */
 public interface CDOInvalidationNotification extends Notification
 {

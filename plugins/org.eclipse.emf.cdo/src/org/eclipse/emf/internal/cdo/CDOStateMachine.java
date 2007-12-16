@@ -1,3 +1,14 @@
+/***************************************************************************
+ * Copyright (c) 2004 - 2007 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
+ **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSession;
@@ -8,6 +19,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ServerException;
@@ -94,7 +106,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.DIRTY, CDOEvent.ATTACH, FAIL);
     init(CDOState.DIRTY, CDOEvent.DETACH, FAIL);
     init(CDOState.DIRTY, CDOEvent.READ, IGNORE);
-    init(CDOState.DIRTY, CDOEvent.WRITE, IGNORE);
+    init(CDOState.DIRTY, CDOEvent.WRITE, new RewriteTransition());
     init(CDOState.DIRTY, CDOEvent.INVALIDATE, new ConflictTransition());
     init(CDOState.DIRTY, CDOEvent.RELOAD, new ReloadTransition());
     init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition());
@@ -151,8 +163,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   public void write(InternalCDOObject object)
   {
+    write(object, null);
+  }
+
+  public void write(InternalCDOObject object, CDOFeatureDelta featureChange)
+  {
     if (TRACER.isEnabled()) trace(object, CDOEvent.WRITE);
-    process(object, CDOEvent.WRITE, null);
+    process(object, CDOEvent.WRITE, featureChange);
   }
 
   public void reload(InternalCDOObject... objects)
@@ -387,7 +404,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private final class WriteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureChange)
     {
       // Copy revision
       CDORevisionImpl revision = new CDORevisionImpl((CDORevisionImpl)object.cdoRevision());
@@ -396,9 +413,21 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDOTransactionImpl transaction = view.toTransaction();
-      transaction.registerDirty(object);
-
+      transaction.registerDirty(object, (CDOFeatureDelta)featureChange);
       changeState(object, CDOState.DIRTY);
+    }
+  }
+
+  /**
+   * @author Simon McDuff
+   */
+  private final class RewriteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  {
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureChange)
+    {
+      CDOViewImpl view = (CDOViewImpl)object.cdoView();
+      CDOTransactionImpl transaction = view.toTransaction();
+      transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureChange);
     }
   }
 

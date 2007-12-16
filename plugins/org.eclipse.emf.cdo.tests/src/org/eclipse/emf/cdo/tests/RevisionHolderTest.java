@@ -18,8 +18,8 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionData;
-import org.eclipse.emf.cdo.protocol.revision.CDORevisionDelta;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 
 import org.eclipse.net4j.tests.AbstractOMTest;
 

@@ -27,6 +27,7 @@ public class CrossReferencesPackageClosure extends PackageClosure
   {
   }
 
+  @Override
   public Set<EPackage> calculate(EPackage ePackage)
   {
     Set<EPackage> visited = new HashSet<EPackage>();
@@ -34,6 +35,7 @@ public class CrossReferencesPackageClosure extends PackageClosure
     return visited;
   }
 
+  @Override
   protected void collectContents(EPackage ePackage, Set<EPackage> visited)
   {
     visited.add(ePackage);

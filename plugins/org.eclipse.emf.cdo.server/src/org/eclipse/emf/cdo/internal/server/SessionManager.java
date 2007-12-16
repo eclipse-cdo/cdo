@@ -7,13 +7,14 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
  *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=202725
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.SessionCreationException;
@@ -26,7 +27,6 @@ import java.util.Map;
 
 /**
  * @author Eike Stepper
- * @author Simon McDuff
  */
 public class SessionManager extends Container<ISession> implements ISessionManager
 {
@@ -103,7 +103,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     }
   }
 
-  public void notifyInvalidation(long timeStamp, CDORevisionImpl[] dirtyObjects, Session excludedSession)
+  public void notifyInvalidation(long timeStamp, CDOID[] dirtyObjects, Session excludedSession)
   {
     for (Session session : getSessions())
     {

@@ -7,7 +7,8 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - EMF invalidation notifications
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201997
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -22,7 +23,6 @@ import org.eclipse.net4j.util.event.INotifier;
 
 /**
  * @author Eike Stepper
- * @author Simon McDuff
  */
 public interface CDOView extends INotifier
 {

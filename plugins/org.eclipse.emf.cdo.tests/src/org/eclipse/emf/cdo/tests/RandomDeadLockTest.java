@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.CDOTransaction;
 /**
  * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=201366
  * @author Simon McDuff
- * @author Eike Stepper
  */
 public class RandomDeadLockTest extends AbstractCDOTest
 {

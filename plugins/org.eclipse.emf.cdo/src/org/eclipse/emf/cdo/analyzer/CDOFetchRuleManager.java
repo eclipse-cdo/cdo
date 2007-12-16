@@ -21,7 +21,6 @@ import java.util.List;
 
 /**
  * @author Simon McDuff
- * @author Eike Stepper
  */
 public interface CDOFetchRuleManager
 {

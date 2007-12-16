@@ -7,10 +7,12 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.server.ISession;
@@ -87,5 +89,10 @@ public abstract class StoreAccessor implements IStoreWriter
   public CDOID primeNewObject(CDOClass cdoClass)
   {
     return store.getNextCDOID();
+  }
+
+  public void writeRevisionDelta(CDORevisionDeltaImpl delta)
+  {
+    throw new UnsupportedOperationException();
   }
 }

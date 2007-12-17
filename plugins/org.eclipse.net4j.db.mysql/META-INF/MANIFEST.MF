@@ -21,3 +21,4 @@ Export-Package: com.mysql.jdbc,
  com.mysql.jdbc.util,
  org.eclipse.net4j.db.internal.mysql;version="0.8.0",
  org.gjt.mm.mysql
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

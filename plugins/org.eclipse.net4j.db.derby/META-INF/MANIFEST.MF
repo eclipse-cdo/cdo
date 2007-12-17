@@ -96,3 +96,4 @@ Export-Package: org.apache.derby.authentication,
  org.apache.derby.tools,
  org.apache.derby.vti,
  org.eclipse.net4j.db.internal.derby;version="0.8.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

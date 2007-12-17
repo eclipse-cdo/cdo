@@ -63,6 +63,7 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
       addModifiedPropertyDescriptor(object);
       addLoadedPropertyDescriptor(object);
       addTrackingModificationPropertyDescriptor(object);
+      addTimeStampPropertyDescriptor(object);
       addPathPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
@@ -123,6 +124,20 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
         getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_trackingModification_feature",
             "_UI_CDOResource_type"), EresourcePackage.Literals.CDO_RESOURCE__TRACKING_MODIFICATION, true, false, false,
         ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Time Stamp feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  protected void addTimeStampPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
+        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_CDOResource_timeStamp_feature"), getString(
+        "_UI_PropertyDescriptor_description", "_UI_CDOResource_timeStamp_feature", "_UI_CDOResource_type"),
+        EresourcePackage.Literals.CDO_RESOURCE__TIME_STAMP, true, false, false,
+        ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -215,6 +230,7 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
     case EresourcePackage.CDO_RESOURCE__TRACKING_MODIFICATION:
     case EresourcePackage.CDO_RESOURCE__ERRORS:
     case EresourcePackage.CDO_RESOURCE__WARNINGS:
+    case EresourcePackage.CDO_RESOURCE__TIME_STAMP:
     case EresourcePackage.CDO_RESOURCE__PATH:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;

@@ -204,12 +204,22 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCDOResource_TimeStamp()
+  {
+    return (EAttribute)cdoResourceEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getCDOResource_Path()
   {
-    return (EAttribute)cdoResourceEClass.getEStructuralFeatures().get(8);
+    return (EAttribute)cdoResourceEClass.getEStructuralFeatures().get(9);
   }
 
   /**
@@ -275,6 +285,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     createEAttribute(cdoResourceEClass, CDO_RESOURCE__TRACKING_MODIFICATION);
     createEAttribute(cdoResourceEClass, CDO_RESOURCE__ERRORS);
     createEAttribute(cdoResourceEClass, CDO_RESOURCE__WARNINGS);
+    createEAttribute(cdoResourceEClass, CDO_RESOURCE__TIME_STAMP);
     createEAttribute(cdoResourceEClass, CDO_RESOURCE__PATH);
 
     // Create data types
@@ -334,6 +345,8 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     initEAttribute(getCDOResource_Errors(), this.getDiagnostic(), "errors", null, 0, -1, CDOResource.class,
         IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResource_Warnings(), this.getDiagnostic(), "warnings", null, 0, -1, CDOResource.class,
+        IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCDOResource_TimeStamp(), theEcorePackage.getELong(), "timeStamp", null, 0, 1, CDOResource.class,
         IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResource_Path(), ecorePackage.getEString(), "path", null, 0, 1, CDOResource.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

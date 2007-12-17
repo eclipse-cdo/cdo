@@ -91,6 +91,21 @@ final class ProxyResolverResource implements Resource
     throw new UnsupportedOperationException();
   }
 
+  public void delete(Map<?, ?> options) throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public long getTimeStamp()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void setTimeStamp(long timeStamp)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public EList<Diagnostic> getWarnings()
   {
     throw new UnsupportedOperationException();

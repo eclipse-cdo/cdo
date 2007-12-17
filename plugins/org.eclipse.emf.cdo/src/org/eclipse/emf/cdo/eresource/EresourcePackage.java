@@ -134,12 +134,20 @@ public interface EresourcePackage extends EPackage
   int CDO_RESOURCE__WARNINGS = 7;
 
   /**
+   * The feature id for the '<em><b>Time Stamp</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE__TIME_STAMP = 8;
+
+  /**
    * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__PATH = 8;
+  int CDO_RESOURCE__PATH = 9;
 
   /**
    * The number of structural features of the '<em>CDO Resource</em>' class. <!-- begin-user-doc --> <!--
@@ -148,7 +156,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE_FEATURE_COUNT = 9;
+  int CDO_RESOURCE_FEATURE_COUNT = 10;
 
   /**
    * The meta object id for the '<em>Resource Set</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -274,6 +282,17 @@ public interface EresourcePackage extends EPackage
    * @generated
    */
   EAttribute getCDOResource_Warnings();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp <em>Time Stamp</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Time Stamp</em>'.
+   * @see org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp()
+   * @see #getCDOResource()
+   * @generated
+   */
+  EAttribute getCDOResource_TimeStamp();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}'.
@@ -414,6 +433,14 @@ public interface EresourcePackage extends EPackage
      * @generated
      */
     EAttribute CDO_RESOURCE__WARNINGS = eINSTANCE.getCDOResource_Warnings();
+
+    /**
+     * The meta object literal for the '<em><b>Time Stamp</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute CDO_RESOURCE__TIME_STAMP = eINSTANCE.getCDOResource_TimeStamp();
 
     /**
      * The meta object literal for the '<em><b>Path</b></em>' attribute feature. <!-- begin-user-doc --> <!--

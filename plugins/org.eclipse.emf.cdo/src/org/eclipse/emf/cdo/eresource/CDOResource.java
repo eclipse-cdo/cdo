@@ -220,6 +220,33 @@ public interface CDOResource extends EresourceObject
   EList<Diagnostic> getWarnings();
 
   /**
+   * Returns the value of the '<em><b>Time Stamp</b></em>' attribute. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Time Stamp</em>' attribute isn't clear, there really should be more of a description
+   * here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Time Stamp</em>' attribute.
+   * @see #setTimeStamp(long)
+   * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_TimeStamp()
+   * @model transient="true"
+   * @generated
+   */
+  long getTimeStamp();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp <em>Time Stamp</em>}'
+   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Time Stamp</em>' attribute.
+   * @see #getTimeStamp()
+   * @generated
+   */
+  void setTimeStamp(long value);
+
+  /**
    * Returns the value of the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Path</em>' attribute isn't clear, there really should be more of a description

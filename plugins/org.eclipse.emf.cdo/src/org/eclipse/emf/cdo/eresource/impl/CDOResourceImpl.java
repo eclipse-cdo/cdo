@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.impl.NotificationChainImpl;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
+import org.eclipse.emf.common.notify.impl.NotifyingListImpl;
 import org.eclipse.emf.common.util.AbstractTreeIterator;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -27,7 +28,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecore.util.NotifyingInternalEListImpl;
 import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
@@ -542,10 +542,13 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   }
 
   /**
+   * TODO Change superclass to NotifyingInternalEListImpl when EMF 2.3 is out of maintenance
+   * 
    * @ADDED
    * @author Eike Stepper
    */
-  protected class TransientContents<E extends Object & EObject> extends NotifyingInternalEListImpl<E>
+  protected class TransientContents<E extends Object & EObject> extends NotifyingListImpl<E> implements
+      InternalEList<E>
   {
     private static final long serialVersionUID = 1L;
 
@@ -614,6 +617,36 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
       InternalEObject eObject = (InternalEObject)object;
       // CDOResourceImpl.this.detached(eObject);
       return eObject.eSetResource(null, notifications);
+    }
+
+    public boolean basicContains(Object object)
+    {
+      return super.contains(object);
+    }
+
+    public boolean basicContainsAll(Collection<?> collection)
+    {
+      return super.containsAll(collection);
+    }
+
+    public int basicIndexOf(Object object)
+    {
+      return super.indexOf(object);
+    }
+
+    public int basicLastIndexOf(Object object)
+    {
+      return super.lastIndexOf(object);
+    }
+
+    public Object[] basicToArray()
+    {
+      return super.toArray();
+    }
+
+    public <T> T[] basicToArray(T[] array)
+    {
+      return super.toArray(array);
     }
 
     @Override

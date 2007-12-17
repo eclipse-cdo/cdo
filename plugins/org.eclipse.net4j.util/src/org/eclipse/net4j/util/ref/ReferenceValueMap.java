@@ -52,19 +52,33 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
   @Override
   public int size()
   {
+    purgeQueue();
     return map.size();
   }
 
   @Override
   public boolean isEmpty()
   {
+    purgeQueue();
     return map.isEmpty();
   }
 
   @Override
   public boolean containsKey(Object key)
   {
-    return map.containsKey(key);
+    KeyedReference<K, V> ref = map.get(key);
+    if (ref != null)
+    {
+      if (ref.isEnqueued())
+      {
+        map.remove(key);
+        return false;
+      }
+
+      return true;
+    }
+
+    return false;
   }
 
   @Override
@@ -77,7 +91,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
 
     for (KeyedReference<K, V> ref : map.values())
     {
-      if (ObjectUtil.equals(value, dereference(ref)))
+      if (!ref.isEnqueued() && ObjectUtil.equals(value, dereference(ref)))
       {
         return true;
       }
@@ -167,6 +181,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
   @Override
   public void clear()
   {
+    purgeQueue();
     map.clear();
   }
 
@@ -175,6 +190,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
   {
     if (entrySet == null)
     {
+      purgeQueue();
       entrySet = new EntrySet();
     }
 

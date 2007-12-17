@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.ref;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -40,5 +41,11 @@ public class KeyedSoftReference<K, T> extends SoftReference<T> implements KeyedR
   public K getKey()
   {
     return key;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("KeyedSoftReference[{0} -> {1}]", key, isEnqueued() ? "ENQUEUED" : get());
   }
 }

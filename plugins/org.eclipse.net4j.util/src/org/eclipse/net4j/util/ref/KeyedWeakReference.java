@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.ref;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -40,5 +41,11 @@ public class KeyedWeakReference<K, T> extends WeakReference<T> implements KeyedR
   public K getKey()
   {
     return key;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("KeyedWeakReference[{0} -> {1}]", key, isEnqueued() ? "ENQUEUED" : get());
   }
 }

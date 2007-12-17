@@ -102,7 +102,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   protected ConcurrentMap<CDOID, InternalCDOObject> createObjectsMap()
   {
-    return new ReferenceValueMap.Weak<CDOID, InternalCDOObject>();
+    return new ReferenceValueMap.Soft<CDOID, InternalCDOObject>();
   }
 
   public int getViewID()

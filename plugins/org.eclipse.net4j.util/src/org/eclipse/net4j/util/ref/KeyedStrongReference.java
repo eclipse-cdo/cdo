@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.ref;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -53,5 +55,11 @@ public class KeyedStrongReference<K, T> implements KeyedReference<K, T>
   public boolean enqueue()
   {
     return false;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("KeyedStrongReference[{0} -> {1}]", key, ref);
   }
 }

@@ -78,10 +78,8 @@ public class TCPServerConnector extends TCPConnector
     {
       return MessageFormat.format("ServerTCPConnector[{0}:{1}]", getHost(), getPort()); //$NON-NLS-1$
     }
-    else
-    {
-      return MessageFormat.format("ServerTCPConnector[{3}@{0}:{1}]", getHost(), getPort(), getUserID()); //$NON-NLS-1$
-    }
+
+    return MessageFormat.format("ServerTCPConnector[{3}@{0}:{1}]", getHost(), getPort(), getUserID()); //$NON-NLS-1$
   }
 
   @Override

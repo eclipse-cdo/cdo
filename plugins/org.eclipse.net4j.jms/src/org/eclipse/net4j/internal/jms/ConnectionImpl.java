@@ -385,10 +385,8 @@ public class ConnectionImpl extends Container<Session> implements Connection
         sessions.set(sessionID, null);
         return true;
       }
-      else
-      {
-        return false;
-      }
+
+      return false;
     }
   }
 

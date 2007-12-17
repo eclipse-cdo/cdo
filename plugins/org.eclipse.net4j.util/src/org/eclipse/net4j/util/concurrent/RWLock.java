@@ -74,10 +74,8 @@ public class RWLock extends ReentrantReadWriteLock
           lock.unlock();
         }
       }
-      else
-      {
-        throw new TimeoutException("Acquisition of lock timed out after " + timeoutMillis + " millis");
-      }
+
+      throw new TimeoutException("Acquisition of lock timed out after " + timeoutMillis + " millis");
     }
     catch (Exception ex)
     {

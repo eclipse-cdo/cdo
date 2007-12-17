@@ -264,55 +264,49 @@ public final class ZIPUtil
 
               return path1.compareTo(path2);
             }
-            else
+
+            // f1=dir, f2=file
+            if (path1.equalsIgnoreCase("/META-INF"))
             {
-              // f1=dir, f2=file
-              if (path1.equalsIgnoreCase("/META-INF"))
-              {
-                return ORDER_KEEP;
-              }
-
-              if (path2.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
-              {
-                return ORDER_SWAP;
-              }
-
               return ORDER_KEEP;
             }
-          }
-          else
-          {
-            if (f2.isDirectory())
+
+            if (path2.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
             {
-              // f1=file, f2=dir
-              if (path2.equalsIgnoreCase("/META-INF"))
-              {
-                return ORDER_SWAP;
-              }
-
-              if (path1.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
-              {
-                return ORDER_KEEP;
-              }
-
               return ORDER_SWAP;
             }
-            else
-            {
-              // f1=file, f2=file
-              if (path1.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
-              {
-                return ORDER_KEEP;
-              }
 
-              if (path2.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
-              {
-                return ORDER_SWAP;
-              }
-
-              return path1.compareTo(path2);
-            }
+            return ORDER_KEEP;
           }
+
+          if (f2.isDirectory())
+          {
+            // f1=file, f2=dir
+            if (path2.equalsIgnoreCase("/META-INF"))
+            {
+              return ORDER_SWAP;
+            }
+
+            if (path1.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
+            {
+              return ORDER_KEEP;
+            }
+
+            return ORDER_SWAP;
+          }
+
+          // f1=file, f2=file
+          if (path1.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
+          {
+            return ORDER_KEEP;
+          }
+
+          if (path2.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
+          {
+            return ORDER_SWAP;
+          }
+
+          return path1.compareTo(path2);
         }
 
         private String getPath(File file, int baseLength)

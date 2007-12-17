@@ -44,10 +44,8 @@ public abstract class QueueWorker<E> extends Worker
     {
       return queue.offer(element);
     }
-    else
-    {
-      return false;
-    }
+
+    return false;
   }
 
   @Override

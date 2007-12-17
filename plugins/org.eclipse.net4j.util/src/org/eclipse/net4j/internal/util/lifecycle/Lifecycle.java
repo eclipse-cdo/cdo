@@ -123,10 +123,8 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
     {
       return ReflectUtil.getLabel(this);
     }
-    else
-    {
-      return super.toString();
-    }
+
+    return super.toString();
   }
 
   protected final void dump()

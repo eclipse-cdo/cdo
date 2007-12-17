@@ -89,12 +89,10 @@ public abstract class DelegatingRegistry<K, V> extends Registry<K, V>
       getTransaction().rememberRegistered(key, value);
       return delegated;
     }
-    else
-    {
-      getTransaction().rememberDeregistered(key, old);
-      getTransaction().rememberRegistered(key, value);
-      return old;
-    }
+
+    getTransaction().rememberDeregistered(key, old);
+    getTransaction().rememberRegistered(key, value);
+    return old;
   }
 
   @Override

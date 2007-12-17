@@ -108,10 +108,8 @@ public class ServerConnection implements IConnection
         sessions.set(sessionID, null);
         return true;
       }
-      else
-      {
-        return false;
-      }
+
+      return false;
     }
   }
 }

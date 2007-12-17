@@ -385,11 +385,9 @@ public abstract class MappingStrategy implements IMappingStrategy
         String path = resultSet.getString(1);
         return path;
       }
-      else
-      {
-        long id = resultSet.getLong(1);
-        return CDOIDImpl.create(id);
-      }
+
+      long id = resultSet.getLong(1);
+      return CDOIDImpl.create(id);
     }
     catch (SQLException ex)
     {

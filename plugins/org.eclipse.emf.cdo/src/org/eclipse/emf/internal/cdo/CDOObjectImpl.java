@@ -142,11 +142,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         this.state = state;
       }
     }
-    else
-    {
-      // TODO Detect duplicate cdoInternalSetState() calls
-      return null;
-    }
+
+    // TODO Detect duplicate cdoInternalSetState() calls
+    return null;
   }
 
   public void cdoInternalSetRevision(CDORevision revision)
@@ -616,11 +614,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       {
         return ECollections.emptyEList();
       }
-      else
-      {
-        Object[] data = getStore().toArray(owner, eStructuralFeature);
-        return new EcoreEList.UnmodifiableEList<E>(owner, eStructuralFeature, data.length, data);
-      }
+
+      Object[] data = getStore().toArray(owner, eStructuralFeature);
+      return new EcoreEList.UnmodifiableEList<E>(owner, eStructuralFeature, data.length, data);
     }
 
     @Override
@@ -832,11 +828,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       {
         return ECollections.emptyEList();
       }
-      else
-      {
-        Object[] data = getStore().toArray(owner, eStructuralFeature);
-        return new EcoreEList.UnmodifiableEList<FeatureMap.Entry>(owner, eStructuralFeature, data.length, data);
-      }
+
+      Object[] data = getStore().toArray(owner, eStructuralFeature);
+      return new EcoreEList.UnmodifiableEList<FeatureMap.Entry>(owner, eStructuralFeature, data.length, data);
     }
 
     @Override

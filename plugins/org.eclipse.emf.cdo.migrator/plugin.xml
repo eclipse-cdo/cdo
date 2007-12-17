@@ -24,7 +24,7 @@
     	icon="icons/full/obj16/CDOModelFile.gif" 
     	extensions="ecore,emof" 
     	description="%_UI_CDOImporter_description" 
-    	wizard="org.eclipse.emf.cdo.migrator.ui.CDOImporterWizard" />
+    	wizard="org.eclipse.emf.cdo.migrator.wizards.CDOImporterWizard" />
   </extension>
   
   <extension

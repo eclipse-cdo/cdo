@@ -636,10 +636,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     protected void didAdd(int index, E object)
     {
       super.didAdd(index, object);
-      // if (index == size - 1)
-      // {
-      // loaded();
-      // }
       modified();
     }
 
@@ -660,27 +656,9 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     @Override
     protected void didClear(int oldSize, Object[] oldData)
     {
-      // if (oldSize == 0)
-      // {
-      // loaded();
-      // }
-      // else
-      {
-        super.didClear(oldSize, oldData);
-      }
+      super.didClear(oldSize, oldData);
+      // modified();
     }
-
-    // protected void loaded()
-    // {
-    // if (!CDOResourceImpl.this.isLoaded())
-    // {
-    // Notification notification = CDOResourceImpl.this.setLoaded(true);
-    // if (notification != null)
-    // {
-    // CDOResourceImpl.this.eNotify(notification);
-    // }
-    // }
-    // }
 
     protected void modified()
     {
@@ -690,35 +668,4 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
       }
     }
   }
-
-  // /**
-  // * @ADDED
-  // * @author Eike Stepper
-  // */
-  // private final class PersistentContents extends EStoreEList<EObject>
-  // {
-  // private static final long serialVersionUID = 1L;
-  //
-  // public PersistentContents()
-  // {
-  // super(CDOResourceImpl.this,
-  // EresourcePackage.eINSTANCE.getCDOResource_Contents(), eStore());
-  // }
-  //
-  // @Override
-  // public NotificationChain inverseAdd(EObject object, NotificationChain
-  // notifications)
-  // {
-  // InternalEObject eObject = (InternalEObject)object;
-  // return eObject.eSetResource(CDOResourceImpl.this, notifications);
-  // }
-  //
-  // @Override
-  // public NotificationChain inverseRemove(EObject object, NotificationChain
-  // notifications)
-  // {
-  // InternalEObject eObject = (InternalEObject)object;
-  // return eObject.eSetResource(null, notifications);
-  // }
-  // }
 } // CDOResourceImpl

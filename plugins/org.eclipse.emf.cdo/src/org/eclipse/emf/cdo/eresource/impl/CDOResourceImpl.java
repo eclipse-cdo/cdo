@@ -16,7 +16,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.impl.NotificationChainImpl;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
-import org.eclipse.emf.common.notify.impl.NotifyingListImpl;
 import org.eclipse.emf.common.util.AbstractTreeIterator;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -28,6 +27,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.util.NotifyingInternalEListImpl;
 import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
@@ -544,8 +544,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    * @ADDED
    * @author Eike Stepper
    */
-  protected class TransientContents<E extends Object & EObject> extends NotifyingListImpl<E> implements
-      InternalEList<E>
+  protected class TransientContents<E extends Object & EObject> extends NotifyingInternalEListImpl<E>
   {
     private static final long serialVersionUID = 1L;
 

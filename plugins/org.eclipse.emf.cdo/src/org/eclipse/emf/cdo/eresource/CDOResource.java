@@ -198,8 +198,7 @@ public interface CDOResource extends EresourceObject
    * 
    * @return the value of the '<em>Errors</em>' attribute list.
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Errors()
-   * @model type="org.eclipse.emf.ecore.resource.Resource.Diagnostic"
-   *        dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true"
+   * @model dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true"
    * @generated
    */
   EList<Diagnostic> getErrors();
@@ -215,8 +214,7 @@ public interface CDOResource extends EresourceObject
    * 
    * @return the value of the '<em>Warnings</em>' attribute list.
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Warnings()
-   * @model type="org.eclipse.emf.ecore.resource.Resource.Diagnostic"
-   *        dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true"
+   * @model dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true"
    * @generated
    */
   EList<Diagnostic> getWarnings();

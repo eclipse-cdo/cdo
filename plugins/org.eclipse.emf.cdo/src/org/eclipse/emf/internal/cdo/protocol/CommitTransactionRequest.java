@@ -151,6 +151,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     writeRevisions(out, newObjects);
   }
 
+  @SuppressWarnings("unused")
   private void writeDirtyObjects(ExtendedDataOutputStream out) throws IOException
   {
     Collection<CDOObject> dirtyObjects = transaction.getDirtyObjects().values();

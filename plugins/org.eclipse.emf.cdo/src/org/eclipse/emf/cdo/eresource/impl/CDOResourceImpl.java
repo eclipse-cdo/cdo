@@ -42,6 +42,7 @@ import org.eclipse.net4j.util.ImplementationError;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -547,6 +548,20 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   protected class TransientContents<E extends Object & EObject> extends NotifyingInternalEListImpl<E>
   {
     private static final long serialVersionUID = 1L;
+
+    public TransientContents()
+    {
+    }
+
+    public TransientContents(Collection<? extends E> collection)
+    {
+      super(collection);
+    }
+
+    public TransientContents(int initialCapacity)
+    {
+      super(initialCapacity);
+    }
 
     @Override
     public Object getNotifier()

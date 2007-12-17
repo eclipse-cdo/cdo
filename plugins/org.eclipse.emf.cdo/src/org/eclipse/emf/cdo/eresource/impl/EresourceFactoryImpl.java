@@ -6,6 +6,7 @@
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
+import org.eclipse.emf.cdo.eresource.*;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -20,14 +21,13 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static EresourceFactory init()
@@ -49,8 +49,8 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public EresourceFactoryImpl()
@@ -77,7 +77,6 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -94,7 +93,6 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -111,7 +109,6 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOResource createCDOResource()
@@ -142,7 +139,6 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EresourcePackage getEresourcePackage()
@@ -152,7 +148,6 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -86,7 +87,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOResourceImpl()
@@ -96,7 +96,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -107,7 +106,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -118,7 +116,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ResourceSet getResourceSet()
@@ -128,7 +125,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setResourceSet(ResourceSet newResourceSet)
@@ -138,7 +134,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public URI getURI()
@@ -181,7 +176,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isModified()
@@ -191,7 +185,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setModified(boolean newModified)
@@ -201,7 +194,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isLoaded()
@@ -211,7 +203,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setLoaded(boolean newLoaded)
@@ -221,7 +212,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isTrackingModification()
@@ -231,7 +221,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTrackingModification(boolean newTrackingModification)
@@ -241,7 +230,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -252,7 +240,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -263,7 +250,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getPath()

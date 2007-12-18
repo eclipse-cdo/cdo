@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDOIDProvider;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
-import org.eclipse.emf.cdo.internal.server.protocol.InvalidationRequest;
+import org.eclipse.emf.cdo.internal.server.protocol.InvalidationNotification;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
@@ -164,7 +164,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   {
     try
     {
-      new InvalidationRequest(protocol.getChannel(), timeStamp, dirtyIDs).send();
+      new InvalidationNotification(protocol.getChannel(), timeStamp, dirtyIDs).send();
     }
     catch (Exception ex)
     {

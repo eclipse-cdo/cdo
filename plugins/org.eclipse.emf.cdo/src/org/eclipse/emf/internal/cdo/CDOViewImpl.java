@@ -102,7 +102,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   protected ConcurrentMap<CDOID, InternalCDOObject> createObjectsMap()
   {
-    return new ReferenceValueMap.Soft<CDOID, InternalCDOObject>();
+    return new ReferenceValueMap.Weak<CDOID, InternalCDOObject>();
   }
 
   public int getViewID()
@@ -271,39 +271,47 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
 
     lastLookupID = id;
-    lastLookupObject = objects.get(id);
-    if (lastLookupObject == null)
+    synchronized (objects)
     {
-      if (id.isMeta())
+      lastLookupObject = objects.get(id);
+      if (lastLookupObject == null)
       {
-        lastLookupObject = createMetaObject(id);
-      }
-      else
-      {
-        if (loadOnDemand)
+        if (id.isMeta())
         {
-          lastLookupObject = createObject(id);
+          lastLookupObject = createMetaObject(id);
         }
         else
         {
-          lastLookupObject = createProxy(id);
+          if (loadOnDemand)
+          {
+            lastLookupObject = createObject(id);
+          }
+          else
+          {
+            lastLookupObject = createProxy(id);
+          }
         }
+
+        registerObject(lastLookupObject);
       }
-
-      registerObject(lastLookupObject);
     }
-
     return lastLookupObject;
   }
 
   public boolean isObjectRegistered(CDOID id)
   {
-    return objects.containsKey(id);
+    synchronized (objects)
+    {
+      return objects.containsKey(id);
+    }
   }
 
   public InternalCDOObject removeObject(CDOID id)
   {
-    return objects.remove(id);
+    synchronized (objects)
+    {
+      return objects.remove(id);
+    }
   }
 
   /**
@@ -475,7 +483,12 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       TRACER.format("Registering {0}", object);
     }
 
-    InternalCDOObject old = objects.put(object.cdoID(), object);
+    InternalCDOObject old;
+    synchronized (objects)
+    {
+      old = objects.put(object.cdoID(), object);
+    }
+
     if (old != null)
     {
       throw new IllegalStateException("Duplicate ID: " + object);
@@ -489,7 +502,12 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       TRACER.format("Deregistering {0}", object);
     }
 
-    InternalCDOObject old = objects.remove(object.cdoID());
+    InternalCDOObject old;
+    synchronized (objects)
+    {
+      old = objects.remove(object.cdoID());
+    }
+
     if (old == null)
     {
       throw new IllegalStateException("Unknown ID: " + object);
@@ -498,46 +516,19 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public void remapObject(CDOID oldID)
   {
-    InternalCDOObject object = objects.remove(oldID);
-    CDOID newID = object.cdoID();
-    objects.put(newID, object);
+    CDOID newID;
+    synchronized (objects)
+    {
+      InternalCDOObject object = objects.remove(oldID);
+      newID = object.cdoID();
+      objects.put(newID, object);
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.format("Remapping {0} --> {1}", oldID, newID);
     }
   }
-
-  // public final class HistoryEntryImpl implements HistoryEntry, Comparable
-  // {
-  // private String resourcePath;
-  //
-  // private HistoryEntryImpl(String resourcePath)
-  // {
-  // this.resourcePath = resourcePath;
-  // }
-  //
-  // public CDOView getView()
-  // {
-  // return CDOViewImpl.this;
-  // }
-  //
-  // public String getResourcePath()
-  // {
-  // return resourcePath;
-  // }
-  //
-  // public int compareTo(Object o)
-  // {
-  // HistoryEntry that = (HistoryEntry)o;
-  // return resourcePath.compareTo(that.getResourcePath());
-  // }
-  //
-  // @Override
-  // public String toString()
-  // {
-  // return resourcePath;
-  // }
-  // }
 
   /**
    * Turns registered objects into proxies and synchronously delivers invalidation events to registered event listeners.
@@ -558,14 +549,19 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     List<InternalCDOObject> dirtyObjects = enableInvalidationNotifications ? new ArrayList<InternalCDOObject>() : null;
     for (CDOID dirtyOID : dirtyOIDs)
     {
-      InternalCDOObject dirtyObject = objects.get(dirtyOID);
-      if (dirtyObject != null)
+      InternalCDOObject dirtyObject;
+      synchronized (objects)
       {
-        CDOStateMachine.INSTANCE.invalidate(dirtyObject, timeStamp);
-        if (dirtyObjects != null && dirtyObject.eNotificationRequired())
+        dirtyObject = objects.get(dirtyOID);
+        if (dirtyObject != null)
         {
-          dirtyObjects.add(dirtyObject);
+          CDOStateMachine.INSTANCE.invalidate(dirtyObject, timeStamp);
         }
+      }
+
+      if (dirtyObject != null && dirtyObjects != null && dirtyObject.eNotificationRequired())
+      {
+        dirtyObjects.add(dirtyObject);
       }
     }
 
@@ -595,7 +591,10 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
     else
     {
-      internalObjects = this.objects.values();
+      synchronized (objects)
+      {
+        internalObjects = new ArrayList<InternalCDOObject>(this.objects.values());
+      }
     }
 
     int result = internalObjects.size();

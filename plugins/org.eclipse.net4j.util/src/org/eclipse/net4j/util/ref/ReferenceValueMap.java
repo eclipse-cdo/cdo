@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util.ref;
 
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.MapEntry;
 
 import java.lang.ref.ReferenceQueue;
@@ -18,11 +17,22 @@ import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
+ * A {@link ConcurrentMap} implementation that uses {@link KeyedReference} instances ({@link KeyedReference#Strong Strong},
+ * {@link KeyedReference#Soft Soft}, {@link KeyedReference#Weak Weak} or {@link KeyedReference#Phantom Phantom}) as
+ * its values.
+ * <p>
+ * A <code>ReferenceValueMap</code> can be used to cache mappings until the <em>value</em> of the mapping is no
+ * longer reachable from outside of the map
+ * <p>
+ * <b>Note:</b> This map is not synchronized. If it is to be used by multiple threads concurrently the user is
+ * responsible for applying proper external synchronization!
+ * 
  * @author Eike Stepper
  */
 public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V>
@@ -69,9 +79,9 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
     KeyedReference<K, V> ref = map.get(key);
     if (ref != null)
     {
-      if (ref.isEnqueued())
+      if (ref.get() == null)
       {
-        map.remove(key);
+        ref.enqueue();
         return false;
       }
 
@@ -91,7 +101,14 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
 
     for (KeyedReference<K, V> ref : map.values())
     {
-      if (!ref.isEnqueued() && ObjectUtil.equals(value, dereference(ref)))
+      V v = ref.get();
+      if (v == null)
+      {
+        ref.enqueue();
+        return false;
+      }
+
+      if (value.equals(v))
       {
         return true;
       }
@@ -221,7 +238,13 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
       return null;
     }
 
-    return ref.get();
+    V value = ref.get();
+    if (value == null)
+    {
+      ref.enqueue();
+    }
+
+    return value;
   }
 
   protected abstract KeyedReference<K, V> createReference(K key, V value, ReferenceQueue<V> queue);
@@ -413,6 +436,8 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
   {
     private Iterator<Entry<K, KeyedReference<K, V>>> it = map.entrySet().iterator();
 
+    private MapEntry<K, V> nextEntry;
+
     private K lastKey;
 
     public EntrySetIterator()
@@ -421,15 +446,44 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
 
     public boolean hasNext()
     {
-      return it.hasNext();
+      if (nextEntry != null)
+      {
+        return true;
+      }
+
+      while (it.hasNext())
+      {
+        Entry<K, KeyedReference<K, V>> entry = it.next();
+        lastKey = entry.getKey();
+        V value = dereference(entry.getValue());
+        if (value != null)
+        {
+          nextEntry = new MapEntry<K, V>(lastKey, value);
+          return true;
+        }
+      }
+
+      return false;
     }
 
     public Entry<K, V> next()
     {
-      Entry<K, KeyedReference<K, V>> entry = it.next();
-      lastKey = entry.getKey();
-      V value = dereference(entry.getValue());
-      return new MapEntry<K, V>(lastKey, value);
+      if (nextEntry == null)
+      {
+        if (!hasNext())
+        {
+          throw new NoSuchElementException();
+        }
+      }
+
+      try
+      {
+        return nextEntry;
+      }
+      finally
+      {
+        nextEntry = null;
+      }
     }
 
     public void remove()
@@ -441,6 +495,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
 
       map.remove(lastKey);
       lastKey = null;
+      nextEntry = null;
     }
   }
 }

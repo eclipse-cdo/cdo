@@ -26,15 +26,15 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class InvalidationRequest extends Request
+public class InvalidationNotification extends Request
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, InvalidationRequest.class);
+  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, InvalidationNotification.class);
 
   private long timeStamp;
 
   private CDOID[] dirtyIDs;
 
-  public InvalidationRequest(IChannel channel, long timeStamp, CDOID[] dirtyIDs)
+  public InvalidationNotification(IChannel channel, long timeStamp, CDOID[] dirtyIDs)
   {
     super(channel);
     this.timeStamp = timeStamp;

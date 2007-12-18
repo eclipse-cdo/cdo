@@ -81,7 +81,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
     {
       if (ref.get() == null)
       {
-        ref.enqueue();
+        // ref.enqueue();
         return false;
       }
 
@@ -104,7 +104,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
       V v = ref.get();
       if (v == null)
       {
-        ref.enqueue();
+        // ref.enqueue();
         return false;
       }
 
@@ -226,7 +226,8 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
       KeyedReference<K, V> ref;
       while ((ref = (KeyedReference<K, V>)queue.poll()) != null)
       {
-        map.remove(ref.getKey());
+        // Slightly faster than map.get() + map.remove()
+        map.remove(ref.getKey(), ref);
       }
     }
   }
@@ -238,13 +239,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
       return null;
     }
 
-    V value = ref.get();
-    if (value == null)
-    {
-      ref.enqueue();
-    }
-
-    return value;
+    return ref.get();
   }
 
   protected abstract KeyedReference<K, V> createReference(K key, V value, ReferenceQueue<V> queue);

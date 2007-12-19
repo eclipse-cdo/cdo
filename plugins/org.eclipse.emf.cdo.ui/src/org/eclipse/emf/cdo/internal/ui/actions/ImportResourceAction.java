@@ -10,6 +10,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
@@ -134,6 +136,14 @@ public class ImportResourceAction extends ViewAction
         data.left = new FormAttachment(0, CONTROL_OFFSET);
         data.right = new FormAttachment(100, -CONTROL_OFFSET);
         targetText.setLayoutData(data);
+        targetText.setText(targetPath);
+        targetText.addModifyListener(new ModifyListener()
+        {
+          public void modifyText(ModifyEvent e)
+          {
+            targetPath = targetText.getText();
+          }
+        });
       }
 
       Label separatorLabel2 = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
@@ -146,26 +156,6 @@ public class ImportResourceAction extends ViewAction
       }
 
       return composite;
-
-      // Composite composite = UIUtil.createGridComposite(parent, 1);
-      // Control source = super.createDialogArea(composite);
-      // source.setLayoutData(UIUtil.createGridData(true, false));
-      //
-      // Composite line = UIUtil.createGridComposite(composite, 2);
-      // new Label(line, SWT.NONE).setText("Enter target path:");
-      //
-      // targetText = new Text(line, SWT.BORDER);
-      // targetText.setLayoutData(UIUtil.createGridData(true, false));
-      // targetText.setText(targetPath);
-      // targetText.addModifyListener(new ModifyListener()
-      // {
-      // public void modifyText(ModifyEvent e)
-      // {
-      // targetPath = targetText.getText();
-      // }
-      // });
-      //
-      // return source;
     }
   }
 }

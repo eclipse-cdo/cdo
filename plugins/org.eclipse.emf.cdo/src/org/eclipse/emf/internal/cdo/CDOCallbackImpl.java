@@ -10,15 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOView;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.CDOAware;
 import org.eclipse.emf.ecore.impl.CDOCallback;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
@@ -144,30 +140,5 @@ public class CDOCallbackImpl extends CDOLegacyImpl implements CDOCallback
         CDOStateMachine.INSTANCE.detach(object, cdoResource(), view);
       }
     }
-  }
-
-  public static InternalCDOObject adapt(Object object, CDOView view) throws Throwable
-  {
-    if (object instanceof CDOAware)
-    {
-      CDOAware aware = (CDOAware)object;
-      CDOCallbackImpl callback = (CDOCallbackImpl)aware.getCDOCallback();
-      if (callback == null)
-      {
-        InternalEObject instance = (InternalEObject)aware;
-        if (instance.eIsProxy())
-        {
-          instance = (InternalEObject)EcoreUtil.resolve(instance, view.getResourceSet());
-        }
-
-        callback = new CDOCallbackImpl(instance);
-        aware.setCDOCallback(callback);
-        instance.eAdapters().add(callback);
-      }
-
-      return callback;
-    }
-
-    return null;
   }
 }

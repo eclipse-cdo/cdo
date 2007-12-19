@@ -7,7 +7,6 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.ui.actions.ExportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportRootsAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReloadObjectsAction;
 
@@ -64,12 +63,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   /**
    * @ADDED
    */
-  protected ImportRootsAction importResourceAction;
-
-  /**
-   * @ADDED
-   */
-  protected ExportResourceAction exportResourceAction;
+  protected ImportRootsAction importRootsAction;
 
   /**
    * @ADDED
@@ -183,8 +177,8 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     loadResourceAction = new LoadResourceAction();
     loadResourceAction.setId(LOAD_RESOURCE_ID);
 
-    importResourceAction = new ImportRootsAction();
-    importResourceAction.setId(ImportRootsAction.ID);
+    importRootsAction = new ImportRootsAction();
+    importRootsAction.setId(ImportRootsAction.ID);
 
     // exportResourceAction = new ExportResourceAction(); // TODO
     // exportResourceAction.setId(EXPORT_RESOURCE_ID);
@@ -376,15 +370,15 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
         newChildDescriptors = domain.getNewChildDescriptors(object, null);
         newSiblingDescriptors = domain.getNewChildDescriptors(null, object);
 
-        if (importResourceAction != null)
+        if (importRootsAction != null)
         {
           if (object instanceof CDOResource)
           {
-            importResourceAction.setTargetResource((CDOResource)object);
+            importRootsAction.setTargetResource((CDOResource)object);
           }
           else
           {
-            importResourceAction.setTargetResource(null);
+            importRootsAction.setTargetResource(null);
           }
         }
       }
@@ -564,26 +558,16 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
 
     if (loadResourceAction != null)
     {
-      if (exportResourceAction != null)
+      if (importRootsAction != null)
       {
-        menuManager.insertAfter(loadResourceAction.getId(), exportResourceAction);
-      }
-
-      if (importResourceAction != null)
-      {
-        menuManager.insertAfter(loadResourceAction.getId(), importResourceAction);
+        menuManager.insertAfter(loadResourceAction.getId(), importRootsAction);
       }
     }
     else
     {
-      if (importResourceAction != null)
+      if (importRootsAction != null)
       {
-        menuManager.insertBefore("additions-end", importResourceAction);
-      }
-
-      if (exportResourceAction != null)
-      {
-        menuManager.insertAfter("additions-end", exportResourceAction);
+        menuManager.insertBefore("additions-end", importRootsAction);
       }
 
       menuManager.insertBefore("additions-end", new Separator());
@@ -608,23 +592,18 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   @Override
   public void activate()
   {
-    if (importResourceAction != null)
+    if (importRootsAction != null)
     {
-      importResourceAction.setActiveWorkbenchPart(activeEditor);
+      importRootsAction.setActiveWorkbenchPart(activeEditor);
       Object input = ((CDOEditor)getActiveEditor()).getViewer().getInput();
       if (input instanceof CDOResource)
       {
-        importResourceAction.setTargetResource((CDOResource)input);
+        importRootsAction.setTargetResource((CDOResource)input);
       }
       else
       {
-        importResourceAction.setTargetResource(null);
+        importRootsAction.setTargetResource(null);
       }
-    }
-
-    if (exportResourceAction != null)
-    {
-      exportResourceAction.setActiveWorkbenchPart(activeEditor);
     }
 
     if (reloadObjectsAction != null)
@@ -641,15 +620,10 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   @Override
   public void deactivate()
   {
-    if (importResourceAction != null)
+    if (importRootsAction != null)
     {
-      importResourceAction.setActiveWorkbenchPart(null);
-      importResourceAction.setTargetResource(null);
-    }
-
-    if (exportResourceAction != null)
-    {
-      exportResourceAction.setActiveWorkbenchPart(null);
+      importRootsAction.setActiveWorkbenchPart(null);
+      importRootsAction.setTargetResource(null);
     }
 
     if (reloadObjectsAction != null)
@@ -667,14 +641,9 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   public void update()
   {
     super.update();
-    if (importResourceAction != null)
+    if (importRootsAction != null)
     {
-      importResourceAction.update();
-    }
-
-    if (exportResourceAction != null)
-    {
-      exportResourceAction.update();
+      importRootsAction.update();
     }
 
     if (reloadObjectsAction != null)

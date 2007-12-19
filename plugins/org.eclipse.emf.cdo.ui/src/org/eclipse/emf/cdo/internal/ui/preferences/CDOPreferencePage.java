@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.preferences;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
+import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;
 import org.eclipse.net4j.util.ui.widgets.TextAndDisable;
@@ -97,7 +98,7 @@ public class CDOPreferencePage extends OMPreferencePage
     transactionGroup.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(transactionGroup, SWT.NONE).setText("Commit timeout (millis):");
-    commitTimeout = new TextAndDisable(transactionGroup, SWT.BORDER, "0")
+    commitTimeout = new TextAndDisable(transactionGroup, SWT.BORDER, String.valueOf(BufferInputStream.NO_TIMEOUT))
     {
       @Override
       protected GridData createTextLayoutData()

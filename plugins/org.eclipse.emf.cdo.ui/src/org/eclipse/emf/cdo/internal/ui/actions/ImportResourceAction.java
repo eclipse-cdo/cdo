@@ -4,9 +4,13 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 
 import org.eclipse.emf.common.ui.dialogs.ResourceDialog;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -23,6 +27,7 @@ import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -71,13 +76,25 @@ public class ImportResourceAction extends ViewAction
   protected void doRun() throws Exception
   {
     CDOTransaction transaction = getTransaction();
-    Resource source = transaction.getResourceSet().getResource(sourceURI, true);
-    Resource target = transaction.createResource(targetPath);
 
-    List<EObject> contents = new ArrayList<EObject>(source.getContents());
-    for (EObject root : contents)
+    // Source ResourceSet
+    ResourceSet sourceSet = new ResourceSetImpl();
+    Map<String, Object> map = sourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+    map.put("*", new XMIResourceFactoryImpl());
+    sourceSet.setPackageRegistry(transaction.getSession().getPackageRegistry());
+
+    // Source Resource
+    Resource source = sourceSet.getResource(sourceURI, true);
+    List<EObject> sourceContents = new ArrayList<EObject>(source.getContents());
+
+    // Target Resource
+    Resource target = transaction.createResource(targetPath);
+    EList<EObject> targetContents = target.getContents();
+
+    // Move contents over
+    for (EObject root : sourceContents)
     {
-      target.getContents().add(root);
+      targetContents.add(root);
     }
   }
 

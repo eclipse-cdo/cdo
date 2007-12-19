@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.bundle;
 
+import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
@@ -78,4 +79,7 @@ public abstract class OM
 
   public static final OMPreference<Integer> PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE = // 
   PREFS.init("PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE", CDOView.NO_PRELOAD); //$NON-NLS-1$
+
+  public static final OMPreference<Long> PREF_DEFAULT_COMMIT_TIMEOUT = // 
+  PREFS.init("PREF_DEFAULT_COMMIT_TIMEOUT", CDOTransaction.DEFAULT_COMMIT_TIMEOUT); //$NON-NLS-1$
 }

@@ -82,9 +82,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   private boolean conflict;
 
+  private long commitTimeout;
+
   public CDOTransactionImpl(int id, CDOSessionImpl session)
   {
     super(id, session);
+    commitTimeout = OM.PREF_DEFAULT_COMMIT_TIMEOUT.getValue();
   }
 
   @Override
@@ -134,6 +137,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     ConflictEvent event = new ConflictEvent(object, !conflict);
     conflict = true;
     fireEvent(event);
+  }
+
+  public long getCommitTimeout()
+  {
+    return commitTimeout;
+  }
+
+  public void setCommitTimeout(long timeout)
+  {
+    commitTimeout = timeout;
   }
 
   public List<CDOPackage> getNewPackages()
@@ -201,8 +214,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
         IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
         CommitTransactionRequest request = new CommitTransactionRequest(channel, this);
 
-        // TODO Change timeout semantics in Net4j
-        CommitTransactionResult result = failOverStrategy.send(request, 100000L);
+        CommitTransactionResult result = failOverStrategy.send(request, commitTimeout);
         String rollbackMessage = result.getRollbackMessage();
         if (rollbackMessage != null)
         {

@@ -31,6 +31,12 @@ import java.util.Map;
  */
 public interface CDOTransaction extends CDOView
 {
+  public static final long DEFAULT_COMMIT_TIMEOUT = 100000L;
+
+  public long getCommitTimeout();
+
+  public void setCommitTimeout(long timeout);
+
   /**
    * @see ResourceSet#createResource(URI)
    */

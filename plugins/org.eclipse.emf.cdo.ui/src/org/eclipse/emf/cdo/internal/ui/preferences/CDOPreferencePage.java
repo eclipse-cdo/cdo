@@ -43,6 +43,8 @@ public class CDOPreferencePage extends OMPreferencePage
 
   private Button invalidationNotifications;
 
+  private TextAndDisable commitTimeout;
+
   public CDOPreferencePage()
   {
     super(org.eclipse.emf.internal.cdo.bundle.OM.PREFS);
@@ -87,6 +89,15 @@ public class CDOPreferencePage extends OMPreferencePage
     new Label(viewGroup, SWT.NONE).setText("EMF invalidation notifications:");
     invalidationNotifications = new Button(viewGroup, SWT.CHECK);
 
+    Group transactionGroup = new Group(composite, SWT.NONE);
+    transactionGroup.setLayout(new GridLayout(2, false));
+    transactionGroup.setText("Transaction Defaults");
+    transactionGroup.setLayoutData(UIUtil.createGridData(true, false));
+
+    new Label(transactionGroup, SWT.NONE).setText("Default commit timeout:");
+    commitTimeout = new TextAndDisable(transactionGroup, SWT.BORDER, "0");
+    commitTimeout.setLayoutData(UIUtil.createGridData(true, false));
+
     initValues();
     return composite;
   }
@@ -102,6 +113,8 @@ public class CDOPreferencePage extends OMPreferencePage
         .valueOf(org.eclipse.emf.internal.cdo.bundle.OM.PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE.getValue()));
     invalidationNotifications
         .setSelection(org.eclipse.emf.internal.cdo.bundle.OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.getValue());
+    commitTimeout.setValue(String
+        .valueOf(org.eclipse.emf.internal.cdo.bundle.OM.PREF_DEFAULT_COMMIT_TIMEOUT.getValue()));
   }
 
   @Override
@@ -110,16 +123,14 @@ public class CDOPreferencePage extends OMPreferencePage
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_REPOSITORY_NAME.setValue(repositoryName.getText());
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_USER_NAME.setValue(userName.getText());
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_CONNECTOR_DESCRIPTION.setValue(connectorDescription.getText());
-
-    int v1 = Integer.parseInt(referenceChunkSize.getValue());
-    org.eclipse.emf.internal.cdo.bundle.OM.PREF_REFERENCE_CHUNK_SIZE.setValue(v1);
-
-    int v2 = Integer.parseInt(preloadChunkSize.getValue());
-    org.eclipse.emf.internal.cdo.bundle.OM.PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE.setValue(v2);
-
-    boolean v3 = invalidationNotifications.getSelection();
-    org.eclipse.emf.internal.cdo.bundle.OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.setValue(v3);
-
+    org.eclipse.emf.internal.cdo.bundle.OM.PREF_REFERENCE_CHUNK_SIZE.setValue(Integer.parseInt(referenceChunkSize
+        .getValue()));
+    org.eclipse.emf.internal.cdo.bundle.OM.PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE.setValue(Integer
+        .parseInt(preloadChunkSize.getValue()));
+    org.eclipse.emf.internal.cdo.bundle.OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.setValue(invalidationNotifications
+        .getSelection());
+    org.eclipse.emf.internal.cdo.bundle.OM.PREF_DEFAULT_COMMIT_TIMEOUT.setValue(Long
+        .parseLong(commitTimeout.getValue()));
     return super.performOk();
   }
 }

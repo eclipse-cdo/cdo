@@ -22,6 +22,12 @@ public interface IStore extends IRepositoryElement
   public String getStoreType();
 
   /**
+   * @return <code>true</code> if this store supports the writing of modified revisions in terms of deltas,
+   *         <code>false</code> otherwise.
+   */
+  public boolean hasWriteDeltaSupport();
+
+  /**
    * @return <code>true</code> if this store supports the retrieval of historical revisions, <code>false</code>
    *         otherwise.
    */
@@ -39,7 +45,7 @@ public interface IStore extends IRepositoryElement
    */
   public boolean hasEfficientTypeLookup();
 
-  public boolean hasCrashed();
+  public boolean wasCrashed();
 
   public void repairAfterCrash();
 

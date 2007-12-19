@@ -68,8 +68,13 @@ public abstract class Store extends Lifecycle implements IStore
     this.nextOIDValue = nextOIDValue;
   }
 
-  public boolean hasCrashed()
+  public boolean wasCrashed()
   {
     return nextOIDValue == 0L;
+  }
+
+  public boolean hasWriteDeltaSupport()
+  {
+    return false;
   }
 }

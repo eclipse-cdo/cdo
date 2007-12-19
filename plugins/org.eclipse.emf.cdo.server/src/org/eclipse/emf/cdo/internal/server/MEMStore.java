@@ -79,6 +79,11 @@ public class MEMStore extends Store
     }
   }
 
+  public boolean hasWriteDeltaSupport()
+  {
+    return true;
+  }
+
   public boolean hasAuditingSupport()
   {
     return true;

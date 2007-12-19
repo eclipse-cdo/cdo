@@ -332,7 +332,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       {
         if (!getRepository().isSupportingRevisionDeltas())
         {
-          throw new IllegalArgumentException("Cannot retrieved origin revision");
+          throw new IllegalArgumentException("Cannot retrieve origin revision");
         }
       }
       else

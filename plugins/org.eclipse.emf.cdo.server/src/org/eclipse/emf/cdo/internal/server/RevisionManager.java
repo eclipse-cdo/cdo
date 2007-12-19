@@ -326,20 +326,6 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     private WriteRevisionOperation(CDORevisionDeltaImpl revisionDelta)
     {
       this.revisionDelta = revisionDelta;
-      CDORevisionImpl oldRevision = getRevisionByVersion(revisionDelta.getId(), CDORevision.UNCHUNKED, revisionDelta
-          .getOriginVersion(), true);
-      if (oldRevision == null)
-      {
-        if (!getRepository().isSupportingRevisionDeltas())
-        {
-          throw new IllegalArgumentException("Cannot retrieve origin revision");
-        }
-      }
-      else
-      {
-        dirtyRevision = new CDORevisionImpl(oldRevision);
-        revisionDelta.applyChanges(dirtyRevision);
-      }
     }
 
     public void phase1(IStoreWriter storeWriter) throws Exception
@@ -351,6 +337,15 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       }
       else
       {
+        CDORevisionImpl oldRevision = getRevisionByVersion(revisionDelta.getId(), CDORevision.UNCHUNKED, revisionDelta
+            .getOriginVersion(), true);
+        if (oldRevision == null)
+        {
+          throw new IllegalArgumentException("Cannot retrieve origin revision");
+        }
+
+        dirtyRevision = new CDORevisionImpl(oldRevision);
+        revisionDelta.applyChanges(dirtyRevision);
         storeWriter.writeRevision(dirtyRevision);
       }
 

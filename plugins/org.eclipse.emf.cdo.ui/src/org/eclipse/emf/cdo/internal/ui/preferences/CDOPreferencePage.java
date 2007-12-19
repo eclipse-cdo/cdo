@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;
 import org.eclipse.net4j.util.ui.widgets.TextAndDisable;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -54,6 +55,7 @@ public class CDOPreferencePage extends OMPreferencePage
   protected Control createUI(Composite parent)
   {
     Composite composite = UIUtil.createGridComposite(parent, 1);
+    ((GridLayout)composite.getLayout()).verticalSpacing = 5;
     composite.setLayoutData(UIUtil.createGridData());
 
     Group sessionGroup = new Group(composite, SWT.NONE);
@@ -94,8 +96,17 @@ public class CDOPreferencePage extends OMPreferencePage
     transactionGroup.setText("Transaction Defaults");
     transactionGroup.setLayoutData(UIUtil.createGridData(true, false));
 
-    new Label(transactionGroup, SWT.NONE).setText("Default commit timeout:");
-    commitTimeout = new TextAndDisable(transactionGroup, SWT.BORDER, "0");
+    new Label(transactionGroup, SWT.NONE).setText("Commit timeout (millis):");
+    commitTimeout = new TextAndDisable(transactionGroup, SWT.BORDER, "0")
+    {
+      @Override
+      protected GridData createTextLayoutData()
+      {
+        GridData gd = super.createTextLayoutData();
+        gd.widthHint = 64;
+        return gd;
+      }
+    };
     commitTimeout.setLayoutData(UIUtil.createGridData(true, false));
 
     initValues();

@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.CDOIDNull;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
@@ -50,7 +49,7 @@ public class LoadRevisionIndication extends CDOReadIndication
 
   protected CDOID contextID = CDOID.NULL;
 
-  protected int loadRevisionCollectionChunkSize = 1;
+  protected int loadRevisionCollectionChunkSize;
 
   public LoadRevisionIndication()
   {

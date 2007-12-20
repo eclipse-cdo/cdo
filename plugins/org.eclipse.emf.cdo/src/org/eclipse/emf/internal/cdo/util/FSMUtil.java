@@ -27,6 +27,7 @@ import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -35,8 +36,33 @@ import java.util.Iterator;
  */
 public final class FSMUtil
 {
+  private static Method adaptLegacyMethod = initAdaptLegacyMethod();
+
   private FSMUtil()
   {
+  }
+
+  private static Method initAdaptLegacyMethod()
+  {
+    try
+    {
+      Class<?> c = Class.forName("org.eclipse.emf.internal.cdo.CDOCallbackImpl");
+      if (c != null)
+      {
+        final Class<?>[] params = { Object.class, CDOView.class };
+        Method method = c.getDeclaredMethod("adapt", params);
+        if (method != null)
+        {
+          return method;
+        }
+      }
+    }
+    catch (Throwable ignore)
+    {
+    }
+
+    OM.LOG.info("Legacy system not available");
+    return null;
   }
 
   public static boolean isTransient(CDOObject object)
@@ -82,17 +108,16 @@ public final class FSMUtil
       }
     }
 
-    try
+    if (adaptLegacyMethod != null)
     {
-      InternalCDOObject callback = adaptLegacy(object, view);
-      if (callback != null)
+      try
       {
-        return callback;
+        return (InternalCDOObject)adaptLegacyMethod.invoke(null, object, view);
       }
-    }
-    catch (Throwable t)
-    {
-      OM.LOG.info(t);
+      catch (Throwable t)
+      {
+        OM.LOG.info(t);
+      }
     }
 
     if (object instanceof InternalEObject)
@@ -106,32 +131,6 @@ public final class FSMUtil
       }
 
       return adapter;
-    }
-
-    return null;
-  }
-
-  public static InternalCDOObject adaptLegacy(Object object, CDOView view) throws Throwable
-  {
-    if (object instanceof org.eclipse.emf.ecore.impl.CDOAware)
-    {
-      org.eclipse.emf.ecore.impl.CDOAware aware = (org.eclipse.emf.ecore.impl.CDOAware)object;
-      org.eclipse.emf.internal.cdo.CDOCallbackImpl callback = (org.eclipse.emf.internal.cdo.CDOCallbackImpl)aware
-          .getCDOCallback();
-      if (callback == null)
-      {
-        InternalEObject instance = (InternalEObject)aware;
-        if (instance.eIsProxy())
-        {
-          instance = (InternalEObject)EcoreUtil.resolve(instance, view.getResourceSet());
-        }
-
-        callback = new org.eclipse.emf.internal.cdo.CDOCallbackImpl(instance);
-        aware.setCDOCallback(callback);
-        instance.eAdapters().add(callback);
-      }
-
-      return callback;
     }
 
     return null;

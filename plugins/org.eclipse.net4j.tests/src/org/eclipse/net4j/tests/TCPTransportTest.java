@@ -159,7 +159,6 @@ public class TCPTransportTest extends AbstractTransportTest
 
     getAcceptor().addListener(new IListener()
     {
-      @SuppressWarnings("unchecked")
       public void notifyEvent(IEvent event)
       {
         if (event instanceof IContainerEvent)

@@ -10,15 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.util.ui.actions;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.om.monitor.MonitorUtil;
 import org.eclipse.net4j.util.om.monitor.MonitoredJob;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;

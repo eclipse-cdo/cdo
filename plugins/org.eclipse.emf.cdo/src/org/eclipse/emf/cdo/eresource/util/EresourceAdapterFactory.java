@@ -6,10 +6,8 @@
  */
 package org.eclipse.emf.cdo.eresource.util;
 
-import org.eclipse.emf.cdo.eresource.*;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;

@@ -6,11 +6,9 @@
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
-import org.eclipse.emf.cdo.eresource.*;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;

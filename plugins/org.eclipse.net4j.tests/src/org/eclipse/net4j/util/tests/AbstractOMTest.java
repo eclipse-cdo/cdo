@@ -86,7 +86,6 @@ public abstract class AbstractOMTest extends TestCase
     }
   }
 
-  @SuppressWarnings("unused")
   protected void disableConsole()
   {
     if (consoleEnabled)

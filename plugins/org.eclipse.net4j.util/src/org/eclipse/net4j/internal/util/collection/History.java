@@ -136,6 +136,7 @@ public class History<T> extends Notifier implements IHistory<T>
     return elements.get(0).getData();
   }
 
+  @SuppressWarnings("unchecked")
   public <D> D[] getData(D[] a)
   {
     lazyLoad();
@@ -158,6 +159,7 @@ public class History<T> extends Notifier implements IHistory<T>
     return a;
   }
 
+  @SuppressWarnings("unchecked")
   public IHistoryElement<T>[] toArray()
   {
     lazyLoad();

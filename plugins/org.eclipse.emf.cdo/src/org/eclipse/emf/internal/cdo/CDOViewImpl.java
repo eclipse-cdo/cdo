@@ -706,6 +706,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
   }
 
+  @SuppressWarnings("unchecked")
   private void notifyAddMany(Notification msg)
   {
     EList<Resource> newResources = (EList<Resource>)msg.getNewValue();
@@ -752,6 +753,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
   }
 
+  @SuppressWarnings("unchecked")
   private void notifyRemoveMany(Notification msg)
   {
     EList<Resource> newResources = (EList<Resource>)msg.getNewValue();

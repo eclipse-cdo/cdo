@@ -517,6 +517,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
   }
 
+  @SuppressWarnings("unchecked")
   private static void finalizeRevisionFeature(CDOViewImpl view, CDORevisionImpl revision, int i, Object setting,
       EStructuralFeature eFeature, Object[] eSettings)
   {

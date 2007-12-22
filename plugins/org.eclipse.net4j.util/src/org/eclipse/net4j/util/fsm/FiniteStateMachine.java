@@ -33,6 +33,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
 
   private ITransition<STATE, EVENT, SUBJECT, ?>[][] transitions;
 
+  @SuppressWarnings("unchecked")
   public FiniteStateMachine(Class<STATE> stateEnum, Class<EVENT> eventEnum,
       ITransition<STATE, EVENT, SUBJECT, ?> defaultTransition)
   {
@@ -42,6 +43,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     initAll(defaultTransition);
   }
 
+  @SuppressWarnings("unchecked")
   public FiniteStateMachine(Class<STATE> stateEnum, Class<EVENT> eventEnum)
   {
     this(stateEnum, eventEnum, FAIL);
@@ -124,6 +126,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     }
   }
 
+  @SuppressWarnings("unchecked")
   public final <DATA> void process(SUBJECT subject, EVENT event, DATA data)
   {
     STATE state = getState(subject);
@@ -149,11 +152,13 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     }
   }
 
+  @SuppressWarnings("unchecked")
   protected ITransition<STATE, EVENT, SUBJECT, ?> createIgnoreTransition(STATE state, EVENT event)
   {
     return IGNORE;
   }
 
+  @SuppressWarnings("unchecked")
   protected ITransition<STATE, EVENT, SUBJECT, ?> createFailTransition(STATE state, EVENT event)
   {
     return FAIL;

@@ -320,6 +320,7 @@ public final class CDOStore implements EStore
     return result;
   }
 
+  @SuppressWarnings("unchecked")
   public <T> T[] toArray(InternalEObject eObject, EStructuralFeature eFeature, T[] a)
   {
     Object[] array = toArray(eObject, eFeature);

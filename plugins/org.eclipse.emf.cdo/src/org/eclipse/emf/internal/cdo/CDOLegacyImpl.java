@@ -381,6 +381,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
     }
   }
 
+  @SuppressWarnings("unchecked")
   protected void transferFeatureToInstance(CDOViewImpl view, CDOFeatureImpl feature)
   {
     Object value = revision.getValue(feature);

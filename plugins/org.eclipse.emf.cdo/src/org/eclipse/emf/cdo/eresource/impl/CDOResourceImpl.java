@@ -163,6 +163,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    * 
    * @generated NOT
    */
+  @SuppressWarnings("unchecked")
   public EList<EObject> getContents()
   {
     if (FSMUtil.isTransient(this))

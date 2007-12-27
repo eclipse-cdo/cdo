@@ -485,6 +485,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return resource != null ? (CDOViewImpl)cdoObject.cdoResource().cdoView() : null;
   }
 
+  @Deprecated
   static void finalizeCDORevision(InternalCDOObject cdoObject, EObject eContainer, int eContainerFeatureID,
       Object[] eSettings)
   {

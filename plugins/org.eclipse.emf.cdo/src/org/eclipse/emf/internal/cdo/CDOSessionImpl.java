@@ -37,7 +37,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
 import org.eclipse.emf.internal.cdo.protocol.QueryObjectTypesRequest;
-import org.eclipse.emf.internal.cdo.protocol.ViewsChangedNotification;
+import org.eclipse.emf.internal.cdo.protocol.ViewsChangedRequest;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.emf.internal.cdo.util.ProxyResolverURIResourceMap;
 
@@ -333,7 +333,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
     try
     {
-      new ViewsChangedNotification(channel, view.getViewID(), CDOProtocolConstants.VIEW_CLOSED).send();
+      new ViewsChangedRequest(channel, view.getViewID(), CDOProtocolConstants.VIEW_CLOSED).send();
     }
     catch (Exception ex)
     {
@@ -653,7 +653,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     {
       int id = view.getViewID();
       byte kind = getKind(view);
-      new ViewsChangedNotification(channel, id, kind).send();
+      new ViewsChangedRequest(channel, id, kind).send();
     }
     catch (Exception ex)
     {

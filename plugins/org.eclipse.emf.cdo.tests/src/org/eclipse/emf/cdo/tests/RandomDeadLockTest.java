@@ -47,7 +47,7 @@ public class RandomDeadLockTest extends AbstractCDOTest
 
     for (int i = 0; i < 100; i++)
     {
-    	msg("Loop " + i);
+    	msg("Session " + i);
       CDOSession session = openModel1Session();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/test2");
@@ -70,7 +70,7 @@ public class RandomDeadLockTest extends AbstractCDOTest
       
       for (int i =0; i < 1000; i++)
       {
-      	msg("Loop " + i);
+      	msg("Transaction " + i);
     	   transaction = session.openTransaction(new ResourceSetImpl());
           CDOResource resource = transaction.getResource("/test2");
           Category category = Model1Factory.eINSTANCE.createCategory();

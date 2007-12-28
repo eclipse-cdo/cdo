@@ -30,6 +30,8 @@ public class TCPClientConnector extends TCPConnector
     try
     {
       SocketChannel socketChannel = SocketChannel.open();
+//      socketChannel.socket().setReuseAddress(true);
+//      socketChannel.socket().setKeepAlive(true);
       socketChannel.configureBlocking(false);
       setSocketChannel(socketChannel);
     }

@@ -31,8 +31,8 @@ import java.nio.ByteBuffer;
  */
 public final class ControlChannel extends Channel
 {
-	public static final long REGISTRATION_TIMEOUT = OM.PROTOCOL_REGISTRATION_TIMEOUT;
-	
+  public static final long REGISTRATION_TIMEOUT = OM.PROTOCOL_REGISTRATION_TIMEOUT;
+
   public static final short CONTROL_CHANNEL_INDEX = -1;
 
   public static final byte OPCODE_NEGOTIATION = 1;

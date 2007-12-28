@@ -24,6 +24,16 @@ import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
+import org.eclipse.emf.internal.cdo.CDOStateMachine;
+import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOObject;
+
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.transaction.TransactionException;
+import org.eclipse.net4j.util.ui.actions.LongRunningAction;
+import org.eclipse.net4j.util.ui.actions.SafeAction;
+
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
@@ -64,15 +74,6 @@ import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
-import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
-import org.eclipse.emf.internal.cdo.CDOStateMachine;
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
-
-import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.transaction.TransactionException;
-import org.eclipse.net4j.util.ui.actions.LongRunningAction;
-import org.eclipse.net4j.util.ui.actions.SafeAction;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;

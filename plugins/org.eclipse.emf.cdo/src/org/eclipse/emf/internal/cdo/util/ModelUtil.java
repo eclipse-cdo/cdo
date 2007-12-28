@@ -24,6 +24,14 @@ import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
+import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
+import org.eclipse.emf.internal.cdo.CDOPackageRegistryImpl;
+import org.eclipse.emf.internal.cdo.CDOSessionPackageManager;
+import org.eclipse.emf.internal.cdo.bundle.OM;
+
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.ImplementationError;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -32,13 +40,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
-import org.eclipse.emf.internal.cdo.CDOPackageRegistryImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionPackageManager;
-import org.eclipse.emf.internal.cdo.bundle.OM;
-
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.ImplementationError;
 
 /**
  * @author Eike Stepper

@@ -134,7 +134,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
       String value = getProperties().get(PROP_SUPPORTING_REVISION_DELTAS);
       supportingRevisionDeltas = value == null ? false : Boolean.valueOf(value);
     }
-  
+
     return supportingRevisionDeltas;
   }
 
@@ -235,10 +235,11 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   {
     return new TypeManager(this)
     {
-		@Override
-		protected String getThreadName() {
-			return "TypeManager-" + name;
-		}
+      @Override
+      protected String getThreadName()
+      {
+        return "TypeManager-" + name;
+      }
     };
   }
 

@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 
 import org.eclipse.net4j.IConnector;
@@ -19,6 +18,8 @@ import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.internal.net4j.ConnectorFactory;
+
+import org.eclipse.emf.common.util.URI;
 
 /**
  * @author Eike Stepper

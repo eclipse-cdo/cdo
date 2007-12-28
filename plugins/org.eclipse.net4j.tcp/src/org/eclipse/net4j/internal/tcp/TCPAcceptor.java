@@ -175,8 +175,8 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
           TRACER.trace("Accepted socketChannel " + socketChannel); //$NON-NLS-1$
         }
 
-//        socketChannel.socket().setReuseAddress(true);
-//        socketChannel.socket().setKeepAlive(true);
+        // socketChannel.socket().setReuseAddress(true);
+        // socketChannel.socket().setKeepAlive(true);
         socketChannel.configureBlocking(false);
 
         TCPServerConnector connector = new TCPServerConnector(this);

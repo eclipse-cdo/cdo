@@ -17,11 +17,11 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-
-import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.Iterator;
 

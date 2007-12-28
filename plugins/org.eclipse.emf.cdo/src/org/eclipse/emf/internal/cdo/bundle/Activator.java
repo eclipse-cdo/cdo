@@ -10,11 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.bundle;
 
-import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.net4j.internal.util.om.OSGiBundle;
 import org.eclipse.net4j.util.om.OSGiActivator;
+
+import org.eclipse.emf.common.EMFPlugin;
+import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.osgi.framework.BundleContext;
 

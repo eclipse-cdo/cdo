@@ -10,12 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import java.io.IOException;
-
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+
+import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -35,16 +36,16 @@ public class ViewsChangedIndication extends CDOServerIndication
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-	    int viewID = in.readInt();
-	    byte kind = in.readByte();
-	    CDOServerProtocol protocol = (CDOServerProtocol)getProtocol();
-	    Session session = protocol.getSession();
-	    session.notifyViewsChanged(session, viewID, kind);
+    int viewID = in.readInt();
+    byte kind = in.readByte();
+    CDOServerProtocol protocol = (CDOServerProtocol)getProtocol();
+    Session session = protocol.getSession();
+    session.notifyViewsChanged(session, viewID, kind);
   }
 
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-	  out.writeBoolean(true);
+    out.writeBoolean(true);
   }
 }

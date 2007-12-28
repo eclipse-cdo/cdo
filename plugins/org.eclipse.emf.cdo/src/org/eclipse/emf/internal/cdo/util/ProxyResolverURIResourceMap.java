@@ -10,9 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
+import org.eclipse.emf.internal.cdo.CDOViewImpl;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.internal.cdo.CDOViewImpl;
 
 import java.util.Collection;
 import java.util.HashMap;

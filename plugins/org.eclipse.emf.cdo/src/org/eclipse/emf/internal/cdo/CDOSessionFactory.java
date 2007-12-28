@@ -12,11 +12,11 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSession;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.net4j.internal.util.factory.Factory;
 import org.eclipse.net4j.util.container.IManagedContainer;
+
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;

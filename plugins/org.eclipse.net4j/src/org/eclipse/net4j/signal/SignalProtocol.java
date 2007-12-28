@@ -150,41 +150,41 @@ public abstract class SignalProtocol extends Protocol
     Signal signal;
     synchronized (signals)
     {
-    	if (correlationID > 0)
-    	{
-    		// Incoming indication
-    		signal = signals.get(-correlationID);
-    		if (signal == null)
-    		{
-    			short signalID = byteBuffer.getShort();
-    			if (TRACER.isEnabled())
-    			{
-    				TRACER.trace("Got signal id " + signalID); //$NON-NLS-1$
-    			}
-    			
-    			signal = createSignalReactor(signalID);
-    			signal.setProtocol(this);
-    			signal.setCorrelationID(-correlationID);
-    			signal.setBufferInputStream(new SignalInputStream(getInputStreamTimeout()));
-    			signal.setBufferOutputStream(new SignalOutputStream(-correlationID, signalID, false));
-    			signals.put(-correlationID, signal);
-    			getExecutorService().execute(signal);
-    		}
-    	}
-    	else
-    	{
-    		// Incoming confirmation
-    		signal = signals.get(-correlationID);
-    		if (signal == null)
-    		{
-    			if (TRACER.isEnabled())
-    			{
-    				TRACER.trace("Discarding buffer"); //$NON-NLS-1$
-    			}
-    			
-    			buffer.release();
-    		}
-    	}
+      if (correlationID > 0)
+      {
+        // Incoming indication
+        signal = signals.get(-correlationID);
+        if (signal == null)
+        {
+          short signalID = byteBuffer.getShort();
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Got signal id " + signalID); //$NON-NLS-1$
+          }
+
+          signal = createSignalReactor(signalID);
+          signal.setProtocol(this);
+          signal.setCorrelationID(-correlationID);
+          signal.setBufferInputStream(new SignalInputStream(getInputStreamTimeout()));
+          signal.setBufferOutputStream(new SignalOutputStream(-correlationID, signalID, false));
+          signals.put(-correlationID, signal);
+          getExecutorService().execute(signal);
+        }
+      }
+      else
+      {
+        // Incoming confirmation
+        signal = signals.get(-correlationID);
+        if (signal == null)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Discarding buffer"); //$NON-NLS-1$
+          }
+
+          buffer.release();
+        }
+      }
     }
 
     if (signal != null) // Can be null after timeout
@@ -232,9 +232,9 @@ public abstract class SignalProtocol extends Protocol
     signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));
     synchronized (signals)
     {
-    	signals.put(correlationID, signalActor);
+      signals.put(correlationID, signalActor);
     }
-    
+
     signalActor.runSync();
   }
 
@@ -243,7 +243,7 @@ public abstract class SignalProtocol extends Protocol
     int correlationID = signal.getCorrelationID();
     synchronized (signals)
     {
-    	signals.remove(correlationID);
+      signals.remove(correlationID);
       signals.notifyAll();
     }
   }

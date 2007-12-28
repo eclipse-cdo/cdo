@@ -16,6 +16,7 @@ package org.eclipse.net4j.util;
 public final class StringUtil
 {
   public static final String EMPTY = "";
+
   public static final String NL = System.getProperty("line.separator"); //$NON-NLS-1$
 
   private StringUtil()
@@ -34,12 +35,12 @@ public final class StringUtil
         {
           break;
         }
-  
+
         end = start + find[i].length();
         text = text.substring(0, start) + replace[i] + text.substring(end);
       }
     }
-  
+
     return text;
   }
 

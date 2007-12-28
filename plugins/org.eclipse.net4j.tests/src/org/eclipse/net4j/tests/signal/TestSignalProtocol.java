@@ -23,7 +23,7 @@ public class TestSignalProtocol extends SignalProtocol
   public static final short SIGNAL1 = 1;
 
   public static final short SIGNAL2 = 2;
-  
+
   public static final short SIGNAL3 = 3;
 
   public TestSignalProtocol()

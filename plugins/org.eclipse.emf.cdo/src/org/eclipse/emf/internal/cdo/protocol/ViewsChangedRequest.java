@@ -10,12 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import java.io.IOException;
-
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+
+import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -42,13 +43,13 @@ public class ViewsChangedRequest extends CDOClientRequest<Boolean>
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-	    out.writeInt(viewID);
-	    out.writeByte(kind);
+    out.writeInt(viewID);
+    out.writeByte(kind);
   }
 
   @Override
   protected Boolean confirming(ExtendedDataInputStream in) throws IOException
   {
-	return in.readBoolean();
+    return in.readBoolean();
   }
 }

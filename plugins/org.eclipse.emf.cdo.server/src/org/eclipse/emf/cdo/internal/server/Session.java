@@ -74,7 +74,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     this.sessionID = sessionID;
     this.disableLegacyObjects = disableLegacyObjects;
     protocol.addListener(protocolListener);
-    
+
     try
     {
       activate();

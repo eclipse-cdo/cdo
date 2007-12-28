@@ -24,13 +24,14 @@ import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.analyzer.CDOFeatureAnalyzerModelBased;
 import org.eclipse.emf.internal.cdo.analyzer.CDOFetchRuleManagerThreadLocal;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.util.ArrayList;
 import java.util.List;

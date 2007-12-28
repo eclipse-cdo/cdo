@@ -10,6 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
+import org.eclipse.emf.internal.cdo.bundle.OM;
+
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -19,9 +23,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
-import org.eclipse.emf.internal.cdo.bundle.OM;
-
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.util.HashSet;
 import java.util.List;

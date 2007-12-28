@@ -10,11 +10,11 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IProtocol;
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 
 /**

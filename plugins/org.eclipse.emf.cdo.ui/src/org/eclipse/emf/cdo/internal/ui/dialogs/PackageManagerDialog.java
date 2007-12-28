@@ -20,12 +20,12 @@ import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ui.UIUtil;
+
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
-import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;

@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
-import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.net4j.util.ui.StaticContentProvider;
 import org.eclipse.net4j.util.ui.UIUtil;
+
+import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;

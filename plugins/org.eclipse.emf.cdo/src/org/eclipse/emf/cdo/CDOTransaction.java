@@ -17,11 +17,11 @@ import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 
+import org.eclipse.net4j.util.transaction.TransactionException;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import java.util.List;
 import java.util.Map;

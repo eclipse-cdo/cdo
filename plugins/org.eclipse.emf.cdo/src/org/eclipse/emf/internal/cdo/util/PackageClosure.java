@@ -10,10 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.ecore.EPackage;
 
 import java.util.Collection;
 import java.util.HashSet;

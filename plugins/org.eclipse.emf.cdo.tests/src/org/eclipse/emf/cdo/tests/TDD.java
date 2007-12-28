@@ -21,9 +21,9 @@ import java.lang.reflect.Method;
  */
 public class TDD
 {
-  private static final AbstractOMTest test = new InvalidationTest();
+  private static final AbstractOMTest test = new RandomDeadLockTest();
 
-  private static final String METHOD_NAME = "testSeparateView";
+  private static final String METHOD_NAME = "_testCreateManyTransaction";
 
   public static void main(String[] args) throws Throwable
   {

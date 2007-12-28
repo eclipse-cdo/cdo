@@ -33,7 +33,7 @@ public class RandomDeadLockTest extends AbstractCDOTest
 	    OMPlatform.INSTANCE.setDebugging(false);
 	}
 
-	public void _testCreateManySession() throws Exception
+	public void testCreateManySession() throws Exception
   {
     {
       msg("Opening session");

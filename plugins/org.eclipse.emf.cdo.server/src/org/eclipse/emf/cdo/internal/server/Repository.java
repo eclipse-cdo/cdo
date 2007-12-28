@@ -233,7 +233,13 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   protected TypeManager createTypeManager()
   {
-    return new TypeManager(this);
+    return new TypeManager(this)
+    {
+		@Override
+		protected String getThreadName() {
+			return "TypeManager-" + name;
+		}
+    };
   }
 
   protected PackageManager createPackageManager()

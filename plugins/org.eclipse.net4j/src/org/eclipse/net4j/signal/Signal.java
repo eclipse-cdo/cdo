@@ -112,13 +112,27 @@ public abstract class Signal implements Runnable
 
   public final void run()
   {
+	  String threadName=null;
     try
     {
+    	if (OM.SET_SIGNAL_THREAD_NAME)
+    	{
+			threadName = getClass().getSimpleName();
+    		Thread.currentThread().setName(threadName);
+    	}
+    	
       runSync();
     }
     catch (Exception ex)
     {
       OM.LOG.error(ex);
+    }
+    finally
+    {
+    	if (threadName!=null)
+    	{
+    		Thread.currentThread().setName(threadName+"(FINISHED)");
+    	}
     }
   }
 

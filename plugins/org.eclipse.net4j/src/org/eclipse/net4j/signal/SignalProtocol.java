@@ -79,7 +79,7 @@ public abstract class SignalProtocol extends Protocol
 
   public ExecutorService getExecutorService()
   {
-    return getChannel().getConnector().getReceiveExecutor();
+    return getChannel().getReceiveExecutor();
   }
 
   public boolean waitForSignals(long timeout)
@@ -148,40 +148,43 @@ public abstract class SignalProtocol extends Protocol
     }
 
     Signal signal;
-    if (correlationID > 0)
+    synchronized (signals)
     {
-      // Incoming indication
-      signal = signals.get(-correlationID);
-      if (signal == null)
-      {
-        short signalID = byteBuffer.getShort();
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Got signal id " + signalID); //$NON-NLS-1$
-        }
-
-        signal = createSignalReactor(signalID);
-        signal.setProtocol(this);
-        signal.setCorrelationID(-correlationID);
-        signal.setBufferInputStream(new SignalInputStream(getInputStreamTimeout()));
-        signal.setBufferOutputStream(new SignalOutputStream(-correlationID, signalID, false));
-        signals.put(-correlationID, signal);
-        getExecutorService().execute(signal);
-      }
-    }
-    else
-    {
-      // Incoming confirmation
-      signal = signals.get(-correlationID);
-      if (signal == null)
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Discarding buffer"); //$NON-NLS-1$
-        }
-
-        buffer.release();
-      }
+    	if (correlationID > 0)
+    	{
+    		// Incoming indication
+    		signal = signals.get(-correlationID);
+    		if (signal == null)
+    		{
+    			short signalID = byteBuffer.getShort();
+    			if (TRACER.isEnabled())
+    			{
+    				TRACER.trace("Got signal id " + signalID); //$NON-NLS-1$
+    			}
+    			
+    			signal = createSignalReactor(signalID);
+    			signal.setProtocol(this);
+    			signal.setCorrelationID(-correlationID);
+    			signal.setBufferInputStream(new SignalInputStream(getInputStreamTimeout()));
+    			signal.setBufferOutputStream(new SignalOutputStream(-correlationID, signalID, false));
+    			signals.put(-correlationID, signal);
+    			getExecutorService().execute(signal);
+    		}
+    	}
+    	else
+    	{
+    		// Incoming confirmation
+    		signal = signals.get(-correlationID);
+    		if (signal == null)
+    		{
+    			if (TRACER.isEnabled())
+    			{
+    				TRACER.trace("Discarding buffer"); //$NON-NLS-1$
+    			}
+    			
+    			buffer.release();
+    		}
+    	}
     }
 
     if (signal != null) // Can be null after timeout
@@ -227,22 +230,25 @@ public abstract class SignalProtocol extends Protocol
     int correlationID = signalActor.getCorrelationID();
     signalActor.setBufferInputStream(new SignalInputStream(timeout));
     signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));
-    signals.put(correlationID, signalActor);
+    synchronized (signals)
+    {
+    	signals.put(correlationID, signalActor);
+    }
+    
     signalActor.runSync();
   }
 
   void stopSignal(Signal signal)
   {
     int correlationID = signal.getCorrelationID();
-    signals.remove(correlationID);
-
     synchronized (signals)
     {
+    	signals.remove(correlationID);
       signals.notifyAll();
     }
   }
 
-  int getNextCorrelationID()
+  synchronized int getNextCorrelationID()
   {
     int correlationID = nextCorrelationID;
     if (nextCorrelationID == MAX_CORRELATION_ID)

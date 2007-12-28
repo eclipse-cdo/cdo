@@ -27,6 +27,8 @@ public abstract class OM
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
+  public static final int PROTOCOL_REGISTRATION_TIMEOUT = BUNDLE.getDebugOption("protocol.registration.timeout", 5000); //$NON-NLS-1$
+
   public static final OMLogger LOG = BUNDLE.logger();
 
   /**

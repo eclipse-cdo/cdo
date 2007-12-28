@@ -228,7 +228,14 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
       // receiveSerializer = new CompletionWorkSerializer();
       // receiveSerializer = new AsynchronousWorkSerializer(receiveExecutor);
       // receiveSerializer = new SynchronousWorkSerializer();
-      receiveSerializer = new QueueWorkerWorkSerializer();
+      receiveSerializer = new QueueWorkerWorkSerializer()
+      {
+		@Override
+		protected String getThreadName() 
+		{
+			return "ReceiveSerializer-"+connector.getLocation() + channelIndex;
+		}
+      };
     }
   }
 

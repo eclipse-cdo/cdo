@@ -37,7 +37,7 @@ public class RegisterFilesystemPackagesAction extends RegisterPackagesAction
   private static final String TOOL_TIP = "Register dynamic packages from the filesystem";
 
   private static final String[] FILTER_NAMES = { "Ecore models (*.ecore)", "XMI files (*.xmi)", "XML files (*.xml)",
-  "All files (*.*)" };
+      "All files (*.*)" };
 
   private static final String[] FILTER_EXTENSIONS = { "ecore", "xmi", "xml", null };
 

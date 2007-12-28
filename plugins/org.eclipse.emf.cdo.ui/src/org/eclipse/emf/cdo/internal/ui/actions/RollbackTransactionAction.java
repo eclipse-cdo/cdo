@@ -50,7 +50,7 @@ public final class RollbackTransactionAction extends ViewAction
       break;
     default:
       cancel();
-    break;
+      break;
     }
   }
 

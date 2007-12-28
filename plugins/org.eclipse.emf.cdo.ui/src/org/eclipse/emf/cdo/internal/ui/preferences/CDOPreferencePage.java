@@ -124,7 +124,7 @@ public class CDOPreferencePage extends OMPreferencePage
     preloadChunkSize.setValue(String
         .valueOf(org.eclipse.emf.internal.cdo.bundle.OM.PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE.getValue()));
     invalidationNotifications
-    .setSelection(org.eclipse.emf.internal.cdo.bundle.OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.getValue());
+        .setSelection(org.eclipse.emf.internal.cdo.bundle.OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.getValue());
     commitTimeout.setValue(String
         .valueOf(org.eclipse.emf.internal.cdo.bundle.OM.PREF_DEFAULT_COMMIT_TIMEOUT.getValue()));
   }

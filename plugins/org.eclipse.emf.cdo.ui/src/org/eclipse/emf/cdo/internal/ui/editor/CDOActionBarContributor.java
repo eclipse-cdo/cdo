@@ -216,7 +216,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     super.contributeToMenu(menuManager);
 
     IMenuManager submenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CDOEditor_menu"),
-    "org.eclipse.emf.cdo.internal.ui.editorMenuID");
+        "org.eclipse.emf.cdo.internal.ui.editorMenuID");
     menuManager.insertAfter("additions", submenuManager);
     submenuManager.add(new Separator("settings"));
     submenuManager.add(new Separator("actions"));

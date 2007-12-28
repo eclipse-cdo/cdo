@@ -156,7 +156,7 @@ import java.util.Map;
  * @generated
  */
 public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
-IMenuListener, IViewerProvider, IGotoMarker
+    IMenuListener, IViewerProvider, IGotoMarker
 {
   /**
    * @ADDED
@@ -1710,7 +1710,7 @@ IMenuListener, IViewerProvider, IGotoMarker
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()
         .getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
-        doSave(progressMonitor);
+    doSave(progressMonitor);
   }
 
   /**

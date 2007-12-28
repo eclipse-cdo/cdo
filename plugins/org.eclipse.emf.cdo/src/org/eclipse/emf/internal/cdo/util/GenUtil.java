@@ -96,7 +96,10 @@ public final class GenUtil
       }
     }
 
-    if (name.length() != 0) parsedName.addAll(parseName(name, '_'));
+    if (name.length() != 0)
+    {
+      parsedName.addAll(parseName(name, '_'));
+    }
 
     StringBuilder result = new StringBuilder();
 

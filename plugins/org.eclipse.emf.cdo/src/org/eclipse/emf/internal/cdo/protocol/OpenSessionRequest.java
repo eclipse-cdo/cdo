@@ -53,10 +53,16 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing repositoryName: {0}", repositoryName);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing repositoryName: {0}", repositoryName);
+    }
     out.writeString(repositoryName);
 
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing disableLegacyObjects: {0}", disableLegacyObjects);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing disableLegacyObjects: {0}", disableLegacyObjects);
+    }
     out.writeBoolean(disableLegacyObjects);
   }
 

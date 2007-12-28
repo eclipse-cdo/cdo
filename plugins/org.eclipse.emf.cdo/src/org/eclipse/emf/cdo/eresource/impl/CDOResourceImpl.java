@@ -587,7 +587,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     @Override
     protected boolean isNotificationRequired()
     {
-      return CDOResourceImpl.this.eNotificationRequired();
+      return eNotificationRequired();
     }
 
     @Override

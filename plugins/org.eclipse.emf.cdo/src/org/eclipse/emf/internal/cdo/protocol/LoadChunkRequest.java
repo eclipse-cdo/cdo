@@ -65,7 +65,10 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
     CDOID id = revision.getID();
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing revision ID: {0}", id);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing revision ID: {0}", id);
+    }
     CDOIDImpl.write(out, id);
 
     int version = revision.getVersion();
@@ -74,18 +77,30 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
       --version;
     }
 
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing revision version: {0}", version);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing revision version: {0}", version);
+    }
     out.writeInt(version);
 
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing feature: {0}", feature);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing feature: {0}", feature);
+    }
     CDOClassRefImpl classRef = (CDOClassRefImpl)feature.getContainingClass().createClassRef();
     classRef.write(out, null);
     out.writeInt(feature.getFeatureID());
 
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing fromIndex: {0}", fromIndex);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing fromIndex: {0}", fromIndex);
+    }
     out.writeInt(fromIndex);
 
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing toIndex: {0}", toIndex);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing toIndex: {0}", toIndex);
+    }
     out.writeInt(toIndex);
   }
 

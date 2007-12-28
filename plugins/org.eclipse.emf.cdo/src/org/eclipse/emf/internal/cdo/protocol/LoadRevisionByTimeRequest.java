@@ -54,7 +54,10 @@ public class LoadRevisionByTimeRequest extends LoadRevisionRequest
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
     super.requesting(out);
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing timeStamp: {0}", timeStamp);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing timeStamp: {0}", timeStamp);
+    }
     out.writeLong(timeStamp);
   }
 

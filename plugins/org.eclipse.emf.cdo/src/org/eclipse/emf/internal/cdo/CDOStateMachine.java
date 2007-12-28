@@ -141,11 +141,17 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     data.view = view;
 
     // TRANSIENT --> PREPARED_ATTACH
-    if (TRACER.isEnabled()) TRACER.format("ATTACH: {0} --> {1}", object, view);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("ATTACH: {0} --> {1}", object, view);
+    }
     process(object, CDOEvent.ATTACH, data);
 
     // PREPARED_ATTACH --> NEW
-    if (TRACER.isEnabled()) TRACER.format("FINALIZE_ATTACH: {0} --> {1}", object, view);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("FINALIZE_ATTACH: {0} --> {1}", object, view);
+    }
     process(object, CDOEvent.FINALIZE_ATTACH, data);
   }
 
@@ -157,7 +163,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   public void read(InternalCDOObject object)
   {
-    if (TRACER.isEnabled()) trace(object, CDOEvent.READ);
+    if (TRACER.isEnabled())
+    {
+      trace(object, CDOEvent.READ);
+    }
     process(object, CDOEvent.READ, null);
   }
 
@@ -168,7 +177,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   public void write(InternalCDOObject object, CDOFeatureDelta featureChange)
   {
-    if (TRACER.isEnabled()) trace(object, CDOEvent.WRITE);
+    if (TRACER.isEnabled())
+    {
+      trace(object, CDOEvent.WRITE);
+    }
     process(object, CDOEvent.WRITE, featureChange);
   }
 
@@ -208,26 +220,38 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     for (CDORevisionImpl revision : revisions)
     {
       InternalCDOObject object = ids.get(revision.getID());
-      if (TRACER.isEnabled()) trace(object, CDOEvent.RELOAD);
+      if (TRACER.isEnabled())
+      {
+        trace(object, CDOEvent.RELOAD);
+      }
       process(object, CDOEvent.RELOAD, null);
     }
   }
 
   public void invalidate(InternalCDOObject object, long timeStamp)
   {
-    if (TRACER.isEnabled()) trace(object, CDOEvent.INVALIDATE);
+    if (TRACER.isEnabled())
+    {
+      trace(object, CDOEvent.INVALIDATE);
+    }
     process(object, CDOEvent.INVALIDATE, timeStamp);
   }
 
   public void commit(InternalCDOObject object, CommitTransactionResult result)
   {
-    if (TRACER.isEnabled()) trace(object, CDOEvent.COMMIT);
+    if (TRACER.isEnabled())
+    {
+      trace(object, CDOEvent.COMMIT);
+    }
     process(object, CDOEvent.COMMIT, result);
   }
 
   public void rollback(InternalCDOObject object, boolean remote)
   {
-    if (TRACER.isEnabled()) trace(object, CDOEvent.ROLLBACK);
+    if (TRACER.isEnabled())
+    {
+      trace(object, CDOEvent.ROLLBACK);
+    }
     process(object, CDOEvent.ROLLBACK, remote);
   }
 

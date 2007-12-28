@@ -67,15 +67,24 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing referenceChunk: {0}", referenceChunk);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing referenceChunk: {0}", referenceChunk);
+    }
     out.writeInt(referenceChunk);
 
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing {0} IDs", ids.size());
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing {0} IDs", ids.size());
+    }
     out.writeInt(ids.size());
 
     for (CDOID id : ids)
     {
-      if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing ID: {0}", id);
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Writing ID: {0}", id);
+      }
       CDOIDImpl.write(out, id);
     }
 
@@ -110,7 +119,10 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
     CDOSessionPackageManager packageManager = session.getPackageManager();
     ArrayList<CDORevisionImpl> revisions = new ArrayList<CDORevisionImpl>(ids.size());
 
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Reading {0} revisions", ids.size());
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Reading {0} revisions", ids.size());
+    }
     for (int i = 0; i < ids.size(); i++)
     {
       CDORevisionImpl revision = new CDORevisionImpl(in, revisionManager, packageManager);
@@ -120,7 +132,10 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
     int size = in.readInt();
     if (size != 0)
     {
-      if (PROTOCOL.isEnabled()) PROTOCOL.format("Reading {0} additional revisions", size);
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Reading {0} additional revisions", size);
+      }
       for (int i = 0; i < size; i++)
       {
         try

@@ -55,7 +55,7 @@ public class CDOFeatureAnalyzerModelBased extends CDOAbstractFeatureRuleAnalyzer
   {
     fetchData();
     List<CDOFetchRule> rules = new ArrayList<CDOFetchRule>();
-    rules.addAll(featureInfos.getRules(this.lastTraverseCDOObject.cdoClass(), this.lastTraverseFeature));
+    rules.addAll(featureInfos.getRules(lastTraverseCDOObject.cdoClass(), lastTraverseFeature));
     return rules;
   }
 }

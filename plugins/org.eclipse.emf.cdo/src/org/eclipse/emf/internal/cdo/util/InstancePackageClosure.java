@@ -56,7 +56,10 @@ public class InstancePackageClosure extends PackageClosure
       {
         if (visited.add(p))
         {
-          if (TRACER.isEnabled()) TRACER.trace("Found package " + p.getNsURI());
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Found package " + p.getNsURI());
+          }
         }
       }
       else
@@ -94,7 +97,10 @@ public class InstancePackageClosure extends PackageClosure
   {
     if (visited.add(eClass))
     {
-      if (TRACER.isEnabled()) TRACER.trace("Found class " + eClass.getName());
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Found class " + eClass.getName());
+      }
       handleEStructuralFeatures(eClass.getEStructuralFeatures(), visited);
       handleEOperations(eClass.getEOperations(), visited);
       handleEClasses(eClass.getESuperTypes(), visited);

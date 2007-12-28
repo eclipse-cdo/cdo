@@ -94,7 +94,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public CDOViewImpl(int id, CDOSessionImpl session)
   {
-    this.viewID = id;
+    viewID = id;
     this.session = session;
     enableInvalidationNotifications = OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.getValue();
     loadRevisionCollectionChunkSize = OM.PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE.getValue();

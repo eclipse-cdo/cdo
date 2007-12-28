@@ -49,7 +49,7 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
 
   public CDOID getContext()
   {
-    if (this.lastTraverseFeature.isMany())
+    if (lastTraverseFeature.isMany())
     {
       return CDOID.NULL;
     }

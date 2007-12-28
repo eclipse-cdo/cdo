@@ -171,7 +171,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
         revision.getVersion() - 1, false);
 
     CDOTransactionImpl transaction = cdoView().toTransaction();
-    transaction.registerRevisionDelta(this.cdoRevision().createDelta(originRevision));
+    transaction.registerRevisionDelta(cdoRevision().createDelta(originRevision));
   }
 
   public void cdoInternalPostLoad()

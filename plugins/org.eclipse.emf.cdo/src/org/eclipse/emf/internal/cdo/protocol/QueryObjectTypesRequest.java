@@ -53,12 +53,18 @@ public class QueryObjectTypesRequest extends CDOClientRequest<CDOClassRef[]>
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing {0} IDs", ids.size());
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing {0} IDs", ids.size());
+    }
     out.writeInt(ids.size());
 
     for (CDOID id : ids)
     {
-      if (PROTOCOL.isEnabled()) PROTOCOL.format("Writing ID: {0}", id);
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Writing ID: {0}", id);
+      }
       CDOIDImpl.write(out, id);
     }
   }
@@ -70,7 +76,10 @@ public class QueryObjectTypesRequest extends CDOClientRequest<CDOClassRef[]>
     for (int i = 0; i < types.length; i++)
     {
       types[i] = new CDOClassRefImpl(in, null);
-      if (PROTOCOL.isEnabled()) PROTOCOL.format("Read type: {0}", types[i]);
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Read type: {0}", types[i]);
+      }
     }
 
     return types;

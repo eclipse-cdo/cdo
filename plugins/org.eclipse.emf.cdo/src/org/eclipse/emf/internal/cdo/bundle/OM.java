@@ -62,24 +62,24 @@ public abstract class OM
 
   public static final OMPreferences PREFS = BUNDLE.preferences();
 
-  public static final OMPreference<String> PREF_REPOSITORY_NAME = // 
+  public static final OMPreference<String> PREF_REPOSITORY_NAME = //
   PREFS.initString("PREF_REPOSITORY_NAME"); //$NON-NLS-1$
 
-  public static final OMPreference<String> PREF_USER_NAME = // 
+  public static final OMPreference<String> PREF_USER_NAME = //
   PREFS.initString("PREF_USER_NAME"); //$NON-NLS-1$
 
-  public static final OMPreference<String> PREF_CONNECTOR_DESCRIPTION = // 
+  public static final OMPreference<String> PREF_CONNECTOR_DESCRIPTION = //
   PREFS.initString("PREF_CONNECTOR_DESCRIPTION"); //$NON-NLS-1$
 
-  public static final OMPreference<Integer> PREF_REFERENCE_CHUNK_SIZE = // 
+  public static final OMPreference<Integer> PREF_REFERENCE_CHUNK_SIZE = //
   PREFS.init("PREF_REFERENCE_CHUNK_SIZE", CDORevision.UNCHUNKED); //$NON-NLS-1$
 
-  public static final OMPreference<Boolean> PREF_ENABLE_INVALIDATION_NOTIFICATIONS = // 
+  public static final OMPreference<Boolean> PREF_ENABLE_INVALIDATION_NOTIFICATIONS = //
   PREFS.init("PREF_ENABLE_INVALIDATION_NOTIFICATIONS", false); //$NON-NLS-1$
 
-  public static final OMPreference<Integer> PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE = // 
+  public static final OMPreference<Integer> PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE = //
   PREFS.init("PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE", CDOView.NO_PRELOAD); //$NON-NLS-1$
 
-  public static final OMPreference<Long> PREF_DEFAULT_COMMIT_TIMEOUT = // 
+  public static final OMPreference<Long> PREF_DEFAULT_COMMIT_TIMEOUT = //
   PREFS.init("PREF_DEFAULT_COMMIT_TIMEOUT", CDOTransaction.DEFAULT_COMMIT_TIMEOUT); //$NON-NLS-1$
 }

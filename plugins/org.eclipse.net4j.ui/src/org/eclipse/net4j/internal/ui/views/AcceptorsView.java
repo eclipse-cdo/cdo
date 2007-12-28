@@ -1,3 +1,13 @@
+/***************************************************************************
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ **************************************************************************/
 package org.eclipse.net4j.internal.ui.views;
 
 import org.eclipse.net4j.IAcceptor;
@@ -13,6 +23,9 @@ import org.eclipse.net4j.util.ui.views.IElementFilter;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 
+/**
+ * @author Eike Stepper
+ */
 public class AcceptorsView extends ContainerView
 {
   private Action addAcceptorAction2036 = new SafeAction("Add Acceptor 2036", "Add an acceptor for port 2036",

@@ -187,7 +187,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   protected AdapterFactoryEditingDomain editingDomain;
 
   /**
-   * This is the one view factory used for providing views of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This is the one adapter factory used for providing views of the model. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
    * 
    * @generated
    */
@@ -342,7 +343,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   protected Collection<Resource> savedResources = new ArrayList<Resource>();
 
   /**
-   * Map to store the diagnostic associated with a viewerInput. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Map to store the diagnostic associated with a resource. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    */
@@ -427,93 +428,90 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     public void resourceChanged(IResourceChangeEvent event)
     {
-      // Only listening to these.
-      // if (event.getType() == IResourceDelta.POST_CHANGE)
+      IResourceDelta delta = event.getDelta();
+      try
       {
-        IResourceDelta delta = event.getDelta();
-        try
+        class ResourceDeltaVisitor implements IResourceDeltaVisitor
         {
-          class ResourceDeltaVisitor implements IResourceDeltaVisitor
+          protected ResourceSet resourceSet = editingDomain.getResourceSet();
+
+          protected Collection<Resource> changedResources = new ArrayList<Resource>();
+
+          protected Collection<Resource> removedResources = new ArrayList<Resource>();
+
+          public boolean visit(IResourceDelta delta)
           {
-            protected ResourceSet resourceSet = editingDomain.getResourceSet();
-
-            protected Collection<Resource> changedResources = new ArrayList<Resource>();
-
-            protected Collection<Resource> removedResources = new ArrayList<Resource>();
-
-            public boolean visit(IResourceDelta delta)
+            if (delta.getResource().getType() == IResource.FILE)
             {
-              if (delta.getFlags() != IResourceDelta.MARKERS && delta.getResource().getType() == IResource.FILE)
+              if (delta.getKind() == IResourceDelta.REMOVED || delta.getKind() == IResourceDelta.CHANGED
+                  && delta.getFlags() != IResourceDelta.MARKERS)
               {
-                if ((delta.getKind() & (IResourceDelta.CHANGED | IResourceDelta.REMOVED)) != 0)
+                Resource resource = resourceSet.getResource(URI.createURI(delta.getFullPath().toString()), false);
+                if (resource != null)
                 {
-                  Resource resource = resourceSet.getResource(URI.createURI(delta.getFullPath().toString()), false);
-                  if (resource != null)
+                  if (delta.getKind() == IResourceDelta.REMOVED)
                   {
-                    if ((delta.getKind() & IResourceDelta.REMOVED) != 0)
-                    {
-                      removedResources.add(resource);
-                    }
-                    else if (!savedResources.remove(resource))
-                    {
-                      changedResources.add(resource);
-                    }
+                    removedResources.add(resource);
+                  }
+                  else if (!savedResources.remove(resource))
+                  {
+                    changedResources.add(resource);
                   }
                 }
               }
-
-              return true;
             }
 
-            public Collection<Resource> getChangedResources()
-            {
-              return changedResources;
-            }
-
-            public Collection<Resource> getRemovedResources()
-            {
-              return removedResources;
-            }
+            return true;
           }
 
-          ResourceDeltaVisitor visitor = new ResourceDeltaVisitor();
-          delta.accept(visitor);
-
-          if (!visitor.getRemovedResources().isEmpty())
+          public Collection<Resource> getChangedResources()
           {
-            removedResources.addAll(visitor.getRemovedResources());
-            if (!isDirty())
-            {
-              getSite().getShell().getDisplay().asyncExec(new Runnable()
-              {
-                public void run()
-                {
-                  getSite().getPage().closeEditor(CDOEditor.this, false);
-                  CDOEditor.this.dispose();
-                }
-              });
-            }
+            return changedResources;
           }
 
-          if (!visitor.getChangedResources().isEmpty())
+          public Collection<Resource> getRemovedResources()
           {
-            changedResources.addAll(visitor.getChangedResources());
-            if (getSite().getPage().getActiveEditor() == CDOEditor.this)
-            {
-              getSite().getShell().getDisplay().asyncExec(new Runnable()
-              {
-                public void run()
-                {
-                  handleActivate();
-                }
-              });
-            }
+            return removedResources;
           }
         }
-        catch (CoreException exception)
+
+        ResourceDeltaVisitor visitor = new ResourceDeltaVisitor();
+        delta.accept(visitor);
+
+        if (!visitor.getRemovedResources().isEmpty())
         {
-          PluginDelegator.INSTANCE.log(exception);
+          removedResources.addAll(visitor.getRemovedResources());
+          if (!isDirty())
+          {
+            getSite().getShell().getDisplay().asyncExec(new Runnable()
+            {
+              public void run()
+              {
+                getSite().getPage().closeEditor(CDOEditor.this, false);
+                CDOEditor.this.dispose();
+              }
+            });
+          }
         }
+
+        if (!visitor.getChangedResources().isEmpty())
+        {
+          changedResources.addAll(visitor.getChangedResources());
+          if (getSite().getPage().getActiveEditor() == CDOEditor.this)
+          {
+            getSite().getShell().getDisplay().asyncExec(new Runnable()
+            {
+              public void run()
+              {
+                handleActivate();
+              }
+            });
+          }
+        }
+      }
+      catch (CoreException exception)
+      {
+        PluginDelegator.INSTANCE.log(exception);
       }
     }
   };
@@ -695,13 +693,11 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
     adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
-    // Create the command stack that will notify this editor as commands are
-    // executed.
+    // Create the command stack that will notify this editor as commands are executed.
     //
     BasicCommandStack commandStack = new BasicCommandStack();
 
-    // Add a listener to set the most recent command's affected objects to be
-    // the selection of the viewer with focus.
+    // Add a listener to set the most recent command's affected objects to be the selection of the viewer with focus.
     //
     commandStack.addCommandStackListener(new CommandStackListener()
     {
@@ -767,8 +763,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     if (theSelection != null && !theSelection.isEmpty())
     {
       // I don't know if this should be run this deferred
-      // because we might have to give the editor a chance to process the viewer
-      // update events
+      // because we might have to give the editor a chance to process the viewer update events
       // and hence to update the views first.
       //
       //
@@ -776,8 +771,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         public void run()
         {
-          // Try to select the items in the current content viewer of the
-          // editor.
+          // Try to select the items in the current content viewer of the editor.
           //
           if (currentViewer != null)
           {
@@ -1487,8 +1481,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
     saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
 
-    // Do the work within an operation because this is a long running activity
-    // that modifies the workbench.
+    // Do the work within an operation because this is a long running activity that modifies the workbench.
     //
     WorkspaceModifyOperation operation = new WorkspaceModifyOperation()
     {
@@ -1512,7 +1505,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
             }
             catch (Exception exception)
             {
-              exception.printStackTrace();
               resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
             }
             first = false;
@@ -1633,8 +1625,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This returns wether something has been persisted to the URI of the specified viewerInput. The implementation uses
-   * the URI converter from the editor's viewerInput set to try to open an input stream. <!-- begin-user-doc --> <!--
+   * This returns whether something has been persisted to the URI of the specified resource. The implementation uses the
+   * URI converter from the editor's resource set to try to open an input stream. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
    * @generated

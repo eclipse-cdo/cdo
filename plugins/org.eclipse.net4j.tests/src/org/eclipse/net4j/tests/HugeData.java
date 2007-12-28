@@ -37,209 +37,209 @@ public final class HugeData
   public static String getText()
   {
     return "/***************************************************************************" + NL
-        + " * Copyright (c) 2004 - 2008 Eike Stepper, Germany." + NL
-        + " * All rights reserved. This program and the accompanying materials" + NL
-        + " * are made available under the terms of the Eclipse Public License v1.0" + NL
-        + " * which accompanies this distribution, and is available at" + NL
-        + " * http://www.eclipse.org/legal/epl-v10.html" + NL + " * " + NL + " * Contributors:" + NL
-        + " *    Eike Stepper - initial API and implementation" + NL
+        + " * COPYRIGHT (C) 2004 - 2008 EIKE STEPPER, GERMANY." + NL
+        + " * ALL RIGHTS RESERVED. THIS PROGRAM AND THE ACCOMPANYING MATERIALS" + NL
+        + " * ARE MADE AVAILABLE UNDER THE TERMS OF THE ECLIPSE PUBLIC LICENSE V1.0" + NL
+        + " * WHICH ACCOMPANIES THIS DISTRIBUTION, AND IS AVAILABLE AT" + NL
+        + " * HTTP://WWW.ECLIPSE.ORG/LEGAL/EPL-V10.HTML" + NL + " * " + NL + " * CONTRIBUTORS:" + NL
+        + " *    EIKE STEPPER - INITIAL API AND IMPLEMENTATION" + NL
         + " **************************************************************************/" + NL
-        + "package org.eclipse.internal.net4j.transport.connector;" + NL + "" + NL
-        + "import org.eclipse.net4j.transport.buffer.BufferProvider;" + NL
-        + "import org.eclipse.net4j.transport.channel.Channel;" + NL
-        + "import org.eclipse.net4j.transport.channel.Multiplexer;" + NL
-        + "import org.eclipse.net4j.transport.connector.Connector;" + NL
-        + "import org.eclipse.net4j.transport.connector.ConnectorException;" + NL
-        + "import org.eclipse.net4j.transport.connector.Credentials;" + NL
-        + "import org.eclipse.net4j.transport.connector.Protocol;" + NL
-        + "import org.eclipse.net4j.transport.connector.ProtocolFactory;" + NL
-        + "import org.eclipse.net4j.util.lifecycle.LifecycleListener;" + NL
-        + "import org.eclipse.net4j.util.lifecycle.LifecycleNotifier;" + NL
-        + "import org.eclipse.net4j.util.registry.IRegistry;" + NL + "" + NL
-        + "import org.eclipse.internal.net4j.transport.channel.ChannelImpl;" + NL
-        + "import org.eclipse.internal.net4j.util.stream.BufferQueue;" + NL
-        + "import org.eclipse.internal.net4j.util.lifecycle.AbstractComponent;" + NL
-        + "import org.eclipse.internal.net4j.util.lifecycle.LifecycleUtil;" + NL + "" + NL
-        + "import java.util.ArrayList;" + NL + "import java.util.List;" + NL + "import java.util.Queue;" + NL
-        + "import java.util.concurrent.ConcurrentLinkedQueue;" + NL + "import java.util.concurrent.CountDownLatch;"
-        + NL + "import java.util.concurrent.ExecutorService;" + NL + "import java.util.concurrent.TimeUnit;" + NL + ""
-        + NL + "/**" + NL + " * @author Eike Stepper" + NL + " */" + NL
-        + "public abstract class AbstractConnector extends AbstractLifecycle implements Connector, ChannelMultiplexer"
-        + NL + "{" + NL + "  private static final ChannelImpl NULL_CHANNEL = new ChannelImpl(null);" + NL + "" + NL
-        + "  private ConnectorCredentials credentials;" + NL + "" + NL
-        + "  private IRegistry<String, ProtocolFactory> protocolFactoryRegistry;" + NL + "" + NL
-        + "  private BufferProvider bufferProvider;" + NL + "" + NL + "  /**" + NL
-        + "   * An optional executor to be used by the {@link Channel}s to process their" + NL
-        + "   * {@link ChannelImpl#receiveQueue} instead of the current thread. If not" + NL
-        + "   * <code>null</code> the sender and the receiver peers become decoupled." + NL + "   * <p>" + NL + "   */"
-        + NL + "  private ExecutorService receiveExecutor;" + NL + "" + NL + "  /**" + NL
-        + "   * TODO synchronize on channels?" + NL + "   */" + NL
-        + "  private List<ChannelImpl> channels = new ArrayList();" + NL + "" + NL
-        + "  private State state = State.DISCONNECTED;" + NL + "" + NL + "  /**" + NL
-        + "   * Don\'t initialize lazily to circumvent synchronization!" + NL + "   */" + NL
-        + "  private Queue<StateListener> stateListeners = new ConcurrentLinkedQueue();" + NL + "" + NL + "  /**" + NL
-        + "   * Don\'t initialize lazily to circumvent synchronization!" + NL + "   */" + NL
-        + "  private Queue<ChannelListener> channelListeners = new ConcurrentLinkedQueue();" + NL + "" + NL + "  /**"
-        + NL + "   * Is registered with each {@link Channel} of this {@link Connector}." + NL + "   * <p>" + NL
-        + "   */" + NL + "  private LifecycleListener channelLifecycleListener = new ChannelLifecycleListener();" + NL
-        + "" + NL + "  private CountDownLatch finishedConnecting;" + NL + "" + NL
-        + "  private CountDownLatch finishedNegotiating;" + NL + "" + NL + "  public AbstractConnector()" + NL + "  {"
-        + NL + "  }" + NL + "" + NL + "  public ExecutorService getReceiveExecutor()" + NL + "  {" + NL
-        + "    return receiveExecutor;" + NL + "  }" + NL + "" + NL
-        + "  public void setReceiveExecutor(ExecutorService receiveExecutor)" + NL + "  {" + NL
-        + "    this.receiveExecutor = receiveExecutor;" + NL + "  }" + NL + "" + NL
-        + "  public IRegistry<String, ProtocolFactory> getProtocolFactoryRegistry()" + NL + "  {" + NL
-        + "    return protocolFactoryRegistry;" + NL + "  }" + NL + "" + NL
-        + "  public void setProtocolFactoryRegistry(IRegistry<String, ProtocolFactory> protocolFactoryRegistry)" + NL
-        + "  {" + NL + "    this.protocolFactoryRegistry = protocolFactoryRegistry;" + NL + "  }" + NL + "" + NL
-        + "  public void addStateListener(StateListener listener)" + NL + "  {" + NL
-        + "    stateListeners.add(listener);" + NL + "  }" + NL + "" + NL
-        + "  public void removeStateListener(StateListener listener)" + NL + "  {" + NL
-        + "    stateListeners.remove(listener);" + NL + "  }" + NL + "" + NL
-        + "  public void addChannelListener(ChannelListener listener)" + NL + "  {" + NL
-        + "    channelListeners.add(listener);" + NL + "  }" + NL + "" + NL
-        + "  public void removeChannelListener(ChannelListener listener)" + NL + "  {" + NL
-        + "    channelListeners.remove(listener);" + NL + "  }" + NL + "" + NL
-        + "  public BufferProvider getBufferProvider()" + NL + "  {" + NL + "    return bufferProvider;" + NL + "  }"
-        + NL + "" + NL + "  public void setBufferProvider(BufferProvider bufferProvider)" + NL + "  {" + NL
-        + "    this.bufferProvider = bufferProvider;" + NL + "  }" + NL + "" + NL + "  public boolean isClient()" + NL
-        + "  {" + NL + "    return getType() == Type.CLIENT;" + NL + "  }" + NL + "" + NL
-        + "  public boolean isServer()" + NL + "  {" + NL + "    return getType() == Type.SERVER;" + NL + "  }" + NL
-        + "" + NL + "  public ConnectorCredentials getCredentials()" + NL + "  {" + NL + "    return credentials;" + NL
-        + "  }" + NL + "" + NL + "  public void setCredentials(ConnectorCredentials credentials)" + NL + "  {" + NL
-        + "    this.credentials = credentials;" + NL + "  }" + NL + "" + NL + "  public State getState()" + NL + "  {"
-        + NL + "    return state;" + NL + "  }" + NL + "" + NL
-        + "  public void setState(State newState) throws ConnectorException" + NL + "  {" + NL
-        + "    State oldState = getState();" + NL + "    if (newState != oldState)" + NL + "    {" + NL
-        + "      IOUtil.OUT().println(toString() + \": Setting state \" + newState + \" (was \"" + NL
-        + "          + oldState.toString().toLowerCase() + \")\");" + NL + "      state = newState;" + NL
-        + "      fireStateChanged(newState, oldState);" + NL + "" + NL + "      switch (newState)" + NL + "      {"
-        + NL + "      case DISCONNECTED:" + NL + "        if (finishedConnecting != null)" + NL + "        {" + NL
-        + "          finishedConnecting.countDown();" + NL + "          finishedConnecting = null;" + NL + "        }"
-        + NL + "" + NL + "        if (finishedNegotiating != null)" + NL + "        {" + NL
-        + "          finishedNegotiating.countDown();" + NL + "          finishedNegotiating = null;" + NL
-        + "        }" + NL + "        break;" + NL + "" + NL + "      case CONNECTING:" + NL
-        + "        finishedConnecting = new CountDownLatch(1);" + NL
-        + "        finishedNegotiating = new CountDownLatch(1);" + NL + "        if (getType() == Type.SERVER)" + NL
-        + "        {" + NL + "          setState(State.NEGOTIATING);" + NL + "        }" + NL + "        break;" + NL
-        + "" + NL + "      case NEGOTIATING:" + NL + "        finishedConnecting.countDown();" + NL
-        + "        setState(State.CONNECTED); // TODO Implement negotiation" + NL + "        break;" + NL + "" + NL
-        + "      case CONNECTED:" + NL + "        finishedConnecting.countDown(); // Just in case of suspicion" + NL
-        + "        finishedNegotiating.countDown();" + NL + "        break;" + NL + "" + NL + "      }" + NL + "    }"
-        + NL + "  }" + NL + "" + NL + "  public boolean isConnected()" + NL + "  {" + NL
-        + "    return getState() == State.CONNECTED;" + NL + "  }" + NL + "" + NL
-        + "  public void connectAsync() throws ConnectorException" + NL + "  {" + NL + "    try" + NL + "    {" + NL
-        + "      activate();" + NL + "    }" + NL + "    catch (ConnectorException ex)" + NL + "    {" + NL
-        + "      throw ex;" + NL + "    }" + NL + "    catch (Exception ex)" + NL + "    {" + NL
-        + "      throw new ConnectorException(ex);" + NL + "    }" + NL + "  }" + NL + "" + NL
-        + "  public boolean waitForConnection(long timeout) throws ConnectorException" + NL + "  {" + NL
-        + "    State state = getState();" + NL + "    if (state == State.DISCONNECTED)" + NL + "    {" + NL
-        + "      return false;" + NL + "    }" + NL + "" + NL + "    try" + NL + "    {" + NL
-        + "      IOUtil.OUT().println(toString() + \": Waiting for connection...\");" + NL
-        + "      return finishedNegotiating.await(timeout, TimeUnit.MILLISECONDS);" + NL + "    }" + NL
-        + "    catch (InterruptedException ex)" + NL + "    {" + NL + "      return false;" + NL + "    }" + NL + "  }"
-        + NL + "" + NL + "  public boolean connect(long timeout) throws ConnectorException" + NL + "  {" + NL
-        + "    connectAsync();" + NL + "    return waitForConnection(timeout);" + NL + "  }" + NL + "" + NL
-        + "  public ConnectorException disconnect()" + NL + "  {" + NL + "    Exception ex = deactivate();" + NL
-        + "    if (ex == null)" + NL + "    {" + NL + "      return null;" + NL + "    }" + NL + "" + NL
-        + "    if (ex instanceof ConnectorException)" + NL + "    {" + NL + "      return (ConnectorException)ex;" + NL
-        + "    }" + NL + "" + NL + "    return new ConnectorException(ex);" + NL + "  }" + NL + "" + NL
-        + "  public Channel[] getChannels()" + NL + "  {" + NL
-        + "    final List<Channel> result = new ArrayList<Channel>();" + NL + "    synchronized (channels)" + NL
-        + "    {" + NL + "      for (final ChannelImpl channel : channels)" + NL + "      {" + NL
-        + "        if (channel != NULL_CHANNEL)" + NL + "        {" + NL + "          result.add(channel);" + NL
+        + "PACKAGE ORG.ECLIPSE.INTERNAL.NET4J.TRANSPORT.CONNECTOR;" + NL + "" + NL
+        + "IMPORT ORG.ECLIPSE.NET4J.TRANSPORT.BUFFER.BUFFERPROVIDER;" + NL
+        + "IMPORT ORG.ECLIPSE.NET4J.TRANSPORT.CHANNEL.CHANNEL;" + NL
+        + "IMPORT ORG.ECLIPSE.NET4J.TRANSPORT.CHANNEL.MULTIPLEXER;" + NL
+        + "IMPORT ORG.ECLIPSE.NET4J.TRANSPORT.CONNECTOR.CONNECTOR;" + NL
+        + "IMPORT ORG.ECLIPSE.NET4J.TRANSPORT.CONNECTOR.CONNECTOREXCEPTION;" + NL
+        + "IMPORT ORG.ECLIPSE.NET4J.TRANSPORT.CONNECTOR.CREDENTIALS;" + NL
+        + "IMPORT ORG.ECLIPSE.NET4J.TRANSPORT.CONNECTOR.PROTOCOL;" + NL
+        + "IMPORT ORG.ECLIPSE.NET4J.TRANSPORT.CONNECTOR.PROTOCOLFACTORY;" + NL
+        + "IMPORT ORG.ECLIPSE.NET4J.UTIL.LIFECYCLE.LIFECYCLELISTENER;" + NL
+        + "IMPORT ORG.ECLIPSE.NET4J.UTIL.LIFECYCLE.LIFECYCLENOTIFIER;" + NL
+        + "IMPORT ORG.ECLIPSE.NET4J.UTIL.REGISTRY.IREGISTRY;" + NL + "" + NL
+        + "IMPORT ORG.ECLIPSE.INTERNAL.NET4J.TRANSPORT.CHANNEL.CHANNELIMPL;" + NL
+        + "IMPORT ORG.ECLIPSE.INTERNAL.NET4J.UTIL.STREAM.BUFFERQUEUE;" + NL
+        + "IMPORT ORG.ECLIPSE.INTERNAL.NET4J.UTIL.LIFECYCLE.ABSTRACTCOMPONENT;" + NL
+        + "IMPORT ORG.ECLIPSE.INTERNAL.NET4J.UTIL.LIFECYCLE.LIFECYCLEUTIL;" + NL + "" + NL
+        + "IMPORT JAVA.UTIL.ARRAYLIST;" + NL + "IMPORT JAVA.UTIL.LIST;" + NL + "IMPORT JAVA.UTIL.QUEUE;" + NL
+        + "IMPORT JAVA.UTIL.CONCURRENT.CONCURRENTLINKEDQUEUE;" + NL + "IMPORT JAVA.UTIL.CONCURRENT.COUNTDOWNLATCH;"
+        + NL + "IMPORT JAVA.UTIL.CONCURRENT.EXECUTORSERVICE;" + NL + "IMPORT JAVA.UTIL.CONCURRENT.TIMEUNIT;" + NL + ""
+        + NL + "/**" + NL + " * @AUTHOR EIKE STEPPER" + NL + " */" + NL
+        + "PUBLIC ABSTRACT CLASS ABSTRACTCONNECTOR EXTENDS ABSTRACTLIFECYCLE IMPLEMENTS CONNECTOR, CHANNELMULTIPLEXER"
+        + NL + "{" + NL + "  PRIVATE STATIC FINAL CHANNELIMPL NULL_CHANNEL = NEW CHANNELIMPL(NULL);" + NL + "" + NL
+        + "  PRIVATE CONNECTORCREDENTIALS CREDENTIALS;" + NL + "" + NL
+        + "  PRIVATE IREGISTRY<STRING, PROTOCOLFACTORY> PROTOCOLFACTORYREGISTRY;" + NL + "" + NL
+        + "  PRIVATE BUFFERPROVIDER BUFFERPROVIDER;" + NL + "" + NL + "  /**" + NL
+        + "   * AN OPTIONAL EXECUTOR TO BE USED BY THE {@LINK CHANNEL}S TO PROCESS THEIR" + NL
+        + "   * {@LINK CHANNELIMPL#RECEIVEQUEUE} INSTEAD OF THE CURRENT THREAD. IF NOT" + NL
+        + "   * <CODE>NULL</CODE> THE SENDER AND THE RECEIVER PEERS BECOME DECOUPLED." + NL + "   * <P>" + NL + "   */"
+        + NL + "  PRIVATE EXECUTORSERVICE RECEIVEEXECUTOR;" + NL + "" + NL + "  /**" + NL
+        + "   * TODO SYNCHRONIZE ON CHANNELS?" + NL + "   */" + NL
+        + "  PRIVATE LIST<CHANNELIMPL> CHANNELS = NEW ARRAYLIST();" + NL + "" + NL
+        + "  PRIVATE STATE STATE = STATE.DISCONNECTED;" + NL + "" + NL + "  /**" + NL
+        + "   * DON\'T INITIALIZE LAZILY TO CIRCUMVENT SYNCHRONIZATION!" + NL + "   */" + NL
+        + "  PRIVATE QUEUE<STATELISTENER> STATELISTENERS = NEW CONCURRENTLINKEDQUEUE();" + NL + "" + NL + "  /**" + NL
+        + "   * DON\'T INITIALIZE LAZILY TO CIRCUMVENT SYNCHRONIZATION!" + NL + "   */" + NL
+        + "  PRIVATE QUEUE<CHANNELLISTENER> CHANNELLISTENERS = NEW CONCURRENTLINKEDQUEUE();" + NL + "" + NL + "  /**"
+        + NL + "   * IS REGISTERED WITH EACH {@LINK CHANNEL} OF THIS {@LINK CONNECTOR}." + NL + "   * <P>" + NL
+        + "   */" + NL + "  PRIVATE LIFECYCLELISTENER CHANNELLIFECYCLELISTENER = NEW CHANNELLIFECYCLELISTENER();" + NL
+        + "" + NL + "  PRIVATE COUNTDOWNLATCH FINISHEDCONNECTING;" + NL + "" + NL
+        + "  PRIVATE COUNTDOWNLATCH FINISHEDNEGOTIATING;" + NL + "" + NL + "  PUBLIC ABSTRACTCONNECTOR()" + NL + "  {"
+        + NL + "  }" + NL + "" + NL + "  PUBLIC EXECUTORSERVICE GETRECEIVEEXECUTOR()" + NL + "  {" + NL
+        + "    RETURN RECEIVEEXECUTOR;" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC VOID SETRECEIVEEXECUTOR(EXECUTORSERVICE RECEIVEEXECUTOR)" + NL + "  {" + NL
+        + "    THIS.RECEIVEEXECUTOR = RECEIVEEXECUTOR;" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC IREGISTRY<STRING, PROTOCOLFACTORY> GETPROTOCOLFACTORYREGISTRY()" + NL + "  {" + NL
+        + "    RETURN PROTOCOLFACTORYREGISTRY;" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC VOID SETPROTOCOLFACTORYREGISTRY(IREGISTRY<STRING, PROTOCOLFACTORY> PROTOCOLFACTORYREGISTRY)" + NL
+        + "  {" + NL + "    THIS.PROTOCOLFACTORYREGISTRY = PROTOCOLFACTORYREGISTRY;" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC VOID ADDSTATELISTENER(STATELISTENER LISTENER)" + NL + "  {" + NL
+        + "    STATELISTENERS.ADD(LISTENER);" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC VOID REMOVESTATELISTENER(STATELISTENER LISTENER)" + NL + "  {" + NL
+        + "    STATELISTENERS.REMOVE(LISTENER);" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC VOID ADDCHANNELLISTENER(CHANNELLISTENER LISTENER)" + NL + "  {" + NL
+        + "    CHANNELLISTENERS.ADD(LISTENER);" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC VOID REMOVECHANNELLISTENER(CHANNELLISTENER LISTENER)" + NL + "  {" + NL
+        + "    CHANNELLISTENERS.REMOVE(LISTENER);" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC BUFFERPROVIDER GETBUFFERPROVIDER()" + NL + "  {" + NL + "    RETURN BUFFERPROVIDER;" + NL + "  }"
+        + NL + "" + NL + "  PUBLIC VOID SETBUFFERPROVIDER(BUFFERPROVIDER BUFFERPROVIDER)" + NL + "  {" + NL
+        + "    THIS.BUFFERPROVIDER = BUFFERPROVIDER;" + NL + "  }" + NL + "" + NL + "  PUBLIC BOOLEAN ISCLIENT()" + NL
+        + "  {" + NL + "    RETURN GETTYPE() == TYPE.CLIENT;" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC BOOLEAN ISSERVER()" + NL + "  {" + NL + "    RETURN GETTYPE() == TYPE.SERVER;" + NL + "  }" + NL
+        + "" + NL + "  PUBLIC CONNECTORCREDENTIALS GETCREDENTIALS()" + NL + "  {" + NL + "    RETURN CREDENTIALS;" + NL
+        + "  }" + NL + "" + NL + "  PUBLIC VOID SETCREDENTIALS(CONNECTORCREDENTIALS CREDENTIALS)" + NL + "  {" + NL
+        + "    THIS.CREDENTIALS = CREDENTIALS;" + NL + "  }" + NL + "" + NL + "  PUBLIC STATE GETSTATE()" + NL + "  {"
+        + NL + "    RETURN STATE;" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC VOID SETSTATE(STATE NEWSTATE) THROWS CONNECTOREXCEPTION" + NL + "  {" + NL
+        + "    STATE OLDSTATE = GETSTATE();" + NL + "    IF (NEWSTATE != OLDSTATE)" + NL + "    {" + NL
+        + "      IOUTIL.OUT().PRINTLN(TOSTRING() + \": SETTING STATE \" + NEWSTATE + \" (WAS \"" + NL
+        + "          + OLDSTATE.TOSTRING().TOLOWERCASE() + \")\");" + NL + "      STATE = NEWSTATE;" + NL
+        + "      FIRESTATECHANGED(NEWSTATE, OLDSTATE);" + NL + "" + NL + "      SWITCH (NEWSTATE)" + NL + "      {"
+        + NL + "      CASE DISCONNECTED:" + NL + "        IF (FINISHEDCONNECTING != NULL)" + NL + "        {" + NL
+        + "          FINISHEDCONNECTING.COUNTDOWN();" + NL + "          FINISHEDCONNECTING = NULL;" + NL + "        }"
+        + NL + "" + NL + "        IF (FINISHEDNEGOTIATING != NULL)" + NL + "        {" + NL
+        + "          FINISHEDNEGOTIATING.COUNTDOWN();" + NL + "          FINISHEDNEGOTIATING = NULL;" + NL
+        + "        }" + NL + "        BREAK;" + NL + "" + NL + "      CASE CONNECTING:" + NL
+        + "        FINISHEDCONNECTING = NEW COUNTDOWNLATCH(1);" + NL
+        + "        FINISHEDNEGOTIATING = NEW COUNTDOWNLATCH(1);" + NL + "        IF (GETTYPE() == TYPE.SERVER)" + NL
+        + "        {" + NL + "          SETSTATE(STATE.NEGOTIATING);" + NL + "        }" + NL + "        BREAK;" + NL
+        + "" + NL + "      CASE NEGOTIATING:" + NL + "        FINISHEDCONNECTING.COUNTDOWN();" + NL
+        + "        SETSTATE(STATE.CONNECTED); // TODO IMPLEMENT NEGOTIATION" + NL + "        BREAK;" + NL + "" + NL
+        + "      CASE CONNECTED:" + NL + "        FINISHEDCONNECTING.COUNTDOWN(); // JUST IN CASE OF SUSPICION" + NL
+        + "        FINISHEDNEGOTIATING.COUNTDOWN();" + NL + "        BREAK;" + NL + "" + NL + "      }" + NL + "    }"
+        + NL + "  }" + NL + "" + NL + "  PUBLIC BOOLEAN ISCONNECTED()" + NL + "  {" + NL
+        + "    RETURN GETSTATE() == STATE.CONNECTED;" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC VOID CONNECTASYNC() THROWS CONNECTOREXCEPTION" + NL + "  {" + NL + "    TRY" + NL + "    {" + NL
+        + "      ACTIVATE();" + NL + "    }" + NL + "    CATCH (CONNECTOREXCEPTION EX)" + NL + "    {" + NL
+        + "      THROW EX;" + NL + "    }" + NL + "    CATCH (EXCEPTION EX)" + NL + "    {" + NL
+        + "      THROW NEW CONNECTOREXCEPTION(EX);" + NL + "    }" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC BOOLEAN WAITFORCONNECTION(LONG TIMEOUT) THROWS CONNECTOREXCEPTION" + NL + "  {" + NL
+        + "    STATE STATE = GETSTATE();" + NL + "    IF (STATE == STATE.DISCONNECTED)" + NL + "    {" + NL
+        + "      RETURN FALSE;" + NL + "    }" + NL + "" + NL + "    TRY" + NL + "    {" + NL
+        + "      IOUTIL.OUT().PRINTLN(TOSTRING() + \": WAITING FOR CONNECTION...\");" + NL
+        + "      RETURN FINISHEDNEGOTIATING.AWAIT(TIMEOUT, TIMEUNIT.MILLISECONDS);" + NL + "    }" + NL
+        + "    CATCH (INTERRUPTEDEXCEPTION EX)" + NL + "    {" + NL + "      RETURN FALSE;" + NL + "    }" + NL + "  }"
+        + NL + "" + NL + "  PUBLIC BOOLEAN CONNECT(LONG TIMEOUT) THROWS CONNECTOREXCEPTION" + NL + "  {" + NL
+        + "    CONNECTASYNC();" + NL + "    RETURN WAITFORCONNECTION(TIMEOUT);" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC CONNECTOREXCEPTION DISCONNECT()" + NL + "  {" + NL + "    EXCEPTION EX = DEACTIVATE();" + NL
+        + "    IF (EX == NULL)" + NL + "    {" + NL + "      RETURN NULL;" + NL + "    }" + NL + "" + NL
+        + "    IF (EX INSTANCEOF CONNECTOREXCEPTION)" + NL + "    {" + NL + "      RETURN (CONNECTOREXCEPTION)EX;" + NL
+        + "    }" + NL + "" + NL + "    RETURN NEW CONNECTOREXCEPTION(EX);" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC CHANNEL[] GETCHANNELS()" + NL + "  {" + NL
+        + "    FINAL LIST<CHANNEL> RESULT = NEW ARRAYLIST<CHANNEL>();" + NL + "    SYNCHRONIZED (CHANNELS)" + NL
+        + "    {" + NL + "      FOR (FINAL CHANNELIMPL CHANNEL : CHANNELS)" + NL + "      {" + NL
+        + "        IF (CHANNEL != NULL_CHANNEL)" + NL + "        {" + NL + "          RESULT.ADD(CHANNEL);" + NL
         + "        }" + NL + "      }" + NL + "    }" + NL + "" + NL
-        + "    return result.toArray(new Channel[result.size()]);" + NL + "  }" + NL + "" + NL
-        + "  public Channel openChannel() throws ConnectorException" + NL + "  {" + NL
-        + "    return openChannel(null);" + NL + "  }" + NL + "" + NL
-        + "  public Channel openChannel(String protocolID) throws ConnectorException" + NL + "  {" + NL
-        + "    short channelIndex = findFreeChannelIndex();" + NL
-        + "    ChannelImpl channel = createChannel(channelIndex, protocolID);" + NL
-        + "    registerChannelWithPeer(channelIndex, protocolID);" + NL + "" + NL + "    try" + NL + "    {" + NL
-        + "      channel.activate();" + NL + "    }" + NL + "    catch (ConnectorException ex)" + NL + "    {" + NL
-        + "      throw ex;" + NL + "    }" + NL + "    catch (Exception ex)" + NL + "    {" + NL
-        + "      throw new ConnectorException(ex);" + NL + "    }" + NL + "" + NL + "    return channel;" + NL + "  }"
-        + NL + "" + NL + "  public ChannelImpl createChannel(short channelIndex, String protocolID)" + NL + "  {" + NL
-        + "    Protocol protocol = createProtocol(protocolID);" + NL + "    if (protocol == null)" + NL + "    {" + NL
-        + "      IOUtil.OUT().println(toString() + \": Opening channel without protocol\");" + NL + "    }" + NL
-        + "    else" + NL + "    {" + NL
-        + "      IOUtil.OUT().println(toString() + \": Opening channel with protocol \" + protocolID);" + NL + "    }"
-        + NL + "" + NL + "    ChannelImpl channel = new ChannelImpl(receiveExecutor);" + NL
-        + "    channel.setChannelIndex(channelIndex);" + NL + "    channel.setMultiplexer(this);" + NL
-        + "    channel.setReceiveHandler(protocol);" + NL
-        + "    channel.addLifecycleListener(channelLifecycleListener);" + NL + "    addChannel(channel);" + NL
-        + "    return channel;" + NL + "  }" + NL + "" + NL + "  public ChannelImpl getChannel(short channelIndex)"
-        + NL + "  {" + NL + "    try" + NL + "    {" + NL + "      ChannelImpl channel = channels.get(channelIndex);"
-        + NL + "      if (channel == null || channel == NULL_CHANNEL)" + NL + "      {" + NL
-        + "        throw new NullPointerException();" + NL + "      }" + NL + "" + NL + "      return channel;" + NL
-        + "    }" + NL + "    catch (IndexOutOfBoundsException ex)" + NL + "    {" + NL
-        + "      IOUtil.OUT().println(toString() + \": Invalid channelIndex \" + channelIndex);" + NL
-        + "      return null;" + NL + "    }" + NL + "  }" + NL + "" + NL
-        + "  protected List<BufferQueue> getChannelBufferQueues()" + NL + "  {" + NL
-        + "    final List<BufferQueue> result = new ArrayList<BufferQueue>();" + NL + "    synchronized (channels)"
-        + NL + "    {" + NL + "      for (final ChannelImpl channel : channels)" + NL + "      {" + NL
-        + "        if (channel != NULL_CHANNEL)" + NL + "        {" + NL
-        + "          BufferQueue bufferQueue = channel.getSendQueue();" + NL + "          result.add(bufferQueue);"
-        + NL + "        }" + NL + "      }" + NL + "    }" + NL + "" + NL + "    return result;" + NL + "  }" + NL + ""
-        + NL + "  protected short findFreeChannelIndex()" + NL + "  {" + NL + "    synchronized (channels)" + NL
-        + "    {" + NL + "      int size = channels.size();" + NL + "      for (short i = 0; i < size; i++)" + NL
-        + "      {" + NL + "        if (channels.get(i) == NULL_CHANNEL)" + NL + "        {" + NL
-        + "          return i;" + NL + "        }" + NL + "      }" + NL + "" + NL
-        + "      channels.add(NULL_CHANNEL);" + NL + "      return (short)size;" + NL + "    }" + NL + "  }" + NL + ""
-        + NL + "  protected void addChannel(ChannelImpl channel)" + NL + "  {" + NL
-        + "    short channelIndex = channel.getChannelIndex();" + NL + "    while (channelIndex >= channels.size())"
-        + NL + "    {" + NL + "      channels.add(NULL_CHANNEL);" + NL + "    }" + NL + "" + NL
-        + "    channels.set(channelIndex, channel);" + NL + "  }" + NL + "" + NL
-        + "  protected void removeChannel(ChannelImpl channel)" + NL + "  {" + NL
-        + "    channel.removeLifecycleListener(channelLifecycleListener);" + NL
-        + "    int channelIndex = channel.getChannelIndex();" + NL + "" + NL
-        + "    IOUtil.OUT().println(toString() + \": Removing channel \" + channelIndex);" + NL
-        + "    channels.set(channelIndex, NULL_CHANNEL);" + NL + "  }" + NL + "" + NL
-        + "  protected Protocol createProtocol(String protocolID)" + NL + "  {" + NL
-        + "    if (protocolID == null || protocolID.length() == 0)" + NL + "    {" + NL + "      return null;" + NL
-        + "    }" + NL + "" + NL + "    IRegistry<String, ProtocolFactory> registry = getProtocolFactoryRegistry();"
-        + NL + "    if (registry == null)" + NL + "    {" + NL + "      return null;" + NL + "    }" + NL + "" + NL
-        + "    ProtocolFactory factory = registry.lookup(protocolID);" + NL + "    if (factory == null)" + NL + "    {"
-        + NL + "      return null;" + NL + "    }" + NL + "" + NL
-        + "    IOUtil.OUT().println(toString() + \": Creating protocol \" + protocolID);" + NL
-        + "    return factory.createProtocol();" + NL + "  }" + NL + "" + NL
-        + "  protected void fireChannelOpened(Channel channel)" + NL + "  {" + NL
-        + "    for (ChannelListener listener : channelListeners)" + NL + "    {" + NL + "      try" + NL + "      {"
-        + NL + "        listener.notifyChannelOpened(channel);" + NL + "      }" + NL + "      catch (Exception ex)"
-        + NL + "      {" + NL + "        ex.printStackTrace();" + NL + "      }" + NL + "    }" + NL + "  }" + NL + ""
-        + NL + "  protected void fireChannelClosing(Channel channel)" + NL + "  {" + NL
-        + "    for (ChannelListener listener : channelListeners)" + NL + "    {" + NL + "      try" + NL + "      {"
-        + NL + "        listener.notifyChannelClosing(channel);" + NL + "      }" + NL + "      catch (Exception ex)"
-        + NL + "      {" + NL + "        ex.printStackTrace();" + NL + "      }" + NL + "    }" + NL + "  }" + NL + ""
-        + NL + "  protected void fireStateChanged(State newState, State oldState)" + NL + "  {" + NL
-        + "    for (StateListener listener : stateListeners)" + NL + "    {" + NL + "      try" + NL + "      {" + NL
-        + "        listener.notifyStateChanged(this, newState, oldState);" + NL + "      }" + NL
-        + "      catch (Exception ex)" + NL + "      {" + NL + "        ex.printStackTrace();" + NL + "      }" + NL
-        + "    }" + NL + "  }" + NL + "" + NL + "  @Override" + NL
-        + "  protected void onAccessBeforeActivate() throws Exception" + NL + "  {" + NL
-        + "    super.onAccessBeforeActivate();" + NL + "    if (bufferProvider == null)" + NL + "    {" + NL
-        + "      throw new IllegalStateException(\"bufferProvider == null\");" + NL + "    }" + NL + "" + NL
-        + "    if (protocolFactoryRegistry == null)" + NL + "    {" + NL
-        + "      IOUtil.OUT().println(toString() + \": (INFO) protocolFactoryRegistry == null\");" + NL + "    }" + NL
-        + "" + NL + "    if (receiveExecutor == null)" + NL + "    {" + NL
-        + "      IOUtil.OUT().println(toString() + \": (INFO) receiveExecutor == null\");" + NL + "    }" + NL + "  }"
-        + NL + "" + NL + "  @Override" + NL + "  protected void onActivate() throws Exception" + NL + "  {" + NL
-        + "    super.onActivate();" + NL + "    setState(State.CONNECTING);" + NL + "  }" + NL + "" + NL
-        + "  @Override" + NL + "  protected void onDeactivate() throws Exception" + NL + "  {" + NL
-        + "    setState(State.DISCONNECTED);" + NL + "    for (short i = 0; i < channels.size(); i++)" + NL + "    {"
-        + NL + "      ChannelImpl channel = channels.get(i);" + NL + "      if (channel != null)" + NL + "      {" + NL
-        + "        LifecycleUtil.deactivate(channel);" + NL + "      }" + NL + "    }" + NL + "" + NL
-        + "    channels.clear();" + NL + "    super.onDeactivate();" + NL + "  }" + NL + "" + NL
-        + "  protected abstract void registerChannelWithPeer(short channelIndex, String protocolID)" + NL
-        + "      throws ConnectorException;" + NL + "" + NL + "  /**" + NL
-        + "   * Is registered with each {@link Channel} of this {@link Connector}." + NL + "   * <p>" + NL + "   * "
-        + NL + "   * @author Eike Stepper" + NL + "   */" + NL
-        + "  private final class ChannelLifecycleListener implements LifecycleListener" + NL + "  {" + NL
-        + "    public void notifyLifecycleActivated(LifecycleNotifier notifier)" + NL + "    {" + NL
-        + "      ChannelImpl channel = (ChannelImpl)notifier;" + NL + "      fireChannelOpened(channel);" + NL
-        + "    }" + NL + "" + NL + "    public void notifyLifecycleDeactivating(LifecycleNotifier notifier)" + NL
-        + "    {" + NL + "      ChannelImpl channel = (ChannelImpl)notifier;" + NL
-        + "      fireChannelClosing(channel);" + NL + "      removeChannel(channel);" + NL + "    }" + NL + "  }" + NL
+        + "    RETURN RESULT.TOARRAY(NEW CHANNEL[RESULT.SIZE()]);" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC CHANNEL OPENCHANNEL() THROWS CONNECTOREXCEPTION" + NL + "  {" + NL
+        + "    RETURN OPENCHANNEL(NULL);" + NL + "  }" + NL + "" + NL
+        + "  PUBLIC CHANNEL OPENCHANNEL(STRING PROTOCOLID) THROWS CONNECTOREXCEPTION" + NL + "  {" + NL
+        + "    SHORT CHANNELINDEX = FINDFREECHANNELINDEX();" + NL
+        + "    CHANNELIMPL CHANNEL = CREATECHANNEL(CHANNELINDEX, PROTOCOLID);" + NL
+        + "    REGISTERCHANNELWITHPEER(CHANNELINDEX, PROTOCOLID);" + NL + "" + NL + "    TRY" + NL + "    {" + NL
+        + "      CHANNEL.ACTIVATE();" + NL + "    }" + NL + "    CATCH (CONNECTOREXCEPTION EX)" + NL + "    {" + NL
+        + "      THROW EX;" + NL + "    }" + NL + "    CATCH (EXCEPTION EX)" + NL + "    {" + NL
+        + "      THROW NEW CONNECTOREXCEPTION(EX);" + NL + "    }" + NL + "" + NL + "    RETURN CHANNEL;" + NL + "  }"
+        + NL + "" + NL + "  PUBLIC CHANNELIMPL CREATECHANNEL(SHORT CHANNELINDEX, STRING PROTOCOLID)" + NL + "  {" + NL
+        + "    PROTOCOL PROTOCOL = CREATEPROTOCOL(PROTOCOLID);" + NL + "    IF (PROTOCOL == NULL)" + NL + "    {" + NL
+        + "      IOUTIL.OUT().PRINTLN(TOSTRING() + \": OPENING CHANNEL WITHOUT PROTOCOL\");" + NL + "    }" + NL
+        + "    ELSE" + NL + "    {" + NL
+        + "      IOUTIL.OUT().PRINTLN(TOSTRING() + \": OPENING CHANNEL WITH PROTOCOL \" + PROTOCOLID);" + NL + "    }"
+        + NL + "" + NL + "    CHANNELIMPL CHANNEL = NEW CHANNELIMPL(RECEIVEEXECUTOR);" + NL
+        + "    CHANNEL.SETCHANNELINDEX(CHANNELINDEX);" + NL + "    CHANNEL.SETMULTIPLEXER(THIS);" + NL
+        + "    CHANNEL.SETRECEIVEHANDLER(PROTOCOL);" + NL
+        + "    CHANNEL.ADDLIFECYCLELISTENER(CHANNELLIFECYCLELISTENER);" + NL + "    ADDCHANNEL(CHANNEL);" + NL
+        + "    RETURN CHANNEL;" + NL + "  }" + NL + "" + NL + "  PUBLIC CHANNELIMPL GETCHANNEL(SHORT CHANNELINDEX)"
+        + NL + "  {" + NL + "    TRY" + NL + "    {" + NL + "      CHANNELIMPL CHANNEL = CHANNELS.GET(CHANNELINDEX);"
+        + NL + "      IF (CHANNEL == NULL || CHANNEL == NULL_CHANNEL)" + NL + "      {" + NL
+        + "        THROW NEW NULLPOINTEREXCEPTION();" + NL + "      }" + NL + "" + NL + "      RETURN CHANNEL;" + NL
+        + "    }" + NL + "    CATCH (INDEXOUTOFBOUNDSEXCEPTION EX)" + NL + "    {" + NL
+        + "      IOUTIL.OUT().PRINTLN(TOSTRING() + \": INVALID CHANNELINDEX \" + CHANNELINDEX);" + NL
+        + "      RETURN NULL;" + NL + "    }" + NL + "  }" + NL + "" + NL
+        + "  PROTECTED LIST<BUFFERQUEUE> GETCHANNELBUFFERQUEUES()" + NL + "  {" + NL
+        + "    FINAL LIST<BUFFERQUEUE> RESULT = NEW ARRAYLIST<BUFFERQUEUE>();" + NL + "    SYNCHRONIZED (CHANNELS)"
+        + NL + "    {" + NL + "      FOR (FINAL CHANNELIMPL CHANNEL : CHANNELS)" + NL + "      {" + NL
+        + "        IF (CHANNEL != NULL_CHANNEL)" + NL + "        {" + NL
+        + "          BUFFERQUEUE BUFFERQUEUE = CHANNEL.GETSENDQUEUE();" + NL + "          RESULT.ADD(BUFFERQUEUE);"
+        + NL + "        }" + NL + "      }" + NL + "    }" + NL + "" + NL + "    RETURN RESULT;" + NL + "  }" + NL + ""
+        + NL + "  PROTECTED SHORT FINDFREECHANNELINDEX()" + NL + "  {" + NL + "    SYNCHRONIZED (CHANNELS)" + NL
+        + "    {" + NL + "      INT SIZE = CHANNELS.SIZE();" + NL + "      FOR (SHORT I = 0; I < SIZE; I++)" + NL
+        + "      {" + NL + "        IF (CHANNELS.GET(I) == NULL_CHANNEL)" + NL + "        {" + NL
+        + "          RETURN I;" + NL + "        }" + NL + "      }" + NL + "" + NL
+        + "      CHANNELS.ADD(NULL_CHANNEL);" + NL + "      RETURN (SHORT)SIZE;" + NL + "    }" + NL + "  }" + NL + ""
+        + NL + "  PROTECTED VOID ADDCHANNEL(CHANNELIMPL CHANNEL)" + NL + "  {" + NL
+        + "    SHORT CHANNELINDEX = CHANNEL.GETCHANNELINDEX();" + NL + "    WHILE (CHANNELINDEX >= CHANNELS.SIZE())"
+        + NL + "    {" + NL + "      CHANNELS.ADD(NULL_CHANNEL);" + NL + "    }" + NL + "" + NL
+        + "    CHANNELS.SET(CHANNELINDEX, CHANNEL);" + NL + "  }" + NL + "" + NL
+        + "  PROTECTED VOID REMOVECHANNEL(CHANNELIMPL CHANNEL)" + NL + "  {" + NL
+        + "    CHANNEL.REMOVELIFECYCLELISTENER(CHANNELLIFECYCLELISTENER);" + NL
+        + "    INT CHANNELINDEX = CHANNEL.GETCHANNELINDEX();" + NL + "" + NL
+        + "    IOUTIL.OUT().PRINTLN(TOSTRING() + \": REMOVING CHANNEL \" + CHANNELINDEX);" + NL
+        + "    CHANNELS.SET(CHANNELINDEX, NULL_CHANNEL);" + NL + "  }" + NL + "" + NL
+        + "  PROTECTED PROTOCOL CREATEPROTOCOL(STRING PROTOCOLID)" + NL + "  {" + NL
+        + "    IF (PROTOCOLID == NULL || PROTOCOLID.LENGTH() == 0)" + NL + "    {" + NL + "      RETURN NULL;" + NL
+        + "    }" + NL + "" + NL + "    IREGISTRY<STRING, PROTOCOLFACTORY> REGISTRY = GETPROTOCOLFACTORYREGISTRY();"
+        + NL + "    IF (REGISTRY == NULL)" + NL + "    {" + NL + "      RETURN NULL;" + NL + "    }" + NL + "" + NL
+        + "    PROTOCOLFACTORY FACTORY = REGISTRY.LOOKUP(PROTOCOLID);" + NL + "    IF (FACTORY == NULL)" + NL + "    {"
+        + NL + "      RETURN NULL;" + NL + "    }" + NL + "" + NL
+        + "    IOUTIL.OUT().PRINTLN(TOSTRING() + \": CREATING PROTOCOL \" + PROTOCOLID);" + NL
+        + "    RETURN FACTORY.CREATEPROTOCOL();" + NL + "  }" + NL + "" + NL
+        + "  PROTECTED VOID FIRECHANNELOPENED(CHANNEL CHANNEL)" + NL + "  {" + NL
+        + "    FOR (CHANNELLISTENER LISTENER : CHANNELLISTENERS)" + NL + "    {" + NL + "      TRY" + NL + "      {"
+        + NL + "        LISTENER.NOTIFYCHANNELOPENED(CHANNEL);" + NL + "      }" + NL + "      CATCH (EXCEPTION EX)"
+        + NL + "      {" + NL + "        EX.PRINTSTACKTRACE();" + NL + "      }" + NL + "    }" + NL + "  }" + NL + ""
+        + NL + "  PROTECTED VOID FIRECHANNELCLOSING(CHANNEL CHANNEL)" + NL + "  {" + NL
+        + "    FOR (CHANNELLISTENER LISTENER : CHANNELLISTENERS)" + NL + "    {" + NL + "      TRY" + NL + "      {"
+        + NL + "        LISTENER.NOTIFYCHANNELCLOSING(CHANNEL);" + NL + "      }" + NL + "      CATCH (EXCEPTION EX)"
+        + NL + "      {" + NL + "        EX.PRINTSTACKTRACE();" + NL + "      }" + NL + "    }" + NL + "  }" + NL + ""
+        + NL + "  PROTECTED VOID FIRESTATECHANGED(STATE NEWSTATE, STATE OLDSTATE)" + NL + "  {" + NL
+        + "    FOR (STATELISTENER LISTENER : STATELISTENERS)" + NL + "    {" + NL + "      TRY" + NL + "      {" + NL
+        + "        LISTENER.NOTIFYSTATECHANGED(THIS, NEWSTATE, OLDSTATE);" + NL + "      }" + NL
+        + "      CATCH (EXCEPTION EX)" + NL + "      {" + NL + "        EX.PRINTSTACKTRACE();" + NL + "      }" + NL
+        + "    }" + NL + "  }" + NL + "" + NL + "  @OVERRIDE" + NL
+        + "  PROTECTED VOID ONACCESSBEFOREACTIVATE() THROWS EXCEPTION" + NL + "  {" + NL
+        + "    SUPER.ONACCESSBEFOREACTIVATE();" + NL + "    IF (BUFFERPROVIDER == NULL)" + NL + "    {" + NL
+        + "      THROW NEW ILLEGALSTATEEXCEPTION(\"BUFFERPROVIDER == NULL\");" + NL + "    }" + NL + "" + NL
+        + "    IF (PROTOCOLFACTORYREGISTRY == NULL)" + NL + "    {" + NL
+        + "      IOUTIL.OUT().PRINTLN(TOSTRING() + \": (INFO) PROTOCOLFACTORYREGISTRY == NULL\");" + NL + "    }" + NL
+        + "" + NL + "    IF (RECEIVEEXECUTOR == NULL)" + NL + "    {" + NL
+        + "      IOUTIL.OUT().PRINTLN(TOSTRING() + \": (INFO) RECEIVEEXECUTOR == NULL\");" + NL + "    }" + NL + "  }"
+        + NL + "" + NL + "  @OVERRIDE" + NL + "  PROTECTED VOID ONACTIVATE() THROWS EXCEPTION" + NL + "  {" + NL
+        + "    SUPER.ONACTIVATE();" + NL + "    SETSTATE(STATE.CONNECTING);" + NL + "  }" + NL + "" + NL
+        + "  @OVERRIDE" + NL + "  PROTECTED VOID ONDEACTIVATE() THROWS EXCEPTION" + NL + "  {" + NL
+        + "    SETSTATE(STATE.DISCONNECTED);" + NL + "    FOR (SHORT I = 0; I < CHANNELS.SIZE(); I++)" + NL + "    {"
+        + NL + "      CHANNELIMPL CHANNEL = CHANNELS.GET(I);" + NL + "      IF (CHANNEL != NULL)" + NL + "      {" + NL
+        + "        LIFECYCLEUTIL.DEACTIVATE(CHANNEL);" + NL + "      }" + NL + "    }" + NL + "" + NL
+        + "    CHANNELS.CLEAR();" + NL + "    SUPER.ONDEACTIVATE();" + NL + "  }" + NL + "" + NL
+        + "  PROTECTED ABSTRACT VOID REGISTERCHANNELWITHPEER(SHORT CHANNELINDEX, STRING PROTOCOLID)" + NL
+        + "      THROWS CONNECTOREXCEPTION;" + NL + "" + NL + "  /**" + NL
+        + "   * IS REGISTERED WITH EACH {@LINK CHANNEL} OF THIS {@LINK CONNECTOR}." + NL + "   * <P>" + NL + "   * "
+        + NL + "   * @AUTHOR EIKE STEPPER" + NL + "   */" + NL
+        + "  PRIVATE FINAL CLASS CHANNELLIFECYCLELISTENER IMPLEMENTS LIFECYCLELISTENER" + NL + "  {" + NL
+        + "    PUBLIC VOID NOTIFYLIFECYCLEACTIVATED(LIFECYCLENOTIFIER NOTIFIER)" + NL + "    {" + NL
+        + "      CHANNELIMPL CHANNEL = (CHANNELIMPL)NOTIFIER;" + NL + "      FIRECHANNELOPENED(CHANNEL);" + NL
+        + "    }" + NL + "" + NL + "    PUBLIC VOID NOTIFYLIFECYCLEDEACTIVATING(LIFECYCLENOTIFIER NOTIFIER)" + NL
+        + "    {" + NL + "      CHANNELIMPL CHANNEL = (CHANNELIMPL)NOTIFIER;" + NL
+        + "      FIRECHANNELCLOSING(CHANNEL);" + NL + "      REMOVECHANNEL(CHANNEL);" + NL + "    }" + NL + "  }" + NL
         + "}" + NL;
   }
 }

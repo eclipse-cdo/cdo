@@ -76,25 +76,25 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
     switch (eClass.getClassifierID())
     {
     case Model1Package.ADDRESS:
-      return createAddress();
+      return (EObject)createAddress();
     case Model1Package.COMPANY:
-      return createCompany();
+      return (EObject)createCompany();
     case Model1Package.SUPPLIER:
-      return createSupplier();
+      return (EObject)createSupplier();
     case Model1Package.CUSTOMER:
-      return createCustomer();
+      return (EObject)createCustomer();
     case Model1Package.ORDER:
-      return createOrder();
+      return (EObject)createOrder();
     case Model1Package.ORDER_DETAIL:
-      return createOrderDetail();
+      return (EObject)createOrderDetail();
     case Model1Package.PURCHASE_ORDER:
-      return createPurchaseOrder();
+      return (EObject)createPurchaseOrder();
     case Model1Package.SALES_ORDER:
-      return createSalesOrder();
+      return (EObject)createSalesOrder();
     case Model1Package.CATEGORY:
-      return createCategory();
+      return (EObject)createCategory();
     case Model1Package.PRODUCT:
-      return createProduct();
+      return (EObject)createProduct();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

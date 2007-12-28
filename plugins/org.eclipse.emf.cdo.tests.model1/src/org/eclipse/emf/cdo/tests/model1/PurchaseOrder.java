@@ -53,7 +53,8 @@ public interface PurchaseOrder extends Order
   void setDate(Date value);
 
   /**
-   * Returns the value of the '<em><b>Supplier</b></em>' reference. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Supplier</b></em>' reference. It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.Supplier#getPurchaseOrders <em>Purchase Orders</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Supplier</em>' reference isn't clear, there really should be more of a description
    * here...
@@ -63,7 +64,8 @@ public interface PurchaseOrder extends Order
    * @return the value of the '<em>Supplier</em>' reference.
    * @see #setSupplier(Supplier)
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getPurchaseOrder_Supplier()
-   * @model
+   * @see org.eclipse.emf.cdo.tests.model1.Supplier#getPurchaseOrders
+   * @model opposite="purchaseOrders" required="true"
    * @generated
    */
   Supplier getSupplier();

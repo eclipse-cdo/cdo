@@ -70,7 +70,7 @@ public interface Company extends Address
    * 
    * @return the value of the '<em>Purchase Orders</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_PurchaseOrders()
-   * @model type="org.eclipse.emf.cdo.tests.model1.PurchaseOrder" containment="true"
+   * @model containment="true"
    * @generated
    */
   EList<PurchaseOrder> getPurchaseOrders();

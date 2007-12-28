@@ -20,11 +20,11 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class Request1 extends RequestWithConfirmation<Integer>
+public class StringRequest extends RequestWithConfirmation<String>
 {
-  private int data;
+  private String data;
 
-  public Request1(IChannel channel, int data)
+  public StringRequest(IChannel channel, String data)
   {
     super(channel);
     this.data = data;
@@ -33,18 +33,18 @@ public class Request1 extends RequestWithConfirmation<Integer>
   @Override
   protected short getSignalID()
   {
-    return TestSignalProtocol.SIGNAL1;
+    return TestSignalProtocol.SIGNAL_STRING;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    out.writeInt(data);
+    out.writeString(data);
   }
 
   @Override
-  protected Integer confirming(ExtendedDataInputStream in) throws IOException
+  protected String confirming(ExtendedDataInputStream in) throws IOException
   {
-    return in.readInt();
+    return in.readString();
   }
 }

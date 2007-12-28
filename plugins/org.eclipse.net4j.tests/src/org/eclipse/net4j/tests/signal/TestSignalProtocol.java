@@ -20,11 +20,15 @@ public class TestSignalProtocol extends SignalProtocol
 {
   public static final String PROTOCOL_NAME = "signal.protocol";
 
-  public static final short SIGNAL1 = 1;
+  public static final short SIGNAL_INT = 1;
 
-  public static final short SIGNAL2 = 2;
+  public static final short SIGNAL_INT_FAIL = 2;
 
-  public static final short SIGNAL3 = 3;
+  public static final short SIGNAL_ARRAY = 3;
+
+  public static final short SIGNAL_STRING = 4;
+
+  public static final short SIGNAL_ASYNC = 5;
 
   public TestSignalProtocol()
   {
@@ -40,12 +44,16 @@ public class TestSignalProtocol extends SignalProtocol
   {
     switch (signalID)
     {
-    case SIGNAL1:
-      return new Indication1();
-    case SIGNAL2:
-      return new Indication2();
-    case SIGNAL3:
-      return new Indication3();
+    case SIGNAL_INT:
+      return new IntIndication();
+    case SIGNAL_INT_FAIL:
+      return new IntFailIndication();
+    case SIGNAL_ARRAY:
+      return new ArrayIndication();
+    case SIGNAL_STRING:
+      return new StringIndication();
+    case SIGNAL_ASYNC:
+      return new AsyncIndication();
     }
     return null;
   }

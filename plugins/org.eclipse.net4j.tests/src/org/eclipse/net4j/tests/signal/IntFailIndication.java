@@ -10,8 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.tests.signal;
 
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -20,31 +19,34 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class Request2 extends RequestWithConfirmation<byte[]>
+public class IntFailIndication extends IndicationWithResponse
 {
-  private byte[] data;
+  private int data;
 
-  public Request2(IChannel channel, byte[] data)
+  public IntFailIndication()
   {
-    super(channel);
-    this.data = data;
+  }
+
+  public int getData()
+  {
+    return data;
   }
 
   @Override
   protected short getSignalID()
   {
-    return TestSignalProtocol.SIGNAL2;
+    return TestSignalProtocol.SIGNAL_INT_FAIL;
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    out.writeByteArray(data);
+    data = in.readInt();
   }
 
   @Override
-  protected byte[] confirming(ExtendedDataInputStream in) throws IOException
+  protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    return in.readByteArray();
+    getProtocol().deactivate();
   }
 }

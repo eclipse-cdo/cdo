@@ -8,34 +8,36 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.tests;
+package org.eclipse.net4j.tests.signal;
 
-import java.util.StringTokenizer;
+import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+
+import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public final class TinyData
+public class AsyncRequest extends Request
 {
-  public static final String NL = System.getProperty("line.separator");
+  private String data;
 
-  public static StringTokenizer getTokenizer()
+  public AsyncRequest(IChannel channel, String data)
   {
-    return new StringTokenizer(getText(), NL);
+    super(channel);
+    this.data = data;
   }
 
-  public static String[] getArray()
+  @Override
+  protected short getSignalID()
   {
-    return getText().split(NL);
+    return TestSignalProtocol.SIGNAL_ASYNC;
   }
 
-  public static byte[] getBytes()
+  @Override
+  protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    return getText().getBytes();
-  }
-
-  public static String getText()
-  {
-    return "COPYRIGHT (C) 2004 - 2008 EIKE STEPPER, GERMANY. ALL RIGHTS RESERVED.";
+    out.writeString(data);
   }
 }

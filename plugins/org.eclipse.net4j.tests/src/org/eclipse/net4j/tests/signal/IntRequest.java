@@ -10,7 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.tests.signal;
 
-import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -19,25 +20,31 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class Indication1 extends IndicationWithResponse
+public class IntRequest extends RequestWithConfirmation<Integer>
 {
   private int data;
+
+  public IntRequest(IChannel channel, int data)
+  {
+    super(channel);
+    this.data = data;
+  }
 
   @Override
   protected short getSignalID()
   {
-    return TestSignalProtocol.SIGNAL1;
+    return TestSignalProtocol.SIGNAL_INT;
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
-  {
-    data = in.readInt();
-  }
-
-  @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
     out.writeInt(data);
+  }
+
+  @Override
+  protected Integer confirming(ExtendedDataInputStream in) throws IOException
+  {
+    return in.readInt();
   }
 }

@@ -13,8 +13,8 @@ package org.eclipse.net4j.tests;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.signal.FailOverStrategy;
 import org.eclipse.net4j.signal.IFailOverStrategy;
-import org.eclipse.net4j.tests.signal.Request1;
-import org.eclipse.net4j.tests.signal.Request3;
+import org.eclipse.net4j.tests.signal.IntRequest;
+import org.eclipse.net4j.tests.signal.IntFailRequest;
 import org.eclipse.net4j.tests.signal.TestSignalClientProtocolFactory;
 import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -45,7 +45,7 @@ public class FailOverTest extends AbstractTransportTest
     IFailOverStrategy failOverStrategy = new FailOverStrategy();
 
     // Exception HERE
-    Request1 request = new Request1(channel, data);
+    IntRequest request = new IntRequest(channel, data);
 
     int result = failOverStrategy.send(request);
     assertEquals(data, result);
@@ -60,7 +60,7 @@ public class FailOverTest extends AbstractTransportTest
     IFailOverStrategy failOverStrategy = new FailOverStrategy();
 
     // Exception HERE
-    Request1 request = new Request1(channel, data);
+    IntRequest request = new IntRequest(channel, data);
 
     // Simulate a disconnect from the server.
     getAcceptor().deactivate();
@@ -78,7 +78,7 @@ public class FailOverTest extends AbstractTransportTest
     IFailOverStrategy failOverStrategy = new FailOverStrategy();
 
     // Exception HERE
-    Request3 request = new Request3(channel, data);
+    IntFailRequest request = new IntFailRequest(channel, data);
 
     int result = failOverStrategy.send(request, 1000);
     assertEquals(data, result);

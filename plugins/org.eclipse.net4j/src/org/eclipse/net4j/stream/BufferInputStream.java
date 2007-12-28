@@ -109,27 +109,28 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     {
       if (timeout == NO_TIMEOUT)
       {
+        // System.out.println("while (currentBuffer == null)");
         while (currentBuffer == null)
         {
           if (buffers == null)
           {
-            // Stream has been closed
+            // Stream has been closed - shutting down
             return false;
           }
 
+          // System.out.println("buffers.poll");
           currentBuffer = buffers.poll(check, TimeUnit.MILLISECONDS);
         }
       }
       else
       {
-        // TODO Consider something faster than currentTimeMillis(), maybe less
-        // accurate?
+        // TODO Consider something faster than currentTimeMillis(), maybe less accurate?
         final long stop = System.currentTimeMillis() + timeout;
         while (currentBuffer == null)
         {
           if (buffers == null)
           {
-            // Stream has been closed - shutting sown
+            // Stream has been closed - shutting down
             return false;
           }
 

@@ -19,34 +19,25 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class Indication3 extends IndicationWithResponse
+public class ArrayIndication extends IndicationWithResponse
 {
-  private int data;
-
-  public Indication3()
-  {
-  }
-
-  public int getData()
-  {
-    return data;
-  }
+  private byte[] data;
 
   @Override
   protected short getSignalID()
   {
-    return TestSignalProtocol.SIGNAL3;
+    return TestSignalProtocol.SIGNAL_ARRAY;
   }
 
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    data = in.readInt();
+    data = in.readByteArray();
   }
 
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    getProtocol().deactivate();
+    out.writeByteArray(data);
   }
 }

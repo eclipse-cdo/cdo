@@ -183,7 +183,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting userID {0} for {2}", userID, this); //$NON-NLS-1$ 
+      TRACER.format("Setting userID {0} for {1}", userID, this); //$NON-NLS-1$ 
     }
 
     this.userID = userID;

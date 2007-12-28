@@ -10,41 +10,32 @@
  **************************************************************************/
 package org.eclipse.net4j.tests.signal;
 
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class Request3 extends RequestWithConfirmation<Integer>
+public class AsyncIndication extends Indication
 {
-  private int data;
-
-  public Request3(IChannel channel, int data)
-  {
-    super(channel);
-    this.data = data;
-  }
+  private String data;
 
   @Override
   protected short getSignalID()
   {
-    return TestSignalProtocol.SIGNAL3;
+    return TestSignalProtocol.SIGNAL_ASYNC;
+  }
+
+  public String getData()
+  {
+    return data;
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    out.writeInt(data);
-  }
-
-  @Override
-  protected Integer confirming(ExtendedDataInputStream in) throws IOException
-  {
-    return in.readInt();
+    data = in.readString();
   }
 }

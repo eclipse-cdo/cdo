@@ -99,75 +99,120 @@ public class Model1Switch<T>
     {
       Address address = (Address)theEObject;
       T result = caseAddress(address);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.COMPANY:
     {
       Company company = (Company)theEObject;
       T result = caseCompany(company);
-      if (result == null) result = caseAddress(company);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseAddress(company);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.SUPPLIER:
     {
       Supplier supplier = (Supplier)theEObject;
       T result = caseSupplier(supplier);
-      if (result == null) result = caseAddress(supplier);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseAddress(supplier);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.CUSTOMER:
     {
       Customer customer = (Customer)theEObject;
       T result = caseCustomer(customer);
-      if (result == null) result = caseAddress(customer);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseAddress(customer);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.ORDER:
     {
       Order order = (Order)theEObject;
       T result = caseOrder(order);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.ORDER_DETAIL:
     {
       OrderDetail orderDetail = (OrderDetail)theEObject;
       T result = caseOrderDetail(orderDetail);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.PURCHASE_ORDER:
     {
       PurchaseOrder purchaseOrder = (PurchaseOrder)theEObject;
       T result = casePurchaseOrder(purchaseOrder);
-      if (result == null) result = caseOrder(purchaseOrder);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseOrder(purchaseOrder);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.SALES_ORDER:
     {
       SalesOrder salesOrder = (SalesOrder)theEObject;
       T result = caseSalesOrder(salesOrder);
-      if (result == null) result = caseOrder(salesOrder);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseOrder(salesOrder);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.CATEGORY:
     {
       Category category = (Category)theEObject;
       T result = caseCategory(category);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model1Package.PRODUCT:
     {
       Product product = (Product)theEObject;
       T result = caseProduct(product);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

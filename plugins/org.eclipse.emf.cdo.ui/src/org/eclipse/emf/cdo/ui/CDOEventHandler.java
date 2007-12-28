@@ -156,7 +156,7 @@ public class CDOEventHandler
 
   public void setViewer(TreeViewer viewer)
   {
-    this.treeViewer = viewer;
+    treeViewer = viewer;
   }
 
   protected void sessionInvalidated(Set<CDOID> dirtyOIDs)

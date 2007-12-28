@@ -68,7 +68,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Eike Stepper
  */
 public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier implements CDOView, CDOIDProvider,
-    Adapter.Internal
+Adapter.Internal
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 

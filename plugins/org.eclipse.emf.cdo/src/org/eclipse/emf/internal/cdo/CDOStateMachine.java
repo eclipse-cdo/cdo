@@ -370,7 +370,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * @author Eike Stepper
    */
   private final class CommitTransition implements
-      ITransition<CDOState, CDOEvent, InternalCDOObject, CommitTransactionResult>
+  ITransition<CDOState, CDOEvent, InternalCDOObject, CommitTransactionResult>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CommitTransactionResult data)
     {
@@ -539,7 +539,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * @author Eike Stepper
    */
   private final class LoadResourceTransition implements
-      ITransition<CDOState, CDOEvent, InternalCDOObject, ResourceAndView>
+  ITransition<CDOState, CDOEvent, InternalCDOObject, ResourceAndView>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, ResourceAndView data)
     {

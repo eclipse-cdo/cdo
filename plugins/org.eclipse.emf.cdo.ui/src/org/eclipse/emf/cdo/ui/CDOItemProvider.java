@@ -318,12 +318,12 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     Set<Map.Entry<String, CDOPackageType>> entrySet = CDOUtil.getPackageTypes().entrySet();
     List<Map.Entry<String, CDOPackageType>> entryList = new ArrayList<Map.Entry<String, CDOPackageType>>(entrySet);
     Collections.sort(entryList, new Comparator<Map.Entry<String, CDOPackageType>>()
-    {
+        {
       public int compare(Map.Entry<String, CDOPackageType> e1, Map.Entry<String, CDOPackageType> e2)
       {
         return e1.getKey().compareTo(e2.getKey());
       }
-    });
+        });
 
     Set<String> registeredURIs = new HashSet<String>(session.getPackageRegistry().keySet());
     boolean added = false;

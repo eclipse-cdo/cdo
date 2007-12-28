@@ -136,7 +136,7 @@ public final class CDOUtil
 
   public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects,
       EPackage.Registry delegate, IFailOverStrategy failOverStrategy) throws ConnectorException
-  {
+      {
     CDOSessionImpl session = new CDOSessionImpl(delegate);
     session.setFailOverStrategy(failOverStrategy);
     session.setConnector(connector);
@@ -144,10 +144,10 @@ public final class CDOUtil
     session.setDisableLegacyObjects(disableLegacyObjects);
     LifecycleUtil.activate(session);
     return session;
-  }
+      }
 
   public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects)
-      throws ConnectorException
+  throws ConnectorException
   {
     return openSession(connector, repositoryName, disableLegacyObjects, null, null);
   }

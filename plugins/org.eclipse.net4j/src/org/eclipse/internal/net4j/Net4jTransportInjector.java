@@ -14,6 +14,11 @@ import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.security.INegotiator;
 
+import org.eclipse.internal.net4j.acceptor.Acceptor;
+import org.eclipse.internal.net4j.buffer.BufferProvider;
+import org.eclipse.internal.net4j.buffer.BufferProviderFactory;
+import org.eclipse.internal.net4j.connector.Connector;
+
 import java.util.concurrent.ExecutorService;
 
 /**

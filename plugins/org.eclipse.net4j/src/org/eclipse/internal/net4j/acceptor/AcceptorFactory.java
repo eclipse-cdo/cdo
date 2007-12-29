@@ -8,18 +8,18 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j;
+package org.eclipse.internal.net4j.acceptor;
 
 import org.eclipse.net4j.internal.util.factory.Factory;
 
 /**
  * @author Eike Stepper
  */
-public abstract class ClientProtocolFactory extends Factory
+public abstract class AcceptorFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.clientProtocols";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.acceptors";
 
-  public ClientProtocolFactory(String type)
+  public AcceptorFactory(String type)
   {
     super(PRODUCT_GROUP, type);
   }

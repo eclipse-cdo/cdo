@@ -16,7 +16,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 /**
  * @author Eike Stepper
  */
-public final class ClientProtocolFactory extends org.eclipse.internal.net4j.ClientProtocolFactory
+public final class ClientProtocolFactory extends org.eclipse.internal.net4j.protocol.ClientProtocolFactory
 {
   public static final String TYPE = ProtocolConstants.PROTOCOL_NAME;
 

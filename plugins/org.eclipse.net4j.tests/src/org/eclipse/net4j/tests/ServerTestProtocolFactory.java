@@ -12,7 +12,7 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
-import org.eclipse.internal.net4j.ServerProtocolFactory;
+import org.eclipse.internal.net4j.protocol.ServerProtocolFactory;
 
 import java.util.concurrent.CountDownLatch;
 

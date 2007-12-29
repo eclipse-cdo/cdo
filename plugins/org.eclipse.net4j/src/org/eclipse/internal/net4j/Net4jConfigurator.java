@@ -16,6 +16,8 @@ import org.eclipse.net4j.internal.util.security.NegotiatorFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.security.INegotiator;
 
+import org.eclipse.internal.net4j.acceptor.Acceptor;
+import org.eclipse.internal.net4j.acceptor.AcceptorFactory;
 import org.eclipse.internal.net4j.bundle.OM;
 
 import org.eclipse.core.runtime.CoreException;

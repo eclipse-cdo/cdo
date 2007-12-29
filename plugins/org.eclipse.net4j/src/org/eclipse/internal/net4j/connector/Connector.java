@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j;
+package org.eclipse.internal.net4j.connector;
 
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
@@ -43,6 +43,9 @@ import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.INegotiator;
 
 import org.eclipse.internal.net4j.bundle.OM;
+import org.eclipse.internal.net4j.channel.Channel;
+import org.eclipse.internal.net4j.protocol.ClientProtocolFactory;
+import org.eclipse.internal.net4j.protocol.ServerProtocolFactory;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;

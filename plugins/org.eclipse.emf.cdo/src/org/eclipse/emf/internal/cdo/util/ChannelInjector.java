@@ -17,7 +17,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
-import org.eclipse.internal.net4j.ConnectorFactory;
+import org.eclipse.internal.net4j.connector.ConnectorFactory;
 
 import org.eclipse.emf.common.util.URI;
 

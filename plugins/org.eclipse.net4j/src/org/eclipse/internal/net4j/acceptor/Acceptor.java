@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j;
+package org.eclipse.internal.net4j.acceptor;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.buffer.IBufferProvider;
@@ -28,6 +28,7 @@ import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.INegotiator;
 
 import org.eclipse.internal.net4j.bundle.OM;
+import org.eclipse.internal.net4j.connector.Connector;
 
 import java.util.HashSet;
 import java.util.List;

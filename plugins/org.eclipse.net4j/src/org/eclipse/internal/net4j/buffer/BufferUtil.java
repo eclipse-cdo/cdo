@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j;
+package org.eclipse.internal.net4j.buffer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

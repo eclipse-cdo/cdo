@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j;
+package org.eclipse.internal.net4j.channel;
 
 import org.eclipse.net4j.buffer.BufferState;
 import org.eclipse.net4j.buffer.IBuffer;
@@ -23,6 +23,7 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.internal.net4j.buffer.Buffer;
 import org.eclipse.internal.net4j.bundle.OM;
 
 import java.text.MessageFormat;

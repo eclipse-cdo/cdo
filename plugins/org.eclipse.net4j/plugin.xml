@@ -24,7 +24,7 @@
             productGroup="org.eclipse.net4j.executorServices"
             type="default"/>
       <factory
-            class="org.eclipse.internal.net4j.BufferProviderFactory"
+            class="org.eclipse.internal.net4j.buffer.BufferProviderFactory"
             productGroup="org.eclipse.net4j.bufferProviders"
             type="default"/>
    </extension>

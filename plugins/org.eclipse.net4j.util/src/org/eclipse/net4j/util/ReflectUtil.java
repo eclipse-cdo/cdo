@@ -336,6 +336,7 @@ public final class ReflectUtil
     out.print(toString(object, prefix));
   }
 
+  @SuppressWarnings("unchecked")
   public static Pair<Field, Object>[] dumpToArray(Object object)
   {
     List<Field> fields = new ArrayList<Field>();

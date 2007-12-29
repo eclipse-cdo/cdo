@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.server;
 
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IProtocol;
 import org.eclipse.net4j.buddies.internal.protocol.Account;
 import org.eclipse.net4j.buddies.internal.protocol.Buddy;
 import org.eclipse.net4j.buddies.internal.protocol.BuddyStateNotification;
@@ -28,7 +26,9 @@ import org.eclipse.net4j.buddies.protocol.IBuddyStateEvent;
 import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;

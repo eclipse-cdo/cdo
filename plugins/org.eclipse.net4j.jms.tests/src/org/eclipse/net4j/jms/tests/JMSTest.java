@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.jms.tests;
 
-import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.internal.derby.DerbyAdapter;
 import org.eclipse.net4j.internal.util.container.ManagedContainer;

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.jms.internal.server;
 
-import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.jms.MessageImpl;
 import org.eclipse.net4j.jms.internal.server.bundle.OM;
 import org.eclipse.net4j.jms.internal.server.protocol.JMSServerMessageRequest;

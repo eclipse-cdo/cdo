@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
-import org.eclipse.net4j.IBuffer;
-import org.eclipse.net4j.IBufferProvider;
+import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 
 /**

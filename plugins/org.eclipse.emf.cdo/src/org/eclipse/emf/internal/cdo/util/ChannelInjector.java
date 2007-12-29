@@ -12,7 +12,7 @@ package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 
-import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;

@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.ui.views;
 
-import org.eclipse.net4j.IAcceptor;
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;

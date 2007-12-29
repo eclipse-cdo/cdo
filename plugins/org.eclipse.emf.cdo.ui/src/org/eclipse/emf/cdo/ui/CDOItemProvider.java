@@ -39,7 +39,7 @@ import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;

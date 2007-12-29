@@ -27,8 +27,8 @@ import org.eclipse.emf.internal.cdo.LegacyObjectDisabler;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
-import org.eclipse.net4j.ConnectorException;
-import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.connector.ConnectorException;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;

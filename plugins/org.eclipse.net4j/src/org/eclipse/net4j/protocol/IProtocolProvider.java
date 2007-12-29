@@ -8,22 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
+package org.eclipse.net4j.protocol;
+
+import org.eclipse.net4j.channel.IChannel;
 
 /**
- * An event that is fired by an {@link IConnector} to indicate that its state has changed.
- * 
  * @author Eike Stepper
  */
-public interface IConnectorStateEvent extends IConnectorEvent
+public interface IProtocolProvider
 {
-  /**
-   * The old state of the {@link IConnector} that sent this event.
-   */
-  public ConnectorState getOldState();
+  public IProtocol getClientProtocol(String type, IChannel channel);
 
-  /**
-   * The new state of the {@link IConnector} that sent this event.
-   */
-  public ConnectorState getNewState();
+  public IProtocol getServerProtocol(String type, IChannel channel);
 }

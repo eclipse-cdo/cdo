@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui;
 
-import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buddies.BuddiesUtil;
 import org.eclipse.net4j.buddies.IBuddySession;
@@ -18,6 +17,7 @@ import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.ui.ISessionManager;
 import org.eclipse.net4j.buddies.ui.ISessionManagerEvent;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;

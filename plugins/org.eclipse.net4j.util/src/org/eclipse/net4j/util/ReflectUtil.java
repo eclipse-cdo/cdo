@@ -318,7 +318,7 @@ public final class ReflectUtil
       return null;
     }
 
-    return getSimpleClassName(object) + "@" + getID(object); //$NON-NLS-1$
+    return object.getClass().getSimpleName() + "@" + getID(object); //$NON-NLS-1$
   }
 
   public static void dump(Object object)

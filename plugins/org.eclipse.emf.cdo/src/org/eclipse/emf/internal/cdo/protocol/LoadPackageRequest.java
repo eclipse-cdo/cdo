@@ -13,7 +13,7 @@ package org.eclipse.emf.internal.cdo.protocol;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
-import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 

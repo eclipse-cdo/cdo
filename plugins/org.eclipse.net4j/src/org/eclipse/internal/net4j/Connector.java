@@ -10,21 +10,21 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
-import org.eclipse.net4j.ConnectorException;
-import org.eclipse.net4j.ConnectorLocation;
-import org.eclipse.net4j.ConnectorState;
-import org.eclipse.net4j.IBuffer;
-import org.eclipse.net4j.IBufferProvider;
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IChannelMultiplexer;
-import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.IConnectorStateEvent;
-import org.eclipse.net4j.IProtocol;
+import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.channel.IChannelMultiplexer;
+import org.eclipse.net4j.connector.ConnectorException;
+import org.eclipse.net4j.connector.ConnectorLocation;
+import org.eclipse.net4j.connector.ConnectorState;
+import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.connector.IConnectorStateEvent;
 import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.internal.util.container.LifecycleEventConverter;
 import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.factory.FactoryKey;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.RWLock;

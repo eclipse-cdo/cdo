@@ -8,20 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
+package org.eclipse.net4j.channel;
 
 /**
  * @author Eike Stepper
  */
-public interface IProtocol extends IBufferHandler
+public interface IChannelMultiplexer
 {
-  public String getType();
+  public void multiplexChannel(IChannel channel);
 
-  public IChannel getChannel();
-
-  public void setChannel(IChannel channel);
-
-  public Object getInfraStructure();
-
-  public void setInfraStructure(Object infraStructure);
+  public boolean removeChannel(IChannel channel);
 }

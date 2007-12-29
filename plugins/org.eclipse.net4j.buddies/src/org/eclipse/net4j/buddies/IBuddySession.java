@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies;
 
-import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IBuddyContainer;
 import org.eclipse.net4j.buddies.protocol.ISession;
+import org.eclipse.net4j.channel.IChannel;
 
 /**
  * @author Eike Stepper

@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies;
 
-import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.internal.protocol.ClientFacilityFactory;
@@ -22,6 +21,7 @@ import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
 import org.eclipse.net4j.buddies.protocol.IFacility;
 import org.eclipse.net4j.buddies.protocol.IMessage;
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.buddies.protocol.InstallFacilityRequest;
 import org.eclipse.net4j.internal.buddies.protocol.InviteBuddiesNotification;
 import org.eclipse.net4j.util.WrappedException;

@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 
-import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.connector.IConnector;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.PlatformObject;

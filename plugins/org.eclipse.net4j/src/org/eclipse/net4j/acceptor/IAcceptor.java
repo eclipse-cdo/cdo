@@ -8,8 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
+package org.eclipse.net4j.acceptor;
 
+import org.eclipse.net4j.connector.ConnectorLocation;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.factory.IFactory;

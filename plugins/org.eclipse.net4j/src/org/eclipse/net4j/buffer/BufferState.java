@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
+package org.eclipse.net4j.buffer;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;

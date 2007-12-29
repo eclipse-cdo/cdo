@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.server;
 
-import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.buddies.internal.server.BuddyAdmin;
 import org.eclipse.net4j.buddies.protocol.IAccount;
 import org.eclipse.net4j.buddies.protocol.IBuddy;
@@ -19,6 +18,7 @@ import org.eclipse.net4j.buddies.protocol.ICollaboration;
 import org.eclipse.net4j.buddies.protocol.ICollaborationContainer;
 import org.eclipse.net4j.buddies.protocol.ISession;
 import org.eclipse.net4j.buddies.protocol.ISessionProvider;
+import org.eclipse.net4j.channel.IChannel;
 
 import java.util.Map;
 

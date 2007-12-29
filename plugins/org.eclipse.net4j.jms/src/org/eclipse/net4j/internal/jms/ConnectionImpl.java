@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jms;
 
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.jms.bundle.OM;
 import org.eclipse.net4j.internal.jms.protocol.JMSClientProtocol;
 import org.eclipse.net4j.internal.jms.protocol.JMSLogonRequest;

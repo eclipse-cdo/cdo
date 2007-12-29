@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.jms.admin;
 
-import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jms.internal.admin.JMSAdmin;
 import org.eclipse.net4j.jms.internal.admin.protocol.JMSAdminProtocolFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;

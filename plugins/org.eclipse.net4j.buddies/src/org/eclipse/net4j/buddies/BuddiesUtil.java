@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies;
 
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.buddies.internal.protocol.ClientFacilityFactory;
 import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.buddies.protocol.OpenSessionRequest;
 import org.eclipse.net4j.signal.SignalActor;
 import org.eclipse.net4j.util.WrappedException;

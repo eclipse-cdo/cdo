@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.stream;
 
-import org.eclipse.net4j.IBuffer;
-import org.eclipse.net4j.IBufferHandler;
-import org.eclipse.net4j.IBufferProvider;
+import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.buffer.IBufferHandler;
+import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;

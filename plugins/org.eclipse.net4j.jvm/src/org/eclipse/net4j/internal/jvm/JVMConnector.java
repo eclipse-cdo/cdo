@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jvm;
 
-import org.eclipse.net4j.ConnectorException;
-import org.eclipse.net4j.IBuffer;
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IProtocol;
+import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.ConnectorException;
+import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
 import org.eclipse.internal.net4j.Channel;

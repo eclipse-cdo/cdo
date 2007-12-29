@@ -8,7 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
+package org.eclipse.net4j.connector;
+
+import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.protocol.IProtocol;
 
 /**
  * Enumerates the roles that an {@link IConnector} can play during the establishment of a physical connection.

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
-import org.eclipse.net4j.IAcceptor;
+import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.internal.util.security.NegotiatorFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;

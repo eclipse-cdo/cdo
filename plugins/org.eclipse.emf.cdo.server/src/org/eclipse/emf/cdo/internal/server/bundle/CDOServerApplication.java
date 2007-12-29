@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.internal.server.bundle;
 import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.server.IRepository;
 
-import org.eclipse.net4j.IAcceptor;
+import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;

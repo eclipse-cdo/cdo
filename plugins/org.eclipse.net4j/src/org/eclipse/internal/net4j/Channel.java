@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
-import org.eclipse.net4j.BufferState;
-import org.eclipse.net4j.IBuffer;
-import org.eclipse.net4j.IBufferHandler;
-import org.eclipse.net4j.IBufferProvider;
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IChannelMultiplexer;
+import org.eclipse.net4j.buffer.BufferState;
+import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.buffer.IBufferHandler;
+import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.internal.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.internal.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;

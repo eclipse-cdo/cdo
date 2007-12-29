@@ -10,6 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j;
 
+import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.buffer.IBufferPool;
+import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.util.security.RandomizerFactory;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;

@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.IBufferPool;
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.buffer.IBufferPool;
 import org.eclipse.net4j.internal.tcp.TCPAcceptor;
 import org.eclipse.net4j.internal.tcp.TCPClientConnector;
 import org.eclipse.net4j.internal.tcp.TCPSelector;

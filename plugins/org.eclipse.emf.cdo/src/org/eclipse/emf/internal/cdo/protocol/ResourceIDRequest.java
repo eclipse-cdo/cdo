@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;

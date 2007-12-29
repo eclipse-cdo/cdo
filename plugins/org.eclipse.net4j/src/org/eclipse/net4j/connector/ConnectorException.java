@@ -8,14 +8,33 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
+package org.eclipse.net4j.connector;
 
 /**
+ * Thrown by an {@link IConnector} to indicate connection problems.
+ * 
  * @author Eike Stepper
  */
-public interface IProtocolProvider
+public class ConnectorException extends RuntimeException
 {
-  public IProtocol getClientProtocol(String type, IChannel channel);
+  private static final long serialVersionUID = 1L;
 
-  public IProtocol getServerProtocol(String type, IChannel channel);
+  public ConnectorException()
+  {
+  }
+
+  public ConnectorException(String message)
+  {
+    super(message);
+  }
+
+  public ConnectorException(Throwable cause)
+  {
+    super(cause);
+  }
+
+  public ConnectorException(String message, Throwable cause)
+  {
+    super(message, cause);
+  }
 }

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
+package org.eclipse.net4j.buffer;
 
 /**
  * Provides clients with the ability to obtain and retain {@link IBuffer}s.

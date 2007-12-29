@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.jvm;
 
-import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.connector.IConnector;
 
 /**
  * @author Eike Stepper

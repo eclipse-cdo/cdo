@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.ui.views;
 
-import org.eclipse.net4j.IAcceptor;
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.ConnectorLocation;
+import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 
 import java.io.IOException;

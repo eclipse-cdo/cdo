@@ -8,22 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
+package org.eclipse.net4j.connector;
 
 /**
- * Provides clients with the ability to pass {@link IBuffer}s in for further buffer handling.
+ * An event that is fired by an {@link IConnector} to indicate that its state has changed.
  * 
  * @author Eike Stepper
  */
-public interface IBufferHandler
+public interface IConnectorStateEvent extends IConnectorEvent
 {
   /**
-   * Handles an {@link IBuffer} and optionally releases it. The implementor of this method takes over the ownership of
-   * the buffer. Care must be taken to properly {@link IBuffer#release() release} the buffer if the ownership is not
-   * explicitely passed to some further party.
-   * 
-   * @param buffer
-   *          The buffer to be handled and otionally released.
+   * The old state of the {@link IConnector} that sent this event.
    */
-  public void handleBuffer(IBuffer buffer);
+  public ConnectorState getOldState();
+
+  /**
+   * The new state of the {@link IConnector} that sent this event.
+   */
+  public ConnectorState getNewState();
 }

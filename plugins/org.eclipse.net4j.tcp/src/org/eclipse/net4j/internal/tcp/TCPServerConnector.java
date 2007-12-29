@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.ConnectorException;
-import org.eclipse.net4j.ConnectorLocation;
-import org.eclipse.net4j.ConnectorState;
+import org.eclipse.net4j.connector.ConnectorException;
+import org.eclipse.net4j.connector.ConnectorLocation;
+import org.eclipse.net4j.connector.ConnectorState;
 
 import java.nio.channels.SelectionKey;
 import java.text.MessageFormat;

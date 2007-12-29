@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.tests.signal.ArrayRequest;
 import org.eclipse.net4j.tests.signal.AsyncRequest;
 import org.eclipse.net4j.tests.signal.IntRequest;

@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.container.IContainer;
 

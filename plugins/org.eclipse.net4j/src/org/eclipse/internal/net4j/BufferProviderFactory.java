@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
-import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.internal.util.factory.Factory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 

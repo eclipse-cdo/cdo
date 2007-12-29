@@ -8,22 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
-
-import org.eclipse.net4j.util.container.IContainerEvent;
-import org.eclipse.net4j.util.event.IEvent;
+package org.eclipse.net4j.buffer;
 
 /**
- * An event that is fired by an {@link IConnector}.
+ * Provides clients with the ability to pass {@link IBuffer}s in for further buffer handling.
  * 
  * @author Eike Stepper
  */
-public interface IConnectorEvent extends IEvent
+public interface IBufferHandler
 {
   /**
-   * The {@link IConnector} that sent this event.
+   * Handles an {@link IBuffer} and optionally releases it. The implementor of this method takes over the ownership of
+   * the buffer. Care must be taken to properly {@link IBuffer#release() release} the buffer if the ownership is not
+   * explicitely passed to some further party.
    * 
-   * @see IContainerEvent#getContainer()
+   * @param buffer
+   *          The buffer to be handled and otionally released.
    */
-  public IConnector getConnector();
+  public void handleBuffer(IBuffer buffer);
 }

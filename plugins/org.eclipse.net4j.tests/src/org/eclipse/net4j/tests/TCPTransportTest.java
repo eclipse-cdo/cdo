@@ -10,11 +10,11 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.IBuffer;
-import org.eclipse.net4j.IBufferProvider;
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.util.container.ManagedContainer;
 import org.eclipse.net4j.stream.ChannelInputStream;
 import org.eclipse.net4j.stream.ChannelOutputStream;

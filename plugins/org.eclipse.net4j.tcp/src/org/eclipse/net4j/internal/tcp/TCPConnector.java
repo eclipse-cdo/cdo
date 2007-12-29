@@ -10,14 +10,14 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.ConnectorException;
-import org.eclipse.net4j.ConnectorState;
-import org.eclipse.net4j.IBuffer;
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IProtocol;
+import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.ConnectorException;
+import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.internal.util.security.NegotiationContext;
+import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelectorListener;

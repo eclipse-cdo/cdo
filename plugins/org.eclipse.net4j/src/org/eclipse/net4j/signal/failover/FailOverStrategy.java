@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.signal.failover;
 
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.util.event.Notifier;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalActor;

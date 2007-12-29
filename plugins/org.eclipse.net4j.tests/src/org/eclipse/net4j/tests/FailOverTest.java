@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.signal.failover.RetryFailOverStrategy;
 import org.eclipse.net4j.tests.signal.IntFailRequest;

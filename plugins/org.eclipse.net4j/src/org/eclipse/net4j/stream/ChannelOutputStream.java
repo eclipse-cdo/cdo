@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.stream;
 
-import org.eclipse.net4j.IBufferProvider;
-import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.channel.IChannel;
 
 /**
  * @author Eike Stepper

@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.jms.internal.admin;
 
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jms.JMSAdminProtocolConstants;
 import org.eclipse.net4j.jms.admin.IJMSAdmin;
 import org.eclipse.net4j.jms.internal.admin.bundle.OM;

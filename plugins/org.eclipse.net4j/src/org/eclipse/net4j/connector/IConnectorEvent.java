@@ -8,33 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
+package org.eclipse.net4j.connector;
+
+import org.eclipse.net4j.util.container.IContainerEvent;
+import org.eclipse.net4j.util.event.IEvent;
 
 /**
- * Thrown by an {@link IConnector} to indicate connection problems.
+ * An event that is fired by an {@link IConnector}.
  * 
  * @author Eike Stepper
  */
-public class ConnectorException extends RuntimeException
+public interface IConnectorEvent extends IEvent
 {
-  private static final long serialVersionUID = 1L;
-
-  public ConnectorException()
-  {
-  }
-
-  public ConnectorException(String message)
-  {
-    super(message);
-  }
-
-  public ConnectorException(Throwable cause)
-  {
-    super(cause);
-  }
-
-  public ConnectorException(String message, Throwable cause)
-  {
-    super(message, cause);
-  }
+  /**
+   * The {@link IConnector} that sent this event.
+   * 
+   * @see IContainerEvent#getContainer()
+   */
+  public IConnector getConnector();
 }

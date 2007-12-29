@@ -8,8 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j;
+package org.eclipse.net4j.connector;
 
+import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.buffer.IBufferHandler;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.event.IListener;

@@ -27,7 +27,7 @@ import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByTimeRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByVersionRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
 
-import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.PerfTracer;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 

@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
-import org.eclipse.net4j.IAcceptor;
-import org.eclipse.net4j.IBufferProvider;
-import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.internal.util.container.LifecycleEventConverter;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;

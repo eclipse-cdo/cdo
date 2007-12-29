@@ -33,7 +33,7 @@ import org.eclipse.emf.internal.cdo.protocol.CommitTransactionRequest;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
-import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.util.event.Notifier;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;

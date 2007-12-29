@@ -33,8 +33,8 @@ import org.eclipse.emf.internal.cdo.protocol.ViewsChangedRequest;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.emf.internal.cdo.util.ProxyResolverURIResourceMap;
 
-import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IConnector;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;

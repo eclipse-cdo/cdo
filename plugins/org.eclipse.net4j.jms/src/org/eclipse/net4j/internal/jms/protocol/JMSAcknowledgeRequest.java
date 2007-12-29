@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jms.protocol;
 
-import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;

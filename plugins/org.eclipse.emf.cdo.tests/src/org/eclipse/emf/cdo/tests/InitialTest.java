@@ -19,8 +19,8 @@ import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.net4j.IBufferHandler;
-import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.buffer.IBufferHandler;
+import org.eclipse.net4j.channel.IChannel;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;

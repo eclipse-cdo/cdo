@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.jvm;
 
-import org.eclipse.net4j.IAcceptor;
+import org.eclipse.net4j.acceptor.IAcceptor;
 
 /**
  * @author Eike Stepper

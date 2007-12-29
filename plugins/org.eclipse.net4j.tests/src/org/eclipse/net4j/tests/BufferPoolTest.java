@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.IBuffer;
-import org.eclipse.net4j.IBufferPool;
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.buffer.IBufferPool;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;

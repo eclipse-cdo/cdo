@@ -65,7 +65,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
   }
 
   @Override
-  protected CDOServerProtocol getProtocol()
+  public CDOServerProtocol getProtocol()
   {
     return (CDOServerProtocol)super.getProtocol();
   }

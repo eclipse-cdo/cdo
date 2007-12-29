@@ -88,7 +88,7 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
   public String getToolTipText()
   {
     CDOSession session = view.getSession();
-    IConnector connector = session.getChannel().getConnector();
+    IConnector connector = session.getConnector();
     String repositoryName = session.getRepositoryName();
 
     StringBuilder builder = new StringBuilder();

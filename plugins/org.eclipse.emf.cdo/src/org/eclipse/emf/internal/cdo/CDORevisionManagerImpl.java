@@ -29,7 +29,7 @@ import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.PerfTracer;
-import org.eclipse.net4j.signal.IFailOverStrategy;
+import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 
 import java.util.ArrayList;
 import java.util.Collection;

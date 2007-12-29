@@ -73,7 +73,7 @@ public class InvalidationIndication extends Indication
   }
 
   @Override
-  protected CDOClientProtocol getProtocol()
+  public CDOClientProtocol getProtocol()
   {
     return (CDOClientProtocol)super.getProtocol();
   }

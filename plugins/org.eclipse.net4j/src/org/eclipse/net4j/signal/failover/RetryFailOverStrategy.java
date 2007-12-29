@@ -8,25 +8,31 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.signal;
+package org.eclipse.net4j.signal.failover;
 
 import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.IConnector;
 
 /**
  * @author Eike Stepper
  */
-public interface IFailOverEvent extends IEvent
+public class RetryFailOverStrategy extends FailOverStrategy
 {
-  /**
-   * @return The old channel that was active before the fail over occured. At the time this event is being sent the old
-   *         channel is already closed.
-   */
-  public IChannel getOldChannel();
+  private IConnector connector;
 
-  /**
-   * @return The new channel that is active after the fail over occured. At the time this event is being sent the new
-   *         channel is already active.
-   */
-  public IChannel getNewChannel();
+  public RetryFailOverStrategy(IConnector connector)
+  {
+    this.connector = connector;
+  }
+
+  public IConnector getConnector()
+  {
+    return connector;
+  }
+
+  @Override
+  protected IConnector getNewConnector(IChannel oldChannel)
+  {
+    return connector;
+  }
 }

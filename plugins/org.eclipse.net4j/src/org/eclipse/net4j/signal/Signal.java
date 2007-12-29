@@ -42,7 +42,7 @@ public abstract class Signal implements Runnable
   {
   }
 
-  protected SignalProtocol getProtocol()
+  public SignalProtocol getProtocol()
   {
     return protocol;
   }

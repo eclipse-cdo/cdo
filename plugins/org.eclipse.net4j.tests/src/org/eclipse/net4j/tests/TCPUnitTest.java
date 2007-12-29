@@ -8,19 +8,21 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.signal;
+package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.util.io.GZIPStreamWrapper;
+import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 /**
  * @author Eike Stepper
  */
-public class GZIPStreamWrapperInjector extends StreamWrapperInjector
+public class TCPUnitTest extends AbstractOMTest
 {
-  public static final GZIPStreamWrapper STREAM_WRAPPER = new GZIPStreamWrapper();
-
-  public GZIPStreamWrapperInjector(String protocolID)
+  public TCPUnitTest()
   {
-    super(protocolID, STREAM_WRAPPER);
+  }
+
+  public void test()
+  {
+
   }
 }

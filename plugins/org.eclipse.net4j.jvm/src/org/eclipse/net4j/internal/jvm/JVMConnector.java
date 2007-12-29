@@ -61,8 +61,7 @@ public abstract class JVMConnector extends Connector
     return "jvm://" + name;
   }
 
-  @Override
-  public void multiplexBuffer(IChannel localChannel)
+  public void multiplexChannel(IChannel localChannel)
   {
     short channelIndex = localChannel.getChannelIndex();
     Channel peerChannel = peer.getChannel(channelIndex);

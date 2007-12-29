@@ -29,7 +29,7 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.ConnectorException;
 import org.eclipse.net4j.IConnector;
-import org.eclipse.net4j.signal.IFailOverStrategy;
+import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;

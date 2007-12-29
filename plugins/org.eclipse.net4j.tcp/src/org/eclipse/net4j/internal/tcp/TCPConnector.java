@@ -112,8 +112,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
    * Called by {@link Channel} each time a new buffer is available for multiplexing. This or another buffer can be
    * dequeued from the outputQueue of the {@link Channel}.
    */
-  @Override
-  public void multiplexBuffer(IChannel channel)
+  public void multiplexChannel(IChannel channel)
   {
     checkSelectionKey();
     selector.orderWriteInterest(selectionKey, isClient(), true);
@@ -299,7 +298,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  protected boolean removeChannel(Channel channel)
+  public boolean removeChannel(IChannel channel)
   {
     if (channel instanceof ControlChannel)
     {

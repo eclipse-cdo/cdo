@@ -13,6 +13,7 @@ package org.eclipse.net4j.internal.util.lifecycle;
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.event.Notifier;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
@@ -149,6 +150,31 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
     {
       throw new IllegalStateException("Not inactive: " + this);
     }
+  }
+
+  protected final void checkNull(Object handle, String msg) throws NullPointerException
+  {
+    CheckUtil.checkNull(handle, msg);
+  }
+
+  protected final void checkArg(boolean expr, String msg) throws IllegalArgumentException
+  {
+    CheckUtil.checkArg(expr, msg);
+  }
+
+  protected final void checkArg(Object handle, String handleName) throws IllegalArgumentException
+  {
+    CheckUtil.checkArg(handle, handleName);
+  }
+
+  protected final void checkState(boolean expr, String msg) throws IllegalStateException
+  {
+    CheckUtil.checkState(expr, msg);
+  }
+
+  protected final void checkState(Object handle, String handleName) throws IllegalStateException
+  {
+    CheckUtil.checkState(handle, handleName);
   }
 
   protected final void deferredActivate()

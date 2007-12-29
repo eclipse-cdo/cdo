@@ -8,18 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.signal;
+package org.eclipse.net4j.signal.failover;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.internal.util.event.Notifier;
+import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.signal.SignalActor;
+import org.eclipse.net4j.signal.SignalProtocol;
+import org.eclipse.net4j.util.CheckUtil;
 
 import java.util.concurrent.TimeoutException;
 
 /**
  * @author Eike Stepper
  */
-public class FailOverStrategy extends Notifier implements IFailOverStrategy
+public abstract class FailOverStrategy extends Notifier implements IFailOverStrategy
 {
   public FailOverStrategy()
   {
@@ -48,31 +52,20 @@ public class FailOverStrategy extends Notifier implements IFailOverStrategy
   protected void failOver(SignalProtocol protocol)
   {
     IChannel oldChannel = protocol.getChannel();
-    IConnector connector = getNewConnector(oldChannel);
-    if (connector == null)
-    {
-      throw new IllegalStateException("connector == null");
-    }
+    IConnector newConnector = getNewConnector(oldChannel);
+    CheckUtil.checkNull(newConnector, "newConnector");
 
-    IChannel newChannel = connector.openChannel(protocol);
+    IChannel newChannel = newConnector.openChannel(protocol);
     protocol.setChannel(newChannel);
     oldChannel.close();
-    fireEvent(new FailOverEvent(oldChannel, newChannel));
+    fireEvent(new FailOverEvent(oldChannel, newChannel, newConnector));
   }
 
   /**
    * Should be overridden to provide a fail-over <code>IConnector</code>. The oldChannel <i>can</i> be used as a
    * hint.
    */
-  protected IConnector getNewConnector(IChannel oldChannel)
-  {
-    if (oldChannel == null)
-    {
-      throw new IllegalArgumentException("oldChannel == null");
-    }
-
-    return oldChannel.getConnector();
-  }
+  protected abstract IConnector getNewConnector(IChannel oldChannel);
 
   /**
    * @author Eike Stepper
@@ -83,10 +76,13 @@ public class FailOverStrategy extends Notifier implements IFailOverStrategy
 
     private IChannel newChannel;
 
-    public FailOverEvent(IChannel oldChannel, IChannel newChannel)
+    private IConnector newConnector;
+
+    public FailOverEvent(IChannel oldChannel, IChannel newChannel, IConnector newConnector)
     {
       this.oldChannel = oldChannel;
       this.newChannel = newChannel;
+      this.newConnector = newConnector;
     }
 
     public IFailOverStrategy getSource()
@@ -102,6 +98,11 @@ public class FailOverStrategy extends Notifier implements IFailOverStrategy
     public IChannel getNewChannel()
     {
       return newChannel;
+    }
+
+    public IConnector getNewConnector()
+    {
+      return newConnector;
     }
   }
 }

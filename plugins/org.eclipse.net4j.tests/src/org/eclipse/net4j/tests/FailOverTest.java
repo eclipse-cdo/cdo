@@ -11,10 +11,10 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.signal.FailOverStrategy;
-import org.eclipse.net4j.signal.IFailOverStrategy;
-import org.eclipse.net4j.tests.signal.IntRequest;
+import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+import org.eclipse.net4j.signal.failover.RetryFailOverStrategy;
 import org.eclipse.net4j.tests.signal.IntFailRequest;
+import org.eclipse.net4j.tests.signal.IntRequest;
 import org.eclipse.net4j.tests.signal.TestSignalClientProtocolFactory;
 import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -42,7 +42,7 @@ public class FailOverTest extends AbstractTransportTest
     getAcceptor().deactivate();
 
     int data = 0x0a;
-    IFailOverStrategy failOverStrategy = new FailOverStrategy();
+    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(getConnector());
 
     // Exception HERE
     IntRequest request = new IntRequest(channel, data);
@@ -57,7 +57,7 @@ public class FailOverTest extends AbstractTransportTest
     IChannel channel = getConnector().openChannel(TestSignalClientProtocolFactory.TYPE, null);
 
     int data = 0x0a;
-    IFailOverStrategy failOverStrategy = new FailOverStrategy();
+    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(getConnector());
 
     // Exception HERE
     IntRequest request = new IntRequest(channel, data);
@@ -75,7 +75,7 @@ public class FailOverTest extends AbstractTransportTest
     IChannel channel = getConnector().openChannel(TestSignalClientProtocolFactory.TYPE, null);
 
     int data = 0x0a;
-    IFailOverStrategy failOverStrategy = new FailOverStrategy();
+    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(getConnector());
 
     // Exception HERE
     IntFailRequest request = new IntFailRequest(channel, data);

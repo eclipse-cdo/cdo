@@ -8,8 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.signal;
+package org.eclipse.net4j.signal.failover;
 
+import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.event.INotifier;
 
 /**

@@ -32,7 +32,7 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.signal.IFailOverStrategy;
+import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
 

@@ -96,11 +96,6 @@ public interface IChannel extends IBufferHandler, INotifier
   public short getChannelIndex();
 
   /**
-   * Returns the connector of this channel.
-   */
-  public IConnector getConnector();
-
-  /**
    * Asynchronously sends the given buffer to the receive handler of the peer channel.
    */
   public void sendBuffer(IBuffer buffer);

@@ -38,7 +38,7 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
   }
 
   @Override
-  protected CDOClientProtocol getProtocol()
+  public CDOClientProtocol getProtocol()
   {
     return (CDOClientProtocol)super.getProtocol();
   }

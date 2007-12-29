@@ -238,7 +238,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
   public static String getSessionLabel(CDOSession session)
   {
-    IConnector connector = session.getChannel().getConnector();
+    IConnector connector = session.getConnector();
     String repositoryName = session.getRepositoryName();
     return "Session " + connector.getURL() + "/" + repositoryName + " [" + session.getSessionID() + "]";
   }

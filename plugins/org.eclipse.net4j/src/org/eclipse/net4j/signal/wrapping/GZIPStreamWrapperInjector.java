@@ -8,17 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.signal;
+package org.eclipse.net4j.signal.wrapping;
 
-import org.eclipse.net4j.util.io.XORStreamWrapper;
+import org.eclipse.net4j.util.io.GZIPStreamWrapper;
 
 /**
  * @author Eike Stepper
  */
-public class XORStreamWrapperInjector extends StreamWrapperInjector
+public class GZIPStreamWrapperInjector extends StreamWrapperInjector
 {
-  public XORStreamWrapperInjector(String protocolID, int[] key)
+  public static final GZIPStreamWrapper STREAM_WRAPPER = new GZIPStreamWrapper();
+
+  public GZIPStreamWrapperInjector(String protocolID)
   {
-    super(protocolID, new XORStreamWrapper(key));
+    super(protocolID, STREAM_WRAPPER);
   }
 }

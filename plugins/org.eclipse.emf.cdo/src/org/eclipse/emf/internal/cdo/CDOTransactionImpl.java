@@ -36,7 +36,7 @@ import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.net4j.IChannel;
 import org.eclipse.net4j.internal.util.event.Notifier;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.signal.IFailOverStrategy;
+import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.transaction.TransactionException;
 

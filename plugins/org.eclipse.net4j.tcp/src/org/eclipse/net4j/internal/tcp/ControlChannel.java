@@ -51,11 +51,13 @@ public final class ControlChannel extends Channel
 
   private SynchronizingCorrelator<Short, Boolean> registrations = new SynchronizingCorrelator<Short, Boolean>();
 
+  private TCPConnector connector;
+
   public ControlChannel(int channelID, TCPConnector connector)
   {
-    super(channelID, connector.getReceiveExecutor());
+    super(channelID, connector.getBufferProvider(), connector, connector.getReceiveExecutor());
+    this.connector = connector;
     setChannelIndex(CONTROL_CHANNEL_INDEX);
-    setConnector(connector);
   }
 
   @Override
@@ -64,10 +66,9 @@ public final class ControlChannel extends Channel
     return true;
   }
 
-  @Override
   public TCPConnector getConnector()
   {
-    return (TCPConnector)super.getConnector();
+    return connector;
   }
 
   public boolean registerChannel(int channelID, short channelIndex, IProtocol protocol)
@@ -126,11 +127,11 @@ public final class ControlChannel extends Channel
       case OPCODE_NEGOTIATION:
       {
         assertNegotiating();
-        INegotiationContext negotiationContext = getConnector().getNegotiationContext();
+        INegotiationContext negotiationContext = connector.getNegotiationContext();
         while (negotiationContext == null)
         {
           ConcurrencyUtil.sleep(20);
-          negotiationContext = getConnector().getNegotiationContext();
+          negotiationContext = connector.getNegotiationContext();
         }
 
         Receiver receiver = negotiationContext.getReceiver();
@@ -150,7 +151,7 @@ public final class ControlChannel extends Channel
         {
           byte[] handlerFactoryUTF8 = BufferUtil.getByteArray(byteBuffer);
           String protocolID = BufferUtil.fromUTF8(handlerFactoryUTF8);
-          Channel channel = getConnector().createChannel(channelID, channelIndex, protocolID);
+          Channel channel = connector.createChannel(channelID, channelIndex, protocolID);
           if (channel != null)
           {
             channel.activate();
@@ -188,7 +189,7 @@ public final class ControlChannel extends Channel
         {
           try
           {
-            getConnector().inverseRemoveChannel(channelID, channelIndex);
+            connector.inverseRemoveChannel(channelID, channelIndex);
           }
           catch (Exception ex)
           {
@@ -201,7 +202,7 @@ public final class ControlChannel extends Channel
 
       default:
         OM.LOG.error("Invalid opcode: " + opcode); //$NON-NLS-1$
-        getConnector().deactivate();
+        connector.deactivate();
       }
     }
     finally
@@ -228,7 +229,6 @@ public final class ControlChannel extends Channel
 
   private void assertNegotiating()
   {
-    TCPConnector connector = getConnector();
     if (!connector.isNegotiating())
     {
       connector.deactivate();
@@ -238,7 +238,7 @@ public final class ControlChannel extends Channel
 
   private void assertConnected()
   {
-    if (!getConnector().isConnected())
+    if (!connector.isConnected())
     {
       throw new IllegalStateException("Connector is not connected");
     }

@@ -39,8 +39,8 @@ import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.internal.util.event.Event;
 import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.signal.IFailOverEvent;
-import org.eclipse.net4j.signal.IFailOverStrategy;
+import org.eclipse.net4j.signal.failover.IFailOverEvent;
+import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -92,7 +92,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
       if (event instanceof IFailOverEvent)
       {
         IFailOverEvent e = (IFailOverEvent)event;
-        handleFailOver(e.getOldChannel(), e.getNewChannel());
+        handleFailOver(e.getOldChannel(), e.getNewChannel(), e.getNewConnector());
       }
     }
   };
@@ -201,11 +201,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   public IChannel getChannel()
   {
     return channel;
-  }
-
-  public void setChannel(IChannel channel)
-  {
-    this.channel = channel;
   }
 
   public String getRepositoryName()
@@ -523,7 +518,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   @Override
   public String toString()
   {
-    IConnector connector = channel == null ? null : channel.getConnector();
     return MessageFormat.format("CDOSession[{0}/{1}]", connector, repositoryName);
   }
 
@@ -580,13 +574,13 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     fireElementAddedEvent(view);
   }
 
-  protected void handleFailOver(IChannel oldChannel, IChannel newChannel)
+  protected void handleFailOver(IChannel oldChannel, IChannel newChannel, IConnector newConnector)
   {
     EventUtil.removeListener(oldChannel, channelListener);
     EventUtil.addListener(newChannel, channelListener);
 
     channel = newChannel;
-    connector = channel.getConnector();
+    connector = newConnector;
   }
 
   @Override

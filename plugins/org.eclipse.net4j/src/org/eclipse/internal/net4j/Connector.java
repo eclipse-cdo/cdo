@@ -16,6 +16,7 @@ import org.eclipse.net4j.ConnectorState;
 import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.IChannelMultiplexer;
 import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.IConnectorStateEvent;
 import org.eclipse.net4j.IProtocol;
@@ -56,7 +57,7 @@ import java.util.concurrent.TimeoutException;
 /**
  * @author Eike Stepper
  */
-public abstract class Connector extends Container<IChannel> implements IConnector
+public abstract class Connector extends Container<IChannel> implements IConnector, IChannelMultiplexer
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONNECTOR, Connector.class);
 
@@ -106,8 +107,6 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   public Connector()
   {
   }
-
-  public abstract void multiplexBuffer(IChannel channel);
 
   public ExecutorService getReceiveExecutor()
   {
@@ -423,15 +422,15 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
   public Channel createChannel(int channelID, short channelIndex, IProtocol protocol)
   {
-    Channel channel = new Channel(channelID, receiveExecutor);
+    Channel channel = new Channel(channelID, bufferProvider, this, receiveExecutor);
     if (protocol != null)
     {
       protocol.setChannel(channel);
       LifecycleUtil.activate(protocol);
       if (TRACER.isEnabled())
       {
-        TRACER.format(
-            "Opening channel {0} with protocol {1}", channelIndex, protocol == null ? null : protocol.getType()); //$NON-NLS-1$
+        String protocolType = protocol == null ? null : protocol.getType();
+        TRACER.format("Opening channel {0} with protocol {1}", channelIndex, protocolType); //$NON-NLS-1$
       }
     }
     else
@@ -443,7 +442,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     }
 
     channel.setChannelIndex(channelIndex);
-    channel.setConnector(this);
+    // channel.setConnector(this);
     channel.setReceiveHandler(protocol);
     channel.addListener(channelListener); // TODO remove?
     addChannel(channel);
@@ -527,7 +526,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   /**
    * @return <code>true</code> if the channel was removed, <code>false</code> otherwise.
    */
-  protected boolean removeChannel(final Channel channel)
+  public boolean removeChannel(final IChannel channel)
   {
     if (channel == null)
     {

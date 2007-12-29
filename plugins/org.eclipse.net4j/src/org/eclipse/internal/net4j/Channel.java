@@ -15,6 +15,7 @@ import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferHandler;
 import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IChannel;
+import org.eclipse.net4j.IChannelMultiplexer;
 import org.eclipse.net4j.internal.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.internal.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
@@ -40,11 +41,14 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
 
   private short channelIndex = Buffer.NO_CHANNEL;
 
-  private Connector connector;
+  // private Connector connector;
+
+  private IBufferProvider bufferProvider;
+
+  private IChannelMultiplexer channelMultiplexer;
 
   /**
    * The external handler for buffers passed from the {@link #connector}.
-   * <p>
    */
   private IBufferHandler receiveHandler;
 
@@ -54,9 +58,12 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
 
   private Queue<IBuffer> sendQueue;
 
-  public Channel(int channelID, ExecutorService receiveExecutor)
+  public Channel(int channelID, IBufferProvider bufferProvider, IChannelMultiplexer channelMultiplexer,
+      ExecutorService receiveExecutor)
   {
     this.channelID = channelID;
+    this.bufferProvider = bufferProvider;
+    this.channelMultiplexer = channelMultiplexer;
     this.receiveExecutor = receiveExecutor;
   }
 
@@ -80,29 +87,29 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     this.channelIndex = channelIndex;
   }
 
-  public Connector getConnector()
-  {
-    return connector;
-  }
-
-  public void setConnector(Connector connector)
-  {
-    this.connector = connector;
-  }
+  // public Connector getConnector()
+  // {
+  // return connector;
+  // }
+  //
+  // public void setConnector(Connector connector)
+  // {
+  // this.connector = connector;
+  // }
 
   public short getBufferCapacity()
   {
-    return connector.getBufferProvider().getBufferCapacity();
+    return bufferProvider.getBufferCapacity();
   }
 
   public IBuffer provideBuffer()
   {
-    return connector.getBufferProvider().provideBuffer();
+    return bufferProvider.provideBuffer();
   }
 
   public void retainBuffer(IBuffer buffer)
   {
-    connector.getBufferProvider().retainBuffer(buffer);
+    bufferProvider.retainBuffer(buffer);
   }
 
   public Queue<IBuffer> getSendQueue()
@@ -166,7 +173,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     else
     {
       sendQueue.add(buffer);
-      connector.multiplexBuffer(this);
+      channelMultiplexer.multiplexChannel(this);
     }
   }
 
@@ -198,15 +205,9 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (channelIndex == Buffer.NO_CHANNEL)
-    {
-      throw new IllegalStateException("channelIndex == INVALID_CHANNEL_ID"); //$NON-NLS-1$
-    }
-
-    if (connector == null)
-    {
-      throw new IllegalStateException("connector == null"); //$NON-NLS-1$
-    }
+    checkState(channelIndex != Buffer.NO_CHANNEL, "channelIndex == NO_CHANNEL"); //$NON-NLS-1$
+    checkState(bufferProvider, "bufferProvider"); //$NON-NLS-1$
+    checkState(channelMultiplexer, "channelMultiplexer"); //$NON-NLS-1$
   }
 
   @Override
@@ -230,7 +231,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
         @Override
         protected String getThreadName()
         {
-          return "ReceiveSerializer-" + connector.getLocation() + channelIndex;
+          return "ReceiveSerializer" + channelIndex;
         }
       }
 
@@ -244,7 +245,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     LifecycleUtil.deactivate(receiveHandler);
     receiveHandler = null;
 
-    connector.removeChannel(this);
+    channelMultiplexer.removeChannel(this);
     if (receiveSerializer != null)
     {
       receiveSerializer.dispose();

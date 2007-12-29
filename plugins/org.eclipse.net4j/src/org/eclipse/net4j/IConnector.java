@@ -18,20 +18,18 @@ import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.registry.IRegistry;
 
-import org.eclipse.internal.net4j.Channel;
-import org.eclipse.internal.net4j.Connector;
-
 import java.util.List;
 
 /**
  * One endpoint of a physical connection of arbitrary nature between two communicating parties. A {@link IConnector}
  * encapsulates the process of establishing and closing such connections and has a {@link ConnectorLocation} of
- * {@link ConnectorLocation#CLIENT} or {@link ConnectorLocation#SERVER} with respect to this process. Once a connection
- * is established either party can use its connector to open multiple {@link IChannel}s to asynchronously exchange
- * {@link IBuffer}s.
+ * {@link ConnectorLocation#CLIENT CLIENT} or {@link ConnectorLocation#SERVER SERVER} with respect to this process. Once
+ * a connection is established either party can use its connector to open multiple {@link IChannel}s to asynchronously
+ * exchange {@link IBuffer}s.
  * <p>
  * This interface is <b>not</b> intended to be implemented by clients. Providers of connectors for new physical
- * connection types have to subclass {@link Connector} (see {@link Channel#setConnector(Connector)}.
+ * connection types have to subclass {@link org.eclipse.internal.net4j.Connector Connector} (see
+ * {@link org.eclipse.internal.net4j.Channel#setConnector(org.eclipse.internal.net4j.Connector) Channel#setConnector}).
  * <p>
  * <dt><b>Class Diagram:</b></dt>
  * <dd><img src="doc-files/Connectors.png" title="Diagram Connectors" border="0" usemap="Connectors.png"/></dd>

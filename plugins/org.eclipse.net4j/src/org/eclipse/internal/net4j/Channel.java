@@ -15,19 +15,15 @@ import org.eclipse.net4j.IBuffer;
 import org.eclipse.net4j.IBufferHandler;
 import org.eclipse.net4j.IBufferProvider;
 import org.eclipse.net4j.IChannel;
-import org.eclipse.net4j.IChannelID;
-import org.eclipse.net4j.IConnector;
 import org.eclipse.net4j.internal.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.internal.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
-import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -146,7 +142,7 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
 
   public void handleBuffer(IBuffer buffer)
   {
-    BufferState state = ((Buffer)buffer).getState();
+    BufferState state = buffer.getState();
     if (state != BufferState.PUTTING)
     {
       OM.LOG.warn("Ignoring buffer in state == " + state + ": " + this); //$NON-NLS-1$ //$NON-NLS-2$
@@ -228,14 +224,17 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
       // receiveSerializer = new CompletionWorkSerializer();
       // receiveSerializer = new AsynchronousWorkSerializer(receiveExecutor);
       // receiveSerializer = new SynchronousWorkSerializer();
-      receiveSerializer = new QueueWorkerWorkSerializer()
+
+      class ChannelReceiveSerializer extends QueueWorkerWorkSerializer
       {
         @Override
         protected String getThreadName()
         {
           return "ReceiveSerializer-" + connector.getLocation() + channelIndex;
         }
-      };
+      }
+
+      receiveSerializer = new ChannelReceiveSerializer();
     }
   }
 
@@ -259,65 +258,6 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     }
 
     super.doDeactivate();
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  @SuppressWarnings("unused")
-  @Deprecated
-  private final class ChannelIDImpl implements IChannelID, Cloneable, Serializable
-  {
-    private static final long serialVersionUID = 1L;
-
-    public ChannelIDImpl()
-    {
-    }
-
-    public IConnector getConnector()
-    {
-      return connector;
-    }
-
-    public short getChannelIndex()
-    {
-      return channelIndex;
-    }
-
-    @Override
-    protected Object clone() throws CloneNotSupportedException
-    {
-      return this;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-      if (obj == this)
-      {
-        return true;
-      }
-
-      if (obj instanceof IChannelID)
-      {
-        IChannelID that = (IChannelID)obj;
-        return channelIndex == that.getChannelIndex() && ObjectUtil.equals(connector, that.getConnector());
-      }
-
-      return false;
-    }
-
-    @Override
-    public int hashCode()
-    {
-      return ObjectUtil.hashCode(connector) ^ channelIndex;
-    }
-
-    @Override
-    public String toString()
-    {
-      return "ChannelID[" + connector + ", channelIndex=" + channelIndex + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-    }
   }
 
   /**

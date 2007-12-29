@@ -19,7 +19,6 @@ import org.eclipse.net4j.tests.signal.TestSignalClientProtocolFactory;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.util.Arrays;
 
@@ -58,16 +57,16 @@ public class SignalTest extends AbstractTransportTest
   public void testAsync() throws Exception
   {
     startTransport();
-    OMPlatform.INSTANCE.setDebugging(false);
+    // OMPlatform.INSTANCE.setDebugging(false);
     IChannel channel = getConnector().openChannel(TestSignalProtocol.PROTOCOL_NAME, null);
-    String tiny = TinyData.getText();
-    String huge = HugeData.getText();
+    String data = TinyData.getText();
+    // String huge = HugeData.getText();
     for (int i = 0; i < 10000; i++)
     {
       msg("Loop " + i);
-      new AsyncRequest(channel, tiny).send();
-      String result = new StringRequest(channel, huge).send();
-      assertEquals(huge, result);
+      new AsyncRequest(channel, data).send();
+      String result = new StringRequest(channel, data).send();
+      assertEquals(data, result);
     }
   }
 }

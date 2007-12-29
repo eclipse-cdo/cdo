@@ -84,6 +84,12 @@ import org.eclipse.net4j.util.event.INotifier;
 public interface IChannel extends IBufferHandler, INotifier
 {
   /**
+   * Returns the ID of this channel that is unique among all channels that the connector of this channel has ever
+   * created or will ever create.
+   */
+  public int getChannelID();
+
+  /**
    * Returns the index of this channel within the array of channels returned from the
    * {@link IConnector#getChannels() getChannels()} method of the connector of this channel.
    */

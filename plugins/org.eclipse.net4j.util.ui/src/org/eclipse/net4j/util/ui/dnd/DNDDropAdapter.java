@@ -67,6 +67,7 @@ public abstract class DNDDropAdapter<TYPE> extends ViewerDropAdapter
     return location;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public boolean performDrop(Object data)
   {

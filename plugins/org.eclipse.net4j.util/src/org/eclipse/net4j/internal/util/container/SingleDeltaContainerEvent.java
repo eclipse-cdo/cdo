@@ -29,12 +29,14 @@ public class SingleDeltaContainerEvent<E> extends Event implements IContainerEve
 
   private IContainerDelta<E>[] deltas;
 
+  @SuppressWarnings("unchecked")
   public SingleDeltaContainerEvent(IContainer<E> container, E element, Kind kind)
   {
     super(container);
     deltas = new IContainerDelta[] { new ContainerDelta<E>(element, kind) };
   }
 
+  @SuppressWarnings("unchecked")
   public IContainer<E> getContainer()
   {
     return (IContainer<E>)getSource();

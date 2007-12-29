@@ -1950,6 +1950,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
                 }
               }
 
+              @SuppressWarnings("unchecked")
               @Override
               protected void doRun() throws Exception
               {

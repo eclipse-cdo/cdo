@@ -394,6 +394,7 @@ public class MessageImpl implements Message, Comparable<MessageImpl>
     return 0;
   }
 
+  @SuppressWarnings("unchecked")
   public void populate(Message source) throws JMSException
   {
     setJMSMessageID(source.getJMSMessageID());

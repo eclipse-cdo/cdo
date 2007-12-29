@@ -51,6 +51,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
     return viewer;
   }
 
+  @SuppressWarnings("unchecked")
   public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
   {
     this.viewer = (StructuredViewer)viewer;

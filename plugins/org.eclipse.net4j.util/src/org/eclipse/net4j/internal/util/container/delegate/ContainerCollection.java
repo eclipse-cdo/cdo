@@ -34,6 +34,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
     return delegate;
   }
 
+  @SuppressWarnings("unchecked")
   public E[] getElements()
   {
     return (E[])toArray();
@@ -101,6 +102,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category WRITE
    */
+  @SuppressWarnings("unchecked")
   public boolean removeAll(Collection<?> c)
   {
     ContainerEvent<E> event = new ContainerEvent<E>(this);
@@ -119,6 +121,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category WRITE
    */
+  @SuppressWarnings("unchecked")
   public boolean retainAll(Collection<?> c)
   {
     ContainerEvent<E> event = new ContainerEvent<E>(this);

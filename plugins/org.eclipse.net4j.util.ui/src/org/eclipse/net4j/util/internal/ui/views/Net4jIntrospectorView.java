@@ -240,6 +240,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     }
   }
 
+  @SuppressWarnings("unchecked")
   public void doubleClick(DoubleClickEvent event)
   {
     ISelection sel = event.getSelection();
@@ -507,6 +508,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
    */
   class ObjectLabelProvider extends AbstractLabelProvider
   {
+    @SuppressWarnings("unchecked")
     public String getColumnText(Object obj, int index)
     {
       if (obj instanceof Pair)
@@ -551,7 +553,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
         if (element instanceof Iterable)
         {
           List<Object> result = new ArrayList<Object>();
-          for (Object object : (Iterable<Object>)element)
+          for (Object object : (Iterable<?>)element)
           {
             result.add(object);
           }

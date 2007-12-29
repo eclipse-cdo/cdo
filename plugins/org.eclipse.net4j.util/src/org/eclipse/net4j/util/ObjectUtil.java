@@ -46,6 +46,7 @@ public final class ObjectUtil
     return (int)(num >> 32) ^ (int)(num & 0xffffffff);
   }
 
+  @SuppressWarnings("unchecked")
   public static <T> T[] appendtoArray(T[] array, T... elements)
   {
     T[] result = (T[])Array.newInstance(array.getClass().getComponentType(), array.length + elements.length);

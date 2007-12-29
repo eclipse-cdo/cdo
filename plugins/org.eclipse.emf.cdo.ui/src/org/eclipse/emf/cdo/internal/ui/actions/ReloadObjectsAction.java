@@ -45,7 +45,7 @@ public class ReloadObjectsAction extends EditingDomainAction
     objects.clear();
     if (selection != null)
     {
-      for (Iterator<Object> it = selection.iterator(); it.hasNext();)
+      for (Iterator<?> it = selection.iterator(); it.hasNext();)
       {
         Object object = it.next();
         if (object instanceof InternalCDOObject)

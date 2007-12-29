@@ -211,36 +211,42 @@ public class OMPreferenceStore implements IPreferenceStore
     throw new UnsupportedOperationException();
   }
 
+  @SuppressWarnings("unchecked")
   public void setValue(String name, boolean value)
   {
     OMPreference<Boolean> pref = (OMPreference<Boolean>)getPreference(name);
     pref.setValue(value);
   }
 
+  @SuppressWarnings("unchecked")
   public void setValue(String name, double value)
   {
     OMPreference<Double> pref = (OMPreference<Double>)getPreference(name);
     pref.setValue(value);
   }
 
+  @SuppressWarnings("unchecked")
   public void setValue(String name, float value)
   {
     OMPreference<Float> pref = (OMPreference<Float>)getPreference(name);
     pref.setValue(value);
   }
 
+  @SuppressWarnings("unchecked")
   public void setValue(String name, int value)
   {
     OMPreference<Integer> pref = (OMPreference<Integer>)getPreference(name);
     pref.setValue(value);
   }
 
+  @SuppressWarnings("unchecked")
   public void setValue(String name, long value)
   {
     OMPreference<Long> pref = (OMPreference<Long>)getPreference(name);
     pref.setValue(value);
   }
 
+  @SuppressWarnings("unchecked")
   public void setValue(String name, String value)
   {
     OMPreference<String> pref = (OMPreference<String>)getPreference(name);

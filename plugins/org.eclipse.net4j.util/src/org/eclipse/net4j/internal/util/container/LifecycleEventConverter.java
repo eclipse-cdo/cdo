@@ -68,6 +68,7 @@ public class LifecycleEventConverter<E> implements IListener
     fireContainerEvent(e, IContainerDelta.Kind.REMOVED);
   }
 
+  @SuppressWarnings("unchecked")
   protected void fireContainerEvent(ILifecycleEvent e, IContainerDelta.Kind kind)
   {
     E element = (E)e.getLifecycle();

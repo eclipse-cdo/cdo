@@ -194,6 +194,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     return new LeafNode(parent, element);
   }
 
+  @SuppressWarnings("unchecked")
   protected ContainerNode createContaineNode(Node parent, Object element)
   {
     return new ContainerNode(parent, (IContainer<Object>)element);
@@ -380,6 +381,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       return children;
     }
 
+    @SuppressWarnings("unchecked")
     public IContainer<Object> getContainer()
     {
       return (IContainer<Object>)getElement();

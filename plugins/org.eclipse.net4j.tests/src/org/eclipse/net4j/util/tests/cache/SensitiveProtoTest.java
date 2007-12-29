@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class SensitiveProtoTest extends AbstractOMTest
 {
+  @SuppressWarnings("unchecked")
   public void testSensitiveCacheWithEvictionPolicy() throws Exception
   {
     ConcurrentMap<Integer, KeyedAndValuedWeakReference<Integer, String>> map //

@@ -213,41 +213,49 @@ public class Preferences extends Notifier implements OMPreferences
     return prefs.get(name);
   }
 
+  @SuppressWarnings("unchecked")
   public OMPreference<Boolean> getBoolean(String name)
   {
     return (OMPreference<Boolean>)get(name);
   }
 
+  @SuppressWarnings("unchecked")
   public OMPreference<Integer> getInteger(String name)
   {
     return (OMPreference<Integer>)get(name);
   }
 
+  @SuppressWarnings("unchecked")
   public OMPreference<Long> getLong(String name)
   {
     return (OMPreference<Long>)get(name);
   }
 
+  @SuppressWarnings("unchecked")
   public OMPreference<Float> getFloat(String name)
   {
     return (OMPreference<Float>)get(name);
   }
 
+  @SuppressWarnings("unchecked")
   public OMPreference<Double> getDouble(String name)
   {
     return (OMPreference<Double>)get(name);
   }
 
+  @SuppressWarnings("unchecked")
   public OMPreference<String> getString(String name)
   {
     return (OMPreference<String>)get(name);
   }
 
+  @SuppressWarnings("unchecked")
   public OMPreference<String[]> getArray(String name)
   {
     return (OMPreference<String[]>)get(name);
   }
 
+  @SuppressWarnings("unchecked")
   public OMPreference<byte[]> getBytes(String name)
   {
     return (OMPreference<byte[]>)get(name);

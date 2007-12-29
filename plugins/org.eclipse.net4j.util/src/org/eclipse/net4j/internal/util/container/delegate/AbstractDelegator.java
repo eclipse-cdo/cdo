@@ -34,11 +34,13 @@ public abstract class AbstractDelegator<E> extends Notifier implements IContaine
     fireEvent(new SingleDeltaContainerEvent<E>(this, o, IContainerDelta.Kind.ADDED));
   }
 
+  @SuppressWarnings("unchecked")
   protected void fireRemovedEvent(Object o)
   {
     fireEvent(new SingleDeltaContainerEvent<E>(this, (E)o, IContainerDelta.Kind.REMOVED));
   }
 
+  @SuppressWarnings("unchecked")
   protected ContainerEvent<E> createEvent(Collection<? super E> c, Kind kind)
   {
     ContainerEvent<E> event = new ContainerEvent<E>(this);

@@ -44,6 +44,7 @@ public class HistoryElement<T> implements IHistoryElement<T>
     return data.toString();
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public boolean equals(Object obj)
   {

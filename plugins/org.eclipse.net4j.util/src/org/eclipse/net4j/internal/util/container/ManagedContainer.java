@@ -362,6 +362,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     }
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public void fireEvent(IEvent event)
   {

@@ -190,6 +190,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
     }
   }
 
+  @SuppressWarnings("unchecked")
   public void notifyEvent(IEvent event)
   {
     if (event.getSource() == session)

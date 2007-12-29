@@ -167,6 +167,7 @@ public class CollaborationsPane extends Composite implements IListener
     }
   }
 
+  @SuppressWarnings("unchecked")
   public void notifyEvent(IEvent event)
   {
     if (session == null)

@@ -95,6 +95,7 @@ public abstract class DelegatingRegistry<K, V> extends Registry<K, V>
     return old;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   protected V deregister(Object key)
   {

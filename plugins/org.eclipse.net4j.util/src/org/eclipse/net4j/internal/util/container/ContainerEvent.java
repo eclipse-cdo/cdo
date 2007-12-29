@@ -43,6 +43,7 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
     this.deltas = deltas;
   }
 
+  @SuppressWarnings("unchecked")
   public IContainer<E> getContainer()
   {
     return (IContainer<E>)getSource();
@@ -53,6 +54,7 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
     return deltas.isEmpty();
   }
 
+  @SuppressWarnings("unchecked")
   public IContainerDelta<E>[] getDeltas()
   {
     return deltas.toArray(new IContainerDelta[deltas.size()]);

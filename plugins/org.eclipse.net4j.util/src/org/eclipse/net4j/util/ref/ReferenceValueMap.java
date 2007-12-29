@@ -219,6 +219,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
     return new ReferenceQueue<V>();
   }
 
+  @SuppressWarnings("unchecked")
   protected void purgeQueue()
   {
     if (queue != null)
@@ -372,6 +373,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
       return a;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T[] toArray(T[] a)
     {

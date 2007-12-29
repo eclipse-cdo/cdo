@@ -25,6 +25,7 @@ public class ContainerEventAdapter<E> implements IListener
   {
   }
 
+  @SuppressWarnings("unchecked")
   public final void notifyEvent(IEvent event)
   {
     if (event instanceof IContainerEvent)

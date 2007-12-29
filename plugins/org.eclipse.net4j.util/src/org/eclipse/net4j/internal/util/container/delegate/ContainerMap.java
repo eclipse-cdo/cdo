@@ -140,6 +140,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category READ
    */
+  @SuppressWarnings("unchecked")
   public Map.Entry<K, V>[] getElements()
   {
     return (Entry<K, V>[])getDelegate().entrySet().toArray();

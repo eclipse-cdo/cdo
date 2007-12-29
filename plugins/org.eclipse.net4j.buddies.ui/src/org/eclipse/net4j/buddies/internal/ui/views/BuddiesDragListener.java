@@ -39,7 +39,7 @@ public class BuddiesDragListener extends DNDDragListener<IBuddy[]>
   protected IBuddy[] getObject(IStructuredSelection selection)
   {
     Collection<IBuddy> buddies = new ArrayList<IBuddy>();
-    for (Iterator<Object> it = selection.iterator(); it.hasNext();)
+    for (Iterator<?> it = selection.iterator(); it.hasNext();)
     {
       Object element = it.next();
       if (element instanceof IBuddy)

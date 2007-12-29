@@ -48,6 +48,7 @@ public abstract class DNDTransfer<TYPE> extends ByteArrayTransfer
     return new String[] { typeName };
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   protected void javaToNative(Object object, TransferData transferData)
   {

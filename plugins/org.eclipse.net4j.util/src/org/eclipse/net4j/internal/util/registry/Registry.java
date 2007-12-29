@@ -135,6 +135,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
     }
   }
 
+  @SuppressWarnings("unchecked")
   public Entry<K, V>[] getElements()
   {
     return entrySet().toArray(new Entry[size()]);
@@ -189,6 +190,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
     return oldValue;
   }
 
+  @SuppressWarnings("unchecked")
   protected V deregister(Object key)
   {
     V value = getMap().remove(key);

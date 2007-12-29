@@ -21,8 +21,8 @@ import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.INegotiationContext.Receiver;
 
-import org.eclipse.internal.net4j.BufferUtil;
-import org.eclipse.internal.net4j.Channel;
+import org.eclipse.internal.net4j.buffer.BufferUtil;
+import org.eclipse.internal.net4j.channel.Channel;
 
 import java.nio.ByteBuffer;
 

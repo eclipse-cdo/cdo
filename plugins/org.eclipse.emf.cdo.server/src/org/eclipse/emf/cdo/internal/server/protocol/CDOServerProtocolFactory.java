@@ -5,7 +5,7 @@ import org.eclipse.emf.cdo.server.IRepositoryProvider;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 
-import org.eclipse.internal.net4j.ServerProtocolFactory;
+import org.eclipse.internal.net4j.protocol.ServerProtocolFactory;
 
 /**
  * @author Eike Stepper

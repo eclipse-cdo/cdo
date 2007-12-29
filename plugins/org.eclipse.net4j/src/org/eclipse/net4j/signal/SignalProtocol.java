@@ -18,8 +18,8 @@ import org.eclipse.net4j.stream.ChannelOutputStream;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.net4j.util.io.StreamWrapperChain;
 
-import org.eclipse.internal.net4j.Protocol;
 import org.eclipse.internal.net4j.bundle.OM;
+import org.eclipse.internal.net4j.protocol.Protocol;
 
 import java.io.IOException;
 import java.io.InputStream;

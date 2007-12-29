@@ -25,8 +25,8 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
-import org.eclipse.internal.net4j.Channel;
-import org.eclipse.internal.net4j.Connector;
+import org.eclipse.internal.net4j.channel.Channel;
+import org.eclipse.internal.net4j.connector.Connector;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;

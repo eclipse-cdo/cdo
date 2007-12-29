@@ -18,7 +18,7 @@ import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.registry.IRegistry;
 
-import org.eclipse.internal.net4j.Acceptor;
+import org.eclipse.internal.net4j.acceptor.Acceptor;
 
 import java.util.List;
 

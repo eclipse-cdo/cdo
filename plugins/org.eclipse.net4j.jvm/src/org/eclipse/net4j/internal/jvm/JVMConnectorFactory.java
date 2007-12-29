@@ -13,7 +13,7 @@ package org.eclipse.net4j.internal.jvm;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
-import org.eclipse.internal.net4j.ConnectorFactory;
+import org.eclipse.internal.net4j.connector.ConnectorFactory;
 
 /**
  * @author Eike Stepper

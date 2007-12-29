@@ -18,13 +18,13 @@ import org.eclipse.net4j.internal.util.security.RandomizerFactory;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
-import org.eclipse.internal.net4j.AcceptorFactory;
-import org.eclipse.internal.net4j.BufferFactory;
-import org.eclipse.internal.net4j.BufferPool;
-import org.eclipse.internal.net4j.BufferProviderFactory;
-import org.eclipse.internal.net4j.ConnectorFactory;
 import org.eclipse.internal.net4j.ExecutorServiceFactory;
 import org.eclipse.internal.net4j.Net4jTransportInjector;
+import org.eclipse.internal.net4j.acceptor.AcceptorFactory;
+import org.eclipse.internal.net4j.buffer.BufferFactory;
+import org.eclipse.internal.net4j.buffer.BufferPool;
+import org.eclipse.internal.net4j.buffer.BufferProviderFactory;
+import org.eclipse.internal.net4j.connector.ConnectorFactory;
 
 import java.util.concurrent.ExecutorService;
 

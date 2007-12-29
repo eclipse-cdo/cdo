@@ -16,8 +16,8 @@ import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import org.eclipse.internal.net4j.Acceptor;
-import org.eclipse.internal.net4j.Connector;
+import org.eclipse.internal.net4j.acceptor.Acceptor;
+import org.eclipse.internal.net4j.connector.Connector;
 
 /**
  * @author Eike Stepper

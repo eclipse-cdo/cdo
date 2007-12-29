@@ -32,8 +32,8 @@ import java.util.List;
  * exchange {@link IBuffer}s.
  * <p>
  * This interface is <b>not</b> intended to be implemented by clients. Providers of connectors for new physical
- * connection types have to subclass {@link org.eclipse.internal.net4j.Connector Connector} (see
- * {@link org.eclipse.internal.net4j.Channel#setConnector(org.eclipse.internal.net4j.Connector) Channel#setConnector}).
+ * connection types have to subclass {@link org.eclipse.internal.net4j.connector.Connector Connector} (see
+ * {@link org.eclipse.internal.net4j.channel.Channel#setConnector(org.eclipse.internal.net4j.connector.Connector) Channel#setConnector}).
  * <p>
  * <dt><b>Class Diagram:</b></dt>
  * <dd><img src="doc-files/Connectors.png" title="Diagram Connectors" border="0" usemap="Connectors.png"/></dd>

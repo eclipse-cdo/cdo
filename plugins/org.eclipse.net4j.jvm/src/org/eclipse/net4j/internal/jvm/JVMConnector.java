@@ -16,8 +16,8 @@ import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
-import org.eclipse.internal.net4j.Channel;
-import org.eclipse.internal.net4j.Connector;
+import org.eclipse.internal.net4j.channel.Channel;
+import org.eclipse.internal.net4j.connector.Connector;
 
 import java.util.Queue;
 

@@ -18,7 +18,7 @@ import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelectorListener;
 import org.eclipse.net4j.util.io.IOUtil;
 
-import org.eclipse.internal.net4j.Acceptor;
+import org.eclipse.internal.net4j.acceptor.Acceptor;
 
 import java.io.IOException;
 import java.net.InetAddress;

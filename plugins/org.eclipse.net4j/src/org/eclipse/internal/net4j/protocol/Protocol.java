@@ -10,21 +10,23 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.protocol;
 
-import org.eclipse.net4j.Net4jUtil;
-import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.protocol.IProtocol;
 
-import org.eclipse.internal.net4j.channel.Channel;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
  */
-public abstract class Protocol extends Lifecycle implements IProtocol, IBufferProvider
+public abstract class Protocol extends Lifecycle implements IProtocol
 {
-  private Channel channel;
+  private IChannel channel;
+
+  private IBufferProvider bufferProvider;
+
+  private ExecutorService executorService;
 
   private Object infraStructure;
 
@@ -32,14 +34,34 @@ public abstract class Protocol extends Lifecycle implements IProtocol, IBufferPr
   {
   }
 
-  public Channel getChannel()
+  public IChannel getChannel()
   {
     return channel;
   }
 
   public void setChannel(IChannel channel)
   {
-    this.channel = (Channel)channel;
+    this.channel = channel;
+  }
+
+  public IBufferProvider getBufferProvider()
+  {
+    return bufferProvider;
+  }
+
+  public void setBufferProvider(IBufferProvider bufferProvider)
+  {
+    this.bufferProvider = bufferProvider;
+  }
+
+  public ExecutorService getExecutorService()
+  {
+    return executorService;
+  }
+
+  public void setExecutorService(ExecutorService executorService)
+  {
+    this.executorService = executorService;
   }
 
   public Object getInfraStructure()
@@ -52,29 +74,13 @@ public abstract class Protocol extends Lifecycle implements IProtocol, IBufferPr
     this.infraStructure = infraStructure;
   }
 
-  public short getBufferCapacity()
-  {
-    return Net4jUtil.getBufferProvider(channel).getBufferCapacity();
-  }
-
-  public IBuffer provideBuffer()
-  {
-    return Net4jUtil.getBufferProvider(channel).provideBuffer();
-  }
-
-  public void retainBuffer(IBuffer buffer)
-  {
-    Net4jUtil.getBufferProvider(channel).retainBuffer(buffer);
-  }
-
   @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (channel == null)
-    {
-      throw new IllegalStateException("channel == null");
-    }
+    checkState(channel, "channel");
+    checkState(bufferProvider, "bufferProvider");
+    checkState(executorService, "executorService");
   }
 
   @Override

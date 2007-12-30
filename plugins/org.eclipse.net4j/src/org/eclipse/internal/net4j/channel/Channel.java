@@ -13,8 +13,6 @@ package org.eclipse.internal.net4j.channel;
 import org.eclipse.net4j.buffer.BufferState;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
-import org.eclipse.net4j.buffer.IBufferProvider;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.internal.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.internal.util.concurrent.SynchronousWorkSerializer;
@@ -34,43 +32,49 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public class Channel extends Lifecycle implements IChannel, IBufferProvider
+public class Channel extends Lifecycle implements InternalChannel
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CHANNEL, Channel.class);
 
   private int channelID;
 
+  private IChannelMultiplexer channelMultiplexer;
+
   private short channelIndex = Buffer.NO_CHANNEL;
 
-  // private Connector connector;
-
-  private IBufferProvider bufferProvider;
-
-  private IChannelMultiplexer channelMultiplexer;
+  private ExecutorService receiveExecutor;
 
   /**
    * The external handler for buffers passed from the {@link #connector}.
    */
   private IBufferHandler receiveHandler;
 
-  private ExecutorService receiveExecutor;
-
   private IWorkSerializer receiveSerializer;
 
   private Queue<IBuffer> sendQueue;
 
-  public Channel(int channelID, IBufferProvider bufferProvider, IChannelMultiplexer channelMultiplexer,
-      ExecutorService receiveExecutor)
+  public Channel()
   {
-    this.channelID = channelID;
-    this.bufferProvider = bufferProvider;
-    this.channelMultiplexer = channelMultiplexer;
-    this.receiveExecutor = receiveExecutor;
   }
 
   public int getChannelID()
   {
     return channelID;
+  }
+
+  public void setChannelID(int channelID)
+  {
+    this.channelID = channelID;
+  }
+
+  public IChannelMultiplexer getChannelMultiplexer()
+  {
+    return channelMultiplexer;
+  }
+
+  public void setChannelMultiplexer(IChannelMultiplexer channelMultiplexer)
+  {
+    this.channelMultiplexer = channelMultiplexer;
   }
 
   public short getChannelIndex()
@@ -88,34 +92,14 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     this.channelIndex = channelIndex;
   }
 
-  // public Connector getConnector()
-  // {
-  // return connector;
-  // }
-  //
-  // public void setConnector(Connector connector)
-  // {
-  // this.connector = connector;
-  // }
-
-  public short getBufferCapacity()
+  public ExecutorService getReceiveExecutor()
   {
-    return bufferProvider.getBufferCapacity();
+    return receiveExecutor;
   }
 
-  public IBuffer provideBuffer()
+  public void setReceiveExecutor(ExecutorService receiveExecutor)
   {
-    return bufferProvider.provideBuffer();
-  }
-
-  public void retainBuffer(IBuffer buffer)
-  {
-    bufferProvider.retainBuffer(buffer);
-  }
-
-  public Queue<IBuffer> getSendQueue()
-  {
-    return sendQueue;
+    this.receiveExecutor = receiveExecutor;
   }
 
   public IBufferHandler getReceiveHandler()
@@ -128,14 +112,9 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
     this.receiveHandler = receiveHandler;
   }
 
-  public ExecutorService getReceiveExecutor()
+  public Queue<IBuffer> getSendQueue()
   {
-    return receiveExecutor;
-  }
-
-  public boolean isInternal()
-  {
-    return false;
+    return sendQueue;
   }
 
   public void close()
@@ -207,7 +186,6 @@ public class Channel extends Lifecycle implements IChannel, IBufferProvider
   {
     super.doBeforeActivate();
     checkState(channelIndex != Buffer.NO_CHANNEL, "channelIndex == NO_CHANNEL"); //$NON-NLS-1$
-    checkState(bufferProvider, "bufferProvider"); //$NON-NLS-1$
     checkState(channelMultiplexer, "channelMultiplexer"); //$NON-NLS-1$
   }
 

@@ -8,34 +8,27 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.protocol;
+package org.eclipse.internal.net4j.channel;
 
-import org.eclipse.net4j.buffer.IBufferHandler;
-import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
+import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
  */
-public interface IProtocol extends IBufferHandler
+public interface InternalChannel extends IChannel, ILifecycle.Introspection
 {
-  public String getType();
+  public void setChannelID(int channelID);
 
-  public IChannel getChannel();
+  public void setChannelIndex(short channelIndex);
 
-  public void setChannel(IChannel channel);
+  public ExecutorService getReceiveExecutor();
 
-  public Object getInfraStructure();
+  public Queue<IBuffer> getSendQueue();
 
-  public void setInfraStructure(Object infraStructure);
-
-  public IBufferProvider getBufferProvider();
-
-  public void setBufferProvider(IBufferProvider bufferProvider);
-
-  public ExecutorService getExecutorService();
-
-  public void setExecutorService(ExecutorService executorService);
+  public void handleBufferFromMultiplexer(IBuffer buffer);
 }

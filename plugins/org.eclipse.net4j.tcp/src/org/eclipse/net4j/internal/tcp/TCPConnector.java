@@ -25,7 +25,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
-import org.eclipse.internal.net4j.channel.Channel;
+import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.connector.Connector;
 
 import java.nio.ByteBuffer;
@@ -109,8 +109,8 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   /**
-   * Called by {@link Channel} each time a new buffer is available for multiplexing. This or another buffer can be
-   * dequeued from the outputQueue of the {@link Channel}.
+   * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be
+   * dequeued from the outputQueue of the {@link IChannel}.
    */
   public void multiplexChannel(IChannel channel)
   {
@@ -162,7 +162,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       if (byteBuffer != null)
       {
         short channelIndex = inputBuffer.getChannelIndex();
-        Channel channel = channelIndex == ControlChannel.CONTROL_CHANNEL_INDEX ? controlChannel
+        InternalChannel channel = channelIndex == ControlChannel.CONTROL_CHANNEL_INDEX ? controlChannel
             : getChannel(channelIndex);
         if (channel != null)
         {
@@ -280,7 +280,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   {
     try
     {
-      Channel channel = getChannel(channelIndex);
+      InternalChannel channel = getChannel(channelIndex);
       if (channel instanceof ControlChannel)
       {
         return;

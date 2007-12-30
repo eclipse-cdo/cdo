@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
  */
 public class TDD
 {
-  private static final AbstractOMTest test = new RandomDeadLockTest();
+  private static final AbstractOMTest test = new TransactionDeadLockTest();
 
   private static final String METHOD_NAME = "_testCreateManyTransaction";
 

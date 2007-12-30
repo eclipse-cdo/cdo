@@ -20,7 +20,9 @@ import org.eclipse.net4j.util.event.INotifier;
  * and virtual in the sense that it does not necessarily represent a single physical connection like a TCP socket
  * connection. The underlying physical connection is represented by a {@link IConnector}.
  * <p>
- * This interface is <b>not</b> intended to be implemented by clients.
+ * This interface is <b>not</b> intended to be implemented by clients. Providers of channels (for example for new
+ * physical connection types) have to subclass
+ * {@link org.eclipse.internal.net4j.channel.InternalChannel InternalChannel}.
  * <p>
  * <dt><b>Class Diagram:</b></dt>
  * <dd><img src="doc-files/Channels.png" title="Diagram Buffers" border="0" usemap="#Channels.png"/></dd>

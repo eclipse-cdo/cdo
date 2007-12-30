@@ -44,6 +44,7 @@ import org.eclipse.net4j.util.security.INegotiator;
 
 import org.eclipse.internal.net4j.bundle.OM;
 import org.eclipse.internal.net4j.channel.Channel;
+import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.protocol.ClientProtocolFactory;
 import org.eclipse.internal.net4j.protocol.ServerProtocolFactory;
 
@@ -77,15 +78,15 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   private IBufferProvider bufferProvider;
 
   /**
-   * An optional executor to be used by the {@link IChannel}s to process their {@link Channel#receiveQueue} instead of
-   * the current thread. If not <code>null</code> the sender and the receiver peers become decoupled.
+   * An optional executor to be used by the {@link IChannel}s to process their receive queues instead of the current
+   * thread. If not <code>null</code> the sender and the receiver peers become decoupled.
    * <p>
    */
   private ExecutorService receiveExecutor;
 
   private int nextChannelID;
 
-  private List<Channel> channels = new ArrayList<Channel>(0);
+  private List<InternalChannel> channels = new ArrayList<InternalChannel>(0);
 
   private RWLock channelsLock = new RWLock(2500);
 
@@ -349,7 +350,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     {
       public void run()
       {
-        for (Channel channel : channels)
+        for (InternalChannel channel : channels)
         {
           if (channel != null)
           {
@@ -398,7 +399,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
     int channelID = getNextChannelID();
     short channelIndex = findFreeChannelIndex();
-    Channel channel = createChannel(channelID, channelIndex, protocol);
+    InternalChannel channel = createChannel(channelID, channelIndex, protocol);
     registerChannelWithPeer(channelID, channelIndex, protocol);
 
     try
@@ -417,15 +418,17 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     return channel;
   }
 
-  public Channel createChannel(int channelID, short channelIndex, String protocolID)
+  public InternalChannel createChannel(int channelID, short channelIndex, String protocolID)
   {
     IProtocol protocol = createProtocol(protocolID, null);
     return createChannel(channelID, channelIndex, protocol);
   }
 
-  public Channel createChannel(int channelID, short channelIndex, IProtocol protocol)
+  public InternalChannel createChannel(int channelID, short channelIndex, IProtocol protocol)
   {
-    Channel channel = new Channel(channelID, bufferProvider, this, receiveExecutor);
+    InternalChannel channel = createChannel();
+    channel.setChannelID(channelID);
+
     if (protocol != null)
     {
       protocol.setChannel(channel);
@@ -445,18 +448,25 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     }
 
     channel.setChannelIndex(channelIndex);
-    // channel.setConnector(this);
     channel.setReceiveHandler(protocol);
     channel.addListener(channelListener); // TODO remove?
     addChannel(channel);
     return channel;
   }
 
-  public Channel getChannel(final short channelIndex)
+  protected InternalChannel createChannel()
   {
-    return channelsLock.read(new Callable<Channel>()
+    Channel channel = new Channel();
+    channel.setChannelMultiplexer(this);
+    channel.setReceiveExecutor(receiveExecutor);
+    return channel;
+  }
+
+  public InternalChannel getChannel(final short channelIndex)
+  {
+    return channelsLock.read(new Callable<InternalChannel>()
     {
-      public Channel call() throws Exception
+      public InternalChannel call() throws Exception
       {
         return channels.get(channelIndex);
       }
@@ -475,7 +485,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     {
       public void run()
       {
-        for (final Channel channel : channels)
+        for (final InternalChannel channel : channels)
         {
           if (channel != null && channel.isActive())
           {
@@ -509,7 +519,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     });
   }
 
-  protected void addChannel(final Channel channel)
+  protected void addChannel(final InternalChannel channel)
   {
     channelsLock.write(new Runnable()
     {
@@ -576,7 +586,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
       {
         if (channelIndex < channels.size())
         {
-          Channel c = channels.get(channelIndex);
+          InternalChannel c = channels.get(channelIndex);
           if (c != null && c.isActive())
           {
             throw ex;
@@ -596,7 +606,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   {
     try
     {
-      Channel channel = getChannel(channelIndex);
+      InternalChannel channel = getChannel(channelIndex);
       if (channel != null)
       {
         if (channel.getChannelID() != channelID)
@@ -649,6 +659,8 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     // Create protocol
     String description = null;
     IProtocol protocol = (IProtocol)factory.create(description);
+    protocol.setBufferProvider(bufferProvider);
+    protocol.setExecutorService(receiveExecutor);
     if (infraStructure != null)
     {
       protocol.setInfraStructure(infraStructure);
@@ -725,7 +737,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
       {
         for (short i = 0; i < channels.size(); i++)
         {
-          Channel channel = channels.get(i);
+          InternalChannel channel = channels.get(i);
           if (channel != null)
           {
             LifecycleUtil.deactivate(channel);

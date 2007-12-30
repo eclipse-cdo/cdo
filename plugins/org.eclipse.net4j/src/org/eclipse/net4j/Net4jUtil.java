@@ -88,21 +88,6 @@ public final class Net4jUtil
     return (IConnector)container.getElement(ConnectorFactory.PRODUCT_GROUP, factoryType, connectorDescription);
   }
 
-  public static IBufferProvider getBufferProvider(Object object)
-  {
-    if (object instanceof IBufferProvider)
-    {
-      return (IBufferProvider)object;
-    }
-
-    if (object == null)
-    {
-      throw new IllegalArgumentException("object == null"); //$NON-NLS-1$
-    }
-
-    throw new IllegalArgumentException("Unable to provide buffers: " + object); //$NON-NLS-1$
-  }
-
   public static IBufferProvider createBufferFactory(short bufferCapacity)
   {
     return new BufferFactory(bufferCapacity);

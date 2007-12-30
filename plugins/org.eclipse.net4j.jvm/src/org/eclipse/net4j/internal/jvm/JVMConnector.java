@@ -16,7 +16,7 @@ import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
-import org.eclipse.internal.net4j.channel.Channel;
+import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.connector.Connector;
 
 import java.util.Queue;
@@ -64,13 +64,13 @@ public abstract class JVMConnector extends Connector
   public void multiplexChannel(IChannel localChannel)
   {
     short channelIndex = localChannel.getChannelIndex();
-    Channel peerChannel = peer.getChannel(channelIndex);
+    InternalChannel peerChannel = peer.getChannel(channelIndex);
     if (peerChannel == null)
     {
       throw new IllegalStateException("peerChannel == null"); //$NON-NLS-1$
     }
 
-    Queue<IBuffer> localQueue = ((Channel)localChannel).getSendQueue();
+    Queue<IBuffer> localQueue = ((InternalChannel)localChannel).getSendQueue();
     IBuffer buffer = localQueue.poll();
     buffer.flip();
     peerChannel.handleBufferFromMultiplexer(buffer);
@@ -88,7 +88,7 @@ public abstract class JVMConnector extends Connector
   {
     try
     {
-      Channel channel = getPeer().createChannel(channelID, channelIndex, protocol);
+      InternalChannel channel = getPeer().createChannel(channelID, channelIndex, protocol);
       if (channel == null)
       {
         throw new ConnectorException("Failed to register channel with peer");

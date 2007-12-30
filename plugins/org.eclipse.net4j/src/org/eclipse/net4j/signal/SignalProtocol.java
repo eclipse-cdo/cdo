@@ -28,7 +28,6 @@ import java.nio.ByteBuffer;
 import java.text.MessageFormat;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
@@ -75,11 +74,6 @@ public abstract class SignalProtocol extends Protocol
     {
       this.streamWrapper = new StreamWrapperChain(streamWrapper, this.streamWrapper);
     }
-  }
-
-  public ExecutorService getExecutorService()
-  {
-    return getChannel().getReceiveExecutor();
   }
 
   public boolean waitForSignals(long timeout)
@@ -205,6 +199,11 @@ public abstract class SignalProtocol extends Protocol
     return MessageFormat.format("SignalProtocol[{0}]", getType()); //$NON-NLS-1$ 
   }
 
+  public String getType()
+  {
+    return null;
+  }
+
   protected final SignalReactor createSignalReactor(short signalID)
   {
     checkActive();
@@ -296,7 +295,7 @@ public abstract class SignalProtocol extends Protocol
     {
       super(getChannel(), new IBufferProvider()
       {
-        private IBufferProvider delegate = org.eclipse.net4j.Net4jUtil.getBufferProvider(getChannel());
+        private IBufferProvider delegate = getBufferProvider();
 
         private boolean firstBuffer = addSignalID;
 

@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.security.INegotiationContext.Receiver;
 
 import org.eclipse.internal.net4j.buffer.BufferUtil;
 import org.eclipse.internal.net4j.channel.Channel;
+import org.eclipse.internal.net4j.channel.InternalChannel;
 
 import java.nio.ByteBuffer;
 
@@ -51,24 +52,17 @@ public final class ControlChannel extends Channel
 
   private SynchronizingCorrelator<Short, Boolean> registrations = new SynchronizingCorrelator<Short, Boolean>();
 
-  private TCPConnector connector;
-
   public ControlChannel(int channelID, TCPConnector connector)
   {
-    super(channelID, connector.getBufferProvider(), connector, connector.getReceiveExecutor());
-    this.connector = connector;
+    setChannelID(channelID);
     setChannelIndex(CONTROL_CHANNEL_INDEX);
-  }
-
-  @Override
-  public boolean isInternal()
-  {
-    return true;
+    setChannelMultiplexer(connector);
+    setReceiveExecutor(connector.getReceiveExecutor());
   }
 
   public TCPConnector getConnector()
   {
-    return connector;
+    return (TCPConnector)getChannelMultiplexer();
   }
 
   public boolean registerChannel(int channelID, short channelIndex, IProtocol protocol)
@@ -127,11 +121,11 @@ public final class ControlChannel extends Channel
       case OPCODE_NEGOTIATION:
       {
         assertNegotiating();
-        INegotiationContext negotiationContext = connector.getNegotiationContext();
+        INegotiationContext negotiationContext = getConnector().getNegotiationContext();
         while (negotiationContext == null)
         {
           ConcurrencyUtil.sleep(20);
-          negotiationContext = connector.getNegotiationContext();
+          negotiationContext = getConnector().getNegotiationContext();
         }
 
         Receiver receiver = negotiationContext.getReceiver();
@@ -151,7 +145,7 @@ public final class ControlChannel extends Channel
         {
           byte[] handlerFactoryUTF8 = BufferUtil.getByteArray(byteBuffer);
           String protocolID = BufferUtil.fromUTF8(handlerFactoryUTF8);
-          Channel channel = connector.createChannel(channelID, channelIndex, protocolID);
+          InternalChannel channel = getConnector().createChannel(channelID, channelIndex, protocolID);
           if (channel != null)
           {
             channel.activate();
@@ -189,7 +183,7 @@ public final class ControlChannel extends Channel
         {
           try
           {
-            connector.inverseRemoveChannel(channelID, channelIndex);
+            getConnector().inverseRemoveChannel(channelID, channelIndex);
           }
           catch (Exception ex)
           {
@@ -202,7 +196,7 @@ public final class ControlChannel extends Channel
 
       default:
         OM.LOG.error("Invalid opcode: " + opcode); //$NON-NLS-1$
-        connector.deactivate();
+        getConnector().deactivate();
       }
     }
     finally
@@ -227,18 +221,23 @@ public final class ControlChannel extends Channel
     handleBuffer(buffer);
   }
 
+  private IBuffer provideBuffer()
+  {
+    return getConnector().getBufferProvider().provideBuffer();
+  }
+
   private void assertNegotiating()
   {
-    if (!connector.isNegotiating())
+    if (!getConnector().isNegotiating())
     {
-      connector.deactivate();
+      getConnector().deactivate();
       throw new IllegalStateException("Connector is not negotiating");
     }
   }
 
   private void assertConnected()
   {
-    if (!connector.isConnected())
+    if (!getConnector().isConnected())
     {
       throw new IllegalStateException("Connector is not connected");
     }

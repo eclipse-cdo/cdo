@@ -22,11 +22,11 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 /**
- * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=201366
  * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=213782
+ * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=201366
  * @author Simon McDuff
  */
-public class RandomDeadLockTest extends AbstractCDOTest
+public class TransactionDeadLockTest extends AbstractCDOTest
 {
   @Override
   protected void doSetUp() throws Exception

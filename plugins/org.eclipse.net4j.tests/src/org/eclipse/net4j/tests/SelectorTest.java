@@ -25,7 +25,13 @@ public class SelectorTest extends AbstractOMTest
     {
       long start = System.currentTimeMillis();
       Selector selector = Selector.open();
-      System.out.println("OPEN " + i + ": " + (System.currentTimeMillis() - start));
+      long duration = System.currentTimeMillis() - start;
+      if (i == 0)
+      {
+        System.out.println(selector.provider().getClass().getName());
+      }
+
+      System.out.println(duration);
       selector.close();
     }
   }

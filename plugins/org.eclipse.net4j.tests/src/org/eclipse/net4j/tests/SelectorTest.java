@@ -24,7 +24,7 @@ public class SelectorTest extends TestCase
   {
     SelectorProvider provider = SelectorProvider.provider();
     System.out.println(provider.getClass().getName());
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 5; i++)
     {
       long start = System.currentTimeMillis();
       Selector selector = provider.openSelector();

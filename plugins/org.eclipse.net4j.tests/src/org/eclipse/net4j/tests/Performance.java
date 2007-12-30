@@ -1,4 +1,5 @@
 package org.eclipse.net4j.tests;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -19,6 +20,7 @@ public class Performance
   {
     testInetAddress();
     testServerSocket();
+    // testRouter();
     testSocket();
     testSelector();
   }
@@ -51,11 +53,30 @@ public class Performance
     }
   }
 
-  public static void testSocket() throws Exception
+  public static void testRouter() throws Exception
   {
-    System.out.println(Socket.class.getName());
+    System.out.println(Socket.class.getName() + " (ROUTER)");
     for (int i = 0; i < 2; i++)
     {
+      final SocketAddress endpoint = new InetSocketAddress(InetAddress.getByName("192.168.1.1"), 80);
+      Socket socket = new Socket(Proxy.NO_PROXY);
+
+      long start = System.currentTimeMillis();
+      socket.connect(endpoint);
+      long duration = System.currentTimeMillis() - start;
+
+      System.out.println(duration);
+      socket.close();
+      Thread.sleep(500);
+    }
+  }
+
+  public static void testSocket() throws Exception
+  {
+    System.out.println(Socket.class.getName() + " (LOOPBACK)");
+    for (int i = 0; i < 2; i++)
+    {
+      final SocketAddress endpoint = new InetSocketAddress(InetAddress.getByName("127.0.0.1"), 2036);
       final CountDownLatch latch = new CountDownLatch(1);
       new Thread()
       {
@@ -64,7 +85,8 @@ public class Performance
         {
           try
           {
-            ServerSocket serverSocket = new ServerSocket(2036);
+            ServerSocket serverSocket = new ServerSocket();
+            serverSocket.bind(endpoint);
             latch.countDown();
 
             Socket socket = serverSocket.accept();
@@ -81,15 +103,14 @@ public class Performance
 
       latch.await();
       Thread.sleep(500);
-
       Socket socket = new Socket(Proxy.NO_PROXY);
-      SocketAddress endpoint = new InetSocketAddress(InetAddress.getByName("127.0.0.1"), 2036);
 
       long start = System.currentTimeMillis();
       socket.connect(endpoint);
       long duration = System.currentTimeMillis() - start;
 
       System.out.println(duration);
+      socket.close();
       Thread.sleep(500);
     }
   }

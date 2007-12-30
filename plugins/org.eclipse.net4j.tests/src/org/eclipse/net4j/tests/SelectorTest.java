@@ -10,26 +10,25 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.util.tests.AbstractOMTest;
-
 import java.nio.channels.Selector;
+import java.nio.channels.spi.SelectorProvider;
+
+import junit.framework.TestCase;
 
 /**
  * @author Eike Stepper
  */
-public class SelectorTest extends AbstractOMTest
+public class SelectorTest extends TestCase
 {
-  public void testInteger() throws Exception
+  public void testOpen() throws Exception
   {
-    for (int i = 0; i < 5; i++)
+    SelectorProvider provider = SelectorProvider.provider();
+    System.out.println(provider.getClass().getName());
+    for (int i = 0; i < 10; i++)
     {
       long start = System.currentTimeMillis();
-      Selector selector = Selector.open();
+      Selector selector = provider.openSelector();
       long duration = System.currentTimeMillis() - start;
-      if (i == 0)
-      {
-        System.out.println(selector.provider().getClass().getName());
-      }
 
       System.out.println(duration);
       selector.close();

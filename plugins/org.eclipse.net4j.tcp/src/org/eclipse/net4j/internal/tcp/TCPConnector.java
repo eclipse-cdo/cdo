@@ -21,6 +21,7 @@ import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelectorListener;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.INegotiationContext;
@@ -32,8 +33,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
-import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author Eike Stepper
@@ -47,6 +49,8 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   private ITCPSelector selector;
 
   private SelectionKey selectionKey;
+
+  private BlockingQueue<InternalChannel> writeQueue = new LinkedBlockingQueue<InternalChannel>();
 
   private IBuffer inputBuffer;
 
@@ -106,16 +110,6 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   public String getURL()
   {
     return "tcp://" + host + ":" + port;
-  }
-
-  /**
-   * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be
-   * dequeued from the outputQueue of the {@link IChannel}.
-   */
-  public void multiplexChannel(IChannel channel)
-  {
-    checkSelectionKey();
-    selector.orderWriteInterest(selectionKey, isClient(), true);
   }
 
   public void handleRegistration(SelectionKey selectionKey)
@@ -192,43 +186,67 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
   }
 
+  /**
+   * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be
+   * dequeued from the outputQueue of the {@link IChannel}.
+   */
+  public void multiplexChannel(IChannel channel)
+  {
+    synchronized (writeQueue)
+    {
+      boolean firstChannel = writeQueue.isEmpty();
+
+      try
+      {
+        writeQueue.put((InternalChannel)channel);
+      }
+      catch (InterruptedException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+
+      if (firstChannel)
+      {
+        checkSelectionKey();
+        selector.orderWriteInterest(selectionKey, isClient(), true);
+      }
+    }
+  }
+
   public void handleWrite(ITCPSelector selector, SocketChannel socketChannel)
   {
     try
     {
-      boolean moreToWrite = false;
-      for (Queue<IBuffer> bufferQueue : getChannelBufferQueues())
+      synchronized (writeQueue)
       {
-        IBuffer buffer = bufferQueue.peek();
-        if (buffer != null)
+        InternalChannel channel = writeQueue.peek();
+        if (channel != null)
         {
-          if (buffer.write(socketChannel))
+          Queue<IBuffer> bufferQueue = channel.getSendQueue();
+          if (bufferQueue != null)
           {
-            bufferQueue.poll();
-            buffer.release();
-
-            if (!moreToWrite)
+            IBuffer buffer = bufferQueue.peek();
+            if (buffer != null)
             {
-              moreToWrite = !bufferQueue.isEmpty();
+              if (buffer.write(socketChannel))
+              {
+                writeQueue.poll();
+                bufferQueue.poll();
+                buffer.release();
+              }
             }
           }
-          else
-          {
-            moreToWrite = true;
-            break;
-          }
         }
-      }
 
-      if (!moreToWrite)
-      {
-        checkSelectionKey();
-        selector.orderWriteInterest(selectionKey, isClient(), false);
+        if (writeQueue.isEmpty())
+        {
+          checkSelectionKey();
+          selector.orderWriteInterest(selectionKey, isClient(), false);
+        }
       }
     }
     catch (NullPointerException ignore)
     {
-      ;
     }
     catch (ClosedChannelException ex)
     {
@@ -239,19 +257,6 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       OM.LOG.error(ex);
       deactivate();
     }
-  }
-
-  @Override
-  protected List<Queue<IBuffer>> getChannelBufferQueues()
-  {
-    List<Queue<IBuffer>> queues = super.getChannelBufferQueues();
-    Queue<IBuffer> controlQueue = controlChannel.getSendQueue();
-    if (!controlQueue.isEmpty())
-    {
-      queues.add(controlQueue);
-    }
-
-    return queues;
   }
 
   @Override

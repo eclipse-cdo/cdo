@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.connector;
 
-import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
@@ -51,7 +50,6 @@ import org.eclipse.internal.net4j.protocol.ServerProtocolFactory;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -476,27 +474,6 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   protected int getNextChannelID()
   {
     return nextChannelID++;
-  }
-
-  protected List<Queue<IBuffer>> getChannelBufferQueues()
-  {
-    final List<Queue<IBuffer>> result = new ArrayList<Queue<IBuffer>>(channels.size());
-    channelsLock.read(new Runnable()
-    {
-      public void run()
-      {
-        for (final InternalChannel channel : channels)
-        {
-          if (channel != null && channel.isActive())
-          {
-            Queue<IBuffer> bufferQueue = channel.getSendQueue();
-            result.add(bufferQueue);
-          }
-        }
-      }
-    });
-
-    return result;
   }
 
   protected short findFreeChannelIndex()

@@ -136,7 +136,6 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       {
         return "INTEREST WRITE " + selectionKey.channel() + " = " + on;
       }
-
     });
   }
 

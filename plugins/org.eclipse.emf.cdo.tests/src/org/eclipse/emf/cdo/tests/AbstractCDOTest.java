@@ -43,7 +43,7 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   @Override
   protected boolean useJVMTransport()
   {
-    return true;
+    return false;
   }
 
   @Override

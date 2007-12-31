@@ -11,7 +11,10 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.util.container.ManagedContainer;
+import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -29,9 +32,9 @@ public abstract class AbstractTransportTest extends AbstractOMTest
 
   protected IManagedContainer container;
 
-  private Acceptor acceptor;
+  private IAcceptor acceptor;
 
-  private Connector connector;
+  private IConnector connector;
 
   @Override
   protected void doSetUp() throws Exception
@@ -58,29 +61,56 @@ public abstract class AbstractTransportTest extends AbstractOMTest
     }
   }
 
+  protected boolean useJVMTransport()
+  {
+    return false;
+  }
+
   protected IManagedContainer createContainer()
   {
     IManagedContainer container = new ManagedContainer();
     Net4jUtil.prepareContainer(container);
-    TCPUtil.prepareContainer(container);
+    if (useJVMTransport())
+    {
+      JVMUtil.prepareContainer(container);
+    }
+    else
+    {
+      TCPUtil.prepareContainer(container);
+    }
+
     return container;
   }
 
-  protected Acceptor getAcceptor()
+  protected IAcceptor getAcceptor()
   {
     if (acceptor == null)
     {
-      acceptor = (Acceptor)TCPUtil.getAcceptor(container, null);
+      if (useJVMTransport())
+      {
+        acceptor = (Acceptor)JVMUtil.getAcceptor(container, "default");
+      }
+      else
+      {
+        acceptor = (Acceptor)TCPUtil.getAcceptor(container, null);
+      }
     }
 
     return acceptor;
   }
 
-  protected Connector getConnector()
+  protected IConnector getConnector()
   {
     if (connector == null)
     {
-      connector = (Connector)TCPUtil.getConnector(container, HOST);
+      if (useJVMTransport())
+      {
+        connector = (Connector)JVMUtil.getConnector(container, "default");
+      }
+      else
+      {
+        connector = (Connector)TCPUtil.getConnector(container, HOST);
+      }
     }
 
     return connector;
@@ -90,11 +120,11 @@ public abstract class AbstractTransportTest extends AbstractOMTest
   {
     if (container != null)
     {
-      Acceptor acceptor = getAcceptor();
-      acceptor.activate();
+      IAcceptor acceptor = getAcceptor();
+      LifecycleUtil.activate(acceptor);
 
-      Connector connector = getConnector();
-      connector.activate();
+      IConnector connector = getConnector();
+      LifecycleUtil.activate(connector);
     }
   }
 }

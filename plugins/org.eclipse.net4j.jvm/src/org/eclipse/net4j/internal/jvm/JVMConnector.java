@@ -13,9 +13,15 @@ package org.eclipse.net4j.internal.jvm;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
+import org.eclipse.net4j.connector.ConnectorLocation;
+import org.eclipse.net4j.connector.ConnectorState;
+import org.eclipse.net4j.internal.jvm.bundle.OM;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
+import org.eclipse.internal.net4j.buffer.Buffer;
 import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.connector.Connector;
 
@@ -26,8 +32,10 @@ import java.util.Queue;
  * 
  * @author Eike Stepper
  */
-public abstract class JVMConnector extends Connector
+public abstract class JVMConnector extends Connector implements IJVMConnector
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, JVMConnector.class);
+
   private JVMConnector peer;
 
   private String name;
@@ -61,6 +69,23 @@ public abstract class JVMConnector extends Connector
     return "jvm://" + name;
   }
 
+  public ConnectorLocation getLocation()
+  {
+    return null;
+  }
+
+  @Override
+  public void setState(ConnectorState newState) throws ConnectorException
+  {
+    super.setState(newState);
+  }
+
+  @Override
+  public boolean waitForConnection(long timeout) throws ConnectorException
+  {
+    return super.waitForConnection(timeout);
+  }
+
   public void multiplexChannel(IChannel localChannel)
   {
     short channelIndex = localChannel.getChannelIndex();
@@ -72,6 +97,11 @@ public abstract class JVMConnector extends Connector
 
     Queue<IBuffer> localQueue = ((InternalChannel)localChannel).getSendQueue();
     IBuffer buffer = localQueue.poll();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Multiplexing " + ((Buffer)buffer).formatContent(true));
+    }
+
     buffer.flip();
     peerChannel.handleBufferFromMultiplexer(buffer);
   }
@@ -88,7 +118,7 @@ public abstract class JVMConnector extends Connector
   {
     try
     {
-      InternalChannel channel = getPeer().createChannel(channelID, channelIndex, protocol);
+      InternalChannel channel = getPeer().createChannel(channelID, channelIndex, protocol.getType());
       if (channel == null)
       {
         throw new ConnectorException("Failed to register channel with peer");
@@ -110,9 +140,13 @@ public abstract class JVMConnector extends Connector
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (name == null)
-    {
-      throw new IllegalStateException("name == null");
-    }
+    checkState(name, "name");
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    leaveConnecting();
   }
 }

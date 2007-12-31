@@ -18,6 +18,7 @@ import org.eclipse.net4j.tests.signal.IntRequest;
 import org.eclipse.net4j.tests.signal.TestSignalClientProtocolFactory;
 import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * @author Eike Stepper
@@ -39,7 +40,7 @@ public class FailOverTest extends AbstractTransportTest
     IChannel channel = getConnector().openChannel(TestSignalClientProtocolFactory.TYPE, null);
 
     // Simulate a disconnect from the server.
-    getAcceptor().deactivate();
+    LifecycleUtil.deactivate(getAcceptor());
 
     int data = 0x0a;
     IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(getConnector());
@@ -63,7 +64,7 @@ public class FailOverTest extends AbstractTransportTest
     IntRequest request = new IntRequest(channel, data);
 
     // Simulate a disconnect from the server.
-    getAcceptor().deactivate();
+    LifecycleUtil.deactivate(getAcceptor());
 
     int result = failOverStrategy.send(request);
     assertEquals(data, result);

@@ -109,7 +109,6 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     {
       if (timeout == NO_TIMEOUT)
       {
-        // System.out.println("while (currentBuffer == null)");
         while (currentBuffer == null)
         {
           if (buffers == null)
@@ -118,7 +117,6 @@ public class BufferInputStream extends InputStream implements IBufferHandler
             return false;
           }
 
-          // System.out.println("buffers.poll");
           currentBuffer = buffers.poll(check, TimeUnit.MILLISECONDS);
         }
       }

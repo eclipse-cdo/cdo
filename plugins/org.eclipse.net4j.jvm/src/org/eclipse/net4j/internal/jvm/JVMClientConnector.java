@@ -63,6 +63,7 @@ public class JVMClientConnector extends JVMConnector
   {
     super.doActivate();
     JVMConnector peer = acceptor.handleAccept(this);
+    peer.addListener(peerLifecycleListener);
     setPeer(peer);
   }
 
@@ -71,15 +72,5 @@ public class JVMClientConnector extends JVMConnector
   {
     LifecycleUtil.deactivateNoisy(getPeer());
     super.doDeactivate();
-  }
-
-  protected JVMConnector createServerPeer() throws Exception
-  {
-    JVMServerConnector server = new JVMServerConnector(this);
-    server.setBufferProvider(getBufferProvider());
-    server.setReceiveExecutor(getReceiveExecutor());
-    server.addListener(peerLifecycleListener);
-    server.activate();
-    return server;
   }
 }

@@ -41,6 +41,12 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   public static final String REPOSITORY_NAME = "repo1";
 
   @Override
+  protected boolean useJVMTransport()
+  {
+    return true;
+  }
+
+  @Override
   protected IManagedContainer createContainer()
   {
     IManagedContainer container = super.createContainer();
@@ -98,7 +104,7 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
 
   protected CDOSession openModel1Session()
   {
-    CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+    CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
     session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
     return session;
   }

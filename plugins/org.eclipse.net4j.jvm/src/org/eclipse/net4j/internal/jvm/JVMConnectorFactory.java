@@ -22,7 +22,7 @@ public class JVMConnectorFactory extends ConnectorFactory
 {
   public static final String TYPE = "jvm";
 
-  public JVMConnectorFactory(String type)
+  public JVMConnectorFactory()
   {
     super(TYPE);
   }

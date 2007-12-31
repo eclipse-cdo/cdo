@@ -183,7 +183,7 @@ public class Buffer implements IBuffer
     if (TRACER.isEnabled())
     {
       TRACER.trace("Read " + byteBuffer.limit() + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
-          + (eos ? " (EOS)" : "") + StringUtil.NL + formatContent()); //$NON-NLS-1$ //$NON-NLS-2$
+          + (eos ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     byteBuffer.flip();
@@ -242,7 +242,7 @@ public class Buffer implements IBuffer
       if (TRACER.isEnabled())
       {
         TRACER.trace("Writing " + (Math.abs(payloadSize) - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
-            + (eos ? " (EOS)" : "") + StringUtil.NL + formatContent()); //$NON-NLS-1$ //$NON-NLS-2$
+            + (eos ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
       byteBuffer.flip();
@@ -286,7 +286,7 @@ public class Buffer implements IBuffer
   }
 
   @SuppressWarnings("deprecation")
-  public String formatContent()
+  public String formatContent(boolean showHeader)
   {
     final int oldPosition = byteBuffer.position();
     final int oldLimit = byteBuffer.limit();
@@ -298,7 +298,7 @@ public class Buffer implements IBuffer
         byteBuffer.flip();
       }
 
-      if (state == BufferState.PUTTING)
+      if (state == BufferState.PUTTING && !showHeader)
       {
         byteBuffer.position(HEADER_SIZE);
       }

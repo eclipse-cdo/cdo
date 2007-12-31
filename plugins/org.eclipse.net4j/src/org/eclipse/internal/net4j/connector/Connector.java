@@ -605,6 +605,18 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     }
   }
 
+  protected void leaveConnecting()
+  {
+    if (getNegotiator() == null)
+    {
+      setState(ConnectorState.CONNECTED);
+    }
+    else
+    {
+      setState(ConnectorState.NEGOTIATING);
+    }
+  }
+
   protected abstract INegotiationContext createNegotiationContext();
 
   /**

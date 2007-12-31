@@ -10,9 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorLocation;
-import org.eclipse.net4j.connector.ConnectorState;
 
 import java.nio.channels.SelectionKey;
 import java.text.MessageFormat;
@@ -37,12 +35,6 @@ public class TCPServerConnector extends TCPConnector
   public ConnectorLocation getLocation()
   {
     return ConnectorLocation.SERVER;
-  }
-
-  @Override
-  public void setState(ConnectorState newState) throws ConnectorException
-  {
-    super.setState(newState);
   }
 
   @Override

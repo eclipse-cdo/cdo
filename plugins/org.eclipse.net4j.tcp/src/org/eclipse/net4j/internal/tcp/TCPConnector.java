@@ -373,18 +373,6 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
   }
 
-  private void leaveConnecting()
-  {
-    if (getNegotiator() == null)
-    {
-      setState(ConnectorState.CONNECTED);
-    }
-    else
-    {
-      setState(ConnectorState.NEGOTIATING);
-    }
-  }
-
   /**
    * @author Eike Stepper
    */

@@ -240,6 +240,12 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
       {
         return "TypeManager-" + name;
       }
+
+      @Override
+      public String toString()
+      {
+        return getThreadName();
+      }
     };
   }
 

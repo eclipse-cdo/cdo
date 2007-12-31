@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class ViewsChangedIndication extends CDOServerIndication
+public class ViewsChangedIndication extends CDOServerIndication // Indication
 {
   public ViewsChangedIndication()
   {

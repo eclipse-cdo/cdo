@@ -29,6 +29,12 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 public class TransactionDeadLockTest extends AbstractCDOTest
 {
   @Override
+  protected boolean useJVMTransport()
+  {
+    return false;
+  }
+
+  @Override
   protected void doSetUp() throws Exception
   {
     super.doSetUp();

@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class ViewsChangedRequest extends CDOClientRequest<Boolean>
+public class ViewsChangedRequest extends CDOClientRequest<Boolean> // Request
 {
   private int viewID;
 

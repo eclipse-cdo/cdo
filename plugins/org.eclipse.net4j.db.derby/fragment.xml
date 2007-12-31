@@ -22,7 +22,7 @@
       <dbAdapter
             class="org.eclipse.net4j.db.internal.derby.DerbyAdapter"
             name="derby"
-            version="10.3.1.4">
+            version="10.3.2.1">
       </dbAdapter>
    </extension>
 

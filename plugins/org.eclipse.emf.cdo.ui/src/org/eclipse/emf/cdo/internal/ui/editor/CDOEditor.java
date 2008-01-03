@@ -735,8 +735,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected void initializeEditingDomain()
   {
-    Registry regsitry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
-    adapterFactory = new ComposedAdapterFactory(regsitry);
+    Registry registry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
+    adapterFactory = new ComposedAdapterFactory(registry);
   }
 
   /**

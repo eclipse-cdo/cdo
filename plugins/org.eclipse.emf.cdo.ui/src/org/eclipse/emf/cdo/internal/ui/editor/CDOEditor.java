@@ -1031,7 +1031,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         viewerInput = resourceSet.getResource(resourceURI, true);
       }
 
-      // TODO resourceSet.eAdapters().add(problemIndicationAdapter);
+      // resourceSet.eAdapters().add(problemIndicationAdapter);
     }
     catch (RuntimeException ex)
     {
@@ -1197,7 +1197,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         {
           if (cdoObject instanceof CDOLegacyImpl)
           {
-            // TODO Consider CDOObject.cdoRefresh(boolean force)
             CDOStateMachine.INSTANCE.read(cdoObject);
           }
         }
@@ -1465,7 +1464,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   @Override
   public boolean isDirty()
   {
-    return view instanceof CDOTransaction && ((CDOTransaction)view).isDirty();
+    return view.isDirty();
   }
 
   /**

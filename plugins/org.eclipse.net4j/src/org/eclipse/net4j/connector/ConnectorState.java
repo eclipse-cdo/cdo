@@ -10,8 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.connector;
 
-import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.security.INegotiator;
 
 /**
  * Enumerates the lifecycle states of an {@link IConnector}.
@@ -37,12 +36,13 @@ public enum ConnectorState
    * Indicates that the {@link IConnector} has not been connected yet or has been disconnected after being connected
    * previously.
    * <p>
-   * A connector is <code>DISCONNECTED</code> if and only if it is not {@link LifecycleUtil#isActive(Object) active}.
-   * A transition to {@link #CONNECTING} can be triggered by calling {@link IConnector#connect(long)} or
+   * A connector is <code>DISCONNECTED</code> if and only if it is not
+   * {@link org.eclipse.net4j.util.lifecycle.LifecycleUtil#isActive(Object) active}. A transition to
+   * {@link #CONNECTING} can be triggered by calling {@link IConnector#connect(long)} or
    * {@link IConnector#connectAsync()}.
    * 
    * @see IConnector#getState()
-   * @see ILifecycle.Introspection#isActive()
+   * @see org.eclipse.net4j.util.lifecycle.ILifecycle.Introspection#isActive()
    */
   DISCONNECTED,
 
@@ -50,29 +50,30 @@ public enum ConnectorState
    * Indicates that the {@link IConnector} is currently trying to establish an underlying physical connection like a TCP
    * socket connection.
    * <p>
-   * A connector can only be <code>CONNECTING</code> if it is {@link LifecycleUtil#isActive(Object) active}. As soon
-   * as the underlying physical connection is successfully established the state of the connector automatically
-   * transitions to {@link #NEGOTIATING}.
+   * A connector can only be <code>CONNECTING</code> if it is
+   * {@link org.eclipse.net4j.util.lifecycle.LifecycleUtil#isActive(Object) active}. As soon as the underlying physical
+   * connection is successfully established the state of the connector automatically transitions to {@link #NEGOTIATING}.
    * 
    * @see IConnector#getState()
-   * @see ILifecycle.Introspection#isActive()
+   * @see org.eclipse.net4j.util.lifecycle.ILifecycle.Introspection#isActive()
    */
   CONNECTING,
 
   /**
    * Indicates that the {@link IConnector} has successfully managed to establish the underlying physical connection and
-   * has currently delegated control over this connection to an {@link IConnectorNegotiator}.
+   * has currently delegated control over this connection to an {@link INegotiator}.
    * <p>
-   * A connector can only be <code>NEGOTIATING</code> if it is {@link LifecycleUtil#isActive(Object) active} and a
-   * negotiator has been supplied. As soon as the negotiator has successfully negotiated both peers (or a negotiator has
-   * not been supplied) the state of the connector automatically transitions to {@link #CONNECTED}.
+   * A connector can only be <code>NEGOTIATING</code> if it is
+   * {@link org.eclipse.net4j.util.lifecycle.LifecycleUtil#isActive(Object) active} and a negotiator has been supplied.
+   * As soon as the negotiator has successfully negotiated both peers (or a negotiator has not been supplied) the state
+   * of the connector automatically transitions to {@link #CONNECTED}.
    * <p>
    * Negotiators can implement arbitrary handshake protocols, challenge-response sequences or other authentication
    * procedures. They can also be used to initially setup connection encryption if the connector implementation is not
    * able to do so.
    * 
    * @see IConnector#getState()
-   * @see ILifecycle.Introspection#isActive()
+   * @see org.eclipse.net4j.util.lifecycle.ILifecycle.Introspection#isActive()
    */
   NEGOTIATING,
 
@@ -80,11 +81,12 @@ public enum ConnectorState
    * Indicates that the {@link IConnector} has successfully managed to establish and negotiate the underlying physical
    * connection and is ready now to perform actual communications.
    * <p>
-   * A connector can only be <code>CONNECTED</code> if it is {@link LifecycleUtil#isActive(Object) active}. A
-   * transition to {@link #DISCONNECTED} can be triggered by calling {@link IConnector#disconnect()}.
+   * A connector can only be <code>CONNECTED</code> if it is
+   * {@link org.eclipse.net4j.util.lifecycle.LifecycleUtil#isActive(Object) active}. A transition to
+   * {@link #DISCONNECTED} can be triggered by calling {@link IConnector#disconnect()}.
    * 
    * @see IConnector#getState()
-   * @see ILifecycle.Introspection#isActive()
+   * @see org.eclipse.net4j.util.lifecycle.ILifecycle.Introspection#isActive()
    */
   CONNECTED
 }

@@ -138,7 +138,7 @@ public interface IConnector extends IContainer<IChannel>
    * {@link IListener listeners}.
    * <p>
    * 
-   * @see #openChannel(String)
+   * @see #openChannel(String, Object)
    * @see #openChannel(IProtocol)
    */
   public IChannel openChannel() throws ConnectorException;
@@ -161,7 +161,7 @@ public interface IConnector extends IContainer<IChannel>
    * <p>
    * 
    * @see #openChannel()
-   * @see #openChannel(String)
+   * @see #openChannel(String, Object)
    */
   public IChannel openChannel(IProtocol protocol) throws ConnectorException;
 }

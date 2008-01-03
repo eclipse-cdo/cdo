@@ -23,9 +23,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * A {@link ConcurrentMap} implementation that uses {@link KeyedReference} instances ({@link KeyedReference#Strong Strong},
- * {@link KeyedReference#Soft Soft}, {@link KeyedReference#Weak Weak} or {@link KeyedReference#Phantom Phantom}) as
- * its values.
+ * A {@link ConcurrentMap} implementation that uses {@link KeyedReference} instances ({@link KeyedStrongReference},
+ * {@link KeyedSoftReference}, {@link KeyedWeakReference} or {@link KeyedPhantomReference}) as its values.
  * <p>
  * A <code>ReferenceValueMap</code> can be used to cache mappings until the <em>value</em> of the mapping is no
  * longer reachable from outside of the map

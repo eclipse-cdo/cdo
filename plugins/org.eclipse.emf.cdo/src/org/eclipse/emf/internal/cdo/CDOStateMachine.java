@@ -146,6 +146,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       TRACER.format("ATTACH: {0} --> {1}", object, view);
     }
+
     process(object, CDOEvent.ATTACH, data);
 
     // PREPARED_ATTACH --> NEW
@@ -153,6 +154,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       TRACER.format("FINALIZE_ATTACH: {0} --> {1}", object, view);
     }
+
     process(object, CDOEvent.FINALIZE_ATTACH, data);
   }
 
@@ -168,6 +170,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       trace(object, CDOEvent.READ);
     }
+
     process(object, CDOEvent.READ, null);
   }
 
@@ -182,6 +185,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       trace(object, CDOEvent.WRITE);
     }
+
     process(object, CDOEvent.WRITE, featureChange);
   }
 
@@ -225,6 +229,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       {
         trace(object, CDOEvent.RELOAD);
       }
+
       process(object, CDOEvent.RELOAD, null);
     }
   }
@@ -235,6 +240,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       trace(object, CDOEvent.INVALIDATE);
     }
+
     process(object, CDOEvent.INVALIDATE, timeStamp);
   }
 
@@ -244,6 +250,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       trace(object, CDOEvent.COMMIT);
     }
+
     process(object, CDOEvent.COMMIT, result);
   }
 
@@ -253,6 +260,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       trace(object, CDOEvent.ROLLBACK);
     }
+
     process(object, CDOEvent.ROLLBACK, remote);
   }
 

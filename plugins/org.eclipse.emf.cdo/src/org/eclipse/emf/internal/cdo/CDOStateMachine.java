@@ -141,7 +141,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     data.resource = resource;
     data.view = view;
 
-    // TRANSIENT --> PREPARED_ATTACH
+    // Phase 1: TRANSIENT --> PREPARED_ATTACH
     if (TRACER.isEnabled())
     {
       TRACER.format("ATTACH: {0} --> {1}", object, view);
@@ -149,7 +149,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     process(object, CDOEvent.ATTACH, data);
 
-    // PREPARED_ATTACH --> NEW
+    // Phase 2: PREPARED_ATTACH --> NEW
     if (TRACER.isEnabled())
     {
       TRACER.format("FINALIZE_ATTACH: {0} --> {1}", object, view);
@@ -595,5 +595,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
  */
 enum CDOEvent
 {
-  ATTACH, DETACH, READ, WRITE, INVALIDATE, RELOAD, COMMIT, ROLLBACK, FINALIZE_ATTACH
+  ATTACH, DETACH, READ, WRITE, INVALIDATE, RELOAD, COMMIT, ROLLBACK,
+
+  /**
+   * An internal event that is only triggered by the state machine itself to express the two phase nature of attaching
+   * an object tree to a view in {@link CDOStateMachine#attach(InternalCDOObject, CDOResource, CDOViewImpl) attach()}.
+   */
+  FINALIZE_ATTACH
 }

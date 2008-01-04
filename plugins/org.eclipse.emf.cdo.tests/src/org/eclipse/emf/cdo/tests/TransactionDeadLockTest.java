@@ -19,8 +19,6 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 
 import org.eclipse.net4j.util.om.OMPlatform;
 
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-
 /**
  * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=213782
  * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=201366
@@ -71,7 +69,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
   {
     msg("Opening session");
     CDOSession session = openModel1Session();
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
     transaction.createResource("/test2");
     transaction.commit();
     transaction.close();
@@ -79,7 +77,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
     for (int i = 0; i < 1000; i++)
     {
       msg("Transaction " + i);
-      transaction = session.openTransaction(new ResourceSetImpl());
+      transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/test2");
       Category category = Model1Factory.eINSTANCE.createCategory();
       resource.getContents().add(category);

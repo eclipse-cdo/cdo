@@ -25,7 +25,6 @@ import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 
 import java.util.Collection;
@@ -61,7 +60,7 @@ public class ContentAdapterTest extends AbstractCDOTest
 
     {
       CDOSession session = openModel1Session();
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       CDOResource resource = transaction.createResource("/test2");
       // resource.eAdapters().add(contentAdapter);
@@ -87,7 +86,7 @@ public class ContentAdapterTest extends AbstractCDOTest
       CDOFetchRuleManagerInfo info = new CDOFetchRuleManagerInfo();
       session.getRevisionManager().setRuleManager(info);
 
-      CDOTransactionImpl transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransactionImpl transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/test2");
 
       // I don't want to fetch my objects!!

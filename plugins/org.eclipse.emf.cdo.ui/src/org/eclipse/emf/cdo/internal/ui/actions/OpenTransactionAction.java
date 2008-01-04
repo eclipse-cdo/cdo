@@ -13,8 +13,6 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -34,6 +32,6 @@ public final class OpenTransactionAction extends AbstractOpenViewAction
   @Override
   protected void doRun() throws Exception
   {
-    getSession().openTransaction(new ResourceSetImpl());
+    getSession().openTransaction();
   }
 }

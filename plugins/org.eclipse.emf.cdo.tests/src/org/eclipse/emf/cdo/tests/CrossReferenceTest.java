@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 /**
  * @author Eike Stepper
@@ -56,7 +55,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     companyA.getSalesOrders().add(salesOrder2A);
 
     msg("Attaching transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
     CDOResource resourceA = transaction.createResource("/test1");
@@ -72,7 +71,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Attaching viewB");
-    CDOView viewB = session.openTransaction(new ResourceSetImpl());
+    CDOView viewB = session.openTransaction();
 
     msg("Loading resource");
     CDOResource resourceB = viewB.getResource("/test1");
@@ -131,7 +130,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     companyA.getSalesOrders().add(salesOrder2A);
 
     msg("Attaching transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
     CDOResource resourceA = transaction.createResource("/test1");
@@ -147,7 +146,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Attaching viewB");
-    CDOView viewB = session.openTransaction(new ResourceSetImpl());
+    CDOView viewB = session.openTransaction();
 
     msg("Loading resource");
     CDOResource resourceB = viewB.getResource("/test1");
@@ -182,7 +181,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Attaching transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     // ************************************************************* //
 
@@ -237,7 +236,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Attaching viewB");
-    CDOView viewB = session.openTransaction(new ResourceSetImpl());
+    CDOView viewB = session.openTransaction();
 
     msg("Loading resource1");
     CDOResource resource1B = viewB.getResource("/test1");

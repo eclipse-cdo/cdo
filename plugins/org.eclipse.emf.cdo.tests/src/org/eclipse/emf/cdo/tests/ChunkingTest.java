@@ -21,7 +21,6 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.util.Iterator;
 
@@ -37,7 +36,7 @@ public class ChunkingTest extends AbstractCDOTest
       CDOSession session = openModel1Session();
 
       msg("Attaching transaction");
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
@@ -67,7 +66,7 @@ public class ChunkingTest extends AbstractCDOTest
     session.setReferenceChunkSize(10);
 
     msg("Attaching transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Loading resource");
     CDOResource resource = transaction.getResource("/test1");
@@ -90,7 +89,7 @@ public class ChunkingTest extends AbstractCDOTest
       CDOSession session = openModel1Session();
 
       msg("Attaching transaction");
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
@@ -120,7 +119,7 @@ public class ChunkingTest extends AbstractCDOTest
     session.setReferenceChunkSize(10);
 
     msg("Attaching transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Loading resource");
     CDOResource resource = transaction.getResource("/test1");
@@ -145,7 +144,7 @@ public class ChunkingTest extends AbstractCDOTest
       CDOSession session = openModel1Session();
 
       msg("Attaching transaction");
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
@@ -165,7 +164,7 @@ public class ChunkingTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Attaching transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
     transaction.setLoadRevisionCollectionChunkSize(10);
 
     msg("Loading resource");

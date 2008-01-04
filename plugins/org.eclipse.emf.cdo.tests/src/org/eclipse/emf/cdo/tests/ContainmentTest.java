@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.tests.model1.Supplier;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 /**
  * @author Eike Stepper
@@ -64,7 +63,7 @@ public class ContainmentTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
@@ -108,7 +107,7 @@ public class ContainmentTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
@@ -157,7 +156,7 @@ public class ContainmentTest extends AbstractCDOTest
       category2.getCategories().add(category3);
 
       msg("Opening transaction");
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
@@ -170,7 +169,7 @@ public class ContainmentTest extends AbstractCDOTest
     }
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Loading resource");
     CDOResource resource = transaction.getResource("/test1");
@@ -226,7 +225,7 @@ public class ContainmentTest extends AbstractCDOTest
       category2.getCategories().add(category3);
 
       msg("Opening transaction");
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
@@ -242,7 +241,7 @@ public class ContainmentTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Loading resource");
     CDOResource resource = transaction.getResource("/test1");

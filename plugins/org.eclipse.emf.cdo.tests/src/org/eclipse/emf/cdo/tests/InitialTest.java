@@ -124,7 +124,7 @@ public class InitialTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
     assertNotNull(transaction);
     assertEquals(session, transaction.getSession());
   }
@@ -135,7 +135,7 @@ public class InitialTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
@@ -244,7 +244,7 @@ public class InitialTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
@@ -267,7 +267,7 @@ public class InitialTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
@@ -293,7 +293,7 @@ public class InitialTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
@@ -322,7 +322,7 @@ public class InitialTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
@@ -352,7 +352,7 @@ public class InitialTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
@@ -385,7 +385,7 @@ public class InitialTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
@@ -419,7 +419,7 @@ public class InitialTest extends AbstractCDOTest
     {
       disableConsole();
       msg("Opening transaction");
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
@@ -439,7 +439,7 @@ public class InitialTest extends AbstractCDOTest
     }
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Getting resource");
     CDOResource resource = transaction.getResource("/test1");
@@ -459,7 +459,7 @@ public class InitialTest extends AbstractCDOTest
     {
       disableConsole();
       msg("Opening transaction");
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
@@ -479,7 +479,7 @@ public class InitialTest extends AbstractCDOTest
     }
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Getting resource");
     CDOResource resource = transaction.getResource("/test1");
@@ -497,7 +497,7 @@ public class InitialTest extends AbstractCDOTest
     {
       disableConsole();
       msg("Opening transaction");
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
@@ -517,7 +517,7 @@ public class InitialTest extends AbstractCDOTest
     }
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Getting resource");
     CDOResource resource = transaction.getResource("/test1");
@@ -541,7 +541,7 @@ public class InitialTest extends AbstractCDOTest
       CDOSession session = openModel1Session();
 
       msg("Opening transaction");
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
@@ -565,7 +565,7 @@ public class InitialTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Getting resource");
     CDOResource resource = transaction.getResource("/test1");
@@ -585,7 +585,7 @@ public class InitialTest extends AbstractCDOTest
       CDOSession session = openModel1Session();
 
       msg("Opening transaction");
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
@@ -609,7 +609,7 @@ public class InitialTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Getting resource");
     CDOResource resource = transaction.getResource("/test1");

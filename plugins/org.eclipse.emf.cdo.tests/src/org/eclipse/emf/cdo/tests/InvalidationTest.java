@@ -24,7 +24,6 @@ import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -62,7 +61,7 @@ public class InvalidationTest extends AbstractCDOTest
     category2A.getCategories().add(category3A);
 
     msg("Opening transaction");
-    final CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    final CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
@@ -76,7 +75,7 @@ public class InvalidationTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Opening view");
-    final CDOView view = session.openTransaction(new ResourceSetImpl());
+    final CDOView view = session.openTransaction();
 
     msg("Loading resource");
     final CDOResource resourceB = view.getResource("/test1");
@@ -158,7 +157,7 @@ public class InvalidationTest extends AbstractCDOTest
     category2A.getCategories().add(category3A);
 
     msg("Attaching transaction");
-    final CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    final CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
@@ -172,7 +171,7 @@ public class InvalidationTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Attaching viewB");
-    final CDOView viewB = session.openTransaction(new ResourceSetImpl());
+    final CDOView viewB = session.openTransaction();
 
     msg("Loading resource");
     final CDOResource resourceB = viewB.getResource("/test1");
@@ -269,7 +268,7 @@ public class InvalidationTest extends AbstractCDOTest
     final CDOSession sessionA = openModel1Session();
 
     msg("Attaching transaction");
-    final CDOTransaction transaction = sessionA.openTransaction(new ResourceSetImpl());
+    final CDOTransaction transaction = sessionA.openTransaction();
 
     msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
@@ -286,7 +285,7 @@ public class InvalidationTest extends AbstractCDOTest
     final CDOSession sessionB = openModel1Session();
 
     msg("Attaching viewB");
-    final CDOView viewB = sessionB.openTransaction(new ResourceSetImpl());
+    final CDOView viewB = sessionB.openTransaction();
 
     msg("Loading resource");
     final CDOResource resourceB = viewB.getResource("/test1");

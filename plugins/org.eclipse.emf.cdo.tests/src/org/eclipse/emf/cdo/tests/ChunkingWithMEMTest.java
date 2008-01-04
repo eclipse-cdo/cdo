@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -74,7 +73,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
       CDOSession session = openModel1Session();
 
       msg("Attaching transaction");
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
@@ -109,7 +108,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
     session.setReferenceChunkSize(10);
 
     msg("Attaching transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
     msg("Loading resource");
     CDOResource resource = transaction.getResource("/test1");
 
@@ -133,7 +132,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
       CDOSession session = openModel1Session();
 
       msg("Attaching transaction");
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
@@ -169,7 +168,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
     session.setReferenceChunkSize(10);
 
     msg("Attaching transaction");
-    CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransaction transaction = session.openTransaction();
 
     msg("Loading resource");
     CDOResource resource = transaction.getResource("/test1");

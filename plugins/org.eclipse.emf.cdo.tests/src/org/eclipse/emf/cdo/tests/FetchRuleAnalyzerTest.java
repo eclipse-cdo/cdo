@@ -31,7 +31,6 @@ import org.eclipse.emf.internal.cdo.analyzer.CDOFetchRuleManagerThreadLocal;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +51,7 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
       CDOSession session = openModel1Session();
 
       msg("Opening transaction");
-      CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+      CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
       CDOResource resource = transaction.createResource("/test2");
@@ -94,7 +93,7 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
     session.getRevisionManager().setRuleManager(new CDOFetchRuleManagerThreadLocal());
 
     msg("Opening transaction");
-    CDOTransactionImpl transaction = session.openTransaction(new ResourceSetImpl());
+    CDOTransactionImpl transaction = session.openTransaction();
 
     CDOFeatureAnalyzerModelBased featureanalyzerModelBased = new CDOFeatureAnalyzerModelBased();
     transaction.setFeatureAnalyzer(featureanalyzerModelBased);

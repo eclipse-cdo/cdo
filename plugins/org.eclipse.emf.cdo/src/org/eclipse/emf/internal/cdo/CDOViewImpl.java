@@ -295,9 +295,9 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
         registerObject(lastLookupObject);
       }
-    }
 
-    return lastLookupObject;
+      return lastLookupObject;
+    }
   }
 
   public boolean isObjectRegistered(CDOID id)

@@ -55,8 +55,10 @@ public class BugzillasTest extends AbstractCDOTest
     CDORevision salesRevision = salesOrder2.cdoRevision();
     CDOFeature customerFeature = salesRevision.getCDOClass().lookupFeature(
         Model1Package.eINSTANCE.getSalesOrder_Customer().getFeatureID());
+
     Object value = salesRevision.getData().get(customerFeature, 0);
     Assert.assertEquals(true, value instanceof CDOID);
     transaction2.close();
+    session.close();
   }
 }

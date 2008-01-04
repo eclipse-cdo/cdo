@@ -26,7 +26,7 @@ import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.CDOPackageRegistryImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionPackageManager;
+import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -106,7 +106,7 @@ public final class ModelUtil
     }
   }
 
-  public static CDOPackageImpl getCDOPackage(EPackage ePackage, CDOSessionPackageManager packageManager)
+  public static CDOPackageImpl getCDOPackage(EPackage ePackage, CDOSessionPackageManagerImpl packageManager)
   {
     String packageURI = ePackage.getNsURI();
     CDOPackageImpl cdoPackage = packageManager.lookupPackage(packageURI);
@@ -119,13 +119,13 @@ public final class ModelUtil
     return cdoPackage;
   }
 
-  public static CDOClassImpl getCDOClass(EClass eClass, CDOSessionPackageManager packageManager)
+  public static CDOClassImpl getCDOClass(EClass eClass, CDOSessionPackageManagerImpl packageManager)
   {
     CDOPackageImpl cdoPackage = getCDOPackage(eClass.getEPackage(), packageManager);
     return cdoPackage.lookupClass(eClass.getClassifierID());
   }
 
-  public static CDOFeatureImpl getCDOFeature(EStructuralFeature eFeature, CDOSessionPackageManager packageManager)
+  public static CDOFeatureImpl getCDOFeature(EStructuralFeature eFeature, CDOSessionPackageManagerImpl packageManager)
   {
     CDOClassImpl cdoClass = getCDOClass(eFeature.getEContainingClass(), packageManager);
     return cdoClass.lookupFeature(eFeature.getFeatureID());
@@ -135,7 +135,7 @@ public final class ModelUtil
    * @see EMFUtil#getPersistentFeatures(org.eclipse.emf.common.util.EList)
    * @see http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
    */
-  private static CDOPackageImpl createCDOPackage(EPackage ePackage, CDOSessionPackageManager packageManager)
+  private static CDOPackageImpl createCDOPackage(EPackage ePackage, CDOSessionPackageManagerImpl packageManager)
   {
     String packageURI = ePackage.getNsURI();
     String name = ePackage.getName();
@@ -309,7 +309,7 @@ public final class ModelUtil
     return null;
   }
 
-  public static void addModelInfos(CDOSessionPackageManager packageManager)
+  public static void addModelInfos(CDOSessionPackageManagerImpl packageManager)
   {
     // Ecore
     CDOCorePackageImpl corePackage = packageManager.getCDOCorePackage();
@@ -326,7 +326,7 @@ public final class ModelUtil
   }
 
   @Deprecated
-  public static void removeModelInfos(CDOSessionPackageManager packageManager)
+  public static void removeModelInfos(CDOSessionPackageManagerImpl packageManager)
   {
     // Ecore
     CDOCorePackageImpl corePackage = packageManager.getCDOCorePackage();

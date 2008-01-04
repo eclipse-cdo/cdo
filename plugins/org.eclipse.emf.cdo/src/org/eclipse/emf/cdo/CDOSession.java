@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.net4j.channel.IChannel;
@@ -49,7 +48,7 @@ public interface CDOSession extends IContainer<CDOView>
 
   public CDOPackageRegistry getPackageRegistry();
 
-  public CDOPackageManager getPackageManager();
+  public CDOSessionPackageManager getPackageManager();
 
   public CDORevisionManager getRevisionManager();
 

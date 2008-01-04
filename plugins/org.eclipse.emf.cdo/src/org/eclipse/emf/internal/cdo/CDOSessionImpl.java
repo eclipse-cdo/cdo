@@ -107,7 +107,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   private CDOPackageRegistryImpl packageRegistry;
 
-  private CDOSessionPackageManager packageManager;
+  private CDOSessionPackageManagerImpl packageManager;
 
   private CDORevisionManagerImpl revisionManager;
 
@@ -233,7 +233,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     return packageRegistry;
   }
 
-  public CDOSessionPackageManager getPackageManager()
+  public CDOSessionPackageManagerImpl getPackageManager()
   {
     return packageManager;
   }
@@ -526,9 +526,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     return new CDOPackageRegistryImpl(this, delegate);
   }
 
-  protected CDOSessionPackageManager createPackageManager()
+  protected CDOSessionPackageManagerImpl createPackageManager()
   {
-    return new CDOSessionPackageManager(this);
+    return new CDOSessionPackageManagerImpl(this);
   }
 
   protected CDORevisionManagerImpl createRevisionManager()

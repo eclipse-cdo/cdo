@@ -10,9 +10,15 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOSessionPackageManager;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.EMFUtil;
@@ -23,18 +29,20 @@ import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.Collection;
 
 /**
  * @author Eike Stepper
  */
-public class CDOSessionPackageManager extends CDOPackageManagerImpl
+public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implements CDOSessionPackageManager
 {
   private CDOSessionImpl session;
 
-  public CDOSessionPackageManager(CDOSessionImpl session)
+  public CDOSessionPackageManagerImpl(CDOSessionImpl session)
   {
     this.session = session;
     ModelUtil.addModelInfos(this);
@@ -43,6 +51,36 @@ public class CDOSessionPackageManager extends CDOPackageManagerImpl
   public CDOSessionImpl getSession()
   {
     return session;
+  }
+
+  public CDOPackage convert(EPackage ePackage)
+  {
+    return ModelUtil.getCDOPackage(ePackage, this);
+  }
+
+  public CDOClass convert(EClass eClass)
+  {
+    return ModelUtil.getCDOClass(eClass, this);
+  }
+
+  public CDOFeature convert(EStructuralFeature eFeature)
+  {
+    return ModelUtil.getCDOFeature(eFeature, this);
+  }
+
+  public EPackage convert(CDOPackage cdoPackage)
+  {
+    return ModelUtil.getEPackage((CDOPackageImpl)cdoPackage, session.getPackageRegistry());
+  }
+
+  public EClass convert(CDOClass cdoClass)
+  {
+    return ModelUtil.getEClass((CDOClassImpl)cdoClass, session.getPackageRegistry());
+  }
+
+  public EStructuralFeature convert(CDOFeature cdoFeature)
+  {
+    return ModelUtil.getEFeature((CDOFeatureImpl)cdoFeature, session.getPackageRegistry());
   }
 
   public void addPackageProxies(Collection<CDOPackageInfo> packageInfos)

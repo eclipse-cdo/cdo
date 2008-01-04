@@ -398,7 +398,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
 
     // Determine which of the used packages are new
-    CDOSessionPackageManager packageManager = session.getPackageManager();
+    CDOSessionPackageManagerImpl packageManager = session.getPackageManager();
     List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
     for (EPackage usedPackage : usedPackages)
     {

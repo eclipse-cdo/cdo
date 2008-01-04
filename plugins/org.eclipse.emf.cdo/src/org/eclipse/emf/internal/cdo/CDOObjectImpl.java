@@ -476,7 +476,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   static CDOClassImpl getCDOClass(InternalCDOObject cdoObject)
   {
     CDOViewImpl view = (CDOViewImpl)cdoObject.cdoView();
-    CDOSessionPackageManager packageManager = view.getSession().getPackageManager();
+    CDOSessionPackageManagerImpl packageManager = view.getSession().getPackageManager();
     return ModelUtil.getCDOClass(cdoObject.eClass(), packageManager);
   }
 

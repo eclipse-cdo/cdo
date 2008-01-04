@@ -50,6 +50,8 @@ public interface CDOView extends INotifier
 
   public void setLoadRevisionCollectionChunkSize(int loadRevisionCollectionChunkSize);
 
+  public CDORevision getRevision(CDOID id);
+
   /**
    * @see ResourceSet#getResource(URI, boolean)
    */
@@ -57,7 +59,7 @@ public interface CDOView extends INotifier
 
   public CDOObject getObject(CDOID id);
 
-  public CDORevision getRevision(CDOID id);
+  public CDOObject getObject(CDOID id, boolean loadOnDemand);
 
   public boolean isObjectRegistered(CDOID id);
 

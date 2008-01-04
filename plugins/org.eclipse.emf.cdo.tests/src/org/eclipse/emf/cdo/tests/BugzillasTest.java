@@ -21,8 +21,6 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
-
 import junit.framework.Assert;
 
 /**
@@ -50,11 +48,10 @@ public class BugzillasTest extends AbstractCDOTest
     transaction.commit();
     transaction.close();
 
-    CDOTransactionImpl transaction2 = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction2 = session.openTransaction();
     SalesOrder salesOrder2 = (SalesOrder)transaction2.getObject(salesOrder.cdoID(), true);
     CDORevision salesRevision = salesOrder2.cdoRevision();
-    CDOFeature customerFeature = salesRevision.getCDOClass().lookupFeature(
-        Model1Package.eINSTANCE.getSalesOrder_Customer().getFeatureID());
+    CDOFeature customerFeature = session.getPackageManager().convert(Model1Package.eINSTANCE.getSalesOrder_Customer());
 
     Object value = salesRevision.getData().get(customerFeature, 0);
     Assert.assertEquals(true, value instanceof CDOID);

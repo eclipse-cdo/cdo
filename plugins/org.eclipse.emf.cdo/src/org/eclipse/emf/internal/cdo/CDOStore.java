@@ -502,7 +502,7 @@ public final class CDOStore implements EStore
       throw new IllegalStateException("view == null");
     }
 
-    CDOSessionPackageManager packageManager = view.getSession().getPackageManager();
+    CDOSessionPackageManagerImpl packageManager = view.getSession().getPackageManager();
     return ModelUtil.getCDOFeature(eFeature, packageManager);
   }
 

@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.protocol.revision.CDODuplicateRevisionException;
 
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionPackageManager;
+import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
@@ -116,7 +116,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
   {
     CDOSessionImpl session = getSession();
     CDORevisionManagerImpl revisionManager = session.getRevisionManager();
-    CDOSessionPackageManager packageManager = session.getPackageManager();
+    CDOSessionPackageManagerImpl packageManager = session.getPackageManager();
     ArrayList<CDORevisionImpl> revisions = new ArrayList<CDORevisionImpl>(ids.size());
 
     if (PROTOCOL.isEnabled())

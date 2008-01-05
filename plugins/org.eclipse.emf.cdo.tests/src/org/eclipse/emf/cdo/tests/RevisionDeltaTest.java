@@ -131,6 +131,28 @@ public class RevisionDeltaTest extends AbstractCDOTest
     session.close();
   }
 
+  /**
+   * CDOView.getRevision() does not work for transactions/dirty objects (INVALID)
+   * 
+   * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=214431
+   */
+  public void testBugzilla214431() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+    resource.getContents().add(salesOrder);
+    transaction.commit();
+
+    salesOrder.setId(4711);
+    assertNotSame(salesOrder.cdoRevision(), transaction.getRevision(salesOrder.cdoID()));
+    assertEquals(salesOrder.cdoRevision(), transaction.getDirtyObjects().get(salesOrder.cdoID()).cdoRevision());
+    transaction.close();
+    session.close();
+  }
+
   private CDORevisionImpl getCopyCDORevision(Object object)
   {
     return new CDORevisionImpl((CDORevisionImpl)((InternalCDOObject)object).cdoRevision());

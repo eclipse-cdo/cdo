@@ -50,6 +50,12 @@ public interface CDOView extends INotifier
 
   public void setLoadRevisionCollectionChunkSize(int loadRevisionCollectionChunkSize);
 
+  /**
+   * Returns the {@link CDORevision} that is stored in the {@link CDORevisionManager} associated with this view and that
+   * is mapped for the given id. Note that, if this method is called in the context of a {@link CDOTransaction} and the
+   * object with the given id is dirty, it returns the base revision of the session and not the dirty revision of the
+   * transaction!
+   */
   public CDORevision getRevision(CDOID id);
 
   /**

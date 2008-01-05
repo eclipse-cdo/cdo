@@ -16,17 +16,24 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOListFeatureDeltaImpl;
+import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
+
+import junit.framework.Assert;
 
 /**
  * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
@@ -88,6 +95,39 @@ public class RevisionDeltaTest extends AbstractCDOTest
     transaction.rollback(true);
 
     transaction.close();
+    session.close();
+  }
+
+  /**
+   * Sending deltas doesn't adjust CDOIDs
+   * 
+   * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=214374
+   */
+  public void testBugzilla214374() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+    resource.getContents().add(salesOrder);
+    transaction.commit();
+
+    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    salesOrder.setCustomer(customer);
+
+    resource.getContents().add(customer);
+    transaction.commit();
+    transaction.close();
+
+    CDOTransaction transaction2 = session.openTransaction();
+    SalesOrder salesOrder2 = (SalesOrder)transaction2.getObject(salesOrder.cdoID(), true);
+    CDORevision salesRevision = salesOrder2.cdoRevision();
+    CDOFeature customerFeature = session.getPackageManager().convert(Model1Package.eINSTANCE.getSalesOrder_Customer());
+
+    Object value = salesRevision.getData().get(customerFeature, 0);
+    Assert.assertEquals(true, value instanceof CDOID);
+    transaction2.close();
     session.close();
   }
 

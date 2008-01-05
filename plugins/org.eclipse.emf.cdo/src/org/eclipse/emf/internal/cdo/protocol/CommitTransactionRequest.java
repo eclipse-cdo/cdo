@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.util.RevisionAdjuster;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -171,10 +172,15 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
       PROTOCOL.format("Writing {0} revision deltas", revisionDeltas.size());
     }
 
+    RevisionAdjuster revisionAdjuster = new RevisionAdjuster(transaction);
     out.writeInt(revisionDeltas.size());
     for (CDORevisionDelta revisionDelta : revisionDeltas)
     {
       ((CDORevisionDeltaImpl)revisionDelta).write(out, transaction);
+      // CDORevisionImpl revision = transaction.getRevision(revisionDelta.getID());
+      CDOObject object = transaction.getDirtyObjects().get(revisionDelta.getID());
+      CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
+      revisionAdjuster.adjustRevision(revision, revisionDelta);
     }
   }
 

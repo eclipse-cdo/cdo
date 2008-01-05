@@ -430,7 +430,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
       {
         if (featureDelta instanceof CDOListFeatureDeltaImpl)
         {
-          int[] indices = ((CDOListFeatureDeltaImpl)featureDelta).reconstructAddedIndices(null);
+          int[] indices = ((CDOListFeatureDeltaImpl)featureDelta).reconstructAddedIndices();
           if (indices[0] != 0)
           {
             System.out.print(revisionDelta.getID());
@@ -471,7 +471,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
       {
         if (featureDelta instanceof CDOListFeatureDeltaImpl)
         {
-          int[] indices = ((CDOListFeatureDeltaImpl)featureDelta).reconstructAddedIndices(null);
+          int[] indices = ((CDOListFeatureDeltaImpl)featureDelta).reconstructAddedIndices();
           for (int i = 1; i <= indices[0]; i++)
           {
             ReconstructedIndex expectedIndex = new ReconstructedIndex(revisionDelta.getID(), featureDelta.getFeature(),

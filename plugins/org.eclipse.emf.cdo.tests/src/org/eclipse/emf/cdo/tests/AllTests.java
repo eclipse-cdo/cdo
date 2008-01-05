@@ -34,6 +34,7 @@ public class AllTests
     suite.addTestSuite(TransactionDeadLockTest.class);
     suite.addTestSuite(PackageRegistryTest.class);
     suite.addTestSuite(RevisionDeltaTest.class);
+    suite.addTestSuite(IndexReconstructionTest.class);
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);
     // $JUnit-END$
 

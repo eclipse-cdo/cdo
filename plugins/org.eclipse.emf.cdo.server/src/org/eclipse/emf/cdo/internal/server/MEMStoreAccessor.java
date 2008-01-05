@@ -134,7 +134,7 @@ public class MEMStoreAccessor extends StoreAccessor
   @Override
   public void writeRevisionDelta(CDORevisionDeltaImpl delta)
   {
-    CDORevisionImpl revision2 = (CDORevisionImpl)getStore().getRevision(delta.getId());
+    CDORevisionImpl revision2 = (CDORevisionImpl)getStore().getRevision(delta.getID());
     if (delta.getOriginVersion() != revision2.getVersion())
     {
       throw new CDODuplicateRevisionException(revision2);

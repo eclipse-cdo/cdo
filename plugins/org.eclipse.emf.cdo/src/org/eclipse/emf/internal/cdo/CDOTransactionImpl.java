@@ -340,10 +340,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   public void registerRevisionDelta(CDORevisionDelta delta)
   {
-    CDORevisionDelta changeSet = revisionDeltas.get(delta.getId());
-    if (changeSet == null)
+    CDORevisionDelta revisionDelta = revisionDeltas.get(delta.getID());
+    if (revisionDelta == null)
     {
-      revisionDeltas.put(delta.getId(), changeSet);
+      revisionDeltas.put(delta.getID(), revisionDelta);
     }
   }
 

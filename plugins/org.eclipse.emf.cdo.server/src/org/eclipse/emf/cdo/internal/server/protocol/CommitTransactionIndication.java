@@ -239,7 +239,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     for (int i = 0; i < size; i++)
     {
       deltas[i] = new CDORevisionDeltaImpl(in, transactionPackageManager);
-      dirtyIDs[i] = deltas[i].getId();
+      dirtyIDs[i] = deltas[i].getID();
     }
 
     return deltas;

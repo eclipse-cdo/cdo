@@ -337,7 +337,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       }
       else
       {
-        CDORevisionImpl oldRevision = getRevisionByVersion(revisionDelta.getId(), CDORevision.UNCHUNKED, revisionDelta
+        CDORevisionImpl oldRevision = getRevisionByVersion(revisionDelta.getID(), CDORevision.UNCHUNKED, revisionDelta
             .getOriginVersion(), true);
         if (oldRevision == null)
         {
@@ -350,7 +350,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       }
 
       // Look if we already have it in our cache revision
-      CDORevisionImpl currentVersion = getRevisionByVersion(revisionDelta.getId(), 0, revisionDelta.getDirtyVersion(),
+      CDORevisionImpl currentVersion = getRevisionByVersion(revisionDelta.getID(), 0, revisionDelta.getDirtyVersion(),
           false);
 
       if (currentVersion != null)

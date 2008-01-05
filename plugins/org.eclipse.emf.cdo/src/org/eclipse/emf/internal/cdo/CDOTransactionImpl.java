@@ -52,6 +52,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Eike Stepper
@@ -77,7 +79,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   private Map<CDOID, CDOObject> dirtyObjects = new HashMap<CDOID, CDOObject>();
 
-  private Map<CDOID, CDORevisionDelta> revisionDeltas = new HashMap<CDOID, CDORevisionDelta>();
+  private ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = new ConcurrentHashMap<CDOID, CDORevisionDelta>();
 
   private boolean dirty;
 
@@ -338,13 +340,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
   }
 
-  public void registerRevisionDelta(CDORevisionDelta delta)
+  public void registerRevisionDelta(CDORevisionDelta revisionDelta)
   {
-    CDORevisionDelta revisionDelta = revisionDeltas.get(delta.getID());
-    if (revisionDelta == null)
-    {
-      revisionDeltas.put(delta.getID(), revisionDelta);
-    }
+    revisionDeltas.putIfAbsent(revisionDelta.getID(), revisionDelta);
   }
 
   public void registerDirty(InternalCDOObject object, CDOFeatureDelta featureDelta)

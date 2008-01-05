@@ -29,6 +29,8 @@ import junit.framework.Assert;
 public class BugzillasTest extends AbstractCDOTest
 {
   /**
+   * Sending deltas doesn't adjust CDOIDs
+   * 
    * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=214374
    */
   public void test214374() throws Exception

@@ -179,14 +179,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     write(object, null);
   }
 
-  public void write(InternalCDOObject object, CDOFeatureDelta featureChange)
+  public void write(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
     if (TRACER.isEnabled())
     {
       trace(object, CDOEvent.WRITE);
     }
 
-    process(object, CDOEvent.WRITE, featureChange);
+    process(object, CDOEvent.WRITE, featureDelta);
   }
 
   public void reload(InternalCDOObject... objects)
@@ -437,7 +437,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private final class WriteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureChange)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
       // Copy revision
       CDORevisionImpl revision = new CDORevisionImpl((CDORevisionImpl)object.cdoRevision());
@@ -446,7 +446,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDOTransactionImpl transaction = view.toTransaction();
-      transaction.registerDirty(object, (CDOFeatureDelta)featureChange);
+      transaction.registerDirty(object, (CDOFeatureDelta)featureDelta);
       changeState(object, CDOState.DIRTY);
     }
   }
@@ -456,11 +456,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private final class RewriteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureChange)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDOTransactionImpl transaction = view.toTransaction();
-      transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureChange);
+      transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
   }
 

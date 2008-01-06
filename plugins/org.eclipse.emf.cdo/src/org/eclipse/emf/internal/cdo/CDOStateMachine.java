@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.revision.CDODuplicateRevisionException;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
@@ -403,8 +404,18 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       revision.setCreated(data.getTimeStamp());
       revision.adjustReferences(idMappings);
 
-      CDORevisionManagerImpl revisionManager = view.getSession().getRevisionManager();
-      revisionManager.addRevision(revision);
+      try
+      {
+        CDORevisionManagerImpl revisionManager = view.getSession().getRevisionManager();
+        revisionManager.addRevision(revision);
+      }
+      catch (CDODuplicateRevisionException ignore)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Ignorable exception on client side", ignore);
+        }
+      }
 
       changeState(object, CDOState.CLEAN);
     }
@@ -494,8 +505,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       if (revision.isTransactional())
       {
         CDOViewImpl view = (CDOViewImpl)object.cdoView();
-        revision = view.getRevision(object.cdoID());
-        revision.setRevised(timeStamp - 1);
+        CDORevisionImpl sessionRevision = view.getRevision(object.cdoID());
+        if (sessionRevision.getVersion() < revision.getVersion())
+        {
+          sessionRevision.setRevised(timeStamp - 1);
+        }
       }
     }
   }

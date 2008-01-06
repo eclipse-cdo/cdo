@@ -29,14 +29,8 @@ public class TransactionDeadLockTest extends AbstractCDOTest
   @Override
   protected boolean useJVMTransport()
   {
-    return false;
-  }
-
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    super.doSetUp();
     OMPlatform.INSTANCE.setDebugging(false);
+    return false;
   }
 
   public void testCreateManySession() throws Exception

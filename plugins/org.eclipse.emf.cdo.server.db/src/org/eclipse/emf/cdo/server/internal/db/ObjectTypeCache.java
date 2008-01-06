@@ -8,15 +8,31 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.db;
+package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
+import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
+
+import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+
+import java.sql.Connection;
 
 /**
  * @author Eike Stepper
  */
-public interface IObjectTypeLookup
+public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 {
-  public CDOClassRef getObjectType(IDBStoreReader storeReader, CDOID id);
+  public ObjectTypeCache()
+  {
+  }
+
+  public CDOClassRef getObjectType(Connection connection, CDOID id)
+  {
+    return null;
+  }
+
+  public void putObjectType(Connection connection, CDOID id, CDOClassRef type)
+  {
+  }
 }

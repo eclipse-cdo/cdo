@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,14 +61,14 @@ public class VerticalClassMapping extends ClassMapping
   }
 
   @Override
-  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  public void writeRevision(IDBStoreWriter storeWriter, CDORevisionImpl revision)
   {
-    super.writeRevision(storeAccessor, revision);
+    super.writeRevision(storeWriter, revision);
     if (superMappings != null)
     {
       for (IClassMapping superMapping : superMappings)
       {
-        superMapping.writeRevision(storeAccessor, revision);
+        superMapping.writeRevision(storeWriter, revision);
       }
     }
   }

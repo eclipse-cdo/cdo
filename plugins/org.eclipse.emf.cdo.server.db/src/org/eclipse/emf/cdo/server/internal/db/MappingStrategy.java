@@ -28,6 +28,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBField;
 import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.CloseableIterator;
 
@@ -43,7 +44,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public abstract class MappingStrategy implements IMappingStrategy
+public abstract class MappingStrategy extends Lifecycle implements IMappingStrategy
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MappingStrategy.class);
 
@@ -142,6 +143,28 @@ public abstract class MappingStrategy implements IMappingStrategy
   public Map<Object, IDBTable> getReferenceTables()
   {
     return referenceTables;
+  }
+
+  public CDOClassRef getClassRef(IDBStoreReader storeReader, int classID)
+  {
+    CDOClassRef classRef = classRefs.get(classID);
+    if (classRef == null)
+    {
+      if (classID == ClassServerInfo.CDO_RESOURCE_CLASS_DBID)
+      {
+        IPackageManager packageManager = getStore().getRepository().getPackageManager();
+        CDOResourceClass resourceClass = packageManager.getCDOResourcePackage().getCDOResourceClass();
+        classRef = resourceClass.createClassRef();
+      }
+      else
+      {
+        classRef = storeReader.readClassRef(classID);
+      }
+
+      classRefs.put(classID, classRef);
+    }
+
+    return classRef;
   }
 
   public IClassMapping getClassMapping(CDOClass cdoClass)
@@ -273,69 +296,6 @@ public abstract class MappingStrategy implements IMappingStrategy
     };
   }
 
-  public CDOClassRef readObjectType(IDBStoreReader storeReader, CDOID id)
-  {
-    // TODO Change to support vertical mappings
-    String prefix = "SELECT DISTINCT " + CDODBSchema.ATTRIBUTES_CLASS + " FROM ";
-    String suffix = " WHERE " + CDODBSchema.ATTRIBUTES_ID + "=" + id;
-    for (CDOClass cdoClass : getClassesWithObjectInfo())
-    {
-      IClassMapping mapping = getClassMapping(cdoClass);
-      if (mapping != null)
-      {
-        IDBTable table = mapping.getTable();
-        if (table != null)
-        {
-          String sql = prefix + table + suffix;
-          if (TRACER.isEnabled()) TRACER.trace(sql);
-          ResultSet resultSet = null;
-
-          try
-          {
-            resultSet = storeReader.getStatement().executeQuery(sql);
-            if (resultSet.next())
-            {
-              int classID = resultSet.getInt(1);
-              return getClassRef(storeReader, classID);
-            }
-          }
-          catch (SQLException ex)
-          {
-            throw new DBException(ex);
-          }
-          finally
-          {
-            DBUtil.close(resultSet);
-          }
-        }
-      }
-    }
-
-    throw new DBException("No object with id " + id);
-  }
-
-  public CDOClassRef getClassRef(IDBStoreReader storeReader, int classID)
-  {
-    CDOClassRef classRef = classRefs.get(classID);
-    if (classRef == null)
-    {
-      if (classID == ClassServerInfo.CDO_RESOURCE_CLASS_DBID)
-      {
-        IPackageManager packageManager = getStore().getRepository().getPackageManager();
-        CDOResourceClass resourceClass = packageManager.getCDOResourcePackage().getCDOResourceClass();
-        classRef = resourceClass.createClassRef();
-      }
-      else
-      {
-        classRef = storeReader.readClassRef(classID);
-      }
-
-      classRefs.put(classID, classRef);
-    }
-
-    return classRef;
-  }
-
   public CDOID readResourceID(IDBStoreReader storeReader, String path)
   {
     IDBTable resourceTable = getResourceTable();
@@ -431,4 +391,11 @@ public abstract class MappingStrategy implements IMappingStrategy
   protected abstract IClassMapping createClassMapping(CDOClass cdoClass);
 
   protected abstract List<CDOClass> getClassesWithObjectInfo();
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    checkState(store, "store");
+  }
 }

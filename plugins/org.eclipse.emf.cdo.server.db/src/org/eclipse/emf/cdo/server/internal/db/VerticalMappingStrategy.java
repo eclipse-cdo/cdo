@@ -10,8 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
+import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +44,11 @@ public class VerticalMappingStrategy extends MappingStrategy
     }
 
     return rootClassMapping;
+  }
+
+  public CDOClassRef readObjectType(IDBStoreReader storeReader, CDOID id)
+  {
+    throw new UnsupportedOperationException();
   }
 
   @Override

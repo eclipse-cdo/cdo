@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreReader;
+import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 
@@ -77,7 +77,7 @@ public class NoClassMapping implements IClassMapping
     return null;
   }
 
-  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  public void writeRevision(IDBStoreWriter storeWriter, CDORevisionImpl revision)
   {
   }
 

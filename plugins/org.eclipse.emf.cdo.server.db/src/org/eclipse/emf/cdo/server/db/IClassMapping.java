@@ -40,7 +40,7 @@ public interface IClassMapping
 
   public IReferenceMapping getReferenceMapping(CDOFeature feature);
 
-  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
+  public void writeRevision(IDBStoreWriter storeWriter, CDORevisionImpl revision);
 
   public void readRevision(IDBStoreReader storeReader, CDORevisionImpl revision, int referenceChunk);
 

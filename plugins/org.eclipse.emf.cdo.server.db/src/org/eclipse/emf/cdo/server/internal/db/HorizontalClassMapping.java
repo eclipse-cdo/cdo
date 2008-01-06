@@ -10,7 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
 
 /**
  * @author Eike Stepper
@@ -26,6 +30,18 @@ public class HorizontalClassMapping extends ClassMapping
   public HorizontalMappingStrategy getMappingStrategy()
   {
     return (HorizontalMappingStrategy)super.getMappingStrategy();
+  }
+
+  @Override
+  public void writeRevision(IDBStoreWriter storeWriter, CDORevisionImpl revision)
+  {
+    super.writeRevision(storeWriter, revision);
+    if (revision.getVersion() == 1)
+    {
+      CDOID id = revision.getID();
+      CDOClassRefImpl type = revision.getCDOClass().createClassRef();
+      getMappingStrategy().getObjectTypeCache().putObjectType(storeWriter.getConnection(), id, type);
+    }
   }
 
   @Override

@@ -30,6 +30,7 @@ import org.eclipse.net4j.db.IDBSchema;
 import org.eclipse.net4j.db.IDBTable;
 import org.eclipse.net4j.internal.db.DBSchema;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.sql.Connection;
 import java.text.MessageFormat;
@@ -184,6 +185,7 @@ public class DBStore extends Store implements IDBStore
           System.currentTimeMillis(), 0, 0, 0);
 
       MappingStrategy mappingStrategy = (MappingStrategy)getMappingStrategy();
+
       IClassMapping resourceClassMapping = mappingStrategy.getResourceClassMapping();
       Set<IDBTable> tables = resourceClassMapping.getAffectedTables();
       if (dbAdapter.createTables(tables, connection).size() != tables.size())
@@ -234,6 +236,7 @@ public class DBStore extends Store implements IDBStore
     nextPackageID = DBUtil.selectMaximumInt(connection, CDODBSchema.PACKAGES_ID) + 1;
     nextClassID = DBUtil.selectMaximumInt(connection, CDODBSchema.CLASSES_ID) + 1;
     nextFeatureID = DBUtil.selectMaximumInt(connection, CDODBSchema.FEATURES_ID) + 1;
+    LifecycleUtil.activate(mappingStrategy);
   }
 
   protected void deactivateStore(Repository repository, Connection connection)
@@ -260,6 +263,8 @@ public class DBStore extends Store implements IDBStore
     {
       throw new DBException("No row updated in table " + CDODBSchema.REPOSITORY);
     }
+
+    LifecycleUtil.deactivate(mappingStrategy);
   }
 
   public void repairAfterCrash()

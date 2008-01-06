@@ -19,8 +19,8 @@ import org.eclipse.emf.cdo.protocol.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreReader;
+import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
@@ -160,7 +160,7 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected int sqlUpdate(IDBStoreAccessor storeAccessor, String sql) throws DBException
+  protected int sqlUpdate(IDBStoreWriter storeWriter, String sql) throws DBException
   {
     if (TRACER.isEnabled())
     {
@@ -169,7 +169,7 @@ public abstract class ClassMapping implements IClassMapping
 
     try
     {
-      Statement statement = storeAccessor.getStatement();
+      Statement statement = storeWriter.getStatement();
       return statement.executeUpdate(sql);
     }
     catch (SQLException ex)
@@ -436,25 +436,25 @@ public abstract class ClassMapping implements IClassMapping
 
   protected abstract boolean hasFullRevisionInfo();
 
-  public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  public void writeRevision(IDBStoreWriter storeWriter, CDORevisionImpl revision)
   {
     if (revision.getVersion() >= 2 && hasFullRevisionInfo())
     {
-      writeRevisedRow(storeAccessor, revision);
+      writeRevisedRow(storeWriter, revision);
     }
 
     if (attributeMappings != null)
     {
-      writeAttributes(storeAccessor, revision);
+      writeAttributes(storeWriter, revision);
     }
 
     if (referenceMappings != null)
     {
-      writeReferences(storeAccessor, revision);
+      writeReferences(storeWriter, revision);
     }
   }
 
-  protected void writeRevisedRow(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  protected void writeRevisedRow(IDBStoreWriter storeWriter, CDORevisionImpl revision)
   {
     StringBuilder builder = new StringBuilder();
     builder.append("UPDATE ");
@@ -471,10 +471,10 @@ public abstract class ClassMapping implements IClassMapping
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
     builder.append("=");
     builder.append(revision.getVersion() - 1);
-    sqlUpdate(storeAccessor, builder.toString());
+    sqlUpdate(storeWriter, builder.toString());
   }
 
-  protected void writeAttributes(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  protected void writeAttributes(IDBStoreWriter storeWriter, CDORevisionImpl revision)
   {
     StringBuilder builder = new StringBuilder();
     builder.append("INSERT INTO ");
@@ -489,14 +489,14 @@ public abstract class ClassMapping implements IClassMapping
     }
 
     builder.append(")");
-    sqlUpdate(storeAccessor, builder.toString());
+    sqlUpdate(storeWriter, builder.toString());
   }
 
-  protected void writeReferences(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  protected void writeReferences(IDBStoreWriter storeWriter, CDORevisionImpl revision)
   {
     for (IReferenceMapping referenceMapping : referenceMappings)
     {
-      referenceMapping.writeReference(storeAccessor, revision);
+      referenceMapping.writeReference(storeWriter, revision);
     }
   }
 

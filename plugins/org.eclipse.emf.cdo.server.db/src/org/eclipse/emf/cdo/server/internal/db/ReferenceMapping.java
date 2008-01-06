@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IDBStoreReader;
+import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
@@ -72,7 +73,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     return table;
   }
 
-  public void writeReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision)
+  public void writeReference(IDBStoreWriter storeWriter, CDORevisionImpl revision)
   {
     long source = revision.getID().getValue();
     int version = revision.getVersion();
@@ -91,7 +92,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
       builder.append(target);
       builder.append(")");
       String sql = builder.toString();
-      getClassMapping().sqlUpdate(storeAccessor, sql);
+      getClassMapping().sqlUpdate(storeWriter, sql);
     }
   }
 

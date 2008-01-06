@@ -10,11 +10,25 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
+import org.eclipse.emf.cdo.server.db.IDBStore;
+import org.eclipse.emf.cdo.server.db.IDBStoreReader;
+import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
+import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +37,10 @@ import java.util.List;
  */
 public class HorizontalMappingStrategy extends MappingStrategy
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalMappingStrategy.class);
+
+  private IObjectTypeCache objectTypeCache;
+
   public HorizontalMappingStrategy()
   {
   }
@@ -30,6 +48,63 @@ public class HorizontalMappingStrategy extends MappingStrategy
   public String getType()
   {
     return "horizontal";
+  }
+
+  public IObjectTypeCache getObjectTypeCache()
+  {
+    return objectTypeCache;
+  }
+
+  public CDOClassRef readObjectType(IDBStoreReader storeReader, CDOID id)
+  {
+    CDOClassRef type = objectTypeCache.getObjectType(storeReader.getConnection(), id);
+    if (type == null)
+    {
+      type = readObjectTypeFromClassesWithObjectInfo(storeReader, id);
+      objectTypeCache.putObjectType(storeReader.getConnection(), id, type);
+    }
+
+    return type;
+  }
+
+  protected CDOClassRef readObjectTypeFromClassesWithObjectInfo(IDBStoreReader storeReader, CDOID id)
+  {
+    String prefix = "SELECT DISTINCT " + CDODBSchema.ATTRIBUTES_CLASS + " FROM ";
+    String suffix = " WHERE " + CDODBSchema.ATTRIBUTES_ID + "=" + id;
+    for (CDOClass cdoClass : getClassesWithObjectInfo())
+    {
+      IClassMapping mapping = getClassMapping(cdoClass);
+      if (mapping != null)
+      {
+        IDBTable table = mapping.getTable();
+        if (table != null)
+        {
+          String sql = prefix + table + suffix;
+          if (TRACER.isEnabled()) TRACER.trace(sql);
+          ResultSet resultSet = null;
+
+          try
+          {
+            resultSet = storeReader.getStatement().executeQuery(sql);
+            if (resultSet.next())
+            {
+              int classID = resultSet.getInt(1);
+              return getClassRef(storeReader, classID);
+            }
+          }
+          catch (SQLException ex)
+          {
+            throw new DBException(ex);
+          }
+          finally
+          {
+            DBUtil.close(resultSet);
+          }
+        }
+      }
+    }
+
+    throw new DBException("No object with id " + id);
   }
 
   @Override
@@ -60,5 +135,26 @@ public class HorizontalMappingStrategy extends MappingStrategy
     }
 
     return result;
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    objectTypeCache = createObjectTypeCache(getStore());
+    LifecycleUtil.activate(objectTypeCache);
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    LifecycleUtil.deactivate(objectTypeCache);
+    objectTypeCache = null;
+    super.doDeactivate();
+  }
+
+  protected IObjectTypeCache createObjectTypeCache(IDBStore store)
+  {
+    return new ObjectTypeCache();
   }
 }

@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -30,7 +30,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
 {
   private MappingStrategy mappingStrategy;
 
-  private IDBStoreAccessor storeAccessor;
+  private IDBStoreReader storeReader;
 
   private boolean withTypes;
 
@@ -42,10 +42,10 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
    * Creates an iterator over all objects in a store. It is important to {@link #dispose()} of this iterator after usage
    * to properly close internal result sets.
    */
-  public ObjectIDIterator(MappingStrategy mappingStrategy, IDBStoreAccessor storeAccessor, boolean withTypes)
+  public ObjectIDIterator(MappingStrategy mappingStrategy, IDBStoreReader storeReader, boolean withTypes)
   {
     this.mappingStrategy = mappingStrategy;
-    this.storeAccessor = storeAccessor;
+    this.storeReader = storeReader;
     this.withTypes = withTypes;
   }
 
@@ -59,9 +59,9 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
     return mappingStrategy;
   }
 
-  public IDBStoreAccessor getStoreAccessor()
+  public IDBStoreReader getStoreReader()
   {
-    return storeAccessor;
+    return storeReader;
   }
 
   public boolean isWithTypes()
@@ -91,7 +91,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
           if (withTypes)
           {
             int classID = currentResultSet.getInt(2);
-            CDOClassRef type = mappingStrategy.getClassRef(storeAccessor, classID);
+            CDOClassRef type = mappingStrategy.getClassRef(storeReader, classID);
             nextID = CDOIDImpl.create(id, type);
           }
           else

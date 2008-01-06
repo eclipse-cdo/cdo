@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreReader;
 
 import java.util.List;
 
@@ -24,23 +24,23 @@ import java.util.List;
  */
 public class MEMStoreChunkReader extends StoreChunkReader
 {
-  public MEMStoreChunkReader(IStoreAccessor storeAccessor, CDORevision revision, CDOFeature feature)
+  public MEMStoreChunkReader(IStoreReader storeReader, CDORevision revision, CDOFeature feature)
   {
-    super(storeAccessor, revision, feature);
+    super(storeReader, revision, feature);
   }
 
   public List<Chunk> executeRead()
   {
-    for (Chunk chunk : this.getChunks())
+    MEMStore store = getStoreReader().getStore();
+    for (Chunk chunk : getChunks())
     {
       int startIndex = chunk.getStartIndex();
       int size = chunk.size();
-      CDORevisionImpl revisionMEM = (CDORevisionImpl)this.getStoreAccessor().getStore().getRevision(
-          this.getRevision().getID());
+      CDORevisionImpl revisionMEM = (CDORevisionImpl)store.getRevision(getRevision().getID());
 
       for (int i = 0; i < size; i++)
       {
-        Object object = revisionMEM.get(this.getFeature(), startIndex + i);
+        Object object = revisionMEM.get(getFeature(), startIndex + i);
         chunk.addID(i, (CDOID)object);
       }
     }
@@ -49,8 +49,8 @@ public class MEMStoreChunkReader extends StoreChunkReader
   }
 
   @Override
-  public MEMStoreAccessor getStoreAccessor()
+  public MEMStoreAccessor getStoreReader()
   {
-    return (MEMStoreAccessor)super.getStoreAccessor();
+    return (MEMStoreAccessor)super.getStoreReader();
   }
 }

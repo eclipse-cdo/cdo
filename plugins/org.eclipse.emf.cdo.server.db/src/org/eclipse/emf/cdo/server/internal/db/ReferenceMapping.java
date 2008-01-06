@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
+import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
@@ -94,7 +95,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     }
   }
 
-  public void readReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
+  public void readReference(IDBStoreReader storeReader, CDORevisionImpl revision, int referenceChunk)
   {
     MoveableList list = revision.getList(getFeature());
     CDOID source = revision.getID();
@@ -106,7 +107,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
     try
     {
-      resultSet = storeAccessor.getStatement().executeQuery(sql);
+      resultSet = storeReader.getStatement().executeQuery(sql);
       while (resultSet.next() && (referenceChunk == CDORevision.UNCHUNKED || --referenceChunk >= 0))
       {
         long target = resultSet.getLong(1);
@@ -131,7 +132,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
   public void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)
   {
-    IDBStoreAccessor storeAccessor = chunkReader.getStoreAccessor();
+    IDBStoreAccessor storeAccessor = chunkReader.getStoreReader();
     CDOID source = chunkReader.getRevision().getID();
     int version = chunkReader.getRevision().getVersion();
 

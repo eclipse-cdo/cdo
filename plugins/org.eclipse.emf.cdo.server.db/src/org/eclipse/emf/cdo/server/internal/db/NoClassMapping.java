@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 
@@ -80,16 +81,16 @@ public class NoClassMapping implements IClassMapping
   {
   }
 
-  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
+  public void readRevision(IDBStoreReader storeReader, CDORevisionImpl revision, int referenceChunk)
   {
   }
 
-  public void readRevisionByTime(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp,
+  public void readRevisionByTime(IDBStoreReader storeReader, CDORevisionImpl revision, long timeStamp,
       int referenceChunk)
   {
   }
 
-  public void readRevisionByVersion(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int version,
+  public void readRevisionByVersion(IDBStoreReader storeReader, CDORevisionImpl revision, int version,
       int referenceChunk)
   {
   }

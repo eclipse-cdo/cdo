@@ -18,5 +18,5 @@ import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
  */
 public interface IObjectTypeLookup
 {
-  public CDOClassRef getObjectType(CDOID id);
+  public CDOClassRef getObjectType(IDBStoreReader storeReader, CDOID id);
 }

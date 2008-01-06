@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
@@ -499,13 +500,13 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
+  public void readRevision(IDBStoreReader storeReader, CDORevisionImpl revision, int referenceChunk)
   {
     String where = CDODBSchema.ATTRIBUTES_REVISED + "=0";
-    readRevision(storeAccessor, revision, where, true, referenceChunk);
+    readRevision(storeReader, revision, where, true, referenceChunk);
   }
 
-  public void readRevisionByTime(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp,
+  public void readRevisionByTime(IDBStoreReader storeReader, CDORevisionImpl revision, long timeStamp,
       int referenceChunk)
   {
     StringBuilder where = new StringBuilder();
@@ -519,32 +520,31 @@ public abstract class ClassMapping implements IClassMapping
     where.append(timeStamp);
     where.append(">=");
     where.append(CDODBSchema.ATTRIBUTES_CREATED);
-    readRevision(storeAccessor, revision, where.toString(), true, referenceChunk);
+    readRevision(storeReader, revision, where.toString(), true, referenceChunk);
   }
 
-  public void readRevisionByVersion(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int version,
+  public void readRevisionByVersion(IDBStoreReader storeReader, CDORevisionImpl revision, int version,
       int referenceChunk)
   {
     String where = CDODBSchema.ATTRIBUTES_VERSION + "=" + version;
-    readRevision(storeAccessor, revision, where, false, referenceChunk);
+    readRevision(storeReader, revision, where, false, referenceChunk);
   }
 
-  protected void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, String where,
-      boolean readVersion, int referenceChunk)
+  protected void readRevision(IDBStoreReader storeReader, CDORevisionImpl revision, String where, boolean readVersion,
+      int referenceChunk)
   {
     if (attributeMappings != null)
     {
-      readAttributes(storeAccessor, revision, where, readVersion);
+      readAttributes(storeReader, revision, where, readVersion);
     }
 
     if (referenceMappings != null)
     {
-      readReferences(storeAccessor, revision, referenceChunk);
+      readReferences(storeReader, revision, referenceChunk);
     }
   }
 
-  protected void readAttributes(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, String where,
-      boolean readVersion)
+  protected void readAttributes(IDBStoreReader storeReader, CDORevisionImpl revision, String where, boolean readVersion)
   {
     long id = revision.getID().getValue();
     StringBuilder builder = new StringBuilder(readVersion ? selectPrefixWithVersion : selectPrefix);
@@ -561,7 +561,7 @@ public abstract class ClassMapping implements IClassMapping
 
     try
     {
-      resultSet = storeAccessor.getStatement().executeQuery(sql);
+      resultSet = storeReader.getStatement().executeQuery(sql);
       if (!resultSet.next())
       {
         throw new IllegalStateException("Revision not found: " + id);
@@ -600,11 +600,11 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected void readReferences(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk)
+  protected void readReferences(IDBStoreReader storeReader, CDORevisionImpl revision, int referenceChunk)
   {
     for (IReferenceMapping referenceMapping : referenceMappings)
     {
-      referenceMapping.readReference(storeAccessor, revision, referenceChunk);
+      referenceMapping.readReference(storeReader, revision, referenceChunk);
     }
   }
 }

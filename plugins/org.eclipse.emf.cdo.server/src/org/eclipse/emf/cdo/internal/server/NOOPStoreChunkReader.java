@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreReader;
 
 import java.util.List;
 
@@ -21,9 +21,9 @@ import java.util.List;
  */
 public class NOOPStoreChunkReader extends StoreChunkReader
 {
-  public NOOPStoreChunkReader(IStoreAccessor storeAccessor, CDORevision revision, CDOFeature feature)
+  public NOOPStoreChunkReader(IStoreReader storeReader, CDORevision revision, CDOFeature feature)
   {
-    super(storeAccessor, revision, feature);
+    super(storeReader, revision, feature);
   }
 
   @Override

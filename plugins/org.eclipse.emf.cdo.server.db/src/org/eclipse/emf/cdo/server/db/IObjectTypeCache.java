@@ -18,5 +18,5 @@ import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
  */
 public interface IObjectTypeCache extends IObjectTypeLookup
 {
-  public void putObjectType(CDOID id, CDOClassRef type);
+  public void putObjectType(IDBStoreWriter storeWriter, CDOID id, CDOClassRef type);
 }

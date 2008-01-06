@@ -26,7 +26,7 @@ public interface IReferenceMapping extends IFeatureMapping
 
   public void writeReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
 
-  public void readReference(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk);
+  public void readReference(IDBStoreReader storeReader, CDORevisionImpl revision, int referenceChunk);
 
   public void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String string);
 }

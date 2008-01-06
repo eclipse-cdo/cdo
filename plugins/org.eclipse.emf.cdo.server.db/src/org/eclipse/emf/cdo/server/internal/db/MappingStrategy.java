@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
@@ -225,11 +225,11 @@ public abstract class MappingStrategy implements IMappingStrategy
     resourcePathField = resourcePathMapping.getField();
   }
 
-  public CloseableIterator<CDOID> readObjectIDs(final IDBStoreAccessor storeAccessor, final boolean withTypes)
+  public CloseableIterator<CDOID> readObjectIDs(final IDBStoreReader storeReader, final boolean withTypes)
   {
     List<CDOClass> classes = getClassesWithObjectInfo();
     final Iterator<CDOClass> classIt = classes.iterator();
-    return new ObjectIDIterator(this, storeAccessor, withTypes)
+    return new ObjectIDIterator(this, storeReader, withTypes)
     {
       @Override
       protected ResultSet getNextResultSet()
@@ -258,7 +258,7 @@ public abstract class MappingStrategy implements IMappingStrategy
 
               try
               {
-                return storeAccessor.getStatement().executeQuery(sql);
+                return storeReader.getStatement().executeQuery(sql);
               }
               catch (SQLException ex)
               {
@@ -273,7 +273,7 @@ public abstract class MappingStrategy implements IMappingStrategy
     };
   }
 
-  public CDOClassRef readObjectType(IDBStoreAccessor storeAccessor, CDOID id)
+  public CDOClassRef readObjectType(IDBStoreReader storeReader, CDOID id)
   {
     // TODO Change to support vertical mappings
     String prefix = "SELECT DISTINCT " + CDODBSchema.ATTRIBUTES_CLASS + " FROM ";
@@ -292,11 +292,11 @@ public abstract class MappingStrategy implements IMappingStrategy
 
           try
           {
-            resultSet = storeAccessor.getStatement().executeQuery(sql);
+            resultSet = storeReader.getStatement().executeQuery(sql);
             if (resultSet.next())
             {
               int classID = resultSet.getInt(1);
-              return getClassRef(storeAccessor, classID);
+              return getClassRef(storeReader, classID);
             }
           }
           catch (SQLException ex)
@@ -314,7 +314,7 @@ public abstract class MappingStrategy implements IMappingStrategy
     throw new DBException("No object with id " + id);
   }
 
-  public CDOClassRef getClassRef(IDBStoreAccessor storeAccessor, int classID)
+  public CDOClassRef getClassRef(IDBStoreReader storeReader, int classID)
   {
     CDOClassRef classRef = classRefs.get(classID);
     if (classRef == null)
@@ -327,7 +327,7 @@ public abstract class MappingStrategy implements IMappingStrategy
       }
       else
       {
-        classRef = storeAccessor.readClassRef(classID);
+        classRef = storeReader.readClassRef(classID);
       }
 
       classRefs.put(classID, classRef);
@@ -336,23 +336,23 @@ public abstract class MappingStrategy implements IMappingStrategy
     return classRef;
   }
 
-  public CDOID readResourceID(IDBStoreAccessor storeAccessor, String path)
+  public CDOID readResourceID(IDBStoreReader storeReader, String path)
   {
     IDBTable resourceTable = getResourceTable();
     IDBField selectField = getResourceIDField();
     IDBField whereField = getResourcePathField();
-    return (CDOID)readResourceInfo(storeAccessor, resourceTable, selectField, whereField, path);
+    return (CDOID)readResourceInfo(storeReader, resourceTable, selectField, whereField, path);
   }
 
-  public String readResourcePath(IDBStoreAccessor storeAccessor, CDOID id)
+  public String readResourcePath(IDBStoreReader storeReader, CDOID id)
   {
     IDBTable resourceTable = getResourceTable();
     IDBField selectField = getResourcePathField();
     IDBField whereField = getResourceIDField();
-    return (String)readResourceInfo(storeAccessor, resourceTable, selectField, whereField, id);
+    return (String)readResourceInfo(storeReader, resourceTable, selectField, whereField, id);
   }
 
-  protected Object readResourceInfo(IDBStoreAccessor storeAccessor, IDBTable resourceTable, IDBField selectField,
+  protected Object readResourceInfo(IDBStoreReader storeReader, IDBTable resourceTable, IDBField selectField,
       IDBField whereField, Object whereValue)
   {
     StringBuilder builder = new StringBuilder();
@@ -371,7 +371,7 @@ public abstract class MappingStrategy implements IMappingStrategy
 
     try
     {
-      Statement statement = storeAccessor.getStatement();
+      Statement statement = storeReader.getStatement();
       statement.setMaxRows(1); // Reset by DBUtil.close(resultSet)
 
       resultSet = statement.executeQuery(sql);

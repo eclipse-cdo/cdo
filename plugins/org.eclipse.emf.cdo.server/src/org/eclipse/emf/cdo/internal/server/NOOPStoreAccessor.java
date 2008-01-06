@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
+import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
@@ -31,7 +32,7 @@ import java.util.Collections;
 /**
  * @author Eike Stepper
  */
-public class NOOPStoreAccessor extends StoreAccessor
+public class NOOPStoreAccessor extends StoreAccessor implements IStoreReader, IStoreWriter
 {
   public NOOPStoreAccessor(NOOPStore store, ISession session)
   {

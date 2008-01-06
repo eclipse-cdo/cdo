@@ -16,13 +16,13 @@ import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IView;
 
 /**
  * @author Eike Stepper
  */
-public abstract class StoreAccessor implements IStoreWriter
+public class StoreAccessor implements IStoreAccessor
 {
   private Store store;
 
@@ -37,12 +37,12 @@ public abstract class StoreAccessor implements IStoreWriter
     this.reader = reader;
   }
 
-  public StoreAccessor(Store store, ISession session)
+  protected StoreAccessor(Store store, ISession session)
   {
     this(store, session, true);
   }
 
-  public StoreAccessor(Store store, IView view)
+  protected StoreAccessor(Store store, IView view)
   {
     this(store, view, false);
   }

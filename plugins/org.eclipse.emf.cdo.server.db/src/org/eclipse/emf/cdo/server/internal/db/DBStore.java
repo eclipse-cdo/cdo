@@ -109,14 +109,14 @@ public class DBStore extends Store implements IDBStore
     return false;
   }
 
-  public DBStoreAccessor getReader(ISession session) throws DBException
+  public DBStoreReader getReader(ISession session) throws DBException
   {
-    return new DBStoreAccessor(this, session);
+    return new DBStoreReader(this, session);
   }
 
-  public DBStoreAccessor getWriter(IView view) throws DBException
+  public DBStoreWriter getWriter(IView view) throws DBException
   {
-    return new DBStoreAccessor(this, view);
+    return new DBStoreWriter(this, view);
   }
 
   public int getNextPackageID()
@@ -265,7 +265,7 @@ public class DBStore extends Store implements IDBStore
   public void repairAfterCrash()
   {
     Repository repository = (Repository)getRepository();
-    DBStoreAccessor storeReader = getReader(null);
+    DBStoreReader storeReader = getReader(null);
     StoreUtil.setReader(storeReader);
 
     try

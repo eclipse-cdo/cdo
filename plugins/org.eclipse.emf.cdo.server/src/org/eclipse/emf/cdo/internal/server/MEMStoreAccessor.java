@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.protocol.revision.CDODuplicateRevisionException;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
+import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
@@ -36,7 +37,7 @@ import java.util.List;
 /**
  * @author Simon McDuff
  */
-public class MEMStoreAccessor extends StoreAccessor
+public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, IStoreWriter
 {
   List<CDORevisionImpl> listToCommit = new ArrayList<CDORevisionImpl>();
 

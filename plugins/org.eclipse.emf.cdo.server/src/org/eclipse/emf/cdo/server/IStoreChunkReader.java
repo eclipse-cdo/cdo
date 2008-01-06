@@ -22,6 +22,8 @@ import java.util.List;
  */
 public interface IStoreChunkReader
 {
+  public IStoreReader getStoreReader();
+
   public CDORevision getRevision();
 
   public CDOFeature getFeature();

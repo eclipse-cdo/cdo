@@ -42,11 +42,11 @@ public interface IClassMapping
 
   public void writeRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision);
 
-  public void readRevision(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int referenceChunk);
+  public void readRevision(IDBStoreReader storeReader, CDORevisionImpl revision, int referenceChunk);
 
-  public void readRevisionByTime(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, long timeStamp,
+  public void readRevisionByTime(IDBStoreReader storeReader, CDORevisionImpl revision, long timeStamp,
       int referenceChunk);
 
-  public void readRevisionByVersion(IDBStoreAccessor storeAccessor, CDORevisionImpl revision, int version,
+  public void readRevisionByVersion(IDBStoreReader storeReader, CDORevisionImpl revision, int version,
       int referenceChunk);
 }

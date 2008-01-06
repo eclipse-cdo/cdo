@@ -10,19 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.server.IStoreAccessor;
-
-import java.sql.Connection;
-import java.sql.Statement;
+import org.eclipse.emf.cdo.server.IStoreWriter;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBStoreAccessor extends IStoreAccessor
+public interface IDBStoreWriter extends IDBStoreReader, IStoreWriter
 {
-  public IDBStore getStore();
-
-  public Connection getConnection();
-
-  public Statement getStatement();
 }

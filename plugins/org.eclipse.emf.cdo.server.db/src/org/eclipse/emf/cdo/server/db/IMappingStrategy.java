@@ -36,13 +36,13 @@ public interface IMappingStrategy
 
   public IClassMapping getClassMapping(CDOClass cdoClass);
 
-  public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor storeAccessor, boolean withTypes);
+  public CloseableIterator<CDOID> readObjectIDs(IDBStoreReader storeReader, boolean withTypes);
 
-  public CDOClassRef readObjectType(IDBStoreAccessor storeAccessor, CDOID id);
+  public CDOClassRef readObjectType(IDBStoreReader storeReader, CDOID id);
 
-  public CDOID readResourceID(IDBStoreAccessor storeAccessor, String path);
+  public CDOID readResourceID(IDBStoreReader storeReader, String path);
 
-  public String readResourcePath(IDBStoreAccessor storeAccessor, CDOID id);
+  public String readResourcePath(IDBStoreReader storeReader, CDOID id);
 
   /**
    * Must return the next CDOID value to be used for new objects.

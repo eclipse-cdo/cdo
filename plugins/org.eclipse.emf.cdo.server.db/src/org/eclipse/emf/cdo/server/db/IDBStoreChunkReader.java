@@ -17,5 +17,5 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader;
  */
 public interface IDBStoreChunkReader extends IStoreChunkReader
 {
-  public IDBStoreAccessor getStoreAccessor();
+  public IDBStoreReader getStoreReader();
 }

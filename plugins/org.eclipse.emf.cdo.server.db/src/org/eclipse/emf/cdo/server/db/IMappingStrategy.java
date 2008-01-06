@@ -26,12 +26,6 @@ public interface IMappingStrategy
 {
   public String getType();
 
-  /**
-   * @return <code>true</code> if this mapping strategy supports the efficient lookup of object types,
-   *         <code>false</code> otherwise.
-   */
-  public boolean hasEfficientTypeLookup();
-
   public IDBStore getStore();
 
   public void setStore(IDBStore store);

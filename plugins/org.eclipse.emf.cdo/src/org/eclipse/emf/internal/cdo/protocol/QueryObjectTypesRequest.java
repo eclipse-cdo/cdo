@@ -33,9 +33,6 @@ public class QueryObjectTypesRequest extends CDOClientRequest<CDOClassRef[]>
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, QueryObjectTypesRequest.class);
 
-  /**
-   * TODO Consider single id
-   */
   private List<CDOID> ids;
 
   public QueryObjectTypesRequest(IChannel channel, List<CDOID> ids)
@@ -57,14 +54,15 @@ public class QueryObjectTypesRequest extends CDOClientRequest<CDOClassRef[]>
     {
       PROTOCOL.format("Writing {0} IDs", ids.size());
     }
-    out.writeInt(ids.size());
 
+    out.writeInt(ids.size());
     for (CDOID id : ids)
     {
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("Writing ID: {0}", id);
       }
+
       CDOIDImpl.write(out, id);
     }
   }

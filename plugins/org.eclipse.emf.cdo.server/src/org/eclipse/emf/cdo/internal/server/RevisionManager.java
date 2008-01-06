@@ -13,7 +13,6 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOPathFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
@@ -209,27 +208,21 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   protected CDORevisionImpl loadRevision(CDOID id, int referenceChunk)
   {
     IStoreReader storeReader = StoreUtil.getReader();
-    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevision(id, referenceChunk);
-    registerObjectType(revision);
-    return revision;
+    return (CDORevisionImpl)storeReader.readRevision(id, referenceChunk);
   }
 
   @Override
   protected CDORevisionImpl loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
     IStoreReader storeReader = StoreUtil.getReader();
-    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevisionByTime(id, referenceChunk, timeStamp);
-    registerObjectType(revision);
-    return revision;
+    return (CDORevisionImpl)storeReader.readRevisionByTime(id, referenceChunk, timeStamp);
   }
 
   @Override
   protected CDORevisionImpl loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
     IStoreReader storeReader = StoreUtil.getReader();
-    CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevisionByVersion(id, referenceChunk, version);
-    registerObjectType(revision);
-    return revision;
+    return (CDORevisionImpl)storeReader.readRevisionByVersion(id, referenceChunk, version);
   }
 
   @Override
@@ -240,7 +233,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     for (CDOID id : ids)
     {
       CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevision(id, referenceChunk);
-      registerObjectType(revision);
+      revisions.add(revision);
     }
 
     return revisions;
@@ -254,7 +247,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     for (CDOID id : ids)
     {
       CDORevisionImpl revision = (CDORevisionImpl)storeReader.readRevisionByTime(id, referenceChunk, timeStamp);
-      registerObjectType(revision);
+      revisions.add(revision);
     }
 
     return revisions;
@@ -272,13 +265,6 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   {
     String capacity = repository.getProperties().get(prop);
     return capacity == null ? 0 : Integer.valueOf(capacity);
-  }
-
-  protected void registerObjectType(CDORevisionImpl revision)
-  {
-    CDOID id = revision.getID();
-    CDOClassRefImpl type = revision.getCDOClass().createClassRef();
-    repository.getTypeManager().registerObjectType(id, type);
   }
 
   /**
@@ -300,7 +286,6 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
 
     public void phase2(IStoreWriter storeWriter)
     {
-      repository.getTypeManager().registerObjectType(revision.getID(), revision.getCDOClass().createClassRef());
       addRevision(revision);
       if (revision.isResource())
       {

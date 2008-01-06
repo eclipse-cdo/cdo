@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.internal.server.protocol.InvalidationNotification;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
@@ -34,7 +35,6 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import java.text.MessageFormat;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -54,8 +54,6 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   private boolean disableLegacyObjects;
 
   private ConcurrentMap<Integer, View> views = new ConcurrentHashMap<Integer, View>();
-
-  private Set<CDOID> knownTypes = new HashSet<CDOID>();
 
   private IListener protocolListener = new LifecycleEventAdapter()
   {
@@ -180,19 +178,15 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
       return id;
     }
 
-    Repository repository = sessionManager.getRepository();
-    if (repository.isRememberingKnownTypes())
-    {
-      if (knownTypes.contains(id))
-      {
-        return id;
-      }
-
-      knownTypes.add(id);
-    }
-
-    CDOClassRef type = repository.getTypeManager().getObjectType(StoreUtil.getReader(), id);
+    CDOClassRef type = getObjectTypeRef(id);
     return CDOIDImpl.create(id.getValue(), type);
+  }
+
+  public CDOClassRef getObjectTypeRef(CDOID id)
+  {
+    RevisionManager revisionManager = sessionManager.getRepository().getRevisionManager();
+    CDOClass cdoClass = revisionManager.getObjectType(id);
+    return cdoClass != null ? cdoClass.createClassRef() : StoreUtil.getReader().readObjectType(id);
   }
 
   /**

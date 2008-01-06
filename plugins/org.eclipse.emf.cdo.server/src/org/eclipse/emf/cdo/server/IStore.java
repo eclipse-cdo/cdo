@@ -54,18 +54,6 @@ public interface IStore extends IRepositoryElement
    */
   public boolean hasBranchingSupport();
 
-  /**
-   * Returns if this store supports the efficient lookup of object types.
-   * <p>
-   * The contract includes that store implementations with efficient type lookup support must also implement
-   * {@link IStoreReader#readObjectType(org.eclipse.emf.cdo.protocol.CDOID) IStoreReader.readObjectType(CDOID)} in a way
-   * that it performs similar to a <code>HashMap</code> or <code>TreeMap</code>.
-   * 
-   * @return <code>true</code> if this store supports the efficient lookup of object types, <code>false</code>
-   *         otherwise.
-   */
-  public boolean hasEfficientTypeLookup();
-
   public boolean wasCrashed();
 
   public void repairAfterCrash();

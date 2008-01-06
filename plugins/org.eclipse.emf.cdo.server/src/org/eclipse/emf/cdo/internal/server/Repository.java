@@ -39,8 +39,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   public static final String PROP_VERIFYING_REVISIONS = "verifyingRevisions";
 
-  public static final String PROP_REMEMBERING_KNOWN_TYPES = "rememberingKnownTypes";
-
   public static final String PROP_CURRENT_LRU_CAPACITY = "currentLRUCapacity";
 
   public static final String PROP_REVISED_LRU_CAPACITY = "revisedLRUCapacity";
@@ -60,10 +58,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   private Boolean supportingAudits;
 
   private Boolean verifyingRevisions;
-
-  private Boolean rememberingKnownTypes;
-
-  private TypeManager typeManager = createTypeManager();
 
   private PackageManager packageManager = createPackageManager();
 
@@ -160,22 +154,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return verifyingRevisions;
   }
 
-  public boolean isRememberingKnownTypes()
-  {
-    if (rememberingKnownTypes == null)
-    {
-      String value = getProperties().get(PROP_REMEMBERING_KNOWN_TYPES);
-      rememberingKnownTypes = value == null ? false : Boolean.valueOf(value);
-    }
-
-    return rememberingKnownTypes;
-  }
-
-  public TypeManager getTypeManager()
-  {
-    return typeManager;
-  }
-
   public PackageManager getPackageManager()
   {
     return packageManager;
@@ -231,24 +209,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return MessageFormat.format("Repository[{0}, {1}]", name, uuid);
   }
 
-  protected TypeManager createTypeManager()
-  {
-    return new TypeManager(this)
-    {
-      @Override
-      protected String getThreadName()
-      {
-        return "TypeManager-" + name;
-      }
-
-      @Override
-      public String toString()
-      {
-        return getThreadName();
-      }
-    };
-  }
-
   protected PackageManager createPackageManager()
   {
     return new PackageManager(this);
@@ -288,8 +248,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
       throw new IllegalStateException("Store without auditing support");
     }
 
-    elements = new IRepositoryElement[] { packageManager, sessionManager, resourceManager, revisionManager,
-        typeManager, store };
+    elements = new IRepositoryElement[] { packageManager, sessionManager, resourceManager, revisionManager, store };
   }
 
   @Override
@@ -309,8 +268,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   protected void activateRepository() throws Exception
   {
     LifecycleUtil.activate(store);
-    typeManager.setPersistent(!store.hasEfficientTypeLookup());
-    typeManager.activate();
     packageManager.activate();
     if (store.wasCrashed())
     {
@@ -328,7 +285,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     resourceManager.deactivate();
     sessionManager.deactivate();
     packageManager.deactivate();
-    typeManager.deactivate();
     LifecycleUtil.deactivate(store);
   }
 }

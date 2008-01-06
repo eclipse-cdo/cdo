@@ -12,12 +12,10 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
-import org.eclipse.emf.cdo.internal.server.StoreUtil;
-import org.eclipse.emf.cdo.internal.server.TypeManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -48,26 +46,34 @@ public class QueryObjectTypesIndication extends CDOReadIndication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     int size = in.readInt();
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Reading {0} IDs", size);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Reading {0} IDs", size);
+    }
 
     ids = new CDOID[size];
     for (int i = 0; i < ids.length; i++)
     {
       ids[i] = CDOIDImpl.read(in);
-      if (PROTOCOL.isEnabled()) PROTOCOL.format("Read ID: {0}", ids[i]);
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Read ID: {0}", ids[i]);
+      }
     }
   }
 
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    IStoreReader storeReader = StoreUtil.getReader();
-    TypeManager typeManager = getRepository().getTypeManager();
     for (CDOID id : ids)
     {
-      CDOClassRefImpl classRef = (CDOClassRefImpl)typeManager.getObjectType(storeReader, id);
-      if (PROTOCOL.isEnabled()) PROTOCOL.format("Wrinting type: {0}", classRef);
-      classRef.write(out, null);
+      CDOClassRef classRef = getSession().getObjectTypeRef(id);
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Wrinting type: {0}", classRef);
+      }
+
+      ((CDOClassRefImpl)classRef).write(out, null);
     }
   }
 }

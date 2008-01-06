@@ -35,11 +35,6 @@ public class NOOPStore extends Store
     return false;
   }
 
-  public boolean hasEfficientTypeLookup()
-  {
-    return true;
-  }
-
   public void repairAfterCrash()
   {
   }

@@ -32,11 +32,6 @@ public class HorizontalMappingStrategy extends MappingStrategy
     return "horizontal";
   }
 
-  public boolean hasEfficientTypeLookup()
-  {
-    return false;
-  }
-
   @Override
   protected IClassMapping createClassMapping(CDOClass cdoClass)
   {

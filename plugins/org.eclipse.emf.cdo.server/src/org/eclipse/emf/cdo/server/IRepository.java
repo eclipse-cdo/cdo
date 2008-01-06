@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.internal.server.TypeManager;
-
 import org.eclipse.net4j.util.container.IContainer;
 
 import java.util.Map;
@@ -38,8 +36,6 @@ public interface IRepository extends IContainer<IRepositoryElement>
   public boolean isSupportingAudits();
 
   public boolean isVerifyingRevisions();
-
-  public TypeManager getTypeManager();
 
   public IPackageManager getPackageManager();
 

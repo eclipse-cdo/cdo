@@ -94,11 +94,6 @@ public class MEMStore extends Store
     return false;
   }
 
-  public boolean hasEfficientTypeLookup()
-  {
-    return true;
-  }
-
   public void repairAfterCrash()
   {
   }

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
+import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
@@ -83,10 +84,11 @@ public class LoadChunkIndication extends CDOReadIndication
     CDORevisionImpl revision = getRevisionManager().getRevisionByVersion(id, 0, version);
     getRevisionManager().ensureChunk(revision, feature, fromIndex, toIndex + 1);
 
+    Session session = getSession();
     MoveableList list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
-      CDOIDImpl.write(out, getSession().provideCDOID(list.get(i)));
+      CDOIDImpl.write(out, session.provideCDOID(list.get(i)));
     }
   }
 }

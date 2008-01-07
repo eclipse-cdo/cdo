@@ -27,6 +27,8 @@ import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.BundleContext;
 
 /**
+ * The <em>Operations & Maintenance</em> class of this bundle.
+ * 
  * @author Eike Stepper
  */
 public abstract class OM

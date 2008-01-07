@@ -25,6 +25,8 @@ import org.eclipse.net4j.util.ui.UIActivator;
 import org.eclipse.internal.net4j.Net4jTransportInjector;
 
 /**
+ * The <em>Operations & Maintenance</em> class of this bundle.
+ * 
  * @author Eike Stepper
  */
 public abstract class OM

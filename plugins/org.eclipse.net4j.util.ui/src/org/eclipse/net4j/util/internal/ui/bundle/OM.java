@@ -18,6 +18,8 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
 
 /**
+ * The <em>Operations & Maintenance</em> class of this bundle.
+ * 
  * @author Eike Stepper
  */
 public abstract class OM

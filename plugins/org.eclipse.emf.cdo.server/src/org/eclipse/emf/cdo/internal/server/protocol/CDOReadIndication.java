@@ -14,8 +14,8 @@ import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreReader;
 
-import org.eclipse.net4j.stream.BufferInputStream;
-import org.eclipse.net4j.stream.BufferOutputStream;
+import org.eclipse.net4j.buffer.BufferInputStream;
+import org.eclipse.net4j.buffer.BufferOutputStream;
 
 /**
  * @author Eike Stepper

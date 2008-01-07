@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.signal;
 
+import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.stream.BufferInputStream;
 import org.eclipse.net4j.util.ReflectUtil;
 
 import java.text.MessageFormat;

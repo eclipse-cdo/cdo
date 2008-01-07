@@ -8,9 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.stream;
+package org.eclipse.net4j.channel;
 
-import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.buffer.BufferInputStream;
 
 /**
  * @author Eike Stepper

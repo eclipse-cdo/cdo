@@ -276,7 +276,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     }
   }
 
-  // TODO Rename to addRevisionDeltass
+  // TODO Rename to addRevisionDeltas
   // TODO Remove deltas parameter
   private void writeRevisions(ITransaction<IStoreWriter> storeTransaction, CDORevisionDeltaImpl[] deltas)
   {

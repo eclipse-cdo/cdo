@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.ILifecycleState;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
 
 /**
  * @author Eike Stepper
@@ -38,7 +39,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
   {
   }
 
-  public final void activate() throws Exception
+  public final void activate() throws LifecycleException
   {
     if (lifecycleState == ILifecycleState.INACTIVE)
     {
@@ -49,8 +50,20 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
 
       lifecycleState = ILifecycleState.ACTIVATING;
       fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE));
-      doBeforeActivate();
-      doActivate();
+
+      try
+      {
+        doBeforeActivate();
+        doActivate();
+      }
+      catch (RuntimeException ex)
+      {
+        throw ex;
+      }
+      catch (Exception ex)
+      {
+        throw new LifecycleException(ex);
+      }
 
       if (!isDeferredActivation())
       {
@@ -90,10 +103,6 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
       {
         OM.LOG.error(ex);
         return ex;
-      }
-      finally
-      {
-        lifecycleState = ILifecycleState.INACTIVE;
       }
     }
     else
@@ -187,6 +196,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
   protected final void deferredDeactivate() throws Exception
   {
     doDeactivate();
+    lifecycleState = ILifecycleState.INACTIVE;
     fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED));
   }
 

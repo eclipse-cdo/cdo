@@ -68,18 +68,7 @@ public final class LifecycleUtil
   {
     if (object instanceof ILifecycle)
     {
-      try
-      {
-        ((ILifecycle)object).activate();
-      }
-      catch (RuntimeException ex)
-      {
-        throw ex;
-      }
-      catch (Exception ex)
-      {
-        throw new LifecycleException(ex);
-      }
+      ((ILifecycle)object).activate();
     }
     else if (object != null && useAnnotation)
     {

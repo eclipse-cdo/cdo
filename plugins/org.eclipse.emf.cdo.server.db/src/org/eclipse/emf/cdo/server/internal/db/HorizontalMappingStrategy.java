@@ -57,11 +57,12 @@ public class HorizontalMappingStrategy extends MappingStrategy
 
   public CDOClassRef readObjectType(IDBStoreReader storeReader, CDOID id)
   {
-    CDOClassRef type = objectTypeCache.getObjectType(storeReader.getConnection(), id);
+    CDOClassRef type = objectTypeCache.getObjectType(storeReader, id);
     if (type == null)
     {
-      type = readObjectTypeFromClassesWithObjectInfo(storeReader, id);
-      objectTypeCache.putObjectType(storeReader.getConnection(), id, type);
+      throw new DBException("Type of " + id + " not found");
+      // type = readObjectTypeFromClassesWithObjectInfo(storeReader, id);
+      // objectTypeCache.putObjectType(storeReader.getStatement(), id, type);
     }
 
     return type;
@@ -155,6 +156,8 @@ public class HorizontalMappingStrategy extends MappingStrategy
 
   protected IObjectTypeCache createObjectTypeCache(IDBStore store)
   {
-    return new ObjectTypeCache();
+    ObjectTypeCache cache = new ObjectTypeCache();
+    cache.setMappingStrategy(this);
+    return cache;
   }
 }

@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -39,8 +38,8 @@ public class HorizontalClassMapping extends ClassMapping
     if (revision.getVersion() == 1)
     {
       CDOID id = revision.getID();
-      CDOClassRefImpl type = revision.getCDOClass().createClassRef();
-      getMappingStrategy().getObjectTypeCache().putObjectType(storeWriter.getConnection(), id, type);
+      CDOClass type = revision.getCDOClass();
+      getMappingStrategy().getObjectTypeCache().putObjectType(storeWriter, id, type);
     }
   }
 

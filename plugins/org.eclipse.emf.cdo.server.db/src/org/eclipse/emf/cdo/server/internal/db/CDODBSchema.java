@@ -160,6 +160,11 @@ public class CDODBSchema extends DBSchema
   FEATURES.addIndex(IDBIndex.Type.PRIMARY_KEY, FEATURES_ID);
 
   /**
+   * Name of object table
+   */
+  public static final String CDO_OBJECTS = "cdo_objects";
+
+  /**
    * Field names of attribute tables
    */
   public static final String ATTRIBUTES_ID = "cdo_id";

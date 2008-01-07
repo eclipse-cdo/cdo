@@ -11,16 +11,15 @@
 package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-
-import java.sql.Connection;
 
 /**
  * @author Eike Stepper
  */
 public interface IObjectTypeCache
 {
-  public CDOClassRef getObjectType(Connection connection, CDOID id);
+  public CDOClassRef getObjectType(IDBStoreReader storeReader, CDOID id);
 
-  public void putObjectType(Connection connection, CDOID id, CDOClassRef type);
+  public void putObjectType(IDBStoreWriter storeWriter, CDOID id, CDOClass type);
 }

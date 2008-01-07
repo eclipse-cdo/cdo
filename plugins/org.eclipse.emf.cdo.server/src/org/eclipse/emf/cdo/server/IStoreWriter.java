@@ -52,5 +52,6 @@ public interface IStoreWriter extends IStoreReader
 
   public CDOID primeNewObject(CDOClass cdoClass);
 
+  // TODO Remove storeTransaction parameter
   public void rollback(IView view, ITransaction<IStoreWriter> storeTransaction);
 }

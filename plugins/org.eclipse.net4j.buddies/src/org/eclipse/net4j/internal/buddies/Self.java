@@ -64,7 +64,7 @@ public class Self extends Buddy
       long id = new InitiateCollaborationRequest(channel, buddies).send(ProtocolConstants.TIMEOUT);
 
       BuddyCollaboration collaboration = new BuddyCollaboration(session, id);
-      LifecycleUtil.activate(collaboration);
+      collaboration.activate();
       Membership.create(this, collaboration);
 
       List<IMembership> memberships = new ArrayList<IMembership>();

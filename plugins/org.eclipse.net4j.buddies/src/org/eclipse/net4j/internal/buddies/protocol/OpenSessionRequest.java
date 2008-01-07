@@ -19,7 +19,6 @@ import org.eclipse.net4j.internal.buddies.ClientSession;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.io.IOException;
 import java.util.Set;
@@ -80,7 +79,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
       session.buddyAdded(in.readString());
     }
 
-    LifecycleUtil.activate(session);
+    session.activate();
     return session;
   }
 }

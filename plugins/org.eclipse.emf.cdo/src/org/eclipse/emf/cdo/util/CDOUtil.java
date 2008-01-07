@@ -32,7 +32,6 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
@@ -136,18 +135,18 @@ public final class CDOUtil
 
   public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects,
       EPackage.Registry delegate, IFailOverStrategy failOverStrategy) throws ConnectorException
-      {
+  {
     CDOSessionImpl session = new CDOSessionImpl(delegate);
     session.setFailOverStrategy(failOverStrategy);
     session.setConnector(connector);
     session.setRepositoryName(repositoryName);
     session.setDisableLegacyObjects(disableLegacyObjects);
-    LifecycleUtil.activate(session);
+    session.activate();
     return session;
-      }
+  }
 
   public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects)
-  throws ConnectorException
+      throws ConnectorException
   {
     return openSession(connector, repositoryName, disableLegacyObjects, null, null);
   }

@@ -61,7 +61,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
 
   public BuddyAdmin()
   {
-    LifecycleUtil.activate(this);
+    activate();
   }
 
   public Map<String, IAccount> getAccounts()
@@ -128,7 +128,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
     }
 
     ServerBuddy buddy = new ServerBuddy(account, facilityTypes);
-    LifecycleUtil.activate(buddy);
+    buddy.activate();
     buddy.addListener(this);
 
     ServerSession session = new ServerSession(channel, buddy);
@@ -151,7 +151,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
     }
 
     Collaboration collaboration = new Collaboration(collaborationID);
-    LifecycleUtil.activate(collaboration);
+    collaboration.activate();
     Membership.create(initiator, collaboration);
 
     Set<IBuddy> buddies = new HashSet<IBuddy>();

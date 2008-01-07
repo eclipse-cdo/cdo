@@ -12,7 +12,6 @@ package org.eclipse.net4j.internal.util.concurrent;
 
 import org.eclipse.net4j.internal.util.lifecycle.QueueWorker;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * @author Eike Stepper
@@ -21,7 +20,7 @@ public class QueueWorkerWorkSerializer extends QueueWorker<Runnable> implements 
 {
   public QueueWorkerWorkSerializer()
   {
-    LifecycleUtil.activate(this);
+    activate();
   }
 
   public void dispose()

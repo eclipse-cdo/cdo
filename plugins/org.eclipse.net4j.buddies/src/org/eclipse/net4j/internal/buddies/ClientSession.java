@@ -57,7 +57,7 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
   public void setSelf(IAccount account, Set<String> facilityTypes)
   {
     self = new Self(this, account, facilityTypes);
-    LifecycleUtil.activate(self);
+    self.activate();
     self.addListener(this);
   }
 
@@ -108,7 +108,7 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
   public void buddyAdded(String userID)
   {
     ClientBuddy buddy = new ClientBuddy(this, userID);
-    LifecycleUtil.activate(buddy);
+    buddy.activate();
     addBuddy(buddy);
   }
 

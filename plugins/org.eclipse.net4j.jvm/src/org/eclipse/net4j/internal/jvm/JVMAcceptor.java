@@ -12,7 +12,6 @@ package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.internal.net4j.acceptor.Acceptor;
 
@@ -47,7 +46,7 @@ public class JVMAcceptor extends Acceptor implements IJVMAcceptor
     connector.setReceiveExecutor(client.getReceiveExecutor());
     connector.setProtocolFactoryRegistry(client.getProtocolFactoryRegistry());
     connector.setProtocolPostProcessors(client.getProtocolPostProcessors());
-    LifecycleUtil.activate(connector);
+    connector.activate();
     addConnector(connector);
     return connector;
   }

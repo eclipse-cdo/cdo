@@ -157,6 +157,7 @@ public final class LifecycleUtil
     }
     else if (object != null && useAnnotation)
     {
+      // TODO Handle evtl. return value (exception)
       invokeAnnotation(object, Deactivator.class);
     }
 

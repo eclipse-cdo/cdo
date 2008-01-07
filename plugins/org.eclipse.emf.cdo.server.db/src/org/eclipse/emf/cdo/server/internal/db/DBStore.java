@@ -196,9 +196,9 @@ public class DBStore extends Store implements IDBStore
     else
     {
       // Restart
-      int nextCDOID = DBUtil.selectMaximumInt(connection, CDODBSchema.REPOSITORY_NEXT_CDOID);
-      int nextMetaID = DBUtil.selectMaximumInt(connection, CDODBSchema.REPOSITORY_NEXT_METAID);
-      if (nextCDOID == 0 || nextMetaID == 0)
+      long nextCDOID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_CDOID);
+      long nextMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_METAID);
+      if (nextCDOID == 0L || nextMetaID == 0L)
       {
         OM.LOG.warn("Detected restart after crash");
       }
@@ -241,6 +241,7 @@ public class DBStore extends Store implements IDBStore
 
   protected void deactivateStore(Repository repository, Connection connection)
   {
+    LifecycleUtil.deactivate(mappingStrategy);
     StringBuilder builder = new StringBuilder();
     builder.append("UPDATE ");
     builder.append(CDODBSchema.REPOSITORY);
@@ -263,8 +264,6 @@ public class DBStore extends Store implements IDBStore
     {
       throw new DBException("No row updated in table " + CDODBSchema.REPOSITORY);
     }
-
-    LifecycleUtil.deactivate(mappingStrategy);
   }
 
   public void repairAfterCrash()

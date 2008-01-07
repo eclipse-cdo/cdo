@@ -145,7 +145,7 @@ public final class DBUtil
       return (Integer)number;
     }
 
-    return 0;
+    throw new DBException("Not an integer number: " + number);
   }
 
   public static long selectMaximumLong(Connection connection, IDBField field) throws DBException
@@ -156,7 +156,7 @@ public final class DBUtil
       return (Long)number;
     }
 
-    return 0;
+    throw new DBException("Not a long number: " + number);
   }
 
   private static Number getMaximumNumber(Connection connection, IDBField field) throws DBException

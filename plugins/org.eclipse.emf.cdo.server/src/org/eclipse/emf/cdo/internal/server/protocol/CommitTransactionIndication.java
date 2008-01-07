@@ -259,6 +259,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     return revisions;
   }
 
+  // TODO Remove newPackages parameter
   private void addPackages(ITransaction<IStoreWriter> storeTransaction, CDOPackageImpl[] newPackages)
   {
     sessionPackageManager.addPackages(storeTransaction, newPackages);
@@ -275,6 +276,8 @@ public class CommitTransactionIndication extends CDOServerIndication
     }
   }
 
+  // TODO Rename to addRevisionDeltass
+  // TODO Remove deltas parameter
   private void writeRevisions(ITransaction<IStoreWriter> storeTransaction, CDORevisionDeltaImpl[] deltas)
   {
     for (CDORevisionDeltaImpl delta : deltas)

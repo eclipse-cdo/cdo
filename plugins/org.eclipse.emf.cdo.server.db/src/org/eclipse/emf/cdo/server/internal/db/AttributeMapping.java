@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.IDBField;
+import org.eclipse.net4j.db.ddl.IDBField;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

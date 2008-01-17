@@ -8,14 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.db;
+package org.eclipse.net4j.internal.db.ddl;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
-import org.eclipse.net4j.db.IDBField;
-import org.eclipse.net4j.db.IDBIndex;
-import org.eclipse.net4j.db.IDBTable;
-import org.eclipse.net4j.db.IDBIndex.Type;
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class DBTable extends DBElement implements IDBTable
+public class DBTable extends DBSchemaElement implements IDBTable
 {
   private DBSchema schema;
 

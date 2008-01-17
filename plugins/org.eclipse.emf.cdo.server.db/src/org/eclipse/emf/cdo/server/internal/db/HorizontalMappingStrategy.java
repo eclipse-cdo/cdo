@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 

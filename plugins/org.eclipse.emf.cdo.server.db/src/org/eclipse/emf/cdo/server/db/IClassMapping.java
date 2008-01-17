@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
-import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.db.ddl.IDBTable;
 
 import java.util.List;
 import java.util.Set;

@@ -12,9 +12,9 @@ package org.eclipse.net4j.db.internal.mysql;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
-import org.eclipse.net4j.db.IDBField;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.internal.db.DBAdapter;
-import org.eclipse.net4j.internal.db.DBField;
+import org.eclipse.net4j.internal.db.ddl.DBField;
 
 import org.gjt.mm.mysql.Driver;
 

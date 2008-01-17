@@ -26,9 +26,9 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.IDBSchema;
-import org.eclipse.net4j.db.IDBTable;
-import org.eclipse.net4j.internal.db.DBSchema;
+import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.internal.db.ddl.DBSchema;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 

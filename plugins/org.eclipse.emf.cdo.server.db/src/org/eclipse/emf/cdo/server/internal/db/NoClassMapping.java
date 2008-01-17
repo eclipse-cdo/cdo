@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 
-import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.db.ddl.IDBTable;
 
 import java.util.Collections;
 import java.util.List;

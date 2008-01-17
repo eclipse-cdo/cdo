@@ -8,24 +8,30 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.db;
-
-import org.eclipse.emf.cdo.server.IStore;
-
-import org.eclipse.net4j.db.ConnectionProvider;
-import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.ddl.IDBSchema;
+package org.eclipse.net4j.db.ddl;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBStore extends IStore
+public interface IDBIndex extends IDBSchemaElement
 {
-  public IMappingStrategy getMappingStrategy();
+  public IDBTable getTable();
 
-  public IDBAdapter getDBAdapter();
+  public Type getType();
 
-  public ConnectionProvider getConnectionProvider();
+  public IDBField getField(int index);
 
-  public IDBSchema getSchema();
+  public int getFieldCount();
+
+  public IDBField[] getFields();
+
+  public int getPosition();
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum Type
+  {
+    PRIMARY_KEY, UNIQUE, NON_UNIQUE
+  }
 }

@@ -8,30 +8,28 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db;
+package org.eclipse.net4j.db.dml;
+
+import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBIndex extends IDBElement
+public interface IDBStatement
 {
-  public IDBTable getTable();
+  public IDBParameter addParameter(DBType type);
 
-  public Type getType();
+  public IDBParameter addParameter(IDBField field);
 
-  public IDBField getField(int index);
+  public IDBParameter[] getParameters();
 
-  public int getFieldCount();
+  public void addSQL(String literal);
 
-  public IDBField[] getFields();
+  public void addSQL(IDBParameter parameter);
 
-  public int getPosition();
+  public void addSQL(IDBSchemaElement schemaElement);
 
-  /**
-   * @author Eike Stepper
-   */
-  public enum Type
-  {
-    PRIMARY_KEY, UNIQUE, NON_UNIQUE
-  }
+  public String getSQL();
 }

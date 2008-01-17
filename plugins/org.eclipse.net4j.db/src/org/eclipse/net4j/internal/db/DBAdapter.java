@@ -14,10 +14,13 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.IDBField;
-import org.eclipse.net4j.db.IDBIndex;
-import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.bundle.OM;
+import org.eclipse.net4j.internal.db.ddl.DBField;
+import org.eclipse.net4j.internal.db.ddl.DBIndex;
+import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.sql.Connection;

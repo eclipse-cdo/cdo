@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.db;
 
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.DBAdapterRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 

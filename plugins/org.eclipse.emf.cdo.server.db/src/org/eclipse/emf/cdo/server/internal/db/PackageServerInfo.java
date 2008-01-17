@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 
-import org.eclipse.net4j.db.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 
 /**
  * @author Eike Stepper

@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 
-import org.eclipse.net4j.db.IDBField;
+import org.eclipse.net4j.db.ddl.IDBField;
 
 import java.sql.ResultSet;
 

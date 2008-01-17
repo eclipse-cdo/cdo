@@ -8,20 +8,20 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.db;
+package org.eclipse.net4j.internal.db.ddl;
 
-import org.eclipse.net4j.db.IDBElement;
+import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 
 import java.util.Properties;
 
 /**
  * @author Eike Stepper
  */
-public abstract class DBElement implements IDBElement
+public abstract class DBSchemaElement implements IDBSchemaElement
 {
   private Properties properties;
 
-  public DBElement()
+  public DBSchemaElement()
   {
   }
 

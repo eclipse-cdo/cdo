@@ -8,14 +8,15 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db;
+package org.eclipse.net4j.db.ddl;
 
-import org.eclipse.net4j.internal.db.DBField;
+import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.internal.db.ddl.DBField;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBTable extends IDBElement
+public interface IDBTable extends IDBSchemaElement
 {
   public IDBField addField(String name, DBType type);
 

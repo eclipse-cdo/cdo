@@ -8,25 +8,40 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.db;
+package org.eclipse.net4j.db.ddl;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
-
-import org.eclipse.net4j.db.ddl.IDBTable;
-
-import java.util.List;
+import org.eclipse.net4j.db.DBType;
 
 /**
  * @author Eike Stepper
  */
-public interface IReferenceMapping extends IFeatureMapping
+public interface IDBField extends IDBSchemaElement
 {
+  public static final int DEFAULT = -1;
+
   public IDBTable getTable();
 
-  public void writeReference(IDBStoreWriter storeWriter, CDORevisionImpl revision);
+  public void setName(String name);
 
-  public void readReference(IDBStoreReader storeReader, CDORevisionImpl revision, int referenceChunk);
+  public DBType getType();
 
-  public void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String string);
+  public void setType(DBType type);
+
+  public int getPrecision();
+
+  public void setPrecision(int precision);
+
+  public int getScale();
+
+  public void setScale(int scale);
+
+  public boolean isNotNull();
+
+  public void setNotNull(boolean on);
+
+  public int getPosition();
+
+  public String getFullName();
+
+  public void appendValue(StringBuilder builder, Object value);
 }

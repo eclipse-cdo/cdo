@@ -10,9 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.db;
 
-import org.eclipse.net4j.internal.db.DBSchema;
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
+import org.eclipse.net4j.internal.db.ddl.DBSchema;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ReflectUtil;
 

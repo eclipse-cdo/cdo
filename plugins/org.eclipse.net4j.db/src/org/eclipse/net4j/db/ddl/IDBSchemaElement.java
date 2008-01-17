@@ -8,14 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db;
+package org.eclipse.net4j.db.ddl;
 
 import java.util.Properties;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBElement
+public interface IDBSchemaElement
 {
   public IDBSchema getSchema();
 

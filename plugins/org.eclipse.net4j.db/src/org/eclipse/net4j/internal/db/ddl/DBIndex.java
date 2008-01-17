@@ -8,16 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.db;
+package org.eclipse.net4j.internal.db.ddl;
 
-import org.eclipse.net4j.db.IDBField;
-import org.eclipse.net4j.db.IDBIndex;
-import org.eclipse.net4j.db.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 
 /**
  * @author Eike Stepper
  */
-public class DBIndex extends DBElement implements IDBIndex
+public class DBIndex extends DBSchemaElement implements IDBIndex
 {
   private DBTable table;
 

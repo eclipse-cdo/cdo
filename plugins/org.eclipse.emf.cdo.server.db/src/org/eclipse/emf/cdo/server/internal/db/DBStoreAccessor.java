@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.db.ddl.IDBTable;
 
 import java.sql.Connection;
 import java.sql.SQLException;

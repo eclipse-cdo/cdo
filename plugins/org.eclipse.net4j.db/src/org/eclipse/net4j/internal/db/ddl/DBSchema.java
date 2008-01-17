@@ -8,14 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.db;
+package org.eclipse.net4j.internal.db.ddl;
 
 import org.eclipse.net4j.db.ConnectionProvider;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.IDBSchema;
-import org.eclipse.net4j.db.IDBTable;
+import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBTable;
 
 import javax.sql.DataSource;
 
@@ -27,7 +27,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class DBSchema extends DBElement implements IDBSchema
+public class DBSchema extends DBSchemaElement implements IDBSchema
 {
   private String name;
 

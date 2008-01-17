@@ -11,10 +11,10 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.net4j.db.DBType;
-import org.eclipse.net4j.db.IDBField;
-import org.eclipse.net4j.db.IDBIndex;
-import org.eclipse.net4j.db.IDBTable;
-import org.eclipse.net4j.internal.db.DBSchema;
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.internal.db.ddl.DBSchema;
 
 /**
  * @author Eike Stepper

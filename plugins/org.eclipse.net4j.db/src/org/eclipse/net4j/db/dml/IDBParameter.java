@@ -8,38 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db;
+package org.eclipse.net4j.db.dml;
+
+import org.eclipse.net4j.db.DBType;
 
 /**
  * @author Eike Stepper
  */
-public interface IDBField extends IDBElement
+public interface IDBParameter
 {
-  public static final int DEFAULT = -1;
+  public IDBStatement getStatement();
 
-  public IDBTable getTable();
-
-  public void setName(String name);
-
-  public DBType getType();
-
-  public void setType(DBType type);
-
-  public int getPrecision();
-
-  public void setPrecision(int precision);
-
-  public int getScale();
-
-  public void setScale(int scale);
-
-  public boolean isNotNull();
-
-  public void setNotNull(boolean on);
-
+  /**
+   * Returns the zero based position of this parameter within the {@link IDBStatement#getParameters() parameters} list
+   * of the containing {@link #getStatement() statement}.
+   */
   public int getPosition();
 
-  public String getFullName();
-
-  public void appendValue(StringBuilder builder, Object value);
+  public DBType getType();
 }

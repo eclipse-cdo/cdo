@@ -8,7 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db;
+package org.eclipse.net4j.db.ddl;
+
+import org.eclipse.net4j.db.ConnectionProvider;
+import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.IDBAdapter;
 
 import javax.sql.DataSource;
 
@@ -18,7 +22,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public interface IDBSchema extends IDBElement
+public interface IDBSchema extends IDBSchemaElement
 {
   public IDBTable addTable(String name) throws DBException;
 

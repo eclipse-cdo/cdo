@@ -12,7 +12,7 @@ package org.eclipse.net4j.db.internal.hsqldb;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.internal.db.DBAdapter;
-import org.eclipse.net4j.internal.db.DBField;
+import org.eclipse.net4j.internal.db.ddl.DBField;
 
 import org.hsqldb.jdbcDriver;
 

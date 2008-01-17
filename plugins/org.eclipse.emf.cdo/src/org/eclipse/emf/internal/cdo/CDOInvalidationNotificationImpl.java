@@ -65,7 +65,7 @@ public class CDOInvalidationNotificationImpl implements CDOInvalidationNotificat
 
   public boolean isTouch()
   {
-    throw new UnsupportedOperationException();
+    return false;
   }
 
   public boolean merge(Notification notification)

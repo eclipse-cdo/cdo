@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
-import org.eclipse.emf.cdo.protocol.revision.CDODuplicateRevisionException;
 
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
@@ -138,18 +137,8 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
       }
       for (int i = 0; i < size; i++)
       {
-        try
-        {
-          CDORevisionImpl revision = new CDORevisionImpl(in, revisionManager, packageManager);
-          revisionManager.addRevision(revision);
-        }
-        catch (CDODuplicateRevisionException ex)
-        {
-          if (PROTOCOL.isEnabled())
-          {
-            PROTOCOL.trace(ex);
-          }
-        }
+        CDORevisionImpl revision = new CDORevisionImpl(in, revisionManager, packageManager);
+        revisionManager.addRevision(revision);
       }
     }
 

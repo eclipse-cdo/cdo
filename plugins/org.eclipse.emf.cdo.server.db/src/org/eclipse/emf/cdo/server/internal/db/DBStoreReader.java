@@ -212,9 +212,10 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
   public CDOClassRef readClassRef(int classID)
   {
     String where = CDODBSchema.CLASSES_ID.getName() + "=" + classID;
-    Object[] ids = DBUtil.select(getConnection(), where, CDODBSchema.CLASSES_CLASSIFIER, CDODBSchema.CLASSES_PACKAGE);
-    String packageURI = readPackageURI((Integer)ids[1]);
-    return new CDOClassRefImpl(packageURI, (Integer)ids[0]);
+    Object[] res = DBUtil.select(getConnection(), where, CDODBSchema.CLASSES_CLASSIFIER, CDODBSchema.CLASSES_PACKAGE);
+    int classifierID = (Integer)res[0];
+    String packageURI = readPackageURI((Integer)res[1]);
+    return new CDOClassRefImpl(packageURI, classifierID);
   }
 
   public CDORevision readRevision(CDOID id, int referenceChunk)

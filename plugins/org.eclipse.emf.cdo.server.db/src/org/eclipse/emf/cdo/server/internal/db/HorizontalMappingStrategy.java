@@ -57,15 +57,7 @@ public class HorizontalMappingStrategy extends MappingStrategy
 
   public CDOClassRef readObjectType(IDBStoreReader storeReader, CDOID id)
   {
-    CDOClassRef type = objectTypeCache.getObjectType(storeReader, id);
-    if (type == null)
-    {
-      throw new DBException("Type of " + id + " not found");
-      // type = readObjectTypeFromClassesWithObjectInfo(storeReader, id);
-      // objectTypeCache.putObjectType(storeReader.getStatement(), id, type);
-    }
-
-    return type;
+    return objectTypeCache.getObjectType(storeReader, id);
   }
 
   protected CDOClassRef readObjectTypeFromClassesWithObjectInfo(IDBStoreReader storeReader, CDOID id)

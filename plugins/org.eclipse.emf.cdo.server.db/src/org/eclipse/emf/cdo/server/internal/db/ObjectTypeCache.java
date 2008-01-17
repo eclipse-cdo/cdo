@@ -84,7 +84,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
       resultSet = statement.executeQuery(sql);
       if (!resultSet.next())
       {
-        return null;
+        throw new DBException("ClassID for CDOID " + id + " not found");
       }
 
       int classID = resultSet.getInt(1);

@@ -147,6 +147,10 @@ public final class DBUtil
     {
       return (Integer)number;
     }
+    else if (number == null)
+    {
+      return 0;
+    }
 
     throw new DBException("Not an integer number: " + number);
   }
@@ -157,6 +161,10 @@ public final class DBUtil
     if (number instanceof Long)
     {
       return (Long)number;
+    }
+    else if (number == null)
+    {
+      return 0L;
     }
 
     throw new DBException("Not a long number: " + number);

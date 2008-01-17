@@ -361,22 +361,22 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
 
   public long repairAfterCrash(Connection connection)
   {
-    long max = 0L;
+    long maxCDOID = 0L;
     for (CDOClass idClass : getClassesWithObjectInfo())
     {
       IClassMapping classMapping = getClassMapping(idClass);
       IDBTable table = classMapping.getTable();
       IDBField idField = table.getField(CDODBSchema.ATTRIBUTES_ID);
-      long classMax = DBUtil.selectMaximumLong(connection, idField);
+      long classMaxCDOID = DBUtil.selectMaximumLong(connection, idField);
       if (TRACER.isEnabled())
       {
-        TRACER.format("Max CDOID of table {0}: {1}", table, classMax);
+        TRACER.format("Max CDOID of table {0}: {1}", table, classMaxCDOID);
       }
 
-      max = Math.max(max, classMax);
+      maxCDOID = Math.max(maxCDOID, classMaxCDOID);
     }
 
-    return max + 2L;
+    return maxCDOID + 2L;
   }
 
   @Override

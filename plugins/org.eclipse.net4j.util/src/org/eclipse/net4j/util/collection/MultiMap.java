@@ -244,7 +244,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
       this.delegates = delegates;
     }
 
-    public List<Map<K, V>> getDelegates()
+    public synchronized List<Map<K, V>> getDelegates()
     {
       if (delegates == null)
       {

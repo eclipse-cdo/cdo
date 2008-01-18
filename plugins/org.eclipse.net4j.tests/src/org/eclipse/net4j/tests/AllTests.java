@@ -11,6 +11,7 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.util.tests.MonitorTest;
+import org.eclipse.net4j.util.tests.MultiMapTest;
 import org.eclipse.net4j.util.tests.ReferenceValueMapTest;
 import org.eclipse.net4j.util.tests.SortedFileMapTest;
 import org.eclipse.net4j.util.tests.SynchronizingCorrelatorTest;
@@ -29,6 +30,7 @@ public class AllTests
 
     // $JUnit-BEGIN$
     suite.addTestSuite(MonitorTest.class);
+    suite.addTestSuite(MultiMapTest.class);
     suite.addTestSuite(SortedFileMapTest.class);
     suite.addTestSuite(SynchronizingCorrelatorTest.class);
     suite.addTestSuite(ReferenceValueMapTest.class);

@@ -61,7 +61,6 @@ public class MEMStore extends Store
   public synchronized CDORevision getRevision(CDOID rev, int version)
   {
     List<CDORevision> list = getList(rev);
-
     for (CDORevision revision : list)
     {
       if (revision.getVersion() == version) return revision;
@@ -71,7 +70,6 @@ public class MEMStore extends Store
 
   public synchronized void addRevision(CDORevision revision)
   {
-
     CDORevision rev = getRevision(revision.getID(), revision.getVersion());
     if (rev == null)
     {

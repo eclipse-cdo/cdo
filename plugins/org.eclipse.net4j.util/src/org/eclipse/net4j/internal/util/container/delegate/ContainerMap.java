@@ -19,7 +19,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -62,7 +61,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
     {
       event.addDelta(new ContainerMapEntry<K, V>(key, removed), IContainerDelta.Kind.REMOVED);
     }
-  
+
     event.addDelta(new ContainerMapEntry<K, V>(key, value), IContainerDelta.Kind.ADDED);
     fireEvent(event);
     return removed;
@@ -85,10 +84,10 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
       {
         event.addDelta(new ContainerMapEntry<K, V>(key, removed), IContainerDelta.Kind.REMOVED);
       }
-  
+
       event.addDelta(new ContainerMapEntry<K, V>(key, value), IContainerDelta.Kind.ADDED);
     }
-  
+
     dispatchEvent(event);
   }
 
@@ -102,7 +101,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
     {
       fireRemovedEvent(new ContainerMapEntry<Object, V>(key, removed));
     }
-  
+
     return removed;
   }
 

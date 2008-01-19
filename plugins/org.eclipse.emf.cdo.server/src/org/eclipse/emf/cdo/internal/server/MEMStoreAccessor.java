@@ -142,7 +142,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     }
 
     CDORevisionImpl newRevision = new CDORevisionImpl(revision2);
-    delta.applyChanges(newRevision);
+    delta.apply(newRevision);
     listToCommit.add(newRevision);
   }
 

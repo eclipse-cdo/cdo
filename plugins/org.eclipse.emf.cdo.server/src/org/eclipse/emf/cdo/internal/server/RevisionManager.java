@@ -281,6 +281,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
 
     public void phase1(IStoreWriter storeWriter) throws Exception
     {
+      // Can throw an exception if duplicate
       storeWriter.writeRevision(revision);
     }
 
@@ -330,7 +331,9 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
         }
 
         dirtyRevision = new CDORevisionImpl(oldRevision);
-        revisionDelta.applyChanges(dirtyRevision);
+        revisionDelta.apply(dirtyRevision);
+
+        // Can throw an exception if duplicate
         storeWriter.writeRevision(dirtyRevision);
       }
 

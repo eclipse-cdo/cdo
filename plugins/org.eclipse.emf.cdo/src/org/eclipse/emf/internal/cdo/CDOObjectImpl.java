@@ -197,7 +197,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     CDOViewImpl view = cdoView();
     revision.setContainerID(eContainer == null ? CDOID.NULL : ((CDOObjectImpl)eContainer).cdoID());
-    revision.setContainingFeature(eContainerFeatureID);
+    revision.setContainingFeatureID(eContainerFeatureID);
 
     if (eSettings != null)
     {
@@ -499,7 +499,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     CDORevisionImpl revision = (CDORevisionImpl)cdoObject.cdoRevision();
     revision.setVersion(1);
     revision.setContainerID(eContainer == null ? CDOID.NULL : ((CDOObjectImpl)eContainer).cdoID());
-    revision.setContainingFeature(eContainerFeatureID);
+    revision.setContainingFeatureID(eContainerFeatureID);
 
     if (eSettings != null)
     {

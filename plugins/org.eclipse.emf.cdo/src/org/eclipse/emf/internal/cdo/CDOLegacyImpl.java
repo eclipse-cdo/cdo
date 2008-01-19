@@ -171,7 +171,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
         revision.getVersion() - 1, false);
 
     CDOTransactionImpl transaction = cdoView().toTransaction();
-    transaction.registerRevisionDelta(cdoRevision().createDelta(originRevision));
+    transaction.registerRevisionDelta(cdoRevision().compare(originRevision));
   }
 
   public void cdoInternalPostLoad()
@@ -243,7 +243,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
       {
         revision.setResourceID(((CDOResource)container).cdoID());
         revision.setContainerID(CDOID.NULL);
-        revision.setContainingFeature(0);
+        revision.setContainingFeatureID(0);
       }
       else
       {
@@ -257,7 +257,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
 
         int containerFeatureID = instance.eContainerFeatureID();// containER???
         revision.setContainerID(containerID);
-        revision.setContainingFeature(containerFeatureID);
+        revision.setContainingFeatureID(containerFeatureID);
       }
     }
 

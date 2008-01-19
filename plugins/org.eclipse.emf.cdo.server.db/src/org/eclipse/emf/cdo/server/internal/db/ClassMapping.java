@@ -579,7 +579,7 @@ public abstract class ClassMapping implements IClassMapping
         revision.setRevised(resultSet.getLong(i++));
         revision.setResourceID(CDOIDImpl.create(resultSet.getLong(i++)));
         revision.setContainerID(CDOIDImpl.create(resultSet.getLong(i++)));
-        revision.setContainingFeature(resultSet.getInt(i++));
+        revision.setContainingFeatureID(resultSet.getInt(i++));
       }
 
       if (attributeMappings != null)

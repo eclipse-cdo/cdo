@@ -62,7 +62,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     company1.setName("TEST3");
     CDORevisionImpl rev2 = getCopyCDORevision(company1);
 
-    CDORevisionDelta revisionDelta = rev2.createDelta(rev1);
+    CDORevisionDelta revisionDelta = rev2.compare(rev1);
     assertEquals(1, revisionDelta.getFeatureDeltas().size());
     CDOSetFeatureDelta setDelta = (CDOSetFeatureDelta)revisionDelta.getFeatureDeltas().get(0);
     assertEquals("TEST3", setDelta.getValue());
@@ -71,7 +71,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     company1.getCategories().clear();
     CDORevisionImpl rev3 = getCopyCDORevision(company1);
 
-    CDORevisionDelta revisionDelta3 = rev3.createDelta(rev2);
+    CDORevisionDelta revisionDelta3 = rev3.compare(rev2);
     assertEquals(1, revisionDelta3.getFeatureDeltas().size());
     CDOListFeatureDeltaImpl delta3List = (CDOListFeatureDeltaImpl)revisionDelta3.getFeatureDeltas().get(0);
 
@@ -86,7 +86,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     }
     CDORevisionImpl rev4 = getCopyCDORevision(company1);
 
-    CDORevisionDelta revisionDelta4 = rev4.createDelta(rev3);
+    CDORevisionDelta revisionDelta4 = rev4.compare(rev3);
     assertEquals(1, revisionDelta4.getFeatureDeltas().size());
     CDOListFeatureDeltaImpl delta4List = (CDOListFeatureDeltaImpl)revisionDelta4.getFeatureDeltas().get(0);
 

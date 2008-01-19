@@ -192,9 +192,14 @@ public class RevisionHolderTest extends AbstractOMTest
       this.id = CDOIDImpl.create(id);
     }
 
-    public CDORevisionDelta createDelta(CDORevision origin)
+    public CDORevisionDelta compare(CDORevision origin)
     {
       return null;
+    }
+
+    public void merge(CDORevisionDelta delta)
+    {
+      throw new UnsupportedOperationException();
     }
 
     public CDOClass getCDOClass()

@@ -13,24 +13,24 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaApplier;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionMerger;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 
 /**
  * @author Simon McDuff
  */
-public class CDOObjectDeltaApplier extends CDORevisionDeltaApplier
+public class CDOObjectMerger extends CDORevisionMerger
 {
-  public CDOObjectDeltaApplier()
+  public CDOObjectMerger()
   {
   }
 
-  public void apply(InternalCDOObject object, CDORevisionDelta delta)
+  public void merge(InternalCDOObject object, CDORevisionDelta delta)
   {
     CDORevisionImpl revision = new CDORevisionImpl((CDORevisionImpl)object.cdoRevision());
     revision.increaseVersion();
     object.cdoInternalSetRevision(revision);
     object.cdoInternalSetState(CDOState.DIRTY);
-    apply(revision, delta);
+    merge(revision, delta);
   }
 }

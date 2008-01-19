@@ -74,7 +74,7 @@ public final class CDOStore implements EStore
     CDOContainerFeatureDeltaImpl delta = new CDOContainerFeatureDeltaImpl(containerID, newContainerFeatureID);
     CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
     revision.setContainerID(containerID);
-    revision.setContainingFeature(newContainerFeatureID);
+    revision.setContainingFeatureID(newContainerFeatureID);
   }
 
   public InternalEObject getContainer(InternalEObject eObject)

@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.internal.ui.dialogs;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
+
 import org.eclipse.net4j.internal.util.collection.PreferenceHistory;
 import org.eclipse.net4j.util.collection.IHistory;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -120,6 +122,7 @@ public class OpenSessionDialog extends TitleAreaDialog
 
     new Label(composite, SWT.NONE);
     legacy = new PreferenceButton(composite, SWT.CHECK, "Legacy Support", OM.PREF_LEGACY_SUPPORT);
+    legacy.getButton().setEnabled(FSMUtil.isLegacySystemAvailable());
 
     connector.setFocus();
     connector.getCombo().addFocusListener(new FocusListener()

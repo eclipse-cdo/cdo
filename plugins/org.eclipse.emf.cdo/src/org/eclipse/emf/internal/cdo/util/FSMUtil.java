@@ -66,6 +66,11 @@ public final class FSMUtil
     return null;
   }
 
+  public static boolean isLegacySystemAvailable()
+  {
+    return adaptLegacyMethod != null;
+  }
+
   public static boolean isTransient(CDOObject object)
   {
     CDOState state = object.cdoState();
@@ -109,7 +114,7 @@ public final class FSMUtil
       }
     }
 
-    if (adaptLegacyMethod != null)
+    if (isLegacySystemAvailable())
     {
       try
       {

@@ -70,6 +70,7 @@ public class ReloadObjectsAction extends EditingDomainAction
     if (!objects.isEmpty())
     {
       InternalCDOObject[] array = objects.toArray(new InternalCDOObject[objects.size()]);
+
       CDOStateMachine.INSTANCE.reload(array);
 
       IWorkbenchPage page = getPage();

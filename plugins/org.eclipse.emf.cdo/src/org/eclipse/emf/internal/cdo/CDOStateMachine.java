@@ -89,7 +89,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.NEW, CDOEvent.READ, IGNORE);
     init(CDOState.NEW, CDOEvent.WRITE, IGNORE);
     init(CDOState.NEW, CDOEvent.INVALIDATE, FAIL);
-    init(CDOState.NEW, CDOEvent.RELOAD, IGNORE);
+    init(CDOState.NEW, CDOEvent.RELOAD, FAIL);
     init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition());
     init(CDOState.NEW, CDOEvent.ROLLBACK, FAIL);
     init(CDOState.NEW, CDOEvent.FINALIZE_ATTACH, FAIL);
@@ -129,7 +129,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.CONFLICT, CDOEvent.READ, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.WRITE, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.INVALIDATE, IGNORE);
-    init(CDOState.CONFLICT, CDOEvent.RELOAD, new ReloadTransition());
+    init(CDOState.CONFLICT, CDOEvent.RELOAD, FAIL);
     init(CDOState.CONFLICT, CDOEvent.COMMIT, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.ROLLBACK, new RollbackTransition());
     init(CDOState.CONFLICT, CDOEvent.FINALIZE_ATTACH, IGNORE);
@@ -196,17 +196,21 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     List<CDORevisionImpl> revised = new ArrayList<CDORevisionImpl>();
     for (InternalCDOObject object : objects)
     {
-      CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
-      if (revision.isCurrent())
+      CDOState state = object.cdoState();
+      if (state != CDOState.NEW && state != CDOState.CONFLICT)
       {
-        revisions.add(revision);
-      }
-      else
-      {
-        revised.add(revision);
-      }
+        CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
+        if (revision.isCurrent())
+        {
+          revisions.add(revision);
+        }
+        else
+        {
+          revised.add(revision);
+        }
 
-      ids.put(object.cdoID(), object);
+        ids.put(object.cdoID(), object);
+      }
     }
 
     try

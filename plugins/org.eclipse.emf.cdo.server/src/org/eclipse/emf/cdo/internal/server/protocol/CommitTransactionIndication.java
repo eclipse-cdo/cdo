@@ -283,7 +283,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     for (CDORevisionDeltaImpl delta : deltas)
     {
       delta.adjustReferences(idMappings);
-      getRevisionManager().writeRevisionDelta(storeTransaction, delta);
+      getRevisionManager().addRevisionDelta(storeTransaction, delta);
     }
   }
 

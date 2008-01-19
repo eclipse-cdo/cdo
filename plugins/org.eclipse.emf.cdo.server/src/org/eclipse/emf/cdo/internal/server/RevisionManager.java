@@ -66,9 +66,9 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     storeTransaction.execute(new AddRevisionOperation(revision));
   }
 
-  public void writeRevisionDelta(ITransaction<IStoreWriter> storeTransaction, CDORevisionDeltaImpl revision)
+  public void addRevisionDelta(ITransaction<IStoreWriter> storeTransaction, CDORevisionDeltaImpl delta)
   {
-    storeTransaction.execute(new WriteRevisionOperation(revision));
+    storeTransaction.execute(new AddRevisionDeltaOperation(delta));
   }
 
   public CDOID resolveReferenceProxy(CDOReferenceProxy referenceProxy)
@@ -302,13 +302,13 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   /**
    * @author Simon McDuff
    */
-  private final class WriteRevisionOperation implements ITransactionalOperation<IStoreWriter>
+  private final class AddRevisionDeltaOperation implements ITransactionalOperation<IStoreWriter>
   {
     private CDORevisionDeltaImpl revisionDelta;
 
     private CDORevisionImpl dirtyRevision = null;
 
-    private WriteRevisionOperation(CDORevisionDeltaImpl revisionDelta)
+    private AddRevisionDeltaOperation(CDORevisionDeltaImpl revisionDelta)
     {
       this.revisionDelta = revisionDelta;
     }

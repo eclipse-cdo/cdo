@@ -29,6 +29,11 @@ public final class StoreUtil
     return new NOOPStore();
   }
 
+  public static IStore createMEMStore()
+  {
+    return new MEMStore();
+  }
+
   public static void setReader(IStoreReader reader)
   {
     THREAD_LOCAL.set(reader);

@@ -75,7 +75,7 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
 
   protected IStore createStore()
   {
-    return StoreUtil.createNOOPStore();
+    return StoreUtil.createMEMStore();
   }
 
   // protected DBStore createDBStore()

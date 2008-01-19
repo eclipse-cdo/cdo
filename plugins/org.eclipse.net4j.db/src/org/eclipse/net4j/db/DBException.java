@@ -11,6 +11,8 @@
 package org.eclipse.net4j.db;
 
 /**
+ * TODO Provide consistent exception hierarchy
+ * 
  * @author Eike Stepper
  */
 public class DBException extends RuntimeException

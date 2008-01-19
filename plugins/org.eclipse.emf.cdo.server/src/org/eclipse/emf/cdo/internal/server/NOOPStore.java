@@ -25,14 +25,10 @@ public class NOOPStore extends Store
     super(TYPE);
   }
 
+  @Override
   public boolean hasAuditingSupport()
   {
     return true;
-  }
-
-  public boolean hasBranchingSupport()
-  {
-    return false;
   }
 
   public void repairAfterCrash()

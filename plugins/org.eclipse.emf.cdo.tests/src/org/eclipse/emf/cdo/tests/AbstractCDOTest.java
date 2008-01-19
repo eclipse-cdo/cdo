@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.server.ContainerRepositoryProvider;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -41,12 +42,6 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   public static final String REPOSITORY_NAME = "repo1";
 
   @Override
-  protected boolean useJVMTransport()
-  {
-    return false;
-  }
-
-  @Override
   protected IManagedContainer createContainer()
   {
     IManagedContainer container = super.createContainer();
@@ -56,11 +51,17 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     return container;
   }
 
+  protected IStore createStore()
+  {
+    return StoreUtil.createMEMStore();
+  }
+
   protected Repository createRepository()
   {
     Map<String, String> props = new HashMap<String, String>();
-    // props.put(RevisionManager.PROP_CURRENT_LRU_CAPACITY, "20");
-    // props.put(RevisionManager.PROP_REVISED_LRU_CAPACITY, "20");
+    // props.put(IRepository.PROP_SUPPORTING_REVISION_DELTAS, "true");
+    // props.put(IRepository.PROP_CURRENT_LRU_CAPACITY, "20");
+    // props.put(IRepository.PROP_REVISED_LRU_CAPACITY, "20");
 
     IStore store = createStore();
 
@@ -73,27 +74,10 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     return repository;
   }
 
-  protected IStore createStore()
+  protected IRepository getRepository()
   {
-    return StoreUtil.createMEMStore();
+    return CDOServerUtil.getRepository(container, REPOSITORY_NAME);
   }
-
-  // protected DBStore createDBStore()
-  // {
-  // IMappingStrategy mappingStrategy = new HorizontalMappingStrategy();
-  // IDBAdapter dbAdapter = new DerbyAdapter();
-  //
-  // Properties properties = new Properties();
-  // properties.put("driverClass", "org.apache.derby.jdbc.EmbeddedDataSource");
-  // properties.put("databaseName", "C:/temp/cdo-repo1");
-  // properties.put("createDatabase", "create");
-  // DataSource dataSource = DBUtil.createDataSource(properties);
-  // ConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
-  //
-  // DBStore store = new DBStore(mappingStrategy, dbAdapter, connectionProvider);
-  // mappingStrategy.setStore(store);
-  // return store;
-  // }
 
   @Override
   protected void doSetUp() throws Exception

@@ -52,6 +52,11 @@ public final class CDOServerUtil
     container.putElement(RepositoryFactory.PRODUCT_GROUP, RepositoryFactory.TYPE, repository.getName(), repository);
   }
 
+  public static IRepository getRepository(IManagedContainer container, String name)
+  {
+    return RepositoryFactory.get(container, name);
+  }
+
   public static Element getRepositoryConfig(String repositoryName) throws ParserConfigurationException, SAXException,
       IOException
   {

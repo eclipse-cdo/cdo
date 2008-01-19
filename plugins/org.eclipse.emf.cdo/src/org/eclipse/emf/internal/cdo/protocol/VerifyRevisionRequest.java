@@ -62,8 +62,8 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<CDORevisionImpl
     {
       PROTOCOL.format("Writing {0} IDs and versions", revisions.size());
     }
-    out.writeInt(revisions.size());
 
+    out.writeInt(revisions.size());
     for (CDORevisionImpl revision : revisions)
     {
       CDOID id = revision.getID();
@@ -72,6 +72,7 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<CDORevisionImpl
       {
         PROTOCOL.format("Writing ID and version: {0}v{1}", id, version);
       }
+
       CDOIDImpl.write(out, id);
       out.writeInt(version);
     }
@@ -81,11 +82,11 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<CDORevisionImpl
   protected List<CDORevisionImpl> confirming(ExtendedDataInputStream in) throws IOException
   {
     ArrayList<CDORevisionImpl> result = new ArrayList<CDORevisionImpl>();
-
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Reading {0} timeStamps", revisions.size());
     }
+
     for (CDORevisionImpl revision : revisions)
     {
       long revised = in.readLong();
@@ -93,6 +94,7 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<CDORevisionImpl
       {
         PROTOCOL.format("Reading timeStamp: {0}", revised);
       }
+
       if (revised != CDORevision.UNSPECIFIED_DATE)
       {
         revision.setRevised(revised);

@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.revision.CDODuplicateRevisionException;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
@@ -29,7 +28,6 @@ import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByVersionRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.internal.util.om.trace.PerfTracer;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 
@@ -42,8 +40,6 @@ import java.util.List;
  */
 public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements CDORevisionManager
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CDORevisionManagerImpl.class);
-
   private static final PerfTracer LOADING = new PerfTracer(OM.PERF_REVISION_LOADING, CDORevisionManagerImpl.class);
 
   private CDOSessionImpl session;
@@ -58,22 +54,6 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   public CDOSessionImpl getSession()
   {
     return session;
-  }
-
-  @Override
-  public void addRevision(CDORevisionImpl revision) throws CDODuplicateRevisionException
-  {
-    try
-    {
-      super.addRevision(revision);
-    }
-    catch (CDODuplicateRevisionException ignore)
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Ignorable exception on client side", ignore);
-      }
-    }
   }
 
   public CDOID resolveReferenceProxy(CDOReferenceProxy referenceProxy)

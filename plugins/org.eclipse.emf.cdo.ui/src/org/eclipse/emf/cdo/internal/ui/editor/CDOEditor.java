@@ -2141,7 +2141,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     try
     {
-      getSite().getShell().getDisplay().syncExec(new Runnable()
+      getSite().getShell().getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {
@@ -2168,7 +2168,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     try
     {
-      selectionViewer.getControl().getDisplay().syncExec(new Runnable()
+      selectionViewer.getControl().getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {

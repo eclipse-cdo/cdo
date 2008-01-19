@@ -116,7 +116,7 @@ public class LoadRevisionIndication extends CDOReadIndication
   {
     Session session = getSession();
     List<CDORevisionImpl> additionalRevisions = new ArrayList<CDORevisionImpl>();
-    Set<CDOID> revisions = new HashSet<CDOID>();
+    Set<CDOID> revisionIDs = new HashSet<CDOID>();
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Writing {0} revisions", ids.length);
@@ -124,7 +124,7 @@ public class LoadRevisionIndication extends CDOReadIndication
 
     for (CDOID id : ids)
     {
-      revisions.add(id);
+      revisionIDs.add(id);
     }
 
     // Need to fetch the rule first.
@@ -133,11 +133,11 @@ public class LoadRevisionIndication extends CDOReadIndication
     {
       if (PROTOCOL.isEnabled())
       {
-        PROTOCOL.format("Collecting more objects based on rules");
+        PROTOCOL.format("Collecting more revisions based on rules");
       }
 
       CDORevisionImpl revisionContext = getRevision(contextID);
-      collectRevisions(revisionContext, revisions, additionalRevisions, visitedFetchRules);
+      collectRevisions(revisionContext, revisionIDs, additionalRevisions, visitedFetchRules);
     }
 
     for (CDOID id : ids)
@@ -146,7 +146,7 @@ public class LoadRevisionIndication extends CDOReadIndication
       revision.write(out, session, referenceChunk);
       if (loadRevisionCollectionChunkSize > 0)
       {
-        collectRevisions(revision, revisions, additionalRevisions, visitedFetchRules);
+        collectRevisions(revision, revisionIDs, additionalRevisions, visitedFetchRules);
       }
     }
 
@@ -165,7 +165,8 @@ public class LoadRevisionIndication extends CDOReadIndication
 
   protected CDORevisionImpl getRevision(CDOID id)
   {
-    return getRevisionManager().getRevision(id, referenceChunk);
+    RevisionManager revisionManager = getRevisionManager();
+    return revisionManager.getRevision(id, referenceChunk);
   }
 
   private void collectRevisions(CDORevisionImpl revision, Set<CDOID> revisions,

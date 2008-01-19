@@ -123,13 +123,15 @@ public class CommitTransactionIndication extends CDOServerIndication
         writeRevisions(storeTransaction, dirtyObjects);
         // addRevisions(storeTransaction, dirtyObjects);
 
+        storeWriter.commit();
         storeTransaction.commit();
       }
       catch (RuntimeException ex)
       {
         OM.LOG.error(ex);
         rollbackMessage = ex.getLocalizedMessage();
-        storeWriter.rollback(view, storeTransaction);
+        storeWriter.rollback();
+        storeTransaction.rollback();
       }
     }
     finally

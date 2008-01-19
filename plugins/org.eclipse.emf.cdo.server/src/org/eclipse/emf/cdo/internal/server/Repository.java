@@ -31,18 +31,6 @@ import java.util.UUID;
  */
 public class Repository extends Container<IRepositoryElement> implements IRepository
 {
-  public static final String PROP_OVERRIDE_UUID = "overrideUUID";
-
-  public static final String PROP_SUPPORTING_REVISION_DELTAS = "supportingRevisionDeltas";
-
-  public static final String PROP_SUPPORTING_AUDITS = "supportingAudits";
-
-  public static final String PROP_VERIFYING_REVISIONS = "verifyingRevisions";
-
-  public static final String PROP_CURRENT_LRU_CAPACITY = "currentLRUCapacity";
-
-  public static final String PROP_REVISED_LRU_CAPACITY = "revisedLRUCapacity";
-
   private static final long INITIAL_META_ID_VALUE = 1;
 
   private String name;
@@ -99,7 +87,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   {
     if (uuid == null)
     {
-      String value = getProperties().get(PROP_OVERRIDE_UUID);
+      String value = getProperties().get(IRepository.PROP_OVERRIDE_UUID);
       uuid = StringUtil.isEmpty(value) ? UUID.randomUUID().toString() : value;
     }
 
@@ -125,7 +113,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   {
     if (supportingRevisionDeltas == null)
     {
-      String value = getProperties().get(PROP_SUPPORTING_REVISION_DELTAS);
+      String value = getProperties().get(IRepository.PROP_SUPPORTING_REVISION_DELTAS);
       supportingRevisionDeltas = value == null ? false : Boolean.valueOf(value);
     }
 
@@ -136,7 +124,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   {
     if (supportingAudits == null)
     {
-      String value = getProperties().get(PROP_SUPPORTING_AUDITS);
+      String value = getProperties().get(IRepository.PROP_SUPPORTING_AUDITS);
       supportingAudits = value == null ? false : Boolean.valueOf(value);
     }
 
@@ -147,7 +135,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   {
     if (verifyingRevisions == null)
     {
-      String value = getProperties().get(PROP_VERIFYING_REVISIONS);
+      String value = getProperties().get(IRepository.PROP_VERIFYING_REVISIONS);
       verifyingRevisions = value == null ? false : Boolean.valueOf(value);
     }
 

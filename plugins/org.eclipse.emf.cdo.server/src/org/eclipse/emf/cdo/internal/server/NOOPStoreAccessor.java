@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.util.io.CloseableIterator;
-import org.eclipse.net4j.util.transaction.ITransaction;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -108,7 +107,11 @@ public class NOOPStoreAccessor extends StoreAccessor implements IStoreReader, IS
   {
   }
 
-  public void rollback(IView view, ITransaction<IStoreWriter> storeTransaction)
+  public void commit()
+  {
+  }
+
+  public void rollback()
   {
   }
 }

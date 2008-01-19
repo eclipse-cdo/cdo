@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
-import org.eclipse.emf.cdo.protocol.revision.CDODuplicateRevisionException;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
@@ -27,7 +26,6 @@ import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.util.io.CloseableIterator;
-import org.eclipse.net4j.util.transaction.ITransaction;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,7 +37,7 @@ import java.util.List;
  */
 public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, IStoreWriter
 {
-  List<CDORevisionImpl> listToCommit = new ArrayList<CDORevisionImpl>();
+  List<CDORevision> newRevisions = new ArrayList<CDORevision>();
 
   public MEMStoreAccessor(MEMStore store, ISession session)
   {
@@ -84,23 +82,28 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
 
   public CDORevision readRevision(CDOID id, int referenceChunk)
   {
-    CDORevisionImpl revStore = (CDORevisionImpl)getStore().getRevision(id);
-    CDORevisionImpl newRevision = new CDORevisionImpl(this.getStore().getRepository().getRevisionManager(), revStore
-        .getCDOClass(), revStore.getID());
-    newRevision.setResourceID(revStore.getResourceID());
-
-    for (CDOFeature feature : revStore.getCDOClass().getAllFeatures())
-    {
-      if (feature.isMany())
-      {
-        newRevision.setListSize(feature, revStore.getList(feature).size());
-        for (int i = 0; i < referenceChunk; i++)
-        {
-          newRevision.getList(feature).set(i, revStore.get(feature, i));
-        }
-      }
-    }
-    return newRevision;
+    CDORevisionImpl storeRevision = (CDORevisionImpl)getStore().getRevision(id);
+    // IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
+    // CDORevisionImpl newRevision = new CDORevisionImpl(revisionManager, storeRevision.getCDOClass(), storeRevision
+    // .getID());
+    // newRevision.setResourceID(storeRevision.getResourceID());
+    //
+    // for (CDOFeature feature : storeRevision.getCDOClass().getAllFeatures())
+    // {
+    // if (feature.isMany())
+    // {
+    // newRevision.setListSize(feature, storeRevision.getList(feature).size());
+    // MoveableList list = newRevision.getList(feature);
+    // int size = referenceChunk == CDORevision.UNCHUNKED ? list.size() : referenceChunk;
+    // for (int i = 0; i < size; i++)
+    // {
+    // list.set(i, storeRevision.get(feature, i));
+    // }
+    // }
+    // }
+    //
+    // return newRevision;
+    return storeRevision;
   }
 
   public CDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
@@ -129,32 +132,34 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
 
   public void writeRevision(CDORevisionImpl revision)
   {
-    getStore().addRevision(revision);
+    newRevisions.add(revision);
   }
 
   @Override
   public void writeRevisionDelta(CDORevisionDeltaImpl delta)
   {
-    CDORevisionImpl revision2 = (CDORevisionImpl)getStore().getRevision(delta.getID());
-    if (delta.getOriginVersion() != revision2.getVersion())
-    {
-      throw new CDODuplicateRevisionException(revision2);
-    }
-
-    CDORevisionImpl newRevision = new CDORevisionImpl(revision2);
+    CDORevisionImpl revision = (CDORevisionImpl)getStore().getRevision(delta.getID());
+    CDORevisionImpl newRevision = new CDORevisionImpl(revision);
     delta.apply(newRevision);
-    listToCommit.add(newRevision);
+    newRevisions.add(newRevision);
   }
 
   @Override
   public void release()
   {
-    for (CDORevisionImpl rev : listToCommit)
-      getStore().addRevision(rev);
+    newRevisions.clear();
   }
 
-  public void rollback(IView view, ITransaction<IStoreWriter> storeTransaction)
+  public void commit()
   {
-    listToCommit.clear();
+    MEMStore store = getStore();
+    for (CDORevision revision : newRevisions)
+    {
+      store.addRevision(revision);
+    }
+  }
+
+  public void rollback()
+  {
   }
 }

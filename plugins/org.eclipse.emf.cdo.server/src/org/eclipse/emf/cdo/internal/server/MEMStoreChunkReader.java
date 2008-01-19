@@ -32,20 +32,19 @@ public class MEMStoreChunkReader extends StoreChunkReader
   public List<Chunk> executeRead()
   {
     MEMStore store = getStoreReader().getStore();
-    for (Chunk chunk : getChunks())
+    List<Chunk> chunks = getChunks();
+    for (Chunk chunk : chunks)
     {
       int startIndex = chunk.getStartIndex();
-      int size = chunk.size();
-      CDORevisionImpl revisionMEM = (CDORevisionImpl)store.getRevision(getRevision().getID());
-
-      for (int i = 0; i < size; i++)
+      CDORevisionImpl revision = (CDORevisionImpl)store.getRevision(getRevision().getID());
+      for (int i = 0; i < chunk.size(); i++)
       {
-        Object object = revisionMEM.get(getFeature(), startIndex + i);
+        Object object = revision.get(getFeature(), startIndex + i);
         chunk.addID(i, (CDOID)object);
       }
     }
 
-    return this.getChunks();
+    return chunks;
   }
 
   @Override

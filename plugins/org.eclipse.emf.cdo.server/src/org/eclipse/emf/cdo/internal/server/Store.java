@@ -77,4 +77,14 @@ public abstract class Store extends Lifecycle implements IStore
   {
     return false;
   }
+
+  public boolean hasAuditingSupport()
+  {
+    return false;
+  }
+
+  public boolean hasBranchingSupport()
+  {
+    return false;
+  }
 }

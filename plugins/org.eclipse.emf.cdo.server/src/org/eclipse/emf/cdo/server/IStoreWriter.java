@@ -21,8 +21,6 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
-import org.eclipse.net4j.util.transaction.ITransaction;
-
 /**
  * @author Eike Stepper
  */
@@ -46,12 +44,13 @@ public interface IStoreWriter extends IStoreReader
    */
   public void writePackages(CDOPackageImpl... cdoPackages);
 
+  public CDOID primeNewObject(CDOClass cdoClass);
+
   public void writeRevision(CDORevisionImpl revision);
 
   public void writeRevisionDelta(CDORevisionDeltaImpl delta);
 
-  public CDOID primeNewObject(CDOClass cdoClass);
+  public void commit();
 
-  // TODO Remove storeTransaction parameter
-  public void rollback(IView view, ITransaction<IStoreWriter> storeTransaction);
+  public void rollback();
 }

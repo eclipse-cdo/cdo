@@ -14,17 +14,13 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.server.MEMStore;
 import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.internal.server.RepositoryFactory;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
-
-import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -37,33 +33,6 @@ import java.util.Map;
  */
 public class ChunkingWithMEMTest extends AbstractCDOTest
 {
-  @Override
-  protected IStore createStore()
-  {
-    return new MEMStore();
-  }
-
-  @Override
-  protected Repository createRepository()
-  {
-    Map<String, String> props = new HashMap<String, String>();
-    IStore store = createStore();
-    Repository repository = new Repository()
-    {
-      @Override
-      protected RevisionManager createRevisionManager()
-      {
-        return new TestRevisionManager(this);
-      }
-    };
-
-    repository.setName(REPOSITORY_NAME);
-    repository.setProperties(props);
-    repository.setStore(store);
-    store.setRepository(repository);
-    return repository;
-  }
-
   public void testReadNative() throws Exception
   {
     CDORevision revisionToRemove = null;
@@ -94,14 +63,11 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
 
       msg("Committing");
       transaction.commit();
+      session.close();
     }
 
-    // ************************************************************* //
-    Repository repos = (Repository)container.getElement(RepositoryFactory.PRODUCT_GROUP, RepositoryFactory.TYPE,
-        REPOSITORY_NAME);
-    TestRevisionManager revManagerTest = (TestRevisionManager)repos.getRevisionManager();
-    // Remove a specific version
-    revManagerTest.removeRevision(revisionToRemove);
+    TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
+    revisionManager.removeRevision(revisionToRemove);
 
     msg("Opening session");
     CDOSession session = openModel1Session();
@@ -117,10 +83,12 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
     int i = 0;
     for (Iterator<SalesOrder> it = salesOrders.iterator(); it.hasNext();)
     {
-      IOUtil.OUT().println(i++);
+      msg(i++);
       SalesOrder salesOrder = it.next();
-      IOUtil.OUT().println(salesOrder);
+      msg(salesOrder);
     }
+
+    session.close();
   }
 
   public void testWriteNative() throws Exception
@@ -154,14 +122,11 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
       msg("Committing");
       transaction.commit();
       revisionToRemove = customer.cdoRevision();
+      session.close();
     }
 
-    // ************************************************************* //
-    Repository repos = (Repository)container.getElement(RepositoryFactory.PRODUCT_GROUP, RepositoryFactory.TYPE,
-        REPOSITORY_NAME);
-    TestRevisionManager revManagerTest = (TestRevisionManager)repos.getRevisionManager();
-
-    revManagerTest.removeRevision(revisionToRemove);
+    TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
+    revisionManager.removeRevision(revisionToRemove);
 
     msg("Opening session");
     CDOSession session = openModel1Session();
@@ -184,6 +149,30 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
     }
 
     transaction.commit();
+    session.close();
+  }
+
+  @Override
+  protected Repository createRepository()
+  {
+    Map<String, String> props = new HashMap<String, String>();
+    // props.put(IRepository.PROP_SUPPORTING_REVISION_DELTAS, "true");
+
+    IStore store = createStore();
+    Repository repository = new Repository()
+    {
+      @Override
+      protected RevisionManager createRevisionManager()
+      {
+        return new TestRevisionManager(this);
+      }
+    };
+
+    repository.setName(REPOSITORY_NAME);
+    repository.setProperties(props);
+    repository.setStore(store);
+    store.setRepository(repository);
+    return repository;
   }
 
   /**

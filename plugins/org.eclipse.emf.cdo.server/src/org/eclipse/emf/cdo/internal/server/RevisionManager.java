@@ -21,9 +21,9 @@ import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableLi
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.revision.CDODuplicateRevisionException;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreReader;
@@ -42,10 +42,6 @@ import java.util.List;
  */
 public class RevisionManager extends CDORevisionResolverImpl implements IRevisionManager
 {
-  public static final String PROP_CURRENT_LRU_CAPACITY = "currentLRUCapacity";
-
-  public static final String PROP_REVISED_LRU_CAPACITY = "revisedLRUCapacity";
-
   private Repository repository;
 
   private CDOPathFeatureImpl cdoPathFeature;
@@ -257,8 +253,8 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    setCurrentLRUCapacity(getLRUCapacity(PROP_CURRENT_LRU_CAPACITY));
-    setRevisedLRUCapacity(getLRUCapacity(PROP_REVISED_LRU_CAPACITY));
+    setCurrentLRUCapacity(getLRUCapacity(IRepository.PROP_CURRENT_LRU_CAPACITY));
+    setRevisedLRUCapacity(getLRUCapacity(IRepository.PROP_REVISED_LRU_CAPACITY));
   }
 
   protected int getLRUCapacity(String prop)
@@ -327,7 +323,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
             .getOriginVersion(), true);
         if (oldRevision == null)
         {
-          throw new IllegalArgumentException("Cannot retrieve origin revision");
+          throw new IllegalStateException("Can not retrieve origin revision");
         }
 
         dirtyRevision = new CDORevisionImpl(oldRevision);
@@ -335,15 +331,6 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
 
         // Can throw an exception if duplicate
         storeWriter.writeRevision(dirtyRevision);
-      }
-
-      // Look if we already have it in our cache revision
-      CDORevisionImpl currentVersion = getRevisionByVersion(revisionDelta.getID(), 0, revisionDelta.getDirtyVersion(),
-          false);
-
-      if (currentVersion != null)
-      {
-        throw new CDODuplicateRevisionException(currentVersion);
       }
     }
 

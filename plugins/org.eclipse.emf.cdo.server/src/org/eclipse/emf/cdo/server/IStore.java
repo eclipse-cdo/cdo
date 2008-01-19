@@ -20,36 +20,36 @@ public interface IStore extends IRepositoryElement
   public String getStoreType();
 
   /**
-   * Returns if this store supports the writing of modified revisions in terms of deltas.
+   * Returns if this store supports the writing of modified newRevisions in terms of deltas.
    * <p>
    * The contract includes that store implementations with write delta support must also implement
    * {@link IStoreWriter#writeRevisionDelta(org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl) IStoreWriter.writeRevisionDelta(CDORevisionDeltaImpl)}
    * to not throw an <code>UnsupportedOperationException</code>.
    * 
-   * @return <code>true</code> if this store supports the writing of modified revisions in terms of deltas,
+   * @return <code>true</code> if this store supports the writing of modified newRevisions in terms of deltas,
    *         <code>false</code> otherwise.
    */
   public boolean hasWriteDeltaSupport();
 
   /**
-   * Returns if this store supports the retrieval of historical revisions.
+   * Returns if this store supports the retrieval of historical newRevisions.
    * <p>
    * The contract includes that store implementations with auditing support must also implement
    * {@link IStoreReader#readRevisionByTime(org.eclipse.emf.cdo.protocol.CDOID, int, long) IStoreReader.readRevisionByTime(CDOID, int, long)}
    * to not throw an <code>UnsupportedOperationException</code>.
    * 
-   * @return <code>true</code> if this store supports the retrieval of historical revisions, <code>false</code>
+   * @return <code>true</code> if this store supports the retrieval of historical newRevisions, <code>false</code>
    *         otherwise.
    */
   public boolean hasAuditingSupport();
 
   /**
-   * Returns if this store supports the storage of concurrent revisions in separate branches.
+   * Returns if this store supports the storage of concurrent newRevisions in separate branches.
    * <p>
    * Note: This is reserved for future use by the framework. There is currently no support for branching in the
    * framework!
    * 
-   * @return <code>true</code> if this store supports the storage of concurrent revisions in separate branches,
+   * @return <code>true</code> if this store supports the storage of concurrent newRevisions in separate branches,
    *         <code>false</code> otherwise.
    */
   public boolean hasBranchingSupport();

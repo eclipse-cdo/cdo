@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
-import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
@@ -27,7 +26,6 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.transaction.ITransaction;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -43,23 +41,6 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
   public DBStoreWriter(DBStore store, IView view) throws DBException
   {
     super(store, view);
-  }
-
-  @Override
-  public void release() throws DBException
-  {
-    try
-    {
-      getConnection().commit();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      super.release();
-    }
   }
 
   public void writePackages(CDOPackageImpl... cdoPackages)
@@ -194,13 +175,30 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     mapping.writeRevision(this, revision);
   }
 
-  public void rollback(IView view, ITransaction<IStoreWriter> storeTransaction)
+  public void commit()
   {
     try
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Rolling back transaction: {0}", view);
+        TRACER.format("Committing transaction: {0}", getView());
+      }
+
+      getConnection().commit();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
+  public void rollback()
+  {
+    try
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Rolling back transaction: {0}", getView());
       }
 
       getConnection().rollback();

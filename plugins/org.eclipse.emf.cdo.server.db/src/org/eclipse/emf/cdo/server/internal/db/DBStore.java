@@ -100,11 +100,13 @@ public class DBStore extends Store implements IDBStore
     return schema;
   }
 
+  @Override
   public boolean hasAuditingSupport()
   {
     return true;
   }
 
+  @Override
   public boolean hasBranchingSupport()
   {
     return false;

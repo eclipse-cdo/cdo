@@ -17,9 +17,13 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Simon McDuff
@@ -28,68 +32,118 @@ public class MEMStore extends Store
 {
   public static final String TYPE = "mem";
 
-  private Map<CDOID, List<CDORevision>> mapOfRevisions = new HashMap<CDOID, List<CDORevision>>();
+  private Map<CDOID, List<CDORevision>> revisions = new HashMap<CDOID, List<CDORevision>>()
+  {
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public String toString()
+    {
+      List<Entry<CDOID, List<CDORevision>>> entries = new ArrayList<Entry<CDOID, List<CDORevision>>>(entrySet());
+      Collections.sort(entries, new Comparator<Entry<CDOID, List<CDORevision>>>()
+      {
+        public int compare(Entry<CDOID, List<CDORevision>> o1, Entry<CDOID, List<CDORevision>> o2)
+        {
+          return o1.getKey().compareTo(o2.getKey());
+        }
+      });
+
+      StringBuilder builder = new StringBuilder();
+      for (Entry<CDOID, List<CDORevision>> entry : entries)
+      {
+        builder.append(entry.getKey());
+        builder.append(" -->");
+        for (CDORevision revision : entry.getValue())
+        {
+          builder.append(" ");
+          builder.append(revision);
+        }
+
+        builder.append("\n");
+      }
+
+      return builder.toString();
+    }
+  };
 
   public MEMStore()
   {
     super(TYPE);
   }
 
-  public synchronized CDORevision getRevision(CDOID rev)
+  public synchronized CDORevision getRevision(CDOID id)
   {
-    List<CDORevision> list = getList(rev);
-    if (list.size() == 0)
+    List<CDORevision> list = revisions.get(id);
+    if (list != null)
     {
-      return null;
+      return list.get(list.size() - 1);
     }
 
-    return list.get(list.size() - 1);
+    return null;
   }
 
-  public synchronized List<CDORevision> getList(CDOID rev)
+  public synchronized CDORevision getRevisionByVersion(CDOID id, int version)
   {
-    List<CDORevision> list = mapOfRevisions.get(rev);
-    if (list == null)
+    List<CDORevision> list = revisions.get(id);
+    if (list != null)
     {
-      list = new ArrayList<CDORevision>();
-      mapOfRevisions.put(rev, list);
+      return getRevisionByVersion(list, version);
     }
 
-    return list;
-  }
-
-  public synchronized CDORevision getRevision(CDOID rev, int version)
-  {
-    List<CDORevision> list = getList(rev);
-    for (CDORevision revision : list)
-    {
-      if (revision.getVersion() == version) return revision;
-    }
     return null;
   }
 
   public synchronized void addRevision(CDORevision revision)
   {
-    CDORevision rev = getRevision(revision.getID(), revision.getVersion());
-    if (rev == null)
+    CDOID id = revision.getID();
+    List<CDORevision> list = revisions.get(id);
+    if (list == null)
     {
-      getList(revision.getID()).add(revision);
+      list = new ArrayList<CDORevision>();
+      revisions.put(id, list);
     }
+
+    CDORevision rev = getRevisionByVersion(list, revision.getVersion());
+    if (rev != null)
+    {
+      throw new IllegalStateException("Concurrent modification of revision " + rev);
+    }
+
+    list.add(revision);
   }
 
+  public synchronized boolean removeRevision(CDORevision revision)
+  {
+    CDOID id = revision.getID();
+    List<CDORevision> list = revisions.get(id);
+    if (list == null)
+    {
+      return false;
+    }
+
+    for (Iterator<CDORevision> it = list.iterator(); it.hasNext();)
+    {
+      CDORevision rev = it.next();
+      if (rev.getVersion() == revision.getVersion())
+      {
+        it.remove();
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  @Override
   public boolean hasWriteDeltaSupport()
   {
     return true;
   }
 
+  @Override
   public boolean hasAuditingSupport()
   {
     return true;
-  }
-
-  public boolean hasBranchingSupport()
-  {
-    return false;
   }
 
   public void repairAfterCrash()
@@ -104,5 +158,25 @@ public class MEMStore extends Store
   public MEMStoreAccessor getWriter(IView view)
   {
     return new MEMStoreAccessor(this, view);
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    revisions.clear();
+    super.doDeactivate();
+  }
+
+  private CDORevision getRevisionByVersion(List<CDORevision> list, int version)
+  {
+    for (CDORevision revision : list)
+    {
+      if (revision.getVersion() == version)
+      {
+        return revision;
+      }
+    }
+
+    return null;
   }
 }

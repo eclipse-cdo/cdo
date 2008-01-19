@@ -105,11 +105,10 @@ public abstract class AbstractOMTest extends TestCase
   {
   }
 
-  protected static void msg(String m)
+  protected static void msg(Object m)
   {
     if (consoleEnabled)
     {
-      IOUtil.OUT().println();
       IOUtil.OUT().println("--> " + m);
     }
   }

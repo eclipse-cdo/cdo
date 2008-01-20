@@ -11,14 +11,16 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOListFeatureDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
@@ -30,8 +32,6 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.util.CDOUtil;
-
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
 import junit.framework.Assert;
 
@@ -56,11 +56,11 @@ public class RevisionDeltaTest extends AbstractCDOTest
     company1.getCategories().add(category1);
 
     company1.setName("TEST");
-    CDORevisionImpl rev1 = getCopyCDORevision(company1);
+    InternalCDORevision rev1 = getCopyCDORevision(company1);
 
     // Test simple attributes
     company1.setName("TEST3");
-    CDORevisionImpl rev2 = getCopyCDORevision(company1);
+    InternalCDORevision rev2 = getCopyCDORevision(company1);
 
     CDORevisionDelta revisionDelta = rev2.compare(rev1);
     assertEquals(1, revisionDelta.getFeatureDeltas().size());
@@ -69,7 +69,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
 
     // Test List clear
     company1.getCategories().clear();
-    CDORevisionImpl rev3 = getCopyCDORevision(company1);
+    InternalCDORevision rev3 = getCopyCDORevision(company1);
 
     CDORevisionDelta revisionDelta3 = rev3.compare(rev2);
     assertEquals(1, revisionDelta3.getFeatureDeltas().size());
@@ -84,7 +84,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
       Category category = Model1Factory.eINSTANCE.createCategory();
       company1.getCategories().add(category);
     }
-    CDORevisionImpl rev4 = getCopyCDORevision(company1);
+    InternalCDORevision rev4 = getCopyCDORevision(company1);
 
     CDORevisionDelta revisionDelta4 = rev4.compare(rev3);
     assertEquals(1, revisionDelta4.getFeatureDeltas().size());
@@ -152,6 +152,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     transaction.close();
     session.close();
   }
+
   /**
    * CDOView.getRevision() does not work for transactions/dirty objects (INVALID)
    * 
@@ -165,24 +166,24 @@ public class RevisionDeltaTest extends AbstractCDOTest
 
     Customer customer = Model1Factory.eINSTANCE.createCustomer();
     resource.getContents().add(customer);
-    
-    
+
     SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
     resource.getContents().add(salesOrder);
     customer.getSalesOrders().add(salesOrder);
     customer.getSalesOrders().add(salesOrder);
     transaction.commit();
-    
+
     customer.getSalesOrders().add(salesOrder);
     customer.getSalesOrders().clear();
     customer.getSalesOrders().add(salesOrder);
-    
+
     transaction.commit();
     transaction.close();
     session.close();
   }
-  private CDORevisionImpl getCopyCDORevision(Object object)
+
+  private InternalCDORevision getCopyCDORevision(Object object)
   {
-    return new CDORevisionImpl((CDORevisionImpl)((InternalCDOObject)object).cdoRevision());
+    return (InternalCDORevision)CDORevisionUtil.copy(((CDOObject)object).cdoRevision());
   }
 }

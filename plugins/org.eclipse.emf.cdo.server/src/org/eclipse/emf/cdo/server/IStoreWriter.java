@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -46,7 +46,7 @@ public interface IStoreWriter extends IStoreReader
 
   public CDOID primeNewObject(CDOClass cdoClass);
 
-  public void writeRevision(CDORevisionImpl revision);
+  public void writeRevision(InternalCDORevision revision);
 
   public void writeRevisionDelta(CDORevisionDeltaImpl delta);
 

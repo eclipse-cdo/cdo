@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.ddl.IDBField;
 
@@ -23,7 +23,7 @@ public interface IAttributeMapping extends IFeatureMapping
 {
   public IDBField getField();
 
-  public void appendValue(StringBuilder builder, CDORevisionImpl revision);
+  public void appendValue(StringBuilder builder, InternalCDORevision revision);
 
-  public void extractValue(ResultSet resultSet, int column, CDORevisionImpl revision);
+  public void extractValue(ResultSet resultSet, int column, InternalCDORevision revision);
 }

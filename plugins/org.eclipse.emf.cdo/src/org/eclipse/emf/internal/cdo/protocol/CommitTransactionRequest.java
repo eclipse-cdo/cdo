@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
@@ -177,9 +177,9 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     for (CDORevisionDelta revisionDelta : revisionDeltas)
     {
       ((CDORevisionDeltaImpl)revisionDelta).write(out, transaction);
-      // CDORevisionImpl revision = transaction.getRevision(revisionDelta.getID());
+      // InternalCDORevision revision = transaction.getRevision(revisionDelta.getID());
       CDOObject object = transaction.getDirtyObjects().get(revisionDelta.getID());
-      CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
+      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
       revisionAdjuster.adjustRevision(revision, revisionDelta);
     }
   }
@@ -190,7 +190,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     for (Iterator<?> it = objects.iterator(); it.hasNext();)
     {
       InternalCDOObject object = (InternalCDOObject)it.next();
-      CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
+      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
       revision.write(out, transaction, CDORevision.UNCHUNKED);
     }
   }

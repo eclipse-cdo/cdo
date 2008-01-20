@@ -15,10 +15,10 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -192,14 +192,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   public void reload(InternalCDOObject... objects)
   {
     Map<CDOID, InternalCDOObject> ids = new HashMap<CDOID, InternalCDOObject>();
-    List<CDORevisionImpl> revisions = new ArrayList<CDORevisionImpl>();
-    List<CDORevisionImpl> revised = new ArrayList<CDORevisionImpl>();
+    List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
+    List<InternalCDORevision> revised = new ArrayList<InternalCDORevision>();
     for (InternalCDOObject object : objects)
     {
       CDOState state = object.cdoState();
       if (state != CDOState.NEW && state != CDOState.CONFLICT)
       {
-        CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
+        InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
         if (revision.isCurrent())
         {
           revisions.add(revision);
@@ -226,7 +226,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
 
     revisions.addAll(revised);
-    for (CDORevisionImpl revision : revisions)
+    for (InternalCDORevision revision : revisions)
     {
       InternalCDOObject object = ids.get(revision.getID());
       if (TRACER.isEnabled())
@@ -329,7 +329,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       changeState(object, CDOState.PREPARED_ATTACH);
 
       // Create new revision
-      CDORevisionImpl revision = new CDORevisionImpl(revisionManager, (CDOClassImpl)object.cdoClass(), id);
+      InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil
+          .create(revisionManager, object.cdoClass(), id);
       revision.setVersion(-1);
       revision.setResourceID(data.resource.cdoID());
       object.cdoInternalSetRevision(revision);
@@ -401,7 +402,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
 
       // Adjust revision
-      CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
+      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
       revision.setID(id);
       revision.setUntransactional();
       revision.setCreated(data.getTimeStamp());
@@ -429,7 +430,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       int version = transactionalRevision.getVersion();
 
       CDORevisionManagerImpl revisionManager = view.getSession().getRevisionManager();
-      CDORevisionImpl previousRevision = revisionManager.getRevisionByVersion(id, 0, version - 1);
+      InternalCDORevision previousRevision = revisionManager.getRevisionByVersion(id, 0, version - 1);
       object.cdoInternalSetRevision(previousRevision);
 
       changeState(object, remote ? CDOState.PROXY : CDOState.CLEAN);
@@ -444,7 +445,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
       // Copy revision
-      CDORevisionImpl revision = new CDORevisionImpl((CDORevisionImpl)object.cdoRevision());
+      InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.copy(object.cdoRevision());
       revision.setTransactional();
       object.cdoInternalSetRevision(revision);
 
@@ -492,13 +493,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     protected void reviseObject(InternalCDOObject object, Long timeStamp)
     {
-      CDORevisionImpl revision = (CDORevisionImpl)object.cdoRevision();
+      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
       revision.setRevised(timeStamp - 1);
 
       if (revision.isTransactional())
       {
         CDOViewImpl view = (CDOViewImpl)object.cdoView();
-        CDORevisionImpl sessionRevision = view.getRevision(object.cdoID());
+        InternalCDORevision sessionRevision = view.getRevision(object.cdoID());
         if (sessionRevision.getVersion() < revision.getVersion())
         {
           sessionRevision.setRevised(timeStamp - 1);
@@ -539,7 +540,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       CDOID id = object.cdoID();
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
-      CDORevisionImpl revision = view.getRevision(id);
+      InternalCDORevision revision = view.getRevision(id);
       object.cdoInternalSetRevision(revision);
       changeState(object, CDOState.CLEAN);
       object.cdoInternalPostLoad();

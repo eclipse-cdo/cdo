@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
@@ -64,7 +64,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
 
   private CDOResourceImpl resource;
 
-  private CDORevisionImpl revision;
+  private InternalCDORevision revision;
 
   public CDOLegacyImpl()
   {
@@ -76,7 +76,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
     return state;
   }
 
-  public CDORevisionImpl cdoRevision()
+  public InternalCDORevision cdoRevision()
   {
     return revision;
   }
@@ -139,7 +139,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
       TRACER.format("Setting revision: {0}", revision);
     }
 
-    this.revision = (CDORevisionImpl)revision;
+    this.revision = (InternalCDORevision)revision;
   }
 
   public void cdoInternalSetResource(CDOResource resource)
@@ -166,8 +166,8 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
     transferInstanceToRevision();
 
     CDORevisionManagerImpl revisionManager = view.getSession().getRevisionManager();
-    CDORevisionImpl revision = cdoRevision();
-    CDORevisionImpl originRevision = revisionManager.getRevisionByVersion(revision.getID(), CDORevision.UNCHUNKED,
+    InternalCDORevision revision = cdoRevision();
+    InternalCDORevision originRevision = revisionManager.getRevisionByVersion(revision.getID(), CDORevision.UNCHUNKED,
         revision.getVersion() - 1, false);
 
     CDOTransactionImpl transaction = cdoView().toTransaction();
@@ -262,7 +262,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
     }
 
     // Handle values
-    CDOClassImpl cdoClass = revision.getCDOClass();
+    CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
     CDOFeatureImpl[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
     {
@@ -335,7 +335,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
       transferContainmentToInstance(view);
 
       // Handle values
-      CDOClassImpl cdoClass = revision.getCDOClass();
+      CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
       CDOFeatureImpl[] features = cdoClass.getAllFeatures();
       for (CDOFeatureImpl feature : features)
       {

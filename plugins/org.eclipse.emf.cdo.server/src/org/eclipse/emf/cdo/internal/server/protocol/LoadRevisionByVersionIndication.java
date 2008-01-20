@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
@@ -49,7 +49,7 @@ public class LoadRevisionByVersionIndication extends LoadRevisionIndication
   }
 
   @Override
-  protected CDORevisionImpl getRevision(CDOID id)
+  protected InternalCDORevision getRevision(CDOID id)
   {
     return getRevisionManager().getRevisionByVersion(id, referenceChunk, version);
   }

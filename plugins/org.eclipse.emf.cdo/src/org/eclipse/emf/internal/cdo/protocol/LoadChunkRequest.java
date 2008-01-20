@@ -12,8 +12,7 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
@@ -22,6 +21,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -34,7 +34,7 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkRequest.class);
 
-  private CDORevisionImpl revision;
+  private InternalCDORevision revision;
 
   private CDOFeature feature;
 
@@ -44,7 +44,7 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
 
   private int toIndex;
 
-  public LoadChunkRequest(IChannel channel, CDORevisionImpl revision, CDOFeature feature, int accessIndex,
+  public LoadChunkRequest(IChannel channel, InternalCDORevision revision, CDOFeature feature, int accessIndex,
       int fromIndex, int toIndex)
   {
     super(channel);
@@ -108,7 +108,7 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
   protected CDOID confirming(ExtendedDataInputStream in) throws IOException
   {
     CDOID accessID = null;
-    MoveableList list = revision.getList(feature);
+    MoveableList<Object> list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
       CDOID id = CDOIDImpl.read(in);

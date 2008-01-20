@@ -12,13 +12,14 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreReader;
@@ -82,9 +83,10 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
 
   public CDORevision readRevision(CDOID id, int referenceChunk)
   {
-    CDORevisionImpl storeRevision = (CDORevisionImpl)getStore().getRevision(id);
+    InternalCDORevision storeRevision = (InternalCDORevision)getStore().getRevision(id);
     // IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
-    // CDORevisionImpl newRevision = new CDORevisionImpl(revisionManager, storeRevision.getCDOClass(), storeRevision
+    // InternalCDORevision newRevision = new InternalCDORevision(revisionManager, storeRevision.getCDOClass(),
+    // storeRevision
     // .getID());
     // newRevision.setResourceID(storeRevision.getResourceID());
     //
@@ -93,7 +95,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     // if (feature.isMany())
     // {
     // newRevision.setListSize(feature, storeRevision.getList(feature).size());
-    // MoveableList list = newRevision.getList(feature);
+    // MoveableList<Object> list = newRevision.getList(feature);
     // int size = referenceChunk == CDORevision.UNCHUNKED ? list.size() : referenceChunk;
     // for (int i = 0; i < size; i++)
     // {
@@ -130,7 +132,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   {
   }
 
-  public void writeRevision(CDORevisionImpl revision)
+  public void writeRevision(InternalCDORevision revision)
   {
     newRevisions.add(revision);
   }
@@ -138,8 +140,8 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   @Override
   public void writeRevisionDelta(CDORevisionDeltaImpl delta)
   {
-    CDORevisionImpl revision = (CDORevisionImpl)getStore().getRevision(delta.getID());
-    CDORevisionImpl newRevision = new CDORevisionImpl(revision);
+    InternalCDORevision revision = (InternalCDORevision)getStore().getRevision(delta.getID());
+    InternalCDORevision newRevision = (InternalCDORevision)CDORevisionUtil.copy(revision);
     delta.apply(newRevision);
     newRevisions.add(newRevision);
   }

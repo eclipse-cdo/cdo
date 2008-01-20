@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.Repository;
@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.protocol.model.core.CDOCorePackage;
 import org.eclipse.emf.cdo.protocol.model.resource.CDOResourcePackage;
+import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
@@ -59,9 +60,9 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   private CDOPackageImpl[] newPackages;
 
-  private CDORevisionImpl[] newResources;
+  private InternalCDORevision[] newResources;
 
-  private CDORevisionImpl[] newObjects;
+  private InternalCDORevision[] newObjects;
 
   private CDORevisionDeltaImpl[] dirtyObjects;
 
@@ -204,7 +205,8 @@ public class CommitTransactionIndication extends CDOServerIndication
     return newPackages;
   }
 
-  private CDORevisionImpl[] readNewResources(ExtendedDataInputStream in, IStoreWriter storeWriter) throws IOException
+  private InternalCDORevision[] readNewResources(ExtendedDataInputStream in, IStoreWriter storeWriter)
+      throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL.isEnabled())
@@ -215,7 +217,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     return readRevisions(in, storeWriter, size);
   }
 
-  private CDORevisionImpl[] readNewObjects(ExtendedDataInputStream in, IStoreWriter storeWriter) throws IOException
+  private InternalCDORevision[] readNewObjects(ExtendedDataInputStream in, IStoreWriter storeWriter) throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL.isEnabled())
@@ -247,14 +249,14 @@ public class CommitTransactionIndication extends CDOServerIndication
     return deltas;
   }
 
-  private CDORevisionImpl[] readRevisions(ExtendedDataInputStream in, IStoreWriter storeWriter, int size)
+  private InternalCDORevision[] readRevisions(ExtendedDataInputStream in, IStoreWriter storeWriter, int size)
       throws IOException
   {
     RevisionManager revisionManager = sessionPackageManager.getRepository().getRevisionManager();
-    CDORevisionImpl[] revisions = new CDORevisionImpl[size];
+    InternalCDORevision[] revisions = new InternalCDORevision[size];
     for (int i = 0; i < size; i++)
     {
-      revisions[i] = new CDORevisionImpl(in, revisionManager, transactionPackageManager);
+      revisions[i] = (InternalCDORevision)CDORevisionUtil.read(in, revisionManager, transactionPackageManager);
       mapTemporaryID(revisions[i], storeWriter);
     }
 
@@ -267,10 +269,10 @@ public class CommitTransactionIndication extends CDOServerIndication
     sessionPackageManager.addPackages(storeTransaction, newPackages);
   }
 
-  private void addRevisions(ITransaction<IStoreWriter> storeTransaction, CDORevisionImpl[] revisions)
+  private void addRevisions(ITransaction<IStoreWriter> storeTransaction, InternalCDORevision[] revisions)
   {
     RevisionManager revisionManager = getRevisionManager();
-    for (CDORevisionImpl revision : revisions)
+    for (InternalCDORevision revision : revisions)
     {
       revision.setCreated(timeStamp);
       revision.adjustReferences(idMappings);
@@ -289,7 +291,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     }
   }
 
-  private void mapTemporaryID(CDORevisionImpl revision, IStoreWriter storeWriter)
+  private void mapTemporaryID(InternalCDORevision revision, IStoreWriter storeWriter)
   {
     CDOID oldID = revision.getID();
     if (oldID.isTemporary())

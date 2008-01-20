@@ -12,7 +12,7 @@
 package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.CDOIDProvider;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOFeatureDeltaVisitorImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOListFeatureDeltaImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
@@ -31,14 +31,14 @@ public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
 {
   private CDOIDProvider idProvider;
 
-  private CDORevisionImpl revision;
+  private InternalCDORevision revision;
 
   public RevisionAdjuster(CDOIDProvider idProvider)
   {
     this.idProvider = idProvider;
   }
 
-  public void adjustRevision(CDORevisionImpl revision, CDORevisionDelta revisionDelta)
+  public void adjustRevision(InternalCDORevision revision, CDORevisionDelta revisionDelta)
   {
     this.revision = revision;
     revisionDelta.accept(this);

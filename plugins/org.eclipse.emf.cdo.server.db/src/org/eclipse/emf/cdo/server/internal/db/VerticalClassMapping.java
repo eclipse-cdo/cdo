@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
@@ -61,7 +61,7 @@ public class VerticalClassMapping extends ClassMapping
   }
 
   @Override
-  public void writeRevision(IDBStoreWriter storeWriter, CDORevisionImpl revision)
+  public void writeRevision(IDBStoreWriter storeWriter, InternalCDORevision revision)
   {
     super.writeRevision(storeWriter, revision);
     if (superMappings != null)

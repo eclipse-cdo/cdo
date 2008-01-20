@@ -11,10 +11,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IView;
@@ -81,9 +82,9 @@ public class StoreAccessor implements IStoreAccessor
     return null;
   }
 
-  public CDORevisionImpl verifyRevision(CDORevisionImpl revision)
+  public InternalCDORevision verifyRevision(CDORevision revision)
   {
-    return revision;
+    return (InternalCDORevision)revision;
   }
 
   public CDOID primeNewObject(CDOClass cdoClass)

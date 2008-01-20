@@ -11,8 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
@@ -32,6 +31,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.collection.MoveableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -73,7 +73,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     return table;
   }
 
-  public void writeReference(IDBStoreWriter storeWriter, CDORevisionImpl revision)
+  public void writeReference(IDBStoreWriter storeWriter, InternalCDORevision revision)
   {
     long source = revision.getID().getValue();
     int version = revision.getVersion();
@@ -96,14 +96,17 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     }
   }
 
-  public void readReference(IDBStoreReader storeReader, CDORevisionImpl revision, int referenceChunk)
+  public void readReference(IDBStoreReader storeReader, InternalCDORevision revision, int referenceChunk)
   {
-    MoveableList list = revision.getList(getFeature());
+    MoveableList<Object> list = revision.getList(getFeature());
     CDOID source = revision.getID();
     int version = revision.getVersion();
 
     String sql = createSelect(source, version, null);
-    if (TRACER.isEnabled()) TRACER.trace(sql);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
     ResultSet resultSet = null;
 
     try
@@ -118,7 +121,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
       // TODO Optimize this?
       while (resultSet.next())
       {
-        list.add(CDORevisionImpl.UNINITIALIZED);
+        list.add(InternalCDORevision.UNINITIALIZED);
       }
     }
     catch (SQLException ex)
@@ -138,7 +141,10 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     int version = chunkReader.getRevision().getVersion();
 
     String sql = createSelect(source, version, where);
-    if (TRACER.isEnabled()) TRACER.trace(sql);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
     ResultSet resultSet = null;
 
     try

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
@@ -77,20 +77,20 @@ public class NoClassMapping implements IClassMapping
     return null;
   }
 
-  public void writeRevision(IDBStoreWriter storeWriter, CDORevisionImpl revision)
+  public void writeRevision(IDBStoreWriter storeWriter, InternalCDORevision revision)
   {
   }
 
-  public void readRevision(IDBStoreReader storeReader, CDORevisionImpl revision, int referenceChunk)
+  public void readRevision(IDBStoreReader storeReader, InternalCDORevision revision, int referenceChunk)
   {
   }
 
-  public void readRevisionByTime(IDBStoreReader storeReader, CDORevisionImpl revision, long timeStamp,
+  public void readRevisionByTime(IDBStoreReader storeReader, InternalCDORevision revision, long timeStamp,
       int referenceChunk)
   {
   }
 
-  public void readRevisionByVersion(IDBStoreReader storeReader, CDORevisionImpl revision, int version,
+  public void readRevisionByVersion(IDBStoreReader storeReader, InternalCDORevision revision, int version,
       int referenceChunk)
   {
   }

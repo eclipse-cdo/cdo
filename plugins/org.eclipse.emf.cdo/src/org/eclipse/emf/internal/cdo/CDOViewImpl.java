@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDOIDProvider;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDTyped;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -253,10 +253,10 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return newInstance(eClass);
   }
 
-  public CDORevisionImpl getRevision(CDOID id)
+  public InternalCDORevision getRevision(CDOID id)
   {
     CDORevisionResolver revisionManager = session.getRevisionManager();
-    return (CDORevisionImpl)revisionManager.getRevision(id, session.getReferenceChunkSize());
+    return (InternalCDORevision)revisionManager.getRevision(id, session.getReferenceChunkSize());
   }
 
   public InternalCDOObject getObject(CDOID id)
@@ -345,8 +345,8 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       TRACER.trace("Creating object for " + id);
     }
 
-    CDORevisionImpl revision = getRevision(id);
-    CDOClassImpl cdoClass = revision.getCDOClass();
+    InternalCDORevision revision = getRevision(id);
+    CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
     InternalCDOObject object = newInstance(cdoClass);
     if (object instanceof CDOResourceImpl)
     {

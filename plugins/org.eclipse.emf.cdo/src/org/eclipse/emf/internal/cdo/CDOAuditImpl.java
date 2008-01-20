@@ -11,7 +11,7 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOAudit;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
 
@@ -42,11 +42,11 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
   }
 
   @Override
-  public CDORevisionImpl getRevision(CDOID id)
+  public InternalCDORevision getRevision(CDOID id)
   {
     CDOSessionImpl session = getSession();
     CDORevisionResolver revisionManager = session.getRevisionManager();
-    return (CDORevisionImpl)revisionManager.getRevisionByTime(id, session.getReferenceChunkSize(), timeStamp);
+    return (InternalCDORevision)revisionManager.getRevisionByTime(id, session.getReferenceChunkSize(), timeStamp);
   }
 
   @Override

@@ -12,8 +12,7 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOAddFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOClearFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOContainerFeatureDeltaImpl;
@@ -31,6 +30,7 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.collection.MoveableList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -71,8 +71,8 @@ public final class CDOStore implements EStore
 
     CDOID containerID = (CDOID)((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(newContainer);
 
-    CDOContainerFeatureDeltaImpl delta = new CDOContainerFeatureDeltaImpl(containerID, newContainerFeatureID);
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
+    CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(containerID, newContainerFeatureID);
+    InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
     revision.setContainerID(containerID);
     revision.setContainingFeatureID(newContainerFeatureID);
   }
@@ -85,7 +85,7 @@ public final class CDOStore implements EStore
       TRACER.format("getContainer({0})", cdoObject);
     }
 
-    CDORevisionImpl revision = getRevisionForReading(cdoObject);
+    InternalCDORevision revision = getRevisionForReading(cdoObject);
     CDOID id = revision.getContainerID();
     return (InternalEObject)((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(id);
   }
@@ -98,7 +98,7 @@ public final class CDOStore implements EStore
       TRACER.format("getContainingFeatureID({0})", cdoObject);
     }
 
-    CDORevisionImpl revision = getRevisionForReading(cdoObject);
+    InternalCDORevision revision = getRevisionForReading(cdoObject);
     return revision.getContainingFeatureID();
   }
 
@@ -118,7 +118,7 @@ public final class CDOStore implements EStore
     }
 
     view.getFeatureAnalyzer().preTraverseFeature(cdoObject, cdoFeature, index);
-    CDORevisionImpl revision = getRevisionForReading(cdoObject);
+    InternalCDORevision revision = getRevisionForReading(cdoObject);
     Object value = get(revision, cdoFeature, index);
     if (cdoFeature.isReference())
     {
@@ -135,7 +135,7 @@ public final class CDOStore implements EStore
     return value;
   }
 
-  private void loadAhead(CDORevisionImpl revision, CDOFeatureImpl cdoFeature, CDOID id, int index)
+  private void loadAhead(InternalCDORevision revision, CDOFeatureImpl cdoFeature, CDOID id, int index)
   {
     CDOSessionImpl session = view.getSession();
     CDORevisionManagerImpl revisionManager = session.getRevisionManager();
@@ -143,7 +143,7 @@ public final class CDOStore implements EStore
     int chunkSize = view.getLoadRevisionCollectionChunkSize();
     if (chunkSize > 1 && !revisionManager.containsRevision(id))
     {
-      MoveableList list = revision.getList(cdoFeature);
+      MoveableList<Object> list = revision.getList(cdoFeature);
       int fromIndex = index;
       int toIndex = Math.min(index + chunkSize, list.size()) - 1;
 
@@ -175,7 +175,7 @@ public final class CDOStore implements EStore
     }
   }
 
-  private Object get(CDORevisionImpl revision, CDOFeature cdoFeature, int index)
+  private Object get(InternalCDORevision revision, CDOFeature cdoFeature, int index)
   {
     Object result = revision.get(cdoFeature, index);
     if (cdoFeature.isReference())
@@ -197,7 +197,7 @@ public final class CDOStore implements EStore
       TRACER.format("isSet({0}, {1})", cdoObject, cdoFeature);
     }
 
-    CDORevisionImpl revision = getRevisionForReading(cdoObject);
+    InternalCDORevision revision = getRevisionForReading(cdoObject);
     return revision.isSet(cdoFeature);
   }
 
@@ -210,7 +210,7 @@ public final class CDOStore implements EStore
       TRACER.format("size({0}, {1})", cdoObject, cdoFeature);
     }
 
-    CDORevisionImpl revision = getRevisionForReading(cdoObject);
+    InternalCDORevision revision = getRevisionForReading(cdoObject);
     return revision.size(cdoFeature);
   }
 
@@ -223,7 +223,7 @@ public final class CDOStore implements EStore
       TRACER.format("isEmpty({0}, {1})", cdoObject, cdoFeature);
     }
 
-    CDORevisionImpl revision = getRevisionForReading(cdoObject);
+    InternalCDORevision revision = getRevisionForReading(cdoObject);
     return revision.isEmpty(cdoFeature);
   }
 
@@ -241,7 +241,7 @@ public final class CDOStore implements EStore
       value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
     }
 
-    CDORevisionImpl revision = getRevisionForReading(cdoObject);
+    InternalCDORevision revision = getRevisionForReading(cdoObject);
     return revision.contains(cdoFeature, value);
   }
 
@@ -259,7 +259,7 @@ public final class CDOStore implements EStore
       value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
     }
 
-    CDORevisionImpl revision = getRevisionForReading(cdoObject);
+    InternalCDORevision revision = getRevisionForReading(cdoObject);
     return revision.indexOf(cdoFeature, value);
   }
 
@@ -277,7 +277,7 @@ public final class CDOStore implements EStore
       value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
     }
 
-    CDORevisionImpl revision = getRevisionForReading(cdoObject);
+    InternalCDORevision revision = getRevisionForReading(cdoObject);
     return revision.lastIndexOf(cdoFeature, value);
   }
 
@@ -290,7 +290,7 @@ public final class CDOStore implements EStore
       TRACER.format("hashCode({0}, {1})", cdoObject, cdoFeature);
     }
 
-    CDORevisionImpl revision = getRevisionForReading(cdoObject);
+    InternalCDORevision revision = getRevisionForReading(cdoObject);
     return revision.hashCode(cdoFeature);
   }
 
@@ -303,7 +303,7 @@ public final class CDOStore implements EStore
       TRACER.format("toArray({0}, {1})", cdoObject, cdoFeature);
     }
 
-    CDORevisionImpl revision = getRevisionForReading(cdoObject);
+    InternalCDORevision revision = getRevisionForReading(cdoObject);
     Object[] result = revision.toArray(cdoFeature);
     if (cdoFeature.isReference())
     {
@@ -350,8 +350,8 @@ public final class CDOStore implements EStore
       TRACER.format("set({0}, {1}, {2}, {3})", cdoObject, cdoFeature, index, value);
     }
 
-    CDOSetFeatureDeltaImpl delta = new CDOSetFeatureDeltaImpl(cdoFeature, index, value);
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
+    CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(cdoFeature, index, value);
+    InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
     if (cdoFeature.isReference())
     {
       Object oldValue = revision.get(cdoFeature, index);
@@ -385,8 +385,8 @@ public final class CDOStore implements EStore
       TRACER.format("unset({0}, {1})", cdoObject, cdoFeature);
     }
 
-    CDOUnsetFeatureDeltaImpl delta = new CDOUnsetFeatureDeltaImpl(cdoFeature);
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
+    CDOFeatureDelta delta = new CDOUnsetFeatureDeltaImpl(cdoFeature);
+    InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
     revision.unset(cdoFeature);
   }
 
@@ -409,8 +409,8 @@ public final class CDOStore implements EStore
       value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
     }
 
-    CDOAddFeatureDeltaImpl delta = new CDOAddFeatureDeltaImpl(cdoFeature, index, value);
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
+    CDOFeatureDelta delta = new CDOAddFeatureDeltaImpl(cdoFeature, index, value);
+    InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
     revision.add(cdoFeature, index, value);
   }
 
@@ -423,8 +423,8 @@ public final class CDOStore implements EStore
       TRACER.format("remove({0}, {1}, {2})", cdoObject, cdoFeature, index);
     }
 
-    CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(cdoFeature, index);
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
+    CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(cdoFeature, index);
+    InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
     Object result = revision.remove(cdoFeature, index);
     if (cdoFeature.isReference())
     {
@@ -448,8 +448,8 @@ public final class CDOStore implements EStore
       TRACER.format("clear({0}, {1})", cdoObject, cdoFeature);
     }
 
-    CDOClearFeatureDeltaImpl delta = new CDOClearFeatureDeltaImpl(cdoFeature);
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
+    CDOFeatureDelta delta = new CDOClearFeatureDeltaImpl(cdoFeature);
+    InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
     revision.clear(cdoFeature);
   }
 
@@ -462,8 +462,8 @@ public final class CDOStore implements EStore
       TRACER.format("move({0}, {1}, {2}, {3})", cdoObject, cdoFeature, target, source);
     }
 
-    CDOMoveFeatureDeltaImpl delta = new CDOMoveFeatureDeltaImpl(cdoFeature, target, source);
-    CDORevisionImpl revision = getRevisionForWriting(cdoObject, delta);
+    CDOFeatureDelta delta = new CDOMoveFeatureDeltaImpl(cdoFeature, target, source);
+    InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
     Object result = revision.move(cdoFeature, target, source);
     if (cdoFeature.isReference())
     {
@@ -506,21 +506,21 @@ public final class CDOStore implements EStore
     return ModelUtil.getCDOFeature(eFeature, packageManager);
   }
 
-  private static CDORevisionImpl getRevisionForReading(InternalCDOObject cdoObject)
+  private static InternalCDORevision getRevisionForReading(InternalCDOObject cdoObject)
   {
     CDOStateMachine.INSTANCE.read(cdoObject);
     return getRevision(cdoObject);
   }
 
-  private static CDORevisionImpl getRevisionForWriting(InternalCDOObject cdoObject, CDOFeatureDelta delta)
+  private static InternalCDORevision getRevisionForWriting(InternalCDOObject cdoObject, CDOFeatureDelta delta)
   {
     CDOStateMachine.INSTANCE.write(cdoObject, delta);
     return getRevision(cdoObject);
   }
 
-  private static CDORevisionImpl getRevision(InternalCDOObject cdoObject)
+  private static InternalCDORevision getRevision(InternalCDOObject cdoObject)
   {
-    CDORevisionImpl revision = (CDORevisionImpl)cdoObject.cdoRevision();
+    InternalCDORevision revision = (InternalCDORevision)cdoObject.cdoRevision();
     if (revision == null)
     {
       throw new IllegalStateException("revision == null");

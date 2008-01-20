@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
@@ -138,7 +138,7 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected void appendRevisionInfos(StringBuilder builder, CDORevisionImpl revision, boolean full)
+  protected void appendRevisionInfos(StringBuilder builder, InternalCDORevision revision, boolean full)
   {
     builder.append(revision.getID().getValue());
     builder.append(", ");
@@ -436,7 +436,7 @@ public abstract class ClassMapping implements IClassMapping
 
   protected abstract boolean hasFullRevisionInfo();
 
-  public void writeRevision(IDBStoreWriter storeWriter, CDORevisionImpl revision)
+  public void writeRevision(IDBStoreWriter storeWriter, InternalCDORevision revision)
   {
     if (revision.getVersion() >= 2 && hasFullRevisionInfo())
     {
@@ -454,7 +454,7 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected void writeRevisedRow(IDBStoreWriter storeWriter, CDORevisionImpl revision)
+  protected void writeRevisedRow(IDBStoreWriter storeWriter, InternalCDORevision revision)
   {
     StringBuilder builder = new StringBuilder();
     builder.append("UPDATE ");
@@ -474,7 +474,7 @@ public abstract class ClassMapping implements IClassMapping
     sqlUpdate(storeWriter, builder.toString());
   }
 
-  protected void writeAttributes(IDBStoreWriter storeWriter, CDORevisionImpl revision)
+  protected void writeAttributes(IDBStoreWriter storeWriter, InternalCDORevision revision)
   {
     StringBuilder builder = new StringBuilder();
     builder.append("INSERT INTO ");
@@ -492,7 +492,7 @@ public abstract class ClassMapping implements IClassMapping
     sqlUpdate(storeWriter, builder.toString());
   }
 
-  protected void writeReferences(IDBStoreWriter storeWriter, CDORevisionImpl revision)
+  protected void writeReferences(IDBStoreWriter storeWriter, InternalCDORevision revision)
   {
     for (IReferenceMapping referenceMapping : referenceMappings)
     {
@@ -500,13 +500,13 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  public void readRevision(IDBStoreReader storeReader, CDORevisionImpl revision, int referenceChunk)
+  public void readRevision(IDBStoreReader storeReader, InternalCDORevision revision, int referenceChunk)
   {
     String where = CDODBSchema.ATTRIBUTES_REVISED + "=0";
     readRevision(storeReader, revision, where, true, referenceChunk);
   }
 
-  public void readRevisionByTime(IDBStoreReader storeReader, CDORevisionImpl revision, long timeStamp,
+  public void readRevisionByTime(IDBStoreReader storeReader, InternalCDORevision revision, long timeStamp,
       int referenceChunk)
   {
     StringBuilder where = new StringBuilder();
@@ -523,15 +523,15 @@ public abstract class ClassMapping implements IClassMapping
     readRevision(storeReader, revision, where.toString(), true, referenceChunk);
   }
 
-  public void readRevisionByVersion(IDBStoreReader storeReader, CDORevisionImpl revision, int version,
+  public void readRevisionByVersion(IDBStoreReader storeReader, InternalCDORevision revision, int version,
       int referenceChunk)
   {
     String where = CDODBSchema.ATTRIBUTES_VERSION + "=" + version;
     readRevision(storeReader, revision, where, false, referenceChunk);
   }
 
-  protected void readRevision(IDBStoreReader storeReader, CDORevisionImpl revision, String where, boolean readVersion,
-      int referenceChunk)
+  protected void readRevision(IDBStoreReader storeReader, InternalCDORevision revision, String where,
+      boolean readVersion, int referenceChunk)
   {
     if (attributeMappings != null)
     {
@@ -544,7 +544,8 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected void readAttributes(IDBStoreReader storeReader, CDORevisionImpl revision, String where, boolean readVersion)
+  protected void readAttributes(IDBStoreReader storeReader, InternalCDORevision revision, String where,
+      boolean readVersion)
   {
     long id = revision.getID().getValue();
     StringBuilder builder = new StringBuilder(readVersion ? selectPrefixWithVersion : selectPrefix);
@@ -600,7 +601,7 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected void readReferences(IDBStoreReader storeReader, CDORevisionImpl revision, int referenceChunk)
+  protected void readReferences(IDBStoreReader storeReader, InternalCDORevision revision, int referenceChunk)
   {
     for (IReferenceMapping referenceMapping : referenceMappings)
     {

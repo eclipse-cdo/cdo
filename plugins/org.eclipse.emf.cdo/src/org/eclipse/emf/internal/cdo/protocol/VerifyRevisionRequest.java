@@ -11,7 +11,7 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
@@ -32,19 +32,19 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class VerifyRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
+public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevision>>
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, VerifyRevisionRequest.class);
 
-  private Collection<CDORevisionImpl> revisions;
+  private Collection<InternalCDORevision> revisions;
 
-  public VerifyRevisionRequest(IChannel channel, Collection<CDORevisionImpl> revisions)
+  public VerifyRevisionRequest(IChannel channel, Collection<InternalCDORevision> revisions)
   {
     super(channel);
     this.revisions = revisions;
   }
 
-  public VerifyRevisionRequest(IChannel channel, CDORevisionImpl revision)
+  public VerifyRevisionRequest(IChannel channel, InternalCDORevision revision)
   {
     this(channel, Collections.singleton(revision));
   }
@@ -64,7 +64,7 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<CDORevisionImpl
     }
 
     out.writeInt(revisions.size());
-    for (CDORevisionImpl revision : revisions)
+    for (InternalCDORevision revision : revisions)
     {
       CDOID id = revision.getID();
       int version = revision.getVersion();
@@ -79,15 +79,15 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<CDORevisionImpl
   }
 
   @Override
-  protected List<CDORevisionImpl> confirming(ExtendedDataInputStream in) throws IOException
+  protected List<InternalCDORevision> confirming(ExtendedDataInputStream in) throws IOException
   {
-    ArrayList<CDORevisionImpl> result = new ArrayList<CDORevisionImpl>();
+    ArrayList<InternalCDORevision> result = new ArrayList<InternalCDORevision>();
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Reading {0} timeStamps", revisions.size());
     }
 
-    for (CDORevisionImpl revision : revisions)
+    for (InternalCDORevision revision : revisions)
     {
       long revised = in.readLong();
       if (PROTOCOL.isEnabled())

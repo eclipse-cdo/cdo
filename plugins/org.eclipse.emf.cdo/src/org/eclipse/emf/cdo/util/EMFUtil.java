@@ -331,9 +331,9 @@ public final class EMFUtil
     // }
   }
 
-  // public static List<Change> analyzeListDifferences(CDORevisionImpl
+  // public static List<Change> analyzeListDifferences(InternalCDORevision
   // oldRevision,
-  // CDORevisionImpl newRevision, CDOFeatureImpl feature)
+  // InternalCDORevision newRevision, CDOFeatureImpl feature)
   // {
   // if (!feature.isMany())
   // {

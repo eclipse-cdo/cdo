@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -56,7 +56,7 @@ public class VerifyRevisionIndication extends CDOReadIndication
       int version = in.readInt();
       if (PROTOCOL.isEnabled()) PROTOCOL.format("Read ID and version: {0}v{1}", id, version);
 
-      CDORevisionImpl revision = revisionManager.getRevisionByVersion(id, 0, version);
+      InternalCDORevision revision = revisionManager.getRevisionByVersion(id, 0, version);
       timeStamps[i] = revision.getRevised();
     }
   }

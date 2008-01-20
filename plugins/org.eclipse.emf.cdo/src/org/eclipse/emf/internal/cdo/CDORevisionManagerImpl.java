@@ -12,9 +12,8 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDORevisionManager;
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
@@ -30,6 +29,7 @@ import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.PerfTracer;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+import org.eclipse.net4j.util.collection.MoveableList;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,7 +59,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   public CDOID resolveReferenceProxy(CDOReferenceProxy referenceProxy)
   {
     // Get proxy values
-    CDORevisionImpl revision = (CDORevisionImpl)referenceProxy.getRevision();
+    InternalCDORevision revision = (InternalCDORevision)referenceProxy.getRevision();
     CDOFeature feature = referenceProxy.getFeature();
     int accessIndex = referenceProxy.getIndex();
 
@@ -71,7 +71,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
       chunkSize = Integer.MAX_VALUE;
     }
 
-    MoveableList list = revision.getList(feature);
+    MoveableList<Object> list = revision.getList(feature);
     int size = list.size();
     int fromIndex = accessIndex;
     int toIndex = accessIndex;
@@ -210,36 +210,36 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   }
 
   @Override
-  protected CDORevisionImpl loadRevision(CDOID id, int referenceChunk)
+  protected InternalCDORevision loadRevision(CDOID id, int referenceChunk)
   {
     return send(new LoadRevisionRequest(session.getChannel(), id, referenceChunk)).get(0);
   }
 
   @Override
-  protected CDORevisionImpl loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  protected InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
     return send(new LoadRevisionByTimeRequest(session.getChannel(), id, referenceChunk, timeStamp)).get(0);
   }
 
   @Override
-  protected CDORevisionImpl loadRevisionByVersion(CDOID id, int referenceChunk, int version)
+  protected InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
     return send(new LoadRevisionByVersionRequest(session.getChannel(), id, referenceChunk, version)).get(0);
   }
 
   @Override
-  protected List<CDORevisionImpl> loadRevisions(Collection<CDOID> ids, int referenceChunk)
+  protected List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
   {
     return send(new LoadRevisionRequest(session.getChannel(), ids, referenceChunk));
   }
 
   @Override
-  protected List<CDORevisionImpl> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
+  protected List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
     return send(new LoadRevisionByTimeRequest(session.getChannel(), ids, referenceChunk, timeStamp));
   }
 
-  private List<CDORevisionImpl> send(LoadRevisionRequest request)
+  private List<InternalCDORevision> send(LoadRevisionRequest request)
   {
     try
     {

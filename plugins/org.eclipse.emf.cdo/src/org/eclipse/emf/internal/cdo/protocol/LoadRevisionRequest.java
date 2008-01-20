@@ -12,10 +12,11 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
+import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
 
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
@@ -37,7 +38,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
+public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevision>>
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionRequest.class);
 
@@ -111,12 +112,12 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
   }
 
   @Override
-  protected List<CDORevisionImpl> confirming(ExtendedDataInputStream in) throws IOException
+  protected List<InternalCDORevision> confirming(ExtendedDataInputStream in) throws IOException
   {
     CDOSessionImpl session = getSession();
     CDORevisionManagerImpl revisionManager = session.getRevisionManager();
     CDOSessionPackageManagerImpl packageManager = session.getPackageManager();
-    ArrayList<CDORevisionImpl> revisions = new ArrayList<CDORevisionImpl>(ids.size());
+    ArrayList<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>(ids.size());
 
     if (PROTOCOL.isEnabled())
     {
@@ -124,7 +125,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
     }
     for (int i = 0; i < ids.size(); i++)
     {
-      CDORevisionImpl revision = new CDORevisionImpl(in, revisionManager, packageManager);
+      InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.read(in, revisionManager, packageManager);
       revisions.add(revision);
     }
 
@@ -137,7 +138,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<CDORevisionImpl>>
       }
       for (int i = 0; i < size; i++)
       {
-        CDORevisionImpl revision = new CDORevisionImpl(in, revisionManager, packageManager);
+        InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.read(in, revisionManager, packageManager);
         revisionManager.addRevision(revision);
       }
     }

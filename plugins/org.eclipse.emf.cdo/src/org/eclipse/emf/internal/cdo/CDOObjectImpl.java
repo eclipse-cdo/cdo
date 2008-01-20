@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
@@ -62,7 +62,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   private CDOResourceImpl resource;
 
-  private CDORevisionImpl revision;
+  private InternalCDORevision revision;
 
   public CDOObjectImpl()
   {
@@ -80,7 +80,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return state;
   }
 
-  public CDORevisionImpl cdoRevision()
+  public InternalCDORevision cdoRevision()
   {
     return revision;
   }
@@ -155,7 +155,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       TRACER.format("Setting revision: {0}", revision);
     }
 
-    this.revision = (CDORevisionImpl)revision;
+    this.revision = (InternalCDORevision)revision;
   }
 
   public void cdoInternalSetView(CDOView view)
@@ -496,7 +496,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     CDOViewImpl view = (CDOViewImpl)cdoObject.cdoView();
-    CDORevisionImpl revision = (CDORevisionImpl)cdoObject.cdoRevision();
+    InternalCDORevision revision = (InternalCDORevision)cdoObject.cdoRevision();
     revision.setVersion(1);
     revision.setContainerID(eContainer == null ? CDOID.NULL : ((CDOObjectImpl)eContainer).cdoID());
     revision.setContainingFeatureID(eContainerFeatureID);
@@ -520,7 +520,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   @SuppressWarnings("unchecked")
-  private static void finalizeRevisionFeature(CDOViewImpl view, CDORevisionImpl revision, int i, Object setting,
+  private static void finalizeRevisionFeature(CDOViewImpl view, InternalCDORevision revision, int i, Object setting,
       EStructuralFeature eFeature, Object[] eSettings)
   {
     CDOFeatureImpl cdoFeature = ModelUtil.getCDOFeature(eFeature, view.getSession().getPackageManager());

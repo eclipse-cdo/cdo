@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 
@@ -40,20 +40,20 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
     return field;
   }
 
-  public void appendValue(StringBuilder builder, CDORevisionImpl revision)
+  public void appendValue(StringBuilder builder, InternalCDORevision revision)
   {
     IDBAdapter dbAdapter = getDBAdapter();
     Object value = getRevisionValue(revision);
     dbAdapter.appendValue(builder, field, value);
   }
 
-  protected Object getRevisionValue(CDORevisionImpl revision)
+  protected Object getRevisionValue(InternalCDORevision revision)
   {
     CDOFeature feature = getFeature();
     return revision.getValue(feature);
   }
 
-  public void extractValue(ResultSet resultSet, int column, CDORevisionImpl revision)
+  public void extractValue(ResultSet resultSet, int column, InternalCDORevision revision)
   {
     try
     {

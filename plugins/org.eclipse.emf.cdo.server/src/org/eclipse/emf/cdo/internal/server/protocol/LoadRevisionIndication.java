@@ -11,8 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl.MoveableList;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -23,6 +22,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -115,7 +115,7 @@ public class LoadRevisionIndication extends CDOReadIndication
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
     Session session = getSession();
-    List<CDORevisionImpl> additionalRevisions = new ArrayList<CDORevisionImpl>();
+    List<InternalCDORevision> additionalRevisions = new ArrayList<InternalCDORevision>();
     Set<CDOID> revisionIDs = new HashSet<CDOID>();
     if (PROTOCOL.isEnabled())
     {
@@ -136,13 +136,13 @@ public class LoadRevisionIndication extends CDOReadIndication
         PROTOCOL.format("Collecting more revisions based on rules");
       }
 
-      CDORevisionImpl revisionContext = getRevision(contextID);
+      InternalCDORevision revisionContext = getRevision(contextID);
       collectRevisions(revisionContext, revisionIDs, additionalRevisions, visitedFetchRules);
     }
 
     for (CDOID id : ids)
     {
-      CDORevisionImpl revision = getRevision(id);
+      InternalCDORevision revision = getRevision(id);
       revision.write(out, session, referenceChunk);
       if (loadRevisionCollectionChunkSize > 0)
       {
@@ -157,20 +157,20 @@ public class LoadRevisionIndication extends CDOReadIndication
     }
 
     out.writeInt(additionalSize);
-    for (CDORevisionImpl revision : additionalRevisions)
+    for (InternalCDORevision revision : additionalRevisions)
     {
       revision.write(out, session, referenceChunk);
     }
   }
 
-  protected CDORevisionImpl getRevision(CDOID id)
+  protected InternalCDORevision getRevision(CDOID id)
   {
     RevisionManager revisionManager = getRevisionManager();
     return revisionManager.getRevision(id, referenceChunk);
   }
 
-  private void collectRevisions(CDORevisionImpl revision, Set<CDOID> revisions,
-      List<CDORevisionImpl> additionalRevisions, Set<CDOFetchRule> visitedFetchRules)
+  private void collectRevisions(InternalCDORevision revision, Set<CDOID> revisions,
+      List<InternalCDORevision> additionalRevisions, Set<CDOFetchRule> visitedFetchRules)
   {
     getSession().collectContainedRevisions(revision, referenceChunk, revisions, additionalRevisions);
     CDOFetchRule fetchRule = fetchRules.get(revision.getCDOClass());
@@ -186,7 +186,7 @@ public class LoadRevisionIndication extends CDOReadIndication
     {
       if (feature.isMany())
       {
-        MoveableList list = revision.getList(feature);
+        MoveableList<Object> list = revision.getList(feature);
         int toIndex = Math.min(loadRevisionCollectionChunkSize, list.size()) - 1;
         for (int i = 0; i <= toIndex; i++)
         {
@@ -196,7 +196,7 @@ public class LoadRevisionIndication extends CDOReadIndication
             CDOID id = (CDOID)value;
             if (!id.isNull() && !revisions.contains(id))
             {
-              CDORevisionImpl containedRevision = revisionManager.getRevision(id, referenceChunk);
+              InternalCDORevision containedRevision = revisionManager.getRevision(id, referenceChunk);
               revisions.add(containedRevision.getID());
               additionalRevisions.add(containedRevision);
               collectRevisions(containedRevision, revisions, additionalRevisions, visitedFetchRules);
@@ -212,7 +212,7 @@ public class LoadRevisionIndication extends CDOReadIndication
           CDOID id = (CDOID)value;
           if (!id.isNull() && !revisions.contains(id))
           {
-            CDORevisionImpl containedRevision = revisionManager.getRevision(id, referenceChunk);
+            InternalCDORevision containedRevision = revisionManager.getRevision(id, referenceChunk);
             revisions.add(containedRevision.getID());
             additionalRevisions.add(containedRevision);
             collectRevisions(containedRevision, revisions, additionalRevisions, visitedFetchRules);

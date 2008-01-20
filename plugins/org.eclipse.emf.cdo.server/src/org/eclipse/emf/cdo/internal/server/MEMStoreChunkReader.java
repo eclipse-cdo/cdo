@@ -11,7 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
@@ -36,7 +36,7 @@ public class MEMStoreChunkReader extends StoreChunkReader
     for (Chunk chunk : chunks)
     {
       int startIndex = chunk.getStartIndex();
-      CDORevisionImpl revision = (CDORevisionImpl)store.getRevision(getRevision().getID());
+      InternalCDORevision revision = (InternalCDORevision)store.getRevision(getRevision().getID());
       for (int i = 0; i < chunk.size(); i++)
       {
         Object object = revision.get(getFeature(), startIndex + i);

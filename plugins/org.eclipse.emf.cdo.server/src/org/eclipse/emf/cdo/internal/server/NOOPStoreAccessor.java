@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
@@ -103,7 +103,7 @@ public class NOOPStoreAccessor extends StoreAccessor implements IStoreReader, IS
   {
   }
 
-  public void writeRevision(CDORevisionImpl revision)
+  public void writeRevision(InternalCDORevision revision)
   {
   }
 

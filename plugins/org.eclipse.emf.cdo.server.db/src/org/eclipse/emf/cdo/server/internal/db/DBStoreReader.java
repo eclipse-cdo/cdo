@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
@@ -227,7 +228,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
 
     IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
     CDOClassImpl cdoClass = getObjectType(id);
-    CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
+    InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(revisionManager, cdoClass, id);
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
@@ -244,7 +245,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
 
     IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
     CDOClassImpl cdoClass = getObjectType(id);
-    CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
+    InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(revisionManager, cdoClass, id);
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
@@ -261,7 +262,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
 
     IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
     CDOClassImpl cdoClass = getObjectType(id);
-    CDORevisionImpl revision = new CDORevisionImpl(revisionManager, cdoClass, id);
+    InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(revisionManager, cdoClass, id);
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);

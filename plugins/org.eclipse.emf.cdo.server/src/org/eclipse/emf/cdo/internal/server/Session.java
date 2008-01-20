@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDOIDProvider;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.internal.server.protocol.InvalidationNotification;
@@ -192,11 +192,11 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   /**
    * TODO I can't see how recursion is controlled/limited
    */
-  public void collectContainedRevisions(CDORevisionImpl revision, int referenceChunk, Set<CDOID> revisions,
-      List<CDORevisionImpl> additionalRevisions)
+  public void collectContainedRevisions(InternalCDORevision revision, int referenceChunk, Set<CDOID> revisions,
+      List<InternalCDORevision> additionalRevisions)
   {
     RevisionManager revisionManager = getSessionManager().getRepository().getRevisionManager();
-    CDOClassImpl cdoClass = revision.getCDOClass();
+    CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
     CDOFeatureImpl[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
     {
@@ -209,7 +209,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
           CDOID id = (CDOID)value;
           if (!id.isNull() && !revisions.contains(id))
           {
-            CDORevisionImpl containedRevision = revisionManager.getRevision(id, referenceChunk);
+            InternalCDORevision containedRevision = revisionManager.getRevision(id, referenceChunk);
             revisions.add(id);
             additionalRevisions.add(containedRevision);
 

@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
@@ -162,14 +162,14 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
         type, packageURI, classifierID, many, containment, idx);
   }
 
-  public void writeRevision(CDORevisionImpl revision)
+  public void writeRevision(InternalCDORevision revision)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Inserting revision: {0}", revision);
     }
 
-    CDOClassImpl cdoClass = revision.getCDOClass();
+    CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.writeRevision(this, revision);

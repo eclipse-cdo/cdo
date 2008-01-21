@@ -13,20 +13,18 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.RevisionAdjuster;
 
@@ -102,13 +100,13 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
     for (;;)
     {
-      CDOID oldID = CDOIDImpl.read(in);
+      CDOID oldID = CDOIDUtil.read(in);
       if (oldID.isNull())
       {
         break;
       }
 
-      CDOID newID = CDOIDImpl.read(in);
+      CDOID newID = CDOIDUtil.read(in);
       result.addIDMapping(oldID, newID);
     }
 
@@ -176,8 +174,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     out.writeInt(revisionDeltas.size());
     for (CDORevisionDelta revisionDelta : revisionDeltas)
     {
-      ((CDORevisionDeltaImpl)revisionDelta).write(out, transaction);
-      // InternalCDORevision revision = transaction.getRevision(revisionDelta.getID());
+      revisionDelta.write(out, transaction);
       CDOObject object = transaction.getDirtyObjects().get(revisionDelta.getID());
       InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
       revisionAdjuster.adjustRevision(revision, revisionDelta);
@@ -189,8 +186,8 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     out.writeInt(objects.size());
     for (Iterator<?> it = objects.iterator(); it.hasNext();)
     {
-      InternalCDOObject object = (InternalCDOObject)it.next();
-      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+      CDOObject object = (CDOObject)it.next();
+      CDORevision revision = object.cdoRevision();
       revision.write(out, transaction, CDORevision.UNCHUNKED);
     }
   }

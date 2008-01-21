@@ -11,12 +11,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
@@ -59,7 +59,7 @@ public class LoadChunkIndication extends CDOReadIndication
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    id = CDOIDImpl.read(in);
+    id = CDOIDUtil.read(in);
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Read revision ID: {0}", id);
@@ -103,7 +103,7 @@ public class LoadChunkIndication extends CDOReadIndication
     MoveableList<Object> list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
-      CDOIDImpl.write(out, session.provideCDOID(list.get(i)));
+      CDOIDUtil.write(out, session.provideCDOID(list.get(i)));
     }
   }
 }

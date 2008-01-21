@@ -11,9 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.channel.IChannel;
@@ -66,7 +66,7 @@ public class InvalidationNotification extends Request
     out.writeInt(size);
     for (int i = 0; i < dirtyIDs.length; i++)
     {
-      CDOIDImpl.write(out, dirtyIDs[i]);
+      CDOIDUtil.write(out, dirtyIDs[i]);
     }
   }
 }

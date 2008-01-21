@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.db;
 
-import org.eclipse.net4j.db.ConnectionProvider;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.DBException;
 
 import javax.sql.DataSource;
@@ -21,7 +21,7 @@ import java.sql.SQLException;
 /**
  * @author Eike Stepper
  */
-public class DataSourceConnectionProvider implements ConnectionProvider
+public class DataSourceConnectionProvider implements IDBConnectionProvider
 {
   private DataSource dataSource;
 

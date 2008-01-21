@@ -304,7 +304,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   {
     private CDORevisionDeltaImpl revisionDelta;
 
-    private InternalCDORevision dirtyRevision = null;
+    private InternalCDORevision dirtyRevision;
 
     private AddRevisionDeltaOperation(CDORevisionDeltaImpl revisionDelta)
     {
@@ -313,23 +313,28 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
 
     public void phase1(IStoreWriter storeWriter) throws Exception
     {
-      if (getRepository().isSupportingRevisionDeltas())
+      boolean supportDelta = getRepository().isSupportingRevisionDeltas();
+      InternalCDORevision originRevision = getRevisionByVersion(revisionDelta.getID(), CDORevision.UNCHUNKED,
+          revisionDelta.getOriginVersion(), !supportDelta);
+
+      if (originRevision != null)
+      {
+        dirtyRevision = (InternalCDORevision)CDORevisionUtil.copy(originRevision);
+        revisionDelta.apply(dirtyRevision);
+      }
+      else if (!supportDelta)
+      {
+        // Origin revision need to be accessible for stores that do not support deltas
+        throw new IllegalStateException("Can not retrieve origin revision");
+      }
+
+      if (supportDelta)
       {
         // Can throw an exception if duplicate
         storeWriter.writeRevisionDelta(revisionDelta);
       }
       else
       {
-        InternalCDORevision oldRevision = getRevisionByVersion(revisionDelta.getID(), CDORevision.UNCHUNKED,
-            revisionDelta.getOriginVersion(), true);
-        if (oldRevision == null)
-        {
-          throw new IllegalStateException("Can not retrieve origin revision");
-        }
-
-        dirtyRevision = (InternalCDORevision)CDORevisionUtil.copy(oldRevision);
-        revisionDelta.apply(dirtyRevision);
-
         // Can throw an exception if duplicate
         storeWriter.writeRevision(dirtyRevision);
       }

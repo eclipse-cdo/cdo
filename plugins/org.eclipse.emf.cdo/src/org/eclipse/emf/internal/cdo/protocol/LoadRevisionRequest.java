@@ -11,9 +11,9 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
@@ -85,7 +85,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
       {
         PROTOCOL.format("Writing ID: {0}", id);
       }
-      CDOIDImpl.write(out, id);
+      CDOIDUtil.write(out, id);
     }
 
     CDOFetchRuleManager ruleManager = getSession().getRevisionManager().getRuleManager();
@@ -102,7 +102,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
 
       out.writeInt(fetchSize);
       out.writeInt(ruleManager.getLoadRevisionCollectionChunkSize());
-      CDOIDImpl.write(out, contextID);
+      CDOIDUtil.write(out, contextID);
 
       for (CDOFetchRule fetchRule : fetchRules)
       {

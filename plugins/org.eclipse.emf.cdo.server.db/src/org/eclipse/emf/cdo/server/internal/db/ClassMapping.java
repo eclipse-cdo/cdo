@@ -10,12 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.model.resource.CDOResourceClass;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -196,7 +197,7 @@ public abstract class ClassMapping implements IClassMapping
 
       try
       {
-        IDBTable table = mappingStrategy.getStore().getSchema().addTable(tableName);
+        IDBTable table = mappingStrategy.getStore().getDBSchema().addTable(tableName);
         affectedTables.add(table);
         return table;
       }
@@ -436,21 +437,21 @@ public abstract class ClassMapping implements IClassMapping
 
   protected abstract boolean hasFullRevisionInfo();
 
-  public void writeRevision(IDBStoreWriter storeWriter, InternalCDORevision revision)
+  public void writeRevision(IDBStoreWriter storeWriter, CDORevision revision)
   {
     if (revision.getVersion() >= 2 && hasFullRevisionInfo())
     {
-      writeRevisedRow(storeWriter, revision);
+      writeRevisedRow(storeWriter, (InternalCDORevision)revision);
     }
 
     if (attributeMappings != null)
     {
-      writeAttributes(storeWriter, revision);
+      writeAttributes(storeWriter, (InternalCDORevision)revision);
     }
 
     if (referenceMappings != null)
     {
-      writeReferences(storeWriter, revision);
+      writeReferences(storeWriter, (InternalCDORevision)revision);
     }
   }
 
@@ -500,14 +501,13 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  public void readRevision(IDBStoreReader storeReader, InternalCDORevision revision, int referenceChunk)
+  public void readRevision(IDBStoreReader storeReader, CDORevision revision, int referenceChunk)
   {
     String where = CDODBSchema.ATTRIBUTES_REVISED + "=0";
-    readRevision(storeReader, revision, where, true, referenceChunk);
+    readRevision(storeReader, (InternalCDORevision)revision, where, true, referenceChunk);
   }
 
-  public void readRevisionByTime(IDBStoreReader storeReader, InternalCDORevision revision, long timeStamp,
-      int referenceChunk)
+  public void readRevisionByTime(IDBStoreReader storeReader, CDORevision revision, long timeStamp, int referenceChunk)
   {
     StringBuilder where = new StringBuilder();
     where.append("(");
@@ -520,14 +520,13 @@ public abstract class ClassMapping implements IClassMapping
     where.append(timeStamp);
     where.append(">=");
     where.append(CDODBSchema.ATTRIBUTES_CREATED);
-    readRevision(storeReader, revision, where.toString(), true, referenceChunk);
+    readRevision(storeReader, (InternalCDORevision)revision, where.toString(), true, referenceChunk);
   }
 
-  public void readRevisionByVersion(IDBStoreReader storeReader, InternalCDORevision revision, int version,
-      int referenceChunk)
+  public void readRevisionByVersion(IDBStoreReader storeReader, CDORevision revision, int version, int referenceChunk)
   {
     String where = CDODBSchema.ATTRIBUTES_VERSION + "=" + version;
-    readRevision(storeReader, revision, where, false, referenceChunk);
+    readRevision(storeReader, (InternalCDORevision)revision, where, false, referenceChunk);
   }
 
   protected void readRevision(IDBStoreReader storeReader, InternalCDORevision revision, String where,
@@ -557,7 +556,10 @@ public abstract class ClassMapping implements IClassMapping
     }
 
     String sql = builder.toString();
-    if (TRACER.isEnabled()) TRACER.trace(sql);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
     ResultSet resultSet = null;
 
     try
@@ -578,8 +580,8 @@ public abstract class ClassMapping implements IClassMapping
 
         revision.setCreated(resultSet.getLong(i++));
         revision.setRevised(resultSet.getLong(i++));
-        revision.setResourceID(CDOIDImpl.create(resultSet.getLong(i++)));
-        revision.setContainerID(CDOIDImpl.create(resultSet.getLong(i++)));
+        revision.setResourceID(CDOIDUtil.create(resultSet.getLong(i++)));
+        revision.setContainerID(CDOIDUtil.create(resultSet.getLong(i++)));
         revision.setContainingFeatureID(resultSet.getInt(i++));
       }
 

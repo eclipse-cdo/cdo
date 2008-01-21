@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -52,7 +52,7 @@ public class ResourcePathRequest extends CDOClientRequest<String>
       PROTOCOL.format("Writing ID: {0}", id);
     }
 
-    CDOIDImpl.write(out, id);
+    CDOIDUtil.write(out, id);
   }
 
   @Override

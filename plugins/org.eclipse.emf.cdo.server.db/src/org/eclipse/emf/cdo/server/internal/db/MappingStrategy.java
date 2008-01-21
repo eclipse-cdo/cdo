@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.resource.CDOPathFeature;
@@ -347,7 +347,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
       }
 
       long id = resultSet.getLong(1);
-      return CDOIDImpl.create(id);
+      return CDOIDUtil.create(id);
     }
     catch (SQLException ex)
     {

@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
@@ -60,7 +60,7 @@ public class InvalidationIndication extends Indication
     Set<CDOID> dirtyOIDs = new HashSet<CDOID>();
     for (int i = 0; i < size; i++)
     {
-      CDOID dirtyOID = CDOIDImpl.read(in);
+      CDOID dirtyOID = CDOIDUtil.read(in);
       dirtyOIDs.add(dirtyOID);
     }
 

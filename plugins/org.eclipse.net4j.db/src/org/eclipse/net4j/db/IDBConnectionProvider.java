@@ -8,13 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server;
+package org.eclipse.net4j.db;
+
+import java.sql.Connection;
 
 /**
  * @author Eike Stepper
  */
-@Deprecated
-public interface IStoreProvider
+public interface IDBConnectionProvider
 {
-  public IStore getStore(String repositoryName);
+  public Connection getConnection() throws DBException;
 }

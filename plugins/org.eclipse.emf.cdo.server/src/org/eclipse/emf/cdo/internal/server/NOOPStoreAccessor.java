@@ -10,11 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
@@ -59,7 +58,7 @@ public class NOOPStoreAccessor extends StoreAccessor implements IStoreReader, IS
     return Collections.emptySet();
   }
 
-  public void readPackage(CDOPackageImpl cdoPackage)
+  public void readPackage(CDOPackage cdoPackage)
   {
     throw new UnsupportedOperationException();
   }
@@ -99,11 +98,11 @@ public class NOOPStoreAccessor extends StoreAccessor implements IStoreReader, IS
     throw new UnsupportedOperationException();
   }
 
-  public void writePackages(CDOPackageImpl... cdoPackages)
+  public void writePackages(CDOPackage... cdoPackages)
   {
   }
 
-  public void writeRevision(InternalCDORevision revision)
+  public void writeRevision(CDORevision revision)
   {
   }
 

@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
@@ -73,7 +73,7 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
         PROTOCOL.format("Writing ID and version: {0}v{1}", id, version);
       }
 
-      CDOIDImpl.write(out, id);
+      CDOIDUtil.write(out, id);
       out.writeInt(version);
     }
   }

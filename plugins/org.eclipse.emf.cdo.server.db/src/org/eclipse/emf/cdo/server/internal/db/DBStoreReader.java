@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
@@ -90,15 +91,15 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
     return result;
   }
 
-  public void readPackage(final CDOPackageImpl cdoPackage)
+  public void readPackage(final CDOPackage cdoPackage)
   {
     String where = CDODBSchema.PACKAGES_URI.getName() + " = '" + cdoPackage.getPackageURI() + "'";
     Object[] values = DBUtil.select(getConnection(), where, CDODBSchema.PACKAGES_ID, CDODBSchema.PACKAGES_NAME,
         CDODBSchema.PACKAGES_ECORE);
     PackageServerInfo.setDBID(cdoPackage, (Integer)values[0]);
-    cdoPackage.setName((String)values[1]);
-    cdoPackage.setEcore((String)values[2]);
-    readClasses(cdoPackage);
+    ((CDOPackageImpl)cdoPackage).setName((String)values[1]);
+    ((CDOPackageImpl)cdoPackage).setEcore((String)values[2]);
+    readClasses((CDOPackageImpl)cdoPackage);
 
     mapPackages(cdoPackage);
   }

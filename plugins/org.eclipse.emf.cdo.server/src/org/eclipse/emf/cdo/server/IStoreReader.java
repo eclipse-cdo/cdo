@@ -10,11 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
@@ -37,7 +37,7 @@ public interface IStoreReader extends IStoreAccessor
   /**
    * Demand loads a given package proxy that has been created on startup of the repository.
    */
-  public void readPackage(CDOPackageImpl cdoPackage);
+  public void readPackage(CDOPackage cdoPackage);
 
   /**
    * Returns an iterator that iterates over all objects in the store and makes their ids available for processing. This

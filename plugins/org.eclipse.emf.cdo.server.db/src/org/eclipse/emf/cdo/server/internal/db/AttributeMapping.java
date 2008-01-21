@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 
@@ -126,7 +126,7 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
         return null;
       }
 
-      return CDOIDImpl.create(id);
+      return CDOIDUtil.create(id);
     }
   }
 

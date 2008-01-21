@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
+
 /**
  * @author Eike Stepper
  */
@@ -23,7 +25,7 @@ public interface IStore extends IRepositoryElement
    * Returns if this store supports the writing of modified newRevisions in terms of deltas.
    * <p>
    * The contract includes that store implementations with write delta support must also implement
-   * {@link IStoreWriter#writeRevisionDelta(org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl) IStoreWriter.writeRevisionDelta(CDORevisionDeltaImpl)}
+   * {@link IStoreWriter#writeRevisionDelta(CDORevisionDelta) IStoreWriter.writeRevisionDelta(CDORevisionDeltaImpl)}
    * to not throw an <code>UnsupportedOperationException</code>.
    * 
    * @return <code>true</code> if this store supports the writing of modified newRevisions in terms of deltas,

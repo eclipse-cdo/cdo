@@ -21,11 +21,11 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
-import org.eclipse.net4j.db.ConnectionProvider;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.ddl.DBSchema;
@@ -45,11 +45,11 @@ public class DBStore extends Store implements IDBStore
 
   private IMappingStrategy mappingStrategy;
 
+  private IDBSchema dbSchema;
+
   private IDBAdapter dbAdapter;
 
-  private ConnectionProvider connectionProvider;
-
-  private IDBSchema schema;
+  private IDBConnectionProvider dbConnectionProvider;
 
   private int nextPackageID;
 
@@ -57,7 +57,7 @@ public class DBStore extends Store implements IDBStore
 
   private int nextFeatureID;
 
-  public DBStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter, ConnectionProvider connectionProvider)
+  public DBStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider)
   {
     super(TYPE);
     if (dbAdapter == null)
@@ -65,14 +65,14 @@ public class DBStore extends Store implements IDBStore
       throw new IllegalArgumentException("dbAdapter is null");
     }
 
-    if (connectionProvider == null)
+    if (dbConnectionProvider == null)
     {
-      throw new IllegalArgumentException("connectionProvider is null");
+      throw new IllegalArgumentException("dbConnectionProvider is null");
     }
 
     this.mappingStrategy = mappingStrategy;
     this.dbAdapter = dbAdapter;
-    this.connectionProvider = connectionProvider;
+    this.dbConnectionProvider = dbConnectionProvider;
   }
 
   public IMappingStrategy getMappingStrategy()
@@ -80,24 +80,25 @@ public class DBStore extends Store implements IDBStore
     return mappingStrategy;
   }
 
+  public synchronized IDBSchema getDBSchema()
+  {
+    // TODO Better synchronization or eager init
+    if (dbSchema == null)
+    {
+      dbSchema = createSchema();
+    }
+
+    return dbSchema;
+  }
+
   public IDBAdapter getDBAdapter()
   {
     return dbAdapter;
   }
 
-  public ConnectionProvider getConnectionProvider()
+  public IDBConnectionProvider getDBConnectionProvider()
   {
-    return connectionProvider;
-  }
-
-  public IDBSchema getSchema()
-  {
-    if (schema == null)
-    {
-      schema = createSchema();
-    }
-
-    return schema;
+    return dbConnectionProvider;
   }
 
   @Override
@@ -122,18 +123,21 @@ public class DBStore extends Store implements IDBStore
     return new DBStoreWriter(this, view);
   }
 
-  public int getNextPackageID()
+  public synchronized int getNextPackageID()
   {
+    // TODO Better synchronization
     return nextPackageID++;
   }
 
-  public int getNextClassID()
+  public synchronized int getNextClassID()
   {
+    // TODO Better synchronization
     return nextClassID++;
   }
 
-  public int getNextFeatureID()
+  public synchronized int getNextFeatureID()
   {
+    // TODO Better synchronization
     return nextFeatureID++;
   }
 
@@ -154,10 +158,10 @@ public class DBStore extends Store implements IDBStore
   protected void activateOrDeactivate(boolean started)
   {
     Repository repository = (Repository)getRepository();
-    Connection connection = connectionProvider.getConnection();
+    Connection connection = dbConnectionProvider.getConnection();
     if (connection == null)
     {
-      throw new DBException("No connection from connection provider: " + connectionProvider);
+      throw new DBException("No connection from connection provider: " + dbConnectionProvider);
     }
 
     try
@@ -179,7 +183,7 @@ public class DBStore extends Store implements IDBStore
 
   protected void activateStore(Repository repository, Connection connection)
   {
-    Set<IDBTable> createdTables = CDODBSchema.INSTANCE.create(dbAdapter, connectionProvider);
+    Set<IDBTable> createdTables = CDODBSchema.INSTANCE.create(dbAdapter, dbConnectionProvider);
     if (createdTables.contains(CDODBSchema.REPOSITORY))
     {
       // First start

@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -79,7 +79,7 @@ public class LoadRevisionIndication extends CDOReadIndication
     ids = new CDOID[size];
     for (int i = 0; i < size; i++)
     {
-      CDOID id = CDOIDImpl.read(in);
+      CDOID id = CDOIDUtil.read(in);
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("Read ID: {0}", id);
@@ -97,7 +97,7 @@ public class LoadRevisionIndication extends CDOReadIndication
         loadRevisionCollectionChunkSize = 1;
       }
 
-      contextID = CDOIDImpl.read(in);
+      contextID = CDOIDUtil.read(in);
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("Reading fetch rules for context {0}", contextID);

@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 
@@ -54,7 +54,7 @@ public class QueryObjectTypesIndication extends CDOReadIndication
     ids = new CDOID[size];
     for (int i = 0; i < ids.length; i++)
     {
-      ids[i] = CDOIDImpl.read(in);
+      ids[i] = CDOIDUtil.read(in);
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("Read ID: {0}", ids[i]);

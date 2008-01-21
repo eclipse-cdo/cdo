@@ -11,15 +11,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 
 /**
  * @author Eike Stepper
@@ -35,20 +33,23 @@ public interface IStoreWriter extends IStoreReader
    * <b>Note:</b> The implementor of this method must not assume that references to classes in this package or in any
    * other package are already resolved or are resolveable at the point in time when this method is called by the
    * framework. References to classes frequently appear in {@link CDOClass#getSuperTypes()} and in
-   * {@link CDOFeature#getReferenceType()}. Instead {@link CDOClassImpl#getSuperTypeProxies()} and
-   * {@link CDOFeatureImpl#getReferenceTypeProxy()} should be used.
+   * {@link CDOFeature#getReferenceType()}. Instead
+   * {@link org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl#getSuperTypeProxies() CDOClassImpl.getSuperTypeProxies()}
+   * and
+   * {@link org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl#getReferenceTypeProxy() CDOFeatureImpl.getReferenceTypeProxy()}
+   * should be used.
    * <p>
    * 
    * @see CDOClassProxy#getPackageURI()
    * @see CDOClassProxy#getClassifierID()
    */
-  public void writePackages(CDOPackageImpl... cdoPackages);
+  public void writePackages(CDOPackage... cdoPackages);
 
   public CDOID primeNewObject(CDOClass cdoClass);
 
-  public void writeRevision(InternalCDORevision revision);
+  public void writeRevision(CDORevision revision);
 
-  public void writeRevisionDelta(CDORevisionDeltaImpl delta);
+  public void writeRevisionDelta(CDORevisionDelta delta);
 
   public void commit();
 

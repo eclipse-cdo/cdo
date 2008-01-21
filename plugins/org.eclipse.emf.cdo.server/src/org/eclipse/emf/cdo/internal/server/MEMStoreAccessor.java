@@ -11,15 +11,15 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreReader;
@@ -66,7 +66,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     return Collections.emptySet();
   }
 
-  public void readPackage(CDOPackageImpl cdoPackage)
+  public void readPackage(CDOPackage cdoPackage)
   {
     throw new UnsupportedOperationException();
   }
@@ -128,17 +128,17 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     throw new UnsupportedOperationException();
   }
 
-  public void writePackages(CDOPackageImpl... cdoPackages)
+  public void writePackages(CDOPackage... cdoPackages)
   {
   }
 
-  public void writeRevision(InternalCDORevision revision)
+  public void writeRevision(CDORevision revision)
   {
     newRevisions.add(revision);
   }
 
   @Override
-  public void writeRevisionDelta(CDORevisionDeltaImpl delta)
+  public void writeRevisionDelta(CDORevisionDelta delta)
   {
     InternalCDORevision revision = (InternalCDORevision)getStore().getRevision(delta.getID());
     InternalCDORevision newRevision = (InternalCDORevision)CDORevisionUtil.copy(revision);

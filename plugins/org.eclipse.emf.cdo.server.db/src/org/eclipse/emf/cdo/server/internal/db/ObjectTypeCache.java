@@ -136,7 +136,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     {
       if (table == null)
       {
-        IDBSchema schema = mappingStrategy.getStore().getSchema();
+        IDBSchema schema = mappingStrategy.getStore().getDBSchema();
         table = schema.addTable(CDODBSchema.CDO_OBJECTS);
         idField = table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT);
         typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.INTEGER);

@@ -10,11 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -52,7 +52,7 @@ public class VerifyRevisionIndication extends CDOReadIndication
     timeStamps = new long[size];
     for (int i = 0; i < size; i++)
     {
-      CDOID id = CDOIDImpl.read(in);
+      CDOID id = CDOIDUtil.read(in);
       int version = in.readInt();
       if (PROTOCOL.isEnabled()) PROTOCOL.format("Read ID and version: {0}v{1}", id, version);
 

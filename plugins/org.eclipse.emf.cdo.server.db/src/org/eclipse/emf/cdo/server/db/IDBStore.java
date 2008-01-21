@@ -12,8 +12,8 @@ package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.server.IStore;
 
-import org.eclipse.net4j.db.ConnectionProvider;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 
 /**
@@ -23,9 +23,9 @@ public interface IDBStore extends IStore
 {
   public IMappingStrategy getMappingStrategy();
 
+  public IDBSchema getDBSchema();
+
   public IDBAdapter getDBAdapter();
 
-  public ConnectionProvider getConnectionProvider();
-
-  public IDBSchema getSchema();
+  public IDBConnectionProvider getDBConnectionProvider();
 }

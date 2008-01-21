@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.db.ddl;
 
-import org.eclipse.net4j.db.ConnectionProvider;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBAdapter;
 
@@ -32,7 +32,7 @@ public interface IDBSchema extends IDBSchemaElement
 
   public Set<IDBTable> create(IDBAdapter dbAdapter, Connection connection) throws DBException;
 
-  public Set<IDBTable> create(IDBAdapter dbAdapter, ConnectionProvider connectionProvider) throws DBException;
+  public Set<IDBTable> create(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException;
 
   public Set<IDBTable> create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException;
 }

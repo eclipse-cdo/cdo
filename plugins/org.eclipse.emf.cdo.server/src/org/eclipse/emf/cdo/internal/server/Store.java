@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 
@@ -52,7 +52,7 @@ public abstract class Store extends Lifecycle implements IStore
 
   public CDOID getNextCDOID()
   {
-    CDOID id = CDOIDImpl.create(nextOIDValue);
+    CDOID id = CDOIDUtil.create(nextOIDValue);
     ++nextOIDValue;
     ++nextOIDValue;
     return id;

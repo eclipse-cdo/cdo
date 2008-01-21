@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -59,7 +59,7 @@ public class ResourceIDRequest extends CDOClientRequest<CDOID>
   @Override
   protected CDOID confirming(ExtendedDataInputStream in) throws IOException
   {
-    CDOID id = CDOIDImpl.read(in);
+    CDOID id = CDOIDUtil.read(in);
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Read ID: {0}", id);

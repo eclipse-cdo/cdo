@@ -10,11 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.DLRevisionHolder;
 import org.eclipse.emf.cdo.internal.protocol.revision.LRURevisionHolder;
 import org.eclipse.emf.cdo.internal.protocol.revision.LRURevisionList;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDProvider;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionData;
@@ -22,7 +23,9 @@ import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 
 import org.eclipse.net4j.tests.AbstractOMTest;
+import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -189,17 +192,7 @@ public class RevisionHolderTest extends AbstractOMTest
 
     public RevisionStub(long id)
     {
-      this.id = CDOIDImpl.create(id);
-    }
-
-    public CDORevisionDelta compare(CDORevision origin)
-    {
-      return null;
-    }
-
-    public void merge(CDORevisionDelta delta)
-    {
-      throw new UnsupportedOperationException();
+      this.id = CDOIDUtil.create(id);
     }
 
     public CDOClass getCDOClass()
@@ -255,6 +248,21 @@ public class RevisionHolderTest extends AbstractOMTest
     public boolean isValid(long timeStamp)
     {
       return false;
+    }
+
+    public CDORevisionDelta compare(CDORevision origin)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void merge(CDORevisionDelta delta)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void write(ExtendedDataOutput out, CDOIDProvider idProvider, int referenceChunk) throws IOException
+    {
+      throw new UnsupportedOperationException();
     }
   }
 }

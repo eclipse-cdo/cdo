@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 
@@ -69,7 +69,7 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
     {
       PROTOCOL.format("Writing revision ID: {0}", id);
     }
-    CDOIDImpl.write(out, id);
+    CDOIDUtil.write(out, id);
 
     int version = revision.getVersion();
     if (revision.isTransactional())
@@ -111,7 +111,7 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
     MoveableList<Object> list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
-      CDOID id = CDOIDImpl.read(in);
+      CDOID id = CDOIDUtil.read(in);
       list.set(i, id);
       if (i == accessIndex)
       {

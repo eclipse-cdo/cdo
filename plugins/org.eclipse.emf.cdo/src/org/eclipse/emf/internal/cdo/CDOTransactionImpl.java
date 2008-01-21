@@ -19,13 +19,14 @@ import org.eclipse.emf.cdo.CDOTransactionHandler;
 import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.delta.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -154,27 +155,27 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   public List<CDOPackage> getNewPackages()
   {
-    return newPackages;
+    return Collections.unmodifiableList(newPackages);
   }
 
   public Map<CDOID, CDOResource> getNewResources()
   {
-    return newResources;
+    return Collections.unmodifiableMap(newResources);
   }
 
   public Map<CDOID, CDOObject> getNewObjects()
   {
-    return newObjects;
+    return Collections.unmodifiableMap(newObjects);
   }
 
   public Map<CDOID, CDOObject> getDirtyObjects()
   {
-    return dirtyObjects;
+    return Collections.unmodifiableMap(dirtyObjects);
   }
 
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
   {
-    return revisionDeltas;
+    return Collections.unmodifiableMap(revisionDeltas);
   }
 
   public CDOID getNextTemporaryID()
@@ -182,7 +183,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     long id = nextTemporaryID;
     --nextTemporaryID;
     --nextTemporaryID;
-    return CDOIDImpl.create(id);
+    return CDOIDUtil.create(id);
   }
 
   public CDOResource createResource(String path)
@@ -326,10 +327,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   public void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
-    CDORevisionDeltaImpl revisionDelta = (CDORevisionDeltaImpl)revisionDeltas.get(object.cdoID());
+    InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(object.cdoID());
     if (revisionDelta == null)
     {
-      revisionDelta = new CDORevisionDeltaImpl(object.cdoRevision());
+      revisionDelta = (InternalCDORevisionDelta)CDORevisionDeltaUtil.create(object.cdoRevision());
       revisionDeltas.put(object.cdoID(), revisionDelta);
     }
 

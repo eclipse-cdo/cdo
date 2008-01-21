@@ -67,7 +67,7 @@ public final class DBUtil
     }
   }
 
-  public static ConnectionProvider createConnectionProvider(DataSource dataSource)
+  public static IDBConnectionProvider createConnectionProvider(DataSource dataSource)
   {
     return new DataSourceConnectionProvider(dataSource);
   }

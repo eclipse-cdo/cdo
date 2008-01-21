@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.server.StoreAccessor;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
@@ -56,7 +56,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   {
     try
     {
-      connection = getStore().getConnectionProvider().getConnection();
+      connection = getStore().getDBConnectionProvider().getConnection();
       connection.setAutoCommit(isReader());
     }
     catch (SQLException ex)
@@ -123,12 +123,12 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     throw new IllegalArgumentException("Not a boolean value: " + value);
   }
 
-  protected Set<IDBTable> mapPackages(CDOPackageImpl... cdoPackages)
+  protected Set<IDBTable> mapPackages(CDOPackage... cdoPackages)
   {
     Set<IDBTable> affectedTables = new HashSet<IDBTable>();
     if (cdoPackages != null && cdoPackages.length != 0)
     {
-      for (CDOPackageImpl cdoPackage : cdoPackages)
+      for (CDOPackage cdoPackage : cdoPackages)
       {
         Set<IDBTable> tables = mapClasses(cdoPackage.getClasses());
         affectedTables.addAll(tables);
@@ -138,13 +138,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     return affectedTables;
   }
 
-  protected Set<IDBTable> mapClasses(CDOClassImpl... cdoClasses)
+  protected Set<IDBTable> mapClasses(CDOClass... cdoClasses)
   {
     Set<IDBTable> affectedTables = new HashSet<IDBTable>();
     if (cdoClasses != null && cdoClasses.length != 0)
     {
       IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-      for (CDOClassImpl cdoClass : cdoClasses)
+      for (CDOClass cdoClass : cdoClasses)
       {
         IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
         if (mapping != null)

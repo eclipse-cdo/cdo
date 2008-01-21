@@ -14,8 +14,10 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
@@ -43,9 +45,9 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     super(store, view);
   }
 
-  public void writePackages(CDOPackageImpl... cdoPackages)
+  public void writePackages(CDOPackage... cdoPackages)
   {
-    for (CDOPackageImpl cdoPackage : cdoPackages)
+    for (CDOPackage cdoPackage : cdoPackages)
     {
       writePackage(cdoPackage);
     }
@@ -54,7 +56,7 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     getStore().getDBAdapter().createTables(affectedTables, getConnection());
   }
 
-  protected void writePackage(CDOPackageImpl cdoPackage)
+  protected void writePackage(CDOPackage cdoPackage)
   {
     int id = getStore().getNextPackageID();
     PackageServerInfo.setDBID(cdoPackage, id);
@@ -105,9 +107,9 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
       DBUtil.close(pstmt);
     }
 
-    for (CDOClassImpl cdoClass : cdoPackage.getClasses())
+    for (CDOClass cdoClass : cdoPackage.getClasses())
     {
-      writeClass(cdoClass);
+      writeClass((CDOClassImpl)cdoClass);
     }
   }
 
@@ -162,14 +164,14 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
         type, packageURI, classifierID, many, containment, idx);
   }
 
-  public void writeRevision(InternalCDORevision revision)
+  public void writeRevision(CDORevision revision)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Inserting revision: {0}", revision);
     }
 
-    CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
+    CDOClass cdoClass = revision.getCDOClass();
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.writeRevision(this, revision);

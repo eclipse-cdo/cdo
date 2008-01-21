@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.net4j.db.ddl.IDBTable;
 
@@ -40,13 +40,11 @@ public interface IClassMapping
 
   public IReferenceMapping getReferenceMapping(CDOFeature feature);
 
-  public void writeRevision(IDBStoreWriter storeWriter, InternalCDORevision revision);
+  public void writeRevision(IDBStoreWriter storeWriter, CDORevision revision);
 
-  public void readRevision(IDBStoreReader storeReader, InternalCDORevision revision, int referenceChunk);
+  public void readRevision(IDBStoreReader storeReader, CDORevision revision, int referenceChunk);
 
-  public void readRevisionByTime(IDBStoreReader storeReader, InternalCDORevision revision, long timeStamp,
-      int referenceChunk);
+  public void readRevisionByTime(IDBStoreReader storeReader, CDORevision revision, long timeStamp, int referenceChunk);
 
-  public void readRevisionByVersion(IDBStoreReader storeReader, InternalCDORevision revision, int version,
-      int referenceChunk);
+  public void readRevisionByVersion(IDBStoreReader storeReader, CDORevision revision, int version, int referenceChunk);
 }

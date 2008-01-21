@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
@@ -24,6 +23,7 @@ import org.eclipse.emf.cdo.internal.server.View;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
@@ -320,12 +320,12 @@ public class CommitTransactionIndication extends CDOServerIndication
       if (!oldID.isMeta())
       {
         CDOID newID = entry.getValue();
-        CDOIDImpl.write(out, oldID);
-        CDOIDImpl.write(out, newID);
+        CDOIDUtil.write(out, oldID);
+        CDOIDUtil.write(out, newID);
       }
     }
 
-    CDOIDImpl.write(out, CDOID.NULL);
+    CDOIDUtil.write(out, CDOID.NULL);
   }
 
   /**

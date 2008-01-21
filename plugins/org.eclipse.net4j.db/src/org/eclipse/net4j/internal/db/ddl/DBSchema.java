@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.db.ddl;
 
-import org.eclipse.net4j.db.ConnectionProvider;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -93,7 +93,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     return dbAdapter.createTables(tables.values(), connection);
   }
 
-  public Set<IDBTable> create(IDBAdapter dbAdapter, ConnectionProvider connectionProvider) throws DBException
+  public Set<IDBTable> create(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException
   {
     Connection connection = null;
 

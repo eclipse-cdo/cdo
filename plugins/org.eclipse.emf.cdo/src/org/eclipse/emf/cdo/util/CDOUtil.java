@@ -14,8 +14,8 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.emf.internal.cdo.CDOSessionFactory;
@@ -239,7 +239,7 @@ public final class CDOUtil
     try
     {
       String path = uri.path();
-      return CDOIDImpl.parse(path);
+      return CDOIDUtil.parse(path);
     }
     catch (RuntimeException ex)
     {

@@ -13,12 +13,12 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
@@ -407,7 +407,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
    */
   private long registerMetaInstance(InternalEObject metaInstance, long idValue)
   {
-    CDOID id = CDOIDImpl.create(idValue);
+    CDOID id = CDOIDUtil.create(idValue);
     if (TRACER.isEnabled())
     {
       TRACER.format("Registering meta instance: {0} <-> {1}", id, metaInstance);

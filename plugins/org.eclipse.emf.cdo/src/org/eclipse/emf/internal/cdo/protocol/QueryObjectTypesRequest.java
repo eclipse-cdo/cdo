@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 
@@ -63,7 +63,7 @@ public class QueryObjectTypesRequest extends CDOClientRequest<CDOClassRef[]>
         PROTOCOL.format("Writing ID: {0}", id);
       }
 
-      CDOIDImpl.write(out, id);
+      CDOIDUtil.write(out, id);
     }
   }
 

@@ -8,10 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.server;
+package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.internal.server.MEMStore;
+import org.eclipse.emf.cdo.internal.server.NOOPStore;
 
 /**
  * @author Eike Stepper

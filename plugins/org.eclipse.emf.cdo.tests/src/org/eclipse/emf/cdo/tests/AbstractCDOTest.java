@@ -14,12 +14,10 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.server.ContainerRepositoryProvider;
-import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -46,7 +44,7 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   {
     IManagedContainer container = super.createContainer();
     CDOUtil.prepareContainer(container, false);
-    CDOServerUtil.prepareContainer(container, new ContainerRepositoryProvider(container));
+    CDOServerUtil.prepareContainer(container);
     CDOServerUtil.addRepository(container, createRepository());
     return container;
   }
@@ -56,22 +54,13 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     return StoreUtil.createMEMStore();
   }
 
-  protected Repository createRepository()
+  protected IRepository createRepository()
   {
     Map<String, String> props = new HashMap<String, String>();
-    // props.put(IRepository.PROP_SUPPORTING_REVISION_DELTAS, "true");
-    // props.put(IRepository.PROP_CURRENT_LRU_CAPACITY, "20");
-    // props.put(IRepository.PROP_REVISED_LRU_CAPACITY, "20");
-
-    IStore store = createStore();
-
-    Repository repository = new Repository();
-    repository.setName(REPOSITORY_NAME);
-    repository.setProperties(props);
-    repository.setStore(store);
-
-    store.setRepository(repository);
-    return repository;
+    props.put(IRepository.PROP_SUPPORTING_REVISION_DELTAS, "true");
+    props.put(IRepository.PROP_CURRENT_LRU_CAPACITY, "10000");
+    props.put(IRepository.PROP_REVISED_LRU_CAPACITY, "10000");
+    return CDOServerUtil.createRepository(REPOSITORY_NAME, createStore(), props);
   }
 
   protected IRepository getRepository()

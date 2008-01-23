@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.server.IResourceManager;
 import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.StoreUtil;
 
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;

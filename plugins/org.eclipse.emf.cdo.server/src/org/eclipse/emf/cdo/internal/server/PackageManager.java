@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.StoreUtil;
 
 import org.eclipse.net4j.util.transaction.ITransaction;
 import org.eclipse.net4j.util.transaction.ITransactionalOperation;

@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.StoreUtil;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;

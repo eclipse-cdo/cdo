@@ -13,14 +13,11 @@ package org.eclipse.net4j.tests;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.internal.util.container.ManagedContainer;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-
-import org.eclipse.internal.net4j.acceptor.Acceptor;
-import org.eclipse.internal.net4j.connector.Connector;
 
 /**
  * @author Eike Stepper
@@ -67,7 +64,7 @@ public abstract class AbstractTransportTest extends AbstractOMTest
 
   protected IManagedContainer createContainer()
   {
-    IManagedContainer container = new ManagedContainer();
+    IManagedContainer container = ContainerUtil.createContainer();
     Net4jUtil.prepareContainer(container);
     if (useJVMTransport())
     {
@@ -87,11 +84,11 @@ public abstract class AbstractTransportTest extends AbstractOMTest
     {
       if (useJVMTransport())
       {
-        acceptor = (Acceptor)JVMUtil.getAcceptor(container, "default");
+        acceptor = JVMUtil.getAcceptor(container, "default");
       }
       else
       {
-        acceptor = (Acceptor)TCPUtil.getAcceptor(container, null);
+        acceptor = TCPUtil.getAcceptor(container, null);
       }
     }
 
@@ -104,11 +101,11 @@ public abstract class AbstractTransportTest extends AbstractOMTest
     {
       if (useJVMTransport())
       {
-        connector = (Connector)JVMUtil.getConnector(container, "default");
+        connector = JVMUtil.getConnector(container, "default");
       }
       else
       {
-        connector = (Connector)TCPUtil.getConnector(container, HOST);
+        connector = TCPUtil.getConnector(container, HOST);
       }
     }
 

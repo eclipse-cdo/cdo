@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
+import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IView.Type;
 
 import org.eclipse.net4j.internal.util.container.Container;

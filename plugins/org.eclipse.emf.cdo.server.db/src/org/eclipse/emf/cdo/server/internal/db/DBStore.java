@@ -12,10 +12,10 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.Store;
-import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;

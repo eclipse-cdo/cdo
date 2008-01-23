@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;

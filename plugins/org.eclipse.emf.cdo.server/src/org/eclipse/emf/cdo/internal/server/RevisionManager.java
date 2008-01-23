@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 
 import org.eclipse.net4j.util.collection.MoveableList;

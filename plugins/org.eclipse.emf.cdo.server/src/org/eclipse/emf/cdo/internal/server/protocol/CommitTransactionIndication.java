@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl
 import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
-import org.eclipse.emf.cdo.internal.server.StoreUtil;
 import org.eclipse.emf.cdo.internal.server.View;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOID;
@@ -33,6 +32,7 @@ import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.StoreUtil;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.internal.util.transaction.Transaction;

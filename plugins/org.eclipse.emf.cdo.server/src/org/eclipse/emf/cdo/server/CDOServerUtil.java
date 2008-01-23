@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.internal.server.ContainerRepositoryProvider;
+import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RepositoryFactory;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocolFactory;
 
@@ -30,6 +32,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -40,10 +43,24 @@ public final class CDOServerUtil
   {
   }
 
+  public static IRepository createRepository(String name, IStore store, Map<String, String> props)
+  {
+    Repository repository = new Repository();
+    repository.setName(name);
+    repository.setProperties(props);
+    repository.setStore(store);
+    store.setRepository(repository);
+    return repository;
+  }
+
   public static void prepareContainer(IManagedContainer container, IRepositoryProvider repositoryProvider)
   {
-    // container.registerFactory(new RepositoryFactory());
     container.registerFactory(new CDOServerProtocolFactory(repositoryProvider));
+  }
+
+  public static void prepareContainer(IManagedContainer container)
+  {
+    prepareContainer(container, new ContainerRepositoryProvider(container));
   }
 
   public static void addRepository(IManagedContainer container, IRepository repository)

@@ -11,7 +11,6 @@
 		<property name="overrideUUID" value="1ff5d226-b1f0-40fb-aba2-0c31b38c764f"/>
 		<property name="supportingAudits" value="true"/>
 		<property name="verifyingRevisions" value="false"/>
-		<property name="rememberingKnownTypes" value="false"/>
 		<property name="currentLRUCapacity" value="10000"/>
 		<property name="revisedLRUCapacity" value="100"/>
 		

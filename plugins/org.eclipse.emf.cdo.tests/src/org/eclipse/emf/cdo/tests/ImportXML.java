@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -70,9 +71,9 @@ public class ImportXML
   private static IRepository createRepository()
   {
     Map<String, String> props = new HashMap<String, String>();
-    props.put(IRepository.PROP_SUPPORTING_REVISION_DELTAS, "true");
-    props.put(IRepository.PROP_CURRENT_LRU_CAPACITY, "10000");
-    props.put(IRepository.PROP_REVISED_LRU_CAPACITY, "10000");
+    props.put(Props.PROP_SUPPORTING_REVISION_DELTAS, "true");
+    props.put(Props.PROP_CURRENT_LRU_CAPACITY, "10000");
+    props.put(Props.PROP_REVISED_LRU_CAPACITY, "10000");
     return CDOServerUtil.createRepository(REPOSITORY_NAME, createStore(), props);
   }
 

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.IRepository.Props;
 
 import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.util.StringUtil;
@@ -87,7 +88,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   {
     if (uuid == null)
     {
-      String value = getProperties().get(IRepository.PROP_OVERRIDE_UUID);
+      String value = getProperties().get(Props.PROP_OVERRIDE_UUID);
       uuid = StringUtil.isEmpty(value) ? UUID.randomUUID().toString() : value;
     }
 
@@ -113,7 +114,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   {
     if (supportingRevisionDeltas == null)
     {
-      String value = getProperties().get(IRepository.PROP_SUPPORTING_REVISION_DELTAS);
+      String value = getProperties().get(Props.PROP_SUPPORTING_REVISION_DELTAS);
       supportingRevisionDeltas = value == null ? false : Boolean.valueOf(value);
     }
 
@@ -124,7 +125,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   {
     if (supportingAudits == null)
     {
-      String value = getProperties().get(IRepository.PROP_SUPPORTING_AUDITS);
+      String value = getProperties().get(Props.PROP_SUPPORTING_AUDITS);
       supportingAudits = value == null ? false : Boolean.valueOf(value);
     }
 
@@ -135,7 +136,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   {
     if (verifyingRevisions == null)
     {
-      String value = getProperties().get(IRepository.PROP_VERIFYING_REVISIONS);
+      String value = getProperties().get(Props.PROP_VERIFYING_REVISIONS);
       verifyingRevisions = value == null ? false : Boolean.valueOf(value);
     }
 

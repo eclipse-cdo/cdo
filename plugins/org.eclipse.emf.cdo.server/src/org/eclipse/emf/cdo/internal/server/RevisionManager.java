@@ -23,12 +23,12 @@ import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 
 import org.eclipse.net4j.util.collection.MoveableList;
@@ -255,8 +255,8 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    setCurrentLRUCapacity(getLRUCapacity(IRepository.PROP_CURRENT_LRU_CAPACITY));
-    setRevisedLRUCapacity(getLRUCapacity(IRepository.PROP_REVISED_LRU_CAPACITY));
+    setCurrentLRUCapacity(getLRUCapacity(Props.PROP_CURRENT_LRU_CAPACITY));
+    setRevisedLRUCapacity(getLRUCapacity(Props.PROP_REVISED_LRU_CAPACITY));
   }
 
   protected int getLRUCapacity(String prop)

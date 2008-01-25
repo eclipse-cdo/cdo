@@ -66,7 +66,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   }
 
   @Override
-  public void release() throws DBException
+  protected void doRelease() throws DBException
   {
     DBUtil.close(statement);
     DBUtil.close(connection);

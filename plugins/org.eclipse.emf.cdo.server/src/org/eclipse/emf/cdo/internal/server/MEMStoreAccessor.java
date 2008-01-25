@@ -146,12 +146,6 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     newRevisions.add(newRevision);
   }
 
-  @Override
-  public void release()
-  {
-    newRevisions.clear();
-  }
-
   public void commit()
   {
     MEMStore store = getStore();
@@ -163,5 +157,11 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
 
   public void rollback()
   {
+  }
+
+  @Override
+  protected void doRelease()
+  {
+    newRevisions.clear();
   }
 }

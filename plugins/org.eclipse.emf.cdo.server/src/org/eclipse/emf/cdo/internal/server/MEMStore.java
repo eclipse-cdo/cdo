@@ -150,12 +150,14 @@ public class MEMStore extends Store
   {
   }
 
-  public MEMStoreAccessor getReader(ISession session)
+  @Override
+  public MEMStoreAccessor createReader(ISession session)
   {
     return new MEMStoreAccessor(this, session);
   }
 
-  public MEMStoreAccessor getWriter(IView view)
+  @Override
+  public MEMStoreAccessor createWriter(IView view)
   {
     return new MEMStoreAccessor(this, view);
   }

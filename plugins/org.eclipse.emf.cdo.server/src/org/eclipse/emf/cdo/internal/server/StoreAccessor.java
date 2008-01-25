@@ -48,7 +48,12 @@ public class StoreAccessor implements IStoreAccessor
     this(store, view, false);
   }
 
-  public void release()
+  public final void release()
+  {
+    store.releaseAccessor(this);
+  }
+
+  protected void doRelease()
   {
   }
 

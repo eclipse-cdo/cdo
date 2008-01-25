@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IRepository.Props;
 
 import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.util.StringUtil;
@@ -95,7 +94,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return uuid;
   }
 
-  public Map<String, String> getProperties()
+  public synchronized Map<String, String> getProperties()
   {
     if (properties == null)
     {
@@ -105,7 +104,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return properties;
   }
 
-  public void setProperties(Map<String, String> properties)
+  public synchronized void setProperties(Map<String, String> properties)
   {
     this.properties = properties;
   }

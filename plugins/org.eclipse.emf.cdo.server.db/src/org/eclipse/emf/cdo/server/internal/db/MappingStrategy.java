@@ -58,12 +58,6 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
 
   private Map<String, String> properties;
 
-  private Precedence precedence;
-
-  private ToMany toMany;
-
-  private ToOne toOne;
-
   private Map<Object, IDBTable> referenceTables = new HashMap<Object, IDBTable>();
 
   private Map<Integer, CDOClassRef> classRefs = new HashMap<Integer, CDOClassRef>();
@@ -92,7 +86,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     this.store = store;
   }
 
-  public Map<String, String> getProperties()
+  public synchronized Map<String, String> getProperties()
   {
     if (properties == null)
     {
@@ -102,42 +96,27 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     return properties;
   }
 
-  public void setProperties(Map<String, String> properties)
+  public synchronized void setProperties(Map<String, String> properties)
   {
     this.properties = properties;
   }
 
   public Precedence getPrecedence()
   {
-    if (precedence == null)
-    {
-      String value = getProperties().get(PROP_MAPPING_PRECEDENCE);
-      precedence = value == null ? Precedence.STRATEGY : Precedence.valueOf(value);
-    }
-
-    return precedence;
+    String value = getProperties().get(PROP_MAPPING_PRECEDENCE);
+    return value == null ? Precedence.STRATEGY : Precedence.valueOf(value);
   }
 
   public ToMany getToMany()
   {
-    if (toMany == null)
-    {
-      String value = getProperties().get(PROP_TO_MANY_REFERENCE_MAPPING);
-      toMany = value == null ? ToMany.PER_REFERENCE : ToMany.valueOf(value);
-    }
-
-    return toMany;
+    String value = getProperties().get(PROP_TO_MANY_REFERENCE_MAPPING);
+    return value == null ? ToMany.PER_REFERENCE : ToMany.valueOf(value);
   }
 
   public ToOne getToOne()
   {
-    if (toOne == null)
-    {
-      String value = getProperties().get(PROP_TO_ONE_REFERENCE_MAPPING);
-      toOne = value == null ? ToOne.LIKE_ATTRIBUTES : ToOne.valueOf(value);
-    }
-
-    return toOne;
+    String value = getProperties().get(PROP_TO_ONE_REFERENCE_MAPPING);
+    return value == null ? ToOne.LIKE_ATTRIBUTES : ToOne.valueOf(value);
   }
 
   public Map<Object, IDBTable> getReferenceTables()
@@ -326,7 +305,10 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     getStore().getDBAdapter().appendValue(builder, whereField, whereValue);
 
     String sql = builder.toString();
-    if (TRACER.isEnabled()) TRACER.trace(sql);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
     ResultSet resultSet = null;
 
     try

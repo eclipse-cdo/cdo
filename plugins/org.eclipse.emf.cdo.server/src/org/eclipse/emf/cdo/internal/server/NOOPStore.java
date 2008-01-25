@@ -35,12 +35,14 @@ public class NOOPStore extends Store
   {
   }
 
-  public NOOPStoreAccessor getReader(ISession session)
+  @Override
+  public NOOPStoreAccessor createReader(ISession session)
   {
     return new NOOPStoreAccessor(this, session);
   }
 
-  public NOOPStoreAccessor getWriter(IView view)
+  @Override
+  public NOOPStoreAccessor createWriter(IView view)
   {
     return new NOOPStoreAccessor(this, view);
   }

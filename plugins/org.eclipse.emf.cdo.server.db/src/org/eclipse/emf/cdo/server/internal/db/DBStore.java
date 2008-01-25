@@ -113,12 +113,26 @@ public class DBStore extends Store implements IDBStore
     return false;
   }
 
-  public DBStoreReader getReader(ISession session) throws DBException
+  @Override
+  public DBStoreReader getReader(ISession session)
+  {
+    return (DBStoreReader)super.getReader(session);
+  }
+
+  @Override
+  public DBStoreReader createReader(ISession session) throws DBException
   {
     return new DBStoreReader(this, session);
   }
 
-  public DBStoreWriter getWriter(IView view) throws DBException
+  @Override
+  public DBStoreWriter getWriter(IView view)
+  {
+    return (DBStoreWriter)super.getWriter(view);
+  }
+
+  @Override
+  public DBStoreWriter createWriter(IView view) throws DBException
   {
     return new DBStoreWriter(this, view);
   }

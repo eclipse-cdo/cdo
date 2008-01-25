@@ -13,9 +13,17 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -25,6 +33,8 @@ public abstract class Store extends Lifecycle implements IStore
   private static final long INITIAL_OID_VALUE = 2;
 
   private String type;
+
+  private Map<String, String> properties;
 
   private IRepository repository;
 
@@ -38,6 +48,21 @@ public abstract class Store extends Lifecycle implements IStore
   public String getStoreType()
   {
     return type;
+  }
+
+  public synchronized Map<String, String> getProperties()
+  {
+    if (properties == null)
+    {
+      properties = new HashMap<String, String>();
+    }
+
+    return properties;
+  }
+
+  public synchronized void setProperties(Map<String, String> properties)
+  {
+    this.properties = properties;
   }
 
   public IRepository getRepository()
@@ -86,5 +111,23 @@ public abstract class Store extends Lifecycle implements IStore
   public boolean hasBranchingSupport()
   {
     return false;
+  }
+
+  public IStoreReader getReader(ISession session)
+  {
+    return createReader(session);
+  }
+
+  protected abstract IStoreReader createReader(ISession session);
+
+  public IStoreWriter getWriter(IView view)
+  {
+    return createWriter(view);
+  }
+
+  protected abstract IStoreWriter createWriter(IView view);
+
+  protected void releaseAccessor(IStoreAccessor accessor)
+  {
   }
 }

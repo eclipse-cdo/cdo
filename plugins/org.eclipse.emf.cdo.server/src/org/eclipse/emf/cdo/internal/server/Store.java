@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
@@ -127,7 +126,8 @@ public abstract class Store extends Lifecycle implements IStore
 
   protected abstract IStoreWriter createWriter(IView view);
 
-  protected void releaseAccessor(IStoreAccessor accessor)
+  protected void releaseAccessor(StoreAccessor accessor)
   {
+    accessor.doRelease();
   }
 }

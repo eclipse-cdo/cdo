@@ -10,8 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
+import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 
@@ -29,6 +32,12 @@ public final class CDODBUtil
 
   private CDODBUtil()
   {
+  }
+
+  public static IDBStore createStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter,
+      IDBConnectionProvider dbConnectionProvider)
+  {
+    return new DBStore(mappingStrategy, dbAdapter, dbConnectionProvider);
   }
 
   public static IMappingStrategy createMappingStrategy(String type)

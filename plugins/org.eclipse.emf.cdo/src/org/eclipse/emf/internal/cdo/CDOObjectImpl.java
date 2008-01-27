@@ -32,7 +32,6 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
@@ -210,7 +209,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
           EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
           if (!eFeature.isTransient())
           {
-            finalizeRevisionFeature(view, revision, i, setting, eFeature, eSettings);
+            postAttachFeature(view, revision, i, setting, eFeature, eSettings);
           }
         }
       }
@@ -486,41 +485,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return resource != null ? (CDOViewImpl)cdoObject.cdoResource().cdoView() : null;
   }
 
-  @Deprecated
-  static void finalizeCDORevision(InternalCDOObject cdoObject, EObject eContainer, int eContainerFeatureID,
-      Object[] eSettings)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Finalizing revision for {0}", cdoObject);
-    }
-
-    CDOViewImpl view = (CDOViewImpl)cdoObject.cdoView();
-    InternalCDORevision revision = (InternalCDORevision)cdoObject.cdoRevision();
-    revision.setVersion(1);
-    revision.setContainerID(eContainer == null ? CDOID.NULL : ((CDOObjectImpl)eContainer).cdoID());
-    revision.setContainingFeatureID(eContainerFeatureID);
-
-    if (eSettings != null)
-    {
-      EClass eClass = cdoObject.eClass();
-      for (int i = 0; i < eClass.getFeatureCount(); i++)
-      {
-        Object setting = eSettings[i];
-        if (setting != null)
-        {
-          EStructuralFeature eFeature = cdoObject.cdoInternalDynamicFeature(i);
-          if (!eFeature.isTransient())
-          {
-            finalizeRevisionFeature(view, revision, i, setting, eFeature, eSettings);
-          }
-        }
-      }
-    }
-  }
-
   @SuppressWarnings("unchecked")
-  private static void finalizeRevisionFeature(CDOViewImpl view, InternalCDORevision revision, int i, Object setting,
+  private static void postAttachFeature(CDOViewImpl view, InternalCDORevision revision, int i, Object setting,
       EStructuralFeature eFeature, Object[] eSettings)
   {
     CDOFeatureImpl cdoFeature = ModelUtil.getCDOFeature(eFeature, view.getSession().getPackageManager());

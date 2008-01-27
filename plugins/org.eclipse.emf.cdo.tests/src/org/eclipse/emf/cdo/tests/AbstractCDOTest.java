@@ -83,7 +83,7 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     return session;
   }
 
-  protected void assertTransient(CDOObject object)
+  protected static void assertTransient(CDOObject object)
   {
     assertTrue(FSMUtil.isTransient(object));
     assertEquals(null, object.cdoID());
@@ -92,7 +92,7 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     assertEquals(object.eResource(), object.cdoResource());
   }
 
-  protected void assertNotTransient(CDOObject object)
+  protected static void assertNotTransient(CDOObject object)
   {
     assertFalse(FSMUtil.isTransient(object));
     assertNotNull(object.cdoID());
@@ -103,25 +103,25 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     assertEquals(object.eResource(), object.cdoResource());
   }
 
-  protected void assertNew(CDOObject object)
+  protected static void assertNew(CDOObject object)
   {
     assertNotTransient(object);
     assertEquals(CDOState.NEW, object.cdoState());
   }
 
-  protected void assertDirty(CDOObject object)
+  protected static void assertDirty(CDOObject object)
   {
     assertNotTransient(object);
     assertEquals(CDOState.DIRTY, object.cdoState());
   }
 
-  protected void assertClean(CDOObject object)
+  protected static void assertClean(CDOObject object)
   {
     assertNotTransient(object);
     assertEquals(CDOState.CLEAN, object.cdoState());
   }
 
-  protected void assertProxy(CDOObject object)
+  protected static void assertProxy(CDOObject object)
   {
     assertFalse(FSMUtil.isTransient(object));
     assertNotNull(object.cdoID());
@@ -132,7 +132,7 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     assertEquals(CDOState.PROXY, object.cdoState());
   }
 
-  protected void assertContent(CDOObject container, CDOObject contained)
+  protected static void assertContent(CDOObject container, CDOObject contained)
   {
     assertEquals(container.eResource(), contained.eResource());
     assertEquals(container.cdoResource(), contained.cdoResource());

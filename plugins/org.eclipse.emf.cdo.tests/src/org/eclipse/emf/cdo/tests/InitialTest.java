@@ -144,7 +144,6 @@ public class InitialTest extends AbstractCDOTest
     ResourceSet expected = transaction.getResourceSet();
     ResourceSet actual = resource.getResourceSet();
     assertEquals(expected, actual);
-
   }
 
   public void testAttachView() throws Exception

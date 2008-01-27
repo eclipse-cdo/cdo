@@ -142,7 +142,7 @@ public class CDOCallbackImpl extends CDOLegacyImpl implements CDOCallback
       if (((InternalEObject)instance).eDeliver())
       {
         InternalCDOObject object = FSMUtil.adapt(instance, view);
-        CDOStateMachine.INSTANCE.detach(object, cdoResource(), view);
+        CDOStateMachine.INSTANCE.detach(object);
       }
     }
   }

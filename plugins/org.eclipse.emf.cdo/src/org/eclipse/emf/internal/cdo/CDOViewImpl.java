@@ -775,7 +775,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private void notifyRemove(CDOResourceImpl cdoResource)
   {
-    CDOStateMachine.INSTANCE.detach(cdoResource, cdoResource, this);
+    CDOStateMachine.INSTANCE.detach(cdoResource);
     fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.REMOVED));
   }
 

@@ -539,7 +539,7 @@ public final class CDOStore implements EStore
     {
       if (containedView != null)
       {
-        CDOStateMachine.INSTANCE.detach(contained, contained.cdoResource(), containedView);
+        CDOStateMachine.INSTANCE.detach(contained);
       }
 
       CDOStateMachine.INSTANCE.attach(contained, container.cdoResource(), containerView);

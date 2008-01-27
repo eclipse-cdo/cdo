@@ -424,7 +424,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   public void detached(EObject object)
   {
     InternalCDOObject legacy = getLegacyWrapper(object);
-    CDOStateMachine.INSTANCE.detach(legacy, this, view);
+    CDOStateMachine.INSTANCE.detach(legacy);
   }
 
   /**
@@ -554,7 +554,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    * @author Eike Stepper
    */
   protected class TransientContents<E extends Object & EObject> extends NotifyingListImpl<E> implements
-  InternalEList<E>
+      InternalEList<E>
   {
     private static final long serialVersionUID = 1L;
 

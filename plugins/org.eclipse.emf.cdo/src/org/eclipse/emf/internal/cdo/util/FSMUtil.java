@@ -75,7 +75,6 @@ public final class FSMUtil
   {
     CDOState state = object.cdoState();
     return state == CDOState.TRANSIENT || state == CDOState.PREPARED;
-    // TODO || state == CDOState.PROXY && object instanceof CDOResource;
   }
 
   /**

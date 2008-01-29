@@ -191,7 +191,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Finalizing revision for {0}", this);
+      TRACER.format("Populating revision for {0}", this);
     }
 
     CDOViewImpl view = cdoView();
@@ -209,10 +209,121 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
           EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
           if (!eFeature.isTransient())
           {
-            postAttachFeature(view, revision, i, setting, eFeature, eSettings);
+            populateRevisionFeature(view, revision, eFeature, eSettings, i);
           }
         }
       }
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  private void populateRevisionFeature(CDOViewImpl view, InternalCDORevision revision, EStructuralFeature eFeature,
+      Object[] eSettings, int i)
+  {
+    CDOFeatureImpl cdoFeature = ModelUtil.getCDOFeature(eFeature, view.getSession().getPackageManager());
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Populating feature {0}", cdoFeature);
+    }
+
+    Object setting = eSettings[i];
+    boolean isReference = cdoFeature.isReference();
+    if (cdoFeature.isMany())
+    {
+      int index = 0;
+      EList<Object> list = (EList<Object>)setting;
+      for (Object value : list)
+      {
+        if (isReference)
+        {
+          value = view.convertObjectToID(value);
+        }
+
+        revision.add(cdoFeature, index++, value);
+      }
+    }
+    else
+    {
+      if (isReference)
+      {
+        setting = view.convertObjectToID(setting);
+      }
+
+      revision.set(cdoFeature, 0, setting);
+    }
+
+    if (eSettings != null)
+    {
+      eSettings[i] = null;
+    }
+  }
+
+  public void cdoInternalPostDetach()
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Depopulating revision for {0}", this);
+    }
+
+    CDOViewImpl view = cdoView();
+    eContainer = null;
+    eContainerFeatureID = 0;
+
+    if (eSettings == null)
+    {
+      eSettings();
+    }
+
+    EClass eClass = eClass();
+    for (int i = 0; i < eClass.getFeatureCount(); i++)
+    {
+      Object setting = eSettings[i];
+      if (setting != null)
+      {
+        EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
+        if (!eFeature.isTransient())
+        {
+          depopulateRevisionFeature(view, revision, eFeature, eSettings, i);
+        }
+      }
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  private void depopulateRevisionFeature(CDOViewImpl view, InternalCDORevision revision, EStructuralFeature eFeature,
+      Object[] eSettings, int i)
+  {
+    CDOFeatureImpl cdoFeature = ModelUtil.getCDOFeature(eFeature, view.getSession().getPackageManager());
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Depopulating feature {0}", cdoFeature);
+    }
+
+    boolean isReference = cdoFeature.isReference();
+    if (cdoFeature.isMany())
+    {
+      eSettings[i] = null;
+      EList<Object> setting = (EList<Object>)super.dynamicGet(eFeature.getFeatureID());
+      EList<Object> list = (EList<Object>)revision.getList(cdoFeature);
+      for (Object value : list)
+      {
+        if (isReference)
+        {
+          value = view.getObject((CDOID)value, true);
+        }
+
+        setting.add(value);
+      }
+    }
+    else
+    {
+      Object value = revision.getValue(cdoFeature);
+      if (isReference)
+      {
+        value = view.getObject((CDOID)value, true);
+      }
+
+      eSettings[i] = value;
     }
   }
 
@@ -483,47 +594,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     CDOResource resource = cdoObject.cdoResource();
     return resource != null ? (CDOViewImpl)cdoObject.cdoResource().cdoView() : null;
-  }
-
-  @SuppressWarnings("unchecked")
-  private static void postAttachFeature(CDOViewImpl view, InternalCDORevision revision, int i, Object setting,
-      EStructuralFeature eFeature, Object[] eSettings)
-  {
-    CDOFeatureImpl cdoFeature = ModelUtil.getCDOFeature(eFeature, view.getSession().getPackageManager());
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Finalizing feature {0}", cdoFeature);
-    }
-
-    boolean isReference = cdoFeature.isReference();
-    if (cdoFeature.isMany())
-    {
-      int index = 0;
-      EList<Object> list = (EList<Object>)setting;
-      for (Object value : list)
-      {
-        if (isReference)
-        {
-          value = view.convertObjectToID(value);
-        }
-
-        revision.add(cdoFeature, index++, value);
-      }
-    }
-    else
-    {
-      if (isReference)
-      {
-        setting = view.convertObjectToID(setting);
-      }
-
-      revision.set(cdoFeature, 0, setting);
-    }
-
-    if (eSettings != null)
-    {
-      eSettings[i] = null;
-    }
   }
 
   private CDOStore getStore()

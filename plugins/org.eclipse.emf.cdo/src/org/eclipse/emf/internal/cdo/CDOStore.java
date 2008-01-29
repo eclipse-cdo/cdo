@@ -362,7 +362,7 @@ public final class CDOStore implements EStore
 
       if (cdoFeature.isContainment())
       {
-        handleContainmentAdd(cdoObject, cdoFeature, value);
+        handleContainmentAdd(cdoObject, value);
       }
     }
 
@@ -371,6 +371,10 @@ public final class CDOStore implements EStore
     if (cdoFeature.isReference())
     {
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
+      if (result != null && cdoFeature.isContainment())
+      {
+        handleContainmentRemove(cdoObject, value);
+      }
     }
 
     return result;
@@ -387,6 +391,7 @@ public final class CDOStore implements EStore
 
     CDOFeatureDelta delta = new CDOUnsetFeatureDeltaImpl(cdoFeature);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
+    // TODO Handle containment remove!!!
     revision.unset(cdoFeature);
   }
 
@@ -403,7 +408,7 @@ public final class CDOStore implements EStore
     {
       if (cdoFeature.isContainment())
       {
-        handleContainmentAdd(cdoObject, cdoFeature, value);
+        handleContainmentAdd(cdoObject, value);
       }
 
       value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
@@ -434,6 +439,10 @@ public final class CDOStore implements EStore
       }
 
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
+      if (cdoFeature.isContainment())
+      {
+        handleContainmentRemove(cdoObject, result);
+      }
     }
 
     return result;
@@ -450,6 +459,7 @@ public final class CDOStore implements EStore
 
     CDOFeatureDelta delta = new CDOClearFeatureDeltaImpl(cdoFeature);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
+    // TODO Handle containment remove!!!
     revision.clear(cdoFeature);
   }
 
@@ -529,9 +539,8 @@ public final class CDOStore implements EStore
     return revision;
   }
 
-  private void handleContainmentAdd(InternalCDOObject cdoObject, CDOFeatureImpl cdoFeature, Object value)
+  private void handleContainmentAdd(InternalCDOObject container, Object value)
   {
-    InternalCDOObject container = cdoObject;
     InternalCDOObject contained = getCDOObject(value);
     CDOViewImpl containerView = (CDOViewImpl)container.cdoView();
     CDOViewImpl containedView = (CDOViewImpl)contained.cdoView();
@@ -544,5 +553,11 @@ public final class CDOStore implements EStore
 
       CDOStateMachine.INSTANCE.attach(contained, container.cdoResource(), containerView);
     }
+  }
+
+  private void handleContainmentRemove(InternalCDOObject container, Object value)
+  {
+    // InternalCDOObject contained = getCDOObject(value);
+    // CDOStateMachine.INSTANCE.detach(contained);
   }
 }

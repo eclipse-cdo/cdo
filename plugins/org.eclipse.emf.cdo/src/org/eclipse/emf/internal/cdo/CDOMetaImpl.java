@@ -85,6 +85,11 @@ public class CDOMetaImpl extends CDOWrapperImpl
     throw new UnsupportedOperationException();
   }
 
+  public void cdoInternalPostDetach()
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public void cdoInternalPreCommit()
   {
     throw new UnsupportedOperationException();

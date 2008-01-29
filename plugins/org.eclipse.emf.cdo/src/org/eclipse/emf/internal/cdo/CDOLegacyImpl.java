@@ -161,6 +161,11 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
     // Do nothing
   }
 
+  public void cdoInternalPostDetach()
+  {
+    // Do nothing
+  }
+
   public void cdoInternalPreCommit()
   {
     transferInstanceToRevision();

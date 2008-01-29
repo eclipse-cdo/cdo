@@ -66,7 +66,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     init(CDOState.TRANSIENT, CDOEvent.PREPARE, new PrepareTransition());
     init(CDOState.TRANSIENT, CDOEvent.ATTACH, FAIL);
-    init(CDOState.TRANSIENT, CDOEvent.DETACH, FAIL);
+    init(CDOState.TRANSIENT, CDOEvent.DETACH, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.READ, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.WRITE, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.INVALIDATE, FAIL);
@@ -86,7 +86,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     init(CDOState.NEW, CDOEvent.PREPARE, FAIL);
     init(CDOState.NEW, CDOEvent.ATTACH, FAIL);
-    init(CDOState.NEW, CDOEvent.DETACH, IGNORE);
+    init(CDOState.NEW, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.NEW, CDOEvent.READ, IGNORE);
     init(CDOState.NEW, CDOEvent.WRITE, IGNORE);
     init(CDOState.NEW, CDOEvent.INVALIDATE, FAIL);
@@ -96,7 +96,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     init(CDOState.CLEAN, CDOEvent.PREPARE, FAIL);
     init(CDOState.CLEAN, CDOEvent.ATTACH, FAIL);
-    init(CDOState.CLEAN, CDOEvent.DETACH, IGNORE);
+    init(CDOState.CLEAN, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.CLEAN, CDOEvent.READ, IGNORE);
     init(CDOState.CLEAN, CDOEvent.WRITE, new WriteTransition());
     init(CDOState.CLEAN, CDOEvent.INVALIDATE, new InvalidateTransition());
@@ -106,7 +106,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     init(CDOState.DIRTY, CDOEvent.PREPARE, FAIL);
     init(CDOState.DIRTY, CDOEvent.ATTACH, FAIL);
-    init(CDOState.DIRTY, CDOEvent.DETACH, IGNORE);
+    init(CDOState.DIRTY, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.DIRTY, CDOEvent.READ, IGNORE);
     init(CDOState.DIRTY, CDOEvent.WRITE, new RewriteTransition());
     init(CDOState.DIRTY, CDOEvent.INVALIDATE, new ConflictTransition());
@@ -116,7 +116,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     init(CDOState.PROXY, CDOEvent.PREPARE, new LoadResourceTransition());// Resources start in PROXY instead TRANSIENT
     init(CDOState.PROXY, CDOEvent.ATTACH, IGNORE);// Resources must not FAIL
-    init(CDOState.PROXY, CDOEvent.DETACH, IGNORE);
+    init(CDOState.PROXY, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.PROXY, CDOEvent.READ, new LoadTransition(false));
     init(CDOState.PROXY, CDOEvent.WRITE, new LoadTransition(true));
     init(CDOState.PROXY, CDOEvent.INVALIDATE, IGNORE);
@@ -126,7 +126,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     init(CDOState.CONFLICT, CDOEvent.PREPARE, FAIL);
     init(CDOState.CONFLICT, CDOEvent.ATTACH, IGNORE);
-    init(CDOState.CONFLICT, CDOEvent.DETACH, IGNORE);
+    init(CDOState.CONFLICT, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.CONFLICT, CDOEvent.READ, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.WRITE, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.INVALIDATE, IGNORE);
@@ -364,7 +364,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       data.view.registerObject(object);
       transaction.registerNew(object);
 
-      // Attach content tree
+      // Prepare content tree
       for (Iterator<InternalCDOObject> it = FSMUtil.iterator(object.eContents(), transaction); it.hasNext();)
       {
         InternalCDOObject content = it.next();
@@ -384,7 +384,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       object.cdoInternalPostAttach();
       changeState(object, CDOState.NEW);
 
-      // Finalize content tree
+      // Attach content tree
       for (Iterator<?> it = FSMUtil.iterator(object.eContents(), transaction); it.hasNext();)
       {
         InternalCDOObject content = (InternalCDOObject)it.next();
@@ -400,7 +400,15 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
-      // object.cdoInternalSetState(CDOState.TRANSIENT);
+      CDOTransactionImpl transaction = (CDOTransactionImpl)object.cdoView();
+      object.cdoInternalSetState(CDOState.TRANSIENT);
+
+      // Detach content tree
+      for (Iterator<?> it = FSMUtil.iterator(object.eContents(), transaction); it.hasNext();)
+      {
+        InternalCDOObject content = (InternalCDOObject)it.next();
+        INSTANCE.process(content, CDOEvent.DETACH, null);
+      }
     }
   }
 

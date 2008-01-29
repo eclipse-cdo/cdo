@@ -29,6 +29,8 @@ public interface InternalCDOObject extends CDOObject, InternalEObject
 
   public void cdoInternalPostAttach();
 
+  public void cdoInternalPostDetach();
+
   public void cdoInternalPreCommit();
 
   public void cdoInternalSetID(CDOID id);

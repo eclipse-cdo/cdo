@@ -74,7 +74,8 @@ public final class FSMUtil
   public static boolean isTransient(CDOObject object)
   {
     CDOState state = object.cdoState();
-    return state == CDOState.TRANSIENT || state == CDOState.PREPARED_ATTACH;
+    return state == CDOState.TRANSIENT || state == CDOState.PREPARED;
+    // TODO || state == CDOState.PROXY && object instanceof CDOResource;
   }
 
   /**

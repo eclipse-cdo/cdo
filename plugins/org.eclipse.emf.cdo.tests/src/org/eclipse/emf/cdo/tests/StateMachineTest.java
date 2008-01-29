@@ -36,13 +36,15 @@ public class StateMachineTest extends AbstractCDOTest
 {
   private static final long TIMESTAMP = 12345678L;
 
-  public void test__TRANSIENT__ATTACH() throws Exception
+  // ///////////////////////////////////////////////////
+
+  public void test_TRANSIENT_with_ATTACH() throws Exception
   {
     // Attach resource
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
-    assertNew(resource);
+    assertNew(resource, transaction);
     assertEquals(URI.createURI("cdo:/test1"), resource.getURI());
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
 
@@ -51,7 +53,7 @@ public class StateMachineTest extends AbstractCDOTest
     supplier.setName("Stepper");
     assertTransient(supplier);
     resource.getContents().add(supplier);
-    assertNew(supplier);
+    assertNew(supplier, transaction);
     assertEquals(transaction, supplier.cdoView());
     assertEquals(resource, supplier.cdoResource());
     assertEquals(resource, supplier.eResource());
@@ -78,14 +80,14 @@ public class StateMachineTest extends AbstractCDOTest
     assertTransient(p2);
     assertTransient(p3);
     resource.getContents().add(cat1);
-    assertNew(cat1);
-    assertNew(cat2);
-    assertNew(p1);
-    assertNew(p2);
-    assertNew(p3);
+    assertNew(cat1, transaction);
+    assertNew(cat2, transaction);
+    assertNew(p1, transaction);
+    assertNew(p2, transaction);
+    assertNew(p3, transaction);
   }
 
-  public void test__TRANSIENT__DETACH() throws Exception
+  public void test_TRANSIENT_with_DETACH() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
@@ -101,7 +103,7 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  public void test__TRANSIENT__READ() throws Exception
+  public void test_TRANSIENT_with_READ() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
@@ -109,7 +111,7 @@ public class StateMachineTest extends AbstractCDOTest
     CDOStateMachine.INSTANCE.read((InternalCDOObject)supplier);
   }
 
-  public void test__TRANSIENT__WRITE() throws Exception
+  public void test_TRANSIENT_with_WRITE() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
@@ -117,7 +119,7 @@ public class StateMachineTest extends AbstractCDOTest
     CDOStateMachine.INSTANCE.write((InternalCDOObject)supplier);
   }
 
-  public void test__TRANSIENT__INVALIDATE() throws Exception
+  public void test_TRANSIENT_with_INVALIDATE() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
@@ -133,7 +135,7 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  public void test__TRANSIENT__RELOAD() throws Exception
+  public void test_TRANSIENT_with_RELOAD() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
@@ -142,7 +144,7 @@ public class StateMachineTest extends AbstractCDOTest
     assertTransient(supplier);
   }
 
-  public void test__TRANSIENT__COMMIT() throws Exception
+  public void test_TRANSIENT_with_COMMIT() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
@@ -158,7 +160,7 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  public void test__TRANSIENT__ROLLBACK() throws Exception
+  public void test_TRANSIENT_with_ROLLBACK() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
@@ -187,11 +189,13 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  public void test__PREPARED_ATTACH__ATTACH() throws Exception
+  // ///////////////////////////////////////////////////
+
+  public void test_PREPARED_with_ATTACH() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED_ATTACH);
+    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
     try
     {
       attach(supplier);
@@ -202,11 +206,11 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  public void test__PREPARED_ATTACH__DETACH() throws Exception
+  public void test_PREPARED_with_DETACH() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED_ATTACH);
+    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
     try
     {
       CDOStateMachine.INSTANCE.detach((InternalCDOObject)supplier);
@@ -218,20 +222,20 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  public void test__PREPARED_ATTACH__READ() throws Exception
+  public void test_PREPARED_with_READ() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED_ATTACH);
+    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
     CDOStateMachine.INSTANCE.read((InternalCDOObject)supplier);
-    assertEquals(CDOState.PREPARED_ATTACH, supplier.cdoState());
+    assertEquals(CDOState.PREPARED, supplier.cdoState());
   }
 
-  public void test__PREPARED_ATTACH__WRITE() throws Exception
+  public void test_PREPARED_with_WRITE() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED_ATTACH);
+    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
     try
     {
       CDOStateMachine.INSTANCE.write((InternalCDOObject)supplier);
@@ -243,11 +247,11 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  public void test__PREPARED_ATTACH__INVALIDATE() throws Exception
+  public void test_PREPARED_with_INVALIDATE() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED_ATTACH);
+    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
     try
     {
       CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)supplier, TIMESTAMP);
@@ -259,11 +263,11 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  public void test__PREPARED_ATTACH__RELOAD() throws Exception
+  public void test_PREPARED_with_RELOAD() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED_ATTACH);
+    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
     try
     {
       reload(supplier);
@@ -275,11 +279,11 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  public void test__PREPARED_ATTACH__COMMIT() throws Exception
+  public void test_PREPARED_with_COMMIT() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED_ATTACH);
+    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
     try
     {
       CDOStateMachine.INSTANCE.commit((InternalCDOObject)supplier, new CommitTransactionResult(TIMESTAMP));
@@ -291,11 +295,11 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  public void test__PREPARED_ATTACH__ROLLBACK() throws Exception
+  public void test_PREPARED_with_ROLLBACK() throws Exception
   {
     Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED_ATTACH);
+    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
     try
     {
       CDOStateMachine.INSTANCE.rollback((InternalCDOObject)supplier, false);
@@ -307,165 +311,198 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  public void test__NEW__ATTACH() throws Exception
+  // ///////////////////////////////////////////////////
+
+  public void test_NEW_with_ATTACH() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    assertNew(resource, transaction);
+
+    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    supplier.setName("Stepper");
+    resource.getContents().add(supplier); // ATTACH
+    assertNew(supplier, transaction);
+  }
+
+  public void _test_NEW_with_DETACH() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    assertNew(resource, transaction);
+
+    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    supplier.setName("Stepper");
+    resource.getContents().add(supplier); // ATTACH
+    assertNew(supplier, transaction);
+
+    CDOStateMachine.INSTANCE.detach((InternalCDOObject)supplier);
+    assertTransient(supplier);
+  }
+
+  public void test_NEW_with_READ() throws Exception
   {
   }
 
-  public void test__NEW__DETACH() throws Exception
+  public void test_NEW_with_WRITE() throws Exception
   {
   }
 
-  public void test__NEW__READ() throws Exception
+  public void test_NEW_with_INVALIDATE() throws Exception
   {
   }
 
-  public void test__NEW__WRITE() throws Exception
+  public void test_NEW_with_RELOAD() throws Exception
   {
   }
 
-  public void test__NEW__INVALIDATE() throws Exception
+  public void test_NEW_with_COMMIT() throws Exception
   {
   }
 
-  public void test__NEW__RELOAD() throws Exception
+  public void test_NEW_with_ROLLBACK() throws Exception
   {
   }
 
-  public void test__NEW__COMMIT() throws Exception
+  // ///////////////////////////////////////////////////
+
+  public void test_CLEAN_with_ATTACH() throws Exception
   {
   }
 
-  public void test__NEW__ROLLBACK() throws Exception
+  public void test_CLEAN_with_DETACH() throws Exception
   {
   }
 
-  public void test__CLEAN__ATTACH() throws Exception
+  public void test_CLEAN_with_READ() throws Exception
   {
   }
 
-  public void test__CLEAN__DETACH() throws Exception
+  public void test_CLEAN_with_WRITE() throws Exception
   {
   }
 
-  public void test__CLEAN__READ() throws Exception
+  public void test_CLEAN_with_INVALIDATE() throws Exception
   {
   }
 
-  public void test__CLEAN__WRITE() throws Exception
+  public void test_CLEAN_with_RELOAD() throws Exception
   {
   }
 
-  public void test__CLEAN__INVALIDATE() throws Exception
+  public void test_CLEAN_with_COMMIT() throws Exception
   {
   }
 
-  public void test__CLEAN__RELOAD() throws Exception
+  public void test_CLEAN_with_ROLLBACK() throws Exception
   {
   }
 
-  public void test__CLEAN__COMMIT() throws Exception
+  // ///////////////////////////////////////////////////
+
+  public void test_DIRTY_with_ATTACH() throws Exception
   {
   }
 
-  public void test__CLEAN__ROLLBACK() throws Exception
+  public void test_DIRTY_with_DETACH() throws Exception
   {
   }
 
-  public void test__DIRTY__ATTACH() throws Exception
+  public void test_DIRTY_with_READ() throws Exception
   {
   }
 
-  public void test__DIRTY__DETACH() throws Exception
+  public void test_DIRTY_with_WRITE() throws Exception
   {
   }
 
-  public void test__DIRTY__READ() throws Exception
+  public void test_DIRTY_with_INVALIDATE() throws Exception
   {
   }
 
-  public void test__DIRTY__WRITE() throws Exception
+  public void test_DIRTY_with_RELOAD() throws Exception
   {
   }
 
-  public void test__DIRTY__INVALIDATE() throws Exception
+  public void test_DIRTY_with_COMMIT() throws Exception
   {
   }
 
-  public void test__DIRTY__RELOAD() throws Exception
+  public void test_DIRTY_with_ROLLBACK() throws Exception
   {
   }
 
-  public void test__DIRTY__COMMIT() throws Exception
+  // ///////////////////////////////////////////////////
+
+  public void test_PROXY_with_ATTACH() throws Exception
   {
   }
 
-  public void test__DIRTY__ROLLBACK() throws Exception
+  public void test_PROXY_with_DETACH() throws Exception
   {
   }
 
-  public void test__PROXY__ATTACH() throws Exception
+  public void test_PROXY_with_READ() throws Exception
   {
   }
 
-  public void test__PROXY__DETACH() throws Exception
+  public void test_PROXY_with_WRITE() throws Exception
   {
   }
 
-  public void test__PROXY__READ() throws Exception
+  public void test_PROXY_with_INVALIDATE() throws Exception
   {
   }
 
-  public void test__PROXY__WRITE() throws Exception
+  public void test_PROXY_with_RELOAD() throws Exception
   {
   }
 
-  public void test__PROXY__INVALIDATE() throws Exception
+  public void test_PROXY_with_COMMIT() throws Exception
   {
   }
 
-  public void test__PROXY__RELOAD() throws Exception
+  public void test_PROXY_with_ROLLBACK() throws Exception
   {
   }
 
-  public void test__PROXY__COMMIT() throws Exception
+  // ///////////////////////////////////////////////////
+
+  public void test_CONFLICT_with_ATTACH() throws Exception
   {
   }
 
-  public void test__PROXY__ROLLBACK() throws Exception
+  public void test_CONFLICT_with_DETACH() throws Exception
   {
   }
 
-  public void test__CONFLICT__ATTACH() throws Exception
+  public void test_CONFLICT_with_READ() throws Exception
   {
   }
 
-  public void test__CONFLICT__DETACH() throws Exception
+  public void test_CONFLICT_with_WRITE() throws Exception
   {
   }
 
-  public void test__CONFLICT__READ() throws Exception
+  public void test_CONFLICT_with_INVALIDATE() throws Exception
   {
   }
 
-  public void test__CONFLICT__WRITE() throws Exception
+  public void test_CONFLICT_with_RELOAD() throws Exception
   {
   }
 
-  public void test__CONFLICT__INVALIDATE() throws Exception
+  public void test_CONFLICT_with_COMMIT() throws Exception
   {
   }
 
-  public void test__CONFLICT__RELOAD() throws Exception
+  public void test_CONFLICT_with_ROLLBACK() throws Exception
   {
   }
 
-  public void test__CONFLICT__COMMIT() throws Exception
-  {
-  }
-
-  public void test__CONFLICT__ROLLBACK() throws Exception
-  {
-  }
+  // ///////////////////////////////////////////////////
 
   @Override
   protected boolean useJVMTransport()

@@ -139,7 +139,7 @@ public class InitialTest extends AbstractCDOTest
 
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
-    assertNew(resource);
+    assertNew(resource, transaction);
     assertEquals(URI.createURI("cdo:/test1"), resource.getURI());
     ResourceSet expected = transaction.getResourceSet();
     ResourceSet actual = resource.getResourceSet();
@@ -165,7 +165,7 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction(resourceSet);
 
     msg("Verifying resource");
-    assertNew(resource);
+    assertNew(resource, transaction);
     assertEquals(uri, resource.getURI());
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
   }
@@ -213,7 +213,7 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction(resourceSet);
 
     msg("Verifying resource");
-    assertNew(resource);
+    assertNew(resource, transaction);
     assertEquals(uri, resource.getURI());
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
 
@@ -224,8 +224,8 @@ public class InitialTest extends AbstractCDOTest
 
     msg("Verifying supplier");
     Supplier s = (Supplier)contents.get(0);
-    assertNew(supplier);
-    assertNew(resource);
+    assertNew(supplier, transaction);
+    assertNew(resource, transaction);
     assertEquals(supplier, s);
     assertEquals(resource, s.cdoResource());
     assertEquals(null, s.eContainer());
@@ -253,7 +253,7 @@ public class InitialTest extends AbstractCDOTest
 
     msg("Adding supplier");
     contents.add(supplier);
-    assertNew(supplier);
+    assertNew(supplier, transaction);
     assertEquals(transaction, supplier.cdoView());
     assertEquals(resource, supplier.cdoResource());
     assertEquals(resource, supplier.eResource());

@@ -83,25 +83,25 @@ public class InvalidationTest extends AbstractCDOTest
 
     EList<EObject> contents = resourceB.getContents();
     final Company companyB = (Company)contents.get(0);
-    assertClean(companyB);
-    assertClean(resourceB);
+    assertClean(companyB, view);
+    assertClean(resourceB, view);
     assertContent(resourceB, companyB);
 
     final Category category1B = companyB.getCategories().get(0);
-    assertClean(category1B);
-    assertClean(companyB);
+    assertClean(category1B, view);
+    assertClean(companyB, view);
     assertContent(companyB, category1B);
 
     final Category category2B = category1B.getCategories().get(0);
-    assertClean(category2B);
-    assertClean(category1B);
+    assertClean(category2B, view);
+    assertClean(category1B, view);
     assertContent(category1B, category2B);
 
     final Category category3B = category2B.getCategories().get(0);
-    assertClean(category3B);
-    assertClean(category2B);
+    assertClean(category3B, view);
+    assertClean(category2B, view);
     assertContent(category2B, category3B);
-    assertClean(category3B);
+    assertClean(category3B, view);
 
     // ************************************************************* //
 
@@ -179,25 +179,25 @@ public class InvalidationTest extends AbstractCDOTest
 
     EList<EObject> contents = resourceB.getContents();
     final Company companyB = (Company)contents.get(0);
-    assertClean(companyB);
-    assertClean(resourceB);
+    assertClean(companyB, viewB);
+    assertClean(resourceB, viewB);
     assertContent(resourceB, companyB);
 
     final Category category1B = companyB.getCategories().get(0);
-    assertClean(category1B);
-    assertClean(companyB);
+    assertClean(category1B, viewB);
+    assertClean(companyB, viewB);
     assertContent(companyB, category1B);
 
     final Category category2B = category1B.getCategories().get(0);
-    assertClean(category2B);
-    assertClean(category1B);
+    assertClean(category2B, viewB);
+    assertClean(category1B, viewB);
     assertContent(category1B, category2B);
 
     final Category category3B = category2B.getCategories().get(0);
-    assertClean(category3B);
-    assertClean(category2B);
+    assertClean(category3B, viewB);
+    assertClean(category2B, viewB);
     assertContent(category2B, category3B);
-    assertClean(category3B);
+    assertClean(category3B, viewB);
 
     // ************************************************************* //
 
@@ -293,25 +293,25 @@ public class InvalidationTest extends AbstractCDOTest
 
     EList<EObject> contents = resourceB.getContents();
     final Company companyB = (Company)contents.get(0);
-    assertClean(companyB);
-    assertClean(resourceB);
+    assertClean(companyB, viewB);
+    assertClean(resourceB, viewB);
     assertContent(resourceB, companyB);
 
     final Category category1B = companyB.getCategories().get(0);
-    assertClean(category1B);
-    assertClean(companyB);
+    assertClean(category1B, viewB);
+    assertClean(companyB, viewB);
     assertContent(companyB, category1B);
 
     final Category category2B = category1B.getCategories().get(0);
-    assertClean(category2B);
-    assertClean(category1B);
+    assertClean(category2B, viewB);
+    assertClean(category1B, viewB);
     assertContent(category1B, category2B);
 
     final Category category3B = category2B.getCategories().get(0);
-    assertClean(category3B);
-    assertClean(category2B);
+    assertClean(category3B, viewB);
+    assertClean(category2B, viewB);
     assertContent(category2B, category3B);
-    assertClean(category3B);
+    assertClean(category3B, viewB);
 
     // ************************************************************* //
 

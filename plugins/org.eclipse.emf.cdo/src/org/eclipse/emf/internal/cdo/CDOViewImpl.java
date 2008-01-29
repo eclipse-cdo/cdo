@@ -734,6 +734,8 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
     catch (RuntimeException ex)
     {
+      OM.LOG.error(ex);
+
       try
       {
         ((InternalCDOObject)cdoResource).cdoInternalSetState(CDOState.NEW);

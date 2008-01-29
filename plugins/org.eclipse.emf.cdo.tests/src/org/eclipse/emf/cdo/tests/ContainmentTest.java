@@ -74,9 +74,9 @@ public class ContainmentTest extends AbstractCDOTest
     msg("Committing");
     transaction.commit();
 
-    assertClean(resource);
-    assertClean(company);
-    assertClean(supplier);
+    assertClean(resource, transaction);
+    assertClean(company, transaction);
+    assertClean(supplier, transaction);
     assertContent(resource, company);
     assertContent(company, supplier);
   }
@@ -118,11 +118,11 @@ public class ContainmentTest extends AbstractCDOTest
     msg("Committing");
     transaction.commit();
 
-    assertClean(resource);
-    assertClean(company);
-    assertClean(category1);
-    assertClean(category2);
-    assertClean(category3);
+    assertClean(resource, transaction);
+    assertClean(company, transaction);
+    assertClean(category1, transaction);
+    assertClean(category2, transaction);
+    assertClean(category3, transaction);
     assertContent(resource, company);
     assertContent(company, category1);
     assertContent(category1, category2);
@@ -177,25 +177,25 @@ public class ContainmentTest extends AbstractCDOTest
 
     EList<EObject> contents = resource.getContents();
     Company company = (Company)contents.get(0);
-    assertClean(company);
-    assertClean(resource);
+    assertClean(company, transaction);
+    assertClean(resource, transaction);
     assertContent(resource, company);
 
     Category category1 = company.getCategories().get(0);
-    assertClean(category1);
-    assertClean(company);
+    assertClean(category1, transaction);
+    assertClean(company, transaction);
     assertContent(company, category1);
 
     Category category2 = category1.getCategories().get(0);
-    assertClean(category2);
-    assertClean(category1);
+    assertClean(category2, transaction);
+    assertClean(category1, transaction);
     assertContent(category1, category2);
 
     Category category3 = category2.getCategories().get(0);
-    assertClean(category3);
-    assertClean(category2);
+    assertClean(category3, transaction);
+    assertClean(category2, transaction);
     assertContent(category2, category3);
-    assertClean(category3);
+    assertClean(category3, transaction);
   }
 
   public void testSeparateSession() throws Exception
@@ -249,24 +249,24 @@ public class ContainmentTest extends AbstractCDOTest
 
     EList<EObject> contents = resource.getContents();
     Company company = (Company)contents.get(0);
-    assertClean(company);
-    assertClean(resource);
+    assertClean(company, transaction);
+    assertClean(resource, transaction);
     assertContent(resource, company);
 
     Category category1 = company.getCategories().get(0);
-    assertClean(category1);
-    assertClean(company);
+    assertClean(category1, transaction);
+    assertClean(company, transaction);
     assertContent(company, category1);
 
     Category category2 = category1.getCategories().get(0);
-    assertClean(category2);
-    assertClean(category1);
+    assertClean(category2, transaction);
+    assertClean(category1, transaction);
     assertContent(category1, category2);
 
     Category category3 = category2.getCategories().get(0);
-    assertClean(category3);
-    assertClean(category2);
+    assertClean(category3, transaction);
+    assertClean(category2, transaction);
     assertContent(category2, category3);
-    assertClean(category3);
+    assertClean(category3, transaction);
   }
 }

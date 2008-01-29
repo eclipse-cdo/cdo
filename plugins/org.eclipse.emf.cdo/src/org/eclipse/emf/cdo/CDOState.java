@@ -15,5 +15,5 @@ package org.eclipse.emf.cdo;
  */
 public enum CDOState
 {
-  TRANSIENT, NEW, CLEAN, DIRTY, PROXY, CONFLICT, PREPARED_ATTACH
+  TRANSIENT, NEW, CLEAN, DIRTY, PROXY, CONFLICT, PREPARED
 }

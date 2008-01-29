@@ -79,25 +79,25 @@ public class CrossReferenceTest extends AbstractCDOTest
 
     EList<EObject> contents = resourceB.getContents();
     Company companyB = (Company)contents.get(0);
-    assertClean(companyB);
-    assertClean(resourceB);
+    assertClean(companyB, viewB);
+    assertClean(resourceB, viewB);
     assertContent(resourceB, companyB);
 
     Customer customerB = companyB.getCustomers().get(0);
-    assertClean(customerB);
-    assertClean(companyB);
+    assertClean(customerB, viewB);
+    assertClean(companyB, viewB);
     assertContent(companyB, customerB);
 
     SalesOrder salesOrder1B = companyB.getSalesOrders().get(0);
-    assertClean(salesOrder1B);
-    assertClean(companyB);
+    assertClean(salesOrder1B, viewB);
+    assertClean(companyB, viewB);
     assertContent(companyB, salesOrder1B);
 
     SalesOrder salesOrder2B = companyB.getSalesOrders().get(1);
-    assertClean(salesOrder2B);
-    assertClean(companyB);
+    assertClean(salesOrder2B, viewB);
+    assertClean(companyB, viewB);
     assertContent(companyB, salesOrder2B);
-    assertClean(salesOrder2B);
+    assertClean(salesOrder2B, viewB);
 
     assertEquals(2, customerB.getSalesOrders().size());
   }
@@ -154,25 +154,25 @@ public class CrossReferenceTest extends AbstractCDOTest
 
     EList<EObject> contents = resourceB.getContents();
     Company companyB = (Company)contents.get(0);
-    assertClean(companyB);
-    assertClean(resourceB);
+    assertClean(companyB, viewB);
+    assertClean(resourceB, viewB);
     assertContent(resourceB, companyB);
 
     Customer customerB = companyB.getCustomers().get(0);
-    assertClean(customerB);
-    assertClean(companyB);
+    assertClean(customerB, viewB);
+    assertClean(companyB, viewB);
     assertContent(companyB, customerB);
 
     SalesOrder salesOrder1B = customerB.getSalesOrders().get(0);
-    assertClean(salesOrder1B);
-    assertClean(companyB);
+    assertClean(salesOrder1B, viewB);
+    assertClean(companyB, viewB);
     assertContent(companyB, salesOrder1B);
 
     SalesOrder salesOrder2B = customerB.getSalesOrders().get(1);
-    assertClean(salesOrder2B);
-    assertClean(companyB);
+    assertClean(salesOrder2B, viewB);
+    assertClean(companyB, viewB);
     assertContent(companyB, salesOrder2B);
-    assertClean(salesOrder2B);
+    assertClean(salesOrder2B, viewB);
   }
 
   public void testTwoResources() throws Exception
@@ -244,19 +244,19 @@ public class CrossReferenceTest extends AbstractCDOTest
 
     EList<EObject> contents = resource1B.getContents();
     Company company1B = (Company)contents.get(0);
-    assertClean(company1B);
-    assertClean(resource1B);
+    assertClean(company1B, viewB);
+    assertClean(resource1B, viewB);
     assertContent(resource1B, company1B);
 
     Customer customerB = company1B.getCustomers().get(0);
-    assertClean(customerB);
-    assertClean(company1B);
+    assertClean(customerB, viewB);
+    assertClean(company1B, viewB);
     assertContent(company1B, customerB);
 
     SalesOrder salesOrder1B = customerB.getSalesOrders().get(0);
-    assertClean(salesOrder1B);
+    assertClean(salesOrder1B, viewB);
 
     SalesOrder salesOrder2B = customerB.getSalesOrders().get(1);
-    assertClean(salesOrder2B);
+    assertClean(salesOrder2B, viewB);
   }
 }

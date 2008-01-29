@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -86,13 +87,13 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   protected static void assertTransient(CDOObject object)
   {
     assertTrue(FSMUtil.isTransient(object));
-    assertEquals(null, object.cdoID());
-    assertEquals(null, object.cdoRevision());
-    assertEquals(null, object.cdoView());
+    // assertEquals(null, object.cdoID());
+    // assertEquals(null, object.cdoRevision());
+    // assertEquals(null, object.cdoView());
     assertEquals(object.eResource(), object.cdoResource());
   }
 
-  protected static void assertNotTransient(CDOObject object)
+  protected static void assertNotTransient(CDOObject object, CDOView view)
   {
     assertFalse(FSMUtil.isTransient(object));
     assertNotNull(object.cdoID());
@@ -101,23 +102,25 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     assertNotNull(object.cdoResource());
     assertNotNull(object.eResource());
     assertEquals(object.eResource(), object.cdoResource());
+    assertEquals(view, object.cdoView());
+    assertEquals(object, view.getObject(object.cdoID(), false));
   }
 
-  protected static void assertNew(CDOObject object)
+  protected static void assertNew(CDOObject object, CDOView view)
   {
-    assertNotTransient(object);
+    assertNotTransient(object, view);
     assertEquals(CDOState.NEW, object.cdoState());
   }
 
-  protected static void assertDirty(CDOObject object)
+  protected static void assertDirty(CDOObject object, CDOView view)
   {
-    assertNotTransient(object);
+    assertNotTransient(object, view);
     assertEquals(CDOState.DIRTY, object.cdoState());
   }
 
-  protected static void assertClean(CDOObject object)
+  protected static void assertClean(CDOObject object, CDOView view)
   {
-    assertNotTransient(object);
+    assertNotTransient(object, view);
     assertEquals(CDOState.CLEAN, object.cdoState());
   }
 

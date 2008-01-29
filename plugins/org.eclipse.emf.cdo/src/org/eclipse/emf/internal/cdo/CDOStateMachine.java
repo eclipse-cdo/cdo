@@ -64,7 +64,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     super(CDOState.class, CDOEvent.class);
 
-    init(CDOState.TRANSIENT, CDOEvent.ATTACH, new PrepareAttachTransition());
+    init(CDOState.TRANSIENT, CDOEvent.PREPARE, new PrepareTransition());
+    init(CDOState.TRANSIENT, CDOEvent.ATTACH, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.DETACH, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.READ, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.WRITE, IGNORE);
@@ -73,17 +74,19 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.TRANSIENT, CDOEvent.COMMIT, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.ROLLBACK, FAIL);
 
-    init(CDOState.PREPARED_ATTACH, CDOEvent.ATTACH, new FinalizeAttachTransition());
-    init(CDOState.PREPARED_ATTACH, CDOEvent.DETACH, FAIL);
-    init(CDOState.PREPARED_ATTACH, CDOEvent.READ, IGNORE);
-    init(CDOState.PREPARED_ATTACH, CDOEvent.WRITE, FAIL);
-    init(CDOState.PREPARED_ATTACH, CDOEvent.INVALIDATE, FAIL);
-    init(CDOState.PREPARED_ATTACH, CDOEvent.RELOAD, FAIL);
-    init(CDOState.PREPARED_ATTACH, CDOEvent.COMMIT, FAIL);
-    init(CDOState.PREPARED_ATTACH, CDOEvent.ROLLBACK, FAIL);
+    init(CDOState.PREPARED, CDOEvent.PREPARE, FAIL);
+    init(CDOState.PREPARED, CDOEvent.ATTACH, new AttachTransition());
+    init(CDOState.PREPARED, CDOEvent.DETACH, FAIL);
+    init(CDOState.PREPARED, CDOEvent.READ, IGNORE);
+    init(CDOState.PREPARED, CDOEvent.WRITE, FAIL);
+    init(CDOState.PREPARED, CDOEvent.INVALIDATE, FAIL);
+    init(CDOState.PREPARED, CDOEvent.RELOAD, FAIL);
+    init(CDOState.PREPARED, CDOEvent.COMMIT, FAIL);
+    init(CDOState.PREPARED, CDOEvent.ROLLBACK, FAIL);
 
+    init(CDOState.NEW, CDOEvent.PREPARE, FAIL);
     init(CDOState.NEW, CDOEvent.ATTACH, FAIL);
-    init(CDOState.NEW, CDOEvent.DETACH, FAIL);
+    init(CDOState.NEW, CDOEvent.DETACH, IGNORE);
     init(CDOState.NEW, CDOEvent.READ, IGNORE);
     init(CDOState.NEW, CDOEvent.WRITE, IGNORE);
     init(CDOState.NEW, CDOEvent.INVALIDATE, FAIL);
@@ -91,8 +94,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition());
     init(CDOState.NEW, CDOEvent.ROLLBACK, FAIL);
 
+    init(CDOState.CLEAN, CDOEvent.PREPARE, FAIL);
     init(CDOState.CLEAN, CDOEvent.ATTACH, FAIL);
-    init(CDOState.CLEAN, CDOEvent.DETACH, FAIL);
+    init(CDOState.CLEAN, CDOEvent.DETACH, IGNORE);
     init(CDOState.CLEAN, CDOEvent.READ, IGNORE);
     init(CDOState.CLEAN, CDOEvent.WRITE, new WriteTransition());
     init(CDOState.CLEAN, CDOEvent.INVALIDATE, new InvalidateTransition());
@@ -100,8 +104,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.CLEAN, CDOEvent.COMMIT, FAIL);
     init(CDOState.CLEAN, CDOEvent.ROLLBACK, FAIL);
 
+    init(CDOState.DIRTY, CDOEvent.PREPARE, FAIL);
     init(CDOState.DIRTY, CDOEvent.ATTACH, FAIL);
-    init(CDOState.DIRTY, CDOEvent.DETACH, FAIL);
+    init(CDOState.DIRTY, CDOEvent.DETACH, IGNORE);
     init(CDOState.DIRTY, CDOEvent.READ, IGNORE);
     init(CDOState.DIRTY, CDOEvent.WRITE, new RewriteTransition());
     init(CDOState.DIRTY, CDOEvent.INVALIDATE, new ConflictTransition());
@@ -109,8 +114,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition());
     init(CDOState.DIRTY, CDOEvent.ROLLBACK, new RollbackTransition());
 
-    init(CDOState.PROXY, CDOEvent.ATTACH, new LoadResourceTransition());
-    init(CDOState.PROXY, CDOEvent.DETACH, new DetachTransition());
+    init(CDOState.PROXY, CDOEvent.PREPARE, new LoadResourceTransition());// Resources start in PROXY instead TRANSIENT
+    init(CDOState.PROXY, CDOEvent.ATTACH, IGNORE);// Resources must not FAIL
+    init(CDOState.PROXY, CDOEvent.DETACH, IGNORE);
     init(CDOState.PROXY, CDOEvent.READ, new LoadTransition(false));
     init(CDOState.PROXY, CDOEvent.WRITE, new LoadTransition(true));
     init(CDOState.PROXY, CDOEvent.INVALIDATE, IGNORE);
@@ -118,6 +124,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.PROXY, CDOEvent.COMMIT, FAIL);
     init(CDOState.PROXY, CDOEvent.ROLLBACK, FAIL);
 
+    init(CDOState.CONFLICT, CDOEvent.PREPARE, FAIL);
     init(CDOState.CONFLICT, CDOEvent.ATTACH, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.DETACH, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.READ, IGNORE);
@@ -134,18 +141,18 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     data.resource = resource;
     data.view = view;
 
-    // Phase 1: TRANSIENT --> PREPARED_ATTACH
+    // Phase 1: TRANSIENT --> PREPARED
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("PREPARE: {0} --> {1}", object, view);
+    }
+
+    process(object, CDOEvent.PREPARE, data);
+
+    // Phase 2: PREPARED --> NEW
     if (TRACER.isEnabled())
     {
       TRACER.format("ATTACH: {0} --> {1}", object, view);
-    }
-
-    process(object, CDOEvent.ATTACH, data);
-
-    // Phase 2: PREPARED_ATTACH --> NEW
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("FINALIZE_ATTACH: {0} --> {1}", object, view);
     }
 
     process(object, CDOEvent.ATTACH, null);
@@ -195,7 +202,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     for (InternalCDOObject object : objects)
     {
       CDOState state = object.cdoState();
-      if (state != CDOState.TRANSIENT && state != CDOState.PREPARED_ATTACH && state != CDOState.NEW
+      if (state != CDOState.TRANSIENT && state != CDOState.PREPARED && state != CDOState.NEW
           && state != CDOState.CONFLICT)
       {
         if (view == null)
@@ -332,8 +339,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private final class PrepareAttachTransition implements
-      ITransition<CDOState, CDOEvent, InternalCDOObject, ResourceAndView>
+  private final class PrepareTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, ResourceAndView>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, ResourceAndView data)
     {
@@ -345,7 +351,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       object.cdoInternalSetID(id);
       object.cdoInternalSetResource(data.resource);
       object.cdoInternalSetView(data.view);
-      changeState(object, CDOState.PREPARED_ATTACH);
+      changeState(object, CDOState.PREPARED);
 
       // Create new revision
       InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil
@@ -362,7 +368,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       for (Iterator<InternalCDOObject> it = FSMUtil.iterator(object.eContents(), transaction); it.hasNext();)
       {
         InternalCDOObject content = it.next();
-        INSTANCE.process(content, CDOEvent.ATTACH, data);
+        INSTANCE.process(content, CDOEvent.PREPARE, data);
       }
     }
   }
@@ -370,7 +376,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private final class FinalizeAttachTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  private final class AttachTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
@@ -394,8 +400,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
-      // TODO Implement method DetachTransition.execute()
-      throw new UnsupportedOperationException("Not yet implemented");
+      // object.cdoInternalSetState(CDOState.TRANSIENT);
     }
   }
 
@@ -622,5 +627,5 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
  */
 enum CDOEvent
 {
-  ATTACH, DETACH, READ, WRITE, INVALIDATE, RELOAD, COMMIT, ROLLBACK
+  PREPARE, ATTACH, DETACH, READ, WRITE, INVALIDATE, RELOAD, COMMIT, ROLLBACK
 }

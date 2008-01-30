@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreReader;
@@ -64,7 +63,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
     super(store, view);
   }
 
-  public IStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature)
+  public DBStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature)
   {
     return new DBStoreChunkReader(this, revision, feature);
   }

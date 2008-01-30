@@ -17,6 +17,10 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IRepository.Props;
+import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Model1Factory;
+import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -24,6 +28,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -40,6 +45,9 @@ public class ImportXML
 
   public static void main(String[] args)
   {
+    // Turn on tracing
+    OMPlatform.INSTANCE.setDebugging(true);
+
     // Prepare the standalone infra structure (not needed when running inside Eclipse)
     IManagedContainer container = ContainerUtil.createContainer(); // Create a wiring container
     Net4jUtil.prepareContainer(container); // Prepare the Net4j kernel
@@ -54,18 +62,17 @@ public class ImportXML
     // Establish a communications connection and open a session with the repository
     IConnector connector = JVMUtil.getConnector(container, "default"); // Open a JVM connection
     CDOSession session = CDOUtil.openSession(connector, REPOSITORY_NAME, true);// Open a CDO session
+    session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);// Not needed after first commit!!!
+
     CDOTransaction transaction = session.openTransaction();// Open a CDO transaction
     Resource resource = transaction.createResource("/my/big/resource");// Create a new EMF resource
 
     // Work normally with the EMF resource
-    for (int i = 0; i < 100; i++)
-    {
-      EObject inputModel = getInputModel(i);
-      resource.getContents().add(inputModel);
-      transaction.commit();
-    }
-
+    EObject inputModel = getInputModel();
+    resource.getContents().add(inputModel);
+    transaction.commit();
     session.close();
+    connector.disconnect();
   }
 
   private static IRepository createRepository()
@@ -83,8 +90,22 @@ public class ImportXML
     return StoreUtil.createMEMStore();
   }
 
-  private static EObject getInputModel(int i)
+  private static EObject getInputModel()
   {
-    throw new UnsupportedOperationException("Load you model here");
+    Category cat1 = Model1Factory.eINSTANCE.createCategory();
+    cat1.setName("CAT1");
+    Category cat2 = Model1Factory.eINSTANCE.createCategory();
+    cat2.setName("CAT2");
+    cat1.getCategories().add(cat2);
+    Product p1 = Model1Factory.eINSTANCE.createProduct();
+    p1.setName("P1");
+    cat1.getProducts().add(p1);
+    Product p2 = Model1Factory.eINSTANCE.createProduct();
+    p2.setName("P2");
+    cat1.getProducts().add(p2);
+    Product p3 = Model1Factory.eINSTANCE.createProduct();
+    p3.setName("P3");
+    cat2.getProducts().add(p3);
+    return cat1;
   }
 }

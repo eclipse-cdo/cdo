@@ -14,9 +14,9 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 
 import org.eclipse.emf.internal.cdo.CDOSessionFactory;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;

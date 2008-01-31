@@ -13,7 +13,7 @@
 package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.net4j.util.event.INotifier;

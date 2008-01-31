@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
@@ -18,8 +17,9 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
@@ -79,7 +79,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
         boolean dynamic = getBoolean(values[1]);
         long rangeLB = (Long)values[2];
         long rangeUB = (Long)values[3];
-        CDOIDRange metaIDRange = rangeLB == 0L && rangeUB == 0L ? null : CDOIDRangeImpl.create(rangeLB, rangeUB);
+        CDOIDRange metaIDRange = rangeLB == 0L && rangeUB == 0L ? null : CDOIDUtil.createRange(rangeLB, rangeUB);
         result.add(new CDOPackageInfo(packageURI, dynamic, metaIDRange));
         return true;
       }

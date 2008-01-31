@@ -14,7 +14,7 @@ package org.eclipse.emf.internal.cdo.util;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOFeatureDeltaVisitorImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOListFeatureDeltaImpl;
-import org.eclipse.emf.cdo.protocol.CDOIDProvider;
+import org.eclipse.emf.cdo.protocol.id.CDOIDProvider;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOAddFeatureDelta;

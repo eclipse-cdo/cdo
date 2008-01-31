@@ -11,8 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
-import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IStore;
@@ -178,7 +178,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     long lowerBound = nextMetaIDValue;
     nextMetaIDValue += count;
     nextMetaIDValue += count;
-    return CDOIDRangeImpl.create(lowerBound, nextMetaIDValue - 2);
+    return CDOIDUtil.createRange(lowerBound, nextMetaIDValue - 2);
   }
 
   public void setNextMetaIDValue(long nextMetaIDValue)

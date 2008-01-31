@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
-import org.eclipse.emf.cdo.protocol.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.util.ServerException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -104,7 +104,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
       }
 
       boolean dynamic = in.readBoolean();
-      CDOIDRange metaIDRange = CDOIDRangeImpl.read(in);
+      CDOIDRange metaIDRange = CDOIDUtil.readRange(in);
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("Read package info: uri={0}, dynamic={1}, metaIDRange={2}", packageURI, dynamic, metaIDRange);

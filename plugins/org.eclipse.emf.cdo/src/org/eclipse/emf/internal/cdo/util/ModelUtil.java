@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.core.CDOCorePackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOResourceClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOResourcePackageImpl;
-import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.util.EMFUtil;
 

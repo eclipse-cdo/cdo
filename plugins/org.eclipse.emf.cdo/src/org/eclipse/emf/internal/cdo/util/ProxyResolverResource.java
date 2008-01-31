@@ -11,8 +11,8 @@
 package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.CDOIDUtil;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 
 import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;

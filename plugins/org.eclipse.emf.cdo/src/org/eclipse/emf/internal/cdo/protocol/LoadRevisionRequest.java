@@ -12,10 +12,10 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
 
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;

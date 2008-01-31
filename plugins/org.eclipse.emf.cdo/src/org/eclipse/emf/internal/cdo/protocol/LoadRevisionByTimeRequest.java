@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 

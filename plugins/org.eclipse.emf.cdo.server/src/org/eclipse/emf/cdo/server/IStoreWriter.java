@@ -12,7 +12,7 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
-import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;

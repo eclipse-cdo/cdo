@@ -12,8 +12,8 @@
 package org.eclipse.emf.internal.cdo.analyzer;
 
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
-import org.eclipse.emf.cdo.protocol.CDOID;
 import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
 
 import java.util.Collection;
 import java.util.List;

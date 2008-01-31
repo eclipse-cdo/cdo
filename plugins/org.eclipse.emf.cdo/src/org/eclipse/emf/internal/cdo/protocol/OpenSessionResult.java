@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.protocol.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 
 import java.util.ArrayList;

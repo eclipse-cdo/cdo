@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
@@ -20,10 +19,10 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.View;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.CDOIDRange;
-import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.protocol.model.core.CDOCorePackage;
@@ -156,7 +155,7 @@ public class CommitTransactionIndication extends CDOServerIndication
       out.writeLong(timeStamp);
       for (CDOPackageImpl newPackage : newPackages)
       {
-        CDOIDRangeImpl.write(out, newPackage.getMetaIDRange());
+        CDOIDUtil.writeRange(out, newPackage.getMetaIDRange());
       }
 
       writeIDMappings(out);

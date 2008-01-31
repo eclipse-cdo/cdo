@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOMoveFeatureDeltaI
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORemoveFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOUnsetFeatureDeltaImpl;
-import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;

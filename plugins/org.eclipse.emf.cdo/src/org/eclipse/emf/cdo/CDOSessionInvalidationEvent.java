@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
 
 import java.util.Set;
 

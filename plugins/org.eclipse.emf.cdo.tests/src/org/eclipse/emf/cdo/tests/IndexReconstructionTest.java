@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOListFeatureDeltaImpl;
-import org.eclipse.emf.cdo.protocol.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;

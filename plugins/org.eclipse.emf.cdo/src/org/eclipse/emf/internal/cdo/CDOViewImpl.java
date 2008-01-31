@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDProvider;
-import org.eclipse.emf.cdo.protocol.id.CDOIDTyped;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
@@ -398,10 +397,9 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       return type;
     }
 
-    if (id instanceof CDOIDTyped)
+    CDOClassRef typeRef = id.getType();
+    if (typeRef != null)
     {
-      CDOIDTyped typed = (CDOIDTyped)id;
-      CDOClassRef typeRef = typed.getType();
       type = (CDOClassImpl)typeRef.resolve(session.getPackageManager());
       session.registerObjectType(id, type);
       return type;

@@ -17,13 +17,10 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Simon McDuff
@@ -32,39 +29,40 @@ public class MEMStore extends Store
 {
   public static final String TYPE = "mem";
 
-  private Map<CDOID, List<CDORevision>> revisions = new HashMap<CDOID, List<CDORevision>>()
-  {
-    private static final long serialVersionUID = 1L;
+  private Map<CDOID, List<CDORevision>> revisions = new HashMap<CDOID, List<CDORevision>>();
 
-    @Override
-    public String toString()
-    {
-      List<Entry<CDOID, List<CDORevision>>> entries = new ArrayList<Entry<CDOID, List<CDORevision>>>(entrySet());
-      Collections.sort(entries, new Comparator<Entry<CDOID, List<CDORevision>>>()
-      {
-        public int compare(Entry<CDOID, List<CDORevision>> o1, Entry<CDOID, List<CDORevision>> o2)
-        {
-          return o1.getKey().compareTo(o2.getKey());
-        }
-      });
-
-      StringBuilder builder = new StringBuilder();
-      for (Entry<CDOID, List<CDORevision>> entry : entries)
-      {
-        builder.append(entry.getKey());
-        builder.append(" -->");
-        for (CDORevision revision : entry.getValue())
-        {
-          builder.append(" ");
-          builder.append(revision);
-        }
-
-        builder.append("\n");
-      }
-
-      return builder.toString();
-    }
-  };
+  // {
+  // private static final long serialVersionUID = 1L;
+  //
+  // @Override
+  // public String toString()
+  // {
+  // List<Entry<CDOID, List<CDORevision>>> entries = new ArrayList<Entry<CDOID, List<CDORevision>>>(entrySet());
+  // Collections.sort(entries, new Comparator<Entry<CDOID, List<CDORevision>>>()
+  // {
+  // public int compare(Entry<CDOID, List<CDORevision>> o1, Entry<CDOID, List<CDORevision>> o2)
+  // {
+  // return o1.getKey().compareTo(o2.getKey());
+  // }
+  // });
+  //
+  // StringBuilder builder = new StringBuilder();
+  // for (Entry<CDOID, List<CDORevision>> entry : entries)
+  // {
+  // builder.append(entry.getKey());
+  // builder.append(" -->");
+  // for (CDORevision revision : entry.getValue())
+  // {
+  // builder.append(" ");
+  // builder.append(revision);
+  // }
+  //
+  // builder.append("\n");
+  // }
+  //
+  // return builder.toString();
+  // }
+  // };
 
   public MEMStore()
   {

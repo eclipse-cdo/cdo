@@ -10,22 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.protocol.CDOProtocolView;
+
 /**
  * @author Eike Stepper
  */
-public interface IView
+public interface IView extends CDOProtocolView
 {
   public ISession getSession();
-
-  public int getViewID();
-
-  public Type getViewType();
-
-  /**
-   * @author Eike Stepper
-   */
-  public enum Type
-  {
-    TRANSACTION, READONLY, AUDIT
-  }
 }

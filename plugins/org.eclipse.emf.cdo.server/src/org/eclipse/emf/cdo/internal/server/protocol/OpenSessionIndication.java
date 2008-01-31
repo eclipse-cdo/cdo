@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
@@ -56,10 +56,16 @@ public class OpenSessionIndication extends IndicationWithResponse
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     repositoryName = in.readString();
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Read repositoryName: {0}", repositoryName);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Read repositoryName: {0}", repositoryName);
+    }
 
     disableLegacyObjects = in.readBoolean();
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Read disableLegacyObjects: {0}", disableLegacyObjects);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Read disableLegacyObjects: {0}", disableLegacyObjects);
+    }
   }
 
   @Override
@@ -72,7 +78,7 @@ public class OpenSessionIndication extends IndicationWithResponse
 
       CDOServerProtocol serverProtocol = (CDOServerProtocol)getProtocol();
       Session session = sessionManager.openSession(serverProtocol, disableLegacyObjects);
-      serverProtocol.setSession(session);
+      serverProtocol.setInfraStructure(session);
 
       writeSessionID(out, session);
       writeRepositoryUUID(out, repository);
@@ -148,7 +154,7 @@ public class OpenSessionIndication extends IndicationWithResponse
 
         out.writeString(p.getPackageURI());
         out.writeBoolean(p.isDynamic());
-        CDOIDRangeImpl.write(out, p.getMetaIDRange());
+        CDOIDUtil.writeRange(out, p.getMetaIDRange());
       }
     }
 

@@ -10,36 +10,25 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.internal.protocol.CDOProtocolImpl;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
-import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 
 /**
  * @author Eike Stepper
  */
-public class CDOServerProtocol extends SignalProtocol
+public class CDOServerProtocol extends CDOProtocolImpl
 {
-  private Session session;
-
   public CDOServerProtocol()
   {
   }
 
-  public String getType()
-  {
-    return CDOProtocolConstants.PROTOCOL_NAME;
-  }
-
+  @Override
   public Session getSession()
   {
-    return session;
-  }
-
-  public void setSession(Session session)
-  {
-    this.session = session;
+    return (Session)super.getSession();
   }
 
   @Override

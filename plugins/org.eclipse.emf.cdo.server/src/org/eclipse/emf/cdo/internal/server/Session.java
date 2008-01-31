@@ -17,17 +17,17 @@ import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.internal.server.protocol.InvalidationNotification;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.CDOIDProvider;
-import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.CDOProtocolView.Type;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDProvider;
+import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.server.StoreUtil;
-import org.eclipse.emf.cdo.server.IView.Type;
 
 import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
@@ -137,7 +137,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     }
     else
     {
-      IView.Type viewType = getViewType(kind);
+      Type viewType = getViewType(kind);
       View view = new View(this, viewID, viewType);
       views.put(viewID, view);
       fireElementAddedEvent(view);

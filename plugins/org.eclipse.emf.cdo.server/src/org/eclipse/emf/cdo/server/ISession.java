@@ -11,23 +11,16 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
+import org.eclipse.emf.cdo.protocol.CDOProtocolSession;
 
 import org.eclipse.net4j.util.container.IContainer;
 
 /**
  * @author Eike Stepper
  */
-public interface ISession extends IContainer<IView>
+public interface ISession extends CDOProtocolSession, IContainer<IView>
 {
   public ISessionManager getSessionManager();
 
   public CDOServerProtocol getProtocol();
-
-  public int getSessionID();
-
-  public boolean isDisableLegacyObjects();
-
-  public IView[] getViews();
-
-  public IView getView(int viewID);
 }

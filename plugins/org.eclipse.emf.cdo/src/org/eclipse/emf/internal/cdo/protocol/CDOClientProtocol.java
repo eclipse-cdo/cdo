@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.internal.protocol.CDOProtocolImpl;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
@@ -40,9 +41,9 @@ public class CDOClientProtocol extends CDOProtocolImpl
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (getInfraStructure() == null)
+    if (!(getInfraStructure() instanceof CDOSession))
     {
-      throw new IllegalStateException("session == null");
+      throw new IllegalStateException("No session");
     }
   }
 }

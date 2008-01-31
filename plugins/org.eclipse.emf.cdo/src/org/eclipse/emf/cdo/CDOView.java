@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.protocol.CDOProtocolView;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
@@ -24,15 +25,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 /**
  * @author Eike Stepper
  */
-public interface CDOView extends INotifier
+public interface CDOView extends CDOProtocolView, INotifier
 {
   public static final long UNSPECIFIED_DATE = CDORevision.UNSPECIFIED_DATE;
 
   public static final int NO_PRELOAD = 1;
-
-  public int getViewID();
-
-  public Type getViewType();
 
   public CDOSession getSession();
 
@@ -72,12 +69,4 @@ public interface CDOView extends INotifier
   public int reload(CDOObject... objects);
 
   public void close();
-
-  /**
-   * @author Eike Stepper
-   */
-  public enum Type
-  {
-    TRANSACTION, READONLY, AUDIT
-  }
 }

@@ -61,7 +61,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
 
   protected Session getSession()
   {
-    return getProtocol().getSession();
+    return (Session)getProtocol().getSession();
   }
 
   @Override

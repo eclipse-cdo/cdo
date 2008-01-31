@@ -10,23 +10,18 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.internal.protocol.CDOProtocolImpl;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
-import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 
 /**
  * @author Eike Stepper
  */
-public class CDOClientProtocol extends SignalProtocol
+public class CDOClientProtocol extends CDOProtocolImpl
 {
   public CDOClientProtocol()
   {
-  }
-
-  public String getType()
-  {
-    return CDOProtocolConstants.PROTOCOL_NAME;
   }
 
   @Override

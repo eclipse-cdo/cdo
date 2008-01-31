@@ -13,13 +13,12 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.CDOIDRange;
-import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
@@ -87,7 +86,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     for (CDOPackage newPackage : newPackages)
     {
       CDOIDRange oldRange = newPackage.getMetaIDRange();
-      CDOIDRange newRange = CDOIDRangeImpl.read(in);
+      CDOIDRange newRange = CDOIDUtil.readRange(in);
       ((CDOPackageImpl)newPackage).setMetaIDRange(newRange);
       for (long i = 0; i < oldRange.getCount(); i++)
       {

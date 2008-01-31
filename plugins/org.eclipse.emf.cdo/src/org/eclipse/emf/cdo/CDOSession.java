@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
+import org.eclipse.emf.cdo.protocol.CDOProtocolSession;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.net4j.channel.IChannel;
@@ -22,12 +23,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 /**
  * @author Eike Stepper
  */
-public interface CDOSession extends IContainer<CDOView>
+public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
 {
-  public int getSessionID();
-
-  public boolean isDisableLegacyObjects();
-
   public void setDisableLegacyObjects(boolean disableLegacyObjects);
 
   public int getReferenceChunkSize();

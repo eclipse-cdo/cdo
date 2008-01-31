@@ -13,19 +13,19 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.internal.protocol.CDOIDRangeImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.protocol.CDOID;
-import org.eclipse.emf.cdo.protocol.CDOIDRange;
-import org.eclipse.emf.cdo.protocol.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
 import org.eclipse.emf.internal.cdo.protocol.QueryObjectTypesRequest;
@@ -203,6 +203,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     return channel;
   }
 
+  public CDOClientProtocol getProtocol()
+  {
+    return (CDOClientProtocol)channel.getReceiveHandler();
+  }
+
   public String getRepositoryName()
   {
     return repositoryName;
@@ -294,6 +299,19 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     return openAudit(createResourceSet(), timeStamp);
   }
 
+  public CDOView getView(int viewID)
+  {
+    for (CDOViewImpl view : getViews())
+    {
+      if (view.getViewID() == viewID)
+      {
+        return view;
+      }
+    }
+
+    return null;
+  }
+
   public CDOViewImpl[] getViews()
   {
     Collection<CDOViewImpl> values;
@@ -344,7 +362,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     long id1 = nextTemporaryID;
     nextTemporaryID -= count + count;
     long id2 = nextTemporaryID + 2;
-    return CDOIDRangeImpl.create(id1, id2);
+    return CDOIDUtil.createRange(id1, id2);
   }
 
   public InternalEObject lookupMetaInstance(CDOID id)
@@ -397,7 +415,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   {
     long count = registerMetaInstance((InternalEObject)ePackage, nextTemporaryID);
     long newTempID = nextTemporaryID - 2L * count;
-    CDOIDRange range = CDOIDRangeImpl.create(nextTemporaryID, newTempID + 2L);
+    CDOIDRange range = CDOIDUtil.createRange(nextTemporaryID, newTempID + 2L);
     nextTemporaryID = newTempID;
     return range;
   }

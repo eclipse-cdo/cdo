@@ -26,6 +26,12 @@ public class CDOClientProtocol extends CDOProtocolImpl
   }
 
   @Override
+  public CDOSession getSession()
+  {
+    return (CDOSession)super.getSession();
+  }
+
+  @Override
   protected SignalReactor doCreateSignalReactor(short signalID)
   {
     switch (signalID)

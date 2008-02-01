@@ -11,13 +11,13 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSessionPackageManager;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
-import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
@@ -53,6 +53,11 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
     return session;
   }
 
+  public CDOIDObjectFactory getCDOIDObjectFactory()
+  {
+    return session;
+  }
+
   public CDOPackage convert(EPackage ePackage)
   {
     return ModelUtil.getCDOPackage(ePackage, this);
@@ -70,17 +75,17 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
 
   public EPackage convert(CDOPackage cdoPackage)
   {
-    return ModelUtil.getEPackage((CDOPackageImpl)cdoPackage, session.getPackageRegistry());
+    return ModelUtil.getEPackage(cdoPackage, session.getPackageRegistry());
   }
 
   public EClass convert(CDOClass cdoClass)
   {
-    return ModelUtil.getEClass((CDOClassImpl)cdoClass, session.getPackageRegistry());
+    return ModelUtil.getEClass(cdoClass, session.getPackageRegistry());
   }
 
   public EStructuralFeature convert(CDOFeature cdoFeature)
   {
-    return ModelUtil.getEFeature((CDOFeatureImpl)cdoFeature, session.getPackageRegistry());
+    return ModelUtil.getEFeature(cdoFeature, session.getPackageRegistry());
   }
 
   public void addPackageProxies(Collection<CDOPackageInfo> packageInfos)
@@ -89,9 +94,9 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
     {
       String packageURI = info.getPackageURI();
       boolean dynamic = info.isDynamic();
-      CDOIDRange metaIDRange = info.getMetaIDRange();
+      CDOIDMetaRange metaIDRange = info.getMetaIDRange();
 
-      CDOPackageImpl proxy = new CDOPackageImpl(this, packageURI, dynamic, metaIDRange);
+      CDOPackage proxy = CDOModelUtil.createProxyPackage(this, packageURI, dynamic, metaIDRange);
       addPackage(proxy);
       session.getPackageRegistry().putPackageDescriptor(proxy);
     }

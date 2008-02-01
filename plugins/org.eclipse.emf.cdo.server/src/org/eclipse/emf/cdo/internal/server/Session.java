@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
@@ -20,10 +19,11 @@ import org.eclipse.emf.cdo.internal.server.protocol.InvalidationNotification;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.CDOProtocolView.Type;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDObject;
 import org.eclipse.emf.cdo.protocol.id.CDOIDProvider;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
@@ -179,11 +179,17 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
       return id;
     }
 
-    CDOClassRef type = getObjectTypeRef(id);
-    return CDOIDUtil.create(id.getValue(), type);
+    CDOIDObject objectID = (CDOIDObject)id;
+    if (objectID.getClassRef() == null)
+    {
+      CDOClassRef classRef = getClassRef(objectID);
+      objectID = objectID.asLegacy(classRef);
+    }
+
+    return objectID;
   }
 
-  public CDOClassRef getObjectTypeRef(CDOID id)
+  public CDOClassRef getClassRef(CDOID id)
   {
     RevisionManager revisionManager = sessionManager.getRepository().getRevisionManager();
     CDOClass cdoClass = revisionManager.getObjectType(id);
@@ -198,10 +204,10 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   {
     RevisionManager revisionManager = getSessionManager().getRepository().getRevisionManager();
     CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
-    CDOFeatureImpl[] features = cdoClass.getAllFeatures();
+    CDOFeature[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
     {
-      CDOFeatureImpl feature = features[i];
+      CDOFeature feature = features[i];
       if (feature.isReference() && !feature.isMany() && feature.isContainment())
       {
         Object value = revision.getValue(feature);

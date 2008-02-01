@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * @author Simon McDuff
  */
-public class MEMStore extends Store
+public class MEMStore extends LongIDStore
 {
   public static final String TYPE = "mem";
 

@@ -21,8 +21,10 @@ import org.eclipse.emf.cdo.internal.server.View;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
+import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.protocol.model.core.CDOCorePackage;
@@ -57,7 +59,7 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CommitTransactionIndication.class);
 
-  private CDOPackageImpl[] newPackages;
+  private CDOPackage[] newPackages;
 
   private InternalCDORevision[] newResources;
 
@@ -153,9 +155,9 @@ public class CommitTransactionIndication extends CDOServerIndication
     {
       out.writeBoolean(true);
       out.writeLong(timeStamp);
-      for (CDOPackageImpl newPackage : newPackages)
+      for (CDOPackage newPackage : newPackages)
       {
-        CDOIDUtil.writeRange(out, newPackage.getMetaIDRange());
+        CDOIDUtil.writeMetaRange(out, newPackage.getMetaIDRange());
       }
 
       writeIDMappings(out);
@@ -166,7 +168,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     }
   }
 
-  private CDOPackageImpl[] readNewPackages(ExtendedDataInputStream in, IStoreWriter storeWriter) throws IOException
+  private CDOPackage[] readNewPackages(ExtendedDataInputStream in, IStoreWriter storeWriter) throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL.isEnabled())
@@ -175,18 +177,17 @@ public class CommitTransactionIndication extends CDOServerIndication
     }
 
     Repository repository = getRepository();
-    CDOPackageImpl[] newPackages = new CDOPackageImpl[size];
+    CDOPackage[] newPackages = new CDOPackage[size];
     for (int i = 0; i < size; i++)
     {
-      newPackages[i] = new CDOPackageImpl(transactionPackageManager, in);
-      CDOIDRange oldRange = newPackages[i].getMetaIDRange();
+      newPackages[i] = CDOModelUtil.readPackage(transactionPackageManager, in);
+      CDOIDMetaRange oldRange = newPackages[i].getMetaIDRange();
       if (oldRange != null && oldRange.isTemporary())
       {
-        CDOIDRange newRange = repository.getMetaIDRange(oldRange.getCount());
-        newPackages[i].setMetaIDRange(newRange);
+        CDOIDMetaRange newRange = repository.getMetaIDRange(oldRange.size());
+        ((CDOPackageImpl)newPackages[i]).setMetaIDRange(newRange);
 
-        long count = oldRange.getCount();
-        for (long l = 0; l < count; l++)
+        for (int l = 0; l < oldRange.size(); l++)
         {
           CDOID oldID = oldRange.get(l);
           CDOID newID = newRange.get(l);
@@ -263,7 +264,7 @@ public class CommitTransactionIndication extends CDOServerIndication
   }
 
   // TODO Remove newPackages parameter
-  private void addPackages(ITransaction<IStoreWriter> storeTransaction, CDOPackageImpl[] newPackages)
+  private void addPackages(ITransaction<IStoreWriter> storeTransaction, CDOPackage[] newPackages)
   {
     sessionPackageManager.addPackages(storeTransaction, newPackages);
   }
@@ -336,9 +337,14 @@ public class CommitTransactionIndication extends CDOServerIndication
     {
     }
 
-    public CDOPackageImpl lookupPackage(String uri)
+    public CDOIDObjectFactory getCDOIDObjectFactory()
     {
-      for (CDOPackageImpl cdoPackage : newPackages)
+      return sessionPackageManager.getCDOIDObjectFactory();
+    }
+
+    public CDOPackage lookupPackage(String uri)
+    {
+      for (CDOPackage cdoPackage : newPackages)
       {
         if (ObjectUtil.equals(cdoPackage.getPackageURI(), uri))
         {

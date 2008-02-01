@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
@@ -126,6 +127,11 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   public String readResourcePath(CDOID id)
   {
     throw new UnsupportedOperationException();
+  }
+
+  public CDOID primeNewObject(CDOClass cdoClass)
+  {
+    return getStore().getNextCDOID();
   }
 
   public void writePackages(CDOPackage... cdoPackages)

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
@@ -52,6 +53,11 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   }
 
   public CDOSessionImpl getSession()
+  {
+    return session;
+  }
+
+  public CDOIDObjectFactory getCDOIDObjectFactory()
   {
     return session;
   }

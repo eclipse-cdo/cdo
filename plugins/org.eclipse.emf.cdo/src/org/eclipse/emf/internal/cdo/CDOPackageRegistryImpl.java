@@ -11,6 +11,7 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
@@ -50,7 +51,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     return session;
   }
 
-  public void putPackageDescriptor(CDOPackageImpl cdoPackage)
+  public void putPackageDescriptor(CDOPackage cdoPackage)
   {
     EPackage.Descriptor descriptor = new CDOPackageDescriptor(cdoPackage);
     String uri = cdoPackage.getPackageURI();
@@ -81,8 +82,8 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
         ModelUtil.prepareEPackage(ePackage);
       }
 
-      CDOPackageImpl cdoPackage = ModelUtil.getCDOPackage(ePackage, session.getPackageManager());
-      cdoPackage.setPersistent(!cdoPackage.getMetaIDRange().isTemporary());
+      CDOPackage cdoPackage = ModelUtil.getCDOPackage(ePackage, session.getPackageManager());
+      ((CDOPackageImpl)cdoPackage).setPersistent(!cdoPackage.getMetaIDRange().isTemporary());
     }
 
     return super.put(key, value);
@@ -99,9 +100,9 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
    */
   private final class CDOPackageDescriptor implements EPackage.Descriptor
   {
-    private CDOPackageImpl cdoPackage;
+    private CDOPackage cdoPackage;
 
-    private CDOPackageDescriptor(CDOPackageImpl cdoPackage)
+    private CDOPackageDescriptor(CDOPackage cdoPackage)
     {
       this.cdoPackage = cdoPackage;
     }

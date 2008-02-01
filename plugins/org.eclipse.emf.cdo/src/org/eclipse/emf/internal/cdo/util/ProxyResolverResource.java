@@ -10,13 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
-import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
-
-import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -24,7 +18,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
@@ -58,18 +51,20 @@ final class ProxyResolverResource implements Resource
    */
   public EObject getEObject(String uriFragment)
   {
-    CDOID id = CDOIDUtil.create(Long.parseLong(uriFragment));
-    InternalCDOObject object = view.getObject(id);
-    InternalEObject instance = object.cdoInternalInstance();
-    if (instance instanceof CDOAdapterImpl)
-    {
-      if (object.cdoState() == CDOState.PROXY)
-      {
-        object.cdoInternalPostLoad();
-      }
-    }
-
-    return instance;
+    // TODO Implement me
+    throw new UnsupportedOperationException("Not yet implemented");
+    // CDOID id = CDOIDUtil.create(Long.parseLong(uriFragment));
+    // InternalCDOObject object = view.getObject(id);
+    // InternalEObject instance = object.cdoInternalInstance();
+    // if (instance instanceof CDOAdapterImpl)
+    // {
+    // if (object.cdoState() == CDOState.PROXY)
+    // {
+    // object.cdoInternalPostLoad();
+    // }
+    // }
+    //
+    // return instance;
   }
 
   public TreeIterator<EObject> getAllContents()

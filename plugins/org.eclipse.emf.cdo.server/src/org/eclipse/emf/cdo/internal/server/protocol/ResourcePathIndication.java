@@ -43,7 +43,7 @@ public class ResourcePathIndication extends CDOReadIndication
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    final CDOID id = CDOIDUtil.read(in);
+    final CDOID id = CDOIDUtil.read(in, getStore().getCDOIDObjectFactory());
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Read ID: {0}", id);

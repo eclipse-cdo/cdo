@@ -13,13 +13,17 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.internal.protocol.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDObject;
+import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
+import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -61,6 +65,7 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -69,13 +74,9 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class CDOSessionImpl extends Container<CDOView> implements CDOSession
+public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CDOIDObjectFactory
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
-
-  private static final long INITIAL_TEMPORARY_ID = -1L;
-
-  private transient long nextTemporaryID = INITIAL_TEMPORARY_ID;
 
   private int sessionID;
 
@@ -115,11 +116,13 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
   private Map<InternalEObject, CDOID> metaInstanceToIDMap = new HashMap<InternalEObject, CDOID>();
 
-  private ConcurrentMap<CDOID, CDOClassImpl> types = new ConcurrentHashMap<CDOID, CDOClassImpl>();
+  private ConcurrentMap<CDOID, CDOClass> types = new ConcurrentHashMap<CDOID, CDOClass>();
 
   private Map<ResourceSet, CDOViewImpl> views = new HashMap<ResourceSet, CDOViewImpl>();
 
-  private transient int lastViewID = 0;
+  private transient int lastViewID;
+
+  private transient int lastTempMetaID;
 
   private IListener channelListener = new LifecycleEventAdapter()
   {
@@ -129,6 +132,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
       close();
     }
   };
+
+  private CDOIDObjectFactory cdoidObjectFactory;
 
   public CDOSessionImpl(EPackage.Registry delegate)
   {
@@ -141,6 +146,16 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
   public int getSessionID()
   {
     return sessionID;
+  }
+
+  public Class<?>[] getCDOIDObjectClasses()
+  {
+    return cdoidObjectFactory.getCDOIDObjectClasses();
+  }
+
+  public CDOIDObject createCDOIDObject()
+  {
+    return cdoidObjectFactory.createCDOIDObject();
   }
 
   public boolean isDisableLegacyObjects()
@@ -357,12 +372,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     fireElementRemovedEvent(view);
   }
 
-  public CDOIDRange getTemporaryIDRange(long count)
+  public synchronized CDOIDMetaRange getTempMetaIDRange(int count)
   {
-    long id1 = nextTemporaryID;
-    nextTemporaryID -= count + count;
-    long id2 = nextTemporaryID + 2;
-    return CDOIDUtil.createRange(id1, id2);
+    CDOIDTemp lowerBound = new CDOIDTempMetaImpl(lastTempMetaID + 1);
+    lastTempMetaID += count;
+    return CDOIDUtil.createMetaRange(lowerBound, count);
   }
 
   public InternalEObject lookupMetaInstance(CDOID id)
@@ -370,10 +384,10 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     InternalEObject metaInstance = idToMetaInstanceMap.get(id);
     if (metaInstance == null)
     {
-      CDOPackageImpl[] cdoPackages = packageManager.getPackages();
-      for (CDOPackageImpl cdoPackage : cdoPackages)
+      CDOPackage[] cdoPackages = packageManager.getPackages();
+      for (CDOPackage cdoPackage : cdoPackages)
       {
-        CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
+        CDOIDMetaRange metaIDRange = cdoPackage.getMetaIDRange();
         if (metaIDRange != null && metaIDRange.contains(id))
         {
           EPackage ePackage = ModelUtil.getEPackage(cdoPackage, packageRegistry);
@@ -392,40 +406,37 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     return metaInstanceToIDMap.get(metaInstance);
   }
 
-  public void registerEPackage(EPackage ePackage, CDOIDRange metaIDRange)
+  public void registerEPackage(EPackage ePackage, CDOIDMetaRange metaIDRange)
   {
     if (metaIDRange.isTemporary())
     {
       throw new IllegalArgumentException("metaIDRange.isTemporary()");
     }
 
-    if (!metaIDRange.isMeta())
+    CDOIDMetaRange range = CDOIDUtil.createMetaRange(metaIDRange.getLowerBound(), 0);
+    range = registerMetaInstance((InternalEObject)ePackage, range);
+    if (range.size() != metaIDRange.size())
     {
-      throw new IllegalArgumentException("!metaIDRange.isMeta()");
-    }
-
-    long count = registerMetaInstance((InternalEObject)ePackage, metaIDRange.getLowerBound().getValue());
-    if (count != metaIDRange.getCount())
-    {
-      throw new IllegalStateException("count != metaIDRange.getCount()");
+      throw new IllegalStateException("range.getCount() != metaIDRange.getCount()");
     }
   }
 
-  public CDOIDRange registerEPackage(EPackage ePackage)
+  public CDOIDMetaRange registerEPackage(EPackage ePackage)
   {
-    long count = registerMetaInstance((InternalEObject)ePackage, nextTemporaryID);
-    long newTempID = nextTemporaryID - 2L * count;
-    CDOIDRange range = CDOIDUtil.createRange(nextTemporaryID, newTempID + 2L);
-    nextTemporaryID = newTempID;
+    CDOIDTemp lowerBound = new CDOIDTempMetaImpl(lastTempMetaID + 1);
+    CDOIDMetaRange range = CDOIDUtil.createMetaRange(lowerBound, 0);
+    range = registerMetaInstance((InternalEObject)ePackage, range);
+    lastTempMetaID = ((CDOIDTemp)range.getUpperBound()).getValue();
     return range;
   }
 
   /**
    * TODO Synchronize?
    */
-  private long registerMetaInstance(InternalEObject metaInstance, long idValue)
+  private CDOIDMetaRange registerMetaInstance(InternalEObject metaInstance, CDOIDMetaRange range)
   {
-    CDOID id = CDOIDUtil.create(idValue);
+    range = range.increase();
+    CDOID id = range.getUpperBound();
     if (TRACER.isEnabled())
     {
       TRACER.format("Registering meta instance: {0} <-> {1}", id, metaInstance);
@@ -434,34 +445,12 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     idToMetaInstanceMap.put(id, metaInstance);
     metaInstanceToIDMap.put(metaInstance, id);
 
-    // EClass eClass = metaInstance.eClass();
-    // for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
-    // {
-    // Object value = metaInstance.eGet(feature);
-    // if (value instanceof InternalEObject)
-    // {
-    // metaInstance.eResolveProxy((InternalEObject)value);
-    // }
-    // else if (value instanceof Collection)
-    // {
-    // for (Object element : (Collection)value)
-    // {
-    // if (element instanceof InternalEObject)
-    // {
-    // metaInstance.eResolveProxy((InternalEObject)element);
-    // }
-    // }
-    // }
-    // }
-
-    long step = id.isTemporary() ? -2L : 2L;
-    long count = 1L;
     for (EObject content : metaInstance.eContents())
     {
-      count += registerMetaInstance((InternalEObject)content, idValue + step * count);
+      range = registerMetaInstance((InternalEObject)content, range);
     }
 
-    return count;
+    return range;
   }
 
   public void remapMetaInstance(CDOID oldID, CDOID newID)
@@ -481,18 +470,18 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     metaInstanceToIDMap.put(metaInstance, newID);
   }
 
-  public CDOClassImpl getObjectType(CDOID id)
+  public CDOClass getObjectType(CDOID id)
   {
     return types.get(id);
   }
 
-  public CDOClassImpl requestObjectType(CDOID id)
+  public CDOClass requestObjectType(CDOID id)
   {
     try
     {
       QueryObjectTypesRequest request = new QueryObjectTypesRequest(channel, Collections.singletonList(id));
       CDOClassRef[] typeRefs = getFailOverStrategy().send(request);
-      CDOClassImpl type = (CDOClassImpl)typeRefs[0].resolve(packageManager);
+      CDOClass type = typeRefs[0].resolve(packageManager);
       registerObjectType(id, type);
       return type;
     }
@@ -502,7 +491,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     }
   }
 
-  public void registerObjectType(CDOID id, CDOClassImpl type)
+  public void registerObjectType(CDOID id, CDOClass type)
   {
     types.put(id, type);
   }
@@ -630,6 +619,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
 
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
+    cdoidObjectFactory = createCDOIDFactory(result.getCDOIDObjectFactoryClass(), result.getCDOIDObjectClasses());
     packageManager.addPackageProxies(result.getPackageInfos());
     packageManager.activate();
     revisionManager.activate();
@@ -660,6 +650,22 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     super.doDeactivate();
   }
 
+  private CDOIDObjectFactory createCDOIDFactory(Class<?> objectFactoryClass, List<Class<?>> objectClasses)
+  {
+    // ClassLoader classLoader = new CDOIDObjectFactoryClassLoader();
+
+    // return new CDOIDObjectFactoryImpl();
+
+    try
+    {
+      return (CDOIDObjectFactory)objectFactoryClass.newInstance();
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+  }
+
   private void sendViewsNotification(CDOViewImpl view)
   {
     try
@@ -688,6 +694,17 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession
     }
 
     throw new ImplementationError("Invalid view type: " + type);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class CDOIDObjectFactoryClassLoader extends ClassLoader
+  {
+    public CDOIDObjectFactoryClassLoader()
+    {
+      super(OM.BUNDLE.getClass().getClassLoader());
+    }
   }
 
   private final class InvalidationEvent extends Event implements CDOSessionInvalidationEvent

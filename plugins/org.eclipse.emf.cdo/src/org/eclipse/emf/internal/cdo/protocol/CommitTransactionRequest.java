@@ -17,12 +17,14 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
+import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 
+import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.RevisionAdjuster;
@@ -82,30 +84,31 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     long timeStamp = in.readLong();
     CommitTransactionResult result = new CommitTransactionResult(timeStamp);
 
+    CDOSessionImpl session = transaction.getSession();
     List<CDOPackage> newPackages = transaction.getNewPackages();
     for (CDOPackage newPackage : newPackages)
     {
-      CDOIDRange oldRange = newPackage.getMetaIDRange();
-      CDOIDRange newRange = CDOIDUtil.readRange(in);
+      CDOIDMetaRange oldRange = newPackage.getMetaIDRange();
+      CDOIDMetaRange newRange = CDOIDUtil.readMetaRange(in);
       ((CDOPackageImpl)newPackage).setMetaIDRange(newRange);
-      for (long i = 0; i < oldRange.getCount(); i++)
+      for (int i = 0; i < oldRange.size(); i++)
       {
         CDOID oldID = oldRange.get(i);
         CDOID newID = newRange.get(i);
-        transaction.getSession().remapMetaInstance(oldID, newID);
+        session.remapMetaInstance(oldID, newID);
         result.addIDMapping(oldID, newID);
       }
     }
 
     for (;;)
     {
-      CDOID oldID = CDOIDUtil.read(in);
+      CDOID oldID = CDOIDUtil.read(in, session);
       if (oldID.isNull())
       {
         break;
       }
 
-      CDOID newID = CDOIDUtil.read(in);
+      CDOID newID = CDOIDUtil.read(in, session);
       result.addIDMapping(oldID, newID);
     }
 
@@ -123,7 +126,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     out.writeInt(newPackages.size());
     for (CDOPackage newPackage : newPackages)
     {
-      ((CDOPackageImpl)newPackage).write(out);
+      CDOModelUtil.writePackage(out, newPackage);
     }
   }
 

@@ -329,7 +329,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
       }
 
       long id = resultSet.getLong(1);
-      return CDOIDUtil.create(id);
+      return CDOIDUtil.createCDOID(id);
     }
     catch (SQLException ex)
     {

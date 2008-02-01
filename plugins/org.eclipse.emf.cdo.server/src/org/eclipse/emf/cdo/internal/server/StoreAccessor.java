@@ -12,8 +12,6 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.ISession;
@@ -90,11 +88,6 @@ public class StoreAccessor implements IStoreAccessor
   public InternalCDORevision verifyRevision(CDORevision revision)
   {
     return (InternalCDORevision)revision;
-  }
-
-  public CDOID primeNewObject(CDOClass cdoClass)
-  {
-    return store.getNextCDOID();
   }
 
   public void writeRevisionDelta(CDORevisionDelta delta)

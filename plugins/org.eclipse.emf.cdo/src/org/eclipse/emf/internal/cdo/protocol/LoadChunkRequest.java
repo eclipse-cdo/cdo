@@ -10,13 +10,15 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
+import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
 
+import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
@@ -69,8 +71,8 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
     {
       PROTOCOL.format("Writing revision ID: {0}", id);
     }
-    CDOIDUtil.write(out, id);
 
+    CDOIDUtil.write(out, id);
     int version = revision.getVersion();
     if (revision.isTransactional())
     {
@@ -81,37 +83,38 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
     {
       PROTOCOL.format("Writing revision version: {0}", version);
     }
-    out.writeInt(version);
 
+    out.writeInt(version);
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Writing feature: {0}", feature);
     }
-    CDOClassRefImpl classRef = (CDOClassRefImpl)feature.getContainingClass().createClassRef();
-    classRef.write(out, null);
+    CDOClassRef classRef = feature.getContainingClass().createClassRef();
+    CDOModelUtil.writeClassRef(out, classRef);
     out.writeInt(feature.getFeatureID());
-
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Writing fromIndex: {0}", fromIndex);
     }
-    out.writeInt(fromIndex);
 
+    out.writeInt(fromIndex);
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Writing toIndex: {0}", toIndex);
     }
+
     out.writeInt(toIndex);
   }
 
   @Override
   protected CDOID confirming(ExtendedDataInputStream in) throws IOException
   {
+    CDOSessionImpl session = getSession();
     CDOID accessID = null;
     MoveableList<Object> list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
-      CDOID id = CDOIDUtil.read(in);
+      CDOID id = CDOIDUtil.read(in, session);
       list.set(i, id);
       if (i == accessIndex)
       {

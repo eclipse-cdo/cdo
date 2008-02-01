@@ -11,7 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.internal.protocol.id.CDOIDMetaImpl;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
@@ -31,8 +33,6 @@ import java.util.UUID;
  */
 public class Repository extends Container<IRepositoryElement> implements IRepository
 {
-  private static final long INITIAL_META_ID_VALUE = 1;
-
   private String name;
 
   private IStore store;
@@ -57,7 +57,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   private IRepositoryElement[] elements;
 
-  private long nextMetaIDValue = INITIAL_META_ID_VALUE;
+  private transient long lastMetaID;
 
   public Repository()
   {
@@ -173,22 +173,21 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return false;
   }
 
-  public CDOIDRange getMetaIDRange(long count)
+  public synchronized CDOIDMetaRange getMetaIDRange(int count)
   {
-    long lowerBound = nextMetaIDValue;
-    nextMetaIDValue += count;
-    nextMetaIDValue += count;
-    return CDOIDUtil.createRange(lowerBound, nextMetaIDValue - 2);
+    CDOID lowerBound = new CDOIDMetaImpl(lastMetaID + 1);
+    lastMetaID += count;
+    return CDOIDUtil.createMetaRange(lowerBound, count);
   }
 
-  public void setNextMetaIDValue(long nextMetaIDValue)
+  public long getLastMetaID()
   {
-    this.nextMetaIDValue = nextMetaIDValue;
+    return lastMetaID;
   }
 
-  public long getNextMetaIDValue()
+  public void setLastMetaID(long lastMetaID)
   {
-    return nextMetaIDValue;
+    this.lastMetaID = lastMetaID;
   }
 
   @Override

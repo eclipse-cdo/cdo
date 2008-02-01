@@ -10,11 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
+import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
@@ -73,7 +73,7 @@ public class QueryObjectTypesRequest extends CDOClientRequest<CDOClassRef[]>
     CDOClassRef[] types = new CDOClassRef[ids.size()];
     for (int i = 0; i < types.length; i++)
     {
-      types[i] = new CDOClassRefImpl(in, null);
+      types[i] = CDOModelUtil.readClassRef(in);
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("Read type: {0}", types[i]);

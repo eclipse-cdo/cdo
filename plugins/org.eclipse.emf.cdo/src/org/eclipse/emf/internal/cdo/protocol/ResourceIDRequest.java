@@ -59,7 +59,7 @@ public class ResourceIDRequest extends CDOClientRequest<CDOID>
   @Override
   protected CDOID confirming(ExtendedDataInputStream in) throws IOException
   {
-    CDOID id = CDOIDUtil.read(in);
+    CDOID id = CDOIDUtil.read(in, getSession());
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Read ID: {0}", id);

@@ -12,10 +12,11 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDMeta;
+import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IView;
@@ -45,6 +46,11 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     super(store, view);
   }
 
+  public CDOID primeNewObject(CDOClass cdoClass)
+  {
+    return getStore().getNextCDOID();
+  }
+
   public void writePackages(CDOPackage... cdoPackages)
   {
     for (CDOPackage cdoPackage : cdoPackages)
@@ -69,9 +75,9 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     String name = cdoPackage.getName();
     String ecore = cdoPackage.getEcore();
     boolean dynamic = cdoPackage.isDynamic();
-    CDOIDRange metaIDRange = cdoPackage.getMetaIDRange();
-    long lb = metaIDRange == null ? 0L : metaIDRange.getLowerBound().getValue();
-    long ub = metaIDRange == null ? 0L : metaIDRange.getUpperBound().getValue();
+    CDOIDMetaRange metaIDRange = cdoPackage.getMetaIDRange();
+    long lowerBound = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getLowerBound()).getValue();
+    long upperBound = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getUpperBound()).getValue();
 
     String sql = "INSERT INTO " + CDODBSchema.PACKAGES + " VALUES (?, ?, ?, ?, ?, ?, ?)";
     DBUtil.trace(sql);
@@ -85,8 +91,8 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
       pstmt.setString(3, name);
       pstmt.setString(4, ecore);
       pstmt.setBoolean(5, dynamic);
-      pstmt.setLong(6, lb);
-      pstmt.setLong(7, ub);
+      pstmt.setLong(6, lowerBound);
+      pstmt.setLong(7, upperBound);
 
       if (pstmt.execute())
       {
@@ -118,7 +124,7 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     int id = getStore().getNextClassID();
     ClassServerInfo.setDBID(cdoClass, id);
 
-    CDOPackageImpl cdoPackage = cdoClass.getContainingPackage();
+    CDOPackage cdoPackage = cdoClass.getContainingPackage();
     int packageID = ServerInfo.getDBID(cdoPackage);
     int classifierID = cdoClass.getClassifierID();
     String name = cdoClass.getName();
@@ -131,7 +137,7 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
       writeSuperType(id, superType);
     }
 
-    for (CDOFeatureImpl feature : cdoClass.getFeatures())
+    for (CDOFeature feature : cdoClass.getFeatures())
     {
       writeFeature(feature);
     }
@@ -145,7 +151,7 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
         .insertRow(getConnection(), getStore().getDBAdapter(), CDODBSchema.SUPERTYPES, type, packageURI, classifierID);
   }
 
-  protected void writeFeature(CDOFeatureImpl feature)
+  protected void writeFeature(CDOFeature feature)
   {
     int id = getStore().getNextFeatureID();
     FeatureServerInfo.setDBID(feature, id);

@@ -126,7 +126,7 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
         return null;
       }
 
-      return CDOIDUtil.create(id);
+      return CDOIDUtil.createCDOID(id);
     }
   }
 

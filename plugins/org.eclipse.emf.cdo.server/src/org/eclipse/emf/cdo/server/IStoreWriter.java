@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
@@ -27,17 +26,12 @@ public interface IStoreWriter extends IStoreReader
   public IView getView();
 
   /**
-   * Stores a complete description of a package so that it can be restored to an identical state at a later point in
-   * time.
+   * Stores an array of complete package descriptions so that they can be restored to an identical state at a later
+   * point in time.
    * <p>
    * <b>Note:</b> The implementor of this method must not assume that references to classes in this package or in any
    * other package are already resolved or are resolveable at the point in time when this method is called by the
-   * framework. References to classes frequently appear in {@link CDOClass#getSuperTypes()} and in
-   * {@link CDOFeature#getReferenceType()}. Instead
-   * {@link org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl#getSuperTypeProxies() CDOClassImpl.getSuperTypeProxies()}
-   * and
-   * {@link org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl#getReferenceTypeProxy() CDOFeatureImpl.getReferenceTypeProxy()}
-   * should be used.
+   * framework.
    * <p>
    * 
    * @see CDOClassProxy#getPackageURI()

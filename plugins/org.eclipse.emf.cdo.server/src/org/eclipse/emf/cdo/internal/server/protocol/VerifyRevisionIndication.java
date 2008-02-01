@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -46,15 +47,22 @@ public class VerifyRevisionIndication extends CDOReadIndication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     int size = in.readInt();
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Reading {0} IDs and versions", size);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Reading {0} IDs and versions", size);
+    }
 
     RevisionManager revisionManager = getRevisionManager();
+    CDOIDObjectFactory factory = getStore().getCDOIDObjectFactory();
     timeStamps = new long[size];
     for (int i = 0; i < size; i++)
     {
-      CDOID id = CDOIDUtil.read(in);
+      CDOID id = CDOIDUtil.read(in, factory);
       int version = in.readInt();
-      if (PROTOCOL.isEnabled()) PROTOCOL.format("Read ID and version: {0}v{1}", id, version);
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Read ID and version: {0}v{1}", id, version);
+      }
 
       InternalCDORevision revision = revisionManager.getRevisionByVersion(id, 0, version);
       timeStamps[i] = revision.getRevised();

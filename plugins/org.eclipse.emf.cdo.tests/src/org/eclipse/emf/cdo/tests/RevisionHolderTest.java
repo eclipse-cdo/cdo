@@ -192,7 +192,7 @@ public class RevisionHolderTest extends AbstractOMTest
 
     public RevisionStub(long id)
     {
-      this.id = CDOIDUtil.create(id);
+      this.id = CDOIDUtil.createCDOID(id);
     }
 
     public CDOClass getCDOClass()

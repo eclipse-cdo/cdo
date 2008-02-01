@@ -141,7 +141,7 @@ public abstract class ClassMapping implements IClassMapping
 
   protected void appendRevisionInfos(StringBuilder builder, InternalCDORevision revision, boolean full)
   {
-    builder.append(revision.getID().getValue());
+    builder.append(CDOIDUtil.getLong(revision.getID()));
     builder.append(", ");
     builder.append(revision.getVersion());
     if (full)
@@ -153,9 +153,9 @@ public abstract class ClassMapping implements IClassMapping
       builder.append(", ");
       builder.append(revision.getRevised());
       builder.append(", ");
-      builder.append(revision.getResourceID().getValue());
+      builder.append(CDOIDUtil.getLong(revision.getResourceID()));
       builder.append(", ");
-      builder.append(revision.getContainerID().getValue());
+      builder.append(CDOIDUtil.getLong(revision.getContainerID()));
       builder.append(", ");
       builder.append(revision.getContainingFeatureID());
     }
@@ -467,7 +467,7 @@ public abstract class ClassMapping implements IClassMapping
     builder.append(" WHERE ");
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append("=");
-    builder.append(revision.getID().getValue());
+    builder.append(CDOIDUtil.getLong(revision.getID()));
     builder.append(" AND ");
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
     builder.append("=");
@@ -546,7 +546,7 @@ public abstract class ClassMapping implements IClassMapping
   protected void readAttributes(IDBStoreReader storeReader, InternalCDORevision revision, String where,
       boolean readVersion)
   {
-    long id = revision.getID().getValue();
+    long id = CDOIDUtil.getLong(revision.getID());
     StringBuilder builder = new StringBuilder(readVersion ? selectPrefixWithVersion : selectPrefix);
     builder.append(id);
     if (where != null)
@@ -580,8 +580,8 @@ public abstract class ClassMapping implements IClassMapping
 
         revision.setCreated(resultSet.getLong(i++));
         revision.setRevised(resultSet.getLong(i++));
-        revision.setResourceID(CDOIDUtil.create(resultSet.getLong(i++)));
-        revision.setContainerID(CDOIDUtil.create(resultSet.getLong(i++)));
+        revision.setResourceID(CDOIDUtil.createCDOID(resultSet.getLong(i++)));
+        revision.setContainerID(CDOIDUtil.createCDOID(resultSet.getLong(i++)));
         revision.setContainingFeatureID(resultSet.getInt(i++));
       }
 

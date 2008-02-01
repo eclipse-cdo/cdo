@@ -57,14 +57,15 @@ public class InvalidationIndication extends Indication
       PROTOCOL.format("Reading {0} IDs", size);
     }
 
+    CDOSessionImpl session = getSession();
     Set<CDOID> dirtyOIDs = new HashSet<CDOID>();
     for (int i = 0; i < size; i++)
     {
-      CDOID dirtyOID = CDOIDUtil.read(in);
+      CDOID dirtyOID = CDOIDUtil.read(in, session);
       dirtyOIDs.add(dirtyOID);
     }
 
-    getSession().notifyInvalidation(timeStamp, dirtyOIDs, null);
+    session.notifyInvalidation(timeStamp, dirtyOIDs, null);
   }
 
   protected CDOSessionImpl getSession()

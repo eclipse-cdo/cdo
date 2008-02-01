@@ -12,6 +12,9 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
+import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
+import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IStoreReader;
@@ -40,11 +43,16 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
     return repository;
   }
 
-  public void addPackages(ITransaction<IStoreWriter> storeTransaction, CDOPackageImpl[] cdoPackages)
+  public CDOIDObjectFactory getCDOIDObjectFactory()
   {
-    for (CDOPackageImpl cdoPackage : cdoPackages)
+    return repository.getStore().getCDOIDObjectFactory();
+  }
+
+  public void addPackages(ITransaction<IStoreWriter> storeTransaction, CDOPackage[] cdoPackages)
+  {
+    for (CDOPackage cdoPackage : cdoPackages)
     {
-      cdoPackage.setPackageManager(this);
+      ((CDOPackageImpl)cdoPackage).setPackageManager(this);
     }
 
     storeTransaction.execute(new AddPackagesOperation(cdoPackages));
@@ -79,7 +87,7 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
       Collection<CDOPackageInfo> packageInfos = storeReader.readPackageInfos();
       for (CDOPackageInfo info : packageInfos)
       {
-        addPackage(new CDOPackageImpl(this, info.getPackageURI(), info.isDynamic(), info.getMetaIDRange()));
+        addPackage(CDOModelUtil.createProxyPackage(this, info.getPackageURI(), info.isDynamic(), info.getMetaIDRange()));
       }
     }
     finally
@@ -96,9 +104,9 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
    */
   private final class AddPackagesOperation implements ITransactionalOperation<IStoreWriter>
   {
-    private CDOPackageImpl[] cdoPackages;
+    private CDOPackage[] cdoPackages;
 
-    private AddPackagesOperation(CDOPackageImpl[] cdoPackages)
+    private AddPackagesOperation(CDOPackage[] cdoPackages)
     {
       this.cdoPackages = cdoPackages;
     }
@@ -110,7 +118,7 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
 
     public void phase2(IStoreWriter storeWriter)
     {
-      for (CDOPackageImpl cdoPackage : cdoPackages)
+      for (CDOPackage cdoPackage : cdoPackages)
       {
         addPackage(cdoPackage);
       }

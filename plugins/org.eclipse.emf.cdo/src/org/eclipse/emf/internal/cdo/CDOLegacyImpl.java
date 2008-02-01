@@ -15,10 +15,11 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
@@ -86,7 +87,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
     return resource;
   }
 
-  public CDOClassImpl cdoClass()
+  public CDOClass cdoClass()
   {
     return CDOObjectImpl.getCDOClass(this);
   }
@@ -268,10 +269,10 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
 
     // Handle values
     CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
-    CDOFeatureImpl[] features = cdoClass.getAllFeatures();
+    CDOFeature[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
     {
-      CDOFeatureImpl feature = features[i];
+      CDOFeature feature = features[i];
       Object instanceValue = getInstanceValue(instance, feature);
       if (feature.isMany())
       {
@@ -341,8 +342,8 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
 
       // Handle values
       CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
-      CDOFeatureImpl[] features = cdoClass.getAllFeatures();
-      for (CDOFeatureImpl feature : features)
+      CDOFeature[] features = cdoClass.getAllFeatures();
+      for (CDOFeature feature : features)
       {
         transferFeatureToInstance(view, feature);
       }
@@ -388,7 +389,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
   }
 
   @SuppressWarnings("unchecked")
-  protected void transferFeatureToInstance(CDOViewImpl view, CDOFeatureImpl feature)
+  protected void transferFeatureToInstance(CDOViewImpl view, CDOFeature feature)
   {
     Object value = revision.getValue(feature);
     if (feature.isMany())
@@ -449,13 +450,13 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
     throw new ImplementationError();
   }
 
-  protected Object getInstanceValue(InternalEObject instance, CDOFeatureImpl feature)
+  protected Object getInstanceValue(InternalEObject instance, CDOFeature feature)
   {
     EStructuralFeature eFeature = ModelUtil.getEFeature(feature, cdoView().getSession().getPackageRegistry());
     return instance.eGet(eFeature);
   }
 
-  protected void setInstanceValue(InternalEObject instance, CDOFeatureImpl feature, Object value)
+  protected void setInstanceValue(InternalEObject instance, CDOFeature feature, Object value)
   {
     // TODO Don't use Java reflection
     Class<?> instanceClass = instance.getClass();

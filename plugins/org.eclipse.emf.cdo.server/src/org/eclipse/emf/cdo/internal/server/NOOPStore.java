@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.server.IView;
 /**
  * @author Eike Stepper
  */
-public class NOOPStore extends Store
+public class NOOPStore extends LongIDStore
 {
   public static final String TYPE = "noop";
 

@@ -10,9 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
@@ -28,7 +29,7 @@ public class LoadPackageIndication extends CDOReadIndication
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadPackageIndication.class);
 
-  private CDOPackageImpl cdoPackage;
+  private CDOPackage cdoPackage;
 
   public LoadPackageIndication()
   {
@@ -64,6 +65,6 @@ public class LoadPackageIndication extends CDOReadIndication
       PROTOCOL.format("Writing package: {0}", cdoPackage);
     }
 
-    cdoPackage.write(out);
+    CDOModelUtil.writePackage(out, cdoPackage);
   }
 }

@@ -75,13 +75,13 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
   public void writeReference(IDBStoreWriter storeWriter, CDORevision revision)
   {
-    long source = revision.getID().getValue();
+    long source = CDOIDUtil.getLong(revision.getID());
     int version = revision.getVersion();
 
     int idx = 0;
     for (Object element : ((InternalCDORevision)revision).getList(getFeature()))
     {
-      long target = ((CDOID)element).getValue();
+      long target = CDOIDUtil.getLong((CDOID)element);
       StringBuilder builder = new StringBuilder(insertPrefix);
       builder.append(source);
       builder.append(", ");
@@ -115,7 +115,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
       while (resultSet.next() && (referenceChunk == CDORevision.UNCHUNKED || --referenceChunk >= 0))
       {
         long target = resultSet.getLong(1);
-        list.add(CDOIDUtil.create(target));
+        list.add(CDOIDUtil.createCDOID(target));
       }
 
       // TODO Optimize this?
@@ -164,7 +164,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
           chunkSize = chunk.size();
         }
 
-        chunk.addID(indexInChunk++, CDOIDUtil.create(target));
+        chunk.addID(indexInChunk++, CDOIDUtil.createCDOID(target));
         if (indexInChunk == chunkSize)
         {
           chunk = null;
@@ -221,7 +221,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
   protected String createSelect(CDOID source, int version, String where)
   {
     StringBuilder builder = new StringBuilder(selectPrefix);
-    builder.append(source.getValue());
+    builder.append(CDOIDUtil.getLong(source));
     builder.append(" AND ");
     builder.append(CDODBSchema.REFERENCES_VERSION);
     builder.append("=");

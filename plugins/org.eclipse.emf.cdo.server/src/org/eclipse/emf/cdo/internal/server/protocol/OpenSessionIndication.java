@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -83,6 +84,7 @@ public class OpenSessionIndication extends IndicationWithResponse
       writeSessionID(out, session);
       writeRepositoryUUID(out, repository);
       writePackageURIs(out, repository.getPackageManager());
+      writeCDOIDObjectFactory(out, repository.getStore().getCDOIDObjectFactory());
     }
     catch (RepositoryNotFoundException ex)
     {
@@ -154,10 +156,31 @@ public class OpenSessionIndication extends IndicationWithResponse
 
         out.writeString(p.getPackageURI());
         out.writeBoolean(p.isDynamic());
-        CDOIDUtil.writeRange(out, p.getMetaIDRange());
+        CDOIDUtil.writeMetaRange(out, p.getMetaIDRange());
       }
     }
 
     out.writeString(null);
+  }
+
+  private void writeCDOIDObjectFactory(ExtendedDataOutputStream out, CDOIDObjectFactory factory) throws IOException
+  {
+    Class<?>[] classes = factory.getCDOIDObjectClasses();
+    if (classes == null)
+    {
+      classes = new Class<?>[0];
+    }
+
+    out.writeInt(1 + classes.length);
+    serializeClass(out, factory.getClass());
+    for (Class<?> c : classes)
+    {
+      serializeClass(out, c);
+    }
+  }
+
+  private void serializeClass(ExtendedDataOutputStream out, Class<?> c) throws IOException
+  {
+    out.writeObject(c);
   }
 }

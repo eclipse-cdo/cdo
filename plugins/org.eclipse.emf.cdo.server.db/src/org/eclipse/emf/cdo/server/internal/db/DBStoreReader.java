@@ -10,18 +10,18 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.protocol.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
@@ -77,9 +77,10 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
       {
         String packageURI = (String)values[0];
         boolean dynamic = getBoolean(values[1]);
-        long rangeLB = (Long)values[2];
-        long rangeUB = (Long)values[3];
-        CDOIDRange metaIDRange = rangeLB == 0L && rangeUB == 0L ? null : CDOIDUtil.createRange(rangeLB, rangeUB);
+        long lowerBound = (Long)values[2];
+        long upperBound = (Long)values[3];
+        CDOIDMetaRange metaIDRange = lowerBound == 0 ? null : CDOIDUtil.createMetaRange(new CDOIDMetaImpl(lowerBound),
+            (int)(upperBound - lowerBound) + 1);
         result.add(new CDOPackageInfo(packageURI, dynamic, metaIDRange));
         return true;
       }
@@ -90,7 +91,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
     return result;
   }
 
-  public void readPackage(final CDOPackage cdoPackage)
+  public void readPackage(CDOPackage cdoPackage)
   {
     String where = CDODBSchema.PACKAGES_URI.getName() + " = '" + cdoPackage.getPackageURI() + "'";
     Object[] values = DBUtil.select(getConnection(), where, CDODBSchema.PACKAGES_ID, CDODBSchema.PACKAGES_NAME,
@@ -98,12 +99,11 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
     PackageServerInfo.setDBID(cdoPackage, (Integer)values[0]);
     ((CDOPackageImpl)cdoPackage).setName((String)values[1]);
     ((CDOPackageImpl)cdoPackage).setEcore((String)values[2]);
-    readClasses((CDOPackageImpl)cdoPackage);
-
+    readClasses(cdoPackage);
     mapPackages(cdoPackage);
   }
 
-  protected void readClasses(final CDOPackageImpl cdoPackage)
+  protected void readClasses(final CDOPackage cdoPackage)
   {
     IDBRowHandler rowHandler = new IDBRowHandler()
     {
@@ -113,9 +113,9 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
         int classifierID = (Integer)values[1];
         String name = (String)values[2];
         boolean isAbstract = getBoolean(values[3]);
-        CDOClassImpl cdoClass = new CDOClassImpl(cdoPackage, classifierID, name, isAbstract);
+        CDOClass cdoClass = CDOModelUtil.createClass(cdoPackage, classifierID, name, isAbstract);
         ClassServerInfo.setDBID(cdoClass, classID);
-        cdoPackage.addClass(cdoClass);
+        ((CDOPackageImpl)cdoPackage).addClass(cdoClass);
         readSuperTypes(cdoClass, classID);
         readFeatures(cdoClass, classID);
         return true;
@@ -127,7 +127,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
         CDODBSchema.CLASSES_NAME, CDODBSchema.CLASSES_ABSTRACT);
   }
 
-  protected void readSuperTypes(final CDOClassImpl cdoClass, int classID)
+  protected void readSuperTypes(final CDOClass cdoClass, int classID)
   {
     IDBRowHandler rowHandler = new IDBRowHandler()
     {
@@ -135,7 +135,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
       {
         String packageURI = (String)values[0];
         int classifierID = (Integer)values[1];
-        cdoClass.addSuperType(new CDOClassRefImpl(packageURI, classifierID));
+        ((CDOClassImpl)cdoClass).addSuperType(CDOModelUtil.createClassRef(packageURI, classifierID));
         return true;
       }
     };
@@ -145,7 +145,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
         CDODBSchema.SUPERTYPES_SUPERTYPE_CLASSIFIER);
   }
 
-  protected void readFeatures(final CDOClassImpl cdoClass, int classID)
+  protected void readFeatures(final CDOClass cdoClass, int classID)
   {
     IDBRowHandler rowHandler = new IDBRowHandler()
     {
@@ -153,26 +153,26 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
       {
         int featureID = (Integer)values[1];
         String name = (String)values[2];
-        CDOTypeImpl type = CDOTypeImpl.getType((Integer)values[3]);
+        CDOType type = CDOModelUtil.getType((Integer)values[3]);
         boolean many = getBoolean(values[6]);
 
-        CDOFeatureImpl feature;
+        CDOFeature feature;
         if (type == CDOType.OBJECT)
         {
           String packageURI = (String)values[4];
           int classifierID = (Integer)values[5];
           boolean containment = getBoolean(values[7]);
-          CDOClassRefImpl classRef = new CDOClassRefImpl(packageURI, classifierID);
+          CDOClassRef classRef = CDOModelUtil.createClassRef(packageURI, classifierID);
           CDOClassProxy referenceType = new CDOClassProxy(classRef, cdoClass.getPackageManager());
-          feature = new CDOFeatureImpl(cdoClass, featureID, name, referenceType, many, containment);
+          feature = CDOModelUtil.createReference(cdoClass, featureID, name, referenceType, many, containment);
         }
         else
         {
-          feature = new CDOFeatureImpl(cdoClass, featureID, name, type, many);
+          feature = CDOModelUtil.createAttribute(cdoClass, featureID, name, type, many);
         }
 
         FeatureServerInfo.setDBID(feature, (Integer)values[0]);
-        cdoClass.addFeature(feature);
+        ((CDOClassImpl)cdoClass).addFeature(feature);
         return true;
       }
     };
@@ -216,7 +216,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
     Object[] res = DBUtil.select(getConnection(), where, CDODBSchema.CLASSES_CLASSIFIER, CDODBSchema.CLASSES_PACKAGE);
     int classifierID = (Integer)res[0];
     String packageURI = readPackageURI((Integer)res[1]);
-    return new CDOClassRefImpl(packageURI, classifierID);
+    return CDOModelUtil.createClassRef(packageURI, classifierID);
   }
 
   public CDORevision readRevision(CDOID id, int referenceChunk)

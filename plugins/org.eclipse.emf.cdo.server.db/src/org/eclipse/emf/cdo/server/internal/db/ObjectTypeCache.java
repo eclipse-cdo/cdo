@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.db.IDBStoreReader;
@@ -73,7 +74,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     builder.append(" WHERE ");
     builder.append(idField);
     builder.append("=");
-    builder.append(id.getValue());
+    builder.append(CDOIDUtil.getLong(id));
     String sql = builder.toString();
     DBUtil.trace(sql);
 
@@ -109,7 +110,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     builder.append("INSERT INTO ");
     builder.append(table);
     builder.append(" VALUES (");
-    builder.append(id.getValue());
+    builder.append(CDOIDUtil.getLong(id));
     builder.append(", ");
     builder.append(ClassServerInfo.getDBID(type));
     builder.append(")");

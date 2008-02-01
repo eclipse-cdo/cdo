@@ -11,7 +11,7 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.util.ServerException;
 
@@ -20,10 +20,14 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectStreamClass;
 import java.text.MessageFormat;
 
 /**
@@ -104,7 +108,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
       }
 
       boolean dynamic = in.readBoolean();
-      CDOIDRange metaIDRange = CDOIDUtil.readRange(in);
+      CDOIDMetaRange metaIDRange = CDOIDUtil.readMetaRange(in);
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("Read package info: uri={0}, dynamic={1}, metaIDRange={2}", packageURI, dynamic, metaIDRange);
@@ -113,6 +117,70 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
       result.addPackageInfo(packageURI, dynamic, metaIDRange);
     }
 
+    int classes = in.readInt();
+    result.setCDOIDObjectFactoryClass(deserializeClass(in));
+    for (int i = 1; i < classes; i++)
+    {
+      result.addCDOIDObjectClass(deserializeClass(in));
+    }
+
     return result;
+  }
+
+  private Class<?> deserializeClass(InputStream in) throws IOException
+  {
+    ObjectInputStream ois = new ObjectInputStream(in)
+    {
+      @Override
+      protected Class<?> resolveClass(ObjectStreamClass v) throws IOException, ClassNotFoundException
+      {
+        String className = v.getName();
+        ClassLoader loader = OM.class.getClassLoader();
+
+        try
+        {
+          return loader.loadClass(className);
+        }
+        catch (ClassNotFoundException ex)
+        {
+          ex.printStackTrace();
+          return super.resolveClass(v);
+        }
+      }
+    };
+
+    try
+    {
+      return (Class<?>)ois.readObject();
+    }
+    catch (ClassNotFoundException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+  }
+
+  private static final class CustomObjectInputStream extends ObjectInputStream
+  {
+    public CustomObjectInputStream(InputStream in) throws IOException
+    {
+      super(in);
+    }
+
+    @Override
+    protected Class<?> resolveClass(ObjectStreamClass v) throws IOException, ClassNotFoundException
+    {
+      String className = v.getName();
+      ClassLoader loader = getClass().getClassLoader();
+
+      try
+      {
+        return loader.loadClass(className);
+      }
+      catch (ClassNotFoundException ex)
+      {
+        ex.printStackTrace();
+        return super.resolveClass(v);
+      }
+    }
   }
 }

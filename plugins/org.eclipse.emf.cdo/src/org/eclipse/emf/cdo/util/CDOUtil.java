@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 
 import org.eclipse.emf.internal.cdo.CDOSessionFactory;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
@@ -153,7 +152,7 @@ public final class CDOUtil
 
   public static CDOSession openSession(IConnector connector, String repositoryName) throws ConnectorException
   {
-    return openSession(connector, repositoryName, false);
+    return openSession(connector, repositoryName, true);
   }
 
   public static CDOSession openSession(IManagedContainer container, String description) throws ConnectorException
@@ -214,37 +213,39 @@ public final class CDOUtil
     return uri.path();
   }
 
+  @Deprecated
   public static CDOID extractResourceID(URI uri)
   {
-    if (!CDOProtocolConstants.PROTOCOL_NAME.equals(uri.scheme()))
-    {
-      return null;
-    }
-
-    if (uri.hasAuthority())
-    {
-      return null;
-    }
-
-    if (!uri.isHierarchical())
-    {
-      return null;
-    }
-
-    if (uri.hasAbsolutePath())
-    {
-      return null;
-    }
-
-    try
-    {
-      String path = uri.path();
-      return CDOIDUtil.parse(path);
-    }
-    catch (RuntimeException ex)
-    {
-      return null;
-    }
+    throw new UnsupportedOperationException();
+    // if (!CDOProtocolConstants.PROTOCOL_NAME.equals(uri.scheme()))
+    // {
+    // return null;
+    // }
+    //
+    // if (uri.hasAuthority())
+    // {
+    // return null;
+    // }
+    //
+    // if (!uri.isHierarchical())
+    // {
+    // return null;
+    // }
+    //
+    // if (uri.hasAbsolutePath())
+    // {
+    // return null;
+    // }
+    //
+    // try
+    // {
+    // String path = uri.path();
+    // return CDOModelUtil.parse(path);
+    // }
+    // catch (RuntimeException ex)
+    // {
+    // return null;
+    // }
   }
 
   public static URI createResourceURI(String path)

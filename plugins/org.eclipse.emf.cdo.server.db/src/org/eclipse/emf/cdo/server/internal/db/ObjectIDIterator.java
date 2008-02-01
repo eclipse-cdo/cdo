@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDObject;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.db.IDBStoreReader;
@@ -88,16 +89,14 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
         if (currentResultSet.next())
         {
           long id = currentResultSet.getLong(1);
-          if (withTypes)
+          nextID = CDOIDUtil.createCDOID(id);
+          if (withTypes && nextID instanceof CDOIDObject)
           {
             int classID = currentResultSet.getInt(2);
-            CDOClassRef type = mappingStrategy.getClassRef(storeReader, classID);
-            nextID = CDOIDUtil.create(id, type);
+            CDOClassRef classRef = mappingStrategy.getClassRef(storeReader, classID);
+            nextID = ((CDOIDObject)nextID).asLegacy(classRef);
           }
-          else
-          {
-            nextID = CDOIDUtil.create(id);
-          }
+
           return true;
         }
 

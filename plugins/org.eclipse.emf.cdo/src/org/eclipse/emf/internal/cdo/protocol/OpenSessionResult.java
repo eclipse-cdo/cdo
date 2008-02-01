@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.protocol.id.CDOIDRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 
 import java.util.ArrayList;
@@ -26,6 +26,10 @@ public final class OpenSessionResult
   private String repositoryUUID;
 
   private List<CDOPackageInfo> packageInfos = new ArrayList<CDOPackageInfo>();
+
+  private Class<?> cdoidFactoryClass;
+
+  private List<Class<?>> cdoidObjectClasses = new ArrayList<Class<?>>();
 
   public OpenSessionResult(int sessionID, String repositoryUUID)
   {
@@ -48,8 +52,28 @@ public final class OpenSessionResult
     return packageInfos;
   }
 
-  void addPackageInfo(String packageURI, boolean dynamic, CDOIDRange metaIDRange)
+  public Class<?> getCDOIDObjectFactoryClass()
+  {
+    return cdoidFactoryClass;
+  }
+
+  public List<Class<?>> getCDOIDObjectClasses()
+  {
+    return cdoidObjectClasses;
+  }
+
+  void addPackageInfo(String packageURI, boolean dynamic, CDOIDMetaRange metaIDRange)
   {
     packageInfos.add(new CDOPackageInfo(packageURI, dynamic, metaIDRange));
+  }
+
+  void setCDOIDObjectFactoryClass(Class<?> c)
+  {
+    cdoidFactoryClass = c;
+  }
+
+  void addCDOIDObjectClass(Class<?> c)
+  {
+    cdoidObjectClasses.add(c);
   }
 }

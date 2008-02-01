@@ -39,7 +39,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   {
     {
       // Create resource in session 1
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
       session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");

@@ -10,12 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
+import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -51,10 +52,11 @@ public class QueryObjectTypesIndication extends CDOReadIndication
       PROTOCOL.format("Reading {0} IDs", size);
     }
 
+    CDOIDObjectFactory factory = getStore().getCDOIDObjectFactory();
     ids = new CDOID[size];
     for (int i = 0; i < ids.length; i++)
     {
-      ids[i] = CDOIDUtil.read(in);
+      ids[i] = CDOIDUtil.read(in, factory);
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("Read ID: {0}", ids[i]);
@@ -67,13 +69,13 @@ public class QueryObjectTypesIndication extends CDOReadIndication
   {
     for (CDOID id : ids)
     {
-      CDOClassRef classRef = getSession().getObjectTypeRef(id);
+      CDOClassRef classRef = getSession().getClassRef(id);
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("Wrinting type: {0}", classRef);
       }
 
-      ((CDOClassRefImpl)classRef).write(out, null);
+      CDOModelUtil.writeClassRef(out, classRef);
     }
   }
 }

@@ -73,7 +73,10 @@ public class HorizontalMappingStrategy extends MappingStrategy
         if (table != null)
         {
           String sql = prefix + table + suffix;
-          if (TRACER.isEnabled()) TRACER.trace(sql);
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace(sql);
+          }
           ResultSet resultSet = null;
 
           try

@@ -13,13 +13,13 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.resource.CDOPathFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
@@ -46,7 +46,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
 {
   private Repository repository;
 
-  private CDOPathFeatureImpl cdoPathFeature;
+  private CDOPathFeature cdoPathFeature;
 
   public RevisionManager(Repository repository)
   {
@@ -57,6 +57,11 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   public Repository getRepository()
   {
     return repository;
+  }
+
+  public CDOIDObjectFactory getCDOIDObjectFactory()
+  {
+    return repository.getStore().getCDOIDObjectFactory();
   }
 
   public void addRevision(ITransaction<IStoreWriter> storeTransaction, InternalCDORevision revision)
@@ -98,10 +103,10 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   protected void ensureChunks(InternalCDORevision revision, int referenceChunk, IStoreReader storeReader)
   {
     CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
-    CDOFeatureImpl[] features = cdoClass.getAllFeatures();
+    CDOFeature[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
     {
-      CDOFeatureImpl feature = features[i];
+      CDOFeature feature = features[i];
       if (feature.isReference() && feature.isMany())
       {
         MoveableList<Object> list = revision.getList(feature);

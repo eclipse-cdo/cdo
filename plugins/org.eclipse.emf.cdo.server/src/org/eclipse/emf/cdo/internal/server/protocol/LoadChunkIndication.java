@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -21,6 +20,7 @@ import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.collection.MoveableList;
@@ -59,7 +59,7 @@ public class LoadChunkIndication extends CDOReadIndication
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    id = CDOIDUtil.read(in);
+    id = CDOIDUtil.read(in, getStore().getCDOIDObjectFactory());
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Read revision ID: {0}", id);
@@ -71,7 +71,7 @@ public class LoadChunkIndication extends CDOReadIndication
       PROTOCOL.format("Read revision version: {0}", version);
     }
 
-    CDOClassRef classRef = new CDOClassRefImpl(in, null);
+    CDOClassRef classRef = CDOModelUtil.readClassRef(in);
     int featureID = in.readInt();
     CDOClass cdoClass = classRef.resolve(getPackageManager());
     feature = cdoClass.lookupFeature(featureID);

@@ -14,10 +14,10 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -84,7 +84,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return revision;
   }
 
-  public CDOClassImpl cdoClass()
+  public CDOClass cdoClass()
   {
     return getCDOClass(this);
   }
@@ -220,7 +220,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   private void populateRevisionFeature(CDOViewImpl view, InternalCDORevision revision, EStructuralFeature eFeature,
       Object[] eSettings, int i)
   {
-    CDOFeatureImpl cdoFeature = ModelUtil.getCDOFeature(eFeature, view.getSession().getPackageManager());
+    CDOFeature cdoFeature = ModelUtil.getCDOFeature(eFeature, view.getSession().getPackageManager());
     if (TRACER.isEnabled())
     {
       TRACER.format("Populating feature {0}", cdoFeature);
@@ -293,7 +293,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   private void depopulateRevisionFeature(CDOViewImpl view, InternalCDORevision revision, EStructuralFeature eFeature,
       Object[] eSettings, int i)
   {
-    CDOFeatureImpl cdoFeature = ModelUtil.getCDOFeature(eFeature, view.getSession().getPackageManager());
+    CDOFeature cdoFeature = ModelUtil.getCDOFeature(eFeature, view.getSession().getPackageManager());
     if (TRACER.isEnabled())
     {
       TRACER.format("Depopulating feature {0}", cdoFeature);
@@ -583,7 +583,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return eClass().getName() + "@" + id;
   }
 
-  static CDOClassImpl getCDOClass(InternalCDOObject cdoObject)
+  static CDOClass getCDOClass(InternalCDOObject cdoObject)
   {
     CDOViewImpl view = (CDOViewImpl)cdoObject.cdoView();
     CDOSessionPackageManagerImpl packageManager = view.getSession().getPackageManager();

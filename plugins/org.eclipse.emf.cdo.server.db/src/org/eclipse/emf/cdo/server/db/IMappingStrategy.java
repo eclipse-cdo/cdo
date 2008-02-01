@@ -45,7 +45,7 @@ public interface IMappingStrategy
   public String readResourcePath(IDBStoreReader storeReader, CDOID id);
 
   /**
-   * Must return the next CDOID value to be used for new objects.
+   * Must return the maximum CDOID value .
    */
   public long repairAfterCrash(Connection connection);
 }

@@ -16,9 +16,9 @@ import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
-import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;

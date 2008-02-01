@@ -26,6 +26,8 @@ import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDMeta;
+import org.eclipse.emf.cdo.protocol.id.CDOIDObject;
 import org.eclipse.emf.cdo.protocol.id.CDOIDProvider;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
@@ -243,7 +245,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public InternalCDOObject newInstance(CDOClass cdoClass)
   {
-    EClass eClass = ModelUtil.getEClass((CDOClassImpl)cdoClass, session.getPackageRegistry());
+    EClass eClass = ModelUtil.getEClass(cdoClass, session.getPackageRegistry());
     if (eClass == null)
     {
       throw new IllegalStateException("No EClass for " + cdoClass);
@@ -278,7 +280,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       {
         if (id.isMeta())
         {
-          lastLookupObject = createMetaObject(id);
+          lastLookupObject = createMetaObject((CDOIDMeta)id);
         }
         else
         {
@@ -318,7 +320,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   /**
    * @return Never <code>null</code>
    */
-  private InternalCDOObject createMetaObject(CDOID id)
+  private InternalCDOObject createMetaObject(CDOIDMeta id)
   {
     if (TRACER.isEnabled())
     {
@@ -376,7 +378,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       TRACER.format("Creating proxy for " + id);
     }
 
-    CDOClassImpl cdoClass = getObjectType(id);
+    CDOClass cdoClass = getObjectType(id);
     InternalCDOObject object = newInstance(cdoClass);
     if (object instanceof CDOResourceImpl)
     {
@@ -389,18 +391,18 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return object;
   }
 
-  private CDOClassImpl getObjectType(CDOID id)
+  private CDOClass getObjectType(CDOID id)
   {
-    CDOClassImpl type = session.getObjectType(id);
+    CDOClass type = session.getObjectType(id);
     if (type != null)
     {
       return type;
     }
 
-    CDOClassRef typeRef = id.getType();
-    if (typeRef != null)
+    if (id.isLegacy())
     {
-      type = (CDOClassImpl)typeRef.resolve(session.getPackageManager());
+      CDOClassRef typeRef = ((CDOIDObject)id).getClassRef();
+      type = typeRef.resolve(session.getPackageManager());
       session.registerObjectType(id, type);
       return type;
     }

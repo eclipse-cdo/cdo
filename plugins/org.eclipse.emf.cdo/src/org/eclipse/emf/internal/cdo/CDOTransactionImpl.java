@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
@@ -63,10 +64,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSCTION, CDOTransactionImpl.class);
 
-  private static final long INITIAL_TEMPORARY_ID = -2L;
-
-  private transient long nextTemporaryID = INITIAL_TEMPORARY_ID;
-
   /**
    * TODO Optimize by storing an array. See {@link Notifier}.
    */
@@ -87,6 +84,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   private boolean conflict;
 
   private long commitTimeout;
+
+  private int lastTemporaryID;
 
   public CDOTransactionImpl(int id, CDOSessionImpl session)
   {
@@ -178,12 +177,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     return Collections.unmodifiableMap(revisionDeltas);
   }
 
-  public CDOID getNextTemporaryID()
+  public CDOIDTemp getNextTemporaryID()
   {
-    long id = nextTemporaryID;
-    --nextTemporaryID;
-    --nextTemporaryID;
-    return CDOIDUtil.create(id);
+    return CDOIDUtil.createCDOIDTempObject(++lastTemporaryID);
   }
 
   public CDOResource createResource(String path)
@@ -401,7 +397,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
     for (EPackage usedPackage : usedPackages)
     {
-      CDOPackageImpl cdoPackage = ModelUtil.getCDOPackage(usedPackage, packageManager);
+      CDOPackage cdoPackage = ModelUtil.getCDOPackage(usedPackage, packageManager);
       if (cdoPackage == null)
       {
         throw new IllegalStateException("Missing CDO package: " + usedPackage.getNsURI());
@@ -449,7 +445,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     revisionDeltas.clear();
     dirty = false;
     conflict = false;
-    nextTemporaryID = INITIAL_TEMPORARY_ID;
+    lastTemporaryID = 0;
   }
 
   /**

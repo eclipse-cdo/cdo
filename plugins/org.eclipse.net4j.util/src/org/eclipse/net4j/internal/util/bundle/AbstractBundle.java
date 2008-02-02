@@ -209,7 +209,13 @@ public abstract class AbstractBundle implements OMBundle
 
   public InputStream getInputStream(String path) throws IOException
   {
-    URL url = new URL(getBaseURL().toString() + ".options"); //$NON-NLS-1$
+    String base = getBaseURL().toString();
+    if (!path.startsWith("/"))
+    {
+      base += "/";
+    }
+
+    URL url = new URL(base + path);
     return url.openStream();
   }
 

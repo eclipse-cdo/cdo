@@ -25,6 +25,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
+import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -54,6 +56,8 @@ public class HibernateTest
   {
     // Turn on tracing
     OMPlatform.INSTANCE.setDebugging(true);
+    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
+    OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
 
     // Prepare the standalone infra structure (not needed when running inside Eclipse)
     IManagedContainer container = ContainerUtil.createContainer(); // Create a wiring container

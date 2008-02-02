@@ -39,6 +39,9 @@ public class CDOResourceFactoryImpl implements Resource.Factory, CDOResourceFact
     return resource;
   }
 
+  /**
+   * TODO Add TCs to ensure that Ecore internally doesn't change the way the stack is used!!!
+   */
   private boolean isExistingResource()
   {
     boolean inResourceSet = false;

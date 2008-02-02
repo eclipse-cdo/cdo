@@ -50,6 +50,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import org.eclipse.emf.common.util.URI;
@@ -153,9 +154,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return cdoidObjectFactory.getCDOIDObjectClasses();
   }
 
-  public CDOIDObject createCDOIDObject()
+  public CDOIDObject createCDOIDObject(ExtendedDataInput in)
   {
-    return cdoidObjectFactory.createCDOIDObject();
+    return cdoidObjectFactory.createCDOIDObject(in);
   }
 
   public boolean isDisableLegacyObjects()

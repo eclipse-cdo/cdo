@@ -54,17 +54,7 @@ public class HibernateTest
 
   public static void main(String[] args) throws Exception
   {
-    // Turn on tracing
-    OMPlatform.INSTANCE.setDebugging(true);
-    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
-    OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
-
-    // Prepare the standalone infra structure (not needed when running inside Eclipse)
-    IManagedContainer container = ContainerUtil.createContainer(); // Create a wiring container
-    Net4jUtil.prepareContainer(container); // Prepare the Net4j kernel
-    JVMUtil.prepareContainer(container); // Prepare the JVM transport
-    CDOServerUtil.prepareContainer(container); // Prepare the CDO server
-    CDOUtil.prepareContainer(container, false); // Prepare the CDO client
+    IManagedContainer container = initContainer();
 
     // Start the transport and create a repository
     JVMUtil.getAcceptor(container, "default"); // Start the JVM transport
@@ -84,6 +74,22 @@ public class HibernateTest
     transaction.commit();
     session.close();
     connector.disconnect();
+  }
+
+  private static IManagedContainer initContainer()
+  {
+    // Turn on tracing
+    OMPlatform.INSTANCE.setDebugging(true);
+    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
+    OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+
+    // Prepare the standalone infra structure (not needed when running inside Eclipse)
+    IManagedContainer container = ContainerUtil.createContainer(); // Create a wiring container
+    Net4jUtil.prepareContainer(container); // Prepare the Net4j kernel
+    JVMUtil.prepareContainer(container); // Prepare the JVM transport
+    CDOServerUtil.prepareContainer(container); // Prepare the CDO server
+    CDOUtil.prepareContainer(container, false); // Prepare the CDO client
+    return container;
   }
 
   private static IRepository createRepository() throws Exception

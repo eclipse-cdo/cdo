@@ -34,7 +34,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
+import org.hibernate.dialect.MySQLDialect;
 
+import java.io.PrintWriter;
+import java.sql.Driver;
+import java.sql.DriverManager;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +50,7 @@ public class HibernateTest
 {
   private static final String REPOSITORY_NAME = "repo1";
 
-  public static void main(String[] args)
+  public static void main(String[] args) throws Exception
   {
     // Turn on tracing
     OMPlatform.INSTANCE.setDebugging(true);
@@ -77,7 +82,7 @@ public class HibernateTest
     connector.disconnect();
   }
 
-  private static IRepository createRepository()
+  private static IRepository createRepository() throws Exception
   {
     Map<String, String> props = new HashMap<String, String>();
     props.put(Props.PROP_SUPPORTING_AUDITS, "false");
@@ -88,9 +93,20 @@ public class HibernateTest
     return CDOServerUtil.createRepository(REPOSITORY_NAME, createStore(), props);
   }
 
-  private static IStore createStore()
+  private static IStore createStore() throws Exception
   {
+    DriverManager.setLogWriter(new PrintWriter(System.out));
+    Driver driver = new com.mysql.jdbc.Driver();
+    DriverManager.registerDriver(driver);
+    String driverName = driver.getClass().getName();
+    String dialectName = MySQLDialect.class.getName();
+
     Configuration configuration = new Configuration();
+    configuration.setProperty(Environment.DRIVER, driverName);
+    configuration.setProperty(Environment.URL, "jdbc:mysql://localhost/cdohibernate");
+    configuration.setProperty(Environment.USER, "root");
+    configuration.setProperty(Environment.DIALECT, dialectName);
+    configuration.setProperty(Environment.SHOW_SQL, "true");
     return new HibernateStore(configuration);
   }
 

@@ -65,13 +65,13 @@ public class HibernateTest
     CDOSession session = CDOUtil.openSession(connector, REPOSITORY_NAME, true);// Open a CDO session
     session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);// Not needed after first commit!!!
 
-    CDOTransaction transaction = session.openTransaction();// Open a CDO transaction
-    Resource resource = transaction.createResource("/my/big/resource");// Create a new EMF resource
-
-    // Work normally with the EMF resource
-    EObject inputModel = getInputModel();
-    resource.getContents().add(inputModel);
+    // Open a transaction, and create a new resource
+    CDOTransaction transaction = session.openTransaction();
+    Resource resource = transaction.createResource("/my/big/resource");
+    resource.getContents().add(getInputModel());
     transaction.commit();
+
+    // Cleanup
     session.close();
     connector.disconnect();
   }

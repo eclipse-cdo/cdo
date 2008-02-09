@@ -21,7 +21,7 @@ import org.eclipse.net4j.util.event.INotifier;
  * connection. The underlying physical connection is represented by a {@link IConnector}.
  * <p>
  * This interface is <b>not</b> intended to be implemented by clients. Providers of channels (for example for new
- * physical connection types) have to subclass
+ * physical connection types) have to extend/subclass
  * {@link org.eclipse.internal.net4j.channel.InternalChannel InternalChannel}.
  * <p>
  * <dt><b>Class Diagram:</b></dt>

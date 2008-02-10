@@ -7,6 +7,6 @@
 <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
 <listEntry value="org.eclipse.ui.externaltools.launchGroup"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="C:\develop\lib\db-derby-10.3.2.1-bin\bin\startNetworkServer.bat"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="C:\develop\_lib\db-derby-10.3.2.1-bin\bin\startNetworkServer.bat"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="C:\temp"/>
 </launchConfiguration>

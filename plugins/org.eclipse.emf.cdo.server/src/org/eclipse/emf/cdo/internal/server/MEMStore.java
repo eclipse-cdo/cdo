@@ -12,9 +12,12 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
+
+import org.eclipse.net4j.util.ObjectUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,13 +135,39 @@ public class MEMStore extends LongIDStore
     return false;
   }
 
-  @Override
+  public synchronized CDORevision getResource(String path)
+  {
+    CDOPathFeature pathFeature = getRepository().getPackageManager().getCDOResourcePackage().getCDOResourceClass()
+        .getCDOPathFeature();
+    for (List<CDORevision> list : revisions.values())
+    {
+      if (!list.isEmpty())
+      {
+        CDORevision revision = list.get(0);
+        if (revision.isResource())
+        {
+          String p = (String)revision.getData().get(pathFeature, 0);
+          if (ObjectUtil.equals(p, path))
+          {
+            return revision;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  public boolean hasBranchingSupport()
+  {
+    return false;
+  }
+
   public boolean hasWriteDeltaSupport()
   {
     return true;
   }
 
-  @Override
   public boolean hasAuditingSupport()
   {
     return true;

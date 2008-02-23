@@ -51,7 +51,10 @@ public class ResourceManager extends Lifecycle implements IResourceManager
     if (id == null)
     {
       id = loadID(path);
-      registerResource(id, path);
+      if (id != null)
+      {
+        registerResource(id, path);
+      }
     }
 
     return id;
@@ -63,7 +66,10 @@ public class ResourceManager extends Lifecycle implements IResourceManager
     if (path == null)
     {
       path = loadPath(id);
-      registerResource(id, path);
+      if (path != null)
+      {
+        registerResource(id, path);
+      }
     }
 
     return path;

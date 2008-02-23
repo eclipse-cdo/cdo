@@ -14,15 +14,10 @@ import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IStoreReader;
-import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.StoreUtil;
-
-import org.eclipse.net4j.util.transaction.ITransaction;
-import org.eclipse.net4j.util.transaction.ITransactionalOperation;
 
 import java.util.Collection;
 
@@ -46,16 +41,6 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
   public CDOIDObjectFactory getCDOIDObjectFactory()
   {
     return repository.getStore().getCDOIDObjectFactory();
-  }
-
-  public void addPackages(ITransaction<IStoreWriter> storeTransaction, CDOPackage[] cdoPackages)
-  {
-    for (CDOPackage cdoPackage : cdoPackages)
-    {
-      ((CDOPackageImpl)cdoPackage).setPackageManager(this);
-    }
-
-    storeTransaction.execute(new AddPackagesOperation(cdoPackages));
   }
 
   @Override
@@ -96,36 +81,6 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
       {
         storeReader.release();
       }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class AddPackagesOperation implements ITransactionalOperation<IStoreWriter>
-  {
-    private CDOPackage[] cdoPackages;
-
-    private AddPackagesOperation(CDOPackage[] cdoPackages)
-    {
-      this.cdoPackages = cdoPackages;
-    }
-
-    public void phase1(IStoreWriter storeWriter) throws Exception
-    {
-      storeWriter.writePackages(cdoPackages);
-    }
-
-    public void phase2(IStoreWriter storeWriter)
-    {
-      for (CDOPackage cdoPackage : cdoPackages)
-      {
-        addPackage(cdoPackage);
-      }
-    }
-
-    public void undoPhase1(IStoreWriter storeWriter)
-    {
     }
   }
 }

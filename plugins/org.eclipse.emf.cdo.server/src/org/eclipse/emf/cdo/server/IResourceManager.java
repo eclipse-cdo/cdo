@@ -17,7 +17,13 @@ import org.eclipse.emf.cdo.protocol.id.CDOID;
  */
 public interface IResourceManager extends IRepositoryElement
 {
+  /**
+   * Returns the <code>CDOID</code> of the resource with the given path.
+   */
   public CDOID getResourceID(String path);
 
+  /**
+   * Returns the path of the resource with the given <code>CDOID</code>.
+   */
   public String getResourcePath(CDOID id);
 }

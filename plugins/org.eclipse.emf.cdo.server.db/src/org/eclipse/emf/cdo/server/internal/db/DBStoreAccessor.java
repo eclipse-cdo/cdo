@@ -34,8 +34,6 @@ import java.util.Set;
  */
 public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 {
-  // private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
-
   private Connection connection;
 
   private Statement statement;

@@ -42,6 +42,8 @@ public interface CDOTransaction extends CDOView
    */
   public CDOResource createResource(String path);
 
+  public CDOResource getOrCreateResource(String path);
+
   public CDOObject newInstance(EClass eClass);
 
   public CDOObject newInstance(CDOClass cdoClass);

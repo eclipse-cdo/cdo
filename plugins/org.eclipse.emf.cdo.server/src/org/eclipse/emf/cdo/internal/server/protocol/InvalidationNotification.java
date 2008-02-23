@@ -22,6 +22,7 @@ import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -32,9 +33,9 @@ public class InvalidationNotification extends Request
 
   private long timeStamp;
 
-  private CDOID[] dirtyIDs;
+  private List<CDOID> dirtyIDs;
 
-  public InvalidationNotification(IChannel channel, long timeStamp, CDOID[] dirtyIDs)
+  public InvalidationNotification(IChannel channel, long timeStamp, List<CDOID> dirtyIDs)
   {
     super(channel);
     this.timeStamp = timeStamp;
@@ -56,17 +57,15 @@ public class InvalidationNotification extends Request
     }
 
     out.writeLong(timeStamp);
-
-    int size = dirtyIDs.length;
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Writing {0} IDs", size);
+      PROTOCOL.format("Writing {0} dirty IDs", dirtyIDs.size());
     }
 
-    out.writeInt(size);
-    for (int i = 0; i < dirtyIDs.length; i++)
+    out.writeInt(dirtyIDs.size());
+    for (CDOID dirtyID : dirtyIDs)
     {
-      CDOIDUtil.write(out, dirtyIDs[i]);
+      CDOIDUtil.write(out, dirtyID);
     }
   }
 }

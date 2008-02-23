@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
@@ -421,7 +422,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CommitTransactionResult data)
     {
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
-      Map<CDOID, CDOID> idMappings = data.getIDMappings();
+      Map<CDOIDTemp, CDOID> idMappings = data.getIDMappings();
 
       // Adjust object
       CDOID id = object.cdoID();
@@ -593,7 +594,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, ResourceAndView data)
     {
       CDOID id = requestID(data.resource, data.view);
-      if (id == CDOID.NULL)
+      if (id.isNull())
       {
         throw new ServerException("Resource not available: " + data.resource.getPath());
       }

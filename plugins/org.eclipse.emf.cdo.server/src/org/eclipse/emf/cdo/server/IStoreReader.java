@@ -56,8 +56,16 @@ public interface IStoreReader extends IStoreAccessor
 
   public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version);
 
+  /**
+   * Returns the <code>CDOID</code> of the resource with the given path if a resource with this path exists in the
+   * store, <code>null</code> otherwise.
+   */
   public CDOID readResourceID(String path);
 
+  /**
+   * Returns the path of the resource with the given <code>CDOID</code> if a resource with this <code>CDOID</code>
+   * exists in the store, <code>null</code> otherwise.
+   */
   public String readResourcePath(CDOID id);
 
   public CDORevision verifyRevision(CDORevision revision);

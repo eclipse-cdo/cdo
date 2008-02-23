@@ -85,13 +85,11 @@ public class NoClassMapping implements IClassMapping
   {
   }
 
-  public void readRevisionByTime(IDBStoreReader storeReader, CDORevision revision, long timeStamp,
-      int referenceChunk)
+  public void readRevisionByTime(IDBStoreReader storeReader, CDORevision revision, long timeStamp, int referenceChunk)
   {
   }
 
-  public void readRevisionByVersion(IDBStoreReader storeReader, CDORevision revision, int version,
-      int referenceChunk)
+  public void readRevisionByVersion(IDBStoreReader storeReader, CDORevision revision, int version, int referenceChunk)
   {
   }
 }

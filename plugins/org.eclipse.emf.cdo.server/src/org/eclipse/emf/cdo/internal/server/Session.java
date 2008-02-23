@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
@@ -54,7 +53,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
   private boolean disableLegacyObjects;
 
-  private ConcurrentMap<Integer, View> views = new ConcurrentHashMap<Integer, View>();
+  private ConcurrentMap<Integer, IView> views = new ConcurrentHashMap<Integer, IView>();
 
   private IListener protocolListener = new LifecycleEventAdapter()
   {
@@ -120,7 +119,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     return views.values().toArray(new View[views.size()]);
   }
 
-  public View getView(int viewID)
+  public IView getView(int viewID)
   {
     return views.get(viewID);
   }
@@ -129,7 +128,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   {
     if (kind == CDOProtocolConstants.VIEW_CLOSED)
     {
-      View view = views.remove(viewID);
+      IView view = views.remove(viewID);
       if (view != null)
       {
         fireElementRemovedEvent(view);
@@ -137,29 +136,31 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     }
     else
     {
-      Type viewType = getViewType(kind);
-      View view = new View(this, viewID, viewType);
+      IView view = createView(kind, viewID);
       views.put(viewID, view);
       fireElementAddedEvent(view);
     }
   }
 
-  private Type getViewType(byte kind)
+  private IView createView(byte kind, int viewID)
   {
     switch (kind)
     {
     case CDOProtocolConstants.VIEW_TRANSACTION:
-      return Type.TRANSACTION;
-    case CDOProtocolConstants.VIEW_READONLY:
-      return Type.READONLY;
-    case CDOProtocolConstants.VIEW_AUDIT:
-      return Type.AUDIT;
-    }
+      return new Transaction(this, viewID);
 
-    throw new ImplementationError("Invalid kind: " + kind);
+    case CDOProtocolConstants.VIEW_READONLY:
+      return new View(this, viewID, Type.READONLY);
+
+    case CDOProtocolConstants.VIEW_AUDIT:
+      return new View(this, viewID, Type.AUDIT);
+
+    default:
+      throw new ImplementationError("Invalid kind: " + kind);
+    }
   }
 
-  public void notifyInvalidation(long timeStamp, CDOID[] dirtyIDs)
+  public void notifyInvalidation(long timeStamp, List<CDOID> dirtyIDs)
   {
     try
     {
@@ -203,7 +204,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
       List<InternalCDORevision> additionalRevisions)
   {
     RevisionManager revisionManager = getSessionManager().getRepository().getRevisionManager();
-    CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
+    CDOClass cdoClass = revision.getCDOClass();
     CDOFeature[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
     {

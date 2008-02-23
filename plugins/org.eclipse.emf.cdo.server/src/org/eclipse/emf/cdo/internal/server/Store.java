@@ -68,21 +68,6 @@ public abstract class Store extends Lifecycle implements IStore
     this.repository = repository;
   }
 
-  public boolean hasWriteDeltaSupport()
-  {
-    return false;
-  }
-
-  public boolean hasAuditingSupport()
-  {
-    return false;
-  }
-
-  public boolean hasBranchingSupport()
-  {
-    return false;
-  }
-
   public IStoreReader getReader(ISession session)
   {
     return createReader(session);

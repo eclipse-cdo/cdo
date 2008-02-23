@@ -15,25 +15,19 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreReader;
-import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 
 import org.eclipse.net4j.util.collection.MoveableList;
-import org.eclipse.net4j.util.transaction.ITransaction;
-import org.eclipse.net4j.util.transaction.ITransactionalOperation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -64,16 +58,6 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     return repository.getStore().getCDOIDObjectFactory();
   }
 
-  public void addRevision(ITransaction<IStoreWriter> storeTransaction, InternalCDORevision revision)
-  {
-    storeTransaction.execute(new AddRevisionOperation(revision));
-  }
-
-  public void addRevisionDelta(ITransaction<IStoreWriter> storeTransaction, CDORevisionDeltaImpl delta)
-  {
-    storeTransaction.execute(new AddRevisionDeltaOperation(delta));
-  }
-
   public CDOID resolveReferenceProxy(CDOReferenceProxy referenceProxy)
   {
     throw new UnsupportedOperationException("Reference proxies not supported on server side");
@@ -83,6 +67,18 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   {
     // There are currently no reference proxies on server side
     return null;
+  }
+
+  @Override
+  public boolean addRevision(InternalCDORevision revision)
+  {
+    if (revision.isResource())
+    {
+      String path = (String)revision.get(cdoPathFeature, 0);
+      repository.getResourceManager().registerResource(revision.getID(), path);
+    }
+
+    return super.addRevision(revision);
   }
 
   @Override
@@ -268,94 +264,5 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   {
     String capacity = repository.getProperties().get(prop);
     return capacity == null ? 0 : Integer.valueOf(capacity);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class AddRevisionOperation implements ITransactionalOperation<IStoreWriter>
-  {
-    private InternalCDORevision revision;
-
-    private AddRevisionOperation(InternalCDORevision revision)
-    {
-      this.revision = revision;
-    }
-
-    public void phase1(IStoreWriter storeWriter) throws Exception
-    {
-      // Can throw an exception if duplicate
-      storeWriter.writeRevision(revision);
-    }
-
-    public void phase2(IStoreWriter storeWriter)
-    {
-      addRevision(revision);
-      if (revision.isResource())
-      {
-        String path = (String)revision.getData().get(cdoPathFeature, -1);
-        repository.getResourceManager().registerResource(revision.getID(), path);
-      }
-    }
-
-    public void undoPhase1(IStoreWriter storeWriter)
-    {
-    }
-  }
-
-  /**
-   * @author Simon McDuff
-   */
-  private final class AddRevisionDeltaOperation implements ITransactionalOperation<IStoreWriter>
-  {
-    private CDORevisionDeltaImpl revisionDelta;
-
-    private InternalCDORevision dirtyRevision;
-
-    private AddRevisionDeltaOperation(CDORevisionDeltaImpl revisionDelta)
-    {
-      this.revisionDelta = revisionDelta;
-    }
-
-    public void phase1(IStoreWriter storeWriter) throws Exception
-    {
-      boolean supportDelta = getRepository().isSupportingRevisionDeltas();
-      InternalCDORevision originRevision = getRevisionByVersion(revisionDelta.getID(), CDORevision.UNCHUNKED,
-          revisionDelta.getOriginVersion(), !supportDelta);
-
-      if (originRevision != null)
-      {
-        dirtyRevision = (InternalCDORevision)CDORevisionUtil.copy(originRevision);
-        revisionDelta.apply(dirtyRevision);
-      }
-      else if (!supportDelta)
-      {
-        // Origin revision need to be accessible for stores that do not support deltas
-        throw new IllegalStateException("Can not retrieve origin revision");
-      }
-
-      if (supportDelta)
-      {
-        // Can throw an exception if duplicate
-        storeWriter.writeRevisionDelta(revisionDelta);
-      }
-      else
-      {
-        // Can throw an exception if duplicate
-        storeWriter.writeRevision(dirtyRevision);
-      }
-    }
-
-    public void phase2(IStoreWriter storeWriter)
-    {
-      if (dirtyRevision != null)
-      {
-        addRevision(dirtyRevision);
-      }
-    }
-
-    public void undoPhase1(IStoreWriter storeWriter)
-    {
-    }
   }
 }

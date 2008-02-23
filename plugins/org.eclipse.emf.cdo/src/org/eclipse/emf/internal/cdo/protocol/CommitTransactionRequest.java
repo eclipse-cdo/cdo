@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
@@ -63,11 +64,47 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
+    List<CDOPackage> newPackages = transaction.getNewPackages();
+    Collection<CDOResource> newResources = transaction.getNewResources().values();
+    Collection<CDOObject> newObjects = transaction.getNewObjects().values();
+    Collection<CDORevisionDelta> dirtyObjects = transaction.getRevisionDeltas().values();
+
     out.writeInt(transaction.getViewID());
-    writeNewPackages(out);
-    writeNewResources(out);
-    writeNewObjects(out);
-    writeRevisionDeltas(out);
+    out.writeInt(newPackages.size());
+    out.writeInt(newResources.size() + newObjects.size());
+    out.writeInt(dirtyObjects.size());
+
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing {0} new packages", newPackages.size());
+    }
+
+    for (CDOPackage newPackage : newPackages)
+    {
+      CDOModelUtil.writePackage(out, newPackage);
+    }
+
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing {0} new objects", newResources.size() + newObjects.size());
+    }
+
+    writeRevisions(out, newResources);
+    writeRevisions(out, newObjects);
+
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing {0} dirty objects", dirtyObjects.size());
+    }
+
+    RevisionAdjuster revisionAdjuster = new RevisionAdjuster(transaction);
+    for (CDORevisionDelta revisionDelta : dirtyObjects)
+    {
+      revisionDelta.write(out, transaction);
+      CDOObject object = transaction.getDirtyObjects().get(revisionDelta.getID());
+      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+      revisionAdjuster.adjustRevision(revision, revisionDelta);
+    }
   }
 
   @Override
@@ -93,7 +130,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
       ((CDOPackageImpl)newPackage).setMetaIDRange(newRange);
       for (int i = 0; i < oldRange.size(); i++)
       {
-        CDOID oldID = oldRange.get(i);
+        CDOIDTemp oldID = (CDOIDTemp)oldRange.get(i);
         CDOID newID = newRange.get(i);
         session.remapMetaInstance(oldID, newID);
         result.addIDMapping(oldID, newID);
@@ -102,7 +139,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
     for (;;)
     {
-      CDOID oldID = CDOIDUtil.read(in, session);
+      CDOIDTemp oldID = (CDOIDTemp)CDOIDUtil.read(in, session);
       if (oldID.isNull())
       {
         break;
@@ -113,43 +150,6 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     }
 
     return result;
-  }
-
-  private void writeNewPackages(ExtendedDataOutputStream out) throws IOException
-  {
-    List<CDOPackage> newPackages = transaction.getNewPackages();
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Writing {0} new packages", newPackages.size());
-    }
-
-    out.writeInt(newPackages.size());
-    for (CDOPackage newPackage : newPackages)
-    {
-      CDOModelUtil.writePackage(out, newPackage);
-    }
-  }
-
-  private void writeNewResources(ExtendedDataOutputStream out) throws IOException
-  {
-    Collection<CDOResource> newResources = transaction.getNewResources().values();
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Writing {0} new resources", newResources.size());
-    }
-
-    writeRevisions(out, newResources);
-  }
-
-  private void writeNewObjects(ExtendedDataOutputStream out) throws IOException
-  {
-    Collection<CDOObject> newObjects = transaction.getNewObjects().values();
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Writing {0} new objects", newObjects.size());
-    }
-
-    writeRevisions(out, newObjects);
   }
 
   @SuppressWarnings("unused")
@@ -164,28 +164,8 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     writeRevisions(out, dirtyObjects);
   }
 
-  private void writeRevisionDeltas(ExtendedDataOutputStream out) throws IOException
-  {
-    Collection<CDORevisionDelta> revisionDeltas = transaction.getRevisionDeltas().values();
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Writing {0} revision deltas", revisionDeltas.size());
-    }
-
-    RevisionAdjuster revisionAdjuster = new RevisionAdjuster(transaction);
-    out.writeInt(revisionDeltas.size());
-    for (CDORevisionDelta revisionDelta : revisionDeltas)
-    {
-      revisionDelta.write(out, transaction);
-      CDOObject object = transaction.getDirtyObjects().get(revisionDelta.getID());
-      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
-      revisionAdjuster.adjustRevision(revision, revisionDelta);
-    }
-  }
-
   private void writeRevisions(ExtendedDataOutputStream out, Collection<?> objects) throws IOException
   {
-    out.writeInt(objects.size());
     for (Iterator<?> it = objects.iterator(); it.hasNext();)
     {
       CDOObject object = (CDOObject)it.next();

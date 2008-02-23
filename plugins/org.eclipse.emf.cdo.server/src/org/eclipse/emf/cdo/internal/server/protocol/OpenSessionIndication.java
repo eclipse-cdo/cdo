@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.internal.protocol.id.CDOIDObjectFactoryImpl;
 import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.Session;
@@ -165,17 +166,24 @@ public class OpenSessionIndication extends IndicationWithResponse
 
   private void writeCDOIDObjectFactory(ExtendedDataOutputStream out, CDOIDObjectFactory factory) throws IOException
   {
-    Class<?>[] classes = factory.getCDOIDObjectClasses();
-    if (classes == null)
+    if (factory.getClass() == CDOIDObjectFactoryImpl.class)
     {
-      classes = new Class<?>[0];
+      out.writeInt(0);
     }
-
-    out.writeInt(1 + classes.length);
-    serializeClass(out, factory.getClass());
-    for (Class<?> c : classes)
+    else
     {
-      serializeClass(out, c);
+      Class<?>[] classes = factory.getCDOIDObjectClasses();
+      if (classes == null)
+      {
+        classes = new Class<?>[0];
+      }
+
+      out.writeInt(1 + classes.length);
+      serializeClass(out, factory.getClass());
+      for (Class<?> c : classes)
+      {
+        serializeClass(out, c);
+      }
     }
   }
 

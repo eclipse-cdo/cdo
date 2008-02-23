@@ -57,7 +57,7 @@ public class ImportXML
 
     // Start the transport and create a repository
     JVMUtil.getAcceptor(container, "default"); // Start the JVM transport
-    CDOServerUtil.addRepository(container, createRepository()); // Start a CDO respository
+    CDOServerUtil.addRepository(container, createRepository()); // Start a CDO repository
 
     // Establish a communications connection and open a session with the repository
     IConnector connector = JVMUtil.getConnector(container, "default"); // Open a JVM connection

@@ -11,6 +11,7 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,7 @@ public final class CommitTransactionResult
 
   private long timeStamp;
 
-  private Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
+  private Map<CDOIDTemp, CDOID> idMappings = new HashMap<CDOIDTemp, CDOID>();
 
   public CommitTransactionResult(String rollbackMessage)
   {
@@ -46,12 +47,12 @@ public final class CommitTransactionResult
     return timeStamp;
   }
 
-  public Map<CDOID, CDOID> getIDMappings()
+  public Map<CDOIDTemp, CDOID> getIDMappings()
   {
     return idMappings;
   }
 
-  void addIDMapping(CDOID oldID, CDOID newID)
+  void addIDMapping(CDOIDTemp oldID, CDOID newID)
   {
     idMappings.put(oldID, newID);
   }

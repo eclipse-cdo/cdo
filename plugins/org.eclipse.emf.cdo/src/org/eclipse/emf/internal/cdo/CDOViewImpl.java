@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.protocol.ResourceIDRequest;
 import org.eclipse.emf.internal.cdo.protocol.ResourcePathRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
@@ -45,6 +46,7 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
+import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -182,6 +184,26 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     throw new ReadOnlyException("CDO view is read only: " + this);
   }
 
+  public boolean hasResource(String path)
+  {
+    CDOID id = getResourceID(path);
+    return id != null && !id.isNull();
+  }
+
+  public CDOID getResourceID(String path)
+  {
+    try
+    {
+      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
+      ResourceIDRequest request = new ResourceIDRequest(session.getChannel(), path);
+      return failOverStrategy.send(request);
+    }
+    catch (Exception ex)
+    {
+      throw new TransactionException(ex);
+    }
+  }
+
   public CDOResource getResource(String path)
   {
     URI uri = CDOUtil.createResourceURI(path);
@@ -190,11 +212,12 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   public CDOResourceImpl getResource(CDOID resourceID)
   {
-    if (resourceID == null || resourceID == CDOID.NULL)
+    if (resourceID == null || resourceID.isNull())
     {
       throw new IllegalArgumentException("resourceID == null || resourceID == CDOID.NULL");
     }
 
+    // TODO What about somply looking in the objects cache of this view as well?
     ResourceSet resourceSet = getResourceSet();
     EList<Resource> resources = resourceSet.getResources();
     for (Resource resource : resources)
@@ -214,18 +237,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
       ResourcePathRequest request = new ResourcePathRequest(session.getChannel(), resourceID);
       String path = failOverStrategy.send(request);
-
-      CDOResourceImpl resource = (CDOResourceImpl)EresourceFactory.eINSTANCE.createCDOResource();
-      resource.setPath(path);
-
-      InternalCDOObject resourceObject = resource;
-      resourceObject.cdoInternalSetID(resourceID);
-      resourceObject.cdoInternalSetView(this);
-      resourceObject.cdoInternalSetResource(resource);
-      resourceObject.cdoInternalSetState(CDOState.PROXY);
-
-      resourceSet.getResources().add(resource);
-      return resource;
+      return addResource(resourceID, path);
     }
     catch (RuntimeException ex)
     {
@@ -235,6 +247,22 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     {
       throw new TransportException(ex);
     }
+  }
+
+  public CDOResourceImpl addResource(CDOID id, String path)
+  {
+    CDOResourceImpl resource = (CDOResourceImpl)EresourceFactory.eINSTANCE.createCDOResource();
+    resource.setPath(path);
+
+    InternalCDOObject resourceObject = resource;
+    resourceObject.cdoInternalSetID(id);
+    resourceObject.cdoInternalSetView(this);
+    resourceObject.cdoInternalSetResource(resource);
+    resourceObject.cdoInternalSetState(CDOState.PROXY);
+
+    ResourceSet resourceSet = getResourceSet();
+    resourceSet.getResources().add(resource);
+    return resource;
   }
 
   public InternalCDOObject newInstance(EClass eClass)

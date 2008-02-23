@@ -23,6 +23,7 @@ import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -103,13 +104,13 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     }
   }
 
-  public void notifyInvalidation(long timeStamp, CDOID[] dirtyObjects, Session excludedSession)
+  public void notifyInvalidation(long timeStamp, List<CDOID> dirtyIDs, Session excludedSession)
   {
     for (Session session : getSessions())
     {
       if (session != excludedSession)
       {
-        session.notifyInvalidation(timeStamp, dirtyObjects);
+        session.notifyInvalidation(timeStamp, dirtyIDs);
       }
     }
   }

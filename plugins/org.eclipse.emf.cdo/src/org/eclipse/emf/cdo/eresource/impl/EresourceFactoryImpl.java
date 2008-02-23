@@ -39,7 +39,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
     try
     {
       EresourceFactory theEresourceFactory = (EresourceFactory)EPackage.Registry.INSTANCE
-      .getEFactory("http://www.eclipse.org/emf/CDO/resource/1.0.0");
+          .getEFactory("http://www.eclipse.org/emf/CDO/resource/1.0.0");
       if (theEresourceFactory != null)
       {
         return theEresourceFactory;

@@ -230,6 +230,11 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
       throw new IllegalArgumentException("store is null");
     }
 
+    if (isSupportingRevisionDeltas() && !store.hasWriteDeltaSupport())
+    {
+      throw new IllegalStateException("Store without revision delta support");
+    }
+
     if (isSupportingAudits() && !store.hasAuditingSupport())
     {
       throw new IllegalStateException("Store without auditing support");

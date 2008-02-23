@@ -560,6 +560,7 @@ public abstract class ClassMapping implements IClassMapping
     {
       TRACER.trace(sql);
     }
+
     ResultSet resultSet = null;
 
     try

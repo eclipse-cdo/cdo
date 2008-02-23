@@ -55,6 +55,8 @@ public interface CDOView extends CDOProtocolView, INotifier
    */
   public CDORevision getRevision(CDOID id);
 
+  public boolean hasResource(String path);
+
   /**
    * @see ResourceSet#getResource(URI, boolean)
    */

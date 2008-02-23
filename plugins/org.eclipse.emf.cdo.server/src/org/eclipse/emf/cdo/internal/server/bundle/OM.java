@@ -35,6 +35,8 @@ public abstract class OM
 
   public static final OMTracer DEBUG_SESSION = DEBUG.tracer("session"); //$NON-NLS-1$
 
+  public static final OMTracer DEBUG_TRANSACTION = DEBUG.tracer("transaction"); //$NON-NLS-1$
+
   public static final OMTracer DEBUG_REVISION = DEBUG.tracer("revision"); //$NON-NLS-1$
 
   public static final OMTracer DEBUG_RESOURCE = DEBUG.tracer("resource"); //$NON-NLS-1$

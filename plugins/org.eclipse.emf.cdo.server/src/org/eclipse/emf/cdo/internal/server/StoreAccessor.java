@@ -11,18 +11,31 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
+
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 /**
  * @author Eike Stepper
  */
 public class StoreAccessor implements IStoreAccessor
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, StoreAccessor.class);
+
   private Store store;
 
   private Object context;
@@ -90,7 +103,115 @@ public class StoreAccessor implements IStoreAccessor
     return (InternalCDORevision)revision;
   }
 
-  public void writeRevisionDelta(CDORevisionDelta delta)
+  public void commit(CommitContext context)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Committing transaction: {0}", getView());
+    }
+
+    writePackages(context.getNewPackages());
+    addIDMappings(context);
+    context.applyIDMappings();
+    writeRevisions(context.getNewObjects());
+    if (store.hasWriteDeltaSupport() && store.getRepository().isSupportingRevisionDeltas())
+    {
+      writeRevisionDeltas(context.getDirtyObjectDeltas());
+    }
+    else
+    {
+      writeRevisions(context.getDirtyObjects());
+    }
+  }
+
+  public void rollback(CommitContext context)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Rolling back transaction: {0}", getView());
+    }
+  }
+
+  protected void addIDMappings(CommitContext context)
+  {
+    if (store instanceof LongIDStore)
+    {
+      LongIDStore longIDStore = (LongIDStore)getStore();
+      for (CDORevision revision : context.getNewObjects())
+      {
+        CDOIDTemp oldID = (CDOIDTemp)revision.getID();
+        CDOID newID = longIDStore.getNextCDOID();
+        if (newID == null || newID.isNull() || newID.isTemporary())
+        {
+          throw new IllegalStateException("newID=" + newID);
+        }
+
+        context.addIDMapping(oldID, newID);
+      }
+    }
+  }
+
+  protected void writePackages(CDOPackage... cdoPackages)
+  {
+    for (CDOPackage cdoPackage : cdoPackages)
+    {
+      writePackage(cdoPackage);
+    }
+  }
+
+  protected void writePackage(CDOPackage cdoPackage)
+  {
+    for (CDOClass cdoClass : cdoPackage.getClasses())
+    {
+      writeClass((CDOClassImpl)cdoClass);
+    }
+  }
+
+  protected void writeClass(CDOClassImpl cdoClass)
+  {
+    for (CDOClassProxy superType : cdoClass.getSuperTypeProxies())
+    {
+      writeSuperType(cdoClass, superType);
+    }
+
+    for (CDOFeature feature : cdoClass.getFeatures())
+    {
+      writeFeature(feature);
+    }
+  }
+
+  protected void writeSuperType(CDOClassImpl type, CDOClassProxy superType)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  protected void writeFeature(CDOFeature feature)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  protected void writeRevisions(CDORevision[] revisions)
+  {
+    for (CDORevision revision : revisions)
+    {
+      writeRevision(revision);
+    }
+  }
+
+  protected void writeRevision(CDORevision revision)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas)
+  {
+    for (CDORevisionDelta revisionDelta : revisionDeltas)
+    {
+      writeRevisionDelta(revisionDelta);
+    }
+  }
+
+  protected void writeRevisionDelta(CDORevisionDelta revisionDelta)
   {
     throw new UnsupportedOperationException();
   }

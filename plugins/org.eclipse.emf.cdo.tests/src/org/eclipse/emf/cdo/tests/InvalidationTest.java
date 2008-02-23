@@ -318,7 +318,7 @@ public class InvalidationTest extends AbstractCDOTest
     msg("Changing name");
     category1A.setName("CHANGED NAME");
 
-    ITimeOuter timeOuter = new PollingTimeOuter(10, 100)
+    ITimeOuter timeOuter = new PollingTimeOuter(20, 100)
     {
       @Override
       protected boolean successful()
@@ -328,14 +328,12 @@ public class InvalidationTest extends AbstractCDOTest
     };
 
     msg("Checking before commit");
-    boolean timedOut = timeOuter.timedOut();
-    assertEquals(true, timedOut);
+    assertEquals(true, timeOuter.timedOut());
 
     msg("Committing");
     transaction.commit();
 
     msg("Checking after commit");
-    timedOut = timeOuter.timedOut();
-    assertEquals(false, timedOut);
+    assertEquals(false, timeOuter.timedOut());
   }
 }

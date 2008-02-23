@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
+
 import org.eclipse.net4j.util.container.IContainer;
 
 import java.util.Map;
@@ -33,6 +35,8 @@ public interface IRepository extends IContainer<IRepositoryElement>
 
   public String getUUID();
 
+  public boolean isSupportingRevisionDeltas();
+
   public boolean isSupportingAudits();
 
   public boolean isVerifyingRevisions();
@@ -44,6 +48,8 @@ public interface IRepository extends IContainer<IRepositoryElement>
   public IResourceManager getResourceManager();
 
   public IRevisionManager getRevisionManager();
+
+  public CDOIDMetaRange getMetaIDRange(int count);
 
   /**
    * @author Eike Stepper

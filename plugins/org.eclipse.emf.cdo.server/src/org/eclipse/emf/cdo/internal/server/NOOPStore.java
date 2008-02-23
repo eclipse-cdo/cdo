@@ -25,7 +25,16 @@ public class NOOPStore extends LongIDStore
     super(TYPE);
   }
 
-  @Override
+  public boolean hasBranchingSupport()
+  {
+    return false;
+  }
+
+  public boolean hasWriteDeltaSupport()
+  {
+    return true;
+  }
+
   public boolean hasAuditingSupport()
   {
     return true;

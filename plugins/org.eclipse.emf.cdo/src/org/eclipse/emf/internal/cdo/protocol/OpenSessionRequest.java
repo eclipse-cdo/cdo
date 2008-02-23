@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.internal.protocol.id.CDOIDObjectFactoryImpl;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
@@ -118,10 +119,17 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
     }
 
     int classes = in.readInt();
-    result.setCDOIDObjectFactoryClass(deserializeClass(in));
-    for (int i = 1; i < classes; i++)
+    if (classes == 0)
     {
-      result.addCDOIDObjectClass(deserializeClass(in));
+      result.setCDOIDObjectFactoryClass(CDOIDObjectFactoryImpl.class);
+    }
+    else
+    {
+      result.setCDOIDObjectFactoryClass(deserializeClass(in));
+      for (int i = 1; i < classes; i++)
+      {
+        result.addCDOIDObjectClass(deserializeClass(in));
+      }
     }
 
     return result;
@@ -156,31 +164,6 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
     catch (ClassNotFoundException ex)
     {
       throw WrappedException.wrap(ex);
-    }
-  }
-
-  private static final class CustomObjectInputStream extends ObjectInputStream
-  {
-    public CustomObjectInputStream(InputStream in) throws IOException
-    {
-      super(in);
-    }
-
-    @Override
-    protected Class<?> resolveClass(ObjectStreamClass v) throws IOException, ClassNotFoundException
-    {
-      String className = v.getName();
-      ClassLoader loader = getClass().getClassLoader();
-
-      try
-      {
-        return loader.loadClass(className);
-      }
-      catch (ClassNotFoundException ex)
-      {
-        ex.printStackTrace();
-        return super.resolveClass(v);
-      }
     }
   }
 }

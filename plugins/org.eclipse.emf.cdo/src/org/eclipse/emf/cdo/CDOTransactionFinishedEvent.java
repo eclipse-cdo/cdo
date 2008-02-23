@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public interface CDOTransactionFinishedEvent extends CDOViewEvent
 {
   public Type getType();
 
-  public Map<CDOID, CDOID> getIDMappings();
+  public Map<CDOIDTemp, CDOID> getIDMappings();
 
   public enum Type
   {

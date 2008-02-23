@@ -167,11 +167,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     return Collections.unmodifiableMap(newObjects);
   }
 
+  /**
+   * TODO Consolidate with {@link #getRevisionDeltas()}
+   */
   public Map<CDOID, CDOObject> getDirtyObjects()
   {
     return Collections.unmodifiableMap(dirtyObjects);
   }
 
+  /**
+   * TODO Consolidate with {@link #getDirtyObjects()}
+   */
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
   {
     return Collections.unmodifiableMap(revisionDeltas);
@@ -186,6 +192,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   {
     URI createURI = CDOUtil.createResourceURI(path);
     return (CDOResource)getResourceSet().createResource(createURI);
+  }
+
+  public CDOResource getOrCreateResource(String path)
+  {
+    CDOID id = getResourceID(path);
+    if (id == null || id.isNull())
+    {
+      return createResource(path);
+    }
+    else
+    {
+      return addResource(id, path);
+    }
   }
 
   public void commit() throws TransactionException
@@ -236,7 +255,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
         }
 
         cleanUp();
-        Map<CDOID, CDOID> idMappings = result.getIDMappings();
+        Map<CDOIDTemp, CDOID> idMappings = result.getIDMappings();
         fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings));
       }
       catch (RuntimeException ex)
@@ -280,7 +299,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       }
 
       cleanUp();
-      Map<CDOID, CDOID> idMappings = Collections.emptyMap();
+      Map<CDOIDTemp, CDOID> idMappings = Collections.emptyMap();
       fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.ROLLED_BACK, idMappings));
     }
     catch (RuntimeException ex)
@@ -475,9 +494,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
     private Type type;
 
-    private Map<CDOID, CDOID> idMappings;
+    private Map<CDOIDTemp, CDOID> idMappings;
 
-    private FinishedEvent(Type type, Map<CDOID, CDOID> idMappings)
+    private FinishedEvent(Type type, Map<CDOIDTemp, CDOID> idMappings)
     {
       this.type = type;
       this.idMappings = idMappings;
@@ -488,7 +507,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       return type;
     }
 
-    public Map<CDOID, CDOID> getIDMappings()
+    public Map<CDOIDTemp, CDOID> getIDMappings()
     {
       return idMappings;
     }

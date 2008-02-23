@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
@@ -121,7 +120,8 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
 
   public CDOID readResourceID(String path)
   {
-    throw new UnsupportedOperationException();
+    CDORevision revision = getStore().getResource(path);
+    return revision == null ? null : revision.getID();
   }
 
   public String readResourcePath(CDOID id)
@@ -129,40 +129,50 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     throw new UnsupportedOperationException();
   }
 
-  public CDOID primeNewObject(CDOClass cdoClass)
-  {
-    return getStore().getNextCDOID();
-  }
-
-  public void writePackages(CDOPackage... cdoPackages)
-  {
-  }
-
-  public void writeRevision(CDORevision revision)
-  {
-    newRevisions.add(revision);
-  }
-
   @Override
-  public void writeRevisionDelta(CDORevisionDelta delta)
-  {
-    InternalCDORevision revision = (InternalCDORevision)getStore().getRevision(delta.getID());
-    InternalCDORevision newRevision = (InternalCDORevision)CDORevisionUtil.copy(revision);
-    delta.apply(newRevision);
-    newRevisions.add(newRevision);
-  }
-
-  public void commit()
+  public void commit(CommitContext context)
   {
     MEMStore store = getStore();
-    for (CDORevision revision : newRevisions)
+    synchronized (store)
     {
-      store.addRevision(revision);
+      super.commit(context);
     }
   }
 
-  public void rollback()
+  @Override
+  public void rollback(CommitContext context)
   {
+    MEMStore store = getStore();
+    synchronized (store)
+    {
+      super.rollback(context);
+      for (CDORevision revision : newRevisions)
+      {
+        store.removeRevision(revision);
+      }
+    }
+  }
+
+  @Override
+  protected void writePackages(CDOPackage... cdoPackages)
+  {
+    // Do nothing
+  }
+
+  @Override
+  protected void writeRevision(CDORevision revision)
+  {
+    newRevisions.add(revision);
+    getStore().addRevision(revision);
+  }
+
+  @Override
+  protected void writeRevisionDelta(CDORevisionDelta revisionDelta)
+  {
+    CDORevision revision = getStore().getRevision(revisionDelta.getID());
+    CDORevision newRevision = CDORevisionUtil.copy(revision);
+    revisionDelta.apply(newRevision);
+    writeRevision(newRevision);
   }
 
   @Override

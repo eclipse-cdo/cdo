@@ -11,12 +11,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
+
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -25,27 +27,70 @@ public interface IStoreWriter extends IStoreReader
 {
   public IView getView();
 
+  public void commit(CommitContext context);
+
+  public void rollback(CommitContext context);
+
   /**
-   * Stores an array of complete package descriptions so that they can be restored to an identical state at a later
-   * point in time.
-   * <p>
-   * <b>Note:</b> The implementor of this method must not assume that references to classes in this package or in any
-   * other package are already resolved or are resolveable at the point in time when this method is called by the
-   * framework.
-   * <p>
+   * Represents the state of a single, logical commit operation which is driven through multiple calls to several
+   * methods on the {@link IStoreWriter} API. All these method calls get the same <code>CommitContext</code> instance
+   * passed so that the implementor of the {@link IStoreWriter} can track the state and progress of the commit
+   * operation.
    * 
-   * @see CDOClassProxy#getPackageURI()
-   * @see CDOClassProxy#getClassifierID()
+   * @author Eike Stepper
    */
-  public void writePackages(CDOPackage... cdoPackages);
+  public interface CommitContext
+  {
+    /**
+     * Returns the ID of the transactional view (<code>ITransaction</code>) which is the scope of the commit
+     * operation represented by this <code>CommitContext</code>.
+     */
+    public int getTransactionID();
 
-  public CDOID primeNewObject(CDOClass cdoClass);
+    /**
+     * Returns the time stamp of this commit operation.
+     */
+    public long getTimeStamp();
 
-  public void writeRevision(CDORevision revision);
+    /**
+     * Returns the temporary, transactional package manager associated with the commit operation represented by this
+     * <code>CommitContext</code>. In addition to the packages registered with the session this package manager also
+     * contains the new packages that are part of this commit operation.
+     */
+    public CDOPackageManager getPackageManager();
 
-  public void writeRevisionDelta(CDORevisionDelta delta);
+    /**
+     * Returns an array of the new packages that are part of the commit operation represented by this
+     * <code>CommitContext</code>.
+     */
+    public CDOPackage[] getNewPackages();
 
-  public void commit();
+    /**
+     * Returns an array of the new objects that are part of the commit operation represented by this
+     * <code>CommitContext</code>.
+     */
+    public CDORevision[] getNewObjects();
 
-  public void rollback();
+    /**
+     * Returns an array of the dirty objects that are part of the commit operation represented by this
+     * <code>CommitContext</code>.
+     */
+    public CDORevision[] getDirtyObjects();
+
+    /**
+     * Returns an array of the dirty object deltas that are part of the commit operation represented by this
+     * <code>CommitContext</code>.
+     */
+    public CDORevisionDelta[] getDirtyObjectDeltas();
+
+    /**
+     * Returns an unmodifiable map from all temporary IDs (meta or not) to their persistent counter parts. It is
+     * initially populated with the mappings of all new meta objects.
+     */
+    public Map<CDOIDTemp, CDOID> getIDMappings();
+
+    public void addIDMapping(CDOIDTemp oldID, CDOID newID);
+
+    public void applyIDMappings();
+  }
 }

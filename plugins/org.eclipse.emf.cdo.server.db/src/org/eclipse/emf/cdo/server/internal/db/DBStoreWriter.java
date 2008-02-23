@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMeta;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -46,29 +45,52 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     super(store, view);
   }
 
-  public CDOID primeNewObject(CDOClass cdoClass)
+  @Override
+  public void commit(CommitContext context)
   {
-    return getStore().getNextCDOID();
+    super.commit(context);
+
+    try
+    {
+      getConnection().commit();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
   }
 
-  public void writePackages(CDOPackage... cdoPackages)
+  @Override
+  public void rollback(CommitContext context)
   {
-    for (CDOPackage cdoPackage : cdoPackages)
-    {
-      writePackage(cdoPackage);
-    }
+    super.rollback(context);
 
+    try
+    {
+      getConnection().rollback();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
+  @Override
+  protected void writePackages(CDOPackage... cdoPackages)
+  {
+    super.writePackages(cdoPackages);
     Set<IDBTable> affectedTables = mapPackages(cdoPackages);
     getStore().getDBAdapter().createTables(affectedTables, getConnection());
   }
 
+  @Override
   protected void writePackage(CDOPackage cdoPackage)
   {
     int id = getStore().getNextPackageID();
     PackageServerInfo.setDBID(cdoPackage, id);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Inserting package: {0} --> {1}", cdoPackage, id);
+      TRACER.format("Writing package: {0} --> {1}", cdoPackage, id);
     }
 
     String packageURI = cdoPackage.getPackageURI();
@@ -76,8 +98,8 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     String ecore = cdoPackage.getEcore();
     boolean dynamic = cdoPackage.isDynamic();
     CDOIDMetaRange metaIDRange = cdoPackage.getMetaIDRange();
-    long lowerBound = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getLowerBound()).getValue();
-    long upperBound = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getUpperBound()).getValue();
+    long lowerBound = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getLowerBound()).getLongValue();
+    long upperBound = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getUpperBound()).getLongValue();
 
     String sql = "INSERT INTO " + CDODBSchema.PACKAGES + " VALUES (?, ?, ?, ?, ?, ?, ?)";
     DBUtil.trace(sql);
@@ -113,12 +135,10 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
       DBUtil.close(pstmt);
     }
 
-    for (CDOClass cdoClass : cdoPackage.getClasses())
-    {
-      writeClass((CDOClassImpl)cdoClass);
-    }
+    super.writePackage(cdoPackage);
   }
 
+  @Override
   protected void writeClass(CDOClassImpl cdoClass)
   {
     int id = getStore().getNextClassID();
@@ -132,25 +152,19 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     DBUtil.insertRow(getConnection(), getStore().getDBAdapter(), CDODBSchema.CLASSES, id, packageID, classifierID,
         name, isAbstract);
 
-    for (CDOClassProxy superType : cdoClass.getSuperTypeProxies())
-    {
-      writeSuperType(id, superType);
-    }
-
-    for (CDOFeature feature : cdoClass.getFeatures())
-    {
-      writeFeature(feature);
-    }
+    super.writeClass(cdoClass);
   }
 
-  protected void writeSuperType(int type, CDOClassProxy superType)
+  @Override
+  protected void writeSuperType(CDOClassImpl type, CDOClassProxy superType)
   {
+    int id = ClassServerInfo.getDBID(type);
     String packageURI = superType.getPackageURI();
     int classifierID = superType.getClassifierID();
-    DBUtil
-        .insertRow(getConnection(), getStore().getDBAdapter(), CDODBSchema.SUPERTYPES, type, packageURI, classifierID);
+    DBUtil.insertRow(getConnection(), getStore().getDBAdapter(), CDODBSchema.SUPERTYPES, id, packageURI, classifierID);
   }
 
+  @Override
   protected void writeFeature(CDOFeature feature)
   {
     int id = getStore().getNextFeatureID();
@@ -170,50 +184,17 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
         type, packageURI, classifierID, many, containment, idx);
   }
 
-  public void writeRevision(CDORevision revision)
+  @Override
+  protected void writeRevision(CDORevision revision)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Inserting revision: {0}", revision);
+      TRACER.format("Writing revision: {0}", revision);
     }
 
     CDOClass cdoClass = revision.getCDOClass();
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.writeRevision(this, revision);
-  }
-
-  public void commit()
-  {
-    try
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Committing transaction: {0}", getView());
-      }
-
-      getConnection().commit();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-  }
-
-  public void rollback()
-  {
-    try
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Rolling back transaction: {0}", getView());
-      }
-
-      getConnection().rollback();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
   }
 }

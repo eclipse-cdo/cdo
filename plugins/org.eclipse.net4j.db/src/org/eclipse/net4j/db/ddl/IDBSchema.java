@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.db.ddl;
 
-import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 
 import javax.sql.DataSource;
 

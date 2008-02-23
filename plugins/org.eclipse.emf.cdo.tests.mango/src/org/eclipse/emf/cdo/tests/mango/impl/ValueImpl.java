@@ -2,35 +2,33 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ValueImpl.java,v 1.1 2008-01-30 08:58:25 estepper Exp $
+ * $Id: ValueImpl.java,v 1.2 2008-02-23 10:00:34 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.mango.Value;
 
-import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
+import org.eclipse.emf.ecore.EClass;
+
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Value</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Value</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.mango.impl.ValueImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.mango.impl.ValueImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ValueImpl extends CDOObjectImpl implements Value
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ValueImpl()
@@ -39,8 +37,8 @@ public class ValueImpl extends CDOObjectImpl implements Value
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -50,8 +48,8 @@ public class ValueImpl extends CDOObjectImpl implements Value
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -61,8 +59,8 @@ public class ValueImpl extends CDOObjectImpl implements Value
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -71,8 +69,8 @@ public class ValueImpl extends CDOObjectImpl implements Value
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -80,4 +78,4 @@ public class ValueImpl extends CDOObjectImpl implements Value
     eSet(MangoPackage.Literals.VALUE__NAME, newName);
   }
 
-} //ValueImpl
+} // ValueImpl

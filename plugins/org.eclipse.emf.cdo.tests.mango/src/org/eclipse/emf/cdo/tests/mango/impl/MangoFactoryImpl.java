@@ -2,32 +2,31 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoFactoryImpl.java,v 1.1 2008-01-30 08:58:25 estepper Exp $
+ * $Id: MangoFactoryImpl.java,v 1.2 2008-02-23 10:00:34 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 
-import org.eclipse.emf.cdo.tests.mango.*;
+import org.eclipse.emf.cdo.tests.mango.MangoFactory;
+import org.eclipse.emf.cdo.tests.mango.MangoPackage;
+import org.eclipse.emf.cdo.tests.mango.Value;
+import org.eclipse.emf.cdo.tests.mango.ValueList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static MangoFactory init()
@@ -49,9 +48,8 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public MangoFactoryImpl()
@@ -60,8 +58,8 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -79,8 +77,8 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ValueList createValueList()
@@ -90,8 +88,8 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Value createValue()
@@ -101,8 +99,8 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public MangoPackage getMangoPackage()
@@ -111,8 +109,8 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */
@@ -122,4 +120,4 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
     return MangoPackage.eINSTANCE;
   }
 
-} //MangoFactoryImpl
+} // MangoFactoryImpl

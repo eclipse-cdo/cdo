@@ -10,14 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.hibernate.teneo;
 
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
-
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -29,6 +23,13 @@ import org.eclipse.emf.teneo.extension.ExtensionManagerFactory;
 import org.eclipse.emf.teneo.extension.ExtensionUtil;
 import org.eclipse.emf.teneo.hibernate.mapper.MappingContext;
 import org.eclipse.emf.teneo.hibernate.mapper.MappingUtil;
+
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * Handles different cases of input modes: the modelObjects can be a collection of String (containing an ecore model) or

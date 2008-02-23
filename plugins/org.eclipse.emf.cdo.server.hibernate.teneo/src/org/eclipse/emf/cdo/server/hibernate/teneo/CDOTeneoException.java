@@ -15,11 +15,13 @@ package org.eclipse.emf.cdo.server.hibernate.teneo;
  * 
  * @author Martin Taal
  */
-public class CDOTeneoException extends RuntimeException {
+public class CDOTeneoException extends RuntimeException
+{
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	public CDOTeneoException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+  public CDOTeneoException(String msg, Throwable cause)
+  {
+    super(msg, cause);
+  }
 }

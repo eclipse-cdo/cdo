@@ -11,9 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.hibernate;
 
-import java.util.Properties;
-
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
+
+import java.util.Properties;
 
 /**
  * @author Eike Stepper

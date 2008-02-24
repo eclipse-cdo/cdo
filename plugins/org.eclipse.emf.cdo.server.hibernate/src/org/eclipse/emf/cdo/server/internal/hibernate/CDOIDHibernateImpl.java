@@ -16,8 +16,10 @@ import org.eclipse.emf.cdo.protocol.id.CDOIDObject;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.hibernate.CDOIDHibernate;
 
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -42,6 +44,40 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
   {
   }
 
+  /**
+   * @return the id
+   */
+  public Serializable getId()
+  {
+    return id;
+  }
+
+  /**
+   * @param id
+   *          the id to set
+   */
+  public void setId(Serializable id)
+  {
+    this.id = id;
+  }
+
+  /**
+   * @return the entityName
+   */
+  public String getEntityName()
+  {
+    return entityName;
+  }
+
+  /**
+   * @param entityName
+   *          the entityName to set
+   */
+  public void setEntityName(String entityName)
+  {
+    this.entityName = entityName;
+  }
+
   public Type getType()
   {
     return Type.OBJECT;
@@ -60,36 +96,27 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
   public void read(ExtendedDataInput in) throws IOException
   {
     final byte[] content = in.readByteArray();
+    System.out.println("Read CONTENT: " + HexUtil.bytesToHex(content));
     setContent(content);
   }
 
-  public void setContent(byte[] content)
+  public void write(ExtendedDataOutput out) throws IOException
   {
-    try
-    {
-      final ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(content));
-      final SerializableContent contentObject = (SerializableContent)ois.readObject();
-      setId(contentObject.getId());
-      setEntityName(contentObject.getEntityName());
-      ois.close();
-    }
-    catch (ClassNotFoundException e)
-    {
-      throw new IllegalArgumentException(e);
-    }
-    catch (IOException e)
-    {
-      throw new IllegalStateException(e);
-    }
+    byte[] content = getContent();
+    System.out.println("Write CONTENT: " + HexUtil.bytesToHex(content));
+    out.writeByteArray(content);
   }
 
   public byte[] getContent()
   {
+    ObjectOutputStream oos = null;
+
     try
     {
       final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-      final ObjectOutputStream oos = new ObjectOutputStream(bos);
-      final SerializableContent content = new SerializableContent();
+      oos = new ObjectOutputStream(bos);
+      SerializableContent content = null;
+      content = new SerializableContent();
       content.setId(getId());
       content.setEntityName(getEntityName());
       oos.writeObject(content);
@@ -99,12 +126,35 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
     {
       throw new IllegalStateException(e);
     }
-
+    finally
+    {
+      IOUtil.close(oos);
+    }
   }
 
-  public void write(ExtendedDataOutput out) throws IOException
+  public void setContent(byte[] content)
   {
-    out.writeByteArray(getContent());
+    ObjectInputStream ois = null;
+
+    try
+    {
+      ois = new ObjectInputStream(new ByteArrayInputStream(content));
+      final SerializableContent contentObject = (SerializableContent)ois.readObject();
+      setId(contentObject.getId());
+      setEntityName(contentObject.getEntityName());
+    }
+    catch (ClassNotFoundException e)
+    {
+      throw new IllegalArgumentException(e);
+    }
+    catch (IOException e)
+    {
+      throw new IllegalStateException(e);
+    }
+    finally
+    {
+      IOUtil.close(ois);
+    }
   }
 
   @Override
@@ -225,39 +275,5 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
     {
       return super.toString() + "(" + classRef + ")";
     }
-  }
-
-  /**
-   * @return the id
-   */
-  public Serializable getId()
-  {
-    return id;
-  }
-
-  /**
-   * @param id
-   *          the id to set
-   */
-  public void setId(Serializable id)
-  {
-    this.id = id;
-  }
-
-  /**
-   * @return the entityName
-   */
-  public String getEntityName()
-  {
-    return entityName;
-  }
-
-  /**
-   * @param entityName
-   *          the entityName to set
-   */
-  public void setEntityName(String entityName)
-  {
-    this.entityName = entityName;
   }
 }

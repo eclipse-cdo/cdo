@@ -118,7 +118,7 @@ public class HibernateTest
     props.setProperty(Environment.DRIVER, driverName);
     props.setProperty(Environment.URL, "jdbc:mysql://localhost/cdohibernate");
     props.setProperty(Environment.USER, "root");
-    props.setProperty(Environment.PASS, "root");
+    // props.setProperty(Environment.PASS, "root");
     props.setProperty(Environment.DIALECT, dialectName);
     props.setProperty(Environment.SHOW_SQL, "true");
     props.setProperty("hibernate.hbm2ddl.auto", "create-drop");

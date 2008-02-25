@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
+import org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +39,16 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
   public Object readObject() throws IOException
   {
     return ExtendedIOUtil.readObject(this);
+  }
+
+  public Object readObject(ClassLoader classLoader) throws IOException
+  {
+    return ExtendedIOUtil.readObject(this, classLoader);
+  }
+
+  public Object readObject(ClassResolver classResolver) throws IOException
+  {
+    return ExtendedIOUtil.readObject(this, classResolver);
   }
 
   public static ExtendedDataInputStream wrap(InputStream stream)

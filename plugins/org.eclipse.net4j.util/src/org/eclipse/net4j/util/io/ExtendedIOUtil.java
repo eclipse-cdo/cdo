@@ -21,6 +21,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.io.ObjectStreamClass;
 import java.io.OutputStream;
 
 /**
@@ -119,6 +120,16 @@ public final class ExtendedIOUtil
 
   public static Object readObject(final DataInput in) throws IOException
   {
+    return readObject(in, (ClassResolver)null);
+  }
+
+  public static Object readObject(final DataInput in, ClassLoader classLoader) throws IOException
+  {
+    return readObject(in, new ClassLoaderClassResolver(classLoader));
+  }
+
+  public static Object readObject(final DataInput in, final ClassResolver classResolver) throws IOException
+  {
     ObjectInput wrapper = null;
     if (in instanceof ObjectInput)
     {
@@ -133,7 +144,23 @@ public final class ExtendedIOUtil
         {
           return in.readByte() - Byte.MIN_VALUE;
         }
-      });
+      })
+      {
+        @Override
+        protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException
+        {
+          if (classResolver != null)
+          {
+            Class<?> c = classResolver.resolveClass(desc);
+            if (c != null)
+            {
+              return c;
+            }
+          }
+
+          return super.resolveClass(desc);
+        }
+      };
     }
 
     try
@@ -164,5 +191,41 @@ public final class ExtendedIOUtil
     } while (more);
 
     return builder.toString();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface ClassResolver
+  {
+    public Class<?> resolveClass(ObjectStreamClass v) throws ClassNotFoundException;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class ClassLoaderClassResolver implements ClassResolver
+  {
+    private ClassLoader classLoader;
+
+    public ClassLoaderClassResolver(ClassLoader classLoader)
+    {
+      this.classLoader = classLoader;
+    }
+
+    public Class<?> resolveClass(ObjectStreamClass v) throws ClassNotFoundException
+    {
+      String className = v.getName();
+
+      try
+      {
+        return classLoader.loadClass(className);
+      }
+      catch (ClassNotFoundException ex)
+      {
+        OM.LOG.error(ex);
+        return null;
+      }
+    }
   }
 }

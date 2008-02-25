@@ -39,9 +39,37 @@ public class ExtendedIOTest extends AbstractOMTest
     assertEquals(map, result);
   }
 
-  public void testByteArray() throws Exception
+  public void testObject1() throws Exception
   {
-    final byte[] byteArray = createByteArray();
+    final byte[] byteArray = createByteArray1();
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    ExtendedDataOutputStream edos = new ExtendedDataOutputStream(baos);
+    edos.writeObject(byteArray);
+    edos.close();
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    ExtendedDataInputStream edis = new ExtendedDataInputStream(bais);
+    byte[] result = (byte[])edis.readObject();
+    assertTrue(Arrays.equals(byteArray, result));
+  }
+
+  public void testObject2() throws Exception
+  {
+    final byte[] byteArray = createByteArray2();
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    ExtendedDataOutputStream edos = new ExtendedDataOutputStream(baos);
+    edos.writeObject(byteArray);
+    edos.close();
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    ExtendedDataInputStream edis = new ExtendedDataInputStream(bais);
+    byte[] result = (byte[])edis.readObject();
+    assertTrue(Arrays.equals(byteArray, result));
+  }
+
+  public void testByteArray1() throws Exception
+  {
+    final byte[] byteArray = createByteArray1();
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     ExtendedDataOutputStream edos = new ExtendedDataOutputStream(baos);
     edos.writeByteArray(byteArray);
@@ -53,7 +81,21 @@ public class ExtendedIOTest extends AbstractOMTest
     assertTrue(Arrays.equals(byteArray, result));
   }
 
-  private byte[] createByteArray() throws IOException
+  public void testByteArray2() throws Exception
+  {
+    final byte[] byteArray = createByteArray2();
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    ExtendedDataOutputStream edos = new ExtendedDataOutputStream(baos);
+    edos.writeByteArray(byteArray);
+    edos.close();
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    ExtendedDataInputStream edis = new ExtendedDataInputStream(bais);
+    byte[] result = edis.readByteArray();
+    assertTrue(Arrays.equals(byteArray, result));
+  }
+
+  private byte[] createByteArray1() throws IOException
   {
     HashMap<String, String> map = createMap();
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -61,6 +103,18 @@ public class ExtendedIOTest extends AbstractOMTest
     edos.writeObject(map);
     edos.close();
     return baos.toByteArray();
+  }
+
+  private byte[] createByteArray2()
+  {
+    byte[] byteArray = new byte[256];
+    byte v = Byte.MIN_VALUE;
+    for (int i = 0; i < byteArray.length; i++)
+    {
+      byteArray[i] = v++;
+    }
+
+    return byteArray;
   }
 
   private HashMap<String, String> createMap()

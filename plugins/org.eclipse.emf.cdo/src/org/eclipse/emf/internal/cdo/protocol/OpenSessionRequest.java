@@ -21,14 +21,10 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectStreamClass;
 import java.text.MessageFormat;
 
 /**
@@ -135,35 +131,14 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
     return result;
   }
 
-  private Class<?> deserializeClass(InputStream in) throws IOException
+  private Class<?> deserializeClass(ExtendedDataInputStream in) throws IOException
   {
-    ObjectInputStream ois = new ObjectInputStream(in)
+    Class<?> clazz = (Class<?>)in.readObject(OM.class.getClassLoader());
+    if (PROTOCOL.isEnabled())
     {
-      @Override
-      protected Class<?> resolveClass(ObjectStreamClass v) throws IOException, ClassNotFoundException
-      {
-        String className = v.getName();
-        ClassLoader loader = OM.class.getClassLoader();
-
-        try
-        {
-          return loader.loadClass(className);
-        }
-        catch (ClassNotFoundException ex)
-        {
-          ex.printStackTrace();
-          return super.resolveClass(v);
-        }
-      }
-    };
-
-    try
-    {
-      return (Class<?>)ois.readObject();
+      PROTOCOL.format("Deserialized class " + clazz.getName());
     }
-    catch (ClassNotFoundException ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
+
+    return clazz;
   }
 }

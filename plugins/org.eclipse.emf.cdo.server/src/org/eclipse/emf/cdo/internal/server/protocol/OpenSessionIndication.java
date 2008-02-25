@@ -189,6 +189,11 @@ public class OpenSessionIndication extends IndicationWithResponse
 
   private void serializeClass(ExtendedDataOutputStream out, Class<?> c) throws IOException
   {
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Serializing class " + c.getName());
+    }
+
     out.writeObject(c);
   }
 }

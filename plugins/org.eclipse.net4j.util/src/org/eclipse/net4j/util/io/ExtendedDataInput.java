@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
+import org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver;
+
 import java.io.DataInput;
 import java.io.IOException;
 
@@ -21,6 +23,10 @@ public interface ExtendedDataInput extends DataInput
   public byte[] readByteArray() throws IOException;
 
   public Object readObject() throws IOException;
+
+  public Object readObject(ClassLoader classLoader) throws IOException;
+
+  public Object readObject(ClassResolver classResolver) throws IOException;
 
   public String readString() throws IOException;
 }

@@ -28,6 +28,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
 import org.eclipse.net4j.jvm.JVMUtil;
+import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -48,34 +49,38 @@ import java.util.Properties;
 /**
  * @author Eike Stepper
  */
-public class HibernateTest
+public class HibernateTest extends AbstractOMTest
 {
   private static final String REPOSITORY_NAME = "repo1";
 
-  public static void main(String[] args) throws Exception
+  public void testHibernate() throws Exception
   {
     IManagedContainer container = initContainer();
-
-    // Start the transport and create a repository
     JVMUtil.getAcceptor(container, "default"); // Start the JVM transport
     CDOServerUtil.addRepository(container, createRepository()); // Start a CDO respository
-
-    // Establish a communications connection and open a session with the repository
     IConnector connector = JVMUtil.getConnector(container, "default"); // Open a JVM connection
-    CDOSession session = CDOUtil.openSession(connector, REPOSITORY_NAME, true);// Open a CDO
-    // session
-    session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);// Not needed after
-    // first
-    // commit!!!
 
-    // Open a transaction, and create a new resource
+    CDOSession session = CDOUtil.openSession(connector, REPOSITORY_NAME, true);// Open a CDO session
+    session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);// Not needed after first commit!!!
     CDOTransaction transaction = session.openTransaction();
     Resource resource = transaction.createResource("/my/big/resource");
     resource.getContents().add(getInputModel());
     transaction.commit();
+    session.close();
+
+    CDOSession session2 = CDOUtil.openSession(connector, REPOSITORY_NAME, true);// Open a CDO session
+    CDOTransaction transaction2 = session2.openTransaction();
+    Resource resource2 = transaction2.getResource("/my/big/resource");
+    Category category = (Category)resource2.getContents().get(0);
+    assertEquals("CAT1", category.getName());
+    assertEquals("CAT2", category.getCategories().get(0).getName());
+    assertEquals("P1", category.getProducts().get(0).getName());
+    assertEquals("P2", category.getProducts().get(1).getName());
+    assertEquals("P3", category.getCategories().get(0).getProducts().get(0).getName());
+    transaction.close();
 
     // Cleanup
-    session.close();
+    session2.close();
     connector.disconnect();
   }
 

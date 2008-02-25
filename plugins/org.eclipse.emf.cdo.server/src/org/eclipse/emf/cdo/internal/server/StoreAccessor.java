@@ -11,8 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOClass;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
@@ -163,11 +163,11 @@ public class StoreAccessor implements IStoreAccessor
   {
     for (CDOClass cdoClass : cdoPackage.getClasses())
     {
-      writeClass((CDOClassImpl)cdoClass);
+      writeClass((InternalCDOClass)cdoClass);
     }
   }
 
-  protected void writeClass(CDOClassImpl cdoClass)
+  protected void writeClass(InternalCDOClass cdoClass)
   {
     for (CDOClassProxy superType : cdoClass.getSuperTypeProxies())
     {
@@ -180,7 +180,7 @@ public class StoreAccessor implements IStoreAccessor
     }
   }
 
-  protected void writeSuperType(CDOClassImpl type, CDOClassProxy superType)
+  protected void writeSuperType(InternalCDOClass type, CDOClassProxy superType)
   {
     throw new UnsupportedOperationException();
   }

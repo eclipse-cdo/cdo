@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IStoreReader;
@@ -44,7 +44,7 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
   }
 
   @Override
-  protected void resolve(CDOPackageImpl cdoPackage)
+  protected void resolve(CDOPackage cdoPackage)
   {
     if (!cdoPackage.isSystem())
     {
@@ -54,7 +54,7 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
   }
 
   @Override
-  protected String provideEcore(CDOPackageImpl cdoPackage)
+  protected String provideEcore(CDOPackage cdoPackage)
   {
     // No generated model on server side
     return null;

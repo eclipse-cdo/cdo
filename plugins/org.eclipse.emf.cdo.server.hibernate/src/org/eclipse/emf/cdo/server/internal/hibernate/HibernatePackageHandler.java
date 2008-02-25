@@ -11,9 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOClass;
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOFeature;
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
@@ -177,28 +177,29 @@ public class HibernatePackageHandler
       Session session = getSessionFactory().openSession();
       try
       {
-        Criteria criteria = session.createCriteria(CDOPackageImpl.class);
+        Criteria criteria = session.createCriteria(CDOPackage.class);
         List<?> list = criteria.list();
         TRACER.trace("Found " + list.size() + " CDOPackages in DB");
         for (Object object : list)
         {
-          CDOPackageImpl cdoPackage = (CDOPackageImpl)object;
+          CDOPackage cdoPackage = (CDOPackage)object;
           TRACER.trace("Read CDOPackage: " + cdoPackage.getName());
           result.add(new CDOPackageInfo(cdoPackage.getPackageURI(), cdoPackage.isDynamic(), null));
-          cdoPackage.setPackageManager(hibernateStore.getRepository().getPackageManager());
+          ((InternalCDOPackage)cdoPackage).setPackageManager(hibernateStore.getRepository().getPackageManager());
           resultPackages.add(cdoPackage);
 
           // repair something
           // TODO: set this in the mapping with a bi-directional relation
           for (CDOClass cdoClass : cdoPackage.getClasses())
           {
-            ((CDOClassImpl)cdoClass).setContainingPackage(cdoPackage);
+            ((InternalCDOClass)cdoClass).setContainingPackage(cdoPackage);
             for (CDOFeature cdoFeature : cdoClass.getFeatures())
             {
-              ((CDOFeatureImpl)cdoFeature).setContainingClass(cdoClass);
+              ((InternalCDOFeature)cdoFeature).setContainingClass(cdoClass);
             }
           }
         }
+
         cdoPackages = resultPackages;
         cdoPackageInfos = result;
       }

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -253,7 +253,7 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
     }
 
     CDOIDMetaRange newRange = repository.getMetaIDRange(oldRange.size());
-    ((CDOPackageImpl)newPackage).setMetaIDRange(newRange);
+    ((InternalCDOPackage)newPackage).setMetaIDRange(newRange);
     for (int l = 0; l < oldRange.size(); l++)
     {
       CDOIDTemp oldID = (CDOIDTemp)oldRange.get(l);

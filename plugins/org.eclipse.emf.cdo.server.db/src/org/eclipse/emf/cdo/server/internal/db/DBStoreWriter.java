@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOClass;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMeta;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
@@ -139,7 +139,7 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
   }
 
   @Override
-  protected void writeClass(CDOClassImpl cdoClass)
+  protected void writeClass(InternalCDOClass cdoClass)
   {
     int id = getStore().getNextClassID();
     ClassServerInfo.setDBID(cdoClass, id);
@@ -156,7 +156,7 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
   }
 
   @Override
-  protected void writeSuperType(CDOClassImpl type, CDOClassProxy superType)
+  protected void writeSuperType(InternalCDOClass type, CDOClassProxy superType)
   {
     int id = ClassServerInfo.getDBID(type);
     String packageURI = superType.getPackageURI();

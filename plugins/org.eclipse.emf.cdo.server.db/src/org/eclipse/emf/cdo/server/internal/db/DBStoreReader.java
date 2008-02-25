@@ -11,9 +11,9 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.protocol.id.CDOIDMetaImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOClass;
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
@@ -97,8 +97,8 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
     Object[] values = DBUtil.select(getConnection(), where, CDODBSchema.PACKAGES_ID, CDODBSchema.PACKAGES_NAME,
         CDODBSchema.PACKAGES_ECORE);
     PackageServerInfo.setDBID(cdoPackage, (Integer)values[0]);
-    ((CDOPackageImpl)cdoPackage).setName((String)values[1]);
-    ((CDOPackageImpl)cdoPackage).setEcore((String)values[2]);
+    ((InternalCDOPackage)cdoPackage).setName((String)values[1]);
+    ((InternalCDOPackage)cdoPackage).setEcore((String)values[2]);
     readClasses(cdoPackage);
     mapPackages(cdoPackage);
   }
@@ -115,7 +115,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
         boolean isAbstract = getBoolean(values[3]);
         CDOClass cdoClass = CDOModelUtil.createClass(cdoPackage, classifierID, name, isAbstract);
         ClassServerInfo.setDBID(cdoClass, classID);
-        ((CDOPackageImpl)cdoPackage).addClass(cdoClass);
+        ((InternalCDOPackage)cdoPackage).addClass(cdoClass);
         readSuperTypes(cdoClass, classID);
         readFeatures(cdoClass, classID);
         return true;
@@ -135,7 +135,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
       {
         String packageURI = (String)values[0];
         int classifierID = (Integer)values[1];
-        ((CDOClassImpl)cdoClass).addSuperType(CDOModelUtil.createClassRef(packageURI, classifierID));
+        ((InternalCDOClass)cdoClass).addSuperType(CDOModelUtil.createClassRef(packageURI, classifierID));
         return true;
       }
     };
@@ -172,7 +172,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
         }
 
         FeatureServerInfo.setDBID(feature, (Integer)values[0]);
-        ((CDOClassImpl)cdoClass).addFeature(feature);
+        ((InternalCDOClass)cdoClass).addFeature(feature);
         return true;
       }
     };
@@ -227,7 +227,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
     }
 
     IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
-    CDOClassImpl cdoClass = getObjectType(id);
+    CDOClass cdoClass = getObjectType(id);
     InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(revisionManager, cdoClass, id);
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
@@ -244,7 +244,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
     }
 
     IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
-    CDOClassImpl cdoClass = getObjectType(id);
+    CDOClass cdoClass = getObjectType(id);
     InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(revisionManager, cdoClass, id);
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
@@ -261,7 +261,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
     }
 
     IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
-    CDOClassImpl cdoClass = getObjectType(id);
+    CDOClass cdoClass = getObjectType(id);
     InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(revisionManager, cdoClass, id);
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
@@ -282,11 +282,11 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
     return mappingStrategy.readResourcePath(this, id);
   }
 
-  protected CDOClassImpl getObjectType(CDOID id)
+  protected CDOClass getObjectType(CDOID id)
   {
     IRepository repository = getStore().getRepository();
     IPackageManager packageManager = repository.getPackageManager();
     CDOClassRef type = readObjectType(id);
-    return (CDOClassImpl)type.resolve(packageManager);
+    return type.resolve(packageManager);
   }
 }

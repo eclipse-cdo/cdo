@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 
 import org.eclipse.net4j.db.ddl.IDBSchema;
@@ -29,7 +30,7 @@ public final class PackageServerInfo extends ServerInfo
   public static PackageServerInfo setDBID(CDOPackage cdoPackage, int id)
   {
     PackageServerInfo serverInfo = new PackageServerInfo(id);
-    cdoPackage.setServerInfo(serverInfo);
+    ((InternalCDOPackage)cdoPackage).setServerInfo(serverInfo);
     return serverInfo;
   }
 

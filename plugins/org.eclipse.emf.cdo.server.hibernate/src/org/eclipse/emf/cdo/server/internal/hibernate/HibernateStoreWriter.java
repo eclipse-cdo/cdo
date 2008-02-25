@@ -11,8 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
@@ -93,7 +93,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   }
 
   @Override
-  protected void writeClass(CDOClassImpl cdoClass)
+  protected void writeClass(InternalCDOClass cdoClass)
   {
     throw new UnsupportedOperationException("Should not be called, should be handled by hibernate cascade");
   }
@@ -147,7 +147,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   }
 
   @Override
-  protected void writeSuperType(CDOClassImpl type, CDOClassProxy superType)
+  protected void writeSuperType(InternalCDOClass type, CDOClassProxy superType)
   {
     throw new UnsupportedOperationException("Should not be called, should be handled by hibernate cascade");
   }

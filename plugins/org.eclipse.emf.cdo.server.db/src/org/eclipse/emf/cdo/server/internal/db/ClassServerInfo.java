@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 
@@ -34,7 +35,7 @@ public final class ClassServerInfo extends ServerInfo
   public static ClassServerInfo setDBID(CDOClass cdoClass, int id)
   {
     ClassServerInfo serverInfo = new ClassServerInfo(id);
-    cdoClass.setServerInfo(serverInfo);
+    ((InternalCDOClass)cdoClass).setServerInfo(serverInfo);
     return serverInfo;
   }
 

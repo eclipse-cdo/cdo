@@ -100,6 +100,11 @@ public class DataOutputExtender implements ExtendedDataOutput
     ExtendedIOUtil.writeByteArray(output, b);
   }
 
+  public void writeObject(Object object) throws IOException
+  {
+    ExtendedIOUtil.writeObject(output, object);
+  }
+
   public void writeString(String str) throws IOException
   {
     ExtendedIOUtil.writeString(output, str);

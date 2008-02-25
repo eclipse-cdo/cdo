@@ -15,8 +15,11 @@ import org.eclipse.emf.cdo.internal.protocol.id.AbstractCDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObject;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.hibernate.CDOIDHibernate;
+import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -34,6 +37,8 @@ import java.io.Serializable;
  */
 public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOIDHibernateImpl.class);
+
   private static final long serialVersionUID = 1L;
 
   private Serializable id;
@@ -95,6 +100,18 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
 
   public void read(ExtendedDataInput in) throws IOException
   {
+    // id = (Serializable)in.readObject();
+    // if (TRACER.isEnabled())
+    // {
+    // TRACER.format("Read id={0}", id);
+    // }
+    //
+    // entityName = in.readString();
+    // if (TRACER.isEnabled())
+    // {
+    // TRACER.format("Read entityName={0}", entityName);
+    // }
+
     final byte[] content = in.readByteArray();
     System.out.println("Read CONTENT: " + HexUtil.bytesToHex(content));
     setContent(content);
@@ -102,6 +119,19 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
 
   public void write(ExtendedDataOutput out) throws IOException
   {
+    // if (TRACER.isEnabled())
+    // {
+    // TRACER.format("Writing id={0}", id);
+    // }
+    //
+    // out.writeObject(id);
+    // if (TRACER.isEnabled())
+    // {
+    // TRACER.format("Writing entityName={0}", entityName);
+    // }
+    //
+    // out.writeString(entityName);
+
     byte[] content = getContent();
     System.out.println("Write CONTENT: " + HexUtil.bytesToHex(content));
     out.writeByteArray(content);
@@ -122,9 +152,9 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
       oos.writeObject(content);
       return bos.toByteArray();
     }
-    catch (IOException e)
+    catch (Exception ex)
     {
-      throw new IllegalStateException(e);
+      throw WrappedException.wrap(ex);
     }
     finally
     {
@@ -143,13 +173,9 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
       setId(contentObject.getId());
       setEntityName(contentObject.getEntityName());
     }
-    catch (ClassNotFoundException e)
+    catch (Exception ex)
     {
-      throw new IllegalArgumentException(e);
-    }
-    catch (IOException e)
-    {
-      throw new IllegalStateException(e);
+      throw WrappedException.wrap(ex);
     }
     finally
     {

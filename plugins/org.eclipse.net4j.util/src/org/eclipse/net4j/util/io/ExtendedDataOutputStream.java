@@ -12,7 +12,6 @@ package org.eclipse.net4j.util.io;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 /**
@@ -37,8 +36,7 @@ public class ExtendedDataOutputStream extends DataOutputStream implements Extend
 
   public void writeObject(Object object) throws IOException
   {
-    ObjectOutputStream wrapper = new ObjectOutputStream(this);
-    wrapper.writeObject(object);
+    ExtendedIOUtil.writeObject(this, object);
   }
 
   public static ExtendedDataOutputStream wrap(OutputStream stream)

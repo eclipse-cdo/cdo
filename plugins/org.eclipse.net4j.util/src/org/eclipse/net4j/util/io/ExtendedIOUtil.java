@@ -10,9 +10,18 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.WrappedException;
+
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 
 /**
  * @author Eike Stepper
@@ -42,6 +51,28 @@ public final class ExtendedIOUtil
     {
       out.writeInt(-1);
     }
+  }
+
+  public static void writeObject(final DataOutput out, Object object) throws IOException
+  {
+    ObjectOutput wrapper = null;
+    if (out instanceof ObjectOutput)
+    {
+      wrapper = (ObjectOutput)out;
+    }
+    else
+    {
+      wrapper = new ObjectOutputStream(new OutputStream()
+      {
+        @Override
+        public void write(int b) throws IOException
+        {
+          out.writeByte(b & 0xff);
+        }
+      });
+    }
+
+    wrapper.writeObject(object);
   }
 
   public static void writeString(DataOutput out, String str) throws IOException
@@ -84,6 +115,36 @@ public final class ExtendedIOUtil
 
     in.readFully(b);
     return b;
+  }
+
+  public static Object readObject(final DataInput in) throws IOException
+  {
+    ObjectInput wrapper = null;
+    if (in instanceof ObjectInput)
+    {
+      wrapper = (ObjectInput)in;
+    }
+    else
+    {
+      wrapper = new ObjectInputStream(new InputStream()
+      {
+        @Override
+        public int read() throws IOException
+        {
+          return in.readByte() - Byte.MIN_VALUE;
+        }
+      });
+    }
+
+    try
+    {
+      return wrapper.readObject();
+    }
+    catch (ClassNotFoundException ex)
+    {
+      OM.LOG.error(ex);
+      throw WrappedException.wrap(ex);
+    }
   }
 
   public static String readString(DataInput in) throws IOException

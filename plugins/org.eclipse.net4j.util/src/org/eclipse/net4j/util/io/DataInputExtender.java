@@ -100,6 +100,11 @@ public class DataInputExtender implements ExtendedDataInput
     return ExtendedIOUtil.readByteArray(input);
   }
 
+  public Object readObject() throws IOException
+  {
+    return ExtendedIOUtil.readObject(input);
+  }
+
   public String readString() throws IOException
   {
     return ExtendedIOUtil.readString(input);

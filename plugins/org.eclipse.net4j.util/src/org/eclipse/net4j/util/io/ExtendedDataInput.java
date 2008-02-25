@@ -20,5 +20,7 @@ public interface ExtendedDataInput extends DataInput
 {
   public byte[] readByteArray() throws IOException;
 
+  public Object readObject() throws IOException;
+
   public String readString() throws IOException;
 }

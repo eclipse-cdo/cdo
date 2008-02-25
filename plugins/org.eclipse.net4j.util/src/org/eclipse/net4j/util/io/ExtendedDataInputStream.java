@@ -13,7 +13,6 @@ package org.eclipse.net4j.util.io;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
 
 /**
  * @author Eike Stepper
@@ -35,10 +34,9 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
     return ExtendedIOUtil.readString(this);
   }
 
-  public Object readObject() throws IOException, ClassNotFoundException
+  public Object readObject() throws IOException
   {
-    ObjectInputStream wrapper = new ObjectInputStream(this);
-    return wrapper.readObject();
+    return ExtendedIOUtil.readObject(this);
   }
 
   public static ExtendedDataInputStream wrap(InputStream stream)

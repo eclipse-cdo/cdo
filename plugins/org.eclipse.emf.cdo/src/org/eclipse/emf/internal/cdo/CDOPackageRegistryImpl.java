@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.EMFUtil;
@@ -83,7 +83,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
       }
 
       CDOPackage cdoPackage = ModelUtil.getCDOPackage(ePackage, session.getPackageManager());
-      ((CDOPackageImpl)cdoPackage).setPersistent(!cdoPackage.getMetaIDRange().isTemporary());
+      ((InternalCDOPackage)cdoPackage).setPersistent(!cdoPackage.getMetaIDRange().isTemporary());
     }
 
     return super.put(key, value);

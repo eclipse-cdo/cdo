@@ -11,7 +11,6 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSessionPackageManager;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
@@ -103,7 +102,7 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
   }
 
   @Override
-  protected void resolve(CDOPackageImpl cdoPackage)
+  protected void resolve(CDOPackage cdoPackage)
   {
     if (!cdoPackage.isDynamic())
     {
@@ -138,7 +137,7 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
   }
 
   @Override
-  protected String provideEcore(CDOPackageImpl cdoPackage)
+  protected String provideEcore(CDOPackage cdoPackage)
   {
     EPackage ePackage = ModelUtil.getEPackage(cdoPackage, session.getPackageRegistry());
     return EMFUtil.ePackageToString(ePackage);

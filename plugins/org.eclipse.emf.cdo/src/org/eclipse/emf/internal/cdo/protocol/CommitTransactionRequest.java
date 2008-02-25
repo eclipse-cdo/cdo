@@ -13,7 +13,7 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
@@ -127,7 +127,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     {
       CDOIDMetaRange oldRange = newPackage.getMetaIDRange();
       CDOIDMetaRange newRange = CDOIDUtil.readMetaRange(in);
-      ((CDOPackageImpl)newPackage).setMetaIDRange(newRange);
+      ((InternalCDOPackage)newPackage).setMetaIDRange(newRange);
       for (int i = 0; i < oldRange.size(); i++)
       {
         CDOIDTemp oldID = (CDOIDTemp)oldRange.get(i);

@@ -10,8 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -24,9 +25,9 @@ import java.io.IOException;
  */
 public class LoadPackageRequest extends CDOClientRequest<Object>
 {
-  private CDOPackageImpl cdoPackage;
+  private CDOPackage cdoPackage;
 
-  public LoadPackageRequest(IChannel channel, CDOPackageImpl cdoPackage)
+  public LoadPackageRequest(IChannel channel, CDOPackage cdoPackage)
   {
     super(channel);
     this.cdoPackage = cdoPackage;
@@ -47,7 +48,7 @@ public class LoadPackageRequest extends CDOClientRequest<Object>
   @Override
   protected Object confirming(ExtendedDataInputStream in) throws IOException
   {
-    cdoPackage.read(in);
+    ((InternalCDOPackage)cdoPackage).read(in);
     return null;
   }
 }

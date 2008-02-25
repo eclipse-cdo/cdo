@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.CDOTransactionHandler;
 import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
+import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
@@ -246,7 +246,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
         for (CDOPackage newPackage : newPackages)
         {
-          ((CDOPackageImpl)newPackage).setPersistent(true);
+          ((InternalCDOPackage)newPackage).setPersistent(true);
         }
 
         if (!dirtyObjects.isEmpty())

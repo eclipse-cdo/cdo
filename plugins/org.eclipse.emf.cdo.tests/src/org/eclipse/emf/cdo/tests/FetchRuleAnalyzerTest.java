@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
@@ -119,14 +118,14 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
     assertEquals(2, fetchRules.size());
 
     CDOFetchRule fetchRule1 = fetchRules.get(0);
-    EClass eClass = ModelUtil.getEClass((CDOClassImpl)fetchRule1.getCDOClass(), session.getPackageRegistry());
+    EClass eClass = ModelUtil.getEClass(fetchRule1.getCDOClass(), session.getPackageRegistry());
     assertEquals(Model1Package.eINSTANCE.getCompany(), eClass);
     assertEquals(1, fetchRule1.getFeatures().size());
     assertEquals(Model1Package.eINSTANCE.getCompany_PurchaseOrders().getName(), fetchRule1.getFeatures().get(0)
         .getName());
 
     CDOFetchRule fetchRule2 = fetchRules.get(1);
-    EClass ePurchaseOrder = ModelUtil.getEClass((CDOClassImpl)fetchRule2.getCDOClass(), session.getPackageRegistry());
+    EClass ePurchaseOrder = ModelUtil.getEClass(fetchRule2.getCDOClass(), session.getPackageRegistry());
     assertEquals(Model1Package.eINSTANCE.getPurchaseOrder(), ePurchaseOrder);
     assertEquals(1, fetchRule2.getFeatures().size());
     assertEquals(Model1Package.eINSTANCE.getPurchaseOrder_Supplier().getName(), fetchRule2.getFeatures().get(0)

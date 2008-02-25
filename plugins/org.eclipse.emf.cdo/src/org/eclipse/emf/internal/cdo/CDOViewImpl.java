@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.analyzer.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMeta;
@@ -375,7 +374,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     }
 
     InternalCDORevision revision = getRevision(id);
-    CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
+    CDOClass cdoClass = revision.getCDOClass();
     InternalCDOObject object = newInstance(cdoClass);
     if (object instanceof CDOResourceImpl)
     {

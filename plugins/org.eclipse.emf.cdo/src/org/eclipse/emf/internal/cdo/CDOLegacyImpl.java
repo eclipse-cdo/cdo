@@ -14,7 +14,6 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
@@ -268,7 +267,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
     }
 
     // Handle values
-    CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
+    CDOClass cdoClass = revision.getCDOClass();
     CDOFeature[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
     {
@@ -341,7 +340,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
       transferContainmentToInstance(view);
 
       // Handle values
-      CDOClassImpl cdoClass = (CDOClassImpl)revision.getCDOClass();
+      CDOClass cdoClass = revision.getCDOClass();
       CDOFeature[] features = cdoClass.getAllFeatures();
       for (CDOFeature feature : features)
       {

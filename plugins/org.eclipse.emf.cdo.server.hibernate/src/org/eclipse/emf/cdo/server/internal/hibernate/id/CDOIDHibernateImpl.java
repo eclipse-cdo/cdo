@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.server.hibernate.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -39,9 +38,9 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOIDHibernateImpl.class);
 
-  private static final long serialVersionUID = 1L;
-
   private static final Class<?>[] CLASSES = { CDOIDHibernateImpl.class, Legacy.class, SerializableContent.class };
+
+  private static final long serialVersionUID = 1L;
 
   private Serializable id;
 
@@ -102,49 +101,49 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
 
   public void read(ExtendedDataInput in) throws IOException
   {
-    // id = (Serializable)in.readObject();
-    // if (TRACER.isEnabled())
-    // {
-    // TRACER.format("Read id={0}", id);
-    // }
-    //
-    // entityName = in.readString();
-    // if (TRACER.isEnabled())
-    // {
-    // TRACER.format("Read entityName={0}", entityName);
-    // }
-
-    final byte[] content = in.readByteArray();
+    id = (Serializable)in.readObject();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read content={0}", HexUtil.bytesToHex(content));
+      TRACER.format("Read id={0}", id);
     }
 
-    setContent(content);
+    entityName = in.readString();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read entityName={0}", entityName);
+    }
+
+    // final byte[] content = in.readByteArray();
+    // if (TRACER.isEnabled())
+    // {
+    // TRACER.format("Read content={0}", HexUtil.bytesToHex(content));
+    // }
+    //
+    // setContent(content);
   }
 
   public void write(ExtendedDataOutput out) throws IOException
   {
-    // if (TRACER.isEnabled())
-    // {
-    // TRACER.format("Writing id={0}", id);
-    // }
-    //
-    // out.writeObject(id);
-    // if (TRACER.isEnabled())
-    // {
-    // TRACER.format("Writing entityName={0}", entityName);
-    // }
-    //
-    // out.writeString(entityName);
-
-    byte[] content = getContent();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing content={0}", HexUtil.bytesToHex(content));
+      TRACER.format("Writing id={0}", id);
     }
 
-    out.writeByteArray(content);
+    out.writeObject(id);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing entityName={0}", entityName);
+    }
+
+    out.writeString(entityName);
+
+    // byte[] content = getContent();
+    // if (TRACER.isEnabled())
+    // {
+    // TRACER.format("Writing content={0}", HexUtil.bytesToHex(content));
+    // }
+    //
+    // out.writeByteArray(content);
   }
 
   public byte[] getContent()

@@ -27,13 +27,16 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 /**
- * Persists a cdoid in the db.
+ * Persists a CDOID in the DB.
  */
 public class CDOIDUserType implements UserType
 {
-
-  // second varchar is just for informational purposes
+  // Second varchar is just for informational purposes
   private static final int[] SQL_TYPES = { Types.VARCHAR, Types.VARCHAR, Types.VARBINARY };
+
+  public CDOIDUserType()
+  {
+  }
 
   public int[] sqlTypes()
   {
@@ -50,10 +53,6 @@ public class CDOIDUserType implements UserType
     return false;
   }
 
-  public CDOIDUserType()
-  {
-  }
-
   public Object deepCopy(Object value)
   {
     return value;
@@ -65,10 +64,12 @@ public class CDOIDUserType implements UserType
     {
       return true;
     }
+
     if (x == null || y == null)
     {
       return false;
     }
+
     return x.equals(y);
   }
 
@@ -79,6 +80,7 @@ public class CDOIDUserType implements UserType
     {
       return null;
     }
+
     final byte[] content = (byte[])Hibernate.BINARY.nullSafeGet(rs, names[2]);
     final CDOIDHibernate cdoID = new CDOIDHibernateImpl();
     cdoID.setContent(content);
@@ -93,6 +95,7 @@ public class CDOIDUserType implements UserType
       statement.setNull(index, Types.VARCHAR);
       statement.setNull(index, Types.VARBINARY);
     }
+
     if (value != null)
     {
       final CDOIDHibernate cdoID;
@@ -108,6 +111,7 @@ public class CDOIDUserType implements UserType
       {
         cdoID = (CDOIDHibernate)value;
       }
+
       statement.setString(index, cdoID.getEntityName());
       statement.setString(index + 1, cdoID.getId().toString());
       statement.setBytes(index + 2, cdoID.getContent());

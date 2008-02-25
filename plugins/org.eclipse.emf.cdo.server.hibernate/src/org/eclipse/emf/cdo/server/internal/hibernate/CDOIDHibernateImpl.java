@@ -41,6 +41,8 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
 
   private static final long serialVersionUID = 1L;
 
+  private static final Class<?>[] CLASSES = { CDOIDHibernateImpl.class, Legacy.class, SerializableContent.class };
+
   private Serializable id;
 
   private String entityName;
@@ -212,6 +214,11 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
   public String toString()
   {
     return getClass().getName() + ": " + entityName + " (id:" + id.toString() + ")";
+  }
+
+  public static Class<?>[] getClasses()
+  {
+    return CLASSES;
   }
 
   // used for serialization

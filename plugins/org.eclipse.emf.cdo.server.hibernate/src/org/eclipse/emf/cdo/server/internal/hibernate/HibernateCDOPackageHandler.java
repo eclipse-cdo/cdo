@@ -47,8 +47,6 @@ public class HibernateCDOPackageHandler
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateStoreWriter.class);
 
-  private static final ContextTracer WARNING = new ContextTracer(OM.WARNING, HibernateStoreWriter.class);
-
   private Configuration configuration;
 
   private SessionFactory sessionFactory;
@@ -90,9 +88,10 @@ public class HibernateCDOPackageHandler
       {
         if (null != getCDOPackage(cdoPackage.getPackageURI()))
         {
-          WARNING.trace("CDOPackage " + cdoPackage.getPackageURI() + " already exists not persisting it again!");
+          OM.LOG.warn("CDOPackage " + cdoPackage.getPackageURI() + " already exists not persisting it again!");
           continue;
         }
+
         TRACER.trace("Persisting CDOPackage " + cdoPackage.getPackageURI());
         session.saveOrUpdate(cdoPackage);
       }
@@ -115,9 +114,10 @@ public class HibernateCDOPackageHandler
   {
     if (null != getCDOPackage(cdoPackage.getPackageURI()))
     {
-      WARNING.trace("CDOPackage " + cdoPackage.getPackageURI() + " already exists not persisting it again!");
+      OM.LOG.warn("CDOPackage " + cdoPackage.getPackageURI() + " already exists not persisting it again!");
       return;
     }
+
     final Session session = getSessionFactory().openSession();
     final Transaction tx = session.beginTransaction();
     boolean err = true;

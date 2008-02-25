@@ -113,7 +113,11 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
     // }
 
     final byte[] content = in.readByteArray();
-    System.out.println("Read CONTENT: " + HexUtil.bytesToHex(content));
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read content={0}", HexUtil.bytesToHex(content));
+    }
+
     setContent(content);
   }
 
@@ -133,7 +137,11 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
     // out.writeString(entityName);
 
     byte[] content = getContent();
-    System.out.println("Write CONTENT: " + HexUtil.bytesToHex(content));
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing content={0}", HexUtil.bytesToHex(content));
+    }
+
     out.writeByteArray(content);
   }
 

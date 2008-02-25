@@ -29,8 +29,6 @@ public abstract class OM
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
-  public static final OMTracer WARNING = BUNDLE.tracer("warn"); //$NON-NLS-1$
-
   public static final OMLogger LOG = BUNDLE.logger();
 
   /**

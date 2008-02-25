@@ -20,7 +20,7 @@ import org.eclipse.net4j.util.io.ExtendedDataInput;
  */
 public class CDOIDHibernateFactoryImpl implements CDOIDObjectFactory
 {
-  private static final Class<?>[] CLASSES = { CDOIDHibernateImpl.class, CDOIDHibernateImpl.Legacy.class };
+  private static final Class<?>[] CLASSES = CDOIDHibernateImpl.getClasses();
 
   public CDOIDHibernateFactoryImpl()
   {

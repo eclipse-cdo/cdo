@@ -43,7 +43,7 @@ import java.util.Properties;
  * @author Eike Stepper
  * @author Martin Taal
  */
-public class HibernateCDOPackageHandler
+public class HibernatePackageHandler
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateStoreWriter.class);
 
@@ -65,7 +65,7 @@ public class HibernateCDOPackageHandler
 
   private HibernateStore hibernateStore;
 
-  public HibernateCDOPackageHandler(Properties props, HibernateStore hibernateStore)
+  public HibernatePackageHandler(Properties props, HibernateStore hibernateStore)
   {
     properties = props;
     this.hibernateStore = hibernateStore;

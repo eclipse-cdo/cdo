@@ -67,7 +67,7 @@ public final class ExtendedIOUtil
         @Override
         public void write(int b) throws IOException
         {
-          out.writeByte(b & 0xff);
+          out.writeByte((b & 0xff) + Byte.MIN_VALUE);
         }
       });
     }

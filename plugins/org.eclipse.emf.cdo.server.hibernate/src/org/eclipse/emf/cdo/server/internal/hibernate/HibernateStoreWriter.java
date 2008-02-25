@@ -50,20 +50,20 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
     {
       // start with fresh hibernate session
       final Session session = getHibernateSession();
-      CDOHibernateThreadContext.setCommitContext(context);
+      HibernateThreadContext.setCommitContext(context);
       session.setFlushMode(FlushMode.COMMIT);
       session.beginTransaction();
       for (Object o : context.getNewObjects())
       {
         final CDORevision cdoRevision = (CDORevision)o;
-        session.save(CDOHibernateUtil.getInstance().getEntityName(cdoRevision), o);
+        session.save(HibernateUtil.getInstance().getEntityName(cdoRevision), o);
         TRACER
             .trace("Persisted new Object " + ((CDORevision)o).getCDOClass().getName() + " id: " + cdoRevision.getID());
       }
       for (Object o : context.getDirtyObjects())
       {
         final CDORevision cdoRevision = (CDORevision)o;
-        session.update(CDOHibernateUtil.getInstance().getEntityName(cdoRevision), o);
+        session.update(HibernateUtil.getInstance().getEntityName(cdoRevision), o);
         TRACER.trace("Updated Object " + ((CDORevision)o).getCDOClass().getName() + " id: " + cdoRevision.getID());
       }
       TRACER.trace("Commit hibernate transaction");
@@ -72,7 +72,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
     finally
     {
       TRACER.trace("Clearing used hibernate session");
-      CDOHibernateThreadContext.setCommitContext(null);
+      HibernateThreadContext.setCommitContext(null);
     }
 
     TRACER.trace("Applying id mappings");

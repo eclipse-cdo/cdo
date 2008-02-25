@@ -20,9 +20,9 @@ import org.hibernate.Session;
 /**
  * @author Martin Taal
  */
-public class CDOHibernateThreadContext
+public class HibernateThreadContext
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOHibernateThreadContext.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateThreadContext.class);
 
   private static ThreadLocal<CommitContext> commitContext = new ThreadLocal<CommitContext>();
 

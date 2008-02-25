@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateUtil;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 import org.eclipse.net4j.internal.util.collection.MoveableArrayList;
 
@@ -61,7 +61,7 @@ public class HibernateMoveableListWrapper implements List<Object>
       return o;
     }
 
-    return CDOHibernateUtil.getInstance().getCDORevision((CDOID)o);
+    return HibernateUtil.getInstance().getCDORevision((CDOID)o);
   }
 
   protected List<Object> getObjects(List<?> cdoIDs)
@@ -236,7 +236,7 @@ public class HibernateMoveableListWrapper implements List<Object>
       final Object o = this.delegate.next();
       if (o instanceof CDOID)
       {
-        return CDOHibernateUtil.getInstance().getCDORevision((CDOID)o);
+        return HibernateUtil.getInstance().getCDORevision((CDOID)o);
       }
       return o;
     }
@@ -276,7 +276,7 @@ public class HibernateMoveableListWrapper implements List<Object>
       final Object o = this.delegate.next();
       if (o instanceof CDOID)
       {
-        return CDOHibernateUtil.getInstance().getCDORevision((CDOID)delegate.next());
+        return HibernateUtil.getInstance().getCDORevision((CDOID)delegate.next());
       }
       return o;
     }
@@ -291,7 +291,7 @@ public class HibernateMoveableListWrapper implements List<Object>
       final Object o = this.delegate.previous();
       if (o instanceof CDOID)
       {
-        return CDOHibernateUtil.getInstance().getCDORevision((CDOID)delegate.next());
+        return HibernateUtil.getInstance().getCDORevision((CDOID)delegate.next());
       }
       return o;
     }

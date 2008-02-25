@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.hibernate.id.CDOIDHibernateFactoryImpl;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.WrappedException;
@@ -54,7 +55,7 @@ public class HibernateStore extends Store implements IHibernateStore
 
   private SessionFactory hibernateSessionFactory;
 
-  private HibernateCDOPackageHandler packageHandler;
+  private HibernatePackageHandler packageHandler;
 
   @SuppressWarnings("unused")
   private IHibernateMappingProvider mappingProvider;
@@ -65,7 +66,7 @@ public class HibernateStore extends Store implements IHibernateStore
   {
     super(TYPE);
     properties = props;
-    packageHandler = new HibernateCDOPackageHandler(props, this);
+    packageHandler = new HibernatePackageHandler(props, this);
     this.mappingProvider = mappingProvider;
     TRACER.trace("Created " + this.getClass().getName() + " with properties:");
     for (Object keyObject : props.keySet())
@@ -171,7 +172,7 @@ public class HibernateStore extends Store implements IHibernateStore
     throw new UnsupportedOperationException(); // TODO Implement me
   }
 
-  public HibernateCDOPackageHandler getPackageHandler()
+  public HibernatePackageHandler getPackageHandler()
   {
     return packageHandler;
   }

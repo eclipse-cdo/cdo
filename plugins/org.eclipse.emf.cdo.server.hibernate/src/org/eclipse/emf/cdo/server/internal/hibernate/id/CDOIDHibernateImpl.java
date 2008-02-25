@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Martin Taal - added hibernate specifics
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.hibernate;
+package org.eclipse.emf.cdo.server.internal.hibernate.id;
 
 import org.eclipse.emf.cdo.internal.protocol.id.AbstractCDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObject;

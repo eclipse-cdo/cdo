@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateUtil;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 import org.hibernate.HibernateException;
 
@@ -33,7 +33,7 @@ public class CDOReferenceGetter extends CDOPropertyGetter
     final Object o = super.get(target);
     if (o instanceof CDOID)
     {
-      return CDOHibernateUtil.getInstance().getCDORevision((CDOID)o);
+      return HibernateUtil.getInstance().getCDORevision((CDOID)o);
     }
     return o;
   }

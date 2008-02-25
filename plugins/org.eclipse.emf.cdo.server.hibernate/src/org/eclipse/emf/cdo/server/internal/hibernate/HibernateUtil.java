@@ -21,14 +21,14 @@ import org.hibernate.Session;
 /**
  * @author Martin Taal
  */
-public class CDOHibernateUtil
+public class HibernateUtil
 {
-  private static CDOHibernateUtil instance = new CDOHibernateUtil();
+  private static HibernateUtil instance = new HibernateUtil();
 
   /**
    * @return the instance
    */
-  public static CDOHibernateUtil getInstance()
+  public static HibernateUtil getInstance()
   {
     return instance;
   }
@@ -37,9 +37,9 @@ public class CDOHibernateUtil
    * @param instance
    *          the instance to set
    */
-  public static void setInstance(CDOHibernateUtil instance)
+  public static void setInstance(HibernateUtil instance)
   {
-    CDOHibernateUtil.instance = instance;
+    HibernateUtil.instance = instance;
   }
 
   public String getEntityName(CDORevision cdoRevision)
@@ -50,7 +50,7 @@ public class CDOHibernateUtil
   /**
    * Translates a temporary cdoID into a hibernate ID, by finding the object it refers to in the CommitContext and then
    * returning or by persisting the object. Note assumes that the hibernate session and CommitContext are set in
-   * CDOHibernateThreadContext.
+   * HibernateThreadContext.
    */
   public CDOIDHibernate getCDOIDHibernate(CDOID cdoID)
   {
@@ -59,7 +59,7 @@ public class CDOHibernateUtil
     {
       return (CDOIDHibernate)cdoRevision.getID();
     }
-    final Session session = CDOHibernateThreadContext.getSession();
+    final Session session = HibernateThreadContext.getSession();
     session.saveOrUpdate(cdoRevision);
     if (!(cdoRevision.getID() instanceof CDOIDHibernate))
     {
@@ -75,7 +75,7 @@ public class CDOHibernateUtil
    */
   public CDORevision getCDORevision(CDOID id)
   {
-    final CommitContext commitContext = CDOHibernateThreadContext.getCommitContext();
+    final CommitContext commitContext = HibernateThreadContext.getCommitContext();
     for (CDORevision revision : commitContext.getNewObjects())
     {
       if (revision.getID().equals(id))
@@ -107,7 +107,7 @@ public class CDOHibernateUtil
           + id.getClass().getName() + ": " + id);
     }
     final CDOIDHibernate cdoIDHibernate = (CDOIDHibernate)id;
-    final Session session = CDOHibernateThreadContext.getSession();
+    final Session session = HibernateThreadContext.getSession();
     return (CDORevision)session.get(cdoIDHibernate.getEntityName(), cdoIDHibernate.getId());
   }
 }

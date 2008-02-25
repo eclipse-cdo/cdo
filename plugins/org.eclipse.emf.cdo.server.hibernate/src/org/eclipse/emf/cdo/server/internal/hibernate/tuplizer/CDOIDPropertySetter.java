@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.hibernate.CDOIDHibernate;
-import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateThreadContext;
-import org.eclipse.emf.cdo.server.internal.hibernate.CDOIDHibernateImpl;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
+import org.eclipse.emf.cdo.server.internal.hibernate.id.CDOIDHibernateImpl;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionFactoryImplementor;
@@ -53,7 +53,7 @@ public class CDOIDPropertySetter extends CDOPropertySetter
     }
     else if (cdoID instanceof CDOIDTemp)
     {
-      final CommitContext commitContext = CDOHibernateThreadContext.getCommitContext();
+      final CommitContext commitContext = HibernateThreadContext.getCommitContext();
       final CDOIDHibernate newCDOID = new CDOIDHibernateImpl();
       newCDOID.setId((Serializable)value);
       newCDOID.setEntityName(revision.getCDOClass().getName());

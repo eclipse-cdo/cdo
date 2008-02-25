@@ -129,7 +129,7 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
 
   public CDORevision readRevision(CDOID id, int referenceChunk)
   {
-    return CDOHibernateUtil.getInstance().getCDORevision(id);
+    return HibernateUtil.getInstance().getCDORevision(id);
   }
 
   public CDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp)

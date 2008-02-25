@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
+import org.eclipse.net4j.util.tests.ExtendedIOTest;
 import org.eclipse.net4j.util.tests.MonitorTest;
 import org.eclipse.net4j.util.tests.MultiMapTest;
 import org.eclipse.net4j.util.tests.ReferenceValueMapTest;
@@ -35,6 +36,7 @@ public class AllTests
     suite.addTestSuite(SynchronizingCorrelatorTest.class);
     suite.addTestSuite(ReferenceValueMapTest.class);
     suite.addTestSuite(BufferPoolTest.class);
+    suite.addTestSuite(ExtendedIOTest.class);
     // suite.addTestSuite(SecurityTest.class);
     // TODO suite.addTestSuite(ConnectorTest.class);
     // $JUnit-END$

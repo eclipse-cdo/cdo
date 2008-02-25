@@ -14,8 +14,8 @@ import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.hibernate.CDOIDHibernate;
-import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateUtil;
-import org.eclipse.emf.cdo.server.internal.hibernate.CDOIDHibernateImpl;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
+import org.eclipse.emf.cdo.server.internal.hibernate.id.CDOIDHibernateImpl;
 
 import org.hibernate.Hibernate;
 import org.hibernate.usertype.UserType;
@@ -98,7 +98,7 @@ public class CDOIDUserType implements UserType
       final CDOIDHibernate cdoID;
       if (value instanceof CDOIDTemp)
       {
-        cdoID = CDOHibernateUtil.getInstance().getCDOIDHibernate((CDOID)value);
+        cdoID = HibernateUtil.getInstance().getCDOIDHibernate((CDOID)value);
       }
       else if (value instanceof CDORevision)
       {

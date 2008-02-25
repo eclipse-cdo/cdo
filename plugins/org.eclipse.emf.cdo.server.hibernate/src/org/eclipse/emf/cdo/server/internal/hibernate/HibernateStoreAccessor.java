@@ -46,10 +46,10 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   protected Session createHibernateSession()
   {
-    TRACER.trace("Creating hibernate session and setting it in threadlocal CDOHibernateThreadContext");
+    TRACER.trace("Creating hibernate session and setting it in threadlocal HibernateThreadContext");
     final SessionFactory sessionFactory = getStore().getHibernateSessionFactory();
     final Session session = sessionFactory.openSession();
-    CDOHibernateThreadContext.setSession(session);
+    HibernateThreadContext.setSession(session);
     return session;
   }
 
@@ -57,7 +57,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   protected void doRelease()
   {
     TRACER.trace("Releasing hibernate session");
-    CDOHibernateThreadContext.setSession(null);
+    HibernateThreadContext.setSession(null);
     clearHibernateSession();
   }
 

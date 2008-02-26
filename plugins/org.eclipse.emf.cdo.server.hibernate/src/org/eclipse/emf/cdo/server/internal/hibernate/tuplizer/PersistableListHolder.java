@@ -27,31 +27,27 @@ import java.util.Map;
  * 
  * @author Martin Taal
  */
-
 public class PersistableListHolder
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, PersistableListHolder.class);
 
   private static PersistableListHolder instance = new PersistableListHolder();
 
-  public static PersistableListHolder getInstance()
-  {
-    return instance;
-  }
-
-  public static void setInstance(PersistableListHolder instance)
-  {
-    PersistableListHolder.instance = instance;
-  }
-
   private ThreadLocal<Map<Key, PersistentCollection>> listMapping = new ThreadLocal<Map<Key, PersistentCollection>>();
+
+  public PersistableListHolder()
+  {
+  }
 
   public void putListMapping(Object target, CDOFeature cdoFeature, PersistentCollection collection)
   {
     final Key key = new Key(target, cdoFeature);
     getListMapping().put(key, collection);
-    TRACER.trace("Stored hb list in threadlocal: " + ((CDORevision)target).getCDOClass().getName() + "."
-        + cdoFeature.getName());
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Stored hb list in threadlocal: " + ((CDORevision)target).getCDOClass().getName() + "."
+          + cdoFeature.getName());
+    }
   }
 
   public PersistentCollection getListMapping(Object target, CDOFeature cdoFeature)
@@ -66,16 +62,27 @@ public class PersistableListHolder
     {
       listMapping.set(new HashMap<Key, PersistentCollection>());
     }
+
     return listMapping.get();
   }
 
-  private class Key
+  public static PersistableListHolder getInstance()
+  {
+    return instance;
+  }
+
+  public static void setInstance(PersistableListHolder instance)
+  {
+    PersistableListHolder.instance = instance;
+  }
+
+  private static final class Key
   {
     private Object owner;
 
     private CDOFeature cdoFeature;
 
-    Key(Object owner, CDOFeature cdoFeature)
+    public Key(Object owner, CDOFeature cdoFeature)
     {
       this.owner = owner;
       this.cdoFeature = cdoFeature;
@@ -88,6 +95,7 @@ public class PersistableListHolder
       {
         return false;
       }
+
       final Key otherKey = (Key)obj;
       // the owner is uniquely present in mem, the same applies for the cdoFeature
       // therefore == is allowed

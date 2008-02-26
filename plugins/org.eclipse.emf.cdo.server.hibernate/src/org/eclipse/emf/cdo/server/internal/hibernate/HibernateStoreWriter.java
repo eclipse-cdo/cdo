@@ -42,7 +42,10 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   @Override
   public void commit(CommitContext context)
   {
-    TRACER.trace("Committing transaction");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Committing transaction");
+    }
 
     writePackages(context.getNewPackages());
 
@@ -57,39 +60,62 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
       {
         final CDORevision cdoRevision = (CDORevision)o;
         session.save(HibernateUtil.getInstance().getEntityName(cdoRevision), o);
-        TRACER
-            .trace("Persisted new Object " + ((CDORevision)o).getCDOClass().getName() + " id: " + cdoRevision.getID());
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Persisted new Object " + ((CDORevision)o).getCDOClass().getName() + " id: "
+              + cdoRevision.getID());
+        }
       }
+
       for (Object o : context.getDirtyObjects())
       {
         final CDORevision cdoRevision = (CDORevision)o;
         session.update(HibernateUtil.getInstance().getEntityName(cdoRevision), o);
-        TRACER.trace("Updated Object " + ((CDORevision)o).getCDOClass().getName() + " id: " + cdoRevision.getID());
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Updated Object " + ((CDORevision)o).getCDOClass().getName() + " id: " + cdoRevision.getID());
+        }
       }
-      TRACER.trace("Commit hibernate transaction");
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Commit hibernate transaction");
+      }
+
       session.getTransaction().commit();
     }
     finally
     {
-      TRACER.trace("Clearing used hibernate session");
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Clearing used hibernate session");
+      }
+
       HibernateThreadContext.setCommitContext(null);
     }
 
-    TRACER.trace("Applying id mappings");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Applying id mappings");
+    }
     context.applyIDMappings();
   }
 
   @Override
   public boolean isReader()
   {
+    // TODO Is this necessary?
     return false;
   }
 
   @Override
   public void rollback(CommitContext context)
   {
-    // don't do anything as the real action is done at commit (which does not happen now)
-    TRACER.trace("Rollbacked called");
+    // Don't do anything as the real action is done at commit (which does not happen now)
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Rollbacked called");
+    }
   }
 
   @Override
@@ -107,12 +133,12 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   @Override
   protected void writePackages(CDOPackage... cdoPackages)
   {
-    if (cdoPackages != null && cdoPackages.length > 0)
+    if (cdoPackages != null && cdoPackages.length != 0)
     {
       getStore().getPackageHandler().writePackages(cdoPackages);
     }
 
-    // set a new hibernatesession in the thread
+    // Set a new hibernatesession in the thread
     resetHibernateSession();
   }
 
@@ -125,7 +151,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   @Override
   protected void writeRevision(CDORevision revision)
   {
-    // do nothing, do it all at commit
+    // Do nothing, do it all at commit
   }
 
   @Override
@@ -143,7 +169,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   @Override
   protected void writeRevisions(CDORevision[] revisions)
   {
-    // don't do anything it is done at commit
+    // Don't do anything it is done at commit
   }
 
   @Override

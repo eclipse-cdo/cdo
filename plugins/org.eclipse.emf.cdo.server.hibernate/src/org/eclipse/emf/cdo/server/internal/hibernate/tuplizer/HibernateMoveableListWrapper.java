@@ -31,6 +31,10 @@ public class HibernateMoveableListWrapper implements List<Object>
 {
   private MoveableArrayList<Object> delegate;
 
+  public HibernateMoveableListWrapper()
+  {
+  }
+
   /**
    * @return the delegate
    */
@@ -71,6 +75,7 @@ public class HibernateMoveableListWrapper implements List<Object>
     {
       result.add(getObject(o));
     }
+
     return result;
   }
 
@@ -87,6 +92,7 @@ public class HibernateMoveableListWrapper implements List<Object>
     {
       newC.add(getCDOID(o));
     }
+
     return newC;
   }
 
@@ -203,6 +209,7 @@ public class HibernateMoveableListWrapper implements List<Object>
     {
       result[i++] = o;
     }
+
     return result;
   }
 
@@ -214,14 +221,15 @@ public class HibernateMoveableListWrapper implements List<Object>
     {
       a[i++] = (T)o;
     }
+
     return a;
   }
 
-  private static class CDOHibernateIterator implements Iterator<Object>
+  private static final class CDOHibernateIterator implements Iterator<Object>
   {
-    final Iterator<?> delegate;
+    private final Iterator<?> delegate;
 
-    CDOHibernateIterator(Iterator<?> delegate)
+    public CDOHibernateIterator(Iterator<?> delegate)
     {
       this.delegate = delegate;
     }
@@ -233,11 +241,12 @@ public class HibernateMoveableListWrapper implements List<Object>
 
     public Object next()
     {
-      final Object o = this.delegate.next();
+      final Object o = delegate.next();
       if (o instanceof CDOID)
       {
         return HibernateUtil.getInstance().getCDORevision((CDOID)o);
       }
+
       return o;
     }
 
@@ -247,11 +256,11 @@ public class HibernateMoveableListWrapper implements List<Object>
     }
   }
 
-  private class CDOHibernateListIterator implements ListIterator<Object>
+  private static final class CDOHibernateListIterator implements ListIterator<Object>
   {
-    final ListIterator<Object> delegate;
+    private final ListIterator<Object> delegate;
 
-    CDOHibernateListIterator(ListIterator<Object> delegate)
+    public CDOHibernateListIterator(ListIterator<Object> delegate)
     {
       this.delegate = delegate;
     }
@@ -273,11 +282,12 @@ public class HibernateMoveableListWrapper implements List<Object>
 
     public Object next()
     {
-      final Object o = this.delegate.next();
+      final Object o = delegate.next();
       if (o instanceof CDOID)
       {
         return HibernateUtil.getInstance().getCDORevision((CDOID)delegate.next());
       }
+
       return o;
     }
 
@@ -288,11 +298,12 @@ public class HibernateMoveableListWrapper implements List<Object>
 
     public Object previous()
     {
-      final Object o = this.delegate.previous();
+      final Object o = delegate.previous();
       if (o instanceof CDOID)
       {
         return HibernateUtil.getInstance().getCDORevision((CDOID)delegate.next());
       }
+
       return o;
     }
 

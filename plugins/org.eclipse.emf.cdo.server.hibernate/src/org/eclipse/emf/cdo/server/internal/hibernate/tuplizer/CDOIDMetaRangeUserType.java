@@ -29,8 +29,11 @@ import java.sql.Types;
  */
 public class CDOIDMetaRangeUserType implements UserType
 {
-
   private static final int[] SQL_TYPES = { Types.INTEGER, Types.INTEGER };
+
+  public CDOIDMetaRangeUserType()
+  {
+  }
 
   public int[] sqlTypes()
   {
@@ -47,10 +50,6 @@ public class CDOIDMetaRangeUserType implements UserType
     return true;
   }
 
-  public CDOIDMetaRangeUserType()
-  {
-  }
-
   public Object deepCopy(Object value)
   {
     final CDOIDMetaRange cdoRange = (CDOIDMetaRange)value;
@@ -64,10 +63,12 @@ public class CDOIDMetaRangeUserType implements UserType
     {
       return true;
     }
+
     if (x == null || y == null)
     {
       return false;
     }
+
     return x.equals(y);
   }
 
@@ -79,6 +80,7 @@ public class CDOIDMetaRangeUserType implements UserType
     {
       return null;
     }
+
     final CDOIDMeta newCdoIDMeta = new CDOIDMetaImpl(start);
     return new CDOIDMetaRangeImpl(newCdoIDMeta, size);
   }

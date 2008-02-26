@@ -30,13 +30,13 @@ public class CDOManyReferenceSetter extends CDOPropertySetter
   @Override
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
-    // do some checking
+    // Do some checking
     if (!(value instanceof PersistentList))
     {
       throw new IllegalArgumentException("Value is not a persistentlist but a " + value.getClass().getName());
     }
 
-    // only set it in the listholder
+    // Only set it in the listholder
     PersistableListHolder.getInstance().putListMapping(target, getCDOFeature(), (PersistentCollection)value);
   }
 }

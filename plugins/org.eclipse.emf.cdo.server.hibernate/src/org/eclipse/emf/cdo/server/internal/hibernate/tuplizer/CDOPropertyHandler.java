@@ -20,13 +20,13 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
  */
 public abstract class CDOPropertyHandler
 {
+  private final ContextTracer tracer = new ContextTracer(OM.DEBUG, this.getClass());
+
   private CDORevisionTuplizer tuplizer;
 
   private CDOFeature cdoFeature;
 
   private boolean virtualProperty = false;
-
-  private final ContextTracer tracer = new ContextTracer(OM.DEBUG, this.getClass());
 
   public CDOPropertyHandler(CDORevisionTuplizer tuplizer, String propertyName)
   {

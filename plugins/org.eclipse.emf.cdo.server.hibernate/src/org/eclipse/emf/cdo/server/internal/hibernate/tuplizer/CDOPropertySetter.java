@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionPropertyAccessor.CDORevisionSetter;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionFactoryImplementor;
@@ -19,6 +20,8 @@ import org.hibernate.property.Setter;
 import java.lang.reflect.Method;
 
 /**
+ * TODO How does this differ from {@link CDORevisionSetter}? Both needed?
+ * 
  * @author Martin Taal
  */
 public class CDOPropertySetter extends CDOPropertyHandler implements Setter

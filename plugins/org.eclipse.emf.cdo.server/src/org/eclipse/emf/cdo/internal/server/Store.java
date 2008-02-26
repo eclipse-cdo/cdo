@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,8 @@ public abstract class Store extends Lifecycle implements IStore
 {
   private String type;
 
+  // Exclude from dump due to contained db password
+  @ExcludeFromDump
   private Map<String, String> properties;
 
   private IRepository repository;

@@ -46,13 +46,19 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
   public HibernateStoreReader(HibernateStore store, ISession session)
   {
     super(store, session);
-    TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
+    }
   }
 
   protected HibernateStoreReader(HibernateStore store, IView view)
   {
     super(store, view);
-    TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
+    }
   }
 
   public HibernateStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature)
@@ -73,7 +79,7 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
 
   public void readPackage(CDOPackage cdoPackage)
   {
-    // does nothing, assumes that the packages have been read
+    // Does nothing, assumes that the packages have been read
   }
 
   public Collection<CDOPackageInfo> readPackageInfos()
@@ -83,18 +89,26 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
 
   public CDOID readResourceID(String path)
   {
-    TRACER.trace("Finding resourceid using path " + path);
-    final Session session = getHibernateSession();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Finding resourceid using path " + path);
+    }
 
+    final Session session = getHibernateSession();
     final Criteria criteria = session.createCriteria(CDOResourceClass.NAME);
     criteria.add(Expression.eq("path", path));
     final List<?> result = criteria.list();
     if (result.size() == 0)
     {
-      TRACER.trace("Resource not found");
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Resource not found");
+      }
+
       // TODO: throw exception?
       return null;
     }
+
     // TODO: throw exception if list.size() > 1?
     final CDORevision cdoRevision = (CDORevision)result.get(0);
     return cdoRevision.getID();
@@ -106,12 +120,16 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
     {
       throw new IllegalArgumentException("ID must be not null");
     }
+
     if (!(id instanceof CDOIDHibernate))
     {
       throw new IllegalArgumentException("ID type " + id.getClass().getName() + " not supported by hibernate reader");
     }
 
-    TRACER.trace("Finding resource using id " + id);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Finding resource using id " + id);
+    }
 
     final Session session = getHibernateSession();
     final Query qry = session.createQuery("select path from " + CDOResourceClass.NAME + " where id=:id");
@@ -120,10 +138,15 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
     final List<?> result = qry.list();
     if (result.size() == 0)
     {
-      TRACER.trace("Resource not found");
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Resource not found");
+      }
+
       // TODO: throw exception?
       return null;
     }
+
     return (String)result.get(0);
   }
 
@@ -139,6 +162,7 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
 
   public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
+    // TODO Could be necessary to implement
     throw new UnsupportedOperationException();
   }
 }

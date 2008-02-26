@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.server.hibernate.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -195,24 +197,31 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
   @Override
   public boolean equals(Object obj)
   {
-    if (!(obj instanceof CDOIDHibernate))
+    if (this == obj)
     {
-      return false;
+      return true;
     }
 
-    return id.equals(((CDOIDHibernate)obj).getId()) && entityName.equals(((CDOIDHibernate)obj).getEntityName());
+    if (obj instanceof CDOIDHibernate)
+    {
+      return ObjectUtil.equals(id, ((CDOIDHibernate)obj).getId())
+          && ObjectUtil.equals(entityName, ((CDOIDHibernate)obj).getEntityName());
+    }
+
+    return false;
   }
 
   @Override
   public int hashCode()
   {
+    // TODO What about entityName?
     return id.hashCode();
   }
 
   @Override
   public String toString()
   {
-    return getClass().getName() + ": " + entityName + " (id:" + id.toString() + ")";
+    return MessageFormat.format("HBM-{0}-{1}", entityName, id);
   }
 
   public static Class<?>[] getClasses()
@@ -220,7 +229,11 @@ public class CDOIDHibernateImpl extends AbstractCDOID implements CDOIDHibernate
     return CLASSES;
   }
 
-  // used for serialization
+  /**
+   * Used for serialization
+   * 
+   * @author Martin Taal
+   */
   private static class SerializableContent implements Serializable
   {
     private static final long serialVersionUID = 1L;

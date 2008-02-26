@@ -26,7 +26,6 @@
 			<list-index />
 			<one-to-many class="CDOClassImpl" />
 		</list>
-
 	</joined-subclass>
 
 	<class name="CDOClassProxy" table="cdo_classes_proxy" lazy="false">

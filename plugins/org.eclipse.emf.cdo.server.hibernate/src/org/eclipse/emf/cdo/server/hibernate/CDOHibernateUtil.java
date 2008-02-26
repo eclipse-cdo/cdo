@@ -19,14 +19,14 @@ import java.util.Properties;
  * @author Eike Stepper
  * @author Martin Taal
  */
-public final class HibernateUtil
+public final class CDOHibernateUtil
 {
-  private HibernateUtil()
+  private CDOHibernateUtil()
   {
   }
 
-  public static IHibernateStore createStore(Properties properties, IHibernateMappingProvider mappingProvider)
+  public static IHibernateStore createStore(IHibernateMappingProvider mappingProvider, Properties properties)
   {
-    return new HibernateStore(properties, mappingProvider);
+    return new HibernateStore(mappingProvider, properties);
   }
 }

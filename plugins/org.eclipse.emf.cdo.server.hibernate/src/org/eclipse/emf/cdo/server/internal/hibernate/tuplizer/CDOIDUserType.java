@@ -31,7 +31,9 @@ import java.sql.Types;
  */
 public class CDOIDUserType implements UserType
 {
-  // Second varchar is just for informational purposes
+  /**
+   * Second varchar is just for informational purposes
+   */
   private static final int[] SQL_TYPES = { Types.VARCHAR, Types.VARCHAR, Types.VARBINARY };
 
   public CDOIDUserType()

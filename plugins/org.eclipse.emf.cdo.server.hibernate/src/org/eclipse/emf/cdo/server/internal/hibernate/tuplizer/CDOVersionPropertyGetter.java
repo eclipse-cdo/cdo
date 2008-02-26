@@ -34,13 +34,11 @@ public class CDOVersionPropertyGetter extends CDOPropertyGetter
     {
       return revision.getVersion();
     }
-    else
-    {
-      final Object version = super.get(target);
-      // TODO: does this make sense?
-      // revision.setVersion(((Number)value).intValue());
-      return version;
-    }
+
+    final Object version = super.get(target);
+    // TODO: does this make sense?
+    // revision.setVersion(((Number)value).intValue());
+    return version;
   }
 
   @Override

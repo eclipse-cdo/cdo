@@ -42,6 +42,7 @@ public class CDOIDPropertySetter extends CDOPropertySetter
     {
       return;
     }
+
     final InternalCDORevision revision = (InternalCDORevision)target;
     final CDOID cdoID = revision.getID();
     if (cdoID == null)

@@ -27,7 +27,6 @@ import java.sql.Types;
  */
 public class CDOTypeUserType implements UserType
 {
-
   private static final int[] SQL_TYPES = { Types.INTEGER };
 
   public int[] sqlTypes()
@@ -60,10 +59,12 @@ public class CDOTypeUserType implements UserType
     {
       return true;
     }
+
     if (x == null || y == null)
     {
       return false;
     }
+
     return x.equals(y);
   }
 
@@ -74,10 +75,12 @@ public class CDOTypeUserType implements UserType
     {
       return null;
     }
+
     if (value == null)
     {
       return null;
     }
+
     return CDOTypeImpl.index.get(value);
   }
 

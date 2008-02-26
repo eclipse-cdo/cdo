@@ -65,15 +65,21 @@ public class HibernatePackageHandler
 
   private HibernateStore hibernateStore;
 
-  public HibernatePackageHandler(Properties props, HibernateStore hibernateStore)
+  /**
+   * TODO Necessary to pass/store/dump the properties from the store?
+   */
+  public HibernatePackageHandler(HibernateStore store, Properties properties)
   {
-    properties = props;
-    this.hibernateStore = hibernateStore;
-    TRACER.trace("Created " + this.getClass().getName() + " with properties:");
-    for (Object keyObject : props.keySet())
-    {
-      TRACER.trace("Property: " + keyObject + ": " + props.get(keyObject));
-    }
+    hibernateStore = store;
+    this.properties = properties;
+    // if (TRACER.isEnabled())
+    // {
+    // TRACER.format("Created {0} with properties:", getClass().getName());
+    // for (Entry<Object, Object> property : properties.entrySet())
+    // {
+    // TRACER.format("Property: {0} = {1}", property.getKey(), property.getValue());
+    // }
+    // }
   }
 
   public void writePackages(CDOPackage... cdoPackages)

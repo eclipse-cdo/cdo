@@ -35,18 +35,28 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   protected HibernateStoreAccessor(HibernateStore store, ISession session)
   {
     super(store, session);
-    TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
+    }
   }
 
   protected HibernateStoreAccessor(HibernateStore store, IView view)
   {
     super(store, view);
-    TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
+    }
   }
 
   protected Session createHibernateSession()
   {
-    TRACER.trace("Creating hibernate session and setting it in threadlocal HibernateThreadContext");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Creating hibernate session and setting it in threadlocal HibernateThreadContext");
+    }
+
     final SessionFactory sessionFactory = getStore().getHibernateSessionFactory();
     final Session session = sessionFactory.openSession();
     HibernateThreadContext.setSession(session);
@@ -56,7 +66,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   @Override
   protected void doRelease()
   {
-    TRACER.trace("Releasing hibernate session");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Releasing hibernate session");
+    }
+
     HibernateThreadContext.setSession(null);
     clearHibernateSession();
   }
@@ -76,12 +90,21 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public void clearHibernateSession()
   {
-    TRACER.trace("Removing hibernate session");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Removing hibernate session");
+    }
+
     if (hibernateSession != null && hibernateSession.isOpen())
     {
-      TRACER.trace("Closing hibernate session");
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Closing hibernate session");
+      }
+
       hibernateSession.close();
     }
+
     hibernateSession = null;
   }
 
@@ -91,6 +114,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       hibernateSession = createHibernateSession();
     }
+
     return hibernateSession;
   }
 }

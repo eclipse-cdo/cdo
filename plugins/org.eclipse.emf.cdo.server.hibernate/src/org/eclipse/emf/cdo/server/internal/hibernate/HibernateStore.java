@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.server.internal.hibernate.id.CDOIDHibernateFactoryImp
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.hibernate.SessionFactory;
@@ -33,6 +34,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
+import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -57,25 +59,38 @@ public class HibernateStore extends Store implements IHibernateStore
 
   private HibernatePackageHandler packageHandler;
 
-  @SuppressWarnings("unused")
   private IHibernateMappingProvider mappingProvider;
 
+  // Exclude from dump due to contained db password
+  // TODO Can't the properties of Store.java be used?
+  @ExcludeFromDump
   private Properties properties;
 
-  public HibernateStore(Properties props, IHibernateMappingProvider mappingProvider)
+  public HibernateStore(IHibernateMappingProvider mappingProvider, Properties properties)
   {
     super(TYPE);
-    properties = props;
-    packageHandler = new HibernatePackageHandler(props, this);
     this.mappingProvider = mappingProvider;
-    TRACER.trace("Created " + this.getClass().getName() + " with properties:");
-    for (Object keyObject : props.keySet())
+    this.properties = properties;
+    packageHandler = new HibernatePackageHandler(this, properties);
+    if (TRACER.isEnabled())
     {
-      TRACER.trace("Property: " + keyObject + ": " + props.get(keyObject));
-    }
-    if (mappingProvider != null)
-    {
-      TRACER.trace("With mappingProvider " + mappingProvider.getClass().getName());
+      TRACER.format("Created {0} with properties:", getClass().getName());
+      for (Entry<Object, Object> property : properties.entrySet())
+      {
+        Object key = property.getKey();
+        Object value = property.getValue();
+        if (key instanceof String && ((String)key).contains("password"))
+        {
+          value = "****************";
+        }
+
+        TRACER.format("Property: {0} = {1}", key, value);
+      }
+
+      if (mappingProvider != null)
+      {
+        TRACER.trace("With mappingProvider " + mappingProvider.getClass().getName());
+      }
     }
   }
 
@@ -88,8 +103,13 @@ public class HibernateStore extends Store implements IHibernateStore
   {
     if (hibernateSessionFactory == null)
     {
-      TRACER.trace("Initializing SessionFactory for HibernateStore");
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Initializing SessionFactory for HibernateStore");
+      }
+
       currentHibernateStore.set(this);
+
       try
       {
         hibernateSessionFactory = hibernateConfiguration.buildSessionFactory();
@@ -177,15 +197,18 @@ public class HibernateStore extends Store implements IHibernateStore
     return packageHandler;
   }
 
-  @Override
   // TODO: synchronize??
+  @Override
   protected void doActivate() throws Exception
   {
-    TRACER.trace("Activating HibernateStore");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Activating HibernateStore");
+    }
 
     super.doActivate();
 
-    // activate the package store
+    // Activate the package store
     packageHandler.doActivate();
 
     initConfiguration();

@@ -48,14 +48,14 @@ public class CDOManyReferenceGetter extends CDOPropertyGetter
   @Override
   public Object get(Object target) throws HibernateException
   {
-    // check if there is already a persistentcollection
+    // Check if there is already a persistentcollection
     final PersistentCollection collection = PersistableListHolder.getInstance().getListMapping(target, getCDOFeature());
     if (collection != null)
     {
       return collection;
     }
 
-    // not yet, get the moveablearraylist
+    // Not yet, get the moveablearraylist
     @SuppressWarnings("unchecked")
     MoveableArrayList<Object> list = (MoveableArrayList<Object>)super.get(target);
     if (list == null)
@@ -66,11 +66,11 @@ public class CDOManyReferenceGetter extends CDOPropertyGetter
       revision.setValue(getCDOFeature(), list);
     }
 
-    // wrap the moveablearraylist
+    // Wrap the moveablearraylist
     final HibernateMoveableListWrapper wrapper = new HibernateMoveableListWrapper();
     wrapper.setDelegate(list);
 
-    // and return it
+    // And return it
     return wrapper;
   }
 }

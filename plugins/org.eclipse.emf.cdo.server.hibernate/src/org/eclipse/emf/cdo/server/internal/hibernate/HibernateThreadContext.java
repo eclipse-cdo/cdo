@@ -30,11 +30,13 @@ public class HibernateThreadContext
 
   public static Session getSession()
   {
-    if (session.get() == null)
+    Session result = session.get();
+    if (result == null)
     {
       throw new IllegalStateException("Session not set");
     }
-    return session.get();
+
+    return result;
   }
 
   public static void setSession(Session newSession)
@@ -43,24 +45,31 @@ public class HibernateThreadContext
     {
       throw new IllegalStateException("Session already set");
     }
-    if (newSession == null)
+
+    if (TRACER.isEnabled())
     {
-      TRACER.trace("Clearing session in threadlocal");
+      if (newSession == null)
+      {
+        TRACER.trace("Clearing session in threadlocal");
+      }
+      else
+      {
+        TRACER.trace("Setting session in threadlocal");
+      }
     }
-    else
-    {
-      TRACER.trace("Setting session in threadlocal");
-    }
+
     session.set(newSession);
   }
 
   public static CommitContext getCommitContext()
   {
-    if (commitContext.get() == null)
+    CommitContext result = commitContext.get();
+    if (result == null)
     {
       throw new IllegalStateException("CommitContext not set");
     }
-    return commitContext.get();
+
+    return result;
   }
 
   public static void setCommitContext(CommitContext newCommitContext)
@@ -69,14 +78,19 @@ public class HibernateThreadContext
     {
       throw new IllegalStateException("CommitContext already set");
     }
-    if (newCommitContext == null)
+
+    if (TRACER.isEnabled())
     {
-      TRACER.trace("Clearing commitcontext in threadlocal");
+      if (newCommitContext == null)
+      {
+        TRACER.trace("Clearing commitcontext in threadlocal");
+      }
+      else
+      {
+        TRACER.trace("Setting commitcontext in threadlocal");
+      }
     }
-    else
-    {
-      TRACER.trace("Setting commitcontext in threadlocal");
-    }
+
     commitContext.set(newCommitContext);
   }
 }

@@ -35,6 +35,7 @@ public class CDOReferenceGetter extends CDOPropertyGetter
     {
       return HibernateUtil.getInstance().getCDORevision((CDOID)o);
     }
+
     return o;
   }
 }

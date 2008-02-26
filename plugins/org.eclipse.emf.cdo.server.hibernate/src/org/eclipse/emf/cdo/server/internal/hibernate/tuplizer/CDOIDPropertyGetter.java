@@ -35,6 +35,7 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
     {
       return null;
     }
+
     final CDOIDHibernate cdoID = (CDOIDHibernate)revision.getID();
     if (isVirtualProperty())
     {

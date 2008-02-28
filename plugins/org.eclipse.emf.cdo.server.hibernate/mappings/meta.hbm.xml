@@ -26,11 +26,12 @@
 			<list-index />
 			<one-to-many class="CDOClassImpl" />
 		</list>
+
 	</joined-subclass>
 
 	<class name="CDOClassProxy" table="cdo_classes_proxy" lazy="false">
 		<id column="id" type="int">
-			<generator class="increment" />
+			<generator class="increment" /> 
 		</id>
 		<!-- set to not-null=false because it is nullified because of persist order -->
 		<many-to-one name="cdoClass" class="CDOClassImpl" not-null="false" cascade="merge,persist,save-update,lock,refresh" column="cdoclass"/>

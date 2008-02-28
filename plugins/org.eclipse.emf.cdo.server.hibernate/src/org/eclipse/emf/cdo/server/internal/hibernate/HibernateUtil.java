@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.internal.protocol.id.CDOIDNullImpl;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
@@ -66,7 +67,6 @@ public class HibernateUtil
       throw new IllegalStateException("CDORevision " + cdoRevision.getCDOClass().getName() + " " + cdoRevision.getID()
           + " does not have a hibernate cdoid after saving/updating it");
     }
-
     return (CDOIDHibernate)cdoRevision.getID();
   }
 
@@ -76,6 +76,11 @@ public class HibernateUtil
    */
   public CDORevision getCDORevision(CDOID id)
   {
+    if (id instanceof CDOIDNullImpl)
+    {
+      return null;
+    }
+
     final CommitContext commitContext = HibernateThreadContext.getCommitContext();
     for (CDORevision revision : commitContext.getNewObjects())
     {
@@ -84,7 +89,6 @@ public class HibernateUtil
         return revision;
       }
     }
-
     for (CDORevision revision : commitContext.getDirtyObjects())
     {
       if (revision.getID().equals(id))
@@ -108,7 +112,6 @@ public class HibernateUtil
       throw new IllegalArgumentException("Passed cdoid is not an instance of CDOIDHibernate but a "
           + id.getClass().getName() + ": " + id);
     }
-
     final CDOIDHibernate cdoIDHibernate = (CDOIDHibernate)id;
     final Session session = HibernateThreadContext.getSession();
     return (CDORevision)session.get(cdoIDHibernate.getEntityName(), cdoIDHibernate.getId());

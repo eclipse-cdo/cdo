@@ -183,7 +183,7 @@ public class HibernateTest extends AbstractOMTest
     props.setProperty("hibernate.hbm2ddl.auto", "create-drop");
     // IHibernateMappingProvider mappingProvider = new TeneoHibernateMappingProvider();
     // return new HibernateStore(props, mappingProvider);
-    return new HibernateStore(props, null);
+    return new HibernateStore(null, props);
   }
 
   private static EObject getInputModel()

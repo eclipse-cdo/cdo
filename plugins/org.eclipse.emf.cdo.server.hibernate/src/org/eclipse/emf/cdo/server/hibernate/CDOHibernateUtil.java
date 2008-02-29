@@ -13,8 +13,6 @@ package org.eclipse.emf.cdo.server.hibernate;
 
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 
-import java.util.Properties;
-
 /**
  * @author Eike Stepper
  * @author Martin Taal
@@ -25,8 +23,8 @@ public final class CDOHibernateUtil
   {
   }
 
-  public static IHibernateStore createStore(IHibernateMappingProvider mappingProvider, Properties properties)
+  public static IHibernateStore createStore(IHibernateMappingProvider mappingProvider)
   {
-    return new HibernateStore(mappingProvider, properties);
+    return new HibernateStore(mappingProvider);
   }
 }

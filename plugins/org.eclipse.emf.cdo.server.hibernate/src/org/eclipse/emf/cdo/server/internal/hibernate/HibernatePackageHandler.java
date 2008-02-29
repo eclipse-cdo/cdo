@@ -35,7 +35,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * Delegate which stores and retrieves cdo packages.
@@ -57,8 +56,6 @@ public class HibernatePackageHandler
 
   private int nextFeatureID;
 
-  private Properties properties;
-
   private Collection<CDOPackageInfo> cdoPackageInfos = null;
 
   private Collection<CDOPackage> cdoPackages = null;
@@ -68,18 +65,9 @@ public class HibernatePackageHandler
   /**
    * TODO Necessary to pass/store/dump the properties from the store?
    */
-  public HibernatePackageHandler(HibernateStore store, Properties properties)
+  public HibernatePackageHandler(HibernateStore store)
   {
     hibernateStore = store;
-    this.properties = properties;
-    // if (TRACER.isEnabled())
-    // {
-    // TRACER.format("Created {0} with properties:", getClass().getName());
-    // for (Entry<Object, Object> property : properties.entrySet())
-    // {
-    // TRACER.format("Property: {0} = {1}", property.getKey(), property.getValue());
-    // }
-    // }
   }
 
   public void writePackages(CDOPackage... cdoPackages)
@@ -280,7 +268,7 @@ public class HibernatePackageHandler
       in = OM.BUNDLE.getInputStream("mappings/meta.hbm.xml");
       configuration = new Configuration();
       configuration.addInputStream(in);
-      configuration.setProperties(properties);
+      configuration.setProperties(HibernateUtil.getInstance().getPropertiesFromStore(hibernateStore));
     }
     catch (Exception ex)
     {

@@ -14,10 +14,14 @@ import org.eclipse.emf.cdo.internal.protocol.id.CDOIDNullImpl;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.hibernate.CDOIDHibernate;
 
 import org.hibernate.Session;
+
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author Martin Taal
@@ -41,6 +45,18 @@ public class HibernateUtil
   public static void setInstance(HibernateUtil instance)
   {
     HibernateUtil.instance = instance;
+  }
+
+  /** Converts from a Map<String, String> to a Properties */
+  public Properties getPropertiesFromStore(IStore store)
+  {
+    final Properties props = new Properties();
+    final Map<String, String> storeProps = store.getRepository().getProperties();
+    for (String key : storeProps.keySet())
+    {
+      props.setProperty(key, storeProps.get(key));
+    }
+    return props;
   }
 
   public String getEntityName(CDORevision cdoRevision)

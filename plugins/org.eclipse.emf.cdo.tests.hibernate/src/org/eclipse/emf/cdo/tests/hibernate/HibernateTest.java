@@ -54,7 +54,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * @author Eike Stepper
@@ -162,10 +161,13 @@ public class HibernateTest extends AbstractOMTest
     props.put(Props.PROP_VERIFYING_REVISIONS, "false");
     props.put(Props.PROP_CURRENT_LRU_CAPACITY, "10000");
     props.put(Props.PROP_REVISED_LRU_CAPACITY, "10000");
+
+    addHibernateTeneoProperties(props);
+
     return CDOServerUtil.createRepository(REPOSITORY_NAME, createStore(), props);
   }
 
-  private static IStore createStore() throws Exception
+  private static void addHibernateTeneoProperties(Map<String, String> props) throws Exception
   {
     DriverManager.setLogWriter(new PrintWriter(System.out));
     Driver driver = new com.mysql.jdbc.Driver();
@@ -173,17 +175,20 @@ public class HibernateTest extends AbstractOMTest
     String driverName = driver.getClass().getName();
     String dialectName = MySQLInnoDBDialect.class.getName();
 
-    Properties props = new Properties();
-    props.setProperty(Environment.DRIVER, driverName);
-    props.setProperty(Environment.URL, "jdbc:mysql://localhost/cdohibernate");
-    props.setProperty(Environment.USER, "cdo");
+    props.put(Environment.DRIVER, driverName);
+    props.put(Environment.URL, "jdbc:mysql://localhost/cdohibernate");
+    props.put(Environment.USER, "cdo");
     // props.setProperty(Environment.PASS, "root");
-    props.setProperty(Environment.DIALECT, dialectName);
-    props.setProperty(Environment.SHOW_SQL, "true");
-    props.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+    props.put(Environment.DIALECT, dialectName);
+    props.put(Environment.SHOW_SQL, "true");
+    props.put("hibernate.hbm2ddl.auto", "create-drop");
+  }
+
+  private static IStore createStore() throws Exception
+  {
     // IHibernateMappingProvider mappingProvider = new TeneoHibernateMappingProvider();
     // return new HibernateStore(props, mappingProvider);
-    return new HibernateStore(null, props);
+    return new HibernateStore(null);
   }
 
   private static EObject getInputModel()

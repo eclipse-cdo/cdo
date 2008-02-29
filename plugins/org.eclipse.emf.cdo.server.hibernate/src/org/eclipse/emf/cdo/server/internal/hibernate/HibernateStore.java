@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.server.internal.hibernate.id.CDOIDHibernateFactoryImp
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.hibernate.SessionFactory;
@@ -33,8 +32,6 @@ import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Properties;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -61,36 +58,15 @@ public class HibernateStore extends Store implements IHibernateStore
 
   private IHibernateMappingProvider mappingProvider;
 
-  // Exclude from dump due to contained db password
-  // TODO Can't the properties of Store.java be used?
-  @ExcludeFromDump
-  private Properties properties;
-
-  public HibernateStore(IHibernateMappingProvider mappingProvider, Properties properties)
+  public HibernateStore(IHibernateMappingProvider mappingProvider)
   {
     super(TYPE);
     this.mappingProvider = mappingProvider;
-    this.properties = properties;
-    packageHandler = new HibernatePackageHandler(this, properties);
-    if (TRACER.isEnabled())
+    packageHandler = new HibernatePackageHandler(this);
+
+    if (mappingProvider != null)
     {
-      TRACER.format("Created {0} with properties:", getClass().getName());
-      for (Entry<Object, Object> property : properties.entrySet())
-      {
-        Object key = property.getKey();
-        Object value = property.getValue();
-        if (key instanceof String && ((String)key).contains("password"))
-        {
-          value = "****************";
-        }
-
-        TRACER.format("Property: {0} = {1}", key, value);
-      }
-
-      if (mappingProvider != null)
-      {
-        TRACER.trace("With mappingProvider " + mappingProvider.getClass().getName());
-      }
+      TRACER.trace("With mappingProvider " + mappingProvider.getClass().getName());
     }
   }
 
@@ -297,7 +273,7 @@ public class HibernateStore extends Store implements IHibernateStore
         hibernateConfiguration.addXML(mapping);
       }
 
-      hibernateConfiguration.setProperties(properties);
+      hibernateConfiguration.setProperties(HibernateUtil.getInstance().getPropertiesFromStore(this));
     }
     catch (Exception ex)
     {

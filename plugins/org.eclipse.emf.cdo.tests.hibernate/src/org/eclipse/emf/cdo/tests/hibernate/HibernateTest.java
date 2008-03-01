@@ -96,16 +96,18 @@ public class HibernateTest extends AbstractOMTest
       customers.add(customer);
       for (int i = 0; i < NO_OF_ORDERS; i++)
       {
-        customer.getSalesOrders().add(createSalesOrder((j * 1000) + i, customer, productCategory.getProducts()));
+        customer.getSalesOrders().add(createSalesOrder(j * 1000 + i, customer, productCategory.getProducts()));
       }
+
       orders.addAll(customer.getSalesOrders());
 
       final Supplier supplier = createSupplier(j);
       suppliers.add(supplier);
       for (int i = 0; i < NO_OF_ORDERS; i++)
       {
-        supplier.getPurchaseOrders().add(createPurchaseOrder((j * 1000) + i, supplier, productCategory.getProducts()));
+        supplier.getPurchaseOrders().add(createPurchaseOrder(j * 1000 + i, supplier, productCategory.getProducts()));
       }
+
       orders.addAll(supplier.getPurchaseOrders());
     }
 
@@ -218,7 +220,7 @@ public class HibernateTest extends AbstractOMTest
     int customerIndex = 0;
     int numOfBPs = 0;
     int numOfOrders = 0;
-    for (int i = startIndex; i < (startIndex + NO_OF_BUSINESS_PARTNERS); i++)
+    for (int i = startIndex; i < startIndex + NO_OF_BUSINESS_PARTNERS; i++)
     {
       final Customer c = (Customer)res.getContents().get(i);
       assertEquals(NO_OF_ORDERS, c.getSalesOrders().size());
@@ -229,7 +231,7 @@ public class HibernateTest extends AbstractOMTest
       for (SalesOrder so : c.getSalesOrders())
       {
         assertEquals(NO_OF_PRODUCTS, so.getOrderDetails().size());
-        assertEquals((customerIndex * 1000) + orderIndex, so.getId());
+        assertEquals(customerIndex * 1000 + orderIndex, so.getId());
         float price = 1.0f;
         int detailIndex = 0;
         for (OrderDetail od : so.getOrderDetails())
@@ -243,17 +245,19 @@ public class HibernateTest extends AbstractOMTest
           price += 1.0f;
           detailIndex++;
         }
+
         assertTrue(res.getContents().contains(so));
         orderIndex++;
         numOfOrders++;
       }
+
       customerIndex++;
       numOfBPs++;
     }
 
     startIndex = 2 + NO_OF_BUSINESS_PARTNERS;
     int supplierIndex = 0;
-    for (int i = startIndex; i < (startIndex + NO_OF_BUSINESS_PARTNERS); i++)
+    for (int i = startIndex; i < startIndex + NO_OF_BUSINESS_PARTNERS; i++)
     {
       Supplier s = (Supplier)res.getContents().get(i);
       assertEquals("Berlin" + supplierIndex, s.getCity());
@@ -263,7 +267,7 @@ public class HibernateTest extends AbstractOMTest
       int orderIndex = 0;
       for (PurchaseOrder po : s.getPurchaseOrders())
       {
-        assertEquals(BASE_MILLIS + (supplierIndex * 1000) + orderIndex, po.getDate().getTime());
+        assertEquals(BASE_MILLIS + supplierIndex * 1000 + orderIndex, po.getDate().getTime());
 
         float price = 1000.0f;
         int detailIndex = 0;
@@ -278,6 +282,7 @@ public class HibernateTest extends AbstractOMTest
           price += 1.0f;
           detailIndex++;
         }
+
         orderIndex++;
         numOfOrders++;
       }
@@ -285,6 +290,7 @@ public class HibernateTest extends AbstractOMTest
       numOfBPs++;
       supplierIndex++;
     }
+
     // 2 is for the categories
     assertEquals(2 + numOfBPs + numOfOrders, res.getContents().size());
   }
@@ -299,6 +305,7 @@ public class HibernateTest extends AbstractOMTest
       p.setName(prefix + "Product" + i);
       catalog.getProducts().add(p);
     }
+
     return catalog;
   }
 
@@ -345,6 +352,7 @@ public class HibernateTest extends AbstractOMTest
       ods.add(createOrderDetail(p, price));
       price += 1f;
     }
+
     return ods;
   }
 

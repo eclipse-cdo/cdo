@@ -19,15 +19,14 @@
 <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
 <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.5.0_14"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}&#13;&#10;-debug&#13;&#10;-console&#13;&#10;--launcher.XXMaxPermSize&#13;&#10;128M"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Ddebug=true&#13;&#10;-Dnet4j.config=${resource_loc:/org.eclipse.emf.cdo.server.product/rootfiles/configuration}"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.sdk.ide"/>
 <stringAttribute key="selectedPlugin" value="org.eclipse.emf.cdo.protocol"/>
-<stringAttribute key="selected_target_plugins" value="javax.servlet,org.eclipse.core.contenttype,org.eclipse.core.jobs,org.eclipse.core.runtime,org.eclipse.core.runtime.compatibility.auth,org.eclipse.core.runtime.compatibility.registry,org.eclipse.equinox.app,org.eclipse.equinox.common,org.eclipse.equinox.preferences,org.eclipse.equinox.registry,org.eclipse.osgi,org.eclipse.osgi.services,org.eclipse.osgi.util,org.eclipse.update.configurator"/>
-<stringAttribute key="selected_workspace_plugins" value="org.eclipse.emf.cdo.protocol,org.eclipse.net4j.db.hsqldb,org.eclipse.net4j.chat,org.eclipse.net4j.util,org.eclipse.emf.cdo.server,org.eclipse.net4j.buddies.protocol,org.eclipse.emf.cdo.server.db,org.eclipse.net4j.db.mysql,org.eclipse.net4j.buddies.server,org.eclipse.net4j.db.derby,org.eclipse.net4j.db,org.eclipse.net4j,org.eclipse.net4j.tcp"/>
+<stringAttribute key="selected_target_plugins" value="org.eclipse.osgi.util*3.1.200.v20071203,org.eclipse.equinox.registry*3.4.0.v20080201,org.eclipse.equinox.common*3.4.0.v20080201,org.eclipse.osgi.services*3.1.200.v20071203,org.eclipse.osgi*3.4.0.v20080222,org.eclipse.core.runtime.compatibility.registry*3.2.200.v20070717,org.eclipse.equinox.preferences*3.2.200.v20080201,org.eclipse.core.runtime.compatibility.auth*3.2.100.v20070502,org.eclipse.equinox.app*1.0.100.v20080225,org.eclipse.core.runtime*3.4.0.v20080201,org.eclipse.core.contenttype*3.3.0.v20080201,org.eclipse.update.configurator*3.2.200.v20080107,javax.servlet*2.4.0.v200711021030,org.eclipse.core.jobs*3.3.100.v20080224"/>
+<stringAttribute key="selected_workspace_plugins" value="org.eclipse.emf.cdo.server.db*0.8.0.qualifier,org.eclipse.net4j.buddies.server*0.8.0.qualifier,org.eclipse.net4j.db*0.8.0.qualifier,org.eclipse.net4j.tcp*0.8.0.qualifier,org.eclipse.emf.cdo.protocol*0.8.0.qualifier,org.eclipse.net4j.db.hsqldb*0.8.0.qualifier,org.eclipse.net4j.chat*0.8.0.qualifier,org.eclipse.net4j.util*0.8.0.qualifier,org.eclipse.emf.cdo.server*0.8.0.qualifier,org.eclipse.net4j.buddies.protocol*0.8.0.qualifier,org.eclipse.net4j.db.mysql*0.8.0.qualifier,org.eclipse.net4j.db.derby*0.8.0.qualifier,org.eclipse.net4j*0.8.0.qualifier"/>
 <booleanAttribute key="show_selected_only" value="false"/>
 <stringAttribute key="templateConfig" value="${target_home}\configuration\config.ini"/>
 <booleanAttribute key="tracing" value="true"/>

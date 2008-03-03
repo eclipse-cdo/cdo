@@ -99,10 +99,12 @@ public abstract class AbstractOMTest extends TestCase
 
   protected void doSetUp() throws Exception
   {
+    // Guaranteed to be empty
   }
 
   protected void doTearDown() throws Exception
   {
+    // Guaranteed to be empty
   }
 
   protected static void msg(Object m)

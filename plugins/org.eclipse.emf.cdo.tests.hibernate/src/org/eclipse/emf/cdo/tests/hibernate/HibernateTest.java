@@ -38,6 +38,7 @@ import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.ecore.EObject;
@@ -46,6 +47,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.MySQLInnoDBDialect;
 
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -70,81 +73,103 @@ public class HibernateTest extends AbstractOMTest
 
   private static final long BASE_MILLIS = new Date().getTime();
 
+  private static final boolean TRACE_TO_CONSOLE = true;
+
+  private static final boolean TRACE_TO_FILE = false;
+
+  private static PrintStream traceStream;
+
   public void testHibernate() throws Exception
   {
-    IManagedContainer container = initContainer();
-    JVMUtil.getAcceptor(container, "default"); // Start the JVM transport
-    CDOServerUtil.addRepository(container, createRepository()); // Start a CDO respository
-    IConnector connector = JVMUtil.getConnector(container, "default"); // Open a JVM connection
-
-    CDOSession session = CDOUtil.openSession(connector, REPOSITORY_NAME, true);// Open a CDO session
-    session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);// Not needed after first commit!!!
-    CDOTransaction transaction = session.openTransaction();
-    Resource resource = transaction.createResource("/my/big/resource");
-    resource.getContents().add(getInputModel());
-
-    // note that specific setters are not always called because of bi-directional
-    // relations, so adding an orderdetail to an order.getOrderDetails list will
-    // set the order feature of the orderdetail
-    final Category productCategory = createCategory("SalesPurchase");
-    final List<Customer> customers = new ArrayList<Customer>();
-    final List<Supplier> suppliers = new ArrayList<Supplier>();
-    final List<Order> orders = new ArrayList<Order>();
-    for (int j = 0; j < NO_OF_BUSINESS_PARTNERS; j++)
+    try
     {
-      final Customer customer = createCustomer(j);
-      customers.add(customer);
-      for (int i = 0; i < NO_OF_ORDERS; i++)
+      IManagedContainer container = initContainer();
+      JVMUtil.getAcceptor(container, "default"); // Start the JVM transport
+      CDOServerUtil.addRepository(container, createRepository()); // Start a CDO respository
+      IConnector connector = JVMUtil.getConnector(container, "default"); // Open a JVM connection
+
+      CDOSession session = CDOUtil.openSession(connector, REPOSITORY_NAME, true);// Open a CDO session
+      session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);// Not needed after first commit!!!
+      CDOTransaction transaction = session.openTransaction();
+      Resource resource = transaction.createResource("/my/big/resource");
+      resource.getContents().add(getInputModel());
+
+      // note that specific setters are not always called because of bi-directional
+      // relations, so adding an orderdetail to an order.getOrderDetails list will
+      // set the order feature of the orderdetail
+      final Category productCategory = createCategory("SalesPurchase");
+      final List<Customer> customers = new ArrayList<Customer>();
+      final List<Supplier> suppliers = new ArrayList<Supplier>();
+      final List<Order> orders = new ArrayList<Order>();
+      for (int j = 0; j < NO_OF_BUSINESS_PARTNERS; j++)
       {
-        customer.getSalesOrders().add(createSalesOrder(j * 1000 + i, customer, productCategory.getProducts()));
+        final Customer customer = createCustomer(j);
+        customers.add(customer);
+        for (int i = 0; i < NO_OF_ORDERS; i++)
+        {
+          customer.getSalesOrders().add(createSalesOrder(j * 1000 + i, customer, productCategory.getProducts()));
+        }
+
+        orders.addAll(customer.getSalesOrders());
+
+        final Supplier supplier = createSupplier(j);
+        suppliers.add(supplier);
+        for (int i = 0; i < NO_OF_ORDERS; i++)
+        {
+          supplier.getPurchaseOrders().add(createPurchaseOrder(j * 1000 + i, supplier, productCategory.getProducts()));
+        }
+
+        orders.addAll(supplier.getPurchaseOrders());
       }
 
-      orders.addAll(customer.getSalesOrders());
+      resource.getContents().add(productCategory);
+      resource.getContents().addAll(customers);
+      resource.getContents().addAll(suppliers);
+      resource.getContents().addAll(orders);
 
-      final Supplier supplier = createSupplier(j);
-      suppliers.add(supplier);
-      for (int i = 0; i < NO_OF_ORDERS; i++)
-      {
-        supplier.getPurchaseOrders().add(createPurchaseOrder(j * 1000 + i, supplier, productCategory.getProducts()));
-      }
+      transaction.commit();
+      session.close();
 
-      orders.addAll(supplier.getPurchaseOrders());
+      CDOSession session2 = CDOUtil.openSession(connector, REPOSITORY_NAME, true);// Open a CDO session
+      CDOTransaction transaction2 = session2.openTransaction();
+      Resource resource2 = transaction2.getResource("/my/big/resource");
+      Category category = (Category)resource2.getContents().get(0);
+      assertEquals("CAT1", category.getName());
+      assertEquals("CAT2", category.getCategories().get(0).getName());
+      assertEquals("P1", category.getProducts().get(0).getName());
+      assertEquals("P2", category.getProducts().get(1).getName());
+      assertEquals("P3", category.getCategories().get(0).getProducts().get(0).getName());
+      assertEquals(category, category.getProducts().get(1).eContainer());
+
+      checkTestData(resource2);
+
+      transaction.close();
+
+      // Cleanup
+      session2.close();
+      connector.disconnect();
     }
-
-    resource.getContents().add(productCategory);
-    resource.getContents().addAll(customers);
-    resource.getContents().addAll(suppliers);
-    resource.getContents().addAll(orders);
-
-    transaction.commit();
-    session.close();
-
-    CDOSession session2 = CDOUtil.openSession(connector, REPOSITORY_NAME, true);// Open a CDO session
-    CDOTransaction transaction2 = session2.openTransaction();
-    Resource resource2 = transaction2.getResource("/my/big/resource");
-    Category category = (Category)resource2.getContents().get(0);
-    assertEquals("CAT1", category.getName());
-    assertEquals("CAT2", category.getCategories().get(0).getName());
-    assertEquals("P1", category.getProducts().get(0).getName());
-    assertEquals("P2", category.getProducts().get(1).getName());
-    assertEquals("P3", category.getCategories().get(0).getProducts().get(0).getName());
-    assertEquals(category, category.getProducts().get(1).eContainer());
-
-    checkTestData(resource2);
-
-    transaction.close();
-
-    // Cleanup
-    session2.close();
-    connector.disconnect();
+    finally
+    {
+      IOUtil.close(traceStream);
+    }
   }
 
-  private static IManagedContainer initContainer()
+  private static IManagedContainer initContainer() throws FileNotFoundException
   {
     // Turn on tracing
     OMPlatform.INSTANCE.setDebugging(true);
-    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+    if (TRACE_TO_FILE)
+    {
+      traceStream = new PrintStream("trace.txt");
+      OMPlatform.INSTANCE.addTraceHandler(new PrintTraceHandler(traceStream));
+    }
+
+    if (!TRACE_TO_CONSOLE)
+    {
+      OMPlatform.INSTANCE.removeTraceHandler(PrintTraceHandler.CONSOLE);
+    }
 
     // Prepare the standalone infra structure (not needed when running inside Eclipse)
     IManagedContainer container = ContainerUtil.createContainer(); // Create a wiring container
@@ -262,7 +287,7 @@ public class HibernateTest extends AbstractOMTest
       Supplier s = (Supplier)res.getContents().get(i);
       assertEquals("Berlin" + supplierIndex, s.getCity());
       assertEquals("Supplier" + supplierIndex, s.getName());
-      assertEquals("Potsdammer Platz" + supplierIndex, s.getStreet());
+      assertEquals("Potsdamer Platz" + supplierIndex, s.getStreet());
 
       int orderIndex = 0;
       for (PurchaseOrder po : s.getPurchaseOrders())

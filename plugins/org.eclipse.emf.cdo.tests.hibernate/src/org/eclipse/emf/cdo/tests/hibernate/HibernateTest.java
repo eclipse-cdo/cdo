@@ -348,7 +348,7 @@ public class HibernateTest extends AbstractOMTest
     final Supplier s = Model1Factory.eINSTANCE.createSupplier();
     s.setName("Supplier" + index);
     s.setCity("Berlin" + index);
-    s.setStreet("Potsdammer Platz" + index);
+    s.setStreet("Potsdamer Platz" + index);
     return s;
   }
 

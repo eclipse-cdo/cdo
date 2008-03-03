@@ -82,7 +82,7 @@ public abstract class ClassMapping implements IClassMapping
       CDOResourceClass resourceClass = cdoClass.getPackageManager().getCDOResourcePackage().getCDOResourceClass();
       if (cdoClass == resourceClass)
       {
-        // Create a unique index to prevent duplicate resource paths
+        // Create a unique ids to prevent duplicate resource paths
         for (IAttributeMapping attributeMapping : attributeMappings)
         {
           if (attributeMapping.getFeature() == resourceClass.getCDOPathFeature())
@@ -92,7 +92,7 @@ public abstract class ClassMapping implements IClassMapping
             pathField.setPrecision(760);// MYSQL key limitation 767
             pathField.setNotNull(true);
 
-            // Create a unique index to prevent duplicate resource paths
+            // Create a unique ids to prevent duplicate resource paths
             table.addIndex(IDBIndex.Type.UNIQUE, versionField, pathField);
             break;
           }

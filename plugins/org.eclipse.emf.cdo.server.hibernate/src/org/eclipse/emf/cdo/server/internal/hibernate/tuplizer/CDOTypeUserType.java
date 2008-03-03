@@ -81,7 +81,7 @@ public class CDOTypeUserType implements UserType
       return null;
     }
 
-    return CDOTypeImpl.index.get(value);
+    return CDOTypeImpl.ids.get(value);
   }
 
   public void nullSafeSet(PreparedStatement statement, Object value, int index) throws SQLException

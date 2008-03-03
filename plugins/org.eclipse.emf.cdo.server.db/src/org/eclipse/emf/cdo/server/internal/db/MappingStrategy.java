@@ -368,7 +368,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
   }
 
   /**
-   * The implementation of this method must take care of creating a unique index to prevent duplicate resource paths.
+   * The implementation of this method must take care of creating a unique ids to prevent duplicate resource paths.
    */
   protected abstract IClassMapping createClassMapping(CDOClass cdoClass);
 

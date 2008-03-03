@@ -457,7 +457,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
     ReconstructedIndex expectedIndex = new ReconstructedIndex(id, feature, index);
     if (!expectedIndices.add(expectedIndex))
     {
-      fail("Duplicate expected index: " + expectedIndex);
+      fail("Duplicate expected ids: " + expectedIndex);
     }
   }
 
@@ -478,7 +478,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
                 indices[i]);
             if (!expectedIndices.remove(expectedIndex))
             {
-              System.out.println("Reconstructed but not expected index: " + expectedIndex);
+              System.out.println("Reconstructed but not expected ids: " + expectedIndex);
               fail = true;
             }
           }

@@ -347,21 +347,21 @@ public final class EMFUtil
   // new ECollections.ListDifferenceAnalyzer()
   // {
   // @Override
-  // protected void add(List<Object> oldList, Object newObject, int index)
+  // protected void add(List<Object> oldList, Object newObject, int ids)
   // {
-  // changes.add(new AddChange(newObject, index));
+  // changes.add(new AddChange(newObject, ids));
   // }
   //
   // @Override
-  // protected void remove(List<?> oldList, int index)
+  // protected void remove(List<?> oldList, int ids)
   // {
-  // changes.add(new RemoveChange(index));
+  // changes.add(new RemoveChange(ids));
   // }
   //
   // @Override
-  // protected void move(List<?> oldList, int index, int toIndex)
+  // protected void move(List<?> oldList, int ids, int toIndex)
   // {
-  // changes.add(new MoveChange(index, toIndex));
+  // changes.add(new MoveChange(ids, toIndex));
   // }
   // }.createListChanges(oldList, newList);
   //
@@ -373,7 +373,7 @@ public final class EMFUtil
   // */
   // public static class MoveChange implements FeatureChange
   // {
-  // public MoveChange(int index, int toIndex)
+  // public MoveChange(int ids, int toIndex)
   // {
   // }
   // }
@@ -383,7 +383,7 @@ public final class EMFUtil
   // */
   // public static class RemoveChange implements FeatureChange
   // {
-  // public RemoveChange(int index)
+  // public RemoveChange(int ids)
   // {
   // }
   // }
@@ -393,7 +393,7 @@ public final class EMFUtil
   // */
   // public static class AddChange implements FeatureChange
   // {
-  // public AddChange(Object newObject, int index)
+  // public AddChange(Object newObject, int ids)
   // {
   // }
   // }

@@ -22,21 +22,20 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getCategories <em>Categories</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getSuppliers <em>Suppliers</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getCustomers <em>Customers</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getSalesOrders <em>Sales Orders</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getCategories <em>Categories</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getSuppliers <em>Suppliers</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getCustomers <em>Customers</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getSalesOrders <em>Sales Orders</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class CompanyImpl extends AddressImpl implements Company
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CompanyImpl()
@@ -46,7 +45,6 @@ public class CompanyImpl extends AddressImpl implements Company
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -57,7 +55,6 @@ public class CompanyImpl extends AddressImpl implements Company
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -68,7 +65,6 @@ public class CompanyImpl extends AddressImpl implements Company
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -79,7 +75,6 @@ public class CompanyImpl extends AddressImpl implements Company
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -90,7 +85,6 @@ public class CompanyImpl extends AddressImpl implements Company
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -101,7 +95,6 @@ public class CompanyImpl extends AddressImpl implements Company
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

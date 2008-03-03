@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.io;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.WrappedException;
 
 import java.io.DataInput;
@@ -29,6 +30,8 @@ import java.io.OutputStream;
  */
 public final class ExtendedIOUtil
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, ExtendedIOUtil.class);
+
   private static final int UTF_HEADER_SIZE = 2;
 
   private static final int MAX_16_BIT = (1 << 16) - 1;
@@ -151,6 +154,11 @@ public final class ExtendedIOUtil
         {
           if (classResolver != null)
           {
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("Deserializing class {0}", desc.getName());
+            }
+
             Class<?> c = classResolver.resolveClass(desc);
             if (c != null)
             {

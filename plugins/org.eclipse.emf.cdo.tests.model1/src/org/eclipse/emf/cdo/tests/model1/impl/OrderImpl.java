@@ -20,17 +20,16 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderImpl#getOrderDetails <em>Order Details</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderImpl#getOrderDetails <em>Order Details</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class OrderImpl extends CDOObjectImpl implements Order
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected OrderImpl()
@@ -40,7 +39,6 @@ public class OrderImpl extends CDOObjectImpl implements Order
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -51,7 +49,6 @@ public class OrderImpl extends CDOObjectImpl implements Order
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -62,7 +59,6 @@ public class OrderImpl extends CDOObjectImpl implements Order
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

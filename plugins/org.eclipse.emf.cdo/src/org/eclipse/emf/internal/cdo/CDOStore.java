@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOSetFeatureDeltaIm
 import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
 
@@ -32,10 +33,12 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.collection.MoveableList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
@@ -128,6 +131,10 @@ public final class CDOStore implements EStore
       }
 
       value = view.convertIDToObject(value);
+    }
+    else if (cdoFeature.getType() == CDOType.CUSTOM)
+    {
+      value = EcoreUtil.createFromString((EDataType)eFeature.getEType(), (String)value);
     }
 
     view.getFeatureAnalyzer().postTraverseFeature(cdoObject, cdoFeature, index, value);
@@ -363,6 +370,10 @@ public final class CDOStore implements EStore
       {
         handleContainmentAdd(cdoObject, value);
       }
+    }
+    else if (cdoFeature.getType() == CDOType.CUSTOM)
+    {
+      value = EcoreUtil.convertToString((EDataType)eFeature.getEType(), value);
     }
 
     Object result = revision.set(cdoFeature, index, value);

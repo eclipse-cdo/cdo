@@ -39,6 +39,7 @@ import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -94,10 +95,18 @@ public final class ModelUtil
         }
 
         return type;
+
+      case EcorePackage.ESTRING:
+        return CDOType.STRING;
       }
     }
 
-    return CDOType.STRING;
+    if (classifier instanceof EDataType)
+    {
+      return CDOType.CUSTOM;
+    }
+
+    throw new IllegalArgumentException("Invalid attribute type: " + classifier);
   }
 
   public static void initializeCDOPackage(EPackage ePackage, CDOPackage cdoPackage)

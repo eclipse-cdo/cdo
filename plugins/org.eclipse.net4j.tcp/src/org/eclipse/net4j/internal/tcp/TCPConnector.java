@@ -29,6 +29,7 @@ import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.connector.Connector;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
@@ -175,7 +176,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
         inputBuffer = null;
       }
     }
-    catch (ClosedChannelException ex)
+    catch (IOException ex)
     {
       deactivate();
     }

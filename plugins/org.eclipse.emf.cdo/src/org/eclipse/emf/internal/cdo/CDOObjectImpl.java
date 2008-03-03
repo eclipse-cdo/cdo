@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -32,6 +33,7 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
@@ -41,6 +43,7 @@ import org.eclipse.emf.ecore.util.DelegatingEcoreEList;
 import org.eclipse.emf.ecore.util.DelegatingFeatureMap;
 import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
 
 import java.util.Collection;
@@ -248,6 +251,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       {
         setting = view.convertObjectToID(setting);
       }
+      else if (cdoFeature.getType() == CDOType.CUSTOM)
+      {
+        setting = EcoreUtil.convertToString((EDataType)eFeature.getEType(), setting);
+      }
 
       revision.set(cdoFeature, 0, setting);
     }
@@ -321,6 +328,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       if (isReference)
       {
         value = view.getObject((CDOID)value, true);
+      }
+      else if (cdoFeature.getType() == CDOType.CUSTOM)
+      {
+        value = EcoreUtil.createFromString((EDataType)eFeature.getEType(), (String)value);
       }
 
       eSettings[i] = value;

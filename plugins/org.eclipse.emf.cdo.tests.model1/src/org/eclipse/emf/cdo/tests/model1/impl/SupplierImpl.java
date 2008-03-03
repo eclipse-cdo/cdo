@@ -18,17 +18,16 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SupplierImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SupplierImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class SupplierImpl extends AddressImpl implements Supplier
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected SupplierImpl()
@@ -38,7 +37,6 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -49,7 +47,6 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

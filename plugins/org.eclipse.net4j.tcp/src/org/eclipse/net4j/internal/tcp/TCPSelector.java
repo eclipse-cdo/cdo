@@ -173,7 +173,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
             }
             catch (Exception ex)
             {
-              OM.LOG.error(ex);
+              OM.LOG.info(ex.getMessage());
               selKey.cancel();
             }
           }

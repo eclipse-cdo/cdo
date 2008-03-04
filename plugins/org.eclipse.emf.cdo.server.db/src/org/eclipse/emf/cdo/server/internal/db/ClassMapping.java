@@ -243,7 +243,8 @@ public abstract class ClassMapping implements IClassMapping
   protected int getDBLength(CDOFeature cdoFeature)
   {
     // Derby: The maximum length for a VARCHAR string is 32,672 characters.
-    return cdoFeature.getType() == CDOType.STRING ? 32672 : IDBField.DEFAULT;
+    CDOType type = cdoFeature.getType();
+    return type == CDOType.STRING || type == CDOType.CUSTOM ? 32672 : IDBField.DEFAULT;
   }
 
   protected IDBAdapter getDBAdapter()
@@ -417,7 +418,7 @@ public abstract class ClassMapping implements IClassMapping
     {
       return new AttributeMapping.AMShort(this, feature);
     }
-    else if (type == CDOType.STRING)
+    else if (type == CDOType.STRING || type == CDOType.CUSTOM)
     {
       return new AttributeMapping.AMString(this, feature);
     }

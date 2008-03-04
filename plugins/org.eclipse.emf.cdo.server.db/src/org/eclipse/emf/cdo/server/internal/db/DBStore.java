@@ -363,7 +363,7 @@ public class DBStore extends LongIDStore implements IDBStore
     {
       return DBType.SMALLINT;
     }
-    else if (type == CDOType.STRING)
+    else if (type == CDOType.STRING || type == CDOType.CUSTOM)
     {
       return DBType.VARCHAR;
     }

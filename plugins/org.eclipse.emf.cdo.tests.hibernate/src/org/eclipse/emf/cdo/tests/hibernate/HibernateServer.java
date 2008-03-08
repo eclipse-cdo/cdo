@@ -70,7 +70,7 @@ public class HibernateServer
     }
     finally
     {
-      IOUtil.close(traceStream);
+      IOUtil.closeSilent(traceStream);
     }
   }
 

@@ -655,12 +655,18 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   private void handleLibraryDescriptor(CDOIDLibraryDescriptor libraryDescriptor) throws Exception
   {
     String factoryName = libraryDescriptor.getFactoryName();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Using CDOID factory: {0}", factoryName);
+    }
+
+    File cacheFolder = getCacheFolder();
     ClassLoader classLoader = OM.class.getClassLoader();
 
     Set<String> neededLibraries = createSet(libraryDescriptor.getLibraryNames());
     if (!neededLibraries.isEmpty())
     {
-      File cacheFolder = getCacheFolder();
+
       IOUtil.mkdirs(cacheFolder);
       Set<String> existingLibraries = createSet(cacheFolder.list());
       Set<String> missingLibraries = new HashSet<String>(neededLibraries);
@@ -669,18 +675,22 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       {
         new LoadLibrariesRequest(channel, missingLibraries, cacheFolder).send();
       }
-
-      int i = 0;
-      URL[] urls = new URL[neededLibraries.size()];
-      for (String neededLibrary : neededLibraries)
-      {
-        File lib = new File(cacheFolder, neededLibrary);
-        urls[i++] = new URL("file://" + lib.getAbsolutePath());
-      }
-
-      classLoader = new URLClassLoader(urls, classLoader);
     }
 
+    int i = 0;
+    URL[] urls = new URL[neededLibraries.size()];
+    for (String neededLibrary : neededLibraries)
+    {
+      File lib = new File(cacheFolder, neededLibrary);
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Using CDOID library: {0}", lib.getAbsolutePath());
+      }
+
+      urls[i++] = new URL("file:///" + lib.getAbsolutePath());
+    }
+
+    classLoader = new URLClassLoader(urls, classLoader);
     Class<?> factoryClass = classLoader.loadClass(factoryName);
     cdoidObjectFactory = (CDOIDObjectFactory)factoryClass.newInstance();
   }

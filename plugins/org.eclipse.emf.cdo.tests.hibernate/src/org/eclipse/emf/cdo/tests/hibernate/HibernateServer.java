@@ -101,6 +101,7 @@ public class HibernateServer
   private static IRepository createRepository() throws Exception
   {
     Map<String, String> props = new HashMap<String, String>();
+    props.put(Props.PROP_OVERRIDE_UUID, "f8188187-65de-4c8a-8e75-e0ce5949837a");
     props.put(Props.PROP_SUPPORTING_AUDITS, "false");
     props.put(Props.PROP_SUPPORTING_REVISION_DELTAS, "false");
     props.put(Props.PROP_VERIFYING_REVISIONS, "false");

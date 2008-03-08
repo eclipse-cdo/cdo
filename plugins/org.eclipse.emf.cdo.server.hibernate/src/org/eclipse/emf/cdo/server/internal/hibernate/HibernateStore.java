@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
-import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -52,7 +51,7 @@ public class HibernateStore extends Store implements IHibernateStore
   private static final IDLibraryProvider CDOID_LIBRARY_PROVIDER = new IDLibraryProvider();
 
   private static final CDOIDLibraryDescriptor CDOID_LIBRARY_DESCRIPTOR = CDOID_LIBRARY_PROVIDER
-      .createDescriptor(CDOIDHibernateImpl.class.getName());
+      .createDescriptor(CDOIDHibernateFactoryImpl.class.getName());
 
   /**
    * Used to give different extensions of Hibernate a context when initializing

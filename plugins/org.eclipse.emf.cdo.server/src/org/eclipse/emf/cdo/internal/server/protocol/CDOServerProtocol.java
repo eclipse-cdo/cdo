@@ -39,6 +39,9 @@ public class CDOServerProtocol extends CDOProtocolImpl
     case CDOProtocolConstants.SIGNAL_OPEN_SESSION:
       return new OpenSessionIndication();
 
+    case CDOProtocolConstants.SIGNAL_LOAD_LIBRARIES:
+      return new LoadLibrariesIndication();
+
     case CDOProtocolConstants.SIGNAL_VIEWS_CHANGED:
       return new ViewsChangedIndication();
 

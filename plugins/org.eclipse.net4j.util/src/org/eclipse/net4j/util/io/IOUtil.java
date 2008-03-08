@@ -275,11 +275,12 @@ public final class IOUtil
       int written = 0;
       int bufferSize = buffer.length;
       int n = Math.min(size, bufferSize);
-      while ((n = input.read(buffer, 0, n)) != -1)
+      while (n > 0 && (n = input.read(buffer, 0, n)) != -1)
       {
         output.write(buffer, 0, n);
         written += n;
         size -= n;
+        n = Math.min(size, bufferSize);
       }
 
       return written;

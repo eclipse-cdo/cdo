@@ -43,6 +43,11 @@ public class ContextTracer
     return delegate.getName();
   }
 
+  public OMTracer getDelegate()
+  {
+    return delegate;
+  }
+
   public OMTracer getParent()
   {
     return delegate.getParent();

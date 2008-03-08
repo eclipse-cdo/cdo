@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 
@@ -27,14 +28,13 @@ public final class OpenSessionResult
 
   private List<CDOPackageInfo> packageInfos = new ArrayList<CDOPackageInfo>();
 
-  private Class<?> cdoidFactoryClass;
+  private CDOIDLibraryDescriptor libraryDescriptor;
 
-  private List<Class<?>> cdoidObjectClasses = new ArrayList<Class<?>>();
-
-  public OpenSessionResult(int sessionID, String repositoryUUID)
+  public OpenSessionResult(int sessionID, String repositoryUUID, CDOIDLibraryDescriptor libraryDescriptor)
   {
     this.sessionID = sessionID;
     this.repositoryUUID = repositoryUUID;
+    this.libraryDescriptor = libraryDescriptor;
   }
 
   public int getSessionID()
@@ -47,33 +47,18 @@ public final class OpenSessionResult
     return repositoryUUID;
   }
 
+  public CDOIDLibraryDescriptor getLibraryDescriptor()
+  {
+    return libraryDescriptor;
+  }
+
   public List<CDOPackageInfo> getPackageInfos()
   {
     return packageInfos;
   }
 
-  public Class<?> getCDOIDObjectFactoryClass()
-  {
-    return cdoidFactoryClass;
-  }
-
-  public List<Class<?>> getCDOIDObjectClasses()
-  {
-    return cdoidObjectClasses;
-  }
-
   void addPackageInfo(String packageURI, boolean dynamic, CDOIDMetaRange metaIDRange)
   {
     packageInfos.add(new CDOPackageInfo(packageURI, dynamic, metaIDRange));
-  }
-
-  void setCDOIDObjectFactoryClass(Class<?> c)
-  {
-    cdoidFactoryClass = c;
-  }
-
-  void addCDOIDObjectClass(Class<?> c)
-  {
-    cdoidObjectClasses.add(c);
   }
 }

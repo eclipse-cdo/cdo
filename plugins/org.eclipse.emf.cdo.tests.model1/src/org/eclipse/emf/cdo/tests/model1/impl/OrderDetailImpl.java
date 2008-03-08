@@ -33,6 +33,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected OrderDetailImpl()
@@ -42,6 +43,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -52,6 +54,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -62,6 +65,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Order getOrder()
@@ -71,6 +75,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setOrder(Order newOrder)
@@ -80,6 +85,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Product getProduct()
@@ -89,6 +95,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setProduct(Product newProduct)
@@ -98,6 +105,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public float getPrice()
@@ -107,6 +115,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setPrice(float newPrice)

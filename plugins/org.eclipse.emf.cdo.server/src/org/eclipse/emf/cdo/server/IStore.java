@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
+import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 
@@ -23,6 +25,10 @@ public interface IStore extends IRepositoryElement
   public String getStoreType();
 
   public CDOIDObjectFactory getCDOIDObjectFactory();
+
+  public CDOIDLibraryDescriptor getCDOIDLibraryDescriptor();
+
+  public CDOIDLibraryProvider getCDOIDLibraryProvider();
 
   /**
    * Returns if this store supports the writing of modified newRevisions in terms of deltas.

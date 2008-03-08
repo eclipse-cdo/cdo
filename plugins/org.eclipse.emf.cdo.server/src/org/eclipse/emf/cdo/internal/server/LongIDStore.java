@@ -10,8 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.id.CDOIDObjectFactoryImpl;
+import org.eclipse.emf.cdo.internal.protocol.id.CDOIDLongFactoryImpl;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
+import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 
@@ -22,7 +24,7 @@ public abstract class LongIDStore extends Store
 {
   protected static final long CRASHED = -1L;
 
-  private static final CDOIDObjectFactory CDOID_OBJECT_FACTORY = new CDOIDObjectFactoryImpl();
+  private static final CDOIDLongFactoryImpl CDOID_OBJECT_FACTORY = new CDOIDLongFactoryImpl();
 
   private transient long lastObjectID;
 
@@ -54,5 +56,34 @@ public abstract class LongIDStore extends Store
   public CDOIDObjectFactory getCDOIDObjectFactory()
   {
     return CDOID_OBJECT_FACTORY;
+  }
+
+  public CDOIDLibraryDescriptor getCDOIDLibraryDescriptor()
+  {
+    return CDOID_OBJECT_FACTORY.getLibraryHandler();
+  }
+
+  public CDOIDLibraryProvider getCDOIDLibraryProvider()
+  {
+    return CDOID_OBJECT_FACTORY.getLibraryHandler();
+  }
+
+  public boolean hasAuditingSupport()
+  {
+    return false;
+  }
+
+  public boolean hasBranchingSupport()
+  {
+    return false;
+  }
+
+  public boolean hasWriteDeltaSupport()
+  {
+    return false;
+  }
+
+  public void repairAfterCrash()
+  {
   }
 }

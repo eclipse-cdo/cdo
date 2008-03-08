@@ -11,15 +11,18 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.internal.protocol.id.CDOIDLibraryDescriptorImpl;
 import org.eclipse.emf.cdo.internal.server.Store;
+import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
+import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
+import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
-import org.eclipse.emf.cdo.server.internal.hibernate.id.CDOIDHibernateFactoryImpl;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.WrappedException;
@@ -29,6 +32,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,6 +49,8 @@ public class HibernateStore extends Store implements IHibernateStore
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateStore.class);
 
   private static final CDOIDObjectFactory CDOID_OBJECT_FACTORY = new CDOIDHibernateFactoryImpl();
+
+  private static final IDLibraryHandler CDOID_LIBRARY_HANDLER = new IDLibraryHandler();
 
   /**
    * Used to give different extensions of Hibernate a context when initializing
@@ -64,7 +71,7 @@ public class HibernateStore extends Store implements IHibernateStore
     this.mappingProvider = mappingProvider;
     packageHandler = new HibernatePackageHandler(this);
 
-    if (mappingProvider != null)
+    if (TRACER.isEnabled() && mappingProvider != null)
     {
       TRACER.trace("With mappingProvider " + mappingProvider.getClass().getName());
     }
@@ -117,6 +124,16 @@ public class HibernateStore extends Store implements IHibernateStore
   public CDOIDObjectFactory getCDOIDObjectFactory()
   {
     return CDOID_OBJECT_FACTORY;
+  }
+
+  public CDOIDLibraryDescriptor getCDOIDLibraryDescriptor()
+  {
+    return CDOID_LIBRARY_HANDLER;
+  }
+
+  public CDOIDLibraryProvider getCDOIDLibraryProvider()
+  {
+    return CDOID_LIBRARY_HANDLER;
   }
 
   @Override
@@ -229,7 +246,10 @@ public class HibernateStore extends Store implements IHibernateStore
 
   protected void initConfiguration()
   {
-    TRACER.trace("Initializing Configuration");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Initializing Configuration");
+    }
 
     InputStream in = null;
 
@@ -244,10 +264,18 @@ public class HibernateStore extends Store implements IHibernateStore
 
       if (cdoPackages.size() > 0)
       {
-        TRACER.trace("Mapping ecore to hibernate for CDOPackages:");
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Mapping ecore to hibernate for CDOPackages:");
+        }
+
         for (CDOPackage cdoPackage : cdoPackages)
         {
-          TRACER.trace("adding ecore for CDOPackage " + cdoPackage.getPackageURI());
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("adding ecore for CDOPackage " + cdoPackage.getPackageURI());
+          }
+
           ecoreStrs.add(cdoPackage.getEcore());
         }
         // DISABLED to prevent teneo dependency
@@ -261,10 +289,17 @@ public class HibernateStore extends Store implements IHibernateStore
       else
       {
         mapping = null;
-        TRACER.trace("No CDOPackages found, ecore not mapped to hibernate");
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("No CDOPackages found, ecore not mapped to hibernate");
+        }
       }
 
-      TRACER.trace("Adding resource.hbm.xml to configuration");
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Adding resource.hbm.xml to configuration");
+      }
+
       in = OM.BUNDLE.getInputStream("mappings/resource.hbm.xml");
       hibernateConfiguration.addInputStream(in);
       if (mapping != null)
@@ -287,12 +322,44 @@ public class HibernateStore extends Store implements IHibernateStore
 
   protected void initSchema()
   {
-    TRACER.trace("Updating db schema for HibernateStore");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Updating db schema for HibernateStore");
+    }
+
     new SchemaUpdate(hibernateConfiguration).execute(true, true);
   }
 
   public static HibernateStore getCurrentHibernateStore()
   {
     return currentHibernateStore.get();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class IDLibraryHandler extends CDOIDLibraryDescriptorImpl implements CDOIDLibraryProvider
+  {
+    public IDLibraryHandler()
+    {
+      super(CDOIDHibernateFactoryImpl.class.getName(), null);
+    }
+
+    public InputStream getContents(String libraryName) throws IOException
+    {
+      File library = getFile(libraryName);
+      return IOUtil.openInputStream(library);
+    }
+
+    public int getSize(String libraryName)
+    {
+      File library = getFile(libraryName);
+      return (int)library.length();
+    }
+
+    private File getFile(String libraryName)
+    {
+      return null;
+    }
   }
 }

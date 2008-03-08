@@ -17,7 +17,6 @@
 
 <plugin>
 
-
    <extension
          point="org.eclipse.emf.cdo.server.storeFactories">
       <storeFactory
@@ -25,6 +24,5 @@
             storeType="hibernate">
       </storeFactory>
    </extension>
-
 
 </plugin>

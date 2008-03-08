@@ -9,8 +9,8 @@ package org.eclipse.emf.cdo.tests.model1.impl;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product;
-
 import org.eclipse.emf.cdo.tests.model1.VAT;
+
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 import org.eclipse.emf.common.util.EList;
@@ -21,18 +21,19 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.ProductImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.ProductImpl#getOrderDetails <em>Order Details</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.ProductImpl#getVat <em>Vat</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.ProductImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.ProductImpl#getOrderDetails <em>Order Details</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.ProductImpl#getVat <em>Vat</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ProductImpl extends CDOObjectImpl implements Product
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ProductImpl()
@@ -42,6 +43,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -52,6 +54,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -62,6 +65,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -71,6 +75,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -80,6 +85,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -89,8 +95,8 @@ public class ProductImpl extends CDOObjectImpl implements Product
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public VAT getVat()
@@ -99,8 +105,8 @@ public class ProductImpl extends CDOObjectImpl implements Product
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setVat(VAT newVat)

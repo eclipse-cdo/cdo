@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
-import org.eclipse.emf.cdo.server.hibernate.CDOIDHibernate;
+import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 
 import org.hibernate.Session;
 

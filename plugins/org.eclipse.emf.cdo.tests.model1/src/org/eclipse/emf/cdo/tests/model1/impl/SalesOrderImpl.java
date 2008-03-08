@@ -29,6 +29,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected SalesOrderImpl()
@@ -38,6 +39,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -48,6 +50,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getId()
@@ -57,6 +60,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setId(int newId)
@@ -66,6 +70,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Customer getCustomer()
@@ -75,6 +80,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setCustomer(Customer newCustomer)

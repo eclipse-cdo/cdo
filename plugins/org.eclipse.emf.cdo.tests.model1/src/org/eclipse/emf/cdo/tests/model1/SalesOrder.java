@@ -24,12 +24,12 @@ package org.eclipse.emf.cdo.tests.model1;
 public interface SalesOrder extends Order
 {
   /**
-   * Returns the value of the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Id</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Id</em>' attribute.
    * @see #setId(int)
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getSalesOrder_Id()
@@ -50,14 +50,14 @@ public interface SalesOrder extends Order
   void setId(int value);
 
   /**
-   * Returns the value of the '<em><b>Customer</b></em>' reference.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.Customer#getSalesOrders <em>Sales Orders</em>}'.
+   * Returns the value of the '<em><b>Customer</b></em>' reference. It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.Customer#getSalesOrders <em>Sales Orders</em>}'.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Customer</em>' reference isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Customer</em>' reference.
    * @see #setCustomer(Customer)
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getSalesOrder_Customer()
@@ -68,9 +68,11 @@ public interface SalesOrder extends Order
   Customer getCustomer();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getCustomer <em>Customer</em>}' reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @param value the new value of the '<em>Customer</em>' reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getCustomer <em>Customer</em>}'
+   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Customer</em>' reference.
    * @see #getCustomer()
    * @generated
    */

@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.server.hibernate.CDOIDHibernate;
+import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 
 import org.hibernate.HibernateException;
 

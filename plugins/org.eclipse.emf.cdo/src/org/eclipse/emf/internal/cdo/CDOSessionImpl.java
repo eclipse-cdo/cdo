@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.protocol.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObject;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
@@ -30,6 +31,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
+import org.eclipse.emf.internal.cdo.protocol.LoadLibrariesRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
 import org.eclipse.emf.internal.cdo.protocol.QueryObjectTypesRequest;
@@ -51,6 +53,7 @@ import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import org.eclipse.emf.common.util.URI;
@@ -62,11 +65,14 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
+import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -147,11 +153,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   public int getSessionID()
   {
     return sessionID;
-  }
-
-  public Class<?>[] getCDOIDObjectClasses()
-  {
-    return cdoidObjectFactory.getCDOIDObjectClasses();
   }
 
   public CDOIDObject createCDOIDObject(ExtendedDataInput in)
@@ -620,7 +621,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
-    cdoidObjectFactory = createCDOIDFactory(result.getCDOIDObjectFactoryClass(), result.getCDOIDObjectClasses());
+    handleLibraryDescriptor(result.getLibraryDescriptor());
     packageManager.addPackageProxies(result.getPackageInfos());
     packageManager.activate();
     revisionManager.activate();
@@ -651,20 +652,58 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     super.doDeactivate();
   }
 
-  private CDOIDObjectFactory createCDOIDFactory(Class<?> objectFactoryClass, List<Class<?>> objectClasses)
+  private void handleLibraryDescriptor(CDOIDLibraryDescriptor libraryDescriptor) throws Exception
   {
-    // ClassLoader classLoader = new CDOIDObjectFactoryClassLoader();
+    String factoryName = libraryDescriptor.getFactoryName();
+    ClassLoader classLoader = OM.class.getClassLoader();
 
-    // return new CDOIDObjectFactoryImpl();
+    Set<String> neededLibraries = createSet(libraryDescriptor.getLibraryNames());
+    if (!neededLibraries.isEmpty())
+    {
+      File cacheFolder = getCacheFolder();
+      IOUtil.mkdirs(cacheFolder);
+      Set<String> existingLibraries = createSet(cacheFolder.list());
+      Set<String> missingLibraries = new HashSet<String>(neededLibraries);
+      missingLibraries.removeAll(existingLibraries);
+      if (!missingLibraries.isEmpty())
+      {
+        new LoadLibrariesRequest(channel, missingLibraries, cacheFolder).send();
+      }
 
-    try
-    {
-      return (CDOIDObjectFactory)objectFactoryClass.newInstance();
+      int i = 0;
+      URL[] urls = new URL[neededLibraries.size()];
+      for (String neededLibrary : neededLibraries)
+      {
+        File lib = new File(cacheFolder, neededLibrary);
+        urls[i++] = new URL("file://" + lib.getAbsolutePath());
+      }
+
+      classLoader = new URLClassLoader(urls, classLoader);
     }
-    catch (Exception ex)
+
+    Class<?> factoryClass = classLoader.loadClass(factoryName);
+    cdoidObjectFactory = (CDOIDObjectFactory)factoryClass.newInstance();
+  }
+
+  private File getCacheFolder()
+  {
+    String stateLocation = OM.BUNDLE.getStateLocation();
+    File repos = new File(stateLocation, "repos");
+    return new File(repos, repositoryUUID);
+  }
+
+  private Set<String> createSet(String[] fileNames)
+  {
+    Set<String> set = new HashSet<String>();
+    for (String fileName : fileNames)
     {
-      throw WrappedException.wrap(ex);
+      if (fileName.endsWith(".jar"))
+      {
+        set.add(fileName);
+      }
     }
+
+    return set;
   }
 
   private void sendViewsNotification(CDOViewImpl view)

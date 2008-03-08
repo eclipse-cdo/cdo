@@ -20,8 +20,8 @@ import org.eclipse.emf.cdo.protocol.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.hibernate.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreReader;
+import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;

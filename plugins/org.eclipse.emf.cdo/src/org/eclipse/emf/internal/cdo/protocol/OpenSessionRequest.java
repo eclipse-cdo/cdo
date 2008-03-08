@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.id.CDOIDObjectFactoryImpl;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.util.ServerException;
@@ -94,7 +94,13 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
       PROTOCOL.format("Read repositoryUUID: {0}", repositoryUUID);
     }
 
-    OpenSessionResult result = new OpenSessionResult(sessionID, repositoryUUID);
+    CDOIDLibraryDescriptor libraryDescriptor = CDOIDUtil.readLibraryDescriptor(in);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Read libraryDescriptor: {0}", libraryDescriptor);
+    }
+
+    OpenSessionResult result = new OpenSessionResult(sessionID, repositoryUUID, libraryDescriptor);
 
     for (;;)
     {
@@ -114,31 +120,6 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
       result.addPackageInfo(packageURI, dynamic, metaIDRange);
     }
 
-    int classes = in.readInt();
-    if (classes == 0)
-    {
-      result.setCDOIDObjectFactoryClass(CDOIDObjectFactoryImpl.class);
-    }
-    else
-    {
-      result.setCDOIDObjectFactoryClass(deserializeClass(in));
-      for (int i = 1; i < classes; i++)
-      {
-        result.addCDOIDObjectClass(deserializeClass(in));
-      }
-    }
-
     return result;
-  }
-
-  private Class<?> deserializeClass(ExtendedDataInputStream in) throws IOException
-  {
-    Class<?> clazz = (Class<?>)in.readObject(OM.class.getClassLoader());
-    if (PROTOCOL.isEnabled())
-    {
-      PROTOCOL.format("Deserialized class " + clazz.getName());
-    }
-
-    return clazz;
   }
 }

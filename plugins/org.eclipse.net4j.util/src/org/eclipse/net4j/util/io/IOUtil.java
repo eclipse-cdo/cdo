@@ -268,11 +268,33 @@ public final class IOUtil
     }
   }
 
+  public static int copy(InputStream input, OutputStream output, int size, byte buffer[]) throws IORuntimeException
+  {
+    try
+    {
+      int written = 0;
+      int bufferSize = buffer.length;
+      int n = Math.min(size, bufferSize);
+      while ((n = input.read(buffer, 0, n)) != -1)
+      {
+        output.write(buffer, 0, n);
+        written += n;
+        size -= n;
+      }
+
+      return written;
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
   public static void copy(InputStream input, OutputStream output, byte buffer[]) throws IORuntimeException
   {
     try
     {
-      int n = 0;
+      int n;
       while ((n = input.read(buffer)) != -1)
       {
         output.write(buffer, 0, n);

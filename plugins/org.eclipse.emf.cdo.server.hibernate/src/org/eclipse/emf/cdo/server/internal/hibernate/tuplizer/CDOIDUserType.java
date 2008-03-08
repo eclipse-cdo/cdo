@@ -13,9 +13,9 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.server.hibernate.CDOIDHibernate;
+import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
+import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
-import org.eclipse.emf.cdo.server.internal.hibernate.id.CDOIDHibernateImpl;
 
 import org.hibernate.Hibernate;
 import org.hibernate.usertype.UserType;

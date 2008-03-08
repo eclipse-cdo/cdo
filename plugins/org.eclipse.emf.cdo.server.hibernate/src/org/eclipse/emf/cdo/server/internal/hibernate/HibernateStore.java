@@ -11,7 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.internal.protocol.id.CDOIDLibraryDescriptorImpl;
+import org.eclipse.emf.cdo.internal.protocol.id.CDOIDLibraryProviderImpl;
 import org.eclipse.emf.cdo.internal.server.Store;
 import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryProvider;
@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
+import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -32,8 +33,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,7 +49,10 @@ public class HibernateStore extends Store implements IHibernateStore
 
   private static final CDOIDObjectFactory CDOID_OBJECT_FACTORY = new CDOIDHibernateFactoryImpl();
 
-  private static final IDLibraryHandler CDOID_LIBRARY_HANDLER = new IDLibraryHandler();
+  private static final IDLibraryProvider CDOID_LIBRARY_PROVIDER = new IDLibraryProvider();
+
+  private static final CDOIDLibraryDescriptor CDOID_LIBRARY_DESCRIPTOR = CDOID_LIBRARY_PROVIDER
+      .createDescriptor(CDOIDHibernateImpl.class.getName());
 
   /**
    * Used to give different extensions of Hibernate a context when initializing
@@ -128,12 +130,12 @@ public class HibernateStore extends Store implements IHibernateStore
 
   public CDOIDLibraryDescriptor getCDOIDLibraryDescriptor()
   {
-    return CDOID_LIBRARY_HANDLER;
+    return CDOID_LIBRARY_DESCRIPTOR;
   }
 
   public CDOIDLibraryProvider getCDOIDLibraryProvider()
   {
-    return CDOID_LIBRARY_HANDLER;
+    return CDOID_LIBRARY_PROVIDER;
   }
 
   @Override
@@ -338,28 +340,11 @@ public class HibernateStore extends Store implements IHibernateStore
   /**
    * @author Eike Stepper
    */
-  private static final class IDLibraryHandler extends CDOIDLibraryDescriptorImpl implements CDOIDLibraryProvider
+  private static final class IDLibraryProvider extends CDOIDLibraryProviderImpl
   {
-    public IDLibraryHandler()
+    public IDLibraryProvider()
     {
-      super(CDOIDHibernateFactoryImpl.class.getName(), null);
-    }
-
-    public InputStream getContents(String libraryName) throws IOException
-    {
-      File library = getFile(libraryName);
-      return IOUtil.openInputStream(library);
-    }
-
-    public int getSize(String libraryName)
-    {
-      File library = getFile(libraryName);
-      return (int)library.length();
-    }
-
-    private File getFile(String libraryName)
-    {
-      return null;
+      addLibrary("hibernate-id-v1.jar", org.eclipse.emf.cdo.server.hibernate.internal.id.bundle.OM.BUNDLE);
     }
   }
 }

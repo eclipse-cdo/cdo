@@ -37,6 +37,8 @@ import java.util.Iterator;
  */
 public final class FSMUtil
 {
+  public static final String LEGACY_SYSTEM_NOT_AVAILABLE = "Legacy system not available";
+
   private static Method adaptLegacyMethod = initAdaptLegacyMethod();
 
   private FSMUtil()
@@ -62,7 +64,7 @@ public final class FSMUtil
     {
     }
 
-    OM.LOG.info("Legacy system not available");
+    OM.LOG.info(LEGACY_SYSTEM_NOT_AVAILABLE);
     return null;
   }
 

@@ -36,6 +36,7 @@ import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
 import org.eclipse.emf.internal.cdo.protocol.QueryObjectTypesRequest;
 import org.eclipse.emf.internal.cdo.protocol.ViewsChangedRequest;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.emf.internal.cdo.util.ProxyResolverURIResourceMap;
 
@@ -168,6 +169,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   public void setDisableLegacyObjects(boolean disableLegacyObjects)
   {
     checkInactive();
+    if (!disableLegacyObjects && !FSMUtil.isLegacySystemAvailable())
+    {
+      throw new IllegalArgumentException(FSMUtil.LEGACY_SYSTEM_NOT_AVAILABLE);
+    }
+
     this.disableLegacyObjects = disableLegacyObjects;
   }
 

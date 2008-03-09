@@ -551,8 +551,10 @@ public final class CDOStore implements EStore
 
   private void handleContainmentAdd(InternalCDOObject container, Object value)
   {
-    InternalCDOObject contained = getCDOObject(value);
     CDOViewImpl containerView = (CDOViewImpl)container.cdoView();
+    InternalCDOObject contained = getCDOObject(value);
+    FSMUtil.checkLegacySystemAvailability(containerView.getSession(), contained);
+
     CDOViewImpl containedView = (CDOViewImpl)contained.cdoView();
     if (containedView != containerView)
     {

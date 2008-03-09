@@ -38,6 +38,7 @@ public class AllTests
     suite.addTestSuite(PackageRegistryTest.class);
     suite.addTestSuite(RevisionDeltaTest.class);
     suite.addTestSuite(IndexReconstructionTest.class);
+    suite.addTestSuite(NoLegacyTest.class);
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);
     // $JUnit-END$
 

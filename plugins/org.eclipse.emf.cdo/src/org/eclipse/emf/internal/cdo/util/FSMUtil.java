@@ -11,11 +11,14 @@
 package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.util.LegacySystemNotAvailableException;
 
 import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
+import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
 import org.eclipse.emf.internal.cdo.CDOMetaImpl;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
@@ -37,8 +40,6 @@ import java.util.Iterator;
  */
 public final class FSMUtil
 {
-  public static final String LEGACY_SYSTEM_NOT_AVAILABLE = "Legacy system not available";
-
   private static Method adaptLegacyMethod = initAdaptLegacyMethod();
 
   private FSMUtil()
@@ -64,13 +65,22 @@ public final class FSMUtil
     {
     }
 
-    OM.LOG.info(LEGACY_SYSTEM_NOT_AVAILABLE);
+    OM.LOG.info(LegacySystemNotAvailableException.LEGACY_SYSTEM_NOT_AVAILABLE);
     return null;
   }
 
   public static boolean isLegacySystemAvailable()
   {
     return adaptLegacyMethod != null;
+  }
+
+  public static void checkLegacySystemAvailability(CDOSession session, CDOObject object)
+      throws LegacySystemNotAvailableException
+  {
+    if (session.isDisableLegacyObjects() && object instanceof CDOLegacyImpl)
+    {
+      throw new LegacySystemNotAvailableException();
+    }
   }
 
   public static boolean isTransient(CDOObject object)

@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.LegacySystemNotAvailableException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
@@ -171,7 +172,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     checkInactive();
     if (!disableLegacyObjects && !FSMUtil.isLegacySystemAvailable())
     {
-      throw new IllegalArgumentException(FSMUtil.LEGACY_SYSTEM_NOT_AVAILABLE);
+      throw new LegacySystemNotAvailableException();
     }
 
     this.disableLegacyObjects = disableLegacyObjects;

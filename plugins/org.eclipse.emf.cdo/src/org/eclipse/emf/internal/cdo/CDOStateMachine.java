@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDORevisionManager;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
@@ -18,6 +19,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
@@ -345,7 +347,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, ResourceAndView data)
     {
       CDOTransactionImpl transaction = data.view.toTransaction();
-      CDORevisionManagerImpl revisionManager = transaction.getSession().getRevisionManager();
+      CDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
 
       // Prepare object
       CDOID id = transaction.getNextTemporaryID();
@@ -355,8 +357,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       changeState(object, CDOState.PREPARED);
 
       // Create new revision
-      InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil
-          .create(revisionManager, object.cdoClass(), id);
+      CDOClass cdoClass = object.cdoClass();
+      InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(revisionManager, cdoClass, id);
       revision.setVersion(-1);
       revision.setResourceID(data.resource.cdoID());
       object.cdoInternalSetRevision(revision);

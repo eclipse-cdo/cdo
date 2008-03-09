@@ -39,6 +39,10 @@ public final class TMPUtil
 
   public static File createTempFolder(String prefix, String suffix, File directory) throws IORuntimeException
   {
+    // TODO Consider servlets
+    // ServletContext context = session.getServletContext();
+    // File tempDir = (File)context.getAttribute("javax.servlet.context.tempdir");
+
     try
     {
       File tmp = File.createTempFile(prefix, suffix, directory);

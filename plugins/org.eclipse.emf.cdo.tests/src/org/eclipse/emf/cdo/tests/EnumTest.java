@@ -44,6 +44,18 @@ public class EnumTest extends AbstractCDOTest
       CDOResource resource = transaction.getResource("/my/resource");
       Product product = (Product)resource.getContents().get(0);
       assertEquals(VAT.VAT7, product.getVat());
+
+      product.setVat(VAT.VAT15);
+      transaction.commit();
+      session.close();
+    }
+
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getResource("/my/resource");
+      Product product = (Product)resource.getContents().get(0);
+      assertEquals(VAT.VAT15, product.getVat());
       session.close();
     }
   }
@@ -73,6 +85,19 @@ public class EnumTest extends AbstractCDOTest
       Category category = (Category)resource.getContents().get(0);
       Product product = category.getProducts().get(0);
       assertEquals(VAT.VAT7, product.getVat());
+
+      product.setVat(VAT.VAT15);
+      transaction.commit();
+      session.close();
+    }
+
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getResource("/my/resource");
+      Category category = (Category)resource.getContents().get(0);
+      Product product = category.getProducts().get(0);
+      assertEquals(VAT.VAT15, product.getVat());
       session.close();
     }
   }

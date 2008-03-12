@@ -356,6 +356,11 @@ public final class CDOStore implements EStore
       TRACER.format("set({0}, {1}, {2}, {3})", cdoObject, cdoFeature, index, value);
     }
 
+    if (cdoFeature.getType() == CDOType.CUSTOM)
+    {
+      value = EcoreUtil.convertToString((EDataType)eFeature.getEType(), value);
+    }
+
     CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(cdoFeature, index, value);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
     if (cdoFeature.isReference())
@@ -370,10 +375,6 @@ public final class CDOStore implements EStore
       {
         handleContainmentAdd(cdoObject, value);
       }
-    }
-    else if (cdoFeature.getType() == CDOType.CUSTOM)
-    {
-      value = EcoreUtil.convertToString((EDataType)eFeature.getEType(), value);
     }
 
     Object result = revision.set(cdoFeature, index, value);

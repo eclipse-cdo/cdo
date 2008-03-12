@@ -571,7 +571,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       this.forWrite = forWrite;
     }
 
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object delta)
     {
       CDOID id = object.cdoID();
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
@@ -582,7 +582,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       if (forWrite)
       {
-        INSTANCE.write(object);
+        INSTANCE.write(object, (CDOFeatureDelta)delta);
       }
     }
   }

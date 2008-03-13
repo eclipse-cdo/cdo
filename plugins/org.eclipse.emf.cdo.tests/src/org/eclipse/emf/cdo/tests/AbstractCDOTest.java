@@ -18,8 +18,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.StoreUtil;
-import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -28,8 +26,6 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.net4j.tests.AbstractTransportTest;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -53,16 +49,12 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
 
   protected IStore createStore()
   {
-    return StoreUtil.createMEMStore();
+    return StoreRepositoryProvider.getInstance().createStore();
   }
 
   protected IRepository createRepository()
   {
-    Map<String, String> props = new HashMap<String, String>();
-    props.put(Props.PROP_SUPPORTING_REVISION_DELTAS, "true");
-    props.put(Props.PROP_CURRENT_LRU_CAPACITY, "10000");
-    props.put(Props.PROP_REVISED_LRU_CAPACITY, "10000");
-    return CDOServerUtil.createRepository(REPOSITORY_NAME, createStore(), props);
+    return StoreRepositoryProvider.getInstance().createRepository(REPOSITORY_NAME);
   }
 
   protected IRepository getRepository()

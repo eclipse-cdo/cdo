@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
 import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOClass;
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreWriter;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.WrappedException;
 
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
@@ -69,11 +71,23 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
 
       for (Object o : context.getDirtyObjects())
       {
-        final CDORevision cdoRevision = (CDORevision)o;
-        session.update(HibernateUtil.getInstance().getEntityName(cdoRevision), o);
-        if (TRACER.isEnabled())
+        try
         {
-          TRACER.trace("Updated Object " + ((CDORevision)o).getCDOClass().getName() + " id: " + cdoRevision.getID());
+          final CDORevision cdoRevision = (CDORevision)o;
+          if (cdoRevision instanceof CDORevisionImpl)
+          {
+            ((CDORevisionImpl)cdoRevision).setVersion(cdoRevision.getVersion() - 1);
+          }
+          session.update(HibernateUtil.getInstance().getEntityName(cdoRevision), o);
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Updated Object " + ((CDORevision)o).getCDOClass().getName() + " id: " + cdoRevision.getID());
+          }
+        }
+        catch (Exception e)
+        {
+          e.printStackTrace(System.err);
+          throw WrappedException.wrap(e);
         }
       }
 

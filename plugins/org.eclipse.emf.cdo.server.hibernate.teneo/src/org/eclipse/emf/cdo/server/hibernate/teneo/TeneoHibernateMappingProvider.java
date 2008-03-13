@@ -52,6 +52,7 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
     final String mapping = generateMapping();
     TRACER.trace("Generated hibernate mapping:");
     TRACER.trace(mapping);
+    System.err.println(mapping);
     configuration.addXML(mapping);
     TRACER.trace("Added mapping to configuration");
   }

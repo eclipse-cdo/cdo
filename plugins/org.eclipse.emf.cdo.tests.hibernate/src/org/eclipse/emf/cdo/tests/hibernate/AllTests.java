@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.hibernate;
 
-import org.eclipse.emf.cdo.tests.ChunkingTest;
-import org.eclipse.emf.cdo.tests.ChunkingWithMEMTest;
 import org.eclipse.emf.cdo.tests.ContainmentTest;
 import org.eclipse.emf.cdo.tests.CrossReferenceTest;
 import org.eclipse.emf.cdo.tests.EnumTest;
@@ -42,12 +40,11 @@ public class AllTests
 
     TestSuite suite = new TestSuite("Tests for CDO using Hibernate");
 
-    if (true)
-    {
-      return suite;
-    }
     // PASS>>>
+    suite.addTestSuite(EnumTest.class);
+    suite.addTestSuite(InitialTest.class);
     suite.addTestSuite(ResourceTest.class);
+    suite.addTestSuite(RollbackTest.class);
     suite.addTestSuite(ContainmentTest.class);
     suite.addTestSuite(StateMachineTest.class);
     suite.addTestSuite(ViewTest.class);
@@ -57,22 +54,18 @@ public class AllTests
     suite.addTestSuite(NoLegacyTest.class);
 
     // FAIL>>>
-    suite.addTestSuite(InitialTest.class);
-    // failures: testCommitDirty
     suite.addTestSuite(InvalidationTest.class);
     // failures: testSeparateView, testSeparateViewNotification, testSeparateSession
-    suite.addTestSuite(RollbackTest.class);
-    // failes: testRollbackSameSession, testRollbackSeparateSession
-    suite.addTestSuite(ChunkingTest.class);
-    // failures: /testWriteNative, testChunkWithTemporaryObject
-    suite.addTestSuite(ChunkingWithMEMTest.class);
-    // failures testReadNative, testWriteNative
     suite.addTestSuite(TransactionDeadLockTest.class);
     // failures: testCreateManySession, testCreateManyTransaction
     suite.addTestSuite(RevisionDeltaTest.class);
     // Remark: I don't think hibernate won't support this.
-    suite.addTestSuite(EnumTest.class);
-    // failures: testTransient, testAttached
+
+    // Chunking is not supported by Hibernate
+    // suite.addTestSuite(ChunkingTest.class);
+    // failures: /testWriteNative, testChunkWithTemporaryObject
+    // suite.addTestSuite(ChunkingWithMEMTest.class);
+    // failures testReadNative, testWriteNative
 
     // $JUnit-BEGIN$
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);

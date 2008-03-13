@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IRepository.Props;
+import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateFileMappingProvider;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -77,7 +79,7 @@ public class HibernateServer
   private static IManagedContainer initContainer() throws FileNotFoundException
   {
     // Turn on tracing
-    OMPlatform.INSTANCE.setDebugging(true);
+    OMPlatform.INSTANCE.setDebugging(false);
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
     if (TRACE_TO_FILE)
     {
@@ -133,6 +135,7 @@ public class HibernateServer
   {
     // IHibernateMappingProvider mappingProvider = new TeneoHibernateMappingProvider();
     // return new HibernateStore(props, mappingProvider);
-    return new HibernateStore(null);
+    IHibernateMappingProvider mappingProvider = new HibernateFileMappingProvider("/mappings/product.hbm.xml");
+    return new HibernateStore(mappingProvider);
   }
 }

@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.internal.server.Store;
 import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
@@ -33,8 +32,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -256,44 +253,12 @@ public class HibernateStore extends Store implements IHibernateStore
 
     try
     {
-      final Collection<CDOPackage> cdoPackages = getPackageHandler().getCDOPackages();
-      final Collection<Object> ecoreStrs = new ArrayList<Object>();
-
       hibernateConfiguration = new Configuration();
 
-      final String mapping;
-
-      if (cdoPackages.size() > 0)
+      if (mappingProvider != null)
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Mapping ecore to hibernate for CDOPackages:");
-        }
-
-        for (CDOPackage cdoPackage : cdoPackages)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.trace("adding ecore for CDOPackage " + cdoPackage.getPackageURI());
-          }
-
-          ecoreStrs.add(cdoPackage.getEcore());
-        }
-        // DISABLED to prevent teneo dependency
-        // mapping = mappingProvider.provideMapping(ecoreStrs, properties);
-        // TRACER.trace(mapping);
-        // System.err.println(mapping);
-        mapping = null;
-        in = OM.BUNDLE.getInputStream("mappings/product.hbm.xml");
-        hibernateConfiguration.addInputStream(in);
-      }
-      else
-      {
-        mapping = null;
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("No CDOPackages found, ecore not mapped to hibernate");
-        }
+        mappingProvider.setHibernateStore(this);
+        mappingProvider.addMapping(hibernateConfiguration);
       }
 
       if (TRACER.isEnabled())
@@ -303,11 +268,6 @@ public class HibernateStore extends Store implements IHibernateStore
 
       in = OM.BUNDLE.getInputStream("mappings/resource.hbm.xml");
       hibernateConfiguration.addInputStream(in);
-      if (mapping != null)
-      {
-        TRACER.trace("Adding generated mapping to configuration");
-        hibernateConfiguration.addXML(mapping);
-      }
 
       hibernateConfiguration.setProperties(HibernateUtil.getInstance().getPropertiesFromStore(this));
     }

@@ -14,17 +14,21 @@ import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
-import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateImpl;
+import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
+
+import org.eclipse.net4j.util.WrappedException;
 
 import org.hibernate.Hibernate;
 import org.hibernate.usertype.UserType;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.HashMap;
 
 /**
  * Persists a CDOID in the DB.
@@ -32,9 +36,12 @@ import java.sql.Types;
 public class CDOIDUserType implements UserType
 {
   /**
-   * Second varchar is just for informational purposes
+   * 1) entityname, 2) id, 3) id class name
    */
-  private static final int[] SQL_TYPES = { Types.VARCHAR, Types.VARCHAR, Types.VARBINARY };
+  private static final int[] SQL_TYPES = { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
+
+  /** Constructor by id */
+  private final HashMap<String, Constructor<?>> constructors = new HashMap<String, Constructor<?>>();
 
   public CDOIDUserType()
   {
@@ -78,15 +85,22 @@ public class CDOIDUserType implements UserType
   public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws SQLException
   {
     final String entityName = (String)Hibernate.STRING.nullSafeGet(rs, names[0]);
-    if (rs.wasNull() || entityName == null)
+    if (rs.wasNull())
     {
       return null;
     }
-
-    final byte[] content = (byte[])Hibernate.BINARY.nullSafeGet(rs, names[2]);
-    final CDOIDHibernate cdoID = new CDOIDHibernateImpl();
-    cdoID.setContent(content);
-    return cdoID;
+    final String idStr = (String)Hibernate.STRING.nullSafeGet(rs, names[1]);
+    if (rs.wasNull())
+    {
+      return null;
+    }
+    final String idClassName = (String)Hibernate.STRING.nullSafeGet(rs, names[2]);
+    if (rs.wasNull())
+    {
+      return null;
+    }
+    final Serializable id = getId(idStr, idClassName);
+    return CDOIDHibernateFactoryImpl.getInstance().createCDOID(id, entityName);
   }
 
   public void nullSafeSet(PreparedStatement statement, Object value, int index) throws SQLException
@@ -95,7 +109,7 @@ public class CDOIDUserType implements UserType
     {
       statement.setNull(index, Types.VARCHAR);
       statement.setNull(index, Types.VARCHAR);
-      statement.setNull(index, Types.VARBINARY);
+      statement.setNull(index, Types.VARCHAR);
     }
 
     if (value != null)
@@ -116,7 +130,7 @@ public class CDOIDUserType implements UserType
 
       statement.setString(index, cdoID.getEntityName());
       statement.setString(index + 1, cdoID.getId().toString());
-      statement.setBytes(index + 2, cdoID.getContent());
+      statement.setString(index + 2, cdoID.getId().getClass().getName());
     }
   }
 
@@ -139,4 +153,25 @@ public class CDOIDUserType implements UserType
   {
     return x.hashCode();
   }
+
+  /** Creates an id object of the correct type */
+  private Serializable getId(String idStr, String idType)
+  {
+    try
+    {
+      Constructor<?> constructor = constructors.get(idType);
+      if (constructor == null)
+      {
+        final Class<?> idClass = this.getClass().getClassLoader().loadClass(idType);
+        constructor = idClass.getConstructor(new Class[] { String.class });
+        constructors.put(idType, constructor);
+      }
+      return (Serializable)constructor.newInstance(new Object[] { idStr });
+    }
+    catch (Exception e)
+    {
+      throw WrappedException.wrap(e);
+    }
+  }
+
 }

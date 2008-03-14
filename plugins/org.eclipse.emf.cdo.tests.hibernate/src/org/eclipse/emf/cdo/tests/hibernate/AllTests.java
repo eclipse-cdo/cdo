@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.tests.ContainmentTest;
 import org.eclipse.emf.cdo.tests.CrossReferenceTest;
-import org.eclipse.emf.cdo.tests.EMFTest;
 import org.eclipse.emf.cdo.tests.EnumTest;
 import org.eclipse.emf.cdo.tests.IndexReconstructionTest;
 import org.eclipse.emf.cdo.tests.InitialTest;

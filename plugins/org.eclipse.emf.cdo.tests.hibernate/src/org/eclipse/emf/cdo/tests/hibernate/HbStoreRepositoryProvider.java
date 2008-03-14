@@ -69,7 +69,7 @@ public class HbStoreRepositoryProvider extends StoreRepositoryProvider
     try
     {
       final Properties teneoProperties = new Properties();
-      teneoProperties.load(getClass().getResourceAsStream("/teneo.properties"));
+      teneoProperties.load(getClass().getResourceAsStream("/app.properties"));
       for (Object key : teneoProperties.keySet())
       {
         props.put((String)key, teneoProperties.getProperty((String)key));

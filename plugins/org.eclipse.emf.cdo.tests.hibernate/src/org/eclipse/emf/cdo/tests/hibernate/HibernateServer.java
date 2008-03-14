@@ -25,6 +25,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.HashMap;
 
 /**
  * @author Eike Stepper
@@ -45,7 +46,8 @@ public class HibernateServer
     {
       IManagedContainer container = initContainer();
       TCPUtil.getAcceptor(container, "0.0.0.0:2036"); // Start the JVM transport
-      CDOServerUtil.addRepository(container, HbStoreRepositoryProvider.getInstance().createRepository(REPOSITORY_NAME));
+      CDOServerUtil.addRepository(container, HbStoreRepositoryProvider.getInstance().createRepository(REPOSITORY_NAME,
+          new HashMap<String, String>()));
       IOUtil.OUT().println();
       IOUtil.OUT().println("Hit any key to shut down...");
       while (System.in.read() == -1)

@@ -12,18 +12,20 @@ package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.tests.ContainmentTest;
 import org.eclipse.emf.cdo.tests.CrossReferenceTest;
+import org.eclipse.emf.cdo.tests.EMFTest;
 import org.eclipse.emf.cdo.tests.EnumTest;
 import org.eclipse.emf.cdo.tests.IndexReconstructionTest;
 import org.eclipse.emf.cdo.tests.InitialTest;
 import org.eclipse.emf.cdo.tests.InvalidationTest;
+import org.eclipse.emf.cdo.tests.MangoTest;
 import org.eclipse.emf.cdo.tests.NoLegacyTest;
 import org.eclipse.emf.cdo.tests.PackageRegistryTest;
 import org.eclipse.emf.cdo.tests.ResourceTest;
 import org.eclipse.emf.cdo.tests.RevisionDeltaTest;
+import org.eclipse.emf.cdo.tests.RevisionHolderTest;
 import org.eclipse.emf.cdo.tests.RollbackTest;
 import org.eclipse.emf.cdo.tests.StateMachineTest;
 import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
-import org.eclipse.emf.cdo.tests.TransactionDeadLockTest;
 import org.eclipse.emf.cdo.tests.ViewTest;
 
 import junit.framework.Test;
@@ -39,27 +41,28 @@ public class AllTests
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
 
     TestSuite suite = new TestSuite("Tests for CDO using Hibernate");
-
-    // PASS>>>
-    suite.addTestSuite(EnumTest.class);
-    suite.addTestSuite(InitialTest.class);
-    suite.addTestSuite(ResourceTest.class);
-    suite.addTestSuite(RollbackTest.class);
-    suite.addTestSuite(ContainmentTest.class);
-    suite.addTestSuite(StateMachineTest.class);
-    suite.addTestSuite(ViewTest.class);
-    suite.addTestSuite(CrossReferenceTest.class);
-    suite.addTestSuite(PackageRegistryTest.class);
-    suite.addTestSuite(IndexReconstructionTest.class);
-    suite.addTestSuite(NoLegacyTest.class);
-
-    // FAIL>>>
-    suite.addTestSuite(InvalidationTest.class);
-    // failures: testSeparateView, testSeparateViewNotification, testSeparateSession
-    suite.addTestSuite(TransactionDeadLockTest.class);
-    // failures: testCreateManySession, testCreateManyTransaction
     suite.addTestSuite(RevisionDeltaTest.class);
-    // Remark: I don't think hibernate won't support this.
+    suite.addTestSuite(HbTransactionDeadLockTest.class);
+    suite.addTestSuite(RollbackTest.class);
+    suite.addTestSuite(StateMachineTest.class);
+    suite.addTestSuite(RevisionHolderTest.class);
+    suite.addTestSuite(CrossReferenceTest.class);
+    suite.addTestSuite(MangoTest.class);
+    suite.addTestSuite(EnumTest.class);
+    suite.addTestSuite(NoLegacyTest.class);
+    suite.addTestSuite(ResourceTest.class);
+    suite.addTestSuite(InvalidationTest.class);
+    suite.addTestSuite(ContainmentTest.class);
+    suite.addTestSuite(InitialTest.class);
+    suite.addTestSuite(ViewTest.class);
+    suite.addTestSuite(IndexReconstructionTest.class);
+    suite.addTestSuite(PackageRegistryTest.class);
+
+    // These fail for standard cdo >>>
+    // suite.addTestSuite(DymamicEcoreTest.class);
+    // suite.addTestSuite(ContentAdapterTest.class);
+    // suite.addTestSuite(FetchRuleAnalyzerTest.class);
+    // suite.addTestSuite(GeneratedEcoreTest.class);
 
     // Chunking is not supported by Hibernate
     // suite.addTestSuite(ChunkingTest.class);

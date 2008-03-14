@@ -171,13 +171,11 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   @Override
   protected void writeRevisionDelta(CDORevisionDelta revisionDelta)
   {
-    throw new UnsupportedOperationException("Should not be called");
   }
 
   @Override
   protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas)
   {
-    throw new UnsupportedOperationException("Should not be called");
   }
 
   @Override

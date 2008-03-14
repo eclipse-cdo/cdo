@@ -11,12 +11,12 @@
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
+import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
 
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.tuple.Instantiator;
@@ -50,7 +50,8 @@ public class CDORevisionInstantiator implements Instantiator
 
   public Object instantiate(Serializable id)
   {
-    return CDORevisionUtil.create(revisionManager, cdoClass, (CDOID)id);// TODO Is simply casting ok?
+    return CDORevisionUtil.create(revisionManager, cdoClass, CDOIDHibernateFactoryImpl.getInstance().createCDOID(id,
+        cdoClass.getName()));
   }
 
   public boolean isInstance(Object object)

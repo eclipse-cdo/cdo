@@ -75,8 +75,12 @@ public class CDOIDMetaRangeUserType implements UserType
   public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws SQLException
   {
     final Integer start = (Integer)Hibernate.INTEGER.nullSafeGet(rs, names[0]);
+    if (rs.wasNull())
+    {
+      return null;
+    }
     final Integer size = (Integer)Hibernate.INTEGER.nullSafeGet(rs, names[1]);
-    if (size == null || start == null)
+    if (rs.wasNull())
     {
       return null;
     }

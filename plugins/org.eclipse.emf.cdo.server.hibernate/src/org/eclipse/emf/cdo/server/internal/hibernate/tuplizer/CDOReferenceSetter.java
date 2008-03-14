@@ -30,7 +30,14 @@ public class CDOReferenceSetter extends CDOPropertySetter
   @Override
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
-    final CDORevision cdoValue = (CDORevision)value;
-    super.set(target, cdoValue.getID(), factory);
+    if (value == null)
+    {
+      super.set(target, null, factory);
+    }
+    else
+    {
+      final CDORevision cdoValue = (CDORevision)value;
+      super.set(target, cdoValue.getID(), factory);
+    }
   }
 }

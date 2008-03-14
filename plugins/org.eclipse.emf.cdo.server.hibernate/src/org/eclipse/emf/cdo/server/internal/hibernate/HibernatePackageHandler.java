@@ -72,15 +72,17 @@ public class HibernatePackageHandler
 
   public void writePackages(CDOPackage... cdoPackages)
   {
+    readPackages();
     TRACER.trace("Persisting new CDOPackages");
     final Session session = getSessionFactory().openSession();
     final Transaction tx = session.beginTransaction();
     boolean err = true;
+    boolean updated = false;
     try
     {
       for (CDOPackage cdoPackage : cdoPackages)
       {
-        if (null != getCDOPackage(cdoPackage.getPackageURI()))
+        if (cdoPackageExistsAndIsUnchanged(cdoPackage))
         {
           OM.LOG.warn("CDOPackage " + cdoPackage.getPackageURI() + " already exists not persisting it again!");
           continue;
@@ -88,6 +90,7 @@ public class HibernatePackageHandler
 
         TRACER.trace("Persisting CDOPackage " + cdoPackage.getPackageURI());
         session.saveOrUpdate(cdoPackage);
+        updated = true;
       }
       tx.commit();
       err = false;
@@ -100,13 +103,27 @@ public class HibernatePackageHandler
       }
       session.close();
     }
-    reset();
-    hibernateStore.reInitialize();
+    if (updated)
+    {
+      reset();
+      hibernateStore.reInitialize();
+    }
+  }
+
+  protected boolean cdoPackageExistsAndIsUnchanged(CDOPackage newCDOPackage)
+  {
+    final CDOPackage currentCDOPackage = getCDOPackage(newCDOPackage.getPackageURI());
+    if (currentCDOPackage == null)
+    {
+      return false;
+    }
+    return currentCDOPackage.getEcore().compareTo(newCDOPackage.getEcore()) == 0;
   }
 
   public void writePackage(CDOPackage cdoPackage)
   {
-    if (null != getCDOPackage(cdoPackage.getPackageURI()))
+    readPackages();
+    if (cdoPackageExistsAndIsUnchanged(cdoPackage))
     {
       OM.LOG.warn("CDOPackage " + cdoPackage.getPackageURI() + " already exists not persisting it again!");
       return;
@@ -136,6 +153,7 @@ public class HibernatePackageHandler
 
   public CDOPackage getCDOPackage(String uri)
   {
+    readPackages();
     TRACER.trace("Getting CDOPackage using uri: " + uri);
     for (CDOPackage cdoPackage : cdoPackages)
     {
@@ -163,7 +181,7 @@ public class HibernatePackageHandler
 
   protected void readPackages()
   {
-    if (cdoPackageInfos == null)
+    if (cdoPackageInfos == null || cdoPackageInfos.size() == 0)
     {
       TRACER.trace("Reading CDOPackages from db");
       Collection<CDOPackageInfo> result = new ArrayList<CDOPackageInfo>();
@@ -178,7 +196,8 @@ public class HibernatePackageHandler
         {
           CDOPackage cdoPackage = (CDOPackage)object;
           TRACER.trace("Read CDOPackage: " + cdoPackage.getName());
-          result.add(new CDOPackageInfo(cdoPackage.getPackageURI(), cdoPackage.isDynamic(), null));
+          result
+              .add(new CDOPackageInfo(cdoPackage.getPackageURI(), cdoPackage.isDynamic(), cdoPackage.getMetaIDRange()));
           ((InternalCDOPackage)cdoPackage).setPackageManager(hibernateStore.getRepository().getPackageManager());
           resultPackages.add(cdoPackage);
 

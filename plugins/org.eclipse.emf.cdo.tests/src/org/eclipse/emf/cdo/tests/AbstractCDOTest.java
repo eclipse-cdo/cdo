@@ -26,6 +26,8 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.net4j.tests.AbstractTransportTest;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -54,7 +56,13 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
 
   protected IRepository createRepository()
   {
-    return StoreRepositoryProvider.getInstance().createRepository(REPOSITORY_NAME);
+    return StoreRepositoryProvider.getInstance().createRepository(REPOSITORY_NAME, getTestProperties());
+  }
+
+  // allows a testcase to pass specific properties
+  protected Map<String, String> getTestProperties()
+  {
+    return new HashMap<String, String>();
   }
 
   protected IRepository getRepository()

@@ -58,7 +58,7 @@ public abstract class OM
   PREFS.initArray("PREF_HISTORY_REPOSITORIES"); //$NON-NLS-1$
 
   public static final OMPreference<Boolean> PREF_LEGACY_SUPPORT = //
-  PREFS.init("PREF_LEGACY_SUPPORT", true); //$NON-NLS-1$
+  PREFS.init("PREF_LEGACY_SUPPORT", false); //$NON-NLS-1$
 
   static void start()
   {

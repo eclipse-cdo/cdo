@@ -256,15 +256,27 @@ public final class EMFUtil
     }
   }
 
-  public static String ePackageToString(EPackage ePackage)
+  public static String ePackageToString(EPackage ePackage, EPackage.Registry packageRegistry)
   {
+    Resource.Factory resourceFactory = new XMIResourceFactoryImpl();
+    ResourceSetImpl resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory);
+    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("*", resourceFactory);
+
+    Resource packageResource = createPackageResource(resourceSet, ePackage);
+    for (Object object : packageRegistry.values())
+    {
+      if (object != ePackage)
+      {
+        createPackageResource(resourceSet, (EPackage)object);
+      }
+    }
+
     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    XMIResource resource = new XMIResourceImpl();
 
     try
     {
-      resource.getContents().add(ePackage);
-      resource.save(stream, null);
+      packageResource.save(stream, null);
       return stream.toString(ECORE_ENCODING);
     }
     catch (RuntimeException ex)
@@ -275,10 +287,14 @@ public final class EMFUtil
     {
       throw new IORuntimeException(ex);
     }
-    finally
-    {
-      resource.getContents().clear();
-    }
+  }
+
+  private static Resource createPackageResource(ResourceSetImpl resourceSet, EPackage ePackage)
+  {
+    URI uri = URI.createURI(ePackage.getNsURI());
+    Resource resource = resourceSet.createResource(uri);
+    resource.getContents().add(ePackage);
+    return resource;
   }
 
   /**

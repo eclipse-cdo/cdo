@@ -17,6 +17,9 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model2.Model2Factory;
+import org.eclipse.emf.cdo.tests.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.URI;
@@ -35,7 +38,7 @@ import java.io.IOException;
  */
 public class PackageRegistryTest extends AbstractCDOTest
 {
-  public void testGeneratedPackage() throws Exception
+  public void __testGeneratedPackage() throws Exception
   {
     {
       // Create resource in session 1
@@ -59,6 +62,33 @@ public class PackageRegistryTest extends AbstractCDOTest
       Company company = (Company)res.getContents().get(0);
       assertEquals("Eike", company.getName());
     }
+  }
+
+  public void testCommitTwoPackages() throws Exception
+  {
+    {
+      // Create resource in session 1
+      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
+      session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+      session.getPackageRegistry().putEPackage(Model2Package.eINSTANCE);
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.createResource("/res");
+
+      SpecialPurchaseOrder specialPurchaseOrder = Model2Factory.eINSTANCE.createSpecialPurchaseOrder();
+      specialPurchaseOrder.setDiscountCode("12345");
+      res.getContents().add(specialPurchaseOrder);
+      transaction.commit();
+    }
+
+    // {
+    // // Load resource in session 2
+    // CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+    // CDOTransaction transaction = session.openTransaction();
+    // CDOResource res = transaction.getResource("/res");
+    //
+    // Company company = (Company)res.getContents().get(0);
+    // assertEquals("Eike", company.getName());
+    // }
   }
 
   /**

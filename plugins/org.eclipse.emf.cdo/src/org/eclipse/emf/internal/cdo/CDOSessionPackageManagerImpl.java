@@ -140,6 +140,6 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
   protected String provideEcore(CDOPackage cdoPackage)
   {
     EPackage ePackage = ModelUtil.getEPackage(cdoPackage, session.getPackageRegistry());
-    return EMFUtil.ePackageToString(ePackage);
+    return EMFUtil.ePackageToString(ePackage, session.getPackageRegistry());
   }
 }

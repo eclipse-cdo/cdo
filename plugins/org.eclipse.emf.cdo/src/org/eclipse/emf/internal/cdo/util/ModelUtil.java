@@ -159,7 +159,8 @@ public final class ModelUtil
     // certain Ecore features (see newsgroup thread "eGenericSuperTypes" and
     // EMFUtil.getPersistentFeatures()
 
-    String ecore = EcorePackage.eINSTANCE.getNsURI().equals(packageURI) ? null : EMFUtil.ePackageToString(ePackage);
+    String ecore = EcorePackage.eINSTANCE.getNsURI().equals(packageURI) ? null : EMFUtil.ePackageToString(ePackage,
+        packageManager.getSession().getPackageRegistry());
     // String ecore = EMFUtil.ePackageToString(ePackage);
     CDOIDMetaRange idRange = packageManager.getSession().registerEPackage(ePackage);
 

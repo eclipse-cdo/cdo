@@ -16,6 +16,9 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+
 /**
  * @author Eike Stepper
  */
@@ -54,6 +57,24 @@ public class ViewTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     assertEquals(id, transaction.getOrCreateResource("/test1").cdoID());
     assertNotSame(id, transaction.getOrCreateResource("/test2").cdoID());
+    session.close();
+  }
+
+  public void testExternalResourceSet() throws Exception
+  {
+    {
+      ResourceSet resourceSet = new ResourceSetImpl();
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction(resourceSet);
+      transaction.createResource("/test1");
+      transaction.commit();
+      session.close();
+    }
+
+    CDOSession session = openModel1Session();
+    CDOView view = session.openView();
+    assertEquals(true, view.hasResource("/test1"));
+    assertEquals(false, view.hasResource("/test2"));
     session.close();
   }
 }

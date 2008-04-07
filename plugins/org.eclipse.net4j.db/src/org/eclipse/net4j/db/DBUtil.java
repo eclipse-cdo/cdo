@@ -75,6 +75,10 @@ public final class DBUtil
     return new DataSourceConnectionProvider(dataSource);
   }
 
+  /**
+   * Can only be used when Eclipse is running. In standalone scenarios create the adapter instance by directly calling
+   * the constructor of the adapter class.
+   */
   public static IDBAdapter getDBAdapter(String adapterName)
   {
     return IDBAdapter.REGISTRY.get(adapterName);

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
+import org.eclipse.emf.cdo.server.internal.db.HorizontalMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.IDBAdapter;
@@ -39,6 +40,18 @@ public final class CDODBUtil
   {
     return new DBStore(mappingStrategy, dbAdapter, dbConnectionProvider);
   }
+
+  public static IMappingStrategy createHorizontalMappingStrategy()
+  {
+    return new HorizontalMappingStrategy();
+  }
+
+  /**
+   * Can only be used when Eclipse is running. In standalone scenarios create the mapping strategy instance by directly
+   * calling the constructor of the mapping strategy class.
+   * 
+   * @see #createHorizontalMappingStrategy()
+   */
 
   public static IMappingStrategy createMappingStrategy(String type)
   {

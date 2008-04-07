@@ -10,7 +10,7 @@
     featureDelegation="Reflective" complianceLevel="5.0" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>eresource.ecore</foreignModel>
   <genPackages prefix="Eresource" basePackage="org.eclipse.emf.cdo" disposableProviderFactory="true"
-      ecorePackage="eresource.ecore#/">
+      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="eresource.ecore#/">
     <genDataTypes ecoreDataType="eresource.ecore#//ResourceSet"/>
     <genDataTypes ecoreDataType="eresource.ecore#//URI"/>
     <genDataTypes ecoreDataType="eresource.ecore#//Diagnostic"/>
@@ -23,6 +23,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/trackingModification"/>
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/errors"/>
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/warnings"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/timeStamp"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/path"/>
     </genClasses>
   </genPackages>

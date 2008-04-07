@@ -2,32 +2,30 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2FactoryImpl.java,v 1.1 2008-04-07 07:36:37 estepper Exp $
+ * $Id: Model2FactoryImpl.java,v 1.2 2008-04-07 08:28:21 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
-import org.eclipse.emf.cdo.tests.model2.*;
+import org.eclipse.emf.cdo.tests.model2.Model2Factory;
+import org.eclipse.emf.cdo.tests.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static Model2Factory init()
@@ -49,9 +47,8 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Model2FactoryImpl()
@@ -60,8 +57,8 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -77,8 +74,8 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public SpecialPurchaseOrder createSpecialPurchaseOrder()
@@ -88,8 +85,8 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Model2Package getModel2Package()
@@ -98,8 +95,8 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */
@@ -109,4 +106,4 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
     return Model2Package.eINSTANCE;
   }
 
-} //Model2FactoryImpl
+} // Model2FactoryImpl

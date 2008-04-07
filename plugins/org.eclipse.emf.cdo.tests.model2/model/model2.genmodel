@@ -9,7 +9,7 @@
   <foreignModel>model2.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Model2" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"
-      ecorePackage="model2.ecore#/">
+      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="model2.ecore#/">
     <genClasses ecoreClass="model2.ecore#//SpecialPurchaseOrder">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//SpecialPurchaseOrder/discountCode"/>
     </genClasses>

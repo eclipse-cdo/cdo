@@ -43,7 +43,7 @@
       <perspectiveExtension
             targetID="org.eclipse.ui.resourcePerspective">
          <view
-               id="org.eclipse.emf.cdo.ui.CDOSessionsView"
+               id="org.eclipse.emf.cdo.CDOSessionsView"
                ratio="0.2"
                relationship="bottom"
                relative="org.eclipse.ui.views.ResourceNavigator">

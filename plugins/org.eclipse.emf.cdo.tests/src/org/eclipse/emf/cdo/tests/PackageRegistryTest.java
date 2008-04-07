@@ -14,9 +14,13 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.tests.mango.MangoFactory;
+import org.eclipse.emf.cdo.tests.mango.MangoPackage;
+import org.eclipse.emf.cdo.tests.mango.Value;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
@@ -38,7 +42,7 @@ import java.io.IOException;
  */
 public class PackageRegistryTest extends AbstractCDOTest
 {
-  public void __testGeneratedPackage() throws Exception
+  public void testGeneratedPackage() throws Exception
   {
     {
       // Create resource in session 1
@@ -67,7 +71,6 @@ public class PackageRegistryTest extends AbstractCDOTest
   public void testCommitTwoPackages() throws Exception
   {
     {
-      // Create resource in session 1
       CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
       session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
       session.getPackageRegistry().putEPackage(Model2Package.eINSTANCE);
@@ -80,15 +83,44 @@ public class PackageRegistryTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    // {
-    // // Load resource in session 2
-    // CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
-    // CDOTransaction transaction = session.openTransaction();
-    // CDOResource res = transaction.getResource("/res");
-    //
-    // Company company = (Company)res.getContents().get(0);
-    // assertEquals("Eike", company.getName());
-    // }
+    {
+      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.getResource("/res");
+
+      SpecialPurchaseOrder specialPurchaseOrder = (SpecialPurchaseOrder)res.getContents().get(0);
+      assertEquals("12345", specialPurchaseOrder.getDiscountCode());
+    }
+  }
+
+  public void testCommitUnrelatedPackage() throws Exception
+  {
+    {
+      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
+      session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.createResource("/res");
+
+      PurchaseOrder purchaseOrder = Model1Factory.eINSTANCE.createPurchaseOrder();
+      res.getContents().add(purchaseOrder);
+
+      transaction.commit();
+      session.close();
+    }
+
+    {
+      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      session.getPackageRegistry().putEPackage(MangoPackage.eINSTANCE);
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.getResource("/res");
+
+      Value value = MangoFactory.eINSTANCE.createValue();
+      value.setName("V0");
+      res.getContents().add(value);
+
+      transaction.commit();
+      session.close();
+    }
   }
 
   /**

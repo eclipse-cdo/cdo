@@ -259,18 +259,27 @@ public final class EMFUtil
   public static String ePackageToString(EPackage ePackage, EPackage.Registry packageRegistry)
   {
     Resource.Factory resourceFactory = new XMIResourceFactoryImpl();
-    ResourceSetImpl resourceSet = new ResourceSetImpl();
+    ResourceSetImpl resourceSet = new ResourceSetImpl()
+    {
+      @Override
+      protected Resource delegatedGetResource(URI uri, boolean loadOnDemand)
+      {
+        System.out.println("\nGET_RESOURCE: " + uri);
+        return delegatedGetResource(uri, loadOnDemand);
+      }
+    };
+
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory);
     resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("*", resourceFactory);
 
     Resource packageResource = createPackageResource(resourceSet, ePackage);
-    for (Object object : packageRegistry.values())
-    {
-      if (object != ePackage)
-      {
-        createPackageResource(resourceSet, (EPackage)object);
-      }
-    }
+    // for (Object object : packageRegistry.values())
+    // {
+    // if (object != ePackage)
+    // {
+    // createPackageResource(resourceSet, (EPackage)object);
+    // }
+    // }
 
     ByteArrayOutputStream stream = new ByteArrayOutputStream();
 

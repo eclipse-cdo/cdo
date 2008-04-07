@@ -114,13 +114,34 @@ public enum DBType
     {
       if (value instanceof String || value instanceof Character)
       {
+        builder.append("'");
         if (value instanceof String)
         {
-          value = ((String)value).replaceAll("'", "\\'");
+          /*
+           * Stefan Winkler <stefan.winkler-et@fernuni-hagen.de> 2008-04-01 (no April's joke!) changed \\' to \\\\'
+           * because at least with MySQL \\' is not enough for some reason - the \\ get eaten up somewhere on the way
+           * :-(
+           */
+
+          String str = (String)value;
+          for (int i = 0; i < str.length(); i++)
+          {
+            char c = str.charAt(i);
+            if (c == '\'')
+            {
+              builder.append("\\\'");
+            }
+            else
+            {
+              builder.append(c);
+            }
+          }
+        }
+        else
+        {
+          builder.append(value);
         }
 
-        builder.append("'");
-        builder.append(value);
         builder.append("'");
       }
       else

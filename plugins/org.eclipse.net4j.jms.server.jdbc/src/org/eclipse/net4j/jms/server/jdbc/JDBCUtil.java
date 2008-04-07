@@ -39,7 +39,7 @@ public final class JDBCUtil
   public static IStore getStore()
   {
     Properties properties = OM.BUNDLE.getConfigProperties();
-    String adapterName = properties.getProperty("store.adapterName", "derby");
+    String adapterName = properties.getProperty("store.adapterName", "derby-embedded");
     IDBAdapter dbAdapter = DBUtil.getDBAdapter(adapterName);
     DataSource dataSource = DBUtil.createDataSource(properties, "datasource");
     String instanceID = properties.getProperty("store.instanceID", "00000000");

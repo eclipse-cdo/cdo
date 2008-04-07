@@ -101,16 +101,19 @@ public class DBStore extends LongIDStore implements IDBStore
     return dbConnectionProvider;
   }
 
+  @Override
   public boolean hasAuditingSupport()
   {
     return true;
   }
 
+  @Override
   public boolean hasBranchingSupport()
   {
     return false;
   }
 
+  @Override
   public boolean hasWriteDeltaSupport()
   {
     return false;
@@ -292,6 +295,7 @@ public class DBStore extends LongIDStore implements IDBStore
     }
   }
 
+  @Override
   public void repairAfterCrash()
   {
     Repository repository = (Repository)getRepository();

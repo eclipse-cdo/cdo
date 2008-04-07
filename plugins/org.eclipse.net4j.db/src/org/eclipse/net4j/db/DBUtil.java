@@ -23,10 +23,13 @@ import javax.sql.DataSource;
 
 import java.sql.Clob;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -119,7 +122,11 @@ public final class DBUtil
     {
       try
       {
-        resultSet.getStatement().setMaxRows(0);
+        Statement statement = resultSet.getStatement();
+        if (statement != null)
+        {
+          statement.setMaxRows(0);
+        }
       }
       catch (Exception ex)
       {
@@ -138,6 +145,57 @@ public final class DBUtil
     }
 
     return null;
+  }
+
+  public static List<String> getAllTableNames(Connection connection, String dbName)
+  {
+    ResultSet tables = null;
+
+    try
+    {
+      List<String> names = new ArrayList<String>();
+      DatabaseMetaData metaData = connection.getMetaData();
+      tables = metaData.getTables(dbName, null, null, new String[] { "TABLE" });
+      while (tables.next())
+      {
+        String name = tables.getString(3);
+        names.add(name);
+      }
+
+      return names;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(tables);
+    }
+  }
+
+  public static void dropAllTables(Connection connection, String dbName)
+  {
+    Statement statement = null;
+
+    try
+    {
+      statement = connection.createStatement();
+      for (String tableName : DBUtil.getAllTableNames(connection, dbName))
+      {
+        String sql = "DROP TABLE " + tableName;
+        DBUtil.trace(sql);
+        statement.execute(sql);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(statement);
+    }
   }
 
   public static int selectMaximumInt(Connection connection, IDBField field) throws DBException
@@ -383,6 +441,9 @@ public final class DBUtil
 
   public static void trace(String sql)
   {
-    if (TRACER.isEnabled()) TRACER.trace(sql);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
   }
 }

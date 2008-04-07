@@ -8,7 +8,7 @@
   <foreignModel>editor.ecore</foreignModel>
   <genPackages prefix="CDO" basePackage="org.eclipse.emf.cdo.internal.ui" disposableProviderFactory="true"
       presentationPackageSuffix="" multipleEditorPages="false" generateModelWizard="false"
-      ecorePackage="editor.ecore#/">
+      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="editor.ecore#/">
     <genClasses ecoreClass="editor.ecore#//Dummy"/>
   </genPackages>
 </genmodel:GenModel>

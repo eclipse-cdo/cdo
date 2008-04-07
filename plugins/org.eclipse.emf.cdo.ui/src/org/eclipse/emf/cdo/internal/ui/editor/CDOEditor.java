@@ -566,6 +566,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     if (!changedResources.isEmpty() && (!isDirty() || handleDirtyConflict()))
     {
+      if (isDirty())
+      {
+        changedResources.addAll(editingDomain.getResourceSet().getResources());
+      }
       editingDomain.getCommandStack().flush();
 
       updateProblemIndication = false;
@@ -587,6 +591,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           }
         }
       }
+
+      if (AdapterFactoryEditingDomain.isStale(editorSelection))
+      {
+        setSelection(StructuredSelection.EMPTY);
+      }
+
       updateProblemIndication = true;
       updateProblemIndication();
     }
@@ -1081,8 +1091,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     // Only creates the other pages if there is something that can be edited
     //
-    if (!getEditingDomain().getResourceSet().getResources().isEmpty()
-        && !getEditingDomain().getResourceSet().getResources().get(0).getContents().isEmpty())
+    if (!getEditingDomain().getResourceSet().getResources().isEmpty())
     {
       // Create a page for the selection tree view.
       //

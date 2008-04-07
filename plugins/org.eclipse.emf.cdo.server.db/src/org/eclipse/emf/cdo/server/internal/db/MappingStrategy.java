@@ -48,6 +48,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MappingStrategy.class);
 
+  @Deprecated
   public static final String PROP_MAPPING_PRECEDENCE = "mappingPrecedence";
 
   public static final String PROP_TO_MANY_REFERENCE_MAPPING = "toManyReferenceMapping";

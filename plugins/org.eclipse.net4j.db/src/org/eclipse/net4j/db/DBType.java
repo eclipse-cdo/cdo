@@ -129,7 +129,7 @@ public enum DBType
             char c = str.charAt(i);
             if (c == '\'')
             {
-              builder.append("\\\'");
+              builder.append("\\'");
             }
             else
             {

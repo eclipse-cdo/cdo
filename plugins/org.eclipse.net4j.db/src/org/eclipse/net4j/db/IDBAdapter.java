@@ -15,6 +15,8 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.DBAdapterRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
+import javax.sql.DataSource;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.Statement;
@@ -33,6 +35,8 @@ public interface IDBAdapter
 
   public Driver getJDBCDriver();
 
+  public DataSource createJDBCDataSource();
+
   public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException;
 
   public boolean createTable(IDBTable table, Statement statement) throws DBException;
@@ -42,4 +46,6 @@ public interface IDBAdapter
   public String mangleFieldName(String name, int attempt);
 
   public void appendValue(StringBuilder builder, IDBField field, Object value);
+
+  public boolean isTypeIndexable(DBType type);
 }

@@ -19,7 +19,13 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
  */
 public class DBField extends DBSchemaElement implements IDBField
 {
-  private static final int DEFAULT_PRECISION = 255;
+  public static final int DEFAULT_DECIMAL_PRECISION = 5;
+
+  public static final int DEFAULT_SCALE = 0;
+
+  public static final int DEFAULT_CHAR_LENGTH = 1;
+
+  public static final int DEFAULT_VARCHAR_LENGTH = 255;
 
   private DBTable table;
 
@@ -78,7 +84,24 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public int getPrecision()
   {
-    return precision == DEFAULT ? DEFAULT_PRECISION : precision;
+    if (precision == DEFAULT)
+    {
+      switch (type)
+      {
+      case CHAR:
+        return DEFAULT_CHAR_LENGTH;
+
+      case VARCHAR:
+      case VARBINARY:
+        return DEFAULT_VARCHAR_LENGTH;
+
+      case DECIMAL:
+      case NUMERIC:
+        return DEFAULT_DECIMAL_PRECISION;
+      }
+    }
+
+    return precision;
   }
 
   public void setPrecision(int precision)
@@ -88,6 +111,11 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public int getScale()
   {
+    if (scale == DEFAULT)
+    {
+      return DEFAULT_SCALE;
+    }
+
     return scale;
   }
 

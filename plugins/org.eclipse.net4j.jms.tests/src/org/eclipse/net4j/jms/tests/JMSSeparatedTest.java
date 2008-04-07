@@ -13,7 +13,7 @@ package org.eclipse.net4j.jms.tests;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.internal.derby.DerbyAdapter;
+import org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter;
 import org.eclipse.net4j.internal.util.container.ManagedContainer;
 import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
@@ -91,7 +91,7 @@ public class JMSSeparatedTest
 
   private static void initServer() throws Exception
   {
-    IDBAdapter.REGISTRY.put("derby", new DerbyAdapter());
+    IDBAdapter.REGISTRY.put(EmbeddedDerbyAdapter.NAME, new EmbeddedDerbyAdapter());
     IStore store = JDBCUtil.getStore();
     Server.INSTANCE.setStore(store);
     Server.INSTANCE.activate();

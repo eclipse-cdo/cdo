@@ -20,23 +20,28 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
+import javax.sql.DataSource;
+
 import java.sql.Connection;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractDBTest extends AbstractOMTest
+public abstract class AbstractDBTest<DATA_SOURCE extends DataSource> extends AbstractOMTest
 {
   protected IDBAdapter dbAdapter;
 
   protected IDBConnectionProvider dbConnectionProvider;
 
+  @SuppressWarnings("unchecked")
   @Override
   protected void doSetUp() throws Exception
   {
     dbAdapter = createDBAdapter();
-    dbConnectionProvider = createDBConnectionProvider();
+    DATA_SOURCE dataSource = (DATA_SOURCE)dbAdapter.createJDBCDataSource();
+    configureDataSourcer(dataSource);
+    dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
   }
 
   @Override
@@ -46,40 +51,63 @@ public abstract class AbstractDBTest extends AbstractOMTest
 
   protected abstract IDBAdapter createDBAdapter();
 
-  protected abstract IDBConnectionProvider createDBConnectionProvider();
+  protected abstract void configureDataSourcer(DATA_SOURCE dataSource);
 
   protected Connection getConnection()
   {
     return dbConnectionProvider.getConnection();
   }
 
-  public void testDBTypes() throws Exception
+  public void _testDBTypes() throws Exception
   {
     IDBSchema schema = DBUtil.createSchema("testDBTypes");
     DBType[] dbTypes = DBType.values();
 
+    int count = 0;
     int i = 0;
     for (DBType dbType : dbTypes)
     {
       IDBTable table = schema.addTable("table_" + i);
       table.addField("field", dbType);
+      ++count;
 
-      IDBTable idx_table = schema.addTable("idx_table" + i);
-      IDBField idx_field = idx_table.addField("field", dbType);
-      idx_table.addIndex(IDBIndex.Type.NON_UNIQUE, idx_field);
+      if (dbAdapter.isTypeIndexable(dbType))
+      {
+        IDBTable idx_table = schema.addTable("idx_table" + i);
+        IDBField idx_field = idx_table.addField("field", dbType);
+        idx_table.addIndex(IDBIndex.Type.NON_UNIQUE, idx_field);
+        ++count;
 
-      IDBTable uni_table = schema.addTable("uni_table" + i);
-      IDBField uni_field = uni_table.addField("field", dbType);
-      uni_table.addIndex(IDBIndex.Type.UNIQUE, uni_field);
+        IDBTable uni_table = schema.addTable("uni_table" + i);
+        IDBField uni_field = uni_table.addField("field", dbType);
+        uni_table.addIndex(IDBIndex.Type.UNIQUE, uni_field);
+        ++count;
 
-      IDBTable pk_table = schema.addTable("pk_table" + i);
-      IDBField pk_field = pk_table.addField("field", dbType);
-      pk_table.addIndex(IDBIndex.Type.PRIMARY_KEY, pk_field);
-
+        IDBTable pk_table = schema.addTable("pk_table" + i);
+        IDBField pk_field = pk_table.addField("field", dbType);
+        pk_table.addIndex(IDBIndex.Type.PRIMARY_KEY, pk_field);
+        ++count;
+      }
       ++i;
     }
 
     Set<IDBTable> tables = schema.create(dbAdapter, dbConnectionProvider);
-    assertEquals(dbTypes.length * 4, tables.size());
+    assertEquals(count, tables.size());
+  }
+
+  public void testEscapeStrings() throws Exception
+  {
+    IDBSchema schema = DBUtil.createSchema("testEscapeStrings");
+    IDBTable table = schema.addTable("testtable");
+    IDBField strval = table.addField("strval", DBType.VARCHAR, 255);
+    schema.create(dbAdapter, dbConnectionProvider);
+
+    // StringBuilder builder = new StringBuilder("insert into testtable values(");
+    // dbAdapter.appendValue(builder, strval, "My name is \"nobody\", not body");
+    // builder.append(")");
+    String val = "My name is 'nobody', not body";
+    DBUtil.insertRow(getConnection(), dbAdapter, table, val);
+    Object[] result = DBUtil.select(getConnection(), (String)null, strval);
+    assertEquals(val, result[0]);
   }
 }

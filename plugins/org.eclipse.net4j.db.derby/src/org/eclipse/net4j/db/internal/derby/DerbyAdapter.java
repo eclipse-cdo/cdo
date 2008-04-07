@@ -15,16 +15,15 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.internal.db.DBAdapter;
 import org.eclipse.net4j.internal.db.ddl.DBField;
 
-import org.apache.derby.jdbc.EmbeddedDriver;
-
-import java.sql.Driver;
 import java.util.Arrays;
 
 /**
  * @author Eike Stepper
  */
-public class DerbyAdapter extends DBAdapter
+public abstract class DerbyAdapter extends DBAdapter
 {
+  public static final String VERSION = "10.3.2.1";
+
   private static final String[] RESERVED_WORDS = { "ADD", "ALL", "ALLOCATE", "ALTER", "AND", "ANY", "ARE", "AS", "ASC",
       "ASSERTION", "AT", "AUTHORIZATION", "AVG", "BEGIN", "BETWEEN", "BIGINT", "BIT", "BOOLEAN", "BOTH", "BY", "CALL",
       "CASCADE", "CASCADED", "CASE", "CAST", "CHAR", "CHARACTER", "CHECK", "CLOSE", "COALESCE", "COLLATE", "COLLATION",
@@ -46,14 +45,9 @@ public class DerbyAdapter extends DBAdapter
       "UPDATE", "UPPER", "USER", "USING", "VALUES", "VARCHAR", "VARYING", "VIEW", "WHENEVER", "WHERE", "WITH", "WORK",
       "WRITE", "XML", "XMLEXISTS", "XMLPARSE", "XMLQUERY", "XMLSERIALIZE", "YEAR" };
 
-  public DerbyAdapter()
+  public DerbyAdapter(String name)
   {
-    super("derby", "10.2.2.0");
-  }
-
-  public Driver getJDBCDriver()
-  {
-    return new EmbeddedDriver();
+    super(name, VERSION);
   }
 
   @Override
@@ -62,9 +56,15 @@ public class DerbyAdapter extends DBAdapter
     DBType type = field.getType();
     switch (type)
     {
+    case TINYINT:
     case BOOLEAN:
     case BIT:
       return "SMALLINT";
+
+    case LONGVARBINARY:
+    case VARBINARY:
+    case BINARY:
+      return "BLOB";
     }
 
     return super.getTypeName(field);

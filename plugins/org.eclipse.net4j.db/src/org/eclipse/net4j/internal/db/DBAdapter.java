@@ -157,6 +157,23 @@ public abstract class DBAdapter implements IDBAdapter
     field.appendValue(builder, value);
   }
 
+  public boolean isTypeIndexable(DBType type)
+  {
+    switch (type)
+    {
+    case CLOB:
+    case BLOB:
+    case LONGVARCHAR:
+    case LONGVARBINARY:
+    case VARBINARY:
+    case BINARY:
+      return false;
+
+    default:
+      return true;
+    }
+  }
+
   @Override
   public String toString()
   {
@@ -179,7 +196,10 @@ public abstract class DBAdapter implements IDBAdapter
 
     builder.append(")");
     String sql = builder.toString();
-    if (TRACER.isEnabled()) TRACER.trace(sql);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
     statement.execute(sql);
 
     DBIndex[] indices = table.getIndices();
@@ -219,7 +239,10 @@ public abstract class DBAdapter implements IDBAdapter
 
     builder.append(")");
     String sql = builder.toString();
-    if (TRACER.isEnabled()) TRACER.trace(sql);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
     statement.execute(sql);
   }
 

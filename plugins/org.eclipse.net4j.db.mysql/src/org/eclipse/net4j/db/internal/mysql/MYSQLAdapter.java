@@ -16,7 +16,10 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.internal.db.DBAdapter;
 import org.eclipse.net4j.internal.db.ddl.DBField;
 
-import org.gjt.mm.mysql.Driver;
+import com.mysql.jdbc.Driver;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+
+import javax.sql.DataSource;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -26,6 +29,10 @@ import java.util.Arrays;
  */
 public class MYSQLAdapter extends DBAdapter
 {
+  public static final String NAME = "mysql";
+
+  public static final String VERSION = "5.1.5";
+
   private static final String[] RESERVED_WORDS = { "ACTION", "ADD", "ALL", "ALTER", "ANALYZE", "AND", "AS", "ASC",
       "ASENSITIVE", "BEFORE", "BETWEEN", "BIGINT", "BINARY", "BIT", "BLOB", "BOTH", "BY", "CALL", "CASCADE", "CASE",
       "CHANGE", "CHAR", "CHARACTER", "CHECK", "COLLATE", "COLUMN", "CONDITION", "CONSTRAINT", "CONTINUE", "CONVERT",
@@ -52,7 +59,7 @@ public class MYSQLAdapter extends DBAdapter
 
   public MYSQLAdapter()
   {
-    super("mysql", "5.1.5");
+    super(NAME, VERSION);
   }
 
   public Driver getJDBCDriver()
@@ -65,6 +72,11 @@ public class MYSQLAdapter extends DBAdapter
     {
       throw new DBException(ex);
     }
+  }
+
+  public DataSource createJDBCDataSource()
+  {
+    return new MysqlDataSource();
   }
 
   @Override

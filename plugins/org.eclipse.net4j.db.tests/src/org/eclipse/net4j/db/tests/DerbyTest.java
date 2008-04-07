@@ -10,10 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.db.tests;
 
-import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.IDBConnectionProvider;
-import org.eclipse.net4j.db.internal.derby.DerbyAdapter;
+import org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
 
@@ -24,7 +22,7 @@ import java.io.File;
 /**
  * @author Eike Stepper
  */
-public class DerbyTest extends AbstractDBTest
+public class DerbyTest extends AbstractDBTest<EmbeddedDataSource>
 {
   private File dbFolder;
 
@@ -38,21 +36,18 @@ public class DerbyTest extends AbstractDBTest
   @Override
   protected IDBAdapter createDBAdapter()
   {
-    return new DerbyAdapter();
+    return new EmbeddedDerbyAdapter();
   }
 
   @Override
-  protected IDBConnectionProvider createDBConnectionProvider()
+  protected void configureDataSourcer(EmbeddedDataSource dataSource)
   {
-    dbFolder = TMPUtil.createTempFolder();
+    dbFolder = TMPUtil.createTempFolder("derby_", null, new File("/temp"));
     deleteDBFolder();
     msg("Using DB folder: " + dbFolder.getAbsolutePath());
 
-    EmbeddedDataSource dataSource = new EmbeddedDataSource();
     dataSource.setDatabaseName(dbFolder.getAbsolutePath());
-    dataSource.setCreateDatabase("true");
-
-    return DBUtil.createConnectionProvider(dataSource);
+    dataSource.setCreateDatabase("create");
   }
 
   private void deleteDBFolder()

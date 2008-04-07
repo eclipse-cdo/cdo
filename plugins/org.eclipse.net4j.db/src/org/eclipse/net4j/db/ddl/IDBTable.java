@@ -11,7 +11,6 @@
 package org.eclipse.net4j.db.ddl;
 
 import org.eclipse.net4j.db.DBType;
-import org.eclipse.net4j.internal.db.ddl.DBField;
 
 /**
  * @author Eike Stepper
@@ -20,15 +19,15 @@ public interface IDBTable extends IDBSchemaElement
 {
   public IDBField addField(String name, DBType type);
 
-  public DBField addField(String name, DBType type, boolean notNull);
+  public IDBField addField(String name, DBType type, boolean notNull);
 
-  public DBField addField(String name, DBType type, int precision);
+  public IDBField addField(String name, DBType type, int precision);
 
-  public DBField addField(String name, DBType type, int precision, boolean notNull);
+  public IDBField addField(String name, DBType type, int precision, boolean notNull);
 
-  public DBField addField(String name, DBType type, int precision, int scale);
+  public IDBField addField(String name, DBType type, int precision, int scale);
 
-  public DBField addField(String name, DBType type, int precision, int scale, boolean notNull);
+  public IDBField addField(String name, DBType type, int precision, int scale, boolean notNull);
 
   public IDBField getField(String name);
 

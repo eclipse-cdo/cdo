@@ -78,7 +78,7 @@ public final class CDODBUtil
   // public static CDODBStoreManager getStoreManager()
   // {
   // Properties properties = OM.BUNDLE.getConfigProperties();
-  // String adapterName = properties.getProperty("store.adapterName", "derby");
+  // String adapterName = properties.getProperty("store.adapterName", "derby-embedded");
   // IDBAdapter dbAdapter = DBUtil.getDBAdapter(adapterName);
   // DataSource dataSource = DBUtil.createDataSource(properties, "datasource");
   // return getStoreManager(dbAdapter, dataSource);

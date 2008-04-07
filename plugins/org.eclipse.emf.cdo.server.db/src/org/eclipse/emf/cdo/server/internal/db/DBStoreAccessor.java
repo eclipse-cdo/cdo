@@ -24,6 +24,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBTable;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
@@ -96,6 +97,18 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     }
 
     return statement;
+  }
+
+  public PreparedStatement prepareStatement(String sql)
+  {
+    try
+    {
+      return getConnection().prepareStatement(sql);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
   }
 
   /**

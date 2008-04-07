@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.db;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 /**
@@ -25,4 +26,6 @@ public interface IDBStoreAccessor extends IStoreAccessor
   public Connection getConnection();
 
   public Statement getStatement();
+
+  public PreparedStatement prepareStatement(String sql);
 }

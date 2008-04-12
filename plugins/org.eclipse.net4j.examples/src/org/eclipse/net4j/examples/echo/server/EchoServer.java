@@ -8,12 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.examples.echo.client;
+package org.eclipse.net4j.examples.echo.server;
 
 import org.eclipse.net4j.Net4jUtil;
-import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.examples.echo.EchoProtocol;
+import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.internal.examples.bundle.OM;
 import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
 import org.eclipse.net4j.tcp.TCPUtil;
@@ -25,7 +24,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
 /**
  * @author Eike Stepper
  */
-public class EchoClient
+public class EchoServer
 {
   public static void main(String[] args) throws Exception
   {
@@ -41,21 +40,18 @@ public class EchoClient
     {
       Net4jUtil.prepareContainer(container);
       TCPUtil.prepareContainer(container);
-      container.registerFactory(new EchoClientProtocol.Factory());
+      container.registerFactory(new EchoServerProtocol.Factory());
       LifecycleUtil.activate(container);
 
-      // Start a connector that represents the client side of a physical connection
-      IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "tcp", "localhost:2036");
+      // Start an acceptor
+      IAcceptor acceptor = (IAcceptor)container.getElement("org.eclipse.net4j.acceptors", "tcp", "0.0.0.0:2036");
+      OM.LOG.info("Accepting connections: " + acceptor);
 
-      // Open a virtual channel with the ECHO protocol, send an ECHO request and close the channel
-      IChannel channel = connector.openChannel(EchoProtocol.PROTOCOL_NAME, null);
-      EchoRequest request = new EchoRequest(channel, "My cool message");
-      String echo = request.send();
-      channel.close();
-
-      System.out.println();
-      System.out.println("ECHO: " + echo);
-      System.out.println();
+      System.out.println("Press any key to shutdown");
+      while (System.in.read() == -1)
+      {
+        Thread.sleep(200);
+      }
     }
     finally
     {

@@ -199,11 +199,6 @@ public abstract class SignalProtocol extends Protocol
     return MessageFormat.format("SignalProtocol[{0}]", getType()); //$NON-NLS-1$ 
   }
 
-  public String getType()
-  {
-    return null;
-  }
-
   protected final SignalReactor createSignalReactor(short signalID)
   {
     checkActive();

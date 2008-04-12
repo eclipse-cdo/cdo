@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.tests.model1.Supplier#getPurchaseOrders <em>Purchase Orders</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.Supplier#isPreferred <em>Preferred</em>}</li>
  * </ul>
  * </p>
  * 
@@ -40,5 +41,33 @@ public interface Supplier extends Address
    * @generated
    */
   EList<PurchaseOrder> getPurchaseOrders();
+
+  /**
+   * Returns the value of the '<em><b>Preferred</b></em>' attribute. The default value is <code>"true"</code>.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Preferred</em>' attribute isn't clear, there really should be more of a description
+   * here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Preferred</em>' attribute.
+   * @see #setPreferred(boolean)
+   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getSupplier_Preferred()
+   * @model default="true" required="true"
+   * @generated
+   */
+  boolean isPreferred();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Supplier#isPreferred <em>Preferred</em>}'
+   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Preferred</em>' attribute.
+   * @see #isPreferred()
+   * @generated
+   */
+  void setPreferred(boolean value);
 
 } // Supplier

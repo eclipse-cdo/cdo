@@ -314,13 +314,21 @@ public interface Model1Package extends EPackage
   int SUPPLIER__PURCHASE_ORDERS = ADDRESS_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Preferred</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SUPPLIER__PREFERRED = ADDRESS_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Supplier</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
    * 
    * @generated
    * @ordered
    */
-  int SUPPLIER_FEATURE_COUNT = ADDRESS_FEATURE_COUNT + 1;
+  int SUPPLIER_FEATURE_COUNT = ADDRESS_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.CustomerImpl <em>Customer</em>}' class.
@@ -612,6 +620,17 @@ public interface Model1Package extends EPackage
    * @generated
    */
   EReference getSupplier_PurchaseOrders();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Supplier#isPreferred <em>Preferred</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Preferred</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Supplier#isPreferred()
+   * @see #getSupplier()
+   * @generated
+   */
+  EAttribute getSupplier_Preferred();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder <em>Purchase Order</em>}'.
@@ -996,6 +1015,14 @@ public interface Model1Package extends EPackage
      * @generated
      */
     EReference SUPPLIER__PURCHASE_ORDERS = eINSTANCE.getSupplier_PurchaseOrders();
+
+    /**
+     * The meta object literal for the '<em><b>Preferred</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute SUPPLIER__PREFERRED = eINSTANCE.getSupplier_Preferred();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model1.impl.PurchaseOrderImpl <em>Purchase Order</em>}'

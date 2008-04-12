@@ -23,6 +23,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Supplier" eSuperTypes="#//Address">
     <eStructuralFeatures xsi:type="ecore:EReference" name="purchaseOrders" upperBound="-1"
         eType="#//PurchaseOrder" eOpposite="#//PurchaseOrder/supplier"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="preferred" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Customer" eSuperTypes="#//Address">
     <eStructuralFeatures xsi:type="ecore:EReference" name="salesOrders" unique="false"

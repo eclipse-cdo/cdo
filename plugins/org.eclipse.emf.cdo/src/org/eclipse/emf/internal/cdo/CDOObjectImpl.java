@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+import org.eclipse.emf.internal.cdo.util.GenUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -207,7 +208,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       for (int i = 0; i < eClass.getFeatureCount(); i++)
       {
         Object setting = eSettings[i];
-        if (setting != null)
+        // if (setting != null)
         {
           EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
           if (!eFeature.isTransient())
@@ -233,16 +234,19 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     boolean isReference = cdoFeature.isReference();
     if (cdoFeature.isMany())
     {
-      int index = 0;
-      EList<Object> list = (EList<Object>)setting;
-      for (Object value : list)
+      if (setting != null)
       {
-        if (isReference)
+        int index = 0;
+        EList<Object> list = (EList<Object>)setting;
+        for (Object value : list)
         {
-          value = view.convertObjectToID(value);
-        }
+          if (isReference)
+          {
+            value = view.convertObjectToID(value);
+          }
 
-        revision.add(cdoFeature, index++, value);
+          revision.add(cdoFeature, index++, value);
+        }
       }
     }
     else
@@ -251,9 +255,16 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       {
         setting = view.convertObjectToID(setting);
       }
-      else if (cdoFeature.getType() == CDOType.CUSTOM)
+      else
       {
-        setting = EcoreUtil.convertToString((EDataType)eFeature.getEType(), setting);
+        if (cdoFeature.getType() == CDOType.CUSTOM)
+        {
+          setting = EcoreUtil.convertToString((EDataType)eFeature.getEType(), setting);
+        }
+        else if (setting == null && GenUtil.isPrimitiveType(eFeature.getEType()))
+        {
+          setting = eFeature.getDefaultValue();
+        }
       }
 
       revision.set(cdoFeature, 0, setting);

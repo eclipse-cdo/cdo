@@ -54,7 +54,7 @@ public interface Supplier extends Address
    * @return the value of the '<em>Preferred</em>' attribute.
    * @see #setPreferred(boolean)
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getSupplier_Preferred()
-   * @model default="true" required="true"
+   * @model default="true"
    * @generated
    */
   boolean isPreferred();

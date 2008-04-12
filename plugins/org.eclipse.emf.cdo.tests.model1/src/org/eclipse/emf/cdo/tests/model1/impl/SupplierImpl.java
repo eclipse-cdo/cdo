@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EClass;
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SupplierImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SupplierImpl#isPreferred <em>Preferred</em>}</li>
  * </ul>
  * </p>
  * 
@@ -56,6 +57,26 @@ public class SupplierImpl extends AddressImpl implements Supplier
   public EList<PurchaseOrder> getPurchaseOrders()
   {
     return (EList<PurchaseOrder>)eGet(Model1Package.Literals.SUPPLIER__PURCHASE_ORDERS, true);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public boolean isPreferred()
+  {
+    return ((Boolean)eGet(Model1Package.Literals.SUPPLIER__PREFERRED, true)).booleanValue();
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setPreferred(boolean newPreferred)
+  {
+    eSet(Model1Package.Literals.SUPPLIER__PREFERRED, new Boolean(newPreferred));
   }
 
 } // SupplierImpl

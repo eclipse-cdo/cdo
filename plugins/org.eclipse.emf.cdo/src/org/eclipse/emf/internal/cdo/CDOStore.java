@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+import org.eclipse.emf.internal.cdo.util.GenUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -359,6 +360,10 @@ public final class CDOStore implements EStore
     if (cdoFeature.getType() == CDOType.CUSTOM)
     {
       value = EcoreUtil.convertToString((EDataType)eFeature.getEType(), value);
+    }
+    else if (value == null && GenUtil.isPrimitiveType(eFeature.getEType()))
+    {
+      value = eFeature.getDefaultValue();
     }
 
     CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(cdoFeature, index, value);

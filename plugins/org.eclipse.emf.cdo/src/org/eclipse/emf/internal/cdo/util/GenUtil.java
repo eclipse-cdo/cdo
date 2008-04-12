@@ -12,6 +12,8 @@ package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.net4j.util.StringUtil;
 
+import org.eclipse.emf.ecore.EClassifier;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,6 +25,28 @@ public final class GenUtil
 {
   private GenUtil()
   {
+  }
+
+  /**
+   * @see GenGenBaseImpl#isPrimitiveType
+   */
+  public static boolean isPrimitiveType(EClassifier eType)
+  {
+    try
+    {
+      // J9 2.2 has problems assigning null to a Class variable.
+      Object result = eType.getInstanceClass();
+      if (result == null)
+      {
+        return false;
+      }
+      Class<?> instanceClass = (Class<?>)result;
+      return instanceClass.isPrimitive();
+    }
+    catch (Exception e)
+    {
+      return false;
+    }
   }
 
   /**

@@ -207,14 +207,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       EClass eClass = eClass();
       for (int i = 0; i < eClass.getFeatureCount(); i++)
       {
-        Object setting = eSettings[i];
-        // if (setting != null)
+        EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
+        if (!eFeature.isTransient())
         {
-          EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
-          if (!eFeature.isTransient())
-          {
-            populateRevisionFeature(view, revision, eFeature, eSettings, i);
-          }
+          populateRevisionFeature(view, revision, eFeature, eSettings, i);
         }
       }
     }

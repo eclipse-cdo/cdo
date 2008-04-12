@@ -12,6 +12,7 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Order;
+import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
@@ -172,6 +173,16 @@ public class Model1Switch<T>
       if (result == null) result = defaultCase(theEObject);
       return result;
     }
+    case Model1Package.ORDER_ADDRESS:
+    {
+      OrderAddress orderAddress = (OrderAddress)theEObject;
+      T result = caseOrderAddress(orderAddress);
+      if (result == null) result = caseAddress(orderAddress);
+      if (result == null) result = caseOrder(orderAddress);
+      if (result == null) result = caseOrderDetail(orderAddress);
+      if (result == null) result = defaultCase(theEObject);
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -248,6 +259,21 @@ public class Model1Switch<T>
    * @generated
    */
   public T caseProduct(Product object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Order Address</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Order Address</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseOrderAddress(OrderAddress object)
   {
     return null;
   }

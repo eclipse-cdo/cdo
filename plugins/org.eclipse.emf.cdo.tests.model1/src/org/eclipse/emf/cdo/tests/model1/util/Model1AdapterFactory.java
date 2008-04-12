@@ -12,6 +12,7 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Order;
+import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
@@ -142,6 +143,12 @@ public class Model1AdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseOrderAddress(OrderAddress object)
+    {
+      return createOrderAddressAdapter();
+    }
+
+    @Override
     public Adapter defaultCase(EObject object)
     {
       return createEObjectAdapter();
@@ -228,6 +235,20 @@ public class Model1AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createProductAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model1.OrderAddress <em>Order Address</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model1.OrderAddress
+   * @generated
+   */
+  public Adapter createOrderAddressAdapter()
   {
     return null;
   }

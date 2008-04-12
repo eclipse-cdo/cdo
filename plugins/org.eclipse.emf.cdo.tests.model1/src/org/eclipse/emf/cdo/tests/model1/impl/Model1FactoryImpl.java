@@ -13,6 +13,7 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Order;
+import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
@@ -97,6 +98,8 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
       return (EObject)createCategory();
     case Model1Package.PRODUCT:
       return (EObject)createProduct();
+    case Model1Package.ORDER_ADDRESS:
+      return (EObject)createOrderAddress();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -189,6 +192,17 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   {
     ProductImpl product = new ProductImpl();
     return product;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public OrderAddress createOrderAddress()
+  {
+    OrderAddressImpl orderAddress = new OrderAddressImpl();
+    return orderAddress;
   }
 
   /**

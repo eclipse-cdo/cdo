@@ -13,6 +13,7 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Order;
+import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
@@ -67,6 +68,13 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * @generated
    */
   private EClass productEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass orderAddressEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -361,6 +369,26 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * 
    * @generated
    */
+  public EClass getOrderAddress()
+  {
+    return orderAddressEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getOrderAddress_TestAttribute()
+  {
+    return (EAttribute)orderAddressEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EEnum getVAT()
   {
     return vatEEnum;
@@ -610,6 +638,9 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     createEReference(productEClass, PRODUCT__ORDER_DETAILS);
     createEAttribute(productEClass, PRODUCT__VAT);
 
+    orderAddressEClass = createEClass(ORDER_ADDRESS);
+    createEAttribute(orderAddressEClass, ORDER_ADDRESS__TEST_ATTRIBUTE);
+
     // Create enums
     vatEEnum = createEEnum(VAT);
   }
@@ -647,6 +678,9 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     customerEClass.getESuperTypes().add(this.getAddress());
     purchaseOrderEClass.getESuperTypes().add(this.getOrder());
     salesOrderEClass.getESuperTypes().add(this.getOrder());
+    orderAddressEClass.getESuperTypes().add(this.getAddress());
+    orderAddressEClass.getESuperTypes().add(this.getOrder());
+    orderAddressEClass.getESuperTypes().add(this.getOrderDetail());
 
     // Initialize classes and features; add operations and parameters
     initEClass(addressEClass, Address.class, "Address", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -736,6 +770,12 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProduct_Vat(), this.getVAT(), "vat", "vat15", 0, 1, Product.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(orderAddressEClass, OrderAddress.class, "OrderAddress", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getOrderAddress_TestAttribute(), ecorePackage.getEBoolean(), "testAttribute", null, 0, 1,
+        OrderAddress.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(vatEEnum, org.eclipse.emf.cdo.tests.model1.VAT.class, "VAT");

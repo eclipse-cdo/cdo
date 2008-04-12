@@ -69,4 +69,7 @@
     <eLiterals name="vat7" value="7"/>
     <eLiterals name="vat15" value="15"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OrderAddress" eSuperTypes="#//Address #//Order #//OrderDetail">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="testAttribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
 </ecore:EPackage>

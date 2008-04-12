@@ -15,6 +15,9 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
+import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.OrderAddress;
+import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -622,5 +625,63 @@ public class InitialTest extends AbstractCDOTest
 
     msg("Verifying name");
     assertEquals("Stepper", s.getName());
+  }
+
+  /**
+   * https://bugs.eclipse.org/bugs/show_bug.cgi?id=226317
+   */
+  public void testMultipleInheritence() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    OrderAddress orderAddress = Model1Factory.eINSTANCE.createOrderAddress();
+    resource.getContents().add(orderAddress);
+
+    assertEquals(Model1Package.eINSTANCE.getAddress_City().getFeatureID(), Model1Package.eINSTANCE
+        .getOrderDetail_Price().getFeatureID());
+
+    orderAddress.setCity("ALLO");
+    orderAddress.setPrice(2.8f);
+    orderAddress.setTestAttribute(true);
+
+    assertEquals(2.8f, orderAddress.getPrice());
+    assertEquals("ALLO", orderAddress.getCity());
+
+    OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
+    resource.getContents().add(orderDetail);
+    orderDetail.setPrice(3f);
+
+    transaction.commit();
+
+    orderAddress.setCity("ALLO");
+
+    transaction.commit();
+    session.close();
+
+    session = openModel1Session();
+
+    msg("Opening transaction");
+    transaction = session.openTransaction();
+    orderAddress = (OrderAddress)transaction.getObject(orderAddress.cdoID(), true);
+
+    assertEquals(2.8f, orderAddress.getPrice());
+    assertEquals("ALLO", orderAddress.getCity());
+
+    orderAddress.setPrice(2.8f);
+    transaction.commit();
+    session.close();
+
+    session = openModel1Session();
+
+    transaction = session.openTransaction();
+    orderAddress = (OrderAddress)transaction.getObject(orderAddress.cdoID(), true);
+
+    assertEquals(2.8f, orderAddress.getPrice());
+    assertEquals("ALLO", orderAddress.getCity());
+
+    orderAddress.setPrice(2.8f);
+
+    session.close();
   }
 }

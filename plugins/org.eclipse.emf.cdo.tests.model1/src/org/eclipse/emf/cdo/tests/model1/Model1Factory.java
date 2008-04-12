@@ -65,6 +65,14 @@ public interface Model1Factory extends EFactory
   Product createProduct();
 
   /**
+   * Returns a new object of class '<em>Order Address</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Order Address</em>'.
+   * @generated
+   */
+  OrderAddress createOrderAddress();
+
+  /**
    * Returns a new object of class '<em>Category</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return a new object of class '<em>Category</em>'.

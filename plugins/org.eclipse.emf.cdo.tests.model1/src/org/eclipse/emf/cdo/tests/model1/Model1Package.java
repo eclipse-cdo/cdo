@@ -591,6 +591,92 @@ public interface Model1Package extends EPackage
   int PRODUCT_FEATURE_COUNT = 3;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl <em>Order Address</em>}'
+   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl
+   * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getOrderAddress()
+   * @generated
+   */
+  int ORDER_ADDRESS = 10;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ORDER_ADDRESS__NAME = ADDRESS__NAME;
+
+  /**
+   * The feature id for the '<em><b>Street</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ORDER_ADDRESS__STREET = ADDRESS__STREET;
+
+  /**
+   * The feature id for the '<em><b>City</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ORDER_ADDRESS__CITY = ADDRESS__CITY;
+
+  /**
+   * The feature id for the '<em><b>Order Details</b></em>' containment reference list. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ORDER_ADDRESS__ORDER_DETAILS = ADDRESS_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Order</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ORDER_ADDRESS__ORDER = ADDRESS_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Product</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ORDER_ADDRESS__PRODUCT = ADDRESS_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Price</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ORDER_ADDRESS__PRICE = ADDRESS_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Test Attribute</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ORDER_ADDRESS__TEST_ATTRIBUTE = ADDRESS_FEATURE_COUNT + 4;
+
+  /**
+   * The number of structural features of the '<em>Order Address</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ORDER_ADDRESS_FEATURE_COUNT = ADDRESS_FEATURE_COUNT + 5;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.VAT <em>VAT</em>}' enum. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
    * 
@@ -598,7 +684,7 @@ public interface Model1Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getVAT()
    * @generated
    */
-  int VAT = 10;
+  int VAT = 11;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Supplier <em>Supplier</em>}'. <!--
@@ -749,6 +835,27 @@ public interface Model1Package extends EPackage
    * @generated
    */
   EAttribute getProduct_Vat();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.OrderAddress <em>Order Address</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Order Address</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.OrderAddress
+   * @generated
+   */
+  EClass getOrderAddress();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.OrderAddress#isTestAttribute <em>Test Attribute</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Test Attribute</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.OrderAddress#isTestAttribute()
+   * @see #getOrderAddress()
+   * @generated
+   */
+  EAttribute getOrderAddress_TestAttribute();
 
   /**
    * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.model1.VAT <em>VAT</em>}'. <!-- begin-user-doc
@@ -1117,6 +1224,24 @@ public interface Model1Package extends EPackage
      * @generated
      */
     EAttribute PRODUCT__VAT = eINSTANCE.getProduct_Vat();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl <em>Order Address</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl
+     * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getOrderAddress()
+     * @generated
+     */
+    EClass ORDER_ADDRESS = eINSTANCE.getOrderAddress();
+
+    /**
+     * The meta object literal for the '<em><b>Test Attribute</b></em>' attribute feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute ORDER_ADDRESS__TEST_ATTRIBUTE = eINSTANCE.getOrderAddress_TestAttribute();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model1.VAT <em>VAT</em>}' enum. <!--

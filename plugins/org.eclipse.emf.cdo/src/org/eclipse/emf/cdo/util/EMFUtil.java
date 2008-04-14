@@ -286,7 +286,8 @@ public final class EMFUtil
     try
     {
       packageResource.save(stream, null);
-      return stream.toString(ECORE_ENCODING);
+      String string = stream.toString(ECORE_ENCODING);
+      return string;
     }
     catch (RuntimeException ex)
     {

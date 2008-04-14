@@ -91,7 +91,7 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
     }
     CDOClassRef classRef = feature.getContainingClass().createClassRef();
     CDOModelUtil.writeClassRef(out, classRef);
-    out.writeInt(feature.getFeatureID());
+    out.writeInt(feature.getFeatureIndex());
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Writing fromIndex: {0}", fromIndex);

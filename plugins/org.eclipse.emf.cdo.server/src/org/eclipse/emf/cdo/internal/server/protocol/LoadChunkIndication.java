@@ -74,7 +74,7 @@ public class LoadChunkIndication extends CDOReadIndication
     CDOClassRef classRef = CDOModelUtil.readClassRef(in);
     int featureID = in.readInt();
     CDOClass cdoClass = classRef.resolve(getPackageManager());
-    feature = cdoClass.lookupFeature(featureID);
+    feature = cdoClass.getAllFeatures()[featureID];
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Read feature: {0}", feature);

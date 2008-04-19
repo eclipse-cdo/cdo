@@ -35,10 +35,6 @@
       <update label="%updateSiteName" url="http://download.eclipse.org/modeling/emft/updates/"/>
    </url>
 
-   <requires>
-      <import plugin="org.eclipse.core.runtime" version="3.3.0" match="compatible"/>
-   </requires>
-
    <includes
          id="org.eclipse.emf.cdo"
          version="0.0.0"/>
@@ -66,6 +62,19 @@
    <includes
          id="org.eclipse.emf.cdo.doc"
          version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.hibernate"
+         version="0.0.0"
+         optional="true"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.hibernate.source"
+         version="0.0.0"/>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime" version="3.3.0" match="compatible"/>
+   </requires>
 
    <plugin
          id="org.eclipse.emf.cdo.migrator"

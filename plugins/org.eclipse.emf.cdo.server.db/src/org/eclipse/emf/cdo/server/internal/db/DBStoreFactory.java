@@ -81,7 +81,13 @@ public class DBStoreFactory implements IStoreFactory
 
     Element dbAdapterConfig = (Element)dbAdapterConfigs.item(0);
     String dbAdapterName = dbAdapterConfig.getAttribute("name");
-    return DBUtil.getDBAdapter(dbAdapterName);
+    IDBAdapter dbAdapter = DBUtil.getDBAdapter(dbAdapterName);
+    if (dbAdapter == null)
+    {
+      throw new IllegalArgumentException("Unknown DB adapter: " + dbAdapterName);
+    }
+
+    return dbAdapter;
   }
 
   private DataSource getDataSource(Element storeConfig)

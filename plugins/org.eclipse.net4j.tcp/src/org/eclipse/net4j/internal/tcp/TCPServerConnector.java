@@ -11,8 +11,10 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.connector.ConnectorLocation;
+import org.eclipse.net4j.internal.tcp.bundle.OM;
+import org.eclipse.net4j.tcp.ITCPSelector;
 
-import java.nio.channels.SelectionKey;
+import java.nio.channels.SocketChannel;
 import java.text.MessageFormat;
 
 /**
@@ -75,9 +77,18 @@ public class TCPServerConnector extends TCPConnector
   }
 
   @Override
-  public void handleRegistration(SelectionKey selectionKey)
+  public void handleRegistration(ITCPSelector selector, SocketChannel socketChannel)
   {
-    super.handleRegistration(selectionKey);
-    acceptor.addConnector(this);
+    super.handleRegistration(selector, socketChannel);
+
+    try
+    {
+      acceptor.addConnector(this);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      deactivate();
+    }
   }
 }

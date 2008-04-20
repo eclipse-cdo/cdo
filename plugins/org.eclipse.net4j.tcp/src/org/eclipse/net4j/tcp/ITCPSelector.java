@@ -10,10 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.tcp;
 
-import org.eclipse.net4j.tcp.ITCPSelectorListener.Active;
-import org.eclipse.net4j.tcp.ITCPSelectorListener.Passive;
-
 import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
@@ -22,9 +20,11 @@ import java.nio.channels.SocketChannel;
  */
 public interface ITCPSelector
 {
-  public void orderRegistration(ServerSocketChannel channel, Passive listener);
+  public Selector getSocketSelector();
 
-  public void orderRegistration(SocketChannel channel, boolean client, Active listener);
+  public void orderRegistration(ServerSocketChannel channel, ITCPPassiveSelectorListener listener);
+
+  public void orderRegistration(SocketChannel channel, boolean client, ITCPActiveSelectorListener listener);
 
   public void orderConnectInterest(SelectionKey selectionKey, boolean client, boolean on);
 

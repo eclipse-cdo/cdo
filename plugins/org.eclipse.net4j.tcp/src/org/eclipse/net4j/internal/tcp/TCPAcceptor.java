@@ -14,8 +14,8 @@ import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.util.lifecycle.Worker;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
+import org.eclipse.net4j.tcp.ITCPPassiveSelectorListener;
 import org.eclipse.net4j.tcp.ITCPSelector;
-import org.eclipse.net4j.tcp.ITCPSelectorListener;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.internal.net4j.acceptor.Acceptor;
@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorListener.Passive
+public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSelectorListener
 {
   public static final boolean DEFAULT_START_SYNCHRONOUSLY = true;
 
@@ -118,10 +118,8 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
     this.synchronousStartTimeout = synchronousStartTimeout;
   }
 
-  public void handleRegistration(SelectionKey selectionKey)
+  public void handleRegistration(ITCPSelector selector, ServerSocketChannel serverSocketChannel)
   {
-    this.selectionKey = selectionKey;
-
     try
     {
       InetSocketAddress addr = null;
@@ -148,6 +146,9 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
           address = address.substring(0, colon);
         }
       }
+
+      // [MACOSX] Must occur AFTER binding!
+      selectionKey = serverSocketChannel.register(selector.getSocketSelector(), SelectionKey.OP_ACCEPT, this);
     }
     catch (Exception ex)
     {
@@ -192,7 +193,10 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPSelectorL
     }
     catch (Exception ex)
     {
-      if (isActive()) OM.LOG.error(ex);
+      if (isActive())
+      {
+        OM.LOG.error(ex);
+      }
       deactivate();
     }
   }

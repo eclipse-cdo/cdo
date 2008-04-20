@@ -13,14 +13,12 @@ package org.eclipse.net4j.internal.tcp;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.tcp.ITCPActiveSelectorListener;
+import org.eclipse.net4j.tcp.ITCPPassiveSelectorListener;
 import org.eclipse.net4j.tcp.ITCPSelector;
-import org.eclipse.net4j.tcp.ITCPSelectorListener;
-import org.eclipse.net4j.tcp.ITCPSelectorListener.Active;
-import org.eclipse.net4j.tcp.ITCPSelectorListener.Passive;
 
 import java.io.IOException;
 import java.nio.channels.CancelledKeyException;
-import java.nio.channels.ClosedChannelException;
 import java.nio.channels.ClosedSelectorException;
 import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
@@ -44,8 +42,14 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
   private Selector selector;
 
+  /**
+   * Always processed <b>after</b> {@link #serverOperations}.
+   */
   private transient Queue<Runnable> clientOperations = new ConcurrentLinkedQueue<Runnable>();
 
+  /**
+   * Always processed <b>before</b> {@link #clientOperations}.
+   */
   private transient Queue<Runnable> serverOperations = new ConcurrentLinkedQueue<Runnable>();
 
   private transient Thread thread;
@@ -56,7 +60,12 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
   {
   }
 
-  public void orderRegistration(final ServerSocketChannel channel, final Passive listener)
+  public Selector getSocketSelector()
+  {
+    return selector;
+  }
+
+  public void orderRegistration(final ServerSocketChannel channel, final ITCPPassiveSelectorListener listener)
   {
     assertValidListener(listener);
     order(false, new Runnable()
@@ -74,7 +83,8 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
-  public void orderRegistration(final SocketChannel channel, final boolean client, final Active listener)
+  public void orderRegistration(final SocketChannel channel, final boolean client,
+      final ITCPActiveSelectorListener listener)
   {
     assertValidListener(listener);
     order(client, new Runnable()
@@ -211,7 +221,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       ServerSocketChannel ssChannel = (ServerSocketChannel)selKey.channel();
       if (ssChannel.isOpen())
       {
-        ITCPSelectorListener.Passive listener = (ITCPSelectorListener.Passive)selKey.attachment();
+        ITCPPassiveSelectorListener listener = (ITCPPassiveSelectorListener)selKey.attachment();
 
         if (selKey.isAcceptable())
         {
@@ -227,7 +237,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     else if (channel instanceof SocketChannel)
     {
       SocketChannel sChannel = (SocketChannel)channel;
-      ITCPSelectorListener.Active listener = (ITCPSelectorListener.Active)selKey.attachment();
+      ITCPActiveSelectorListener listener = (ITCPActiveSelectorListener)selKey.attachment();
 
       if (selKey.isConnectable())
       {
@@ -408,7 +418,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     }
   }
 
-  private void executeRegistration(final ServerSocketChannel channel, final ITCPSelectorListener.Passive listener)
+  private void executeRegistration(final ServerSocketChannel channel, final ITCPPassiveSelectorListener listener)
   {
     if (TRACER.isEnabled())
     {
@@ -417,16 +427,15 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
     try
     {
-      int interest = SelectionKey.OP_ACCEPT;
-      SelectionKey selectionKey = channel.register(selector, interest, listener);
-      listener.handleRegistration(selectionKey);
+      listener.handleRegistration(this, channel);
     }
-    catch (ClosedChannelException ignore)
+    catch (Exception ex)
     {
+      OM.LOG.debug(ex);
     }
   }
 
-  private void executeRegistration(final SocketChannel channel, final ITCPSelectorListener.Active listener,
+  private void executeRegistration(final SocketChannel channel, final ITCPActiveSelectorListener listener,
       boolean client)
   {
     if (TRACER.isEnabled())
@@ -436,12 +445,11 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
     try
     {
-      int interest = client ? SelectionKey.OP_CONNECT : SelectionKey.OP_READ;
-      SelectionKey selectionKey = channel.register(selector, interest, listener);
-      listener.handleRegistration(selectionKey);
+      listener.handleRegistration(this, channel);
     }
-    catch (ClosedChannelException ignore)
+    catch (Exception ex)
     {
+      OM.LOG.debug(ex);
     }
   }
 }

@@ -18,9 +18,9 @@ import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.internal.util.security.NegotiationContext;
 import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.tcp.ITCPActiveSelectorListener;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.ITCPSelector;
-import org.eclipse.net4j.tcp.ITCPSelectorListener;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -41,7 +41,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * @author Eike Stepper
  */
-public abstract class TCPConnector extends Connector implements ITCPConnector, ITCPSelectorListener.Active
+public abstract class TCPConnector extends Connector implements ITCPConnector, ITCPActiveSelectorListener
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TCPConnector.class);
 
@@ -113,12 +113,26 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     return "tcp://" + host + ":" + port;
   }
 
-  public void handleRegistration(SelectionKey selectionKey)
+  public void handleRegistration(ITCPSelector selector, SocketChannel socketChannel)
   {
-    this.selectionKey = selectionKey;
-    if (isServer())
+    try
     {
-      leaveConnecting();
+      int interest = isClient() ? SelectionKey.OP_CONNECT : SelectionKey.OP_READ;
+      selectionKey = socketChannel.register(selector.getSocketSelector(), interest, this);
+
+      if (isServer())
+      {
+        leaveConnecting();
+      }
+    }
+    catch (ClosedChannelException ex)
+    {
+      deactivate();
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      deactivate();
     }
   }
 

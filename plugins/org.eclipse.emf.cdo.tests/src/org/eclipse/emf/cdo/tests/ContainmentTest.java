@@ -13,10 +13,13 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.cdo.tests.model2.Model2Factory;
+import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -268,5 +271,56 @@ public class ContainmentTest extends AbstractCDOTest
     assertClean(category2, transaction);
     assertContent(category2, category3);
     assertClean(category3, transaction);
+  }
+
+  public void testSetSingleContainment() throws Exception
+  {
+    Address address = Model1Factory.eINSTANCE.createAddress();
+    address.setName("Stepper");
+    address.setStreet("Home Ave. 007");
+    address.setCity("Berlin");
+
+    SpecialPurchaseOrder order = Model2Factory.eINSTANCE.createSpecialPurchaseOrder();
+    order.setShippingAddress(address);
+
+    CDOSession session = openModel2Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    resource.getContents().add(order);
+    transaction.commit();
+
+    assertClean(resource, transaction);
+    assertClean(order, transaction);
+    assertClean(address, transaction);
+    assertContent(resource, order);
+    assertContent(order, address);
+  }
+
+  public void testUnsetSingleContainment() throws Exception
+  {
+    Address address = Model1Factory.eINSTANCE.createAddress();
+    address.setName("Stepper");
+    address.setStreet("Home Ave. 007");
+    address.setCity("Berlin");
+
+    SpecialPurchaseOrder order = Model2Factory.eINSTANCE.createSpecialPurchaseOrder();
+    order.setShippingAddress(address);
+
+    CDOSession session = openModel2Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    resource.getContents().add(order);
+    transaction.commit();
+
+    order.setShippingAddress(null);
+    transaction.commit();
+
+    assertClean(resource, transaction);
+    assertClean(order, transaction);
+    assertTransient(address);
+    assertContent(resource, order);
+    assertNull(order.getShippingAddress());
   }
 }

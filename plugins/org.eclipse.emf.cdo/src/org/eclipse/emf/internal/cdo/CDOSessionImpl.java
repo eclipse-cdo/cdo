@@ -426,7 +426,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     range = registerMetaInstance((InternalEObject)ePackage, range);
     if (range.size() != metaIDRange.size())
     {
-      throw new IllegalStateException("range.getCount() != metaIDRange.getCount()");
+      throw new IllegalStateException("range.size() != metaIDRange.size()");
     }
   }
 

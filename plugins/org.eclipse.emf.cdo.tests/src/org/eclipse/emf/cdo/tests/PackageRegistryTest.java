@@ -132,6 +132,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   {
     CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
     session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
+    assertEquals(2, session.getPackageRegistry().size());
 
     try
     {

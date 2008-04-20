@@ -378,7 +378,10 @@ public final class CDOStore implements EStore
 
       if (cdoFeature.isContainment())
       {
-        handleContainmentAdd(cdoObject, value);
+        if (value != null)
+        {
+          handleContainmentAdd(cdoObject, value);
+        }
       }
     }
 

@@ -100,8 +100,9 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     CDOIDMetaRange metaIDRange = cdoPackage.getMetaIDRange();
     long lowerBound = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getLowerBound()).getLongValue();
     long upperBound = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getUpperBound()).getLongValue();
+    String parentURI = cdoPackage.getParentURI();
 
-    String sql = "INSERT INTO " + CDODBSchema.PACKAGES + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO " + CDODBSchema.PACKAGES + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     DBUtil.trace(sql);
     PreparedStatement pstmt = null;
 
@@ -115,6 +116,7 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
       pstmt.setBoolean(5, dynamic);
       pstmt.setLong(6, lowerBound);
       pstmt.setLong(7, upperBound);
+      pstmt.setString(8, parentURI);
 
       if (pstmt.execute())
       {

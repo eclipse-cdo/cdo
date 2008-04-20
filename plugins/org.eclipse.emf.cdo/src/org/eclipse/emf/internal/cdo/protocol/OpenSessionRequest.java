@@ -112,12 +112,14 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
 
       boolean dynamic = in.readBoolean();
       CDOIDMetaRange metaIDRange = CDOIDUtil.readMetaRange(in);
+      String parentURI = in.readString();
       if (PROTOCOL.isEnabled())
       {
-        PROTOCOL.format("Read package info: uri={0}, dynamic={1}, metaIDRange={2}", packageURI, dynamic, metaIDRange);
+        PROTOCOL.format("Read package info: uri={0}, dynamic={1}, metaIDRange={2}, parentURI={3}", packageURI, dynamic,
+            metaIDRange, parentURI);
       }
 
-      result.addPackageInfo(packageURI, dynamic, metaIDRange);
+      result.addPackageInfo(packageURI, dynamic, metaIDRange, parentURI);
     }
 
     return result;

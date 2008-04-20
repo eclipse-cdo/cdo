@@ -57,8 +57,8 @@ public final class OpenSessionResult
     return packageInfos;
   }
 
-  void addPackageInfo(String packageURI, boolean dynamic, CDOIDMetaRange metaIDRange)
+  void addPackageInfo(String packageURI, boolean dynamic, CDOIDMetaRange metaIDRange, String parentURI)
   {
-    packageInfos.add(new CDOPackageInfo(packageURI, dynamic, metaIDRange));
+    packageInfos.add(new CDOPackageInfo(packageURI, dynamic, metaIDRange, parentURI));
   }
 }

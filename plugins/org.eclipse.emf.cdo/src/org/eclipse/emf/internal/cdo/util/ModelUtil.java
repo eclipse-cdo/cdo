@@ -57,6 +57,13 @@ public final class ModelUtil
   {
   }
 
+  public static String getParentURI(EPackage ePackage)
+  {
+    EPackage superPackage = ePackage.getESuperPackage();
+    String parentURI = superPackage == null ? null : superPackage.getNsURI();
+    return parentURI;
+  }
+
   public static CDOType getCDOType(EStructuralFeature eFeature)
   {
     if (eFeature instanceof EReference)
@@ -151,20 +158,15 @@ public final class ModelUtil
   private static CDOPackage createCDOPackage(EPackage ePackage, CDOSessionPackageManagerImpl packageManager)
   {
     String packageURI = ePackage.getNsURI();
+    String parentURI = getParentURI(ePackage);
     String name = ePackage.getName();
     boolean dynamic = EMFUtil.isDynamicEPackage(ePackage);
-    // String ecore = dynamic ? EMFUtil.ePackageToString(ePackage) : null;
-    // TODO Serialize EcorePackage.eINSTANCE, too
-    // Current problem with EcorePackage.eINSTANCE is mutual modification of
-    // certain Ecore features (see newsgroup thread "eGenericSuperTypes" and
-    // EMFUtil.getPersistentFeatures()
-
-    String ecore = EcorePackage.eINSTANCE.getNsURI().equals(packageURI) ? null : EMFUtil.ePackageToString(ePackage,
-        packageManager.getSession().getPackageRegistry());
-    // String ecore = EMFUtil.ePackageToString(ePackage);
+    String ecore = parentURI == null || EcorePackage.eINSTANCE.getNsURI().equals(packageURI) ? null : EMFUtil
+        .ePackageToString(ePackage, packageManager.getSession().getPackageRegistry());
     CDOIDMetaRange idRange = packageManager.getSession().registerEPackage(ePackage);
 
-    CDOPackage cdoPackage = CDOModelUtil.createPackage(packageManager, packageURI, name, ecore, dynamic, idRange);
+    CDOPackage cdoPackage = CDOModelUtil.createPackage(packageManager, packageURI, name, ecore, dynamic, idRange,
+        parentURI);
     initializeCDOPackage(ePackage, cdoPackage);
     return cdoPackage;
   }

@@ -94,8 +94,9 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
       String packageURI = info.getPackageURI();
       boolean dynamic = info.isDynamic();
       CDOIDMetaRange metaIDRange = info.getMetaIDRange();
+      String parentURI = info.getParentURI();
 
-      CDOPackage proxy = CDOModelUtil.createProxyPackage(this, packageURI, dynamic, metaIDRange);
+      CDOPackage proxy = CDOModelUtil.createProxyPackage(this, packageURI, dynamic, metaIDRange, parentURI);
       addPackage(proxy);
       session.getPackageRegistry().putPackageDescriptor(proxy);
     }

@@ -15,7 +15,10 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
+
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
@@ -31,6 +34,8 @@ import java.util.Map;
  */
 public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOPackageRegistry
 {
+  private final ContextTracer TRACER = new ContextTracer(OM.DEBUG_MODEL, CDOPackageRegistryImpl.class);
+
   private static final long serialVersionUID = 1L;
 
   private CDOSessionImpl session;
@@ -55,14 +60,59 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   {
     EPackage.Descriptor descriptor = new CDOPackageDescriptor(cdoPackage);
     String uri = cdoPackage.getPackageURI();
+    checkUnregistered(uri);
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Registering package descriptor for {0}", uri);
+    }
+
     put(uri, descriptor);
   }
 
   public EPackage putEPackage(EPackage ePackage)
   {
+    checkUnregistered(ePackage);
+    putEPackageChecked(ePackage);
+    return getEPackage(ePackage.getNsURI());
+  }
+
+  private void putEPackageChecked(EPackage ePackage)
+  {
     String uri = ePackage.getNsURI();
-    put(uri, ePackage);
-    return getEPackage(uri);
+    if (uri != null)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Registering package for {0}", uri);
+      }
+
+      put(uri, ePackage);
+    }
+
+    for (EPackage subPackage : ePackage.getESubpackages())
+    {
+      putEPackageChecked(subPackage);
+    }
+  }
+
+  private void checkUnregistered(EPackage ePackage)
+  {
+    String uri = ePackage.getNsURI();
+    checkUnregistered(uri);
+
+    for (EPackage subPackage : ePackage.getESubpackages())
+    {
+      checkUnregistered(subPackage);
+    }
+  }
+
+  private void checkUnregistered(String uri)
+  {
+    if (uri != null && containsKey(uri))
+    {
+      throw new IllegalStateException("Package already registered for " + uri);
+    }
   }
 
   @Override

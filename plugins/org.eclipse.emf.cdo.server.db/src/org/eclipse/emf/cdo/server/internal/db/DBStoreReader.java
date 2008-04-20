@@ -81,13 +81,15 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
         long upperBound = (Long)values[3];
         CDOIDMetaRange metaIDRange = lowerBound == 0 ? null : CDOIDUtil.createMetaRange(new CDOIDMetaImpl(lowerBound),
             (int)(upperBound - lowerBound) + 1);
-        result.add(new CDOPackageInfo(packageURI, dynamic, metaIDRange));
+        String parentURI = (String)values[4];
+
+        result.add(new CDOPackageInfo(packageURI, dynamic, metaIDRange, parentURI));
         return true;
       }
     };
 
     DBUtil.select(getConnection(), rowHandler, CDODBSchema.PACKAGES_URI, CDODBSchema.PACKAGES_DYNAMIC,
-        CDODBSchema.PACKAGES_RANGE_LB, CDODBSchema.PACKAGES_RANGE_UB);
+        CDODBSchema.PACKAGES_RANGE_LB, CDODBSchema.PACKAGES_RANGE_UB, CDODBSchema.PACKAGES_PARENT);
     return result;
   }
 

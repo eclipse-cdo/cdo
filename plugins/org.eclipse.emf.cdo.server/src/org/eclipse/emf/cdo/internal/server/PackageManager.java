@@ -72,7 +72,8 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
       Collection<CDOPackageInfo> packageInfos = storeReader.readPackageInfos();
       for (CDOPackageInfo info : packageInfos)
       {
-        addPackage(CDOModelUtil.createProxyPackage(this, info.getPackageURI(), info.isDynamic(), info.getMetaIDRange()));
+        addPackage(CDOModelUtil.createProxyPackage(this, info.getPackageURI(), info.isDynamic(), info.getMetaIDRange(),
+            info.getParentURI()));
       }
     }
     finally

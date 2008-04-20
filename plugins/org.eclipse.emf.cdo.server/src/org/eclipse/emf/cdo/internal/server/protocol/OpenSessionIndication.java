@@ -83,7 +83,7 @@ public class OpenSessionIndication extends IndicationWithResponse
       writeSessionID(out, session);
       writeRepositoryUUID(out, repository);
       repository.getStore().getCDOIDLibraryDescriptor().write(out);
-      writePackageURIs(out, repository.getPackageManager());
+      writePackages(out, repository.getPackageManager());
     }
     catch (RepositoryNotFoundException ex)
     {
@@ -140,7 +140,7 @@ public class OpenSessionIndication extends IndicationWithResponse
     out.writeString(repository.getUUID());
   }
 
-  private void writePackageURIs(ExtendedDataOutputStream out, PackageManager packageManager) throws IOException
+  private void writePackages(ExtendedDataOutputStream out, PackageManager packageManager) throws IOException
   {
     CDOPackage[] packages = packageManager.getPackages();
     for (CDOPackage p : packages)
@@ -149,13 +149,14 @@ public class OpenSessionIndication extends IndicationWithResponse
       {
         if (PROTOCOL.isEnabled())
         {
-          PROTOCOL.format("Writing package info: uri={0}, dynamic={1}, metaIDRange={2}", p.getPackageURI(), p
-              .isDynamic(), p.getMetaIDRange());
+          PROTOCOL.format("Writing package info: uri={0}, dynamic={1}, metaIDRange={2}, parentURI={3}", p
+              .getPackageURI(), p.isDynamic(), p.getMetaIDRange(), p.getParentURI());
         }
 
         out.writeString(p.getPackageURI());
         out.writeBoolean(p.isDynamic());
         CDOIDUtil.writeMetaRange(out, p.getMetaIDRange());
+        out.writeString(p.getParentURI());
       }
     }
 

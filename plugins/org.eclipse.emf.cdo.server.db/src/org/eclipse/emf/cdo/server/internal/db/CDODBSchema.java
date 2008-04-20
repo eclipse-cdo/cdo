@@ -75,6 +75,9 @@ public class CDODBSchema extends DBSchema
   public static final IDBField PACKAGES_RANGE_UB = //
   PACKAGES.addField("range_ub", DBType.BIGINT);
 
+  public static final IDBField PACKAGES_PARENT = //
+  PACKAGES.addField("parent", DBType.VARCHAR, 255);
+
   public static final IDBIndex INDEX_PACKAGES_PK = //
   PACKAGES.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGES_ID);
 

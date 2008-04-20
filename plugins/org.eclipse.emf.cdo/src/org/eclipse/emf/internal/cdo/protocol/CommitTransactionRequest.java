@@ -81,6 +81,11 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
     for (CDOPackage newPackage : newPackages)
     {
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Writing package {0}", newPackage);
+      }
+
       CDOModelUtil.writePackage(out, newPackage);
     }
 

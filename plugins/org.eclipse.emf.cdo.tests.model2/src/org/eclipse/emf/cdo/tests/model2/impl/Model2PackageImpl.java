@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2PackageImpl.java,v 1.2 2008-04-07 08:28:21 estepper Exp $
+ * $Id: Model2PackageImpl.java,v 1.3 2008-04-20 08:22:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -124,6 +125,16 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * 
    * @generated
    */
+  public EReference getSpecialPurchaseOrder_ShippingAddress()
+  {
+    return (EReference)specialPurchaseOrderEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public Model2Factory getModel2Factory()
   {
     return (Model2Factory)getEFactoryInstance();
@@ -150,6 +161,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     // Create classes and their features
     specialPurchaseOrderEClass = createEClass(SPECIAL_PURCHASE_ORDER);
     createEAttribute(specialPurchaseOrderEClass, SPECIAL_PURCHASE_ORDER__DISCOUNT_CODE);
+    createEReference(specialPurchaseOrderEClass, SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS);
   }
 
   /**
@@ -191,6 +203,9 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     initEAttribute(getSpecialPurchaseOrder_DiscountCode(), ecorePackage.getEString(), "discountCode", null, 0, 1,
         SpecialPurchaseOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+    initEReference(getSpecialPurchaseOrder_ShippingAddress(), theModel1Package.getAddress(), null, "shippingAddress",
+        null, 0, 1, SpecialPurchaseOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

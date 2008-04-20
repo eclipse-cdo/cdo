@@ -2,10 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SpecialPurchaseOrder.java,v 1.2 2008-04-07 08:28:21 estepper Exp $
+ * $Id: SpecialPurchaseOrder.java,v 1.3 2008-04-20 08:22:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2;
 
+import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 
 /**
@@ -15,6 +16,7 @@ import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
  * The following features are supported:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getDiscountCode <em>Discount Code</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getShippingAddress <em>Shipping Address</em>}</li>
  * </ul>
  * </p>
  * 
@@ -50,5 +52,32 @@ public interface SpecialPurchaseOrder extends PurchaseOrder
    * @generated
    */
   void setDiscountCode(String value);
+
+  /**
+   * Returns the value of the '<em><b>Shipping Address</b></em>' containment reference. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Shipping Address</em>' containment reference isn't clear, there really should be
+   * more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Shipping Address</em>' containment reference.
+   * @see #setShippingAddress(Address)
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getSpecialPurchaseOrder_ShippingAddress()
+   * @model containment="true"
+   * @generated
+   */
+  Address getShippingAddress();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getShippingAddress <em>Shipping Address</em>}'
+   * containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Shipping Address</em>' containment reference.
+   * @see #getShippingAddress()
+   * @generated
+   */
+  void setShippingAddress(Address value);
 
 } // SpecialPurchaseOrder

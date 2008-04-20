@@ -2,10 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SpecialPurchaseOrderImpl.java,v 1.2 2008-04-07 08:28:21 estepper Exp $
+ * $Id: SpecialPurchaseOrderImpl.java,v 1.3 2008-04-20 08:22:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
+import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.impl.PurchaseOrderImpl;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
@@ -19,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.SpecialPurchaseOrderImpl#getDiscountCode <em>Discount Code</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.SpecialPurchaseOrderImpl#getShippingAddress <em>Shipping Address</em>}</li>
  * </ul>
  * </p>
  * 
@@ -65,6 +67,26 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
   public void setDiscountCode(String newDiscountCode)
   {
     eSet(Model2Package.Literals.SPECIAL_PURCHASE_ORDER__DISCOUNT_CODE, newDiscountCode);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Address getShippingAddress()
+  {
+    return (Address)eGet(Model2Package.Literals.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, true);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setShippingAddress(Address newShippingAddress)
+  {
+    eSet(Model2Package.Literals.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, newShippingAddress);
   }
 
 } // SpecialPurchaseOrderImpl

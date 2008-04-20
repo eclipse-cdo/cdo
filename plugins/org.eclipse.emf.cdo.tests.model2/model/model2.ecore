@@ -5,5 +5,7 @@
     nsURI="http://www.eclipse.org/emf/CDO/tests/model2/1.0.0" nsPrefix="model2">
   <eClassifiers xsi:type="ecore:EClass" name="SpecialPurchaseOrder" eSuperTypes="../../org.eclipse.emf.cdo.tests.model1/model/model1.ecore#//PurchaseOrder">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="discountCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="shippingAddress" eType="ecore:EClass ../../org.eclipse.emf.cdo.tests.model1/model/model1.ecore#//Address"
+        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

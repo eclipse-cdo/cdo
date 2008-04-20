@@ -376,12 +376,9 @@ public final class CDOStore implements EStore
         ((CDOReferenceProxy)oldValue).resolve();
       }
 
-      if (cdoFeature.isContainment())
+      if (cdoFeature.isContainment() && value != null)
       {
-        if (value != null)
-        {
-          handleContainmentAdd(cdoObject, value);
-        }
+        handleContainmentAdd(cdoObject, value);
       }
     }
 
@@ -390,7 +387,7 @@ public final class CDOStore implements EStore
     if (cdoFeature.isReference())
     {
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
-      if (result != null && cdoFeature.isContainment())
+      if (cdoFeature.isContainment() && result != null)
       {
         handleContainmentRemove(cdoObject, value);
       }
@@ -425,7 +422,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      if (cdoFeature.isContainment())
+      if (cdoFeature.isContainment() && value != null)
       {
         handleContainmentAdd(cdoObject, value);
       }
@@ -458,7 +455,7 @@ public final class CDOStore implements EStore
       }
 
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
-      if (cdoFeature.isContainment())
+      if (cdoFeature.isContainment() && result != null)
       {
         handleContainmentRemove(cdoObject, result);
       }

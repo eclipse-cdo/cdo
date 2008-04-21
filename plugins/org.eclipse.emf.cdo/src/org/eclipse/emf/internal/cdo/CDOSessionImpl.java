@@ -451,8 +451,15 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       TRACER.format("Registering meta instance: {0} <-> {1}", id, metaInstance);
     }
 
-    idToMetaInstanceMap.put(id, metaInstance);
-    metaInstanceToIDMap.put(metaInstance, id);
+    if (idToMetaInstanceMap.put(id, metaInstance) != null)
+    {
+      throw new IllegalStateException("Duplicate meta ID: " + id + " --> " + metaInstance);
+    }
+
+    if (metaInstanceToIDMap.put(metaInstance, id) != null)
+    {
+      throw new IllegalStateException("Duplicate metaInstance: " + metaInstance + " --> " + id);
+    }
 
     for (EObject content : metaInstance.eContents())
     {

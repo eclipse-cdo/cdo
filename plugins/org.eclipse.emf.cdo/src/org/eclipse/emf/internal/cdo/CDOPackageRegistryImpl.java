@@ -96,21 +96,25 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   @Override
   public Object put(String key, Object value)
   {
-    if (TRACER.isEnabled())
+    if (value instanceof EPackage)
     {
-      TRACER.format("Registering package for {0}", key);
-    }
-
-    if (value instanceof EPackageImpl)
-    {
-      EPackageImpl ePackage = (EPackageImpl)value;
-      if (EMFUtil.isDynamicEPackage(ePackage))
+      if (TRACER.isEnabled())
       {
-        ModelUtil.prepareEPackage(ePackage);
+        TRACER.format("Registering package for {0}", key);
       }
 
+      if (value instanceof EPackageImpl)
+      {
+        EPackageImpl ePackage = (EPackageImpl)value;
+        if (EMFUtil.isDynamicEPackage(ePackage))
+        {
+          ModelUtil.prepareEPackage(ePackage);
+        }
+      }
+
+      EPackage ePackage = (EPackage)value;
       CDOPackage cdoPackage = ModelUtil.getCDOPackage(ePackage, session.getPackageManager());
-      ((InternalCDOPackage)cdoPackage).setPersistent(!cdoPackage.getMetaIDRange().isTemporary());
+      ((InternalCDOPackage)cdoPackage).setPersistent(!cdoPackage.getTopLevelPackage().getMetaIDRange().isTemporary());
     }
 
     return super.put(key, value);

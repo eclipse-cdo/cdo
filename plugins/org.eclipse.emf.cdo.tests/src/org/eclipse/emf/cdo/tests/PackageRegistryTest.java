@@ -150,9 +150,13 @@ public class PackageRegistryTest extends AbstractCDOTest
     res.getContents().add(class1);
     transaction.commit();
 
-    String nsURI = Model3Package.eINSTANCE.getNsURI();
-    CDOPackage model3Package = session.getPackageManager().lookupPackage(nsURI);
+    CDOPackage model3Package = session.getPackageManager().lookupPackage(Model3Package.eINSTANCE.getNsURI());
     assertEquals(8, model3Package.getMetaIDRange().size());
+    assertNotNull(model3Package.getEcore());
+
+    CDOPackage subPackage = session.getPackageManager().lookupPackage(SubpackagePackage.eINSTANCE.getNsURI());
+    assertNull(subPackage.getMetaIDRange());
+    assertNull(subPackage.getEcore());
   }
 
   public void testCommitCircularPackages() throws Exception

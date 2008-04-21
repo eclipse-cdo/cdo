@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.CDOPackageRegistryImpl;
+import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
@@ -62,6 +63,12 @@ public final class ModelUtil
     EPackage superPackage = ePackage.getESuperPackage();
     String parentURI = superPackage == null ? null : superPackage.getNsURI();
     return parentURI;
+  }
+
+  public static EPackage getTopLevelPackage(EPackage ePackage)
+  {
+    EPackage superPackage = ePackage.getESuperPackage();
+    return superPackage == null ? ePackage : getTopLevelPackage(superPackage);
   }
 
   public static CDOType getCDOType(EStructuralFeature eFeature)
@@ -132,8 +139,16 @@ public final class ModelUtil
     CDOPackage cdoPackage = packageManager.lookupPackage(packageURI);
     if (cdoPackage == null)
     {
-      cdoPackage = createCDOPackage(ePackage, packageManager);
-      packageManager.addPackage(cdoPackage);
+      EPackage topLevelPackage = getTopLevelPackage(ePackage);
+      if (topLevelPackage != ePackage)
+      {
+        getCDOPackage(topLevelPackage, packageManager);
+        cdoPackage = packageManager.lookupPackage(packageURI);
+      }
+      else
+      {
+        cdoPackage = addCDOPackage(topLevelPackage, packageManager);
+      }
     }
 
     return cdoPackage;
@@ -151,22 +166,44 @@ public final class ModelUtil
     return cdoClass.lookupFeature(eFeature.getFeatureID());
   }
 
+  private static CDOPackage addCDOPackage(EPackage ePackage, CDOSessionPackageManagerImpl packageManager)
+  {
+    CDOPackage cdoPackage = createCDOPackage(ePackage, packageManager);
+    packageManager.addPackage(cdoPackage);
+
+    for (EPackage subPackage : ePackage.getESubpackages())
+    {
+      addCDOPackage(subPackage, packageManager);
+    }
+
+    return cdoPackage;
+  }
+
   /**
    * @see EMFUtil#getPersistentFeatures(org.eclipse.emf.common.util.EList)
    * @see http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
    */
   private static CDOPackage createCDOPackage(EPackage ePackage, CDOSessionPackageManagerImpl packageManager)
   {
-    String packageURI = ePackage.getNsURI();
+    CDOSessionImpl session = packageManager.getSession();
+    String uri = ePackage.getNsURI();
     String parentURI = getParentURI(ePackage);
     String name = ePackage.getName();
     boolean dynamic = EMFUtil.isDynamicEPackage(ePackage);
-    String ecore = parentURI == null || EcorePackage.eINSTANCE.getNsURI().equals(packageURI) ? null : EMFUtil
-        .ePackageToString(ePackage, packageManager.getSession().getPackageRegistry());
-    CDOIDMetaRange idRange = packageManager.getSession().registerEPackage(ePackage);
+    String ecore = null;
+    CDOIDMetaRange idRange = null;
 
-    CDOPackage cdoPackage = CDOModelUtil.createPackage(packageManager, packageURI, name, ecore, dynamic, idRange,
-        parentURI);
+    if (parentURI == null)
+    {
+      if (!EcorePackage.eINSTANCE.getNsURI().equals(uri))
+      {
+        ecore = EMFUtil.ePackageToString(ePackage, session.getPackageRegistry());
+      }
+
+      idRange = session.registerEPackage(ePackage);
+    }
+
+    CDOPackage cdoPackage = CDOModelUtil.createPackage(packageManager, uri, name, ecore, dynamic, idRange, parentURI);
     initializeCDOPackage(ePackage, cdoPackage);
     return cdoPackage;
   }

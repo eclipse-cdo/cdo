@@ -22,8 +22,7 @@ public interface CDOPackageRegistry extends EPackage.Registry
    * 
    * @param ePackage
    *          a top level EPackage (i.e. a package with <code>eSuperPackage == null</code>).
-   * @return the package that was previously registered under the <code>nsURI</code> of the top level package or
-   *         <code>null</code>.
+   * @return the package that is registered under the <code>nsURI</code> of the top level package or <code>null</code>.
    */
   public EPackage putEPackage(EPackage ePackage);
 }

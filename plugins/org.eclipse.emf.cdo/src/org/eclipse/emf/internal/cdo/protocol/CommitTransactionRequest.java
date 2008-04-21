@@ -130,15 +130,18 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     List<CDOPackage> newPackages = transaction.getNewPackages();
     for (CDOPackage newPackage : newPackages)
     {
-      CDOIDMetaRange oldRange = newPackage.getMetaIDRange();
-      CDOIDMetaRange newRange = CDOIDUtil.readMetaRange(in);
-      ((InternalCDOPackage)newPackage).setMetaIDRange(newRange);
-      for (int i = 0; i < oldRange.size(); i++)
+      if (newPackage.getParentURI() == null)
       {
-        CDOIDTemp oldID = (CDOIDTemp)oldRange.get(i);
-        CDOID newID = newRange.get(i);
-        session.remapMetaInstance(oldID, newID);
-        result.addIDMapping(oldID, newID);
+        CDOIDMetaRange oldRange = newPackage.getMetaIDRange();
+        CDOIDMetaRange newRange = CDOIDUtil.readMetaRange(in);
+        ((InternalCDOPackage)newPackage).setMetaIDRange(newRange);
+        for (int i = 0; i < oldRange.size(); i++)
+        {
+          CDOIDTemp oldID = (CDOIDTemp)oldRange.get(i);
+          CDOID newID = newRange.get(i);
+          session.remapMetaInstance(oldID, newID);
+          result.addIDMapping(oldID, newID);
+        }
       }
     }
 

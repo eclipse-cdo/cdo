@@ -404,11 +404,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       }
     }
 
-    // Calculate the packages of the used classes
+    // Calculate the top level packages of the used classes
     Set<EPackage> usedPackages = new HashSet<EPackage>();
     for (EClass usedClass : usedClasses)
     {
-      usedPackages.add(usedClass.getEPackage());
+      EPackage topLevelPackage = ModelUtil.getTopLevelPackage(usedClass.getEPackage());
+      usedPackages.add(topLevelPackage);
     }
 
     // Determine which of the used packages are new
@@ -425,6 +426,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       if (!cdoPackage.isPersistent() && !cdoPackage.isSystem())
       {
         newPackages.add(cdoPackage);
+        CDOPackage[] subPackages = cdoPackage.getSubPackages(true);
+        for (CDOPackage subPackage : subPackages)
+        {
+          newPackages.add(subPackage);
+        }
       }
     }
 

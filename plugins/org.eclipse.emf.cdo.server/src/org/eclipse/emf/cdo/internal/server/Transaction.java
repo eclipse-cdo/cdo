@@ -240,7 +240,10 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
   {
     for (CDOPackage newPackage : newPackages)
     {
-      adjustMetaRange(newPackage);
+      if (newPackage.getParentURI() == null)
+      {
+        adjustMetaRange(newPackage);
+      }
     }
   }
 

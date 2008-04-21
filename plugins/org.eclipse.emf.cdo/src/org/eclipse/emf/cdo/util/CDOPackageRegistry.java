@@ -17,5 +17,13 @@ import org.eclipse.emf.ecore.EPackage;
  */
 public interface CDOPackageRegistry extends EPackage.Registry
 {
+  /**
+   * Registers a top level {@link EPackage} and its sub packages with this package registry.
+   * 
+   * @param ePackage
+   *          a top level EPackage (i.e. a package with <code>eSuperPackage == null</code>).
+   * @return the package that was previously registered under the <code>nsURI</code> of the top level package or
+   *         <code>null</code>.
+   */
   public EPackage putEPackage(EPackage ePackage);
 }

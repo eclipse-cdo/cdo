@@ -60,8 +60,6 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   {
     EPackage.Descriptor descriptor = new CDOPackageDescriptor(cdoPackage);
     String uri = cdoPackage.getPackageURI();
-    checkUnregistered(uri);
-
     if (TRACER.isEnabled())
     {
       TRACER.format("Registering package descriptor for {0}", uri);
@@ -72,56 +70,35 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
 
   public EPackage putEPackage(EPackage ePackage)
   {
-    checkUnregistered(ePackage);
-    putEPackageChecked(ePackage);
-    return getEPackage(ePackage.getNsURI());
+    String uri = ePackage.getNsURI();
+    if (ePackage.getESuperPackage() != null)
+    {
+      throw new IllegalArgumentException("Not a top level package: " + uri);
+    }
+
+    putEPackage(uri, ePackage);
+    return getEPackage(uri);
   }
 
-  private void putEPackageChecked(EPackage ePackage)
+  private void putEPackage(String uri, EPackage ePackage)
   {
-    String uri = ePackage.getNsURI();
     if (uri != null)
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Registering package for {0}", uri);
-      }
-
       put(uri, ePackage);
     }
 
     for (EPackage subPackage : ePackage.getESubpackages())
     {
-      putEPackageChecked(subPackage);
-    }
-  }
-
-  private void checkUnregistered(EPackage ePackage)
-  {
-    String uri = ePackage.getNsURI();
-    checkUnregistered(uri);
-
-    for (EPackage subPackage : ePackage.getESubpackages())
-    {
-      checkUnregistered(subPackage);
-    }
-  }
-
-  private void checkUnregistered(String uri)
-  {
-    if (uri != null && containsKey(uri))
-    {
-      throw new IllegalStateException("Package already registered for " + uri);
+      putEPackage(subPackage.getNsURI(), subPackage);
     }
   }
 
   @Override
   public Object put(String key, Object value)
   {
-    Object oldValue = super.get(key);
-    if (oldValue instanceof EPackageImpl)
+    if (TRACER.isEnabled())
     {
-      throw new IllegalArgumentException("Duplicate key: " + key);
+      TRACER.format("Registering package for {0}", key);
     }
 
     if (value instanceof EPackageImpl)

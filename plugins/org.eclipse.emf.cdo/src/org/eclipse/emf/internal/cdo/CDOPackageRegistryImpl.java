@@ -11,6 +11,7 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
+import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.EMFUtil;
@@ -147,7 +148,12 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     public EPackage getEPackage()
     {
       EPackage ePackage = ModelUtil.createEPackage(cdoPackage);
-      session.registerEPackage(ePackage, cdoPackage.getMetaIDRange());
+      CDOIDMetaRange idRange = cdoPackage.getMetaIDRange();
+      if (idRange != null)
+      {
+        session.registerEPackage(ePackage, idRange);
+      }
+
       return ePackage;
     }
 

@@ -28,6 +28,8 @@ import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
+import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
+import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory;
 import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -184,6 +186,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOPackage subPackage = session.getPackageManager().lookupPackage(SubpackagePackage.eINSTANCE.getNsURI());
       assertNull(subPackage.getMetaIDRange());
       assertNull(subPackage.getEcore());
+      session.close();
     }
   }
 
@@ -193,19 +196,38 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
       session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res1 = transaction.createResource("/res1");
+      CDOResource res2 = transaction.createResource("/res2");
 
       Class1 class1 = Model3Factory.eINSTANCE.createClass1();
-      res.getContents().add(class1);
+      Class2 class2 = SubpackageFactory.eINSTANCE.createClass2();
+      class1.getClass2().add(class2);
+
+      res1.getContents().add(class1);
+      res2.getContents().add(class2);
       transaction.commit();
+      session.close();
     }
 
     {
       CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+      CDOResource res1 = transaction.getResource("/res1");
 
-      Class1 class1 = (Class1)res.getContents().get(0);
+      Class1 class1 = (Class1)res1.getContents().get(0);
+      assertNotNull(class1);
+      Class2 class2 = class1.getClass2().get(0);
+      assertNotNull(class2);
+    }
+
+    {
+      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res2 = transaction.getResource("/res2");
+
+      Class2 class2 = (Class2)res2.getContents().get(0);
+      assertNotNull(class2);
+      Class1 class1 = class2.getClass1().get(0);
       assertNotNull(class1);
     }
   }

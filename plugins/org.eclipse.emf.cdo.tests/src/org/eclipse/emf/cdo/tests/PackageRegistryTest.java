@@ -137,9 +137,9 @@ public class PackageRegistryTest extends AbstractCDOTest
     try
     {
       session.getPackageRegistry().putEPackage(SubpackagePackage.eINSTANCE);
-      fail("IllegalStateException expected");
+      fail("IllegalArgumentException expected");
     }
-    catch (IllegalStateException success)
+    catch (IllegalArgumentException success)
     {
     }
 

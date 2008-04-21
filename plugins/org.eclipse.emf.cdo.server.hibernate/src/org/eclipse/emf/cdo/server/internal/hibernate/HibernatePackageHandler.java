@@ -196,8 +196,8 @@ public class HibernatePackageHandler
         {
           CDOPackage cdoPackage = (CDOPackage)object;
           TRACER.trace("Read CDOPackage: " + cdoPackage.getName());
-          result
-              .add(new CDOPackageInfo(cdoPackage.getPackageURI(), cdoPackage.isDynamic(), cdoPackage.getMetaIDRange()));
+          result.add(new CDOPackageInfo(cdoPackage.getPackageURI(), cdoPackage.isDynamic(),
+              cdoPackage.getMetaIDRange(), cdoPackage.getParentURI()));
           ((InternalCDOPackage)cdoPackage).setPackageManager(hibernateStore.getRepository().getPackageManager());
           resultPackages.add(cdoPackage);
 

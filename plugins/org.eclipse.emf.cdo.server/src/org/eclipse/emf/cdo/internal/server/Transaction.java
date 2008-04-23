@@ -80,7 +80,6 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
     repository = session.getSessionManager().getRepository();
     repositoryPackageManager = repository.getPackageManager();
     packageManager = new TransactionPackageManager();
-
   }
 
   public int getTransactionID()

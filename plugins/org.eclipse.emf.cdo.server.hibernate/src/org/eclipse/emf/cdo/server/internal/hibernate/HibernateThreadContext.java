@@ -72,6 +72,11 @@ public class HibernateThreadContext
     return result;
   }
 
+  public static boolean isCommitContextSet()
+  {
+    return commitContext.get() != null;
+  }
+
   public static void setCommitContext(CommitContext newCommitContext)
   {
     if (newCommitContext != null && commitContext.get() != null)

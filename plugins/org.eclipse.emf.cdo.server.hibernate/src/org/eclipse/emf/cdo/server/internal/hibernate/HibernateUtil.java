@@ -10,7 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.internal.protocol.id.CDOIDNullImpl;
+import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
@@ -84,6 +86,20 @@ public class HibernateUtil
           + " does not have a hibernate cdoid after saving/updating it");
     }
     return (CDOIDHibernate)cdoRevision.getID();
+  }
+
+  public InternalCDORevision getCDORevision(Object target)
+  {
+    final InternalCDORevision revision;
+    if (target instanceof CDOObject)
+    {
+      revision = (InternalCDORevision)((CDOObject)target).cdoRevision();
+    }
+    else
+    {
+      revision = (InternalCDORevision)target;
+    }
+    return revision;
   }
 
   /**

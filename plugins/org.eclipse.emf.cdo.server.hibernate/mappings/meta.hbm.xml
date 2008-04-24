@@ -63,7 +63,9 @@
 		<property name="featureID" column="feature" type="int" not-null="true" />
 		<property name="type" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOTypeUserType"
 			not-null="false" />
-		<many-to-one name="referenceType" class="CDOClassImpl" column="reftype" not-null="false" cascade="persist, merge, save-update, evict, replicate, lock, refresh"/>
+		<many-to-one name="referenceType" class="CDOClassImpl" column="reftype" not-null="false" 
+			cascade="persist, merge, save-update, evict, replicate, lock, refresh"
+			access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOFeatureReferenceTypePropertyHandler"/>
 		<property name="many" type="boolean" not-null="true" />
 		<property name="containment" type="boolean" not-null="false" />
 	</joined-subclass>

@@ -32,6 +32,8 @@ import java.util.Properties;
  */
 public class HbStoreRepositoryProvider extends StoreRepositoryProvider
 {
+  public static final String MAPPING_FILE = "mappingfile";
+
   private static HbStoreRepositoryProvider instance = new HbStoreRepositoryProvider();
 
   public static HbStoreRepositoryProvider getInstance()
@@ -86,7 +88,7 @@ public class HbStoreRepositoryProvider extends StoreRepositoryProvider
   {
     IHibernateMappingProvider mappingProvider = new TeneoHibernateMappingProvider();
     // return new HibernateStore(props, mappingProvider);
-    // IHibernateMappingProvider mappingProvider = new HibernateFileMappingProvider("/mappings/product.hbm.xml");
+    // IHibernateMappingProvider mappingProvider = new CDOInterceptor("/mappings/product.hbm.xml");
     return new HibernateStore(mappingProvider);
   }
 

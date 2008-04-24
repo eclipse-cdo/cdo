@@ -13,10 +13,10 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.tuple.Instantiator;
@@ -37,8 +37,8 @@ public class CDORevisionInstantiator implements Instantiator
   public CDORevisionInstantiator(CDORevisionTuplizer tuplizer, PersistentClass mappingInfo)
   {
     cdoClass = tuplizer.getCDOClass();
-    IPackageManager packageManager = (IPackageManager)cdoClass.getPackageManager();
-    IRepository repository = packageManager.getRepository();
+    final HibernateStore hbStore = HibernateStore.getCurrentHibernateStore();
+    IRepository repository = hbStore.getRepository();
     revisionManager = repository.getRevisionManager();
   }
 

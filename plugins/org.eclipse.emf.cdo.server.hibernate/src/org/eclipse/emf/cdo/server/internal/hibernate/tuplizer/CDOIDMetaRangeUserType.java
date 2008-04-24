@@ -52,6 +52,10 @@ public class CDOIDMetaRangeUserType implements UserType
 
   public Object deepCopy(Object value)
   {
+    if (value == null)
+    {
+      return null;
+    }
     final CDOIDMetaRange cdoRange = (CDOIDMetaRange)value;
     final CDOIDMeta newCdoIDMeta = new CDOIDMetaImpl(((CDOIDMetaImpl)cdoRange.getLowerBound()).getLongValue());
     return new CDOIDMetaRangeImpl(newCdoIDMeta, cdoRange.size());

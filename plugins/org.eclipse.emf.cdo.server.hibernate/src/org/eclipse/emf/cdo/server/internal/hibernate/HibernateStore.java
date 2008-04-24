@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOInterceptor;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.WrappedException;
@@ -29,7 +30,6 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
 import java.io.InputStream;
 
@@ -93,6 +93,8 @@ public class HibernateStore extends Store implements IHibernateStore
 
       try
       {
+        initConfiguration();
+
         hibernateSessionFactory = hibernateConfiguration.buildSessionFactory();
       }
       finally
@@ -201,9 +203,6 @@ public class HibernateStore extends Store implements IHibernateStore
 
     // Activate the package store
     packageHandler.doActivate();
-
-    initConfiguration();
-    initSchema();
   }
 
   @Override
@@ -238,8 +237,6 @@ public class HibernateStore extends Store implements IHibernateStore
       }
       hibernateSessionFactory = null;
     }
-    initConfiguration();
-    initSchema();
   }
 
   protected void initConfiguration()
@@ -269,6 +266,8 @@ public class HibernateStore extends Store implements IHibernateStore
       in = OM.BUNDLE.getInputStream("mappings/resource.hbm.xml");
       hibernateConfiguration.addInputStream(in);
 
+      hibernateConfiguration.setInterceptor(new CDOInterceptor());
+
       hibernateConfiguration.setProperties(HibernateUtil.getInstance().getPropertiesFromStore(this));
     }
     catch (Exception ex)
@@ -279,16 +278,6 @@ public class HibernateStore extends Store implements IHibernateStore
     {
       IOUtil.close(in);
     }
-  }
-
-  protected void initSchema()
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Updating db schema for HibernateStore");
-    }
-
-    new SchemaUpdate(hibernateConfiguration).execute(true, true);
   }
 
   public static HibernateStore getCurrentHibernateStore()

@@ -11,13 +11,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOClass;
+import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
 import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOFeature;
 import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
@@ -29,6 +30,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Expression;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
 import java.io.InputStream;
@@ -58,8 +60,6 @@ public class HibernatePackageHandler
 
   private Collection<CDOPackageInfo> cdoPackageInfos = null;
 
-  private Collection<CDOPackage> cdoPackages = null;
-
   private HibernateStore hibernateStore;
 
   /**
@@ -70,9 +70,38 @@ public class HibernatePackageHandler
     hibernateStore = store;
   }
 
+  public List<CDOPackage> getCDOPackages()
+  {
+    final List<CDOPackage> cdoPackages = new ArrayList<CDOPackage>();
+    if (HibernateThreadContext.isCommitContextSet())
+    {
+      final CommitContext cc = HibernateThreadContext.getCommitContext();
+      if (cc instanceof org.eclipse.emf.cdo.internal.server.Transaction)
+      {
+        final org.eclipse.emf.cdo.internal.server.Transaction tx = (org.eclipse.emf.cdo.internal.server.Transaction)cc;
+        for (CDOPackage cdoPackage : tx.getNewPackages())
+        {
+          cdoPackages.add(cdoPackage);
+        }
+      }
+    }
+    for (CDOPackage cdoPackage : hibernateStore.getRepository().getPackageManager().getPackages())
+    {
+      cdoPackages.add(cdoPackage);
+    }
+    for (CDOPackage cdoPackage : cdoPackages)
+    {
+      // force resolve
+      if (cdoPackage.getClassCount() == 0)
+      {
+        TRACER.trace("Returning " + cdoPackage.getPackageURI());
+      }
+    }
+    return cdoPackages;
+  }
+
   public void writePackages(CDOPackage... cdoPackages)
   {
-    readPackages();
     TRACER.trace("Persisting new CDOPackages");
     final Session session = getSessionFactory().openSession();
     final Transaction tx = session.beginTransaction();
@@ -112,17 +141,20 @@ public class HibernatePackageHandler
 
   protected boolean cdoPackageExistsAndIsUnchanged(CDOPackage newCDOPackage)
   {
-    final CDOPackage currentCDOPackage = getCDOPackage(newCDOPackage.getPackageURI());
-    if (currentCDOPackage == null)
+    final CDOPackage[] cdoPackages = hibernateStore.getRepository().getPackageManager().getPackages();
+    for (CDOPackage cdoPackage : cdoPackages)
     {
-      return false;
+      if (cdoPackage.getClassCount() > 0 && cdoPackage.getPackageURI().compareTo(newCDOPackage.getPackageURI()) == 0)
+      {
+        return cdoPackage.getEcore().compareTo(newCDOPackage.getEcore()) == 0;
+      }
     }
-    return currentCDOPackage.getEcore().compareTo(newCDOPackage.getEcore()) == 0;
+
+    return false;
   }
 
   public void writePackage(CDOPackage cdoPackage)
   {
-    readPackages();
     if (cdoPackageExistsAndIsUnchanged(cdoPackage))
     {
       OM.LOG.warn("CDOPackage " + cdoPackage.getPackageURI() + " already exists not persisting it again!");
@@ -151,41 +183,64 @@ public class HibernatePackageHandler
     hibernateStore.reInitialize();
   }
 
-  public CDOPackage getCDOPackage(String uri)
-  {
-    readPackages();
-    TRACER.trace("Getting CDOPackage using uri: " + uri);
-    for (CDOPackage cdoPackage : cdoPackages)
-    {
-      if (cdoPackage.getPackageURI().compareTo(uri) == 0)
-      {
-        TRACER.trace("CDOPackage found");
-        return cdoPackage;
-      }
-    }
-    TRACER.trace("CDOPackage NOT found");
-    return null;
-  }
-
   public Collection<CDOPackageInfo> getCDOPackageInfos()
   {
-    readPackages();
+    readPackageInfos();
     return cdoPackageInfos;
   }
 
-  public Collection<CDOPackage> getCDOPackages()
+  protected void readPackage(CDOPackage cdoPackage)
   {
-    readPackages();
-    return cdoPackages;
+    if (cdoPackage.getClassCount() > 0)
+    { // already initialized go away
+      return;
+    }
+
+    TRACER.trace("Reading CDOPackage with uri " + cdoPackage.getPackageURI() + " from db");
+    Session session = getSessionFactory().openSession();
+    try
+    {
+      Criteria criteria = session.createCriteria(CDOPackage.class);
+      criteria.add(Expression.eq("packageURI", cdoPackage.getPackageURI()));
+      List<?> list = criteria.list();
+      if (list.size() != 1)
+      {
+        throw new IllegalArgumentException("CDOPackage with uri " + cdoPackage.getPackageURI()
+            + " not present in the db");
+      }
+      TRACER.trace("Found " + list.size() + " CDOPackages in DB");
+
+      final CDOPackage dbPackage = (CDOPackage)list.get(0);
+      TRACER.trace("Read CDOPackage: " + cdoPackage.getName());
+      ((InternalCDOPackage)cdoPackage).setServerInfo(dbPackage.getServerInfo());
+      ((InternalCDOPackage)cdoPackage).setName(dbPackage.getName());
+      ((InternalCDOPackage)cdoPackage).setEcore(dbPackage.getEcore());
+      ((InternalCDOPackage)cdoPackage).setMetaIDRange(cdoPackage.getMetaIDRange());
+
+      final List<CDOClass> cdoClasses = new ArrayList<CDOClass>();
+      for (CDOClass cdoClass : dbPackage.getClasses())
+      {
+        cdoClasses.add(cdoClass);
+        for (CDOFeature cdoFeature : cdoClass.getFeatures())
+        {
+          ((InternalCDOFeature)cdoFeature).setContainingClass(cdoClass);
+        }
+      }
+      ((CDOPackageImpl)cdoPackage).setClasses(cdoClasses);
+    }
+    finally
+    {
+      session.close();
+    }
+    TRACER.trace("Finished reading CDOPackages");
   }
 
-  protected void readPackages()
+  protected void readPackageInfos()
   {
     if (cdoPackageInfos == null || cdoPackageInfos.size() == 0)
     {
       TRACER.trace("Reading CDOPackages from db");
       Collection<CDOPackageInfo> result = new ArrayList<CDOPackageInfo>();
-      Collection<CDOPackage> resultPackages = new ArrayList<CDOPackage>();
       Session session = getSessionFactory().openSession();
       try
       {
@@ -199,21 +254,8 @@ public class HibernatePackageHandler
           result.add(new CDOPackageInfo(cdoPackage.getPackageURI(), cdoPackage.isDynamic(),
               cdoPackage.getMetaIDRange(), cdoPackage.getParentURI()));
           ((InternalCDOPackage)cdoPackage).setPackageManager(hibernateStore.getRepository().getPackageManager());
-          resultPackages.add(cdoPackage);
 
-          // repair something
-          // TODO: set this in the mapping with a bi-directional relation
-          for (CDOClass cdoClass : cdoPackage.getClasses())
-          {
-            ((InternalCDOClass)cdoClass).setContainingPackage(cdoPackage);
-            for (CDOFeature cdoFeature : cdoClass.getFeatures())
-            {
-              ((InternalCDOFeature)cdoFeature).setContainingClass(cdoClass);
-            }
-          }
         }
-
-        cdoPackages = resultPackages;
         cdoPackageInfos = result;
       }
       finally
@@ -255,7 +297,6 @@ public class HibernatePackageHandler
   public void reset()
   {
     cdoPackageInfos = null;
-    cdoPackages = null;
   }
 
   protected void doActivate()

@@ -11,18 +11,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
-import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOClass;
-import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOFeature;
-import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
 import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
-import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
@@ -86,56 +79,7 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
 
   public void readPackage(CDOPackage cdoPackage)
   {
-    final CDOPackage dbPackage = getStore().getPackageHandler().getCDOPackage(cdoPackage.getPackageURI());
-    ((InternalCDOPackage)cdoPackage).setServerInfo(dbPackage.getServerInfo());
-    ((InternalCDOPackage)cdoPackage).setName(dbPackage.getName());
-    ((InternalCDOPackage)cdoPackage).setEcore(dbPackage.getEcore());
-
-    ((InternalCDOPackage)cdoPackage).setMetaIDRange(cdoPackage.getMetaIDRange());
-    copyCDOClasses(dbPackage, cdoPackage);
-  }
-
-  protected void copyCDOClasses(CDOPackage dbPackage, CDOPackage cdoPackage)
-  {
-    for (CDOClass dbCDOClass : dbPackage.getClasses())
-    {
-      final CDOClass cdoClass = CDOModelUtil.createClass(cdoPackage, dbCDOClass.getClassifierID(),
-          dbCDOClass.getName(), dbCDOClass.isAbstract());
-      ((InternalCDOClass)cdoClass).setServerInfo(dbCDOClass.getServerInfo());
-      ((InternalCDOPackage)cdoPackage).addClass(cdoClass);
-      for (CDOClass dbSuperCDOClass : dbCDOClass.getSuperTypes())
-      {
-        ((InternalCDOClass)cdoClass).addSuperType(CDOModelUtil.createClassRef(dbSuperCDOClass.getContainingPackage()
-            .getPackageURI(), dbSuperCDOClass.getClassifierID()));
-      }
-
-      for (CDOFeature dbCDOFeature : dbCDOClass.getFeatures())
-      {
-        int featureID = dbCDOFeature.getFeatureID();
-        String name = dbCDOFeature.getName();
-        CDOType type = dbCDOFeature.getType();
-        boolean many = dbCDOFeature.isMany();
-
-        CDOFeature feature;
-        if (type == CDOType.OBJECT)
-        {
-          String packageURI = dbCDOFeature.getReferenceType().getContainingPackage().getPackageURI();
-          int classifierID = dbCDOFeature.getReferenceType().getClassifierID();
-          boolean containment = dbCDOFeature.isContainment();
-          CDOClassRef classRef = CDOModelUtil.createClassRef(packageURI, classifierID);
-          CDOClassProxy referenceType = new CDOClassProxy(classRef, cdoClass.getPackageManager());
-          feature = CDOModelUtil.createReference(cdoClass, featureID, name, referenceType, many, containment);
-        }
-        else
-        {
-          feature = CDOModelUtil.createAttribute(cdoClass, featureID, name, type, many);
-        }
-
-        ((InternalCDOFeature)feature).setServerInfo(dbCDOFeature.getServerInfo());
-        ((InternalCDOClass)cdoClass).addFeature(feature);
-      }
-    }
-    ;
+    getStore().getPackageHandler().readPackage(cdoPackage);
   }
 
   public Collection<CDOPackageInfo> readPackageInfos()

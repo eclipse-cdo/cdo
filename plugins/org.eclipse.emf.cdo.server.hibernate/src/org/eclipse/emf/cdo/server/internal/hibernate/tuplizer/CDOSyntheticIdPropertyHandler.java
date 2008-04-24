@@ -1,13 +1,19 @@
-/***************************************************************************
- * Copyright (c) 2004 - 2008 Martin Taal
+/**
+ * <copyright>
+ *
+ * Copyright (c) 2005, 2006, 2007, 2008 Springsite BV (The Netherlands) and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
- *    Martin Taal - copied from CDORevisionPropertyHandler and adapted
- **************************************************************************/
+ *   Martin Taal
+ * </copyright>
+ *
+ * $Id: CDOSyntheticIdPropertyHandler.java,v 1.1 2008-04-24 11:47:07 mtaal Exp $
+ */
+
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
@@ -17,25 +23,77 @@ import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 import org.hibernate.HibernateException;
+import org.hibernate.PropertyNotFoundException;
 import org.hibernate.engine.SessionFactoryImplementor;
+import org.hibernate.engine.SessionImplementor;
+import org.hibernate.property.Getter;
+import org.hibernate.property.PropertyAccessor;
+import org.hibernate.property.Setter;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
- * @author Martin Taal
+ * Is only used for synthetic id's.
+ * 
+ * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
+ * @version $Revision: 1.1 $
  */
-public class CDOIDPropertySetter extends CDOPropertySetter
+@SuppressWarnings("unchecked")
+public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor
 {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 4707601844087591747L;
 
-  public CDOIDPropertySetter(CDORevisionTuplizer tuplizer, String propertyName)
+  public Getter getGetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
-    super(tuplizer, propertyName);
+    return this;
   }
 
-  @Override
+  public Setter getSetter(Class theClass, String propertyName) throws PropertyNotFoundException
+  {
+    return this;
+  }
+
+  public Object get(Object owner) throws HibernateException
+  {
+    final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(owner);
+    if (revision == null)
+    {
+      return null;
+    }
+    if (!(revision.getID() instanceof CDOIDHibernate))
+    {
+      return null;
+    }
+
+    final CDOIDHibernate cdoID = (CDOIDHibernate)revision.getID();
+    return cdoID.getId();
+  }
+
+  public Object getForInsert(Object arg0, Map arg1, SessionImplementor arg2) throws HibernateException
+  {
+    return get(arg0);
+  }
+
+  public Method getMethod()
+  {
+    return null;
+  }
+
+  public String getMethodName()
+  {
+    return null;
+  }
+
+  public Class getReturnType()
+  {
+    return null;
+  }
+
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
     if (value == null)
@@ -43,7 +101,7 @@ public class CDOIDPropertySetter extends CDOPropertySetter
       return;
     }
 
-    final InternalCDORevision revision = (InternalCDORevision)target;
+    final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(target);
     final CDOID cdoID = revision.getID();
     if (cdoID == null)
     {
@@ -67,15 +125,5 @@ public class CDOIDPropertySetter extends CDOPropertySetter
         throw new IllegalStateException("Current id and new id are different " + value + "/" + hbCDOID.getId());
       }
     }
-    if (!isVirtualProperty())
-    {
-      super.set(target, value, factory);
-    }
-  }
-
-  @Override
-  protected boolean isVirtualPropertyAllowed()
-  {
-    return true;
   }
 }

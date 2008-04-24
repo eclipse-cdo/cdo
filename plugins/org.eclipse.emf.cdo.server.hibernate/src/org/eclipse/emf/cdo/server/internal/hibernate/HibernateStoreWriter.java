@@ -48,6 +48,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
     {
       TRACER.trace("Committing transaction");
     }
+    HibernateThreadContext.setCommitContext(context);
 
     writePackages(context.getNewPackages());
 
@@ -55,7 +56,6 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
     {
       // start with fresh hibernate session
       final Session session = getHibernateSession();
-      HibernateThreadContext.setCommitContext(context);
       session.setFlushMode(FlushMode.COMMIT);
       session.beginTransaction();
       for (Object o : context.getNewObjects())

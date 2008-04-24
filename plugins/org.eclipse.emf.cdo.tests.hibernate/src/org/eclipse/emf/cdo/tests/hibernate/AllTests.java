@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.tests.InitialTest;
 import org.eclipse.emf.cdo.tests.InvalidationTest;
 import org.eclipse.emf.cdo.tests.MangoTest;
 import org.eclipse.emf.cdo.tests.NoLegacyTest;
-import org.eclipse.emf.cdo.tests.PackageRegistryTest;
 import org.eclipse.emf.cdo.tests.ResourceTest;
 import org.eclipse.emf.cdo.tests.RevisionDeltaTest;
 import org.eclipse.emf.cdo.tests.RevisionHolderTest;
@@ -40,8 +39,10 @@ public class AllTests
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
 
     TestSuite suite = new TestSuite("Tests for CDO using Hibernate");
+    suite.addTestSuite(HibernatePackageRegistryTest.class);
+
+    suite.addTestSuite(ContainmentTest.class);
     suite.addTestSuite(RevisionDeltaTest.class);
-    suite.addTestSuite(HbTransactionDeadLockTest.class);
     suite.addTestSuite(RollbackTest.class);
     suite.addTestSuite(StateMachineTest.class);
     suite.addTestSuite(RevisionHolderTest.class);
@@ -51,11 +52,10 @@ public class AllTests
     suite.addTestSuite(NoLegacyTest.class);
     suite.addTestSuite(ResourceTest.class);
     suite.addTestSuite(InvalidationTest.class);
-    suite.addTestSuite(ContainmentTest.class);
     suite.addTestSuite(InitialTest.class);
     suite.addTestSuite(ViewTest.class);
     suite.addTestSuite(IndexReconstructionTest.class);
-    suite.addTestSuite(PackageRegistryTest.class);
+    suite.addTestSuite(HbTransactionDeadLockTest.class);
 
     // These fail for standard cdo >>>
     // suite.addTestSuite(DymamicEcoreTest.class);

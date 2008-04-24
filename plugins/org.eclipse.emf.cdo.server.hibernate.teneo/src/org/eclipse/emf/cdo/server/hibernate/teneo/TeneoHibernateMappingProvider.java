@@ -21,10 +21,12 @@ import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.eclipse.emf.teneo.hibernate.cdo.CDOHelper;
 
 import org.hibernate.cfg.Configuration;
@@ -62,25 +64,28 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
   public String generateMapping()
   {
     TRACER.trace("Generating Hibernate Mapping");
-    final List<String> models = new ArrayList<String>();
-    for (CDOPackage cdoPackage : getHibernateStore().getPackageHandler().getCDOPackages())
-    {
-      TRACER.trace("Using cdoPackage : " + cdoPackage.getName() + " - " + cdoPackage.getPackageURI());
-      models.add(cdoPackage.getEcore());
-    }
     final Properties properties = HibernateUtil.getInstance().getPropertiesFromStore(getHibernateStore());
 
     // TODO: handle nested package structures
     final List<EPackage> epacks = new ArrayList<EPackage>();
     final ResourceSet rs = new ResourceSetImpl();
-    rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-    for (String ecoreStr : models)
+    rs.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
+    rs.getPackageRegistry().put(XMLTypePackage.eNS_URI, XMLTypePackage.eINSTANCE);
+    rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new EcoreResourceFactoryImpl());
+    for (CDOPackage cdoPackage : getHibernateStore().getPackageHandler().getCDOPackages())
     {
+      TRACER.trace("Using cdoPackage : " + cdoPackage.getName() + " - " + cdoPackage.getPackageURI());
+      final String ecoreStr = cdoPackage.getEcore();
+      if (ecoreStr == null)
+      {
+        // happens at initialization time
+        continue;
+      }
       // this assumes that the (default) encoding is the same on both the client and
       // server
       final ByteArrayInputStream bis = new ByteArrayInputStream(ecoreStr.getBytes());
       // fool the resourceset by passing a fake uri
-      final URI epackageURI = URI.createURI("epackage.ecore");
+      final URI epackageURI = URI.createURI(cdoPackage.getPackageURI());
       final Resource resource = rs.createResource(epackageURI);
       try
       {
@@ -104,10 +109,20 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
     return CDOHelper.getInstance().generateMapping(ePackageArray, properties);
   }
 
+  // this will check the global package registry and read the epackages from
+  // there if the epackage is already present there
   protected List<EPackage> resolveSubPackages(EPackage epack)
   {
     final List<EPackage> epacks = new ArrayList<EPackage>();
-    epacks.add(epack);
+    if (EPackage.Registry.INSTANCE.get(epack.getNsURI()) != null)
+    {
+      epacks.add((EPackage)EPackage.Registry.INSTANCE.get(epack.getNsURI()));
+    }
+    else
+    {
+      epacks.add(epack);
+    }
+
     for (EPackage subEPackage : epack.getESubpackages())
     {
       epacks.addAll(resolveSubPackages(subEPackage));

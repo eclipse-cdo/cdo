@@ -260,14 +260,15 @@ public final class EMFUtil
   {
     Resource.Factory resourceFactory = new XMIResourceFactoryImpl();
     ResourceSetImpl resourceSet = new ResourceSetImpl()
-    {
-      @Override
-      protected Resource delegatedGetResource(URI uri, boolean loadOnDemand)
-      {
-        System.out.println("\nGET_RESOURCE: " + uri);
-        return delegatedGetResource(uri, loadOnDemand);
-      }
-    };
+    // {
+    // @Override
+    // protected Resource delegatedGetResource(URI uri, boolean loadOnDemand)
+    // {
+    // System.out.println("\nGET_RESOURCE: " + uri);
+    // return delegatedGetResource(uri, loadOnDemand);
+    // }
+    // }
+    ;
 
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory);
     resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("*", resourceFactory);

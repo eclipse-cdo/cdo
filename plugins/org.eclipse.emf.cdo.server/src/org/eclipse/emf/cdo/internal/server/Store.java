@@ -36,6 +36,8 @@ public abstract class Store extends Lifecycle implements IStore
 
   private IRepository repository;
 
+  private long lastMetaID;
+
   public Store(String type)
   {
     this.type = type;
@@ -61,14 +63,24 @@ public abstract class Store extends Lifecycle implements IStore
     this.properties = properties;
   }
 
-  public IRepository getRepository()
+  public Repository getRepository()
   {
-    return repository;
+    return (Repository)repository;
   }
 
   public void setRepository(IRepository repository)
   {
     this.repository = repository;
+  }
+
+  public long getLastMetaID()
+  {
+    return lastMetaID;
+  }
+
+  public void setLastMetaID(long lastMetaID)
+  {
+    this.lastMetaID = lastMetaID;
   }
 
   public IStoreReader getReader(ISession session)

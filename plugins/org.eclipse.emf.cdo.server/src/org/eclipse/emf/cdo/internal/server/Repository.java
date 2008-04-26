@@ -81,6 +81,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   public void setStore(IStore store)
   {
     this.store = store;
+    store.setRepository(this);
   }
 
   public String getUUID()
@@ -193,7 +194,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   @Override
   public String toString()
   {
-    return MessageFormat.format("Repository[{0}, {1}]", name, uuid);
+    return MessageFormat.format("Repository[{0}]", name);
   }
 
   protected PackageManager createPackageManager()
@@ -265,6 +266,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     {
       store.repairAfterCrash();
     }
+
+    setLastMetaID(store.getLastMetaID());
 
     sessionManager.activate();
     resourceManager.activate();

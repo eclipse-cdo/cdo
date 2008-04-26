@@ -69,6 +69,8 @@ public interface IStore extends IRepositoryElement
 
   public void repairAfterCrash();
 
+  public long getLastMetaID();
+
   /**
    * Returns a reader that can be used to read from this store in the context of the given session.
    * 

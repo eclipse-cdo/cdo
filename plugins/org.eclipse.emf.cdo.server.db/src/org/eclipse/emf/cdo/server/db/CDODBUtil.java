@@ -38,7 +38,11 @@ public final class CDODBUtil
   public static IDBStore createStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter,
       IDBConnectionProvider dbConnectionProvider)
   {
-    return new DBStore(mappingStrategy, dbAdapter, dbConnectionProvider);
+    DBStore store = new DBStore();
+    store.setMappingStrategy(mappingStrategy);
+    store.setDbAdapter(dbAdapter);
+    store.setDbConnectionProvider(dbConnectionProvider);
+    return store;
   }
 
   public static IMappingStrategy createHorizontalMappingStrategy()

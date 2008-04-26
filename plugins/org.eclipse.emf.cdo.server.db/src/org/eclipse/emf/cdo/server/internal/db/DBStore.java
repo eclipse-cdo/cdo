@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.internal.server.LongIDStore;
-import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
@@ -28,9 +27,12 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.ddl.DBSchema;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
+import javax.sql.DataSource;
 
 import java.sql.Connection;
 import java.text.MessageFormat;
@@ -57,27 +59,45 @@ public class DBStore extends LongIDStore implements IDBStore
 
   private int nextFeatureID;
 
-  public DBStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider)
+  public DBStore()
   {
     super(TYPE);
-    if (dbAdapter == null)
-    {
-      throw new IllegalArgumentException("dbAdapter is null");
-    }
-
-    if (dbConnectionProvider == null)
-    {
-      throw new IllegalArgumentException("dbConnectionProvider is null");
-    }
-
-    this.mappingStrategy = mappingStrategy;
-    this.dbAdapter = dbAdapter;
-    this.dbConnectionProvider = dbConnectionProvider;
   }
 
   public IMappingStrategy getMappingStrategy()
   {
     return mappingStrategy;
+  }
+
+  public void setMappingStrategy(IMappingStrategy mappingStrategy)
+  {
+    this.mappingStrategy = mappingStrategy;
+    mappingStrategy.setStore(this);
+  }
+
+  public IDBAdapter getDBAdapter()
+  {
+    return dbAdapter;
+  }
+
+  public void setDbAdapter(IDBAdapter dbAdapter)
+  {
+    this.dbAdapter = dbAdapter;
+  }
+
+  public IDBConnectionProvider getDBConnectionProvider()
+  {
+    return dbConnectionProvider;
+  }
+
+  public void setDbConnectionProvider(IDBConnectionProvider dbConnectionProvider)
+  {
+    this.dbConnectionProvider = dbConnectionProvider;
+  }
+
+  public void setDataSource(DataSource dataSource)
+  {
+    dbConnectionProvider = new DataSourceConnectionProvider(dataSource);
   }
 
   public synchronized IDBSchema getDBSchema()
@@ -89,16 +109,6 @@ public class DBStore extends LongIDStore implements IDBStore
     }
 
     return dbSchema;
-  }
-
-  public IDBAdapter getDBAdapter()
-  {
-    return dbAdapter;
-  }
-
-  public IDBConnectionProvider getDBConnectionProvider()
-  {
-    return dbConnectionProvider;
   }
 
   @Override
@@ -161,39 +171,97 @@ public class DBStore extends LongIDStore implements IDBStore
     return nextFeatureID++;
   }
 
-  @Override
-  protected void doActivate() throws Exception
+  public Connection getConnection()
   {
-    super.doActivate();
-    activateOrDeactivate(true);
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    activateOrDeactivate(false);
-    super.doDeactivate();
-  }
-
-  protected void activateOrDeactivate(boolean started)
-  {
-    Repository repository = (Repository)getRepository();
     Connection connection = dbConnectionProvider.getConnection();
     if (connection == null)
     {
       throw new DBException("No connection from connection provider: " + dbConnectionProvider);
     }
 
+    return connection;
+  }
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    checkNull(mappingStrategy, "mappingStrategy is null");
+    checkNull(dbAdapter, "dbAdapter is null");
+    checkNull(dbConnectionProvider, "dbConnectionProvider is null");
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    Connection connection = null;
+
     try
     {
-      if (started)
+      connection = getConnection();
+      Set<IDBTable> createdTables = CDODBSchema.INSTANCE.create(dbAdapter, dbConnectionProvider);
+      if (createdTables.contains(CDODBSchema.REPOSITORY))
       {
-        activateStore(repository, connection);
+        // First start
+        DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, 1, System.currentTimeMillis(), 0, CRASHED,
+            CRASHED);
+
+        MappingStrategy mappingStrategy = (MappingStrategy)getMappingStrategy();
+
+        IClassMapping resourceClassMapping = mappingStrategy.getResourceClassMapping();
+        Set<IDBTable> tables = resourceClassMapping.getAffectedTables();
+        if (dbAdapter.createTables(tables, connection).size() != tables.size())
+        {
+          throw new DBException("CDOResource tables not completely created");
+        }
       }
       else
       {
-        deactivateStore(repository, connection);
+        // Restart
+        long lastObjectID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_CDOID);
+        setLastMetaID(DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_METAID));
+        if (lastObjectID == CRASHED || getLastMetaID() == CRASHED)
+        {
+          OM.LOG.warn("Detected restart after crash");
+        }
+
+        setLastObjectID(lastObjectID);
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("UPDATE ");
+        builder.append(CDODBSchema.REPOSITORY);
+        builder.append(" SET ");
+        builder.append(CDODBSchema.REPOSITORY_STARTS);
+        builder.append("=");
+        builder.append(CDODBSchema.REPOSITORY_STARTS);
+        builder.append("+1, ");
+        builder.append(CDODBSchema.REPOSITORY_STARTED);
+        builder.append("=");
+        builder.append(System.currentTimeMillis());
+        builder.append(", ");
+        builder.append(CDODBSchema.REPOSITORY_STOPPED);
+        builder.append("=0, ");
+        builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID);
+        builder.append("=");
+        builder.append(CRASHED);
+        builder.append(", ");
+        builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
+        builder.append("=");
+        builder.append(CRASHED);
+
+        String sql = builder.toString();
+        int count = DBUtil.update(connection, sql);
+        if (count == 0)
+        {
+          throw new DBException("No row updated in table " + CDODBSchema.REPOSITORY);
+        }
       }
+
+      nextPackageID = DBUtil.selectMaximumInt(connection, CDODBSchema.PACKAGES_ID) + 1;
+      nextClassID = DBUtil.selectMaximumInt(connection, CDODBSchema.CLASSES_ID) + 1;
+      nextFeatureID = DBUtil.selectMaximumInt(connection, CDODBSchema.FEATURES_ID) + 1;
+      LifecycleUtil.activate(mappingStrategy);
     }
     finally
     {
@@ -201,58 +269,32 @@ public class DBStore extends LongIDStore implements IDBStore
     }
   }
 
-  protected void activateStore(Repository repository, Connection connection)
+  @Override
+  protected void doDeactivate() throws Exception
   {
-    Set<IDBTable> createdTables = CDODBSchema.INSTANCE.create(dbAdapter, dbConnectionProvider);
-    if (createdTables.contains(CDODBSchema.REPOSITORY))
+    Connection connection = null;
+
+    try
     {
-      // First start
-      DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, repository.getName(), repository.getUUID(), 1,
-          System.currentTimeMillis(), 0, CRASHED, CRASHED);
+      connection = getConnection();
 
-      MappingStrategy mappingStrategy = (MappingStrategy)getMappingStrategy();
-
-      IClassMapping resourceClassMapping = mappingStrategy.getResourceClassMapping();
-      Set<IDBTable> tables = resourceClassMapping.getAffectedTables();
-      if (dbAdapter.createTables(tables, connection).size() != tables.size())
-      {
-        throw new DBException("CDOResource tables not completely created");
-      }
-    }
-    else
-    {
-      // Restart
-      long lastObjectID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_CDOID);
-      long lastMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_METAID);
-      if (lastObjectID == CRASHED || lastMetaID == CRASHED)
-      {
-        OM.LOG.warn("Detected restart after crash");
-      }
-
-      setLastObjectID(lastObjectID);
-      repository.setLastMetaID(lastMetaID);
+      LifecycleUtil.deactivate(mappingStrategy);
 
       StringBuilder builder = new StringBuilder();
       builder.append("UPDATE ");
       builder.append(CDODBSchema.REPOSITORY);
       builder.append(" SET ");
-      builder.append(CDODBSchema.REPOSITORY_STARTS);
-      builder.append("=");
-      builder.append(CDODBSchema.REPOSITORY_STARTS);
-      builder.append("+1, ");
-      builder.append(CDODBSchema.REPOSITORY_STARTED);
+      builder.append(CDODBSchema.REPOSITORY_STOPPED);
       builder.append("=");
       builder.append(System.currentTimeMillis());
       builder.append(", ");
-      builder.append(CDODBSchema.REPOSITORY_STOPPED);
-      builder.append("=0, ");
       builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID);
       builder.append("=");
-      builder.append(CRASHED);
+      builder.append(getLastObjectID());
       builder.append(", ");
       builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
       builder.append("=");
-      builder.append(CRASHED);
+      builder.append(getRepository().getLastMetaID());
 
       String sql = builder.toString();
       int count = DBUtil.update(connection, sql);
@@ -261,44 +303,17 @@ public class DBStore extends LongIDStore implements IDBStore
         throw new DBException("No row updated in table " + CDODBSchema.REPOSITORY);
       }
     }
-
-    nextPackageID = DBUtil.selectMaximumInt(connection, CDODBSchema.PACKAGES_ID) + 1;
-    nextClassID = DBUtil.selectMaximumInt(connection, CDODBSchema.CLASSES_ID) + 1;
-    nextFeatureID = DBUtil.selectMaximumInt(connection, CDODBSchema.FEATURES_ID) + 1;
-    LifecycleUtil.activate(mappingStrategy);
-  }
-
-  protected void deactivateStore(Repository repository, Connection connection)
-  {
-    LifecycleUtil.deactivate(mappingStrategy);
-    StringBuilder builder = new StringBuilder();
-    builder.append("UPDATE ");
-    builder.append(CDODBSchema.REPOSITORY);
-    builder.append(" SET ");
-    builder.append(CDODBSchema.REPOSITORY_STOPPED);
-    builder.append("=");
-    builder.append(System.currentTimeMillis());
-    builder.append(", ");
-    builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID);
-    builder.append("=");
-    builder.append(getLastObjectID());
-    builder.append(", ");
-    builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
-    builder.append("=");
-    builder.append(repository.getLastMetaID());
-
-    String sql = builder.toString();
-    int count = DBUtil.update(connection, sql);
-    if (count == 0)
+    finally
     {
-      throw new DBException("No row updated in table " + CDODBSchema.REPOSITORY);
+      DBUtil.close(connection);
     }
+
+    super.doDeactivate();
   }
 
   @Override
   public void repairAfterCrash()
   {
-    Repository repository = (Repository)getRepository();
     DBStoreReader storeReader = getReader(null);
     StoreUtil.setReader(storeReader);
 
@@ -306,11 +321,11 @@ public class DBStore extends LongIDStore implements IDBStore
     {
       Connection connection = storeReader.getConnection();
       long maxObjectID = mappingStrategy.repairAfterCrash(connection);
-      long maxMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGES_RANGE_UB);
+      setLastMetaID(DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGES_RANGE_UB));
 
-      OM.LOG.info(MessageFormat.format("Repaired after crash: maxObjectID={0}, maxMetaID={1}", maxObjectID, maxMetaID));
+      OM.LOG.info(MessageFormat.format("Repaired after crash: maxObjectID={0}, maxMetaID={1}", maxObjectID,
+          getLastMetaID()));
       setLastObjectID(maxObjectID);
-      repository.setLastMetaID(maxMetaID);
     }
     finally
     {

@@ -39,9 +39,19 @@ public final class FactoryKey implements IFactoryKey, Serializable, Comparable<F
     return productGroup;
   }
 
+  public void setProductGroup(String productGroup)
+  {
+    this.productGroup = productGroup;
+  }
+
   public String getType()
   {
     return type;
+  }
+
+  public void setType(String type)
+  {
+    this.type = type;
   }
 
   @Override

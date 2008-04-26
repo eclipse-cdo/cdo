@@ -55,6 +55,11 @@ public class HorizontalMappingStrategy extends MappingStrategy
     return objectTypeCache;
   }
 
+  public void setObjectTypeCache(IObjectTypeCache objectTypeCache)
+  {
+    this.objectTypeCache = objectTypeCache;
+  }
+
   public CDOClassRef readObjectType(IDBStoreReader storeReader, CDOID id)
   {
     return objectTypeCache.getObjectType(storeReader, id);
@@ -137,8 +142,11 @@ public class HorizontalMappingStrategy extends MappingStrategy
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    objectTypeCache = createObjectTypeCache(getStore());
-    LifecycleUtil.activate(objectTypeCache);
+    if (objectTypeCache == null)
+    {
+      objectTypeCache = createObjectTypeCache(getStore());
+      LifecycleUtil.activate(objectTypeCache);
+    }
   }
 
   @Override

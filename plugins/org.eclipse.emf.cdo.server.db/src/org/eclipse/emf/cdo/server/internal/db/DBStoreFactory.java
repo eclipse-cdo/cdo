@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -50,7 +51,7 @@ public class DBStoreFactory implements IStoreFactory
     IDBAdapter dbAdapter = getDBAdapter(storeConfig);
     DataSource dataSource = getDataSource(storeConfig);
     IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
-    DBStore store = new DBStore(mappingStrategy, dbAdapter, connectionProvider);
+    IDBStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
     mappingStrategy.setStore(store);
     return store;
   }

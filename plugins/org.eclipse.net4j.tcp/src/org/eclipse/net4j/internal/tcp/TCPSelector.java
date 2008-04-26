@@ -36,10 +36,6 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TCPSelector.class);
 
-  private static final boolean VISTA = System.getProperty("vista.cache.selector") != null;
-
-  private static Selector vistaCache;
-
   private Selector selector;
 
   /**
@@ -273,46 +269,12 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
   protected Selector openSelector() throws IOException
   {
-    if (VISTA)
-    {
-      if (vistaCache == null)
-      {
-        vistaCache = Selector.open();
-      }
-
-      return vistaCache;
-    }
-
     return Selector.open();
   }
 
   protected void closeSelector() throws IOException
   {
-    if (VISTA)
-    {
-      for (SelectionKey key : selector.keys())
-      {
-        try
-        {
-          key.cancel();
-        }
-        catch (RuntimeException ignore)
-        {
-        }
-      }
-
-      try
-      {
-        selector.selectNow();
-      }
-      catch (RuntimeException ignore)
-      {
-      }
-    }
-    else
-    {
-      selector.close();
-    }
+    selector.close();
   }
 
   @Override

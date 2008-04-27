@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOSession;
 
 import org.eclipse.net4j.internal.util.factory.Factory;
+import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.common.util.URI;
@@ -36,10 +37,8 @@ public class CDOSessionFactory extends Factory
 
   public CDOSession create(String description)
   {
-    CDOSessionImpl session = new CDOSessionImpl();
-    session.setRepositoryName(getRepositoryName(description));
-    session.setDisableLegacyObjects(isDisableLegacyObjects(description));
-    return session;
+    return createSession(getRepositoryName(description), isDisableLegacyObjects(description),
+        isAutomaticPackageRegistry(description), null);
   }
 
   public static String getRepositoryName(String description)
@@ -54,8 +53,28 @@ public class CDOSessionFactory extends Factory
     return description.contains("disableLegacyObjects=true");
   }
 
+  public boolean isAutomaticPackageRegistry(String description)
+  {
+    return description.contains("automaticPackageRegistry=true");
+  }
+
   public static CDOSession get(IManagedContainer container, String description)
   {
     return (CDOSession)container.getElement(PRODUCT_GROUP, TYPE, description);
+  }
+
+  public static CDOSessionImpl createSession(String repositoryName, boolean disableLegacyObjects,
+      boolean automaticPackageRegistry, IFailOverStrategy failOverStrategy)
+  {
+    CDOSessionImpl session = new CDOSessionImpl();
+    if (automaticPackageRegistry)
+    {
+      session.setPackageRegistry(new CDOPackageRegistryImpl.SelfPopulating(session));
+    }
+
+    session.setRepositoryName(repositoryName);
+    session.setDisableLegacyObjects(disableLegacyObjects);
+    session.setFailOverStrategy(failOverStrategy);
+    return session;
   }
 }

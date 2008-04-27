@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.util.TransportException;
+import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.LegacySystemNotAvailableException;
 
@@ -115,7 +116,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   private String repositoryUUID;
 
-  private CDOPackageRegistryImpl packageRegistry;
+  private CDOPackageRegistry packageRegistry;
 
   private CDOSessionPackageManagerImpl packageManager;
 
@@ -146,7 +147,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public CDOSessionImpl()
   {
-    packageRegistry = createPackageRegistry();
     packageManager = createPackageManager();
     revisionManager = createRevisionManager();
     referenceChunkSize = OM.PREF_REFERENCE_CHUNK_SIZE.getValue();
@@ -257,7 +257,12 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     deactivate();
   }
 
-  public CDOPackageRegistryImpl getPackageRegistry()
+  public void setPackageRegistry(CDOPackageRegistryImpl packageRegistry)
+  {
+    this.packageRegistry = packageRegistry;
+  }
+
+  public CDOPackageRegistry getPackageRegistry()
   {
     return packageRegistry;
   }
@@ -625,6 +630,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    if (packageRegistry == null)
+    {
+      packageRegistry = createPackageRegistry();
+    }
+
     if (channel == null)
     {
       channel = connector.openChannel(CDOProtocolConstants.PROTOCOL_NAME, this);

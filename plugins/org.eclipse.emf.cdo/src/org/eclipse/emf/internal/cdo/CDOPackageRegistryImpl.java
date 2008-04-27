@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 
 import java.text.MessageFormat;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -212,7 +211,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     protected void populate()
     {
       Map<String, CDOPackageType> packageTypes = CDOUtil.getPackageTypes();
-      for (Entry<String, CDOPackageType> entry : packageTypes.entrySet())
+      for (Map.Entry<String, CDOPackageType> entry : packageTypes.entrySet())
       {
         CDOPackageType packageType = entry.getValue();
         if (packageType != CDOPackageType.LEGACY)

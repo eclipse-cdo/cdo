@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
 
 import org.eclipse.emf.internal.cdo.CDOSessionFactory;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
@@ -45,8 +44,6 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -57,7 +54,6 @@ import org.osgi.framework.Constants;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -133,21 +129,25 @@ public final class CDOUtil
   }
 
   public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects,
-      IFailOverStrategy failOverStrategy) throws ConnectorException
+      boolean automaticPackageRegistry, IFailOverStrategy failOverStrategy) throws ConnectorException
   {
-    CDOSessionImpl session = new CDOSessionImpl();
-    session.setFailOverStrategy(failOverStrategy);
+    CDOSessionImpl session = CDOSessionFactory.createSession(repositoryName, disableLegacyObjects,
+        automaticPackageRegistry, failOverStrategy);
     session.setConnector(connector);
-    session.setRepositoryName(repositoryName);
-    session.setDisableLegacyObjects(disableLegacyObjects);
     session.activate();
     return session;
+  }
+
+  public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects,
+      boolean automaticPackageRegistry) throws ConnectorException
+  {
+    return openSession(connector, repositoryName, disableLegacyObjects, automaticPackageRegistry, null);
   }
 
   public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects)
       throws ConnectorException
   {
-    return openSession(connector, repositoryName, disableLegacyObjects, null);
+    return openSession(connector, repositoryName, disableLegacyObjects, false, null);
   }
 
   public static CDOSession openSession(IConnector connector, String repositoryName) throws ConnectorException
@@ -213,41 +213,6 @@ public final class CDOUtil
     return uri.path();
   }
 
-  @Deprecated
-  public static CDOID extractResourceID(URI uri)
-  {
-    throw new UnsupportedOperationException();
-    // if (!CDOProtocolConstants.PROTOCOL_NAME.equals(uri.scheme()))
-    // {
-    // return null;
-    // }
-    //
-    // if (uri.hasAuthority())
-    // {
-    // return null;
-    // }
-    //
-    // if (!uri.isHierarchical())
-    // {
-    // return null;
-    // }
-    //
-    // if (uri.hasAbsolutePath())
-    // {
-    // return null;
-    // }
-    //
-    // try
-    // {
-    // String path = uri.path();
-    // return CDOModelUtil.parse(path);
-    // }
-    // catch (RuntimeException ex)
-    // {
-    // return null;
-    // }
-  }
-
   public static URI createResourceURI(String path)
   {
     return URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":" + path);
@@ -293,23 +258,6 @@ public final class CDOUtil
     return eReference;
   }
 
-  /**
-   * Returns a self-contained copy of the eObject with all proxies resolved.
-   * 
-   * @param eObject
-   *          the object to copy.
-   * @return the copy.
-   * @see EcoreUtil#copy(EObject)
-   */
-  @Deprecated
-  public static EObject copy(EObject eObject, CDOView view)
-  {
-    Copier copier = new CDOCopier(view);
-    EObject result = copier.copy(eObject);
-    copier.copyReferences();
-    return result;
-  }
-
   public static void load(EObject eObject, CDOView view)
   {
     InternalCDOObject cdoObject = FSMUtil.adapt(eObject, view);
@@ -319,63 +267,6 @@ public final class CDOUtil
     {
       InternalCDOObject content = it.next();
       load(content, view);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  @Deprecated
-  public static final class CDOCopier extends Copier
-  {
-    private static final long serialVersionUID = 1L;
-
-    private CDOView view;
-
-    public CDOCopier(CDOView view)
-    {
-      this.view = view;
-    }
-
-    @Override
-    protected void copyReference(EReference eReference, EObject eObject, EObject copyEObject)
-    {
-      resolve(eReference, eObject);
-      super.copyReference(eReference, eObject, copyEObject);
-    }
-
-    @Override
-    protected void copyContainment(EReference eReference, EObject eObject, EObject copyEObject)
-    {
-      resolve(eReference, eObject);
-      super.copyContainment(eReference, eObject, copyEObject);
-    }
-
-    protected void resolve(EReference eReference, EObject eObject)
-    {
-      if (eObject.eIsSet(eReference))
-      {
-        if (eReference.isMany())
-        {
-          @SuppressWarnings("unchecked")
-          List<EObject> list = (List<EObject>)eObject.eGet(eReference);
-          for (EObject element : list)
-          {
-            if (element.eIsProxy())
-            {
-              EcoreUtil.resolve(element, view.getResourceSet());
-            }
-          }
-        }
-        else
-        {
-          EObject childEObject = (EObject)eObject.eGet(eReference);
-          if (childEObject.eIsProxy())
-          {
-            EcoreUtil.resolve(childEObject, view.getResourceSet());
-          }
-        }
-      }
     }
   }
 }

@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+
 import org.eclipse.emf.ecore.EPackage;
 
 /**
@@ -25,4 +27,6 @@ public interface CDOPackageRegistry extends EPackage.Registry
    * @return the package that is registered under the <code>nsURI</code> of the top level package or <code>null</code>.
    */
   public EPackage putEPackage(EPackage ePackage);
+
+  public void putPackageDescriptor(CDOPackage proxy);
 }

@@ -26,10 +26,10 @@ import org.eclipse.emf.cdo.protocol.model.CDOType;
 import org.eclipse.emf.cdo.protocol.model.core.CDOCorePackage;
 import org.eclipse.emf.cdo.protocol.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.protocol.model.resource.CDOResourcePackage;
+import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
-import org.eclipse.emf.internal.cdo.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -267,7 +267,7 @@ public final class ModelUtil
     return CDOModelUtil.createAttribute(containingClass, featureID, name, type, many);
   }
 
-  public static EPackage getEPackage(CDOPackage cdoPackage, CDOPackageRegistryImpl packageRegistry)
+  public static EPackage getEPackage(CDOPackage cdoPackage, CDOPackageRegistry packageRegistry)
   {
     EPackage ePackage = (EPackage)cdoPackage.getClientInfo();
     if (ePackage == null)
@@ -286,7 +286,7 @@ public final class ModelUtil
     return ePackage;
   }
 
-  public static EClass getEClass(CDOClass cdoClass, CDOPackageRegistryImpl packageRegistry)
+  public static EClass getEClass(CDOClass cdoClass, CDOPackageRegistry packageRegistry)
   {
     EClass eClass = (EClass)cdoClass.getClientInfo();
     if (eClass == null)
@@ -299,7 +299,7 @@ public final class ModelUtil
     return eClass;
   }
 
-  public static EStructuralFeature getEFeature(CDOFeature cdoFeature, CDOPackageRegistryImpl packageRegistry)
+  public static EStructuralFeature getEFeature(CDOFeature cdoFeature, CDOPackageRegistry packageRegistry)
   {
     EStructuralFeature eFeature = (EStructuralFeature)cdoFeature.getClientInfo();
     if (eFeature == null)

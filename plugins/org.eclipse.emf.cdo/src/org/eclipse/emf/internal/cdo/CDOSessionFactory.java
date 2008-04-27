@@ -16,7 +16,6 @@ import org.eclipse.net4j.internal.util.factory.Factory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -37,7 +36,7 @@ public class CDOSessionFactory extends Factory
 
   public CDOSession create(String description)
   {
-    CDOSessionImpl session = new CDOSessionImpl(EPackage.Registry.INSTANCE);
+    CDOSessionImpl session = new CDOSessionImpl();
     session.setRepositoryName(getRepositoryName(description));
     session.setDisableLegacyObjects(isDisableLegacyObjects(description));
     return session;

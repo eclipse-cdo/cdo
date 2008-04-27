@@ -23,7 +23,6 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 
@@ -43,12 +42,6 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
 
   public CDOPackageRegistryImpl(CDOSessionImpl session)
   {
-    this.session = session;
-  }
-
-  public CDOPackageRegistryImpl(CDOSessionImpl session, Registry delegateRegistry)
-  {
-    super(delegateRegistry);
     this.session = session;
   }
 

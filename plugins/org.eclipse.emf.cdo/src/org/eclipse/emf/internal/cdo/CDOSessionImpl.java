@@ -144,9 +144,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   private CDOIDObjectFactory cdoidObjectFactory;
 
-  public CDOSessionImpl(EPackage.Registry delegate)
+  public CDOSessionImpl()
   {
-    packageRegistry = createPackageRegistry(delegate);
+    packageRegistry = createPackageRegistry();
     packageManager = createPackageManager();
     revisionManager = createRevisionManager();
     referenceChunkSize = OM.PREF_REFERENCE_CHUNK_SIZE.getValue();
@@ -544,9 +544,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return MessageFormat.format("CDOSession[{0}/{1}]", connector, repositoryName);
   }
 
-  protected CDOPackageRegistryImpl createPackageRegistry(EPackage.Registry delegate)
+  protected CDOPackageRegistryImpl createPackageRegistry()
   {
-    return new CDOPackageRegistryImpl(this, delegate);
+    return new CDOPackageRegistryImpl(this);
   }
 
   protected CDOSessionPackageManagerImpl createPackageManager()

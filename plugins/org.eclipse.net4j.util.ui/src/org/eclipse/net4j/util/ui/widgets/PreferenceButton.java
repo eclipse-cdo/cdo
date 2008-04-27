@@ -64,9 +64,20 @@ public class PreferenceButton
     return button.getImage();
   }
 
+  public boolean getSelection(boolean setPreference)
+  {
+    boolean selection = button.getSelection();
+    if (setPreference)
+    {
+      preference.setValue(selection);
+    }
+
+    return selection;
+  }
+
   public boolean getSelection()
   {
-    return button.getSelection();
+    return getSelection(false);
   }
 
   public String getText()

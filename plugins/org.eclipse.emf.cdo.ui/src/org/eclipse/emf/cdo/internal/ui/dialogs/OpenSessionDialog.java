@@ -46,19 +46,28 @@ public class OpenSessionDialog extends TitleAreaDialog
 
   private IHistory<String> repositoryHistory = new PreferenceHistory(OM.PREF_HISTORY_REPOSITORIES);
 
-  private HistoryText connector;
+  private HistoryText connectorText;
 
-  private Label example;
+  private Label exampleLabel;
 
-  private HistoryText repository;
+  private HistoryText repositoryText;
 
-  private PreferenceButton legacy;
+  private PreferenceButton automaticButton;
+
+  private PreferenceButton legacyButton;
 
   private String serverDescription;
 
   private String repositoryName;
 
-  private boolean legacySupport;
+  private boolean automaticPackageRegistry;
+
+  private boolean legacyModelSupport;
+
+  static
+  {
+    OM.PREF_LEGACY_MODEL_SUPPORT.setValue(FSMUtil.isLegacySystemAvailable());
+  }
 
   public OpenSessionDialog(IWorkbenchPage page)
   {
@@ -82,9 +91,14 @@ public class OpenSessionDialog extends TitleAreaDialog
     return repositoryName;
   }
 
-  public boolean isLegacySupport()
+  public boolean isAutomaticPackageRegistry()
   {
-    return legacySupport;
+    return automaticPackageRegistry;
+  }
+
+  public boolean isLegacyModelSupport()
+  {
+    return legacyModelSupport;
   }
 
   @Override
@@ -105,41 +119,45 @@ public class OpenSessionDialog extends TitleAreaDialog
     setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PACKAGE_MANAGER));
 
     new Label(composite, SWT.NONE).setText("Server Description:");
-    connector = new HistoryText(composite, SWT.BORDER | SWT.SINGLE, connectorHistory);
-    connector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+    connectorText = new HistoryText(composite, SWT.BORDER | SWT.SINGLE, connectorHistory);
+    connectorText.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
     if (connectorHistory.isEmpty())
     {
       new Label(composite, SWT.NONE);
-      example = new Label(composite, SWT.NONE);
-      example.setText("for example 'tcp://estepper@dev.eclipse.org:2036'");
-      example.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+      exampleLabel = new Label(composite, SWT.NONE);
+      exampleLabel.setText("for exampleLabel 'tcp://estepper@dev.eclipse.org:2036'");
+      exampleLabel.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
     }
 
     new Label(composite, SWT.NONE).setText("Repository Name:");
-    repository = new HistoryText(composite, SWT.BORDER | SWT.SINGLE, repositoryHistory);
-    repository.getCombo().setLayoutData(new GridData(150, SWT.DEFAULT));
+    repositoryText = new HistoryText(composite, SWT.BORDER | SWT.SINGLE, repositoryHistory);
+    repositoryText.getCombo().setLayoutData(new GridData(150, SWT.DEFAULT));
 
     new Label(composite, SWT.NONE);
-    legacy = new PreferenceButton(composite, SWT.CHECK, "Legacy Support", OM.PREF_LEGACY_SUPPORT);
-    legacy.getButton().setEnabled(FSMUtil.isLegacySystemAvailable());
+    automaticButton = new PreferenceButton(composite, SWT.CHECK, "Automatic Package Registry",
+        OM.PREF_AUTOMATIC_PACKAGE_REGISTY);
 
-    connector.setFocus();
-    connector.getCombo().addFocusListener(new FocusListener()
+    new Label(composite, SWT.NONE);
+    legacyButton = new PreferenceButton(composite, SWT.CHECK, "Legacy Model Support", OM.PREF_LEGACY_MODEL_SUPPORT);
+    legacyButton.getButton().setEnabled(FSMUtil.isLegacySystemAvailable());
+
+    connectorText.setFocus();
+    connectorText.getCombo().addFocusListener(new FocusListener()
     {
       public void focusGained(FocusEvent e)
       {
-        if (example != null)
+        if (exampleLabel != null)
         {
-          example.setVisible(true);
+          exampleLabel.setVisible(true);
         }
       }
 
       public void focusLost(FocusEvent e)
       {
-        if (example != null)
+        if (exampleLabel != null)
         {
-          example.setVisible(false);
+          exampleLabel.setVisible(false);
         }
       }
     });
@@ -150,13 +168,10 @@ public class OpenSessionDialog extends TitleAreaDialog
   @Override
   protected void okPressed()
   {
-    serverDescription = connector.getText();
-    repositoryName = repository.getText();
-    legacySupport = legacy.getSelection();
-
-    connectorHistory.add(serverDescription);
-    repositoryHistory.add(repositoryName);
-    OM.PREF_LEGACY_SUPPORT.setValue(legacySupport);
+    serverDescription = connectorText.getText(true);
+    repositoryName = repositoryText.getText(true);
+    automaticPackageRegistry = automaticButton.getSelection(true);
+    legacyModelSupport = legacyButton.getSelection(true);
     super.okPressed();
   }
 

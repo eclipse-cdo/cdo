@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoPackage.java,v 1.2 2008-02-23 10:00:33 estepper Exp $
+ * $Id: MangoPackage.java,v 1.3 2008-04-27 08:57:26 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango;
 
@@ -39,7 +39,7 @@ public interface MangoPackage extends EPackage
    * 
    * @generated
    */
-  String eNS_URI = "http://www.eiswind.de/mango";
+  String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/mango";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->

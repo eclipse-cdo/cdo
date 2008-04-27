@@ -197,17 +197,6 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
       session.addListener(sessionListener);
     }
 
-    public void putPackageDescriptor(String uri)
-    {
-      EPackage.Descriptor descriptor = new LocalPackageDescriptor(uri);
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Registering package descriptor for {0}", uri);
-      }
-
-      put(uri, descriptor);
-    }
-
     protected void populate()
     {
       Map<String, CDOPackageType> packageTypes = CDOUtil.getPackageTypes();
@@ -217,46 +206,19 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
         if (packageType != CDOPackageType.LEGACY)
         {
           String uri = entry.getKey();
-          if (containsKey(uri))
+          if (!containsKey(uri))
           {
-
+            try
+            {
+              EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(uri);
+              putEPackage(ePackage);
+            }
+            catch (RuntimeException ex)
+            {
+              OM.LOG.error(ex);
+            }
           }
         }
-      }
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    private final class LocalPackageDescriptor implements EPackage.Descriptor
-    {
-      private String uri;
-
-      private LocalPackageDescriptor(String uri)
-      {
-        this.uri = uri;
-      }
-
-      public String getURI()
-      {
-        return uri;
-      }
-
-      public EFactory getEFactory()
-      {
-        // TODO Implement method LocalPackageDescriptor.getEFactory()
-        throw new UnsupportedOperationException("Not yet implemented");
-      }
-
-      public EPackage getEPackage()
-      {
-        return EPackage.Registry.INSTANCE.getEPackage(uri);
-      }
-
-      @Override
-      public String toString()
-      {
-        return MessageFormat.format("LocalPackageDescriptor[{0}]", uri);
       }
     }
 

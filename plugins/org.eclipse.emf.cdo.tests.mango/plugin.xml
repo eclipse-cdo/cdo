@@ -5,14 +5,14 @@
  <copyright>
  </copyright>
 
- $Id: plugin.xml,v 1.1 2008-01-30 08:58:25 estepper Exp $
+ $Id: plugin.xml,v 1.2 2008-04-27 08:57:26 estepper Exp $
 -->
 
 <plugin>
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
-       uri = "http://www.eiswind.de/mango" 
+       uri = "http://www.eclipse.org/emf/CDO/tests/mango" 
        class = "org.eclipse.emf.cdo.tests.mango.MangoPackage"
        genModel = "model/mango.genmodel" /> 
   </extension>

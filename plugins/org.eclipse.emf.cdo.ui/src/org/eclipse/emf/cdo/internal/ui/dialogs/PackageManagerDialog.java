@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.RegisterGeneratedPackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
+import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -169,9 +170,9 @@ public class PackageManagerDialog extends TitleAreaDialog
 
   protected String getEPackageText(Object ePackage)
   {
-    if (ePackage instanceof EPackage.Descriptor)
+    if (ePackage == EcorePackage.eINSTANCE)
     {
-      return "?";
+      return "ECORE";
     }
 
     if (ePackage.getClass() == EPackageImpl.class)
@@ -179,13 +180,30 @@ public class PackageManagerDialog extends TitleAreaDialog
       return "DYNAMIC";
     }
 
-    if (ePackage == EcorePackage.eINSTANCE)
+    String uri = EMPTY;
+    if (ePackage instanceof EPackage.Descriptor)
     {
-      return "ECORE";
+      CDOPackageRegistry registry = session.getPackageRegistry();
+      for (Map.Entry<String, Object> entry : registry.entrySet())
+      {
+        if (entry.getValue() == ePackage)
+        {
+          uri = entry.getKey();
+          break;
+        }
+      }
+    }
+    else
+    {
+      uri = ((EPackage)ePackage).getNsURI();
     }
 
-    String uri = ((EPackage)ePackage).getNsURI();
     CDOPackageType packageType = CDOUtil.getPackageTypes().get(uri);
+    if (packageType == null)
+    {
+      return "?";
+    }
+
     return packageType.toString();
   }
 

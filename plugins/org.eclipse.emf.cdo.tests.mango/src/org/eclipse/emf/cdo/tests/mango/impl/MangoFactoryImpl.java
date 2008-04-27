@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoFactoryImpl.java,v 1.2 2008-02-23 10:00:34 estepper Exp $
+ * $Id: MangoFactoryImpl.java,v 1.3 2008-04-27 08:57:26 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 
@@ -34,7 +34,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
     try
     {
       MangoFactory theMangoFactory = (MangoFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eiswind.de/mango");
+          .getEFactory("http://www.eclipse.org/emf/CDO/tests/mango");
       if (theMangoFactory != null)
       {
         return theMangoFactory;

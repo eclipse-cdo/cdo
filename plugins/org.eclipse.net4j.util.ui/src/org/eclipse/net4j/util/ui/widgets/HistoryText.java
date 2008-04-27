@@ -130,9 +130,20 @@ public class HistoryText
     return combo.getTextHeight();
   }
 
+  public String getText(boolean addHistory)
+  {
+    String text = combo.getText();
+    if (addHistory)
+    {
+      history.add(text);
+    }
+
+    return text;
+  }
+
   public String getText()
   {
-    return combo.getText();
+    return getText(false);
   }
 
   public void setText(String string)

@@ -14,12 +14,17 @@ import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
+import org.eclipse.emf.cdo.util.CDOPackageType;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
+import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
@@ -28,6 +33,7 @@ import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 
 import java.text.MessageFormat;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -52,7 +58,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
 
   public void putPackageDescriptor(CDOPackage cdoPackage)
   {
-    EPackage.Descriptor descriptor = new CDOPackageDescriptor(cdoPackage);
+    EPackage.Descriptor descriptor = new RemotePackageDescriptor(cdoPackage);
     String uri = cdoPackage.getPackageURI();
     if (TRACER.isEnabled())
     {
@@ -123,18 +129,23 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   /**
    * @author Eike Stepper
    */
-  private final class CDOPackageDescriptor implements EPackage.Descriptor
+  private final class RemotePackageDescriptor implements EPackage.Descriptor
   {
     private CDOPackage cdoPackage;
 
-    private CDOPackageDescriptor(CDOPackage cdoPackage)
+    private RemotePackageDescriptor(CDOPackage cdoPackage)
     {
       this.cdoPackage = cdoPackage;
     }
 
+    public CDOPackage getCDOPackage()
+    {
+      return cdoPackage;
+    }
+
     public EFactory getEFactory()
     {
-      // TODO Implement method CDOPackageDescriptor.getEFactory()
+      // TODO Implement method LocalPackageDescriptor.getEFactory()
       throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -153,7 +164,102 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     @Override
     public String toString()
     {
-      return MessageFormat.format("CDOPackageDescriptor[{0}]", cdoPackage.getPackageURI());
+      return MessageFormat.format("LocalPackageDescriptor[{0}]", cdoPackage.getPackageURI());
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class SelfPopulating extends CDOPackageRegistryImpl
+  {
+    private final ContextTracer TRACER = new ContextTracer(OM.DEBUG_MODEL, SelfPopulating.class);
+
+    private static final long serialVersionUID = 1L;
+
+    private IListener sessionListener = new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onActivated(ILifecycle lifecycle)
+      {
+        populate();
+      }
+
+      @Override
+      protected void onAboutToDeactivate(ILifecycle lifecycle)
+      {
+        getSession().removeListener(this);
+      }
+    };
+
+    public SelfPopulating(CDOSessionImpl session)
+    {
+      super(session);
+      session.addListener(sessionListener);
+    }
+
+    public void putPackageDescriptor(String uri)
+    {
+      EPackage.Descriptor descriptor = new LocalPackageDescriptor(uri);
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Registering package descriptor for {0}", uri);
+      }
+
+      put(uri, descriptor);
+    }
+
+    protected void populate()
+    {
+      Map<String, CDOPackageType> packageTypes = CDOUtil.getPackageTypes();
+      for (Entry<String, CDOPackageType> entry : packageTypes.entrySet())
+      {
+        CDOPackageType packageType = entry.getValue();
+        if (packageType != CDOPackageType.LEGACY)
+        {
+          String uri = entry.getKey();
+          if (containsKey(uri))
+          {
+
+          }
+        }
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class LocalPackageDescriptor implements EPackage.Descriptor
+    {
+      private String uri;
+
+      private LocalPackageDescriptor(String uri)
+      {
+        this.uri = uri;
+      }
+
+      public String getURI()
+      {
+        return uri;
+      }
+
+      public EFactory getEFactory()
+      {
+        // TODO Implement method LocalPackageDescriptor.getEFactory()
+        throw new UnsupportedOperationException("Not yet implemented");
+      }
+
+      public EPackage getEPackage()
+      {
+        return EPackage.Registry.INSTANCE.getEPackage(uri);
+      }
+
+      @Override
+      public String toString()
+      {
+        return MessageFormat.format("LocalPackageDescriptor[{0}]", uri);
+      }
+    }
+
   }
 }

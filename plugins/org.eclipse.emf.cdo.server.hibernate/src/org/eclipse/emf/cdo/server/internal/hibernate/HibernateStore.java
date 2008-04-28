@@ -94,7 +94,6 @@ public class HibernateStore extends Store implements IHibernateStore
       try
       {
         initConfiguration();
-
         hibernateSessionFactory = hibernateConfiguration.buildSessionFactory();
       }
       finally
@@ -208,10 +207,18 @@ public class HibernateStore extends Store implements IHibernateStore
   @Override
   protected void doDeactivate() throws Exception
   {
-    TRACER.trace("De-Activating HibernateStore");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("De-Activating HibernateStore");
+    }
+
     if (hibernateSessionFactory != null)
     {
-      TRACER.trace("Closing SessionFactory");
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Closing SessionFactory");
+      }
+
       hibernateSessionFactory.close();
       hibernateSessionFactory = null;
     }
@@ -227,14 +234,23 @@ public class HibernateStore extends Store implements IHibernateStore
   // TODO: assumes that packageHandler has been reset
   protected void reInitialize()
   {
-    TRACER.trace("Re-Initializing HibernateStore");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Re-Initializing HibernateStore");
+    }
+
     if (hibernateSessionFactory != null)
     {
       if (!hibernateSessionFactory.isClosed())
       {
-        TRACER.trace("Closing SessionFactory");
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Closing SessionFactory");
+        }
+
         hibernateSessionFactory.close();
       }
+
       hibernateSessionFactory = null;
     }
   }
@@ -265,9 +281,7 @@ public class HibernateStore extends Store implements IHibernateStore
 
       in = OM.BUNDLE.getInputStream("mappings/resource.hbm.xml");
       hibernateConfiguration.addInputStream(in);
-
       hibernateConfiguration.setInterceptor(new CDOInterceptor());
-
       hibernateConfiguration.setProperties(HibernateUtil.getInstance().getPropertiesFromStore(this));
     }
     catch (Exception ex)

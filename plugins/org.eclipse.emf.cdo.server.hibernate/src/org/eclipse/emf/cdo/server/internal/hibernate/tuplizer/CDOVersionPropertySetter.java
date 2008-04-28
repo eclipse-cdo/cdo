@@ -30,7 +30,7 @@ public class CDOVersionPropertySetter extends CDOPropertySetter
   @Override
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
-    final InternalCDORevision revision = (InternalCDORevision)target;
+    InternalCDORevision revision = (InternalCDORevision)target;
     revision.setVersion(((Number)value).intValue());
     if (!isVirtualProperty())
     {

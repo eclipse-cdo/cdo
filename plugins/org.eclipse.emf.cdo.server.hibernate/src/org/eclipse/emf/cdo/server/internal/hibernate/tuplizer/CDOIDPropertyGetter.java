@@ -30,20 +30,20 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
   @Override
   public Object get(Object target) throws HibernateException
   {
-    final InternalCDORevision revision = (InternalCDORevision)target;
+    InternalCDORevision revision = (InternalCDORevision)target;
     if (!(revision.getID() instanceof CDOIDHibernate))
     {
       return null;
     }
 
-    final CDOIDHibernate cdoID = (CDOIDHibernate)revision.getID();
+    CDOIDHibernate cdoID = (CDOIDHibernate)revision.getID();
     if (isVirtualProperty())
     {
       return cdoID.getId();
     }
     else
     {
-      final Object id = super.get(target);
+      Object id = super.get(target);
       // TODO: does this make sense?
       // if (cdoID.getId() == null)
       // {

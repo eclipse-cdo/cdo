@@ -11,7 +11,7 @@
  *   Martin Taal
  * </copyright>
  *
- * $Id: CDOFeatureReferenceTypePropertyHandler.java,v 1.1 2008-04-24 11:47:07 mtaal Exp $
+ * $Id: CDOFeatureReferenceTypePropertyHandler.java,v 1.2 2008-04-28 08:30:39 estepper Exp $
  */
 
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
@@ -36,12 +36,43 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 @SuppressWarnings("unchecked")
 public class CDOFeatureReferenceTypePropertyHandler implements Getter, Setter, PropertyAccessor
 {
-  private static final long serialVersionUID = 4707601844087591747L;
+  private static final long serialVersionUID = 1L;
+
+  public CDOFeatureReferenceTypePropertyHandler()
+  {
+  }
+
+  public Object get(Object owner) throws HibernateException
+  {
+    CDOFeature cdoFeature = (CDOFeature)owner;
+    if (cdoFeature.getType() != CDOType.OBJECT)
+    {
+      return null;
+    }
+  
+    return cdoFeature.getReferenceType();
+  }
+
+  public Object getForInsert(Object arg0, Map arg1, SessionImplementor arg2) throws HibernateException
+  {
+    return get(arg0);
+  }
+
+  public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
+  {
+    CDOFeatureImpl cdoFeature = (CDOFeatureImpl)target;
+    if (cdoFeature.getType() != CDOType.OBJECT)
+    {
+      return;
+    }
+  
+    cdoFeature.setReferenceType((CDOClass)value);
+  }
 
   public Getter getGetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
@@ -51,21 +82,6 @@ public class CDOFeatureReferenceTypePropertyHandler implements Getter, Setter, P
   public Setter getSetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
     return this;
-  }
-
-  public Object get(Object owner) throws HibernateException
-  {
-    final CDOFeature cdoFeature = (CDOFeature)owner;
-    if (cdoFeature.getType() != CDOType.OBJECT)
-    {
-      return null;
-    }
-    return cdoFeature.getReferenceType();
-  }
-
-  public Object getForInsert(Object arg0, Map arg1, SessionImplementor arg2) throws HibernateException
-  {
-    return get(arg0);
   }
 
   public Method getMethod()
@@ -81,15 +97,5 @@ public class CDOFeatureReferenceTypePropertyHandler implements Getter, Setter, P
   public Class getReturnType()
   {
     return null;
-  }
-
-  public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
-  {
-    final CDOFeatureImpl cdoFeature = (CDOFeatureImpl)target;
-    if (cdoFeature.getType() != CDOType.OBJECT)
-    {
-      return;
-    }
-    cdoFeature.setReferenceType((CDOClass)value);
   }
 }

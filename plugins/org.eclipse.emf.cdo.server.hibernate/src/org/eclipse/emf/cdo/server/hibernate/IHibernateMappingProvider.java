@@ -19,7 +19,6 @@ import org.hibernate.cfg.Configuration;
  */
 public interface IHibernateMappingProvider
 {
-
   /** Adds a mapping to a configuration object */
   public void addMapping(Configuration configuration);
 

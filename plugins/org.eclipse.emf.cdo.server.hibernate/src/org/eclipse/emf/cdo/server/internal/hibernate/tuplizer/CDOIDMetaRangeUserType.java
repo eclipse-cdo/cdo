@@ -56,40 +56,27 @@ public class CDOIDMetaRangeUserType implements UserType
     {
       return null;
     }
-    final CDOIDMetaRange cdoRange = (CDOIDMetaRange)value;
-    final CDOIDMeta newCdoIDMeta = new CDOIDMetaImpl(((CDOIDMetaImpl)cdoRange.getLowerBound()).getLongValue());
+
+    CDOIDMetaRange cdoRange = (CDOIDMetaRange)value;
+    CDOIDMeta newCdoIDMeta = new CDOIDMetaImpl(((CDOIDMetaImpl)cdoRange.getLowerBound()).getLongValue());
     return new CDOIDMetaRangeImpl(newCdoIDMeta, cdoRange.size());
-  }
-
-  public boolean equals(Object x, Object y)
-  {
-    if (x == y)
-    {
-      return true;
-    }
-
-    if (x == null || y == null)
-    {
-      return false;
-    }
-
-    return x.equals(y);
   }
 
   public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws SQLException
   {
-    final Integer start = (Integer)Hibernate.INTEGER.nullSafeGet(rs, names[0]);
-    if (rs.wasNull())
-    {
-      return null;
-    }
-    final Integer size = (Integer)Hibernate.INTEGER.nullSafeGet(rs, names[1]);
+    Integer start = (Integer)Hibernate.INTEGER.nullSafeGet(rs, names[0]);
     if (rs.wasNull())
     {
       return null;
     }
 
-    final CDOIDMeta newCdoIDMeta = new CDOIDMetaImpl(start);
+    Integer size = (Integer)Hibernate.INTEGER.nullSafeGet(rs, names[1]);
+    if (rs.wasNull())
+    {
+      return null;
+    }
+
+    CDOIDMeta newCdoIDMeta = new CDOIDMetaImpl(start);
     return new CDOIDMetaRangeImpl(newCdoIDMeta, size);
   }
 
@@ -97,7 +84,7 @@ public class CDOIDMetaRangeUserType implements UserType
   {
     if (value != null)
     {
-      final CDOIDMetaRange cdoRange = (CDOIDMetaRange)value;
+      CDOIDMetaRange cdoRange = (CDOIDMetaRange)value;
       statement.setLong(index, ((CDOIDMeta)cdoRange.getLowerBound()).getLongValue());
       statement.setInt(index + 1, cdoRange.size());
     }
@@ -121,6 +108,21 @@ public class CDOIDMetaRangeUserType implements UserType
   public Object replace(Object original, Object target, Object owner)
   {
     return original;
+  }
+
+  public boolean equals(Object x, Object y)
+  {
+    if (x == y)
+    {
+      return true;
+    }
+  
+    if (x == null || y == null)
+    {
+      return false;
+    }
+  
+    return x.equals(y);
   }
 
   public int hashCode(Object x)

@@ -37,14 +37,14 @@ public class HibernateStoreChunkReader extends StoreChunkReader implements IHibe
   @Override
   public void addSimpleChunk(int index)
   {
-    super.addSimpleChunk(index);
+    // super.addSimpleChunk(index);
     throw new UnsupportedOperationException(); // TODO Implement me
   }
 
   @Override
   public void addRangedChunk(int fromIndex, int toIndex)
   {
-    super.addRangedChunk(fromIndex, toIndex);
+    // super.addRangedChunk(fromIndex, toIndex);
     throw new UnsupportedOperationException(); // TODO Implement me
   }
 

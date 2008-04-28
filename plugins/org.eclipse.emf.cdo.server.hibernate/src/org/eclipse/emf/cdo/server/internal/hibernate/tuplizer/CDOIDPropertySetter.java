@@ -43,29 +43,30 @@ public class CDOIDPropertySetter extends CDOPropertySetter
       return;
     }
 
-    final InternalCDORevision revision = (InternalCDORevision)target;
-    final CDOID cdoID = revision.getID();
+    InternalCDORevision revision = (InternalCDORevision)target;
+    CDOID cdoID = revision.getID();
     if (cdoID == null)
     {
-      final CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
+      CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
           revision.getCDOClass().getName());
       revision.setID(newCDOID);
     }
     else if (cdoID instanceof CDOIDTemp)
     {
-      final CommitContext commitContext = HibernateThreadContext.getCommitContext();
-      final CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
+      CommitContext commitContext = HibernateThreadContext.getCommitContext();
+      CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
           revision.getCDOClass().getName());
       revision.setID(newCDOID);
       commitContext.addIDMapping((CDOIDTemp)cdoID, newCDOID);
     }
     else
     {
-      final CDOIDHibernate hbCDOID = (CDOIDHibernate)revision.getID();
+      CDOIDHibernate hbCDOID = (CDOIDHibernate)revision.getID();
       if (!hbCDOID.getId().equals(value))
       {
         throw new IllegalStateException("Current id and new id are different " + value + "/" + hbCDOID.getId());
       }
+
     }
     if (!isVirtualProperty())
     {

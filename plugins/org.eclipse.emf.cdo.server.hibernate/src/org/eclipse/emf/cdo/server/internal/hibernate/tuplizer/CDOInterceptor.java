@@ -23,8 +23,11 @@ import org.hibernate.EmptyInterceptor;
  */
 public class CDOInterceptor extends EmptyInterceptor
 {
-
   private static final long serialVersionUID = 1L;
+
+  public CDOInterceptor()
+  {
+  }
 
   @Override
   public String getEntityName(Object object)
@@ -33,7 +36,8 @@ public class CDOInterceptor extends EmptyInterceptor
     {
       return ((CDOObject)object).cdoClass().getName();
     }
-    final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(object);
+
+    InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(object);
     return revision.getCDOClass().getName();
   }
 

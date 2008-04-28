@@ -11,7 +11,7 @@
  *   Martin Taal
  * </copyright>
  *
- * $Id: CDOSyntheticIdPropertyHandler.java,v 1.1 2008-04-24 11:47:07 mtaal Exp $
+ * $Id: CDOSyntheticIdPropertyHandler.java,v 1.2 2008-04-28 08:30:39 estepper Exp $
  */
 
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
@@ -41,12 +41,12 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor
 {
-  private static final long serialVersionUID = 4707601844087591747L;
+  private static final long serialVersionUID = 1L;
 
   public Getter getGetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
@@ -60,17 +60,18 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
 
   public Object get(Object owner) throws HibernateException
   {
-    final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(owner);
+    InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(owner);
     if (revision == null)
     {
       return null;
     }
+
     if (!(revision.getID() instanceof CDOIDHibernate))
     {
       return null;
     }
 
-    final CDOIDHibernate cdoID = (CDOIDHibernate)revision.getID();
+    CDOIDHibernate cdoID = (CDOIDHibernate)revision.getID();
     return cdoID.getId();
   }
 
@@ -101,25 +102,25 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
       return;
     }
 
-    final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(target);
-    final CDOID cdoID = revision.getID();
+    InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(target);
+    CDOID cdoID = revision.getID();
     if (cdoID == null)
     {
-      final CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
+      CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
           revision.getCDOClass().getName());
       revision.setID(newCDOID);
     }
     else if (cdoID instanceof CDOIDTemp)
     {
-      final CommitContext commitContext = HibernateThreadContext.getCommitContext();
-      final CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
+      CommitContext commitContext = HibernateThreadContext.getCommitContext();
+      CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
           revision.getCDOClass().getName());
       revision.setID(newCDOID);
       commitContext.addIDMapping((CDOIDTemp)cdoID, newCDOID);
     }
     else
     {
-      final CDOIDHibernate hbCDOID = (CDOIDHibernate)revision.getID();
+      CDOIDHibernate hbCDOID = (CDOIDHibernate)revision.getID();
       if (!hbCDOID.getId().equals(value))
       {
         throw new IllegalStateException("Current id and new id are different " + value + "/" + hbCDOID.getId());

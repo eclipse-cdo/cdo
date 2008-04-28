@@ -29,13 +29,13 @@ public class CDOVersionPropertyGetter extends CDOPropertyGetter
   @Override
   public Object get(Object target) throws HibernateException
   {
-    final InternalCDORevision revision = (InternalCDORevision)target;
+    InternalCDORevision revision = (InternalCDORevision)target;
     if (isVirtualProperty())
     {
       return revision.getVersion();
     }
 
-    final Object version = super.get(target);
+    Object version = super.get(target);
     // TODO: does this make sense?
     // revision.setVersion(((Number)value).intValue());
     return version;

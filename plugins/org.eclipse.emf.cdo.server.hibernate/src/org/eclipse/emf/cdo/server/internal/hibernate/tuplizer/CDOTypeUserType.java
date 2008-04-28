@@ -29,6 +29,10 @@ public class CDOTypeUserType implements UserType
 {
   private static final int[] SQL_TYPES = { Types.INTEGER };
 
+  public CDOTypeUserType()
+  {
+  }
+
   public int[] sqlTypes()
   {
     return SQL_TYPES;
@@ -42,10 +46,6 @@ public class CDOTypeUserType implements UserType
   public boolean isMutable()
   {
     return false;
-  }
-
-  public CDOTypeUserType()
-  {
   }
 
   public Object deepCopy(Object value)
@@ -70,7 +70,7 @@ public class CDOTypeUserType implements UserType
 
   public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws SQLException
   {
-    final Integer value = (Integer)Hibernate.INTEGER.nullSafeGet(rs, names[0]);
+    Integer value = (Integer)Hibernate.INTEGER.nullSafeGet(rs, names[0]);
     if (rs.wasNull())
     {
       return null;

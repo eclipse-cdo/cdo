@@ -57,8 +57,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       TRACER.trace("Creating hibernate session and setting it in threadlocal HibernateThreadContext");
     }
 
-    final SessionFactory sessionFactory = getStore().getHibernateSessionFactory();
-    final Session session = sessionFactory.openSession();
+    SessionFactory sessionFactory = getStore().getHibernateSessionFactory();
+    Session session = sessionFactory.openSession();
     HibernateThreadContext.setSession(session);
     return session;
   }

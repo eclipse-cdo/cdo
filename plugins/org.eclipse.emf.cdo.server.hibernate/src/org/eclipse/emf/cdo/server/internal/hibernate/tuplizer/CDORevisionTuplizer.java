@@ -59,13 +59,13 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
       return;
     }
 
-    final HibernateStore hbStore = HibernateStore.getCurrentHibernateStore();
+    HibernateStore hbStore = HibernateStore.getCurrentHibernateStore();
 
     // find the CDOClass/Package
     // TODO: error handling if meta attribute not present
     // TODO: error handling if entityname not set
-    final String entityName = mappingInfo.getEntityName();
-    final String ePackageURI = mappingInfo.getMetaAttribute("epackage").getValue();
+    String entityName = mappingInfo.getEntityName();
+    String ePackageURI = mappingInfo.getMetaAttribute("epackage").getValue();
 
     if (TRACER.isEnabled())
     {
@@ -202,7 +202,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
       return new CDOVersionPropertyGetter(this, mappedProperty.getName());
     }
 
-    final CDOFeature cdoFeature = getCDOClass().lookupFeature(mappedProperty.getName());
+    CDOFeature cdoFeature = getCDOClass().lookupFeature(mappedProperty.getName());
     if (cdoFeature.isReference() && cdoFeature.isMany())
     {
       return new CDOManyReferenceGetter(this, mappedProperty.getName());
@@ -237,7 +237,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
       return new CDOVersionPropertySetter(this, mappedProperty.getName());
     }
 
-    final CDOFeature cdoFeature = getCDOClass().lookupFeature(mappedProperty.getName());
+    CDOFeature cdoFeature = getCDOClass().lookupFeature(mappedProperty.getName());
     if (cdoFeature.isReference() && cdoFeature.isMany())
     {
       return new CDOManyReferenceSetter(this, mappedProperty.getName());

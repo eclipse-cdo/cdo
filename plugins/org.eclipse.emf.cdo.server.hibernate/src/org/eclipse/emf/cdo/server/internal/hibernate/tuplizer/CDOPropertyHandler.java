@@ -32,15 +32,22 @@ public abstract class CDOPropertyHandler
   {
     this.tuplizer = tuplizer;
     cdoFeature = tuplizer.getCDOClass().lookupFeature(propertyName);
-    getTracer().trace(
-        "Created " + this.getClass().getName() + " for cdoClass/feature: " + tuplizer.getCDOClass().getName() + "."
-            + propertyName);
+    if (getTracer().isEnabled())
+    {
+      getTracer().trace(
+          "Created " + this.getClass().getName() + " for cdoClass/feature: " + tuplizer.getCDOClass().getName() + "."
+              + propertyName);
+    }
+
     if (cdoFeature == null)
     {
       if (isVirtualPropertyAllowed())
       {
         virtualProperty = true;
-        getTracer().trace("This is a virtualproperty");
+        if (getTracer().isEnabled())
+        {
+          getTracer().trace("This is a virtual property");
+        }
       }
       else
       {

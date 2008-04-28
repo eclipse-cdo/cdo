@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
-import org.eclipse.net4j.internal.util.collection.MoveableArrayList;
+import org.eclipse.net4j.util.collection.MoveableList;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,7 +29,7 @@ import java.util.ListIterator;
  */
 public class HibernateMoveableListWrapper implements List<Object>
 {
-  private MoveableArrayList<Object> delegate;
+  private MoveableList<Object> delegate;
 
   public HibernateMoveableListWrapper()
   {
@@ -38,7 +38,7 @@ public class HibernateMoveableListWrapper implements List<Object>
   /**
    * @return the delegate
    */
-  public MoveableArrayList<Object> getDelegate()
+  public MoveableList<Object> getDelegate()
   {
     return delegate;
   }
@@ -47,7 +47,7 @@ public class HibernateMoveableListWrapper implements List<Object>
    * @param delegate
    *          the delegate to set
    */
-  public void setDelegate(MoveableArrayList<Object> delegate)
+  public void setDelegate(MoveableList<Object> delegate)
   {
     this.delegate = delegate;
   }
@@ -70,7 +70,7 @@ public class HibernateMoveableListWrapper implements List<Object>
 
   protected List<Object> getObjects(List<?> cdoIDs)
   {
-    final List<Object> result = new ArrayList<Object>();
+    List<Object> result = new ArrayList<Object>();
     for (Object o : cdoIDs)
     {
       result.add(getObject(o));
@@ -81,13 +81,13 @@ public class HibernateMoveableListWrapper implements List<Object>
 
   protected CDOID getCDOID(Object o)
   {
-    final CDORevision cdoRevision = (CDORevision)o;
+    CDORevision cdoRevision = (CDORevision)o;
     return cdoRevision.getID();
   }
 
   protected List<CDOID> getCDOIDs(Collection<?> c)
   {
-    final List<CDOID> newC = new ArrayList<CDOID>();
+    List<CDOID> newC = new ArrayList<CDOID>();
     for (Object o : c)
     {
       newC.add(getCDOID(o));
@@ -203,7 +203,7 @@ public class HibernateMoveableListWrapper implements List<Object>
 
   public Object[] toArray()
   {
-    final Object[] result = new Object[size()];
+    Object[] result = new Object[size()];
     int i = 0;
     for (Object o : this)
     {
@@ -241,7 +241,7 @@ public class HibernateMoveableListWrapper implements List<Object>
 
     public Object next()
     {
-      final Object o = delegate.next();
+      Object o = delegate.next();
       if (o instanceof CDOID)
       {
         return HibernateUtil.getInstance().getCDORevision((CDOID)o);
@@ -282,7 +282,7 @@ public class HibernateMoveableListWrapper implements List<Object>
 
     public Object next()
     {
-      final Object o = delegate.next();
+      Object o = delegate.next();
       if (o instanceof CDOID)
       {
         return HibernateUtil.getInstance().getCDORevision((CDOID)delegate.next());
@@ -298,7 +298,7 @@ public class HibernateMoveableListWrapper implements List<Object>
 
     public Object previous()
     {
-      final Object o = delegate.previous();
+      Object o = delegate.previous();
       if (o instanceof CDOID)
       {
         return HibernateUtil.getInstance().getCDORevision((CDOID)delegate.next());

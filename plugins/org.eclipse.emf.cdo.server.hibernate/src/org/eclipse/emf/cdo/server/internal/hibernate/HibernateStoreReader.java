@@ -73,7 +73,7 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
 
   public CDOClassRef readObjectType(CDOID id)
   {
-    final CDORevision cdoRevision = readRevision(id, -1);
+    CDORevision cdoRevision = readRevision(id, -1);
     return cdoRevision.getCDOClass().createClassRef();
   }
 
@@ -94,10 +94,10 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
       TRACER.trace("Finding resourceid using path " + path);
     }
 
-    final Session session = getHibernateSession();
-    final Criteria criteria = session.createCriteria(CDOResourceClass.NAME);
+    Session session = getHibernateSession();
+    Criteria criteria = session.createCriteria(CDOResourceClass.NAME);
     criteria.add(Expression.eq("path", path));
-    final List<?> result = criteria.list();
+    List<?> result = criteria.list();
     if (result.size() == 0)
     {
       if (TRACER.isEnabled())
@@ -110,7 +110,7 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
     }
 
     // TODO: throw exception if list.size() > 1?
-    final CDORevision cdoRevision = (CDORevision)result.get(0);
+    CDORevision cdoRevision = (CDORevision)result.get(0);
     return cdoRevision.getID();
   }
 
@@ -131,9 +131,9 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
       TRACER.trace("Finding resource using id " + id);
     }
 
-    final Session session = getHibernateSession();
-    final Query qry = session.createQuery("select path from " + CDOResourceClass.NAME + " where id=:id");
-    final CDOIDHibernate idHibernate = (CDOIDHibernate)id;
+    Session session = getHibernateSession();
+    Query qry = session.createQuery("select path from " + CDOResourceClass.NAME + " where id=:id");
+    CDOIDHibernate idHibernate = (CDOIDHibernate)id;
     qry.setParameter("id", idHibernate.getId());
     final List<?> result = qry.list();
     if (result.size() == 0)

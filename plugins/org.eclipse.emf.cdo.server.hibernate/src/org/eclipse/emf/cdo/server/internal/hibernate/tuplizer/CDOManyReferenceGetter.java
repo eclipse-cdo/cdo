@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 
 import org.eclipse.net4j.internal.util.collection.MoveableArrayList;
+import org.eclipse.net4j.util.collection.MoveableList;
 
 import org.hibernate.HibernateException;
 import org.hibernate.collection.PersistentCollection;
@@ -20,7 +21,6 @@ import org.hibernate.collection.PersistentCollection;
 /**
  * @author Martin Taal
  */
-
 // Howto handle hibernate lists:
 // - a new owner: the owner is persisted and its lists are replaced with hibernate
 // persistentlist, the hibernate persitentlist will have a delegate (internally) which is the list which was previously
@@ -49,7 +49,7 @@ public class CDOManyReferenceGetter extends CDOPropertyGetter
   public Object get(Object target) throws HibernateException
   {
     // Check if there is already a persistentcollection
-    final PersistentCollection collection = PersistableListHolder.getInstance().getListMapping(target, getCDOFeature());
+    PersistentCollection collection = PersistableListHolder.getInstance().getListMapping(target, getCDOFeature());
     if (collection != null)
     {
       return collection;
@@ -57,17 +57,17 @@ public class CDOManyReferenceGetter extends CDOPropertyGetter
 
     // Not yet, get the moveablearraylist
     @SuppressWarnings("unchecked")
-    MoveableArrayList<Object> list = (MoveableArrayList<Object>)super.get(target);
+    MoveableList<Object> list = (MoveableList<Object>)super.get(target);
     if (list == null)
     {
       // TODO: what initial size?
       list = new MoveableArrayList<Object>(10);
-      final InternalCDORevision revision = (InternalCDORevision)target;
+      InternalCDORevision revision = (InternalCDORevision)target;
       revision.setValue(getCDOFeature(), list);
     }
 
     // Wrap the moveablearraylist
-    final HibernateMoveableListWrapper wrapper = new HibernateMoveableListWrapper();
+    HibernateMoveableListWrapper wrapper = new HibernateMoveableListWrapper();
     wrapper.setDelegate(list);
 
     // And return it

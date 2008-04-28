@@ -37,7 +37,7 @@ public class CDORevisionInstantiator implements Instantiator
   public CDORevisionInstantiator(CDORevisionTuplizer tuplizer, PersistentClass mappingInfo)
   {
     cdoClass = tuplizer.getCDOClass();
-    final HibernateStore hbStore = HibernateStore.getCurrentHibernateStore();
+    HibernateStore hbStore = HibernateStore.getCurrentHibernateStore();
     IRepository repository = hbStore.getRepository();
     revisionManager = repository.getRevisionManager();
   }

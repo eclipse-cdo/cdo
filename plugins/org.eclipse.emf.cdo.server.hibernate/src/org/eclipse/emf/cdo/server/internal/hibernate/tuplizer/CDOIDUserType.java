@@ -84,22 +84,25 @@ public class CDOIDUserType implements UserType
 
   public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws SQLException
   {
-    final String entityName = (String)Hibernate.STRING.nullSafeGet(rs, names[0]);
+    String entityName = (String)Hibernate.STRING.nullSafeGet(rs, names[0]);
     if (rs.wasNull())
     {
       return null;
     }
-    final String idStr = (String)Hibernate.STRING.nullSafeGet(rs, names[1]);
+
+    String idStr = (String)Hibernate.STRING.nullSafeGet(rs, names[1]);
     if (rs.wasNull())
     {
       return null;
     }
-    final String idClassName = (String)Hibernate.STRING.nullSafeGet(rs, names[2]);
+
+    String idClassName = (String)Hibernate.STRING.nullSafeGet(rs, names[2]);
     if (rs.wasNull())
     {
       return null;
     }
-    final Serializable id = getId(idStr, idClassName);
+
+    Serializable id = getId(idStr, idClassName);
     return CDOIDHibernateFactoryImpl.getInstance().createCDOID(id, entityName);
   }
 
@@ -114,7 +117,7 @@ public class CDOIDUserType implements UserType
 
     if (value != null)
     {
-      final CDOIDHibernate cdoID;
+      CDOIDHibernate cdoID;
       if (value instanceof CDOIDTemp)
       {
         cdoID = HibernateUtil.getInstance().getCDOIDHibernate((CDOID)value);
@@ -162,10 +165,11 @@ public class CDOIDUserType implements UserType
       Constructor<?> constructor = constructors.get(idType);
       if (constructor == null)
       {
-        final Class<?> idClass = this.getClass().getClassLoader().loadClass(idType);
+        Class<?> idClass = this.getClass().getClassLoader().loadClass(idType);
         constructor = idClass.getConstructor(new Class[] { String.class });
         constructors.put(idType, constructor);
       }
+
       return (Serializable)constructor.newInstance(new Object[] { idStr });
     }
     catch (Exception e)
@@ -173,5 +177,4 @@ public class CDOIDUserType implements UserType
       throw WrappedException.wrap(e);
     }
   }
-
 }

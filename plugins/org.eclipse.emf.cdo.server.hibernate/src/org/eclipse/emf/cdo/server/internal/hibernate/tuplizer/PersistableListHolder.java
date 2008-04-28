@@ -41,7 +41,7 @@ public class PersistableListHolder
 
   public void putListMapping(Object target, CDOFeature cdoFeature, PersistentCollection collection)
   {
-    final Key key = new Key(target, cdoFeature);
+    Key key = new Key(target, cdoFeature);
     getListMapping().put(key, collection);
     if (TRACER.isEnabled())
     {
@@ -52,7 +52,7 @@ public class PersistableListHolder
 
   public PersistentCollection getListMapping(Object target, CDOFeature cdoFeature)
   {
-    final Key key = new Key(target, cdoFeature);
+    Key key = new Key(target, cdoFeature);
     return getListMapping().get(key);
   }
 
@@ -96,7 +96,7 @@ public class PersistableListHolder
         return false;
       }
 
-      final Key otherKey = (Key)obj;
+      Key otherKey = (Key)obj;
       // the owner is uniquely present in mem, the same applies for the cdoFeature
       // therefore == is allowed
       return owner == otherKey.owner && cdoFeature == otherKey.cdoFeature;

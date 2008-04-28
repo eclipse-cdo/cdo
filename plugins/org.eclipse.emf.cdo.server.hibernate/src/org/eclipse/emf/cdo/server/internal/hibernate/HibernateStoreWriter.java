@@ -38,7 +38,10 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   public HibernateStoreWriter(HibernateStore store, IView view)
   {
     super(store, view);
-    TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
+    }
   }
 
   @Override
@@ -48,19 +51,19 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
     {
       TRACER.trace("Committing transaction");
     }
-    HibernateThreadContext.setCommitContext(context);
 
+    HibernateThreadContext.setCommitContext(context);
     writePackages(context.getNewPackages());
 
     try
     {
       // start with fresh hibernate session
-      final Session session = getHibernateSession();
+      Session session = getHibernateSession();
       session.setFlushMode(FlushMode.COMMIT);
       session.beginTransaction();
       for (Object o : context.getNewObjects())
       {
-        final CDORevision cdoRevision = (CDORevision)o;
+        CDORevision cdoRevision = (CDORevision)o;
         session.save(HibernateUtil.getInstance().getEntityName(cdoRevision), o);
         if (TRACER.isEnabled())
         {
@@ -73,11 +76,12 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
       {
         try
         {
-          final CDORevision cdoRevision = (CDORevision)o;
+          CDORevision cdoRevision = (CDORevision)o;
           if (cdoRevision instanceof CDORevisionImpl)
           {
             ((CDORevisionImpl)cdoRevision).setVersion(cdoRevision.getVersion() - 1);
           }
+
           session.update(HibernateUtil.getInstance().getEntityName(cdoRevision), o);
           if (TRACER.isEnabled())
           {
@@ -86,7 +90,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
         }
         catch (Exception e)
         {
-          e.printStackTrace(System.err);
+          OM.LOG.error(e);
           throw WrappedException.wrap(e);
         }
       }
@@ -112,6 +116,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
     {
       TRACER.trace("Applying id mappings");
     }
+
     context.applyIDMappings();
   }
 

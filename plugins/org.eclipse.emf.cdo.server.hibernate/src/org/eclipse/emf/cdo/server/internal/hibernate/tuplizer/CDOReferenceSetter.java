@@ -36,7 +36,7 @@ public class CDOReferenceSetter extends CDOPropertySetter
     }
     else
     {
-      final CDORevision cdoValue = (CDORevision)value;
+      CDORevision cdoValue = (CDORevision)value;
       super.set(target, cdoValue.getID(), factory);
     }
   }

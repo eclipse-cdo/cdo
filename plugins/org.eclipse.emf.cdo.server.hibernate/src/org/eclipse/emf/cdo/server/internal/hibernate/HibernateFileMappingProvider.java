@@ -29,7 +29,6 @@ import java.io.InputStream;
  */
 public class HibernateFileMappingProvider implements IHibernateMappingProvider
 {
-
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateFileMappingProvider.class);
 
   private IHibernateStore hibernateStore;
@@ -46,12 +45,30 @@ public class HibernateFileMappingProvider implements IHibernateMappingProvider
     mappingFileLocations = locations;
   }
 
+  public IHibernateStore getHibernateStore()
+  {
+    return hibernateStore;
+  }
+
+  public void setHibernateStore(IHibernateStore hibernateStore)
+  {
+    this.hibernateStore = hibernateStore;
+  }
+
   public void addMapping(Configuration configuration)
   {
-    TRACER.trace("Adding hibernate mapping from location(s):");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Adding hibernate mapping from location(s):");
+    }
+
     for (String location : mappingFileLocations)
     {
-      TRACER.trace(location);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(location);
+      }
+
       InputStream is = null;
       try
       {
@@ -73,15 +90,5 @@ public class HibernateFileMappingProvider implements IHibernateMappingProvider
         IOUtil.close(is);
       }
     }
-  }
-
-  public IHibernateStore getHibernateStore()
-  {
-    return hibernateStore;
-  }
-
-  public void setHibernateStore(IHibernateStore hibernateStore)
-  {
-    this.hibernateStore = hibernateStore;
   }
 }

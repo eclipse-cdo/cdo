@@ -11,7 +11,7 @@
  *   Martin Taal
  * </copyright>
  *
- * $Id: CDOSyntheticVersionPropertyHandler.java,v 1.1 2008-04-24 11:47:07 mtaal Exp $
+ * $Id: CDOSyntheticVersionPropertyHandler.java,v 1.2 2008-04-28 08:30:39 estepper Exp $
  */
 
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
@@ -34,15 +34,16 @@ import java.util.Map;
  * Reads the version from the internal version cache.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, PropertyAccessor
 {
-  /**
-   * Generated Serial Version ID
-   */
-  private static final long serialVersionUID = -7004553329654520847L;
+  private static final long serialVersionUID = 1L;
+
+  public CDOSyntheticVersionPropertyHandler()
+  {
+  }
 
   public Getter getGetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
@@ -56,11 +57,12 @@ public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, Prope
 
   public Object get(Object owner) throws HibernateException
   {
-    final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(owner);
+    InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(owner);
     if (revision == null)
     {
       return null;
     }
+
     return revision.getVersion();
   }
 
@@ -72,21 +74,11 @@ public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, Prope
     return get(owner);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.hibernate.property.Getter#getMethod()
-   */
   public Method getMethod()
   {
     return null;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.hibernate.property.Getter#getMethodName()
-   */
   public String getMethodName()
   {
     return null;
@@ -101,7 +93,7 @@ public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, Prope
   /** Sets the version in the internal version cache */
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
-    final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(target);
+    InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(target);
     revision.setVersion(((Number)value).intValue());
   }
 }

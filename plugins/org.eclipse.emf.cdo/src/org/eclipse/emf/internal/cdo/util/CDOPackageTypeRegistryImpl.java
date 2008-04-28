@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.dynamichelpers.ExtensionTracker;
 import org.eclipse.core.runtime.dynamichelpers.IExtensionChangeHandler;
@@ -46,11 +45,6 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
     CDOPackageTypeRegistry
 {
   public static final CDOPackageTypeRegistryImpl INSTANCE = new CDOPackageTypeRegistryImpl();
-
-  private static final IExtensionRegistry EXT_REGISTRY = Platform.getExtensionRegistry();
-
-  private static final String EXT_POINT = EcorePlugin.getPlugin().getBundle().getSymbolicName() + "."
-      + EcorePlugin.GENERATED_PACKAGE_PPID;
 
   private Object extensionTracker;
 
@@ -96,7 +90,8 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
 
   private void initPackageTypes()
   {
-    IConfigurationElement[] elements = EXT_REGISTRY.getConfigurationElementsFor(EXT_POINT);
+    IConfigurationElement[] elements = Platform.getExtensionRegistry().getConfigurationElementsFor(
+        EcorePlugin.getPlugin().getBundle().getSymbolicName(), EcorePlugin.GENERATED_PACKAGE_PPID);
     addPackageTypes(elements);
   }
 
@@ -165,7 +160,8 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
 
   private IFilter createExtensionPointFilter()
   {
-    final IExtensionPoint xpt = EXT_REGISTRY.getExtensionPoint(EXT_POINT);
+    final IExtensionPoint xpt = Platform.getExtensionRegistry().getExtensionPoint(
+        EcorePlugin.getPlugin().getBundle().getSymbolicName(), EcorePlugin.GENERATED_PACKAGE_PPID);
     return new IFilter()
     {
       public boolean matches(IExtensionPoint target)

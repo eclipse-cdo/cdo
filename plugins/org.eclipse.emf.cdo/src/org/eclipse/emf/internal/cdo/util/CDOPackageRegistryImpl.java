@@ -8,21 +8,23 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.internal.cdo;
+package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOPackageType;
-import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
+import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
+import org.eclipse.net4j.internal.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
@@ -172,8 +174,6 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
    */
   public static class SelfPopulating extends CDOPackageRegistryImpl
   {
-    private final ContextTracer TRACER = new ContextTracer(OM.DEBUG_MODEL, SelfPopulating.class);
-
     private static final long serialVersionUID = 1L;
 
     private IListener sessionListener = new LifecycleEventAdapter()
@@ -188,6 +188,17 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
       protected void onAboutToDeactivate(ILifecycle lifecycle)
       {
         getSession().removeListener(this);
+        CDOPackageTypeRegistry.INSTANCE.removeListener(typeListener);
+      }
+    };
+
+    private IListener typeListener = new ContainerEventAdapter<Map.Entry<String, CDOPackageType>>()
+    {
+      @Override
+      protected void onAdded(IContainer<java.util.Map.Entry<String, CDOPackageType>> container,
+          java.util.Map.Entry<String, CDOPackageType> entry)
+      {
+        addEntry(entry);
       }
     };
 
@@ -199,28 +210,33 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
 
     protected void populate()
     {
-      Map<String, CDOPackageType> packageTypes = CDOUtil.getPackageTypes();
-      for (Map.Entry<String, CDOPackageType> entry : packageTypes.entrySet())
+      for (Map.Entry<String, CDOPackageType> entry : CDOPackageTypeRegistry.INSTANCE.entrySet())
       {
-        CDOPackageType packageType = entry.getValue();
-        if (packageType != CDOPackageType.LEGACY)
+        addEntry(entry);
+      }
+
+      CDOPackageTypeRegistry.INSTANCE.addListener(typeListener);
+    }
+
+    protected void addEntry(Map.Entry<String, CDOPackageType> entry)
+    {
+      CDOPackageType packageType = entry.getValue();
+      if (packageType != CDOPackageType.LEGACY)
+      {
+        String uri = entry.getKey();
+        if (!containsKey(uri))
         {
-          String uri = entry.getKey();
-          if (!containsKey(uri))
+          try
           {
-            try
-            {
-              EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(uri);
-              putEPackage(ePackage);
-            }
-            catch (RuntimeException ex)
-            {
-              OM.LOG.error(ex);
-            }
+            EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(uri);
+            putEPackage(ePackage);
+          }
+          catch (RuntimeException ex)
+          {
+            OM.LOG.error(ex);
           }
         }
       }
     }
-
   }
 }

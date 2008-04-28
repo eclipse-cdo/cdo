@@ -27,6 +27,8 @@ public interface OMPlatform
 
   public OMBundle bundle(String bundleID, Class<?> accessor);
 
+  public boolean isOSGiRunning();
+
   public boolean isDebugging();
 
   public void setDebugging(boolean debugging);

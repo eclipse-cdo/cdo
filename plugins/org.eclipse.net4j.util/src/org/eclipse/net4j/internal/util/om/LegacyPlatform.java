@@ -27,6 +27,11 @@ public class LegacyPlatform extends AbstractPlatform
   {
   }
 
+  public boolean isOSGiRunning()
+  {
+    return false;
+  }
+
   @Override
   protected OMBundle createBundle(String bundleID, Class<?> accessor)
   {

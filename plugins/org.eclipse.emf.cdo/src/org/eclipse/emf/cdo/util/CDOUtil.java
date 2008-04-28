@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.util;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
-import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.emf.internal.cdo.CDOSessionFactory;
@@ -28,7 +27,6 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -41,18 +39,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.Constants;
-
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -61,71 +50,10 @@ import java.util.Map;
  */
 public final class CDOUtil
 {
-  private static Map<String, CDOPackageType> packageTypes;
-
   public static final String CDO_VERSION_SUFFIX = "-CDO";
 
   private CDOUtil()
   {
-  }
-
-  /**
-   * Can only be used with Eclipse running!
-   */
-  public static synchronized Map<String, CDOPackageType> getPackageTypes()
-  {
-    if (packageTypes == null)
-    {
-      packageTypes = analyzePackageTypes();
-    }
-
-    return packageTypes;
-  }
-
-  private static HashMap<String, CDOPackageType> analyzePackageTypes()
-  {
-    HashMap<String, CDOPackageType> bundles = new HashMap<String, CDOPackageType>();
-    HashMap<String, CDOPackageType> result = new HashMap<String, CDOPackageType>();
-
-    IExtensionRegistry registry = Platform.getExtensionRegistry();
-    String ecoreID = EcorePlugin.getPlugin().getBundle().getSymbolicName();
-    String extPoint = EcorePlugin.GENERATED_PACKAGE_PPID;
-    IConfigurationElement[] elements = registry.getConfigurationElementsFor(ecoreID, extPoint);
-    for (IConfigurationElement element : elements)
-    {
-      String uri = element.getAttribute("uri");
-      if (!StringUtil.isEmpty(uri) && !uri.equals(EresourcePackage.eINSTANCE.getNsURI()))
-      {
-        String bundleName = element.getContributor().getName();
-        CDOPackageType packageType = bundles.get(bundleName);
-        if (packageType == null)
-        {
-          Bundle bundle = Platform.getBundle(bundleName);
-          if (bundle.getEntry("META-INF/CDO.MF") != null)
-          {
-            packageType = CDOPackageType.NATIVE;
-          }
-          else
-          {
-            String version = (String)bundle.getHeaders().get(Constants.BUNDLE_VERSION);
-            if (version.endsWith(CDOUtil.CDO_VERSION_SUFFIX))
-            {
-              packageType = CDOPackageType.CONVERTED;
-            }
-            else
-            {
-              packageType = CDOPackageType.LEGACY;
-            }
-          }
-
-          bundles.put(bundleName, packageType);
-        }
-
-        result.put(uri, packageType);
-      }
-    }
-
-    return result;
   }
 
   public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects,

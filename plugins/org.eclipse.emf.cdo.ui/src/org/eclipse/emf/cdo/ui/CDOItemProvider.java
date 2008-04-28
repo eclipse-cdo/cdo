@@ -37,7 +37,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory;
 import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 import org.eclipse.emf.cdo.util.CDOPackageType;
-import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IContainer;
@@ -315,7 +315,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
   protected boolean fillGenerated(MenuManager manager, CDOSession session)
   {
-    Set<Map.Entry<String, CDOPackageType>> entrySet = CDOUtil.getPackageTypes().entrySet();
+    Set<Map.Entry<String, CDOPackageType>> entrySet = CDOPackageTypeRegistry.INSTANCE.entrySet();
     List<Map.Entry<String, CDOPackageType>> entryList = new ArrayList<Map.Entry<String, CDOPackageType>>(entrySet);
     Collections.sort(entryList, new Comparator<Map.Entry<String, CDOPackageType>>()
     {

@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOPackageType;
-import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -198,7 +198,7 @@ public class PackageManagerDialog extends TitleAreaDialog
       uri = ((EPackage)ePackage).getNsURI();
     }
 
-    CDOPackageType packageType = CDOUtil.getPackageTypes().get(uri);
+    CDOPackageType packageType = CDOPackageTypeRegistry.INSTANCE.get(uri);
     if (packageType == null)
     {
       return "?";

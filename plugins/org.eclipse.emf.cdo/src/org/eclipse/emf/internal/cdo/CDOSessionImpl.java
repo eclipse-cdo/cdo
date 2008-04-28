@@ -38,6 +38,7 @@ import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
 import org.eclipse.emf.internal.cdo.protocol.QueryObjectTypesRequest;
 import org.eclipse.emf.internal.cdo.protocol.ViewsChangedRequest;
+import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.emf.internal.cdo.util.ProxyResolverURIResourceMap;

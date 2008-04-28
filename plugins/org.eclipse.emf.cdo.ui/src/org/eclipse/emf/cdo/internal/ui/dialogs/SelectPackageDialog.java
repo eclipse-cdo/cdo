@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.dialogs;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.util.CDOPackageType;
-import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.BaseDialog;
@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -46,8 +45,6 @@ import java.util.Set;
 public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
 {
   private static final Set<String> NO_URIS = Collections.emptySet();
-
-  private Map<String, CDOPackageType> packageTypes = CDOUtil.getPackageTypes();
 
   private Set<String> excludedURIs = new HashSet<String>();
 
@@ -76,7 +73,7 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
     viewer.getTable().setLayoutData(UIUtil.createGridData());
     viewer.setContentProvider(new PackageContentProvider());
     viewer.setLabelProvider(new PackageLabelProvider());
-    viewer.setInput(packageTypes);
+    viewer.setInput(CDOPackageTypeRegistry.INSTANCE);
 
     String[] uris = OM.PREF_HISTORY_SELECT_PACKAGES.getValue();
     if (uris != null)
@@ -119,7 +116,7 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
 
     public Object[] getElements(Object inputElement)
     {
-      Set<String> uris = new HashSet<String>(packageTypes.keySet());
+      Set<String> uris = new HashSet<String>(CDOPackageTypeRegistry.INSTANCE.keySet());
       uris.removeAll(excludedURIs);
 
       List<String> elements = new ArrayList<String>(uris);
@@ -150,7 +147,7 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
     {
       if (element instanceof String)
       {
-        CDOPackageType packageType = packageTypes.get(element);
+        CDOPackageType packageType = CDOPackageTypeRegistry.INSTANCE.get(element);
         switch (packageType)
         {
         case CONVERTED:

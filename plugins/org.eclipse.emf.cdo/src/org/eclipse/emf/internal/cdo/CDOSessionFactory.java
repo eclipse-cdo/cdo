@@ -12,6 +12,8 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSession;
 
+import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
+
 import org.eclipse.net4j.internal.util.factory.Factory;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.container.IManagedContainer;

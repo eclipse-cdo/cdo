@@ -40,6 +40,11 @@ public class OSGiPlatform extends AbstractPlatform
     }
   }
 
+  public boolean isOSGiRunning()
+  {
+    return true;
+  }
+
   @Override
   protected OMBundle createBundle(String bundleID, Class<?> accessor)
   {

@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.util.om.trace;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.om.OMBundle;
+import org.eclipse.net4j.util.om.OMBundle.DebugSupport;
 import org.eclipse.net4j.util.om.trace.OMTraceHandlerEvent;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 
@@ -39,7 +40,7 @@ public class Tracer implements OMTracer
 
   private Tracer(Tracer parent, String name)
   {
-    this.bundle = parent.getBundle();
+    bundle = parent.getBundle();
     this.parent = parent;
     this.name = name;
     fullName = parent.getFullName() + "." + name; //$NON-NLS-1$
@@ -67,12 +68,14 @@ public class Tracer implements OMTracer
 
   public boolean isEnabled()
   {
-    return bundle.isDebugging() && bundle.getDebugOption(fullName, false);
+    DebugSupport debugSupport = bundle.getDebugSupport();
+    return debugSupport.isDebugging() && debugSupport.getDebugOption(fullName, false);
   }
 
   public void setEnabled(boolean enabled)
   {
-    bundle.setDebugOption(fullName, enabled);
+    DebugSupport debugSupport = bundle.getDebugSupport();
+    debugSupport.setDebugOption(fullName, enabled);
   }
 
   public void trace(OMTraceHandlerEvent event)

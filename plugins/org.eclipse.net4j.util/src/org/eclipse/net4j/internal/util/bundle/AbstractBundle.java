@@ -38,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractBundle implements OMBundle
+public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport, OMBundle.TranslationSupport
 {
   private AbstractPlatform platform;
 
@@ -98,6 +98,16 @@ public abstract class AbstractBundle implements OMBundle
   public void setBundleContext(Object bundleContext)
   {
     this.bundleContext = bundleContext;
+  }
+
+  public DebugSupport getDebugSupport()
+  {
+    return this;
+  }
+
+  public TranslationSupport getTranslationSupport()
+  {
+    return this;
   }
 
   public boolean isDebugging()

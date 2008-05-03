@@ -232,6 +232,31 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
+  public void testSelfPopulating() throws Exception
+  {
+    {
+      // Create resource in session 1
+      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true, true);
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.createResource("/res");
+
+      Company company = Model1Factory.eINSTANCE.createCompany();
+      company.setName("Eike");
+      res.getContents().add(company);
+      transaction.commit();
+    }
+
+    {
+      // Load resource in session 2
+      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.getResource("/res");
+
+      Company company = (Company)res.getContents().get(0);
+      assertEquals("Eike", company.getName());
+    }
+  }
+
   /**
    * TODO Fix testDynamicPackage()
    */

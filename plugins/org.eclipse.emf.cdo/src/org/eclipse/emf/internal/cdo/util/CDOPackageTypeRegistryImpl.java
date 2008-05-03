@@ -46,10 +46,17 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
 {
   public static final CDOPackageTypeRegistryImpl INSTANCE = new CDOPackageTypeRegistryImpl();
 
+  private static final String ECORE_ID = "org.eclipse.emf.ecore";
+
   private Object extensionTracker;
 
   private CDOPackageTypeRegistryImpl()
   {
+    if (!OMPlatform.INSTANCE.isOSGiRunning())
+    {
+      throw new IllegalStateException("OSGi is not running");
+    }
+
     initPackageTypes();
   }
 
@@ -57,16 +64,14 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    if (OMPlatform.INSTANCE.isOSGiRunning())
+
+    try
     {
-      try
-      {
-        connectExtensionTracker();
-      }
-      catch (Throwable t)
-      {
-        OM.LOG.error(t);
-      }
+      connectExtensionTracker();
+    }
+    catch (Throwable t)
+    {
+      OM.LOG.error(t);
     }
   }
 
@@ -90,8 +95,8 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
 
   private void initPackageTypes()
   {
-    IConfigurationElement[] elements = Platform.getExtensionRegistry().getConfigurationElementsFor(
-        EcorePlugin.getPlugin().getBundle().getSymbolicName(), EcorePlugin.GENERATED_PACKAGE_PPID);
+    IConfigurationElement[] elements = Platform.getExtensionRegistry().getConfigurationElementsFor(ECORE_ID,
+        EcorePlugin.GENERATED_PACKAGE_PPID);
     addPackageTypes(elements);
   }
 

@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory;
 import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage;
+import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.URI;
@@ -234,6 +235,8 @@ public class PackageRegistryTest extends AbstractCDOTest
 
   public void testSelfPopulating() throws Exception
   {
+    CDOPackageTypeRegistry.INSTANCE.register(Model1Package.eINSTANCE);
+
     {
       // Create resource in session 1
       CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true, true);

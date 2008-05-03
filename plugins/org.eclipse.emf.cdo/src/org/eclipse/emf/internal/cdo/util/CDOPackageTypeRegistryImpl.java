@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.internal.util.registry.HashMapRegistry;
@@ -90,8 +90,9 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
       // Legacy system might not be available
     }
 
+    // TODO This might not work if the model interface don't extend CDOObject
     Class<?> instanceClass = eClass.getInstanceClass();
-    if (CDOObjectImpl.class.isAssignableFrom(instanceClass))
+    if (CDOObject.class.isAssignableFrom(instanceClass))
     {
       return CDOPackageType.NATIVE;
     }

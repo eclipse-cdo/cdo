@@ -43,7 +43,8 @@ public abstract class OM
 
   public static final OMTracer DEBUG_SIGNAL = DEBUG.tracer("signal"); //$NON-NLS-1$
 
-  public static final boolean SET_SIGNAL_THREAD_NAME = BUNDLE.getDebugOption("set.signal.thread.name", false); //$NON-NLS-1$
+  public static final boolean SET_SIGNAL_THREAD_NAME = BUNDLE.getDebugSupport().getDebugOption(
+      "set.signal.thread.name", false); //$NON-NLS-1$
 
   public static final OMLogger LOG = BUNDLE.logger();
 

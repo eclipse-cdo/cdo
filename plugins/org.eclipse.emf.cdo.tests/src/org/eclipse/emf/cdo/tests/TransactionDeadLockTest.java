@@ -19,6 +19,10 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 
 import org.eclipse.net4j.util.om.OMPlatform;
 
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+
+import java.util.ArrayList;
+
 /**
  * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=213782
  * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=201366
@@ -80,5 +84,82 @@ public class TransactionDeadLockTest extends AbstractCDOTest
     }
 
     session.close();
+  }
+
+  public void testCreateManySessionTransactionMultiThread() throws Exception
+  {
+    final ArrayList<Exception> exceptions = new ArrayList<Exception>();
+    Runnable threadA = new Runnable()
+    {
+      public void run()
+      {
+        try
+        {
+          msg("Thread Starting");
+          for (int i = 0; i < 100; i++)
+          {
+            CDOSession session = openModel1Session();
+            CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+
+            msg("Session + Transaction " + i);
+            transaction.close();
+            session.close();
+          }
+
+          msg("Thread done");
+        }
+        catch (Exception e)
+        {
+          synchronized (exceptions)
+          {
+            exceptions.add(e);
+          }
+        }
+      }
+    };
+
+    ArrayList<Thread> threadList = new ArrayList<Thread>();
+
+    for (int i = 0; i < 5; i++)
+    {
+      threadList.add(new Thread(threadA));
+    }
+
+    for (int i = 0; i < threadList.size(); i++)
+    {
+      threadList.get(i).start();
+    }
+
+    while (true)
+    {
+      int count = 0;
+      for (int i = 0; i < threadList.size(); i++)
+      {
+        if (threadList.get(i).isAlive())
+        {
+          break;
+        }
+
+        count++;
+      }
+
+      if (count == threadList.size())
+      {
+        break;
+      }
+
+      sleep(1000);
+    }
+
+    for (Exception exp : exceptions)
+    {
+      System.out.println();
+      System.out.println();
+      exp.printStackTrace();
+      System.out.println();
+      System.out.println();
+    }
+
+    assertEquals(0, exceptions.size());
   }
 }

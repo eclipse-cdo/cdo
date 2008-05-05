@@ -396,9 +396,8 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     }
 
     int channelID = getNextChannelID();
-    short channelIndex = findFreeChannelIndex();
-    InternalChannel channel = createChannel(channelID, channelIndex, protocol);
-    registerChannelWithPeer(channelID, channelIndex, protocol);
+    InternalChannel channel = createChannel(channelID, protocol);
+    registerChannelWithPeer(channelID, channel.getChannelIndex(), protocol);
 
     try
     {
@@ -419,10 +418,10 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   public InternalChannel createChannel(int channelID, short channelIndex, String protocolID)
   {
     IProtocol protocol = createProtocol(protocolID, null);
-    return createChannel(channelID, channelIndex, protocol);
+    return createAndAddChannel(channelID, channelIndex, protocol);
   }
 
-  public InternalChannel createChannel(int channelID, short channelIndex, IProtocol protocol)
+  protected InternalChannel createChannelWithoutChannelIndex(int channelID, IProtocol protocol)
   {
     InternalChannel channel = createChannel();
     channel.setChannelID(channelID);
@@ -434,21 +433,33 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
       if (TRACER.isEnabled())
       {
         String protocolType = protocol == null ? null : protocol.getType();
-        TRACER.format("Opening channel {0} with protocol {1}", channelIndex, protocolType); //$NON-NLS-1$
+        TRACER.format("Opening channel ID {0} with protocol {1}", channelID, protocolType); //$NON-NLS-1$
       }
     }
     else
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Opening channel {0} without protocol", channelIndex); //$NON-NLS-1$
+        TRACER.format("Opening channel ID {0} without protocol", channelID); //$NON-NLS-1$
       }
     }
-
-    channel.setChannelIndex(channelIndex);
     channel.setReceiveHandler(protocol);
-    channel.addListener(channelListener); // TODO remove?
-    addChannel(channel);
+    channel.addListener(channelListener);
+    return channel;
+  }
+
+  public InternalChannel createAndAddChannel(int channelID, short channelIndex, IProtocol protocol)
+  {
+    InternalChannel channel = createChannelWithoutChannelIndex(channelID, protocol);
+    channel.setChannelIndex(channelIndex);
+    addChannelWithIndex(channel);
+    return channel;
+  }
+
+  public InternalChannel createChannel(int channelID, IProtocol protocol)
+  {
+    InternalChannel channel = createChannelWithoutChannelIndex(channelID, protocol);
+    addChannelWithoutIndex(channel);
     return channel;
   }
 
@@ -476,27 +487,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     return nextChannelID++;
   }
 
-  protected short findFreeChannelIndex()
-  {
-    return channelsLock.read(new Callable<Short>()
-    {
-      public Short call() throws Exception
-      {
-        int size = channels.size();
-        for (short i = 0; i < size; i++)
-        {
-          if (channels.get(i) == null)
-          {
-            return i;
-          }
-        }
-
-        return (short)size;
-      }
-    });
-  }
-
-  protected void addChannel(final InternalChannel channel)
+  protected void addChannelWithIndex(final InternalChannel channel)
   {
     channelsLock.write(new Runnable()
     {
@@ -509,6 +500,29 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
         }
 
         channels.set(channelIndex, channel);
+      }
+    });
+  }
+
+  protected void addChannelWithoutIndex(final InternalChannel channel)
+  {
+    channelsLock.write(new Runnable()
+    {
+      public void run()
+      {
+        int size = channels.size();
+        for (short i = 0; i < size; i++)
+        {
+          if (channels.get(i) == null)
+          {
+            channels.set(i, channel);
+            channel.setChannelIndex(i);
+            return;
+          }
+        }
+
+        channel.setChannelIndex((short)size);
+        channels.add(channel);
       }
     });
   }

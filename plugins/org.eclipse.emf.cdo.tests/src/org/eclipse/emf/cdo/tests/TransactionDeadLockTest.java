@@ -22,6 +22,8 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=213782
@@ -88,54 +90,68 @@ public class TransactionDeadLockTest extends AbstractCDOTest
 
   public void testCreateManySessionTransactionMultiThread() throws Exception
   {
-    final ArrayList<Exception> exceptions = new ArrayList<Exception>();
-    Runnable threadA = new Runnable()
-    {
-      public void run()
-      {
-        try
-        {
-          msg("Thread Starting");
-          for (int i = 0; i < 100; i++)
-          {
-            CDOSession session = openModel1Session();
-            CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
-
-            msg("Session + Transaction " + i);
-            transaction.close();
-            session.close();
-          }
-
-          msg("Thread done");
-        }
-        catch (Exception e)
-        {
-          synchronized (exceptions)
-          {
-            exceptions.add(e);
-          }
-        }
-      }
-    };
-
-    ArrayList<Thread> threadList = new ArrayList<Thread>();
-
+    final List<Exception> exceptions = new ArrayList<Exception>();
+    List<Thread> threadList = new ArrayList<Thread>();
     for (int i = 0; i < 5; i++)
     {
-      threadList.add(new Thread(threadA));
+      final int id = i;
+      threadList.add(new Thread(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            msg("Thread " + id + ": Starting");
+            for (int i = 0; i < 100; i++)
+            {
+              CDOSession session = openModel1Session();
+              CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+
+              msg("Thread " + id + ": Session + Transaction " + i);
+              transaction.close();
+              session.close();
+            }
+
+            msg("Thread " + id + ": Done");
+          }
+          catch (Exception ex)
+          {
+            synchronized (exceptions)
+            {
+              System.out.println("Thread " + id + ": " + ex.getClass().getName() + ": " + ex.getMessage());
+              exceptions.add(ex);
+            }
+          }
+        }
+      }));
     }
 
-    for (int i = 0; i < threadList.size(); i++)
+    startThreads(threadList);
+    for (Exception exp : exceptions)
     {
-      threadList.get(i).start();
+      System.out.println();
+      System.out.println();
+      exp.printStackTrace();
+      System.out.println();
+      System.out.println();
+    }
+
+    assertEquals(0, exceptions.size());
+  }
+
+  private void startThreads(Collection<Thread> threadList)
+  {
+    for (Thread thread : threadList)
+    {
+      thread.start();
     }
 
     while (true)
     {
       int count = 0;
-      for (int i = 0; i < threadList.size(); i++)
+      for (Thread thread : threadList)
       {
-        if (threadList.get(i).isAlive())
+        if (thread.isAlive())
         {
           break;
         }
@@ -148,18 +164,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
         break;
       }
 
-      sleep(1000);
+      sleep(100);
     }
-
-    for (Exception exp : exceptions)
-    {
-      System.out.println();
-      System.out.println();
-      exp.printStackTrace();
-      System.out.println();
-      System.out.println();
-    }
-
-    assertEquals(0, exceptions.size());
   }
 }

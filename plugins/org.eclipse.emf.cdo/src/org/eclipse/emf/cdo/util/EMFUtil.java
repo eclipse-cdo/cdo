@@ -304,7 +304,11 @@ public final class EMFUtil
   {
     URI uri = URI.createURI(ePackage.getNsURI());
     Resource resource = resourceSet.createResource(uri);
-    resource.getContents().add(ePackage);
+    synchronized (ePackage)
+    {
+      resource.getContents().add(ePackage);
+    }
+
     return resource;
   }
 

@@ -8,7 +8,7 @@ Bundle-Localization: fragment
 Bundle-ClassPath: .,
  lib/derby.jar,
  lib/derbyclient.jar
-Fragment-Host: org.eclipse.net4j.db;bundle-version="[0.8.0,0.9.0)"
+Fragment-Host: org.eclipse.net4j.db
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.3.0,4.0.0)"
 Export-Package: org.apache.derby.authentication,
  org.apache.derby.catalog,

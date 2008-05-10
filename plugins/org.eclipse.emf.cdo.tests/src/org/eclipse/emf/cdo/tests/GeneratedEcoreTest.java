@@ -35,7 +35,7 @@ public class GeneratedEcoreTest extends AbstractCDOTest
     EPackage ecore = EcorePackage.eINSTANCE;
 
     // Create resource in session 1
-    CDOSession session1 = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+    CDOSession session1 = openSession();
     session1.getPackageRegistry().putEPackage(ecore);
     CDOTransaction transaction1 = session1.openTransaction();
     CDOResource res1 = transaction1.createResource("/res");
@@ -45,7 +45,7 @@ public class GeneratedEcoreTest extends AbstractCDOTest
     transaction1.commit();
 
     // Load resource in session 2
-    CDOSession session2 = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+    CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
     CDOResource res2 = transaction2.getResource("/res");
 

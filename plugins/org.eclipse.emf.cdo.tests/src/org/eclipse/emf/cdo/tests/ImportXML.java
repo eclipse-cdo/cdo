@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -61,7 +62,7 @@ public class ImportXML
 
     // Establish a communications connection and open a session with the repository
     IConnector connector = JVMUtil.getConnector(container, "default"); // Open a JVM connection
-    CDOSession session = CDOUtil.openSession(connector, REPOSITORY_NAME, true);// Open a CDO session
+    CDOSession session = openSession(connector);// Open a CDO session
     session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);// Not needed after first commit!!!
 
     CDOTransaction transaction = session.openTransaction();// Open a CDO transaction
@@ -107,5 +108,14 @@ public class ImportXML
     p3.setName("P3");
     cat2.getProducts().add(p3);
     return cat1;
+  }
+
+  private static CDOSession openSession(IConnector connector)
+  {
+    CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+    configuration.setConnector(connector);
+    configuration.setRepositoryName(REPOSITORY_NAME);
+    configuration.setDisableLegacyObjects(true);
+    return configuration.openSession();
   }
 }

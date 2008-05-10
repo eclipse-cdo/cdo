@@ -48,6 +48,7 @@ import org.eclipse.emf.ecore.EPackage;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -223,12 +224,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
       try
       {
-        CDOSessionImpl session = getSession();
-        newPackages = analyzeNewPackages(session);
+        newPackages = analyzeNewPackages();
 
         preCommit(newObjects);
         preCommit(dirtyObjects);
 
+        CDOSessionImpl session = getSession();
         IChannel channel = session.getChannel();
         IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
         CommitTransactionRequest request = new CommitTransactionRequest(channel, this);
@@ -388,7 +389,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
   }
 
-  private List<CDOPackage> analyzeNewPackages(CDOSessionImpl session)
+  private List<CDOPackage> analyzeNewPackages()
   {
     // Find all used classes and their super classes
     Set<EClass> usedClasses = new HashSet<EClass>();
@@ -404,16 +405,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       }
     }
 
+    return analyzeNewPackages(usedClasses);
+  }
+
+  private List<CDOPackage> analyzeNewPackages(Collection<EClass> eClasses)
+  {
     // Calculate the top level packages of the used classes
     Set<EPackage> usedPackages = new HashSet<EPackage>();
-    for (EClass usedClass : usedClasses)
+    for (EClass eClass : eClasses)
     {
-      EPackage topLevelPackage = ModelUtil.getTopLevelPackage(usedClass.getEPackage());
+      EPackage topLevelPackage = ModelUtil.getTopLevelPackage(eClass.getEPackage());
       usedPackages.add(topLevelPackage);
     }
 
     // Determine which of the used packages are new
-    CDOSessionPackageManagerImpl packageManager = session.getPackageManager();
+    CDOSessionPackageManagerImpl packageManager = getSession().getPackageManager();
     List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
     for (EPackage usedPackage : usedPackages)
     {

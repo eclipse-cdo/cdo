@@ -10,9 +10,15 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.CDOTransactionHandler;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
@@ -28,13 +34,18 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -47,9 +58,8 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
 
   private CDOSessionImpl session;
 
-  public CDOPackageRegistryImpl(CDOSessionImpl session)
+  public CDOPackageRegistryImpl()
   {
-    this.session = session;
   }
 
   public CDOSessionImpl getSession()
@@ -57,8 +67,14 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     return session;
   }
 
+  public void setSession(CDOSession session)
+  {
+    this.session = (CDOSessionImpl)session;
+  }
+
   public void putPackageDescriptor(CDOPackage cdoPackage)
   {
+    checkSession();
     EPackage.Descriptor descriptor = new RemotePackageDescriptor(cdoPackage);
     String uri = cdoPackage.getPackageURI();
     if (TRACER.isEnabled())
@@ -71,6 +87,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
 
   public EPackage putEPackage(EPackage ePackage)
   {
+    checkSession();
     String uri = ePackage.getNsURI();
     if (ePackage.getESuperPackage() != null)
     {
@@ -97,6 +114,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   @Override
   public Object put(String key, Object value)
   {
+    checkSession();
     if (value instanceof EPackage)
     {
       if (TRACER.isEnabled())
@@ -125,6 +143,14 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   public void putAll(Map<? extends String, ? extends Object> m)
   {
     throw new UnsupportedOperationException();
+  }
+
+  private void checkSession()
+  {
+    if (session == null)
+    {
+      throw new IllegalStateException("session == null");
+    }
   }
 
   /**
@@ -172,25 +198,126 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   /**
    * @author Eike Stepper
    */
-  public static class SelfPopulating extends CDOPackageRegistryImpl
+  public static abstract class SessionBound extends CDOPackageRegistryImpl
   {
     private static final long serialVersionUID = 1L;
 
-    private IListener sessionListener = new LifecycleEventAdapter()
+    private IListener sessionLifecycleListener = new LifecycleEventAdapter()
     {
       @Override
       protected void onActivated(ILifecycle lifecycle)
       {
-        populate();
+        sessionActivated();
       }
 
       @Override
       protected void onAboutToDeactivate(ILifecycle lifecycle)
       {
         getSession().removeListener(this);
-        CDOPackageTypeRegistry.INSTANCE.removeListener(typeListener);
+        sessionAboutToDeactivate();
       }
     };
+
+    public SessionBound()
+    {
+    }
+
+    @Override
+    public void setSession(CDOSession session)
+    {
+      super.setSession(session);
+      session.addListener(sessionLifecycleListener);
+    }
+
+    protected abstract void sessionActivated();
+
+    protected abstract void sessionAboutToDeactivate();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class TransactionBound extends SessionBound implements CDOTransactionHandler
+  {
+    private static final long serialVersionUID = 1L;
+
+    private List<CDOTransaction> transactions = new ArrayList<CDOTransaction>();
+
+    private IListener sessionContainerListener = new ContainerEventAdapter<CDOView>()
+    {
+      @Override
+      protected void onAdded(IContainer<CDOView> session, CDOView view)
+      {
+        if (view instanceof CDOTransaction)
+        {
+          CDOTransaction transaction = (CDOTransaction)view;
+          transaction.addHandler(TransactionBound.this);
+          synchronized (transactions)
+          {
+            transactions.add(transaction);
+          }
+        }
+      }
+
+      @Override
+      protected void onRemoved(IContainer<CDOView> session, CDOView view)
+      {
+        if (view instanceof CDOTransaction)
+        {
+          CDOTransaction transaction = (CDOTransaction)view;
+          transaction.removeHandler(TransactionBound.this);
+          synchronized (transactions)
+          {
+            transactions.remove(transaction);
+          }
+        }
+      }
+    };
+
+    public TransactionBound()
+    {
+    }
+
+    @Override
+    protected void sessionActivated()
+    {
+      getSession().addListener(sessionContainerListener);
+    }
+
+    @Override
+    protected void sessionAboutToDeactivate()
+    {
+      getSession().removeListener(sessionContainerListener);
+      synchronized (transactions)
+      {
+        for (CDOTransaction transaction : transactions)
+        {
+          transaction.removeHandler(this);
+        }
+
+        transactions.clear();
+      }
+    }
+
+    public void addingObject(CDOTransaction transaction, CDOObject object)
+    {
+    }
+
+    public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
+    {
+    }
+
+    public void committingTransaction(CDOTransaction transaction)
+    {
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class SelfPopulating extends SessionBound
+  {
+    private static final long serialVersionUID = 1L;
 
     private IListener typeListener = new ContainerEventAdapter<Map.Entry<String, CDOPackageType>>()
     {
@@ -202,13 +329,12 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
       }
     };
 
-    public SelfPopulating(CDOSessionImpl session)
+    public SelfPopulating()
     {
-      super(session);
-      session.addListener(sessionListener);
     }
 
-    protected void populate()
+    @Override
+    protected void sessionActivated()
     {
       for (Map.Entry<String, CDOPackageType> entry : CDOPackageTypeRegistry.INSTANCE.entrySet())
       {
@@ -216,6 +342,12 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
       }
 
       CDOPackageTypeRegistry.INSTANCE.addListener(typeListener);
+    }
+
+    @Override
+    protected void sessionAboutToDeactivate()
+    {
+      CDOPackageTypeRegistry.INSTANCE.removeListener(typeListener);
     }
 
     protected void addEntry(Map.Entry<String, CDOPackageType> entry)
@@ -236,6 +368,60 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
             OM.LOG.error(ex);
           }
         }
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class DemandPopulating extends TransactionBound
+  {
+    private static final long serialVersionUID = 1L;
+
+    private Set<EClass> usedClasses = new HashSet<EClass>();
+
+    public DemandPopulating()
+    {
+    }
+
+    @Override
+    public void addingObject(CDOTransaction transaction, CDOObject object)
+    {
+      EClass usedClass = object.eClass();
+      if (usedClasses.add(usedClass))
+      {
+        addPackage(usedClass.getEPackage());
+        for (EClass superType : usedClass.getEAllSuperTypes())
+        {
+          usedClasses.add(superType);
+          addPackage(superType.getEPackage());
+        }
+      }
+    }
+
+    @Override
+    protected void sessionAboutToDeactivate()
+    {
+      usedClasses.clear();
+      super.sessionAboutToDeactivate();
+    }
+
+    private void addPackage(EPackage ePackage)
+    {
+      if (!containsKey(ePackage.getNsURI()))
+      {
+        EPackage topLevelPackage = ModelUtil.getTopLevelPackage(ePackage);
+        addPackageRecursively(topLevelPackage);
+      }
+    }
+
+    private void addPackageRecursively(EPackage ePackage)
+    {
+      putEPackage(ePackage);
+      for (EPackage subPackage : ePackage.getESubpackages())
+      {
+        addPackageRecursively(subPackage);
       }
     }
   }

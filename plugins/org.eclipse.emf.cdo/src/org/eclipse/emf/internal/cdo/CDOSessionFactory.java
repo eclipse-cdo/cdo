@@ -71,7 +71,9 @@ public class CDOSessionFactory extends Factory
     CDOSessionImpl session = new CDOSessionImpl();
     if (automaticPackageRegistry)
     {
-      session.setPackageRegistry(new CDOPackageRegistryImpl.SelfPopulating(session));
+      CDOPackageRegistryImpl.SelfPopulating packageRegistry = new CDOPackageRegistryImpl.SelfPopulating();
+      packageRegistry.setSession(session);
+      session.setPackageRegistry(packageRegistry);
     }
 
     session.setRepositoryName(repositoryName);

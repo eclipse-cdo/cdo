@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
@@ -34,6 +35,8 @@ import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage;
 import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -54,8 +57,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   {
     {
       // Create resource in session 1
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
-      session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+      CDOSession session = openModel1Session();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
@@ -67,7 +69,7 @@ public class PackageRegistryTest extends AbstractCDOTest
 
     {
       // Load resource in session 2
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.getResource("/res");
 
@@ -79,7 +81,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   public void testCommitTwoPackages() throws Exception
   {
     {
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
+      CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
       session.getPackageRegistry().putEPackage(Model2Package.eINSTANCE);
       CDOTransaction transaction = session.openTransaction();
@@ -92,7 +94,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.getResource("/res");
 
@@ -104,8 +106,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   public void testCommitUnrelatedPackage() throws Exception
   {
     {
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
-      session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+      CDOSession session = openModel1Session();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
@@ -117,7 +118,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(MangoPackage.eINSTANCE);
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.getResource("/res");
@@ -133,7 +134,7 @@ public class PackageRegistryTest extends AbstractCDOTest
 
   public void testCommitNestedPackages() throws Exception
   {
-    CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
+    CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
     assertEquals(2, session.getPackageRegistry().size());
 
@@ -166,7 +167,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   public void testLoadNestedPackages() throws Exception
   {
     {
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
+      CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
 
       CDOTransaction transaction = session.openTransaction();
@@ -179,7 +180,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
+      CDOSession session = openSession();
       CDOPackage model3Package = session.getPackageManager().lookupPackage(Model3Package.eINSTANCE.getNsURI());
       assertEquals(8, model3Package.getMetaIDRange().size());
       assertNotNull(model3Package.getEcore());
@@ -194,7 +195,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   public void testCommitCircularPackages() throws Exception
   {
     {
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
+      CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
       CDOTransaction transaction = session.openTransaction();
       CDOResource res1 = transaction.createResource("/res1");
@@ -211,7 +212,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res1 = transaction.getResource("/res1");
 
@@ -222,7 +223,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res2 = transaction.getResource("/res2");
 
@@ -239,7 +240,13 @@ public class PackageRegistryTest extends AbstractCDOTest
 
     {
       // Create resource in session 1
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true, true);
+      CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+      configuration.setConnector(getConnector());
+      configuration.setRepositoryName(REPOSITORY_NAME);
+      configuration.setDisableLegacyObjects(true);
+      configuration.setPackageRegistry(new CDOPackageRegistryImpl.SelfPopulating());
+
+      CDOSession session = configuration.openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
@@ -251,7 +258,7 @@ public class PackageRegistryTest extends AbstractCDOTest
 
     {
       // Load resource in session 2
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.getResource("/res");
 
@@ -276,7 +283,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
 
       // Create resource in session 1
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(model1);
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
@@ -289,7 +296,7 @@ public class PackageRegistryTest extends AbstractCDOTest
 
     {
       // Load resource in session 2
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.getResource("/res");
 

@@ -48,6 +48,11 @@ public class Notifier implements INotifier.Introspection
     }
   }
 
+  public boolean hasListeners()
+  {
+    return !listeners.isEmpty();
+  }
+
   public IListener[] getListeners()
   {
     synchronized (listeners)

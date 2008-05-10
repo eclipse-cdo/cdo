@@ -25,8 +25,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  */
 public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
 {
-  public void setDisableLegacyObjects(boolean disableLegacyObjects);
-
   public int getReferenceChunkSize();
 
   public void setReferenceChunkSize(int referenceChunkSize);

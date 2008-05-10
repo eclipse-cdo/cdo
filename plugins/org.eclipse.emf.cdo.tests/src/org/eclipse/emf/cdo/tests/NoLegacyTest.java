@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -31,7 +32,11 @@ public class NoLegacyTest extends AbstractCDOTest
 
     try
     {
-      session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, false);
+      CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+      configuration.setConnector(getConnector());
+      configuration.setRepositoryName(REPOSITORY_NAME);
+      configuration.setDisableLegacyObjects(false);
+      session = configuration.openSession();
       fail("LegacySystemNotAvailableException expected");
     }
     catch (LegacySystemNotAvailableException ex)
@@ -48,7 +53,7 @@ public class NoLegacyTest extends AbstractCDOTest
 
   public void testAttachLegacyObject() throws Exception
   {
-    CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
+    CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(XMLTypePackage.eINSTANCE);
 
     CDOTransaction transaction = session.openTransaction();

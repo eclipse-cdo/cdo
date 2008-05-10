@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 import junit.framework.Assert;
 
@@ -43,9 +42,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
 {
   public void testBasicRevisionDelta() throws Exception
   {
-    CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
-    session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
-
+    CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource1 = transaction.createResource("/test1");
 

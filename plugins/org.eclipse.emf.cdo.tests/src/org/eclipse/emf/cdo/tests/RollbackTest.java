@@ -16,8 +16,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -28,25 +26,20 @@ public class RollbackTest extends AbstractCDOTest
 {
   public void testRollbackSameSession() throws Exception
   {
-    CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
-    session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
-
+    CDOSession session = openModel1Session();
     CDOTransaction transaction1 = session.openTransaction();
     CDOTransaction transaction2 = session.openTransaction();
-
     flow1(transaction1, transaction2);
   }
 
   public void testRollbackSeparateSession() throws Exception
   {
     // Client1
-    CDOSession session1 = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
-    session1.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+    CDOSession session1 = openModel1Session();
     CDOTransaction transaction1 = session1.openTransaction();
 
     // Client2
-    CDOSession session2 = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
-    session2.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+    CDOSession session2 = openModel1Session();
     CDOTransaction transaction2 = session2.openTransaction();
 
     flow1(transaction1, transaction2);

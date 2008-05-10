@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -29,4 +30,6 @@ public interface CDOPackageRegistry extends EPackage.Registry
   public EPackage putEPackage(EPackage ePackage);
 
   public void putPackageDescriptor(CDOPackage proxy);
+
+  public void setSession(CDOSession session);
 }

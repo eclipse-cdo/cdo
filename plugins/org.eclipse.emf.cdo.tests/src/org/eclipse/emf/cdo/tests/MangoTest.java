@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.tests.mango.MangoFactory;
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.mango.Value;
 import org.eclipse.emf.cdo.tests.mango.ValueList;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 /**
  * @author Eike Stepper
@@ -27,7 +26,7 @@ public class MangoTest extends AbstractCDOTest
 {
   private CDOSession openMangoSession()
   {
-    CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
+    CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(MangoPackage.eINSTANCE);
     return session;
   }

@@ -16,8 +16,6 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -39,8 +37,7 @@ public class DymamicUmlTest extends AbstractCDOTest
   {
     {
       // Create resource in session 1
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
-      session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+      CDOSession session = openModel1Session();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
@@ -52,7 +49,7 @@ public class DymamicUmlTest extends AbstractCDOTest
 
     {
       // Load resource in session 2
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.getResource("/res");
 
@@ -70,8 +67,7 @@ public class DymamicUmlTest extends AbstractCDOTest
       EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
 
       // Create resource in session 1
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
-      session.getPackageRegistry().putEPackage(model1);
+      CDOSession session = openModel1Session();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
@@ -83,7 +79,7 @@ public class DymamicUmlTest extends AbstractCDOTest
 
     {
       // Load resource in session 2
-      CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME);
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.getResource("/res");
 

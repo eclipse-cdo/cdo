@@ -150,6 +150,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   {
     packageManager = createPackageManager();
     revisionManager = createRevisionManager();
+
+    // TODO Remove preferences from core
     referenceChunkSize = OM.PREF_REFERENCE_CHUNK_SIZE.getValue();
   }
 
@@ -552,7 +554,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   protected CDOPackageRegistryImpl createPackageRegistry()
   {
-    return new CDOPackageRegistryImpl(this);
+    return new CDOPackageRegistryImpl();
   }
 
   protected CDOSessionPackageManagerImpl createPackageManager()
@@ -635,6 +637,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     {
       packageRegistry = createPackageRegistry();
     }
+
+    packageRegistry.setSession(this);
 
     if (channel == null)
     {

@@ -24,6 +24,8 @@ public interface INotifier
    */
   public interface Introspection extends INotifier
   {
+    public boolean hasListeners();
+
     public IListener[] getListeners();
   }
 }

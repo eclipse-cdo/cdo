@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -78,9 +79,18 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     startTransport();
   }
 
+  protected CDOSession openSession()
+  {
+    CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+    configuration.setConnector(getConnector());
+    configuration.setRepositoryName(REPOSITORY_NAME);
+    configuration.setDisableLegacyObjects(true);
+    return configuration.openSession();
+  }
+
   protected CDOSession openModel1Session()
   {
-    CDOSession session = CDOUtil.openSession(getConnector(), REPOSITORY_NAME, true);
+    CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
     return session;
   }

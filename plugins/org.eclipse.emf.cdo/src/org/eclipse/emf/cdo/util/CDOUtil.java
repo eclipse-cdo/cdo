@@ -10,15 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.emf.internal.cdo.CDOSessionConfigurationImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionFactory;
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
@@ -28,9 +25,6 @@ import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl.SelfPopulating;
 
-import org.eclipse.net4j.connector.ConnectorException;
-import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -73,58 +67,6 @@ public final class CDOUtil
   public static CDOPackageRegistryImpl createDemandPopulatingPackageRegistry()
   {
     return new CDOPackageRegistryImpl.DemandPopulating();
-  }
-
-  /**
-   * @deprecated Use {@link #createSessionConfiguration()} instead.
-   */
-  @Deprecated
-  public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects,
-      boolean automaticPackageRegistry, IFailOverStrategy failOverStrategy) throws ConnectorException
-  {
-    CDOSessionImpl session = CDOSessionFactory.createSession(repositoryName, disableLegacyObjects,
-        automaticPackageRegistry, failOverStrategy);
-    session.setConnector(connector);
-    session.activate();
-    return session;
-  }
-
-  /**
-   * @deprecated Use {@link #createSessionConfiguration()} instead.
-   */
-  @Deprecated
-  public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects,
-      boolean automaticPackageRegistry) throws ConnectorException
-  {
-    return openSession(connector, repositoryName, disableLegacyObjects, automaticPackageRegistry, null);
-  }
-
-  /**
-   * @deprecated Use {@link #createSessionConfiguration()} instead.
-   */
-  @Deprecated
-  public static CDOSession openSession(IConnector connector, String repositoryName, boolean disableLegacyObjects)
-      throws ConnectorException
-  {
-    return openSession(connector, repositoryName, disableLegacyObjects, false, null);
-  }
-
-  /**
-   * @deprecated Use {@link #createSessionConfiguration()} instead.
-   */
-  @Deprecated
-  public static CDOSession openSession(IConnector connector, String repositoryName) throws ConnectorException
-  {
-    return openSession(connector, repositoryName, true);
-  }
-
-  /**
-   * @deprecated Use {@link #createSessionConfiguration()} instead.
-   */
-  @Deprecated
-  public static CDOSession openSession(IManagedContainer container, String description) throws ConnectorException
-  {
-    return CDOSessionFactory.get(container, description);
   }
 
   public static CDOView getView(ResourceSet resourceSet)

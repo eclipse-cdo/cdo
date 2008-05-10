@@ -36,6 +36,8 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
 
   private CDOPackageRegistryImpl packageRegistry;
 
+  private boolean activateOnOpen = true;
+
   public CDOSessionConfigurationImpl()
   {
   }
@@ -47,6 +49,7 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
 
   public void setConnector(IConnector connector)
   {
+    checkNotOpen();
     this.connector = connector;
   }
 
@@ -57,6 +60,7 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
 
   public void setRepositoryName(String repositoryName)
   {
+    checkNotOpen();
     this.repositoryName = repositoryName;
   }
 
@@ -67,6 +71,7 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
 
   public void setLegacySupportEnabled(boolean legacySupportEnabled)
   {
+    checkNotOpen();
     this.legacySupportEnabled = legacySupportEnabled;
   }
 
@@ -77,6 +82,7 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
 
   public void setFailOverStrategy(IFailOverStrategy failOverStrategy)
   {
+    checkNotOpen();
     this.failOverStrategy = failOverStrategy;
   }
 
@@ -87,6 +93,7 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
 
   public void setPackageRegistry(CDOPackageRegistryImpl packageRegistry)
   {
+    checkNotOpen();
     this.packageRegistry = packageRegistry;
   }
 
@@ -100,6 +107,17 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
     setPackageRegistry(CDOUtil.createDemandPopulatingPackageRegistry());
   }
 
+  public boolean isActivateOnOpen()
+  {
+    return activateOnOpen;
+  }
+
+  public void setActivateOnOpen(boolean activateOnOpen)
+  {
+    checkNotOpen();
+    this.activateOnOpen = activateOnOpen;
+  }
+
   public CDOSession openSession()
   {
     if (!isSessionOpen())
@@ -110,7 +128,11 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
       session.setDisableLegacyObjects(!legacySupportEnabled);
       session.setFailOverStrategy(failOverStrategy);
       session.setPackageRegistry(packageRegistry);
-      session.activate();
+
+      if (activateOnOpen)
+      {
+        session.activate();
+      }
     }
 
     return session;
@@ -130,5 +152,13 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
 
     session = null;
     return false;
+  }
+
+  private void checkNotOpen()
+  {
+    if (isSessionOpen())
+    {
+      throw new IllegalStateException("Session is already open");
+    }
   }
 }

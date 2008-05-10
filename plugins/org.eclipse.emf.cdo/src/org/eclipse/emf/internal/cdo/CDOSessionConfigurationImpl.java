@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 
@@ -29,7 +30,7 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
 
   private String repositoryName;
 
-  private boolean disableLegacyObjects;
+  private boolean legacySupportEnabled;
 
   private IFailOverStrategy failOverStrategy;
 
@@ -59,14 +60,14 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
     this.repositoryName = repositoryName;
   }
 
-  public boolean isDisableLegacyObjects()
+  public boolean isLegacySupportEnabled()
   {
-    return disableLegacyObjects;
+    return legacySupportEnabled;
   }
 
-  public void setDisableLegacyObjects(boolean disableLegacyObjects)
+  public void setLegacySupportEnabled(boolean legacySupportEnabled)
   {
-    this.disableLegacyObjects = disableLegacyObjects;
+    this.legacySupportEnabled = legacySupportEnabled;
   }
 
   public IFailOverStrategy getFailOverStrategy()
@@ -89,6 +90,16 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
     this.packageRegistry = packageRegistry;
   }
 
+  public void setSelfPopulatingPackageRegistry()
+  {
+    setPackageRegistry(CDOUtil.createSelfPopulatingPackageRegistry());
+  }
+
+  public void setDemandPopulatingPackageRegistry()
+  {
+    setPackageRegistry(CDOUtil.createDemandPopulatingPackageRegistry());
+  }
+
   public CDOSession openSession()
   {
     if (!isSessionOpen())
@@ -96,7 +107,7 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
       session = new CDOSessionImpl();
       session.setConnector(connector);
       session.setRepositoryName(repositoryName);
-      session.setDisableLegacyObjects(disableLegacyObjects);
+      session.setDisableLegacyObjects(!legacySupportEnabled);
       session.setFailOverStrategy(failOverStrategy);
       session.setPackageRegistry(packageRegistry);
       session.activate();

@@ -35,7 +35,7 @@ public class NoLegacyTest extends AbstractCDOTest
       CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
       configuration.setConnector(getConnector());
       configuration.setRepositoryName(REPOSITORY_NAME);
-      configuration.setDisableLegacyObjects(false);
+      configuration.setLegacySupportEnabled(true);
       session = configuration.openSession();
       fail("LegacySystemNotAvailableException expected");
     }

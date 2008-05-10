@@ -39,6 +39,16 @@ public class TransactionDeadLockTest extends AbstractCDOTest
     return false;
   }
 
+  public void _testHundredTimes() throws Exception
+  {
+    for (int i = 0; i < 100; i++)
+    {
+      testCreateManySession();
+      testCreateManyTransaction();
+      testCreateManySessionTransactionMultiThread();
+    }
+  }
+
   public void testCreateManySession() throws Exception
   {
     {

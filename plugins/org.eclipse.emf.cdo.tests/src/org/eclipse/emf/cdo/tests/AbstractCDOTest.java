@@ -84,7 +84,7 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
     configuration.setConnector(getConnector());
     configuration.setRepositoryName(REPOSITORY_NAME);
-    configuration.setDisableLegacyObjects(true);
+    configuration.setLegacySupportEnabled(false);
     return configuration.openSession();
   }
 

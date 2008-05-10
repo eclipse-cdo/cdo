@@ -24,7 +24,9 @@ import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.LegacyObjectDisabler;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory;
+import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl.SelfPopulating;
 
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.IConnector;
@@ -61,6 +63,16 @@ public final class CDOUtil
   public static CDOSessionConfiguration createSessionConfiguration()
   {
     return new CDOSessionConfigurationImpl();
+  }
+
+  public static SelfPopulating createSelfPopulatingPackageRegistry()
+  {
+    return new CDOPackageRegistryImpl.SelfPopulating();
+  }
+
+  public static CDOPackageRegistryImpl createDemandPopulatingPackageRegistry()
+  {
+    return new CDOPackageRegistryImpl.DemandPopulating();
   }
 
   /**

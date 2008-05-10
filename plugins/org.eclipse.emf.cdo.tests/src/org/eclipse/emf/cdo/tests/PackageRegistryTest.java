@@ -35,8 +35,6 @@ import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage;
 import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -243,8 +241,41 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
       configuration.setConnector(getConnector());
       configuration.setRepositoryName(REPOSITORY_NAME);
-      configuration.setDisableLegacyObjects(true);
-      configuration.setPackageRegistry(new CDOPackageRegistryImpl.SelfPopulating());
+      configuration.setLegacySupportEnabled(false);
+      configuration.setSelfPopulatingPackageRegistry();
+
+      CDOSession session = configuration.openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.createResource("/res");
+
+      Company company = Model1Factory.eINSTANCE.createCompany();
+      company.setName("Eike");
+      res.getContents().add(company);
+      transaction.commit();
+    }
+
+    {
+      // Load resource in session 2
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.getResource("/res");
+
+      Company company = (Company)res.getContents().get(0);
+      assertEquals("Eike", company.getName());
+    }
+  }
+
+  public void testDemandPopulating() throws Exception
+  {
+    CDOPackageTypeRegistry.INSTANCE.register(Model1Package.eINSTANCE);
+
+    {
+      // Create resource in session 1
+      CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+      configuration.setConnector(getConnector());
+      configuration.setRepositoryName(REPOSITORY_NAME);
+      configuration.setLegacySupportEnabled(false);
+      configuration.setDemandPopulatingPackageRegistry();
 
       CDOSession session = configuration.openSession();
       CDOTransaction transaction = session.openTransaction();

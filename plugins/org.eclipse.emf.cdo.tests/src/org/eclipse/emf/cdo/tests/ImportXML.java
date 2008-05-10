@@ -115,7 +115,7 @@ public class ImportXML
     CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName(REPOSITORY_NAME);
-    configuration.setDisableLegacyObjects(true);
+    configuration.setLegacySupportEnabled(false);
     return configuration.openSession();
   }
 }

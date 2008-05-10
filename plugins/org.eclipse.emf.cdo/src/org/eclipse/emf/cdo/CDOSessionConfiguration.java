@@ -28,9 +28,9 @@ public interface CDOSessionConfiguration
 
   public void setRepositoryName(String repositoryName);
 
-  public boolean isDisableLegacyObjects();
+  public boolean isLegacySupportEnabled();
 
-  public void setDisableLegacyObjects(boolean disableLegacyObjects);
+  public void setLegacySupportEnabled(boolean enabled);
 
   public IFailOverStrategy getFailOverStrategy();
 
@@ -39,6 +39,10 @@ public interface CDOSessionConfiguration
   public CDOPackageRegistryImpl getPackageRegistry();
 
   public void setPackageRegistry(CDOPackageRegistryImpl packageRegistry);
+
+  public void setSelfPopulatingPackageRegistry();
+
+  public void setDemandPopulatingPackageRegistry();
 
   public CDOSession openSession();
 

@@ -28,8 +28,11 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -142,6 +145,63 @@ public abstract class DBAdapter implements IDBAdapter
     return created;
   }
 
+  public Collection<IDBTable> dropTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException
+  {
+    List<IDBTable> droppedTables = new ArrayList<IDBTable>();
+    Statement statement = null;
+
+    try
+    {
+      statement = connection.createStatement();
+      for (IDBTable table : tables)
+      {
+        if (dropTable(table, statement))
+        {
+          droppedTables.add(table);
+        }
+      }
+    }
+    catch (SQLException ex)
+    {
+      OM.LOG.error(ex);
+    }
+    finally
+    {
+      DBUtil.close(statement);
+    }
+
+    return droppedTables;
+  }
+
+  public boolean dropTable(IDBTable table, Statement statement)
+  {
+    try
+    {
+      String sql = getDropTableSQL(table);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(sql);
+      }
+
+      statement.execute(sql);
+      return true;
+    }
+    catch (SQLException ex)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(ex.getMessage());
+      }
+
+      return false;
+    }
+  }
+
+  protected String getDropTableSQL(IDBTable table)
+  {
+    return "DROP TABLE " + table;
+  }
+
   public String mangleTableName(String name, int attempt)
   {
     return mangleName(name, getMaximumTableNameLength(), attempt);
@@ -200,6 +260,7 @@ public abstract class DBAdapter implements IDBAdapter
     {
       TRACER.trace(sql);
     }
+
     statement.execute(sql);
 
     DBIndex[] indices = table.getIndices();

@@ -48,9 +48,6 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MappingStrategy.class);
 
-  @Deprecated
-  public static final String PROP_MAPPING_PRECEDENCE = "mappingPrecedence";
-
   public static final String PROP_TO_MANY_REFERENCE_MAPPING = "toManyReferenceMapping";
 
   public static final String PROP_TO_ONE_REFERENCE_MAPPING = "toOneReferenceMapping";
@@ -100,12 +97,6 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
   public synchronized void setProperties(Map<String, String> properties)
   {
     this.properties = properties;
-  }
-
-  public Precedence getPrecedence()
-  {
-    String value = getProperties().get(PROP_MAPPING_PRECEDENCE);
-    return value == null ? Precedence.STRATEGY : Precedence.valueOf(value);
   }
 
   public ToMany getToMany()

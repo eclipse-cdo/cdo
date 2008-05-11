@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="net4j"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.net4j.db.hsqldb"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

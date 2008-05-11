@@ -261,7 +261,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   protected void activateRepository() throws Exception
   {
     LifecycleUtil.activate(store);
-    packageManager.activate();
+    LifecycleUtil.activate(packageManager);
     if (store.wasCrashed())
     {
       store.repairAfterCrash();
@@ -269,17 +269,17 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
     setLastMetaID(store.getLastMetaID());
 
-    sessionManager.activate();
-    resourceManager.activate();
-    revisionManager.activate();
+    LifecycleUtil.activate(sessionManager);
+    LifecycleUtil.activate(resourceManager);
+    LifecycleUtil.activate(revisionManager);
   }
 
   protected void deactivateRepository()
   {
-    revisionManager.deactivate();
-    resourceManager.deactivate();
-    sessionManager.deactivate();
-    packageManager.deactivate();
+    LifecycleUtil.deactivate(revisionManager);
+    LifecycleUtil.deactivate(resourceManager);
+    LifecycleUtil.deactivate(sessionManager);
+    LifecycleUtil.deactivate(packageManager);
     LifecycleUtil.deactivate(store);
   }
 }

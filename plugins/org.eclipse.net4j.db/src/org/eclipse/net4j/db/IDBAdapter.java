@@ -20,6 +20,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -40,6 +41,10 @@ public interface IDBAdapter
   public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException;
 
   public boolean createTable(IDBTable table, Statement statement) throws DBException;
+
+  public Collection<IDBTable> dropTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException;
+
+  public boolean dropTable(IDBTable table, Statement statement);
 
   public String mangleTableName(String name, int attempt);
 

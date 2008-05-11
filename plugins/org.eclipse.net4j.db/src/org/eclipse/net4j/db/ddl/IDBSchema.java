@@ -32,7 +32,13 @@ public interface IDBSchema extends IDBSchemaElement
 
   public Set<IDBTable> create(IDBAdapter dbAdapter, Connection connection) throws DBException;
 
+  public Set<IDBTable> create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException;
+
   public Set<IDBTable> create(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException;
 
-  public Set<IDBTable> create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException;
+  public void drop(IDBAdapter dbAdapter, Connection connection) throws DBException;
+
+  public void drop(IDBAdapter dbAdapter, DataSource dataSource) throws DBException;
+
+  public void drop(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException;
 }

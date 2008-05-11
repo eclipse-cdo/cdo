@@ -47,9 +47,8 @@ public final class CDOServerUtil
   {
     Repository repository = new Repository();
     repository.setName(name);
-    repository.setProperties(props);
     repository.setStore(store);
-    store.setRepository(repository);
+    repository.setProperties(props);
     return repository;
   }
 

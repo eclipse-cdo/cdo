@@ -93,6 +93,11 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     return dbAdapter.createTables(tables.values(), connection);
   }
 
+  public Set<IDBTable> create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
+  {
+    return create(dbAdapter, DBUtil.createConnectionProvider(dataSource));
+  }
+
   public Set<IDBTable> create(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException
   {
     Connection connection = null;
@@ -108,9 +113,29 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     }
   }
 
-  public Set<IDBTable> create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
+  public void drop(IDBAdapter dbAdapter, Connection connection) throws DBException
   {
-    return create(dbAdapter, DBUtil.createConnectionProvider(dataSource));
+    dbAdapter.dropTables(tables.values(), connection);
+  }
+
+  public void drop(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
+  {
+    drop(dbAdapter, DBUtil.createConnectionProvider(dataSource));
+  }
+
+  public void drop(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException
+  {
+    Connection connection = null;
+
+    try
+    {
+      connection = connectionProvider.getConnection();
+      drop(dbAdapter, connection);
+    }
+    finally
+    {
+      DBUtil.close(connection);
+    }
   }
 
   void assertUnlocked() throws DBException

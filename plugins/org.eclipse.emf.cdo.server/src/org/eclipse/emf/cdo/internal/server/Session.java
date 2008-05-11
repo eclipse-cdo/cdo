@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.internal.server.protocol.InvalidationNotification;
 import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.CDOProtocolView.Type;
+import org.eclipse.emf.cdo.protocol.CDOProtocolView;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObject;
 import org.eclipse.emf.cdo.protocol.id.CDOIDProvider;
@@ -124,40 +124,56 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     return views.get(viewID);
   }
 
-  public void notifyViewsChanged(Session session, int viewID, byte kind)
-  {
-    if (kind == CDOProtocolConstants.VIEW_CLOSED)
-    {
-      IView view = views.remove(viewID);
-      if (view != null)
-      {
-        fireElementRemovedEvent(view);
-      }
-    }
-    else
-    {
-      IView view = createView(kind, viewID);
-      views.put(viewID, view);
-      fireElementAddedEvent(view);
-    }
-  }
-
-  private IView createView(byte kind, int viewID)
+  public void changeView(int viewID, byte kind)
   {
     switch (kind)
     {
+    case CDOProtocolConstants.VIEW_CLOSED:
+      closeView(viewID);
+      break;
+
     case CDOProtocolConstants.VIEW_TRANSACTION:
-      return new Transaction(this, viewID);
+      openView(viewID, CDOProtocolView.Type.TRANSACTION);
+      break;
 
     case CDOProtocolConstants.VIEW_READONLY:
-      return new View(this, viewID, Type.READONLY);
+      openView(viewID, CDOProtocolView.Type.READONLY);
 
     case CDOProtocolConstants.VIEW_AUDIT:
-      return new View(this, viewID, Type.AUDIT);
+      openView(viewID, CDOProtocolView.Type.AUDIT);
 
     default:
       throw new ImplementationError("Invalid kind: " + kind);
     }
+  }
+
+  public IView closeView(int viewID)
+  {
+    IView view = views.remove(viewID);
+    if (view != null)
+    {
+      fireElementRemovedEvent(view);
+    }
+
+    return view;
+  }
+
+  public IView openView(int viewID, CDOProtocolView.Type type)
+  {
+    IView view = createView(viewID, type);
+    views.put(viewID, view);
+    fireElementAddedEvent(view);
+    return view;
+  }
+
+  private IView createView(int viewID, CDOProtocolView.Type type)
+  {
+    if (type == CDOProtocolView.Type.TRANSACTION)
+    {
+      return new Transaction(this, viewID);
+    }
+
+    return new View(this, viewID, type);
   }
 
   public void notifyInvalidation(long timeStamp, List<CDOID> dirtyIDs)

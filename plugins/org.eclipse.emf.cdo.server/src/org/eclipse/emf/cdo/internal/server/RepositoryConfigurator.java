@@ -109,7 +109,6 @@ public class RepositoryConfigurator
 
     Element storeConfig = getStoreConfig(repositoryConfig);
     IStore store = configureStore(storeConfig);
-    store.setRepository(repository);
     repository.setStore(store);
 
     Map<String, String> properties = getProperties(repositoryConfig, 1);

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
@@ -20,6 +21,9 @@ import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
  */
 public interface IStore extends IRepositoryElement
 {
+  /**
+   * Internal method. Should only be called by {@link Repository#setStore(IStore)}.
+   */
   public void setRepository(IRepository repository);
 
   public String getStoreType();

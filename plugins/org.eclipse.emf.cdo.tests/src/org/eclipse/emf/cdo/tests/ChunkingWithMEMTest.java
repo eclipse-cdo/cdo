@@ -171,7 +171,6 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
     repository.setName(REPOSITORY_NAME);
     repository.setProperties(props);
     repository.setStore(store);
-    store.setRepository(repository);
     return repository;
   }
 

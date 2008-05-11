@@ -431,7 +431,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     CDOIDMetaRange range = CDOIDUtil.createMetaRange(metaIDRange.getLowerBound(), 0);
-    range = registerMetaInstance((InternalEObject)ePackage, range);
+    range = registerMetaInstance((InternalEObject)ePackage, range, idToMetaInstanceMap, metaInstanceToIDMap);
     if (range.size() != metaIDRange.size())
     {
       throw new IllegalStateException("range.size() != metaIDRange.size()");
@@ -440,17 +440,22 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public CDOIDMetaRange registerEPackage(EPackage ePackage)
   {
-    CDOIDTemp lowerBound = new CDOIDTempMetaImpl(lastTempMetaID + 1);
-    CDOIDMetaRange range = CDOIDUtil.createMetaRange(lowerBound, 0);
-    range = registerMetaInstance((InternalEObject)ePackage, range);
+    CDOIDMetaRange range = registerEPackage(ePackage, lastTempMetaID + 1, idToMetaInstanceMap, metaInstanceToIDMap);
     lastTempMetaID = ((CDOIDTemp)range.getUpperBound()).getIntValue();
     return range;
   }
 
-  /**
-   * TODO Synchronize?
-   */
-  private CDOIDMetaRange registerMetaInstance(InternalEObject metaInstance, CDOIDMetaRange range)
+  public static CDOIDMetaRange registerEPackage(EPackage ePackage, int firstMetaID,
+      Map<CDOID, InternalEObject> idToMetaInstances, Map<InternalEObject, CDOID> metaInstanceToIDs)
+  {
+    CDOIDTemp lowerBound = new CDOIDTempMetaImpl(firstMetaID);
+    CDOIDMetaRange range = CDOIDUtil.createMetaRange(lowerBound, 0);
+    range = registerMetaInstance((InternalEObject)ePackage, range, idToMetaInstances, metaInstanceToIDs);
+    return range;
+  }
+
+  public static CDOIDMetaRange registerMetaInstance(InternalEObject metaInstance, CDOIDMetaRange range,
+      Map<CDOID, InternalEObject> idToMetaInstances, Map<InternalEObject, CDOID> metaInstanceToIDs)
   {
     range = range.increase();
     CDOID id = range.getUpperBound();
@@ -459,19 +464,25 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       TRACER.format("Registering meta instance: {0} <-> {1}", id, metaInstance);
     }
 
-    if (idToMetaInstanceMap.put(id, metaInstance) != null)
+    if (idToMetaInstances != null)
     {
-      throw new IllegalStateException("Duplicate meta ID: " + id + " --> " + metaInstance);
+      if (idToMetaInstances.put(id, metaInstance) != null)
+      {
+        throw new IllegalStateException("Duplicate meta ID: " + id + " --> " + metaInstance);
+      }
     }
 
-    if (metaInstanceToIDMap.put(metaInstance, id) != null)
+    if (metaInstanceToIDs != null)
     {
-      throw new IllegalStateException("Duplicate metaInstance: " + metaInstance + " --> " + id);
+      if (metaInstanceToIDs.put(metaInstance, id) != null)
+      {
+        throw new IllegalStateException("Duplicate metaInstance: " + metaInstance + " --> " + id);
+      }
     }
 
     for (EObject content : metaInstance.eContents())
     {
-      range = registerMetaInstance((InternalEObject)content, range);
+      range = registerMetaInstance((InternalEObject)content, range, idToMetaInstances, metaInstanceToIDs);
     }
 
     return range;

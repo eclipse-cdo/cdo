@@ -1,0 +1,33 @@
+cdo_classes
+===========
+[1, 1, 0, ValueList, false]
+[2, 1, 1, Value, false]
+
+cdo_features
+============
+[1, 1, 0, name, 50, null, 0, false, false, 0]
+[2, 1, 1, values, 10, http://www.eclipse.org/emf/CDO/tests/mango, 1, true, false, 1]
+[3, 2, 0, name, 50, null, 0, false, false, 0]
+
+cdo_repository
+==============
+[1, 1, 0, -1, -1]
+
+cdo_packages
+============
+[1, http://www.eclipse.org/emf/CDO/tests/mango, mango, <?xml version="1.0" encoding="ASCII"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="mango" nsURI="http://www.eclipse.org/emf/CDO/tests/mango" nsPrefix="mango">
+  <eClassifiers xsi:type="ecore:EClass" name="ValueList">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name">
+      <eType xsi:type="ecore:EDataType" href="../../2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1" eType="//Value"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Value">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name">
+      <eType xsi:type="ecore:EDataType" href="../../2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+</ecore:EPackage>
+, false, 1, 9, null]
+

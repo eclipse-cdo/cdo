@@ -204,8 +204,7 @@ public class DBStore extends LongIDStore implements IDBStore
       if (createdTables.contains(CDODBSchema.REPOSITORY))
       {
         // First start
-        DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, 1, System.currentTimeMillis(), 0, CRASHED,
-            CRASHED);
+        DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, 1, getStartupTime(), 0, CRASHED, CRASHED);
 
         MappingStrategy mappingStrategy = (MappingStrategy)getMappingStrategy();
 
@@ -238,7 +237,7 @@ public class DBStore extends LongIDStore implements IDBStore
         builder.append("+1, ");
         builder.append(CDODBSchema.REPOSITORY_STARTED);
         builder.append("=");
-        builder.append(System.currentTimeMillis());
+        builder.append(getStartupTime());
         builder.append(", ");
         builder.append(CDODBSchema.REPOSITORY_STOPPED);
         builder.append("=0, ");
@@ -286,7 +285,7 @@ public class DBStore extends LongIDStore implements IDBStore
       builder.append(" SET ");
       builder.append(CDODBSchema.REPOSITORY_STOPPED);
       builder.append("=");
-      builder.append(System.currentTimeMillis());
+      builder.append(getShutdownTime());
       builder.append(", ");
       builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID);
       builder.append("=");
@@ -338,6 +337,16 @@ public class DBStore extends LongIDStore implements IDBStore
   {
     String name = getRepository().getName();
     return new DBSchema(name);
+  }
+
+  protected long getStartupTime()
+  {
+    return System.currentTimeMillis();
+  }
+
+  protected long getShutdownTime()
+  {
+    return System.currentTimeMillis();
   }
 
   public static DBType getDBType(CDOType type)

@@ -1,0 +1,155 @@
+cdo_classes
+===========
+[1, 1, 0, Address, false]
+[2, 1, 1, Company, false]
+[3, 1, 2, Supplier, false]
+[4, 1, 3, Customer, false]
+[5, 1, 4, Order, false]
+[6, 1, 5, OrderDetail, false]
+[7, 1, 6, PurchaseOrder, false]
+[8, 1, 7, SalesOrder, false]
+[9, 1, 8, Category, false]
+[10, 1, 9, Product, false]
+[11, 1, 10, OrderAddress, false]
+[12, 2, 0, SpecialPurchaseOrder, false]
+
+cdo_supertypes
+==============
+[2, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 0]
+[3, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 0]
+[4, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 0]
+[7, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 4]
+[8, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 4]
+[11, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 0]
+[11, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 4]
+[11, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 5]
+[12, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 6]
+
+cdo_features
+============
+[1, 1, 0, name, 50, null, 0, false, false, 0]
+[2, 1, 1, street, 50, null, 0, false, false, 1]
+[3, 1, 2, city, 50, null, 0, false, false, 2]
+[4, 2, 3, categories, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 8, true, true, 3]
+[5, 2, 4, suppliers, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 2, true, true, 4]
+[6, 2, 5, customers, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 3, true, true, 5]
+[7, 2, 6, purchaseOrders, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 6, true, true, 6]
+[8, 2, 7, salesOrders, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 7, true, true, 7]
+[9, 3, 3, purchaseOrders, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 6, true, false, 3]
+[10, 3, 4, preferred, 22, null, 0, false, false, 4]
+[11, 4, 3, salesOrders, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 7, true, false, 3]
+[12, 5, 0, orderDetails, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 5, true, true, 0]
+[13, 6, 0, order, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 4, false, false, 0]
+[14, 6, 1, product, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 9, false, false, 1]
+[15, 6, 2, price, 37, null, 0, false, false, 2]
+[16, 7, 1, date, 29, null, 0, false, false, 1]
+[17, 7, 2, supplier, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 2, false, false, 2]
+[18, 8, 1, id, 39, null, 0, false, false, 1]
+[19, 8, 2, customer, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 3, false, false, 2]
+[20, 9, 0, name, 50, null, 0, false, false, 0]
+[21, 9, 1, categories, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 8, true, true, 1]
+[22, 9, 2, products, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 9, true, true, 2]
+[23, 10, 0, name, 50, null, 0, false, false, 0]
+[24, 10, 1, orderDetails, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 5, true, false, 1]
+[25, 10, 2, vat, 999, null, 0, false, false, 2]
+[26, 11, 7, testAttribute, 22, null, 0, false, false, 7]
+[27, 12, 3, discountCode, 50, null, 0, false, false, 3]
+[28, 12, 4, shippingAddress, 10, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, 0, false, true, 4]
+
+cdo_repository
+==============
+[1, 1, 0, -1, -1]
+
+cdo_packages
+============
+[1, http://www.eclipse.org/emf/CDO/tests/model1/1.0.0, model1, <?xml version="1.0" encoding="ASCII"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model1" nsURI="http://www.eclipse.org/emf/CDO/tests/model1/1.0.0" nsPrefix="model1">
+  <eClassifiers xsi:type="ecore:EClass" name="Address">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name">
+      <eType xsi:type="ecore:EDataType" href="../../../2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="street">
+      <eType xsi:type="ecore:EDataType" href="../../../2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="city">
+      <eType xsi:type="ecore:EDataType" href="../../../2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Company" eSuperTypes="//Address">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1" eType="//Category" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="suppliers" upperBound="-1" eType="//Supplier" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="customers" upperBound="-1" eType="//Customer" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="purchaseOrders" upperBound="-1" eType="//PurchaseOrder" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="salesOrders" upperBound="-1" eType="//SalesOrder" containment="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Supplier" eSuperTypes="//Address">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="purchaseOrders" upperBound="-1" eType="//PurchaseOrder" eOpposite="//PurchaseOrder/supplier"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="preferred" defaultValueLiteral="true">
+      <eType xsi:type="ecore:EDataType" href="../../../2002/Ecore#//EBoolean"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Customer" eSuperTypes="//Address">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="salesOrders" unique="false" upperBound="-1" eType="//SalesOrder" eOpposite="//SalesOrder/customer"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Order">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="orderDetails" upperBound="-1" eType="//OrderDetail" containment="true" resolveProxies="false" eOpposite="//OrderDetail/order"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OrderDetail">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="order" lowerBound="1" eType="//Order" resolveProxies="false" eOpposite="//Order/orderDetails"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="product" eType="//Product" eOpposite="//Product/orderDetails"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="price">
+      <eType xsi:type="ecore:EDataType" href="../../../2002/Ecore#//EFloat"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PurchaseOrder" eSuperTypes="//Order">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="date">
+      <eType xsi:type="ecore:EDataType" href="../../../2002/Ecore#//EDate"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="supplier" lowerBound="1" eType="//Supplier" eOpposite="//Supplier/purchaseOrders"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SalesOrder" eSuperTypes="//Order">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id">
+      <eType xsi:type="ecore:EDataType" href="../../../2002/Ecore#//EInt"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="customer" lowerBound="1" eType="//Customer" eOpposite="//Customer/salesOrders"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Category">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name">
+      <eType xsi:type="ecore:EDataType" href="../../../2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1" eType="//Category" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="products" upperBound="-1" eType="//Product" containment="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Product">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name">
+      <eType xsi:type="ecore:EDataType" href="../../../2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="orderDetails" upperBound="-1" eType="//OrderDetail" eOpposite="//OrderDetail/product"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vat" eType="//VAT" defaultValueLiteral="vat15"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OrderAddress" eSuperTypes="//Address //Order //OrderDetail">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="testAttribute">
+      <eType xsi:type="ecore:EDataType" href="../../../2002/Ecore#//EBoolean"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="VAT">
+    <eLiterals name="vat0"/>
+    <eLiterals name="vat7" value="7"/>
+    <eLiterals name="vat15" value="15"/>
+  </eClassifiers>
+</ecore:EPackage>
+, false, 1, 76, null]
+[2, http://www.eclipse.org/emf/CDO/tests/model2/1.0.0, model2, <?xml version="1.0" encoding="ASCII"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model2" nsURI="http://www.eclipse.org/emf/CDO/tests/model2/1.0.0" nsPrefix="model2">
+  <eClassifiers xsi:type="ecore:EClass" name="SpecialPurchaseOrder">
+    <eSuperTypes href="../model1/1.0.0#//PurchaseOrder"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="discountCode">
+      <eType xsi:type="ecore:EDataType" href="../../../2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="shippingAddress" containment="true" resolveProxies="false">
+      <eType xsi:type="ecore:EClass" href="../model1/1.0.0#//Address"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+</ecore:EPackage>
+, false, 77, 83, null]
+

@@ -1,0 +1,27 @@
+cdo_classes
+===========
+[1, 1, 0, Class1, false]
+
+cdo_features
+============
+[1, 1, 0, class2, 10, http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0, 0, true, false, 0]
+
+cdo_repository
+==============
+[1, 1, 0, -1, -1]
+
+cdo_packages
+============
+[1, http://www.eclipse.org/emf/CDO/tests/model3/1.0.0, model3, <?xml version="1.0" encoding="ASCII"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model3" nsURI="http://www.eclipse.org/emf/CDO/tests/model3/1.0.0" nsPrefix="model3">
+  <eClassifiers xsi:type="ecore:EClass" name="Class1">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="class2" upperBound="-1" eType="//subpackage/Class2" eOpposite="//subpackage/Class2/class1"/>
+  </eClassifiers>
+  <eSubpackages name="subpackage" nsURI="http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0" nsPrefix="subpackage">
+    <eClassifiers xsi:type="ecore:EClass" name="Class2">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="class1" upperBound="-1" eType="//Class1" eOpposite="//Class1/class2"/>
+    </eClassifiers>
+  </eSubpackages>
+</ecore:EPackage>
+, false, 1, 8, null]
+

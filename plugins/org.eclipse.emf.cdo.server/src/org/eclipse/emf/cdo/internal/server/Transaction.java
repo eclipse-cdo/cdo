@@ -164,7 +164,7 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
 
   public void commit(CDOPackage[] newPackages, CDORevision[] newObjects, CDORevisionDelta[] dirtyObjectDeltas)
   {
-    timeStamp = System.currentTimeMillis();
+    timeStamp = createTimeStamp();
     this.newPackages = newPackages;
     this.newObjects = newObjects;
     this.dirtyObjectDeltas = dirtyObjectDeltas;
@@ -185,6 +185,11 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
       rollbackMessage = ex.getMessage();
       rollback();
     }
+  }
+
+  protected long createTimeStamp()
+  {
+    return System.currentTimeMillis();
   }
 
   public void postCommit(boolean success)

@@ -24,8 +24,18 @@ import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.hsqldb.HSQLDBDataSource;
 import org.eclipse.net4j.db.internal.hsqldb.HSQLDBAdapter;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -37,6 +47,8 @@ import java.util.Map;
  */
 public class DBStoreHorizontalTest extends TestLogic
 {
+  private static final String DEFINITION_MODE = "";
+
   private HorizontalMappingStrategy mappingStrategy;
 
   private HSQLDBAdapter dbAdapter;
@@ -64,7 +76,15 @@ public class DBStoreHorizontalTest extends TestLogic
     dbAdapter = createDBAdapter();
     dbConnectionProvider = createDBConnectionProvider();
 
-    store = new DBStore();
+    store = new DBStore()
+    {
+      @Override
+      protected long getStartupTime()
+      {
+        return 1;
+      }
+    };
+
     store.setMappingStrategy(mappingStrategy);
     store.setDbAdapter(dbAdapter);
     store.setDbConnectionProvider(dbConnectionProvider);
@@ -96,13 +116,71 @@ public class DBStoreHorizontalTest extends TestLogic
     return mappingStrategy;
   }
 
-  private void verifyRowCount(int expectedRows, String tableName)
+  private void defineOrCompare(String fileName) throws IOException
   {
-    int actuaRowsl = query("select count(*) from " + tableName);
-    assertEquals("Rows in " + tableName.toUpperCase(), expectedRows, actuaRowsl);
+    File file = new File(fileName + ".txt");
+    if (fileName.equals(DEFINITION_MODE) || "*".equals(DEFINITION_MODE))
+    {
+      file.getParentFile().mkdirs();
+      PrintStream out = new PrintStream(file);
+      exportDatabase(out);
+      out.close();
+    }
+    else
+    {
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      exportDatabase(new PrintStream(baos));
+
+      ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+      FileInputStream fis = new FileInputStream(file);
+      compareLines(fileName, fis, bais);
+    }
   }
 
-  private int query(String sql)
+  private void compareLines(String fileName, InputStream expectedStream, InputStream actualStream) throws IOException
+  {
+    BufferedReader expectedReader = new BufferedReader(new InputStreamReader(expectedStream));
+    BufferedReader actualReader = new BufferedReader(new InputStreamReader(actualStream));
+
+    int line = 1;
+    while (true)
+    {
+      String expectedLine = expectedReader.readLine();
+      String actualLine = actualReader.readLine();
+      if (!ObjectUtil.equals(expectedLine, actualLine))
+      {
+        throw new IllegalStateException("Mismatch at (" + fileName + ":" + line + ")\n" + expectedLine + "\n"
+            + actualLine);
+      }
+
+      if (expectedLine == null)
+      {
+        break;
+      }
+
+      ++line;
+    }
+  }
+
+  private void exportDatabase(PrintStream out)
+  {
+    store.getDBSchema().export(dbConnectionProvider, out);
+    CDODBSchema.INSTANCE.export(dbConnectionProvider, out);
+  }
+
+  private void assertRowCount(int expectedRows, String tableName)
+  {
+    int actualRowsl = (Integer)query("select count(*) from " + tableName);
+    assertEquals("Rows in " + tableName.toUpperCase(), expectedRows, actualRowsl);
+  }
+
+  private void assertFieldValue(Object expectedValue, String sql)
+  {
+    Object actualValue = query(sql);
+    assertEquals("Field in " + sql, expectedValue, actualValue);
+  }
+
+  private Object query(String sql)
   {
     Connection connection = null;
     Statement statement = null;
@@ -115,10 +193,10 @@ public class DBStoreHorizontalTest extends TestLogic
       resultSet = statement.executeQuery(sql);
       if (!resultSet.next())
       {
-        return 0;
+        throw new IllegalStateException("No row: " + sql.toUpperCase());
       }
 
-      return resultSet.getInt(1);
+      return resultSet.getObject(1);
     }
     catch (Exception ex)
     {
@@ -133,42 +211,59 @@ public class DBStoreHorizontalTest extends TestLogic
   }
 
   @Override
-  protected void verifyCreateModel1(Transaction transaction)
+  protected void verifyCreateModel1(Transaction transaction) throws Exception
   {
-    verifyRowCount(1, "cdo_repository");
-    verifyRowCount(1, "cdo_packages");
-    verifyRowCount(11, "cdo_classes");
-    verifyRowCount(8, "cdo_supertypes");
-    verifyRowCount(26, "cdo_features");
+    defineOrCompare("defs/horizontal/verifyCreateModel1");
+    // assertRowCount(1, "cdo_repository");
+    // assertRowCount(1, "cdo_packages");
+    // assertRowCount(11, "cdo_classes");
+    // assertRowCount(8, "cdo_supertypes");
+    // assertRowCount(26, "cdo_features");
   }
 
   @Override
-  protected void verifyCreateModel2(Transaction transaction)
+  protected void verifyCreateModel2(Transaction transaction) throws Exception
   {
-    verifyRowCount(1, "cdo_repository");
-    verifyRowCount(2, "cdo_packages");
-    verifyRowCount(12, "cdo_classes");
-    verifyRowCount(9, "cdo_supertypes");
-    verifyRowCount(28, "cdo_features");
+    defineOrCompare("defs/horizontal/verifyCreateModel2");
+    // assertRowCount(1, "cdo_repository");
+    // assertRowCount(2, "cdo_packages");
+    // assertRowCount(12, "cdo_classes");
+    // assertRowCount(9, "cdo_supertypes");
+    // assertRowCount(28, "cdo_features");
   }
 
   @Override
-  protected void verifyCreateModel3(Transaction transaction)
+  protected void verifyCreateModel3(Transaction transaction) throws Exception
   {
-    verifyRowCount(1, "cdo_repository");
-    verifyRowCount(1, "cdo_packages");
-    verifyRowCount(1, "cdo_classes");
-    verifyRowCount(0, "cdo_supertypes");
-    verifyRowCount(1, "cdo_features");
+    defineOrCompare("defs/horizontal/verifyCreateModel3");
+    // assertRowCount(1, "cdo_repository");
+    // assertRowCount(1, "cdo_packages");
+    // assertRowCount(1, "cdo_classes");
+    // assertRowCount(0, "cdo_supertypes");
+    // assertRowCount(1, "cdo_features");
   }
 
   @Override
-  protected void verifyCreateMango(Transaction transaction)
+  protected void verifyCreateMango(Transaction transaction) throws Exception
   {
-    verifyRowCount(1, "cdo_repository");
-    verifyRowCount(1, "cdo_packages");
-    verifyRowCount(2, "cdo_classes");
-    verifyRowCount(0, "cdo_supertypes");
-    verifyRowCount(3, "cdo_features");
+    defineOrCompare("defs/horizontal/verifyCreateMango");
+    // assertRowCount(1, "cdo_repository");
+    // assertRowCount(1, "cdo_packages");
+    // assertRowCount(2, "cdo_classes");
+    // assertRowCount(0, "cdo_supertypes");
+    // assertRowCount(3, "cdo_features");
+  }
+
+  @Override
+  protected void verifyCommitCompany(Transaction transaction) throws Exception
+  {
+    defineOrCompare("defs/horizontal/verifyCommitCompany");
+    // assertRowCount(1, "CDOResource");
+    // assertFieldValue("/res1", "select path_0 from CDOResource where cdo_id=1 and cdo_version=1");
+    //
+    // assertRowCount(1, "Company");
+    // assertFieldValue("Sympedia", "select name from Company where cdo_id=1 and cdo_version=1");
+    // assertFieldValue("Homestr. 17", "select street from Company where cdo_id=1 and cdo_version=1");
+    // assertFieldValue("Berlin", "select city from Company where cdo_id=1 and cdo_version=1");
   }
 }

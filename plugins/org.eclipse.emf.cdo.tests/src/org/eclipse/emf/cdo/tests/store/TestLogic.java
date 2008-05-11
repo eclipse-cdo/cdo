@@ -10,15 +10,22 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.store;
 
+import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.Transaction;
 import org.eclipse.emf.cdo.internal.server.Transaction.TransactionPackageManager;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
-import org.eclipse.emf.cdo.protocol.CDOProtocolView;
+import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
+import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
+import org.eclipse.emf.cdo.protocol.model.CDOClass;
+import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
 import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.protocol.model.resource.CDOResourceClass;
+import org.eclipse.emf.cdo.protocol.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IStore;
@@ -34,6 +41,7 @@ import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.tests.AbstractOMTest;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 
@@ -110,7 +118,7 @@ public abstract class TestLogic extends AbstractOMTest
     template.dispose();
   }
 
-  protected abstract void verifyCreateModel1(Transaction transaction);
+  protected abstract void verifyCreateModel1(Transaction transaction) throws Exception;
 
   public void testCreateModel2() throws Exception
   {
@@ -122,7 +130,7 @@ public abstract class TestLogic extends AbstractOMTest
     template.dispose();
   }
 
-  protected abstract void verifyCreateModel2(Transaction transaction);
+  protected abstract void verifyCreateModel2(Transaction transaction) throws Exception;
 
   public void testCreateModel3() throws Exception
   {
@@ -133,7 +141,7 @@ public abstract class TestLogic extends AbstractOMTest
     template.dispose();
   }
 
-  protected abstract void verifyCreateModel3(Transaction transaction);
+  protected abstract void verifyCreateModel3(Transaction transaction) throws Exception;
 
   public void testCreateMango() throws Exception
   {
@@ -144,7 +152,27 @@ public abstract class TestLogic extends AbstractOMTest
     template.dispose();
   }
 
-  protected abstract void verifyCreateMango(Transaction transaction);
+  protected abstract void verifyCreateMango(Transaction transaction) throws Exception;
+
+  public void testCommitCompany() throws Exception
+  {
+    CommitTemplate template = new CommitTemplate();
+    template.addNewPackage(Model1Package.eINSTANCE);
+
+    Revision resource = template.addNewResource(1);
+    resource.set("path", "/res1");
+
+    Revision company = template.addNewObject(2, Model1Package.eINSTANCE.getCompany());
+    company.set("name", "Sympedia");
+    company.set("street", "Homestr. 17");
+    company.set("city", "Berlin");
+
+    Transaction transaction = template.run();
+    verifyCommitCompany(transaction);
+    template.dispose();
+  }
+
+  protected abstract void verifyCommitCompany(Transaction transaction) throws Exception;
 
   /**
    * @author Eike Stepper
@@ -152,6 +180,8 @@ public abstract class TestLogic extends AbstractOMTest
   protected class CommitTemplate
   {
     private int viewID;
+
+    private long timeStamp;
 
     private CDOServerProtocol protocol;
 
@@ -167,17 +197,18 @@ public abstract class TestLogic extends AbstractOMTest
 
     public CommitTemplate()
     {
-      this(1);
+      this(1, 12345);
+    }
+
+    public CommitTemplate(int viewID, long timeStamp)
+    {
+      this.viewID = viewID;
+      this.timeStamp = timeStamp;
       protocol = createProtocol();
       session = repository.getSessionManager().openSession(protocol, true);
       protocol.setInfraStructure(session);
       transaction = createTransaction(session);
       transaction.preCommit();
-    }
-
-    public CommitTemplate(int viewID)
-    {
-      this.viewID = viewID;
     }
 
     public Session getSession()
@@ -217,16 +248,34 @@ public abstract class TestLogic extends AbstractOMTest
       }
 
       TransactionPackageManager packageManager = transaction.getPackageManager();
-      CDOPackage cdoPackage = CDOModelUtil.createPackage(packageManager, uri, name, ecore, dynamic, idRange, parentURI);
-      ModelUtil.initializeCDOPackage(ePackage, cdoPackage);
-      packageManager.addPackage(cdoPackage);
-      newPackages.add(cdoPackage);
-      return cdoPackage;
+      CDOPackage newPackage = CDOModelUtil.createPackage(packageManager, uri, name, ecore, dynamic, idRange, parentURI);
+      ModelUtil.initializeCDOPackage(ePackage, newPackage);
+      packageManager.addPackage(newPackage);
+      newPackages.add(newPackage);
+      return newPackage;
     }
 
-    public void addNewObject(CDORevision newObject)
+    public Revision addNewResource(int id)
     {
+      CDOResourcePackage resourcePackage = repository.getPackageManager().getCDOResourcePackage();
+      CDOResourceClass resourceClass = resourcePackage.getCDOResourceClass();
+      return addRevision(id, resourceClass);
+    }
+
+    public Revision addNewObject(int id, EClass eClass)
+    {
+      String uri = eClass.getEPackage().getNsURI();
+      CDOPackage cdoPackage = transaction.getPackageManager().lookupPackage(uri);
+      CDOClass cdoClass = cdoPackage.lookupClass(eClass.getClassifierID());
+      return addRevision(id, cdoClass);
+    }
+
+    private Revision addRevision(int id, CDOClass cdoClass)
+    {
+      CDOIDTemp tempID = CDOIDUtil.createCDOIDTempObject(id);
+      Revision newObject = new Revision(cdoClass, tempID);
       newObjects.add(newObject);
+      return newObject;
     }
 
     public void addDirtyObjectDelta(CDORevisionDelta dirtyObjectDelta)
@@ -241,7 +290,7 @@ public abstract class TestLogic extends AbstractOMTest
 
     protected Transaction createTransaction(Session session)
     {
-      return (Transaction)session.openView(viewID, CDOProtocolView.Type.TRANSACTION);
+      return session.openTransaction(viewID, timeStamp);
     }
 
     private CDOPackage[] getNewPackages()
@@ -257,6 +306,28 @@ public abstract class TestLogic extends AbstractOMTest
     private CDORevisionDelta[] getDirtyObjectDeltas()
     {
       return dirtyObjectDeltas.toArray(new CDORevisionDelta[dirtyObjectDeltas.size()]);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected class Revision extends CDORevisionImpl
+  {
+    public Revision(CDOClass cdoClass, CDOID id)
+    {
+      super(repository.getRevisionManager(), cdoClass, id);
+    }
+
+    public void set(String featureName, Object value)
+    {
+      set(featureName, 0, value);
+    }
+
+    public void set(String featureName, int index, Object value)
+    {
+      CDOFeature cdoFeature = getCDOClass().lookupFeature(featureName);
+      set(cdoFeature, index, value);
     }
   }
 }

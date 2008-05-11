@@ -168,6 +168,25 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     return view;
   }
 
+  /**
+   * For tests only.
+   */
+  public Transaction openTransaction(int viewID, final long timeStamp)
+  {
+    Transaction transaction = new Transaction(this, viewID)
+    {
+      @Override
+      protected long createTimeStamp()
+      {
+        return timeStamp;
+      }
+    };
+
+    views.put(viewID, transaction);
+    fireElementAddedEvent(transaction);
+    return transaction;
+  }
+
   private IView createView(int viewID, CDOProtocolView.Type type)
   {
     if (type == CDOProtocolView.Type.TRANSACTION)

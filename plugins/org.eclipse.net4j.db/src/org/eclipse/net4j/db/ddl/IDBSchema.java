@@ -16,6 +16,7 @@ import org.eclipse.net4j.db.IDBConnectionProvider;
 
 import javax.sql.DataSource;
 
+import java.io.PrintStream;
 import java.sql.Connection;
 import java.util.Set;
 
@@ -41,4 +42,10 @@ public interface IDBSchema extends IDBSchemaElement
   public void drop(IDBAdapter dbAdapter, DataSource dataSource) throws DBException;
 
   public void drop(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException;
+
+  public void export(Connection connection, PrintStream out) throws DBException;
+
+  public void export(DataSource dataSource, PrintStream out) throws DBException;
+
+  public void export(IDBConnectionProvider connectionProvider, PrintStream out) throws DBException;
 }

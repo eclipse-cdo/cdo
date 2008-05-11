@@ -14,12 +14,15 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 
 import javax.sql.DataSource;
 
+import java.io.PrintStream;
 import java.sql.Connection;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -131,6 +134,61 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     {
       connection = connectionProvider.getConnection();
       drop(dbAdapter, connection);
+    }
+    finally
+    {
+      DBUtil.close(connection);
+    }
+  }
+
+  public void export(Connection connection, PrintStream out) throws DBException
+  {
+    for (DBTable table : getTables())
+    {
+      export(table, connection, out);
+    }
+  }
+
+  private void export(final DBTable table, Connection connection, final PrintStream out)
+  {
+    if (DBUtil.select(connection, new IDBRowHandler()
+    {
+      public boolean handle(int row, Object... values)
+      {
+        if (row == 0)
+        {
+          String tableName = table.getName();
+          out.println(tableName);
+          for (int i = 0; i < tableName.length(); i++)
+          {
+            out.print("=");
+          }
+
+          out.println();
+        }
+
+        out.println(Arrays.asList(values));
+        return true;
+      }
+    }, table.getFields()) > 0)
+    {
+      out.println();
+    }
+  }
+
+  public void export(DataSource dataSource, PrintStream out) throws DBException
+  {
+    export(DBUtil.createConnectionProvider(dataSource), out);
+  }
+
+  public void export(IDBConnectionProvider connectionProvider, PrintStream out) throws DBException
+  {
+    Connection connection = null;
+
+    try
+    {
+      connection = connectionProvider.getConnection();
+      export(connection, out);
     }
     finally
     {

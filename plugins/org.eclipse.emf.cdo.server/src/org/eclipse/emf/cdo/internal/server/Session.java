@@ -138,9 +138,11 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
     case CDOProtocolConstants.VIEW_READONLY:
       openView(viewID, CDOProtocolView.Type.READONLY);
+      break;
 
     case CDOProtocolConstants.VIEW_AUDIT:
       openView(viewID, CDOProtocolView.Type.AUDIT);
+      break;
 
     default:
       throw new ImplementationError("Invalid kind: " + kind);

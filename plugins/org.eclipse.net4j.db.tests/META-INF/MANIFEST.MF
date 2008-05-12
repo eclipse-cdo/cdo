@@ -9,7 +9,7 @@ Bundle-ClassPath: .
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.3.0,4.0.0)",
- org.eclipse.net4j.tests,
- org.eclipse.net4j.db
+ org.eclipse.net4j.tests;visibility:=reexport,
+ org.eclipse.net4j.db.derby;visibility:=reexport
 Export-Package: org.eclipse.net4j.db.tests
 Eclipse-LazyStart: true

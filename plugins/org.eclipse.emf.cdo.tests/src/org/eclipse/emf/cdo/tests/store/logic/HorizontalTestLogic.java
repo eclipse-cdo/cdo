@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.store;
+package org.eclipse.emf.cdo.tests.store.logic;
 
 import org.eclipse.emf.cdo.internal.server.Transaction;
 import org.eclipse.emf.cdo.server.internal.db.HorizontalMappingStrategy;
@@ -16,10 +16,6 @@ import org.eclipse.emf.cdo.server.internal.db.MappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.ToMany;
 import org.eclipse.emf.cdo.server.internal.db.ToOne;
 
-import org.eclipse.net4j.db.IDBConnectionProvider;
-import org.eclipse.net4j.db.hsqldb.HSQLDBDataSource;
-import org.eclipse.net4j.db.internal.hsqldb.HSQLDBAdapter;
-import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,9 +23,9 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public abstract class HorizontalTest extends DBStoreTestLogic
+public abstract class HorizontalTestLogic extends DBStoreTestLogic
 {
-  public HorizontalTest()
+  public HorizontalTestLogic()
   {
   }
 
@@ -100,27 +96,5 @@ public abstract class HorizontalTest extends DBStoreTestLogic
     // assertFieldValue("Sympedia", "select name from Company where cdo_id=1 and cdo_version=1");
     // assertFieldValue("Homestr. 17", "select street from Company where cdo_id=1 and cdo_version=1");
     // assertFieldValue("Berlin", "select city from Company where cdo_id=1 and cdo_version=1");
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class HSQLDB extends HorizontalTest
-  {
-    @Override
-    protected IDBConnectionProvider createDBConnectionProvider()
-    {
-      HSQLDBDataSource dataSource = new HSQLDBDataSource();
-      dataSource.setDatabase("jdbc:hsqldb:mem:storetest");
-      dataSource.setUser("sa");
-  
-      return new DataSourceConnectionProvider(dataSource);
-    }
-  
-    @Override
-    protected HSQLDBAdapter createDBAdapter()
-    {
-      return new HSQLDBAdapter();
-    }
   }
 }

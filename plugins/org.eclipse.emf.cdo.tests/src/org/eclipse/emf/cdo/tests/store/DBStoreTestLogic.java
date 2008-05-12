@@ -10,20 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.store;
 
-import org.eclipse.emf.cdo.internal.server.Transaction;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
-import org.eclipse.emf.cdo.server.internal.db.HorizontalMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.MappingStrategy;
-import org.eclipse.emf.cdo.server.internal.db.ToMany;
-import org.eclipse.emf.cdo.server.internal.db.ToOne;
 
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
-import org.eclipse.net4j.db.hsqldb.HSQLDBDataSource;
-import org.eclipse.net4j.db.internal.hsqldb.HSQLDBAdapter;
-import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 
@@ -39,25 +33,23 @@ import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public class DBStoreHorizontalTest extends TestLogic
+public abstract class DBStoreTestLogic extends TestLogic
 {
-  private static final String DEFINITION_MODE = "";
+  public static final String DEFINITION_MODE = "";
 
-  private HorizontalMappingStrategy mappingStrategy;
+  protected MappingStrategy mappingStrategy;
 
-  private HSQLDBAdapter dbAdapter;
+  protected IDBAdapter dbAdapter;
 
-  private IDBConnectionProvider dbConnectionProvider;
+  protected IDBConnectionProvider dbConnectionProvider;
 
-  private DBStore store;
+  protected DBStore store;
 
-  public DBStoreHorizontalTest()
+  public DBStoreTestLogic()
   {
   }
 
@@ -91,32 +83,13 @@ public class DBStoreHorizontalTest extends TestLogic
     return store;
   }
 
-  protected IDBConnectionProvider createDBConnectionProvider()
-  {
-    HSQLDBDataSource dataSource = new HSQLDBDataSource();
-    dataSource.setDatabase("jdbc:hsqldb:mem:storetest");
-    dataSource.setUser("sa");
+  protected abstract IDBConnectionProvider createDBConnectionProvider();
 
-    return new DataSourceConnectionProvider(dataSource);
-  }
+  protected abstract IDBAdapter createDBAdapter();
 
-  protected HSQLDBAdapter createDBAdapter()
-  {
-    return new HSQLDBAdapter();
-  }
+  protected abstract MappingStrategy createMappingStrategy();
 
-  protected HorizontalMappingStrategy createMappingStrategy()
-  {
-    Map<String, String> props = new HashMap<String, String>();
-    props.put(MappingStrategy.PROP_TO_MANY_REFERENCE_MAPPING, ToMany.PER_CLASS.toString());
-    props.put(MappingStrategy.PROP_TO_ONE_REFERENCE_MAPPING, ToOne.LIKE_ATTRIBUTES.toString());
-
-    HorizontalMappingStrategy mappingStrategy = new HorizontalMappingStrategy();
-    mappingStrategy.setProperties(props);
-    return mappingStrategy;
-  }
-
-  private void defineOrCompare(String fileName) throws IOException
+  protected void defineOrCompare(String fileName) throws IOException
   {
     File file = new File(fileName + ".txt");
     if (fileName.equals(DEFINITION_MODE) || "*".equals(DEFINITION_MODE))
@@ -168,19 +141,19 @@ public class DBStoreHorizontalTest extends TestLogic
     CDODBSchema.INSTANCE.export(dbConnectionProvider, out);
   }
 
-  private void assertRowCount(int expectedRows, String tableName)
+  protected void assertRowCount(int expectedRows, String tableName)
   {
     int actualRowsl = (Integer)query("select count(*) from " + tableName);
     assertEquals("Rows in " + tableName.toUpperCase(), expectedRows, actualRowsl);
   }
 
-  private void assertFieldValue(Object expectedValue, String sql)
+  protected void assertFieldValue(Object expectedValue, String sql)
   {
     Object actualValue = query(sql);
     assertEquals("Field in " + sql, expectedValue, actualValue);
   }
 
-  private Object query(String sql)
+  protected Object query(String sql)
   {
     Connection connection = null;
     Statement statement = null;
@@ -208,62 +181,5 @@ public class DBStoreHorizontalTest extends TestLogic
       DBUtil.close(statement);
       DBUtil.close(connection);
     }
-  }
-
-  @Override
-  protected void verifyCreateModel1(Transaction transaction) throws Exception
-  {
-    defineOrCompare("defs/horizontal/verifyCreateModel1");
-    // assertRowCount(1, "cdo_repository");
-    // assertRowCount(1, "cdo_packages");
-    // assertRowCount(11, "cdo_classes");
-    // assertRowCount(8, "cdo_supertypes");
-    // assertRowCount(26, "cdo_features");
-  }
-
-  @Override
-  protected void verifyCreateModel2(Transaction transaction) throws Exception
-  {
-    defineOrCompare("defs/horizontal/verifyCreateModel2");
-    // assertRowCount(1, "cdo_repository");
-    // assertRowCount(2, "cdo_packages");
-    // assertRowCount(12, "cdo_classes");
-    // assertRowCount(9, "cdo_supertypes");
-    // assertRowCount(28, "cdo_features");
-  }
-
-  @Override
-  protected void verifyCreateModel3(Transaction transaction) throws Exception
-  {
-    defineOrCompare("defs/horizontal/verifyCreateModel3");
-    // assertRowCount(1, "cdo_repository");
-    // assertRowCount(1, "cdo_packages");
-    // assertRowCount(1, "cdo_classes");
-    // assertRowCount(0, "cdo_supertypes");
-    // assertRowCount(1, "cdo_features");
-  }
-
-  @Override
-  protected void verifyCreateMango(Transaction transaction) throws Exception
-  {
-    defineOrCompare("defs/horizontal/verifyCreateMango");
-    // assertRowCount(1, "cdo_repository");
-    // assertRowCount(1, "cdo_packages");
-    // assertRowCount(2, "cdo_classes");
-    // assertRowCount(0, "cdo_supertypes");
-    // assertRowCount(3, "cdo_features");
-  }
-
-  @Override
-  protected void verifyCommitCompany(Transaction transaction) throws Exception
-  {
-    defineOrCompare("defs/horizontal/verifyCommitCompany");
-    // assertRowCount(1, "CDOResource");
-    // assertFieldValue("/res1", "select path_0 from CDOResource where cdo_id=1 and cdo_version=1");
-    //
-    // assertRowCount(1, "Company");
-    // assertFieldValue("Sympedia", "select name from Company where cdo_id=1 and cdo_version=1");
-    // assertFieldValue("Homestr. 17", "select street from Company where cdo_id=1 and cdo_version=1");
-    // assertFieldValue("Berlin", "select city from Company where cdo_id=1 and cdo_version=1");
   }
 }

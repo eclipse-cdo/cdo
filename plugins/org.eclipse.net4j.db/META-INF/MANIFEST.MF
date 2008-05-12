@@ -18,3 +18,4 @@ Export-Package: org.eclipse.net4j.db;version="0.8.0",
  org.eclipse.net4j.internal.db.ddl;version="0.8.0",
  org.eclipse.net4j.internal.db.dml;version="0.8.0"
 Eclipse-LazyStart: true
+Eclipse-BuddyPolicy: registered

@@ -684,4 +684,53 @@ public class InitialTest extends AbstractCDOTest
 
     session.close();
   }
+
+  public void testNullReference() throws Exception
+  {
+    {
+      msg("Opening session");
+      CDOSession session = openModel1Session();
+
+      msg("Opening transaction");
+      CDOTransaction transaction = session.openTransaction();
+
+      msg("Creating resource");
+      CDOResource resource = transaction.createResource("/test1");
+
+      msg("Creating orderDetail");
+      OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
+
+      msg("Setting price");
+      orderDetail.setPrice(4.75f);
+
+      msg("Adding orderDetail");
+      resource.getContents().add(orderDetail);
+
+      msg("Committing");
+      transaction.commit();
+      session.close();
+    }
+
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction();
+
+    msg("Getting resource");
+    CDOResource resource = transaction.getResource("/test1");
+
+    msg("Getting contents");
+    EList<EObject> contents = resource.getContents();
+
+    msg("Getting supplier");
+    OrderDetail orderDetail = (OrderDetail)contents.get(0);
+    assertNotNull(orderDetail);
+
+    msg("Verifying price");
+    assertEquals(4.75f, orderDetail.getPrice());
+
+    msg("Verifying product");
+    assertEquals(null, orderDetail.getProduct());
+  }
 }

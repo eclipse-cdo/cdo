@@ -23,13 +23,13 @@ import org.eclipse.net4j.internal.db.ddl.DBIndex;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -42,8 +42,8 @@ public abstract class DBAdapter implements IDBAdapter
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBAdapter.class);
 
-  private static final String[] RESERVED_WORDS = { "ABSOLUTE", "ACTION", "ADD", "AFTER", "ALL", "ALLOCATE", "ALTER",
-      "AND", "ANY", "ARE", "ARRAY", "AS", "ASC", "ASENSITIVE", "ASSERTION", "ASYMMETRIC", "AT", "ATOMIC",
+  private static final String[] SQL92_RESERVED_WORDS = { "ABSOLUTE", "ACTION", "ADD", "AFTER", "ALL", "ALLOCATE",
+      "ALTER", "AND", "ANY", "ARE", "ARRAY", "AS", "ASC", "ASENSITIVE", "ASSERTION", "ASYMMETRIC", "AT", "ATOMIC",
       "AUTHORIZATION", "AVG", "BEFORE", "BEGIN", "BETWEEN", "BIGINT", "BINARY", "BIT", "BIT_LENGTH", "BLOB", "BOOLEAN",
       "BOTH", "BREADTH", "BY", "CALL", "CALLED", "CASCADE", "CASCADED", "CASE", "CAST", "CATALOG", "CHAR", "CHARACTER",
       "CHARACTER_LENGTH", "CHAR_LENGTH", "CHECK", "CLOB", "CLOSE", "COALESCE", "COLLATE", "COLLATION", "COLUMN",
@@ -79,6 +79,8 @@ public abstract class DBAdapter implements IDBAdapter
   private String name;
 
   private String version;
+
+  private Set<String> reservedWords;
 
   public DBAdapter(String name, String version)
   {
@@ -246,7 +248,7 @@ public abstract class DBAdapter implements IDBAdapter
     builder.append("CREATE TABLE ");
     builder.append(table);
     builder.append(" (");
-    table.appendFieldDefs(builder, createFieldDefinitions(table));
+    appendFieldDefs(builder, table, createFieldDefinitions(table));
     String constraints = createConstraints(table);
     if (constraints != null)
     {
@@ -261,6 +263,7 @@ public abstract class DBAdapter implements IDBAdapter
       TRACER.trace(sql);
     }
 
+    System.out.println(sql);
     statement.execute(sql);
 
     DBIndex[] indices = table.getIndices();
@@ -391,9 +394,24 @@ public abstract class DBAdapter implements IDBAdapter
     return name;
   }
 
-  protected boolean isReservedWord(String word)
+  public String[] getSQL92ReservedWords()
   {
-    return Arrays.binarySearch(RESERVED_WORDS, word.toUpperCase()) >= 0;
+    return SQL92_RESERVED_WORDS;
+  }
+
+  public boolean isReservedWord(String word)
+  {
+    if (reservedWords == null)
+    {
+      reservedWords = new HashSet<String>();
+      for (String reservedWord : getReservedWords())
+      {
+        reservedWords.add(reservedWord.toUpperCase());
+      }
+    }
+
+    word = word.toUpperCase();
+    return reservedWords.contains(word);
   }
 
   protected void validateTable(DBTable table, Statement statement) throws DBException
@@ -402,7 +420,7 @@ public abstract class DBAdapter implements IDBAdapter
     {
       StringBuilder builder = new StringBuilder();
       builder.append("SELECT ");
-      table.appendFieldNames(builder);
+      appendFieldNames(builder, table);
       builder.append(" FROM ");
       builder.append(table);
       String sql = builder.toString();
@@ -435,5 +453,52 @@ public abstract class DBAdapter implements IDBAdapter
     }
 
     return result;
+  }
+
+  public void appendFieldNames(Appendable appendable, IDBTable table)
+  {
+    try
+    {
+      IDBField[] fields = table.getFields();
+      for (int i = 0; i < fields.length; i++)
+      {
+        IDBField field = fields[i];
+        if (i != 0)
+        {
+          appendable.append(", ");
+        }
+
+        String fieldName = field.getName();
+        appendable.append(fieldName);
+      }
+    }
+    catch (IOException canNotHappen)
+    {
+    }
+  }
+
+  private void appendFieldDefs(Appendable appendable, IDBTable table, String[] defs)
+  {
+    try
+    {
+      IDBField[] fields = table.getFields();
+      for (int i = 0; i < fields.length; i++)
+      {
+        IDBField field = fields[i];
+        if (i != 0)
+        {
+          appendable.append(", ");
+        }
+
+        // String fieldName = mangleFieldName(field.getName(), 0);
+        String fieldName = field.getName();
+        appendable.append(fieldName);
+        appendable.append(" ");
+        appendable.append(defs[i]);
+      }
+    }
+    catch (IOException canNotHappen)
+    {
+    }
   }
 }

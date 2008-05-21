@@ -15,8 +15,6 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.internal.db.DBAdapter;
 import org.eclipse.net4j.internal.db.ddl.DBField;
 
-import java.util.Arrays;
-
 /**
  * @author Eike Stepper
  */
@@ -81,9 +79,8 @@ public abstract class DerbyAdapter extends DBAdapter
     super.appendValue(builder, field, value);
   }
 
-  @Override
-  protected boolean isReservedWord(String word)
+  public String[] getReservedWords()
   {
-    return Arrays.binarySearch(RESERVED_WORDS, word.toUpperCase()) >= 0;
+    return RESERVED_WORDS;
   }
 }

@@ -46,6 +46,10 @@ public interface IDBAdapter
 
   public boolean dropTable(IDBTable table, Statement statement);
 
+  public String[] getReservedWords();
+
+  public boolean isReservedWord(String word);
+
   public String mangleTableName(String name, int attempt);
 
   public String mangleFieldName(String name, int attempt);

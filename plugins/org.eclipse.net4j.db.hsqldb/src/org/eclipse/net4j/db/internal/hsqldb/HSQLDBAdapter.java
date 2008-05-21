@@ -90,4 +90,9 @@ public class HSQLDBAdapter extends DBAdapter
 
     return super.getTypeName(field);
   }
+
+  public String[] getReservedWords()
+  {
+    return getSQL92ReservedWords();
+  }
 }

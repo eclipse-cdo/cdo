@@ -17,7 +17,6 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,52 +144,6 @@ public class DBTable extends DBSchemaElement implements IDBTable
     }
 
     return null;
-  }
-
-  public void appendFieldNames(Appendable appendable)
-  {
-    try
-    {
-      boolean first = true;
-      for (DBField field : fields)
-      {
-        if (first)
-        {
-          first = false;
-        }
-        else
-        {
-          appendable.append(", ");
-        }
-
-        appendable.append(field.getName());
-      }
-    }
-    catch (IOException canNotHappen)
-    {
-    }
-  }
-
-  public void appendFieldDefs(Appendable appendable, String[] defs)
-  {
-    try
-    {
-      for (int i = 0; i < fields.size(); i++)
-      {
-        DBField field = fields.get(i);
-        if (i != 0)
-        {
-          appendable.append(", ");
-        }
-
-        appendable.append(field.getName());
-        appendable.append(" ");
-        appendable.append(defs[i]);
-      }
-    }
-    catch (IOException canNotHappen)
-    {
-    }
   }
 
   public String getFullName()

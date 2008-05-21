@@ -22,7 +22,6 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import javax.sql.DataSource;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 
 /**
  * @author Eike Stepper
@@ -105,9 +104,8 @@ public class MYSQLAdapter extends DBAdapter
     }
   }
 
-  @Override
-  protected boolean isReservedWord(String word)
+  public String[] getReservedWords()
   {
-    return Arrays.binarySearch(RESERVED_WORDS, word.toUpperCase()) >= 0;
+    return RESERVED_WORDS;
   }
 }

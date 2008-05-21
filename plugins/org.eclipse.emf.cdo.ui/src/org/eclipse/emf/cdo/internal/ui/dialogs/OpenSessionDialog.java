@@ -126,7 +126,7 @@ public class OpenSessionDialog extends TitleAreaDialog
     {
       new Label(composite, SWT.NONE);
       exampleLabel = new Label(composite, SWT.NONE);
-      exampleLabel.setText("for exampleLabel 'tcp://estepper@dev.eclipse.org:2036'");
+      exampleLabel.setText("for example 'tcp://estepper@dev.eclipse.org:2036'");
       exampleLabel.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
     }
 

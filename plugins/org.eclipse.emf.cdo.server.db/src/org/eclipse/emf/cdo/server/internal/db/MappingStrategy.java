@@ -280,7 +280,8 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     IDBTable resourceTable = getResourceTable();
     IDBField selectField = getResourcePathField();
     IDBField whereField = getResourceIDField();
-    return (String)readResourceInfo(storeReader, resourceTable, selectField, whereField, id);
+    Object whereValue = CDOIDUtil.getLong(id);
+    return (String)readResourceInfo(storeReader, resourceTable, selectField, whereField, whereValue);
   }
 
   protected Object readResourceInfo(IDBStoreReader storeReader, IDBTable resourceTable, IDBField selectField,
@@ -301,6 +302,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     {
       TRACER.trace(sql);
     }
+
     ResultSet resultSet = null;
 
     try

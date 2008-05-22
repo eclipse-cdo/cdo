@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=233314
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -272,44 +273,59 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   public void rollback(boolean remote)
   {
-    try
+    if (dirty)
     {
-      if (!newResources.isEmpty())
+      if (TRACER.isEnabled())
       {
-        for (CDOObject newResource : newResources.values())
-        {
-          removeObject(newResource.cdoID());
-          getResourceSet().getResources().remove(newResource);
-        }
+        TRACER.trace("commit()");
       }
 
-      if (!newObjects.isEmpty())
+      try
       {
-        for (CDOObject newObject : newObjects.values())
+        if (!newResources.isEmpty())
         {
-          removeObject(newObject.cdoID());
+          for (CDOObject newResource : newResources.values())
+          {
+            removeObject(newResource.cdoID());
+            getResourceSet().getResources().remove(newResource);
+          }
+        }
+
+        if (!newObjects.isEmpty())
+        {
+          for (CDOObject newObject : newObjects.values())
+          {
+            removeObject(newObject.cdoID());
+          }
+        }
+
+        if (!dirtyObjects.isEmpty())
+        {
+          for (CDOObject dirtyObject : dirtyObjects.values())
+          {
+            CDOStateMachine.INSTANCE.rollback((InternalCDOObject)dirtyObject, remote);
+          }
+        }
+
+        cleanUp();
+        
+        Map<CDOIDTemp, CDOID> idMappings = Collections.emptyMap();
+        
+        fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.ROLLED_BACK, idMappings));
+
+        for (CDOTransactionHandler handler : getHandlers())
+        {
+            handler.rollingbackTransaction(this);
         }
       }
-
-      if (!dirtyObjects.isEmpty())
+      catch (RuntimeException ex)
       {
-        for (CDOObject dirtyObject : dirtyObjects.values())
-        {
-          CDOStateMachine.INSTANCE.rollback((InternalCDOObject)dirtyObject, remote);
-        }
+        throw ex;
       }
-
-      cleanUp();
-      Map<CDOIDTemp, CDOID> idMappings = Collections.emptyMap();
-      fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.ROLLED_BACK, idMappings));
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new TransactionException(ex);
+      catch (Exception ex)
+      {
+        throw new TransactionException(ex);
+      }
     }
   }
 

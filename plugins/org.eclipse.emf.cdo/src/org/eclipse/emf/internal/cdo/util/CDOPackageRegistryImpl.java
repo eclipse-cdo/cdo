@@ -311,6 +311,10 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     public void committingTransaction(CDOTransaction transaction)
     {
     }
+
+    public void rollingbackTransaction(CDOTransaction transaction)
+    {
+    }
   }
 
   /**

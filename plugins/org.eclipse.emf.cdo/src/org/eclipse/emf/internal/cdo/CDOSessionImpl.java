@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=226778
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -164,7 +165,12 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   {
     return cdoidObjectFactory.createCDOIDObject(in);
   }
-
+  
+  public CDOIDObject createCDOIDObject(String in)
+  {
+    return cdoidObjectFactory.createCDOIDObject(in);
+  }
+  
   public boolean isDisableLegacyObjects()
   {
     return disableLegacyObjects;
@@ -833,4 +839,5 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       return "CDOSessionInvalidationEvent" + dirtyOIDs;
     }
   }
+
 }

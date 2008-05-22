@@ -48,7 +48,6 @@
       <import plugin="org.eclipse.ui.ide" version="3.3.0" match="compatible"/>
       <import plugin="org.eclipse.emf.edit.ui" version="2.3.0" match="compatible"/>
       <import plugin="org.eclipse.net4j.util.ui" version="0.8.0" match="equivalent"/>
-      <import plugin="org.eclipse.ui.forms"/>
    </requires>
 
    <plugin
@@ -74,20 +73,6 @@
 
    <plugin
          id="org.eclipse.emf.cdo.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.weaver"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.weaver.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -1,4 +1,0 @@
-# Debugging and tracing options
-
-org.eclipse.net4j.db.derby/debug = true
-org.eclipse.net4j.db.derby/debug.sql = true

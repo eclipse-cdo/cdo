@@ -227,9 +227,15 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
       while ((ref = (KeyedReference<K, V>)queue.poll()) != null)
       {
         // Slightly faster than map.get() + map.remove()
-        map.remove(ref.getKey(), ref);
+        K key = ref.getKey();
+        map.remove(key, ref);
+        purged(key);
       }
     }
+  }
+
+  protected void purged(K key)
+  {
   }
 
   protected V dereference(KeyedReference<K, V> ref)

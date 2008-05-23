@@ -8,9 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=215688
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDORevisionManager;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
@@ -91,7 +93,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.NEW, CDOEvent.ATTACH, FAIL);
     init(CDOState.NEW, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.NEW, CDOEvent.READ, IGNORE);
-    init(CDOState.NEW, CDOEvent.WRITE, IGNORE);
+    init(CDOState.NEW, CDOEvent.WRITE, new NewObjectWriteTransition());
     init(CDOState.NEW, CDOEvent.INVALIDATE, FAIL);
     init(CDOState.NEW, CDOEvent.RELOAD, FAIL);
     init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition());
@@ -354,6 +356,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       object.cdoInternalSetID(id);
       object.cdoInternalSetResource(data.resource);
       object.cdoInternalSetView(data.view);
+
       changeState(object, CDOState.PREPARED);
 
       // Create new revision
@@ -385,6 +388,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       CDOTransactionImpl transaction = (CDOTransactionImpl)object.cdoView();
       object.cdoInternalPostAttach();
+
       changeState(object, CDOState.NEW);
 
       // Attach content tree
@@ -488,6 +492,26 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       CDOTransactionImpl transaction = view.toTransaction();
       transaction.registerDirty(object, (CDOFeatureDelta)featureDelta);
       changeState(object, CDOState.DIRTY);
+    }
+  }
+
+  /**
+   * @author Simon McDuff
+   */
+  private final class NewObjectWriteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  {
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
+    {
+      CDOViewImpl view = (CDOViewImpl)object.cdoView();
+      CDOTransactionImpl transaction = view.toTransaction();
+
+      // Register Delta for new objects only if objectA doesn't belong to this savepoint
+      if (transaction.getLastSavePoint().getPreviousSavePoint() == null || featureDelta == null) return;
+
+      Map<CDOID, ? extends CDOObject> map = object instanceof CDOResource ? transaction.getLastSavePoint()
+          .getNewResources() : transaction.getLastSavePoint().getNewObjects();
+
+      if (!map.containsKey(object.cdoID())) transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
   }
 

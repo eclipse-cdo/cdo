@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=215688
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
@@ -39,6 +40,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -67,12 +69,12 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     List<CDOPackage> newPackages = transaction.getNewPackages();
     Collection<CDOResource> newResources = transaction.getNewResources().values();
     Collection<CDOObject> newObjects = transaction.getNewObjects().values();
-    Collection<CDORevisionDelta> dirtyObjects = transaction.getRevisionDeltas().values();
+    Collection<CDORevisionDelta> revisionDeltas = transaction.getRevisionDeltas().values();
 
     out.writeInt(transaction.getViewID());
     out.writeInt(newPackages.size());
     out.writeInt(newResources.size() + newObjects.size());
-    out.writeInt(dirtyObjects.size());
+    out.writeInt(revisionDeltas.size());
 
     if (PROTOCOL.isEnabled())
     {
@@ -99,14 +101,14 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Writing {0} dirty objects", dirtyObjects.size());
+      PROTOCOL.format("Writing {0} dirty objects", revisionDeltas.size());
     }
-
+    Map<CDOID, CDOObject> dirtyObjects = transaction.getDirtyObjects();
     RevisionAdjuster revisionAdjuster = new RevisionAdjuster(transaction);
-    for (CDORevisionDelta revisionDelta : dirtyObjects)
+    for (CDORevisionDelta revisionDelta : revisionDeltas)
     {
       revisionDelta.write(out, transaction);
-      CDOObject object = transaction.getDirtyObjects().get(revisionDelta.getID());
+      CDOObject object = dirtyObjects.get(revisionDelta.getID());
       InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
       revisionAdjuster.adjustRevision(revision, revisionDelta);
     }

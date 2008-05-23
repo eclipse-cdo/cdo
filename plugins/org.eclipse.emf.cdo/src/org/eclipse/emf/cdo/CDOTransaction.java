@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=215688
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -51,6 +52,12 @@ public interface CDOTransaction extends CDOView
   public void commit() throws TransactionException;
 
   public void rollback(boolean remote);
+  
+  public void rollback(CDOSavePoint savePoint, boolean remote);
+  
+  public CDOSavePoint createSavePoint();
+    
+  public CDOSavePoint getLastSavePoint();
 
   public void addHandler(CDOTransactionHandler handler);
 

@@ -40,6 +40,7 @@ public class AllTests
     suite.addTestSuite(RevisionDeltaTest.class);
     suite.addTestSuite(IndexReconstructionTest.class);
     suite.addTestSuite(NoLegacyTest.class);
+    suite.addTestSuite(SavePointTest.class);
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);
     // $JUnit-END$
 

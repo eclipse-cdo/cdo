@@ -35,19 +35,6 @@
       <update label="%updateSiteName" url="http://download.eclipse.org/modeling/emft/updates/"/>
    </url>
 
-   <requires>
-      <import plugin="org.eclipse.emf.common"/>
-      <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.eclipse.emf.ecore.xmi" version="2.4.0" match="greaterOrEqual"/>
-      <import plugin="org.apache.commons.logging"/>
-      <import plugin="org.eclipse.core.runtime" version="3.3.0" match="compatible"/>
-      <import plugin="org.eclipse.emf.cdo.server" version="0.8.0" match="equivalent"/>
-      <import plugin="org.apache.commons.logging" version="1.0.4" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.core.runtime" version="3.4.0" match="compatible"/>
-      <import plugin="org.eclipse.emf.cdo"/>
-      <import plugin="org.eclipse.emf.ecore.xmi" version="2.4.0" match="compatible"/>
-   </requires>
-
    <plugin
          id="org.eclipse.emf.teneo.annotations"
          download-size="0"

@@ -44,14 +44,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.weaver"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.weaver.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.server"
          version="0.0.0"/>
 

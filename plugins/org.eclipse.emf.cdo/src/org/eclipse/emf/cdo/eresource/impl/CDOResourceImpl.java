@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
-import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -406,16 +405,11 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void attached(EObject object)
   {
-    InternalCDOObject legacy = getLegacyWrapper(object);
-    if (legacy.cdoState() != CDOState.CLEAN)
-    {
-      CDOStateMachine.INSTANCE.attach(legacy, this, view);
-      // if (legacy.eContainer() == this)
-      // {
-      // legacy.eBasicSetContainer(null, 0, null);
-      // legacy.eSetResource(this, null);
-      // }
-    }
+    // InternalCDOObject legacy = getLegacyWrapper(object);
+    // if (legacy.cdoState() != CDOState.CLEAN)
+    // {
+    // CDOStateMachine.INSTANCE.attach(legacy, this, view);
+    // }
   }
 
   /**
@@ -423,8 +417,8 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void detached(EObject object)
   {
-    InternalCDOObject legacy = getLegacyWrapper(object);
-    CDOStateMachine.INSTANCE.detach(legacy);
+    // InternalCDOObject legacy = getLegacyWrapper(object);
+    // CDOStateMachine.INSTANCE.detach(legacy);
   }
 
   /**

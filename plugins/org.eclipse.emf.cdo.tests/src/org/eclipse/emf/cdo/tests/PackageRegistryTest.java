@@ -133,8 +133,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   public void testCommitNestedPackages() throws Exception
   {
     CDOSession session = openSession();
-    session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
-    assertEquals(2, session.getPackageRegistry().size());
+    assertEquals(5, session.getPackageRegistry().size());
 
     try
     {

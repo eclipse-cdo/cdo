@@ -35,11 +35,6 @@
       <update label="%updateSiteName" url="http://download.eclipse.org/modeling/emft/updates/"/>
    </url>
 
-   <requires>
-      <import plugin="org.eclipse.core.runtime" version="3.3.0" match="compatible"/>
-   </requires>
-
-   <!-- Core -->
    <includes
          id="org.eclipse.net4j"
          version="0.0.0"/>
@@ -48,7 +43,6 @@
          id="org.eclipse.net4j.source"
          version="0.0.0"/>
 
-   <!-- DB -->
    <includes
          id="org.eclipse.net4j.db"
          version="0.0.0"/>
@@ -57,7 +51,6 @@
          id="org.eclipse.net4j.db.source"
          version="0.0.0"/>
 
-   <!-- UI -->
    <includes
          id="org.eclipse.net4j.ui"
          version="0.0.0"/>
@@ -66,7 +59,6 @@
          id="org.eclipse.net4j.ui.source"
          version="0.0.0"/>
 
-   <!-- Examples -->
    <includes
          id="org.eclipse.net4j.examples"
          version="0.0.0"/>
@@ -75,7 +67,6 @@
          id="org.eclipse.net4j.examples.source"
          version="0.0.0"/>
 
-   <!-- Documentation -->
    <includes
          id="org.eclipse.net4j.doc"
          version="0.0.0"/>

@@ -35,12 +35,6 @@
       <update label="%updateSiteName" url="http://download.eclipse.org/modeling/emft/updates/"/>
    </url>
 
-   <requires>
-      <import plugin="org.eclipse.net4j.util" version="0.8.0" match="equivalent"/>
-      <import plugin="org.eclipse.net4j" version="0.8.0" match="equivalent"/>
-      <import plugin="org.eclipse.core.runtime"/>
-   </requires>
-
    <plugin
          id="org.eclipse.net4j.util"
          download-size="0"

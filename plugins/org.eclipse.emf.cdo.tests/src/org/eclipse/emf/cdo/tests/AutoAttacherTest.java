@@ -18,9 +18,9 @@ import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.cdo.util.CDOAutoAttacher;
 
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
-import org.eclipse.emf.internal.cdo.util.CDOAutoAttacher;
 
 
 /**

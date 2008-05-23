@@ -7,7 +7,7 @@
  * 
  * Contributors:
  *    Simon McDuff - initial API and implementation
- **************************************************************************/package org.eclipse.emf.internal.cdo.util;
+ **************************************************************************/package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOTransaction;

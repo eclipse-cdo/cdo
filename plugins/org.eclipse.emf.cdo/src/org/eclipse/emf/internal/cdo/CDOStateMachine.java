@@ -504,14 +504,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDOTransactionImpl transaction = view.toTransaction();
-
-      // Register Delta for new objects only if objectA doesn't belong to this savepoint
-      if (transaction.getLastSavePoint().getPreviousSavePoint() == null || featureDelta == null) return;
-
-      Map<CDOID, ? extends CDOObject> map = object instanceof CDOResource ? transaction.getLastSavePoint()
-          .getNewResources() : transaction.getLastSavePoint().getNewObjects();
-
-      if (!map.containsKey(object.cdoID())) transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
+      transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);      
     }
   }
 

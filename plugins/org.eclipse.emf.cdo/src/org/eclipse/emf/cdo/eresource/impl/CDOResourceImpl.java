@@ -434,7 +434,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void attached(EObject object)
   {
-    InternalCDOObject legacy = getLegacyWrapper(object);
+    /*InternalCDOObject legacy = getLegacyWrapper(object);
     if (legacy.cdoState() != CDOState.CLEAN)
     {
       CDOStateMachine.INSTANCE.attach(legacy, this, view);
@@ -443,7 +443,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
       // legacy.eBasicSetContainer(null, 0, null);
       // legacy.eSetResource(this, null);
       // }
-    }
+    }*/
   }
 
   /**
@@ -451,8 +451,10 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void detached(EObject object)
   {
+    /*
     InternalCDOObject legacy = getLegacyWrapper(object);
     CDOStateMachine.INSTANCE.detach(legacy);
+    */
   }
 
   /**

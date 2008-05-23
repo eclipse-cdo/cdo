@@ -495,21 +495,46 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   public void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
-    CDORevisionDelta revisionDelta = (CDORevisionDelta)lastSavePoint.getRevisionDeltas().get(object.cdoID());
-
-    if (revisionDelta == null)
+    boolean needToSaveFeatureDelta = true;
+    
+    if (object.cdoState() == CDOState.NEW)
     {
-      revisionDelta = (CDORevisionDelta)CDORevisionDeltaUtil.create(object.cdoRevision());
-      lastSavePoint.getRevisionDeltas().put(object.cdoID(), revisionDelta);
+      // Register Delta for new objects only if objectA doesn't belong to this savepoint
+      if (this.getLastSavePoint().getPreviousSavePoint() == null || featureDelta == null)
+      {
+        needToSaveFeatureDelta = false;
+      }
+      else
+      {
+        Map<CDOID, ? extends CDOObject> map = object instanceof CDOResource ? this.getLastSavePoint()
+            .getNewResources() : this.getLastSavePoint().getNewObjects();
+  
+        needToSaveFeatureDelta = !map.containsKey(object.cdoID()); 
+      }
     }
-
-    ((InternalCDORevisionDelta)revisionDelta).addFeatureDelta(featureDelta);
+      
+    if (needToSaveFeatureDelta)
+    {
+      CDORevisionDelta revisionDelta = (CDORevisionDelta)lastSavePoint.getRevisionDeltas().get(object.cdoID());
+  
+      if (revisionDelta == null)
+      {
+        revisionDelta = (CDORevisionDelta)CDORevisionDeltaUtil.create(object.cdoRevision());
+        lastSavePoint.getRevisionDeltas().put(object.cdoID(), revisionDelta);
+      }
+ 
+      ((InternalCDORevisionDelta)revisionDelta).addFeatureDelta(featureDelta);
+    }
+    
     for (CDOTransactionHandler handler : getHandlers())
     {
       handler.modifyingObject(this, object, featureDelta);
     }
   }
-
+  
+  protected void fireEventRegisterDelta(InternalCDOObject object, CDOFeatureDelta featureDelta)
+  {
+  }
   public void registerRevisionDelta(CDORevisionDelta revisionDelta)
   {
     lastSavePoint.getRevisionDeltas().putIfAbsent(revisionDelta.getID(), revisionDelta);

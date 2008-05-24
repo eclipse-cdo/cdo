@@ -17,7 +17,5 @@ import org.eclipse.net4j.connector.IConnector;
  */
 public interface IHTTPConnector extends IConnector
 {
-  public static final int DEFAULT_PORT = IHTTPAcceptor.DEFAULT_PORT;
-
   public String getURL();
 }

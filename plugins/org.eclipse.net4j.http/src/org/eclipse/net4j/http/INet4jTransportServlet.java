@@ -17,6 +17,8 @@ import javax.servlet.Servlet;
  */
 public interface INet4jTransportServlet extends Servlet
 {
+  public static final int OPCODE_CONNECT = 1;
+
   public RequestHandler getRequestHandler();
 
   public void setRequestHandler(RequestHandler handler);
@@ -26,6 +28,6 @@ public interface INet4jTransportServlet extends Servlet
    */
   public interface RequestHandler
   {
-    public void connectRequested(String user);
+    public void connectRequested(String userID);
   }
 }

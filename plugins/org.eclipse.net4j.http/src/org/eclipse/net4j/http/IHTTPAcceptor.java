@@ -17,7 +17,5 @@ import org.eclipse.net4j.acceptor.IAcceptor;
  */
 public interface IHTTPAcceptor extends IAcceptor
 {
-  public static final int DEFAULT_PORT = 80;
-
-  public int getPort();
+  public INet4jTransportServlet getServlet();
 }

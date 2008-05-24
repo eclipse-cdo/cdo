@@ -133,7 +133,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   public void testCommitNestedPackages() throws Exception
   {
     CDOSession session = openSession();
-    assertEquals(5, session.getPackageRegistry().size());
+    assertEquals(0, session.getPackageRegistry().size());
 
     try
     {
@@ -143,6 +143,17 @@ public class PackageRegistryTest extends AbstractCDOTest
     catch (IllegalArgumentException success)
     {
     }
+
+    session.close();
+  }
+
+  public void testCommitTopLevelPackages() throws Exception
+  {
+    CDOSession session = openSession();
+    assertEquals(0, session.getPackageRegistry().size());
+
+    session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
+    assertEquals(2, session.getPackageRegistry().size());
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res");

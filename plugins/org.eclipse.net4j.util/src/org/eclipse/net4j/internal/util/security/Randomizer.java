@@ -100,6 +100,20 @@ public class Randomizer extends Lifecycle implements IRandomizer
     secureRandom.nextBytes(bytes);
   }
 
+  public String nextString(int length, String alphabet)
+  {
+    int n = alphabet.length();
+    StringBuilder builder = new StringBuilder();
+    for (int i = 0; i < length; i++)
+    {
+      int pos = nextInt(n);
+      char c = alphabet.charAt(pos);
+      builder.append(c);
+    }
+
+    return builder.toString();
+  }
+
   public synchronized void setSeed(byte[] seed)
   {
     secureRandom.setSeed(seed);

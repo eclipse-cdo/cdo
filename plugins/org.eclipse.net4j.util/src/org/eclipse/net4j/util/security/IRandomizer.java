@@ -15,6 +15,8 @@ package org.eclipse.net4j.util.security;
  */
 public interface IRandomizer
 {
+  public byte[] generateSeed(int numBytes);
+
   public boolean nextBoolean();
 
   public double nextDouble();
@@ -29,7 +31,7 @@ public interface IRandomizer
 
   public long nextLong();
 
-  public byte[] generateSeed(int numBytes);
-
   public void nextBytes(byte[] bytes);
+
+  public String nextString(int length, String alphabet);
 }

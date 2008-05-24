@@ -28,6 +28,6 @@ public interface INet4jTransportServlet extends Servlet
    */
   public interface RequestHandler
   {
-    public int connectRequested(String userID);
+    public String connectRequested(String userID);
   }
 }

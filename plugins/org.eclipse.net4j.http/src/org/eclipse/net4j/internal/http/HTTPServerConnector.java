@@ -21,11 +21,11 @@ public class HTTPServerConnector extends HTTPConnector
 {
   private HTTPAcceptor acceptor;
 
-  private int connectorID;
+  private String connectorID;
 
   private long lastTraffic = System.currentTimeMillis();
 
-  public HTTPServerConnector(HTTPAcceptor acceptor, int connectorID)
+  public HTTPServerConnector(HTTPAcceptor acceptor, String connectorID)
   {
     this.acceptor = acceptor;
     this.connectorID = connectorID;
@@ -44,6 +44,11 @@ public class HTTPServerConnector extends HTTPConnector
   public String getURL()
   {
     return "agent://connector:" + connectorID;
+  }
+
+  public String getConnectorID()
+  {
+    return connectorID;
   }
 
   public long getLastTraffic()

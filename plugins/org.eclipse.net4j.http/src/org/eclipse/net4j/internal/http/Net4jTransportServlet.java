@@ -83,7 +83,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
       IOException
   {
     String userID = in.readString();
-    int connectorID = requestHandler.connectRequested(userID);
-    out.writeInt(connectorID);
+    String connectorID = requestHandler.connectRequested(userID);
+    out.writeString(connectorID);
   }
 }

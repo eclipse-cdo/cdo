@@ -9,12 +9,12 @@ Bundle-ClassPath: .
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
- org.eclipse.ui;visibility:=reexport,
- org.eclipse.ui.ide;visibility:=reexport,
- org.eclipse.net4j;visibility:=reexport,
- org.eclipse.net4j.util.ui;visibility:=reexport,
- org.eclipse.net4j.buddies;visibility:=reexport,
- org.eclipse.net4j.chat;resolution:=optional
+ org.eclipse.ui;bundle-version="[3.4.0,4.0.0)";visibility:=reexport,
+ org.eclipse.ui.ide;bundle-version="[3.4.0,4.0.0)";visibility:=reexport,
+ org.eclipse.net4j;bundle-version="[0.8.0,0.9.0)";visibility:=reexport,
+ org.eclipse.net4j.util.ui;bundle-version="[0.8.0,0.9.0)";visibility:=reexport,
+ org.eclipse.net4j.buddies;bundle-version="[0.8.0,0.9.0)";visibility:=reexport,
+ org.eclipse.net4j.chat;bundle-version="[0.8.0,0.9.0)";resolution:=optional
 Export-Package: org.eclipse.net4j.buddies.internal.ui;version="0.8.0",
  org.eclipse.net4j.buddies.internal.ui.actions;version="0.8.0",
  org.eclipse.net4j.buddies.internal.ui.dnd;version="0.8.0",

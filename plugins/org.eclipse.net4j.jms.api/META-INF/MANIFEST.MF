@@ -4,7 +4,7 @@ Bundle-SymbolicName: org.eclipse.net4j.jms.api
 Bundle-Version: 0.8.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
-Export-Package: javax.jms;version="1.1.0"
-Bundle-ClassPath: lib/geronimo-jms_1.1_spec-1.1.jar
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ClassPath: lib/geronimo-jms_1.1_spec-1.1.jar
+Export-Package: javax.jms;version="1.1.0"

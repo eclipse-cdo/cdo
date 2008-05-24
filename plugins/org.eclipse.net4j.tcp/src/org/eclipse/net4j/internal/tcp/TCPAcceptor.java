@@ -197,6 +197,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
       {
         OM.LOG.error(ex);
       }
+
       deactivate();
     }
   }

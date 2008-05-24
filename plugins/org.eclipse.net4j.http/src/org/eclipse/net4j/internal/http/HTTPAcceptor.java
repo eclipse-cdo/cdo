@@ -14,6 +14,7 @@ import org.eclipse.net4j.http.IHTTPAcceptor;
 import org.eclipse.net4j.http.INet4jTransportServlet;
 import org.eclipse.net4j.internal.http.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.concurrent.NonBlockingIntCounter;
 
 import org.eclipse.internal.net4j.acceptor.Acceptor;
 
@@ -25,6 +26,8 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HTTPAcceptor.class);
 
   private INet4jTransportServlet servlet;
+
+  private transient NonBlockingIntCounter lastConnectorID = new NonBlockingIntCounter();
 
   public HTTPAcceptor()
   {
@@ -40,9 +43,17 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     this.servlet = servlet;
   }
 
-  public void connectRequested(String userID)
+  public int connectRequested(String userID)
   {
-    System.out.println("HELLO " + userID);
+    int connectorID = lastConnectorID.getValue() + 1;
+    System.out.println("HELLO " + userID + " (" + connectorID + ")");
+
+    HTTPServerConnector connector = new HTTPServerConnector(this, connectorID);
+    prepareConnector(connector);
+    connector.setUserID(userID);
+    addConnector(connector);
+
+    return connectorID;
   }
 
   @Override

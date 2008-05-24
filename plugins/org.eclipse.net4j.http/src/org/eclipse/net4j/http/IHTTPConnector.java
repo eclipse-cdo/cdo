@@ -17,5 +17,4 @@ import org.eclipse.net4j.connector.IConnector;
  */
 public interface IHTTPConnector extends IConnector
 {
-  public String getURL();
 }

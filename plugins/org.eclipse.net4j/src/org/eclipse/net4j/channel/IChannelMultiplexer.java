@@ -15,6 +15,10 @@ package org.eclipse.net4j.channel;
  */
 public interface IChannelMultiplexer
 {
+  /**
+   * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be
+   * dequeued from the outputQueue of the {@link IChannel}.
+   */
   public void multiplexChannel(IChannel channel);
 
   public boolean removeChannel(IChannel channel);

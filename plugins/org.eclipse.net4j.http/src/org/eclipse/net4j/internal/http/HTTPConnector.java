@@ -26,26 +26,10 @@ public abstract class HTTPConnector extends Connector
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HTTPConnector.class);
 
-  private String url;
-
   public HTTPConnector()
   {
   }
 
-  public String getURL()
-  {
-    return url;
-  }
-
-  public void setURL(String url)
-  {
-    this.url = url;
-  }
-
-  /**
-   * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be
-   * dequeued from the outputQueue of the {@link IChannel}.
-   */
   public void multiplexChannel(IChannel channel)
   {
   }
@@ -60,15 +44,5 @@ public abstract class HTTPConnector extends Connector
   protected INegotiationContext createNegotiationContext()
   {
     throw new UnsupportedOperationException();
-  }
-
-  @Override
-  protected void doBeforeActivate() throws Exception
-  {
-    super.doBeforeActivate();
-    if (url == null)
-    {
-      throw new IllegalStateException("url == null");
-    }
   }
 }

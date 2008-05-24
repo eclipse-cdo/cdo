@@ -31,13 +31,11 @@ public class HTTPClientConnector extends HTTPConnector implements IHTTPConnector
     return ConnectorLocation.CLIENT;
   }
 
-  @Override
   public String getURL()
   {
     return url;
   }
 
-  @Override
   public void setURL(String url)
   {
     this.url = url;
@@ -58,9 +56,6 @@ public class HTTPClientConnector extends HTTPConnector implements IHTTPConnector
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (url == null)
-    {
-      throw new IllegalStateException("url == null");
-    }
+    checkArg(url, "url == null");
   }
 }

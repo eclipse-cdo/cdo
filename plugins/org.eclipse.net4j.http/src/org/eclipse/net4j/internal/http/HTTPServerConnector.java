@@ -21,9 +21,14 @@ public class HTTPServerConnector extends HTTPConnector
 {
   private HTTPAcceptor acceptor;
 
-  public HTTPServerConnector(HTTPAcceptor acceptor)
+  private int connectorID;
+
+  private long lastTraffic = System.currentTimeMillis();
+
+  public HTTPServerConnector(HTTPAcceptor acceptor, int connectorID)
   {
     this.acceptor = acceptor;
+    this.connectorID = connectorID;
   }
 
   public HTTPAcceptor getAcceptor()
@@ -36,14 +41,24 @@ public class HTTPServerConnector extends HTTPConnector
     return ConnectorLocation.SERVER;
   }
 
+  public String getURL()
+  {
+    return "agent://connector:" + connectorID;
+  }
+
+  public long getLastTraffic()
+  {
+    return lastTraffic;
+  }
+
   @Override
   public String toString()
   {
     if (getUserID() == null)
     {
-      return MessageFormat.format("HTTPServerConnector[{0}]", acceptor); //$NON-NLS-1$
+      return MessageFormat.format("HTTPServerConnector[{0}]", connectorID); //$NON-NLS-1$
     }
 
-    return MessageFormat.format("HTTPServerConnector[{1}@{0}]", acceptor, getUserID()); //$NON-NLS-1$
+    return MessageFormat.format("HTTPServerConnector[{1}@{0}]", connectorID, getUserID()); //$NON-NLS-1$
   }
 }

@@ -12,9 +12,11 @@ package org.eclipse.net4j.internal.http;
 
 import org.eclipse.net4j.http.INet4jTransportServlet;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,11 +62,15 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
   {
     ServletInputStream servletInputStream = req.getInputStream();
     ExtendedDataInputStream in = new ExtendedDataInputStream(servletInputStream);
+
+    ServletOutputStream servletOutputStream = resp.getOutputStream();
+    ExtendedDataOutputStream out = new ExtendedDataOutputStream(servletOutputStream);
+
     int opcode = servletInputStream.read();
     switch (opcode)
     {
     case OPCODE_CONNECT:
-      handleConnect(in, req, resp);
+      handleConnect(in, out);
 
       break;
 
@@ -73,10 +79,11 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     }
   }
 
-  protected void handleConnect(ExtendedDataInputStream in, HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException
+  protected void handleConnect(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
+      IOException
   {
     String userID = in.readString();
-    requestHandler.connectRequested(userID);
+    int connectorID = requestHandler.connectRequested(userID);
+    out.writeInt(connectorID);
   }
 }

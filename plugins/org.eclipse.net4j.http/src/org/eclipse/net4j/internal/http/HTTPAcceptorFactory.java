@@ -17,7 +17,7 @@ import org.eclipse.internal.net4j.acceptor.AcceptorFactory;
  */
 public class HTTPAcceptorFactory extends AcceptorFactory
 {
-  public static final String TYPE = "tcp";
+  public static final String TYPE = "http";
 
   private static final String SEPARATOR = ":"; //$NON-NLS-1$
 

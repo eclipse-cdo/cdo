@@ -60,6 +60,11 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
 
   protected void handleRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
   {
+    if (requestHandler == null)
+    {
+      throw new ServletException("No request handler installed");
+    }
+
     ServletInputStream servletInputStream = req.getInputStream();
     ExtendedDataInputStream in = new ExtendedDataInputStream(servletInputStream);
 
@@ -71,12 +76,10 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     {
     case OPCODE_CONNECT:
       handleConnect(in, out);
-
-      break;
-
-    default:
       break;
     }
+
+    out.flush();
   }
 
   protected void handleConnect(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,

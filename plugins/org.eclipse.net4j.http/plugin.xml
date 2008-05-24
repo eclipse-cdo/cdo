@@ -32,7 +32,7 @@
    <extension
          point="org.eclipse.equinox.http.registry.servlets">
       <servlet
-            alias="net4j.transport"
+            alias="/net4j"
             class="org.eclipse.net4j.internal.http.Net4jTransportServlet">
       </servlet>
    </extension>

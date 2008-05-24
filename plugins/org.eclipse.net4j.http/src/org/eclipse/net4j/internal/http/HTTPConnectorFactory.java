@@ -17,7 +17,7 @@ import org.eclipse.internal.net4j.connector.ConnectorFactory;
  */
 public class HTTPConnectorFactory extends ConnectorFactory
 {
-  public static final String TYPE = "tcp";
+  public static final String TYPE = "http";
 
   private static final String URL_SCHEME = "http://";
 
@@ -30,8 +30,6 @@ public class HTTPConnectorFactory extends ConnectorFactory
   {
     // try
     // {
-    // // TODO Don't use URL
-    // // Scheme "tcp://" would be rejected!
     // URL url = new URL(URL_SCHEME + description);
     // String userID = url.getUserInfo();
     // String host = url.getHost();

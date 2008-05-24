@@ -22,11 +22,19 @@
       <factory
             class="org.eclipse.net4j.internal.http.HTTPAcceptorFactory"
             productGroup="org.eclipse.net4j.acceptors"
-            type="tcp"/>
+            type="http"/>
       <factory
             class="org.eclipse.net4j.internal.http.HTTPConnectorFactory"
             productGroup="org.eclipse.net4j.connectors"
-            type="tcp"/>
+            type="http"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.equinox.http.registry.servlets">
+      <servlet
+            alias="net4j.transport"
+            class="org.eclipse.net4j.internal.http.Net4jTransportServlet">
+      </servlet>
    </extension>
 
 </plugin>

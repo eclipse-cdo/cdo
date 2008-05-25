@@ -97,6 +97,11 @@ public class HTTPClientConnector extends HTTPConnector
 
         public void handleIn(ExtendedDataInputStream in) throws IOException
         {
+          boolean ok = in.readBoolean();
+          if (!ok)
+          {
+            throw new ConnectorException("Could not send buffer");
+          }
         }
       });
     }

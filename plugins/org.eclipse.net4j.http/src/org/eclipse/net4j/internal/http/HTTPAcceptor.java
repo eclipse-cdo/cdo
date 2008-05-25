@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http;
 
+import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.http.IHTTPAcceptor;
 import org.eclipse.net4j.http.IHTTPConnector;
@@ -23,6 +24,7 @@ import org.eclipse.internal.net4j.acceptor.Acceptor;
 import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.connector.Connector;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -116,7 +118,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     return connectorID;
   }
 
-  public void handleOpenChannel(String connectorID, int channelID, short channelIndex, String protocolType)
+  public void handleOpenChannel(String connectorID, short channelIndex, int channelID, String protocolType)
   {
     HTTPConnector connector = httpConnectors.get(connectorID);
     if (connector == null)
@@ -125,10 +127,32 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     }
 
     InternalChannel channel = connector.createChannel(channelID, channelIndex, protocolType);
-    if (channel != null)
+    if (channel == null)
     {
-      channel.activate();
+      throw new IllegalStateException("Could not open channel");
     }
+
+    channel.activate();
+  }
+
+  public void handleSendBuffer(String connectorID, short channelIndex, byte[] data)
+  {
+    HTTPConnector connector = httpConnectors.get(connectorID);
+    if (connector == null)
+    {
+      throw new IllegalArgumentException("Invalid connectorID: " + connectorID);
+    }
+
+    InternalChannel channel = connector.getChannel(channelIndex);
+    if (channel == null)
+    {
+      throw new IllegalArgumentException("Invalid channelIndex: " + channelIndex);
+    }
+
+    IBuffer buffer = getBufferProvider().provideBuffer();
+    ByteBuffer byteBuffer = buffer.startPutting(channelIndex);
+    byteBuffer.put(data);
+    channel.handleBufferFromMultiplexer(buffer);
   }
 
   @Override

@@ -64,10 +64,10 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
   @Override
   protected final void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
   {
-    handleRequest(req, resp);
+    doRequest(req, resp);
   }
 
-  protected void handleRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+  protected void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
   {
     if (requestHandler == null)
     {
@@ -77,7 +77,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     String connectorID = req.getParameter("list");
     if (connectorID != null)
     {
-      handleList(connectorID, resp);
+      doList(connectorID, resp);
       return;
     }
 
@@ -91,18 +91,22 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     switch (opcode)
     {
     case OPCODE_CONNECT:
-      handleConnect(in, out);
+      doConnect(in, out);
       break;
 
     case OPCODE_OPEN_CHANNEL:
-      handleOpenChannel(in, out);
+      doOpenChannel(in, out);
+      break;
+
+    case OPCODE_SEND_BUFFER:
+      doSendBuffer(in, out);
       break;
     }
 
     out.flush();
   }
 
-  protected void handleList(String connectorID, HttpServletResponse resp) throws IOException
+  protected void doList(String connectorID, HttpServletResponse resp) throws IOException
   {
     IHTTPConnector[] connectors = requestHandler.handleList(connectorID);
     PrintWriter writer = resp.getWriter();
@@ -153,7 +157,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     }
   }
 
-  protected void handleConnect(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
+  protected void doConnect(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
       IOException
   {
     try
@@ -169,7 +173,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     }
   }
 
-  protected void handleOpenChannel(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
+  protected void doOpenChannel(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
       IOException
   {
     try
@@ -178,7 +182,25 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
       int channelID = in.readInt();
       short channelIndex = in.readShort();
       String protocolType = in.readString();
-      requestHandler.handleOpenChannel(connectorID, channelID, channelIndex, protocolType);
+      requestHandler.handleOpenChannel(connectorID, channelIndex, channelID, protocolType);
+      out.writeBoolean(true);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      out.writeBoolean(false);
+    }
+  }
+
+  protected void doSendBuffer(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
+      IOException
+  {
+    try
+    {
+      String connectorID = in.readString();
+      short channelIndex = in.readShort();
+      byte[] data = in.readByteArray();
+      requestHandler.handleSendBuffer(connectorID, channelIndex, data);
       out.writeBoolean(true);
     }
     catch (Exception ex)

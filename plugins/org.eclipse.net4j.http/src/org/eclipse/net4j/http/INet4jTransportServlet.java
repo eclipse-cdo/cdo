@@ -36,6 +36,8 @@ public interface INet4jTransportServlet extends Servlet
 
     public String handleConnect(String userID);
 
-    public void handleOpenChannel(String connectorID, int channelID, short channelIndex, String protocolType);
+    public void handleOpenChannel(String connectorID, short channelIndex, int channelID, String protocolType);
+
+    public void handleSendBuffer(String connectorID, short channelIndex, byte[] data);
   }
 }

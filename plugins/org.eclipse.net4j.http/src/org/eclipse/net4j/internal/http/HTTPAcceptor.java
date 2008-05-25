@@ -151,7 +151,13 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
 
     IBuffer buffer = getBufferProvider().provideBuffer();
     ByteBuffer byteBuffer = buffer.startPutting(channelIndex);
-    byteBuffer.put(data);
+    for (int i = 0; i < data.length; i++)
+    {
+      System.out.println("Payload: " + data[i]);
+      byteBuffer.put(data[i]);
+    }
+
+    buffer.flip();
     channel.handleBufferFromMultiplexer(buffer);
   }
 

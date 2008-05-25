@@ -34,7 +34,7 @@ import java.nio.channels.SocketChannel;
  * This interface is <b>not</b> intended to be implemented by clients.
  * <p>
  * <dt><b>Class Diagram:</b></dt>
- * <dd> <img src="doc-files/Buffers.png" title="Diagram Buffers" border="0" usemap="#Buffers.png"/></dd>
+ * <dd><img src="doc-files/Buffers.png" title="Diagram Buffers" border="0" usemap="#Buffers.png"/></dd>
  * <p>
  * <MAP NAME="Buffers.png"> <AREA SHAPE="RECT" COORDS="303,12,403,72" HREF="IBufferHandler.html"> <AREA SHAPE="RECT"
  * COORDS="533,199,619,249" HREF="http://java.sun.com/j2se/1.5.0/docs/api/java/nio/ByteBuffer.html"> <AREA SHAPE="RECT"
@@ -52,43 +52,17 @@ import java.nio.channels.SocketChannel;
  * <p>
  * An example for <b>putting</b> values into a buffer and writing it to a {@link SocketChannel}:
  * <p>
- * 
- * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
- * // Obtain a fresh buffer 
- * Buffer buffer = bufferProvider.getBuffer();
- * 
- * // Start filling the buffer for channelIndex 4711
- * ByteBuffer byteBuffer = buffer.startPutting(4711);
- * byteBuffer.putDouble(15.47);
- * 
- * // Write the contents of the Buffer to a 
- * // SocketChannel without blocking 
- * while (!buffer.write(socketChannel))
- * {
- *   // Do something else
- * }
- * </pre>
- * 
- * An example for reading a buffer from a {@link SocketChannel} and <b>getting</b> values from it:
+ * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;"> // Obtain a fresh buffer
+ * Buffer buffer = bufferProvider.getBuffer(); // Start filling the buffer for channelIndex 4711 ByteBuffer byteBuffer =
+ * buffer.startPutting(4711); byteBuffer.putDouble(15.47); // Write the contents of the Buffer to a // SocketChannel
+ * without blocking while (!buffer.write(socketChannel)) { // Do something else } </pre> An example for reading a buffer
+ * from a {@link SocketChannel} and <b>getting</b> values from it:
  * <p>
- * 
- * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
- * // Obtain a fresh buffer 
- * Buffer buffer = bufferProvider.getBuffer();
- * 
- * // Read the contents of the Buffer from a 
- * // SocketChannel without blocking 
- * ByteBuffer byteBuffer;
- * while ((byteBuffer = buffer.startGetting(socketChannel)) == null)
- * {
- *   // Do something else
- * }
- * 
- * // Access the contents of the buffer and 
- * // release it to its provider
- * double value = byteBuffer.getDouble();
- * buffer.release();
- * </pre>
+ * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;"> // Obtain a fresh buffer
+ * Buffer buffer = bufferProvider.getBuffer(); // Read the contents of the Buffer from a // SocketChannel without
+ * blocking ByteBuffer byteBuffer; while ((byteBuffer = buffer.startGetting(socketChannel)) == null) { // Do something
+ * else } // Access the contents of the buffer and // release it to its provider double value = byteBuffer.getDouble();
+ * buffer.release(); </pre>
  * 
  * @see IBufferProvider
  * @see IChannel#sendBuffer(IBuffer)
@@ -104,6 +78,8 @@ public interface IBuffer
    * that indicates that this buffer is not intended to be passed to a {@link SocketChannel}.
    */
   public static final short NO_CHANNEL = Short.MIN_VALUE;
+
+  public static final short HEADER_SIZE = 4;
 
   /**
    * Returns the {@link IBufferProvider} that has provided this buffer and that this buffer will be returned to when its
@@ -133,8 +109,8 @@ public interface IBuffer
    * Tries to read a {@link ByteBuffer} from a {@link SocketChannel} that can be used for getting data.
    * <p>
    * This method is non-blocking and it can be necessary to repeatedly call it. If it was not possible to read a
-   * complete header from the <code>SocketChannel</code> <code>null</code> is returned and the state of this buffer
-   * is {@link BufferState#READING_HEADER READING_HEADER}. If it was not possible to read a complete body from the
+   * complete header from the <code>SocketChannel</code> <code>null</code> is returned and the state of this buffer is
+   * {@link BufferState#READING_HEADER READING_HEADER}. If it was not possible to read a complete body from the
    * <code>SocketChannel</code> <code>null</code> is returned and the state of this buffer is
    * {@link BufferState#READING_BODY READING_BODY}.
    * <p>
@@ -157,7 +133,7 @@ public interface IBuffer
    * <li> {@link ByteBuffer#getLong(int)}
    * <li> {@link ByteBuffer#getShort()}
    * <li> {@link ByteBuffer#getShort(int)}
-   * <li> all other methods that do not influence {@link ByteBuffer#position()}, {@link ByteBuffer#limit()} and
+   * <li>all other methods that do not influence {@link ByteBuffer#position()}, {@link ByteBuffer#limit()} and
    * {@link ByteBuffer#capacity()}
    * </ul>
    * 
@@ -178,8 +154,8 @@ public interface IBuffer
    * <p>
    * Turns the {@link #getState() state} of this buffer into {@link BufferState#PUTTING PUTTING}.
    * <p>
-   * The returned <code>ByteBuffer</code> <b>may only</b> be used for putting data. It is left to the responsibility
-   * of the caller that only the following methods of that <code>ByteBuffer</code> are used:
+   * The returned <code>ByteBuffer</code> <b>may only</b> be used for putting data. It is left to the responsibility of
+   * the caller that only the following methods of that <code>ByteBuffer</code> are used:
    * <ul>
    * <li> {@link ByteBuffer#put(byte)}
    * <li> {@link ByteBuffer#put(byte[])}
@@ -198,17 +174,18 @@ public interface IBuffer
    * <li> {@link ByteBuffer#putLong(int, long)}
    * <li> {@link ByteBuffer#putShort(short)}
    * <li> {@link ByteBuffer#putShort(int, short)}
-   * <li> all other methods that do not influence {@link ByteBuffer#position()}, {@link ByteBuffer#limit()} and
+   * <li>all other methods that do not influence {@link ByteBuffer#position()}, {@link ByteBuffer#limit()} and
    * {@link ByteBuffer#capacity()}
    * </ul>
    * 
    * @param channelIndex
-   *          The index of an {@link IChannel} that this buffer is intended to be passed to later or {@link #NO_CHANNEL}.
+   *          The index of an {@link IChannel} that this buffer is intended to be passed to later or {@link #NO_CHANNEL}
+   *          .
    * @return A {@link ByteBuffer} that can be used for putting data.
    * @throws IllegalStateException
-   *           If the state of this buffer is not {@link BufferState#INITIAL INITIAL} ({@link BufferState#PUTTING PUTTING}
-   *           is allowed but meaningless if and only if the given <code>channelIndex</code> is equal to the existing
-   *           <code>channelIndex</code> of this buffer).
+   *           If the state of this buffer is not {@link BufferState#INITIAL INITIAL} ({@link BufferState#PUTTING
+   *           PUTTING} is allowed but meaningless if and only if the given <code>channelIndex</code> is equal to the
+   *           existing <code>channelIndex</code> of this buffer).
    */
   public ByteBuffer startPutting(short channelIndex) throws IllegalStateException;
 
@@ -224,8 +201,8 @@ public interface IBuffer
    * @return <code>true</code> if it was possible to completely write the data to the <code>SocketChannel</code>,
    *         <code>false</code> otherwise.
    * @throws IllegalStateException
-   *           If the state of this buffer is not {@link BufferState#PUTTING PUTTING} or
-   *           {@link BufferState#WRITING WRITING}.
+   *           If the state of this buffer is not {@link BufferState#PUTTING PUTTING} or {@link BufferState#WRITING
+   *           WRITING}.
    * @throws IOException
    *           If the <code>SocketChannel</code> has been closed or discovers other I/O problems.
    */
@@ -243,14 +220,13 @@ public interface IBuffer
    * Returns the <code>ByteBuffer</code> that can be used for putting or getting data.
    * 
    * @throws IllegalStateException
-   *           If the state of this buffer is not {@link BufferState#PUTTING PUTTING} or
-   *           {@link BufferState#GETTING GETTING}.
+   *           If the state of this buffer is not {@link BufferState#PUTTING PUTTING} or {@link BufferState#GETTING
+   *           GETTING}.
    */
   public ByteBuffer getByteBuffer() throws IllegalStateException;
 
   /**
-   * Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of
-   * buffers.
+   * Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.
    */
   public boolean isEOS();
 

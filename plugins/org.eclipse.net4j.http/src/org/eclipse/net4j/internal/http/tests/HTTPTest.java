@@ -42,9 +42,9 @@ public class HTTPTest extends AbstractTransportTest
     IHTTPConnector connector = getHTTPConnector();
     IChannel channel = connector.openChannel(TestSignalProtocol.PROTOCOL_NAME, null);
 
-    IntRequest request = new IntRequest(channel, 4711);
+    IntRequest request = new IntRequest(channel, 305419896);
     int result = request.send();
-    assertEquals(4711, result);
+    assertEquals(305419896, result);
   }
 
   private IHTTPConnector getHTTPConnector()

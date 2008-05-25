@@ -30,8 +30,6 @@ import java.nio.channels.SocketChannel;
  */
 public class Buffer implements IBuffer
 {
-  public static final short HEADER_SIZE = 4;
-
   private static final int EOS_OFFSET = 1;
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER, Buffer.class);
@@ -136,7 +134,7 @@ public class Buffer implements IBuffer
 
     if (state == BufferState.INITIAL)
     {
-      byteBuffer.limit(Buffer.HEADER_SIZE);
+      byteBuffer.limit(IBuffer.HEADER_SIZE);
       state = BufferState.READING_HEADER;
     }
 
@@ -210,7 +208,7 @@ public class Buffer implements IBuffer
       this.channelIndex = channelIndex;
 
       byteBuffer.clear();
-      byteBuffer.position(Buffer.HEADER_SIZE);
+      byteBuffer.position(IBuffer.HEADER_SIZE);
     }
 
     return byteBuffer;
@@ -233,7 +231,7 @@ public class Buffer implements IBuffer
         throw new IllegalStateException("channelIndex == NO_CHANNEL"); //$NON-NLS-1$
       }
 
-      int payloadSize = byteBuffer.position() - Buffer.HEADER_SIZE + EOS_OFFSET;
+      int payloadSize = byteBuffer.position() - IBuffer.HEADER_SIZE + EOS_OFFSET;
       if (eos)
       {
         payloadSize = -payloadSize;
@@ -275,7 +273,7 @@ public class Buffer implements IBuffer
     }
 
     byteBuffer.flip();
-    byteBuffer.position(HEADER_SIZE);
+    byteBuffer.position(IBuffer.HEADER_SIZE);
     state = BufferState.GETTING;
   }
 
@@ -300,7 +298,7 @@ public class Buffer implements IBuffer
 
       if (state == BufferState.PUTTING && !showHeader)
       {
-        byteBuffer.position(HEADER_SIZE);
+        byteBuffer.position(IBuffer.HEADER_SIZE);
       }
 
       StringBuilder builder = new StringBuilder();

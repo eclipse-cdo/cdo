@@ -83,14 +83,21 @@ public class HTTPClientConnector extends HTTPConnector
       {
         public void handleOut(ExtendedDataOutputStream out) throws IOException
         {
-          buffer.flip();
-          ByteBuffer byteBuffer = buffer.getByteBuffer();
-          byte[] data = byteBuffer.array();
-
           out.writeByte(INet4jTransportServlet.OPCODE_SEND_BUFFER);
           out.writeString(getConnectorID());
           out.writeShort(channel.getChannelIndex());
-          out.writeByteArray(data);
+
+          buffer.flip();
+          ByteBuffer byteBuffer = buffer.getByteBuffer();
+          byteBuffer.position(IBuffer.HEADER_SIZE);
+          int length = byteBuffer.limit() - byteBuffer.position();
+          out.writeShort(length);
+          for (int i = 0; i < length; i++)
+          {
+            byte b = byteBuffer.get();
+            System.out.println("Payload: " + b);
+            out.writeByte(b);
+          }
 
           buffer.release();
         }

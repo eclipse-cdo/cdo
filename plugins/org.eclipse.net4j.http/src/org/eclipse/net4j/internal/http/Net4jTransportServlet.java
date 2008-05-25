@@ -199,7 +199,14 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     {
       String connectorID = in.readString();
       short channelIndex = in.readShort();
-      byte[] data = in.readByteArray();
+      int length = in.readShort();
+      byte[] data = new byte[length];
+      for (int i = 0; i < length; i++)
+      {
+        data[i] = in.readByte();
+      }
+
+      // TODO Consider passing the stream!
       requestHandler.handleSendBuffer(connectorID, channelIndex, data);
       out.writeBoolean(true);
     }

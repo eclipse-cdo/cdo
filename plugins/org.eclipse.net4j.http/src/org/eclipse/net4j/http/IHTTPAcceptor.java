@@ -18,4 +18,6 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 public interface IHTTPAcceptor extends IAcceptor
 {
   public INet4jTransportServlet getServlet();
+
+  public void setServlet(INet4jTransportServlet servlet);
 }

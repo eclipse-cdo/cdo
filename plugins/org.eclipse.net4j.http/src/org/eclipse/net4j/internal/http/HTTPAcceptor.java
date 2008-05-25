@@ -54,7 +54,13 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
 
   public void setServlet(INet4jTransportServlet servlet)
   {
+    if (this.servlet != null)
+    {
+      this.servlet.setRequestHandler(null);
+    }
+
     this.servlet = servlet;
+    servlet.setRequestHandler(this);
   }
 
   public int getConnectorIDLength()
@@ -95,22 +101,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkArg(randomizer, "randomizer == null");
-    checkArg(servlet, "servlet == null");
-    checkArg(connectorIDLength > 0, "Constraint violated: connectorIDLength > 0");
-  }
-
-  @Override
-  protected void doActivate() throws Exception
-  {
-    super.doActivate();
-    servlet.setRequestHandler(this);
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    servlet.setRequestHandler(null);
-    super.doDeactivate();
+    checkState(randomizer, "randomizer");
+    checkState(connectorIDLength > 0, "Constraint violated: connectorIDLength > 0");
   }
 }

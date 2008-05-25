@@ -12,6 +12,7 @@ package org.eclipse.net4j.http;
 
 import org.eclipse.net4j.internal.http.HTTPAcceptorFactory;
 import org.eclipse.net4j.internal.http.HTTPConnectorFactory;
+import org.eclipse.net4j.internal.http.RandomizerInjector;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
@@ -27,16 +28,18 @@ public final class HTTPUtil
   {
     container.registerFactory(new HTTPAcceptorFactory());
     container.registerFactory(new HTTPConnectorFactory());
+    container.addPostProcessor(new RandomizerInjector());
   }
 
   public static IHTTPAcceptor getAcceptor(IManagedContainer container, String description)
   {
-    return (IHTTPAcceptor)container.getElement(HTTPAcceptorFactory.PRODUCT_GROUP, HTTPAcceptorFactory.TYPE, description);
+    return (IHTTPAcceptor)container
+        .getElement(HTTPAcceptorFactory.PRODUCT_GROUP, HTTPAcceptorFactory.TYPE, description);
   }
 
   public static IHTTPConnector getConnector(IManagedContainer container, String description)
   {
-    return (IHTTPConnector)container
-        .getElement(HTTPConnectorFactory.PRODUCT_GROUP, HTTPConnectorFactory.TYPE, description);
+    return (IHTTPConnector)container.getElement(HTTPConnectorFactory.PRODUCT_GROUP, HTTPConnectorFactory.TYPE,
+        description);
   }
 }

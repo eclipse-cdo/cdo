@@ -12,14 +12,15 @@ package org.eclipse.net4j.internal.http;
 
 import org.eclipse.internal.net4j.connector.ConnectorFactory;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * @author Eike Stepper
  */
 public class HTTPConnectorFactory extends ConnectorFactory
 {
   public static final String TYPE = "http";
-
-  private static final String URL_SCHEME = "http://";
 
   public HTTPConnectorFactory()
   {
@@ -28,50 +29,31 @@ public class HTTPConnectorFactory extends ConnectorFactory
 
   public HTTPClientConnector create(String description)
   {
-    // try
-    // {
-    // URL url = new URL(URL_SCHEME + description);
-    // String userID = url.getUserInfo();
-    // String host = url.getHost();
-    // int port = url.getPort();
-    // if (port == -1)
-    // {
-    // port = IHTTPConnector.DEFAULT_PORT;
-    // }
+    String userID = null;
+    try
+    {
+      URL url = new URL(description);
+      userID = url.getUserInfo();
+    }
+    catch (MalformedURLException ex)
+    {
+      ex.printStackTrace();
+    }
 
     HTTPClientConnector connector = new HTTPClientConnector();
-    // connector.setUserID(userID);
-    // connector.setHost(host);
-    // connector.setPort(port);
+    connector.setURL(description);
+    connector.setUserID(userID);
     return connector;
-    // }
-    // catch (MalformedURLException ex)
-    // {
-    // throw new ProductCreationException(ex);
-    // }
   }
 
   @Override
   public String getDescriptionFor(Object object)
   {
-    // if (object instanceof HTTPClientConnector)
-    // {
-    // HTTPClientConnector connector = (HTTPClientConnector)object;
-    // String description = connector.getHost();
-    // String userID = connector.getUserID();
-    // if (!StringUtil.isEmpty(userID))
-    // {
-    // description = userID + "@" + description;
-    // }
-    //
-    // int port = connector.getPort();
-    // if (port != IHTTPConnector.DEFAULT_PORT)
-    // {
-    // description = description + ":" + port;
-    // }
-    //
-    // return description;
-    // }
+    if (object instanceof HTTPClientConnector)
+    {
+      HTTPClientConnector connector = (HTTPClientConnector)object;
+      return connector.getURL();
+    }
 
     return null;
   }

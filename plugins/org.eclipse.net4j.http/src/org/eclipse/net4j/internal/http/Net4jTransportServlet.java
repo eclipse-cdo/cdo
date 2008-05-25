@@ -11,8 +11,11 @@
 package org.eclipse.net4j.internal.http;
 
 import org.eclipse.net4j.http.INet4jTransportServlet;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+
+import org.eclipse.internal.net4j.acceptor.AcceptorFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
@@ -88,5 +91,47 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     String userID = in.readString();
     String connectorID = requestHandler.connectRequested(userID);
     out.writeString(connectorID);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class ContainerAware extends Net4jTransportServlet
+  {
+    private static final String ACCEPTORS_GROUP = AcceptorFactory.PRODUCT_GROUP;
+
+    private static final String HTTP_TYPE = HTTPAcceptorFactory.TYPE;
+
+    private static final long serialVersionUID = 1L;
+
+    private HTTPAcceptor acceptor;
+
+    public ContainerAware()
+    {
+    }
+
+    @Override
+    public void init() throws ServletException
+    {
+      super.init();
+
+      acceptor = (HTTPAcceptor)IPluginContainer.INSTANCE.getElement(ACCEPTORS_GROUP, HTTP_TYPE, null);
+      if (acceptor == null)
+      {
+        throw new ServletException("Acceptor not found");
+      }
+
+      acceptor.setServlet(this);
+      setRequestHandler(acceptor);
+    }
+
+    @Override
+    public void destroy()
+    {
+      setRequestHandler(null);
+      acceptor.setServlet(null);
+      acceptor = null;
+      super.destroy();
+    }
   }
 }

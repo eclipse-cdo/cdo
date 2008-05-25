@@ -173,7 +173,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
 
   protected final void checkArg(Object handle, String handleName) throws IllegalArgumentException
   {
-    CheckUtil.checkArg(handle, handleName);
+    CheckUtil.checkState(handle, handleName);
   }
 
   protected final void checkState(boolean expr, String msg) throws IllegalStateException

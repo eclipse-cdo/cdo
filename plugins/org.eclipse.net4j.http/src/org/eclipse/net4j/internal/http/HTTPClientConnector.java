@@ -10,11 +10,21 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http;
 
+import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorLocation;
-import org.eclipse.net4j.http.IHTTPConnector;
 import org.eclipse.net4j.http.INet4jTransportServlet;
+import org.eclipse.net4j.internal.http.bundle.OM;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.IOHandler;
+import org.eclipse.net4j.util.io.IORuntimeException;
+
+import org.eclipse.internal.net4j.buffer.Buffer;
+import org.eclipse.internal.net4j.channel.InternalChannel;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -24,18 +34,20 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.text.MessageFormat;
+import java.util.Queue;
 
 /**
  * @author Eike Stepper
  */
-public class HTTPClientConnector extends HTTPConnector implements IHTTPConnector
+public class HTTPClientConnector extends HTTPConnector
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HTTPClientConnector.class);
+
   private String url;
 
   private HttpClient httpClient;
-
-  private String connectorID;
 
   public HTTPClientConnector()
   {
@@ -46,11 +58,6 @@ public class HTTPClientConnector extends HTTPConnector implements IHTTPConnector
     return ConnectorLocation.CLIENT;
   }
 
-  public String getConnectorID()
-  {
-    return connectorID;
-  }
-
   public String getURL()
   {
     return url;
@@ -59,6 +66,48 @@ public class HTTPClientConnector extends HTTPConnector implements IHTTPConnector
   public void setURL(String url)
   {
     this.url = url;
+  }
+
+  public void multiplexChannel(final IChannel channel)
+  {
+    Queue<IBuffer> localQueue = ((InternalChannel)channel).getSendQueue();
+    final IBuffer buffer = localQueue.poll();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Multiplexing " + ((Buffer)buffer).formatContent(true));
+    }
+
+    try
+    {
+      request(new IOHandler()
+      {
+        public void handleOut(ExtendedDataOutputStream out) throws IOException
+        {
+          buffer.flip();
+          ByteBuffer byteBuffer = buffer.getByteBuffer();
+          byte[] data = byteBuffer.array();
+
+          out.writeByte(INet4jTransportServlet.OPCODE_SEND_BUFFER);
+          out.writeString(getConnectorID());
+          out.writeShort(channel.getChannelIndex());
+          out.writeByteArray(data);
+
+          buffer.release();
+        }
+
+        public void handleIn(ExtendedDataInputStream in) throws IOException
+        {
+        }
+      });
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
   }
 
   @Override
@@ -94,22 +143,76 @@ public class HTTPClientConnector extends HTTPConnector implements IHTTPConnector
     super.doDeactivate();
   }
 
-  private void connect() throws IOException, HttpException
+  @Override
+  protected void registerChannelWithPeer(final int channelID, final short channelIndex, final IProtocol protocol)
+      throws ConnectorException
+  {
+    try
+    {
+      request(new IOHandler()
+      {
+        public void handleOut(ExtendedDataOutputStream out) throws IOException
+        {
+          out.writeByte(INet4jTransportServlet.OPCODE_OPEN_CHANNEL);
+          out.writeString(getConnectorID());
+          out.writeInt(channelID);
+          out.writeShort(channelIndex);
+          out.writeString(protocol.getType());
+        }
+
+        public void handleIn(ExtendedDataInputStream in) throws IOException
+        {
+          boolean ok = in.readBoolean();
+          if (!ok)
+          {
+            throw new ConnectorException("Could not open channel");
+          }
+        }
+      });
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (IOException ex)
+    {
+      throw new ConnectorException(ex);
+    }
+  }
+
+  private void connect() throws IOException
+  {
+    request(new IOHandler()
+    {
+      public void handleOut(ExtendedDataOutputStream out) throws IOException
+      {
+        out.writeByte(INet4jTransportServlet.OPCODE_CONNECT);
+        out.writeString(getUserID());
+      }
+
+      public void handleIn(ExtendedDataInputStream in) throws IOException
+      {
+        String connectorID = in.readString();
+        setConnectorID(connectorID);
+        leaveConnecting();
+      }
+    });
+  }
+
+  private void request(IOHandler handler) throws IOException, HttpException
   {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     ExtendedDataOutputStream out = new ExtendedDataOutputStream(baos);
-    out.writeByte(INet4jTransportServlet.OPCODE_CONNECT);
-    out.writeString(getUserID());
+    handler.handleOut(out);
     out.flush();
     byte[] content = baos.toByteArray();
-
     PostMethod method = new PostMethod(url);
     method.setRequestEntity(new ByteArrayRequestEntity(content));
 
     httpClient.executeMethod(method);
     InputStream bodyInputStream = method.getResponseBodyAsStream();
     ExtendedDataInputStream in = new ExtendedDataInputStream(bodyInputStream);
-    connectorID = in.readString();
+    handler.handleIn(in);
     method.releaseConnection();
   }
 }

@@ -10,7 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http;
 
+import org.eclipse.net4j.buffer.IBufferHandler;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.http.IHTTPConnector;
 import org.eclipse.net4j.http.INet4jTransportServlet;
+import org.eclipse.net4j.internal.http.bundle.OM;
+import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -25,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @author Eike Stepper
@@ -68,6 +74,13 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
       throw new ServletException("No request handler installed");
     }
 
+    String connectorID = req.getParameter("list");
+    if (connectorID != null)
+    {
+      handleList(connectorID, resp);
+      return;
+    }
+
     ServletInputStream servletInputStream = req.getInputStream();
     ExtendedDataInputStream in = new ExtendedDataInputStream(servletInputStream);
 
@@ -80,17 +93,99 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     case OPCODE_CONNECT:
       handleConnect(in, out);
       break;
+
+    case OPCODE_OPEN_CHANNEL:
+      handleOpenChannel(in, out);
+      break;
     }
 
     out.flush();
   }
 
+  protected void handleList(String connectorID, HttpServletResponse resp) throws IOException
+  {
+    IHTTPConnector[] connectors = requestHandler.handleList(connectorID);
+    PrintWriter writer = resp.getWriter();
+    for (IHTTPConnector connector : connectors)
+    {
+      writer.write(connector.getConnectorID());
+      writer.write(":");
+
+      String userID = connector.getUserID();
+      if (userID != null)
+      {
+        writer.write(" userID=" + userID);
+      }
+
+      if (connector instanceof HTTPServerConnector)
+      {
+        long idleTime = System.currentTimeMillis() - ((HTTPServerConnector)connector).getLastTraffic();
+        writer.write(" idleTime=" + idleTime);
+      }
+
+      writer.write("\n");
+
+      for (IChannel channel : connector.getChannels())
+      {
+        writer.write("    ");
+        writer.write(String.valueOf(channel.getChannelIndex()));
+        writer.write(": ");
+        IBufferHandler receiveHandler = channel.getReceiveHandler();
+        if (receiveHandler instanceof IProtocol)
+        {
+          writer.write(((IProtocol)receiveHandler).getType());
+        }
+        else
+        {
+          String string = receiveHandler.toString();
+          if (string.length() > 256)
+          {
+            string = string.substring(0, 256);
+          }
+
+          writer.write(string);
+        }
+
+        writer.write(" (");
+        writer.write(String.valueOf(channel.getChannelID()));
+        writer.write(")\n");
+      }
+    }
+  }
+
   protected void handleConnect(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
       IOException
   {
-    String userID = in.readString();
-    String connectorID = requestHandler.connectRequested(userID);
-    out.writeString(connectorID);
+    try
+    {
+      String userID = in.readString();
+      String connectorID = requestHandler.handleConnect(userID);
+      out.writeString(connectorID);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      out.writeString(null);
+    }
+  }
+
+  protected void handleOpenChannel(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
+      IOException
+  {
+    try
+    {
+      String connectorID = in.readString();
+      int channelID = in.readInt();
+      short channelIndex = in.readShort();
+      String protocolType = in.readString();
+      requestHandler.handleOpenChannel(connectorID, channelID, channelIndex, protocolType);
+      out.writeBoolean(true);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      out.writeBoolean(false);
+    }
   }
 
   /**

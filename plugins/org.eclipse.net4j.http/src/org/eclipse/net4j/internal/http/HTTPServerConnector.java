@@ -10,7 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http;
 
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorLocation;
+import org.eclipse.net4j.protocol.IProtocol;
 
 import java.text.MessageFormat;
 
@@ -21,14 +24,11 @@ public class HTTPServerConnector extends HTTPConnector
 {
   private HTTPAcceptor acceptor;
 
-  private String connectorID;
-
   private long lastTraffic = System.currentTimeMillis();
 
-  public HTTPServerConnector(HTTPAcceptor acceptor, String connectorID)
+  public HTTPServerConnector(HTTPAcceptor acceptor)
   {
     this.acceptor = acceptor;
-    this.connectorID = connectorID;
   }
 
   public HTTPAcceptor getAcceptor()
@@ -43,12 +43,7 @@ public class HTTPServerConnector extends HTTPConnector
 
   public String getURL()
   {
-    return "agent://connector:" + connectorID;
-  }
-
-  public String getConnectorID()
-  {
-    return connectorID;
+    return "agent://connector:" + getConnectorID();
   }
 
   public long getLastTraffic()
@@ -56,14 +51,26 @@ public class HTTPServerConnector extends HTTPConnector
     return lastTraffic;
   }
 
+  public void multiplexChannel(IChannel channel)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   @Override
   public String toString()
   {
     if (getUserID() == null)
     {
-      return MessageFormat.format("HTTPServerConnector[{0}]", connectorID); //$NON-NLS-1$
+      return MessageFormat.format("HTTPServerConnector[{0}]", getConnectorID()); //$NON-NLS-1$
     }
 
-    return MessageFormat.format("HTTPServerConnector[{1}@{0}]", connectorID, getUserID()); //$NON-NLS-1$
+    return MessageFormat.format("HTTPServerConnector[{1}@{0}]", getConnectorID(), getUserID()); //$NON-NLS-1$
+  }
+
+  @Override
+  protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol)
+      throws ConnectorException
+  {
+    throw new UnsupportedOperationException();
   }
 }

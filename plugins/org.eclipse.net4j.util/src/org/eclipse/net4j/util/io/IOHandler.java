@@ -8,31 +8,17 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.http;
+package org.eclipse.net4j.util.io;
 
-import org.eclipse.internal.net4j.acceptor.AcceptorFactory;
+
+import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class HTTPAcceptorFactory extends AcceptorFactory
+public interface IOHandler
 {
-  public static final String TYPE = "http";
+  public void handleIn(ExtendedDataInputStream in) throws IOException;
 
-  public HTTPAcceptorFactory()
-  {
-    super(TYPE);
-  }
-
-  public HTTPAcceptor create(String description)
-  {
-    HTTPAcceptor acceptor = new HTTPAcceptor();
-    return acceptor;
-  }
-
-  @Override
-  public String getDescriptionFor(Object object)
-  {
-    return null;
-  }
+  public void handleOut(ExtendedDataOutputStream out) throws IOException;
 }

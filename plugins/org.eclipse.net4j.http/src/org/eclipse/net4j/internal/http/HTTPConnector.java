@@ -10,11 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http;
 
-import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.connector.ConnectorException;
-import org.eclipse.net4j.internal.http.bundle.OM;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.http.IHTTPConnector;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
 import org.eclipse.internal.net4j.connector.Connector;
@@ -22,22 +18,22 @@ import org.eclipse.internal.net4j.connector.Connector;
 /**
  * @author Eike Stepper
  */
-public abstract class HTTPConnector extends Connector
+public abstract class HTTPConnector extends Connector implements IHTTPConnector
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HTTPConnector.class);
+  private String connectorID;
 
   public HTTPConnector()
   {
   }
 
-  public void multiplexChannel(IChannel channel)
+  public String getConnectorID()
   {
+    return connectorID;
   }
 
-  @Override
-  protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol)
-      throws ConnectorException
+  public void setConnectorID(String connectorID)
   {
+    this.connectorID = connectorID;
   }
 
   @Override

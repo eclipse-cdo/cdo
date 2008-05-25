@@ -10,9 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http.tests;
 
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.http.HTTPUtil;
 import org.eclipse.net4j.http.IHTTPConnector;
 import org.eclipse.net4j.tests.AbstractTransportTest;
+import org.eclipse.net4j.tests.signal.IntRequest;
+import org.eclipse.net4j.tests.signal.TestSignalClientProtocolFactory;
+import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
@@ -29,13 +33,18 @@ public class HTTPTest extends AbstractTransportTest
   {
     IManagedContainer container = super.createContainer();
     HTTPUtil.prepareContainer(container);
+    container.registerFactory(new TestSignalClientProtocolFactory());
     return container;
   }
 
   public void test1() throws Exception
   {
     IHTTPConnector connector = getHTTPConnector();
+    IChannel channel = connector.openChannel(TestSignalProtocol.PROTOCOL_NAME, null);
 
+    IntRequest request = new IntRequest(channel, 4711);
+    int result = request.send();
+    assertEquals(4711, result);
   }
 
   private IHTTPConnector getHTTPConnector()

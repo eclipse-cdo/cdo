@@ -204,6 +204,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     super.doBeforeActivate();
     checkState(randomizer, "randomizer");
     checkState(connectorIDLength > 0, "Constraint violated: connectorIDLength > 0");
+    checkState(maxIdleTime >= 100, "Constraint violated: maxIdleTime >= 100");
   }
 
   @Override

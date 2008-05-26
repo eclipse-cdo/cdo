@@ -14,15 +14,13 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.util.container.Container;
-import org.eclipse.net4j.internal.util.container.LifecycleEventConverter;
+import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IElementProcessor;
-import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.INegotiator;
@@ -52,16 +50,12 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
 
   private ExecutorService receiveExecutor;
 
-  /**
-   * Is registered with each {@link IConnector} of this {@link IAcceptor}.
-   */
-  private transient IListener lifecycleEventConverter = new LifecycleEventConverter<IConnector>(this)
+  private transient IListener connectorListener = new LifecycleEventAdapter()
   {
     @Override
-    protected IContainerEvent<IConnector> createContainerEvent(IContainer<IConnector> container, IConnector element,
-        Kind kind)
+    protected void onDeactivated(ILifecycle lifecycle)
     {
-      return newContainerEvent(element, kind);
+      removeConnector((IConnector)lifecycle);
     }
   };
 
@@ -156,7 +150,7 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
       acceptedConnectors.add(connector);
     }
 
-    connector.addListener(lifecycleEventConverter);
+    connector.addListener(connectorListener);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Added connector " + connector); //$NON-NLS-1$
@@ -167,7 +161,7 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
 
   public void removeConnector(IConnector connector)
   {
-    connector.removeListener(lifecycleEventConverter);
+    connector.removeListener(connectorListener);
     synchronized (acceptedConnectors)
     {
       acceptedConnectors.remove(connector);

@@ -110,4 +110,11 @@ public class HTTPServerConnector extends HTTPConnector
   {
     throw new UnsupportedOperationException();
   }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    leaveConnecting();
+  }
 }

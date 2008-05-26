@@ -198,8 +198,13 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   {
     if (super.removeChannel(channel))
     {
-      ChannelOperation operation = new CloseChannelOperation((HTTPChannel)channel);
-      outputOperations.add(operation);
+      HTTPChannel httpChannel = (HTTPChannel)channel;
+      if (!httpChannel.isInverseRemoved())
+      {
+        ChannelOperation operation = new CloseChannelOperation(httpChannel);
+        outputOperations.add(operation);
+      }
+
       return true;
     }
 
@@ -455,6 +460,8 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     @Override
     public void doEexecute(HTTPChannel channel)
     {
+      // TODO Fix protocol between Channel.close and Connector.removeChannel/inverserRemoveChannel
+      channel.setInverseRemoved();
       inverseRemoveChannel(channel.getChannelID(), channel.getChannelIndex());
     }
   }

@@ -31,6 +31,8 @@ public class HTTPChannel extends Channel
 
   private CountDownLatch openAck = new CountDownLatch(1);
 
+  private boolean inverseRemoved;
+
   public HTTPChannel()
   {
   }
@@ -79,6 +81,16 @@ public class HTTPChannel extends Channel
     catch (InterruptedException ignore)
     {
     }
+  }
+
+  public boolean isInverseRemoved()
+  {
+    return inverseRemoved;
+  }
+
+  public void setInverseRemoved()
+  {
+    inverseRemoved = true;
   }
 
   @Override

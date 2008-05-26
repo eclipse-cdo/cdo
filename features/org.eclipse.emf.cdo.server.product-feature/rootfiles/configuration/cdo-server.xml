@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdoServer>
 
-	<acceptor type="tcp" listenAddr="0.0.0.0" port="2036">
+	<acceptor type="http"/>
+    
 		<!-- 
+	<acceptor type="tcp" listenAddr="0.0.0.0" port="2036">
 		<negotiator type="challenge" description="/temp/users.db"/> 
-		-->
 	</acceptor>
+		-->
 
 	<repository name="repo1">
 		<property name="overrideUUID" value="1ff5d226-b1f0-40fb-aba2-0c31b38c764f"/>

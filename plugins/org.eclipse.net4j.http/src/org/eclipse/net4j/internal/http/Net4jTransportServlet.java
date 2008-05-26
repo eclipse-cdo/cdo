@@ -112,6 +112,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     PrintWriter writer = resp.getWriter();
     for (IHTTPConnector connector : connectors)
     {
+      // TODO Security: Hide connectorID!
       writer.write(connector.getConnectorID());
       writer.write(":");
 

@@ -40,8 +40,12 @@
          point="org.eclipse.equinox.http.registry.servlets">
       <servlet
             alias="/net4j"
-            class="org.eclipse.net4j.internal.http.Net4jTransportServlet$ContainerAware">
-      </servlet>
+            class="org.eclipse.net4j.internal.http.Net4jTransportServlet$ContainerAware"/>
+<!--
+      <servlet
+            alias="/net4j/echotest"
+            class="org.eclipse.net4j.internal.http.tests.Net4jEchoTestServlet"/>
+-->
    </extension>
 
 </plugin>

@@ -68,6 +68,7 @@ public class HTTPClientConnector extends HTTPConnector
     this.url = url;
   }
 
+  @Override
   public void multiplexChannel(final IChannel channel)
   {
     Queue<IBuffer> localQueue = ((InternalChannel)channel).getSendQueue();
@@ -144,7 +145,7 @@ public class HTTPClientConnector extends HTTPConnector
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    httpClient = new HttpClient();
+    httpClient = createHTTPClient();
     connect();
   }
 
@@ -153,6 +154,16 @@ public class HTTPClientConnector extends HTTPConnector
   {
     httpClient = null;
     super.doDeactivate();
+  }
+
+  protected HttpClient createHTTPClient()
+  {
+    return new HttpClient();
+  }
+
+  protected PostMethod createHTTPMethod(String url)
+  {
+    return new PostMethod(url);
   }
 
   @Override
@@ -218,7 +229,7 @@ public class HTTPClientConnector extends HTTPConnector
     handler.handleOut(out);
     out.flush();
     byte[] content = baos.toByteArray();
-    PostMethod method = new PostMethod(url);
+    PostMethod method = createHTTPMethod(url);
     method.setRequestEntity(new ByteArrayRequestEntity(content));
 
     httpClient.executeMethod(method);

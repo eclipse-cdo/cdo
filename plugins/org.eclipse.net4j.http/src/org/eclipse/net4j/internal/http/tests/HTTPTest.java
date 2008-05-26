@@ -18,6 +18,15 @@ import org.eclipse.net4j.tests.signal.IntRequest;
 import org.eclipse.net4j.tests.signal.TestSignalClientProtocolFactory;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.RequestEntity;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * @author Eike Stepper
@@ -35,6 +44,72 @@ public class HTTPTest extends AbstractTransportTest
     HTTPUtil.prepareContainer(container);
     container.registerFactory(new TestSignalClientProtocolFactory());
     return container;
+  }
+
+  /**
+   * Result: With the current implementation (HttpClient / Jetty) it's not possible to transfer request data before
+   */
+  public void _testRequestFlush() throws Exception
+  {
+    HttpClient client = new HttpClient();
+    PostMethod method = new PostMethod("http://eike@localhost:8080/net4j/echotest");
+    method.setRequestEntity(new RequestEntity()
+    {
+      public long getContentLength()
+      {
+        return -1;
+      }
+
+      public String getContentType()
+      {
+        return "application/octet-stream";
+      }
+
+      public boolean isRepeatable()
+      {
+        return false;
+      }
+
+      public void writeRequest(OutputStream out) throws IOException
+      {
+        int count = 10;
+        out.write(count);
+        for (int i = 0; i < count; i++)
+        {
+          send(out, i);
+        }
+      }
+
+      private void send(OutputStream out, int b) throws IOException
+      {
+        try
+        {
+          System.out.println("Writing " + b);
+          out.write(b);
+          out.flush();
+          Thread.sleep(1000);
+        }
+        catch (InterruptedException ex)
+        {
+          throw new RuntimeException(ex);
+        }
+      }
+    });
+
+    client.executeMethod(method);
+    InputStream responseBody = method.getResponseBodyAsStream();
+    ExtendedDataInputStream in = new ExtendedDataInputStream(responseBody);
+    int count = in.readInt();
+    for (int i = 0; i < count; i++)
+    {
+      int b = in.readByte();
+      assertEquals(i, b);
+
+      long gap = in.readLong();
+      System.out.println("Gap: " + gap);
+    }
+
+    method.releaseConnection();
   }
 
   public void test1() throws Exception

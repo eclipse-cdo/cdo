@@ -17,6 +17,8 @@ import org.eclipse.net4j.connector.IConnector;
  */
 public interface IHTTPConnector extends IConnector
 {
+  public static final int DEFAULT_POLL_INTERVAL = 5 * 1000;// 5 seconds
+
   public static final int UNKNOWN_MAX_IDLE_TIME = -1;
 
   public String getConnectorID();

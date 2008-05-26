@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http;
 
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.http.INet4jTransportServlet;
@@ -20,6 +21,7 @@ import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOHandler;
+import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -44,13 +46,19 @@ public class HTTPClientConnector extends HTTPConnector
 
   private int maxIdleTime = UNKNOWN_MAX_IDLE_TIME;
 
+  private int pollInterval = DEFAULT_POLL_INTERVAL;
+
+  private long lastRequest = System.currentTimeMillis();
+
+  private boolean requesting;
+
   private Worker poller = new Worker()
   {
     @Override
     protected void work(WorkContext context) throws Exception
     {
-      int pause = poll();
-      context.nextWork(pause);
+      boolean moreBuffers = tryBuffersRequest();
+      context.nextWork(moreBuffers ? 0 : 100);
     }
   };
 
@@ -76,6 +84,23 @@ public class HTTPClientConnector extends HTTPConnector
   public int getMaxIdleTime()
   {
     return maxIdleTime;
+  }
+
+  public int getPollInterval()
+  {
+    return pollInterval;
+  }
+
+  public void setPollInterval(int pollInterval)
+  {
+    this.pollInterval = pollInterval;
+  }
+
+  @Override
+  public void multiplexChannel(IChannel channel)
+  {
+    super.multiplexChannel(channel);
+    tryBuffersRequest();
   }
 
   @Override
@@ -160,11 +185,6 @@ public class HTTPClientConnector extends HTTPConnector
     }
   }
 
-  protected int poll()
-  {
-    return 0;
-  }
-
   private void connect() throws IOException
   {
     request(new IOHandler()
@@ -201,5 +221,54 @@ public class HTTPClientConnector extends HTTPConnector
     ExtendedDataInputStream in = new ExtendedDataInputStream(bodyInputStream);
     handler.handleIn(in);
     method.releaseConnection();
+  }
+
+  private boolean tryBuffersRequest()
+  {
+    synchronized (poller)
+    {
+      if (requesting)
+      {
+        return false;
+      }
+
+      requesting = true;
+    }
+
+    if (getOutputQueue().isEmpty() || System.currentTimeMillis() - lastRequest < pollInterval)
+    {
+      return false;
+    }
+
+    try
+    {
+      final boolean moreBuffers[] = { false };
+      request(new IOHandler()
+      {
+        public void handleOut(ExtendedDataOutputStream out) throws IOException
+        {
+          moreBuffers[0] = writeOutputBuffers(out);
+        }
+
+        public void handleIn(ExtendedDataInputStream in) throws IOException
+        {
+          readInputBuffers(in);
+        }
+      });
+
+      lastRequest = System.currentTimeMillis();
+      return moreBuffers[0];
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+    finally
+    {
+      synchronized (poller)
+      {
+        requesting = false;
+      }
+    }
   }
 }

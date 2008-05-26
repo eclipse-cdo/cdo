@@ -23,7 +23,6 @@ import org.eclipse.net4j.util.security.INegotiationContext;
 
 import org.eclipse.internal.net4j.buffer.Buffer;
 import org.eclipse.internal.net4j.channel.Channel;
-import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.connector.Connector;
 
 import java.io.IOException;
@@ -166,8 +165,8 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
         throw new IOException("Invalid operation code: " + code);
       }
 
-      operation.execute();
       markLastTraffic();
+      operation.execute();
     }
   }
 
@@ -259,7 +258,60 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       return operationCount;
     }
 
-    public abstract void execute();
+    public void execute()
+    {
+      HTTPChannel channel = (HTTPChannel)getChannel(getChannelIndex());
+      long operationCount = getOperationCount();
+      synchronized (channel)
+      {
+        // Execute preceding operations if necessary
+        while (operationCount < channel.getInputOperationCount())
+        {
+          ChannelOperation operation = channel.getQuarantinedInputOperation(channel.getInputOperationCount());
+          if (operation != null)
+          {
+            operation.doEexecute(channel);
+            channel.increaseInputOperationCount();
+          }
+          else
+          {
+            break;
+          }
+        }
+
+        if (operationCount == channel.getInputOperationCount())
+        {
+          // Execute operation if possible
+          doEexecute(channel);
+          channel.increaseInputOperationCount();
+
+          // Execute following operations if possible
+          for (;;)
+          {
+            ChannelOperation operation = channel.getQuarantinedInputOperation(++operationCount);
+            if (operation != null)
+            {
+              operation.doEexecute(channel);
+              channel.increaseInputOperationCount();
+            }
+            else
+            {
+              break;
+            }
+          }
+        }
+        else
+        {
+          channel.quarantineInputOperation(operationCount, this);
+        }
+      }
+    }
+
+    public abstract void doEexecute(HTTPChannel channel);
+
+    public void dispose()
+    {
+    }
   }
 
   /**
@@ -312,15 +364,22 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     @Override
     public void execute()
     {
+      HTTPChannel channel = (HTTPChannel)createChannel(channelID, getChannelIndex(), protocolID);
+      if (channel == null)
+      {
+        throw new IllegalStateException("Could not open channel");
+      }
+
+      channel.increaseInputOperationCount();
+      doEexecute(channel);
+    }
+
+    @Override
+    public void doEexecute(HTTPChannel channel)
+    {
       boolean success = false;
       try
       {
-        InternalChannel channel = createChannel(channelID, getChannelIndex(), protocolID);
-        if (channel == null)
-        {
-          throw new IllegalStateException("Could not open channel");
-        }
-
         channel.activate();
         success = true;
       }
@@ -365,9 +424,8 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     }
 
     @Override
-    public void execute()
+    public void doEexecute(HTTPChannel channel)
     {
-      HTTPChannel channel = (HTTPChannel)getChannel(getChannelIndex());
       channel.openAck();
     }
   }
@@ -395,7 +453,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     }
 
     @Override
-    public void execute()
+    public void doEexecute(HTTPChannel channel)
     {
       System.out.println("OPERATION_CLOSE");
       throw new UnsupportedOperationException();
@@ -425,6 +483,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       for (int i = 0; i < length; i++)
       {
         byte b = in.readByte();
+        System.out.println("READ " + b);
         byteBuffer.put(b);
       }
 
@@ -446,6 +505,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       for (int i = 0; i < length; i++)
       {
         byte b = byteBuffer.get();
+        System.out.println("WRITE " + b);
         out.writeByte(b);
       }
 
@@ -464,36 +524,22 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     }
 
     @Override
-    public void execute()
+    public void doEexecute(HTTPChannel channel)
     {
-      HTTPChannel channel = (HTTPChannel)getChannel(getChannelIndex());
-      long operationCount = getOperationCount();
-      synchronized (channel)
-      {
-        while (operationCount < channel.getInputOperationCount())
-        {
-          IBuffer quarantinedBuffer = channel.getQuarantinedInputOperation(channel.getInputOperationCount());
-          if (quarantinedBuffer != null)
-          {
-            channel.handleBufferFromMultiplexer(buffer);
-            channel.increaseInputOperationCount();
-          }
-          else
-          {
-            break;
-          }
-        }
+      channel.handleBufferFromMultiplexer(buffer);
+      buffer = null;
+    }
 
-        if (operationCount == channel.getInputOperationCount())
-        {
-          channel.handleBufferFromMultiplexer(buffer);
-          channel.increaseInputOperationCount();
-        }
-        else
-        {
-          channel.quarantineInputOperation(operationCount, buffer);
-        }
+    @Override
+    public void dispose()
+    {
+      if (buffer != null)
+      {
+        buffer.release();
+        buffer = null;
       }
+
+      super.dispose();
     }
   }
 }

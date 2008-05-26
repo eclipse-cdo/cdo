@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http;
 
-import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.internal.http.HTTPConnector.ChannelOperation;
 
 import org.eclipse.internal.net4j.channel.Channel;
 
@@ -27,7 +27,7 @@ public class HTTPChannel extends Channel
 
   private long inputOperationCount;
 
-  private Map<Long, IBuffer> inputOperationQuarantine = new ConcurrentHashMap<Long, IBuffer>();
+  private Map<Long, ChannelOperation> inputOperationQuarantine = new ConcurrentHashMap<Long, ChannelOperation>();
 
   private CountDownLatch openAck = new CountDownLatch(1);
 
@@ -55,12 +55,12 @@ public class HTTPChannel extends Channel
     ++inputOperationCount;
   }
 
-  public void quarantineInputOperation(long count, IBuffer buffer)
+  public void quarantineInputOperation(long count, ChannelOperation operation)
   {
-    inputOperationQuarantine.put(count, buffer);
+    inputOperationQuarantine.put(count, operation);
   }
 
-  public IBuffer getQuarantinedInputOperation(long count)
+  public ChannelOperation getQuarantinedInputOperation(long count)
   {
     return inputOperationQuarantine.remove(count);
   }
@@ -84,9 +84,9 @@ public class HTTPChannel extends Channel
   @Override
   protected void doDeactivate() throws Exception
   {
-    for (IBuffer buffer : inputOperationQuarantine.values())
+    for (ChannelOperation operation : inputOperationQuarantine.values())
     {
-      buffer.release();
+      operation.dispose();
     }
 
     inputOperationQuarantine.clear();

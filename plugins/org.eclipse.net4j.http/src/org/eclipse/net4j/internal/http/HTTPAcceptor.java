@@ -23,7 +23,6 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.security.IRandomizer;
 
 import org.eclipse.internal.net4j.acceptor.Acceptor;
-import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.connector.Connector;
 
 import java.io.IOException;
@@ -160,29 +159,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     connector.deactivate();
   }
 
-  public void handleOpenChannel(String connectorID, short channelIndex, int channelID, String protocolType)
-  {
-    HTTPConnector connector = httpConnectors.get(connectorID);
-    if (connector == null)
-    {
-      throw new IllegalArgumentException("Invalid connectorID: " + connectorID);
-    }
-
-    InternalChannel channel = connector.createChannel(channelID, channelIndex, protocolType);
-    if (channel == null)
-    {
-      throw new IllegalStateException("Could not open channel");
-    }
-
-    channel.activate();
-  }
-
-  public void handleCloseChannel(String connectorID, short channelIndex)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  public void handleBuffers(String connectorID, ExtendedDataInputStream in, ExtendedDataOutputStream out)
+  public void handleOperations(String connectorID, ExtendedDataInputStream in, ExtendedDataOutputStream out)
       throws IOException
   {
     HTTPServerConnector connector = httpConnectors.get(connectorID);
@@ -191,8 +168,8 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
       throw new IllegalArgumentException("Invalid connectorID: " + connectorID);
     }
 
-    connector.readInputBuffers(in);
-    connector.writeOutputBuffers(out);
+    connector.readInputOperations(in);
+    connector.writeOutputOperations(out);
   }
 
   @Override
@@ -230,6 +207,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    cleaner.setDaemon(true);
     cleaner.activate();
   }
 

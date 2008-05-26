@@ -16,61 +16,80 @@ import org.eclipse.internal.net4j.channel.Channel;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author Eike Stepper
  */
 public class HTTPChannel extends Channel
 {
-  private long outputBufferCount;
+  private long outputOperationCount = 1;// Open channel was 0 implicitely
 
-  private long inputBufferCount;
+  private long inputOperationCount;
 
-  private Map<Long, IBuffer> inputBufferQuarantine = new ConcurrentHashMap<Long, IBuffer>();
+  private Map<Long, IBuffer> inputOperationQuarantine = new ConcurrentHashMap<Long, IBuffer>();
+
+  private CountDownLatch openAck = new CountDownLatch(1);
 
   public HTTPChannel()
   {
   }
 
-  public long getOutputBufferCount()
+  public long getOutputOperationCount()
   {
-    return outputBufferCount;
+    return outputOperationCount;
   }
 
-  public void increaseOutputBufferCount()
+  public void increaseOutputOperationCount()
   {
-    ++outputBufferCount;
+    ++outputOperationCount;
   }
 
-  public long getInputBufferCount()
+  public long getInputOperationCount()
   {
-    return inputBufferCount;
+    return inputOperationCount;
   }
 
-  public void increaseInputBufferCount()
+  public void increaseInputOperationCount()
   {
-    ++inputBufferCount;
+    ++inputOperationCount;
   }
 
-  public void quarantineInputBuffer(long count, IBuffer buffer)
+  public void quarantineInputOperation(long count, IBuffer buffer)
   {
-    inputBufferQuarantine.put(count, buffer);
+    inputOperationQuarantine.put(count, buffer);
   }
 
-  public IBuffer getQuarantinedInputBuffer(long count)
+  public IBuffer getQuarantinedInputOperation(long count)
   {
-    return inputBufferQuarantine.remove(count);
+    return inputOperationQuarantine.remove(count);
+  }
+
+  public void openAck()
+  {
+    openAck.countDown();
+  }
+
+  public void waitForOpenAck()
+  {
+    try
+    {
+      openAck.await();
+    }
+    catch (InterruptedException ignore)
+    {
+    }
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    for (IBuffer buffer : inputBufferQuarantine.values())
+    for (IBuffer buffer : inputOperationQuarantine.values())
     {
       buffer.release();
     }
 
-    inputBufferQuarantine.clear();
+    inputOperationQuarantine.clear();
     super.doDeactivate();
   }
 }

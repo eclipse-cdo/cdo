@@ -11,11 +11,8 @@
 package org.eclipse.net4j.internal.http;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorLocation;
-import org.eclipse.net4j.http.INet4jTransportServlet;
 import org.eclipse.net4j.internal.util.lifecycle.Worker;
-import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOAdapter;
@@ -54,7 +51,7 @@ public class HTTPClientConnector extends HTTPConnector
     @Override
     protected void work(WorkContext context) throws Exception
     {
-      boolean moreBuffers = tryBuffersRequest();
+      boolean moreBuffers = tryOperationsRequest();
       context.nextWork(moreBuffers ? 0 : 1000);
     }
   };
@@ -97,7 +94,7 @@ public class HTTPClientConnector extends HTTPConnector
   public void multiplexChannel(IChannel channel)
   {
     super.multiplexChannel(channel);
-    tryBuffersRequest();
+    tryOperationsRequest();
   }
 
   @Override
@@ -122,6 +119,7 @@ public class HTTPClientConnector extends HTTPConnector
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    poller.setDaemon(true);
     poller.activate();
     httpClient = createHTTPClient();
     doConnect();
@@ -146,50 +144,13 @@ public class HTTPClientConnector extends HTTPConnector
     return new PostMethod(url);
   }
 
-  @Override
-  protected void registerChannelWithPeer(final int channelID, final short channelIndex, final IProtocol protocol)
-      throws ConnectorException
-  {
-    try
-    {
-      request(new IOHandler()
-      {
-        public void handleOut(ExtendedDataOutputStream out) throws IOException
-        {
-          out.writeByte(INet4jTransportServlet.OPCODE_OPEN_CHANNEL);
-          out.writeString(getConnectorID());
-          out.writeInt(channelID);
-          out.writeShort(channelIndex);
-          out.writeString(protocol.getType());
-        }
-
-        public void handleIn(ExtendedDataInputStream in) throws IOException
-        {
-          boolean ok = in.readBoolean();
-          if (!ok)
-          {
-            throw new ConnectorException("Could not open channel");
-          }
-        }
-      });
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (IOException ex)
-    {
-      throw new ConnectorException(ex);
-    }
-  }
-
   private void doConnect() throws IOException
   {
     request(new IOHandler()
     {
       public void handleOut(ExtendedDataOutputStream out) throws IOException
       {
-        out.writeByte(INet4jTransportServlet.OPCODE_CONNECT);
+        out.writeByte(Net4jTransportServlet.OPCODE_CONNECT);
         out.writeString(getUserID());
       }
 
@@ -211,7 +172,7 @@ public class HTTPClientConnector extends HTTPConnector
       @Override
       public void handleOut(ExtendedDataOutputStream out) throws IOException
       {
-        out.writeByte(INet4jTransportServlet.OPCODE_DISCONNECT);
+        out.writeByte(Net4jTransportServlet.OPCODE_DISCONNECT);
         out.writeString(getConnectorID());
       }
     });
@@ -234,7 +195,7 @@ public class HTTPClientConnector extends HTTPConnector
     method.releaseConnection();
   }
 
-  private boolean tryBuffersRequest()
+  private boolean tryOperationsRequest()
   {
     synchronized (poller)
     {
@@ -253,24 +214,24 @@ public class HTTPClientConnector extends HTTPConnector
 
     try
     {
-      final boolean moreBuffers[] = { false };
+      final boolean moreOperations[] = { false };
       request(new IOHandler()
       {
         public void handleOut(ExtendedDataOutputStream out) throws IOException
         {
-          out.writeByte(INet4jTransportServlet.OPCODE_BUFFERS);
+          out.writeByte(Net4jTransportServlet.OPCODE_OPERATIONS);
           out.writeString(getConnectorID());
-          moreBuffers[0] = writeOutputBuffers(out);
+          moreOperations[0] = writeOutputOperations(out);
         }
 
         public void handleIn(ExtendedDataInputStream in) throws IOException
         {
-          readInputBuffers(in);
+          readInputOperations(in);
         }
       });
 
       lastRequest = System.currentTimeMillis();
-      return moreBuffers[0];
+      return moreOperations[0];
     }
     catch (IOException ex)
     {

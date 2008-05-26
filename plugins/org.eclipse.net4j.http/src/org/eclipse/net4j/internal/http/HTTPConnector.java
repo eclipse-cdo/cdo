@@ -12,15 +12,18 @@ package org.eclipse.net4j.internal.http;
 
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.http.IHTTPConnector;
 import org.eclipse.net4j.internal.http.bundle.OM;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
 import org.eclipse.internal.net4j.buffer.Buffer;
 import org.eclipse.internal.net4j.channel.Channel;
+import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.connector.Connector;
 
 import java.io.IOException;
@@ -35,9 +38,19 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HTTPConnector.class);
 
+  private static final byte OPERATION_NONE = 0;
+
+  private static final byte OPERATION_OPEN = 1;
+
+  private static final byte OPERATION_OPEN_ACK = 2;
+
+  private static final byte OPERATION_CLOSE = 3;
+
+  private static final byte OPERATION_BUFFER = 4;
+
   private String connectorID;
 
-  private transient Queue<QueuedBuffer> outputQueue = new ConcurrentLinkedQueue<QueuedBuffer>();
+  private transient Queue<ChannelOperation> outputOperations = new ConcurrentLinkedQueue<ChannelOperation>();
 
   private transient long lastTraffic;
 
@@ -56,9 +69,9 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     this.connectorID = connectorID;
   }
 
-  public Queue<QueuedBuffer> getOutputQueue()
+  public Queue<ChannelOperation> getOutputQueue()
   {
-    return outputQueue;
+    return outputOperations;
   }
 
   public long getLastTraffic()
@@ -74,134 +87,81 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   public void multiplexChannel(IChannel channel)
   {
     IBuffer buffer;
-    long outputBufferCount;
+    long outputOperationCount;
 
     HTTPChannel httpChannel = (HTTPChannel)channel;
     synchronized (httpChannel)
     {
       Queue<IBuffer> channelQueue = httpChannel.getSendQueue();
       buffer = channelQueue.poll();
-      outputBufferCount = httpChannel.getOutputBufferCount();
-      httpChannel.increaseOutputBufferCount();
+      outputOperationCount = httpChannel.getOutputOperationCount();
+      httpChannel.increaseOutputOperationCount();
     }
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Multiplexing {0} (count={1})", ((Buffer)buffer).formatContent(true), outputBufferCount);
+      TRACER.format("Multiplexing {0} (count={1})", ((Buffer)buffer).formatContent(true), outputOperationCount);
     }
 
-    outputQueue.add(new QueuedBuffer(buffer, outputBufferCount));
+    outputOperations.add(new BufferChannelOperation(httpChannel.getChannelIndex(), outputOperationCount, buffer));
   }
 
   /**
-   * Writes buffers from the {@link #outputQueue} to the passed stream. After each written buffer
-   * {@link #writeMoreBuffers()} is asked whether to send more buffers.
+   * Writes operations from the {@link #outputOperations} to the passed stream. After each written operation
+   * {@link #writeMoreOperations()} is asked whether to send more operations.
    * 
-   * @return <code>true</code> if more buffers are in the {@link #outputQueue}, <code>false</code> otherwise.
+   * @return <code>true</code> if more operations are in the {@link #outputOperations}, <code>false</code> otherwise.
    */
-  public boolean writeOutputBuffers(ExtendedDataOutputStream out) throws IOException
+  public boolean writeOutputOperations(ExtendedDataOutputStream out) throws IOException
   {
     do
     {
-      QueuedBuffer queuedBuffer = outputQueue.poll();
-      if (queuedBuffer == null && pollAgain())
+      ChannelOperation operation = outputOperations.poll();
+      if (operation == null && pollAgain())
       {
-        queuedBuffer = outputQueue.poll();
+        operation = outputOperations.poll();
       }
 
-      if (queuedBuffer == null)
+      if (operation == null)
       {
         break;
       }
 
-      out.writeBoolean(true);
-      IBuffer buffer = queuedBuffer.getBuffer();
-      short channelIndex = buffer.getChannelIndex();
-      out.writeShort(channelIndex);
-
-      long channelCount = queuedBuffer.getChannelCount();
-      out.writeLong(channelCount);
-
-      buffer.flip();
-      ByteBuffer byteBuffer = buffer.getByteBuffer();
-      byteBuffer.position(IBuffer.HEADER_SIZE);
-      int length = byteBuffer.limit() - byteBuffer.position();
-      out.writeShort(length);
-      for (int i = 0; i < length; i++)
-      {
-        byte b = byteBuffer.get();
-        out.writeByte(b);
-      }
-
-      buffer.release();
+      operation.write(out);
       markLastTraffic();
-    } while (writeMoreBuffers());
+    } while (writeMoreOperations());
 
-    out.writeBoolean(false);
-    return !outputQueue.isEmpty();
+    out.writeByte(OPERATION_NONE);
+    return !outputOperations.isEmpty();
   }
 
-  public void readInputBuffers(ExtendedDataInputStream in) throws IOException
+  public void readInputOperations(ExtendedDataInputStream in) throws IOException
   {
     for (;;)
     {
-      boolean moreBuffers = in.readBoolean();
-      if (!moreBuffers)
+      ChannelOperation operation;
+      byte code = in.readByte();
+      switch (code)
       {
+      case OPERATION_OPEN:
+        operation = new OpenChannelOperation(in);
+
+      case OPERATION_CLOSE:
+        operation = new CloseChannelOperation(in);
+
+      case OPERATION_BUFFER:
+        operation = new BufferChannelOperation(in);
         break;
+
+      case OPERATION_NONE:
+        return;
+
+      default:
+        throw new IOException("Invalid operation code: " + code);
       }
 
-      short channelIndex = in.readShort();
-      HTTPChannel channel = (HTTPChannel)getChannel(channelIndex);
-      if (channel == null)
-      {
-        throw new IllegalArgumentException("Invalid channelIndex: " + channelIndex);
-      }
-
-      long bufferCount = in.readLong();
-      int length = in.readShort();
-
-      IBuffer buffer = getBufferProvider().provideBuffer();
-      ByteBuffer byteBuffer = buffer.startPutting(channelIndex);
-      for (int i = 0; i < length; i++)
-      {
-        byte b = in.readByte();
-        byteBuffer.put(b);
-      }
-
-      buffer.flip();
-      handleInputBuffer(channel, bufferCount, buffer);
+      operation.execute();
       markLastTraffic();
-    }
-  }
-
-  private void handleInputBuffer(HTTPChannel channel, long bufferCount, IBuffer buffer)
-  {
-    synchronized (channel)
-    {
-      while (bufferCount < channel.getInputBufferCount())
-      {
-        IBuffer quarantinedBuffer = channel.getQuarantinedInputBuffer(channel.getInputBufferCount());
-        if (quarantinedBuffer != null)
-        {
-          channel.handleBufferFromMultiplexer(buffer);
-          channel.increaseInputBufferCount();
-        }
-        else
-        {
-          break;
-        }
-      }
-
-      if (bufferCount == channel.getInputBufferCount())
-      {
-        channel.handleBufferFromMultiplexer(buffer);
-        channel.increaseInputBufferCount();
-      }
-      else
-      {
-        channel.quarantineInputBuffer(bufferCount, buffer);
-      }
     }
   }
 
@@ -218,9 +178,27 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   }
 
   @Override
-  public void inverseRemoveChannel(int channelID, short channelIndex)
+  protected void registerChannelWithPeer(final int channelID, final short channelIndex, final IProtocol protocol)
+      throws ConnectorException
   {
-    super.inverseRemoveChannel(channelID, channelIndex);
+    ChannelOperation operation = new OpenChannelOperation(channelIndex, channelID, protocol.getType());
+    outputOperations.add(operation);
+
+    HTTPChannel channel = (HTTPChannel)getChannel(channelIndex);
+    channel.waitForOpenAck();
+  }
+
+  @Override
+  public boolean removeChannel(IChannel channel)
+  {
+    if (super.removeChannel(channel))
+    {
+      ChannelOperation operation = new CloseChannelOperation((HTTPChannel)channel);
+      outputOperations.add(operation);
+      return true;
+    }
+
+    return false;
   }
 
   protected boolean pollAgain()
@@ -228,7 +206,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     return false;
   }
 
-  protected boolean writeMoreBuffers()
+  protected boolean writeMoreOperations()
   {
     return true;
   }
@@ -236,16 +214,240 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   /**
    * @author Eike Stepper
    */
-  private static final class QueuedBuffer
+  public abstract class ChannelOperation
+  {
+    private short channelIndex;
+
+    private long operationCount;
+
+    public ChannelOperation(short channelIndex, long operationCount)
+    {
+      this.channelIndex = channelIndex;
+      this.operationCount = operationCount;
+    }
+
+    public ChannelOperation(ExtendedDataInputStream in) throws IOException
+    {
+      System.out.println("READING " + getClass().getName());
+      channelIndex = in.readShort();
+      operationCount = in.readLong();
+    }
+
+    public void write(ExtendedDataOutputStream out) throws IOException
+    {
+      System.out.println("WRITING " + getClass().getName());
+      out.writeByte(getOperation());
+      out.writeShort(channelIndex);
+      out.writeLong(operationCount);
+    }
+
+    public abstract byte getOperation();
+
+    public short getChannelIndex()
+    {
+      return channelIndex;
+    }
+
+    public long getOperationCount()
+    {
+      return operationCount;
+    }
+
+    public abstract void execute();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class OpenChannelOperation extends ChannelOperation
+  {
+    private int channelID;
+
+    private String protocolID;
+
+    public OpenChannelOperation(short channelIndex, int channelID, String protocolID)
+    {
+      super(channelIndex, 0);
+      this.channelID = channelID;
+      this.protocolID = protocolID;
+    }
+
+    public OpenChannelOperation(ExtendedDataInputStream in) throws IOException
+    {
+      super(in);
+      channelID = in.readInt();
+      protocolID = in.readString();
+    }
+
+    @Override
+    public void write(ExtendedDataOutputStream out) throws IOException
+    {
+      super.write(out);
+      out.writeInt(channelID);
+      out.writeString(protocolID);
+    }
+
+    @Override
+    public byte getOperation()
+    {
+      return OPERATION_OPEN;
+    }
+
+    public int getChannelID()
+    {
+      return channelID;
+    }
+
+    public String getProtocolID()
+    {
+      return protocolID;
+    }
+
+    @Override
+    public void execute()
+    {
+      boolean success = false;
+      try
+      {
+        InternalChannel channel = createChannel(channelID, getChannelIndex(), protocolID);
+        if (channel == null)
+        {
+          throw new IllegalStateException("Could not open channel");
+        }
+
+        channel.activate();
+        success = true;
+      }
+      finally
+      {
+        ChannelOperation operation = new OpenAckChannelOperation(getChannelIndex(), success);
+        outputOperations.add(operation);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class OpenAckChannelOperation extends ChannelOperation
+  {
+    private boolean success;
+
+    public OpenAckChannelOperation(short channelIndex, boolean success)
+    {
+      super(channelIndex, 0);
+      this.success = success;
+    }
+
+    public OpenAckChannelOperation(ExtendedDataInputStream in) throws IOException
+    {
+      super(in);
+      success = in.readBoolean();
+    }
+
+    @Override
+    public byte getOperation()
+    {
+      return OPERATION_OPEN_ACK;
+    }
+
+    @Override
+    public void execute()
+    {
+      HTTPChannel channel = (HTTPChannel)getChannel(getChannelIndex());
+      channel.openAck();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class CloseChannelOperation extends ChannelOperation
+  {
+    public CloseChannelOperation(HTTPChannel channel)
+    {
+      super(channel.getChannelIndex(), channel.getOutputOperationCount());
+      channel.increaseOutputOperationCount();
+    }
+
+    public CloseChannelOperation(ExtendedDataInputStream in) throws IOException
+    {
+      super(in);
+    }
+
+    @Override
+    public void write(ExtendedDataOutputStream out) throws IOException
+    {
+      super.write(out);
+    }
+
+    @Override
+    public byte getOperation()
+    {
+      return OPERATION_CLOSE;
+    }
+
+    @Override
+    public void execute()
+    {
+      throw new UnsupportedOperationException();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class BufferChannelOperation extends ChannelOperation
   {
     private IBuffer buffer;
 
-    private long channelCount;
-
-    public QueuedBuffer(IBuffer buffer, long channelCount)
+    public BufferChannelOperation(short channelIndex, long operationCount, IBuffer buffer)
     {
+      super(channelIndex, operationCount);
       this.buffer = buffer;
-      this.channelCount = channelCount;
+    }
+
+    public BufferChannelOperation(ExtendedDataInputStream in) throws IOException
+    {
+      super(in);
+      int length = in.readShort();
+
+      buffer = getBufferProvider().provideBuffer();
+      ByteBuffer byteBuffer = buffer.startPutting(getChannelIndex());
+      for (int i = 0; i < length; i++)
+      {
+        byte b = in.readByte();
+        byteBuffer.put(b);
+      }
+
+      buffer.flip();
+    }
+
+    @Override
+    public void write(ExtendedDataOutputStream out) throws IOException
+    {
+      super.write(out);
+
+      buffer.flip();
+      ByteBuffer byteBuffer = buffer.getByteBuffer();
+      byteBuffer.position(IBuffer.HEADER_SIZE);
+
+      int length = byteBuffer.limit() - byteBuffer.position();
+      out.writeShort(length);
+
+      for (int i = 0; i < length; i++)
+      {
+        byte b = byteBuffer.get();
+        out.writeByte(b);
+      }
+
+      buffer.release();
+    }
+
+    @Override
+    public byte getOperation()
+    {
+      return OPERATION_BUFFER;
     }
 
     public IBuffer getBuffer()
@@ -253,9 +455,37 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       return buffer;
     }
 
-    public long getChannelCount()
+    @Override
+    public void execute()
     {
-      return channelCount;
+      HTTPChannel channel = (HTTPChannel)getChannel(getChannelIndex());
+      long operationCount = getOperationCount();
+      synchronized (channel)
+      {
+        while (operationCount < channel.getInputOperationCount())
+        {
+          IBuffer quarantinedBuffer = channel.getQuarantinedInputOperation(channel.getInputOperationCount());
+          if (quarantinedBuffer != null)
+          {
+            channel.handleBufferFromMultiplexer(buffer);
+            channel.increaseInputOperationCount();
+          }
+          else
+          {
+            break;
+          }
+        }
+
+        if (operationCount == channel.getInputOperationCount())
+        {
+          channel.handleBufferFromMultiplexer(buffer);
+          channel.increaseInputOperationCount();
+        }
+        else
+        {
+          channel.quarantineInputOperation(operationCount, buffer);
+        }
+      }
     }
   }
 }

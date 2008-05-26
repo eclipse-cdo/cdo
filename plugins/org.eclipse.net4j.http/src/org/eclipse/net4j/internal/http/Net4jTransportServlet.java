@@ -37,6 +37,12 @@ import java.io.PrintWriter;
  */
 public class Net4jTransportServlet extends HttpServlet implements INet4jTransportServlet
 {
+  public static final int OPCODE_CONNECT = 1;
+
+  public static final int OPCODE_DISCONNECT = 2;
+
+  public static final int OPCODE_OPERATIONS = 3;
+
   private static final long serialVersionUID = 1L;
 
   private RequestHandler requestHandler;
@@ -90,20 +96,16 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     int opcode = servletInputStream.read();
     switch (opcode)
     {
-    case OPCODE_CONNECT:
+    case Net4jTransportServlet.OPCODE_CONNECT:
       doConnect(in, out);
       break;
 
-    case OPCODE_DISCONNECT:
+    case Net4jTransportServlet.OPCODE_DISCONNECT:
       doDisconnect(in, out);
       break;
 
-    case OPCODE_OPEN_CHANNEL:
-      doOpenChannel(in, out);
-      break;
-
-    case OPCODE_BUFFERS:
-      doBuffers(in, out);
+    case Net4jTransportServlet.OPCODE_OPERATIONS:
+      doOperations(in, out);
       break;
 
     default:
@@ -196,30 +198,11 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     }
   }
 
-  protected void doOpenChannel(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
-      IOException
-  {
-    try
-    {
-      String connectorID = in.readString();
-      int channelID = in.readInt();
-      short channelIndex = in.readShort();
-      String protocolType = in.readString();
-      requestHandler.handleOpenChannel(connectorID, channelIndex, channelID, protocolType);
-      out.writeBoolean(true);
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-      out.writeBoolean(false);
-    }
-  }
-
-  protected void doBuffers(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
+  protected void doOperations(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
       IOException
   {
     String connectorID = in.readString();
-    requestHandler.handleBuffers(connectorID, in, out);
+    requestHandler.handleOperations(connectorID, in, out);
   }
 
   /**

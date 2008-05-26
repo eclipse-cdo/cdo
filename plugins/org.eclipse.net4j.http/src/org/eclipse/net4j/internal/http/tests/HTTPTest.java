@@ -120,7 +120,8 @@ public class HTTPTest extends AbstractTransportTest
     IntRequest request = new IntRequest(channel, 305419896);
     int result = request.send();
     assertEquals(305419896, result);
-    channel.close();
+
+    sleep(500);
     connector.deactivate();
   }
 

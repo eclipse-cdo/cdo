@@ -84,7 +84,7 @@ public class HTTPTest extends AbstractTransportTest
       {
         try
         {
-          System.out.println("Writing " + b);
+          msg("Writing " + b);
           out.write(b);
           out.flush();
           Thread.sleep(1000);
@@ -106,7 +106,7 @@ public class HTTPTest extends AbstractTransportTest
       assertEquals(i, b);
 
       long gap = in.readLong();
-      System.out.println("Gap: " + gap);
+      msg("Gap: " + gap);
     }
 
     method.releaseConnection();

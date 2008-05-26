@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.http.tests;
 
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
@@ -62,7 +63,7 @@ public class Net4jEchoTestServlet extends HttpServlet
       long now = System.currentTimeMillis();
       long gap = now - lastTime;
       lastTime = now;
-      System.out.println("Gap: " + gap);
+      IOUtil.OUT().println("Gap: " + gap);
 
       out.writeByte(b);
       out.writeLong(gap);

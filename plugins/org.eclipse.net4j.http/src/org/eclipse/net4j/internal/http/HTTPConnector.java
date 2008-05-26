@@ -19,7 +19,6 @@ import org.eclipse.net4j.util.security.INegotiationContext;
 
 import org.eclipse.internal.net4j.buffer.Buffer;
 import org.eclipse.internal.net4j.channel.Channel;
-import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.connector.Connector;
 
 import java.util.Queue;
@@ -34,7 +33,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
 
   private String connectorID;
 
-  private Queue<IBuffer> outputQueue = new ConcurrentLinkedQueue<IBuffer>();
+  private Queue<QueuedBuffer> outputQueue = new ConcurrentLinkedQueue<QueuedBuffer>();
 
   public HTTPConnector()
   {
@@ -50,21 +49,31 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     this.connectorID = connectorID;
   }
 
-  public Queue<IBuffer> getOutputQueue()
+  public Queue<QueuedBuffer> getOutputQueue()
   {
     return outputQueue;
   }
 
   public void multiplexChannel(IChannel channel)
   {
-    Queue<IBuffer> channelQueue = ((InternalChannel)channel).getSendQueue();
-    IBuffer buffer = channelQueue.poll();
-    if (TRACER.isEnabled())
+    IBuffer buffer;
+    long outputBufferCount;
+
+    HTTPChannel httpChannel = (HTTPChannel)channel;
+    synchronized (httpChannel)
     {
-      TRACER.trace("Multiplexing " + ((Buffer)buffer).formatContent(true));
+      Queue<IBuffer> channelQueue = httpChannel.getSendQueue();
+      buffer = channelQueue.poll();
+      outputBufferCount = httpChannel.getOutputBufferCount();
+      httpChannel.increaseOutputBufferCount();
     }
 
-    outputQueue.add(buffer);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Multiplexing {0} (count={1})", ((Buffer)buffer).formatContent(true), outputBufferCount);
+    }
+
+    outputQueue.add(new QueuedBuffer(buffer, outputBufferCount));
   }
 
   @Override
@@ -77,5 +86,31 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   protected Channel createChannelInstance()
   {
     return new HTTPChannel();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class QueuedBuffer
+  {
+    private IBuffer buffer;
+
+    private long channelCount;
+
+    public QueuedBuffer(IBuffer buffer, long channelCount)
+    {
+      this.buffer = buffer;
+      this.channelCount = channelCount;
+    }
+
+    public IBuffer getBuffer()
+    {
+      return buffer;
+    }
+
+    public long getChannelCount()
+    {
+      return channelCount;
+    }
   }
 }

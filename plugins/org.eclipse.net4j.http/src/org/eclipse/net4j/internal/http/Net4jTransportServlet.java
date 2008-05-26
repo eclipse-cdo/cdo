@@ -94,6 +94,10 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
       doConnect(in, out);
       break;
 
+    case OPCODE_DISCONNECT:
+      doDisconnect(in, out);
+      break;
+
     case OPCODE_OPEN_CHANNEL:
       doOpenChannel(in, out);
       break;
@@ -175,6 +179,20 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     {
       OM.LOG.error(ex);
       out.writeString(null);
+    }
+  }
+
+  protected void doDisconnect(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
+      IOException
+  {
+    try
+    {
+      String connectorID = in.readString();
+      requestHandler.handleDisonnect(connectorID);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
     }
   }
 

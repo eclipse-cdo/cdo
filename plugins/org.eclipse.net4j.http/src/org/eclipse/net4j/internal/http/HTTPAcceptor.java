@@ -149,6 +149,17 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     return connector;
   }
 
+  public void handleDisonnect(String connectorID)
+  {
+    HTTPConnector connector = httpConnectors.get(connectorID);
+    if (connector == null)
+    {
+      throw new IllegalArgumentException("Invalid connectorID: " + connectorID);
+    }
+
+    connector.deactivate();
+  }
+
   public void handleOpenChannel(String connectorID, short channelIndex, int channelID, String protocolType)
   {
     HTTPConnector connector = httpConnectors.get(connectorID);

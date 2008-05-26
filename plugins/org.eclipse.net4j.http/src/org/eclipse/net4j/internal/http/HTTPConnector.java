@@ -217,6 +217,12 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     return new HTTPChannel();
   }
 
+  @Override
+  public void inverseRemoveChannel(int channelID, short channelIndex)
+  {
+    super.inverseRemoveChannel(channelID, channelIndex);
+  }
+
   protected boolean pollAgain()
   {
     return false;

@@ -18,6 +18,7 @@ import org.eclipse.net4j.internal.util.lifecycle.Worker;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.IOAdapter;
 import org.eclipse.net4j.util.io.IOHandler;
 import org.eclipse.net4j.util.io.IORuntimeException;
 
@@ -123,12 +124,13 @@ public class HTTPClientConnector extends HTTPConnector
     super.doActivate();
     poller.activate();
     httpClient = createHTTPClient();
-    connect();
+    doConnect();
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
+    doDisconnect();
     poller.deactivate();
     httpClient = null;
     super.doDeactivate();
@@ -181,7 +183,7 @@ public class HTTPClientConnector extends HTTPConnector
     }
   }
 
-  private void connect() throws IOException
+  private void doConnect() throws IOException
   {
     request(new IOHandler()
     {
@@ -198,6 +200,19 @@ public class HTTPClientConnector extends HTTPConnector
 
         setConnectorID(connectorID);
         leaveConnecting();
+      }
+    });
+  }
+
+  private void doDisconnect() throws IOException
+  {
+    request(new IOAdapter()
+    {
+      @Override
+      public void handleOut(ExtendedDataOutputStream out) throws IOException
+      {
+        out.writeByte(INet4jTransportServlet.OPCODE_DISCONNECT);
+        out.writeString(getConnectorID());
       }
     });
   }

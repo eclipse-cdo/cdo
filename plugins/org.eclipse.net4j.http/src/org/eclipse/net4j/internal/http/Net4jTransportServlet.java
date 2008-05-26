@@ -98,7 +98,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
       doOpenChannel(in, out);
       break;
 
-    case OPCODE_SEND_BUFFER:
+    case OPCODE_BUFFER:
       doSendBuffer(in, out);
       break;
     }
@@ -209,7 +209,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
       }
 
       // TODO Consider passing the stream!
-      requestHandler.handleSendBuffer(connectorID, channelIndex, data);
+      requestHandler.handleBuffer(connectorID, channelIndex, data);
       out.writeBoolean(true);
     }
     catch (Exception ex)

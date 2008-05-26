@@ -21,7 +21,9 @@ public interface INet4jTransportServlet extends Servlet
 
   public static final int OPCODE_OPEN_CHANNEL = 2;
 
-  public static final int OPCODE_SEND_BUFFER = 3;
+  public static final int OPCODE_CLOSE_CHANNEL = 3;
+
+  public static final int OPCODE_BUFFER = 4;
 
   public RequestHandler getRequestHandler();
 
@@ -38,6 +40,8 @@ public interface INet4jTransportServlet extends Servlet
 
     public void handleOpenChannel(String connectorID, short channelIndex, int channelID, String protocolType);
 
-    public void handleSendBuffer(String connectorID, short channelIndex, byte[] data);
+    public void handleCloseChannel(String connectorID, short channelIndex);
+
+    public void handleBuffer(String connectorID, short channelIndex, byte[] data);
   }
 }

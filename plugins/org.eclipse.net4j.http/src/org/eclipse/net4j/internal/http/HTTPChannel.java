@@ -10,19 +10,36 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http;
 
+import org.eclipse.net4j.buffer.IBuffer;
+
 import org.eclipse.internal.net4j.channel.Channel;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eike Stepper
  */
 public class HTTPChannel extends Channel
 {
+  private long outputBufferCount;
+
   private long inputBufferCount;
 
-  private long outputBufferCount;
+  private Map<Long, IBuffer> inputBufferQuarantine = new ConcurrentHashMap<Long, IBuffer>();
 
   public HTTPChannel()
   {
+  }
+
+  public long getOutputBufferCount()
+  {
+    return outputBufferCount;
+  }
+
+  public void increaseOutputBufferCount()
+  {
+    ++outputBufferCount;
   }
 
   public long getInputBufferCount()
@@ -35,13 +52,25 @@ public class HTTPChannel extends Channel
     ++inputBufferCount;
   }
 
-  public long getOutputBufferCount()
+  public void quarantineInputBuffer(long count, IBuffer buffer)
   {
-    return outputBufferCount;
+    inputBufferQuarantine.put(count, buffer);
   }
 
-  public void increaseOutputBufferCount()
+  public IBuffer getQuarantinedInputBuffer(long count)
   {
-    ++outputBufferCount;
+    return inputBufferQuarantine.remove(count);
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    for (IBuffer buffer : inputBufferQuarantine.values())
+    {
+      buffer.release();
+    }
+
+    inputBufferQuarantine.clear();
+    super.doDeactivate();
   }
 }

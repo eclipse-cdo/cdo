@@ -91,7 +91,7 @@ public class HTTPClientConnector extends HTTPConnector
       {
         public void handleOut(ExtendedDataOutputStream out) throws IOException
         {
-          out.writeByte(INet4jTransportServlet.OPCODE_SEND_BUFFER);
+          out.writeByte(INet4jTransportServlet.OPCODE_BUFFER);
           out.writeString(getConnectorID());
           out.writeShort(channel.getChannelIndex());
 

@@ -165,7 +165,12 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     channel.activate();
   }
 
-  public void handleSendBuffer(String connectorID, short channelIndex, byte[] data)
+  public void handleCloseChannel(String connectorID, short channelIndex)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void handleBuffer(String connectorID, short channelIndex, byte[] data)
   {
     HTTPServerConnector connector = httpConnectors.get(connectorID);
     if (connector == null)

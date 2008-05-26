@@ -33,8 +33,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public abstract class HTTPConnector extends Connector implements IHTTPConnector
 {
-  public static final short NO_MORE_BUFFERS = -1;
-
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HTTPConnector.class);
 
   private String connectorID;
@@ -111,6 +109,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
         break;
       }
 
+      out.writeBoolean(true);
       IBuffer buffer = queuedBuffer.getBuffer();
       short channelIndex = buffer.getChannelIndex();
       out.writeShort(channelIndex);
@@ -135,15 +134,21 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       markLastTraffic();
     } while (writeMoreBuffers());
 
-    out.writeShort(NO_MORE_BUFFERS);
+    out.writeBoolean(false);
     return !outputQueue.isEmpty();
   }
 
   public void readInputBuffers(ExtendedDataInputStream in) throws IOException
   {
-    short channelIndex = in.readShort();
-    while (channelIndex != NO_MORE_BUFFERS)
+    for (;;)
     {
+      boolean moreBuffers = in.readBoolean();
+      if (!moreBuffers)
+      {
+        break;
+      }
+
+      short channelIndex = in.readShort();
       HTTPChannel channel = (HTTPChannel)getChannel(channelIndex);
       if (channel == null)
       {
@@ -166,7 +171,6 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       System.out.println("READ BUFFER");
       handleInputBuffer(channel, bufferCount, buffer);
       markLastTraffic();
-      channelIndex = in.readShort();
     }
   }
 

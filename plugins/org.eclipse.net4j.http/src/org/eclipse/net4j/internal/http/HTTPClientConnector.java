@@ -58,7 +58,7 @@ public class HTTPClientConnector extends HTTPConnector
     protected void work(WorkContext context) throws Exception
     {
       boolean moreBuffers = tryBuffersRequest();
-      context.nextWork(moreBuffers ? 0 : 100);
+      context.nextWork(moreBuffers ? 0 : 1000);
     }
   };
 
@@ -233,12 +233,12 @@ public class HTTPClientConnector extends HTTPConnector
         return false;
       }
 
-      requesting = true;
-    }
+      if (getOutputQueue().isEmpty() && System.currentTimeMillis() - lastRequest < pollInterval)
+      {
+        return false;
+      }
 
-    if (getOutputQueue().isEmpty() || System.currentTimeMillis() - lastRequest < pollInterval)
-    {
-      return false;
+      requesting = true;
     }
 
     try

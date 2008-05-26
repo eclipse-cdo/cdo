@@ -495,7 +495,6 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       for (int i = 0; i < length; i++)
       {
         byte b = in.readByte();
-        System.out.println("READ " + b);
         byteBuffer.put(b);
       }
 
@@ -517,7 +516,6 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       for (int i = 0; i < length; i++)
       {
         byte b = byteBuffer.get();
-        System.out.println("WRITE " + b);
         out.writeByte(b);
       }
 

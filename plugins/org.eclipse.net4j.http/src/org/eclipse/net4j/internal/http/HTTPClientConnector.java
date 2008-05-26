@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.http;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorLocation;
+import org.eclipse.net4j.http.internal.common.HTTPConnector;
 import org.eclipse.net4j.internal.util.lifecycle.Worker;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -150,7 +151,7 @@ public class HTTPClientConnector extends HTTPConnector
     {
       public void handleOut(ExtendedDataOutputStream out) throws IOException
       {
-        out.writeByte(Net4jTransportServlet.OPCODE_CONNECT);
+        out.writeByte(OPCODE_CONNECT);
         out.writeString(getUserID());
       }
 
@@ -172,7 +173,7 @@ public class HTTPClientConnector extends HTTPConnector
       @Override
       public void handleOut(ExtendedDataOutputStream out) throws IOException
       {
-        out.writeByte(Net4jTransportServlet.OPCODE_DISCONNECT);
+        out.writeByte(OPCODE_DISCONNECT);
         out.writeString(getConnectorID());
       }
     });
@@ -219,7 +220,7 @@ public class HTTPClientConnector extends HTTPConnector
       {
         public void handleOut(ExtendedDataOutputStream out) throws IOException
         {
-          out.writeByte(Net4jTransportServlet.OPCODE_OPERATIONS);
+          out.writeByte(OPCODE_OPERATIONS);
           out.writeString(getConnectorID());
           moreOperations[0] = writeOutputOperations(out);
         }

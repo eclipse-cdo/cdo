@@ -20,32 +20,9 @@
    <extension
          point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.net4j.internal.http.HTTPAcceptorFactory"
-            productGroup="org.eclipse.net4j.acceptors"
-            type="http"/>
-      <factory
             class="org.eclipse.net4j.internal.http.HTTPConnectorFactory"
             productGroup="org.eclipse.net4j.connectors"
             type="http"/>
    </extension>
    
-   <extension
-         point="org.eclipse.net4j.util.elementProcessors">
-      <elementProcessor
-            class="org.eclipse.net4j.internal.http.RandomizerInjector">
-      </elementProcessor>
-   </extension>
-   
-   <extension
-         point="org.eclipse.equinox.http.registry.servlets">
-      <servlet
-            alias="/net4j"
-            class="org.eclipse.net4j.internal.http.Net4jTransportServlet$ContainerAware"/>
-<!--
-      <servlet
-            alias="/net4j/echotest"
-            class="org.eclipse.net4j.internal.http.tests.Net4jEchoTestServlet"/>
--->
-   </extension>
-
 </plugin>

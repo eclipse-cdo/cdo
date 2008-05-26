@@ -18,6 +18,7 @@ import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
 import org.eclipse.internal.net4j.buffer.Buffer;
+import org.eclipse.internal.net4j.channel.Channel;
 import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.connector.Connector;
 
@@ -70,5 +71,11 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   protected INegotiationContext createNegotiationContext()
   {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected Channel createChannelInstance()
+  {
+    return new HTTPChannel();
   }
 }

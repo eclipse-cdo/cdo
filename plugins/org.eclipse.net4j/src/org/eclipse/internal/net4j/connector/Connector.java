@@ -465,10 +465,15 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
   protected InternalChannel createChannel()
   {
-    Channel channel = new Channel();
+    Channel channel = createChannelInstance();
     channel.setChannelMultiplexer(this);
     channel.setReceiveExecutor(receiveExecutor);
     return channel;
+  }
+
+  protected Channel createChannelInstance()
+  {
+    return new Channel();
   }
 
   public InternalChannel getChannel(final short channelIndex)

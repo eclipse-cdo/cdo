@@ -37,7 +37,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
 {
   public static final int DEFAULT_CONNECTOR_ID_LENGTH = 32;
 
-  public static final int DEFAULT_MAX_IDLE_TIME = 10 * 60 * 1000; // 10 minutes
+  public static final int DEFAULT_MAX_IDLE_TIME = 60 * 1000; // 1 minute
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HTTPAcceptor.class);
 
@@ -133,7 +133,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     return new IHTTPConnector[] { httpConnectors.get(connectorID) };
   }
 
-  public String handleConnect(String userID)
+  public IHTTPConnector handleConnect(String userID)
   {
     String connectorID = createConnectorID(userID);
     System.out.println("HELLO " + userID + " (" + connectorID + ")");
@@ -145,7 +145,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     addConnector(connector);
     connector.activate();
 
-    return connectorID;
+    return connector;
   }
 
   public void handleOpenChannel(String connectorID, short channelIndex, int channelID, String protocolType)

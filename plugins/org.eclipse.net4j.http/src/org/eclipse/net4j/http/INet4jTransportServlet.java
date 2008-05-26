@@ -34,7 +34,7 @@ public interface INet4jTransportServlet extends Servlet
   {
     public IHTTPConnector[] handleList(String connectorID);
 
-    public String handleConnect(String userID);
+    public IHTTPConnector handleConnect(String userID);
 
     public void handleOpenChannel(String connectorID, short channelIndex, int channelID, String protocolType);
 

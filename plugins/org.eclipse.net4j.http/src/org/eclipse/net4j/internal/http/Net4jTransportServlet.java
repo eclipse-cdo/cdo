@@ -164,8 +164,9 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     try
     {
       String userID = in.readString();
-      String connectorID = requestHandler.handleConnect(userID);
-      out.writeString(connectorID);
+      IHTTPConnector connector = requestHandler.handleConnect(userID);
+      out.writeString(connector.getConnectorID());
+      out.writeInt(connector.getMaxIdleTime());
     }
     catch (Exception ex)
     {

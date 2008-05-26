@@ -145,9 +145,15 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       {
       case OPERATION_OPEN:
         operation = new OpenChannelOperation(in);
+        break;
+
+      case OPERATION_OPEN_ACK:
+        operation = new OpenAckChannelOperation(in);
+        break;
 
       case OPERATION_CLOSE:
         operation = new CloseChannelOperation(in);
+        break;
 
       case OPERATION_BUFFER:
         operation = new BufferChannelOperation(in);
@@ -346,6 +352,13 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     }
 
     @Override
+    public void write(ExtendedDataOutputStream out) throws IOException
+    {
+      super.write(out);
+      out.writeBoolean(success);
+    }
+
+    @Override
     public byte getOperation()
     {
       return OPERATION_OPEN_ACK;
@@ -376,12 +389,6 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     }
 
     @Override
-    public void write(ExtendedDataOutputStream out) throws IOException
-    {
-      super.write(out);
-    }
-
-    @Override
     public byte getOperation()
     {
       return OPERATION_CLOSE;
@@ -390,6 +397,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     @Override
     public void execute()
     {
+      System.out.println("OPERATION_CLOSE");
       throw new UnsupportedOperationException();
     }
   }

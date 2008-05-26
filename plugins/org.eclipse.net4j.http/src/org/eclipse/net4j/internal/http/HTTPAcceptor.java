@@ -139,8 +139,6 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
   public IHTTPConnector handleConnect(String userID)
   {
     String connectorID = createConnectorID(userID);
-    System.out.println("HELLO " + userID + " (" + connectorID + ")");
-
     HTTPServerConnector connector = createServerConnector();
     prepareConnector(connector);
     connector.setConnectorID(connectorID);

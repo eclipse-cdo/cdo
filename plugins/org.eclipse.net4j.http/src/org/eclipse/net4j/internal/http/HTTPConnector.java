@@ -104,6 +104,11 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     do
     {
       QueuedBuffer queuedBuffer = outputQueue.poll();
+      if (queuedBuffer == null && pollAgain())
+      {
+        queuedBuffer = outputQueue.poll();
+      }
+
       if (queuedBuffer == null)
       {
         break;
@@ -214,6 +219,11 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   protected Channel createChannelInstance()
   {
     return new HTTPChannel();
+  }
+
+  protected boolean pollAgain()
+  {
+    return false;
   }
 
   protected boolean writeMoreBuffers()

@@ -60,6 +60,13 @@ public class HTTPServerConnector extends HTTPConnector
   }
 
   @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    leaveConnecting();
+  }
+
+  @Override
   protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol)
       throws ConnectorException
   {
@@ -67,9 +74,16 @@ public class HTTPServerConnector extends HTTPConnector
   }
 
   @Override
-  protected void doActivate() throws Exception
+  protected boolean pollAgain()
   {
-    super.doActivate();
-    leaveConnecting();
+    try
+    {
+      Thread.sleep(100);
+      return true;
+    }
+    catch (InterruptedException ex)
+    {
+      return false;
+    }
   }
 }

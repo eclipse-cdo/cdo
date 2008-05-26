@@ -14,9 +14,7 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.http.INet4jTransportServlet;
-import org.eclipse.net4j.internal.http.bundle.OM;
 import org.eclipse.net4j.internal.util.lifecycle.Worker;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -38,8 +36,6 @@ import java.text.MessageFormat;
  */
 public class HTTPClientConnector extends HTTPConnector
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HTTPClientConnector.class);
-
   private String url;
 
   private HttpClient httpClient;
@@ -249,6 +245,8 @@ public class HTTPClientConnector extends HTTPConnector
       {
         public void handleOut(ExtendedDataOutputStream out) throws IOException
         {
+          out.writeByte(INet4jTransportServlet.OPCODE_BUFFERS);
+          out.writeString(getConnectorID());
           moreBuffers[0] = writeOutputBuffers(out);
         }
 

@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util.concurrent;
 
-import org.eclipse.net4j.util.WrappedException;
 
 /**
  * @author Eike Stepper
@@ -27,9 +26,8 @@ public final class ConcurrencyUtil
     {
       Thread.sleep(millis);
     }
-    catch (InterruptedException ex)
+    catch (InterruptedException ignore)
     {
-      throw WrappedException.wrap(ex);
     }
   }
 
@@ -39,9 +37,8 @@ public final class ConcurrencyUtil
     {
       Thread.sleep(millis, nanos);
     }
-    catch (InterruptedException ex)
+    catch (InterruptedException ignore)
     {
-      throw WrappedException.wrap(ex);
     }
   }
 }

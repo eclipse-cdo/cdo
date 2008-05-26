@@ -122,6 +122,8 @@ public class HTTPTest extends AbstractTransportTest
     assertEquals(305419896, result);
 
     sleep(500);
+    channel.close();
+    sleep(500);
     connector.deactivate();
   }
 

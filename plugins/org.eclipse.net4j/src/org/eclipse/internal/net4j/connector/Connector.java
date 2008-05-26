@@ -572,6 +572,7 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
       if (removed)
       {
+        channel.removeListener(channelListener);
         channel.close();
       }
     }

@@ -455,8 +455,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     @Override
     public void doEexecute(HTTPChannel channel)
     {
-      System.out.println("OPERATION_CLOSE");
-      throw new UnsupportedOperationException();
+      inverseRemoveChannel(channel.getChannelID(), channel.getChannelIndex());
     }
   }
 

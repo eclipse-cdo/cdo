@@ -221,7 +221,6 @@ public class HTTPClientConnector extends HTTPConnector
 
   private boolean tryBuffersRequest()
   {
-    System.out.println("TRYING REQUEST");
     synchronized (poller)
     {
       if (requesting)
@@ -239,7 +238,6 @@ public class HTTPClientConnector extends HTTPConnector
 
     try
     {
-      System.out.println("REQUESTING");
       final boolean moreBuffers[] = { false };
       request(new IOHandler()
       {

@@ -118,7 +118,6 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       IBuffer buffer = queuedBuffer.getBuffer();
       short channelIndex = buffer.getChannelIndex();
       out.writeShort(channelIndex);
-      System.out.println("WRITING BUFFER");
 
       long channelCount = queuedBuffer.getChannelCount();
       out.writeLong(channelCount);
@@ -131,7 +130,6 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       for (int i = 0; i < length; i++)
       {
         byte b = byteBuffer.get();
-        System.out.println("Payload: " + b);
         out.writeByte(b);
       }
 
@@ -168,12 +166,10 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       for (int i = 0; i < length; i++)
       {
         byte b = in.readByte();
-        System.out.println("Payload: " + b);
         byteBuffer.put(b);
       }
 
       buffer.flip();
-      System.out.println("READ BUFFER");
       handleInputBuffer(channel, bufferCount, buffer);
       markLastTraffic();
     }

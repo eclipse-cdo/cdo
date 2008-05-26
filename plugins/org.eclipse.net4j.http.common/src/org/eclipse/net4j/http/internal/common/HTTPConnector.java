@@ -244,14 +244,12 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
 
     public ChannelOperation(ExtendedDataInputStream in) throws IOException
     {
-      System.out.println("READING " + getClass().getName());
       channelIndex = in.readShort();
       operationCount = in.readLong();
     }
 
     public void write(ExtendedDataOutputStream out) throws IOException
     {
-      System.out.println("WRITING " + getClass().getName());
       out.writeByte(getOperation());
       out.writeShort(channelIndex);
       out.writeLong(operationCount);

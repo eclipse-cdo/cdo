@@ -10,17 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http;
 
-import org.eclipse.net4j.buffer.IBuffer;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.protocol.IProtocol;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
-import org.eclipse.internal.net4j.channel.InternalChannel;
-
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.text.MessageFormat;
 
 /**
@@ -30,12 +23,9 @@ public class HTTPServerConnector extends HTTPConnector
 {
   private HTTPAcceptor acceptor;
 
-  private long lastTraffic;
-
   public HTTPServerConnector(HTTPAcceptor acceptor)
   {
     this.acceptor = acceptor;
-    markLastTraffic();
   }
 
   public HTTPAcceptor getAcceptor()
@@ -56,46 +46,6 @@ public class HTTPServerConnector extends HTTPConnector
   public int getMaxIdleTime()
   {
     return acceptor.getMaxIdleTime();
-  }
-
-  public long getLastTraffic()
-  {
-    return lastTraffic;
-  }
-
-  private void markLastTraffic()
-  {
-    lastTraffic = System.currentTimeMillis();
-  }
-
-  @Override
-  public void multiplexChannel(IChannel channel)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  public void handleBufferFromMultiplexer(short channelIndex, ExtendedDataInputStream in) throws IOException
-  {
-    InternalChannel channel = getChannel(channelIndex);
-    if (channel == null)
-    {
-      throw new IllegalArgumentException("Invalid channelIndex: " + channelIndex);
-    }
-
-    int length = in.readShort();
-
-    IBuffer buffer = getBufferProvider().provideBuffer();
-    ByteBuffer byteBuffer = buffer.startPutting(channelIndex);
-    for (int i = 0; i < length; i++)
-    {
-      byte b = in.readByte();
-      System.out.println("Payload: " + b);
-      byteBuffer.put(b);
-    }
-
-    buffer.flip();
-    channel.handleBufferFromMultiplexer(buffer);
-    markLastTraffic();
   }
 
   @Override

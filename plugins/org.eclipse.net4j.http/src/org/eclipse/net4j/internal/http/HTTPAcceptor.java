@@ -182,12 +182,8 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
       throw new IllegalArgumentException("Invalid connectorID: " + connectorID);
     }
 
-    short channelIndex = in.readShort();
-    while (channelIndex != -1)
-    {
-      connector.handleBufferFromMultiplexer(channelIndex, in);
-      channelIndex = in.readShort();
-    }
+    connector.readInputBuffers(in);
+    connector.writeOutputBuffers(out);
   }
 
   @Override

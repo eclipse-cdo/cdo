@@ -76,61 +76,6 @@ public class HTTPClientConnector extends HTTPConnector
   }
 
   @Override
-  public void multiplexChannel(final IChannel channel)
-  {
-    Queue<IBuffer> localQueue = ((InternalChannel)channel).getSendQueue();
-    final IBuffer buffer = localQueue.poll();
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Multiplexing " + ((Buffer)buffer).formatContent(true));
-    }
-
-    try
-    {
-      request(new IOHandler()
-      {
-        public void handleOut(ExtendedDataOutputStream out) throws IOException
-        {
-          out.writeByte(INet4jTransportServlet.OPCODE_BUFFERS);
-          out.writeString(getConnectorID());
-          out.writeShort(channel.getChannelIndex());
-
-          buffer.flip();
-          ByteBuffer byteBuffer = buffer.getByteBuffer();
-          byteBuffer.position(IBuffer.HEADER_SIZE);
-          int length = byteBuffer.limit() - byteBuffer.position();
-          out.writeShort(length);
-          for (int i = 0; i < length; i++)
-          {
-            byte b = byteBuffer.get();
-            System.out.println("Payload: " + b);
-            out.writeByte(b);
-          }
-
-          buffer.release();
-        }
-
-        public void handleIn(ExtendedDataInputStream in) throws IOException
-        {
-          boolean ok = in.readBoolean();
-          if (!ok)
-          {
-            throw new ConnectorException("Could not send buffer");
-          }
-        }
-      });
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
-  }
-
-  @Override
   public String toString()
   {
     if (getUserID() == null)

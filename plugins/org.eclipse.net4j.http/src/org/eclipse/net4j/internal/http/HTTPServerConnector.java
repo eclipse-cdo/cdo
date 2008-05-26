@@ -10,11 +10,15 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http;
 
+import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.protocol.IProtocol;
 
+import org.eclipse.internal.net4j.channel.InternalChannel;
+
+import java.nio.ByteBuffer;
 import java.text.MessageFormat;
 
 /**
@@ -24,11 +28,12 @@ public class HTTPServerConnector extends HTTPConnector
 {
   private HTTPAcceptor acceptor;
 
-  private long lastTraffic = System.currentTimeMillis();
+  private long lastTraffic;
 
   public HTTPServerConnector(HTTPAcceptor acceptor)
   {
     this.acceptor = acceptor;
+    markLastTraffic();
   }
 
   public HTTPAcceptor getAcceptor()
@@ -46,14 +51,46 @@ public class HTTPServerConnector extends HTTPConnector
     return "agent://connector:" + getConnectorID();
   }
 
+  public int getMaxIdleTime()
+  {
+    return acceptor.getMaxIdleTime();
+  }
+
   public long getLastTraffic()
   {
     return lastTraffic;
   }
 
+  private void markLastTraffic()
+  {
+    lastTraffic = System.currentTimeMillis();
+  }
+
+  @Override
   public void multiplexChannel(IChannel channel)
   {
     throw new UnsupportedOperationException();
+  }
+
+  public void handleBufferFromMultiplexer(short channelIndex, byte[] data)
+  {
+    InternalChannel channel = getChannel(channelIndex);
+    if (channel == null)
+    {
+      throw new IllegalArgumentException("Invalid channelIndex: " + channelIndex);
+    }
+
+    IBuffer buffer = getBufferProvider().provideBuffer();
+    ByteBuffer byteBuffer = buffer.startPutting(channelIndex);
+    for (int i = 0; i < data.length; i++)
+    {
+      System.out.println("Payload: " + data[i]);
+      byteBuffer.put(data[i]);
+    }
+
+    buffer.flip();
+    channel.handleBufferFromMultiplexer(buffer);
+    markLastTraffic();
   }
 
   @Override

@@ -49,6 +49,8 @@ public class HTTPClientConnector extends HTTPConnector
 
   private HttpClient httpClient;
 
+  private int maxIdleTime = UNKNOWN_MAX_IDLE_TIME;
+
   public HTTPClientConnector()
   {
   }
@@ -66,6 +68,11 @@ public class HTTPClientConnector extends HTTPConnector
   public void setURL(String url)
   {
     this.url = url;
+  }
+
+  public int getMaxIdleTime()
+  {
+    return maxIdleTime;
   }
 
   @Override
@@ -216,6 +223,8 @@ public class HTTPClientConnector extends HTTPConnector
       public void handleIn(ExtendedDataInputStream in) throws IOException
       {
         String connectorID = in.readString();
+        maxIdleTime = in.readInt();
+
         setConnectorID(connectorID);
         leaveConnecting();
       }

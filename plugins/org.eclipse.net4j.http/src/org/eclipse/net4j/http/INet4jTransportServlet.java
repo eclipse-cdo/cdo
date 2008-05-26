@@ -10,7 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.http;
 
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+
 import javax.servlet.Servlet;
+
+import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -23,7 +28,7 @@ public interface INet4jTransportServlet extends Servlet
 
   public static final int OPCODE_CLOSE_CHANNEL = 3;
 
-  public static final int OPCODE_BUFFER = 4;
+  public static final int OPCODE_BUFFERS = 4;
 
   public RequestHandler getRequestHandler();
 
@@ -42,6 +47,7 @@ public interface INet4jTransportServlet extends Servlet
 
     public void handleCloseChannel(String connectorID, short channelIndex);
 
-    public void handleBuffer(String connectorID, short channelIndex, byte[] data);
+    public void handleBuffers(String connectorID, ExtendedDataInputStream in, ExtendedDataOutputStream out)
+        throws IOException;
   }
 }

@@ -98,9 +98,12 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
       doOpenChannel(in, out);
       break;
 
-    case OPCODE_BUFFER:
-      doSendBuffer(in, out);
+    case OPCODE_BUFFERS:
+      doBuffers(in, out);
       break;
+
+    default:
+      throw new IOException("Invalid opcaode: " + opcode);
     }
 
     out.flush();
@@ -194,29 +197,11 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     }
   }
 
-  protected void doSendBuffer(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
+  protected void doBuffers(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
       IOException
   {
-    try
-    {
-      String connectorID = in.readString();
-      short channelIndex = in.readShort();
-      int length = in.readShort();
-      byte[] data = new byte[length];
-      for (int i = 0; i < length; i++)
-      {
-        data[i] = in.readByte();
-      }
-
-      // TODO Consider passing the stream!
-      requestHandler.handleBuffer(connectorID, channelIndex, data);
-      out.writeBoolean(true);
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-      out.writeBoolean(false);
-    }
+    String connectorID = in.readString();
+    requestHandler.handleBuffers(connectorID, in, out);
   }
 
   /**

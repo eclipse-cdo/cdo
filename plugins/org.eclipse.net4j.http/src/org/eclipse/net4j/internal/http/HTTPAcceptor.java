@@ -18,12 +18,15 @@ import org.eclipse.net4j.internal.http.bundle.OM;
 import org.eclipse.net4j.internal.util.lifecycle.Worker;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.security.IRandomizer;
 
 import org.eclipse.internal.net4j.acceptor.Acceptor;
 import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.connector.Connector;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -170,7 +173,8 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     throw new UnsupportedOperationException();
   }
 
-  public void handleBuffer(String connectorID, short channelIndex, byte[] data)
+  public void handleBuffers(String connectorID, ExtendedDataInputStream in, ExtendedDataOutputStream out)
+      throws IOException
   {
     HTTPServerConnector connector = httpConnectors.get(connectorID);
     if (connector == null)
@@ -178,7 +182,12 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
       throw new IllegalArgumentException("Invalid connectorID: " + connectorID);
     }
 
-    connector.handleBufferFromMultiplexer(channelIndex, data);
+    short channelIndex = in.readShort();
+    while (channelIndex != -1)
+    {
+      connector.handleBufferFromMultiplexer(channelIndex, in);
+      channelIndex = in.readShort();
+    }
   }
 
   @Override

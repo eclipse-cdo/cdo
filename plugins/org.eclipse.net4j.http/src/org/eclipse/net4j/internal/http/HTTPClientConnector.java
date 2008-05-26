@@ -10,21 +10,16 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http;
 
-import org.eclipse.net4j.buffer.IBuffer;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.http.INet4jTransportServlet;
 import org.eclipse.net4j.internal.http.bundle.OM;
+import org.eclipse.net4j.internal.util.lifecycle.Worker;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOHandler;
-import org.eclipse.net4j.util.io.IORuntimeException;
-
-import org.eclipse.internal.net4j.buffer.Buffer;
-import org.eclipse.internal.net4j.channel.InternalChannel;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -34,9 +29,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
 import java.text.MessageFormat;
-import java.util.Queue;
 
 /**
  * @author Eike Stepper
@@ -50,6 +43,16 @@ public class HTTPClientConnector extends HTTPConnector
   private HttpClient httpClient;
 
   private int maxIdleTime = UNKNOWN_MAX_IDLE_TIME;
+
+  private Worker poller = new Worker()
+  {
+    @Override
+    protected void work(WorkContext context) throws Exception
+    {
+      int pause = poll();
+      context.nextWork(pause);
+    }
+  };
 
   public HTTPClientConnector()
   {
@@ -97,6 +100,7 @@ public class HTTPClientConnector extends HTTPConnector
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    poller.activate();
     httpClient = createHTTPClient();
     connect();
   }
@@ -104,6 +108,7 @@ public class HTTPClientConnector extends HTTPConnector
   @Override
   protected void doDeactivate() throws Exception
   {
+    poller.deactivate();
     httpClient = null;
     super.doDeactivate();
   }
@@ -153,6 +158,11 @@ public class HTTPClientConnector extends HTTPConnector
     {
       throw new ConnectorException(ex);
     }
+  }
+
+  protected int poll()
+  {
+    return 0;
   }
 
   private void connect() throws IOException

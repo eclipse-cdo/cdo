@@ -95,7 +95,13 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     outputQueue.add(new QueuedBuffer(buffer, outputBufferCount));
   }
 
-  public void writeOutputBuffers(ExtendedDataOutputStream out) throws IOException
+  /**
+   * Writes buffers from the {@link #outputQueue} to the passed stream. After each written buffer
+   * {@link #writeMoreBuffers()} is asked whether to send more buffers.
+   * 
+   * @return <code>true</code> if more buffers are in the {@link #outputQueue}, <code>false</code> otherwise.
+   */
+  public boolean writeOutputBuffers(ExtendedDataOutputStream out) throws IOException
   {
     do
     {
@@ -129,6 +135,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     } while (writeMoreBuffers());
 
     out.writeShort(NO_MORE_BUFFERS);
+    return !outputQueue.isEmpty();
   }
 
   public void readInputBuffers(ExtendedDataInputStream in) throws IOException

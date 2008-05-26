@@ -25,6 +25,7 @@ import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.connector.Connector;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
 {
   public static final int DEFAULT_CONNECTOR_ID_LENGTH = 32;
 
-  public static final int DEFAULT_MAX_IDLE_TIME = 10000;
+  public static final int DEFAULT_MAX_IDLE_TIME = 10 * 60 * 1000; // 10 minutes
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HTTPAcceptor.class);
 
@@ -142,6 +143,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     connector.setConnectorID(connectorID);
     connector.setUserID(userID);
     addConnector(connector);
+    connector.activate();
 
     return connectorID;
   }
@@ -231,7 +233,13 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
   protected int cleanIdleConnectors()
   {
     long now = System.currentTimeMillis();
-    for (IConnector connector : getAcceptedConnectors())
+    IConnector[] connectors = getAcceptedConnectors();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Checking {0} HTTP server connectors for idle time: {1,time}", connectors.length, new Date());
+    }
+
+    for (IConnector connector : connectors)
     {
       HTTPServerConnector serverConnector = (HTTPServerConnector)connector;
       long lastTraffic = serverConnector.getLastTraffic();

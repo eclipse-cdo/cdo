@@ -40,7 +40,7 @@ public class ConnectorTest extends AbstractOMTest
 
   private static final String USER_ID = "stepper";
 
-  private static final char[] PASSWORD1 = "eike2007".toCharArray();
+  private static final char[] PASSWORD1 = "eike2008".toCharArray();
 
   private static final char[] PASSWORD2 = "invalid".toCharArray();
 

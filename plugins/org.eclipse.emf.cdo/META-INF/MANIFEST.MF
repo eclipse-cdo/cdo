@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo; singleton:=true
-Bundle-Version: 0.9.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -12,15 +12,15 @@ Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.4.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore.xmi;bundle-version="[2.4.0,3.0.0)";visibility:=reexport,
- org.eclipse.emf.cdo.protocol;bundle-version="[0.9.0,1.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo;version="0.9.0",
- org.eclipse.emf.cdo.analyzer;version="0.9.0",
- org.eclipse.emf.cdo.eresource;version="0.9.0",
- org.eclipse.emf.cdo.eresource.impl;version="0.9.0",
- org.eclipse.emf.cdo.eresource.util;version="0.9.0",
- org.eclipse.emf.cdo.util;version="0.9.0",
+ org.eclipse.emf.cdo.protocol;bundle-version="[2.0.0,3.0.0)";visibility:=reexport
+Export-Package: org.eclipse.emf.cdo;version="2.0.0",
+ org.eclipse.emf.cdo.analyzer;version="2.0.0",
+ org.eclipse.emf.cdo.eresource;version="2.0.0",
+ org.eclipse.emf.cdo.eresource.impl;version="2.0.0",
+ org.eclipse.emf.cdo.eresource.util;version="2.0.0",
+ org.eclipse.emf.cdo.util;version="2.0.0",
  org.eclipse.emf.internal.cdo;version="0.90",
- org.eclipse.emf.internal.cdo.analyzer;version="0.9.0",
- org.eclipse.emf.internal.cdo.bundle;version="0.9.0";x-friends:="org.eclipse.emf.cdo.ui",
- org.eclipse.emf.internal.cdo.protocol;version="0.9.0",
- org.eclipse.emf.internal.cdo.util;version="0.9.0"
+ org.eclipse.emf.internal.cdo.analyzer;version="2.0.0",
+ org.eclipse.emf.internal.cdo.bundle;version="2.0.0";x-friends:="org.eclipse.emf.cdo.ui",
+ org.eclipse.emf.internal.cdo.protocol;version="2.0.0",
+ org.eclipse.emf.internal.cdo.util;version="2.0.0"

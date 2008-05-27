@@ -7,7 +7,8 @@
  * 
  * Contributors:
  *    Simon McDuff - initial API and implementation
- **************************************************************************/package org.eclipse.emf.cdo.util;
+ **************************************************************************/
+package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOTransaction;
@@ -31,143 +32,140 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import java.util.List;
+
 /**
  * @author Simon McDuff
  */
 public class CDOAutoAttacher implements CDOTransactionHandler
-{ 
-	CDOTransaction cdoTransaction;
-	
+{
+  CDOTransaction cdoTransaction;
 
-	
-	class CDOFeatureDeltaVisitorAutoAttach implements CDOFeatureDeltaVisitor
-	{
-	  
-	  Resource resource;
-	  CDOFeatureDeltaVisitorAutoAttach(Resource resource)
-	  {
-	    this.resource = resource;
-	  }
-		public void visit(CDOAddFeatureDelta featureChange)
-		{
-			persist(resource, featureChange.getValue());
-		}
+  class CDOFeatureDeltaVisitorAutoAttach implements CDOFeatureDeltaVisitor
+  {
 
-		public void visit(CDOClearFeatureDelta featureChange)
-		{
+    Resource resource;
 
-		}
+    CDOFeatureDeltaVisitorAutoAttach(Resource resource)
+    {
+      this.resource = resource;
+    }
 
-		public void visit(CDOListFeatureDelta featureChange)
-		{
+    public void visit(CDOAddFeatureDelta featureChange)
+    {
+      persist(resource, featureChange.getValue());
+    }
 
-		}
+    public void visit(CDOClearFeatureDelta featureChange)
+    {
 
-		public void visit(CDOMoveFeatureDelta featureChange)
-		{
+    }
 
-		}
+    public void visit(CDOListFeatureDelta featureChange)
+    {
 
-		public void visit(CDORemoveFeatureDelta featureChange)
-		{
-		}
+    }
 
-		public void visit(CDOSetFeatureDelta featureChange)
-		{
-			persist(resource, featureChange.getValue());
-		}
+    public void visit(CDOMoveFeatureDelta featureChange)
+    {
 
-		public void visit(CDOUnsetFeatureDelta featureChange)
-		{
-		}
+    }
 
-		public void visit(CDOContainerFeatureDelta delta) 
-		{
-		}
-		
-	};
+    public void visit(CDORemoveFeatureDelta featureChange)
+    {
+    }
 
-	public CDOAutoAttacher(CDOTransaction transaction)
-	{
-		this.cdoTransaction = transaction;
-		transaction.addHandler(this);
-	}
-	
-	protected void persist(Resource res, Object object)
-	{
-		if (object instanceof CDOResource)
-			return;
-		
-		if (!(object instanceof InternalCDOObject))
-			return;
+    public void visit(CDOSetFeatureDelta featureChange)
+    {
+      persist(resource, featureChange.getValue());
+    }
 
-		res.getContents().add((InternalCDOObject)object);
-	}
-	
-	/**
-	 * @param eObject
-	 */
-	private void handle(Resource resource, EObject eObject)
-	{
-		for (EReference reference : eObject.eClass().getEAllReferences())
-		{
-			if (reference.isMany())
-			{
-				List<EObject> list = (List<EObject>)eObject.eGet(reference);
-				for (EObject element : list)
-				{
-					if (element.eResource() == null)
-					{
-						if (reference.isContainment())
-							handle(resource, element);
-						else
-							persist(resource, element);
-					}
-				}
-			}
-			else
-			{
-				EObject element = (EObject)eObject.eGet(reference);
+    public void visit(CDOUnsetFeatureDelta featureChange)
+    {
+    }
 
-				if (element != null && element.eResource() == null)
-				{
-					// objectsAdded.add(element);
-					if (reference.isContainment())
-						handle(resource, element);
-					else
-						persist(resource, element);
-				}
-			}
-		}
+    public void visit(CDOContainerFeatureDelta delta)
+    {
+    }
 
-	}
+  };
 
-	public void addingObject(CDOTransaction transaction, CDOObject object)
-	{
-		if (object instanceof CDOResource)
-			return;
+  public CDOAutoAttacher(CDOTransaction transaction)
+  {
+    this.cdoTransaction = transaction;
+    transaction.addHandler(this);
+  }
 
-		// Persist the graph as well.
-		handle(object.eResource(), object);
-	}
+  protected void persist(Resource res, Object object)
+  {
+    if (object instanceof CDOResource) return;
 
-	public void committingTransaction(CDOTransaction transaction)
-	{
-		
-	}
+    if (!(object instanceof InternalCDOObject)) return;
 
-	public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
-	{
-		if (object instanceof CDOResource)
-			return;
-		
-		if (featureChange != null)
-		{
-		  CDOFeatureDeltaVisitorAutoAttach featureChangeVisitor = new CDOFeatureDeltaVisitorAutoAttach( object.cdoResource());
-			featureChange.accept(featureChangeVisitor);
-		}
-			
-	}
+    res.getContents().add((InternalCDOObject)object);
+  }
+
+  /**
+   * @param eObject
+   */
+  private void handle(Resource resource, EObject eObject)
+  {
+    for (EReference reference : eObject.eClass().getEAllReferences())
+    {
+      if (reference.isMany())
+      {
+        List<EObject> list = (List<EObject>)eObject.eGet(reference);
+        for (EObject element : list)
+        {
+          if (element.eResource() == null)
+          {
+            if (reference.isContainment())
+              handle(resource, element);
+            else
+              persist(resource, element);
+          }
+        }
+      }
+      else
+      {
+        EObject element = (EObject)eObject.eGet(reference);
+
+        if (element != null && element.eResource() == null)
+        {
+          // objectsAdded.add(element);
+          if (reference.isContainment())
+            handle(resource, element);
+          else
+            persist(resource, element);
+        }
+      }
+    }
+
+  }
+
+  public void addingObject(CDOTransaction transaction, CDOObject object)
+  {
+    if (object instanceof CDOResource) return;
+
+    // Persist the graph as well.
+    handle(object.eResource(), object);
+  }
+
+  public void committingTransaction(CDOTransaction transaction)
+  {
+
+  }
+
+  public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
+  {
+    if (object instanceof CDOResource) return;
+
+    if (featureChange != null)
+    {
+      CDOFeatureDeltaVisitorAutoAttach featureChangeVisitor = new CDOFeatureDeltaVisitorAutoAttach(object.cdoResource());
+      featureChange.accept(featureChangeVisitor);
+    }
+
+  }
 
   public void rollingbackTransaction(CDOTransaction transaction)
   {

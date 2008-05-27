@@ -12,7 +12,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDORevisionManager;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
@@ -504,7 +503,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDOTransactionImpl transaction = view.toTransaction();
-      transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);      
+      transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
   }
 

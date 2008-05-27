@@ -569,7 +569,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       // Delegate to CDOStore
       getStore().setContainer(this, newContainer, newContainerFeatureID);
-      
+
       if (newContainer instanceof Resource.Internal)
       {
         eSetDirectResource((Resource.Internal)newContainer);

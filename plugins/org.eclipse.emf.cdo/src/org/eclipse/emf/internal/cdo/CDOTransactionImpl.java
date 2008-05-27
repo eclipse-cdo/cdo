@@ -264,14 +264,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   public void rollback(boolean remote)
   {
     rollback(firstSavePoint, remote);
-  
+
     cleanUp();
   }
 
-  private Set<CDOID> rollbackTo(CDOSavePoint savePoint,  boolean remote)
+  private Set<CDOID> rollbackTo(CDOSavePoint savePoint, boolean remote)
   {
-    Set<CDOID> newObjectsDelta = new HashSet<CDOID>(); 
-    
+    Set<CDOID> newObjectsDelta = new HashSet<CDOID>();
+
     boolean isActiveSavePoint = false;
 
     // Start from the last savepoint and come back up to the active
@@ -303,11 +303,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
           for (CDOObject newObject : newObjects.values())
           {
             ((InternalCDOObject)newObject).cdoInternalSetState(CDOState.TRANSIENT);
-            
+
             removeObject(newObject.cdoID());
 
             // TODO Should call detach transition : not there yet
-            // TODO How to remove it from Resource?            
+            // TODO How to remove it from Resource?
             // CDOStateMachine.INSTANCE.detach(newObject);
           }
         }
@@ -334,10 +334,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       }
       if (savePoint == itrSavePoint) isActiveSavePoint = true;
     }
-    
+
     return newObjectsDelta;
   }
-  
+
   private void loadSavePoint(CDOSavePoint savePoint, Set<CDOID> newObjectsDelta)
   {
     Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
@@ -346,7 +346,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     Map<CDOID, CDOResource> newResources = getNewResources();
 
     Map<CDOID, CDORevisionImpl> newBaseRevision = getBaseNewObjects();
-    
+
     // Reload the objects (NEW) with their base.
     for (CDOID newObject : newObjectsDelta)
     {
@@ -384,7 +384,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
     dirty = ((CDOSavePointImpl)savePoint).isDirty();
   }
-  
+
   public void rollback(CDOSavePoint savePoint, boolean remote)
   {
     if (savePoint == null || savePoint.getTransaction() != this)
@@ -461,7 +461,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
 
     lastSavePoint = new CDOSavePointImpl(this, lastSavePoint);
-    
+
     return lastSavePoint;
   }
 
@@ -496,7 +496,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   public void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
     boolean needToSaveFeatureDelta = true;
-    
+
     if (object.cdoState() == CDOState.NEW)
     {
       // Register Delta for new objects only if objectA doesn't belong to this savepoint
@@ -506,35 +506,36 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       }
       else
       {
-        Map<CDOID, ? extends CDOObject> map = object instanceof CDOResource ? this.getLastSavePoint()
-            .getNewResources() : this.getLastSavePoint().getNewObjects();
-  
-        needToSaveFeatureDelta = !map.containsKey(object.cdoID()); 
+        Map<CDOID, ? extends CDOObject> map = object instanceof CDOResource ? this.getLastSavePoint().getNewResources()
+            : this.getLastSavePoint().getNewObjects();
+
+        needToSaveFeatureDelta = !map.containsKey(object.cdoID());
       }
     }
-      
+
     if (needToSaveFeatureDelta)
     {
       CDORevisionDelta revisionDelta = (CDORevisionDelta)lastSavePoint.getRevisionDeltas().get(object.cdoID());
-  
+
       if (revisionDelta == null)
       {
         revisionDelta = (CDORevisionDelta)CDORevisionDeltaUtil.create(object.cdoRevision());
         lastSavePoint.getRevisionDeltas().put(object.cdoID(), revisionDelta);
       }
- 
+
       ((InternalCDORevisionDelta)revisionDelta).addFeatureDelta(featureDelta);
     }
-    
+
     for (CDOTransactionHandler handler : getHandlers())
     {
       handler.modifyingObject(this, object, featureDelta);
     }
   }
-  
+
   protected void fireEventRegisterDelta(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
   }
+
   public void registerRevisionDelta(CDORevisionDelta revisionDelta)
   {
     lastSavePoint.getRevisionDeltas().putIfAbsent(revisionDelta.getID(), revisionDelta);

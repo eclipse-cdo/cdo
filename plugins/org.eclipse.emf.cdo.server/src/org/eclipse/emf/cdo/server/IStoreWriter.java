@@ -42,8 +42,8 @@ public interface IStoreWriter extends IStoreReader
   public interface CommitContext
   {
     /**
-     * Returns the ID of the transactional view (<code>ITransaction</code>) which is the scope of the commit
-     * operation represented by this <code>CommitContext</code>.
+     * Returns the ID of the transactional view (<code>ITransaction</code>) which is the scope of the commit operation
+     * represented by this <code>CommitContext</code>.
      */
     public int getTransactionID();
 

@@ -165,12 +165,12 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   {
     return cdoidObjectFactory.createCDOIDObject(in);
   }
-  
+
   public CDOIDObject createCDOIDObject(String in)
   {
     return cdoidObjectFactory.createCDOIDObject(in);
   }
-  
+
   public boolean isDisableLegacyObjects()
   {
     return disableLegacyObjects;

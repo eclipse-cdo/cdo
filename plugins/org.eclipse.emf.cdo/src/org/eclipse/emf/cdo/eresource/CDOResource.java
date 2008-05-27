@@ -16,8 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are supported:
  * <ul>
@@ -43,8 +42,8 @@ public interface CDOResource extends EresourceObject
   /**
    * Returns the value of the '<em><b>Resource Set</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Resource Set</em>' attribute isn't clear, there really should be more of a
-   * description here...
+   * If the meaning of the '<em>Resource Set</em>' attribute isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -70,8 +69,7 @@ public interface CDOResource extends EresourceObject
   /**
    * Returns the value of the '<em><b>URI</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>URI</em>' attribute isn't clear, there really should be more of a description
-   * here...
+   * If the meaning of the '<em>URI</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -98,8 +96,8 @@ public interface CDOResource extends EresourceObject
    * Returns the value of the '<em><b>Contents</b></em>' containment reference list. The list contents are of type
    * {@link org.eclipse.emf.ecore.EObject}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Contents</em>' containment reference list isn't clear, there really should be more
-   * of a description here...
+   * If the meaning of the '<em>Contents</em>' containment reference list isn't clear, there really should be more of a
+   * description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -140,8 +138,7 @@ public interface CDOResource extends EresourceObject
   /**
    * Returns the value of the '<em><b>Loaded</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Loaded</em>' attribute isn't clear, there really should be more of a description
-   * here...
+   * If the meaning of the '<em>Loaded</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -154,8 +151,8 @@ public interface CDOResource extends EresourceObject
   boolean isLoaded();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded <em>Loaded</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded <em>Loaded</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
    *          the new value of the '<em>Loaded</em>' attribute.
@@ -181,8 +178,8 @@ public interface CDOResource extends EresourceObject
   boolean isTrackingModification();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification <em>Tracking Modification</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification
+   * <em>Tracking Modification</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
    *          the new value of the '<em>Tracking Modification</em>' attribute.
@@ -195,8 +192,8 @@ public interface CDOResource extends EresourceObject
    * Returns the value of the '<em><b>Errors</b></em>' attribute list. The list contents are of type
    * {@link org.eclipse.emf.ecore.resource.Resource.Diagnostic}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Errors</em>' attribute list isn't clear, there really should be more of a
-   * description here...
+   * If the meaning of the '<em>Errors</em>' attribute list isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -211,8 +208,8 @@ public interface CDOResource extends EresourceObject
    * Returns the value of the '<em><b>Warnings</b></em>' attribute list. The list contents are of type
    * {@link org.eclipse.emf.ecore.resource.Resource.Diagnostic}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Warnings</em>' attribute list isn't clear, there really should be more of a
-   * description here...
+   * If the meaning of the '<em>Warnings</em>' attribute list isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -253,8 +250,7 @@ public interface CDOResource extends EresourceObject
   /**
    * Returns the value of the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Path</em>' attribute isn't clear, there really should be more of a description
-   * here...
+   * If the meaning of the '<em>Path</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 

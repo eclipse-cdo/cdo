@@ -15,15 +15,12 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.internal.protocol.id.CDOIDLongImpl;
-import org.eclipse.emf.cdo.internal.protocol.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
-import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -31,7 +28,6 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -49,9 +45,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecore.xmi.UnresolvedReferenceException;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -62,8 +56,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -340,36 +333,32 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public EObject getEObject(String uriFragment)
   {
-    if (uriFragment == null)
-      return null;
-    
+    if (uriFragment == null) return null;
+
     CDOID cdoID = CDOIDUtil.read(uriFragment, cdoView().getSession().getPackageManager().getCDOIDObjectFactory());
-    
-    if (cdoID.isNull())
-      return null;
-    
+
+    if (cdoID.isNull()) return null;
+
     if (cdoID.isTemporary() && !cdoView().isObjectRegistered(cdoID))
       throw new IllegalStateException("Temporary object : " + uriFragment + " is not available anymore.");
-      
-    if (cdoID.isObject())
-      return cdoView().getObject(cdoID,true);
+
+    if (cdoID.isObject()) return cdoView().getObject(cdoID, true);
 
     // If it doesn`t match to anything we return null like ResourceImpl.getEObject
     return null;
   }
 
   /**
-   *  
    * @ADDED
    */
   public String getURIFragment(EObject object)
   {
     InternalCDOObject internalCDOObject = FSMUtil.adapt(object, this.cdoView());
-    
+
     StringBuffer idBuffer = new StringBuffer();
-    
+
     CDOIDUtil.write(idBuffer, internalCDOObject.cdoID());
-    
+
     return idBuffer.toString();
   }
 
@@ -434,16 +423,11 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void attached(EObject object)
   {
-    /*InternalCDOObject legacy = getLegacyWrapper(object);
-    if (legacy.cdoState() != CDOState.CLEAN)
-    {
-      CDOStateMachine.INSTANCE.attach(legacy, this, view);
-      // if (legacy.eContainer() == this)
-      // {
-      // legacy.eBasicSetContainer(null, 0, null);
-      // legacy.eSetResource(this, null);
-      // }
-    }*/
+    /*
+     * InternalCDOObject legacy = getLegacyWrapper(object); if (legacy.cdoState() != CDOState.CLEAN) {
+     * CDOStateMachine.INSTANCE.attach(legacy, this, view); // if (legacy.eContainer() == this) // { //
+     * legacy.eBasicSetContainer(null, 0, null); // legacy.eSetResource(this, null); // } }
+     */
   }
 
   /**
@@ -452,9 +436,8 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   public void detached(EObject object)
   {
     /*
-    InternalCDOObject legacy = getLegacyWrapper(object);
-    CDOStateMachine.INSTANCE.detach(legacy);
-    */
+     * InternalCDOObject legacy = getLegacyWrapper(object); CDOStateMachine.INSTANCE.detach(legacy);
+     */
   }
 
   /**

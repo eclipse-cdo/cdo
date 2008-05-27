@@ -734,53 +734,53 @@ public class InitialTest extends AbstractCDOTest
     msg("Verifying product");
     assertEquals(null, orderDetail.getProduct());
   }
-  
+
   public void testResourceAccessor() throws Exception
   {
-      msg("Opening session");
-      CDOSession session = openModel1Session();
-  
-      msg("Opening transaction");
-      CDOTransaction transaction = session.openTransaction();
-  
-      msg("Creating resource");
-      CDOResource resource = transaction.createResource("/test1");
-  
-      msg("Creating supplier");
-      Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
-  
-      msg("Setting name");
-      supplier.setName("Stepper");
-  
-      msg("Adding supplier");
-      resource.getContents().add(supplier);
-      
-      URI supplierTempURI = EcoreUtil.getURI(supplier);
-      
-      msg("Retrieving supplier from URI before commit");
-      EObject supplier1 = transaction.getResourceSet().getEObject(supplierTempURI, true);
-      
-      assertEquals(supplier, supplier1);
-      
-      msg("Committing");
-      transaction.commit();
-      
-      URI supplierURI = EcoreUtil.getURI(supplier);
-      
-      msg("Retrieving supplier from URI after commit");
-      EObject supplierFromURI = transaction.getResourceSet().getEObject(supplierURI, true);
-      
-      assertEquals(supplier, supplierFromURI);
-  
-       try
-       {
-         EObject supplierAfterCommit2 = transaction.getResourceSet().getEObject(supplierTempURI, true);
-         assertEquals(null, supplierAfterCommit2);
-       }
-       catch(IllegalStateException excep)
-       {
-         
-       }
-      
-   }
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction();
+
+    msg("Creating resource");
+    CDOResource resource = transaction.createResource("/test1");
+
+    msg("Creating supplier");
+    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+
+    msg("Setting name");
+    supplier.setName("Stepper");
+
+    msg("Adding supplier");
+    resource.getContents().add(supplier);
+
+    URI supplierTempURI = EcoreUtil.getURI(supplier);
+
+    msg("Retrieving supplier from URI before commit");
+    EObject supplier1 = transaction.getResourceSet().getEObject(supplierTempURI, true);
+
+    assertEquals(supplier, supplier1);
+
+    msg("Committing");
+    transaction.commit();
+
+    URI supplierURI = EcoreUtil.getURI(supplier);
+
+    msg("Retrieving supplier from URI after commit");
+    EObject supplierFromURI = transaction.getResourceSet().getEObject(supplierURI, true);
+
+    assertEquals(supplier, supplierFromURI);
+
+    try
+    {
+      EObject supplierAfterCommit2 = transaction.getResourceSet().getEObject(supplierTempURI, true);
+      assertEquals(null, supplierAfterCommit2);
+    }
+    catch (IllegalStateException excep)
+    {
+
+    }
+
+  }
 }

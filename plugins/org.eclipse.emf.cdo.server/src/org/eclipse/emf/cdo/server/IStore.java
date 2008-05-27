@@ -50,8 +50,8 @@ public interface IStore extends IRepositoryElement
    * Returns if this store supports the retrieval of historical newRevisions.
    * <p>
    * The contract includes that store implementations with auditing support must also implement
-   * {@link IStoreReader#readRevisionByTime(org.eclipse.emf.cdo.protocol.CDOID, int, long) IStoreReader.readRevisionByTime(CDOID, int, long)}
-   * to not throw an <code>UnsupportedOperationException</code>.
+   * {@link IStoreReader#readRevisionByTime(org.eclipse.emf.cdo.protocol.CDOID, int, long)
+   * IStoreReader.readRevisionByTime(CDOID, int, long)} to not throw an <code>UnsupportedOperationException</code>.
    * 
    * @return <code>true</code> if this store supports the retrieval of historical newRevisions, <code>false</code>
    *         otherwise.
@@ -79,9 +79,9 @@ public interface IStore extends IRepositoryElement
    * Returns a reader that can be used to read from this store in the context of the given session.
    * 
    * @param session
-   *          The session that should be used as a context for read access or <code>null</code>. The store
-   *          implementor is free to interpret and use the session in a manner suitable for him or ignore it at all. It
-   *          is meant only as a hint. Implementor can use it as a key into a cache and/or register a
+   *          The session that should be used as a context for read access or <code>null</code>. The store implementor
+   *          is free to interpret and use the session in a manner suitable for him or ignore it at all. It is meant
+   *          only as a hint. Implementor can use it as a key into a cache and/or register a
    *          {@link org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter LifecycleEventAdapter} with it to
    *          intercept cleanup on session close. Note however that the session can be <code>null</code>, for example
    *          during startup of the server while the repositories are initialized but before any user session has been

@@ -562,9 +562,9 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   /**
    * Turns registered objects into proxies and synchronously delivers invalidation events to registered event listeners.
    * <p>
-   * <b>Implementation note:</b> This implementation guarantees that exceptions from listener code don't propagate up
-   * to the caller of this method. Runtime exceptions from the implementation of the {@link CDOStateMachine} are
-   * propagated to the caller of this method but this should not happen in the absence of implementation errors.
+   * <b>Implementation note:</b> This implementation guarantees that exceptions from listener code don't propagate up to
+   * the caller of this method. Runtime exceptions from the implementation of the {@link CDOStateMachine} are propagated
+   * to the caller of this method but this should not happen in the absence of implementation errors.
    * 
    * @param timeStamp
    *          The time stamp of the server transaction if this event was sent as a result of a successfully committed

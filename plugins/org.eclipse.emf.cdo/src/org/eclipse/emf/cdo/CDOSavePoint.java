@@ -15,8 +15,10 @@ package org.eclipse.emf.cdo;
  */
 public interface CDOSavePoint
 {
-  CDOTransaction getTransaction(); 
-  CDOSavePoint getNextSavePoint(); 
-  CDOSavePoint getPreviousSavePoint(); 
+  CDOTransaction getTransaction();
+
+  CDOSavePoint getNextSavePoint();
+
+  CDOSavePoint getPreviousSavePoint();
 
 }

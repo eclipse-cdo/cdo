@@ -22,8 +22,8 @@ import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
 public interface CDOTransactionHandler
 {
   /**
-   * Called by a <code>CDOTransaction</code> <b>before</b> an object is added. The implementor of this method is
-   * allowed to throw an unchecked exception that will propagate up to the operation that is about to add the object.
+   * Called by a <code>CDOTransaction</code> <b>before</b> an object is added. The implementor of this method is allowed
+   * to throw an unchecked exception that will propagate up to the operation that is about to add the object.
    */
   public void addingObject(CDOTransaction transaction, CDOObject object);
 
@@ -41,9 +41,9 @@ public interface CDOTransactionHandler
    * transaction.
    */
   public void committingTransaction(CDOTransaction transaction);
-  
+
   /**
-   * Called by a <code>CDOTransaction</code> <b>after</b> it is being rolled back. If the implementor of this method 
+   * Called by a <code>CDOTransaction</code> <b>after</b> it is being rolled back. If the implementor of this method
    * throw an exception other listener would not be notify and the exception will be propagated.
    */
   public void rollingbackTransaction(CDOTransaction transaction);

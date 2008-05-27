@@ -22,82 +22,79 @@ import org.eclipse.emf.cdo.util.CDOAutoAttacher;
 
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 
-
 /**
  * @author Simon McDuff
  */
 public class AutoAttacherTest extends AbstractCDOTest
 {
 
-
   public void testBasic() throws Exception
   {
     CDOSession session = openModel1Session();
-    
+
     CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
-    
+
     new CDOAutoAttacher(transaction);
-    
+
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
 
-	  Product product = Model1Factory.eINSTANCE.createProduct();
-	  {
-		  assertTransient(product);
-		  
-	    resource1.getContents().add(product);
-	    assertEquals(resource1, product.eResource());
-	    //assertEquals(resource1, ((EObjectImpl)product).eDirectResource());
-	    
-		  assertNew(product, transaction);
-		  
-	  }
-	  
-	  OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
-	  {
-		  assertTransient(orderDetail);
-		  product.getOrderDetails().add(orderDetail);
-		  assertNew(orderDetail, transaction);
-	  }
-	  
-	  Order order = Model1Factory.eINSTANCE.createOrder();
-	  {
-		  // Bidirectionnel/containment relationship
-		  assertTransient(order);
+    Product product = Model1Factory.eINSTANCE.createProduct();
+    {
+      assertTransient(product);
+
+      resource1.getContents().add(product);
+      assertEquals(resource1, product.eResource());
+      // assertEquals(resource1, ((EObjectImpl)product).eDirectResource());
+
+      assertNew(product, transaction);
+
+    }
+
+    OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
+    {
+      assertTransient(orderDetail);
+      product.getOrderDetails().add(orderDetail);
+      assertNew(orderDetail, transaction);
+    }
+
+    Order order = Model1Factory.eINSTANCE.createOrder();
+    {
+      // Bidirectionnel/containment relationship
+      assertTransient(order);
       // Fail for now. Need to be able to handle that case!
-		  //order.getOrderDetails().add(orderDetail);
+      // order.getOrderDetails().add(orderDetail);
 
-		  //assertTransient(order);
-	  }
-	  
-	  transaction.close();
-	  session.close();
-  }
-  
-  public void testBasic2() throws Exception
-  {
-    CDOSession session = openModel1Session();
-    
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
-    
-    new CDOAutoAttacher(transaction);
-    
-    CDOResource resource1 = transaction.getOrCreateResource("/test1");
-
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
-    PurchaseOrder purchaseOrder = Model1Factory.eINSTANCE.createPurchaseOrder();
-    
-    supplier.getPurchaseOrders().add(purchaseOrder);
-    
-    assertTransient(supplier);
-    
-    resource1.getContents().add(supplier);
-    
-    assertNew(supplier, transaction);
-    assertNew(purchaseOrder, transaction);
-    
+      // assertTransient(order);
+    }
 
     transaction.close();
     session.close();
   }
- 
+
+  public void testBasic2() throws Exception
+  {
+    CDOSession session = openModel1Session();
+
+    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+
+    new CDOAutoAttacher(transaction);
+
+    CDOResource resource1 = transaction.getOrCreateResource("/test1");
+
+    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    PurchaseOrder purchaseOrder = Model1Factory.eINSTANCE.createPurchaseOrder();
+
+    supplier.getPurchaseOrders().add(purchaseOrder);
+
+    assertTransient(supplier);
+
+    resource1.getContents().add(supplier);
+
+    assertNew(supplier, transaction);
+    assertNew(purchaseOrder, transaction);
+
+    transaction.close();
+    session.close();
+  }
+
 }

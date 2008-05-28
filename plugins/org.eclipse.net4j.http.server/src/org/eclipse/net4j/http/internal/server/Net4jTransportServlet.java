@@ -66,7 +66,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
   @Override
   protected final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
   {
-    doPost(req, resp);
+    doRequest(req, resp);
   }
 
   @Override
@@ -119,6 +119,11 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
 
   protected void doList(String connectorID, HttpServletResponse resp) throws IOException
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Received List request: {0}", connectorID);
+    }
+
     IHTTPConnector[] connectors = requestHandler.handleList(connectorID);
     PrintWriter writer = resp.getWriter();
     for (IHTTPConnector connector : connectors)
@@ -175,6 +180,11 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     try
     {
       String userID = in.readString();
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Received Connect request: {0}", userID);
+      }
+
       IHTTPConnector connector = requestHandler.handleConnect(userID);
       out.writeString(connector.getConnectorID());
       out.writeInt(connector.getMaxIdleTime());
@@ -192,6 +202,11 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     try
     {
       String connectorID = in.readString();
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Received Disconnect request: {0}", connectorID);
+      }
+
       requestHandler.handleDisonnect(connectorID);
     }
     catch (Exception ex)
@@ -204,6 +219,11 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
       IOException
   {
     String connectorID = in.readString();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Received Operations request: {0}", connectorID);
+    }
+
     requestHandler.handleOperations(connectorID, in, out);
   }
 

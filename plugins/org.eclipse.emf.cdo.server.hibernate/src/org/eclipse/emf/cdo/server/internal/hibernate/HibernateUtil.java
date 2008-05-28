@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.internal.protocol.id.CDOIDNullImpl;
 import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.protocol.id.CDOID;
@@ -93,14 +92,14 @@ public class HibernateUtil
 
   public InternalCDORevision getCDORevision(Object target)
   {
-    if (target instanceof CDOObject)
-    {
-      return (InternalCDORevision)((CDOObject)target).cdoRevision();
-    }
-    else
-    {
-      return (InternalCDORevision)target;
-    }
+    // if (target instanceof CDOObject)
+    // {
+    // return (InternalCDORevision)((CDOObject)target).cdoRevision();
+    // }
+    // else
+    // {
+    return (InternalCDORevision)target;
+    // }
   }
 
   /**

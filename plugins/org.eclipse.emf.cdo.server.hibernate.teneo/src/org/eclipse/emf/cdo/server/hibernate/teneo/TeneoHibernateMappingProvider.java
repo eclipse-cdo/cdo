@@ -105,7 +105,7 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
 
     // translate the list of EPackages to an array
     final EPackage[] ePackageArray = epacks.toArray(new EPackage[epacks.size()]);
-
+    properties.put("teneo.mapping.also_map_as_class", "false");
     return CDOHelper.getInstance().generateMapping(ePackageArray, properties);
   }
 

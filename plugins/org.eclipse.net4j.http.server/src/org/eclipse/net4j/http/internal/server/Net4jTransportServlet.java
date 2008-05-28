@@ -16,6 +16,7 @@ import org.eclipse.net4j.http.common.IHTTPConnector;
 import org.eclipse.net4j.http.internal.common.HTTPConnector;
 import org.eclipse.net4j.http.internal.server.bundle.OM;
 import org.eclipse.net4j.http.server.INet4jTransportServlet;
+import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -38,12 +39,18 @@ import java.io.PrintWriter;
  */
 public class Net4jTransportServlet extends HttpServlet implements INet4jTransportServlet
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, Net4jTransportServlet.class);
+
   private static final long serialVersionUID = 1L;
 
   private RequestHandler requestHandler;
 
   public Net4jTransportServlet()
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Creating " + getClass().getName());
+    }
   }
 
   public RequestHandler getRequestHandler()

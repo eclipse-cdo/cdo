@@ -46,27 +46,21 @@ public final class OpenSessionAction extends LongRunningAction
     OpenSessionDialog dialog = new OpenSessionDialog(getPage());
     if (dialog.open() == OpenSessionDialog.OK)
     {
-      description = dialog.getServerDescription() + "/" + dialog.getRepositoryName();
       StringBuilder builder = new StringBuilder();
+      builder.append(dialog.getServerDescription());
+      builder.append("?repositoryName=");
+      builder.append(dialog.getRepositoryName());
       if (dialog.isAutomaticPackageRegistry())
       {
-        builder.append("automaticPackageRegistry=true");
+        builder.append("&automaticPackageRegistry=true");
       }
 
       if (!dialog.isLegacyModelSupport())
       {
-        if (builder.length() != 0)
-        {
-          builder.append("&");
-        }
-
-        builder.append("disableLegacyObjects=true");
+        builder.append("&disableLegacyObjects=true");
       }
 
-      if (builder.length() != 0)
-      {
-        description += "?" + builder;
-      }
+      description = builder.toString();
     }
     else
     {

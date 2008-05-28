@@ -19,13 +19,13 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.internal.net4j.connector.ConnectorFactory;
 
-import org.eclipse.emf.common.util.URI;
-
 /**
  * @author Eike Stepper
  */
 public class ChannelInjector implements IElementProcessor
 {
+  private static final String SCHEME_SEPARATOR = "://";
+
   public ChannelInjector()
   {
   }
@@ -47,17 +47,28 @@ public class ChannelInjector implements IElementProcessor
 
   protected IConnector getConnector(IManagedContainer container, String description)
   {
-    URI uri = URI.createURI(description);
-    String factoryType = uri.scheme();
-    if (StringUtil.isEmpty(factoryType))
+    int pos = description.indexOf(SCHEME_SEPARATOR);
+    if (pos == -1)
     {
-      throw new IllegalArgumentException("Connector type (scheme) missing: " + description);
+      throw new IllegalArgumentException("Invalid URI: " + description);
     }
 
-    String connectorDescription = uri.authority();
+    String factoryType = description.substring(0, pos);
+    if (StringUtil.isEmpty(factoryType))
+    {
+      throw new IllegalArgumentException("Invalid URI: " + description);
+    }
+
+    String connectorDescription = description.substring(pos + SCHEME_SEPARATOR.length());
     if (StringUtil.isEmpty(connectorDescription))
     {
-      throw new IllegalArgumentException("Illegal connector description: " + description);
+      throw new IllegalArgumentException("Invalid URI: " + description);
+    }
+
+    pos = connectorDescription.indexOf('?');
+    if (pos != -1)
+    {
+      connectorDescription = connectorDescription.substring(0, pos);
     }
 
     return (IConnector)container.getElement(ConnectorFactory.PRODUCT_GROUP, factoryType, connectorDescription);

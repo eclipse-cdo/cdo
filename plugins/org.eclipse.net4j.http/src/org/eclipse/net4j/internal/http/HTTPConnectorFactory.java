@@ -20,6 +20,8 @@ import java.net.URL;
  */
 public class HTTPConnectorFactory extends ConnectorFactory
 {
+  private static final String HTTP_SCHEME_PREFIX = "http://";
+
   public static final String TYPE = "http";
 
   public HTTPConnectorFactory()
@@ -30,6 +32,11 @@ public class HTTPConnectorFactory extends ConnectorFactory
   public HTTPClientConnector create(String description)
   {
     String userID = null;
+    if (!description.startsWith(HTTP_SCHEME_PREFIX))
+    {
+      description = HTTP_SCHEME_PREFIX + description;
+    }
+
     try
     {
       URL url = new URL(description);

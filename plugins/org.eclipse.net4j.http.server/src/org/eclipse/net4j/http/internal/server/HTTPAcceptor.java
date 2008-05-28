@@ -64,6 +64,12 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     }
   };
 
+  // static
+  // {
+  // // Activate the org.eclipse.equinox.http.servlet bundle
+  // HttpServiceServlet.class.getName();
+  // }
+
   public HTTPAcceptor()
   {
   }

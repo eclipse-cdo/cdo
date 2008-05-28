@@ -68,7 +68,7 @@ public class CDOSessionFactory extends Factory
           else
           {
             String key = parameter.substring(0, pos).trim();
-            String value = parameter.substring(pos);
+            String value = parameter.substring(pos + 1);
             result.put(key, value);
           }
         }

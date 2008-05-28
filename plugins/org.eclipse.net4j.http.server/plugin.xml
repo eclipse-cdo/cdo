@@ -36,7 +36,8 @@
          point="org.eclipse.equinox.http.registry.servlets">
       <servlet
             alias="/net4j"
-            class="org.eclipse.net4j.http.internal.server.Net4jTransportServlet$ContainerAware"/>
+            class="org.eclipse.net4j.http.internal.server.Net4jTransportServlet$ContainerAware"
+            load-on-startup="true"/>
    </extension>
 
 </plugin>

@@ -91,15 +91,21 @@ public class CDOAutoAttacher implements CDOTransactionHandler
 
   public CDOAutoAttacher(CDOTransaction transaction)
   {
-    this.cdoTransaction = transaction;
+    cdoTransaction = transaction;
     transaction.addHandler(this);
   }
 
   protected void persist(Resource res, Object object)
   {
-    if (object instanceof CDOResource) return;
+    if (object instanceof CDOResource)
+    {
+      return;
+    }
 
-    if (!(object instanceof InternalCDOObject)) return;
+    if (!(object instanceof InternalCDOObject))
+    {
+      return;
+    }
 
     res.getContents().add((InternalCDOObject)object);
   }
@@ -107,6 +113,7 @@ public class CDOAutoAttacher implements CDOTransactionHandler
   /**
    * @param eObject
    */
+  @SuppressWarnings("unchecked")
   private void handle(Resource resource, EObject eObject)
   {
     for (EReference reference : eObject.eClass().getEAllReferences())
@@ -119,9 +126,13 @@ public class CDOAutoAttacher implements CDOTransactionHandler
           if (element.eResource() == null)
           {
             if (reference.isContainment())
+            {
               handle(resource, element);
+            }
             else
+            {
               persist(resource, element);
+            }
           }
         }
       }
@@ -133,9 +144,13 @@ public class CDOAutoAttacher implements CDOTransactionHandler
         {
           // objectsAdded.add(element);
           if (reference.isContainment())
+          {
             handle(resource, element);
+          }
           else
+          {
             persist(resource, element);
+          }
         }
       }
     }
@@ -144,7 +159,10 @@ public class CDOAutoAttacher implements CDOTransactionHandler
 
   public void addingObject(CDOTransaction transaction, CDOObject object)
   {
-    if (object instanceof CDOResource) return;
+    if (object instanceof CDOResource)
+    {
+      return;
+    }
 
     // Persist the graph as well.
     handle(object.eResource(), object);
@@ -157,7 +175,10 @@ public class CDOAutoAttacher implements CDOTransactionHandler
 
   public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
   {
-    if (object instanceof CDOResource) return;
+    if (object instanceof CDOResource)
+    {
+      return;
+    }
 
     if (featureChange != null)
     {

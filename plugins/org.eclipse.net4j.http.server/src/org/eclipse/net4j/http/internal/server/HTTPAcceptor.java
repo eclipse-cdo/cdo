@@ -40,7 +40,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
 {
   public static final int DEFAULT_CONNECTOR_ID_LENGTH = 32;
 
-  public static final int DEFAULT_MAX_IDLE_TIME = 60 * 1000; // 1 minute
+  public static final int DEFAULT_MAX_IDLE_TIME = 30 * 60 * 1000; // 30 minutes
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HTTPAcceptor.class);
 
@@ -63,12 +63,6 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
       context.nextWork(pause);
     }
   };
-
-  // static
-  // {
-  // // Activate the org.eclipse.equinox.http.servlet bundle
-  // HttpServiceServlet.class.getName();
-  // }
 
   public HTTPAcceptor()
   {

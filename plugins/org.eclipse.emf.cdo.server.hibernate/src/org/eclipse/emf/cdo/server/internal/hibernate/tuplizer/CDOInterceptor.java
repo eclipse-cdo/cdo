@@ -34,5 +34,4 @@ public class CDOInterceptor extends EmptyInterceptor
     InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(object);
     return revision.getCDOClass().getName();
   }
-
 }

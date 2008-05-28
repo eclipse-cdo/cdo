@@ -32,7 +32,7 @@
    </license>
 
    <url>
-      <update label="%updateSiteName" url="http://download.eclipse.org/modeling/emft/updates/"/>
+      <update label="%updateSiteName" url="http://download.eclipse.org/modeling/emf/updates/"/>
    </url>
 
    <plugin

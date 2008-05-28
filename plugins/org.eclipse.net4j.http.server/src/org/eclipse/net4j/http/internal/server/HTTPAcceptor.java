@@ -91,7 +91,10 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     }
 
     this.servlet = servlet;
-    servlet.setRequestHandler(this);
+    if (this.servlet != null)
+    {
+      this.servlet.setRequestHandler(this);
+    }
   }
 
   public int getConnectorIDLength()

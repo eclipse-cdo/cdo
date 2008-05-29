@@ -32,7 +32,9 @@
    </license>
 
    <url>
-      <update label="%updateSiteName" url="http://download.eclipse.org/modeling/emf/updates/"/>
+      <update label="%emfUpdateSiteName" url="http://download.eclipse.org/modeling/emf/updates/"/>
+      <discovery label="%emfUpdateSiteName" url="http://download.eclipse.org/modeling/emf/updates/"/>
+      <discovery label="%emftUpdateSiteName" url="http://download.eclipse.org/modeling/emft/updates/"/>
    </url>
 
    <includes

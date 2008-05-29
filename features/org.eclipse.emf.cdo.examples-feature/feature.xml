@@ -13,9 +13,11 @@
 	
 	</copyright>
 -->
+
 <feature
       id="org.eclipse.emf.cdo.examples"
       label="%featureName"
+      image="eclipse_update_120.jpg"
       version="1.0.0.qualifier"
       provider-name="%providerName">
 

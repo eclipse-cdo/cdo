@@ -40,7 +40,7 @@ public class OpenSessionIndication extends IndicationWithResponse
 
   private String repositoryName;
 
-  private boolean disableLegacyObjects;
+  private boolean legacySupportEnabled;
 
   public OpenSessionIndication()
   {
@@ -61,10 +61,10 @@ public class OpenSessionIndication extends IndicationWithResponse
       PROTOCOL.format("Read repositoryName: {0}", repositoryName);
     }
 
-    disableLegacyObjects = in.readBoolean();
+    legacySupportEnabled = in.readBoolean();
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Read disableLegacyObjects: {0}", disableLegacyObjects);
+      PROTOCOL.format("Read legacySupportEnabled: {0}", legacySupportEnabled);
     }
   }
 
@@ -77,7 +77,7 @@ public class OpenSessionIndication extends IndicationWithResponse
       SessionManager sessionManager = repository.getSessionManager();
 
       CDOServerProtocol serverProtocol = (CDOServerProtocol)getProtocol();
-      Session session = sessionManager.openSession(serverProtocol, disableLegacyObjects);
+      Session session = sessionManager.openSession(serverProtocol, legacySupportEnabled);
       serverProtocol.setInfraStructure(session);
 
       writeSessionID(out, session);

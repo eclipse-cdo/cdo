@@ -36,13 +36,13 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
 
   private String repositoryName;
 
-  private boolean disableLegacyObjects;
+  private boolean legacySupportEnabled;
 
-  public OpenSessionRequest(IChannel channel, String repositoryName, boolean disableLegacyObjects)
+  public OpenSessionRequest(IChannel channel, String repositoryName, boolean legacySupportEnabled)
   {
     super(channel);
     this.repositoryName = repositoryName;
-    this.disableLegacyObjects = disableLegacyObjects;
+    this.legacySupportEnabled = legacySupportEnabled;
   }
 
   @Override
@@ -62,9 +62,9 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
 
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Writing disableLegacyObjects: {0}", disableLegacyObjects);
+      PROTOCOL.format("Writing legacySupportEnabled: {0}", legacySupportEnabled);
     }
-    out.writeBoolean(disableLegacyObjects);
+    out.writeBoolean(legacySupportEnabled);
   }
 
   @Override

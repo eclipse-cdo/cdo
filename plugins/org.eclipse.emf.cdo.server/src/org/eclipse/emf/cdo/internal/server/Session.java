@@ -51,7 +51,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
   private int sessionID;
 
-  private boolean disableLegacyObjects;
+  private boolean legacySupportEnabled;
 
   private ConcurrentMap<Integer, IView> views = new ConcurrentHashMap<Integer, IView>();
 
@@ -64,13 +64,13 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     }
   };
 
-  public Session(SessionManager sessionManager, CDOServerProtocol protocol, int sessionID, boolean disableLegacyObjects)
+  public Session(SessionManager sessionManager, CDOServerProtocol protocol, int sessionID, boolean legacySupportEnabled)
       throws SessionCreationException
   {
     this.sessionManager = sessionManager;
     this.protocol = protocol;
     this.sessionID = sessionID;
-    this.disableLegacyObjects = disableLegacyObjects;
+    this.legacySupportEnabled = legacySupportEnabled;
     protocol.addListener(protocolListener);
 
     try
@@ -93,9 +93,9 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     return sessionID;
   }
 
-  public boolean isDisableLegacyObjects()
+  public boolean isLegacySupportEnabled()
   {
-    return disableLegacyObjects;
+    return legacySupportEnabled;
   }
 
   public CDOServerProtocol getProtocol()
@@ -212,7 +212,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   public CDOID provideCDOID(Object idObject)
   {
     CDOID id = (CDOID)idObject;
-    if (disableLegacyObjects || id.isNull() || id.isMeta())
+    if (!legacySupportEnabled || id.isNull() || id.isMeta())
     {
       return id;
     }

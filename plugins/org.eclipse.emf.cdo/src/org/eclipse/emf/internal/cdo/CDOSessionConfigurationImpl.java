@@ -125,7 +125,7 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
       session = new CDOSessionImpl();
       session.setConnector(connector);
       session.setRepositoryName(repositoryName);
-      session.setDisableLegacyObjects(!legacySupportEnabled);
+      session.setLegacySupportEnabled(legacySupportEnabled);
       session.setFailOverStrategy(failOverStrategy);
       session.setPackageRegistry(packageRegistry);
 

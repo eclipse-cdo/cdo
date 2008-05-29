@@ -91,7 +91,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   private int sessionID;
 
-  private boolean disableLegacyObjects;
+  private boolean legacySupportEnabled;
 
   private int referenceChunkSize;
 
@@ -165,20 +165,20 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return cdoidObjectFactory.createCDOIDObject(in);
   }
 
-  public boolean isDisableLegacyObjects()
+  public boolean isLegacySupportEnabled()
   {
-    return disableLegacyObjects;
+    return legacySupportEnabled;
   }
 
-  public void setDisableLegacyObjects(boolean disableLegacyObjects)
+  public void setLegacySupportEnabled(boolean legacySupportEnabled)
   {
     checkInactive();
-    if (!disableLegacyObjects && !FSMUtil.isLegacySystemAvailable())
+    if (legacySupportEnabled && !FSMUtil.isLegacySystemAvailable())
     {
       throw new LegacySystemNotAvailableException();
     }
 
-    this.disableLegacyObjects = disableLegacyObjects;
+    this.legacySupportEnabled = legacySupportEnabled;
   }
 
   public int getReferenceChunkSize()
@@ -629,6 +629,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
+    if (legacySupportEnabled && !FSMUtil.isLegacySystemAvailable())
+    {
+      throw new LegacySystemNotAvailableException();
+    }
+
     if (channel == null && connector == null)
     {
       throw new IllegalStateException("channel == null && connector == null");
@@ -656,7 +661,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       channel = connector.openChannel(CDOProtocolConstants.PROTOCOL_NAME, this);
     }
 
-    OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName, disableLegacyObjects);
+    OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName, legacySupportEnabled);
     OpenSessionResult result = request.send();
 
     sessionID = result.getSessionID();

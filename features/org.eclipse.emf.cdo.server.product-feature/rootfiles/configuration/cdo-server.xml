@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdoServer>
     
-    <!-- 
-    <acceptor type="http"/>
-    -->
+    <!--acceptor type="http"/ -->
     
     <acceptor type="tcp" listenAddr="0.0.0.0" port="2036">
-        <!-- 
-        <negotiator type="challenge" description="/temp/users.db"/> 
-        -->
+        <!-- negotiator type="challenge" description="/temp/users.db"/ -->
     </acceptor>
     
     <repository name="repo1">
@@ -19,17 +15,9 @@
         <property name="revisedLRUCapacity" value="100"/>
         
         <store type="db">
-            <!-- type: horizontal | vertical | <any user-contributed type> -->
             <mappingStrategy type="horizontal">
-                
-                <!-- ONE_TABLE_PER_REFERENCE | ONE_TABLE_PER_CLASS | ONE_TABLE_PER_PACKAGE | ONE_TABLE_PER_REPOSITORY | LIKE_ATTRIBUTES -->
                 <property name="toManyReferences" value="ONE_TABLE_PER_REFERENCE"/>
-                
-                <!-- LIKE_ATTRIBUTES | LIKE_TO_MANY_REFERENCES -->
                 <property name="toOneReferences" value="LIKE_ATTRIBUTES"/>
-                
-                <!-- MODEL | STRATEGY -->
-                <property name="mappingPrecedence" value="MODEL"/>
             </mappingStrategy>
             
             <dbAdapter name="derby-embedded"/>

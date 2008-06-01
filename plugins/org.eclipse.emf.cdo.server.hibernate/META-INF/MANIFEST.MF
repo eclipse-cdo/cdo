@@ -18,4 +18,3 @@ Export-Package: org.eclipse.emf.cdo.server.hibernate;version="1.0.0",
  org.eclipse.emf.cdo.server.internal.hibernate.bundle;version="1.0.0",
  org.eclipse.emf.cdo.server.internal.hibernate.info;version="1.0.0",
  org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;version="1.0.0"
-Eclipse-BuddyPolicy: dependent

@@ -46,19 +46,11 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
   public HibernateStoreReader(HibernateStore store, ISession session)
   {
     super(store, session);
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
-    }
   }
 
   protected HibernateStoreReader(HibernateStore store, IView view)
   {
     super(store, view);
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
-    }
   }
 
   public HibernateStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature)

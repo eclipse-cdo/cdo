@@ -38,10 +38,6 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   public HibernateStoreWriter(HibernateStore store, IView view)
   {
     super(store, view);
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
-    }
   }
 
   @Override

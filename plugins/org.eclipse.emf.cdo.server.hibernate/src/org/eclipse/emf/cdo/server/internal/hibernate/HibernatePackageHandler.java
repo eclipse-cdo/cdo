@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
+import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -40,6 +41,8 @@ import java.util.List;
 
 /**
  * Delegate which stores and retrieves cdo packages.
+ * <p>
+ * TODO extend {@link Lifecycle}. See {@link #doActivate()} and {@link #doDeactivate()}.
  * 
  * @author Eike Stepper
  * @author Martin Taal

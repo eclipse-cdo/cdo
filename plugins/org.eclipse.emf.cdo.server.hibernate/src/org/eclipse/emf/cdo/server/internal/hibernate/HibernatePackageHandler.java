@@ -340,19 +340,16 @@ public class HibernatePackageHandler
 
   public synchronized int getNextPackageID()
   {
-    // TODO Better synchronization
     return nextPackageID++;
   }
 
   public synchronized int getNextClassID()
   {
-    // TODO Better synchronization
     return nextClassID++;
   }
 
   public synchronized int getNextFeatureID()
   {
-    // TODO Better synchronization
     return nextFeatureID++;
   }
 

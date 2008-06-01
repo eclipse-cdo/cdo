@@ -71,7 +71,7 @@ public class HibernateStore extends Store implements IHibernateStore
 
     if (TRACER.isEnabled() && mappingProvider != null)
     {
-      TRACER.trace("With mappingProvider " + mappingProvider.getClass().getName());
+      TRACER.trace("HibernateStore with mappingProvider " + mappingProvider.getClass().getName());
     }
   }
 

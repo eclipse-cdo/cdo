@@ -58,7 +58,7 @@
 		</list>
 	</joined-subclass>
 
-	<joined-subclass name="CDOFeatureImpl" table="cdo_features" extends="CDOModelElementImpl">
+	<joined-subclass name="CDOFeatureImpl" table="cdo_features" extends="CDOModelElementImpl" lazy="false">
 		<key/>
 		<property name="featureID" column="feature" type="int" not-null="true" />
 		<property name="type" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOTypeUserType"

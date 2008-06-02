@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,11 +50,6 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
     super(channel);
     this.ids = ids;
     this.referenceChunk = referenceChunk;
-  }
-
-  public LoadRevisionRequest(IChannel channel, CDOID id, int referenceChunk)
-  {
-    this(channel, Collections.singleton(id), referenceChunk);
   }
 
   @Override

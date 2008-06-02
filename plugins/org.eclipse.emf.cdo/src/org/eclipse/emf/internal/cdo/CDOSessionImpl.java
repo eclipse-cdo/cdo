@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.util.LegacySystemNotAvailableException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
+import org.eclipse.emf.internal.cdo.protocol.CDOFacade;
 import org.eclipse.emf.internal.cdo.protocol.LoadLibrariesRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
@@ -94,6 +95,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   private boolean legacySupportEnabled;
 
   private int referenceChunkSize;
+
+  private CDOFacade facade;
 
   private IFailOverStrategy failOverStrategy;
 
@@ -194,6 +197,16 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     this.referenceChunkSize = referenceChunkSize;
+  }
+
+  public CDOFacade getFacade()
+  {
+    return facade;
+  }
+
+  public void setFacade(CDOFacade facade)
+  {
+    this.facade = facade;
   }
 
   public IFailOverStrategy getFailOverStrategy()

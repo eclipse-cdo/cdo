@@ -34,6 +34,7 @@ import org.eclipse.net4j.util.collection.MoveableList;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -218,13 +219,15 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   @Override
   protected InternalCDORevision loadRevision(CDOID id, int referenceChunk)
   {
-    return send(new LoadRevisionRequest(session.getChannel(), id, referenceChunk)).get(0);
+    return send(new LoadRevisionRequest(session.getChannel(), Collections.singleton(id), referenceChunk)).get(0);
   }
 
   @Override
   protected InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
-    return send(new LoadRevisionByTimeRequest(session.getChannel(), id, referenceChunk, timeStamp)).get(0);
+    return send(
+        new LoadRevisionByTimeRequest(session.getChannel(), Collections.singleton(id), referenceChunk, timeStamp)).get(
+        0);
   }
 
   @Override

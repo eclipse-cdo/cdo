@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Collections;
 
 /**
  * @author Eike Stepper
@@ -33,7 +34,7 @@ public class LoadRevisionByVersionRequest extends LoadRevisionRequest
 
   public LoadRevisionByVersionRequest(IChannel channel, CDOID id, int referenceChunk, int version)
   {
-    super(channel, id, referenceChunk);
+    super(channel, Collections.singleton(id), referenceChunk);
     this.version = version;
   }
 

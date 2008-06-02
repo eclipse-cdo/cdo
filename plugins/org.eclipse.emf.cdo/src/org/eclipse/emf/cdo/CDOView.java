@@ -39,9 +39,13 @@ public interface CDOView extends CDOProtocolView, INotifier
 
   public boolean hasConflict();
 
-  public boolean isEnableInvalidationNotifications();
+  public boolean hasUniqueResourceContents();
 
-  public void setEnableInvalidationNotifications(boolean on);
+  public void setUniqueResourceContents(boolean uniqueResourceContents);
+
+  public boolean isInvalidationNotificationsEnabled();
+
+  public void setInvalidationNotificationsEnabled(boolean invalidationNotificationsEnabled);
 
   public int getLoadRevisionCollectionChunkSize();
 

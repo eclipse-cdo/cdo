@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.tests.InitialTest;
 import org.eclipse.emf.cdo.tests.InvalidationTest;
 import org.eclipse.emf.cdo.tests.MangoTest;
 import org.eclipse.emf.cdo.tests.NoLegacyTest;
-import org.eclipse.emf.cdo.tests.ResourceTest;
+import org.eclipse.emf.cdo.tests.NonCDOResourceTest;
 import org.eclipse.emf.cdo.tests.RevisionDeltaTest;
 import org.eclipse.emf.cdo.tests.RevisionHolderTest;
 import org.eclipse.emf.cdo.tests.RollbackTest;
@@ -50,7 +50,7 @@ public class AllTests
     suite.addTestSuite(MangoTest.class);
     suite.addTestSuite(EnumTest.class);
     suite.addTestSuite(NoLegacyTest.class);
-    suite.addTestSuite(ResourceTest.class);
+    suite.addTestSuite(NonCDOResourceTest.class);
     suite.addTestSuite(InvalidationTest.class);
     suite.addTestSuite(InitialTest.class);
     suite.addTestSuite(ViewTest.class);

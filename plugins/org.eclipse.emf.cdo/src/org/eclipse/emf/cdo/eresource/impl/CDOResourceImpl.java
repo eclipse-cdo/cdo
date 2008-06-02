@@ -37,6 +37,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -53,8 +54,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -66,6 +66,7 @@ import java.util.Map;
  * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isTrackingModification <em>Tracking Modification</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getErrors <em>Errors</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getWarnings <em>Warnings</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getTimeStamp <em>Time Stamp</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getPath <em>Path</em>}</li>
  * </ul>
  * </p>
@@ -522,6 +523,23 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     this.existing = existing;
   }
 
+  /**
+   * @ADDED
+   */
+  @Override
+  protected EList<?> createList(EStructuralFeature eStructuralFeature)
+  {
+    if (eStructuralFeature == EresourcePackage.eINSTANCE.getCDOResource_Contents())
+    {
+      return new PersistentContents(eStructuralFeature);
+    }
+
+    return super.createList(eStructuralFeature);
+  }
+
+  /**
+   * @ADDED
+   */
   private InternalCDOObject getLegacyWrapper(EObject object) throws ImplementationError
   {
     InternalCDOObject legacy = FSMUtil.adapt(object, view);
@@ -539,6 +557,24 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   private void basicSetPath(String newPath)
   {
     eSet(EresourcePackage.Literals.CDO_RESOURCE__PATH, newPath);
+  }
+
+  /**
+   * @ADDED
+   * @author Eike Stepper
+   */
+  protected class PersistentContents extends CDOStoreEList<Object>
+  {
+    private static final long serialVersionUID = 1L;
+
+    public PersistentContents(EStructuralFeature eStructuralFeature)
+    {
+      super(eStructuralFeature);
+      if (!cdoView().hasUniqueResourceContents())
+      {
+        kind &= ~IS_UNIQUE;
+      }
+    }
   }
 
   /**

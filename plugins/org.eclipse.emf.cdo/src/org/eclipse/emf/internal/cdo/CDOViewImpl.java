@@ -80,7 +80,9 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private ResourceSet resourceSet;
 
-  private boolean enableInvalidationNotifications;
+  private boolean uniqueResourceContents = true;
+
+  private boolean invalidationNotificationsEnabled;
 
   private int loadRevisionCollectionChunkSize;
 
@@ -98,7 +100,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   {
     viewID = id;
     this.session = session;
-    enableInvalidationNotifications = OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.getValue();
+    invalidationNotificationsEnabled = OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.getValue();
     loadRevisionCollectionChunkSize = OM.PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE.getValue();
     objects = createObjectsMap();
   }
@@ -143,14 +145,24 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return false;
   }
 
-  public boolean isEnableInvalidationNotifications()
+  public boolean hasUniqueResourceContents()
   {
-    return enableInvalidationNotifications;
+    return uniqueResourceContents;
   }
 
-  public void setEnableInvalidationNotifications(boolean on)
+  public void setUniqueResourceContents(boolean uniqueResourceContents)
   {
-    enableInvalidationNotifications = on;
+    this.uniqueResourceContents = uniqueResourceContents;
+  }
+
+  public boolean isInvalidationNotificationsEnabled()
+  {
+    return invalidationNotificationsEnabled;
+  }
+
+  public void setInvalidationNotificationsEnabled(boolean invalidationNotificationsEnabled)
+  {
+    this.invalidationNotificationsEnabled = invalidationNotificationsEnabled;
   }
 
   public int getLoadRevisionCollectionChunkSize()
@@ -562,9 +574,9 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   /**
    * Turns registered objects into proxies and synchronously delivers invalidation events to registered event listeners.
    * <p>
-   * <b>Implementation note:</b> This implementation guarantees that exceptions from listener code don't propagate up
-   * to the caller of this method. Runtime exceptions from the implementation of the {@link CDOStateMachine} are
-   * propagated to the caller of this method but this should not happen in the absence of implementation errors.
+   * <b>Implementation note:</b> This implementation guarantees that exceptions from listener code don't propagate up to
+   * the caller of this method. Runtime exceptions from the implementation of the {@link CDOStateMachine} are propagated
+   * to the caller of this method but this should not happen in the absence of implementation errors.
    * 
    * @param timeStamp
    *          The time stamp of the server transaction if this event was sent as a result of a successfully committed
@@ -575,7 +587,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
    */
   public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs)
   {
-    List<InternalCDOObject> dirtyObjects = enableInvalidationNotifications ? new ArrayList<InternalCDOObject>() : null;
+    List<InternalCDOObject> dirtyObjects = invalidationNotificationsEnabled ? new ArrayList<InternalCDOObject>() : null;
     for (CDOID dirtyOID : dirtyOIDs)
     {
       InternalCDOObject dirtyObject;

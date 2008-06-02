@@ -21,8 +21,8 @@ import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
 public interface CDOTransactionHandler
 {
   /**
-   * Called by a <code>CDOTransaction</code> <b>before</b> an object is added. The implementor of this method is
-   * allowed to throw an unchecked exception that will propagate up to the operation that is about to add the object.
+   * Called by a <code>CDOTransaction</code> <b>before</b> an object is added. The implementor of this method is allowed
+   * to throw an unchecked exception that will propagate up to the operation that is about to add the object.
    */
   public void addingObject(CDOTransaction transaction, CDOObject object);
 

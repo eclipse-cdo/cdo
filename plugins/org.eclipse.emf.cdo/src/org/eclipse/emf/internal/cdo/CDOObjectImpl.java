@@ -432,22 +432,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     throw new ImplementationError();
   }
 
-  // @Override
-  // public Internal eDirectResource()
-  // {
-  // if (revision != null && resource instanceof InternalCDOObject)
-  // {
-  // CDOID containerID = revision.getContainerID();
-  // CDOID resourceID = ((InternalCDOObject)resource).cdoID();
-  // if (containerID.equals(resourceID))
-  // {
-  // return resource;
-  // }
-  // }
-  //
-  // return null;
-  // }
-
   @Override
   protected void eSetDirectResource(Internal resource)
   {

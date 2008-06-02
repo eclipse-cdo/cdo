@@ -112,8 +112,8 @@ public interface EresourcePackage extends EPackage
   int CDO_RESOURCE__LOADED = 4;
 
   /**
-   * The feature id for the '<em><b>Tracking Modification</b></em>' attribute. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The feature id for the '<em><b>Tracking Modification</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
    * 
    * @generated
    * @ordered
@@ -129,8 +129,7 @@ public interface EresourcePackage extends EPackage
   int CDO_RESOURCE__ERRORS = 6;
 
   /**
-   * The feature id for the '<em><b>Warnings</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
+   * The feature id for the '<em><b>Warnings</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
@@ -154,8 +153,8 @@ public interface EresourcePackage extends EPackage
   int CDO_RESOURCE__PATH = 9;
 
   /**
-   * The number of structural features of the '<em>CDO Resource</em>' class. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The number of structural features of the '<em>CDO Resource</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
    * 
    * @generated
    * @ordered
@@ -200,8 +199,8 @@ public interface EresourcePackage extends EPackage
   EClass getCDOResource();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#getResourceSet <em>Resource Set</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#getResourceSet
+   * <em>Resource Set</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute '<em>Resource Set</em>'.
    * @see org.eclipse.emf.cdo.eresource.CDOResource#getResourceSet()
@@ -222,8 +221,9 @@ public interface EresourcePackage extends EPackage
   EAttribute getCDOResource_URI();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.eresource.CDOResource#getContents <em>Contents</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.eresource.CDOResource#getContents <em>Contents</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
    * 
    * @return the meta object for the containment reference list '<em>Contents</em>'.
    * @see org.eclipse.emf.cdo.eresource.CDOResource#getContents()
@@ -233,8 +233,8 @@ public interface EresourcePackage extends EPackage
   EReference getCDOResource_Contents();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#isModified <em>Modified</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#isModified
+   * <em>Modified</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute '<em>Modified</em>'.
    * @see org.eclipse.emf.cdo.eresource.CDOResource#isModified()
@@ -244,8 +244,8 @@ public interface EresourcePackage extends EPackage
   EAttribute getCDOResource_Modified();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded <em>Loaded</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded
+   * <em>Loaded</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute '<em>Loaded</em>'.
    * @see org.eclipse.emf.cdo.eresource.CDOResource#isLoaded()
@@ -255,8 +255,8 @@ public interface EresourcePackage extends EPackage
   EAttribute getCDOResource_Loaded();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification <em>Tracking Modification</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification
+   * <em>Tracking Modification</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute '<em>Tracking Modification</em>'.
    * @see org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification()
@@ -266,8 +266,8 @@ public interface EresourcePackage extends EPackage
   EAttribute getCDOResource_TrackingModification();
 
   /**
-   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.eresource.CDOResource#getErrors <em>Errors</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.eresource.CDOResource#getErrors
+   * <em>Errors</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute list '<em>Errors</em>'.
    * @see org.eclipse.emf.cdo.eresource.CDOResource#getErrors()
@@ -277,8 +277,8 @@ public interface EresourcePackage extends EPackage
   EAttribute getCDOResource_Errors();
 
   /**
-   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.eresource.CDOResource#getWarnings <em>Warnings</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.eresource.CDOResource#getWarnings
+   * <em>Warnings</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute list '<em>Warnings</em>'.
    * @see org.eclipse.emf.cdo.eresource.CDOResource#getWarnings()
@@ -288,8 +288,8 @@ public interface EresourcePackage extends EPackage
   EAttribute getCDOResource_Warnings();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp <em>Time Stamp</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp
+   * <em>Time Stamp</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute '<em>Time Stamp</em>'.
    * @see org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp()
@@ -299,8 +299,8 @@ public interface EresourcePackage extends EPackage
   EAttribute getCDOResource_TimeStamp();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute '<em>Path</em>'.
    * @see org.eclipse.emf.cdo.eresource.CDOResource#getPath()
@@ -332,8 +332,8 @@ public interface EresourcePackage extends EPackage
   EDataType getURI();
 
   /**
-   * Returns the meta object for data type '{@link org.eclipse.emf.ecore.resource.Resource.Diagnostic <em>Diagnostic</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for data type '{@link org.eclipse.emf.ecore.resource.Resource.Diagnostic
+   * <em>Diagnostic</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for data type '<em>Diagnostic</em>'.
    * @see org.eclipse.emf.ecore.resource.Resource.Diagnostic
@@ -365,8 +365,8 @@ public interface EresourcePackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl <em>CDO Resource</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl <em>CDO Resource</em>}
+     * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl
      * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOResource()
@@ -375,8 +375,8 @@ public interface EresourcePackage extends EPackage
     EClass CDO_RESOURCE = eINSTANCE.getCDOResource();
 
     /**
-     * The meta object literal for the '<em><b>Resource Set</b></em>' attribute feature. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Resource Set</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @generated
      */
@@ -415,24 +415,24 @@ public interface EresourcePackage extends EPackage
     EAttribute CDO_RESOURCE__LOADED = eINSTANCE.getCDOResource_Loaded();
 
     /**
-     * The meta object literal for the '<em><b>Tracking Modification</b></em>' attribute feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Tracking Modification</b></em>' attribute feature. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
      * 
      * @generated
      */
     EAttribute CDO_RESOURCE__TRACKING_MODIFICATION = eINSTANCE.getCDOResource_TrackingModification();
 
     /**
-     * The meta object literal for the '<em><b>Errors</b></em>' attribute list feature. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Errors</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @generated
      */
     EAttribute CDO_RESOURCE__ERRORS = eINSTANCE.getCDOResource_Errors();
 
     /**
-     * The meta object literal for the '<em><b>Warnings</b></em>' attribute list feature. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Warnings</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @generated
      */
@@ -455,8 +455,7 @@ public interface EresourcePackage extends EPackage
     EAttribute CDO_RESOURCE__PATH = eINSTANCE.getCDOResource_Path();
 
     /**
-     * The meta object literal for the '<em>Resource Set</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc
-     * -->
+     * The meta object literal for the '<em>Resource Set</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see org.eclipse.emf.ecore.resource.ResourceSet
      * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getResourceSet()
@@ -474,8 +473,7 @@ public interface EresourcePackage extends EPackage
     EDataType URI = eINSTANCE.getURI();
 
     /**
-     * The meta object literal for the '<em>Diagnostic</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc
-     * -->
+     * The meta object literal for the '<em>Diagnostic</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see org.eclipse.emf.ecore.resource.Resource.Diagnostic
      * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getDiagnostic()

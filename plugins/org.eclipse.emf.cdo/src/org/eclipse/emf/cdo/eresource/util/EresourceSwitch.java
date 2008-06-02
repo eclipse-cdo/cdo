@@ -50,8 +50,8 @@ public class EresourceSwitch<T>
   }
 
   /**
-   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that
-   * result. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
@@ -62,8 +62,8 @@ public class EresourceSwitch<T>
   }
 
   /**
-   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that
-   * result. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
@@ -82,8 +82,8 @@ public class EresourceSwitch<T>
   }
 
   /**
-   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that
-   * result. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
@@ -105,8 +105,8 @@ public class EresourceSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>CDO Resource</em>'. <!-- begin-user-doc
-   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>CDO Resource</em>'. <!-- begin-user-doc -->
+   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
    * 
    * @param object
    *          the target of the switch.
@@ -120,8 +120,8 @@ public class EresourceSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc -->
-   * This implementation returns null; returning a non-null result will terminate the switch, but this is the last case
+   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
    * anyway. <!-- end-user-doc -->
    * 
    * @param object

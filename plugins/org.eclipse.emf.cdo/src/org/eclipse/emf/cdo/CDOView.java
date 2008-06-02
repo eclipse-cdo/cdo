@@ -41,6 +41,18 @@ public interface CDOView extends CDOProtocolView, INotifier
 
   public boolean hasUniqueResourceContents();
 
+  /**
+   * Specifies whether the contents list of resources will be unique or not.
+   * <p>
+   * This property is transient in that it does not stick with resources outside of the scope of this view. Especially
+   * it will not be persisted with resources in the repository. Each new view will start with <code>true</code> as a
+   * default value. Changing to <code>false</code> will subsequently apply to all resources being loaded or created.
+   * <p>
+   * Notice that the resource contents is a containment list and as such <b>must be</b> unique. Setting this property to
+   * <code>false</code> is only recommended for performance optimization when uniqueness is granted by other means.
+   * Violating the uniqueness constraint will result in unpredictable behaviour and possible corruption of the
+   * repository!
+   */
   public void setUniqueResourceContents(boolean uniqueResourceContents);
 
   public boolean isInvalidationNotificationsEnabled();

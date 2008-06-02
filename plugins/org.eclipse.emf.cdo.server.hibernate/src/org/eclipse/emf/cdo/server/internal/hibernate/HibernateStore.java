@@ -193,25 +193,13 @@ public class HibernateStore extends Store implements IHibernateStore
   @Override
   protected void doActivate() throws Exception
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Activating HibernateStore");
-    }
-
     super.doActivate();
-
-    // Activate the package store
-    packageHandler.doActivate();
+    packageHandler.activate();
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("De-Activating HibernateStore");
-    }
-
     if (hibernateSessionFactory != null)
     {
       if (TRACER.isEnabled())
@@ -223,8 +211,7 @@ public class HibernateStore extends Store implements IHibernateStore
       hibernateSessionFactory = null;
     }
 
-    packageHandler.doDeactivate();
-
+    packageHandler.deactivate();
     super.doDeactivate();
   }
 
@@ -267,7 +254,6 @@ public class HibernateStore extends Store implements IHibernateStore
     try
     {
       hibernateConfiguration = new Configuration();
-
       if (mappingProvider != null)
       {
         mappingProvider.setHibernateStore(this);

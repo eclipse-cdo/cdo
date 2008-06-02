@@ -47,7 +47,7 @@ import java.util.List;
  * @author Eike Stepper
  * @author Martin Taal
  */
-public class HibernatePackageHandler
+public class HibernatePackageHandler extends Lifecycle
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateStoreWriter.class);
 
@@ -358,36 +358,31 @@ public class HibernatePackageHandler
     cdoPackageInfos = null;
   }
 
-  protected void doActivate()
+  @Override
+  protected void doActivate() throws Exception
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Activating CDOPackageHandler");
-    }
-
+    super.doActivate();
     initConfiguration();
     initSchema();
   }
 
+  @Override
   protected void doDeactivate() throws Exception
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Deactivating CDOPackageHandler");
-    }
-
     if (sessionFactory != null)
     {
       sessionFactory.close();
       sessionFactory = null;
     }
+
+    super.doDeactivate();
   }
 
   protected void initConfiguration()
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Initializing datastore for CDO metadata");
+      TRACER.trace("Initializing configuration for CDO metadata");
     }
 
     InputStream in = null;

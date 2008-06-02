@@ -49,9 +49,9 @@ public interface CDOFacade
 
   public List<InternalCDORevision> loadRevisionByVersion();
 
-  public CDOID loadChunk(InternalCDORevision revision, CDOFeature feature, int accessIndex, int fromIndex, int toIndex);
-
   public List<InternalCDORevision> verifyRevision(Collection<InternalCDORevision> revisions);
+
+  public CDOID loadChunk(InternalCDORevision revision, CDOFeature feature, int accessIndex, int fromIndex, int toIndex);
 
   public CDOClassRef[] queryObjectTypes(List<CDOID> ids);
 

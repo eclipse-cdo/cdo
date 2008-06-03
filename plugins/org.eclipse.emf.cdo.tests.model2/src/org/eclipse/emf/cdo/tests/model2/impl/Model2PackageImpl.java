@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2PackageImpl.java,v 1.3 2008-04-20 08:22:20 estepper Exp $
+ * $Id: Model2PackageImpl.java,v 1.4 2008-06-03 06:41:28 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
@@ -32,8 +32,8 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
   private EClass specialPurchaseOrderEClass = null;
 
   /**
-   * Creates an instance of the model <b>Package</b>, registered with
-   * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package package URI value.
+   * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
+   * EPackage.Registry} by the package package URI value.
    * <p>
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--

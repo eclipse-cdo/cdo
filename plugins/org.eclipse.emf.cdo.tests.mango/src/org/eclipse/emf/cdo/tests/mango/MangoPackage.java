@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoPackage.java,v 1.3 2008-04-27 08:57:26 estepper Exp $
+ * $Id: MangoPackage.java,v 1.4 2008-06-03 06:41:27 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango;
 
@@ -56,8 +56,8 @@ public interface MangoPackage extends EPackage
   MangoPackage eINSTANCE = org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.mango.impl.ValueListImpl <em>Value List</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.mango.impl.ValueListImpl <em>Value List</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see org.eclipse.emf.cdo.tests.mango.impl.ValueListImpl
    * @see org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl#getValueList()
@@ -82,8 +82,7 @@ public interface MangoPackage extends EPackage
   int VALUE_LIST__VALUES = 1;
 
   /**
-   * The number of structural features of the '<em>Value List</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
+   * The number of structural features of the '<em>Value List</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
@@ -127,8 +126,8 @@ public interface MangoPackage extends EPackage
   EClass getValueList();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.ValueList#getName <em>Name</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.ValueList#getName <em>Name</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.mango.ValueList#getName()
@@ -138,8 +137,8 @@ public interface MangoPackage extends EPackage
   EAttribute getValueList_Name();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.mango.ValueList#getValues <em>Values</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.mango.ValueList#getValues
+   * <em>Values</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the reference list '<em>Values</em>'.
    * @see org.eclipse.emf.cdo.tests.mango.ValueList#getValues()
@@ -210,8 +209,8 @@ public interface MangoPackage extends EPackage
     EAttribute VALUE_LIST__NAME = eINSTANCE.getValueList_Name();
 
     /**
-     * The meta object literal for the '<em><b>Values</b></em>' reference list feature. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Values</b></em>' reference list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @generated
      */

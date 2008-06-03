@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SpecialPurchaseOrder.java,v 1.3 2008-04-20 08:22:20 estepper Exp $
+ * $Id: SpecialPurchaseOrder.java,v 1.4 2008-06-03 06:41:28 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2;
 
@@ -29,8 +29,8 @@ public interface SpecialPurchaseOrder extends PurchaseOrder
   /**
    * Returns the value of the '<em><b>Discount Code</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Discount Code</em>' attribute isn't clear, there really should be more of a
-   * description here...
+   * If the meaning of the '<em>Discount Code</em>' attribute isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -43,8 +43,8 @@ public interface SpecialPurchaseOrder extends PurchaseOrder
   String getDiscountCode();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getDiscountCode <em>Discount Code</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getDiscountCode
+   * <em>Discount Code</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
    *          the new value of the '<em>Discount Code</em>' attribute.
@@ -56,8 +56,8 @@ public interface SpecialPurchaseOrder extends PurchaseOrder
   /**
    * Returns the value of the '<em><b>Shipping Address</b></em>' containment reference. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Shipping Address</em>' containment reference isn't clear, there really should be
-   * more of a description here...
+   * If the meaning of the '<em>Shipping Address</em>' containment reference isn't clear, there really should be more of
+   * a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -70,8 +70,8 @@ public interface SpecialPurchaseOrder extends PurchaseOrder
   Address getShippingAddress();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getShippingAddress <em>Shipping Address</em>}'
-   * containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getShippingAddress
+   * <em>Shipping Address</em>}' containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
    *          the new value of the '<em>Shipping Address</em>' containment reference.

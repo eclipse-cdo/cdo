@@ -25,8 +25,8 @@ public interface Customer extends Address
 {
   /**
    * Returns the value of the '<em><b>Sales Orders</b></em>' reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model1.SalesOrder}. It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getCustomer <em>Customer</em>}'.
-   * <!-- begin-user-doc -->
+   * {@link org.eclipse.emf.cdo.tests.model1.SalesOrder}. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getCustomer <em>Customer</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Sales Orders</em>' reference list isn't clear, there really should be more of a
    * description here...

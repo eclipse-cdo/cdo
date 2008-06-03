@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: VAT.java,v 1.2 2008-03-08 09:41:45 estepper Exp $
+ * $Id: VAT.java,v 1.3 2008-06-03 06:41:31 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model1;
 
@@ -52,8 +52,8 @@ public enum VAT implements Enumerator
   /**
    * The '<em><b>Vat0</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of '<em><b>Vat0</b></em>' literal object isn't clear, there really should be more of a
-   * description here...
+   * If the meaning of '<em><b>Vat0</b></em>' literal object isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -67,8 +67,8 @@ public enum VAT implements Enumerator
   /**
    * The '<em><b>Vat7</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of '<em><b>Vat7</b></em>' literal object isn't clear, there really should be more of a
-   * description here...
+   * If the meaning of '<em><b>Vat7</b></em>' literal object isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -82,8 +82,8 @@ public enum VAT implements Enumerator
   /**
    * The '<em><b>Vat15</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of '<em><b>Vat15</b></em>' literal object isn't clear, there really should be more of a
-   * description here...
+   * If the meaning of '<em><b>Vat15</b></em>' literal object isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -102,8 +102,7 @@ public enum VAT implements Enumerator
   private static final VAT[] VALUES_ARRAY = new VAT[] { VAT0, VAT7, VAT15, };
 
   /**
-   * A public read-only list of all the '<em><b>VAT</b></em>' enumerators. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * A public read-only list of all the '<em><b>VAT</b></em>' enumerators. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    */
@@ -129,8 +128,7 @@ public enum VAT implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>VAT</b></em>' literal with the specified name. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
+   * Returns the '<em><b>VAT</b></em>' literal with the specified name. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    */

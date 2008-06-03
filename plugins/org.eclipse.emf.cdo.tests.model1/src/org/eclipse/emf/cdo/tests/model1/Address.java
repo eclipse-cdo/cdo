@@ -29,8 +29,7 @@ public interface Address extends CDOObject
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description
-   * here...
+   * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -56,8 +55,7 @@ public interface Address extends CDOObject
   /**
    * Returns the value of the '<em><b>Street</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Street</em>' attribute isn't clear, there really should be more of a description
-   * here...
+   * If the meaning of the '<em>Street</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -70,8 +68,8 @@ public interface Address extends CDOObject
   String getStreet();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Address#getStreet <em>Street</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Address#getStreet <em>Street</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
    *          the new value of the '<em>Street</em>' attribute.
@@ -83,8 +81,7 @@ public interface Address extends CDOObject
   /**
    * Returns the value of the '<em><b>City</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>City</em>' attribute isn't clear, there really should be more of a description
-   * here...
+   * If the meaning of the '<em>City</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 

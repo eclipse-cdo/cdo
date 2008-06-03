@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: OrderAddressImpl.java,v 1.1 2008-04-12 10:05:44 estepper Exp $
+ * $Id: OrderAddressImpl.java,v 1.2 2008-06-03 06:41:31 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model1.impl;
 
@@ -16,8 +16,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Order Address</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Order Address</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>

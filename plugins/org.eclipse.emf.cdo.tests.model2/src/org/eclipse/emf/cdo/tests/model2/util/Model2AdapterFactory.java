@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2AdapterFactory.java,v 1.2 2008-04-07 08:28:21 estepper Exp $
+ * $Id: Model2AdapterFactory.java,v 1.3 2008-06-03 06:41:28 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.util;
 
@@ -114,9 +114,10 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder <em>Special Purchase Order</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
-   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder
+   * <em>Special Purchase Order</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
    * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder
@@ -128,8 +129,8 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model1.Order <em>Order</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model1.Order <em>Order</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
    * 
    * @return the new adapter.
@@ -142,9 +143,9 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder <em>Purchase Order</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
-   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder
+   * <em>Purchase Order</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
    * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model1.PurchaseOrder

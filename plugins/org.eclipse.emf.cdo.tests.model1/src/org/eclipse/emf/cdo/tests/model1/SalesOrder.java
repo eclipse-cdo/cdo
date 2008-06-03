@@ -7,8 +7,7 @@
 package org.eclipse.emf.cdo.tests.model1;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>Sales Order</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Sales Order</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are supported:
  * <ul>
@@ -50,8 +49,8 @@ public interface SalesOrder extends Order
   void setId(int value);
 
   /**
-   * Returns the value of the '<em><b>Customer</b></em>' reference. It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.Customer#getSalesOrders <em>Sales Orders</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Customer</b></em>' reference. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.model1.Customer#getSalesOrders <em>Sales Orders</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Customer</em>' reference isn't clear, there really should be more of a description
    * here...

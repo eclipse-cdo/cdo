@@ -246,8 +246,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   protected ISelectionChangedListener selectionChangedListener;
 
   /**
-   * This keeps track of all the {@link org.eclipse.jface.viewers.ISelectionChangedListener}s that are listening to
-   * this editor. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This keeps track of all the {@link org.eclipse.jface.viewers.ISelectionChangedListener}s that are listening to this
+   * editor. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    */
@@ -1508,8 +1508,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           {
             try
             {
-              savedResources.add(resource);
+              long timeStamp = resource.getTimeStamp();
               resource.save(saveOptions);
+              if (resource.getTimeStamp() != timeStamp)
+              {
+                savedResources.add(resource);
+              }
             }
             catch (Exception exception)
             {
@@ -1782,8 +1786,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This implements {@link org.eclipse.jface.viewers.ISelectionProvider}. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
+   * This implements {@link org.eclipse.jface.viewers.ISelectionProvider}. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    */
@@ -1793,8 +1796,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This implements {@link org.eclipse.jface.viewers.ISelectionProvider}. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
+   * This implements {@link org.eclipse.jface.viewers.ISelectionProvider}. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    */

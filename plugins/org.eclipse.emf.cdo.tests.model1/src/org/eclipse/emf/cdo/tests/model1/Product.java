@@ -31,8 +31,7 @@ public interface Product extends CDOObject
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description
-   * here...
+   * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -57,8 +56,8 @@ public interface Product extends CDOObject
 
   /**
    * Returns the value of the '<em><b>Order Details</b></em>' reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model1.OrderDetail}. It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail#getProduct <em>Product</em>}'.
-   * <!-- begin-user-doc -->
+   * {@link org.eclipse.emf.cdo.tests.model1.OrderDetail}. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.model1.OrderDetail#getProduct <em>Product</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Order Details</em>' reference list isn't clear, there really should be more of a
    * description here...
@@ -74,11 +73,10 @@ public interface Product extends CDOObject
   EList<OrderDetail> getOrderDetails();
 
   /**
-   * Returns the value of the '<em><b>Vat</b></em>' attribute. The default value is <code>"vat15"</code>. The
-   * literals are from the enumeration {@link org.eclipse.emf.cdo.tests.model1.VAT}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Vat</b></em>' attribute. The default value is <code>"vat15"</code>. The literals
+   * are from the enumeration {@link org.eclipse.emf.cdo.tests.model1.VAT}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Vat</em>' attribute isn't clear, there really should be more of a description
-   * here...
+   * If the meaning of the '<em>Vat</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 

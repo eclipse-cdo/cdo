@@ -2,13 +2,12 @@
  * <copyright>
  * </copyright>
  *
- * $Id: OrderAddress.java,v 1.1 2008-04-12 10:05:44 estepper Exp $
+ * $Id: OrderAddress.java,v 1.2 2008-06-03 06:41:31 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model1;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>Order Address</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Order Address</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are supported:
  * <ul>
@@ -25,8 +24,8 @@ public interface OrderAddress extends Address, Order, OrderDetail
   /**
    * Returns the value of the '<em><b>Test Attribute</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Test Attribute</em>' attribute isn't clear, there really should be more of a
-   * description here...
+   * If the meaning of the '<em>Test Attribute</em>' attribute isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -39,8 +38,8 @@ public interface OrderAddress extends Address, Order, OrderDetail
   boolean isTestAttribute();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.OrderAddress#isTestAttribute <em>Test Attribute</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.OrderAddress#isTestAttribute
+   * <em>Test Attribute</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
    *          the new value of the '<em>Test Attribute</em>' attribute.

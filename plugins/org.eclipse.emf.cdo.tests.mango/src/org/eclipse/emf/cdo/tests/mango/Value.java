@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Value.java,v 1.2 2008-02-23 10:00:33 estepper Exp $
+ * $Id: Value.java,v 1.3 2008-06-03 06:41:27 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango;
 
@@ -27,8 +27,7 @@ public interface Value extends CDOObject
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description
-   * here...
+   * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 

@@ -28,11 +28,11 @@ import org.eclipse.emf.common.util.EList;
 public interface Company extends Address
 {
   /**
-   * Returns the value of the '<em><b>Categories</b></em>' containment reference list. The list contents are of
-   * type {@link org.eclipse.emf.cdo.tests.model1.Category}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Categories</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model1.Category}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Categories</em>' containment reference list isn't clear, there really should be more
-   * of a description here...
+   * If the meaning of the '<em>Categories</em>' containment reference list isn't clear, there really should be more of
+   * a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -47,8 +47,8 @@ public interface Company extends Address
    * Returns the value of the '<em><b>Suppliers</b></em>' containment reference list. The list contents are of type
    * {@link org.eclipse.emf.cdo.tests.model1.Supplier}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Suppliers</em>' containment reference list isn't clear, there really should be more
-   * of a description here...
+   * If the meaning of the '<em>Suppliers</em>' containment reference list isn't clear, there really should be more of a
+   * description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -60,8 +60,8 @@ public interface Company extends Address
   EList<Supplier> getSuppliers();
 
   /**
-   * Returns the value of the '<em><b>Purchase Orders</b></em>' containment reference list. The list contents are
-   * of type {@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Purchase Orders</b></em>' containment reference list. The list contents are of
+   * type {@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder}. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Purchase Orders</em>' containment reference list isn't clear, there really should be
    * more of a description here...
@@ -79,8 +79,8 @@ public interface Company extends Address
    * Returns the value of the '<em><b>Customers</b></em>' containment reference list. The list contents are of type
    * {@link org.eclipse.emf.cdo.tests.model1.Customer}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Customers</em>' containment reference list isn't clear, there really should be more
-   * of a description here...
+   * If the meaning of the '<em>Customers</em>' containment reference list isn't clear, there really should be more of a
+   * description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -92,11 +92,11 @@ public interface Company extends Address
   EList<Customer> getCustomers();
 
   /**
-   * Returns the value of the '<em><b>Sales Orders</b></em>' containment reference list. The list contents are of
-   * type {@link org.eclipse.emf.cdo.tests.model1.SalesOrder}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Sales Orders</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model1.SalesOrder}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Sales Orders</em>' containment reference list isn't clear, there really should be
-   * more of a description here...
+   * If the meaning of the '<em>Sales Orders</em>' containment reference list isn't clear, there really should be more
+   * of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoPackageImpl.java,v 1.2 2008-02-23 10:00:33 estepper Exp $
+ * $Id: MangoPackageImpl.java,v 1.3 2008-06-03 06:41:27 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 
@@ -39,8 +39,8 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
   private EClass valueEClass = null;
 
   /**
-   * Creates an instance of the model <b>Package</b>, registered with
-   * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package package URI value.
+   * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
+   * EPackage.Registry} by the package package URI value.
    * <p>
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--

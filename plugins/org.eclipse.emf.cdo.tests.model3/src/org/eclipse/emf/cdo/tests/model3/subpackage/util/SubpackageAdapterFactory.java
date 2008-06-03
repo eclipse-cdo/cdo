@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SubpackageAdapterFactory.java,v 1.1 2008-04-20 09:58:05 estepper Exp $
+ * $Id: SubpackageAdapterFactory.java,v 1.2 2008-06-03 06:41:22 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage.util;
 
@@ -100,9 +100,9 @@ public class SubpackageAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.subpackage.Class2 <em>Class2</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
-   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.subpackage.Class2
+   * <em>Class2</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
+   * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
    * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model3.subpackage.Class2

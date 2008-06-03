@@ -444,9 +444,8 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   /**
    * This populates the specified <code>manager</code> with {@link org.eclipse.jface.action.ActionContributionItem}s
    * based on the {@link org.eclipse.jface.action.IAction}s contained in the <code>actions</code> collection, by
-   * inserting them before the specified contribution item <code>contributionID</code>. If
-   * <code>contributionID</code> is <code>null</code>, they are simply added. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * inserting them before the specified contribution item <code>contributionID</code>. If <code>contributionID</code>
+   * is <code>null</code>, they are simply added. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    */

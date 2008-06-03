@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SpecialPurchaseOrderImpl.java,v 1.3 2008-04-20 08:22:20 estepper Exp $
+ * $Id: SpecialPurchaseOrderImpl.java,v 1.4 2008-06-03 06:41:28 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
@@ -20,7 +20,8 @@ import org.eclipse.emf.ecore.EClass;
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.SpecialPurchaseOrderImpl#getDiscountCode <em>Discount Code</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.SpecialPurchaseOrderImpl#getShippingAddress <em>Shipping Address</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.SpecialPurchaseOrderImpl#getShippingAddress <em>Shipping Address
+ * </em>}</li>
  * </ul>
  * </p>
  * 

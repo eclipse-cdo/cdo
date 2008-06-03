@@ -27,12 +27,12 @@ import org.eclipse.emf.common.util.EList;
 public interface Order extends CDOObject
 {
   /**
-   * Returns the value of the '<em><b>Order Details</b></em>' containment reference list. The list contents are of
-   * type {@link org.eclipse.emf.cdo.tests.model1.OrderDetail}. It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail#getOrder <em>Order</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Order Details</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model1.OrderDetail}. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.model1.OrderDetail#getOrder <em>Order</em>}'. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Order Details</em>' containment reference list isn't clear, there really should be
-   * more of a description here...
+   * If the meaning of the '<em>Order Details</em>' containment reference list isn't clear, there really should be more
+   * of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 

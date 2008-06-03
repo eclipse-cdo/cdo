@@ -31,8 +31,7 @@ public interface Category extends CDOObject
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description
-   * here...
+   * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -56,11 +55,11 @@ public interface Category extends CDOObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Categories</b></em>' containment reference list. The list contents are of
-   * type {@link org.eclipse.emf.cdo.tests.model1.Category}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Categories</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model1.Category}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Categories</em>' containment reference list isn't clear, there really should be more
-   * of a description here...
+   * If the meaning of the '<em>Categories</em>' containment reference list isn't clear, there really should be more of
+   * a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -75,8 +74,8 @@ public interface Category extends CDOObject
    * Returns the value of the '<em><b>Products</b></em>' containment reference list. The list contents are of type
    * {@link org.eclipse.emf.cdo.tests.model1.Product}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Products</em>' containment reference list isn't clear, there really should be more
-   * of a description here...
+   * If the meaning of the '<em>Products</em>' containment reference list isn't clear, there really should be more of a
+   * description here...
    * </p>
    * <!-- end-user-doc -->
    * 

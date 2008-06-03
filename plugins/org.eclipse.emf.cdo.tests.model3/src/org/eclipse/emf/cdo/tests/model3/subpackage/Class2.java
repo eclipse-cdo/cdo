@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Class2.java,v 1.1 2008-04-20 09:58:05 estepper Exp $
+ * $Id: Class2.java,v 1.2 2008-06-03 06:41:22 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage;
 
@@ -29,11 +29,11 @@ public interface Class2 extends CDOObject
 {
   /**
    * Returns the value of the '<em><b>Class1</b></em>' reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model3.Class1}. It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model3.Class1#getClass2 <em>Class2</em>}'.
-   * <!-- begin-user-doc -->
+   * {@link org.eclipse.emf.cdo.tests.model3.Class1}. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.model3.Class1#getClass2 <em>Class2</em>}'. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Class1</em>' reference list isn't clear, there really should be more of a
-   * description here...
+   * If the meaning of the '<em>Class1</em>' reference list isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
    * 

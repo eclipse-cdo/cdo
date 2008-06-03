@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SubpackagePackage.java,v 1.1 2008-04-20 09:58:05 estepper Exp $
+ * $Id: SubpackagePackage.java,v 1.2 2008-06-03 06:41:22 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage;
 
@@ -91,8 +91,9 @@ public interface SubpackagePackage extends EPackage
   EClass getClass2();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.subpackage.Class2#getClass1 <em>Class1</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the reference list '
+   * {@link org.eclipse.emf.cdo.tests.model3.subpackage.Class2#getClass1 <em>Class1</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
    * 
    * @return the meta object for the reference list '<em>Class1</em>'.
    * @see org.eclipse.emf.cdo.tests.model3.subpackage.Class2#getClass1()
@@ -124,8 +125,8 @@ public interface SubpackagePackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model3.subpackage.impl.Class2Impl <em>Class2</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model3.subpackage.impl.Class2Impl
+     * <em>Class2</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see org.eclipse.emf.cdo.tests.model3.subpackage.impl.Class2Impl
      * @see org.eclipse.emf.cdo.tests.model3.subpackage.impl.SubpackagePackageImpl#getClass2()
@@ -134,8 +135,8 @@ public interface SubpackagePackage extends EPackage
     EClass CLASS2 = eINSTANCE.getClass2();
 
     /**
-     * The meta object literal for the '<em><b>Class1</b></em>' reference list feature. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Class1</b></em>' reference list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @generated
      */

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model3Package.java,v 1.1 2008-04-20 09:58:05 estepper Exp $
+ * $Id: Model3Package.java,v 1.2 2008-06-03 06:41:22 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3;
 
@@ -91,8 +91,8 @@ public interface Model3Package extends EPackage
   EClass getClass1();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.Class1#getClass2 <em>Class2</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.Class1#getClass2
+   * <em>Class2</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the reference list '<em>Class2</em>'.
    * @see org.eclipse.emf.cdo.tests.model3.Class1#getClass2()
@@ -124,8 +124,8 @@ public interface Model3Package extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model3.impl.Class1Impl <em>Class1</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model3.impl.Class1Impl <em>Class1</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see org.eclipse.emf.cdo.tests.model3.impl.Class1Impl
      * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getClass1()
@@ -134,8 +134,8 @@ public interface Model3Package extends EPackage
     EClass CLASS1 = eINSTANCE.getClass1();
 
     /**
-     * The meta object literal for the '<em><b>Class2</b></em>' reference list feature. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Class2</b></em>' reference list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @generated
      */

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoAdapterFactory.java,v 1.2 2008-02-23 10:00:34 estepper Exp $
+ * $Id: MangoAdapterFactory.java,v 1.3 2008-06-03 06:41:27 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.util;
 
@@ -107,9 +107,9 @@ public class MangoAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.mango.ValueList <em>Value List</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
-   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.mango.ValueList <em>Value List</em>}
+   * '. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
+   * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
    * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.mango.ValueList

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ValueListImpl.java,v 1.2 2008-02-23 10:00:34 estepper Exp $
+ * $Id: ValueListImpl.java,v 1.3 2008-06-03 06:41:27 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 
@@ -16,8 +16,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Value List</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Value List</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>

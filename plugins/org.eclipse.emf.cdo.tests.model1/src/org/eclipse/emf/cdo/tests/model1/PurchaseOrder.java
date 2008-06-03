@@ -9,8 +9,7 @@ package org.eclipse.emf.cdo.tests.model1;
 import java.util.Date;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>Purchase Order</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Purchase Order</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are supported:
  * <ul>
@@ -28,8 +27,7 @@ public interface PurchaseOrder extends Order
   /**
    * Returns the value of the '<em><b>Date</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Date</em>' attribute isn't clear, there really should be more of a description
-   * here...
+   * If the meaning of the '<em>Date</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
@@ -53,8 +51,9 @@ public interface PurchaseOrder extends Order
   void setDate(Date value);
 
   /**
-   * Returns the value of the '<em><b>Supplier</b></em>' reference. It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.Supplier#getPurchaseOrders <em>Purchase Orders</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Supplier</b></em>' reference. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.model1.Supplier#getPurchaseOrders <em>Purchase Orders</em>}'. <!-- begin-user-doc
+   * -->
    * <p>
    * If the meaning of the '<em>Supplier</em>' reference isn't clear, there really should be more of a description
    * here...

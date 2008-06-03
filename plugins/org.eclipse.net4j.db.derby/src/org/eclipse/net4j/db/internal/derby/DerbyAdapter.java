@@ -12,8 +12,7 @@ package org.eclipse.net4j.db.internal.derby;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
-import org.eclipse.net4j.internal.db.DBAdapter;
-import org.eclipse.net4j.internal.db.ddl.DBField;
+import org.eclipse.net4j.spi.db.DBAdapter;
 
 /**
  * @author Eike Stepper
@@ -49,7 +48,7 @@ public abstract class DerbyAdapter extends DBAdapter
   }
 
   @Override
-  protected String getTypeName(DBField field)
+  protected String getTypeName(IDBField field)
   {
     DBType type = field.getType();
     switch (type)

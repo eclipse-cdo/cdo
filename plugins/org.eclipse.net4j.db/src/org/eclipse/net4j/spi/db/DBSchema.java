@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.db.ddl;
+package org.eclipse.net4j.spi.db;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -17,6 +17,8 @@ import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.internal.db.ddl.DBSchemaElement;
+import org.eclipse.net4j.internal.db.ddl.DBTable;
 
 import javax.sql.DataSource;
 
@@ -196,7 +198,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     }
   }
 
-  void assertUnlocked() throws DBException
+  public void assertUnlocked() throws DBException
   {
     if (locked)
     {

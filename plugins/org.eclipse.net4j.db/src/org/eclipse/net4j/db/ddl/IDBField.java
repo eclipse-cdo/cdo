@@ -43,5 +43,9 @@ public interface IDBField extends IDBSchemaElement
 
   public String getFullName();
 
+  public String formatPrecision();
+
+  public String formatPrecisionAndScale();
+
   public void appendValue(StringBuilder builder, Object value);
 }

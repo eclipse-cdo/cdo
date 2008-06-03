@@ -27,8 +27,7 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
-import org.eclipse.net4j.internal.db.ddl.DBSchema;
+import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -97,7 +96,7 @@ public class DBStore extends LongIDStore implements IDBStore
 
   public void setDataSource(DataSource dataSource)
   {
-    dbConnectionProvider = new DataSourceConnectionProvider(dataSource);
+    dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
   }
 
   public synchronized IDBSchema getDBSchema()

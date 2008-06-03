@@ -4,7 +4,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.internal.db.ddl.DBSchema;
+import org.eclipse.net4j.spi.db.DBSchema;
 
 public class TestSchema extends DBSchema
 {

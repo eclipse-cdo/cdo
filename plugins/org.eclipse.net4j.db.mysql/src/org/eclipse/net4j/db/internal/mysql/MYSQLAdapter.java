@@ -13,8 +13,7 @@ package org.eclipse.net4j.db.internal.mysql;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
-import org.eclipse.net4j.internal.db.DBAdapter;
-import org.eclipse.net4j.internal.db.ddl.DBField;
+import org.eclipse.net4j.spi.db.DBAdapter;
 
 import com.mysql.jdbc.Driver;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
@@ -79,7 +78,7 @@ public class MYSQLAdapter extends DBAdapter
   }
 
   @Override
-  protected String getTypeName(DBField field)
+  protected String getTypeName(IDBField field)
   {
     DBType type = field.getType();
     switch (type)

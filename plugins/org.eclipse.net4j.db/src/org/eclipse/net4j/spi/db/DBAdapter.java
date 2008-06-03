@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.db;
+package org.eclipse.net4j.spi.db;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -325,7 +325,7 @@ public abstract class DBAdapter implements IDBAdapter
     return getTypeName(field) + (field.isNotNull() ? " NOT NULL" : "");
   }
 
-  protected String getTypeName(DBField field)
+  protected String getTypeName(IDBField field)
   {
     DBType type = field.getType();
     switch (type)

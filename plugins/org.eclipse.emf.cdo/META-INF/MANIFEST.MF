@@ -19,8 +19,8 @@ Export-Package: org.eclipse.emf.cdo;version="1.0.0",
  org.eclipse.emf.cdo.eresource.util;version="1.0.0",
  org.eclipse.emf.cdo.util;version="1.0.0",
  org.eclipse.emf.internal.cdo;version="1.0.0",
- org.eclipse.emf.internal.cdo.analyzer;version="1.0.0",
+ org.eclipse.emf.internal.cdo.analyzer;version="1.0.0";x-friends:="org.eclipse.emf.cdo.tests",
  org.eclipse.emf.internal.cdo.bundle;version="1.0.0";x-friends:="org.eclipse.emf.cdo.ui",
- org.eclipse.emf.internal.cdo.protocol;version="1.0.0",
- org.eclipse.emf.internal.cdo.util;version="1.0.0"
+ org.eclipse.emf.internal.cdo.protocol;version="1.0.0";x-friends:="org.eclipse.emf.cdo.tests",
+ org.eclipse.emf.internal.cdo.util;version="1.0.0";x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.ui"
 Bundle-ActivationPolicy: lazy

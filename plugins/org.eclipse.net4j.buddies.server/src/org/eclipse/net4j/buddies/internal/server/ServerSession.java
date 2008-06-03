@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.server;
 
-import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.ISession;
+import org.eclipse.net4j.buddies.common.IBuddy;
+import org.eclipse.net4j.buddies.common.ISession;
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.PlatformObject;

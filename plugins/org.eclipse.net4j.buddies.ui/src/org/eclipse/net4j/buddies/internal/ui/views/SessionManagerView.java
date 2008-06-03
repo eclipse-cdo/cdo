@@ -11,15 +11,15 @@
 package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddySession;
+import org.eclipse.net4j.buddies.ISessionManager;
+import org.eclipse.net4j.buddies.ISessionManagerEvent;
+import org.eclipse.net4j.buddies.common.IBuddyStateEvent;
 import org.eclipse.net4j.buddies.internal.ui.BuddiesItemProvider;
 import org.eclipse.net4j.buddies.internal.ui.actions.ConnectAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.DisconnectAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.FlashAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.ReconnectAction;
 import org.eclipse.net4j.buddies.internal.ui.actions.StateAction.DropDownAction;
-import org.eclipse.net4j.buddies.protocol.IBuddyStateEvent;
-import org.eclipse.net4j.buddies.ui.ISessionManager;
-import org.eclipse.net4j.buddies.ui.ISessionManagerEvent;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;

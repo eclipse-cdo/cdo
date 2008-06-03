@@ -12,40 +12,41 @@ package org.eclipse.internal.net4j.connector;
 
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.connector.IConnectorStateEvent;
-import org.eclipse.net4j.internal.util.container.Container;
-import org.eclipse.net4j.internal.util.container.LifecycleEventConverter;
-import org.eclipse.net4j.internal.util.event.Event;
-import org.eclipse.net4j.internal.util.factory.FactoryKey;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.protocol.ClientProtocolFactory;
 import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.protocol.ServerProtocolFactory;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.RWLock;
+import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IElementProcessor;
+import org.eclipse.net4j.util.container.LifecycleEventConverter;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
+import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.factory.FactoryKey;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.MonitorUtil;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.INegotiator;
 
 import org.eclipse.internal.net4j.bundle.OM;
 import org.eclipse.internal.net4j.channel.Channel;
-import org.eclipse.internal.net4j.channel.InternalChannel;
-import org.eclipse.internal.net4j.protocol.ClientProtocolFactory;
-import org.eclipse.internal.net4j.protocol.ServerProtocolFactory;
+
+import org.eclipse.spi.net4j.InternalChannel;
+import org.eclipse.spi.net4j.InternalConnector;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ import java.util.concurrent.TimeoutException;
 /**
  * @author Eike Stepper
  */
-public abstract class Connector extends Container<IChannel> implements IConnector, IChannelMultiplexer
+public abstract class Connector extends Container<IChannel> implements InternalConnector
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONNECTOR, Connector.class);
 
@@ -145,6 +146,11 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
     return bufferProvider;
   }
 
+  public void setBufferProvider(IBufferProvider bufferProvider)
+  {
+    this.bufferProvider = bufferProvider;
+  }
+
   public INegotiator getNegotiator()
   {
     return negotiator;
@@ -158,11 +164,6 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
   public INegotiationContext getNegotiationContext()
   {
     return negotiationContext;
-  }
-
-  public void setBufferProvider(IBufferProvider bufferProvider)
-  {
-    this.bufferProvider = bufferProvider;
   }
 
   public boolean isClient()
@@ -465,13 +466,13 @@ public abstract class Connector extends Container<IChannel> implements IConnecto
 
   protected InternalChannel createChannel()
   {
-    Channel channel = createChannelInstance();
+    InternalChannel channel = createChannelInstance();
     channel.setChannelMultiplexer(this);
     channel.setReceiveExecutor(receiveExecutor);
     return channel;
   }
 
-  protected Channel createChannelInstance()
+  protected InternalChannel createChannelInstance()
   {
     return new Channel();
   }

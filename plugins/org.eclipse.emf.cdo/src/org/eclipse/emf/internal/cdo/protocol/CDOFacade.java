@@ -11,11 +11,11 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOClassRef;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 

@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.ui.preferences;
 
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.util.ui.UIUtil;

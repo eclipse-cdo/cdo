@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.common.CDOProtocolSession;
+import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
-import org.eclipse.emf.cdo.protocol.CDOProtocolSession;
-import org.eclipse.emf.cdo.protocol.CDOProtocolView;
 
 import org.eclipse.net4j.util.container.IContainer;
 

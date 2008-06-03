@@ -16,14 +16,14 @@ import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.internal.jvm.bundle.OM;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
-import org.eclipse.internal.net4j.buffer.Buffer;
-import org.eclipse.internal.net4j.channel.InternalChannel;
 import org.eclipse.internal.net4j.connector.Connector;
+
+import org.eclipse.spi.net4j.InternalChannel;
 
 import java.util.Queue;
 
@@ -99,7 +99,7 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
     IBuffer buffer = localQueue.poll();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Multiplexing " + ((Buffer)buffer).formatContent(true));
+      TRACER.trace("Multiplexing " + buffer.formatContent(true));
     }
 
     buffer.flip();

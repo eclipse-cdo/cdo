@@ -11,11 +11,11 @@
 package org.eclipse.net4j.jms.internal.server.store;
 
 import org.eclipse.net4j.internal.jms.MessageImpl;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.jms.internal.server.ServerConsumer;
 import org.eclipse.net4j.jms.internal.server.ServerDestination;
 import org.eclipse.net4j.jms.internal.server.bundle.OM;
 import org.eclipse.net4j.jms.server.IStoreTransaction;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 /**
  * @author Eike Stepper

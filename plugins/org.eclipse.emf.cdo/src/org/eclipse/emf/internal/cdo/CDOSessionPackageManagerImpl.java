@@ -11,15 +11,15 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSessionPackageManager;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageManagerImpl;
-import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
-import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
-import org.eclipse.emf.cdo.protocol.util.TransportException;
+import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.util.TransportException;
+import org.eclipse.emf.cdo.internal.common.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;

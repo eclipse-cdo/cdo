@@ -10,14 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryProvider;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.io.InputStream;

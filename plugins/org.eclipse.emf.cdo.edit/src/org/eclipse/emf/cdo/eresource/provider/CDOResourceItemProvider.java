@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.eresource.provider;
 
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;

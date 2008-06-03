@@ -30,7 +30,7 @@ import java.nio.channels.SocketChannel;
 public enum BufferState
 {
   /**
-   * Indicates that the {@link IBuffer} has just been provided by its {@link IBufferProvider}} or that is has been used
+   * Indicates that the {@link IBuffer} has just been provided by its {@link IBufferProvider} or that is has been used
    * and subsequently {@link IBuffer#clear() cleared}.
    * <p>
    * A transition to {@link #PUTTING} can be triggered by calling {@link IBuffer#startPutting(short)} once. If the

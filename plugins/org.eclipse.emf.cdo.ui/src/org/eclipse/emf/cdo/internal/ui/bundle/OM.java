@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.ui.bundle;
 
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
 
-import org.eclipse.net4j.internal.util.security.ResponseNegotiator;
+import org.eclipse.net4j.Net4jTransportInjector;
 import org.eclipse.net4j.util.internal.ui.security.InteractiveCredentialsProvider;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -20,9 +20,8 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.pref.OMPreference;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
+import org.eclipse.net4j.util.security.ResponseNegotiator;
 import org.eclipse.net4j.util.ui.UIActivator;
-
-import org.eclipse.internal.net4j.Net4jTransportInjector;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.

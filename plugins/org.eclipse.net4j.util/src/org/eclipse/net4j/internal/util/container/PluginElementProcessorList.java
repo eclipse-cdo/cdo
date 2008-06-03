@@ -11,8 +11,8 @@
 package org.eclipse.net4j.internal.util.container;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.container.IElementProcessor;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionDelta;

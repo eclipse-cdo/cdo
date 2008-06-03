@@ -12,14 +12,14 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDORevisionManager;
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.protocol.util.TransportException;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.util.TransportException;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.LoadChunkRequest;
@@ -28,9 +28,9 @@ import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByVersionRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.internal.util.om.trace.PerfTracer;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.collection.MoveableList;
+import org.eclipse.net4j.util.om.trace.PerfTracer;
 
 import java.util.ArrayList;
 import java.util.Collection;

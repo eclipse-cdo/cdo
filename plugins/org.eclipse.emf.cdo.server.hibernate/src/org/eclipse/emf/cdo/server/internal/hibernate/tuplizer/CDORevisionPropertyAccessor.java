@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.hibernate.HibernateException;
 import org.hibernate.PropertyNotFoundException;

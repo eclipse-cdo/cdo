@@ -12,8 +12,8 @@ package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.emf.internal.cdo.CDOSessionConfigurationImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;

@@ -15,15 +15,15 @@ import org.eclipse.emf.cdo.CDORevisionManager;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.protocol.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
-import org.eclipse.emf.cdo.protocol.util.TransportException;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ServerException;
 
@@ -34,10 +34,10 @@ import org.eclipse.emf.internal.cdo.protocol.VerifyRevisionRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;

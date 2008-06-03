@@ -12,13 +12,13 @@ package org.eclipse.net4j.internal.util.bundle;
 
 import org.eclipse.net4j.internal.util.om.LegacyPlatform;
 import org.eclipse.net4j.internal.util.om.OSGiPlatform;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogHandler;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.log.OMLogger.Level;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.OMTraceHandler;
 import org.eclipse.net4j.util.om.trace.OMTraceHandlerEvent;
 

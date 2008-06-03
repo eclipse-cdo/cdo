@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util.registry;
 
-import org.eclipse.net4j.internal.util.registry.UnmodifiableRegistry;
-
 /**
  * @author Eike Stepper
  */

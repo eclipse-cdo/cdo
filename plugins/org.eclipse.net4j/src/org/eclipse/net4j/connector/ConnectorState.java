@@ -37,9 +37,8 @@ public enum ConnectorState
    * previously.
    * <p>
    * A connector is <code>DISCONNECTED</code> if and only if it is not
-   * {@link org.eclipse.net4j.util.lifecycle.LifecycleUtil#isActive(Object) active}. A transition to
-   * {@link #CONNECTING} can be triggered by calling {@link IConnector#connect(long)} or
-   * {@link IConnector#connectAsync()}.
+   * {@link org.eclipse.net4j.util.lifecycle.LifecycleUtil#isActive(Object) active}. A transition to {@link #CONNECTING}
+   * can be triggered by calling {@link IConnector#connect(long)} or {@link IConnector#connectAsync()}.
    * 
    * @see IConnector#getState()
    * @see org.eclipse.net4j.util.lifecycle.ILifecycle.Introspection#isActive()

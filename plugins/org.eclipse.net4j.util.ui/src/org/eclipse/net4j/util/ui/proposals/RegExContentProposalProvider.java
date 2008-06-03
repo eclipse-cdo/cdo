@@ -399,8 +399,8 @@ public class RegExContentProposalProvider implements IContentProposalProvider
   }
 
   /**
-   * <code>true</code> iff the processor is for the find field. <code>false</code> iff the processor is for the
-   * replace field.
+   * <code>true</code> iff the processor is for the find field. <code>false</code> iff the processor is for the replace
+   * field.
    */
   private final boolean fIsFind;
 
@@ -408,8 +408,8 @@ public class RegExContentProposalProvider implements IContentProposalProvider
    * Creates a new completion proposal provider.
    * 
    * @param isFind
-   *          <code>true</code> if the provider is used for the 'find' field <code>false</code> if the provider is
-   *          used for the 'reaplce' field
+   *          <code>true</code> if the provider is used for the 'find' field <code>false</code> if the provider is used
+   *          for the 'reaplce' field
    */
   public RegExContentProposalProvider(boolean isFind)
   {

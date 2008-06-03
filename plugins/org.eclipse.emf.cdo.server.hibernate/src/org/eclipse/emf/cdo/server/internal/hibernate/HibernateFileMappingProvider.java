@@ -14,9 +14,9 @@ import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.hibernate.cfg.Configuration;
 

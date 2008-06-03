@@ -11,10 +11,10 @@
 package org.eclipse.net4j.util.fsm;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.text.MessageFormat;
 

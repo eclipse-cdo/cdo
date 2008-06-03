@@ -10,15 +10,15 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.bundle;
 
-import org.eclipse.net4j.internal.util.om.log.Logger;
 import org.eclipse.net4j.internal.util.om.pref.Preferences;
-import org.eclipse.net4j.internal.util.om.trace.Tracer;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.log.Logger;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
+import org.eclipse.net4j.util.om.trace.Tracer;
 
 import java.io.File;
 import java.io.IOException;

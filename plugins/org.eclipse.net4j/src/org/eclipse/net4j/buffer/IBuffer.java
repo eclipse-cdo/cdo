@@ -12,8 +12,6 @@ package org.eclipse.net4j.buffer;
 
 import org.eclipse.net4j.channel.IChannel;
 
-import org.eclipse.internal.net4j.buffer.Buffer;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
@@ -68,7 +66,6 @@ import java.nio.channels.SocketChannel;
  * @see IChannel#sendBuffer(IBuffer)
  * @see IChannel#setReceiveHandler(IBufferHandler)
  * @see IBufferHandler#handleBuffer(IBuffer)
- * @see Buffer
  * @author Eike Stepper
  */
 public interface IBuffer
@@ -244,4 +241,6 @@ public interface IBuffer
    * Turns the state of this buffer from any state into {@link BufferState#INITIAL INITIAL}.
    */
   public void clear();
+
+  public String formatContent(boolean showHeader);
 }

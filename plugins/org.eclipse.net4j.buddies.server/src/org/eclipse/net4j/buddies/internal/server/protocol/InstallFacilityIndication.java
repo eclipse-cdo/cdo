@@ -10,14 +10,14 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
-import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
-import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
-import org.eclipse.net4j.buddies.internal.protocol.ServerFacilityFactory;
+import org.eclipse.net4j.buddies.common.IBuddy;
+import org.eclipse.net4j.buddies.common.IFacility;
+import org.eclipse.net4j.buddies.common.ISession;
+import org.eclipse.net4j.buddies.internal.common.Collaboration;
+import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.server.BuddyAdmin;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
-import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.IFacility;
-import org.eclipse.net4j.buddies.protocol.ISession;
+import org.eclipse.net4j.buddies.spi.common.ServerFacilityFactory;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.container.IPluginContainer;

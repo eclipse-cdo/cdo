@@ -16,15 +16,16 @@ import org.eclipse.net4j.http.internal.common.HTTPConnector;
 import org.eclipse.net4j.http.internal.server.bundle.OM;
 import org.eclipse.net4j.http.server.IHTTPAcceptor;
 import org.eclipse.net4j.http.server.INet4jTransportServlet;
-import org.eclipse.net4j.internal.util.lifecycle.Worker;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.lifecycle.Worker;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.IRandomizer;
 
 import org.eclipse.internal.net4j.acceptor.Acceptor;
-import org.eclipse.internal.net4j.connector.Connector;
+
+import org.eclipse.spi.net4j.InternalConnector;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -183,7 +184,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
   }
 
   @Override
-  public void addConnector(Connector connector)
+  public void addConnector(InternalConnector connector)
   {
     super.addConnector(connector);
     HTTPServerConnector httpConnector = (HTTPServerConnector)connector;

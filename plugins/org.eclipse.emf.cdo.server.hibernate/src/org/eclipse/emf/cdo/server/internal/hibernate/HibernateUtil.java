@@ -10,14 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.internal.protocol.id.CDOIDNullImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.hibernate.Session;
 
@@ -108,7 +107,7 @@ public class HibernateUtil
    */
   public CDORevision getCDORevision(CDOID id)
   {
-    if (id instanceof CDOIDNullImpl)
+    if (id.isNull())
     {
       return null;
     }

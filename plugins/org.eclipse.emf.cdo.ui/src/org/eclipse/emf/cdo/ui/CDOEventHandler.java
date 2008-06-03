@@ -16,8 +16,8 @@ import org.eclipse.emf.cdo.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
 
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 

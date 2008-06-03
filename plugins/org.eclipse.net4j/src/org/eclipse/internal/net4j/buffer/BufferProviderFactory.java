@@ -12,8 +12,8 @@ package org.eclipse.internal.net4j.buffer;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBufferProvider;
-import org.eclipse.net4j.internal.util.factory.Factory;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.factory.Factory;
 
 /**
  * @author Eike Stepper

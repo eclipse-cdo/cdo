@@ -11,8 +11,8 @@
 package org.eclipse.net4j.util.io;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.DataInput;
 import java.io.DataOutput;

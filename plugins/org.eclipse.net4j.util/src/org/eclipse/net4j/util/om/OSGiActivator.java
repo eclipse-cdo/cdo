@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om;
 
+import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.internal.util.om.OSGiBundle;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -35,12 +35,12 @@ public abstract class OSGiActivator implements BundleActivator
 
   public void start(BundleContext context) throws Exception
   {
-    startBundle(context, (OSGiBundle)getOMBundle());
+    startBundle(context, getOMBundle());
   }
 
   public void stop(BundleContext context) throws Exception
   {
-    stopBundle(context, (OSGiBundle)getOMBundle());
+    stopBundle(context, getOMBundle());
   }
 
   @Override
@@ -73,7 +73,7 @@ public abstract class OSGiActivator implements BundleActivator
     super.finalize();
   }
 
-  public static void startBundle(BundleContext context, OSGiBundle bundle) throws Error, Exception
+  public static void startBundle(BundleContext context, OMBundle bundle) throws Error, Exception
   {
     OM.Activator.traceStart(context);
     if (bundle == null)
@@ -84,7 +84,7 @@ public abstract class OSGiActivator implements BundleActivator
     try
     {
       bundle.setBundleContext(context);
-      bundle.start();
+      ((AbstractBundle)bundle).start();
     }
     catch (Error error)
     {
@@ -98,7 +98,7 @@ public abstract class OSGiActivator implements BundleActivator
     }
   }
 
-  public static void stopBundle(BundleContext context, OSGiBundle bundle) throws Error, Exception
+  public static void stopBundle(BundleContext context, OMBundle bundle) throws Error, Exception
   {
     OM.Activator.traceStop(context);
     if (bundle == null)
@@ -108,7 +108,7 @@ public abstract class OSGiActivator implements BundleActivator
 
     try
     {
-      bundle.stop();
+      ((AbstractBundle)bundle).stop();
       bundle.setBundleContext(null);
     }
     catch (Error error)

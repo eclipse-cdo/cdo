@@ -32,7 +32,7 @@ import java.util.List;
  * exchange {@link IBuffer}s.
  * <p>
  * This interface is <b>not</b> intended to be implemented by clients. Providers of connectors for new physical
- * connection types have to subclass {@link org.eclipse.internal.net4j.connector.Connector Connector}.
+ * connection types have to implement org.eclipse.internal.net4j.connector.InternalConnector.
  * <p>
  * <dt><b>Class Diagram:</b></dt>
  * <dd><img src="doc-files/Connectors.png" title="Diagram Connectors" border="0" usemap="Connectors.png"/></dd>
@@ -43,7 +43,7 @@ import java.util.List;
  * COORDS="280,360,380,410" HREF="IChannel.html"> </MAP>
  * <p>
  * <dt><b>Sequence Diagram: Communication Process</b></dt>
- * <dd> <img src="doc-files/CommunicationProcess.jpg" title="Communication Process" border="0"
+ * <dd><img src="doc-files/CommunicationProcess.jpg" title="Communication Process" border="0"
  * usemap="#CommunicationProcess.jpg"/></dd>
  * <p>
  * <MAP NAME="CommunicationProcess.jpg"> <AREA SHAPE="RECT" COORDS="128,94,247,123" HREF="IConnector.html"> <AREA
@@ -101,8 +101,8 @@ public interface IConnector extends IContainer<IChannel>
   public boolean isConnected();
 
   /**
-   * Asynchronous connect. May leave this {@link IConnector} in a state where
-   * <code>{@link #isConnected()} == false</code>.
+   * Asynchronous connect. May leave this {@link IConnector} in a state where <code>{@link #isConnected()} == false
+   * </code>.
    * <p>
    */
   public void connectAsync() throws ConnectorException;
@@ -116,8 +116,7 @@ public interface IConnector extends IContainer<IChannel>
   public boolean waitForConnection(long timeout) throws ConnectorException;
 
   /**
-   * Synchronous connect. Blocks until <code>{@link #isConnected()} ==
-   * true</code> or the given timeout expired.
+   * Synchronous connect. Blocks until <code>{@link #isConnected()} == true</code> or the given timeout expired.
    * <p>
    */
   public boolean connect(long timeout) throws ConnectorException;

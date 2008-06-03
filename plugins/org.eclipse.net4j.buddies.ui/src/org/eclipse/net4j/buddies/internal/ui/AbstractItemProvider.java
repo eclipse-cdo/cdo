@@ -11,9 +11,9 @@
 package org.eclipse.net4j.buddies.internal.ui;
 
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
-import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.ICollaboration;
-import org.eclipse.net4j.buddies.protocol.IMembership;
+import org.eclipse.net4j.buddies.common.IBuddy;
+import org.eclipse.net4j.buddies.common.ICollaboration;
+import org.eclipse.net4j.buddies.common.IMembership;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.UIUtil;

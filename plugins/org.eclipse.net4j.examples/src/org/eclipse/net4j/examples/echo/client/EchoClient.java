@@ -14,13 +14,13 @@ import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.examples.echo.EchoProtocol;
-import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
-import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.log.PrintLogHandler;
+import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 /**
  * @author Eike Stepper

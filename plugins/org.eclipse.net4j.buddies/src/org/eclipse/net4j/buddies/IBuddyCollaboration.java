@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies;
 
-import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.ICollaboration;
-import org.eclipse.net4j.buddies.protocol.IFacility;
+import org.eclipse.net4j.buddies.common.IBuddy;
+import org.eclipse.net4j.buddies.common.ICollaboration;
+import org.eclipse.net4j.buddies.common.IFacility;
 
 /**
  * @author Eike Stepper

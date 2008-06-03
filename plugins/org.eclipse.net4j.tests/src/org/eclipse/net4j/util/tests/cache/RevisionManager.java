@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.tests.cache;
 
-import org.eclipse.net4j.internal.util.cache.Cache;
+import org.eclipse.net4j.util.cache.Cache;
 
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;

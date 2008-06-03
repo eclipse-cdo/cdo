@@ -19,7 +19,7 @@ import org.eclipse.net4j.internal.jms.protocol.JMSRegisterConsumerRequest;
 import org.eclipse.net4j.internal.jms.protocol.JMSRollbackRequest;
 import org.eclipse.net4j.internal.jms.util.DestinationUtil;
 import org.eclipse.net4j.internal.jms.util.MessageUtil;
-import org.eclipse.net4j.internal.util.lifecycle.QueueWorker;
+import org.eclipse.net4j.util.lifecycle.QueueWorker;
 
 import javax.jms.BytesMessage;
 import javax.jms.Destination;

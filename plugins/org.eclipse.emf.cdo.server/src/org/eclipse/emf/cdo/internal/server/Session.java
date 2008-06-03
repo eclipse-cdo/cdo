@@ -11,28 +11,28 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDObject;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOClassRef;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.internal.server.protocol.InvalidationNotification;
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.CDOProtocolView;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDObject;
-import org.eclipse.emf.cdo.protocol.id.CDOIDProvider;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
-import org.eclipse.net4j.internal.util.container.Container;
-import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
 import java.text.MessageFormat;
 import java.util.List;

@@ -11,7 +11,7 @@
 package org.eclipse.net4j.internal.util.om.pref;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
-import org.eclipse.net4j.internal.util.event.Notifier;
+import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.IORunnable;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;

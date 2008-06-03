@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies.protocol;
 
-import org.eclipse.net4j.buddies.internal.protocol.BuddyStateIndication;
-import org.eclipse.net4j.buddies.protocol.IBuddy.State;
+import org.eclipse.net4j.buddies.common.IBuddy.State;
+import org.eclipse.net4j.buddies.internal.common.protocol.BuddyStateIndication;
 import org.eclipse.net4j.internal.buddies.ClientBuddy;
 import org.eclipse.net4j.internal.buddies.ClientSession;
 

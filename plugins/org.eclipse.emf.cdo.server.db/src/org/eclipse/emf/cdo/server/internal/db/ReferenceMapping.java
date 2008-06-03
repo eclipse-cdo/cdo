@@ -10,13 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -25,13 +24,14 @@ import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.collection.MoveableList;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -115,7 +115,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
       while (resultSet.next() && (referenceChunk == CDORevision.UNCHUNKED || --referenceChunk >= 0))
       {
         long target = resultSet.getLong(1);
-        list.add(CDOIDUtil.createCDOID(target));
+        list.add(CDOIDUtil.createLong(target));
       }
 
       // TODO Optimize this?
@@ -164,7 +164,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
           chunkSize = chunk.size();
         }
 
-        chunk.addID(indexInChunk++, CDOIDUtil.createCDOID(target));
+        chunk.addID(indexInChunk++, CDOIDUtil.createLong(target));
         if (indexInChunk == chunkSize)
         {
           chunk = null;

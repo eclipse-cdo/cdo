@@ -10,22 +10,22 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
+import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOClassProxy;
+import org.eclipse.emf.cdo.common.model.CDOClassRef;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOPackageManager;
+import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.model.core.CDOCorePackage;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
-import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOClass;
-import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOFeature;
-import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
-import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOModelUtil;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
-import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
-import org.eclipse.emf.cdo.protocol.model.CDOType;
-import org.eclipse.emf.cdo.protocol.model.core.CDOCorePackage;
-import org.eclipse.emf.cdo.protocol.model.resource.CDOResourceClass;
-import org.eclipse.emf.cdo.protocol.model.resource.CDOResourcePackage;
+import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
+import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
+import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
@@ -34,8 +34,8 @@ import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;

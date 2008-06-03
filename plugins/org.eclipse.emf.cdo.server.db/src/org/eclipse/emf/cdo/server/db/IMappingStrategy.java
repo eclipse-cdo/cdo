@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOClassRef;
 
 import org.eclipse.net4j.util.io.CloseableIterator;
 

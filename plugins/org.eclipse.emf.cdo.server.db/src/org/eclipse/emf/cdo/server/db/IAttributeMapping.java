@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.db.ddl.IDBField;
 

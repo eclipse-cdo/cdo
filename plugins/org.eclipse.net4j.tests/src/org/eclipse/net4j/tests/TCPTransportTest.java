@@ -17,11 +17,11 @@ import org.eclipse.net4j.channel.ChannelInputStream;
 import org.eclipse.net4j.channel.ChannelOutputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.internal.util.container.ManagedContainer;
 import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.ManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 

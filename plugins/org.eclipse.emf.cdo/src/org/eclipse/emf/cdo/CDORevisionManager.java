@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 
 /**
  * @author Eike Stepper

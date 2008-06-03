@@ -10,23 +10,24 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.acceptor;
 
-import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.internal.util.container.Container;
-import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.INegotiator;
 
 import org.eclipse.internal.net4j.bundle.OM;
-import org.eclipse.internal.net4j.connector.Connector;
+
+import org.eclipse.spi.net4j.InternalAcceptor;
+import org.eclipse.spi.net4j.InternalConnector;
 
 import java.util.HashSet;
 import java.util.List;
@@ -36,7 +37,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public abstract class Acceptor extends Container<IConnector> implements IAcceptor
+public abstract class Acceptor extends Container<IConnector> implements InternalAcceptor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_ACCEPTOR, Acceptor.class);
 
@@ -134,7 +135,7 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
     return getAcceptedConnectors();
   }
 
-  public void prepareConnector(Connector connector)
+  public void prepareConnector(InternalConnector connector)
   {
     connector.setNegotiator(negotiator);
     connector.setBufferProvider(bufferProvider);
@@ -143,7 +144,7 @@ public abstract class Acceptor extends Container<IConnector> implements IAccepto
     connector.setProtocolPostProcessors(protocolPostProcessors);
   }
 
-  public void addConnector(Connector connector)
+  public void addConnector(InternalConnector connector)
   {
     synchronized (acceptedConnectors)
     {

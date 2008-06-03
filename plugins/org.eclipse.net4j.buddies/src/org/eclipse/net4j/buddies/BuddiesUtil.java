@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies;
 
-import org.eclipse.net4j.buddies.internal.protocol.ClientFacilityFactory;
-import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.spi.common.ClientFacilityFactory;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.buddies.protocol.OpenSessionRequest;

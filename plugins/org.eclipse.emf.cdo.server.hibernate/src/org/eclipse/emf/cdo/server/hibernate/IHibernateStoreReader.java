@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.hibernate;
 
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreReader;
 
 /**

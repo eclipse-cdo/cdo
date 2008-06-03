@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.tests.cache;
 
-import org.eclipse.net4j.internal.util.cache.CacheMonitor;
-import org.eclipse.net4j.internal.util.cache.ThresholdConditionPolicy;
+import org.eclipse.net4j.util.cache.CacheMonitor;
+import org.eclipse.net4j.util.cache.ThresholdConditionPolicy;
 import org.eclipse.net4j.util.cache.ICacheMonitor.ConditionPolicy;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 

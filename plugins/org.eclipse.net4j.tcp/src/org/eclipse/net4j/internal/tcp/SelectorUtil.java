@@ -11,7 +11,7 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.internal.tcp.bundle.OM;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.nio.channels.CancelledKeyException;
 import java.nio.channels.SelectionKey;

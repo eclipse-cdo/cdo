@@ -10,11 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
+import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
-import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryProvider;
-import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
 
 /**
  * @author Eike Stepper
@@ -50,8 +50,8 @@ public interface IStore extends IRepositoryElement
    * Returns if this store supports the retrieval of historical newRevisions.
    * <p>
    * The contract includes that store implementations with auditing support must also implement
-   * {@link IStoreReader#readRevisionByTime(org.eclipse.emf.cdo.protocol.CDOID, int, long) IStoreReader.readRevisionByTime(CDOID, int, long)}
-   * to not throw an <code>UnsupportedOperationException</code>.
+   * {@link IStoreReader#readRevisionByTime(org.eclipse.emf.cdo.common.CDOID, int, long)
+   * IStoreReader.readRevisionByTime(CDOID, int, long)} to not throw an <code>UnsupportedOperationException</code>.
    * 
    * @return <code>true</code> if this store supports the retrieval of historical newRevisions, <code>false</code>
    *         otherwise.
@@ -79,13 +79,12 @@ public interface IStore extends IRepositoryElement
    * Returns a reader that can be used to read from this store in the context of the given session.
    * 
    * @param session
-   *          The session that should be used as a context for read access or <code>null</code>. The store
-   *          implementor is free to interpret and use the session in a manner suitable for him or ignore it at all. It
-   *          is meant only as a hint. Implementor can use it as a key into a cache and/or register a
-   *          {@link org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter LifecycleEventAdapter} with it to
-   *          intercept cleanup on session close. Note however that the session can be <code>null</code>, for example
-   *          during startup of the server while the repositories are initialized but before any user session has been
-   *          opened.
+   *          The session that should be used as a context for read access or <code>null</code>. The store implementor
+   *          is free to interpret and use the session in a manner suitable for him or ignore it at all. It is meant
+   *          only as a hint. Implementor can use it as a key into a cache and/or register a
+   *          {@link org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter LifecycleEventAdapter} with it to intercept
+   *          cleanup on session close. Note however that the session can be <code>null</code>, for example during
+   *          startup of the server while the repositories are initialized but before any user session has been opened.
    * @return a reader that can be used to read from this store in the context of the given session, never
    *         <code>null</code>.
    */
@@ -99,8 +98,8 @@ public interface IStore extends IRepositoryElement
    *          The view that must be used as a context for write access. The store implementor is free to interpret and
    *          use the view in a manner suitable for him or ignore it at all. It is meant only as a hint. Implementor can
    *          use it as a key into a cache and/or register a
-   *          {@link org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter LifecycleEventAdapter} with it to
-   *          intercept cleanup on view close.
+   *          {@link org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter LifecycleEventAdapter} with it to intercept
+   *          cleanup on view close.
    * @return a writer that can be used to write to this store in the context of the given view, never <code>null</code>.
    */
   public IStoreWriter getWriter(IView view);

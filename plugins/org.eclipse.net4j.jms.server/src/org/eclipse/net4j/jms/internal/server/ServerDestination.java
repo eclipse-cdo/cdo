@@ -14,10 +14,10 @@ import org.eclipse.net4j.internal.jms.DestinationImpl;
 import org.eclipse.net4j.internal.jms.MessageImpl;
 import org.eclipse.net4j.internal.jms.QueueImpl;
 import org.eclipse.net4j.internal.jms.TopicImpl;
-import org.eclipse.net4j.internal.util.concurrent.RoundRobinList;
 import org.eclipse.net4j.jms.server.IDestination;
 import org.eclipse.net4j.jms.server.IStore;
 import org.eclipse.net4j.jms.server.IStoreTransaction;
+import org.eclipse.net4j.util.concurrent.RoundRobinList;
 
 import javax.naming.Context;
 import javax.naming.NamingException;

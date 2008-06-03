@@ -10,11 +10,11 @@
  **************************************************************************/
 package org.eclipse.net4j.util.tests;
 
-import org.eclipse.net4j.internal.util.om.log.PrintLogHandler;
-import org.eclipse.net4j.internal.util.om.trace.PrintTraceHandler;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.log.PrintLogHandler;
+import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import junit.framework.TestCase;
 

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http;
 
-import org.eclipse.internal.net4j.connector.ConnectorFactory;
+import org.eclipse.spi.net4j.ConnectorFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;

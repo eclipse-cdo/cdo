@@ -18,9 +18,9 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.internal.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;

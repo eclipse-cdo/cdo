@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
-import org.eclipse.net4j.internal.util.collection.PreferenceHistory;
 import org.eclipse.net4j.util.collection.IHistory;
+import org.eclipse.net4j.util.collection.PreferenceHistory;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.HistoryText;
 import org.eclipse.net4j.util.ui.widgets.PreferenceButton;

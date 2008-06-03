@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies.protocol;
 
-import org.eclipse.net4j.buddies.internal.protocol.MessageIndication;
-import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
-import org.eclipse.net4j.buddies.protocol.ISession;
+import org.eclipse.net4j.buddies.common.ISession;
+import org.eclipse.net4j.buddies.internal.common.protocol.MessageIndication;
+import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.internal.buddies.ClientSession;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.signal.SignalProtocol;

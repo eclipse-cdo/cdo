@@ -16,15 +16,12 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -535,20 +532,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     }
 
     return super.createList(eStructuralFeature);
-  }
-
-  /**
-   * @ADDED
-   */
-  private InternalCDOObject getLegacyWrapper(EObject object) throws ImplementationError
-  {
-    InternalCDOObject legacy = FSMUtil.adapt(object, view);
-    if (!(legacy instanceof CDOLegacyImpl))
-    {
-      throw new ImplementationError("Should be legacy wrapper: " + object);
-    }
-
-    return legacy;
   }
 
   /**

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies.protocol;
 
-import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.internal.buddies.ClientSession;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;

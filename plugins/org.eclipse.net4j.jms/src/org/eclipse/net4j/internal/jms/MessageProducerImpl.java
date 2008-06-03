@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jms;
 
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import javax.jms.DeliveryMode;
 import javax.jms.Destination;

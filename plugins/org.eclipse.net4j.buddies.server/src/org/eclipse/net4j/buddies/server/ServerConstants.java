@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.server;
 
-import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 
 /**
  * @author Eike Stepper

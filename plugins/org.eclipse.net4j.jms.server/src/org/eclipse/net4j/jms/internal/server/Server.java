@@ -13,7 +13,6 @@ package org.eclipse.net4j.jms.internal.server;
 import org.eclipse.net4j.internal.jms.ConnectionFactoryImpl;
 import org.eclipse.net4j.internal.jms.JMSDestination;
 import org.eclipse.net4j.internal.jms.MessageImpl;
-import org.eclipse.net4j.internal.util.lifecycle.QueueWorker;
 import org.eclipse.net4j.jms.internal.server.bundle.OM;
 import org.eclipse.net4j.jms.server.IDestination;
 import org.eclipse.net4j.jms.server.IServer;
@@ -21,6 +20,7 @@ import org.eclipse.net4j.jms.server.IStore;
 import org.eclipse.net4j.jms.server.IStoreTransaction;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.concurrent.NonBlockingLongCounter;
+import org.eclipse.net4j.util.lifecycle.QueueWorker;
 
 import javax.jms.Destination;
 import javax.naming.Context;

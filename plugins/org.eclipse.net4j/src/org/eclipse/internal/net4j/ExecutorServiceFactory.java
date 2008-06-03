@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.internal.net4j;
 
-import org.eclipse.net4j.internal.util.factory.Factory;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.factory.Factory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

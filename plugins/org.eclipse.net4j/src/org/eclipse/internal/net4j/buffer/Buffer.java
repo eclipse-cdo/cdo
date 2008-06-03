@@ -13,12 +13,14 @@ package org.eclipse.internal.net4j.buffer;
 import org.eclipse.net4j.buffer.BufferState;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
+
+import org.eclipse.spi.net4j.InternalBuffer;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -28,7 +30,7 @@ import java.nio.channels.SocketChannel;
 /**
  * @author Eike Stepper
  */
-public class Buffer implements IBuffer
+public class Buffer implements InternalBuffer
 {
   private static final int EOS_OFFSET = 1;
 
@@ -46,7 +48,7 @@ public class Buffer implements IBuffer
 
   public Buffer(IBufferProvider provider, short capacity)
   {
-    this.bufferProvider = provider;
+    bufferProvider = provider;
     byteBuffer = ByteBuffer.allocateDirect(capacity);
   }
 

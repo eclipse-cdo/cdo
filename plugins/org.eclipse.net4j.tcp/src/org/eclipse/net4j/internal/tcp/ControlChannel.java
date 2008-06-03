@@ -12,18 +12,19 @@ package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
-import org.eclipse.net4j.internal.util.concurrent.SynchronizingCorrelator;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
+import org.eclipse.net4j.util.concurrent.SynchronizingCorrelator;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.INegotiationContext.Receiver;
 
 import org.eclipse.internal.net4j.buffer.BufferUtil;
 import org.eclipse.internal.net4j.channel.Channel;
-import org.eclipse.internal.net4j.channel.InternalChannel;
+
+import org.eclipse.spi.net4j.InternalChannel;
 
 import java.nio.ByteBuffer;
 

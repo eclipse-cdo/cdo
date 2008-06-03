@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.preferences;
 
-import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
+import org.eclipse.net4j.internal.buddies.bundle.OM;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;
 

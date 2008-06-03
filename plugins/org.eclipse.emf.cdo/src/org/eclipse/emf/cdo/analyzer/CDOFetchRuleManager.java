@@ -11,8 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.analyzer;
 
-import org.eclipse.emf.cdo.protocol.analyzer.CDOFetchRule;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
+import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.internal.cdo.analyzer.NOOPFetchRuleManager;
 

@@ -11,9 +11,11 @@
 package org.eclipse.internal.net4j.buffer;
 
 import org.eclipse.net4j.buffer.IBuffer;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
+
+import org.eclipse.spi.net4j.InternalBuffer;
 
 import java.text.MessageFormat;
 
@@ -32,7 +34,7 @@ public class BufferFactory extends BufferProvider
   @Override
   protected IBuffer doProvideBuffer()
   {
-    Buffer buffer = new Buffer(this, getBufferCapacity());
+    IBuffer buffer = new Buffer(this, getBufferCapacity());
     if (TRACER.isEnabled())
     {
       TRACER.trace("Created " + buffer); //$NON-NLS-1$
@@ -44,9 +46,9 @@ public class BufferFactory extends BufferProvider
   @Override
   protected void doRetainBuffer(IBuffer buffer)
   {
-    if (buffer instanceof Buffer)
+    if (buffer instanceof InternalBuffer)
     {
-      ((Buffer)buffer).dispose();
+      ((InternalBuffer)buffer).dispose();
     }
 
     buffer = null;

@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.tests;
 
-import org.eclipse.net4j.internal.util.concurrent.SynchronizingCorrelator;
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
+import org.eclipse.net4j.util.concurrent.SynchronizingCorrelator;
 
 /**
  * @author Eike Stepper

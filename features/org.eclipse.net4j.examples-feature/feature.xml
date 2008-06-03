@@ -53,7 +53,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.net4j.buddies.protocol"
+         id="org.eclipse.net4j.buddies.common"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -81,14 +81,14 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.net4j.chat"
+         id="org.eclipse.net4j.buddies.chat"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.net4j.chat.ui"
+         id="org.eclipse.net4j.buddies.chat.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui;
 
-import org.eclipse.net4j.buddies.protocol.IMembership;
+import org.eclipse.net4j.buddies.common.IMembership;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.swt.graphics.Image;

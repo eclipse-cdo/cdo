@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies;
 
-import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.IBuddyContainer;
-import org.eclipse.net4j.buddies.protocol.ISession;
+import org.eclipse.net4j.buddies.common.IBuddy;
+import org.eclipse.net4j.buddies.common.IBuddyContainer;
+import org.eclipse.net4j.buddies.common.ISession;
 import org.eclipse.net4j.channel.IChannel;
 
 /**

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.buddies.protocol;
 
-import org.eclipse.net4j.buddies.internal.protocol.CollaborationLeftIndication;
+import org.eclipse.net4j.buddies.internal.common.protocol.CollaborationLeftIndication;
 import org.eclipse.net4j.internal.buddies.Self;
 
 /**

@@ -10,10 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.internal.protocol.id.CDOIDMetaImpl;
-import org.eclipse.emf.cdo.internal.protocol.id.CDOIDMetaRangeImpl;
-import org.eclipse.emf.cdo.protocol.id.CDOIDMeta;
-import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDMeta;
+import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 
 import org.hibernate.Hibernate;
 import org.hibernate.usertype.UserType;
@@ -58,8 +57,8 @@ public class CDOIDMetaRangeUserType implements UserType
     }
 
     CDOIDMetaRange cdoRange = (CDOIDMetaRange)value;
-    CDOIDMeta newCdoIDMeta = new CDOIDMetaImpl(((CDOIDMetaImpl)cdoRange.getLowerBound()).getLongValue());
-    return new CDOIDMetaRangeImpl(newCdoIDMeta, cdoRange.size());
+    CDOIDMeta newCdoIDMeta = CDOIDUtil.createMeta(((CDOIDMeta)cdoRange.getLowerBound()).getLongValue());
+    return CDOIDUtil.createMetaRange(newCdoIDMeta, cdoRange.size());
   }
 
   public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws SQLException
@@ -76,8 +75,8 @@ public class CDOIDMetaRangeUserType implements UserType
       return null;
     }
 
-    CDOIDMeta newCdoIDMeta = new CDOIDMetaImpl(start);
-    return new CDOIDMetaRangeImpl(newCdoIDMeta, size);
+    CDOIDMeta newCdoIDMeta = CDOIDUtil.createMeta(start);
+    return CDOIDUtil.createMetaRange(newCdoIDMeta, size);
   }
 
   public void nullSafeSet(PreparedStatement statement, Object value, int index) throws SQLException
@@ -116,12 +115,12 @@ public class CDOIDMetaRangeUserType implements UserType
     {
       return true;
     }
-  
+
     if (x == null || y == null)
     {
       return false;
     }
-  
+
     return x.equals(y);
   }
 

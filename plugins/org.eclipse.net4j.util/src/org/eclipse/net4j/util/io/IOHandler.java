@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
-
 import java.io.IOException;
 
 /**

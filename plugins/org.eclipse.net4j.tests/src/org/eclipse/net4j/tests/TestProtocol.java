@@ -11,9 +11,8 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.protocol.Protocol;
 import org.eclipse.net4j.util.io.IOUtil;
-
-import org.eclipse.internal.net4j.protocol.Protocol;
 
 import java.util.concurrent.CountDownLatch;
 

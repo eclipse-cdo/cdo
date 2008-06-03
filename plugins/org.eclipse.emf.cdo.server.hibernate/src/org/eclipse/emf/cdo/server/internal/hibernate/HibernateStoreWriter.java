@@ -11,19 +11,19 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOClassProxy;
-import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOClass;
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionImpl;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.model.CDOClassProxy;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreWriter;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
@@ -73,9 +73,9 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
         try
         {
           CDORevision cdoRevision = (CDORevision)o;
-          if (cdoRevision instanceof CDORevisionImpl)
+          if (cdoRevision instanceof InternalCDORevision)
           {
-            ((CDORevisionImpl)cdoRevision).setVersion(cdoRevision.getVersion() - 1);
+            ((InternalCDORevision)cdoRevision).setVersion(cdoRevision.getVersion() - 1);
           }
 
           session.update(HibernateUtil.getInstance().getEntityName(cdoRevision), o);

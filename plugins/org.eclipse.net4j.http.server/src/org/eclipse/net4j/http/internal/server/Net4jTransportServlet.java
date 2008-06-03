@@ -16,13 +16,13 @@ import org.eclipse.net4j.http.common.IHTTPConnector;
 import org.eclipse.net4j.http.internal.common.HTTPConnector;
 import org.eclipse.net4j.http.internal.server.bundle.OM;
 import org.eclipse.net4j.http.server.INet4jTransportServlet;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.internal.net4j.acceptor.AcceptorFactory;
+import org.eclipse.spi.net4j.AcceptorFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;

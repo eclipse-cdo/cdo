@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOPackage;
 
 import org.eclipse.emf.ecore.EPackage;
 

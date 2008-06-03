@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.util.om.pref;
 
-import org.eclipse.net4j.internal.util.event.Event;
+import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.om.pref.OMPreferencesChangeEvent;
 
 /**

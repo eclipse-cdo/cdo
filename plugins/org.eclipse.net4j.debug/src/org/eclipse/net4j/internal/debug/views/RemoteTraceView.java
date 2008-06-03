@@ -11,9 +11,9 @@
 package org.eclipse.net4j.internal.debug.views;
 
 import org.eclipse.net4j.internal.debug.RemoteTraceManager;
-import org.eclipse.net4j.internal.util.om.trace.RemoteTraceServer.Event;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.om.trace.RemoteTraceServer.Event;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;

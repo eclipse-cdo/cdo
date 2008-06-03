@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOTypeImpl;
-import org.eclipse.emf.cdo.protocol.model.CDOType;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOType;
 
 import org.hibernate.Hibernate;
 import org.hibernate.usertype.UserType;
@@ -81,7 +81,7 @@ public class CDOTypeUserType implements UserType
       return null;
     }
 
-    return CDOTypeImpl.ids.get(value);
+    return CDOModelUtil.getType(value);
   }
 
   public void nullSafeSet(PreparedStatement statement, Object value, int index) throws SQLException

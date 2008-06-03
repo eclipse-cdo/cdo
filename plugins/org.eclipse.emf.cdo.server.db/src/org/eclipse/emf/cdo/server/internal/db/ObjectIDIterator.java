@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDObject;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDObject;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 
 import org.eclipse.net4j.db.DBException;
@@ -89,7 +89,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
         if (currentResultSet.next())
         {
           long id = currentResultSet.getLong(1);
-          nextID = CDOIDUtil.createCDOID(id);
+          nextID = CDOIDUtil.createLong(id);
           if (withTypes && nextID instanceof CDOIDObject)
           {
             int classID = currentResultSet.getInt(2);

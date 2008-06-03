@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
-import org.eclipse.net4j.buddies.internal.protocol.BuddyStateIndication;
+import org.eclipse.net4j.buddies.common.ISession;
+import org.eclipse.net4j.buddies.common.IBuddy.State;
+import org.eclipse.net4j.buddies.internal.common.protocol.BuddyStateIndication;
 import org.eclipse.net4j.buddies.internal.server.ServerBuddy;
-import org.eclipse.net4j.buddies.protocol.ISession;
-import org.eclipse.net4j.buddies.protocol.IBuddy.State;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 
 /**

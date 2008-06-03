@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.internal.util.factory.Factory;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.factory.Factory;
 
 /**
  * @author Eike Stepper

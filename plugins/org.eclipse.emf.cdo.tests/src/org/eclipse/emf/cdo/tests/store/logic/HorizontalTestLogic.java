@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.server.internal.db.MappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.ToMany;
 import org.eclipse.emf.cdo.server.internal.db.ToOne;
 
-
 import java.util.HashMap;
 import java.util.Map;
 

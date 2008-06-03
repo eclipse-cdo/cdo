@@ -29,17 +29,17 @@ import java.util.List;
  * Since the process of accepting connection requests is heavily dependent on the implementation of the respective
  * connectors the only public API is introspection and notification.
  * <p>
- * This interface is <b>not</b> intended to be implemented by clients. Service providers <b>must</b> extend the
- * abstract {@link Acceptor} class.
+ * This interface is <b>not</b> intended to be implemented by clients. Service providers <b>must</b> extend the abstract
+ * {@link Acceptor} class.
  * <p>
  * <dt><b>Class Diagram:</b></dt>
- * <dd> <img src="doc-files/Acceptors.png" title="Diagram Acceptors" border="0" usemap="#Acceptors.png"/></dd>
+ * <dd><img src="doc-files/Acceptors.png" title="Diagram Acceptors" border="0" usemap="#Acceptors.png"/></dd>
  * <p>
  * <MAP NAME="Acceptors.png"> <AREA SHAPE="RECT" COORDS="10,8,99,58" HREF="IAcceptor.html"> <AREA SHAPE="RECT"
  * COORDS="289,8,378,58" HREF="IConnector.html"> </MAP>
  * <p>
  * <dt><b>Sequence Diagram:</b></dt>
- * <dd> <img src="doc-files/ConnectionProcess.jpg" title="Connection Process" border="0"
+ * <dd><img src="doc-files/ConnectionProcess.jpg" title="Connection Process" border="0"
  * usemap="#ConnectionProcess.jpg"/></dd>
  * <p>
  * <MAP NAME="ConnectionProcess.jpg"> <AREA SHAPE="RECT" COORDS="146,136,265,165" HREF="IConnector.html"> <AREA

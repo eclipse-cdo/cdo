@@ -11,20 +11,19 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOFeature;
-import org.eclipse.emf.cdo.internal.protocol.model.InternalCDOPackage;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
-import org.eclipse.emf.cdo.protocol.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
+import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -267,7 +266,7 @@ public class HibernatePackageHandler extends Lifecycle
         }
       }
 
-      ((CDOPackageImpl)cdoPackage).setClasses(cdoClasses);
+      ((InternalCDOPackage)cdoPackage).setClasses(cdoClasses);
     }
     finally
     {

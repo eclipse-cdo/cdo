@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
 
 import org.eclipse.net4j.db.IDBAdapter;
 

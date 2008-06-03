@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
-import org.eclipse.net4j.internal.util.collection.MoveableArrayList;
+import org.eclipse.net4j.util.collection.MoveableArrayList;
 import org.eclipse.net4j.util.collection.MoveableList;
 
 import org.hibernate.HibernateException;

@@ -9,7 +9,7 @@ Bundle-ClassPath: .
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)";resolution:=optional,
- org.eclipse.net4j.buddies.protocol;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
+ org.eclipse.net4j.buddies.common;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
 Export-Package: org.eclipse.net4j.buddies.internal.server;version="1.0.0",
  org.eclipse.net4j.buddies.internal.server.protocol;version="1.0.0",
  org.eclipse.net4j.buddies.server;version="1.0.0"

@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util.collection;
 
-import org.eclipse.net4j.internal.util.collection.History;
-import org.eclipse.net4j.internal.util.collection.PreferenceHistory;
 import org.eclipse.net4j.util.om.pref.OMPreference;
 
 /**

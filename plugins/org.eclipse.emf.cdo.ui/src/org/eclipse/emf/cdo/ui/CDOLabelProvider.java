@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
 
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;

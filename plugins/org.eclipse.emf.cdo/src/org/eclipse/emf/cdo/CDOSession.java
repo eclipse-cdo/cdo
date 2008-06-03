@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.protocol.CDOProtocolSession;
+import org.eclipse.emf.cdo.common.CDOProtocolSession;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.net4j.channel.IChannel;

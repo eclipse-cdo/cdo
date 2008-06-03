@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.factory.PluginFactoryRegistry;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.ManagedContainer;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.registry.IRegistry;

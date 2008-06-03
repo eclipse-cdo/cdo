@@ -13,20 +13,19 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.internal.protocol.id.CDOIDTempMetaImpl;
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
-import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.protocol.id.CDOIDObject;
-import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.protocol.util.TransportException;
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
+import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDObject;
+import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOClassRef;
+import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.LegacySystemNotAvailableException;
@@ -46,20 +45,20 @@ import org.eclipse.emf.internal.cdo.util.ProxyResolverURIResourceMap;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.internal.util.container.Container;
-import org.eclipse.net4j.internal.util.event.Event;
-import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.failover.IFailOverEvent;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -404,7 +403,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public synchronized CDOIDMetaRange getTempMetaIDRange(int count)
   {
-    CDOIDTemp lowerBound = new CDOIDTempMetaImpl(lastTempMetaID + 1);
+    CDOIDTemp lowerBound = CDOIDUtil.createTempMeta(lastTempMetaID + 1);
     lastTempMetaID += count;
     return CDOIDUtil.createMetaRange(lowerBound, count);
   }
@@ -461,7 +460,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   public static CDOIDMetaRange registerEPackage(EPackage ePackage, int firstMetaID,
       Map<CDOID, InternalEObject> idToMetaInstances, Map<InternalEObject, CDOID> metaInstanceToIDs)
   {
-    CDOIDTemp lowerBound = new CDOIDTempMetaImpl(firstMetaID);
+    CDOIDTemp lowerBound = CDOIDUtil.createTempMeta(firstMetaID);
     CDOIDMetaRange range = CDOIDUtil.createMetaRange(lowerBound, 0);
     range = registerMetaInstance((InternalEObject)ePackage, range, idToMetaInstances, metaInstanceToIDs);
     return range;

@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -126,7 +126,7 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
         return null;
       }
 
-      return CDOIDUtil.createCDOID(id);
+      return CDOIDUtil.createLong(id);
     }
   }
 

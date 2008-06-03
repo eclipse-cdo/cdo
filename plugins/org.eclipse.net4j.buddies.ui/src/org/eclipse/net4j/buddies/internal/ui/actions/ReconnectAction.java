@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.actions;
 
-import org.eclipse.net4j.buddies.ui.ISessionManager;
+import org.eclipse.net4j.buddies.ISessionManager;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
 /**

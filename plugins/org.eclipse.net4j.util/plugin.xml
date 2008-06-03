@@ -25,11 +25,11 @@
       <factory
             productGroup="org.eclipse.net4j.randomizers"
             type="default"
-            class="org.eclipse.net4j.internal.util.security.RandomizerFactory"/>
+            class="org.eclipse.net4j.util.security.RandomizerFactory"/>
       <factory
             productGroup="org.eclipse.net4j.userManagers"
             type="file"
-            class="org.eclipse.net4j.internal.util.security.FileUserManagerFactory"/>
+            class="org.eclipse.net4j.util.security.FileUserManagerFactory"/>
    </extension>
 
 </plugin>

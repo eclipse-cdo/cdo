@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.protocol.CDOProtocolView;
-import org.eclipse.emf.cdo.protocol.model.CDOPackageManager;
+import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 
 /**
  * @author Eike Stepper
@@ -25,9 +25,8 @@ public interface ITransaction extends IView
 
   /**
    * Returns the temporary, transactional package manager associated with this ITransaction during the process of a
-   * commit operation. In addition to the packages registered with the session
-   * {@link IRepository#getPackageManager() package manager} this package manager also contains the new packages that
-   * are part of the commit operation.
+   * commit operation. In addition to the packages registered with the session {@link IRepository#getPackageManager()
+   * package manager} this package manager also contains the new packages that are part of the commit operation.
    * 
    * @return a temporary, transactional package manager if this ITransaction is in the process of a commit operation,
    *         <code>null</code> otherwise.

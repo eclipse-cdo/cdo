@@ -21,7 +21,7 @@ import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.internal.db.ddl.DBIndex;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.sql.Connection;

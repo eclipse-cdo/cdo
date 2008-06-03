@@ -12,11 +12,11 @@ package org.eclipse.net4j.signal.failover;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.internal.util.event.Notifier;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalActor;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.event.Notifier;
 
 import java.util.concurrent.TimeoutException;
 
@@ -62,8 +62,7 @@ public abstract class FailOverStrategy extends Notifier implements IFailOverStra
   }
 
   /**
-   * Should be overridden to provide a fail-over <code>IConnector</code>. The oldChannel <i>can</i> be used as a
-   * hint.
+   * Should be overridden to provide a fail-over <code>IConnector</code>. The oldChannel <i>can</i> be used as a hint.
    */
   protected abstract IConnector getNewConnector(IChannel oldChannel);
 

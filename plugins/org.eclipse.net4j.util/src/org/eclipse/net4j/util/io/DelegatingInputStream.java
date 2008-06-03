@@ -20,8 +20,8 @@ import java.io.InputStream;
  * with versions that pass all requests to the contained input stream. Subclasses of <code>DelegatingInputStream</code>
  * may further override some of these methods and may also provide additional methods and fields.
  * <p>
- * <b>Note:</b> The only difference to {@link java.io.FilterInputStream} is that <code>DelegatingInputStream</code>
- * does <b>not</b> override {@link #read(byte[])} or {@link #read(byte[], int, int)} but rather exposes the original
+ * <b>Note:</b> The only difference to {@link java.io.FilterInputStream} is that <code>DelegatingInputStream</code> does
+ * <b>not</b> override {@link #read(byte[])} or {@link #read(byte[], int, int)} but rather exposes the original
  * implementations of <code>InputStream</code> which call {@link #read()} instead of their delegate counterparts.
  * 
  * @author Eike Stepper
@@ -38,8 +38,8 @@ public class DelegatingInputStream extends InputStream
    * <code>this.in</code> so as to remember it for later use.
    * 
    * @param in
-   *          the underlying input stream, or <code>null</code> if this instance is to be created without an
-   *          underlying stream.
+   *          the underlying input stream, or <code>null</code> if this instance is to be created without an underlying
+   *          stream.
    */
   protected DelegatingInputStream(InputStream in)
   {
@@ -52,10 +52,10 @@ public class DelegatingInputStream extends InputStream
   }
 
   /**
-   * Reads the next byte of data from this input stream. The value byte is returned as an <code>int</code> in the
-   * range <code>0</code> to <code>255</code>. If no byte is available because the end of the stream has been
-   * reached, the value <code>-1</code> is returned. This method blocks until input data is available, the end of the
-   * stream is detected, or an exception is thrown.
+   * Reads the next byte of data from this input stream. The value byte is returned as an <code>int</code> in the range
+   * <code>0</code> to <code>255</code>. If no byte is available because the end of the stream has been reached, the
+   * value <code>-1</code> is returned. This method blocks until input data is available, the end of the stream is
+   * detected, or an exception is thrown.
    * <p>
    * This method simply performs <code>in.read()</code> and returns the result.
    * 
@@ -71,9 +71,9 @@ public class DelegatingInputStream extends InputStream
   }
 
   /**
-   * Skips over and discards <code>n</code> bytes of data from the input stream. The <code>skip</code> method may,
-   * for a variety of reasons, end up skipping over some smaller number of bytes, possibly <code>0</code>. The actual
-   * number of bytes skipped is returned.
+   * Skips over and discards <code>n</code> bytes of data from the input stream. The <code>skip</code> method may, for a
+   * variety of reasons, end up skipping over some smaller number of bytes, possibly <code>0</code>. The actual number
+   * of bytes skipped is returned.
    * <p>
    * This method simply performs <code>in.skip(n)</code>.
    * 

@@ -10,16 +10,16 @@
  **************************************************************************/
 package org.eclipse.net4j.util.tests;
 
-import org.eclipse.net4j.internal.util.security.ChallengeNegotiator;
-import org.eclipse.net4j.internal.util.security.NegotiationContext;
-import org.eclipse.net4j.internal.util.security.PasswordCredentials;
-import org.eclipse.net4j.internal.util.security.PasswordCredentialsProvider;
-import org.eclipse.net4j.internal.util.security.Randomizer;
-import org.eclipse.net4j.internal.util.security.ResponseNegotiator;
-import org.eclipse.net4j.internal.util.security.UserManager;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.security.ChallengeNegotiator;
 import org.eclipse.net4j.util.security.IChallengeResponse;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
+import org.eclipse.net4j.util.security.NegotiationContext;
+import org.eclipse.net4j.util.security.PasswordCredentials;
+import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
+import org.eclipse.net4j.util.security.Randomizer;
+import org.eclipse.net4j.util.security.ResponseNegotiator;
+import org.eclipse.net4j.util.security.UserManager;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.BlockingQueue;

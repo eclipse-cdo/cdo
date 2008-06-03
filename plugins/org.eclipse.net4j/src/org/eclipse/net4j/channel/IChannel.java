@@ -21,8 +21,7 @@ import org.eclipse.net4j.util.event.INotifier;
  * connection. The underlying physical connection is represented by a {@link IConnector}.
  * <p>
  * This interface is <b>not</b> intended to be implemented by clients. Providers of channels (for example for new
- * physical connection types) have to extend/subclass
- * {@link org.eclipse.internal.net4j.channel.InternalChannel InternalChannel}.
+ * physical connection types) have to extend/subclass {@link org.eclipse.spi.net4j.InternalChannel InternalChannel}.
  * <p>
  * <dt><b>Class Diagram:</b></dt>
  * <dd><img src="doc-files/Channels.png" title="Diagram Buffers" border="0" usemap="#Channels.png"/></dd>
@@ -32,7 +31,7 @@ import org.eclipse.net4j.util.event.INotifier;
  * HREF="IBufferHandler.html"> <AREA SHAPE="RECT" COORDS="7,151,96,201" HREF="IConnector.html"> </MAP>
  * <p>
  * <dt><b>Sequence Diagram: Communication Process</b></dt>
- * <dd> <img src="doc-files/CommunicationProcess.jpg" title="Communication Process" border="0"
+ * <dd><img src="doc-files/CommunicationProcess.jpg" title="Communication Process" border="0"
  * usemap="#CommunicationProcess.jpg"/></dd>
  * <p>
  * <MAP NAME="CommunicationProcess.jpg"> <AREA SHAPE="RECT" COORDS="128,94,247,123" HREF="IConnector.html"> <AREA
@@ -42,47 +41,19 @@ import org.eclipse.net4j.util.event.INotifier;
  * <p>
  * An example for opening a channel on an {@link IConnector} and sending an {@link IBuffer}:
  * <p>
- * 
- * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
- * // Open a channel
- * IChannel channel = connector.openChannel();
- * short channelIndex = channel.getChannelIndex();
- * 
- * // Fill a buffer 
- * Buffer buffer = bufferProvider.getBuffer();
- * ByteBuffer byteBuffer = buffer.startPutting(channelIndex);
- * byteBuffer.putDouble(15.47);
- * 
- * // Let the channel send the buffer without blocking 
- * channel.sendBuffer(buffer);
- * </pre>
- * 
+ * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;"> // Open a channel
+ * IChannel channel = connector.openChannel(); short channelIndex = channel.getChannelIndex(); // Fill a buffer Buffer
+ * buffer = bufferProvider.getBuffer(); ByteBuffer byteBuffer = buffer.startPutting(channelIndex);
+ * byteBuffer.putDouble(15.47); // Let the channel send the buffer without blocking channel.sendBuffer(buffer); </pre>
  * <p>
  * An example for receiving {@link IBuffer}s from channels on an {@link IConnector}:
  * <p>
- * 
- * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
- * // Create a receive handler
- * final IBufferHandler receiveHandler = new IBufferHandler()
- * {
- *   public void handleBuffer(IBuffer buffer)
- *   {
- *     ByteBuffer byteBuffer = buffer.getByteBuffer();
- *     IOUtil.OUT().println(&quot;Received &quot; + byteBuffer.getDouble());
- *     buffer.release();
- *   }
- * };
- * 
- * // Set the receive handler to all new channels
- * connector.addListener(new ContainerEventAdapter()
- * {
- *   protected void onAdded(IContainer container, Object element)
- *   {
- *     IChannel channel = (IChannel)element;
- *     channel.setReceiveHandler(receiveHandler);
- *   }
- * });
- * </pre>
+ * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;"> // Create a receive
+ * handler final IBufferHandler receiveHandler = new IBufferHandler() { public void handleBuffer(IBuffer buffer) {
+ * ByteBuffer byteBuffer = buffer.getByteBuffer(); IOUtil.OUT().println(&quot;Received &quot; + byteBuffer.getDouble());
+ * buffer.release(); } }; // Set the receive handler to all new channels connector.addListener(new
+ * ContainerEventAdapter() { protected void onAdded(IContainer container, Object element) { IChannel channel =
+ * (IChannel)element; channel.setReceiveHandler(receiveHandler); } }); </pre>
  * 
  * @author Eike Stepper
  */
@@ -95,8 +66,8 @@ public interface IChannel extends IBufferHandler, INotifier
   public int getChannelID();
 
   /**
-   * Returns the index of this channel within the array of channels returned from the
-   * {@link IConnector#getChannels() getChannels()} method of the connector of this channel.
+   * Returns the index of this channel within the array of channels returned from the {@link IConnector#getChannels()
+   * getChannels()} method of the connector of this channel.
    */
   public short getChannelIndex();
 

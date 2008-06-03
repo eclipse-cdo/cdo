@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util.container;
 
-import org.eclipse.net4j.internal.util.container.ManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
 
 /**

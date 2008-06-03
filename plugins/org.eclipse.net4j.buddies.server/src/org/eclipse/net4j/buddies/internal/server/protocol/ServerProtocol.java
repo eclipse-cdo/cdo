@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
-import org.eclipse.net4j.buddies.internal.protocol.MessageIndication;
-import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.internal.common.protocol.MessageIndication;
+import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;

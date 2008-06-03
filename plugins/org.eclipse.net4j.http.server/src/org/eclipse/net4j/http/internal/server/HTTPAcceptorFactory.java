@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.http.internal.server;
 
-import org.eclipse.internal.net4j.acceptor.AcceptorFactory;
+import org.eclipse.spi.net4j.AcceptorFactory;
 
 /**
  * @author Eike Stepper

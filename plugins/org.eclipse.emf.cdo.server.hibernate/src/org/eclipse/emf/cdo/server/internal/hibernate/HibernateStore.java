@@ -11,11 +11,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.internal.protocol.id.CDOIDLibraryProviderImpl;
+import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
+import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.internal.server.Store;
-import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
-import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryProvider;
-import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
@@ -23,10 +22,11 @@ import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOInterceptor;
+import org.eclipse.emf.cdo.spi.common.CDOIDLibraryProviderImpl;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

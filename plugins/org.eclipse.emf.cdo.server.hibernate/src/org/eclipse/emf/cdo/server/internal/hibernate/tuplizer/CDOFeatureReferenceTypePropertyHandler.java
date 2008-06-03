@@ -11,15 +11,15 @@
  *   Martin Taal
  * </copyright>
  *
- * $Id: CDOFeatureReferenceTypePropertyHandler.java,v 1.2 2008-04-28 08:30:39 estepper Exp $
+ * $Id: CDOFeatureReferenceTypePropertyHandler.java,v 1.3 2008-06-03 09:45:57 estepper Exp $
  */
 
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.internal.protocol.model.CDOFeatureImpl;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOType;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
 
 import org.hibernate.HibernateException;
 import org.hibernate.PropertyNotFoundException;
@@ -36,7 +36,7 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 @SuppressWarnings("unchecked")
 public class CDOFeatureReferenceTypePropertyHandler implements Getter, Setter, PropertyAccessor
@@ -54,7 +54,7 @@ public class CDOFeatureReferenceTypePropertyHandler implements Getter, Setter, P
     {
       return null;
     }
-  
+
     return cdoFeature.getReferenceType();
   }
 
@@ -65,12 +65,12 @@ public class CDOFeatureReferenceTypePropertyHandler implements Getter, Setter, P
 
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
-    CDOFeatureImpl cdoFeature = (CDOFeatureImpl)target;
+    InternalCDOFeature cdoFeature = (InternalCDOFeature)target;
     if (cdoFeature.getType() != CDOType.OBJECT)
     {
       return;
     }
-  
+
     cdoFeature.setReferenceType((CDOClass)value);
   }
 

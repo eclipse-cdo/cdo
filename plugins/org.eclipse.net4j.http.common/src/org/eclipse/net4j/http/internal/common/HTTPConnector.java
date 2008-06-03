@@ -15,15 +15,15 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.http.common.IHTTPConnector;
 import org.eclipse.net4j.http.internal.common.bundle.OM;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
-import org.eclipse.internal.net4j.buffer.Buffer;
-import org.eclipse.internal.net4j.channel.Channel;
 import org.eclipse.internal.net4j.connector.Connector;
+
+import org.eclipse.spi.net4j.InternalChannel;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -105,7 +105,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Multiplexing {0} (count={1})", ((Buffer)buffer).formatContent(true), outputOperationCount);
+      TRACER.format("Multiplexing {0} (count={1})", buffer.formatContent(true), outputOperationCount);
     }
 
     outputOperations.add(new BufferChannelOperation(httpChannel.getChannelIndex(), outputOperationCount, buffer));
@@ -183,7 +183,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   }
 
   @Override
-  protected Channel createChannelInstance()
+  protected InternalChannel createChannelInstance()
   {
     return new HTTPChannel();
   }

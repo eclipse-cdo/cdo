@@ -186,8 +186,7 @@ public abstract class SortedFileMap<K extends Comparable<K>, V> implements Close
   }
 
   /**
-   * @return The index of the entry with the given key if the key exists, <code>-(insertionIndex + 1)</code>
-   *         otherwise.
+   * @return The index of the entry with the given key if the key exists, <code>-(insertionIndex + 1)</code> otherwise.
    */
   protected long search(K key) throws IOException
   {

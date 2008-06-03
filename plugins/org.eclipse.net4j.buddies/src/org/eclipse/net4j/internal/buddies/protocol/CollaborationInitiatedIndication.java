@@ -11,10 +11,10 @@
 package org.eclipse.net4j.internal.buddies.protocol;
 
 import org.eclipse.net4j.buddies.IBuddySession;
-import org.eclipse.net4j.buddies.internal.protocol.Membership;
-import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
-import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.ProtocolUtil;
+import org.eclipse.net4j.buddies.common.IBuddy;
+import org.eclipse.net4j.buddies.internal.common.Membership;
+import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolUtil;
 import org.eclipse.net4j.internal.buddies.BuddyCollaboration;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.signal.Indication;

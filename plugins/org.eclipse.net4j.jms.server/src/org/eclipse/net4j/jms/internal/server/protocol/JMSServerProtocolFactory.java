@@ -11,9 +11,8 @@
 package org.eclipse.net4j.jms.internal.server.protocol;
 
 import org.eclipse.net4j.jms.JMSProtocolConstants;
+import org.eclipse.net4j.protocol.ServerProtocolFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
-
-import org.eclipse.internal.net4j.protocol.ServerProtocolFactory;
 
 /**
  * @author Eike Stepper

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.ui.views;
 
-import org.eclipse.net4j.internal.util.container.ContainerEventAdapter;
+import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;

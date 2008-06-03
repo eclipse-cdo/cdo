@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util.transaction;
 
-import org.eclipse.net4j.internal.util.transaction.Transaction;
-
 /**
  * @author Eike Stepper
  */

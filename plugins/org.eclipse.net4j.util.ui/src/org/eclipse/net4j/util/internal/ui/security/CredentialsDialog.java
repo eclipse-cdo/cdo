@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.util.internal.ui.security;
 
-import org.eclipse.net4j.internal.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.BaseDialog;
 

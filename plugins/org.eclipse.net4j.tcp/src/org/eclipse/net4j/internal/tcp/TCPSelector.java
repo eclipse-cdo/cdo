@@ -11,11 +11,11 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.internal.tcp.bundle.OM;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.tcp.ITCPActiveSelectorListener;
 import org.eclipse.net4j.tcp.ITCPPassiveSelectorListener;
 import org.eclipse.net4j.tcp.ITCPSelector;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.nio.channels.CancelledKeyException;

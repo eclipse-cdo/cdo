@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.jms.internal.server.store;
 
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.jms.server.IStore;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 /**
  * @author Eike Stepper

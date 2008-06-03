@@ -11,12 +11,12 @@
 package org.eclipse.net4j.internal.util.om.monitor;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
 import org.eclipse.net4j.util.om.monitor.MonitorNotBegunException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMSubMonitor;
 import org.eclipse.net4j.util.om.monitor.TotalWorkExceededException;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 /**
  * @author Eike Stepper

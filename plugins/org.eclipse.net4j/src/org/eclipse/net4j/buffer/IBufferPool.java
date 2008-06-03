@@ -25,8 +25,8 @@ public interface IBufferPool extends IBufferProvider
   public boolean evictOne();
 
   /**
-   * Tries to remove as many buffers from this <code>BufferPool</code> and {@link IBuffer#release() release} them as
-   * are needed to let a given maximum number of buffers survive in the pool.
+   * Tries to remove as many buffers from this <code>BufferPool</code> and {@link IBuffer#release() release} them as are
+   * needed to let a given maximum number of buffers survive in the pool.
    * 
    * @return The number of buffers that could be evicted.
    */

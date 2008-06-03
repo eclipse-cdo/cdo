@@ -17,10 +17,10 @@ import org.eclipse.net4j.internal.jms.ObjectMessageImpl;
 import org.eclipse.net4j.internal.jms.StreamMessageImpl;
 import org.eclipse.net4j.internal.jms.TextMessageImpl;
 import org.eclipse.net4j.internal.jms.bundle.OM;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;

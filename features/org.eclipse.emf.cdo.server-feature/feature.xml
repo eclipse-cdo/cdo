@@ -40,7 +40,7 @@
    </url>
 
    <plugin
-         id="org.eclipse.emf.cdo.protocol"
+         id="org.eclipse.emf.cdo.common"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
+import org.eclipse.net4j.util.om.pref.OMPreference;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 
@@ -33,6 +34,18 @@ public abstract class OM
   public static final OMLogger LOG = BUNDLE.logger();
 
   public static final OMPreferences PREFS = BUNDLE.preferences();
+
+  public static final OMPreference<String> PREF_CONNECTOR_DESCRIPTION = // 
+  PREFS.init("PREF_CONNECTOR_DESCRIPTION", "tcp://localhost"); //$NON-NLS-1$
+
+  public static final OMPreference<String> PREF_USER_ID = // 
+  PREFS.init("PREF_USER_ID", System.getProperty("user.name")); //$NON-NLS-1$
+
+  public static final OMPreference<String> PREF_PASSWORD = // 
+  PREFS.initString("PREF_PASSWORD"); //$NON-NLS-1$
+
+  public static final OMPreference<Boolean> PREF_AUTO_CONNECT = // 
+  PREFS.init("PREF_AUTO_CONNECT", false); //$NON-NLS-1$
 
   /**
    * @author Eike Stepper

@@ -12,10 +12,10 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.IBuddySession;
-import org.eclipse.net4j.buddies.protocol.ICollaboration;
-import org.eclipse.net4j.buddies.protocol.IFacility;
-import org.eclipse.net4j.buddies.protocol.IFacilityInstalledEvent;
-import org.eclipse.net4j.buddies.protocol.IMembership;
+import org.eclipse.net4j.buddies.common.ICollaboration;
+import org.eclipse.net4j.buddies.common.IFacility;
+import org.eclipse.net4j.buddies.common.IFacilityInstalledEvent;
+import org.eclipse.net4j.buddies.common.IMembership;
 import org.eclipse.net4j.buddies.ui.IFacilityPaneCreator;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;

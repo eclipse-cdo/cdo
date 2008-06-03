@@ -11,9 +11,10 @@
 package org.eclipse.net4j.internal.util.factory;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.internal.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.factory.FactoryDescriptor;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionDelta;

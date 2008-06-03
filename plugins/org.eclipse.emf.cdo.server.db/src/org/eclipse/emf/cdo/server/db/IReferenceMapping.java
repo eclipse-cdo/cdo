@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 
 import org.eclipse.net4j.db.ddl.IDBTable;

@@ -11,16 +11,16 @@
 
 package org.eclipse.emf.internal.cdo.util;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOFeatureDeltaVisitorImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOListFeatureDeltaImpl;
-import org.eclipse.emf.cdo.protocol.id.CDOIDProvider;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOAddFeatureDelta;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOListFeatureDelta;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOSetFeatureDelta;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
+import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOFeatureDeltaVisitorImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImpl;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import java.util.List;
 

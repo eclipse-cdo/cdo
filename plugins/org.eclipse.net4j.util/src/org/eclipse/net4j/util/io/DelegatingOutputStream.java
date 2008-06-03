@@ -8,10 +8,9 @@ import java.io.OutputStream;
  * existing output stream (the <i>underlying</i> output stream) which it uses as its basic sink of data, but possibly
  * transforming the data along the way or providing additional functionality.
  * <p>
- * The class <code>DelegatingOutputStream</code> itself simply overrides all methods of <code>OutputStream</code>
- * with versions that pass all requests to the underlying output stream. Subclasses of
- * <code>DelegatingOutputStream</code> may further override some of these methods as well as provide additional
- * methods and fields.
+ * The class <code>DelegatingOutputStream</code> itself simply overrides all methods of <code>OutputStream</code> with
+ * versions that pass all requests to the underlying output stream. Subclasses of <code>DelegatingOutputStream</code>
+ * may further override some of these methods as well as provide additional methods and fields.
  * <p>
  * <b>Note:</b> The only difference to {@link java.io.FilterOutputStream} is that <code>DelegatingOutputStream</code>
  * does <b>not</b> override {@link #write(byte[])} or {@link #write(byte[], int, int)} but rather exposes the original
@@ -46,8 +45,8 @@ public class DelegatingOutputStream extends OutputStream
   /**
    * Writes the specified <code>byte</code> to this output stream.
    * <p>
-   * The <code>write</code> method of <code>DelegatingOutputStream</code> calls the <code>write</code> method of
-   * its underlying output stream, that is, it performs <tt>out.write(b)</tt>.
+   * The <code>write</code> method of <code>DelegatingOutputStream</code> calls the <code>write</code> method of its
+   * underlying output stream, that is, it performs <tt>out.write(b)</tt>.
    * <p>
    * Implements the abstract <tt>write</tt> method of <tt>OutputStream</tt>.
    * 
@@ -65,8 +64,8 @@ public class DelegatingOutputStream extends OutputStream
   /**
    * Flushes this output stream and forces any buffered output bytes to be written out to the stream.
    * <p>
-   * The <code>flush</code> method of <code>DelegatingOutputStream</code> calls the <code>flush</code> method of
-   * its underlying output stream.
+   * The <code>flush</code> method of <code>DelegatingOutputStream</code> calls the <code>flush</code> method of its
+   * underlying output stream.
    * 
    * @exception IOException
    *              if an I/O error occurs.
@@ -81,8 +80,8 @@ public class DelegatingOutputStream extends OutputStream
   /**
    * Closes this output stream and releases any system resources associated with the stream.
    * <p>
-   * The <code>close</code> method of <code>DelegatingOutputStream</code> calls its <code>flush</code> method, and
-   * then calls the <code>close</code> method of its underlying output stream.
+   * The <code>close</code> method of <code>DelegatingOutputStream</code> calls its <code>flush</code> method, and then
+   * calls the <code>close</code> method of its underlying output stream.
    * 
    * @exception IOException
    *              if an I/O error occurs.

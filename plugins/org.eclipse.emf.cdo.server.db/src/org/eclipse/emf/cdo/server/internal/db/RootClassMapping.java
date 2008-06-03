@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.protocol.model.core.CDOObjectClass;
+import org.eclipse.emf.cdo.common.model.core.CDOObjectClass;
 
 /**
  * @author Eike Stepper

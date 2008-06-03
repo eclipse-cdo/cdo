@@ -11,9 +11,9 @@
 package org.eclipse.net4j.internal.buddies.protocol;
 
 import org.eclipse.net4j.buddies.IBuddySession;
-import org.eclipse.net4j.buddies.internal.protocol.ProtocolConstants;
-import org.eclipse.net4j.buddies.protocol.IAccount;
-import org.eclipse.net4j.buddies.protocol.ProtocolUtil;
+import org.eclipse.net4j.buddies.common.IAccount;
+import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolUtil;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.buddies.ClientSession;
 import org.eclipse.net4j.signal.RequestWithConfirmation;

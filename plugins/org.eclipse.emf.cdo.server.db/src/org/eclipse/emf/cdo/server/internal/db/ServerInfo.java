@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.protocol.model.CDOModelElement;
+import org.eclipse.emf.cdo.common.model.CDOModelElement;
 
 /**
  * @author Eike Stepper

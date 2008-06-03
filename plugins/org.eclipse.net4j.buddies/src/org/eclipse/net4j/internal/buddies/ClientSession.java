@@ -11,13 +11,13 @@
 package org.eclipse.net4j.internal.buddies;
 
 import org.eclipse.net4j.buddies.IBuddySession;
-import org.eclipse.net4j.buddies.internal.protocol.BuddyContainer;
-import org.eclipse.net4j.buddies.internal.protocol.BuddyStateNotification;
-import org.eclipse.net4j.buddies.internal.protocol.Collaboration;
-import org.eclipse.net4j.buddies.protocol.IAccount;
-import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.IBuddyStateEvent;
-import org.eclipse.net4j.buddies.protocol.IMembership;
+import org.eclipse.net4j.buddies.common.IAccount;
+import org.eclipse.net4j.buddies.common.IBuddy;
+import org.eclipse.net4j.buddies.common.IBuddyStateEvent;
+import org.eclipse.net4j.buddies.common.IMembership;
+import org.eclipse.net4j.buddies.internal.common.BuddyContainer;
+import org.eclipse.net4j.buddies.internal.common.Collaboration;
+import org.eclipse.net4j.buddies.internal.common.protocol.BuddyStateNotification;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.buddies.bundle.OM;
 import org.eclipse.net4j.util.event.IEvent;

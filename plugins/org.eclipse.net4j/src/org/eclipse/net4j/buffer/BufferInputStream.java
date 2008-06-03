@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.buffer;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 

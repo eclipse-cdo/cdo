@@ -11,11 +11,10 @@
 package org.eclipse.net4j.examples.echo.server;
 
 import org.eclipse.net4j.examples.echo.EchoProtocol;
+import org.eclipse.net4j.protocol.ServerProtocolFactory;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.util.factory.ProductCreationException;
-
-import org.eclipse.internal.net4j.protocol.ServerProtocolFactory;
 
 /**
  * @author Eike Stepper

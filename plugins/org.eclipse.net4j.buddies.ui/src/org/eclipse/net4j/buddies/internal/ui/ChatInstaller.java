@@ -11,7 +11,7 @@
 package org.eclipse.net4j.buddies.internal.ui;
 
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
-import org.eclipse.net4j.chat.IChat;
+import org.eclipse.net4j.buddies.chat.IChat;
 
 /**
  * @author Eike Stepper

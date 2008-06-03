@@ -14,15 +14,16 @@ import org.eclipse.net4j.buffer.BufferState;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
-import org.eclipse.net4j.internal.util.concurrent.QueueWorkerWorkSerializer;
-import org.eclipse.net4j.internal.util.concurrent.SynchronousWorkSerializer;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
+import org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer;
+import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.internal.net4j.buffer.Buffer;
 import org.eclipse.internal.net4j.bundle.OM;
+
+import org.eclipse.spi.net4j.InternalChannel;
 
 import java.text.MessageFormat;
 import java.util.Queue;
@@ -40,7 +41,7 @@ public class Channel extends Lifecycle implements InternalChannel
 
   private IChannelMultiplexer channelMultiplexer;
 
-  private short channelIndex = Buffer.NO_CHANNEL;
+  private short channelIndex = IBuffer.NO_CHANNEL;
 
   private ExecutorService receiveExecutor;
 
@@ -84,7 +85,7 @@ public class Channel extends Lifecycle implements InternalChannel
 
   public void setChannelIndex(short channelIndex)
   {
-    if (channelIndex == Buffer.NO_CHANNEL)
+    if (channelIndex == IBuffer.NO_CHANNEL)
     {
       throw new IllegalArgumentException("channelIndex == INVALID_CHANNEL_ID"); //$NON-NLS-1$
     }
@@ -185,7 +186,7 @@ public class Channel extends Lifecycle implements InternalChannel
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(channelIndex != Buffer.NO_CHANNEL, "channelIndex == NO_CHANNEL"); //$NON-NLS-1$
+    checkState(channelIndex != IBuffer.NO_CHANNEL, "channelIndex == NO_CHANNEL"); //$NON-NLS-1$
     checkState(channelMultiplexer, "channelMultiplexer"); //$NON-NLS-1$
   }
 

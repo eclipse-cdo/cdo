@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.protocol.model.resource.CDOPathFeature;
-import org.eclipse.emf.cdo.protocol.model.resource.CDOResourceClass;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOClassRef;
+import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
@@ -28,9 +28,9 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.CloseableIterator;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -323,7 +323,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
       }
 
       long id = resultSet.getLong(1);
-      return CDOIDUtil.createCDOID(id);
+      return CDOIDUtil.createLong(id);
     }
     catch (SQLException ex)
     {

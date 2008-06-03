@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui.views;
 
+import org.eclipse.net4j.buddies.common.IFacility;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
-import org.eclipse.net4j.buddies.protocol.IFacility;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.UIUtil;

@@ -11,19 +11,19 @@
  *   Martin Taal
  * </copyright>
  *
- * $Id: CDOSyntheticIdPropertyHandler.java,v 1.2 2008-04-28 08:30:39 estepper Exp $
+ * $Id: CDOSyntheticIdPropertyHandler.java,v 1.3 2008-06-03 09:45:56 estepper Exp $
  */
 
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.hibernate.HibernateException;
 import org.hibernate.PropertyNotFoundException;
@@ -41,7 +41,7 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor

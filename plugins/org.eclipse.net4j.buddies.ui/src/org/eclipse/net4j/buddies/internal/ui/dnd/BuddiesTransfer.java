@@ -11,9 +11,9 @@
 package org.eclipse.net4j.buddies.internal.ui.dnd;
 
 import org.eclipse.net4j.buddies.IBuddySession;
-import org.eclipse.net4j.buddies.internal.ui.SessionManager;
+import org.eclipse.net4j.buddies.common.IBuddy;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
-import org.eclipse.net4j.buddies.protocol.IBuddy;
+import org.eclipse.net4j.internal.buddies.SessionManager;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.ui.dnd.DNDTransfer;

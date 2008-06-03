@@ -13,12 +13,12 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.resource.CDOContentsFeature;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.model.resource.CDOContentsFeature;
-import org.eclipse.emf.cdo.protocol.model.resource.CDOResourcePackage;
-import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
-import org.eclipse.emf.cdo.protocol.revision.CDORevisionData;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 

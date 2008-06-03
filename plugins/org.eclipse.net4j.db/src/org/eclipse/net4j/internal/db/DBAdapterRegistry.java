@@ -11,7 +11,7 @@
 package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.internal.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import java.util.HashMap;

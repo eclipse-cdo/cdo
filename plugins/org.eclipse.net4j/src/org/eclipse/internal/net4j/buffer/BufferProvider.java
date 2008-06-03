@@ -12,7 +12,7 @@ package org.eclipse.internal.net4j.buffer;
 
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 /**
  * @author Eike Stepper

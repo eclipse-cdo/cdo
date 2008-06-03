@@ -12,11 +12,11 @@ package org.eclipse.net4j.jms.internal.server;
 
 import org.eclipse.net4j.internal.jms.DestinationImpl;
 import org.eclipse.net4j.internal.jms.MessageImpl;
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.jms.internal.server.bundle.OM;
 import org.eclipse.net4j.jms.server.ISession;
 import org.eclipse.net4j.jms.server.IStore;
 import org.eclipse.net4j.jms.server.IStoreTransaction;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;

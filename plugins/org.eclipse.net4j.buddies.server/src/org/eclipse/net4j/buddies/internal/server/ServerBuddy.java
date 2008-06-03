@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.server;
 
-import org.eclipse.net4j.buddies.internal.protocol.Buddy;
-import org.eclipse.net4j.buddies.protocol.IAccount;
-import org.eclipse.net4j.buddies.protocol.IBuddy;
-import org.eclipse.net4j.buddies.protocol.IMembership;
+import org.eclipse.net4j.buddies.common.IAccount;
+import org.eclipse.net4j.buddies.common.IBuddy;
+import org.eclipse.net4j.buddies.common.IMembership;
+import org.eclipse.net4j.buddies.internal.common.Buddy;
 
 import java.util.Arrays;
 import java.util.Collection;

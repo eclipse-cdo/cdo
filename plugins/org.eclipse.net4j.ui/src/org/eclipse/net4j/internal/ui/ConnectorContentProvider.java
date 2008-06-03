@@ -13,7 +13,7 @@ package org.eclipse.net4j.internal.ui;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
-import org.eclipse.internal.net4j.connector.ConnectorFactory;
+import org.eclipse.spi.net4j.ConnectorFactory;
 
 /**
  * @author Eike Stepper

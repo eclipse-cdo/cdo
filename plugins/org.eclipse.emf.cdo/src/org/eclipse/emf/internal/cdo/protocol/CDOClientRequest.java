@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.CDORevisionResolverImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 

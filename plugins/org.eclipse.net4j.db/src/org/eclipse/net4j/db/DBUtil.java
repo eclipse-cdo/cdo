@@ -16,8 +16,8 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.db.ddl.DBSchema;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import javax.sql.DataSource;
 

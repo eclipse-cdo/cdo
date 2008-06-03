@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui;
 
-import org.eclipse.net4j.buddies.protocol.ICollaboration;
-import org.eclipse.net4j.buddies.protocol.IMembership;
+import org.eclipse.net4j.buddies.common.ICollaboration;
+import org.eclipse.net4j.buddies.common.IMembership;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;

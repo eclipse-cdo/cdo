@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui;
 
-import org.eclipse.net4j.buddies.protocol.IBuddyContainer;
+import org.eclipse.net4j.buddies.common.IBuddyContainer;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
 /**

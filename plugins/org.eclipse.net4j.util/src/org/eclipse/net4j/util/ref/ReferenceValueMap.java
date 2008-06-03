@@ -26,8 +26,8 @@ import java.util.concurrent.ConcurrentMap;
  * A {@link ConcurrentMap} implementation that uses {@link KeyedReference} instances ({@link KeyedStrongReference},
  * {@link KeyedSoftReference}, {@link KeyedWeakReference} or {@link KeyedPhantomReference}) as its values.
  * <p>
- * A <code>ReferenceValueMap</code> can be used to cache mappings until the <em>value</em> of the mapping is no
- * longer reachable from outside of the map
+ * A <code>ReferenceValueMap</code> can be used to cache mappings until the <em>value</em> of the mapping is no longer
+ * reachable from outside of the map
  * <p>
  * <b>Note:</b> This map is not synchronized. If it is to be used by multiple threads concurrently the user is
  * responsible for applying proper external synchronization!

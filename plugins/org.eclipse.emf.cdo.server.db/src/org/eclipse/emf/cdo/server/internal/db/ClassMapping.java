@@ -10,13 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOType;
-import org.eclipse.emf.cdo.protocol.model.resource.CDOResourceClass;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -24,6 +23,7 @@ import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -32,8 +32,8 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -582,8 +582,8 @@ public abstract class ClassMapping implements IClassMapping
 
         revision.setCreated(resultSet.getLong(i++));
         revision.setRevised(resultSet.getLong(i++));
-        revision.setResourceID(CDOIDUtil.createCDOID(resultSet.getLong(i++)));
-        revision.setContainerID(CDOIDUtil.createCDOID(resultSet.getLong(i++)));
+        revision.setResourceID(CDOIDUtil.createLong(resultSet.getLong(i++)));
+        revision.setContainerID(CDOIDUtil.createLong(resultSet.getLong(i++)));
         revision.setContainingFeatureID(resultSet.getInt(i++));
       }
 

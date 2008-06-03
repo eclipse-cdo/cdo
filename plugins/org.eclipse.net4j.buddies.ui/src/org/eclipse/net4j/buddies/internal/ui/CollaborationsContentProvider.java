@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.ui;
 
-import org.eclipse.net4j.buddies.protocol.ICollaborationContainer;
+import org.eclipse.net4j.buddies.common.ICollaborationContainer;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
 /**

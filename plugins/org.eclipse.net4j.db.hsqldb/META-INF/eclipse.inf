@@ -1,3 +1,2 @@
 #Processed using Jarprocessor
 jarprocessor.exclude = true
-jarprocessor.exclude.sign = true

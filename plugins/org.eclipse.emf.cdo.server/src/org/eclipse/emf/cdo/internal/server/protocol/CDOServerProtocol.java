@@ -74,8 +74,9 @@ public class CDOServerProtocol extends CDOProtocolImpl
 
     case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION:
       return new CommitTransactionIndication();
-    }
 
-    return null;
+    default:
+      return null;
+    }
   }
 }

@@ -29,7 +29,7 @@ public class JMSAdminProtocol extends SignalProtocol
   }
 
   @Override
-  protected SignalReactor doCreateSignalReactor(short signalID)
+  protected SignalReactor createSignalReactor(short signalID)
   {
     return null;
   }

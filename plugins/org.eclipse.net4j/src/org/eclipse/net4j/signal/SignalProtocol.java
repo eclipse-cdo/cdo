@@ -212,8 +212,8 @@ public abstract class SignalProtocol extends Protocol
   }
 
   /**
-   * Returns a new signal instance to serve the given signalID or <code>null</code> if the signalID is invalid for this
-   * protocol.
+   * Returns a new signal instance to serve the given signal ID or <code>null</code> if the signal ID is invalid/unknown
+   * for this protocol.
    */
   protected abstract SignalReactor createSignalReactor(short signalID);
 

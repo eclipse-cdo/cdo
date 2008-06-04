@@ -31,7 +31,7 @@ public class EchoClientProtocol extends SignalProtocol implements EchoProtocol
   }
 
   @Override
-  protected SignalReactor doCreateSignalReactor(short signalID)
+  protected SignalReactor createSignalReactor(short signalID)
   {
     // On client side only needed for server initiated requests
     return null;

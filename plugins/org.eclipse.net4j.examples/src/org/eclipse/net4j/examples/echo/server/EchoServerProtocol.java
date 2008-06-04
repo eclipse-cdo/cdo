@@ -31,7 +31,7 @@ public class EchoServerProtocol extends SignalProtocol implements EchoProtocol
   }
 
   @Override
-  protected SignalReactor doCreateSignalReactor(short signalID)
+  protected SignalReactor createSignalReactor(short signalID)
   {
     switch (signalID)
     {

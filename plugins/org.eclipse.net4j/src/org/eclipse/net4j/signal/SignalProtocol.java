@@ -156,7 +156,7 @@ public abstract class SignalProtocol extends Protocol
             TRACER.trace("Got signal id " + signalID); //$NON-NLS-1$
           }
 
-          signal = createSignalReactor(signalID);
+          signal = provideSignalReactor(signalID);
           signal.setProtocol(this);
           signal.setCorrelationID(-correlationID);
           signal.setBufferInputStream(new SignalInputStream(getInputStreamTimeout()));
@@ -199,10 +199,10 @@ public abstract class SignalProtocol extends Protocol
     return MessageFormat.format("SignalProtocol[{0}]", getType()); //$NON-NLS-1$ 
   }
 
-  protected final SignalReactor createSignalReactor(short signalID)
+  protected final SignalReactor provideSignalReactor(short signalID)
   {
     checkActive();
-    SignalReactor signal = doCreateSignalReactor(signalID);
+    SignalReactor signal = createSignalReactor(signalID);
     if (signal == null)
     {
       throw new IllegalArgumentException("Invalid signalID " + signalID);
@@ -211,7 +211,11 @@ public abstract class SignalProtocol extends Protocol
     return signal;
   }
 
-  protected abstract SignalReactor doCreateSignalReactor(short signalID);
+  /**
+   * Returns a new signal instance to serve the given signalID or <code>null</code> if the signalID is invalid for this
+   * protocol.
+   */
+  protected abstract SignalReactor createSignalReactor(short signalID);
 
   void startSignal(SignalActor<?> signalActor, long timeout) throws Exception
   {

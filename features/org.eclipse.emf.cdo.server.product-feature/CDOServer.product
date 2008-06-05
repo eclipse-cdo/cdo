@@ -34,7 +34,7 @@
       <plugin id="org.eclipse.core.runtime"/>
       <plugin id="org.eclipse.core.runtime.compatibility.auth"/>
       <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
-      <plugin id="org.eclipse.emf.cdo.protocol"/>
+      <plugin id="org.eclipse.emf.cdo.common"/>
       <plugin id="org.eclipse.emf.cdo.server"/>
       <plugin id="org.eclipse.emf.cdo.server.db"/>
       <plugin id="org.eclipse.equinox.app"/>

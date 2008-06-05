@@ -1,8 +1,8 @@
 #Master Tracing Options
-org.eclipse.emf.cdo.protocol/debug.model=true
-org.eclipse.emf.cdo.protocol/debug.protocol=true
-org.eclipse.emf.cdo.protocol/debug.revision=true
-org.eclipse.emf.cdo.protocol/debug=true
+org.eclipse.emf.cdo.common/debug.model=true
+org.eclipse.emf.cdo.common/debug.protocol=true
+org.eclipse.emf.cdo.common/debug.revision=true
+org.eclipse.emf.cdo.common/debug=true
 
 org.eclipse.emf.cdo.server/debug.protocol=true
 org.eclipse.emf.cdo.server/debug.repository=true

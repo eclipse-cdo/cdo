@@ -12,15 +12,15 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 
-import org.eclipse.net4j.internal.util.container.Container;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +71,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     }
   }
 
-  public Session openSession(CDOServerProtocol protocol, boolean disableLegacyObjects) throws SessionCreationException
+  public Session openSession(CDOServerProtocol protocol, boolean legacySupportEnabled) throws SessionCreationException
   {
     int id = ++lastSessionID;
     if (TRACER.isEnabled())
@@ -79,7 +79,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
       TRACER.trace("Opening session " + id);
     }
 
-    Session session = new Session(this, protocol, id, disableLegacyObjects);
+    Session session = new Session(this, protocol, id, legacySupportEnabled);
     synchronized (sessions)
     {
       sessions.put(id, session);

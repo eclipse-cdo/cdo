@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.util.LegacySystemNotAvailableException;
 
 import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
@@ -77,7 +77,7 @@ public final class FSMUtil
   public static void checkLegacySystemAvailability(CDOSession session, CDOObject object)
       throws LegacySystemNotAvailableException
   {
-    if (session.isDisableLegacyObjects() && object instanceof CDOLegacyImpl)
+    if (!session.isLegacySupportEnabled() && object instanceof CDOLegacyImpl)
     {
       throw new LegacySystemNotAvailableException();
     }

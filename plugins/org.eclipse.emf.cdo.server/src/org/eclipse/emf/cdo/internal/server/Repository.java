@@ -11,16 +11,15 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.id.CDOIDMetaImpl;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IStore;
 
-import org.eclipse.net4j.internal.util.container.Container;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.text.MessageFormat;
@@ -176,7 +175,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   public synchronized CDOIDMetaRange getMetaIDRange(int count)
   {
-    CDOID lowerBound = new CDOIDMetaImpl(lastMetaID + 1);
+    CDOID lowerBound = CDOIDUtil.createMeta(lastMetaID + 1);
     lastMetaID += count;
     return CDOIDUtil.createMetaRange(lowerBound, count);
   }

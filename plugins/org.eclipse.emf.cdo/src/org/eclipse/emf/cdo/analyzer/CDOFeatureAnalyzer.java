@@ -11,7 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.analyzer;
 
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
 
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.analyzer.NOOPFeatureAnalyzer;

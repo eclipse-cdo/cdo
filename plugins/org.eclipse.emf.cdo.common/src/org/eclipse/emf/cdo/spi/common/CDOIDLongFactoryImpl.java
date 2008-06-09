@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=226778
  **************************************************************************/
 package org.eclipse.emf.cdo.spi.common;
 
@@ -33,6 +34,11 @@ public class CDOIDLongFactoryImpl implements CDOIDObjectFactory
   public CDOIDObject createCDOIDObject(ExtendedDataInput in)
   {
     return new CDOIDLongImpl();
+  }
+  
+  public CDOIDObject createCDOIDObject(String in)
+  {
+    return new CDOIDLongImpl(Long.valueOf(in));
   }
 
   public LibraryHandler getLibraryHandler()

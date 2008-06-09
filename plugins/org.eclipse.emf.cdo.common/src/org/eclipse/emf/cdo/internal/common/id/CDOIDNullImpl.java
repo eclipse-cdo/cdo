@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=226778
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.id;
 
@@ -57,6 +58,11 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDMeta, CDO
   public CDOClassRef getClassRef()
   {
     return null;
+  }
+  
+  public String getCDOIDString()
+  {
+    return "NULL";
   }
 
   public void read(ExtendedDataInput in) throws IOException

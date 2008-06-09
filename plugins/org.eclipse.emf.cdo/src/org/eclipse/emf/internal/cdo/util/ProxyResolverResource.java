@@ -31,6 +31,7 @@ import java.util.Map;
  */
 final class ProxyResolverResource implements Resource
 {
+  @SuppressWarnings("unused")
   private CDOViewImpl view;
 
   public ProxyResolverResource(CDOViewImpl view)

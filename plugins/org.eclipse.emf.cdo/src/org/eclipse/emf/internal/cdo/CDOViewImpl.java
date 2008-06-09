@@ -20,18 +20,18 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.CDOViewResourcesEvent;
 import org.eclipse.emf.cdo.analyzer.CDOFeatureAnalyzer;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDMeta;
+import org.eclipse.emf.cdo.common.id.CDOIDObject;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOClassRef;
+import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDMeta;
-import org.eclipse.emf.cdo.protocol.id.CDOIDObject;
-import org.eclipse.emf.cdo.protocol.id.CDOIDProvider;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
-import org.eclipse.emf.cdo.protocol.util.TransportException;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
@@ -41,9 +41,9 @@ import org.eclipse.emf.internal.cdo.protocol.ResourcePathRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -69,7 +69,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier implements CDOView, CDOIDProvider,
+public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implements CDOView, CDOIDProvider,
     Adapter.Internal
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
@@ -80,7 +80,9 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
 
   private ResourceSet resourceSet;
 
-  private boolean enableInvalidationNotifications;
+  private boolean uniqueResourceContents = true;
+
+  private boolean invalidationNotificationsEnabled;
 
   private int loadRevisionCollectionChunkSize;
 
@@ -98,7 +100,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   {
     viewID = id;
     this.session = session;
-    enableInvalidationNotifications = OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.getValue();
+    invalidationNotificationsEnabled = OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.getValue();
     loadRevisionCollectionChunkSize = OM.PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE.getValue();
     objects = createObjectsMap();
   }
@@ -143,14 +145,24 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
     return false;
   }
 
-  public boolean isEnableInvalidationNotifications()
+  public boolean hasUniqueResourceContents()
   {
-    return enableInvalidationNotifications;
+    return uniqueResourceContents;
   }
 
-  public void setEnableInvalidationNotifications(boolean on)
+  public void setUniqueResourceContents(boolean uniqueResourceContents)
   {
-    enableInvalidationNotifications = on;
+    this.uniqueResourceContents = uniqueResourceContents;
+  }
+
+  public boolean isInvalidationNotificationsEnabled()
+  {
+    return invalidationNotificationsEnabled;
+  }
+
+  public void setInvalidationNotificationsEnabled(boolean invalidationNotificationsEnabled)
+  {
+    this.invalidationNotificationsEnabled = invalidationNotificationsEnabled;
   }
 
   public int getLoadRevisionCollectionChunkSize()
@@ -575,7 +587,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
    */
   public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs)
   {
-    List<InternalCDOObject> dirtyObjects = enableInvalidationNotifications ? new ArrayList<InternalCDOObject>() : null;
+    List<InternalCDOObject> dirtyObjects = invalidationNotificationsEnabled ? new ArrayList<InternalCDOObject>() : null;
     for (CDOID dirtyOID : dirtyOIDs)
     {
       InternalCDOObject dirtyObject;
@@ -811,7 +823,7 @@ public class CDOViewImpl extends org.eclipse.net4j.internal.util.event.Notifier 
   /**
    * @author Eike Stepper
    */
-  protected abstract class Event extends org.eclipse.net4j.internal.util.event.Event implements CDOViewEvent
+  protected abstract class Event extends org.eclipse.net4j.util.event.Event implements CDOViewEvent
   {
     private static final long serialVersionUID = 1L;
 

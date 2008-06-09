@@ -25,7 +25,7 @@ import junit.framework.TestCase;
  * @author Simon McDuff
  * @author Eike Stepper
  */
-public class ResourceTest extends TestCase
+public class NonCDOResourceTest extends TestCase
 {
   public void testNonCDOResource() throws Exception
   {

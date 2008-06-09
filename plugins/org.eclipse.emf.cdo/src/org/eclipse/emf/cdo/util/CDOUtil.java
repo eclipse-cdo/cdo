@@ -12,14 +12,14 @@ package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.emf.internal.cdo.CDOSessionConfigurationImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
-import org.eclipse.emf.internal.cdo.LegacyObjectDisabler;
+import org.eclipse.emf.internal.cdo.LegacySupportEnabler;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -91,10 +91,10 @@ public final class CDOUtil
     map.put(CDOProtocolConstants.PROTOCOL_NAME, factory);
   }
 
-  public static void prepareContainer(IManagedContainer container, boolean disableLegacyObjects)
+  public static void prepareContainer(IManagedContainer container, boolean legacySupportEnabled)
   {
     container.registerFactory(new CDOClientProtocolFactory());
-    container.addPostProcessor(new LegacyObjectDisabler(disableLegacyObjects));
+    container.addPostProcessor(new LegacySupportEnabler(legacySupportEnabled));
   }
 
   public static String extractResourcePath(URI uri)

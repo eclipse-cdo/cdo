@@ -10,19 +10,19 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
-import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
+import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.util.ServerException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -36,13 +36,13 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
 
   private String repositoryName;
 
-  private boolean disableLegacyObjects;
+  private boolean legacySupportEnabled;
 
-  public OpenSessionRequest(IChannel channel, String repositoryName, boolean disableLegacyObjects)
+  public OpenSessionRequest(IChannel channel, String repositoryName, boolean legacySupportEnabled)
   {
     super(channel);
     this.repositoryName = repositoryName;
-    this.disableLegacyObjects = disableLegacyObjects;
+    this.legacySupportEnabled = legacySupportEnabled;
   }
 
   @Override
@@ -62,9 +62,9 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
 
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Writing disableLegacyObjects: {0}", disableLegacyObjects);
+      PROTOCOL.format("Writing legacySupportEnabled: {0}", legacySupportEnabled);
     }
-    out.writeBoolean(disableLegacyObjects);
+    out.writeBoolean(legacySupportEnabled);
   }
 
   @Override

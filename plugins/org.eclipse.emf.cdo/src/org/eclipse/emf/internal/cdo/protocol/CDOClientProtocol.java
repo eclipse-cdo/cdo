@@ -11,8 +11,8 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.internal.protocol.CDOProtocolImpl;
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.internal.common.CDOProtocolImpl;
 
 import org.eclipse.net4j.signal.SignalReactor;
 
@@ -32,7 +32,7 @@ public class CDOClientProtocol extends CDOProtocolImpl
   }
 
   @Override
-  protected SignalReactor doCreateSignalReactor(short signalID)
+  protected SignalReactor createSignalReactor(short signalID)
   {
     switch (signalID)
     {

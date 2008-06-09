@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.OrderAddress;
@@ -27,10 +28,16 @@ import org.eclipse.net4j.channel.IChannel;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 
 import java.util.Date;
 
@@ -782,5 +789,44 @@ public class InitialTest extends AbstractCDOTest
 
     }
 
+  }
+
+  public void testDirectResourceEMF() throws Exception
+  {
+    Resource resource1 = new XMLResourceImpl();
+
+    EPackage p = EcoreFactory.eINSTANCE.createEPackage();
+    EClass c = EcoreFactory.eINSTANCE.createEClass();
+
+    resource1.getContents().add(p);
+    p.getEClassifiers().add(c);
+
+    assertEquals(null, ((InternalEObject)c).eDirectResource());
+    assertEquals(resource1, ((InternalEObject)p).eDirectResource());
+  }
+
+  public void testDirectResource() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = (CDOTransaction)session.openTransaction();
+
+    CDOResource resource1 = transaction.getOrCreateResource("/test1");
+    // Resource resource1 = new XMIResourceImpl();
+
+    Category cat1 = Model1Factory.eINSTANCE.createCategory();
+    assertTransient(cat1);
+
+    Category cat2 = Model1Factory.eINSTANCE.createCategory();
+    assertTransient(cat2);
+
+    // resource1.getContents().add(cat2);
+    resource1.getContents().add(cat1);
+    cat1.getCategories().add(cat2);
+
+    assertEquals(null, ((InternalEObject)cat2).eDirectResource());
+    assertEquals(resource1, ((InternalEObject)cat1).eDirectResource());
+
+    transaction.close();
+    session.close();
   }
 }

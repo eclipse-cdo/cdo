@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.bundle;
 
-import org.eclipse.net4j.internal.util.om.OSGiBundle;
 import org.eclipse.net4j.util.om.OSGiActivator;
 
 import org.eclipse.emf.common.EMFPlugin;
@@ -58,14 +57,14 @@ public final class Activator extends EMFPlugin
     public void start(BundleContext context) throws Exception
     {
       super.start(context);
-      OSGiActivator.startBundle(context, (OSGiBundle)OM.BUNDLE);
+      OSGiActivator.startBundle(context, OM.BUNDLE);
     }
 
     @Override
     public void stop(BundleContext context) throws Exception
     {
       plugin = null;
-      OSGiActivator.stopBundle(context, (OSGiBundle)OM.BUNDLE);
+      OSGiActivator.stopBundle(context, OM.BUNDLE);
       super.stop(context);
     }
   }

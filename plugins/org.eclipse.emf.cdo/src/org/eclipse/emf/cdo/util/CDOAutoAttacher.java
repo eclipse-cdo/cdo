@@ -13,17 +13,17 @@ package org.eclipse.emf.cdo.util;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOTransactionHandler;
+import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
+import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOAddFeatureDelta;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOClearFeatureDelta;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOContainerFeatureDelta;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDeltaVisitor;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOListFeatureDelta;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOMoveFeatureDelta;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDORemoveFeatureDelta;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOSetFeatureDelta;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOUnsetFeatureDelta;
 
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 

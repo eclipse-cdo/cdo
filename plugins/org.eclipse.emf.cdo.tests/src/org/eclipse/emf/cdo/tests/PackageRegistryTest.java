@@ -14,8 +14,8 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
 import org.eclipse.emf.cdo.tests.mango.MangoFactory;
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.mango.Value;
@@ -133,8 +133,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   public void testCommitNestedPackages() throws Exception
   {
     CDOSession session = openSession();
-    session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
-    assertEquals(2, session.getPackageRegistry().size());
+    assertEquals(0, session.getPackageRegistry().size());
 
     try
     {
@@ -144,6 +143,17 @@ public class PackageRegistryTest extends AbstractCDOTest
     catch (IllegalArgumentException success)
     {
     }
+
+    session.close();
+  }
+
+  public void testCommitTopLevelPackages() throws Exception
+  {
+    CDOSession session = openSession();
+    assertEquals(0, session.getPackageRegistry().size());
+
+    session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
+    assertEquals(2, session.getPackageRegistry().size());
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res");

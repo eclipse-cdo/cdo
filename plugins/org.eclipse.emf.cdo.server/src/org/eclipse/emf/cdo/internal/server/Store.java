@@ -17,8 +17,8 @@ import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
-import org.eclipse.net4j.internal.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,9 +63,9 @@ public abstract class Store extends Lifecycle implements IStore
     this.properties = properties;
   }
 
-  public Repository getRepository()
+  public IRepository getRepository()
   {
-    return (Repository)repository;
+    return repository;
   }
 
   public void setRepository(IRepository repository)

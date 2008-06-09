@@ -11,27 +11,27 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOAddFeatureDeltaImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOClearFeatureDeltaImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOContainerFeatureDeltaImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOMoveFeatureDeltaImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDORemoveFeatureDeltaImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOSetFeatureDeltaImpl;
-import org.eclipse.emf.cdo.internal.protocol.revision.delta.CDOUnsetFeatureDeltaImpl;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.model.CDOFeature;
-import org.eclipse.emf.cdo.protocol.model.CDOType;
-import org.eclipse.emf.cdo.protocol.revision.CDOReferenceProxy;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOAddFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOClearFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOContainerFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOMoveFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDORemoveFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.GenUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.collection.MoveableList;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;

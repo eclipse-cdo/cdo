@@ -299,8 +299,8 @@ public interface EresourcePackage extends EPackage
   EAttribute getCDOResource_TimeStamp();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute '<em>Path</em>'.
    * @see org.eclipse.emf.cdo.eresource.CDOResource#getPath()

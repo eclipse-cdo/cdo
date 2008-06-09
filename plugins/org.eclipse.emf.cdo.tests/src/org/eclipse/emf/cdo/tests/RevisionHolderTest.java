@@ -10,17 +10,17 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.internal.protocol.revision.DLRevisionHolder;
-import org.eclipse.emf.cdo.internal.protocol.revision.LRURevisionHolder;
-import org.eclipse.emf.cdo.internal.protocol.revision.LRURevisionList;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDProvider;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.protocol.revision.CDORevisionData;
-import org.eclipse.emf.cdo.protocol.revision.CDORevisionResolver;
-import org.eclipse.emf.cdo.protocol.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.internal.common.revision.DLRevisionHolder;
+import org.eclipse.emf.cdo.internal.common.revision.LRURevisionHolder;
+import org.eclipse.emf.cdo.internal.common.revision.LRURevisionList;
 
 import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -192,7 +192,7 @@ public class RevisionHolderTest extends AbstractOMTest
 
     public RevisionStub(long id)
     {
-      this.id = CDOIDUtil.createCDOID(id);
+      this.id = CDOIDUtil.createLong(id);
     }
 
     public CDOClass getCDOClass()

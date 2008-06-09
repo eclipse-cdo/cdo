@@ -13,21 +13,19 @@ package org.eclipse.emf.cdo.eresource.impl;
 
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -40,6 +38,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -68,6 +67,7 @@ import java.util.Map;
  * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isTrackingModification <em>Tracking Modification</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getErrors <em>Errors</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getWarnings <em>Warnings</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getTimeStamp <em>Time Stamp</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getPath <em>Path</em>}</li>
  * </ul>
  * </p>
@@ -423,11 +423,12 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void attached(EObject object)
   {
-    /*
-     * InternalCDOObject legacy = getLegacyWrapper(object); if (legacy.cdoState() != CDOState.CLEAN) {
-     * CDOStateMachine.INSTANCE.attach(legacy, this, view); // if (legacy.eContainer() == this) // { //
-     * legacy.eBasicSetContainer(null, 0, null); // legacy.eSetResource(this, null); // } }
-     */
+    // InternalCDOObject legacy = getLegacyWrapper(object);
+    // if (legacy.cdoState() != CDOState.CLEAN)
+    // {
+    // CDOStateMachine.INSTANCE.attach(legacy, this, view);
+    // }
+
   }
 
   /**
@@ -435,9 +436,8 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void detached(EObject object)
   {
-    /*
-     * InternalCDOObject legacy = getLegacyWrapper(object); CDOStateMachine.INSTANCE.detach(legacy);
-     */
+    // InternalCDOObject legacy = getLegacyWrapper(object);
+    // CDOStateMachine.INSTANCE.detach(legacy);
   }
 
   /**
@@ -541,15 +541,18 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     this.existing = existing;
   }
 
-  private InternalCDOObject getLegacyWrapper(EObject object) throws ImplementationError
+  /**
+   * @ADDED
+   */
+  @Override
+  protected EList<?> createList(EStructuralFeature eStructuralFeature)
   {
-    InternalCDOObject legacy = FSMUtil.adapt(object, view);
-    if (!(legacy instanceof CDOLegacyImpl))
+    if (eStructuralFeature == EresourcePackage.eINSTANCE.getCDOResource_Contents())
     {
-      throw new ImplementationError("Should be legacy wrapper: " + object);
+      return new PersistentContents(eStructuralFeature);
     }
 
-    return legacy;
+    return super.createList(eStructuralFeature);
   }
 
   /**
@@ -558,6 +561,24 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   private void basicSetPath(String newPath)
   {
     eSet(EresourcePackage.Literals.CDO_RESOURCE__PATH, newPath);
+  }
+
+  /**
+   * @ADDED
+   * @author Eike Stepper
+   */
+  protected class PersistentContents extends CDOStoreEList<Object>
+  {
+    private static final long serialVersionUID = 1L;
+
+    public PersistentContents(EStructuralFeature eStructuralFeature)
+    {
+      super(eStructuralFeature);
+      if (!cdoView().hasUniqueResourceContents())
+      {
+        kind &= ~IS_UNIQUE;
+      }
+    }
   }
 
   /**

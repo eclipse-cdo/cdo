@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.protocol.id.CDOIDLongFactoryImpl;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
-import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryProvider;
-import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
+import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.spi.common.CDOIDLongFactoryImpl;
 
 /**
  * @author Eike Stepper
@@ -35,7 +35,7 @@ public abstract class LongIDStore extends Store
 
   public synchronized CDOID getNextCDOID()
   {
-    return CDOIDUtil.createCDOID(++lastObjectID);
+    return CDOIDUtil.createLong(++lastObjectID);
   }
 
   public long getLastObjectID()

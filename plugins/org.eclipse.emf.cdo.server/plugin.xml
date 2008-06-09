@@ -29,12 +29,12 @@
       	<factory
             type="challenge"
             productGroup="org.eclipse.net4j.Negotiators"
-            class="org.eclipse.net4j.internal.util.security.ChallengeNegotiatorFactory"/>
+            class="org.eclipse.net4j.util.security.ChallengeNegotiatorFactory"/>
    	</extension>
    
 	<extension 
 		point="org.eclipse.net4j.util.elementProcessors">
-		<elementProcessor class="org.eclipse.net4j.internal.util.security.ChallengeNegotiatorConfigurer"/>
+		<elementProcessor class="org.eclipse.net4j.util.security.ChallengeNegotiatorConfigurer"/>
     </extension>
    
    	<extension 

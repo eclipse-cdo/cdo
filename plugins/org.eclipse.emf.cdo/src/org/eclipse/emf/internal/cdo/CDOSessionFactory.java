@@ -14,14 +14,16 @@ import org.eclipse.emf.cdo.CDOSession;
 
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 
-import org.eclipse.net4j.internal.util.factory.Factory;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.factory.Factory;
 
-import org.eclipse.emf.common.util.URI;
-
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * @author Eike Stepper
@@ -32,6 +34,8 @@ public class CDOSessionFactory extends Factory
 
   public static final String TYPE = "cdo";
 
+  private static final String TRUE = Boolean.TRUE.toString();
+
   public CDOSessionFactory()
   {
     super(PRODUCT_GROUP, TYPE);
@@ -39,25 +43,46 @@ public class CDOSessionFactory extends Factory
 
   public CDOSession create(String description)
   {
-    return createSession(getRepositoryName(description), isDisableLegacyObjects(description),
-        isAutomaticPackageRegistry(description), null);
-  }
+    try
+    {
+      URI uri = new URI(description);
+      String query = uri.getQuery();
+      if (StringUtil.isEmpty(query))
+      {
+        throw new IllegalArgumentException("Query is empty: " + description);
+      }
 
-  public static String getRepositoryName(String description)
-  {
-    URI uri = URI.createURI(description);
-    IPath path = new Path(uri.path());
-    return path.segment(0);
-  }
+      Map<String, String> result = new HashMap<String, String>();
+      StringTokenizer tokenizer = new StringTokenizer(query, "&");
+      while (tokenizer.hasMoreTokens())
+      {
+        String parameter = tokenizer.nextToken();
+        if (!StringUtil.isEmpty(parameter))
+        {
+          int pos = parameter.indexOf('=');
+          if (pos == -1)
+          {
+            String key = parameter.trim();
+            result.put(key, "");
+          }
+          else
+          {
+            String key = parameter.substring(0, pos).trim();
+            String value = parameter.substring(pos + 1);
+            result.put(key, value);
+          }
+        }
+      }
 
-  public boolean isDisableLegacyObjects(String description)
-  {
-    return description.contains("disableLegacyObjects=true");
-  }
-
-  public boolean isAutomaticPackageRegistry(String description)
-  {
-    return description.contains("automaticPackageRegistry=true");
+      String repositoryName = result.get("repositoryName");
+      boolean legacySupportEnabled = TRUE.equals(result.get("legacySupportEnabled"));
+      boolean automaticPackageRegistry = TRUE.equals(result.get("automaticPackageRegistry"));
+      return createSession(repositoryName, legacySupportEnabled, automaticPackageRegistry, null);
+    }
+    catch (URISyntaxException ex)
+    {
+      throw new IllegalArgumentException(ex);
+    }
   }
 
   public static CDOSession get(IManagedContainer container, String description)
@@ -65,7 +90,7 @@ public class CDOSessionFactory extends Factory
     return (CDOSession)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 
-  public static CDOSessionImpl createSession(String repositoryName, boolean disableLegacyObjects,
+  public static CDOSessionImpl createSession(String repositoryName, boolean legacySupportEnabled,
       boolean automaticPackageRegistry, IFailOverStrategy failOverStrategy)
   {
     CDOSessionImpl session = new CDOSessionImpl();
@@ -77,7 +102,7 @@ public class CDOSessionFactory extends Factory
     }
 
     session.setRepositoryName(repositoryName);
-    session.setDisableLegacyObjects(disableLegacyObjects);
+    session.setLegacySupportEnabled(legacySupportEnabled);
     session.setFailOverStrategy(failOverStrategy);
     return session;
   }

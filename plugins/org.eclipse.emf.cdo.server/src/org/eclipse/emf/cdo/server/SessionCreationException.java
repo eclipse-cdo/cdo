@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.protocol.util.CDOException;
+import org.eclipse.emf.cdo.common.util.CDOException;
 
 /**
  * @author Eike Stepper

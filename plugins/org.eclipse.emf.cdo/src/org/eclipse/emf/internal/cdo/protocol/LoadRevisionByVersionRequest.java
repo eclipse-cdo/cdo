@@ -10,17 +10,18 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Collections;
 
 /**
  * @author Eike Stepper
@@ -33,7 +34,7 @@ public class LoadRevisionByVersionRequest extends LoadRevisionRequest
 
   public LoadRevisionByVersionRequest(IChannel channel, CDOID id, int referenceChunk, int version)
   {
-    super(channel, id, referenceChunk);
+    super(channel, Collections.singleton(id), referenceChunk);
     this.version = version;
   }
 

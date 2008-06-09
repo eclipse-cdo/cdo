@@ -16,16 +16,16 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 /**
  * @author Eike Stepper
  */
-public class LegacyObjectDisabler implements IElementProcessor
+public class LegacySupportEnabler implements IElementProcessor
 {
-  private boolean disableLegacyObjects;
+  private boolean legacySupportEnabled;
 
-  public LegacyObjectDisabler(boolean disableLegacyObjects)
+  public LegacySupportEnabler(boolean legacySupportEnabled)
   {
-    this.disableLegacyObjects = disableLegacyObjects;
+    this.legacySupportEnabled = legacySupportEnabled;
   }
 
-  public LegacyObjectDisabler()
+  public LegacySupportEnabler()
   {
     this(true);
   }
@@ -36,7 +36,7 @@ public class LegacyObjectDisabler implements IElementProcessor
     if (element instanceof CDOSessionImpl)
     {
       CDOSessionImpl session = (CDOSessionImpl)element;
-      session.setDisableLegacyObjects(disableLegacyObjects);
+      session.setLegacySupportEnabled(legacySupportEnabled);
     }
 
     return element;

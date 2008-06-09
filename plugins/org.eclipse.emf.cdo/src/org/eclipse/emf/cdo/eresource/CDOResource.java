@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification <em>Tracking Modification</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getErrors <em>Errors</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getWarnings <em>Warnings</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp <em>Time Stamp</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}</li>
  * </ul>
  * </p>

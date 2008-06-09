@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.protocol.CDOProtocolView;
+import org.eclipse.emf.cdo.common.CDOProtocolView;
 
 /**
  * @author Eike Stepper

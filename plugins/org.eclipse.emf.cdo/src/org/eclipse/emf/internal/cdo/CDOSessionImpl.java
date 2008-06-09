@@ -14,26 +14,26 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.internal.protocol.id.CDOIDTempMetaImpl;
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.protocol.id.CDOID;
-import org.eclipse.emf.cdo.protocol.id.CDOIDLibraryDescriptor;
-import org.eclipse.emf.cdo.protocol.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.protocol.id.CDOIDObject;
-import org.eclipse.emf.cdo.protocol.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.protocol.id.CDOIDTemp;
-import org.eclipse.emf.cdo.protocol.id.CDOIDUtil;
-import org.eclipse.emf.cdo.protocol.model.CDOClass;
-import org.eclipse.emf.cdo.protocol.model.CDOClassRef;
-import org.eclipse.emf.cdo.protocol.model.CDOPackage;
-import org.eclipse.emf.cdo.protocol.revision.CDORevision;
-import org.eclipse.emf.cdo.protocol.util.TransportException;
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
+import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDObject;
+import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOClassRef;
+import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.LegacySystemNotAvailableException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
+import org.eclipse.emf.internal.cdo.protocol.CDOFacade;
 import org.eclipse.emf.internal.cdo.protocol.LoadLibrariesRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
@@ -46,20 +46,20 @@ import org.eclipse.emf.internal.cdo.util.ProxyResolverURIResourceMap;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.internal.util.container.Container;
-import org.eclipse.net4j.internal.util.event.Event;
-import org.eclipse.net4j.internal.util.lifecycle.LifecycleEventAdapter;
-import org.eclipse.net4j.internal.util.om.trace.ContextTracer;
 import org.eclipse.net4j.signal.failover.IFailOverEvent;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -92,9 +92,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   private int sessionID;
 
-  private boolean disableLegacyObjects;
+  private boolean legacySupportEnabled;
 
   private int referenceChunkSize;
+
+  private CDOFacade facade;
 
   private IFailOverStrategy failOverStrategy;
 
@@ -166,25 +168,26 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return cdoidObjectFactory.createCDOIDObject(in);
   }
 
+
   public CDOIDObject createCDOIDObject(String in)
   {
     return cdoidObjectFactory.createCDOIDObject(in);
   }
 
-  public boolean isDisableLegacyObjects()
+  public boolean isLegacySupportEnabled()
   {
-    return disableLegacyObjects;
+    return legacySupportEnabled;
   }
 
-  public void setDisableLegacyObjects(boolean disableLegacyObjects)
+  public void setLegacySupportEnabled(boolean legacySupportEnabled)
   {
     checkInactive();
-    if (!disableLegacyObjects && !FSMUtil.isLegacySystemAvailable())
+    if (legacySupportEnabled && !FSMUtil.isLegacySystemAvailable())
     {
       throw new LegacySystemNotAvailableException();
     }
 
-    this.disableLegacyObjects = disableLegacyObjects;
+    this.legacySupportEnabled = legacySupportEnabled;
   }
 
   public int getReferenceChunkSize()
@@ -200,6 +203,16 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     this.referenceChunkSize = referenceChunkSize;
+  }
+
+  public CDOFacade getFacade()
+  {
+    return facade;
+  }
+
+  public void setFacade(CDOFacade facade)
+  {
+    this.facade = facade;
   }
 
   public IFailOverStrategy getFailOverStrategy()
@@ -397,7 +410,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public synchronized CDOIDMetaRange getTempMetaIDRange(int count)
   {
-    CDOIDTemp lowerBound = new CDOIDTempMetaImpl(lastTempMetaID + 1);
+    CDOIDTemp lowerBound = CDOIDUtil.createTempMeta(lastTempMetaID + 1);
     lastTempMetaID += count;
     return CDOIDUtil.createMetaRange(lowerBound, count);
   }
@@ -454,7 +467,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   public static CDOIDMetaRange registerEPackage(EPackage ePackage, int firstMetaID,
       Map<CDOID, InternalEObject> idToMetaInstances, Map<InternalEObject, CDOID> metaInstanceToIDs)
   {
-    CDOIDTemp lowerBound = new CDOIDTempMetaImpl(firstMetaID);
+    CDOIDTemp lowerBound = CDOIDUtil.createTempMeta(firstMetaID);
     CDOIDMetaRange range = CDOIDUtil.createMetaRange(lowerBound, 0);
     range = registerMetaInstance((InternalEObject)ePackage, range, idToMetaInstances, metaInstanceToIDs);
     return range;
@@ -635,6 +648,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
+    if (legacySupportEnabled && !FSMUtil.isLegacySystemAvailable())
+    {
+      throw new LegacySystemNotAvailableException();
+    }
+
     if (channel == null && connector == null)
     {
       throw new IllegalStateException("channel == null && connector == null");
@@ -662,7 +680,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       channel = connector.openChannel(CDOProtocolConstants.PROTOCOL_NAME, this);
     }
 
-    OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName, disableLegacyObjects);
+    OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName, legacySupportEnabled);
     OpenSessionResult result = request.send();
 
     sessionID = result.getSessionID();

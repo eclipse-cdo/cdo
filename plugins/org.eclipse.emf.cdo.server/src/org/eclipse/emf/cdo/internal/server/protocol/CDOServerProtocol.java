@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.protocol.CDOProtocolImpl;
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.internal.common.CDOProtocolImpl;
 import org.eclipse.emf.cdo.internal.server.Session;
-import org.eclipse.emf.cdo.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.signal.SignalReactor;
 
@@ -32,7 +32,7 @@ public class CDOServerProtocol extends CDOProtocolImpl
   }
 
   @Override
-  protected SignalReactor doCreateSignalReactor(short signalID)
+  protected SignalReactor createSignalReactor(short signalID)
   {
     switch (signalID)
     {
@@ -74,8 +74,9 @@ public class CDOServerProtocol extends CDOProtocolImpl
 
     case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION:
       return new CommitTransactionIndication();
-    }
 
-    return null;
+    default:
+      return null;
+    }
   }
 }

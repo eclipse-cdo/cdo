@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.spi.common;
 
 import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOClassProxy;
+import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 
 /**
@@ -18,9 +20,14 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
  */
 public interface InternalCDOFeature extends CDOFeature, InternalCDOModelElement
 {
+  public CDOClassProxy getReferenceTypeProxy();
+
   public void setContainingClass(CDOClass containingClass);
 
   public void setFeatureIndex(int featureIndex);
 
+  public void setReferenceType(CDOClassRef cdoClassRef);
+
+  @Deprecated
   public void setReferenceType(CDOClass cdoClass);
 }

@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
+import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -176,7 +177,7 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     String name = feature.getName();
     int featureID = feature.getFeatureID();
     int type = feature.getType().getTypeID();
-    CDOClassProxy reference = feature.getReferenceTypeProxy();
+    CDOClassProxy reference = ((InternalCDOFeature)feature).getReferenceTypeProxy();
     String packageURI = reference == null ? null : reference.getPackageURI();
     int classifierID = reference == null ? 0 : reference.getClassifierID();
     boolean many = feature.isMany();

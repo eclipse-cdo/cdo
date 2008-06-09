@@ -51,7 +51,7 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
 
   private boolean containment;
 
-  private CDOClassProxy referenceType;
+  private CDOClassProxy referenceTypeProxy;
 
   public CDOFeatureImpl()
   {
@@ -75,13 +75,13 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     }
   }
 
-  public CDOFeatureImpl(CDOClass containingClass, int featureID, String name, CDOClassProxy referenceType,
+  public CDOFeatureImpl(CDOClass containingClass, int featureID, String name, CDOClassProxy referenceTypeProxy,
       boolean many, boolean containment)
   {
     super(name);
-    if (referenceType == null)
+    if (referenceTypeProxy == null)
     {
-      throw new IllegalArgumentException("referenceType == null");
+      throw new IllegalArgumentException("referenceTypeProxy == null");
     }
 
     this.containingClass = containingClass;
@@ -89,7 +89,7 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     type = CDOType.OBJECT;
     this.many = many;
     this.containment = containment;
-    this.referenceType = referenceType;
+    this.referenceTypeProxy = referenceTypeProxy;
     if (MODEL.isEnabled())
     {
       MODEL.format("Created {0}", this);
@@ -125,7 +125,7 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
         PROTOCOL.format("Read reference type: classRef={0}", classRef);
       }
 
-      referenceType = new CDOClassProxy(classRef, containingClass.getContainingPackage().getPackageManager());
+      referenceTypeProxy = new CDOClassProxy(classRef, containingClass.getContainingPackage().getPackageManager());
     }
   }
 
@@ -146,7 +146,7 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
 
     if (isReference())
     {
-      CDOClassRef classRef = referenceType.getClassRef();
+      CDOClassRef classRef = referenceTypeProxy.getClassRef();
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("Writing reference type: classRef={0}", classRef);
@@ -238,28 +238,33 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
 
   public CDOClass getReferenceType()
   {
-    if (referenceType == null)
+    if (referenceTypeProxy == null)
     {
       return null;
     }
 
-    return referenceType.getCdoClass();
+    return referenceTypeProxy.getCdoClass();
+  }
+
+  public void setReferenceType(CDOClassRef cdoClassRef)
+  {
+    referenceTypeProxy = new CDOClassProxy(cdoClassRef, getPackageManager());
   }
 
   public void setReferenceType(CDOClass cdoClass)
   {
-    referenceType = new CDOClassProxy(cdoClass);
+    referenceTypeProxy = new CDOClassProxy(cdoClass);
   }
 
   public CDOClassProxy getReferenceTypeProxy()
   {
-    return referenceType;
+    return referenceTypeProxy;
   }
 
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOFeature(ID={0}, name={1}, type={2}, referenceType={3})", featureID, getName(),
+    return MessageFormat.format("CDOFeature(ID={0}, name={1}, type={2}, referenceTypeProxy={3})", featureID, getName(),
         getType(), getReferenceTypeProxy());
   }
 

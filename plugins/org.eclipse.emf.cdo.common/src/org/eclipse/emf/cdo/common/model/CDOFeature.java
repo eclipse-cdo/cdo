@@ -29,8 +29,6 @@ public interface CDOFeature extends CDOModelElement
 
   public CDOClass getReferenceType();
 
-  public CDOClassProxy getReferenceTypeProxy();
-
   public CDOClass getContainingClass();
 
   public CDOPackage getContainingPackage();

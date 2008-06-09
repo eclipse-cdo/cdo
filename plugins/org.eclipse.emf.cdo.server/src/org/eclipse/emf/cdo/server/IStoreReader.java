@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
-import org.eclipse.net4j.util.io.CloseableIterator;
+import org.eclipse.net4j.util.collection.CloseableIterator;
 
 import java.util.Collection;
 

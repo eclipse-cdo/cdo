@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 
-import org.eclipse.net4j.util.io.CloseableIterator;
+import org.eclipse.net4j.util.collection.CloseableIterator;
 
 import java.sql.Connection;
 import java.util.Map;

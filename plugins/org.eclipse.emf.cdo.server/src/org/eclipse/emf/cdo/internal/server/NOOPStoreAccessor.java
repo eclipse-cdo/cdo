@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
-import org.eclipse.net4j.util.io.CloseableIterator;
+import org.eclipse.net4j.util.collection.CloseableIterator;
 
 import java.util.Collection;
 import java.util.Collections;

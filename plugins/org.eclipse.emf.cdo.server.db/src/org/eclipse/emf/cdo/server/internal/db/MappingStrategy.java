@@ -28,7 +28,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.util.io.CloseableIterator;
+import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 

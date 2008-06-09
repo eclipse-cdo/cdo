@@ -39,7 +39,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBRowHandler;
-import org.eclipse.net4j.util.io.CloseableIterator;
+import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.ArrayList;

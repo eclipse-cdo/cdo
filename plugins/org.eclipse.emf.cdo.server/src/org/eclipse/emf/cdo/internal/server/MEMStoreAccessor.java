@@ -26,7 +26,7 @@ import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
-import org.eclipse.net4j.util.io.CloseableIterator;
+import org.eclipse.net4j.util.collection.CloseableIterator;
 
 import java.util.ArrayList;
 import java.util.Collection;

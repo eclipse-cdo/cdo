@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreReader;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
-import org.eclipse.net4j.util.io.CloseableIterator;
+import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.hibernate.Criteria;

@@ -8,14 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.io;
-
-import java.io.Closeable;
-import java.util.Iterator;
+package org.eclipse.net4j.util.collection;
 
 /**
  * @author Eike Stepper
  */
-public interface CloseableIterator<E> extends Iterator<E>, Closeable
+public interface Closeable
 {
+  public void close();
 }

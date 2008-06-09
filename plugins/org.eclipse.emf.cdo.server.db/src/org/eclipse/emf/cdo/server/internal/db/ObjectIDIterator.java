@@ -18,9 +18,8 @@ import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.util.io.CloseableIterator;
+import org.eclipse.net4j.util.collection.CloseableIterator;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -50,7 +49,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
     this.withTypes = withTypes;
   }
 
-  public void close() throws IOException
+  public void close()
   {
     DBUtil.close(currentResultSet);
   }

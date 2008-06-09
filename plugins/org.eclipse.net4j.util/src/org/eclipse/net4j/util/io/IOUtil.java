@@ -167,6 +167,32 @@ public final class IOUtil
     }
   }
 
+  public static Exception closeSilent(org.eclipse.net4j.util.collection.Closeable closeable)
+  {
+    try
+    {
+      if (closeable != null)
+      {
+        closeable.close();
+      }
+
+      return null;
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      return ex;
+    }
+  }
+
+  public static void close(org.eclipse.net4j.util.collection.Closeable closeable) throws IORuntimeException
+  {
+    if (closeable != null)
+    {
+      closeable.close();
+    }
+  }
+
   public static void mkdirs(File folder)
   {
     if (!folder.exists())

@@ -44,7 +44,6 @@ import java.util.Properties;
  */
 public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
 {
-
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TeneoHibernateMappingProvider.class);
 
   private IHibernateStore hibernateStore;
@@ -52,18 +51,28 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
   public void addMapping(Configuration configuration)
   {
     final String mapping = generateMapping();
-    TRACER.trace("Generated hibernate mapping:");
-    TRACER.trace(mapping);
-    System.err.println(mapping);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Generated hibernate mapping:");
+      TRACER.trace(mapping);
+    }
+
     configuration.addXML(mapping);
-    TRACER.trace("Added mapping to configuration");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Added mapping to configuration");
+    }
   }
 
   // the passed modelObjects collection is defined as a collection of Objects
   // to prevent binary dependency on emf.
   public String generateMapping()
   {
-    TRACER.trace("Generating Hibernate Mapping");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Generating Hibernate Mapping");
+    }
+
     final Properties properties = HibernateUtil.getInstance().getPropertiesFromStore(getHibernateStore());
 
     // TODO: handle nested package structures
@@ -74,16 +83,21 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
     rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new EcoreResourceFactoryImpl());
     for (CDOPackage cdoPackage : getHibernateStore().getPackageHandler().getCDOPackages())
     {
-      TRACER.trace("Using cdoPackage : " + cdoPackage.getName() + " - " + cdoPackage.getPackageURI());
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Using cdoPackage : " + cdoPackage.getName() + " - " + cdoPackage.getPackageURI());
+      }
+
       final String ecoreStr = cdoPackage.getEcore();
       if (ecoreStr == null)
       {
         // happens at initialization time
         continue;
       }
-      // this assumes that the (default) encoding is the same on both the client and
-      // server
+
+      // this assumes that the (default) encoding is the same on both the client and server
       final ByteArrayInputStream bis = new ByteArrayInputStream(ecoreStr.getBytes());
+
       // fool the resourceset by passing a fake uri
       final URI epackageURI = URI.createURI(cdoPackage.getPackageURI());
       final Resource resource = rs.createResource(epackageURI);

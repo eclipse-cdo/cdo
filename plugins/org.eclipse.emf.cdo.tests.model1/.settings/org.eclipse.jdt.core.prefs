@@ -1,4 +1,4 @@
-#Sat Feb 23 10:48:50 CET 2008
+#Mon Jun 09 18:09:29 CEST 2008
 eclipse.preferences.version=1
 instance/org.eclipse.core.net/org.eclipse.core.net.hasMigrated=true
 org.eclipse.jdt.core.codeComplete.argumentPrefixes=
@@ -64,7 +64,7 @@ org.eclipse.jdt.core.formatter.comment.format_header=false
 org.eclipse.jdt.core.formatter.comment.format_html=true
 org.eclipse.jdt.core.formatter.comment.format_javadoc_comments=true
 org.eclipse.jdt.core.formatter.comment.format_line_comments=true
-org.eclipse.jdt.core.formatter.comment.format_source_code=true
+org.eclipse.jdt.core.formatter.comment.format_source_code=false
 org.eclipse.jdt.core.formatter.comment.indent_parameter_description=true
 org.eclipse.jdt.core.formatter.comment.indent_root_tags=true
 org.eclipse.jdt.core.formatter.comment.insert_new_line_before_root_tags=insert

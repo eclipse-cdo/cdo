@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.db;
 
-
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 

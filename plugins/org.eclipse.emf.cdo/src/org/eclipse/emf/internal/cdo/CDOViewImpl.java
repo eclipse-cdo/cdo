@@ -352,6 +352,12 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     synchronized (objects)
     {
+      if (id.equals(lastLookupID))
+      {
+        lastLookupID = null;
+        lastLookupObject = null;
+      }
+
       return objects.remove(id);
     }
   }
@@ -543,12 +549,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       TRACER.format("Deregistering {0}", object);
     }
 
-    InternalCDOObject old;
-    synchronized (objects)
-    {
-      old = objects.remove(object.cdoID());
-    }
-
+    InternalCDOObject old = removeObject(object.cdoID());
     if (old == null)
     {
       throw new IllegalStateException("Unknown ID: " + object);

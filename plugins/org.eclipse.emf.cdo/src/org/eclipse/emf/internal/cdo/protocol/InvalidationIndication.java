@@ -65,6 +65,7 @@ public class InvalidationIndication extends Indication
       dirtyOIDs.add(dirtyOID);
     }
 
+    // ConcurrencyUtil.sleep(100);
     session.notifyInvalidation(timeStamp, dirtyOIDs, null);
   }
 

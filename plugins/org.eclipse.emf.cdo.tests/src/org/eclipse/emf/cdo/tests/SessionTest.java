@@ -31,8 +31,8 @@ public class SessionTest extends AbstractCDOTest
     CDOSession sessionA = openModel1Session();
 
     msg("Opening transactionA");
-    CDOTransactionImpl transactionA = (CDOTransactionImpl)sessionA.openTransaction();
-    CDOID cdoidA = null;
+    final CDOTransactionImpl transactionA = (CDOTransactionImpl)sessionA.openTransaction();
+    final CDOID cdoidA;
 
     // *************************************************************
     {
@@ -59,12 +59,7 @@ public class SessionTest extends AbstractCDOTest
       transactionA.removeObject(cdoidA);
     }
 
-    // assertEquals(true, transaction.getObjectsMap().get(category1AID) == null);
     // *************************************************************
-
-    // transactionA.close();
-    // transactionA = (CDOTransactionImpl)sessionA.openTransaction();
-
     msg("Opening sessionB");
     CDOSession sessionB = openModel1Session();
 
@@ -79,7 +74,6 @@ public class SessionTest extends AbstractCDOTest
     transactionB.commit();
 
     Thread.sleep(100);
-    final Category categoryA = (Category)transactionA.getObject(cdoidA, true);
 
     msg("Checking after commit");
     boolean timedOut = new PollingTimeOuter(200, 100)
@@ -87,6 +81,7 @@ public class SessionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
+        Category categoryA = (Category)transactionA.getObject(cdoidA, true);
         String name = categoryA.getName();
         return "CHANGED NAME".equals(name);
       }

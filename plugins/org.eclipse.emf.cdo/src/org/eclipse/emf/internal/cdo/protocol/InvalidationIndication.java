@@ -11,7 +11,7 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
@@ -54,18 +54,22 @@ public class InvalidationIndication extends Indication
     int size = in.readInt();
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Reading {0} IDs", size);
+      PROTOCOL.format("Reading {0} dirty IDs", size);
     }
 
     CDOSessionImpl session = getSession();
-    Set<CDOID> dirtyOIDs = new HashSet<CDOID>();
+    Set<CDOIDAndVersion> dirtyOIDs = new HashSet<CDOIDAndVersion>();
     for (int i = 0; i < size; i++)
     {
-      CDOID dirtyOID = CDOIDUtil.read(in, session);
+      CDOIDAndVersion dirtyOID = CDOIDUtil.readIDAndVersion(in, session);
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Read dirty ID: {0}", dirtyOID);
+      }
+
       dirtyOIDs.add(dirtyOID);
     }
 
-    // ConcurrencyUtil.sleep(100);
     session.notifyInvalidation(timeStamp, dirtyOIDs, null);
   }
 

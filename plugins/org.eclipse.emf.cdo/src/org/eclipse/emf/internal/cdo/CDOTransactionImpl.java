@@ -18,9 +18,11 @@ import org.eclipse.emf.cdo.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.CDOTransactionHandler;
 import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
@@ -252,7 +254,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
         if (!dirtyObjects.isEmpty())
         {
-          session.notifyInvalidation(result.getTimeStamp(), dirtyObjects.keySet(), this);
+          Set<CDOIDAndVersion> dirtyIDs = new HashSet<CDOIDAndVersion>();
+          for (CDOObject dirtyObject : dirtyObjects.values())
+          {
+            CDORevision revision = dirtyObject.cdoRevision();
+            CDOIDAndVersion dirtyID = CDOIDUtil.createIDAndVersion(revision.getID(), revision.getVersion());
+            dirtyIDs.add(dirtyID);
+          }
+
+          session.notifyInvalidation(result.getTimeStamp(), dirtyIDs, this);
         }
 
         cleanUp();

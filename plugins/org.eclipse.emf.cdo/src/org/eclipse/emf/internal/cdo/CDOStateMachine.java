@@ -530,13 +530,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
       revision.setRevised(timeStamp - 1);
-
-      // CDOViewImpl view = (CDOViewImpl)object.cdoView();
-      // InternalCDORevision baseRevision = view.getRevision(object.cdoID(), false);
-      // if (baseRevision != null && baseRevision.getVersion() + 1 == revision.getVersion())
-      // {
-      // baseRevision.setRevised(timeStamp - 1);
-      // }
     }
   }
 

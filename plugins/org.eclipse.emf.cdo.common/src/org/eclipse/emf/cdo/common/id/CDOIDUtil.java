@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
@@ -256,5 +257,21 @@ public final class CDOIDUtil
   public static CDOIDLibraryDescriptor readLibraryDescriptor(ExtendedDataInput in) throws IOException
   {
     return new CDOIDLibraryDescriptorImpl(in);
+  }
+
+  public static CDOIDAndVersion createIDAndVersion(CDOID id, int version)
+  {
+    return new CDOIDAndVersionImpl(id, version);
+  }
+
+  public static CDOIDAndVersion readIDAndVersion(ExtendedDataInput in, CDOIDObjectFactory factory) throws IOException
+  {
+    return readIDAndVersion(in, factory, false);
+  }
+
+  public static CDOIDAndVersion readIDAndVersion(ExtendedDataInput in, CDOIDObjectFactory factory, boolean asLegacy)
+      throws IOException
+  {
+    return new CDOIDAndVersionImpl(in, factory, asLegacy);
   }
 }

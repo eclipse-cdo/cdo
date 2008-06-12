@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.CDOViewResourcesEvent;
 import org.eclipse.emf.cdo.analyzer.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -586,15 +587,15 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    *          A set of the object IDs to be invalidated. <b>Implementation note:</b> This implementation expects the
    *          dirtyOIDs set to be unmodifiable. It does not wrap the set (again).
    */
-  public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs)
+  public void notifyInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs)
   {
     List<InternalCDOObject> dirtyObjects = invalidationNotificationsEnabled ? new ArrayList<InternalCDOObject>() : null;
-    for (CDOID dirtyOID : dirtyOIDs)
+    for (CDOIDAndVersion dirtyOID : dirtyOIDs)
     {
       InternalCDOObject dirtyObject;
       synchronized (objects)
       {
-        dirtyObject = objects.get(dirtyOID);
+        dirtyObject = objects.get(dirtyOID.getID());
         if (dirtyObject != null)
         {
           CDOStateMachine.INSTANCE.invalidate(dirtyObject, timeStamp);

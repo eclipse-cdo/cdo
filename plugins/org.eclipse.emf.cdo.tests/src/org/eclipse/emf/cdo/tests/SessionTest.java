@@ -61,7 +61,7 @@ public class SessionTest extends AbstractCDOTest
 
     // *************************************************************
     msg("Opening sessionB");
-    CDOSession sessionB = openModel1Session();
+    CDOSession sessionB = openSession();
 
     msg("Opening transactionB");
     CDOTransaction transactionB = sessionB.openTransaction();

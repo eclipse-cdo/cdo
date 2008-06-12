@@ -293,10 +293,10 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     return newInstance(eClass);
   }
 
-  public InternalCDORevision getRevision(CDOID id)
+  public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
     CDORevisionResolver revisionManager = session.getRevisionManager();
-    return (InternalCDORevision)revisionManager.getRevision(id, session.getReferenceChunkSize());
+    return (InternalCDORevision)revisionManager.getRevision(id, session.getReferenceChunkSize(), loadOnDemand);
   }
 
   public InternalCDOObject getObject(CDOID id)
@@ -385,7 +385,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       TRACER.trace("Creating object for " + id);
     }
 
-    InternalCDORevision revision = getRevision(id);
+    InternalCDORevision revision = getRevision(id, true);
     CDOClass cdoClass = revision.getCDOClass();
     InternalCDOObject object = newInstance(cdoClass);
     if (object instanceof CDOResourceImpl)

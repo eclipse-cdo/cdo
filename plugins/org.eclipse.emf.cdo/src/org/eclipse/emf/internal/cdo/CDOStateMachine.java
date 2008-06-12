@@ -531,14 +531,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
       revision.setRevised(timeStamp - 1);
 
-      if (revision.isTransactional())
+      CDOViewImpl view = (CDOViewImpl)object.cdoView();
+      InternalCDORevision baseRevision = view.getRevision(object.cdoID(), false);
+      if (baseRevision != null && baseRevision.getVersion() + 1 == revision.getVersion())
       {
-        CDOViewImpl view = (CDOViewImpl)object.cdoView();
-        InternalCDORevision sessionRevision = view.getRevision(object.cdoID());
-        if (sessionRevision.getVersion() < revision.getVersion())
-        {
-          sessionRevision.setRevised(timeStamp - 1);
-        }
+        baseRevision.setRevised(timeStamp - 1);
       }
     }
   }
@@ -575,7 +572,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       CDOID id = object.cdoID();
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
-      InternalCDORevision revision = view.getRevision(id);
+      CDOSessionImpl session = view.getSession();
+      CDORevisionManagerImpl revisionManager = session.getRevisionManager();
+      InternalCDORevision revision = revisionManager.getRevision(id, session.getReferenceChunkSize());
       object.cdoInternalSetRevision(revision);
       changeState(object, CDOState.CLEAN);
       object.cdoInternalPostLoad();

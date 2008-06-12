@@ -272,7 +272,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
     return true;
   }
 
-  protected InternalCDORevision getRevision(CDOID id, int referenceChunk, boolean loadOnDemand)
+  public InternalCDORevision getRevision(CDOID id, int referenceChunk, boolean loadOnDemand)
   {
     RevisionHolder holder = revisions.get(id);
     InternalCDORevision revision = holder == null ? null : (InternalCDORevision)holder.getRevision(true);
@@ -306,7 +306,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
     return revision;
   }
 
-  protected synchronized InternalCDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp,
+  public synchronized InternalCDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp,
       boolean loadOnDemand)
   {
     RevisionHolder holder = revisions.get(id);

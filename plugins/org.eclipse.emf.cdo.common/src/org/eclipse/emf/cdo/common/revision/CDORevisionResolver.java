@@ -37,7 +37,11 @@ public interface CDORevisionResolver
 
   public CDORevision getRevision(CDOID id, int referenceChunk);
 
+  public CDORevision getRevision(CDOID id, int referenceChunk, boolean loadOnDemand);
+
   public CDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp);
+
+  public CDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp, boolean loadOnDemand);
 
   public CDORevision getRevisionByVersion(CDOID id, int referenceChunk, int version);
 

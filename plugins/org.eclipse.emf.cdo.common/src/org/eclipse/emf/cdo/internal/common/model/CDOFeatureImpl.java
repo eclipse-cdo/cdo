@@ -264,8 +264,14 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOFeature(ID={0}, name={1}, type={2}, referenceType={3})", featureID, getName(),
-        getType(), getReferenceTypeProxy());
+    if (type == CDOType.OBJECT)
+    {
+      return MessageFormat.format("CDOFeature(ID={0}, name={1}, type={2})", featureID, getName(), referenceTypeProxy);
+    }
+    else
+    {
+      return MessageFormat.format("CDOFeature(ID={0}, name={1}, type={2})", featureID, getName(), type);
+    }
   }
 
   @Override

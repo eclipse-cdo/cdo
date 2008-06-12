@@ -73,7 +73,7 @@ public class SessionTest extends AbstractCDOTest
     msg("\n\n\n\n\n\n\n\n\n\n\nCommitting");
     transactionB.commit();
 
-    // Thread.sleep(1000);
+    Thread.sleep(200);
 
     msg("Checking after commit");
     boolean timedOut = new PollingTimeOuter(200, 100)

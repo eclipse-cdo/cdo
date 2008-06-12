@@ -2,17 +2,20 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoPackageImpl.java,v 1.3 2008-06-03 06:41:27 estepper Exp $
+ * $Id: MangoPackageImpl.java,v 1.4 2008-06-12 17:22:17 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 
 import org.eclipse.emf.cdo.tests.mango.MangoFactory;
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
+import org.eclipse.emf.cdo.tests.mango.Parameter;
+import org.eclipse.emf.cdo.tests.mango.ParameterPassing;
 import org.eclipse.emf.cdo.tests.mango.Value;
 import org.eclipse.emf.cdo.tests.mango.ValueList;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -37,6 +40,20 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * @generated
    */
   private EClass valueEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass parameterEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EEnum parameterPassingEEnum = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -159,6 +176,46 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * 
    * @generated
    */
+  public EClass getParameter()
+  {
+    return parameterEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getParameter_Name()
+  {
+    return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getParameter_Passing()
+  {
+    return (EAttribute)parameterEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EEnum getParameterPassing()
+  {
+    return parameterPassingEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public MangoFactory getMangoFactory()
   {
     return (MangoFactory)getEFactoryInstance();
@@ -189,6 +246,13 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
 
     valueEClass = createEClass(VALUE);
     createEAttribute(valueEClass, VALUE__NAME);
+
+    parameterEClass = createEClass(PARAMETER);
+    createEAttribute(parameterEClass, PARAMETER__NAME);
+    createEAttribute(parameterEClass, PARAMETER__PASSING);
+
+    // Create enums
+    parameterPassingEEnum = createEEnum(PARAMETER_PASSING);
   }
 
   /**
@@ -231,6 +295,17 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
     initEClass(valueEClass, Value.class, "Value", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getValue_Name(), ecorePackage.getEString(), "name", null, 0, 1, Value.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getParameter_Name(), ecorePackage.getEString(), "name", null, 0, 1, Parameter.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getParameter_Passing(), this.getParameterPassing(), "passing", null, 0, 1, Parameter.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    // Initialize enums and add enum literals
+    initEEnum(parameterPassingEEnum, ParameterPassing.class, "ParameterPassing");
+    addEEnumLiteral(parameterPassingEEnum, ParameterPassing.BY_VALUE);
+    addEEnumLiteral(parameterPassingEEnum, ParameterPassing.BY_REFERENCE);
 
     // Create resource
     createResource(eNS_URI);

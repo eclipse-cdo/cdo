@@ -2,11 +2,12 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoSwitch.java,v 1.3 2008-06-03 06:41:27 estepper Exp $
+ * $Id: MangoSwitch.java,v 1.4 2008-06-12 17:22:17 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.util;
 
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
+import org.eclipse.emf.cdo.tests.mango.Parameter;
 import org.eclipse.emf.cdo.tests.mango.Value;
 import org.eclipse.emf.cdo.tests.mango.ValueList;
 
@@ -103,6 +104,13 @@ public class MangoSwitch<T>
       if (result == null) result = defaultCase(theEObject);
       return result;
     }
+    case MangoPackage.PARAMETER:
+    {
+      Parameter parameter = (Parameter)theEObject;
+      T result = caseParameter(parameter);
+      if (result == null) result = defaultCase(theEObject);
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -134,6 +142,21 @@ public class MangoSwitch<T>
    * @generated
    */
   public T caseValue(Value object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Parameter</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Parameter</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseParameter(Parameter object)
   {
     return null;
   }

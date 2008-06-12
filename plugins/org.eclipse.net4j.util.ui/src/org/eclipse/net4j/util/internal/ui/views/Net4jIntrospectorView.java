@@ -74,6 +74,8 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
 
   private TableViewer iterableViewer;
 
+  private TableViewer arrayViewer;
+
   private TableViewer mapViewer;
 
   private Stack<Object> elements = new Stack<Object>();
@@ -165,6 +167,13 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     iterableViewer.setContentProvider(new IterableContentProvider());
     iterableViewer.setLabelProvider(new IterableLabelProvider());
     iterableViewer.setInput(getViewSite());
+
+    arrayViewer = createViewer(stacked);
+    createArrayColmuns();
+    arrayViewer.addDoubleClickListener(this);
+    arrayViewer.setContentProvider(new ArrayContentProvider());
+    arrayViewer.setLabelProvider(new ArrayLabelProvider());
+    arrayViewer.setInput(getViewSite());
 
     mapViewer = createViewer(stacked);
     createMapColmuns();
@@ -266,6 +275,11 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
       {
         setObject(element);
       }
+      else if (currentViewer == arrayViewer && element instanceof Pair)
+      {
+        Pair<Integer, Object> pair = (Pair<Integer, Object>)element;
+        setObject(pair.getElement2());
+      }
     }
   }
 
@@ -343,6 +357,10 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     {
       setCurrentViewer(iterableViewer);
     }
+    else if (object != null && object.getClass().isArray())
+    {
+      setCurrentViewer(arrayViewer);
+    }
     else
     {
       setCurrentViewer(objectViewer);
@@ -372,6 +390,14 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     Table table = iterableViewer.getTable();
     String[] columnNames = { "Element", "Type" };
     int[] columnWidths = { 400, 300 };
+    createColumns(table, columnNames, columnWidths);
+  }
+
+  private void createArrayColmuns()
+  {
+    Table table = arrayViewer.getTable();
+    String[] columnNames = { "Index", "Element", "Type" };
+    int[] columnWidths = { 50, 400, 300 };
     createColumns(table, columnNames, columnWidths);
   }
 
@@ -581,6 +607,68 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
         return obj == null ? "" : obj.getClass().getName();
       }
 
+      return "";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  class ArrayContentProvider extends AbstractContentProvider
+  {
+    @SuppressWarnings("unchecked")
+    public Object[] getElements(Object parent)
+    {
+      if (!elements.isEmpty())
+      {
+        Object element = elements.peek();
+        if (element.getClass().isArray())
+        {
+          Object[] array = (Object[])element;
+          Pair<Integer, Object>[] result = new Pair[array.length];
+          for (int i = 0; i < array.length; i++)
+          {
+            result[i] = new Pair<Integer, Object>(i, array[i]);
+          }
+
+          return result;
+        }
+      }
+
+      return NO_ELEMENTS;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  class ArrayLabelProvider extends AbstractLabelProvider
+  {
+    @SuppressWarnings("unchecked")
+    public String getColumnText(Object obj, int index)
+    {
+      if (obj instanceof Pair)
+      {
+        try
+        {
+          Pair<Integer, Object> pair = (Pair<Integer, Object>)obj;
+          int i = pair.getElement1();
+          Object value = pair.getElement2();
+          switch (index)
+          {
+          case 0:
+            return String.valueOf(i);
+          case 1:
+            return value == null ? "null" : value.toString();
+          case 2:
+            return value == null ? "" : value.getClass().getName();
+          }
+        }
+        catch (RuntimeException ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
       return "";
     }
   }

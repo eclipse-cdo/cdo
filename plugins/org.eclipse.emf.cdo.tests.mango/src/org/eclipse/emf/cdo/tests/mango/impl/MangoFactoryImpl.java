@@ -2,16 +2,19 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoFactoryImpl.java,v 1.3 2008-04-27 08:57:26 estepper Exp $
+ * $Id: MangoFactoryImpl.java,v 1.4 2008-06-12 17:22:17 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 
 import org.eclipse.emf.cdo.tests.mango.MangoFactory;
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
+import org.eclipse.emf.cdo.tests.mango.Parameter;
+import org.eclipse.emf.cdo.tests.mango.ParameterPassing;
 import org.eclipse.emf.cdo.tests.mango.Value;
 import org.eclipse.emf.cdo.tests.mango.ValueList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
@@ -71,8 +74,44 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
       return (EObject)createValueList();
     case MangoPackage.VALUE:
       return (EObject)createValue();
+    case MangoPackage.PARAMETER:
+      return (EObject)createParameter();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public Object createFromString(EDataType eDataType, String initialValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+    case MangoPackage.PARAMETER_PASSING:
+      return createParameterPassingFromString(eDataType, initialValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public String convertToString(EDataType eDataType, Object instanceValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+    case MangoPackage.PARAMETER_PASSING:
+      return convertParameterPassingToString(eDataType, instanceValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 
@@ -96,6 +135,41 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   {
     ValueImpl value = new ValueImpl();
     return value;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Parameter createParameter()
+  {
+    ParameterImpl parameter = new ParameterImpl();
+    return parameter;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public ParameterPassing createParameterPassingFromString(EDataType eDataType, String initialValue)
+  {
+    ParameterPassing result = ParameterPassing.get(initialValue);
+    if (result == null)
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
+          + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public String convertParameterPassingToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

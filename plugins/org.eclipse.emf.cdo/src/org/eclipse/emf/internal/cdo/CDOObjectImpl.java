@@ -202,16 +202,18 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     revision.setContainerID(eContainer == null ? CDOID.NULL : ((CDOObjectImpl)eContainer).cdoID());
     revision.setContainingFeatureID(eContainerFeatureID);
 
-    if (eSettings != null)
+    if (eSettings == null)
     {
-      EClass eClass = eClass();
-      for (int i = 0; i < eClass.getFeatureCount(); i++)
+      eSettings();
+    }
+
+    EClass eClass = eClass();
+    for (int i = 0; i < eClass.getFeatureCount(); i++)
+    {
+      EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
+      if (!eFeature.isTransient())
       {
-        EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
-        if (!eFeature.isTransient())
-        {
-          populateRevisionFeature(view, revision, eFeature, eSettings, i);
-        }
+        populateRevisionFeature(view, revision, eFeature, eSettings, i);
       }
     }
   }
@@ -227,7 +229,11 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     Object setting = eSettings[i];
-    boolean isReference = cdoFeature.isReference();
+    if (setting == null)
+    {
+      setting = eFeature.getDefaultValue();
+    }
+
     if (cdoFeature.isMany())
     {
       if (setting != null)
@@ -236,7 +242,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         EList<Object> list = (EList<Object>)setting;
         for (Object value : list)
         {
-          if (isReference)
+          if (cdoFeature.isReference())
           {
             value = view.convertObjectToID(value);
           }
@@ -247,7 +253,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
     else
     {
-      if (isReference)
+      if (cdoFeature.isReference())
       {
         setting = view.convertObjectToID(setting);
       }

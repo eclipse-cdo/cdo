@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoFactory.java,v 1.2 2008-02-23 10:00:33 estepper Exp $
+ * $Id: MangoFactory.java,v 1.3 2008-06-12 17:22:17 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango;
 
@@ -39,6 +39,14 @@ public interface MangoFactory extends EFactory
    * @generated
    */
   Value createValue();
+
+  /**
+   * Returns a new object of class '<em>Parameter</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Parameter</em>'.
+   * @generated
+   */
+  Parameter createParameter();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

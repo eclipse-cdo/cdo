@@ -2,12 +2,13 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoPackage.java,v 1.4 2008-06-03 06:41:27 estepper Exp $
+ * $Id: MangoPackage.java,v 1.5 2008-06-12 17:22:17 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -116,6 +117,50 @@ public interface MangoPackage extends EPackage
   int VALUE_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl <em>Parameter</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl
+   * @see org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl#getParameter()
+   * @generated
+   */
+  int PARAMETER = 2;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PARAMETER__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Passing</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PARAMETER__PASSING = 1;
+
+  /**
+   * The number of structural features of the '<em>Parameter</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PARAMETER_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.mango.ParameterPassing <em>Parameter Passing</em>}'
+   * enum. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.mango.ParameterPassing
+   * @see org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl#getParameterPassing()
+   * @generated
+   */
+  int PARAMETER_PASSING = 3;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.mango.ValueList <em>Value List</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -167,6 +212,48 @@ public interface MangoPackage extends EPackage
    * @generated
    */
   EAttribute getValue_Name();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.mango.Parameter <em>Parameter</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Parameter</em>'.
+   * @see org.eclipse.emf.cdo.tests.mango.Parameter
+   * @generated
+   */
+  EClass getParameter();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.Parameter#getName <em>Name</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.tests.mango.Parameter#getName()
+   * @see #getParameter()
+   * @generated
+   */
+  EAttribute getParameter_Name();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.Parameter#getPassing
+   * <em>Passing</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Passing</em>'.
+   * @see org.eclipse.emf.cdo.tests.mango.Parameter#getPassing()
+   * @see #getParameter()
+   * @generated
+   */
+  EAttribute getParameter_Passing();
+
+  /**
+   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.mango.ParameterPassing
+   * <em>Parameter Passing</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for enum '<em>Parameter Passing</em>'.
+   * @see org.eclipse.emf.cdo.tests.mango.ParameterPassing
+   * @generated
+   */
+  EEnum getParameterPassing();
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -233,6 +320,42 @@ public interface MangoPackage extends EPackage
      * @generated
      */
     EAttribute VALUE__NAME = eINSTANCE.getValue_Name();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl <em>Parameter</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl
+     * @see org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl#getParameter()
+     * @generated
+     */
+    EClass PARAMETER = eINSTANCE.getParameter();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute PARAMETER__NAME = eINSTANCE.getParameter_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Passing</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute PARAMETER__PASSING = eINSTANCE.getParameter_Passing();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.mango.ParameterPassing
+     * <em>Parameter Passing</em>}' enum. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.mango.ParameterPassing
+     * @see org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl#getParameterPassing()
+     * @generated
+     */
+    EEnum PARAMETER_PASSING = eINSTANCE.getParameterPassing();
 
   }
 

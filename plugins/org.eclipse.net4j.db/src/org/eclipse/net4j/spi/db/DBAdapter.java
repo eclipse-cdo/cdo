@@ -263,7 +263,6 @@ public abstract class DBAdapter implements IDBAdapter
       TRACER.trace(sql);
     }
 
-    System.out.println(sql);
     statement.execute(sql);
 
     DBIndex[] indices = table.getIndices();

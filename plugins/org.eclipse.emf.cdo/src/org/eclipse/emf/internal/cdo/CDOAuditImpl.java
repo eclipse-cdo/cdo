@@ -42,7 +42,7 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
   }
 
   @Override
-  public InternalCDORevision getRevision(CDOID id)
+  public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
     CDOSessionImpl session = getSession();
     CDORevisionResolver revisionManager = session.getRevisionManager();

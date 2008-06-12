@@ -12,6 +12,11 @@ package org.eclipse.emf.cdo.spi.common;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 
+import org.eclipse.net4j.util.io.ExtendedDataInput;
+import org.eclipse.net4j.util.io.ExtendedDataOutput;
+
+import java.io.IOException;
+
 /**
  * @author Eike Stepper
  */
@@ -82,13 +87,7 @@ public abstract class AbstractCDOID implements CDOID
     }
   }
 
-  // public CDOClassRef getClassRef()
-  // {
-  // return null;
-  // }
-  //
-  // public CDOID asLegacy(CDOClassRef classRef)
-  // {
-  // throw new UnsupportedOperationException();
-  // }
+  public abstract void read(ExtendedDataInput in) throws IOException;
+
+  public abstract void write(ExtendedDataOutput out) throws IOException;
 }

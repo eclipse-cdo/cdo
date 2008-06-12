@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
+import org.eclipse.emf.cdo.spi.common.AbstractCDOID;
 import org.eclipse.emf.cdo.spi.common.CDOIDLibraryDescriptorImpl;
 import org.eclipse.emf.cdo.spi.common.CDOIDLongImpl;
 
@@ -128,7 +129,7 @@ public final class CDOIDUtil
       case LEGACY_OBJECT:
       {
         CDOIDObject id = factory.createCDOIDObject(in);
-        id.read(in);
+        ((AbstractCDOID)id).read(in);
         CDOClassRef classRef = CDOModelUtil.readClassRef(in);
         return id.asLegacy(classRef);
       }
@@ -156,14 +157,14 @@ public final class CDOIDUtil
     case OBJECT:
     {
       CDOIDObject id = factory.createCDOIDObject(in);
-      id.read(in);
-      return id;// new CDOIDLongImpl(in.readLong());
+      ((AbstractCDOID)id).read(in);
+      return id;
     }
 
     case LEGACY_OBJECT:
     {
       CDOIDObject id = factory.createCDOIDObject(in);
-      id.read(in);
+      ((AbstractCDOID)id).read(in);
       CDOModelUtil.readClassRef(in); // Discard classRef from stream
       return id;
     }
@@ -206,7 +207,7 @@ public final class CDOIDUtil
 
       case LEGACY_OBJECT:
         CDOIDObject legacy = (CDOIDObject)id;
-        legacy.write(out);
+        ((AbstractCDOID)legacy).write(out);
         CDOModelUtil.writeClassRef(out, legacy.getClassRef());
         return;
 
@@ -216,7 +217,7 @@ public final class CDOIDUtil
     }
 
     // Not asLegacy
-    id.write(out);
+    ((AbstractCDOID)id).write(out);
   }
 
   public static CDOIDMeta createMeta(long value)

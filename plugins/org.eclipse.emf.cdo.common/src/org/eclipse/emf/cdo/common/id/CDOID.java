@@ -10,10 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.id;
 
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
-
-import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -34,10 +30,6 @@ public interface CDOID extends Serializable
   public boolean isMeta();
 
   public boolean isTemporary();
-
-  public void read(ExtendedDataInput in) throws IOException;
-
-  public void write(ExtendedDataOutput out) throws IOException;
 
   /**
    * @author Eike Stepper

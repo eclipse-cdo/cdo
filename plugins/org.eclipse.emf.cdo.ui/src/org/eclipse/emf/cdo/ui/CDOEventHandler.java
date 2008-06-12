@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
@@ -29,6 +30,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 
 import org.eclipse.jface.viewers.TreeViewer;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -159,8 +161,14 @@ public class CDOEventHandler
     treeViewer = viewer;
   }
 
-  protected void sessionInvalidated(Set<CDOID> dirtyOIDs)
+  protected void sessionInvalidated(Set<CDOIDAndVersion> dirtyOIDs)
   {
+    Set<CDOID> idsWithoutVersion = new HashSet<CDOID>();
+    for (CDOIDAndVersion idAandVersion : dirtyOIDs)
+    {
+      idsWithoutVersion.add(idAandVersion.getID());
+    }
+
     new ItemsProcessor(view)
     {
       @Override
@@ -169,7 +177,7 @@ public class CDOEventHandler
         objectInvalidated(cdoObject);
         viewer.refresh(cdoObject.cdoInternalInstance(), true);
       }
-    }.processCDOObjects(treeViewer, dirtyOIDs);
+    }.processCDOObjects(treeViewer, idsWithoutVersion);
   }
 
   protected void objectInvalidated(InternalCDOObject cdoObject)

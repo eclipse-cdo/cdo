@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
@@ -26,6 +27,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.TransportException;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.LegacySystemNotAvailableException;
@@ -543,8 +545,18 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     types.put(id, type);
   }
 
-  public void notifyInvalidation(long timeStamp, Set<CDOID> dirtyOIDs, CDOViewImpl excludedView)
+  public void notifyInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, CDOViewImpl excludedView)
   {
+    for (CDOIDAndVersion dirtyOID : dirtyOIDs)
+    {
+      InternalCDORevision revision = getRevisionManager().getRevisionByVersion(dirtyOID.getID(), 0,
+          dirtyOID.getVersion(), false);
+      if (revision != null)
+      {
+        revision.setRevised(timeStamp - 1);
+      }
+    }
+
     dirtyOIDs = Collections.unmodifiableSet(dirtyOIDs);
     for (CDOViewImpl view : getViews())
     {
@@ -564,7 +576,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     fireInvalidationEvent(timeStamp, dirtyOIDs, excludedView);
   }
 
-  public void fireInvalidationEvent(long timeStamp, Set<CDOID> dirtyOIDs, CDOViewImpl excludedView)
+  public void fireInvalidationEvent(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, CDOViewImpl excludedView)
   {
     fireEvent(new InvalidationEvent(excludedView, timeStamp, dirtyOIDs));
   }
@@ -814,9 +826,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
     private long timeStamp;
 
-    private Set<CDOID> dirtyOIDs;
+    private Set<CDOIDAndVersion> dirtyOIDs;
 
-    public InvalidationEvent(CDOViewImpl view, long timeStamp, Set<CDOID> dirtyOIDs)
+    public InvalidationEvent(CDOViewImpl view, long timeStamp, Set<CDOIDAndVersion> dirtyOIDs)
     {
       super(CDOSessionImpl.this);
       this.view = view;
@@ -839,7 +851,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       return timeStamp;
     }
 
-    public Set<CDOID> getDirtyOIDs()
+    public Set<CDOIDAndVersion> getDirtyOIDs()
     {
       return dirtyOIDs;
     }
@@ -847,7 +859,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     @Override
     public String toString()
     {
-      return "CDOSessionInvalidationEvent" + dirtyOIDs;
+      return "CDOSessionInvalidationEvent: " + dirtyOIDs;
     }
   }
 }

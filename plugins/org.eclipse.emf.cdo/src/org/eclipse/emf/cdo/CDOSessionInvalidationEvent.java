@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 
 import java.util.Set;
 
@@ -29,5 +29,5 @@ public interface CDOSessionInvalidationEvent extends CDOSessionEvent
    */
   public long getTimeStamp();
 
-  public Set<CDOID> getDirtyOIDs();
+  public Set<CDOIDAndVersion> getDirtyOIDs();
 }

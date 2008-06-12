@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOClass;
@@ -197,7 +198,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     return new View(this, viewID, type);
   }
 
-  public void notifyInvalidation(long timeStamp, List<CDOID> dirtyIDs)
+  public void notifyInvalidation(long timeStamp, List<CDOIDAndVersion> dirtyIDs)
   {
     try
     {

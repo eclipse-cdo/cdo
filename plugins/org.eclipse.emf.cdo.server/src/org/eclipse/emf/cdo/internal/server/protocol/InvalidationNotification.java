@@ -12,8 +12,7 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
@@ -33,9 +32,9 @@ public class InvalidationNotification extends Request
 
   private long timeStamp;
 
-  private List<CDOID> dirtyIDs;
+  private List<CDOIDAndVersion> dirtyIDs;
 
-  public InvalidationNotification(IChannel channel, long timeStamp, List<CDOID> dirtyIDs)
+  public InvalidationNotification(IChannel channel, long timeStamp, List<CDOIDAndVersion> dirtyIDs)
   {
     super(channel);
     this.timeStamp = timeStamp;
@@ -63,9 +62,14 @@ public class InvalidationNotification extends Request
     }
 
     out.writeInt(dirtyIDs.size());
-    for (CDOID dirtyID : dirtyIDs)
+    for (CDOIDAndVersion dirtyID : dirtyIDs)
     {
-      CDOIDUtil.write(out, dirtyID);
+      if (PROTOCOL.isEnabled())
+      {
+        PROTOCOL.format("Writing dirty ID: {0}", dirtyID);
+      }
+
+      dirtyID.write(out, false);
     }
   }
 }

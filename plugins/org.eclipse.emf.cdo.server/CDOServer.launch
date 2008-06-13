@@ -84,7 +84,7 @@
 <mapEntry key="org.eclipse.jface.text/debug/ContentAssistSubjectAdapters" value="false"/>
 <mapEntry key="org.eclipse.jdt.ui/perf/search/participants" value="300"/>
 <mapEntry key="org.eclipse.ui/perf/perspective.create" value="800"/>
-<mapEntry key="org.eclipse.net4j.buddies.protocol/debug" value="true"/>
+<mapEntry key="org.eclipse.net4j.buddies.common/debug" value="true"/>
 <mapEntry key="org.eclipse.update.core/debug/type" value="false"/>
 <mapEntry key="org.eclipse.osgi/eclipseadaptor/debug/platformadmin" value="false"/>
 <mapEntry key="org.eclipse.osgi/resolver/generics" value="false"/>

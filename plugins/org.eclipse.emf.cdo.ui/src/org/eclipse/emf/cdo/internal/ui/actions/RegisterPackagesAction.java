@@ -103,6 +103,9 @@ public abstract class RegisterPackagesAction extends SessionAction
 
   protected abstract List<EPackage> getEPackages(IWorkbenchPage page, CDOSession session);
 
+  /**
+   * @see https://bugs.eclipse.org/237093
+   */
   private void fixEPackage(EPackage ePackage)
   {
     for (EClassifier classifier : ePackage.getEClassifiers())

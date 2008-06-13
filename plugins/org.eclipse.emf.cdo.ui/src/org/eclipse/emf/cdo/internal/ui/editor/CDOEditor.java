@@ -61,7 +61,6 @@ import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory.Descriptor.Registry;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
 import org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTreeEditor;
@@ -745,8 +744,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected void initializeEditingDomain()
   {
-    Registry registry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
+    ComposedAdapterFactory.Descriptor.Registry registry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
     adapterFactory = new ComposedAdapterFactory(registry);
+    adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+    adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
   }
 
   /**
@@ -1911,7 +1912,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   public void menuAboutToShow(IMenuManager menuManager)
   {
-    ((IMenuListener)getEditorSite().getActionBarContributor()).menuAboutToShow(menuManager);
+    menuAboutToShowGen(menuManager);
     MenuManager submenuManager = new MenuManager("New Root");
     if (populateNewRoot(submenuManager))
     {

@@ -38,6 +38,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EFactory;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -308,18 +310,44 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
-  /**
-   * TODO Fix testDynamicPackage()
-   */
-  public void _testDynamicPackage() throws Exception
+  public void testDynamicPackageFactory() throws Exception
   {
     {
-      // Obtain model
       EPackage model1 = loadModel("model1.ecore");
-      // EClass supplierClass = (EClass)model1.getEClassifier("Supplier");
-      // EStructuralFeature firstFeature =
-      // supplierClass.getEStructuralFeatures().get(0);
+      EClass companyClass = (EClass)model1.getEClassifier("Company");
+      EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
 
+      // Create resource in session 1
+      CDOSession session = openSession();
+      session.getPackageRegistry().putEPackage(model1);
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.createResource("/res");
+
+      EFactory factory = model1.getEFactoryInstance();
+      EObject company = factory.create(companyClass);
+      company.eSet(nameAttribute, "Eike");
+      res.getContents().add(company);
+      transaction.commit();
+    }
+
+    {
+      // Load resource in session 2
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.getResource("/res");
+
+      CDOObject company = (CDOObject)res.getContents().get(0);
+      EClass companyClass = company.eClass();
+      EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
+      String name = (String)company.eGet(nameAttribute);
+      assertEquals("Eike", name);
+    }
+  }
+
+  public void testDynamicPackageNewInstance() throws Exception
+  {
+    {
+      EPackage model1 = loadModel("model1.ecore");
       EClass companyClass = (EClass)model1.getEClassifier("Company");
       EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
 

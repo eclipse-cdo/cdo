@@ -111,24 +111,27 @@ public class HibernateUtil
       return null;
     }
 
-    HibernateCommitContext hcc = HibernateThreadContext.getHibernateCommitContext();
-    CDORevision revision;
-    if ((revision = hcc.getDirtyObject(id)) != null)
+    if (HibernateThreadContext.isHibernateCommitContextSet())
     {
-      return revision;
-    }
-    if ((revision = hcc.getNewObject(id)) != null)
-    {
-      return revision;
-    }
-
-    // maybe the temp was already translated
-    if (id instanceof CDOIDTemp)
-    {
-      CDOID newID = hcc.getCommitContext().getIDMappings().get(id);
-      if (newID != null)
+      HibernateCommitContext hcc = HibernateThreadContext.getHibernateCommitContext();
+      CDORevision revision;
+      if ((revision = hcc.getDirtyObject(id)) != null)
       {
-        return getCDORevision(newID);
+        return revision;
+      }
+      if ((revision = hcc.getNewObject(id)) != null)
+      {
+        return revision;
+      }
+
+      // maybe the temp was already translated
+      if (id instanceof CDOIDTemp)
+      {
+        CDOID newID = hcc.getCommitContext().getIDMappings().get(id);
+        if (newID != null)
+        {
+          return getCDORevision(newID);
+        }
       }
     }
 

@@ -11,7 +11,7 @@
  *   Martin Taal
  * </copyright>
  *
- * $Id: CDOSyntheticIdPropertyHandler.java,v 1.4 2008-06-15 20:32:15 mtaal Exp $
+ * $Id: CDOSyntheticIdPropertyHandler.java,v 1.5 2008-06-15 20:47:36 mtaal Exp $
  */
 
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
@@ -41,7 +41,7 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor
@@ -102,7 +102,11 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
       return;
     }
 
-    final HibernateCommitContext hcc = HibernateThreadContext.getHibernateCommitContext();
+    HibernateCommitContext hcc = null;
+    if (HibernateThreadContext.isHibernateCommitContextSet())
+    {
+      hcc = HibernateThreadContext.getHibernateCommitContext();
+    }
 
     InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(target);
     CDOID cdoID = revision.getID();
@@ -111,15 +115,21 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
       CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
           revision.getCDOClass().getName());
       revision.setID(newCDOID);
-      hcc.setNewID(cdoID, newCDOID);
+      if (hcc != null)
+      {
+        hcc.setNewID(cdoID, newCDOID);
+      }
     }
     else if (cdoID instanceof CDOIDTemp)
     {
       CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
           revision.getCDOClass().getName());
       revision.setID(newCDOID);
-      hcc.getCommitContext().addIDMapping((CDOIDTemp)cdoID, newCDOID);
-      hcc.setNewID(cdoID, newCDOID);
+      if (hcc != null)
+      {
+        hcc.getCommitContext().addIDMapping((CDOIDTemp)cdoID, newCDOID);
+        hcc.setNewID(cdoID, newCDOID);
+      }
     }
     else
     {

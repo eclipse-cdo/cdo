@@ -37,6 +37,17 @@ public class HibernatePackageRegistryTest extends PackageRegistryTest
     return testProperties;
   }
 
+  public void testRereadPackages() throws Exception
+  {
+    setHbm2ddlValue("update");
+    super.testCommitTwoPackages();
+    doTearDown();
+    doSetUp();
+    super.testCommitTwoPackages();
+    doTearDown();
+    setHbm2ddlValue(null);
+  }
+
   @Override
   // this testcase can't handle create-drop because in the middle of the
   // testcase a new package is written to the db

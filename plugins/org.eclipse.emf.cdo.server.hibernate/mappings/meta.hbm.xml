@@ -1,73 +1,74 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping package="org.eclipse.emf.cdo.internal.protocol.model">
+<hibernate-mapping package="org.eclipse.emf.cdo.internal.common.model">
+	
+	<class name="org.eclipse.emf.cdo.common.model.CDOClassProxy" table="cdo_classes_proxy" lazy="false">
+		<id column="id" type="int">
+			<generator class="increment" />
+		</id>
+		<many-to-one name="classRef" class="org.eclipse.emf.cdo.internal.common.model.CDOClassRefImpl" column="cdoClassProxy"
+			not-null="false" cascade="all" access="field" />
+	</class>
+	
+	<class name="org.eclipse.emf.cdo.internal.common.model.CDOClassRefImpl" table="cdo_classes_ref" lazy="false">
+		<id column="id" type="int">
+			<generator class="increment" />
+		</id>
+		<property name="packageURI" column="packageURI" type="string" not-null="true" access="field" />
+		<property name="classifierID" column="classifier" type="int" not-null="true" access="field" />
+	</class>
 
 	<class name="CDOModelElementImpl" table="cdo_modelelements" lazy="false">
 		<id name="serverInfo" column="id" type="int">
 			<generator class="increment" />
 		</id>
 		<property name="name" type="string" not-null="true" length="255" />
-	</class> 
-
+	</class>
+	
 	<joined-subclass name="CDOPackageImpl" table="cdo_packages" lazy="false" extends="CDOModelElementImpl">
-		<key/>
+		<key />
 		<property name="packageURI" column="uri" type="string" not-null="true" length="255" />
 		<property name="ecore" type="text" not-null="false" />
 		<property name="dynamic" type="boolean" not-null="true" />
 		<property name="parentURI" column="parentUri" type="string" length="255" />
-
-		<property name="metaIDRange"
-			type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDMetaRangeUserType" not-null="true">
+		<property name="metaIDRange" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDMetaRangeUserType"
+			not-null="true">
 			<column name="metaIDStart" />
 			<column name="metaIDSize" />
 		</property>
-
 		<list name="classes" lazy="false" cascade="all, delete-orphan" access="field">
 			<key />
 			<list-index />
 			<one-to-many class="CDOClassImpl" />
 		</list>
-
 	</joined-subclass>
-
-	<class name="CDOClassProxy" table="cdo_classes_proxy" lazy="false">
-		<id column="id" type="int">
-			<generator class="increment" /> 
-		</id>
-		<!-- set to not-null=false because it is nullified because of persist order -->
-		<many-to-one name="cdoClass" class="CDOClassImpl" not-null="false" cascade="merge,persist,save-update,lock,refresh" column="cdoclass"/>
-	</class>
-
+	
 	<joined-subclass name="CDOClassImpl" table="cdo_classes" lazy="false" extends="CDOModelElementImpl">
-		<key/>
+		<key />
 		<property name="classifierID" column="classifier" type="int" not-null="true" />
 		<property name="abstract" column="abstract" type="boolean" not-null="true" />
-
 		<list name="superTypes" lazy="false" cascade="merge,persist,save-update,lock,refresh" access="field">
 			<key>
-				<column name="supertype"/>
+				<column name="supertype" />
 			</key>
 			<list-index />
-			<many-to-many class="CDOClassProxy" />
+			<many-to-many class="org.eclipse.emf.cdo.common.model.CDOClassProxy" />
 		</list>
-
 		<list name="features" lazy="false" cascade="all, delete-orphan" access="field">
 			<key />
 			<list-index />
 			<one-to-many class="CDOFeatureImpl" />
 		</list>
 	</joined-subclass>
-
+	
 	<joined-subclass name="CDOFeatureImpl" table="cdo_features" extends="CDOModelElementImpl" lazy="false">
-		<key/>
+		<key />
 		<property name="featureID" column="feature" type="int" not-null="true" />
-		<property name="type" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOTypeUserType"
-			not-null="false" />
-		<many-to-one name="referenceType" class="CDOClassImpl" column="reftype" not-null="false" 
-			cascade="persist, merge, save-update, evict, replicate, lock, refresh"
-			access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOFeatureReferenceTypePropertyHandler"/>
+		<property name="type" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOTypeUserType" not-null="false" />
+		<many-to-one name="referenceTypeProxy" class="org.eclipse.emf.cdo.common.model.CDOClassProxy" column="reftype"
+			not-null="false" cascade="persist, merge, save-update, evict, replicate, lock, refresh"
+			access="field" />
 		<property name="many" type="boolean" not-null="true" />
 		<property name="containment" type="boolean" not-null="false" />
 	</joined-subclass>
-
 </hibernate-mapping>

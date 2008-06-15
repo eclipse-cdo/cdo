@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
@@ -112,27 +111,21 @@ public class HibernateUtil
       return null;
     }
 
-    CommitContext commitContext = HibernateThreadContext.getCommitContext();
-    for (CDORevision revision : commitContext.getNewObjects())
+    HibernateCommitContext hcc = HibernateThreadContext.getHibernateCommitContext();
+    CDORevision revision;
+    if ((revision = hcc.getDirtyObject(id)) != null)
     {
-      if (revision.getID().equals(id))
-      {
-        return revision;
-      }
+      return revision;
     }
-
-    for (CDORevision revision : commitContext.getDirtyObjects())
+    if ((revision = hcc.getNewObject(id)) != null)
     {
-      if (revision.getID().equals(id))
-      {
-        return revision;
-      }
+      return revision;
     }
 
     // maybe the temp was already translated
     if (id instanceof CDOIDTemp)
     {
-      CDOID newID = commitContext.getIDMappings().get(id);
+      CDOID newID = hcc.getCommitContext().getIDMappings().get(id);
       if (newID != null)
       {
         return getCDORevision(newID);

@@ -11,7 +11,7 @@
  *   Martin Taal
  * </copyright>
  *
- * $Id: CDOFeatureReferenceTypePropertyHandler.java,v 1.3 2008-06-03 09:45:57 estepper Exp $
+ * $Id: CDOFeatureReferenceTypePropertyHandler.java,v 1.4 2008-06-15 20:32:15 mtaal Exp $
  */
 
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
@@ -19,6 +19,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.internal.common.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
 
 import org.hibernate.HibernateException;
@@ -36,7 +37,7 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 @SuppressWarnings("unchecked")
 public class CDOFeatureReferenceTypePropertyHandler implements Getter, Setter, PropertyAccessor
@@ -55,7 +56,8 @@ public class CDOFeatureReferenceTypePropertyHandler implements Getter, Setter, P
       return null;
     }
 
-    return cdoFeature.getReferenceType();
+    // TODO: ugly cast
+    return ((CDOFeatureImpl)cdoFeature).getReferenceTypeProxy();
   }
 
   public Object getForInsert(Object arg0, Map arg1, SessionImplementor arg2) throws HibernateException

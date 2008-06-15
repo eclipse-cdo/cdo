@@ -12,9 +12,11 @@
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOClassProxy;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.internal.common.model.CDOClassImpl;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
@@ -75,9 +77,9 @@ public class HibernatePackageHandler extends Lifecycle
   public List<CDOPackage> getCDOPackages()
   {
     List<CDOPackage> cdoPackages = new ArrayList<CDOPackage>();
-    if (HibernateThreadContext.isCommitContextSet())
+    if (HibernateThreadContext.isHibernateCommitContextSet())
     {
-      CommitContext cc = HibernateThreadContext.getCommitContext();
+      CommitContext cc = HibernateThreadContext.getHibernateCommitContext().getCommitContext();
       if (cc instanceof org.eclipse.emf.cdo.internal.server.Transaction)
       {
         org.eclipse.emf.cdo.internal.server.Transaction tx = (org.eclipse.emf.cdo.internal.server.Transaction)cc;
@@ -260,9 +262,24 @@ public class HibernatePackageHandler extends Lifecycle
       for (CDOClass cdoClass : dbPackage.getClasses())
       {
         cdoClasses.add(cdoClass);
+
+        // TODO: cast to CDOClassImpl is not to nice, getSuperTypeProxies should
+        // be added to the interface of CDOClass or another way of setting the
+        // packagemanager in the CDOClassProxy should be developed (how?)
+        for (CDOClassProxy proxy : ((CDOClassImpl)cdoClass).getSuperTypeProxies())
+        {
+          proxy.setCDOPackageManager(hibernateStore.getRepository().getPackageManager());
+        }
+
         for (CDOFeature cdoFeature : cdoClass.getFeatures())
         {
-          ((InternalCDOFeature)cdoFeature).setContainingClass(cdoClass);
+          final InternalCDOFeature internalFeature = (InternalCDOFeature)cdoFeature;
+          internalFeature.setContainingClass(cdoClass);
+          if (internalFeature.getReferenceTypeProxy() != null)
+          {
+            internalFeature.getReferenceTypeProxy().setCDOPackageManager(
+                hibernateStore.getRepository().getPackageManager());
+          }
         }
       }
 

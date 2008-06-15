@@ -11,16 +11,16 @@
  *   Martin Taal
  * </copyright>
  *
- * $Id: CDOSyntheticIdPropertyHandler.java,v 1.3 2008-06-03 09:45:56 estepper Exp $
+ * $Id: CDOSyntheticIdPropertyHandler.java,v 1.4 2008-06-15 20:32:15 mtaal Exp $
  */
 
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateCommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
@@ -41,7 +41,7 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor
@@ -102,6 +102,8 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
       return;
     }
 
+    final HibernateCommitContext hcc = HibernateThreadContext.getHibernateCommitContext();
+
     InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(target);
     CDOID cdoID = revision.getID();
     if (cdoID == null)
@@ -109,14 +111,15 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
       CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
           revision.getCDOClass().getName());
       revision.setID(newCDOID);
+      hcc.setNewID(cdoID, newCDOID);
     }
     else if (cdoID instanceof CDOIDTemp)
     {
-      CommitContext commitContext = HibernateThreadContext.getCommitContext();
       CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
           revision.getCDOClass().getName());
       revision.setID(newCDOID);
-      commitContext.addIDMapping((CDOIDTemp)cdoID, newCDOID);
+      hcc.getCommitContext().addIDMapping((CDOIDTemp)cdoID, newCDOID);
+      hcc.setNewID(cdoID, newCDOID);
     }
     else
     {

@@ -24,7 +24,7 @@ public class HibernateThreadContext
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateThreadContext.class);
 
-  private static ThreadLocal<CommitContext> commitContext = new ThreadLocal<CommitContext>();
+  private static ThreadLocal<HibernateCommitContext> commitContext = new ThreadLocal<HibernateCommitContext>();
 
   private static ThreadLocal<Session> session = new ThreadLocal<Session>();
 
@@ -61,9 +61,9 @@ public class HibernateThreadContext
     session.set(newSession);
   }
 
-  public static CommitContext getCommitContext()
+  public static HibernateCommitContext getHibernateCommitContext()
   {
-    CommitContext result = commitContext.get();
+    HibernateCommitContext result = commitContext.get();
     if (result == null)
     {
       throw new IllegalStateException("CommitContext not set");
@@ -72,7 +72,7 @@ public class HibernateThreadContext
     return result;
   }
 
-  public static boolean isCommitContextSet()
+  public static boolean isHibernateCommitContextSet()
   {
     return commitContext.get() != null;
   }
@@ -96,6 +96,16 @@ public class HibernateThreadContext
       }
     }
 
-    commitContext.set(newCommitContext);
+    // reset the context
+    if (newCommitContext == null)
+    {
+      commitContext.set(null);
+    }
+    else
+    {
+      final HibernateCommitContext hcc = new HibernateCommitContext();
+      hcc.setCommitContext(newCommitContext);
+      commitContext.set(hcc);
+    }
   }
 }

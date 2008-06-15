@@ -39,8 +39,8 @@ public class AllTests
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
 
     TestSuite suite = new TestSuite("Tests for CDO using Hibernate");
+    suite.addTestSuite(HbTransactionDeadLockTest.class);
     suite.addTestSuite(HibernatePackageRegistryTest.class);
-
     suite.addTestSuite(ContainmentTest.class);
     suite.addTestSuite(RevisionDeltaTest.class);
     suite.addTestSuite(RollbackTest.class);
@@ -55,7 +55,6 @@ public class AllTests
     suite.addTestSuite(InitialTest.class);
     suite.addTestSuite(ViewTest.class);
     suite.addTestSuite(IndexReconstructionTest.class);
-    suite.addTestSuite(HbTransactionDeadLockTest.class);
 
     // These fail for standard cdo >>>
     // suite.addTestSuite(DymamicEcoreTest.class);

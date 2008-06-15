@@ -45,7 +45,6 @@ public class HibernateCommitContext
   // is called on demand.
   protected void initialize()
   {
-
     if (dirtyObjects != null)
     {
       return;
@@ -58,12 +57,10 @@ public class HibernateCommitContext
     }
 
     newObjects = new HashMap<CDOID, CDORevision>();
-
     for (CDORevision cdoRevision : commitContext.getNewObjects())
     {
       newObjects.put(cdoRevision.getID(), cdoRevision);
     }
-
   }
 
   public CDORevision getDirtyObject(CDOID id)

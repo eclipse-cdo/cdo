@@ -40,6 +40,9 @@ public class HibernateCommitContext
     this.commitContext = commitContext;
   }
 
+  // initialize is not done when the commitContext is set because it appeared
+  // that at that moment the temp id's are not repaired. The initialize method
+  // is called on demand.
   protected void initialize()
   {
 

@@ -15,10 +15,9 @@ import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -59,7 +58,7 @@ public abstract class RegisterPackagesAction extends SessionAction
     CDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
     for (EPackage ePackage : ePackages)
     {
-      fixEPackage(ePackage);
+      EcoreUtil.freeze(ePackage);
       Resource resource = ePackage.eResource();
       URI uri = resource == null ? null : resource.getURI();
 
@@ -102,19 +101,4 @@ public abstract class RegisterPackagesAction extends SessionAction
   }
 
   protected abstract List<EPackage> getEPackages(IWorkbenchPage page, CDOSession session);
-
-  /**
-   * @see http://bugs.eclipse.org/237093
-   */
-  private void fixEPackage(EPackage ePackage)
-  {
-    for (EClassifier classifier : ePackage.getEClassifiers())
-    {
-      if (classifier instanceof EClass)
-      {
-        EClass eClass = (EClass)classifier;
-        eClass.getEAllStructuralFeatures();
-      }
-    }
-  }
 }

@@ -314,8 +314,8 @@
 <mapEntry key="org.eclipse.osgi/debug/services" value="false"/>
 <mapEntry key="org.eclipse.net4j.db.mysql/debug.sql" value="true"/>
 <mapEntry key="org.eclipse.net4j.util.ui/debug" value="true"/>
-<mapEntry key="org.eclipse.net4j.chat.ui/debug" value="true"/>
-<mapEntry key="org.eclipse.net4j.chat/debug" value="true"/>
+<mapEntry key="org.eclipse.net4j.buddies.chat.ui/debug" value="true"/>
+<mapEntry key="org.eclipse.net4j.buddies.chat/debug" value="true"/>
 <mapEntry key="org.eclipse.ui.workbench/debug" value="false"/>
 <mapEntry key="org.eclipse.jdt.ui/perf/content_assist/extensions" value="1000"/>
 <mapEntry key="org.eclipse.emf.cdo.common/debug.model" value="true"/>

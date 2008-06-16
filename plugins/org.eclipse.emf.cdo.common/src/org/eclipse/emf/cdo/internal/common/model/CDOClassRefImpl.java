@@ -32,6 +32,10 @@ public final class CDOClassRefImpl implements CDOClassRef
 
   private int classifierID;
 
+  public CDOClassRefImpl()
+  {
+  }
+
   public CDOClassRefImpl(String packageURI, int classifierID)
   {
     this.packageURI = packageURI;

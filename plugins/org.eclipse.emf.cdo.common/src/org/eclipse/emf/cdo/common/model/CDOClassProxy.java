@@ -56,6 +56,11 @@ public final class CDOClassProxy
     return cdoClass.getClassifierID();
   }
 
+  public void setCDOPackageManager(CDOPackageManager packageManager)
+  {
+    this.packageManager = packageManager;
+  }
+
   // TODO Clarify camel case
   public CDOClass getCdoClass()
   {

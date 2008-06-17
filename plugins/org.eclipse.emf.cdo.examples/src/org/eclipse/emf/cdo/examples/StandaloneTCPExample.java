@@ -23,6 +23,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -33,26 +34,37 @@ public class StandaloneTCPExample
 {
   public static void main(String[] args)
   {
+    // Prepare container
     IManagedContainer container = ContainerUtil.createContainer();
     Net4jUtil.prepareContainer(container); // Register Net4j factories
     TCPUtil.prepareContainer(container); // Register TCP factories
     CDOUtil.prepareContainer(container, false); // Register CDO factories
+
+    // Create connector
     IConnector connector = TCPUtil.getConnector(container, "localhost:2036");
 
+    // Create configuration
     CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName("my-repo");
 
+    // Open session
     CDOSession session = configuration.openSession();
     session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
 
+    // Open transaction
     CDOTransaction transaction = session.openTransaction();
+
+    // Get or create resource
     CDOResource resource = transaction.getOrCreateResource("/path/to/my/resource");
 
+    // Work with the resource and commit the transaction
     EObject object = Model1Factory.eINSTANCE.createCompany();
     resource.getContents().add(object);
-
     transaction.commit();
+
+    // Cleanup
     session.close();
+    LifecycleUtil.deactivate(connector);
   }
 }

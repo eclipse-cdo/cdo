@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * @author Eike Stepper
  */
-public class StandaloneTCPExample
+public class StandaloneContainerExample
 {
   public static void main(String[] args)
   {

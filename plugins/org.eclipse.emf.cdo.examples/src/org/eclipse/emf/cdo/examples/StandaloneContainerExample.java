@@ -54,7 +54,7 @@ public class StandaloneContainerExample
     // Create configuration
     CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
     configuration.setConnector(connector);
-    configuration.setRepositoryName("my-repo");
+    configuration.setRepositoryName("repo1");
 
     // Open session
     CDOSession session = configuration.openSession();

@@ -24,6 +24,9 @@ import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.log.PrintLogHandler;
+import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -34,6 +37,11 @@ public class StandaloneTCPExample
 {
   public static void main(String[] args)
   {
+    // Enable logging and tracing
+    OMPlatform.INSTANCE.setDebugging(true);
+    OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
+
     // Prepare container
     IManagedContainer container = ContainerUtil.createContainer();
     Net4jUtil.prepareContainer(container); // Register Net4j factories

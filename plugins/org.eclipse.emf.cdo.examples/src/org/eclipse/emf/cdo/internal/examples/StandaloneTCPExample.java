@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.examples.bundle;
+package org.eclipse.emf.cdo.internal.examples;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
@@ -18,18 +18,26 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.tcp.TCPUtil;
+import org.eclipse.net4j.util.container.ContainerUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.ecore.EObject;
 
 /**
  * @author Eike Stepper
  */
-public class Examples
+public class StandaloneTCPExample
 {
-  public static void commonPattern()
+  public static void main(String[] args)
   {
-    IConnector connector = getConnector();
+    IManagedContainer container = ContainerUtil.createContainer();
+    Net4jUtil.prepareContainer(container); // Register Net4j factories
+    TCPUtil.prepareContainer(container); // Register TCP factories
+    CDOUtil.prepareContainer(container, false); // Register CDO factories
+    IConnector connector = TCPUtil.getConnector(container, "localhost:2036");
 
     CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
     configuration.setConnector(connector);
@@ -46,10 +54,5 @@ public class Examples
 
     transaction.commit();
     session.close();
-  }
-
-  private static IConnector getConnector()
-  {
-    throw new UnsupportedOperationException();
   }
 }

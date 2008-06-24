@@ -125,23 +125,26 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
 
   // this will check the global package registry and read the epackages from
   // there if the epackage is already present there
-  protected List<EPackage> resolveSubPackages(EPackage epack)
+  protected List<EPackage> resolveSubPackages(EPackage ePackage)
   {
-    final List<EPackage> epacks = new ArrayList<EPackage>();
-    if (EPackage.Registry.INSTANCE.get(epack.getNsURI()) != null)
+    final List<EPackage> result = new ArrayList<EPackage>();
+    resolveSubPackages(ePackage, result);
+    return result;
+  }
+
+  private void resolveSubPackages(EPackage ePackage, List<EPackage> result)
+  {
+    EPackage globalPackage = EPackage.Registry.INSTANCE.getEPackage(ePackage.getNsURI());
+    if (globalPackage != null)
     {
-      epacks.add((EPackage)EPackage.Registry.INSTANCE.get(epack.getNsURI()));
-    }
-    else
-    {
-      epacks.add(epack);
+      ePackage = globalPackage;
     }
 
-    for (EPackage subEPackage : epack.getESubpackages())
+    result.add(ePackage);
+    for (EPackage subEPackage : ePackage.getESubpackages())
     {
-      epacks.addAll(resolveSubPackages(subEPackage));
+      resolveSubPackages(subEPackage, result);
     }
-    return epacks;
   }
 
   public IHibernateStore getHibernateStore()

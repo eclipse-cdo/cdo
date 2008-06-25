@@ -341,7 +341,7 @@ public class InvalidationTest extends AbstractCDOTest
   }
 
   /**
-   * @see http://bugs.eclipse.org/236784
+   * @see https://bugs.eclipse.org/236784
    */
   public void testInvalidateAndCache() throws Exception
   {

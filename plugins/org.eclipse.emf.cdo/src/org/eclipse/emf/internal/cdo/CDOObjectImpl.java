@@ -629,7 +629,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
-   * TODO Remove this when EMF has fixed https://bugs.eclipse.org/bugs/show_bug.cgi?id=197487
+   * TODO Remove this when EMF has fixed https://bugs.eclipse.org/197487
    * 
    * @author Eike Stepper
    */
@@ -843,7 +843,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
-   * TODO Remove this when EMF has fixed https://bugs.eclipse.org/bugs/show_bug.cgi?id=197487
+   * TODO Remove this when EMF has fixed https://bugs.eclipse.org/197487
    * 
    * @author Eike Stepper
    */

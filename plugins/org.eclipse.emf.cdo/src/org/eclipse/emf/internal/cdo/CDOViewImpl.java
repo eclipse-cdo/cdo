@@ -7,10 +7,10 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201265
- *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201266
- *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=201997
- *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=202064
+ *    Simon McDuff - https://bugs.eclipse.org/201265
+ *    Simon McDuff - https://bugs.eclipse.org/201266
+ *    Simon McDuff - https://bugs.eclipse.org/201997
+ *    Simon McDuff - https://bugs.eclipse.org/202064
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 

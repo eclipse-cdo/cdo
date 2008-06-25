@@ -67,6 +67,7 @@ import java.nio.channels.SocketChannel;
  * @see IChannel#setReceiveHandler(IBufferHandler)
  * @see IBufferHandler#handleBuffer(IBuffer)
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IBuffer
 {

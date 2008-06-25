@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 
 /**
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOObjectClass extends CDOClass
 {

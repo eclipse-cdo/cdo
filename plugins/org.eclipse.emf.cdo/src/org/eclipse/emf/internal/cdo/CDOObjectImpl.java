@@ -35,6 +35,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
@@ -593,10 +594,13 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return resource;
   }
 
+  /**
+   * Specializing the behaviour of {@link #equals(Object)} is not permitted as per {@link EObject} specification.
+   */
   @Override
-  public boolean equals(Object obj)
+  public final boolean equals(Object obj)
   {
-    return obj == this;
+    return super.equals(obj);
   }
 
   @Override

@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 /**
  * @author Simon McDuff
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOInvalidationNotification extends Notification
 {

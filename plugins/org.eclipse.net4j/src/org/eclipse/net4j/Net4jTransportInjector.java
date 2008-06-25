@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j;
 
+import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.security.INegotiator;
 
 import org.eclipse.internal.net4j.ExecutorServiceFactory;
-import org.eclipse.internal.net4j.buffer.BufferProvider;
 import org.eclipse.internal.net4j.buffer.BufferProviderFactory;
 
 import org.eclipse.spi.net4j.InternalAcceptor;
@@ -111,9 +111,12 @@ public class Net4jTransportInjector implements IElementProcessor
     }
   }
 
-  protected BufferProvider getBufferProvider(IManagedContainer container)
+  /**
+   * @since 2.0
+   */
+  protected IBufferProvider getBufferProvider(IManagedContainer container)
   {
-    return (BufferProvider)container.getElement(BufferProviderFactory.PRODUCT_GROUP, BufferProviderFactory.TYPE, null);
+    return (IBufferProvider)container.getElement(BufferProviderFactory.PRODUCT_GROUP, BufferProviderFactory.TYPE, null);
   }
 
   protected ExecutorService getExecutorService(IManagedContainer container)

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.store.logic;
 
 import org.eclipse.emf.cdo.internal.server.Transaction;
+import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.HorizontalMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.MappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.ToMany;
@@ -29,7 +30,7 @@ public abstract class HorizontalTestLogic extends DBStoreTestLogic
   }
 
   @Override
-  protected HorizontalMappingStrategy createMappingStrategy()
+  protected IMappingStrategy createMappingStrategy()
   {
     Map<String, String> props = new HashMap<String, String>();
     props.put(MappingStrategy.PROP_TO_MANY_REFERENCE_MAPPING, ToMany.PER_CLASS.toString());

@@ -12,9 +12,11 @@ package org.eclipse.emf.cdo.common.model;
 
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 
-/**
+/*
  * TODO Add read(), write(), ...
- * 
+ */
+
+/**
  * @author Eike Stepper
  */
 public final class CDOPackageInfo

@@ -12,9 +12,8 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
-
-import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
@@ -34,7 +33,7 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
 
   private IFailOverStrategy failOverStrategy;
 
-  private CDOPackageRegistryImpl packageRegistry;
+  private CDOPackageRegistry packageRegistry;
 
   private boolean activateOnOpen = true;
 
@@ -86,12 +85,18 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
     this.failOverStrategy = failOverStrategy;
   }
 
-  public CDOPackageRegistryImpl getPackageRegistry()
+  /**
+   * @since 2.0
+   */
+  public CDOPackageRegistry getPackageRegistry()
   {
     return packageRegistry;
   }
 
-  public void setPackageRegistry(CDOPackageRegistryImpl packageRegistry)
+  /**
+   * @since 2.0
+   */
+  public void setPackageRegistry(CDOPackageRegistry packageRegistry)
   {
     checkNotOpen();
     this.packageRegistry = packageRegistry;

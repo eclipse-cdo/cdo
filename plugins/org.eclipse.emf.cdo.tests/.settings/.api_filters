@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.tests" version="2">
+    <resource path="src/org/eclipse/emf/cdo/tests/RevisionHolderTest.java" type="org.eclipse.emf.cdo.tests.RevisionHolderTest$RevisionStub">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDORevision"/>
+                <message_argument value="RevisionStub"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/tests/store/logic/DBStoreTestLogic.java" type="org.eclipse.emf.cdo.tests.store.logic.DBStoreTestLogic">
+        <filter id="627060751">
+            <message_arguments>
+                <message_argument value="DBStore"/>
+                <message_argument value="DBStoreTestLogic"/>
+                <message_argument value="store"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/tests/store/logic/TestLogic.java" type="org.eclipse.emf.cdo.tests.store.logic.TestLogic$CommitTemplate">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="CDOServerProtocol"/>
+                <message_argument value="CommitTemplate"/>
+                <message_argument value="createProtocol()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/tests/store/logic/TestLogic.java" type="org.eclipse.emf.cdo.tests.store.logic.TestLogic$Revision">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="CDORevisionImpl"/>
+                <message_argument value="Revision"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

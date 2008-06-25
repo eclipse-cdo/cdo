@@ -17,6 +17,7 @@ import java.util.Map;
 
 /**
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOTransactionFinishedEvent extends CDOViewEvent
 {
@@ -24,6 +25,9 @@ public interface CDOTransactionFinishedEvent extends CDOViewEvent
 
   public Map<CDOIDTemp, CDOID> getIDMappings();
 
+  /**
+   * @author Eike Stepper
+   */
   public enum Type
   {
     COMMITTED, ROLLED_BACK

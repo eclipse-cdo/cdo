@@ -8,9 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.migrator.wizards;
+package org.eclipse.emf.cdo.internal.migrator.wizards;
 
-import org.eclipse.emf.cdo.migrator.CDOImporter;
+import org.eclipse.emf.cdo.internal.migrator.CDOImporter;
 
 import org.eclipse.emf.converter.ModelConverter;
 import org.eclipse.emf.importer.ui.contribution.base.ModelImporterDetailPage;

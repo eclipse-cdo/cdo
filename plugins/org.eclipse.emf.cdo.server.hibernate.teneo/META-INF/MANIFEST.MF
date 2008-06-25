@@ -1,13 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.server.hibernate.teneo;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.emf.ecore.xmi;bundle-version="[2.4.0,3.0.0)",
- org.eclipse.emf.cdo.server.hibernate;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
+ org.eclipse.emf.cdo.server.hibernate;bundle-version="[2.0.0,3.0.0)";visibility:=reexport
 Import-Package: org.eclipse.emf.teneo.hibernate.cdo,
  org.hibernate.cfg
-Export-Package: org.eclipse.emf.cdo.server.hibernate.teneo;version="1.0.0"
+Export-Package: org.eclipse.emf.cdo.server.hibernate.teneo;version="2.0.0"

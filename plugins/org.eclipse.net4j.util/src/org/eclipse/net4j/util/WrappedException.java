@@ -10,9 +10,11 @@
  **************************************************************************/
 package org.eclipse.net4j.util;
 
+/* 
+ *TODO Handle IORuntimeException
+ */
+
 /**
- * TODO Handle IORuntimeException
- * 
  * @author Eike Stepper
  */
 public class WrappedException extends RuntimeException

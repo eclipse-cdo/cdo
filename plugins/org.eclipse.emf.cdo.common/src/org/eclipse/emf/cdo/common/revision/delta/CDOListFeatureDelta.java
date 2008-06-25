@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * @author Simon McDuff
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOListFeatureDelta extends CDOFeatureDelta
 {

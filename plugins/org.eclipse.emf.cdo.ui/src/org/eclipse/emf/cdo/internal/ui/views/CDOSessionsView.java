@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenSessionAction;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
+import org.eclipse.emf.cdo.ui.CDOViewHistoryEntry;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -71,9 +72,9 @@ public class CDOSessionsView extends ContainerView
   @Override
   protected void doubleClicked(Object object)
   {
-    if (object instanceof CDOViewHistory.Entry)
+    if (object instanceof CDOViewHistoryEntry)
     {
-      CDOViewHistory.Entry entry = (CDOViewHistory.Entry)object;
+      CDOViewHistoryEntry entry = (CDOViewHistoryEntry)object;
       IWorkbenchPage page = getViewSite().getPage();
       CDOView view = entry.getView();
       String resourcePath = entry.getResourcePath();

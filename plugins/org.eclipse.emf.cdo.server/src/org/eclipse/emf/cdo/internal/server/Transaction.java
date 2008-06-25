@@ -386,7 +386,6 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
    */
   public final class TransactionPackageManager implements CDOPackageManager
   {
-
     private List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
 
     public TransactionPackageManager()

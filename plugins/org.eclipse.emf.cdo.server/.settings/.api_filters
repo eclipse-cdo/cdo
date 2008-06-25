@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.server" version="2">
+    <resource path="src/org/eclipse/emf/cdo/internal/server/Transaction.java" type="org.eclipse.emf.cdo.internal.server.Transaction$TransactionPackageManager">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOPackageManager"/>
+                <message_argument value="TransactionPackageManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/RevisionManager.java" type="org.eclipse.emf.cdo.internal.server.RevisionManager">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="CDORevisionResolverImpl"/>
+                <message_argument value="RevisionManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/IPackageManager.java" type="org.eclipse.emf.cdo.server.IPackageManager">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOPackageManager"/>
+                <message_argument value="IPackageManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/SessionManager.java" type="org.eclipse.emf.cdo.internal.server.SessionManager">
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CDOServerProtocol"/>
+                <message_argument value="SessionManager"/>
+                <message_argument value="openSession(CDOServerProtocol, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/IRevisionManager.java" type="org.eclipse.emf.cdo.server.IRevisionManager">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDORevisionResolver"/>
+                <message_argument value="IRevisionManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/ISessionManager.java" type="org.eclipse.emf.cdo.server.ISessionManager">
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CDOServerProtocol"/>
+                <message_argument value="ISessionManager"/>
+                <message_argument value="openSession(CDOServerProtocol, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/IView.java" type="org.eclipse.emf.cdo.server.IView">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOProtocolView"/>
+                <message_argument value="IView"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/Session.java" type="org.eclipse.emf.cdo.internal.server.Session">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOIDProvider"/>
+                <message_argument value="Session"/>
+            </message_arguments>
+        </filter>
+        <filter id="643850349">
+            <message_arguments>
+                <message_argument value="CDOServerProtocol"/>
+                <message_argument value="Session"/>
+                <message_argument value="Session(SessionManager, CDOServerProtocol, int, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/PackageManager.java" type="org.eclipse.emf.cdo.internal.server.PackageManager">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="CDOPackageManagerImpl"/>
+                <message_argument value="PackageManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/ISession.java" type="org.eclipse.emf.cdo.server.ISession">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOProtocolSession"/>
+                <message_argument value="ISession"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

@@ -33,7 +33,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.LegacySystemNotAvailableException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.LoadLibrariesRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
@@ -231,11 +230,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return channel;
   }
 
-  public CDOClientProtocol getProtocol()
-  {
-    return (CDOClientProtocol)channel.getReceiveHandler();
-  }
-
   public String getRepositoryName()
   {
     return repositoryName;
@@ -261,7 +255,10 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     deactivate();
   }
 
-  public void setPackageRegistry(CDOPackageRegistryImpl packageRegistry)
+  /**
+   * @since 2.0
+   */
+  public void setPackageRegistry(CDOPackageRegistry packageRegistry)
   {
     this.packageRegistry = packageRegistry;
   }
@@ -574,7 +571,10 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return MessageFormat.format("CDOSession[{0}/{1}]", connector, repositoryName);
   }
 
-  protected CDOPackageRegistryImpl createPackageRegistry()
+  /**
+   * @since 2.0
+   */
+  protected CDOPackageRegistry createPackageRegistry()
   {
     return new CDOPackageRegistryImpl();
   }

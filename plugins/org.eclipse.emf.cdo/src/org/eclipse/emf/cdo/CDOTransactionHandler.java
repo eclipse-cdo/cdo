@@ -14,8 +14,6 @@ package org.eclipse.emf.cdo;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 
 /**
- * TODO Enhance API: Return exceptions instead of letting them be thrown
- * 
  * @author Eike Stepper
  */
 public interface CDOTransactionHandler

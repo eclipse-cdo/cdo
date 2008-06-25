@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
 {

@@ -8,9 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.migrator.actions;
+package org.eclipse.emf.cdo.internal.migrator.actions;
 
-import org.eclipse.emf.cdo.migrator.CDOMigrator;
+import org.eclipse.emf.cdo.internal.migrator.CDOMigrator;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.util.EList;
@@ -101,7 +101,7 @@ public class MigrateAction implements IObjectActionDelegate
         }
         catch (Exception ex)
         {
-          return new Status(IStatus.ERROR, "org.eclipse.emf.cdo.migrator", "Problem while migrating EMF model", ex);
+          return new Status(IStatus.ERROR, "org.eclipse.emf.cdo.internal.migrator", "Problem while migrating EMF model", ex);
         }
 
         return Status.OK_STATUS;

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory;
+import org.eclipse.emf.cdo.ui.CDOViewHistoryEntry;
 
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 
@@ -22,16 +22,16 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public abstract class EntryAction extends LongRunningAction
 {
-  private CDOViewHistory.Entry entry;
+  private CDOViewHistoryEntry entry;
 
   public EntryAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
-      CDOViewHistory.Entry entry)
+      CDOViewHistoryEntry entry)
   {
     super(page, text, toolTipText, image);
     this.entry = entry;
   }
 
-  public CDOViewHistory.Entry getEntry()
+  public CDOViewHistoryEntry getEntry()
   {
     return entry;
   }

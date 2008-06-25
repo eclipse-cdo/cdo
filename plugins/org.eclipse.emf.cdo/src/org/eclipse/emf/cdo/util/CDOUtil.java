@@ -23,7 +23,6 @@ import org.eclipse.emf.internal.cdo.LegacySupportEnabler;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
-import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl.SelfPopulating;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 
@@ -59,12 +58,18 @@ public final class CDOUtil
     return new CDOSessionConfigurationImpl();
   }
 
-  public static SelfPopulating createSelfPopulatingPackageRegistry()
+  /**
+   * @since 2.0
+   */
+  public static CDOPackageRegistry createSelfPopulatingPackageRegistry()
   {
     return new CDOPackageRegistryImpl.SelfPopulating();
   }
 
-  public static CDOPackageRegistryImpl createDemandPopulatingPackageRegistry()
+  /**
+   * @since 2.0
+   */
+  public static CDOPackageRegistry createDemandPopulatingPackageRegistry()
   {
     return new CDOPackageRegistryImpl.DemandPopulating();
   }

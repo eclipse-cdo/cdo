@@ -17,7 +17,6 @@ import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.internal.db.ddl.DBSchemaElement;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
 
 import javax.sql.DataSource;
@@ -60,7 +59,10 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     return name;
   }
 
-  public DBTable addTable(String name) throws DBException
+  /**
+   * @since 2.0
+   */
+  public IDBTable addTable(String name) throws DBException
   {
     assertUnlocked();
     if (tables.containsKey(name))
@@ -73,12 +75,18 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     return table;
   }
 
-  public DBTable getTable(String name)
+  /**
+   * @since 2.0
+   */
+  public IDBTable getTable(String name)
   {
     return tables.get(name);
   }
 
-  public DBTable[] getTables()
+  /**
+   * @since 2.0
+   */
+  public IDBTable[] getTables()
   {
     return tables.values().toArray(new DBTable[tables.size()]);
   }
@@ -145,13 +153,13 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
 
   public void export(Connection connection, PrintStream out) throws DBException
   {
-    for (DBTable table : getTables())
+    for (IDBTable table : getTables())
     {
       export(table, connection, out);
     }
   }
 
-  private void export(final DBTable table, Connection connection, final PrintStream out)
+  private void export(final IDBTable table, Connection connection, final PrintStream out)
   {
     if (DBUtil.select(connection, new IDBRowHandler()
     {

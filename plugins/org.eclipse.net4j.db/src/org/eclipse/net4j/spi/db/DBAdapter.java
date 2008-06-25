@@ -18,8 +18,6 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.bundle.OM;
-import org.eclipse.net4j.internal.db.ddl.DBField;
-import org.eclipse.net4j.internal.db.ddl.DBIndex;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -242,7 +240,10 @@ public abstract class DBAdapter implements IDBAdapter
     return getName() + "-" + getVersion();
   }
 
-  protected void doCreateTable(DBTable table, Statement statement) throws SQLException
+  /**
+   * @since 2.0
+   */
+  protected void doCreateTable(IDBTable table, Statement statement) throws SQLException
   {
     StringBuilder builder = new StringBuilder();
     builder.append("CREATE TABLE ");
@@ -265,16 +266,19 @@ public abstract class DBAdapter implements IDBAdapter
 
     statement.execute(sql);
 
-    DBIndex[] indices = table.getIndices();
+    IDBIndex[] indices = table.getIndices();
     for (int i = 0; i < indices.length; i++)
     {
       createIndex(indices[i], statement, i);
     }
   }
 
-  protected void createIndex(DBIndex index, Statement statement, int num) throws SQLException
+  /**
+   * @since 2.0
+   */
+  protected void createIndex(IDBIndex index, Statement statement, int num) throws SQLException
   {
-    DBTable table = index.getTable();
+    IDBTable table = index.getTable();
     StringBuilder builder = new StringBuilder();
     builder.append("CREATE ");
     if (index.getType() == IDBIndex.Type.UNIQUE)
@@ -314,12 +318,18 @@ public abstract class DBAdapter implements IDBAdapter
     builder.append(field);
   }
 
-  protected String createConstraints(DBTable table)
+  /**
+   * @since 2.0
+   */
+  protected String createConstraints(IDBTable table)
   {
     return null;
   }
 
-  protected String createFieldDefinition(DBField field)
+  /**
+   * @since 2.0
+   */
+  protected String createFieldDefinition(IDBField field)
   {
     return getTypeName(field) + (field.isNotNull() ? " NOT NULL" : "");
   }
@@ -413,7 +423,10 @@ public abstract class DBAdapter implements IDBAdapter
     return reservedWords.contains(word);
   }
 
-  protected void validateTable(DBTable table, Statement statement) throws DBException
+  /**
+   * @since 2.0
+   */
+  protected void validateTable(IDBTable table, Statement statement) throws DBException
   {
     try
     {
@@ -439,15 +452,15 @@ public abstract class DBAdapter implements IDBAdapter
     }
   }
 
-  private String[] createFieldDefinitions(DBTable table)
+  private String[] createFieldDefinitions(IDBTable table)
   {
-    DBField[] fields = table.getFields();
+    IDBField[] fields = table.getFields();
     int fieldCount = fields.length;
 
     String[] result = new String[fieldCount];
     for (int i = 0; i < fieldCount; i++)
     {
-      DBField field = fields[i];
+      IDBField field = fields[i];
       result[i] = createFieldDefinition(field);
     }
 

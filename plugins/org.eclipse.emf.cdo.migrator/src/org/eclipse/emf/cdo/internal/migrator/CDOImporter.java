@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.migrator;
+package org.eclipse.emf.cdo.internal.migrator;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
@@ -58,7 +58,7 @@ public class CDOImporter extends ModelImporter
     List<URI> locationURIs = getModelLocationURIs();
     if (locationURIs.isEmpty())
     {
-      diagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.migrator", 0,
+      diagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.internal.migrator", 0,
           "Specify a valid Ecore model and try loading again", null);
     }
     else

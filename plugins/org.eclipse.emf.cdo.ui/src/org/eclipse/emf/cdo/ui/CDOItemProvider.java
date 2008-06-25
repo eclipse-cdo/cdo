@@ -34,8 +34,6 @@ import org.eclipse.emf.cdo.internal.ui.actions.RegisterSinglePackageAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReloadViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
-import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory;
-import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 
@@ -93,7 +91,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
                 CDOViewHistory history = viewHistories.get(view);
                 if (history != null)
                 {
-                  Entry[] entries = history.getEntries();
+                  CDOViewHistoryEntry[] entries = history.getEntries();
                   if (entries != null && entries.length != 0)
                   {
                     fireLabelProviderChanged(entries);
@@ -123,7 +121,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
         CDOView view = e.getViewHistory().getView();
         refreshElement(view, false);
 
-        Entry addedEntry = e.getAddedEntry();
+        CDOViewHistoryEntry addedEntry = e.getAddedEntry();
         if (addedEntry != null)
         {
           revealElement(addedEntry);
@@ -182,9 +180,9 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   @Override
   public Object getParent(Object element)
   {
-    if (element instanceof CDOViewHistory.Entry)
+    if (element instanceof CDOViewHistoryEntry)
     {
-      return ((CDOViewHistory.Entry)element).getView();
+      return ((CDOViewHistoryEntry)element).getView();
     }
 
     return super.getParent(element);
@@ -203,9 +201,9 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       return getViewLabel((CDOView)obj);
     }
 
-    if (obj instanceof CDOViewHistory.Entry)
+    if (obj instanceof CDOViewHistoryEntry)
     {
-      return getHistroyEntryLabel((CDOViewHistory.Entry)obj);
+      return getHistroyEntryLabel((CDOViewHistoryEntry)obj);
     }
 
     return super.getText(obj);
@@ -260,7 +258,10 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     return MessageFormat.format("View [{0}]", view.getViewID());
   }
 
-  public static String getHistroyEntryLabel(CDOViewHistory.Entry entry)
+  /**
+   * @since 2.0
+   */
+  public static String getHistroyEntryLabel(CDOViewHistoryEntry entry)
   {
     return (entry.getView().isDirty() ? "*" : "") + entry.getResourcePath();
   }
@@ -280,9 +281,9 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       {
         fillView(manager, (CDOView)object);
       }
-      else if (object instanceof CDOViewHistory.Entry)
+      else if (object instanceof CDOViewHistoryEntry)
       {
-        fillHistoryEntry(manager, (CDOViewHistory.Entry)object);
+        fillHistoryEntry(manager, (CDOViewHistoryEntry)object);
       }
     }
   }
@@ -359,7 +360,10 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     manager.add(new CloseViewAction(page, view));
   }
 
-  protected void fillHistoryEntry(IMenuManager manager, Entry entry)
+  /**
+   * @since 2.0
+   */
+  protected void fillHistoryEntry(IMenuManager manager, CDOViewHistoryEntry entry)
   {
   }
 

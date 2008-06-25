@@ -8,12 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.ui.views;
+package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewResourcesEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.ui.CDOViewHistoryEvent;
 
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
@@ -28,12 +27,13 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public final class CDOViewHistory extends Notifier
 {
   private CDOView view;
 
-  private Set<Entry> entries = new HashSet<Entry>();
+  private Set<CDOViewHistoryEntry> entries = new HashSet<CDOViewHistoryEntry>();
 
   private IListener viewListener = new IListener()
   {
@@ -67,11 +67,11 @@ public final class CDOViewHistory extends Notifier
     return view;
   }
 
-  public Entry[] getEntries()
+  public CDOViewHistoryEntry[] getEntries()
   {
     synchronized (entries)
     {
-      return entries.toArray(new Entry[entries.size()]);
+      return entries.toArray(new CDOViewHistoryEntry[entries.size()]);
     }
   }
 
@@ -85,13 +85,13 @@ public final class CDOViewHistory extends Notifier
 
   public void reset()
   {
-    Set<Entry> openResources = new HashSet<Entry>();
+    Set<CDOViewHistoryEntry> openResources = new HashSet<CDOViewHistoryEntry>();
     for (Resource resource : view.getResourceSet().getResources())
     {
       if (resource instanceof CDOResource)
       {
         CDOResource cdoResource = (CDOResource)resource;
-        openResources.add(new Entry(cdoResource.getPath()));
+        openResources.add(new CDOViewHistoryEntry(view, cdoResource.getPath()));
       }
     }
 
@@ -109,7 +109,7 @@ public final class CDOViewHistory extends Notifier
 
   protected void addResource(String resourcePath)
   {
-    Entry entry = new Entry(resourcePath);
+    CDOViewHistoryEntry entry = new CDOViewHistoryEntry(view, resourcePath);
     boolean changed;
     synchronized (entries)
     {
@@ -129,9 +129,9 @@ public final class CDOViewHistory extends Notifier
   {
     private static final long serialVersionUID = 1L;
 
-    Entry addedEntry;
+    CDOViewHistoryEntry addedEntry;
 
-    public ViewHistoryEvent(Entry addedEntry)
+    public ViewHistoryEvent(CDOViewHistoryEntry addedEntry)
     {
       super(CDOViewHistory.this);
       this.addedEntry = addedEntry;
@@ -142,7 +142,7 @@ public final class CDOViewHistory extends Notifier
       return CDOViewHistory.this;
     }
 
-    public Entry getAddedEntry()
+    public CDOViewHistoryEntry getAddedEntry()
     {
       return addedEntry;
     }
@@ -151,68 +151,6 @@ public final class CDOViewHistory extends Notifier
     public String toString()
     {
       return MessageFormat.format("CDOViewHistoryEvent[source={0}, addedEntry={1}]", getSource(), getAddedEntry());
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public final class Entry implements Comparable<Entry>
-  {
-    private String resourcePath;
-
-    public Entry(String resourcePath)
-    {
-      if (resourcePath == null)
-      {
-        throw new IllegalArgumentException("resourcePath == null");
-      }
-
-      this.resourcePath = resourcePath;
-    }
-
-    public CDOView getView()
-    {
-      return view;
-    }
-
-    public String getResourcePath()
-    {
-      return resourcePath;
-    }
-
-    public int compareTo(Entry entry)
-    {
-      return resourcePath.compareTo(entry.resourcePath);
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-      if (obj == this)
-      {
-        return true;
-      }
-
-      if (obj instanceof Entry)
-      {
-        Entry that = (Entry)obj;
-        return view == that.getView() && resourcePath.equals(that.resourcePath);
-      }
-
-      return false;
-    }
-
-    @Override
-    public int hashCode()
-    {
-      return resourcePath.hashCode();
-    }
-
-    @Override
-    public String toString()
-    {
-      return resourcePath;
     }
   }
 }

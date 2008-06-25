@@ -10,17 +10,21 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.ui;
 
-import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory;
-import org.eclipse.emf.cdo.internal.ui.views.CDOViewHistory.Entry;
-
 import org.eclipse.net4j.util.event.IEvent;
 
 /**
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOViewHistoryEvent extends IEvent
 {
+  /**
+   * @since 2.0
+   */
   public CDOViewHistory getViewHistory();
 
-  public Entry getAddedEntry();
+  /**
+   * @since 2.0
+   */
+  public CDOViewHistoryEntry getAddedEntry();
 }

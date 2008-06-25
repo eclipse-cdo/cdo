@@ -24,7 +24,7 @@
     	icon="icons/full/obj16/CDOModelFile.gif" 
     	extensions="ecore,emof" 
     	description="%_UI_CDOImporter_description" 
-    	wizard="org.eclipse.emf.cdo.migrator.wizards.CDOImporterWizard" />
+    	wizard="org.eclipse.emf.cdo.internal.migrator.wizards.CDOImporterWizard" />
   </extension>
   
   <extension
@@ -42,7 +42,7 @@
            </separator>
         </menu>
         <action
-              class="org.eclipse.emf.cdo.migrator.actions.MigrateAction"
+              class="org.eclipse.emf.cdo.internal.migrator.actions.MigrateAction"
               enablesFor="1"
               id="org.eclipse.emf.cdo.migrator.MigrateAction"
               label="Migrate EMF Model"

@@ -99,11 +99,6 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     return legacySupportEnabled;
   }
 
-  public CDOServerProtocol getProtocol()
-  {
-    return protocol;
-  }
-
   public View[] getElements()
   {
     return getViews();

@@ -10,13 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
+import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 
 /**
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOSessionConfiguration
 {
@@ -36,9 +37,15 @@ public interface CDOSessionConfiguration
 
   public void setFailOverStrategy(IFailOverStrategy failOverStrategy);
 
-  public CDOPackageRegistryImpl getPackageRegistry();
+  /**
+   * @since 2.0
+   */
+  public CDOPackageRegistry getPackageRegistry();
 
-  public void setPackageRegistry(CDOPackageRegistryImpl packageRegistry);
+  /**
+   * @since 2.0
+   */
+  public void setPackageRegistry(CDOPackageRegistry packageRegistry);
 
   public void setSelfPopulatingPackageRegistry();
 

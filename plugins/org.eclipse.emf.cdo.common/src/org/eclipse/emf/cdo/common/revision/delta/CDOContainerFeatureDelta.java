@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 /**
  * @author Simon McDuff
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOContainerFeatureDelta extends CDOFeatureDelta
 {

@@ -11,9 +11,9 @@
 package org.eclipse.emf.cdo.tests.store.logic;
 
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
-import org.eclipse.emf.cdo.server.internal.db.MappingStrategy;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -41,7 +41,7 @@ public abstract class DBStoreTestLogic extends TestLogic
 {
   public static final String DEFINITION_MODE = "";
 
-  protected MappingStrategy mappingStrategy;
+  protected IMappingStrategy mappingStrategy;
 
   protected IDBAdapter dbAdapter;
 
@@ -87,7 +87,7 @@ public abstract class DBStoreTestLogic extends TestLogic
 
   protected abstract IDBAdapter createDBAdapter();
 
-  protected abstract MappingStrategy createMappingStrategy();
+  protected abstract IMappingStrategy createMappingStrategy();
 
   protected void defineOrCompare(String fileName) throws IOException
   {

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.db.ddl;
+package org.eclipse.net4j.spi.db;
 
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 
@@ -16,6 +16,7 @@ import java.util.Properties;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public abstract class DBSchemaElement implements IDBSchemaElement
 {

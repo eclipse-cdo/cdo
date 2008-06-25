@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Martin Taal - initial API and implementation
+ *    Eike Stepper - https://bugs.eclipse.org/238300
  **************************************************************************/
 package org.eclipse.emf.cdo.server.hibernate.teneo;
 
@@ -41,6 +42,7 @@ import java.util.Properties;
  * Uses the ecore string in the cdoPackages of the store to generate a mapping.
  * 
  * @author Martin Taal
+ * @author Eike Stepper
  */
 public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
 {

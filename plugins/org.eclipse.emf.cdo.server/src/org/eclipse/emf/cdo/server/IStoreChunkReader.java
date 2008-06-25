@@ -7,7 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - https://bugs.eclipse.org/bugs/show_bug.cgi?id=210868
+ *    Simon McDuff - https://bugs.eclipse.org/210868
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 

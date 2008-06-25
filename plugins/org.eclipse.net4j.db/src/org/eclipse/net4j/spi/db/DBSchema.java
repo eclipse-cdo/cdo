@@ -118,6 +118,11 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     try
     {
       connection = connectionProvider.getConnection();
+      if (connection == null)
+      {
+        throw new DBException("No connection available from " + connectionProvider);
+      }
+
       return create(dbAdapter, connection);
     }
     finally

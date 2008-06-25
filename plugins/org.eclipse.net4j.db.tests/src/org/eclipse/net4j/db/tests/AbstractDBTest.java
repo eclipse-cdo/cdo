@@ -102,9 +102,6 @@ public abstract class AbstractDBTest<DATA_SOURCE extends DataSource> extends Abs
     IDBField strval = table.addField("strval", DBType.VARCHAR, 255);
     schema.create(dbAdapter, dbConnectionProvider);
 
-    // StringBuilder builder = new StringBuilder("insert into testtable values(");
-    // dbAdapter.appendValue(builder, strval, "My name is \"nobody\", not body");
-    // builder.append(")");
     String val = "My name is 'nobody', not body";
     DBUtil.insertRow(getConnection(), dbAdapter, table, val);
     Object[] result = DBUtil.select(getConnection(), (String)null, strval);

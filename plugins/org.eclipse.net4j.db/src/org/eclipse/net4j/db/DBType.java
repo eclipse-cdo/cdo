@@ -121,11 +121,8 @@ public enum DBType
           for (int i = 0; i < str.length(); i++)
           {
             char c = str.charAt(i);
+            builder.append(c);
             if (c == '\'')
-            {
-              builder.append("\\'");
-            }
-            else
             {
               builder.append(c);
             }

@@ -12,10 +12,10 @@ package org.eclipse.net4j.db.internal.hsqldb;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.hsqldb.HSQLDBDataSource;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
 import org.hsqldb.jdbcDriver;
-import org.hsqldb.jdbc.jdbcDataSource;
 
 import javax.sql.DataSource;
 
@@ -42,7 +42,7 @@ public class HSQLDBAdapter extends DBAdapter
 
   public DataSource createJDBCDataSource()
   {
-    return new jdbcDataSource();
+    return new HSQLDBDataSource();
   }
 
   @Override

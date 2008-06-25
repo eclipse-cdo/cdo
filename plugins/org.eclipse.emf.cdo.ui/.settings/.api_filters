@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.ui" version="2">
+    <resource path="src/org/eclipse/emf/cdo/ui/CDOViewHistoryEvent.java" type="org.eclipse.emf.cdo.ui.CDOViewHistoryEvent">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="Entry"/>
+                <message_argument value="CDOViewHistoryEvent"/>
+                <message_argument value="getAddedEntry()"/>
+            </message_arguments>
+        </filter>
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="CDOViewHistory"/>
+                <message_argument value="CDOViewHistoryEvent"/>
+                <message_argument value="getViewHistory()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/ui/CDOItemProvider.java" type="org.eclipse.emf.cdo.ui.CDOItemProvider">
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="Entry"/>
+                <message_argument value="CDOItemProvider"/>
+                <message_argument value="fillHistoryEntry(IMenuManager, CDOViewHistory.Entry)"/>
+            </message_arguments>
+        </filter>
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="Entry"/>
+                <message_argument value="CDOItemProvider"/>
+                <message_argument value="getHistroyEntryLabel(CDOViewHistory.Entry)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo" version="2">
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOSessionImpl.java" type="org.eclipse.emf.internal.cdo.CDOSessionImpl">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="CDOClientProtocol"/>
+                <message_argument value="CDOSessionImpl"/>
+                <message_argument value="getProtocol()"/>
+            </message_arguments>
+        </filter>
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="CDOPackageRegistryImpl"/>
+                <message_argument value="CDOSessionImpl"/>
+                <message_argument value="createPackageRegistry()"/>
+            </message_arguments>
+        </filter>
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CDOPackageRegistryImpl"/>
+                <message_argument value="CDOSessionImpl"/>
+                <message_argument value="setPackageRegistry(CDOPackageRegistryImpl)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOStateMachine.java" type="org.eclipse.emf.internal.cdo.CDOStateMachine">
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CommitTransactionResult"/>
+                <message_argument value="CDOStateMachine"/>
+                <message_argument value="commit(InternalCDOObject, CommitTransactionResult)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOSessionPackageManagerImpl.java" type="org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="CDOPackageManagerImpl"/>
+                <message_argument value="CDOSessionPackageManagerImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDORevisionManagerImpl.java" type="org.eclipse.emf.internal.cdo.CDORevisionManagerImpl">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="CDORevisionResolverImpl"/>
+                <message_argument value="CDORevisionManagerImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOSessionConfigurationImpl.java" type="org.eclipse.emf.internal.cdo.CDOSessionConfigurationImpl">
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CDOPackageRegistryImpl"/>
+                <message_argument value="CDOSessionConfigurationImpl"/>
+                <message_argument value="setPackageRegistry(CDOPackageRegistryImpl)"/>
+            </message_arguments>
+        </filter>
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="CDOPackageRegistryImpl"/>
+                <message_argument value="CDOSessionConfigurationImpl"/>
+                <message_argument value="getPackageRegistry()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOObjectMerger.java" type="org.eclipse.emf.internal.cdo.CDOObjectMerger">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="CDORevisionMerger"/>
+                <message_argument value="CDOObjectMerger"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/util/CDOUtil.java" type="org.eclipse.emf.cdo.util.CDOUtil">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="CDOPackageRegistryImpl"/>
+                <message_argument value="CDOUtil"/>
+                <message_argument value="createDemandPopulatingPackageRegistry()"/>
+            </message_arguments>
+        </filter>
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="SelfPopulating"/>
+                <message_argument value="CDOUtil"/>
+                <message_argument value="createSelfPopulatingPackageRegistry()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/CDOSessionConfiguration.java" type="org.eclipse.emf.cdo.CDOSessionConfiguration">
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CDOPackageRegistryImpl"/>
+                <message_argument value="CDOSessionConfiguration"/>
+                <message_argument value="setPackageRegistry(CDOPackageRegistryImpl)"/>
+            </message_arguments>
+        </filter>
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="CDOPackageRegistryImpl"/>
+                <message_argument value="CDOSessionConfiguration"/>
+                <message_argument value="getPackageRegistry()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

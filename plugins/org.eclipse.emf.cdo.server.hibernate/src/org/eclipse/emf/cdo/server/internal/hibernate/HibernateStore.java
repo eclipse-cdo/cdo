@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
+import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateLibraryHandler;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOInterceptor;
 import org.eclipse.emf.cdo.spi.common.CDOIDLibraryProviderImpl;
@@ -292,7 +293,7 @@ public class HibernateStore extends Store implements IHibernateStore
   {
     public IDLibraryProvider()
     {
-      addLibrary("hibernate-id-v1.jar", org.eclipse.emf.cdo.server.hibernate.internal.id.bundle.OM.BUNDLE);
+      addLibrary(CDOIDHibernateLibraryHandler.LIBRARY_NAME, org.eclipse.emf.cdo.server.hibernate.internal.id.bundle.OM.BUNDLE);
     }
   }
 }

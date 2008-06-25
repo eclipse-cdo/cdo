@@ -11,7 +11,6 @@
 package org.eclipse.net4j.db.tests;
 
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
 
@@ -36,7 +35,7 @@ public class DerbyTest extends AbstractDBTest<EmbeddedDataSource>
   @Override
   protected IDBAdapter createDBAdapter()
   {
-    return new EmbeddedDerbyAdapter();
+    return new org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter();
   }
 
   @Override

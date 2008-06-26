@@ -40,6 +40,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="924844039">
+            <message_arguments>
+                <message_argument value="1.0.0.qualifier"/>
+                <message_argument value="1.0.0.v200806180411"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/CDORevisionManagerImpl.java" type="org.eclipse.emf.internal.cdo.CDORevisionManagerImpl">
         <filter id="576720909">
             <message_arguments>
@@ -72,22 +80,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/util/CDOUtil.java" type="org.eclipse.emf.cdo.util.CDOUtil">
-        <filter id="643842064">
-            <message_arguments>
-                <message_argument value="CDOPackageRegistryImpl"/>
-                <message_argument value="CDOUtil"/>
-                <message_argument value="createDemandPopulatingPackageRegistry()"/>
-            </message_arguments>
-        </filter>
-        <filter id="643842064">
-            <message_arguments>
-                <message_argument value="SelfPopulating"/>
-                <message_argument value="CDOUtil"/>
-                <message_argument value="createSelfPopulatingPackageRegistry()"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/CDOSessionConfiguration.java" type="org.eclipse.emf.cdo.CDOSessionConfiguration">
         <filter id="643846161">
             <message_arguments>
@@ -101,6 +93,22 @@
                 <message_argument value="CDOPackageRegistryImpl"/>
                 <message_argument value="CDOSessionConfiguration"/>
                 <message_argument value="getPackageRegistry()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/util/CDOUtil.java" type="org.eclipse.emf.cdo.util.CDOUtil">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="CDOPackageRegistryImpl"/>
+                <message_argument value="CDOUtil"/>
+                <message_argument value="createDemandPopulatingPackageRegistry()"/>
+            </message_arguments>
+        </filter>
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="SelfPopulating"/>
+                <message_argument value="CDOUtil"/>
+                <message_argument value="createSelfPopulatingPackageRegistry()"/>
             </message_arguments>
         </filter>
     </resource>

@@ -8,11 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - https://bugs.eclipse.org/201266
+ *    Simon McDuff - https://bugs.eclipse.org/233490    
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
@@ -26,19 +29,25 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class InvalidationNotification extends Request
+public class CommitNotificationRequest extends Request
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, InvalidationNotification.class);
+  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, CommitNotificationRequest.class);
 
   private long timeStamp;
-
+  
+  private CDOIDProvider provider;
+  
   private List<CDOIDAndVersion> dirtyIDs;
+  
+  private List<CDORevisionDelta> deltas;
 
-  public InvalidationNotification(IChannel channel, long timeStamp, List<CDOIDAndVersion> dirtyIDs)
+  public CommitNotificationRequest(IChannel channel,  CDOIDProvider provider, long timeStamp, List<CDOIDAndVersion> dirtyIDs, List<CDORevisionDelta> deltas)
   {
     super(channel);
+    this.provider = provider;
     this.timeStamp = timeStamp;
     this.dirtyIDs = dirtyIDs;
+    this.deltas = deltas;
   }
 
   @Override
@@ -61,7 +70,7 @@ public class InvalidationNotification extends Request
       PROTOCOL.format("Writing {0} dirty IDs", dirtyIDs.size());
     }
 
-    out.writeInt(dirtyIDs.size());
+    out.writeInt(dirtyIDs == null ? 0 : dirtyIDs.size());
     for (CDOIDAndVersion dirtyID : dirtyIDs)
     {
       if (PROTOCOL.isEnabled())
@@ -71,5 +80,13 @@ public class InvalidationNotification extends Request
 
       dirtyID.write(out, false);
     }
+    
+    out.writeInt(deltas == null ? 0 : deltas.size());
+    
+    for (CDORevisionDelta delta : deltas)
+    {
+      delta.write(out, provider);
+    }
+
   }
 }

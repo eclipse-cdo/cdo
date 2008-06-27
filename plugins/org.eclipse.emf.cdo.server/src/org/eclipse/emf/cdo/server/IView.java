@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.emf.cdo.common.id.CDOID;
 
 /**
  * @author Eike Stepper
@@ -19,4 +20,7 @@ import org.eclipse.emf.cdo.common.CDOProtocolView;
 public interface IView extends CDOProtocolView
 {
   public ISession getSession();
+  public void subscribe(CDOID id);
+  public void unsubscribe(CDOID id);
+  public void clearChangeSubscription();
 }

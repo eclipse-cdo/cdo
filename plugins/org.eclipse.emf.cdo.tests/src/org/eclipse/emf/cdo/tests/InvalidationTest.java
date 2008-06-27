@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/230832
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
@@ -26,7 +27,9 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -405,4 +408,226 @@ public class InvalidationTest extends AbstractCDOTest
 
     assertEquals(false, timedOut);
   }
+
+  public void testRefreshEmptyRepository() throws Exception
+  {
+    msg("Opening session");
+    final CDOSession session = openModel1Session();
+
+    assertEquals(0, session.refresh().size());
+
+    session.close();
+  }
+
+  public void testSeparateSession_PassiveUpdateDisable() throws Exception
+  {
+    msg("Creating category1");
+    final Category category1A = Model1Factory.eINSTANCE.createCategory();
+    category1A.setName("category1");
+
+    msg("Creating category2");
+    final Category category2A = Model1Factory.eINSTANCE.createCategory();
+    category2A.setName("category2");
+
+    msg("Creating category3");
+    final Category category3A = Model1Factory.eINSTANCE.createCategory();
+    category3A.setName("category3");
+
+    msg("Creating company");
+    final Company companyA = Model1Factory.eINSTANCE.createCompany();
+
+    msg("Adding categories");
+    companyA.getCategories().add(category1A);
+    category1A.getCategories().add(category2A);
+    category2A.getCategories().add(category3A);
+
+    msg("Opening sessionA");
+    final CDOSession sessionA = openModel1Session();
+
+    msg("Attaching transaction");
+    final CDOTransaction transaction = sessionA.openTransaction();
+
+    msg("Creating resource");
+    final CDOResource resourceA = transaction.createResource("/test1");
+
+    msg("Adding company");
+    resourceA.getContents().add(companyA);
+
+    msg("Committing");
+    transaction.commit();
+    
+    URI uriCategory1 = EcoreUtil.getURI(category1A);
+    
+    // ************************************************************* //
+
+    msg("Opening sessionB");
+    final CDOSession sessionB = openModel1Session();
+
+    sessionB.setPassiveUpdateEnabled(false);
+
+    msg("Attaching viewB");
+    final CDOView viewB = sessionB.openTransaction();
+
+    final Category category1B = (Category)viewB.getResourceSet().getEObject(uriCategory1, true);
+
+    // ************************************************************* //
+
+    msg("Changing name");
+    category1A.setName("CHANGED NAME");
+
+    ITimeOuter timeOuter = new PollingTimeOuter(20, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return "CHANGED NAME".equals(category1B.getName());
+      }
+    };
+
+    msg("Checking before commit");
+    assertEquals(true, timeOuter.timedOut());
+
+    msg("Committing");
+    transaction.commit();
+
+    msg("Checking after commit");
+    assertEquals(true, timeOuter.timedOut());
+
+    assertEquals(1, sessionB.refresh().size());
+
+    msg("Checking after sync");
+    assertEquals(false, timeOuter.timedOut());
+
+  }
+  public void testPassiveUpdateOnAndOff() throws Exception
+  {
+    msg("Creating category1");
+    final Category category1A = Model1Factory.eINSTANCE.createCategory();
+    category1A.setName("category1");
+
+    msg("Creating category2");
+    final Category category2A = Model1Factory.eINSTANCE.createCategory();
+    category2A.setName("category2");
+
+    msg("Creating category3");
+    final Category category3A = Model1Factory.eINSTANCE.createCategory();
+    category3A.setName("category3");
+
+    msg("Creating company");
+    final Company companyA = Model1Factory.eINSTANCE.createCompany();
+
+    msg("Adding categories");
+    companyA.getCategories().add(category1A);
+    category1A.getCategories().add(category2A);
+    category2A.getCategories().add(category3A);
+
+    msg("Opening sessionA");
+    final CDOSession sessionA = openModel1Session();
+
+    msg("Attaching transaction");
+    final CDOTransaction transaction = sessionA.openTransaction();
+
+    msg("Creating resource");
+    final CDOResource resourceA = transaction.createResource("/test1");
+
+    msg("Adding company");
+    resourceA.getContents().add(companyA);
+
+    msg("Committing");
+    transaction.commit();
+
+    URI uriCategory1 = EcoreUtil.getURI(category1A);
+    // ************************************************************* //
+
+    msg("Opening sessionB");
+    final CDOSession sessionB = openModel1Session();
+
+    sessionB.setPassiveUpdateEnabled(false);
+
+    msg("Attaching viewB");
+    final CDOView viewB = sessionB.openTransaction();
+    
+    final Category category1B = (Category)viewB.getResourceSet().getEObject(uriCategory1, true);
+    
+    // ************************************************************* //
+    msg("Opening sessionB");
+    final CDOSession sessionC = openModel1Session();
+    
+    assertEquals(true, sessionC.isPassiveUpdateEnabled());
+    
+    msg("Attaching viewB");
+    final CDOView viewC = sessionC.openTransaction();
+    
+    final Category category1C = (Category)viewC.getResourceSet().getEObject(uriCategory1, true);
+
+    msg("Changing name");
+    category1A.setName("CHANGED NAME");
+
+    ITimeOuter timeOuterB = new PollingTimeOuter(10, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return "CHANGED NAME".equals(category1B.getName());
+      }
+    };
+    
+    ITimeOuter timeOuterC = new PollingTimeOuter(10, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return "CHANGED NAME".equals(category1C.getName());
+      }
+    };
+
+    msg("Checking before commit");
+    assertEquals(true, timeOuterB.timedOut());
+    assertEquals(true, timeOuterC.timedOut());
+
+    msg("Committing");
+    transaction.commit();
+
+    msg("Checking after commit");
+    assertEquals(true, timeOuterB.timedOut());
+    assertEquals(false, timeOuterC.timedOut());
+
+    // It should refresh the session
+    sessionB.setPassiveUpdateEnabled(true);
+
+    msg("Checking after sync");
+    assertEquals(false, timeOuterB.timedOut());
+    assertEquals(false, timeOuterC.timedOut());
+    
+    category1A.setName("CHANGED NAME-VERSION2");
+    
+    ITimeOuter timeOuterB_2 = new PollingTimeOuter(10, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return "CHANGED NAME-VERSION2".equals(category1B.getName());
+      }
+    };
+    
+    ITimeOuter timeOuterC_2 = new PollingTimeOuter(10, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return "CHANGED NAME-VERSION2".equals(category1C.getName());
+      }
+    };
+
+    msg("Checking after sync");
+    assertEquals(true, timeOuterB_2.timedOut());
+    assertEquals(true, timeOuterC_2.timedOut());
+
+    msg("Committing");
+    transaction.commit();
+
+    assertEquals(false, timeOuterB_2.timedOut());
+    assertEquals(false, timeOuterC_2.timedOut());
+    
+  }  
 }

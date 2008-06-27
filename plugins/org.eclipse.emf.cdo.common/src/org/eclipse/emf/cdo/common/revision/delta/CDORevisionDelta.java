@@ -28,8 +28,14 @@ public interface CDORevisionDelta
 {
   public CDOID getID();
 
+  /**
+   * Specify the version of the object BEFORE it was modified.
+   */
   public int getOriginVersion();
-
+  
+  /**
+   * Specify the version of the object AFTER it was modified.
+   */
   public int getDirtyVersion();
 
   public List<CDOFeatureDelta> getFeatureDeltas();

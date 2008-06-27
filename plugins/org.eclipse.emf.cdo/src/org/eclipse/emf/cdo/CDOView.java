@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - https://bugs.eclipse.org/201266
  *    Simon McDuff - https://bugs.eclipse.org/201997
+ *    Simon McDuff - https://bugs.eclipse.org/233490
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -16,6 +17,7 @@ import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.query.CDOQuery;
 
 import org.eclipse.net4j.util.event.INotifier;
 
@@ -60,6 +62,20 @@ public interface CDOView extends CDOProtocolView, INotifier
 
   public void setInvalidationNotificationsEnabled(boolean invalidationNotificationsEnabled);
 
+  public CDOChangeSubscriptionPolicy getChangeSubscriptionPolicy();
+  
+  /**
+   * Specifies the change subscription policy. By default, the value is set to {@link CDOChangeSubscriptionPolicy.NONE}.
+   * <p>
+   * By activating this feature, every objects that have at least one adapter that match the current policy will be
+   * registered to the server and will be notify for every changes happening on any other CDOTransaction.
+   * <p>
+   * {@link CDOChangeSubscriptionPolicy.NONE} - Disabled
+   * {@link CDOChangeSubscriptionPolicy.ALL} - Enabled
+   * Any others classes that implement {@link CDOChangeSubscriptionPolicy} - Enabled   
+   */
+  public void setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy changeSubscriptionPolicy);
+
   public int getLoadRevisionCollectionChunkSize();
 
   public void setLoadRevisionCollectionChunkSize(int loadRevisionCollectionChunkSize);
@@ -78,6 +94,8 @@ public interface CDOView extends CDOProtocolView, INotifier
   public boolean isObjectRegistered(CDOID id);
 
   public int reload(CDOObject... objects);
+    
+  public CDOQuery createQuery(String language, String queryString);
 
   public void close();
 }

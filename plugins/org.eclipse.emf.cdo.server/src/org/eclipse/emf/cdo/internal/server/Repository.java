@@ -8,6 +8,8 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - https://bugs.eclipse.org/201266
+ *    Simon McDuff - https://bugs.eclipse.org/233273    
+ *    Simon McDuff - https://bugs.eclipse.org/233490    
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
@@ -53,6 +55,10 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   private ResourceManager resourceManager = createResourceManager();
 
   private RevisionManager revisionManager = createRevisionManager();
+
+  private QueryManager queryManager = createQueryManager();
+
+  private NotificationManager notificationManager = createNotificationManager();
 
   private IRepositoryElement[] elements;
 
@@ -162,6 +168,16 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return revisionManager;
   }
 
+  public QueryManager getQueryManager()
+  {
+    return queryManager;
+  }
+
+  public NotificationManager getNotificationManager()
+  {
+    return notificationManager;
+  }
+
   public IRepositoryElement[] getElements()
   {
     return elements;
@@ -214,6 +230,16 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   protected RevisionManager createRevisionManager()
   {
     return new RevisionManager(this);
+  }
+
+  protected QueryManager createQueryManager()
+  {
+    return new QueryManager();
+  }
+
+  protected NotificationManager createNotificationManager()
+  {
+    return new NotificationManager(this);
   }
 
   @Override

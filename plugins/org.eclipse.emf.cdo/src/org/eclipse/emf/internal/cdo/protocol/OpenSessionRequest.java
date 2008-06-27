@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/230832
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
@@ -38,11 +39,15 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
 
   private boolean legacySupportEnabled;
 
-  public OpenSessionRequest(IChannel channel, String repositoryName, boolean legacySupportEnabled)
+  private boolean passiveUpdateEnabled;
+
+  public OpenSessionRequest(IChannel channel, String repositoryName, boolean legacySupportEnabled,
+      boolean passiveUpdateEnabled)
   {
     super(channel);
     this.repositoryName = repositoryName;
     this.legacySupportEnabled = legacySupportEnabled;
+    this.passiveUpdateEnabled = passiveUpdateEnabled;
   }
 
   @Override
@@ -65,6 +70,13 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
       PROTOCOL.format("Writing legacySupportEnabled: {0}", legacySupportEnabled);
     }
     out.writeBoolean(legacySupportEnabled);
+    
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Writing passiveUpdateEnabled: {0}", passiveUpdateEnabled);
+    }
+    out.writeBoolean(passiveUpdateEnabled);
+
   }
 
   @Override

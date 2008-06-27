@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/233490    
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
@@ -199,19 +200,7 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
     try
     {
       int modifications = dirtyObjectDeltas.length;
-      if (success && modifications > 0)
-      {
-        List<CDOIDAndVersion> dirtyIDs = new ArrayList<CDOIDAndVersion>(modifications);
-        for (int i = 0; i < modifications; i++)
-        {
-          CDORevisionDelta delta = dirtyObjectDeltas[i];
-          CDOIDAndVersion dirtyID = CDOIDUtil.createIDAndVersion(delta.getID(), delta.getOriginVersion());
-          dirtyIDs.add(dirtyID);
-        }
-
-        SessionManager sessionManager = (SessionManager)repository.getSessionManager();
-        sessionManager.notifyInvalidation(timeStamp, dirtyIDs, getSession());
-      }
+      repository.getNotificationManager().notifyCommit( getSession(), this);
     }
     finally
     {

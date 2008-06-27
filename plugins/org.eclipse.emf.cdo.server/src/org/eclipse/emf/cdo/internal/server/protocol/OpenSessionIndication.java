@@ -41,6 +41,8 @@ public class OpenSessionIndication extends IndicationWithResponse
   private String repositoryName;
 
   private boolean legacySupportEnabled;
+  
+  private boolean passiveUpdateEnabled;
 
   public OpenSessionIndication()
   {
@@ -66,6 +68,13 @@ public class OpenSessionIndication extends IndicationWithResponse
     {
       PROTOCOL.format("Read legacySupportEnabled: {0}", legacySupportEnabled);
     }
+    
+    passiveUpdateEnabled = in.readBoolean();
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Read passiveUpdateEnabled: {0}", passiveUpdateEnabled);
+    }
+
   }
 
   @Override
@@ -78,6 +87,9 @@ public class OpenSessionIndication extends IndicationWithResponse
 
       CDOServerProtocol serverProtocol = (CDOServerProtocol)getProtocol();
       Session session = sessionManager.openSession(serverProtocol, legacySupportEnabled);
+      
+      session.setPassiveUpdateEnabled(passiveUpdateEnabled);
+      
       serverProtocol.setInfraStructure(session);
 
       writeSessionID(out, session);

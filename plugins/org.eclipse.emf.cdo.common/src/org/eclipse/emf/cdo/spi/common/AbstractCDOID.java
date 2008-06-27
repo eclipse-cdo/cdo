@@ -90,4 +90,5 @@ public abstract class AbstractCDOID implements CDOID
   public abstract void read(ExtendedDataInput in) throws IOException;
 
   public abstract void write(ExtendedDataOutput out) throws IOException;
+
 }

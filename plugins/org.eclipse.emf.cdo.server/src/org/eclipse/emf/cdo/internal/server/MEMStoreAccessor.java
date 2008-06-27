@@ -12,10 +12,13 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
+import org.eclipse.emf.cdo.common.query.CDOQueryParameter;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -126,7 +129,14 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
 
   public String readResourcePath(CDOID id)
   {
-    throw new UnsupportedOperationException();
+    CDORevision revision = getStore().getRevision(id);
+
+    CDOPathFeature pathFeature = getStore().getRepository().getPackageManager().getCDOResourcePackage().getCDOResourceClass()
+    .getCDOPathFeature();
+    
+    String p = (String)revision.getData().get(pathFeature, 0);
+    return p;
+
   }
 
   @Override
@@ -180,4 +190,47 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   {
     newRevisions.clear();
   }
+
+  public CloseableIterator<Object> createQueryIterator(CDOQueryParameter queryParameter)
+  {
+    if (queryParameter.getQueryLanguage().equals("TEST"))
+    {
+      // queryParameter.getQueryString().equals("SLOW");
+      MEMStoreQueryIterator queryExecution =  new MEMStoreQueryIterator(this.getStore());
+      
+      Object context = queryParameter.getParameters().get("context");
+      
+      if (context != null)
+      {
+        if (context instanceof CDOClass)
+        {
+          final CDOClass cdoClass = (CDOClass)context;
+          
+          queryExecution.addFilter(new Object()
+          {
+
+            @Override
+            public boolean equals(Object obj)
+            {
+              CDORevision revision = (CDORevision)obj;
+              return revision.getCDOClass().equals( cdoClass );
+            }
+            
+          }
+          );
+        }
+      }
+      
+      queryExecution.activate();
+      
+      return queryExecution;
+    }
+    throw new RuntimeException("Unsupported language " + queryParameter.getQueryLanguage());
+
+  }
+
+  public void refreshRevisions()
+  {
+    
+  }  
 }

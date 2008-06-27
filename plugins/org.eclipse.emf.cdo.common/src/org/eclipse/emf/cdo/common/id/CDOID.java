@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/226778
  **************************************************************************/
 package org.eclipse.emf.cdo.common.id;
 
@@ -31,7 +32,8 @@ public interface CDOID extends Serializable
   public boolean isMeta();
 
   public boolean isTemporary();
-
+  
+  public String getCDOIDString();
   /**
    * @author Eike Stepper
    */

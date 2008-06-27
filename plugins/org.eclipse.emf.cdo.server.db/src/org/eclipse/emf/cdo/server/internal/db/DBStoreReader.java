@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.query.CDOQueryParameter;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IPackageManager;
@@ -289,5 +290,14 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
     IPackageManager packageManager = repository.getPackageManager();
     CDOClassRef type = readObjectType(id);
     return type.resolve(packageManager);
+  }
+
+  public CloseableIterator<Object> createQueryIterator(CDOQueryParameter queryParameter)
+  {
+    throw new UnsupportedOperationException(); 
+  }
+
+  public void refreshRevisions()
+  {
   }
 }

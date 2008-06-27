@@ -7,12 +7,15 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/233490    
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -22,17 +25,19 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public class InvalidationIndication extends Indication
+public class CommitNotificationIndication extends Indication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, InvalidationIndication.class);
+  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, CommitNotificationIndication.class);
 
-  public InvalidationIndication()
+  public CommitNotificationIndication()
   {
   }
 
@@ -70,7 +75,19 @@ public class InvalidationIndication extends Indication
       dirtyOIDs.add(dirtyOID);
     }
 
-    session.notifyInvalidation(timeStamp, dirtyOIDs, null);
+    size = in.readInt();
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Reading {0} Deltas", size);
+    }
+    
+    List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();
+    for (int i = 0; i < size; i++)
+    {
+      deltas.add(new CDORevisionDeltaImpl(in, getSession().getPackageManager()));
+    }
+    
+    session.handleCommitNotification(timeStamp, dirtyOIDs, deltas, null);
   }
 
   protected CDOSessionImpl getSession()

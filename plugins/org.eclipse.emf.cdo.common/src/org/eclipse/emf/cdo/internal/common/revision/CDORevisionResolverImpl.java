@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - https://bugs.eclipse.org/201266
+ *    Simon McDuff - https://bugs.eclipse.org/230832        
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision;
 
@@ -113,6 +114,21 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
     }
   }
 
+  public List<CDORevision> getRevisions()
+  {
+    ArrayList<CDORevision> currentRevisions = new ArrayList<CDORevision>();
+    
+    for (RevisionHolder holder : revisions.values())
+    {
+      CDORevision revision = holder.getRevision(false);
+      if (revision != null && revision.isCurrent());
+      {
+        currentRevisions.add(revision);
+      }
+    }
+    return currentRevisions;
+  }
+  
   public CDOClass getObjectType(CDOID id)
   {
     RevisionHolder holder = revisions.get(id);

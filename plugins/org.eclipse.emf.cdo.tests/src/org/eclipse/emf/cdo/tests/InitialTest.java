@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 
 import java.util.Date;
@@ -778,5 +779,55 @@ public class InitialTest extends AbstractCDOTest
 
     transaction.close();
     session.close();
+  }
+  
+
+  public void testResourceAccessor() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction();
+
+    msg("Creating resource");
+    CDOResource resource = transaction.createResource("/test1");
+
+    msg("Creating supplier");
+    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+
+    msg("Setting name");
+    supplier.setName("Stepper");
+
+    msg("Adding supplier");
+    resource.getContents().add(supplier);
+
+    URI supplierTempURI = EcoreUtil.getURI(supplier);
+
+    msg("Retrieving supplier from URI before commit");
+    EObject supplier1 = transaction.getResourceSet().getEObject(supplierTempURI, true);
+
+    assertEquals(supplier, supplier1);
+
+    msg("Committing");
+    transaction.commit();
+
+    URI supplierURI = EcoreUtil.getURI(supplier);
+
+    msg("Retrieving supplier from URI after commit");
+    EObject supplierFromURI = transaction.getResourceSet().getEObject(supplierURI, true);
+
+    assertEquals(supplier, supplierFromURI);
+
+    try
+    {
+      EObject supplierAfterCommit2 = transaction.getResourceSet().getEObject(supplierTempURI, true);
+      assertEquals(null, supplierAfterCommit2);
+    }
+    catch (IllegalStateException excep)
+    {
+
+    }
+
   }
 }

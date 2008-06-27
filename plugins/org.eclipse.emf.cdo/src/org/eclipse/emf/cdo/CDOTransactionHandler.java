@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - https://bugs.eclipse.org/201266
+ *    Simon McDuff - https://bugs.eclipse.org/233314    
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -38,4 +39,11 @@ public interface CDOTransactionHandler
    * transaction.
    */
   public void committingTransaction(CDOTransaction transaction);
+  
+  /**
+   * Called by a <code>CDOTransaction</code> <b>after</b> it is being rolled back. If the implementor of this method
+   * throw an exception other listener would not be notify and the exception will be propagated.
+   */
+  public void rollingbackTransaction(CDOTransaction transaction);
+
 }

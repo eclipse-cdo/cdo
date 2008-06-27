@@ -7,12 +7,16 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - https://bugs.eclipse.org/233490
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IView;
 
 import java.text.MessageFormat;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eike Stepper
@@ -24,6 +28,8 @@ public class View implements IView
   private int viewID;
 
   private Type viewType;
+
+  private Map<CDOID, CDOID> changeSubscriptionObjects = new ConcurrentHashMap<CDOID, CDOID>();
 
   public View(Session session, int viewID, Type viewType)
   {
@@ -45,6 +51,26 @@ public class View implements IView
   public Type getViewType()
   {
     return viewType;
+  }
+
+  public void subscribe(CDOID id)
+  {
+    changeSubscriptionObjects.put(id, id);
+  }
+
+  public void unsubscribe(CDOID id)
+  {
+    changeSubscriptionObjects.remove(id);
+  }
+
+  public boolean isSubscribe(CDOID id)
+  {
+    return changeSubscriptionObjects.get(id) != null;
+  }
+
+  public void clearChangeSubscription()
+  {
+    changeSubscriptionObjects.clear();
   }
 
   @Override

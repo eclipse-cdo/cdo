@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public class CDONotificationImpl extends ENotificationImpl implements CDONotification
 {

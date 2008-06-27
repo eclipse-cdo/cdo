@@ -48,14 +48,29 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_INVALIDATION = 14;
   
+  /**
+   * @since 2.0
+   */
   public static final short SIGNAL_QUERY = 15;
   
+  /**
+   * @since 2.0
+   */
   public static final short SIGNAL_QUERY_CANCEL = 16;
   
+  /**
+   * @since 2.0
+   */
   public static final short SIGNAL_SYNC = 17;
   
+  /**
+   * @since 2.0
+   */
   public static final short SIGNAL_PASSIVE_UPDATE = 18;
   
+  /**
+   * @since 2.0
+   */
   public static final short SIGNAL_CHANGE_SUBSCRIPTION = 19;
 
   public static final int ERROR_REPOSITORY_NOT_FOUND = -1;

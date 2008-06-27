@@ -28,6 +28,7 @@ import java.util.Map;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public class CDOInstanceUtil
 {

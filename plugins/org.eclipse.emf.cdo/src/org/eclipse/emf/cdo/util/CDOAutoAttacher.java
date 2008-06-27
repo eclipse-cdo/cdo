@@ -35,6 +35,7 @@ import java.util.List;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public class CDOAutoAttacher implements CDOTransactionHandler
 {

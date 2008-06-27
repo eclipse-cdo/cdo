@@ -99,11 +99,17 @@ public class NOOPStoreAccessor extends StoreAccessor implements IStoreReader, IS
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @since 2.0
+   */
   public CloseableIterator<Object> createQueryIterator(CDOQueryParameter queryParameter)
   {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @since 2.0
+   */
   public void refreshRevisions()
   {
   }

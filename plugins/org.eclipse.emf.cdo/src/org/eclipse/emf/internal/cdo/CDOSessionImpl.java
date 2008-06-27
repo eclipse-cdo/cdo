@@ -173,6 +173,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return cdoidObjectFactory.createCDOIDObject(in);
   }
   
+  /**
+   * @since 2.0
+   */
   public CDOIDObject createCDOIDObject(String in)
   {
     return cdoidObjectFactory.createCDOIDObject(in);
@@ -537,11 +540,15 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
   }
 
+
   public void registerObjectType(CDOID id, CDOClass type)
   {
     types.put(id, type);
   }
   
+  /**
+   * @since 2.0
+   */
   public void handleCommitNotification(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDORevisionDelta> deltas,
       CDOViewImpl excludedView)
   {
@@ -553,6 +560,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     notifyChangeSubcription(deltas, excludedView);
   }
   
+  /**
+   * @since 2.0
+   */
   public void notifySync(Set<CDOIDAndVersion> dirtyOIDs)
   {
     notifyInvalidation(CDORevision.UNSPECIFIED_DATE, dirtyOIDs, null);
@@ -852,6 +862,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   }
 
 
+  /**
+   * @since 2.0
+   */
   public boolean isPassiveUpdateEnabled()
   {
     return passiveUpdateEnabled;
@@ -884,6 +897,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return uniqueObjects;
   }
 
+  /**
+   * @since 2.0
+   */
   public void setPassiveUpdateEnabled(boolean aPassiveUpdateEnabled)
   {
     if (passiveUpdateEnabled != aPassiveUpdateEnabled)
@@ -907,6 +923,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
   }
 
+  /**
+   * @since 2.0
+   */
   public Set<CDOIDAndVersion> refresh()
   {
     if (isPassiveUpdateEnabled())

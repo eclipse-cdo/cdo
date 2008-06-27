@@ -33,6 +33,9 @@ public interface IStoreReader extends IStoreAccessor
 
   public IStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature);
   
+  /**
+   * @since 2.0
+   */
   public CloseableIterator<Object> createQueryIterator(CDOQueryParameter queryParameter);
 
   public Collection<CDOPackageInfo> readPackageInfos();
@@ -74,5 +77,8 @@ public interface IStoreReader extends IStoreAccessor
 
   public CDORevision verifyRevision(CDORevision revision);
   
+  /**
+   * @since 2.0
+   */
   public void refreshRevisions();
 }

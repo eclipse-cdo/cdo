@@ -77,9 +77,13 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
    * refreshed.
    * <p>
    * When we activate it, it will perform a refresh to be in sync with the server. 
+   * @since 2.0
    */
   public void setPassiveUpdateEnabled(boolean enable);
   
+  /**
+   * @since 2.0
+   */
   public boolean isPassiveUpdateEnabled();
   
   /**
@@ -89,6 +93,7 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
    * It will return only dirty objects.
    * <p>
    * In the case where <code>isPassiveUpdateEnabled<code> is true, it will return immediately without doing anything.
+   * @since 2.0
    */
   public Set<CDOIDAndVersion> refresh();
   

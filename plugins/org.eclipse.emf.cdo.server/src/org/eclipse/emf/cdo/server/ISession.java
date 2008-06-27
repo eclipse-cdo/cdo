@@ -28,5 +28,8 @@ public interface ISession extends CDOProtocolSession, IContainer<IView>
 
   public IView closeView(int viewID);
   
+  /**
+   * @since 2.0
+   */
   public boolean isPassiveUpdateEnabled();
 }

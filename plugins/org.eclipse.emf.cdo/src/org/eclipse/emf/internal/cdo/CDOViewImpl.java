@@ -111,8 +111,14 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   private InternalCDOObject lastLookupObject;
   
+  /**
+   * @since 2.0
+   */
   protected ChangeSubscriptionManager changeSubscriptionManager = new ChangeSubscriptionManager();
 
+  /**
+   * @since 2.0
+   */
   protected CDOChangeSubscriptionPolicy changeSubscriptionPolicy = CDOChangeSubscriptionPolicy.NONE;
 
 
@@ -126,11 +132,17 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   }
 
 
+  /**
+   * @since 2.0
+   */
   public void subscribe(EObject eObject, Adapter adapter)
   {
     changeSubscriptionManager.subscribe(eObject, adapter);
   }
 
+  /**
+   * @since 2.0
+   */
   public void unsubscribe(EObject eObject, Adapter adapter)
   {
     changeSubscriptionManager.unsubscribe(eObject, adapter);
@@ -196,11 +208,17 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     this.invalidationNotificationsEnabled = invalidationNotificationsEnabled;
   }
   
+  /**
+   * @since 2.0
+   */
   public CDOChangeSubscriptionPolicy getChangeSubscriptionPolicy()
   {
     return this.changeSubscriptionPolicy;
   }
 
+  /**
+   * @since 2.0
+   */
   public void setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy notificationsEnabled)
   {
     if (this.changeSubscriptionPolicy != notificationsEnabled)
@@ -248,6 +266,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     return id != null && !id.isNull();
   }
   
+  /**
+   * @since 2.0
+   */
   public CDOQuery createQuery(String language, String queryString)
   {
     CDOQueryParameterImpl parameter = new CDOQueryParameterImpl(language, queryString);
@@ -269,6 +290,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     }
   }
   
+  /**
+   * @since 2.0
+   */
   public Map<CDOID, InternalCDOObject> getObjectsMap()
   {
     return Collections.unmodifiableMap(objects);
@@ -678,6 +702,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     }
   }
   
+  /**
+   * @since 2.0
+   */
   public void notifyChangeSubcription(Collection<CDORevisionDelta> deltas)
   {
     if (deltas != null && getChangeSubscriptionPolicy() != CDOChangeSubscriptionPolicy.NONE)
@@ -952,6 +979,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   }
   
   
+  /**
+   * @since 2.0
+   */
   public class ChangeSubscriptionManager
   {
     // List of persisted objects

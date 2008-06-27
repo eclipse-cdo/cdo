@@ -225,6 +225,7 @@ public final class CDOIDUtil
    * Format of the string 
    * Not legacy : <ORDINAL>/<CUSTOM STRING FROM OBJECT FACTORY> 
    * Legacy : <ORDINAL>/<PACKAGEURI>/<CLASSIFIERID>/<CUSTOM STRING FROM OBJECT FACTORY>
+   * @since 2.0
    */
   public static CDOID read(String in, CDOIDObjectFactory factory)
   {
@@ -292,6 +293,7 @@ public final class CDOIDUtil
    * Format of the string 
    * Not legacy : <ORDINAL>/<CUSTOM STRING FROM OBJECT FACTORY> 
    * Legacy : <ORDINAL>/<PACKAGEURI>/<CLASSIFIERID>/<CUSTOM STRING FROM OBJECT FACTORY>
+   * @since 2.0
    */
   public static void write(StringBuffer stringBuffer, CDOID id)
   {

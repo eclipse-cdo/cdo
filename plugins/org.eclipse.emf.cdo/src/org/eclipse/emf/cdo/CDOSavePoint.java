@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public interface CDOSavePoint
 {

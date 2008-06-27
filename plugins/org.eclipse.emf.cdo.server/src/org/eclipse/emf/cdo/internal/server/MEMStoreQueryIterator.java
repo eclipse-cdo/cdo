@@ -19,6 +19,7 @@ import java.util.Iterator;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public class MEMStoreQueryIterator implements CloseableIterator<Object>
 {

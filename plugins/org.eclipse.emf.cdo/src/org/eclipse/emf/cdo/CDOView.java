@@ -62,6 +62,9 @@ public interface CDOView extends CDOProtocolView, INotifier
 
   public void setInvalidationNotificationsEnabled(boolean invalidationNotificationsEnabled);
 
+  /**
+   * @since 2.0
+   */
   public CDOChangeSubscriptionPolicy getChangeSubscriptionPolicy();
   
   /**
@@ -73,6 +76,7 @@ public interface CDOView extends CDOProtocolView, INotifier
    * {@link CDOChangeSubscriptionPolicy.NONE} - Disabled
    * {@link CDOChangeSubscriptionPolicy.ALL} - Enabled
    * Any others classes that implement {@link CDOChangeSubscriptionPolicy} - Enabled   
+   * @since 2.0
    */
   public void setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy changeSubscriptionPolicy);
 
@@ -95,6 +99,9 @@ public interface CDOView extends CDOProtocolView, INotifier
 
   public int reload(CDOObject... objects);
     
+  /**
+   * @since 2.0
+   */
   public CDOQuery createQuery(String language, String queryString);
 
   public void close();

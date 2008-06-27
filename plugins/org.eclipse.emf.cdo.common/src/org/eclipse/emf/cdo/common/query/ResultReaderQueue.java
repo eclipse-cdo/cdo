@@ -16,6 +16,7 @@ import java.util.concurrent.Future;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public interface ResultReaderQueue<T> extends CloseableIterator<T>, Future<T>
 {

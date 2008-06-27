@@ -44,6 +44,9 @@ public abstract class AbstractCDOIDInteger extends AbstractCDOID implements Comp
     return value;
   }
   
+  /**
+   * @since 2.0
+   */
   public String getCDOIDString()
   {
     return String.valueOf(value);

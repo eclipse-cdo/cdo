@@ -14,6 +14,7 @@ import java.util.Queue;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public interface ResultWriterQueue<E> extends Queue<E>
 { 

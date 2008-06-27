@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public interface INotificationManager
 {

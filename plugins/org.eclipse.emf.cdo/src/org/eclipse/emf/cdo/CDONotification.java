@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public interface CDONotification extends Notification
 { 

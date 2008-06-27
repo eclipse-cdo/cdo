@@ -214,6 +214,9 @@ public class MEMStore extends LongIDStore
     return null;
   }
   
+  /**
+   * @since 2.0
+   */
   public List<CDORevision> getRevisions()
   {
     ArrayList<CDORevision> simpleRevisions = new ArrayList<CDORevision>();

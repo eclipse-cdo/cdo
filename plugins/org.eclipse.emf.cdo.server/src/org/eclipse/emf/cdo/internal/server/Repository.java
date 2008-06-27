@@ -31,6 +31,7 @@ import java.util.UUID;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class Repository extends Container<IRepositoryElement> implements IRepository
 {
@@ -168,11 +169,17 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return revisionManager;
   }
 
+  /**
+   * @since 2.0
+   */
   public QueryManager getQueryManager()
   {
     return queryManager;
   }
 
+  /**
+   * @since 2.0
+   */
   public NotificationManager getNotificationManager()
   {
     return notificationManager;
@@ -232,11 +239,17 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return new RevisionManager(this);
   }
 
+  /**
+   * @since 2.0
+   */
   protected QueryManager createQueryManager()
   {
     return new QueryManager();
   }
 
+  /**
+   * @since 2.0
+   */
   protected NotificationManager createNotificationManager()
   {
     return new NotificationManager(this);

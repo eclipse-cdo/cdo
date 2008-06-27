@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.query.ResultReaderQueue;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public interface CDOQueryResult<T> extends ResultReaderQueue<T>
 {

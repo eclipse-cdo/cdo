@@ -36,6 +36,9 @@ public class CDOIDLongFactoryImpl implements CDOIDObjectFactory
     return new CDOIDLongImpl();
   }
   
+  /**
+   * @since 2.0
+   */
   public CDOIDObject createCDOIDObject(String in)
   {
     return new CDOIDLongImpl(Long.valueOf(in));

@@ -20,7 +20,16 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 public interface IView extends CDOProtocolView
 {
   public ISession getSession();
+  /**
+   * @since 2.0
+   */
   public void subscribe(CDOID id);
+  /**
+   * @since 2.0
+   */
   public void unsubscribe(CDOID id);
+  /**
+   * @since 2.0
+   */
   public void clearChangeSubscription();
 }

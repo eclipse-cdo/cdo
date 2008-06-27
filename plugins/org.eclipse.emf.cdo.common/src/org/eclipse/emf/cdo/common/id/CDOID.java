@@ -33,6 +33,9 @@ public interface CDOID extends Serializable
 
   public boolean isTemporary();
   
+  /**
+   * @since 2.0
+   */
   public String getCDOIDString();
   /**
    * @author Eike Stepper

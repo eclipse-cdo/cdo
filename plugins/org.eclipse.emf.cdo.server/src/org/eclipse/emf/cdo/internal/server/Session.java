@@ -105,11 +105,17 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     return legacySupportEnabled;
   }
 
+  /**
+   * @since 2.0
+   */
   public boolean isPassiveUpdateEnabled()
   {
     return passiveUpdateEnabled;
   }
 
+  /**
+   * @since 2.0
+   */
   public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
   {
     this.passiveUpdateEnabled = passiveUpdateEnabled;
@@ -209,6 +215,9 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     return new View(this, viewID, type);
   }
 
+  /**
+   * @since 2.0
+   */
   public void handleCommitNotification(long timeStamp, List<CDOIDAndVersion> dirtyIDs, List<CDORevisionDelta> deltas)
   {
     if (!isPassiveUpdateEnabled()) dirtyIDs = new ArrayList<CDOIDAndVersion>();

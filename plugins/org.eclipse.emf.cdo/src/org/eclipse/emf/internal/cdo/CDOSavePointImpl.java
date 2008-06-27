@@ -26,6 +26,7 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public class CDOSavePointImpl implements CDOSavePoint
 {

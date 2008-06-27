@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public class StateConcurrentQueue<E> extends ConcurrentLinkedQueue<E> implements ResultWriterQueue<E>
 {

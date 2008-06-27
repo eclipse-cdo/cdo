@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.util;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public class PropertyChanged<T>
 {

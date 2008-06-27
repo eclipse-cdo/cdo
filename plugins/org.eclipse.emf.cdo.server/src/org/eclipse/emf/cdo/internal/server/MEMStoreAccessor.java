@@ -191,6 +191,9 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     newRevisions.clear();
   }
 
+  /**
+   * @since 2.0
+   */
   public CloseableIterator<Object> createQueryIterator(CDOQueryParameter queryParameter)
   {
     if (queryParameter.getQueryLanguage().equals("TEST"))
@@ -229,6 +232,9 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
 
   }
 
+  /**
+   * @since 2.0
+   */
   public void refreshRevisions()
   {
     

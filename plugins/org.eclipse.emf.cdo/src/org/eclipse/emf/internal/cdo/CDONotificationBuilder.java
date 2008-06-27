@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 {

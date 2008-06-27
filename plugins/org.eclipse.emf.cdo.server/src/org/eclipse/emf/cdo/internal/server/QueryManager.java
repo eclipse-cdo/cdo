@@ -32,6 +32,7 @@ import java.util.concurrent.Future;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public class QueryManager
 {

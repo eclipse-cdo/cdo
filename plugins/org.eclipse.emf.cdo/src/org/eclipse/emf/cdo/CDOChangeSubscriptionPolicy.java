@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public interface CDOChangeSubscriptionPolicy
 {

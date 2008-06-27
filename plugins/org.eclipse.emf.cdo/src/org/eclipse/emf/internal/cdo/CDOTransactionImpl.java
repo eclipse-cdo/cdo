@@ -188,6 +188,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
   }
 
+  /**
+   * @since 2.0
+   */
   public CDOSavePointImpl getLastSavePoint()
   {
     return this.lastSavePoint;
@@ -403,6 +406,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     dirty = ((CDOSavePointImpl)savePoint).isDirty();
   }
 
+  /**
+   * @since 2.0
+   */
   public void rollback(CDOSavePoint savePoint, boolean remote)
   {
     if (savePoint == null || savePoint.getTransaction() != this)
@@ -461,6 +467,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
   }
 
+  /**
+   * @since 2.0
+   */
   public CDOSavePoint createSavePoint()
   {
     // Take a copy of all new objects for the current save point
@@ -711,6 +720,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     return newResources;
   }
 
+  /**
+   * @since 2.0
+   */
   public Map<CDOID, CDORevisionImpl> getBaseNewObjects()
   {
     if (this.lastSavePoint.getPreviousSavePoint() == null)

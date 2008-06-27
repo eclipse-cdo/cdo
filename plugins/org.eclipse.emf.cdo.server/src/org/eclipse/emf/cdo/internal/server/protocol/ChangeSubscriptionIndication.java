@@ -60,6 +60,7 @@ public class ChangeSubscriptionIndication extends CDOReadIndication
     
     if (clear)
     {
+      if (PROTOCOL.isEnabled())  PROTOCOL.trace("Clear subscription");
       view.clearChangeSubscription();
     }
     

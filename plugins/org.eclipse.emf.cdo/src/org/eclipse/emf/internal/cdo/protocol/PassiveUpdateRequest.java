@@ -23,7 +23,6 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Map;
 
 /**

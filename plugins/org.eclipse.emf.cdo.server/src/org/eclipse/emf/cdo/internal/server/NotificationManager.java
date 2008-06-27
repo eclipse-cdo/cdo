@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;

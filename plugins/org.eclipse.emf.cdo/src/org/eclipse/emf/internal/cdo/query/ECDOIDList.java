@@ -169,7 +169,7 @@ public class ECDOIDList<T> implements EList<T>
   {
     throw new UnsupportedOperationException();
   }
-
+  
   public <T> T[] toArray(T[] arg0)
   {
     throw new UnsupportedOperationException();

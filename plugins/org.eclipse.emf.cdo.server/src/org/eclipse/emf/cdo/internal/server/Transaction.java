@@ -12,11 +12,9 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.core.CDOCorePackage;
@@ -199,7 +197,6 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
   {
     try
     {
-      int modifications = dirtyObjectDeltas.length;
       repository.getNotificationManager().notifyCommit( getSession(), this);
     }
     finally

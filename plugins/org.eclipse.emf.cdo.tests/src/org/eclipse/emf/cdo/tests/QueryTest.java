@@ -117,7 +117,7 @@ public class QueryTest extends AbstractCDOTest
     queryResult.close();
 
     assertEquals(false, ((Repository)getRepository()).getQueryManager().isRunning(
-        ((CDOQueryResultIteratorImpl)queryResult).getQueryID()));
+        ((CDOQueryResultIteratorImpl<?>)queryResult).getQueryID()));
 
     transaction.close();
     transaction.getSession().close();
@@ -134,7 +134,7 @@ public class QueryTest extends AbstractCDOTest
     // queryResult.cancel();
     transaction.close();
     assertEquals(false, ((Repository)getRepository()).getQueryManager().isRunning(
-        ((CDOQueryResultIteratorImpl)queryResult).getQueryID()));
+        ((CDOQueryResultIteratorImpl<?>)queryResult).getQueryID()));
     transaction.getSession().close();
   }
 
@@ -150,7 +150,7 @@ public class QueryTest extends AbstractCDOTest
     transaction.getSession().close();
 
     assertEquals(false, ((Repository)getRepository()).getQueryManager().isRunning(
-        ((CDOQueryResultIteratorImpl)queryResult).getQueryID()));
+        ((CDOQueryResultIteratorImpl<?>)queryResult).getQueryID()));
 
   }
 

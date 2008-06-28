@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.server.hibernate.teneo;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
@@ -83,7 +84,7 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
     rs.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
     rs.getPackageRegistry().put(XMLTypePackage.eNS_URI, XMLTypePackage.eINSTANCE);
     rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new EcoreResourceFactoryImpl());
-    for (CDOPackage cdoPackage : getHibernateStore().getPackageHandler().getCDOPackages())
+    for (CDOPackage cdoPackage : ((HibernateStore)hibernateStore).getPackageHandler().getCDOPackages())
     {
       if (TRACER.isEnabled())
       {

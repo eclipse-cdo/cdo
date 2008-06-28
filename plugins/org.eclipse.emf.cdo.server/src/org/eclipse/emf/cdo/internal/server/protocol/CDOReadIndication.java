@@ -34,7 +34,10 @@ public abstract class CDOReadIndication extends CDOServerIndication
 
     try
     {
+      // Make the store reader available in a ThreadLocal variable
       StoreUtil.setReader(storeReader);
+
+      // Execute indicating() and responding()
       super.execute(in, out);
     }
     finally

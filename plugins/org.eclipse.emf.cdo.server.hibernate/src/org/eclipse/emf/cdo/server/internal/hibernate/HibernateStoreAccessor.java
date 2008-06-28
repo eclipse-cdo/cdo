@@ -89,20 +89,28 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     return (HibernateStore)super.getStore();
   }
 
-  // starts a hibernate session and begins a transaction
+  /**
+   * starts a hibernate session and begins a transaction
+   * 
+   * @since 2.0
+   */
   public void beginHibernateSession()
   {
     if (TRACER.isEnabled())
     {
       TRACER.trace("Creating hibernate session and transaction");
     }
-    assert (hibernateSession == null);
+    assert hibernateSession == null;
     final SessionFactory sessionFactory = getStore().getHibernateSessionFactory();
     hibernateSession = sessionFactory.openSession();
     hibernateSession.beginTransaction();
   }
 
-  // commits/rollbacks and closes the session
+  /**
+   * commits/rollbacks and closes the session
+   * 
+   * @since 2.0
+   */
   public void endHibernateSession()
   {
     if (TRACER.isEnabled())
@@ -149,11 +157,17 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     return hibernateSession;
   }
 
+  /**
+   * @since 2.0
+   */
   public boolean isErrorOccured()
   {
     return errorOccured;
   }
 
+  /**
+   * @since 2.0
+   */
   public void setErrorOccured(boolean errorOccured)
   {
     this.errorOccured = errorOccured;

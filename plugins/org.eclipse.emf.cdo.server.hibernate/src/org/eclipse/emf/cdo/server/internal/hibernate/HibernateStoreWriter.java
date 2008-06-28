@@ -54,12 +54,11 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
     try
     {
       // start with fresh hibernate session
-      Session session = getHibernateSession();
+      final Session session = getHibernateSession();
       session.setFlushMode(FlushMode.COMMIT);
-      session.beginTransaction();
       for (Object o : context.getNewObjects())
       {
-        CDORevision cdoRevision = (CDORevision)o;
+        final CDORevision cdoRevision = (CDORevision)o;
         session.save(HibernateUtil.getInstance().getEntityName(cdoRevision), o);
         if (TRACER.isEnabled())
         {
@@ -72,7 +71,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
       {
         try
         {
-          CDORevision cdoRevision = (CDORevision)o;
+          final CDORevision cdoRevision = (CDORevision)o;
           if (cdoRevision instanceof InternalCDORevision)
           {
             ((InternalCDORevision)cdoRevision).setVersion(cdoRevision.getVersion() - 1);
@@ -91,12 +90,8 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
         }
       }
 
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Commit hibernate transaction");
-      }
-
-      session.getTransaction().commit();
+      // does the commit
+      endHibernateSession();
     }
     finally
     {

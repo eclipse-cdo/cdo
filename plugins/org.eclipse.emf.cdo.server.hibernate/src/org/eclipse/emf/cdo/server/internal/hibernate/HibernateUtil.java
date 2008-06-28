@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
@@ -46,11 +47,17 @@ public class HibernateUtil
     HibernateUtil.instance = instance;
   }
 
+  public Session getHibernateSession()
+  {
+    final HibernateStoreReader storeReader = (HibernateStoreReader)StoreUtil.getReader();
+    return storeReader.getHibernateSession();
+  }
+
   /** Converts from a Map<String, String> to a Properties */
   public Properties getPropertiesFromStore(IStore store)
   {
-    Properties props = new Properties();
-    Map<String, String> storeProps = store.getRepository().getProperties();
+    final Properties props = new Properties();
+    final Map<String, String> storeProps = store.getRepository().getProperties();
     for (String key : storeProps.keySet())
     {
       props.setProperty(key, storeProps.get(key));
@@ -71,13 +78,13 @@ public class HibernateUtil
    */
   public CDOIDHibernate getCDOIDHibernate(CDOID cdoID)
   {
-    CDORevision cdoRevision = getCDORevision(cdoID);
+    final CDORevision cdoRevision = getCDORevision(cdoID);
     if (cdoRevision.getID() instanceof CDOIDHibernate)
     {
       return (CDOIDHibernate)cdoRevision.getID();
     }
 
-    Session session = HibernateThreadContext.getSession();
+    final Session session = getHibernateSession();
     session.saveOrUpdate(cdoRevision);
     if (!(cdoRevision.getID() instanceof CDOIDHibernate))
     {
@@ -113,7 +120,7 @@ public class HibernateUtil
 
     if (HibernateThreadContext.isHibernateCommitContextSet())
     {
-      HibernateCommitContext hcc = HibernateThreadContext.getHibernateCommitContext();
+      final HibernateCommitContext hcc = HibernateThreadContext.getHibernateCommitContext();
       CDORevision revision;
       if ((revision = hcc.getDirtyObject(id)) != null)
       {
@@ -127,7 +134,7 @@ public class HibernateUtil
       // maybe the temp was already translated
       if (id instanceof CDOIDTemp)
       {
-        CDOID newID = hcc.getCommitContext().getIDMappings().get(id);
+        final CDOID newID = hcc.getCommitContext().getIDMappings().get(id);
         if (newID != null)
         {
           return getCDORevision(newID);
@@ -141,8 +148,8 @@ public class HibernateUtil
           + id.getClass().getName() + ": " + id);
     }
 
-    CDOIDHibernate cdoIDHibernate = (CDOIDHibernate)id;
-    Session session = HibernateThreadContext.getSession();
+    final CDOIDHibernate cdoIDHibernate = (CDOIDHibernate)id;
+    final Session session = getHibernateSession();
     return (CDORevision)session.get(cdoIDHibernate.getEntityName(), cdoIDHibernate.getId());
   }
 }

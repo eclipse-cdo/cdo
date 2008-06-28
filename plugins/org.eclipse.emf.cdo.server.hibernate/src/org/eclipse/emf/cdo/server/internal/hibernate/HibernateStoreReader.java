@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreReader;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
@@ -46,11 +47,13 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
   public HibernateStoreReader(HibernateStore store, ISession session)
   {
     super(store, session);
+    StoreUtil.setReader(this);
   }
 
   protected HibernateStoreReader(HibernateStore store, IView view)
   {
     super(store, view);
+    StoreUtil.setReader(this);
   }
 
   public HibernateStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature)
@@ -61,6 +64,24 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
   public CloseableIterator<CDOID> readObjectIDs(boolean withTypes)
   {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  // this method can disappear when in transaction commit the release
+  // of the accessor is done before the StoreUtil.setReader(null),
+  // see the Transaction
+  protected void doRelease()
+  {
+    try
+    {
+      // ugly cast
+      StoreUtil.setReader(this);
+      super.doRelease();
+    }
+    finally
+    {
+      StoreUtil.setReader(null);
+    }
   }
 
   public CDOClassRef readObjectType(CDOID id)

@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.hibernate.Session;
-
 /**
  * @author Martin Taal
  */
@@ -25,41 +23,6 @@ public class HibernateThreadContext
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateThreadContext.class);
 
   private static ThreadLocal<HibernateCommitContext> commitContext = new ThreadLocal<HibernateCommitContext>();
-
-  private static ThreadLocal<Session> session = new ThreadLocal<Session>();
-
-  public static Session getSession()
-  {
-    Session result = session.get();
-    if (result == null)
-    {
-      throw new IllegalStateException("Session not set");
-    }
-
-    return result;
-  }
-
-  public static void setSession(Session newSession)
-  {
-    if (newSession != null && session.get() != null)
-    {
-      throw new IllegalStateException("Session already set");
-    }
-
-    if (TRACER.isEnabled())
-    {
-      if (newSession == null)
-      {
-        TRACER.trace("Clearing session in threadlocal");
-      }
-      else
-      {
-        TRACER.trace("Setting session in threadlocal");
-      }
-    }
-
-    session.set(newSession);
-  }
 
   public static HibernateCommitContext getHibernateCommitContext()
   {

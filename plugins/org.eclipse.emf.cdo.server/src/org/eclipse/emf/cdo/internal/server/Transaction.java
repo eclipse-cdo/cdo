@@ -160,7 +160,10 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
 
   public void preCommit()
   {
+    // Allocate a store writer
     storeWriter = repository.getStore().getWriter(this);
+
+    // Make the store writer available in a ThreadLocal variable
     StoreUtil.setReader(storeWriter);
   }
 

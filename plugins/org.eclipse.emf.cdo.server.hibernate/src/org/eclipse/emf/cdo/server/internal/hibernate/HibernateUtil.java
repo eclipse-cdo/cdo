@@ -47,6 +47,9 @@ public class HibernateUtil
     HibernateUtil.instance = instance;
   }
 
+  /**
+   * @since 2.0
+   */
   public Session getHibernateSession()
   {
     final HibernateStoreReader storeReader = (HibernateStoreReader)StoreUtil.getReader();

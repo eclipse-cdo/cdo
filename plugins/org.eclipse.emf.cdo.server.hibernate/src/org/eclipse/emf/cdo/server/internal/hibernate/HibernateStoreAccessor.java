@@ -154,6 +154,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       beginHibernateSession();
     }
+
     return hibernateSession;
   }
 

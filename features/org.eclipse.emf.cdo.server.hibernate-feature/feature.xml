@@ -13,13 +13,12 @@
 	
 	</copyright>
 -->
-
 <feature
       id="org.eclipse.emf.cdo.server.hibernate"
       label="%featureName"
-      image="eclipse_update_120.jpg"
       version="1.0.0.qualifier"
-      provider-name="%providerName">
+      provider-name="%providerName"
+      image="eclipse_update_120.jpg">
 
    <description>
       %description
@@ -38,33 +37,6 @@
       <discovery label="%emfUpdateSiteName" url="http://download.eclipse.org/modeling/emf/updates/"/>
       <discovery label="%emftUpdateSiteName" url="http://download.eclipse.org/modeling/emft/updates/"/>
    </url>
-
-   <!--plugin
-         id="org.eclipse.emf.teneo.annotations"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.teneo"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.teneo.hibernate.mapper"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/-->
-
-   <plugin
-         id="org.eclipse.emf.cdo.server.hibernate.libraries"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.emf.cdo.server.hibernate.id"

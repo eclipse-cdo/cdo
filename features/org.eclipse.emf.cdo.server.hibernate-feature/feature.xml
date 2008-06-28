@@ -39,33 +39,6 @@
       <discovery label="%emftUpdateSiteName" url="http://download.eclipse.org/modeling/emft/updates/"/>
    </url>
 
-   <!--plugin
-         id="org.eclipse.emf.teneo.annotations"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.teneo"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.teneo.hibernate.mapper"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/-->
-
-   <plugin
-         id="org.eclipse.emf.cdo.server.hibernate.libraries"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
    <plugin
          id="org.eclipse.emf.cdo.server.hibernate.id"
          download-size="0"

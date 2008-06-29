@@ -58,7 +58,7 @@ public abstract class AbstractDBTest<DATA_SOURCE extends DataSource> extends Abs
     return dbConnectionProvider.getConnection();
   }
 
-  public void _testDBTypes() throws Exception
+  public void testDBTypes() throws Exception
   {
     IDBSchema schema = DBUtil.createSchema("testDBTypes");
     DBType[] dbTypes = DBType.values();

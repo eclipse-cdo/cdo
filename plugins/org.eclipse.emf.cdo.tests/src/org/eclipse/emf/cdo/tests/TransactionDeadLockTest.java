@@ -156,7 +156,11 @@ public class TransactionDeadLockTest extends AbstractCDOTest
       thread.start();
     }
 
-    while (true)
+    // Usually takes around 4 seconds on the build machine
+    final long TIMEOUT = 20L;
+
+    long start = System.currentTimeMillis();
+    while (System.currentTimeMillis() < start + TIMEOUT * 1000L)
     {
       int count = 0;
       for (Thread thread : threadList)
@@ -171,10 +175,12 @@ public class TransactionDeadLockTest extends AbstractCDOTest
 
       if (count == threadList.size())
       {
-        break;
+        return;
       }
 
       sleep(100);
     }
+
+    fail("Timeout after " + TIMEOUT + " seconds");
   }
 }

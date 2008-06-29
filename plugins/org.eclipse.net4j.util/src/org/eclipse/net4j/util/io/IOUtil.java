@@ -225,6 +225,7 @@ public final class IOUtil
       return deleted + 1;
     }
 
+    file.deleteOnExit();
     return deleted;
   }
 

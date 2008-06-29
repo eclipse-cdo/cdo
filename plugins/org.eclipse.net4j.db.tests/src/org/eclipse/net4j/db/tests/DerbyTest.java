@@ -26,13 +26,6 @@ public class DerbyTest extends AbstractDBTest<EmbeddedDataSource>
   private File dbFolder;
 
   @Override
-  protected void doTearDown() throws Exception
-  {
-    deleteDBFolder();
-    super.doTearDown();
-  }
-
-  @Override
   protected IDBAdapter createDBAdapter()
   {
     return new org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter();
@@ -49,14 +42,15 @@ public class DerbyTest extends AbstractDBTest<EmbeddedDataSource>
     dataSource.setCreateDatabase("create");
   }
 
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    deleteDBFolder();
+    super.doTearDown();
+  }
+
   private void deleteDBFolder()
   {
-    if (dbFolder != null)
-    {
-      if (dbFolder.exists())
-      {
-        IOUtil.delete(dbFolder);
-      }
-    }
+    IOUtil.delete(dbFolder);
   }
 }

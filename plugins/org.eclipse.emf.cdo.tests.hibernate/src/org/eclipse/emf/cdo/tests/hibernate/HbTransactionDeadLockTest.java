@@ -23,7 +23,6 @@ import java.util.Map;
  */
 public class HbTransactionDeadLockTest extends TransactionDeadLockTest
 {
-
   // allows a testcase to pass specific properties
   @Override
   protected Map<String, String> getTestProperties()

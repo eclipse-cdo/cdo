@@ -47,6 +47,7 @@ import org.eclipse.net4j.util.transaction.TransactionException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -401,24 +402,36 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   private List<CDOPackage> analyzeNewPackages()
   {
-    // Find all used classes and their super classes
     Set<EClass> usedClasses = new HashSet<EClass>();
     for (CDOObject object : newObjects.values())
     {
-      EClass usedClass = object.eClass();
-      if (usedClasses.add(usedClass))
-      {
-        for (EClass superType : usedClass.getEAllSuperTypes())
-        {
-          usedClasses.add(superType);
-        }
-      }
+      findAllUsedEClasses(object.eClass(), usedClasses);
     }
 
-    return analyzeNewPackages(usedClasses);
+    return analyzeNewPackages(usedClasses, getSession().getPackageManager());
   }
 
-  private List<CDOPackage> analyzeNewPackages(Collection<EClass> eClasses)
+  /**
+   * Find all used classes, their super classes and their referenced classes
+   */
+  private static void findAllUsedEClasses(EClass eClass, Set<EClass> foundClasses)
+  {
+    if (foundClasses.add(eClass))
+    {
+      for (EClass superType : eClass.getEAllSuperTypes())
+      {
+        findAllUsedEClasses(superType, foundClasses);
+      }
+
+      for (EReference eReference : eClass.getEAllReferences())
+      {
+        findAllUsedEClasses(eReference.getEReferenceType(), foundClasses);
+      }
+    }
+  }
+
+  private static List<CDOPackage> analyzeNewPackages(Collection<EClass> eClasses,
+      CDOSessionPackageManagerImpl packageManager)
   {
     // Calculate the top level packages of the used classes
     Set<EPackage> usedPackages = new HashSet<EPackage>();
@@ -429,7 +442,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     }
 
     // Determine which of the used packages are new
-    CDOSessionPackageManagerImpl packageManager = getSession().getPackageManager();
     List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
     for (EPackage usedPackage : usedPackages)
     {

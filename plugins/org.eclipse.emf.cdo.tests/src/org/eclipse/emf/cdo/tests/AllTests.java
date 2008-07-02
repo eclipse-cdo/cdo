@@ -28,6 +28,7 @@ public class AllTests
     suite.addTestSuite(EnumTest.class);
     suite.addTestSuite(StateMachineTest.class);
     suite.addTestSuite(ViewTest.class);
+    suite.addTestSuite(ResourceTest.class);
     suite.addTestSuite(NonCDOResourceTest.class);
     suite.addTestSuite(ContainmentTest.class);
     suite.addTestSuite(InvalidationTest.class);

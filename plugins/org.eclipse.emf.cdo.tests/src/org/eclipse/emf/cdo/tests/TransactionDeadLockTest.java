@@ -84,7 +84,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
     transaction.commit();
     transaction.close();
 
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 100; i++)
     {
       msg("Transaction " + i);
       transaction = session.openTransaction();
@@ -112,7 +112,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
           try
           {
             msg("Thread " + id + ": Starting");
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 20; i++)
             {
               CDOSession session = openModel1Session();
               CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
@@ -156,7 +156,10 @@ public class TransactionDeadLockTest extends AbstractCDOTest
       thread.start();
     }
 
-    while (true)
+    final long TIMEOUT = 120L;
+
+    long start = System.currentTimeMillis();
+    while (System.currentTimeMillis() < start + TIMEOUT * 1000L)
     {
       int count = 0;
       for (Thread thread : threadList)
@@ -171,10 +174,12 @@ public class TransactionDeadLockTest extends AbstractCDOTest
 
       if (count == threadList.size())
       {
-        break;
+        return;
       }
 
       sleep(100);
     }
+
+    fail("Timeout after " + TIMEOUT + " seconds");
   }
 }

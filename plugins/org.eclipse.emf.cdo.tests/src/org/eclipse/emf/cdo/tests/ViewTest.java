@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.resource.CDOContentsFeature;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
@@ -51,20 +50,20 @@ public class ViewTest extends AbstractCDOTest
 
   public void testGetOrCreateResource() throws Exception
   {
-    CDOID id;
+    String id;
     {
       CDOSession session = openModel1Session();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
       transaction.commit();
-      id = resource.cdoID();
+      id = resource.cdoID().toString();
       session.close();
     }
 
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
-    assertEquals(id, transaction.getOrCreateResource("/test1").cdoID());
-    assertNotSame(id, transaction.getOrCreateResource("/test2").cdoID());
+    assertEquals(id, transaction.getOrCreateResource("/test1").cdoID().toString());
+    assertNotSame(id, transaction.getOrCreateResource("/test2").cdoID().toString());
     session.close();
   }
 

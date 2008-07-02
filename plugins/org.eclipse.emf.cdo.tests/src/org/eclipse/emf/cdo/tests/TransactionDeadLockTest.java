@@ -84,7 +84,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
     transaction.commit();
     transaction.close();
 
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 100; i++)
     {
       msg("Transaction " + i);
       transaction = session.openTransaction();
@@ -157,7 +157,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
     }
 
     // Usually takes around 4 seconds on the build machine
-    final long TIMEOUT = 20L;
+    final long TIMEOUT = 120L;
 
     long start = System.currentTimeMillis();
     while (System.currentTimeMillis() < start + TIMEOUT * 1000L)

@@ -487,7 +487,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
               public void run()
               {
                 getSite().getPage().closeEditor(CDOEditor.this, false);
-                CDOEditor.this.dispose();
               }
             });
           }
@@ -538,7 +537,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       if (handleDirtyConflict())
       {
         getSite().getPage().closeEditor(CDOEditor.this, false);
-        CDOEditor.this.dispose();
       }
       else
       {

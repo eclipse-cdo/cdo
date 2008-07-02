@@ -487,7 +487,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
               public void run()
               {
                 getSite().getPage().closeEditor(CDOEditor.this, false);
-                CDOEditor.this.dispose();
               }
             });
           }
@@ -538,7 +537,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       if (handleDirtyConflict())
       {
         getSite().getPage().closeEditor(CDOEditor.this, false);
-        CDOEditor.this.dispose();
       }
       else
       {
@@ -1710,7 +1708,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected void doSaveAs(URI uri, IEditorInput editorInput)
   {
-    editingDomain.getResourceSet().getResources().get(0).setURI(uri);
+    (editingDomain.getResourceSet().getResources().get(0)).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()

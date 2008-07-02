@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.tests/model"
+    editDirectory="" editorDirectory="" modelPluginID="org.eclipse.emf.cdo.tests"
+    modelName="Reference" updateClasspath="false" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject"
+    rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl" reflectiveDelegation="true"
+    codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.cdo"
+    featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" usedGenPackages="interface.genmodel#//interface">
+  <foreignModel>reference.ecore</foreignModel>
+  <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <genPackages prefix="Reference" disposableProviderFactory="true" ecorePackage="reference.ecore#/">
+    <genClasses ecoreClass="reference.ecore#//Reference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference reference.ecore#//Reference/ref"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

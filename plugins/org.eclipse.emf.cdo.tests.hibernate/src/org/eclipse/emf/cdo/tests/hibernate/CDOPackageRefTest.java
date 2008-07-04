@@ -24,6 +24,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.teneo.PersistenceOptions;
 
 import reference.ReferenceFactory;
+import reference.ReferencePackage;
+import interface_.InterfacePackage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,6 +108,9 @@ public class CDOPackageRefTest extends AbstractOMTest
       configuration.setLegacySupportEnabled(false);
 
       session = configuration.openSession();
+      session.getPackageRegistry().putEPackage(InterfacePackage.eINSTANCE);
+      session.getPackageRegistry().putEPackage(ReferencePackage.eINSTANCE);
+
       transaction = session.openTransaction();
       resource = transaction.getOrCreateResource(RESOURCE_PATH);
     }

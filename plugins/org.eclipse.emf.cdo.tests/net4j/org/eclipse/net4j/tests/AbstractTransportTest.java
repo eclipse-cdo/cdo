@@ -123,4 +123,24 @@ public abstract class AbstractTransportTest extends AbstractOMTest
       LifecycleUtil.activate(connector);
     }
   }
+
+  protected void stopTransport() throws Exception
+  {
+    LifecycleUtil.deactivate(connector);
+    connector = null;
+
+    LifecycleUtil.deactivate(acceptor);
+    acceptor = null;
+  }
+
+  protected void restartContainer() throws Exception
+  {
+    msg("RESTARTING CONTAINER");
+    stopTransport();
+    LifecycleUtil.deactivate(container);
+    container = createContainer();
+    LifecycleUtil.activate(container);
+    startTransport();
+    msg("RESTARTING CONTAINER - FINISHED");
+  }
 }

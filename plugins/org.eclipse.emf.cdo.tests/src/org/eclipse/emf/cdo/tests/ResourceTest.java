@@ -15,7 +15,7 @@ public class ResourceTest extends AbstractCDOTest
   /**
    * https://bugs.eclipse.org/238963
    */
-  public void testEmptyContents()
+  public void testEmptyContents() throws Exception
   {
     {
       CDOSession session = openModel1Session();
@@ -32,6 +32,8 @@ public class ResourceTest extends AbstractCDOTest
       assertEquals(1, resource.getContents().size());
       session.close();
     }
+
+    restartContainer();
 
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();

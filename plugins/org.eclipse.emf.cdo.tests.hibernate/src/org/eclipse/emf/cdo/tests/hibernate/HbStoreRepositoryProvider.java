@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
 
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -94,7 +93,7 @@ public class HbStoreRepositoryProvider extends StoreRepositoryProvider
 
   protected void setLogging()
   {
-    OMPlatform.INSTANCE.setDebugging(false);
+    // OMPlatform.INSTANCE.setDebugging(false);
     // OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
     // OMPlatform.INSTANCE.addTraceHandler(new PrintTraceHandler(new PrintStream("trace.txt")));
     // OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);

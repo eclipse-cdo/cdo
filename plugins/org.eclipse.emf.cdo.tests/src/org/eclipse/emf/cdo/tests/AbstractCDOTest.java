@@ -27,6 +27,7 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.tests.AbstractTransportTest;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +45,7 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   @Override
   protected IManagedContainer createContainer()
   {
+    LifecycleUtil.deactivate(container);
     IManagedContainer container = super.createContainer();
     CDOUtil.prepareContainer(container, false);
     CDOServerUtil.prepareContainer(container);

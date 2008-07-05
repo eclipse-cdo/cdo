@@ -66,6 +66,11 @@ public class PersistableListHolder
     return listMapping.get();
   }
 
+  public void clearListMapping()
+  {
+    listMapping.set(null);
+  }
+
   public static PersistableListHolder getInstance()
   {
     return instance;

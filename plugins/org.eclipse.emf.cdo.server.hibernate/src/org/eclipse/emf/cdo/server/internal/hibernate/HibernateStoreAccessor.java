@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -69,6 +70,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       // ugly cast
       StoreUtil.setReader((IStoreReader)this);
       endHibernateSession();
+      PersistableListHolder.getInstance().clearListMapping();
     }
     finally
     {
@@ -144,7 +146,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         hibernateSession.close();
       }
     }
-
     hibernateSession = null;
   }
 

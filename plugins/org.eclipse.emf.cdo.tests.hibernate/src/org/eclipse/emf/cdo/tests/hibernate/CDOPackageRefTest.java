@@ -97,11 +97,6 @@ public class CDOPackageRefTest extends AbstractOMTest
 
       connector = JVMUtil.getConnector(container, "default");
 
-      /*
-       * case 1: session = CDOUtil.openSession(connector, repositoryName, true, false);
-       * session.getPackageRegistry().putEPackage(InterfacePackage.eINSTANCE);
-       * session.getPackageRegistry().putEPackage(ReferencePackage.eINSTANCE);
-       */
       CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
       configuration.setConnector(connector);
       configuration.setRepositoryName(REPOSITORY_NAME);

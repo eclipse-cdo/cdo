@@ -40,8 +40,8 @@ public class AllTests
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
 
     TestSuite suite = new TestSuite("Tests for CDO using Hibernate");
-    suite.addTestSuite(CDOPackageRefTest.class);
     suite.addTestSuite(CDOAutomaticPackageRefTest.class);
+    suite.addTestSuite(CDOPackageRefTest.class);
     if (true)
     {
       return suite;

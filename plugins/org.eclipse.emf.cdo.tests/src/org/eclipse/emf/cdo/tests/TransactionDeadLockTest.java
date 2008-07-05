@@ -84,7 +84,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
     transaction.commit();
     transaction.close();
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 1000; i++)
     {
       msg("Transaction " + i);
       transaction = session.openTransaction();

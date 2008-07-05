@@ -42,13 +42,8 @@ public class AllTests
     TestSuite suite = new TestSuite("Tests for CDO using Hibernate");
     suite.addTestSuite(CDOAutomaticPackageRefTest.class);
     suite.addTestSuite(CDOPackageRefTest.class);
-    if (true)
-    {
-      return suite;
-    }
     suite.addTestSuite(RevisionDeltaTest.class);
     suite.addTestSuite(HbTransactionDeadLockTest.class);
-
     suite.addTestSuite(HibernatePackageRegistryTest.class);
     suite.addTestSuite(ContainmentTest.class);
     suite.addTestSuite(RollbackTest.class);

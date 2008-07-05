@@ -37,6 +37,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 
@@ -390,13 +391,22 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     public void addingObject(CDOTransaction transaction, CDOObject object)
     {
       EClass usedClass = object.eClass();
-      if (usedClasses.add(usedClass))
+      addAllEPackages(usedClass);
+    }
+
+    private void addAllEPackages(EClass eClass)
+    {
+      if (usedClasses.add(eClass))
       {
-        addPackage(usedClass.getEPackage());
-        for (EClass superType : usedClass.getEAllSuperTypes())
+        addPackage(eClass.getEPackage());
+        for (EClass superType : eClass.getEAllSuperTypes())
         {
-          usedClasses.add(superType);
-          addPackage(superType.getEPackage());
+          addAllEPackages(superType);
+        }
+
+        for (EReference eReference : eClass.getEAllReferences())
+        {
+          addAllEPackages(eReference.getEReferenceType());
         }
       }
     }

@@ -24,13 +24,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.teneo.PersistenceOptions;
 
 import reference.ReferenceFactory;
-import reference.ReferencePackage;
-import interface_.InterfacePackage;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CDOPackageRefTest extends AbstractOMTest
+public class CDOAutomaticPackageRefTest extends AbstractOMTest
 {
   private static final String DB_USER = "sa";
 
@@ -61,6 +59,11 @@ public class CDOPackageRefTest extends AbstractOMTest
   {
     try
     {
+      // LogManager.getLogManager().readConfiguration(
+      // new FileInputStream("c:\\work\\logging.properties"));
+
+      // IManagedContainer container = IPluginContainer.INSTANCE;
+
       IManagedContainer container = ContainerUtil.createContainer();
       Net4jUtil.prepareContainer(container);
       JVMUtil.prepareContainer(container);
@@ -96,10 +99,9 @@ public class CDOPackageRefTest extends AbstractOMTest
       configuration.setConnector(connector);
       configuration.setRepositoryName(REPOSITORY_NAME);
       configuration.setLegacySupportEnabled(false);
+      configuration.setDemandPopulatingPackageRegistry();
 
       session = configuration.openSession();
-      session.getPackageRegistry().putEPackage(InterfacePackage.eINSTANCE);
-      session.getPackageRegistry().putEPackage(ReferencePackage.eINSTANCE);
 
       transaction = session.openTransaction();
       resource = transaction.getOrCreateResource(RESOURCE_PATH);
@@ -119,6 +121,18 @@ public class CDOPackageRefTest extends AbstractOMTest
     LifecycleUtil.deactivate(connector);
     LifecycleUtil.deactivate(acceptor);
   }
+
+  /*
+   * public void testPutPackage() throws Exception { try {
+   * session.getPackageRegistry().putEPackage(BasePackage.eINSTANCE);
+   * session.getPackageRegistry().putEPackage(DerivedPackage.eINSTANCE); transaction.commit(); } catch (Exception e) {
+   * e.printStackTrace(); throw e; } } public void testPutPackageOneByOne() throws Exception { try {
+   * session.getPackageRegistry().putEPackage(BasePackage.eINSTANCE); transaction.commit();
+   * session.getPackageRegistry().putEPackage(DerivedPackage.eINSTANCE); transaction.commit(); } catch (Exception e) {
+   * e.printStackTrace(); throw e; } } public void testOnlyBaseData() throws Exception { try {
+   * resource.getContents().add(BaseFactory.eINSTANCE.createBaseClass()); transaction.commit(); } catch (Exception e) {
+   * e.printStackTrace(); throw e; } }
+   */
 
   public void testOnlyReference() throws Exception
   {

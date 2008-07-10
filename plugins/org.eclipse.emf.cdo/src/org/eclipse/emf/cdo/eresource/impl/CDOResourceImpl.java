@@ -333,16 +333,28 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public EObject getEObject(String uriFragment)
   {
-    if (uriFragment == null) return null;
+    // Should we return CDOResource (this ?) ?
+    if (uriFragment == null)
+    {
+      return null;
+    }
 
     CDOID cdoID = CDOIDUtil.read(uriFragment, cdoView().getSession().getPackageManager().getCDOIDObjectFactory());
 
-    if (cdoID.isNull()) return null;
+    if (cdoID.isNull())
+    {
+      return null;
+    }
 
     if (cdoID.isTemporary() && !cdoView().isObjectRegistered(cdoID))
+    {
       throw new IllegalStateException("Temporary object : " + uriFragment + " is not available anymore.");
+    }
 
-    if (cdoID.isObject()) return cdoView().getObject(cdoID, true);
+    if (cdoID.isObject())
+    {
+      return cdoView().getObject(cdoID, true);
+    }
 
     // If it doesn`t match to anything we return null like ResourceImpl.getEObject
     return null;
@@ -353,13 +365,15 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public String getURIFragment(EObject object)
   {
-    InternalCDOObject internalCDOObject = FSMUtil.adapt(object, this.cdoView());
+    // if object == this ??? what we do. Is it wanted ? How we handle them ?
 
-    StringBuffer idBuffer = new StringBuffer();
+    InternalCDOObject internalCDOObject = FSMUtil.adapt(object, cdoView());
 
-    CDOIDUtil.write(idBuffer, internalCDOObject.cdoID());
+    StringBuilder builder = new StringBuilder();
 
-    return idBuffer.toString();
+    CDOIDUtil.write(builder, internalCDOObject.cdoID());
+
+    return builder.toString();
   }
 
   /**

@@ -222,14 +222,17 @@ public final class CDOIDUtil
   }
 
   /**
-   * Format of the string 
-   * Not legacy : <ORDINAL>/<CUSTOM STRING FROM OBJECT FACTORY> 
-   * Legacy : <ORDINAL>/<PACKAGEURI>/<CLASSIFIERID>/<CUSTOM STRING FROM OBJECT FACTORY>
+   * Format of the uri fragment.
+   * <p>
+   * Not legacy : <IDTYPE>/<CUSTOM STRING FROM OBJECT FACTORY>
+   * <p>
+   * Legacy : <IDTYPE>/<PACKAGEURI>/<CLASSIFIERID>/<CUSTOM STRING FROM OBJECT FACTORY>
+   * 
    * @since 2.0
    */
-  public static CDOID read(String in, CDOIDObjectFactory factory)
+  public static CDOID read(String uriFragment, CDOIDObjectFactory factory)
   {
-    byte ordinal = Byte.valueOf(in.substring(0, 1));
+    byte ordinal = Byte.valueOf(uriFragment.substring(0, 1));
 
     if (TRACER.isEnabled())
     {
@@ -247,7 +250,7 @@ public final class CDOIDUtil
     }
 
     Type type = Type.values()[ordinal];
-    String fragment = in.substring(2);
+    String fragment = uriFragment.substring(2);
     switch (type)
     {
     case NULL:
@@ -265,6 +268,7 @@ public final class CDOIDUtil
     case OBJECT:
     {
       CDOIDObject id = factory.createCDOIDObject(fragment);
+      ((AbstractCDOID)id).read(fragment);
       return id;
     }
 
@@ -281,21 +285,26 @@ public final class CDOIDUtil
 
       CDOIDObject id = factory.createCDOIDObject(fragment.substring(classifierIndex + 1));
 
+      ((AbstractCDOID)id).read(fragment);
+
       return id.asLegacy(cdoClassRef);
     }
 
     default:
-      throw new ImplementationError();
+      throw new IllegalArgumentException("Invalid ID type : " + uriFragment);
     }
   }
 
   /**
-   * Format of the string 
-   * Not legacy : <ORDINAL>/<CUSTOM STRING FROM OBJECT FACTORY> 
-   * Legacy : <ORDINAL>/<PACKAGEURI>/<CLASSIFIERID>/<CUSTOM STRING FROM OBJECT FACTORY>
+   * Format of the uri fragment.
+   * <p>
+   * Not legacy : <IDTYPE>/<CUSTOM STRING FROM OBJECT FACTORY>
+   * <p>
+   * Legacy : <IDTYPE>/<PACKAGEURI>/<CLASSIFIERID>/<CUSTOM STRING FROM OBJECT FACTORY>
+   * 
    * @since 2.0
    */
-  public static void write(StringBuffer stringBuffer, CDOID id)
+  public static void write(StringBuilder builder, CDOID id)
   {
     if (id == null)
     {
@@ -309,7 +318,7 @@ public final class CDOIDUtil
     {
       TRACER.format("Writing CDOID of type {0} ({1})", ordinal, type);
     }
-    stringBuffer.append(ordinal);
+    builder.append(ordinal);
 
     switch (type)
     {
@@ -322,14 +331,14 @@ public final class CDOIDUtil
 
     case LEGACY_OBJECT:
       CDOIDObject legacy = (CDOIDObject)id;
-      stringBuffer.append("/" + legacy.getClassRef().getPackageURI());
-      stringBuffer.append("/" + legacy.getClassRef().getClassifierID());
+      builder.append("/" + legacy.getClassRef().getPackageURI());
+      builder.append("/" + legacy.getClassRef().getClassifierID());
       break;
 
     default:
       throw new ImplementationError();
     }
-    stringBuffer.append("/" + id.getCDOIDString());
+    builder.append("/" + id.asString());
   }
 
   public static CDOIDMeta createMeta(long value)

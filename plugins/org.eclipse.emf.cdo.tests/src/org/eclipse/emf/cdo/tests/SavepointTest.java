@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (c) 2004 - 2008 Simon McDuff, Canada.
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -12,7 +12,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOSavePoint;
+import org.eclipse.emf.cdo.CDOSavepoint;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -24,12 +24,10 @@ import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
-import junit.framework.Assert;
-
 /**
  * @author Simon McDuff
  */
-public class SavePointTest extends AbstractCDOTest
+public class SavepointTest extends AbstractCDOTest
 {
   public void testRollbackWithNewObject_Collection() throws Exception
   {
@@ -47,17 +45,17 @@ public class SavePointTest extends AbstractCDOTest
     Category category1 = Model1Factory.eINSTANCE.createCategory();
     company1.getCategories().add(category1);
 
-    transaction1.createSavePoint();
+    transaction1.setSavepoint();
 
     Category category2 = Model1Factory.eINSTANCE.createCategory();
     company1.getCategories().add(category2);
 
-    CDOSavePoint savePoint2 = transaction1.createSavePoint();
+    CDOSavepoint savePoint2 = transaction1.setSavepoint();
 
     Category category3 = Model1Factory.eINSTANCE.createCategory();
     company1.getCategories().add(category3);
 
-    transaction1.createSavePoint();
+    transaction1.setSavepoint();
 
     transaction1.rollback(savePoint2, false);
 
@@ -101,13 +99,13 @@ public class SavePointTest extends AbstractCDOTest
     Category category1 = Model1Factory.eINSTANCE.createCategory();
     company1.getCategories().add(category1);
 
-    CDOSavePoint savePoint1 = transaction1.createSavePoint();
-    CDOSavePoint savePoint2 = transaction1.createSavePoint();
+    CDOSavepoint savePoint1 = transaction1.setSavepoint();
+    CDOSavepoint savePoint2 = transaction1.setSavepoint();
     transaction1.rollback(savePoint1, false);
     try
     {
       transaction1.rollback(savePoint2, false);
-      Assert.assertEquals("Should have thrown an exception", false, true);
+      fail("Should have thrown an exception");
     }
     catch (IllegalArgumentException illegalArgumentException)
     {
@@ -116,7 +114,7 @@ public class SavePointTest extends AbstractCDOTest
     try
     {
       transaction1.rollback(null, false);
-      Assert.assertEquals("Should have thrown an exception", false, true);
+      fail("Should have thrown an exception");
     }
     catch (IllegalArgumentException illegalArgumentException)
     {
@@ -131,7 +129,7 @@ public class SavePointTest extends AbstractCDOTest
 
     CDOTransactionImpl transaction1 = (CDOTransactionImpl)session.openTransaction();
 
-    CDOSavePoint savePoint0 = transaction1.createSavePoint();
+    CDOSavepoint savePoint0 = transaction1.setSavepoint();
     // Client1
     CDOResource resource1 = transaction1.createResource("/test1");
     Company company1 = Model1Factory.eINSTANCE.createCompany();
@@ -139,12 +137,12 @@ public class SavePointTest extends AbstractCDOTest
     Category category1 = Model1Factory.eINSTANCE.createCategory();
     company1.getCategories().add(category1);
 
-    CDOSavePoint savePoint1 = transaction1.createSavePoint();
+    CDOSavepoint savePoint1 = transaction1.setSavepoint();
     Category category2 = Model1Factory.eINSTANCE.createCategory();
     company1.getCategories().add(category2);
 
-    CDOSavePoint savePoint2 = transaction1.createSavePoint();
-    CDOSavePoint savePoint3 = transaction1.createSavePoint();
+    CDOSavepoint savePoint2 = transaction1.setSavepoint();
+    CDOSavepoint savePoint3 = transaction1.setSavepoint();
 
     assertEquals(true, transaction1.isDirty());
 
@@ -180,7 +178,7 @@ public class SavePointTest extends AbstractCDOTest
     Category category1 = Model1Factory.eINSTANCE.createCategory();
     company1.getCategories().add(category1);
 
-    CDOSavePoint savePoint1 = transaction1.createSavePoint();
+    CDOSavepoint savePoint1 = transaction1.setSavepoint();
 
     // Modification for savePoint1
     Company company2 = Model1Factory.eINSTANCE.createCompany();
@@ -202,14 +200,14 @@ public class SavePointTest extends AbstractCDOTest
       company1.getCategories().add(category2);
     }
 
-    CDOSavePoint savePoint2 = transaction1.createSavePoint();
+    CDOSavepoint savePoint2 = transaction1.setSavepoint();
     {
       company1.setCity("CITY2");
       category3 = Model1Factory.eINSTANCE.createCategory();
       company1.getCategories().add(category3);
     }
 
-    transaction1.createSavePoint();
+    transaction1.setSavepoint();
     {
       company1.setCity("CITY3");
       assertEquals(3, company1.getCategories().size());
@@ -251,14 +249,14 @@ public class SavePointTest extends AbstractCDOTest
 
       assertEquals(2, company1.getCategories().size());
 
-      assertEquals(null, transaction1.getLastSavePoint().getPreviousSavePoint());
+      assertEquals(null, transaction1.getLastSavepoint().getPreviousSavepoint());
     }
     else
     {
       transaction1.rollback(false);
       assertEquals(false, transaction1.isDirty());
-      assertEquals(null, transaction1.getLastSavePoint().getNextSavePoint());
-      assertEquals(null, transaction1.getLastSavePoint().getPreviousSavePoint());
+      assertEquals(null, transaction1.getLastSavepoint().getNextSavepoint());
+      assertEquals(null, transaction1.getLastSavepoint().getPreviousSavepoint());
 
       assertEquals(commitBegin, !FSMUtil.isTransient(company1));
 

@@ -1,5 +1,5 @@
 /*************************************************************************** 
- * Copyright (c) 2004 - 2008 Simon McDuff, Canada. 
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany. 
  * All rights reserved. This program and the accompanying materials 
  * are made available under the terms of the Eclipse Public License v1.0 
  * which accompanies this distribution, and is available at 
@@ -12,12 +12,12 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOSavePoint;
+import org.eclipse.emf.cdo.CDOSavepoint;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDOSavePointImpl implements CDOSavePoint
+public class CDOSavepointImpl implements CDOSavepoint
 {
   private CDOTransactionImpl transaction = null;
 
@@ -36,24 +36,24 @@ public class CDOSavePointImpl implements CDOSavePoint
 
   private Map<CDOID, CDOObject> newObjects = new HashMap<CDOID, CDOObject>();
 
-  private Map<CDOID, CDORevisionImpl> baseNewObjects = new HashMap<CDOID, CDORevisionImpl>();
+  private Map<CDOID, CDORevision> baseNewObjects = new HashMap<CDOID, CDORevision>();
 
   private Map<CDOID, CDOObject> dirtyObjects = new HashMap<CDOID, CDOObject>();
 
   private ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = new ConcurrentHashMap<CDOID, CDORevisionDelta>();
 
-  private CDOSavePointImpl previousSavePoint = null;
+  private CDOSavepointImpl previousSavepoint = null;
 
-  private CDOSavePointImpl nextSavePoint = null;
+  private CDOSavepointImpl nextSavepoint = null;
 
   private boolean isDirty = false;
 
-  public CDOSavePointImpl(CDOTransactionImpl transaction, CDOSavePointImpl lastSavePoint)
+  public CDOSavepointImpl(CDOTransactionImpl transaction, CDOSavepointImpl lastSavepoint)
   {
     this.transaction = transaction;
     this.isDirty = transaction.isDirty();
-    this.previousSavePoint = lastSavePoint;
-    if (this.previousSavePoint != null) this.previousSavePoint.setNextSavePoint(this);
+    this.previousSavepoint = lastSavepoint;
+    if (this.previousSavepoint != null) this.previousSavepoint.setNextSavepoint(this);
   }
 
   public void clear()
@@ -90,34 +90,53 @@ public class CDOSavePointImpl implements CDOSavePoint
     return revisionDeltas;
   }
 
-  public Map<CDOID, CDORevisionImpl> getBaseNewObjects()
+  public Map<CDOID, CDORevision> getBaseNewObjects()
   {
     return baseNewObjects;
   }
 
-  public CDOSavePointImpl getPreviousSavePoint()
+  public CDOSavepointImpl getPreviousSavepoint()
   {
-    return previousSavePoint;
+    return previousSavepoint;
   }
 
-  public CDOSavePointImpl getNextSavePoint()
+  public CDOSavepointImpl getNextSavepoint()
   {
-    return nextSavePoint;
+    return nextSavepoint;
   }
 
-  public void setPreviousSavePoint(CDOSavePointImpl previousSavePoint)
+  public void setPreviousSavepoint(CDOSavepointImpl previousSavepoint)
   {
-    this.previousSavePoint = previousSavePoint;
+    this.previousSavepoint = previousSavepoint;
   }
 
-  public void setNextSavePoint(CDOSavePointImpl nextSavePoint)
+  public void setNextSavepoint(CDOSavepointImpl nextSavepoint)
   {
-    this.nextSavePoint = nextSavePoint;
+    this.nextSavepoint = nextSavepoint;
   }
 
   public CDOTransaction getTransaction()
   {
     return transaction;
+  }
+
+  public void rollback(boolean remote)
+  {
+    getTransaction().rollback(this, remote);
+  }
+
+  public boolean isValid()
+  {
+    CDOSavepoint lastSavepoint = getTransaction().getLastSavepoint();
+
+    for (CDOSavepoint savepoint = lastSavepoint; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    {
+      if (savepoint == this)
+      {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

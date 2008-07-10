@@ -25,12 +25,13 @@ public interface CDOIDObjectFactory
    * instance.
    */
   public CDOIDObject createCDOIDObject(ExtendedDataInput in);
-  
+
   /**
    * Returns a new instance of CDOIDObject. This implementation is different from createCDOIDObject(ExtendedDataInput
    * in) since the implementor of this method needs to construct completely CDOIDObject from the String.
+   * 
    * @since 2.0
    */
-  public CDOIDObject createCDOIDObject(String in);
+  public CDOIDObject createCDOIDObject(String fragmentPart);
 
 }

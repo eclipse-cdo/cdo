@@ -780,7 +780,6 @@ public class InitialTest extends AbstractCDOTest
     transaction.close();
     session.close();
   }
-  
 
   public void testResourceAccessor() throws Exception
   {

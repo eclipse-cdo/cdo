@@ -43,15 +43,23 @@ public abstract class AbstractCDOIDInteger extends AbstractCDOID implements Comp
   {
     return value;
   }
-  
+
   /**
    * @since 2.0
    */
-  public String getCDOIDString()
+  public String asString()
   {
     return String.valueOf(value);
   }
-  
+
+  /**
+   * @since 2.0
+   */
+  public void read(String fragmentPart)
+  {
+    value = Integer.valueOf(fragmentPart);
+  }
+
   public void read(ExtendedDataInput in) throws IOException
   {
     value = in.readInt();

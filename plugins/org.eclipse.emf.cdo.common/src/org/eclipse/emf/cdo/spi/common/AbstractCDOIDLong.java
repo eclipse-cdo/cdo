@@ -44,15 +44,20 @@ public abstract class AbstractCDOIDLong extends AbstractCDOID implements Compara
   {
     return value;
   }
-  
+
   /**
    * @since 2.0
    */
-  public String getCDOIDString()
+  public String asString()
   {
     return String.valueOf(value);
   }
-  
+
+  public void read(String fragmentPart)
+  {
+    value = Long.valueOf(fragmentPart);
+  }
+
   public void read(ExtendedDataInput in) throws IOException
   {
     value = in.readLong();

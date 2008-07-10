@@ -53,21 +53,31 @@ public interface CDOTransaction extends CDOView
   public void commit() throws TransactionException;
 
   public void rollback(boolean remote);
-  
-  /**
-   * @since 2.0
-   */
-  public void rollback(CDOSavePoint savePoint, boolean remote);
 
   /**
    * @since 2.0
    */
-  public CDOSavePoint createSavePoint();
+  public void rollback();
 
   /**
    * @since 2.0
    */
-  public CDOSavePoint getLastSavePoint();
+  public void rollback(CDOSavepoint savepoint, boolean remote);
+
+  /**
+   * @since 2.0
+   */
+  public void rollback(CDOSavepoint savepoint);
+
+  /**
+   * @since 2.0
+   */
+  public CDOSavepoint setSavepoint();
+
+  /**
+   * @since 2.0
+   */
+  public CDOSavepoint getLastSavepoint();
 
   public void addHandler(CDOTransactionHandler handler);
 

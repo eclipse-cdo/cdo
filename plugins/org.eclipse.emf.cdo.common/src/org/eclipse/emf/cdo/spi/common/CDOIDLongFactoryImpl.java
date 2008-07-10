@@ -35,13 +35,13 @@ public class CDOIDLongFactoryImpl implements CDOIDObjectFactory
   {
     return new CDOIDLongImpl();
   }
-  
+
   /**
    * @since 2.0
    */
-  public CDOIDObject createCDOIDObject(String in)
+  public CDOIDObject createCDOIDObject(String fragmentPart)
   {
-    return new CDOIDLongImpl(Long.valueOf(in));
+    return new CDOIDLongImpl();
   }
 
   public LibraryHandler getLibraryHandler()

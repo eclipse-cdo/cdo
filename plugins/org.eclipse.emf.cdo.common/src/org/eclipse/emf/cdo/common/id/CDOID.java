@@ -32,11 +32,12 @@ public interface CDOID extends Serializable
   public boolean isMeta();
 
   public boolean isTemporary();
-  
+
   /**
    * @since 2.0
    */
-  public String getCDOIDString();
+  public String asString();
+
   /**
    * @author Eike Stepper
    */

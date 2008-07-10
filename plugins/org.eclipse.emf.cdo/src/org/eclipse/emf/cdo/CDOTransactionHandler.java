@@ -39,12 +39,13 @@ public interface CDOTransactionHandler
    * transaction.
    */
   public void committingTransaction(CDOTransaction transaction);
-  
+
   /**
-   * Called by a <code>CDOTransaction</code> <b>after</b> it is being rolled back. If the implementor of this method
-   * throw an exception other listener would not be notify and the exception will be propagated.
+   * Called by a <code>CDOTransaction</code> <b>after</b> it is rolled back. If the implementor of this method throws an
+   * exception other handlers will be notified and the exception will be logged as an error.
+   * 
    * @since 2.0
    */
-  public void rollingbackTransaction(CDOTransaction transaction);
+  public void rolledBackTransaction(CDOTransaction transaction);
 
 }

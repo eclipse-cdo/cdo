@@ -8,21 +8,15 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.common.query;
+package org.eclipse.emf.cdo;
 
-import java.util.Map;
+import org.eclipse.emf.common.notify.Adapter;
 
 /**
  * @author Simon McDuff
  * @since 2.0
  */
-public interface CDOQueryParameter
+public interface CDOAdapter extends Adapter
 {
-  String getQueryLanguage();
 
-  String getQueryString();
-
-  Map<String, Object> getParameters();
-
-  int getMaxResult();
 }

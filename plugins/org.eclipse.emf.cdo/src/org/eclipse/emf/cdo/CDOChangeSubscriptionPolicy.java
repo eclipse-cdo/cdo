@@ -27,6 +27,14 @@ public interface CDOChangeSubscriptionPolicy
     }
   };
   
+  public static CDOChangeSubscriptionPolicy ONLY_CDOADAPTER =  new CDOChangeSubscriptionPolicy()
+  {
+    public boolean valid(EObject eObject, Adapter adapter)
+    {
+      return (adapter instanceof CDOAdapter);
+    }
+  };
+
   public static CDOChangeSubscriptionPolicy ALL =  new CDOChangeSubscriptionPolicy()
   {
     public boolean valid(EObject eObject, Adapter adapter)

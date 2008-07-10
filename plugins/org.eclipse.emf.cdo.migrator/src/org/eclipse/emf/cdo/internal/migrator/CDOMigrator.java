@@ -18,8 +18,11 @@ import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -78,7 +81,36 @@ public abstract class CDOMigrator
       builder.append("\n");
     }
 
-    IFolder folder = project.getFolder("META-INF");
+    IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+    IFolder modelFolder = root.getFolder(new Path(genModel.getModelDirectory()));
+    IProject modelProject = modelFolder.getProject();
+    if (!modelProject.exists())
+    {
+      try
+      {
+        modelProject.create(new NullProgressMonitor());
+        builder.append("Created target model project\n");
+      }
+      catch (CoreException ex)
+      {
+        throw new WrappedException(ex);
+      }
+    }
+
+    if (!modelProject.isOpen())
+    {
+      try
+      {
+        modelProject.open(new NullProgressMonitor());
+        builder.append("Opened target model project\n");
+      }
+      catch (CoreException ex)
+      {
+        throw new WrappedException(ex);
+      }
+    }
+
+    IFolder folder = modelProject.getFolder("META-INF");
     if (!folder.exists())
     {
       try

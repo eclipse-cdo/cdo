@@ -111,6 +111,21 @@ public class CDOAutoAttacher implements CDOTransactionHandler
     res.getContents().add((InternalCDOObject)object);
   }
 
+  private void check(Resource resource, EReference reference, EObject element)
+  {
+    if (element != null && element.eResource() == null)
+    {
+      if (reference.isContainment())
+      {
+        handle(resource, element);
+      }
+      else
+      {
+        persist(resource, element);
+      }
+    }
+  }
+
   /**
    * @param eObject
    */
@@ -124,35 +139,12 @@ public class CDOAutoAttacher implements CDOTransactionHandler
         List<EObject> list = (List<EObject>)eObject.eGet(reference);
         for (EObject element : list)
         {
-          if (element.eResource() == null)
-          {
-            if (reference.isContainment())
-            {
-              handle(resource, element);
-            }
-            else
-            {
-              persist(resource, element);
-            }
-          }
+          check(resource, reference, element);
         }
       }
       else
       {
-        EObject element = (EObject)eObject.eGet(reference);
-
-        if (element != null && element.eResource() == null)
-        {
-          // objectsAdded.add(element);
-          if (reference.isContainment())
-          {
-            handle(resource, element);
-          }
-          else
-          {
-            persist(resource, element);
-          }
-        }
+        check(resource, reference, (EObject)eObject.eGet(reference));
       }
     }
 

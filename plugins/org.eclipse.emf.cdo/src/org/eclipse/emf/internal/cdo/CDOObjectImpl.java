@@ -220,7 +220,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         populateRevisionFeature(view, revision, eFeature, eSettings, i);
       }
     }
-    
+
     if (eBasicAdapters() != null)
     {
       for (Adapter adapter : eBasicAdapters())
@@ -228,7 +228,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         cdoView().subscribe(this, adapter);
       }
     }
-    
+
   }
 
   @SuppressWarnings("unchecked")
@@ -384,7 +384,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (eAdapters == null)
     {
-      eAdapters =  new EAdapterList<Adapter>(this)
+      eAdapters = new EAdapterList<Adapter>(this)
       {
         private static final long serialVersionUID = 1L;
 

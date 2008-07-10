@@ -36,7 +36,7 @@ import java.util.Set;
 public class QueryTest extends AbstractCDOTest
 {
   static String LANGUAGE_TEST = "TEST";
-  
+
   public void testBasicQuery() throws Exception
   {
 
@@ -70,7 +70,7 @@ public class QueryTest extends AbstractCDOTest
     transaction.close();
     session.close();
   }
-  
+
   public void testBasicQuery_EClassParameter() throws Exception
   {
 
@@ -94,19 +94,20 @@ public class QueryTest extends AbstractCDOTest
     transaction.commit();
 
     System.out.println(category1.eClass().getEPackage().getNsURI());
-    
+
     CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST, "TEST");
-    
+
     cdoQuery.setParameter("context", Model1Package.eINSTANCE.getCategory());
-    
+
     List<Category> queryResult = cdoQuery.getResultList(Category.class);
-    
+
     assertEquals(1, queryResult.size());
     assertEquals(category1, queryResult.get(0));
-    
+
     transaction.close();
     session.close();
   }
+
   public void testQueryCancel_successful() throws Exception
   {
     CDOTransaction transaction = initialize(100);

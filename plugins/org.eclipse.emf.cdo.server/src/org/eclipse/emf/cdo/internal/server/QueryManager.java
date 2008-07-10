@@ -117,16 +117,16 @@ public class QueryManager
       ResultWriterQueue<Object> resultQueue = queryResult.getResultWriterQueue();
 
       CloseableIterator<Object> itrResult = null;
-      
+
       try
       {
         itrResult = reader.createQueryIterator(queryResult.getQueryParameter());
-        
+
         int maxResult = queryResult.getQueryParameter().getMaxResult();
-        
+
         if (maxResult < 0) maxResult = Integer.MAX_VALUE;
-        
-        for (int i =0; i < maxResult && itrResult.hasNext(); i++)
+
+        for (int i = 0; i < maxResult && itrResult.hasNext(); i++)
         {
           resultQueue.add(itrResult.next());
         }
@@ -142,9 +142,8 @@ public class QueryManager
       finally
       {
         resultQueue.release();
-        
-        if (itrResult != null)
-          itrResult.close();
+
+        if (itrResult != null) itrResult.close();
 
         unregisterQueryNative(this);
 

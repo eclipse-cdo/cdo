@@ -23,4 +23,10 @@ public interface CDOProtocolSession
   public CDOProtocolView getView(int viewID);
 
   public boolean isLegacySupportEnabled();
+
+  /**
+   * @since 2.0
+   */
+  public boolean isPassiveUpdateEnabled();
+
 }

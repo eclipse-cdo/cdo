@@ -47,27 +47,28 @@ public class ChangeSubscriptionIndication extends CDOReadIndication
 
     int viewID = in.readInt();
     boolean clear = in.readBoolean();
-    
+
     int size = in.readInt();
-    boolean registered = true;
+    boolean subscribeMode = true;
     if (size <= 0)
     {
-      registered = false;
+      subscribeMode = false;
       size = -size;
     }
-    
+
     IView view = getSession().getView(viewID);
-    
+
     if (clear)
     {
-      if (PROTOCOL.isEnabled())  PROTOCOL.trace("Clear subscription");
+      if (PROTOCOL.isEnabled()) PROTOCOL.trace("Clear subscription");
+
       view.clearChangeSubscription();
     }
-    
+
     for (int i = 0; i < size; i++)
     {
       CDOID id = CDOIDUtil.read(in, factory);
-      if (registered)
+      if (subscribeMode)
         view.subscribe(id);
       else
         view.unsubscribe(id);

@@ -110,7 +110,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   private CDOID lastLookupID;
 
   private InternalCDOObject lastLookupObject;
-  
+
   /**
    * @since 2.0
    */
@@ -121,7 +121,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   protected CDOChangeSubscriptionPolicy changeSubscriptionPolicy = CDOChangeSubscriptionPolicy.NONE;
 
-
   public CDOViewImpl(int id, CDOSessionImpl session)
   {
     viewID = id;
@@ -130,7 +129,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     loadRevisionCollectionChunkSize = OM.PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE.getValue();
     objects = createObjectsMap();
   }
-
 
   /**
    * @since 2.0
@@ -207,7 +205,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     this.invalidationNotificationsEnabled = invalidationNotificationsEnabled;
   }
-  
+
   /**
    * @since 2.0
    */
@@ -228,7 +226,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       changeSubscriptionManager.notifyChangeSubcriptionPolicy();
     }
   }
-
 
   public int getLoadRevisionCollectionChunkSize()
   {
@@ -265,7 +262,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     CDOID id = getResourceID(path);
     return id != null && !id.isNull();
   }
-  
+
   /**
    * @since 2.0
    */
@@ -289,7 +286,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       throw new TransactionException(ex);
     }
   }
-  
+
   /**
    * @since 2.0
    */
@@ -297,7 +294,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     return Collections.unmodifiableMap(objects);
   }
-  
+
   public CDOResource getResource(String path)
   {
     URI uri = CDOUtil.createResourceURI(path);
@@ -390,7 +387,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
     if (id == null || id.isNull()) return null;
-    
+
     synchronized (objects)
     {
       if (id.equals(lastLookupID))
@@ -670,8 +667,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    * @param dirtyOIDs
    *          A set of the object IDs to be invalidated. <b>Implementation note:</b> This implementation expects the
    *          dirtyOIDs set to be unmodifiable. It does not wrap the set (again).
+   * @since 2.0
    */
-  public void notifyInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs)
+  public void handleInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs)
   {
     List<InternalCDOObject> dirtyObjects = invalidationNotificationsEnabled ? new ArrayList<InternalCDOObject>() : null;
     for (CDOIDAndVersion dirtyOID : dirtyOIDs)
@@ -701,11 +699,11 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       }
     }
   }
-  
+
   /**
    * @since 2.0
    */
-  public void notifyChangeSubcription(Collection<CDORevisionDelta> deltas)
+  public void handleChangeSubcription(Collection<CDORevisionDelta> deltas)
   {
     if (deltas != null && getChangeSubscriptionPolicy() != CDOChangeSubscriptionPolicy.NONE)
     {
@@ -722,6 +720,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       }
     }
   }
+
   public int reload(CDOObject... objects)
   {
     Collection<InternalCDOObject> internalObjects;
@@ -977,8 +976,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       return MessageFormat.format("CDOViewResourcesEvent[source={0}, {1}={2}]", getSource(), resourcePath, kind);
     }
   }
-  
-  
+
   /**
    * @since 2.0
    */
@@ -1151,5 +1149,5 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     {
       subscribe(eObject, adapter, -1);
     }
-  }  
+  }
 }

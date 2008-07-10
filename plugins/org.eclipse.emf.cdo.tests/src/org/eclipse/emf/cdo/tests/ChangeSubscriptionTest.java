@@ -540,13 +540,12 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     for (Notification notification : adapter.getNotifications())
     {
       CDONotification cdoNotification = (CDONotification)notification;
-      
+
       if (adapter.getNotifications().size() - 1 == count)
-        assertEquals(false,cdoNotification.hasNext());
+        assertEquals(false, cdoNotification.hasNext());
       else
-        assertEquals(true,cdoNotification.hasNext());
-      
-      
+        assertEquals(true, cdoNotification.hasNext());
+
       if (notification.getFeature() == Model1Package.eINSTANCE.getCategory_Name())
       {
         assertEquals(Notification.SET, notification.getEventType());
@@ -566,9 +565,9 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       }
       else
         assertEquals(false, false);
-      
+
       count++;
-      
+
     }
 
   }

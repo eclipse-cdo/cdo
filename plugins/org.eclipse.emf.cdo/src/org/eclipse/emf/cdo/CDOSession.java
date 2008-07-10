@@ -67,35 +67,30 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
   public CDOAudit openAudit(long timeStamp);
 
   /**
-   * Specifies whether object will be invalidate from others users changes. 
+   * Specifies whether object will be invalidate from others users changes.
    * <p>
    * By default this value is enabled.
    * <p>
-   * If you disabled this property, you can still have the latest version of objects by calling refresh
+   * If you disabled this property, you can still have the latest version of objects by calling refresh.
    * <p>
-   * You would disabled it, in the case where you need performance and/or want to control when objects will be 
-   * refreshed.
+   * You would disabled it in the case where you need performance and/or want to control when objects will be refresh.
    * <p>
-   * When we activate it, it will perform a refresh to be in sync with the server. 
+   * When we enable it, it will automatically perform a refresh to be in sync with the server.
+   * 
    * @since 2.0
    */
   public void setPassiveUpdateEnabled(boolean enable);
-  
+
   /**
-   * @since 2.0
-   */
-  public boolean isPassiveUpdateEnabled();
-  
-  /**
-   * Refresh objects cache. 
+   * Refresh objects cache.
    * <p>
-   * Take CDOID and version of all objects in the cache, sent it to the server. 
-   * It will return only dirty objects.
+   * Take CDOID and version of all objects in the cache, sent it to the server. It will return only dirty objects.
    * <p>
    * In the case where <code>isPassiveUpdateEnabled<code> is true, it will return immediately without doing anything.
+   * 
    * @since 2.0
    */
   public Set<CDOIDAndVersion> refresh();
-  
+
   public void close();
 }

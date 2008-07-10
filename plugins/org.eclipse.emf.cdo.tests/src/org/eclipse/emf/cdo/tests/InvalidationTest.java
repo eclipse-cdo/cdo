@@ -455,9 +455,9 @@ public class InvalidationTest extends AbstractCDOTest
 
     msg("Committing");
     transaction.commit();
-    
+
     URI uriCategory1 = EcoreUtil.getURI(category1A);
-    
+
     // ************************************************************* //
 
     msg("Opening sessionB");
@@ -499,6 +499,7 @@ public class InvalidationTest extends AbstractCDOTest
     assertEquals(false, timeOuter.timedOut());
 
   }
+
   public void testPassiveUpdateOnAndOff() throws Exception
   {
     msg("Creating category1");
@@ -546,18 +547,18 @@ public class InvalidationTest extends AbstractCDOTest
 
     msg("Attaching viewB");
     final CDOView viewB = sessionB.openTransaction();
-    
+
     final Category category1B = (Category)viewB.getResourceSet().getEObject(uriCategory1, true);
-    
+
     // ************************************************************* //
     msg("Opening sessionB");
     final CDOSession sessionC = openModel1Session();
-    
+
     assertEquals(true, sessionC.isPassiveUpdateEnabled());
-    
+
     msg("Attaching viewB");
     final CDOView viewC = sessionC.openTransaction();
-    
+
     final Category category1C = (Category)viewC.getResourceSet().getEObject(uriCategory1, true);
 
     msg("Changing name");
@@ -571,7 +572,7 @@ public class InvalidationTest extends AbstractCDOTest
         return "CHANGED NAME".equals(category1B.getName());
       }
     };
-    
+
     ITimeOuter timeOuterC = new PollingTimeOuter(10, 100)
     {
       @Override
@@ -598,9 +599,9 @@ public class InvalidationTest extends AbstractCDOTest
     msg("Checking after sync");
     assertEquals(false, timeOuterB.timedOut());
     assertEquals(false, timeOuterC.timedOut());
-    
+
     category1A.setName("CHANGED NAME-VERSION2");
-    
+
     ITimeOuter timeOuterB_2 = new PollingTimeOuter(10, 100)
     {
       @Override
@@ -609,7 +610,7 @@ public class InvalidationTest extends AbstractCDOTest
         return "CHANGED NAME-VERSION2".equals(category1B.getName());
       }
     };
-    
+
     ITimeOuter timeOuterC_2 = new PollingTimeOuter(10, 100)
     {
       @Override
@@ -628,6 +629,6 @@ public class InvalidationTest extends AbstractCDOTest
 
     assertEquals(false, timeOuterB_2.timedOut());
     assertEquals(false, timeOuterC_2.timedOut());
-    
-  }  
+
+  }
 }

@@ -35,17 +35,18 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
   private int viewID;
 
   private List<CDOID> cdoIDs;
-  
-  private boolean registered;
-  
+
+  private boolean subscribeMode;
+
   private boolean clear;
 
-  public ChangeSubscriptionRequest(IChannel channel, int viewID, List<CDOID> cdoIDs, boolean registered, boolean clear)
+  public ChangeSubscriptionRequest(IChannel channel, int viewID, List<CDOID> cdoIDs, boolean subscribeMode,
+      boolean clear)
   {
     super(channel);
     this.viewID = viewID;
     this.cdoIDs = cdoIDs;
-    this.registered = registered;
+    this.subscribeMode = subscribeMode;
     this.clear = clear;
   }
 
@@ -62,9 +63,9 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
 
     out.writeInt(viewID);
     out.writeBoolean(clear);
-    out.writeInt(registered ? cdoIDs.size() : -cdoIDs.size());
+    out.writeInt(subscribeMode ? cdoIDs.size() : -cdoIDs.size());
     for (CDOID id : cdoIDs)
-       CDOIDUtil.write(out, id);
+      CDOIDUtil.write(out, id);
   }
 
   @Override

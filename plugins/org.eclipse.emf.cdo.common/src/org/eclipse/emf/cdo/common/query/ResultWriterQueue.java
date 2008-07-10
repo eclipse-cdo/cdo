@@ -17,8 +17,8 @@ import java.util.Queue;
  * @since 2.0
  */
 public interface ResultWriterQueue<E> extends Queue<E>
-{ 
+{
   void setException(RuntimeException exception);
-  
+
   void release();
 }

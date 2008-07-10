@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.util;
 
-
 /**
  * @author Simon McDuff
  * @since 2.0
@@ -18,48 +17,48 @@ package org.eclipse.emf.cdo.common.util;
 public class PropertyChanged<T>
 {
   Object notifier = new Object();
-  
+
   T value;
-  
+
   RuntimeException exception = null;
-  
+
   public PropertyChanged(T value)
   {
     this.value = value;
   }
-  
+
   public T get()
   {
     return value;
   }
-  
+
   public void set(T newValue)
   {
-    synchronized(notifier)
+    synchronized (notifier)
     {
       value = newValue;
       notifier.notifyAll();
     }
   }
-  
+
   public void setException(RuntimeException exception)
   {
-    synchronized(notifier)
+    synchronized (notifier)
     {
       this.exception = exception;
       notifier.notifyAll();
     }
   }
-  
+
   public void acquire(Object accept, Object refuse)
   {
     acquire(accept, refuse, 0);
   }
-  
+
   public void acquire(Object accept, Object refuse, long timeout)
   {
-    synchronized(notifier)
-    {      
+    synchronized (notifier)
+    {
       while (!equalToOneElement(accept, refuse))
       {
         try
@@ -73,19 +72,16 @@ public class PropertyChanged<T>
       }
     }
   }
-  
+
   private boolean equalToOneElement(Object accept, Object refuse)
   {
-    if (this.exception != null)
-      throw this.exception;
-    
-    if (accept != null && accept.equals(value))
-       return true;
-    
-    if (refuse != null && refuse.equals(value))
-       throw new IllegalStateException();
-    
-     return false;
+    if (this.exception != null) throw this.exception;
+
+    if (accept != null && accept.equals(value)) return true;
+
+    if (refuse != null && refuse.equals(value)) throw new IllegalStateException();
+
+    return false;
   }
-  
+
 }

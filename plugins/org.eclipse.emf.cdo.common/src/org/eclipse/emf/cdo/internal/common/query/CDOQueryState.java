@@ -15,8 +15,5 @@ package org.eclipse.emf.cdo.internal.common.query;
  */
 public enum CDOQueryState
 {
-  INIT,
-  ACTIVAT,
-  DONE,
-  CANCEL
+  INIT, ACTIVAT, DONE, CANCEL
 }

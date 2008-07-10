@@ -33,7 +33,7 @@ import java.util.Map;
 public class CDOInstanceUtil
 {
   public static Map<Class<?>, CDOType> idTypes = new HashMap<Class<?>, CDOType>();
-  
+
   static
   {
     idTypes.put(String.class, CDOType.STRING);
@@ -63,12 +63,13 @@ public class CDOInstanceUtil
       CDOModelUtil.writeClassRef(out, ((CDOClass)id).createClassRef(), null);
       return;
     }
-    
+
     out.writeByte(1);
-    
+
     writeInstance(out, id);
 
   }
+
   /**
    * @param out
    * @param id
@@ -84,23 +85,24 @@ public class CDOInstanceUtil
     {
       id = ((CDORevision)id).getID();
     }
-    
+
     CDOType type = null;
-    
+
     if (id instanceof CDOID)
     {
       type = CDOType.OBJECT;
     }
     else
     {
-       type = idTypes.get(id.getClass());
+      type = idTypes.get(id.getClass());
     }
-    
+
     if (type == null) throw new IllegalStateException("No type for object " + id.getClass());
 
     CDOModelUtil.writeType(out, type);
     type.writeValue(out, id);
   }
+
   /**
    * @param out
    * @param id
@@ -108,14 +110,15 @@ public class CDOInstanceUtil
    */
   static public Object readInstance(ExtendedDataInput in, CDOIDObjectFactory objectFactory) throws IOException
   {
-      CDOType type = CDOModelUtil.readType(in);
-      return type.readValue(in, objectFactory);
+    CDOType type = CDOModelUtil.readType(in);
+    return type.readValue(in, objectFactory);
   }
-  
-  static public Object readObject(ExtendedDataInput in, CDOIDObjectFactory objectFactory, CDOPackageManager packageManager) throws IOException
+
+  static public Object readObject(ExtendedDataInput in, CDOIDObjectFactory objectFactory,
+      CDOPackageManager packageManager) throws IOException
   {
     byte value = in.readByte();
-    
+
     if (value == 0)
     {
       return CDOModelUtil.readClassRef(in).resolve(packageManager);
@@ -123,7 +126,7 @@ public class CDOInstanceUtil
     else if (value == 1)
     {
       readInstance(in, objectFactory);
-     }
+    }
     throw new IllegalStateException();
-  }  
+  }
 }

@@ -21,10 +21,6 @@ import org.eclipse.emf.internal.cdo.protocol.QueryCancelRequest;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycleState;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 /**
  * @author Simon McDuff
  */
@@ -98,22 +94,6 @@ public class CDOQueryResultIteratorImpl<T> extends CDOAbstractQueryResultImpl<T>
     {
       throw new RuntimeException(ex);
     }
-  }
-
-  public boolean cancel(boolean arg0)
-  {
-    close();
-    return true;
-  }
-
-  public T get() throws InterruptedException, ExecutionException
-  {
-    return null;
-  }
-
-  public T get(long arg0, TimeUnit arg1) throws InterruptedException, ExecutionException, TimeoutException
-  {
-    return null;
   }
 
   public boolean isCancelled()

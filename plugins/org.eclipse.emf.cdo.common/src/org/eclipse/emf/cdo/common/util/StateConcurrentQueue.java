@@ -21,11 +21,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class StateConcurrentQueue<E> extends ConcurrentLinkedQueue<E> implements ResultWriterQueue<E>
 {
   private static final long serialVersionUID = 1L;
-  
+
   private boolean done = false;
 
   private RuntimeException exception = null;
- 
+
   public StateConcurrentQueue()
   {
   }
@@ -34,7 +34,7 @@ public class StateConcurrentQueue<E> extends ConcurrentLinkedQueue<E> implements
   {
     this.exception = exception;
   }
-  
+
   public E poll()
   {
     if (exception != null) throw exception;
@@ -49,20 +49,11 @@ public class StateConcurrentQueue<E> extends ConcurrentLinkedQueue<E> implements
 
   public void release()
   {
-    done = true; 
+    done = true;
   }
 
   public void setException(RuntimeException exception)
   {
     this.exception = exception;
   }
-  
-  public void isReleased()
-  {
-    synchronized(this)
-    {
-      
-    }
-  }
-  
 }

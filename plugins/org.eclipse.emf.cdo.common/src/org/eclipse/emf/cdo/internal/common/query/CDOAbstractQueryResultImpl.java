@@ -22,11 +22,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
 /**
  * @author Simon McDuff
  */
-public abstract class  CDOAbstractQueryResultImpl<T> extends Lifecycle implements ResultReaderQueue<T>
+public abstract class CDOAbstractQueryResultImpl<T> extends Lifecycle implements ResultReaderQueue<T>
 {
   protected long queryID = -1;
 
@@ -35,17 +34,17 @@ public abstract class  CDOAbstractQueryResultImpl<T> extends Lifecycle implement
   protected StateConcurrentQueue<Object> queue = new StateConcurrentQueue<Object>();
 
   protected Iterator<Object> nextObject = new PollIterator<Object>(queue);
-  
+
   public CDOAbstractQueryResultImpl(CDOQueryParameter cdoQueryParameter)
   {
     this.cdoQueryParameter = cdoQueryParameter;
   }
-  
+
   public ResultWriterQueue<Object> getResultQueue()
   {
     return queue;
   }
-  
+
   public void setQueryID(long queryID)
   {
     this.queryID = queryID;

@@ -39,7 +39,7 @@ public class PollIterator<E> implements Iterator<E>
       }
       catch (InterruptedException ex)
       {
-       Thread.currentThread().interrupt();
+        Thread.currentThread().interrupt();
       }
     }
 

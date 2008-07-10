@@ -56,7 +56,7 @@ public class QueryResult
   {
     return view;
   }
-  
+
   public long getQueryID()
   {
     return queryID;

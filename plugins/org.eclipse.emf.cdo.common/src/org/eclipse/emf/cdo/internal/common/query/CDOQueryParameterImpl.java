@@ -22,71 +22,71 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
 /**
  * @author Simon McDuff
  */
 public class CDOQueryParameterImpl implements CDOQueryParameter
 {
-	private String queryLanguage;
-	
-	private String queryString;
-	
-	private Map<String, Object> parameters = new HashMap<String, Object>();
-	
-	private int maxResult = -1;
-	
-	public CDOQueryParameterImpl(String language, String queryString)
-	{
-		this.queryLanguage = language;
-		this.queryString = queryString;
-	}
-	
-	public CDOQueryParameterImpl(ExtendedDataInput in, CDOIDObjectFactory objectFactory, CDOPackageManager packageManager) throws IOException
-	{
-		queryLanguage = in.readString();
-		queryString = in.readString();
-		maxResult = in.readInt();
-		
-		int size = in.readInt();
-		for (int i =0; i< size; i++)
-		{
-		  String key = in.readString();
-		  Object object = CDOInstanceUtil.readObject(in, objectFactory, packageManager);
-		  parameters.put(key, object);
-		}
-	}
-	
-	public void write(ExtendedDataOutput out) throws IOException
-	{
-	   out.writeString(queryLanguage);
-	   out.writeString(queryString);
-	   out.writeInt(maxResult);
-	   
-	   out.writeInt(parameters.size());
-	   for (Entry<String, Object> entry : parameters.entrySet())
-	   {
-		   out.writeString(entry.getKey());
-		   Object value = entry.getValue();
-		   CDOInstanceUtil.writeObject(out, value);
-	   }
-	}
+  private String queryLanguage;
 
-	
+  private String queryString;
 
-	public String getQueryString()
-	{
-		return queryString;
-	}
-	
-	public String getQueryLanguage()
-	{
-		return this.queryLanguage;
-	}
-	
-	public Map<String, Object> getParameters()
-	{
-	  return parameters;
-	}
+  private Map<String, Object> parameters = new HashMap<String, Object>();
+
+  private int maxResult = -1;
+
+  public CDOQueryParameterImpl(String language, String queryString)
+  {
+    this.queryLanguage = language;
+    this.queryString = queryString;
+  }
+
+  public CDOQueryParameterImpl(ExtendedDataInput in, CDOIDObjectFactory objectFactory, CDOPackageManager packageManager)
+      throws IOException
+  {
+    queryLanguage = in.readString();
+    queryString = in.readString();
+    maxResult = in.readInt();
+
+    int size = in.readInt();
+    for (int i = 0; i < size; i++)
+    {
+      String key = in.readString();
+      Object object = CDOInstanceUtil.readObject(in, objectFactory, packageManager);
+      parameters.put(key, object);
+    }
+  }
+
+  public void write(ExtendedDataOutput out) throws IOException
+  {
+    out.writeString(queryLanguage);
+    out.writeString(queryString);
+    out.writeInt(maxResult);
+
+    out.writeInt(parameters.size());
+    for (Entry<String, Object> entry : parameters.entrySet())
+    {
+      out.writeString(entry.getKey());
+      Object value = entry.getValue();
+      CDOInstanceUtil.writeObject(out, value);
+    }
+  }
+
+  public String getQueryString()
+  {
+    return queryString;
+  }
+
+  public String getQueryLanguage()
+  {
+    return this.queryLanguage;
+  }
+
+  public Map<String, Object> getParameters()
+  {
+    return parameters;
+  }
 
   public int getMaxResult()
   {

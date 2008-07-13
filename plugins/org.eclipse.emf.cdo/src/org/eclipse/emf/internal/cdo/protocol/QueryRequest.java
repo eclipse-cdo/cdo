@@ -66,23 +66,30 @@ public class QueryRequest extends CDOClientRequest<Object>
     cdoQuery.write(out);
 
   }
-  
+
   @Override
   protected List<Object> confirming(ExtendedDataInputStream in) throws IOException
   {
 
     List<Object> returnList = new ArrayList<Object>();
-    
+
     queryResult.setQueryID(in.readLong());
-    
+
     LifecycleUtil.activate(queryResult);
-    
+
     ResultWriterQueue<Object> resulQueue = queryResult.getResultQueue();
-    
+
     try
     {
       int numberOfObjectReceived = 0;
-      
+
+      /**
+       * state == 0 : Result
+       * <p>
+       * state == 1 : No more result
+       * <p>
+       * state == 2 : Exception
+       */
       while (true)
       {
         byte state = in.readByte();
@@ -93,7 +100,7 @@ public class QueryRequest extends CDOClientRequest<Object>
           Object element = CDOInstanceUtil.readInstance(in, getSession());
 
           resulQueue.add(element);
-          
+
           numberOfObjectReceived++;
         }
         else if (state == 1)
@@ -107,8 +114,10 @@ public class QueryRequest extends CDOClientRequest<Object>
           String exceptionString = in.readString();
           throw new RuntimeException(exceptionString);
         }
+        else
+          throw new IllegalStateException();
       }
-      
+
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.trace("Query executed [" + numberOfObjectReceived + " elements received]");
@@ -117,7 +126,7 @@ public class QueryRequest extends CDOClientRequest<Object>
     catch (RuntimeException ex)
     {
       resulQueue.setException(ex);
-      
+
     }
     catch (Throwable throwable)
     {
@@ -127,7 +136,7 @@ public class QueryRequest extends CDOClientRequest<Object>
     {
       resulQueue.release();
     }
-    
+
     return returnList;
   }
 }

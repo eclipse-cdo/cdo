@@ -131,9 +131,9 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   {
     CDORevision revision = getStore().getRevision(id);
 
-    CDOPathFeature pathFeature = getStore().getRepository().getPackageManager().getCDOResourcePackage().getCDOResourceClass()
-    .getCDOPathFeature();
-    
+    CDOPathFeature pathFeature = getStore().getRepository().getPackageManager().getCDOResourcePackage()
+        .getCDOResourceClass().getCDOPathFeature();
+
     String p = (String)revision.getData().get(pathFeature, 0);
     return p;
 
@@ -199,16 +199,16 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     if (queryParameter.getQueryLanguage().equals("TEST"))
     {
       // queryParameter.getQueryString().equals("SLOW");
-      MEMStoreQueryIterator queryExecution =  new MEMStoreQueryIterator(this.getStore());
-      
+      MEMStoreQueryIterator queryExecution = new MEMStoreQueryIterator(this.getStore());
+
       Object context = queryParameter.getParameters().get("context");
-      
+
       if (context != null)
       {
         if (context instanceof CDOClass)
         {
           final CDOClass cdoClass = (CDOClass)context;
-          
+
           queryExecution.addFilter(new Object()
           {
 
@@ -216,16 +216,15 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
             public boolean equals(Object obj)
             {
               CDORevision revision = (CDORevision)obj;
-              return revision.getCDOClass().equals( cdoClass );
+              return revision.getCDOClass().equals(cdoClass);
             }
-            
-          }
-          );
+
+          });
         }
       }
-      
+
       queryExecution.activate();
-      
+
       return queryExecution;
     }
     throw new RuntimeException("Unsupported language " + queryParameter.getQueryLanguage());
@@ -237,6 +236,6 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
    */
   public void refreshRevisions()
   {
-    
-  }  
+
+  }
 }

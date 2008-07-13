@@ -24,13 +24,13 @@ import java.util.ListIterator;
 /**
  * @author Simon McDuff
  */
-public class ECDOIDList<T> implements EList<T>
+public class ECDOList<T> implements EList<T>
 {
   private List<Object> listOfIDs;
 
   private CDOView cdoView;
 
-  public ECDOIDList(CDOView view, List<Object> list)
+  public ECDOList(CDOView view, List<Object> list)
   {
     this.listOfIDs = list;
     this.cdoView = view;
@@ -77,7 +77,7 @@ public class ECDOIDList<T> implements EList<T>
 
   public void move(int newPosition, T object)
   {
-
+    throw new UnsupportedOperationException();
   }
 
   public T move(int newPosition, int oldPosition)
@@ -127,7 +127,7 @@ public class ECDOIDList<T> implements EList<T>
 
   public ListIterator<T> listIterator(int arg0)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public boolean remove(Object arg0)
@@ -169,7 +169,7 @@ public class ECDOIDList<T> implements EList<T>
   {
     throw new UnsupportedOperationException();
   }
-  
+
   @SuppressWarnings("hiding")
   public <T> T[] toArray(T[] arg0)
   {

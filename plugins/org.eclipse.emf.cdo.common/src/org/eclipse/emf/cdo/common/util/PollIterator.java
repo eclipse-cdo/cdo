@@ -52,6 +52,7 @@ public class PollIterator<E> implements Iterator<E>
 
   public void remove()
   {
+    throw new UnsupportedOperationException();
   }
 
 }

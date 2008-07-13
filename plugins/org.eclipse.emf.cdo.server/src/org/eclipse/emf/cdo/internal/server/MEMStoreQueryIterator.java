@@ -69,16 +69,6 @@ public class MEMStoreQueryIterator implements CloseableIterator<Object>
 
   public boolean hasNext()
   {
-    try
-    {
-      // @TODO only for test purpose need to be removed.
-      Thread.sleep(500);
-    }
-    catch (InterruptedException ex)
-    {
-      Thread.currentThread().interrupt();
-    }
-
     return nextObject != null;
   }
 

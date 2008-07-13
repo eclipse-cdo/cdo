@@ -18,5 +18,10 @@ import org.eclipse.emf.cdo.common.query.ResultReaderQueue;
  */
 public interface CDOQueryResult<T> extends ResultReaderQueue<T>
 {
-
+  /**
+   * It will throw an exception if not running.
+   * <p>
+   * Use close to terminate the query without throwing an exception
+   */
+  void cancel();
 }

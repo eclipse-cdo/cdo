@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 
-import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 import org.eclipse.emf.internal.cdo.query.CDOQueryResultIteratorImpl;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -59,7 +58,7 @@ public class QueryTest extends AbstractCDOTest
 
     transaction.commit();
 
-    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST, "TEST");
+    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST, "QUERYSTRING");
     List<Object> queryResult = cdoQuery.getResultList(Object.class);
     assertEquals(3, queryResult.size());
     for (Object object : queryResult)
@@ -95,7 +94,7 @@ public class QueryTest extends AbstractCDOTest
 
     System.out.println(category1.eClass().getEPackage().getNsURI());
 
-    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST, "TEST");
+    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST, "QUERYSTRING");
 
     cdoQuery.setParameter("context", Model1Package.eINSTANCE.getCategory());
 
@@ -110,10 +109,10 @@ public class QueryTest extends AbstractCDOTest
 
   public void testQueryCancel_successful() throws Exception
   {
-    CDOTransaction transaction = initialize(100);
+    CDOTransaction transaction = initialize(1000);
 
-    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST, "TEST");
-    CloseableIterator<Object> queryResult = ((CDOQueryImpl)cdoQuery).getResultIterator(Object.class);
+    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST, "QUERYSTRING");
+    CloseableIterator<Object> queryResult = cdoQuery.getResultIterator(Object.class);
 
     queryResult.close();
 
@@ -128,7 +127,7 @@ public class QueryTest extends AbstractCDOTest
   {
     CDOTransaction transaction = initialize(100);
 
-    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST, "TEST");
+    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST, "QUERYSTRING");
     CloseableIterator<Object> queryResult = cdoQuery.getResultIterator(Object.class);
 
     Thread.sleep(300);
@@ -143,7 +142,7 @@ public class QueryTest extends AbstractCDOTest
   {
     CDOTransaction transaction = initialize(100);
 
-    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST, "TEST");
+    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST, "QUERYSTRING");
     CloseableIterator<Object> queryResult = cdoQuery.getResultIterator(Object.class);
 
     Thread.sleep(300);
@@ -159,17 +158,18 @@ public class QueryTest extends AbstractCDOTest
   {
     CDOTransaction transaction = initialize(2);
 
-    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST, "TEST");
+    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST, "QUERYSTRING");
     CDOQueryResult<Object> queryResult = cdoQuery.getResultIterator(Object.class);
 
     while (!queryResult.isDone())
     {
       Thread.sleep(10);
     }
+
     try
     {
-      queryResult.close();
-      assertEquals(false, true);
+      queryResult.cancel();
+      fail("Should throw an exception");
     }
     catch (Exception exception)
     {
@@ -184,7 +184,7 @@ public class QueryTest extends AbstractCDOTest
   {
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
-
+    transaction.setUniqueResourceContents(false);
     CDOResource resource1 = transaction.createResource("/test1");
 
     for (int i = 0; i < number; i++)

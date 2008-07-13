@@ -52,9 +52,9 @@ public class CDOQueryImpl implements CDOQuery
   {
     CDOQueryParameterImpl queryParameter = new CDOQueryParameterImpl(this.queryParameter.getQueryLanguage(),
         this.queryParameter.getQueryString());
-    
+
     queryParameter.setMaxResult(maxResult);
-    
+
     for (Entry<String, Object> entry : parameters.entrySet())
     {
       Object value = entry.getValue();

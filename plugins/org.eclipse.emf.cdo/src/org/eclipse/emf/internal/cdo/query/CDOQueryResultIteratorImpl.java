@@ -85,6 +85,18 @@ public class CDOQueryResultIteratorImpl<T> extends CDOAbstractQueryResultImpl<T>
 
   public void close()
   {
+    try
+    {
+      cancel();
+    }
+    catch (RuntimeException ex)
+    {
+      // Hide exception
+    }
+  }
+
+  public void cancel()
+  {
     cancelled = true;
     try
     {
@@ -94,6 +106,7 @@ public class CDOQueryResultIteratorImpl<T> extends CDOAbstractQueryResultImpl<T>
     {
       throw new RuntimeException(ex);
     }
+
   }
 
   public boolean isCancelled()

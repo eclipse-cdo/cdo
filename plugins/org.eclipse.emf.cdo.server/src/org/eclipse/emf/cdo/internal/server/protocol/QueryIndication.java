@@ -55,7 +55,7 @@ public class QueryIndication extends CDOReadIndication
     IView view = getSession().getView(viewID);
 
     QueryManager queryManager = getRepository().getQueryManager();
-    
+
     queryResult = queryManager.execute(view, cdoQuery);
   }
 
@@ -72,7 +72,6 @@ public class QueryIndication extends CDOReadIndication
       // Return queryID immediately.
       out.writeLong(queryResult.getQueryID());
       out.flush();
-
       while (queryResult.hasNext())
       {
         Object object = queryResult.next();
@@ -86,6 +85,7 @@ public class QueryIndication extends CDOReadIndication
         {
           // Flush only if empty
           out.flush();
+
         }
       }
       if (TRACER.isEnabled())

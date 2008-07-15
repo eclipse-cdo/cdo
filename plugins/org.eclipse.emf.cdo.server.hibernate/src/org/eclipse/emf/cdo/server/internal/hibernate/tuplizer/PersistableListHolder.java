@@ -66,6 +66,14 @@ public class PersistableListHolder
     return listMapping.get();
   }
 
+  /**
+   * @since 1.0 - 6 July 2008
+   */
+  public void clearListMapping()
+  {
+    listMapping.set(null);
+  }
+
   public static PersistableListHolder getInstance()
   {
     return instance;

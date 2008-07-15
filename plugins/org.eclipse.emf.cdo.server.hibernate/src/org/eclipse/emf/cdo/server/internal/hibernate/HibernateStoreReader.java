@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
@@ -20,9 +21,11 @@ import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreReader;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.CDOIDLongImpl;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -32,6 +35,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Expression;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -46,11 +50,13 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
   public HibernateStoreReader(HibernateStore store, ISession session)
   {
     super(store, session);
+    StoreUtil.setReader(this);
   }
 
   protected HibernateStoreReader(HibernateStore store, IView view)
   {
     super(store, view);
+    StoreUtil.setReader(this);
   }
 
   public HibernateStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature)
@@ -61,6 +67,25 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
   public CloseableIterator<CDOID> readObjectIDs(boolean withTypes)
   {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  // this method can disappear when in transaction commit the release
+  // of the accessor is done before the StoreUtil.setReader(null),
+  // see the Transaction
+  protected void doRelease()
+  {
+    try
+    {
+      // ugly cast
+      StoreUtil.setReader(this);
+      super.doRelease();
+    }
+    finally
+    {
+      StoreUtil.setReader(null);
+      HibernateThreadContext.setCommitContext(null);
+    }
   }
 
   public CDOClassRef readObjectType(CDOID id)
@@ -113,8 +138,14 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
       throw new IllegalArgumentException("ID must be not null");
     }
 
-    if (!(id instanceof CDOIDHibernate))
-    {
+    Serializable idValue;
+    if (id instanceof CDOIDLongImpl) {
+      idValue = ((CDOIDLongImpl)id).getLongValue();
+    } else if (id instanceof CDOIDTemp) {
+      idValue = new Long(((CDOIDTemp)id).getIntValue());
+    } else if (id instanceof CDOIDHibernate) {
+      idValue = ((CDOIDHibernate)id).getId();
+    } else {
       throw new IllegalArgumentException("ID type " + id.getClass().getName() + " not supported by hibernate reader");
     }
 
@@ -126,7 +157,7 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
     Session session = getHibernateSession();
     Query qry = session.createQuery("select path from " + CDOResourceClass.NAME + " where id=:id");
     CDOIDHibernate idHibernate = (CDOIDHibernate)id;
-    qry.setParameter("id", idHibernate.getId());
+    qry.setParameter("id", idValue);
     final List<?> result = qry.list();
     if (result.size() == 0)
     {

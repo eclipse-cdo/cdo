@@ -203,7 +203,10 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     }
 
     CDOFeature cdoFeature = getCDOClass().lookupFeature(mappedProperty.getName());
-    if (cdoFeature.isReference() && cdoFeature.isMany())
+    if (cdoFeature == null) {
+      return new CDOVirtualPropertyGetter(this, mappedProperty.getName());
+    } 
+    else if (cdoFeature.isReference() && cdoFeature.isMany())
     {
       return new CDOManyReferenceGetter(this, mappedProperty.getName());
     }
@@ -238,7 +241,10 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     }
 
     CDOFeature cdoFeature = getCDOClass().lookupFeature(mappedProperty.getName());
-    if (cdoFeature.isReference() && cdoFeature.isMany())
+    if (cdoFeature == null) {
+      return new CDOVirtualPropertySetter(this, mappedProperty.getName());
+    } 
+    else if (cdoFeature.isReference() && cdoFeature.isMany())
     {
       return new CDOManyReferenceSetter(this, mappedProperty.getName());
     }

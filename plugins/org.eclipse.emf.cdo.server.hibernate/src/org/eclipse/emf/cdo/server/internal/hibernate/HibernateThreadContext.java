@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
@@ -19,47 +20,12 @@ import org.hibernate.Session;
 
 /**
  * @author Martin Taal
- */
+ */ 
 public class HibernateThreadContext
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateThreadContext.class);
 
   private static ThreadLocal<HibernateCommitContext> commitContext = new ThreadLocal<HibernateCommitContext>();
-
-  private static ThreadLocal<Session> session = new ThreadLocal<Session>();
-
-  public static Session getSession()
-  {
-    Session result = session.get();
-    if (result == null)
-    {
-      throw new IllegalStateException("Session not set");
-    }
-
-    return result;
-  }
-
-  public static void setSession(Session newSession)
-  {
-    if (newSession != null && session.get() != null)
-    {
-      throw new IllegalStateException("Session already set");
-    }
-
-    if (TRACER.isEnabled())
-    {
-      if (newSession == null)
-      {
-        TRACER.trace("Clearing session in threadlocal");
-      }
-      else
-      {
-        TRACER.trace("Setting session in threadlocal");
-      }
-    }
-
-    session.set(newSession);
-  }
 
   public static HibernateCommitContext getHibernateCommitContext()
   {
@@ -76,7 +42,7 @@ public class HibernateThreadContext
   {
     return commitContext.get() != null;
   }
-
+  
   public static void setCommitContext(CommitContext newCommitContext)
   {
     if (newCommitContext != null && commitContext.get() != null)
@@ -107,5 +73,9 @@ public class HibernateThreadContext
       hcc.setCommitContext(newCommitContext);
       commitContext.set(hcc);
     }
+  }
+  
+  public static Session getSession() {
+    return ((HibernateStoreReader)StoreUtil.getReader()).getHibernateSession();
   }
 }

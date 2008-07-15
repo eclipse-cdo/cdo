@@ -13,12 +13,16 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.internal.server.StoreAccessor;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -31,6 +35,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateStoreAccessor.class);
 
   private Session hibernateSession;
+
+  private boolean errorOccured = false;
 
   protected HibernateStoreAccessor(HibernateStore store, ISession session)
   {
@@ -50,36 +56,34 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
   }
 
-  protected Session createHibernateSession()
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Creating hibernate session and setting it in threadlocal HibernateThreadContext");
-    }
-
-    SessionFactory sessionFactory = getStore().getHibernateSessionFactory();
-    Session session = sessionFactory.openSession();
-    HibernateThreadContext.setSession(session);
-    return session;
-  }
-
   @Override
   protected void doRelease()
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Releasing hibernate session");
+      TRACER.trace("Committing/rollback and closing hibernate session");
     }
 
-    HibernateThreadContext.setSession(null);
-    clearHibernateSession();
+    // this try/catch can disappear when in transaction commit the release
+    // of the accessor is done after the
+    try
+    {
+      // ugly cast
+      StoreUtil.setReader((IStoreReader)this);
+      endHibernateSession();
+      PersistableListHolder.getInstance().clearListMapping();
+    }
+    finally
+    {
+      StoreUtil.setReader(null);
+    }
   }
 
   /** Clears the current hibernate session and sets a new one in the thread context */
   public void resetHibernateSession()
   {
-    clearHibernateSession();
-    getHibernateSession();
+    endHibernateSession();
+    beginHibernateSession();
   }
 
   @Override
@@ -88,23 +92,77 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     return (HibernateStore)super.getStore();
   }
 
-  public void clearHibernateSession()
+  /**
+   * @since 1.0 - 6 July 2008
+   */
+  public Session createHibernateSession() {
+    beginHibernateSession();
+    return getHibernateSession();
+  }
+
+  /**
+   * @since 1.0 - 6 July 2008
+   */
+  public void clearHibernateSession() {
+    endHibernateSession();
+  }
+  
+  /**
+   * starts a hibernate session and begins a transaction
+   * 
+   * @since 1.0 - 6 July 2008
+   */
+  public void beginHibernateSession()
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Removing hibernate session");
+      TRACER.trace("Creating hibernate session and transaction");
+    }
+    assert hibernateSession == null;
+    final SessionFactory sessionFactory = getStore().getHibernateSessionFactory();
+    hibernateSession = sessionFactory.openSession();
+    hibernateSession.beginTransaction();
+    hibernateSession.setFlushMode(FlushMode.COMMIT);
+  }
+
+  /**
+   * commits/rollbacks and closes the session
+   * 
+   * @since 1.0 - 6 July 2008
+   */
+  public void endHibernateSession()
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Closing hibernate session");
     }
 
     if (hibernateSession != null && hibernateSession.isOpen())
     {
-      if (TRACER.isEnabled())
+      try
       {
-        TRACER.trace("Closing hibernate session");
+        if (isErrorOccured())
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Rolling back hb transaction");
+          }
+          hibernateSession.getTransaction().rollback();
+        }
+        else
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Committing hb transaction");
+          }
+          hibernateSession.getTransaction().commit();
+        }
       }
-
-      hibernateSession.close();
+      finally
+      {
+        hibernateSession.close();
+      }
     }
-
     hibernateSession = null;
   }
 
@@ -112,9 +170,25 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   {
     if (hibernateSession == null)
     {
-      hibernateSession = createHibernateSession();
+      beginHibernateSession();
     }
 
     return hibernateSession;
+  }
+
+  /**
+   * @since 1.0 - 6 July 2008
+   */
+  public boolean isErrorOccured()
+  {
+    return errorOccured;
+  }
+
+  /**
+   * @since 1.0
+   */
+  public void setErrorOccured(boolean errorOccured)
+  {
+    this.errorOccured = errorOccured;
   }
 }

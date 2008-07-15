@@ -59,6 +59,8 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
       TRACER.trace(mapping);
     }
 
+    System.err.println(mapping);
+    
     configuration.addXML(mapping);
     if (TRACER.isEnabled())
     {

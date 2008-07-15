@@ -98,6 +98,7 @@ public abstract class OMPreferencePage extends PreferencePage implements IWorkbe
     try
     {
       Control control = createUI(parent);
+      dialogChanged();
       addListeners(control);
       return control;
     }

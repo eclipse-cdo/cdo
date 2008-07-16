@@ -1,5 +1,6 @@
 package org.eclipse.net4j.util.ui.prefs;
 
+import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -94,9 +95,18 @@ public abstract class OMPreferencePage extends PreferencePage implements IWorkbe
   @Override
   protected final Control createContents(Composite parent)
   {
-    Control control = createUI(parent);
-    addListeners(control);
-    return control;
+    try
+    {
+      Control control = createUI(parent);
+      dialogChanged();
+      addListeners(control);
+      return control;
+    }
+    catch (RuntimeException ex)
+    {
+      OM.LOG.error(ex);
+      throw ex;
+    }
   }
 
   protected void addListeners(Control control)

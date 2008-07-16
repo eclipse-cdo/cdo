@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.collection;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 /**
  * @author Eike Stepper
  */
@@ -47,5 +49,34 @@ public class Pair<T1, T2>
   public void setElement2(T2 element2)
   {
     this.element2 = element2;
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+
+    if (obj instanceof Pair)
+    {
+      Pair<?, ?> that = (Pair<?, ?>)obj;
+      return ObjectUtil.equals(element1, that.getElement1()) && ObjectUtil.equals(element2, that.getElement2());
+    }
+
+    return false;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return ObjectUtil.hashCode(element1) ^ ObjectUtil.hashCode(element2);
+  }
+
+  @Override
+  public String toString()
+  {
+    return "Pair[" + element1 + ", " + element2 + "]";
   }
 }

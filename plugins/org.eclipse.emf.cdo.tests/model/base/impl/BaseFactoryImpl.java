@@ -2,32 +2,30 @@
  * <copyright>
  * </copyright>
  *
- * $Id: BaseFactoryImpl.java,v 1.1.2.2 2008-07-02 14:10:02 estepper Exp $
+ * $Id: BaseFactoryImpl.java,v 1.1.2.3 2008-07-16 16:34:52 estepper Exp $
  */
 package base.impl;
-
-import base.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
+import base.BaseClass;
+import base.BaseFactory;
+import base.BasePackage;
+
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static BaseFactory init()
@@ -49,9 +47,8 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public BaseFactoryImpl()
@@ -60,8 +57,8 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -77,8 +74,8 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public BaseClass createBaseClass()
@@ -88,8 +85,8 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public BasePackage getBasePackage()
@@ -98,8 +95,8 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */
@@ -109,4 +106,4 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
     return BasePackage.eINSTANCE;
   }
 
-} //BaseFactoryImpl
+} // BaseFactoryImpl

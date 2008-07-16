@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @see https://bugs.eclipse.org/213782
- * @see https://bugs.eclipse.org/201366
+ * @see http://bugs.eclipse.org/213782
+ * @see http://bugs.eclipse.org/201366
  * @author Simon McDuff
  */
 public class HbTransactionDeadLockTest extends TransactionDeadLockTest

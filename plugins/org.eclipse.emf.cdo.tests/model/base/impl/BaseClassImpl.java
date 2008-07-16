@@ -2,35 +2,33 @@
  * <copyright>
  * </copyright>
  *
- * $Id: BaseClassImpl.java,v 1.1.2.2 2008-07-02 14:10:02 estepper Exp $
+ * $Id: BaseClassImpl.java,v 1.1.2.3 2008-07-16 16:34:52 estepper Exp $
  */
 package base.impl;
+
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
+
+import org.eclipse.emf.ecore.EClass;
 
 import base.BaseClass;
 import base.BasePackage;
 
-import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.internal.cdo.CDOObjectImpl;
-
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Class</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Class</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link base.impl.BaseClassImpl#getCouter <em>Couter</em>}</li>
+ * <li>{@link base.impl.BaseClassImpl#getCouter <em>Couter</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class BaseClassImpl extends CDOObjectImpl implements BaseClass
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected BaseClassImpl()
@@ -39,8 +37,8 @@ public class BaseClassImpl extends CDOObjectImpl implements BaseClass
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -50,8 +48,8 @@ public class BaseClassImpl extends CDOObjectImpl implements BaseClass
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -61,8 +59,8 @@ public class BaseClassImpl extends CDOObjectImpl implements BaseClass
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getCouter()
@@ -71,8 +69,8 @@ public class BaseClassImpl extends CDOObjectImpl implements BaseClass
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setCouter(int newCouter)
@@ -81,8 +79,8 @@ public class BaseClassImpl extends CDOObjectImpl implements BaseClass
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void increment()
@@ -92,4 +90,4 @@ public class BaseClassImpl extends CDOObjectImpl implements BaseClass
     throw new UnsupportedOperationException();
   }
 
-} //BaseClassImpl
+} // BaseClassImpl

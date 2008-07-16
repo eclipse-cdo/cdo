@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @see https://bugs.eclipse.org/202063
+ * @see http://bugs.eclipse.org/202063
  * @author Simon McDuff
  */
 public class FetchRuleAnalyzerTest extends AbstractCDOTest

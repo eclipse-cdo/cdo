@@ -293,7 +293,8 @@ public class HibernateStore extends Store implements IHibernateStore
   {
     public IDLibraryProvider()
     {
-      addLibrary(CDOIDHibernateLibraryHandler.LIBRARY_NAME, org.eclipse.emf.cdo.server.hibernate.internal.id.bundle.OM.BUNDLE);
+      addLibrary(CDOIDHibernateLibraryHandler.LIBRARY_NAME,
+          org.eclipse.emf.cdo.server.hibernate.internal.id.bundle.OM.BUNDLE);
     }
   }
 }

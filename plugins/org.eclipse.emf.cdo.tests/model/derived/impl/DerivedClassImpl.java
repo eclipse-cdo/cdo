@@ -2,31 +2,28 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DerivedClassImpl.java,v 1.1.2.2 2008-07-02 14:10:02 estepper Exp $
+ * $Id: DerivedClassImpl.java,v 1.1.2.3 2008-07-16 16:34:52 estepper Exp $
  */
 package derived.impl;
 
-import base.impl.BaseClassImpl;
+import org.eclipse.emf.ecore.EClass;
 
+import base.impl.BaseClassImpl;
 import derived.DerivedClass;
 import derived.DerivedPackage;
 
-import org.eclipse.emf.ecore.EClass;
-
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Class</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Class</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- *
+ * 
  * @generated
  */
 public class DerivedClassImpl extends BaseClassImpl implements DerivedClass
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected DerivedClassImpl()
@@ -35,8 +32,8 @@ public class DerivedClassImpl extends BaseClassImpl implements DerivedClass
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -46,8 +43,8 @@ public class DerivedClassImpl extends BaseClassImpl implements DerivedClass
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void decrement()
@@ -57,4 +54,4 @@ public class DerivedClassImpl extends BaseClassImpl implements DerivedClass
     throw new UnsupportedOperationException();
   }
 
-} //DerivedClassImpl
+} // DerivedClassImpl

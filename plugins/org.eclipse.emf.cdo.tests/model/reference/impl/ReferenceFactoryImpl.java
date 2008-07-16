@@ -2,32 +2,30 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ReferenceFactoryImpl.java,v 1.1.2.2 2008-07-02 14:10:02 estepper Exp $
+ * $Id: ReferenceFactoryImpl.java,v 1.1.2.3 2008-07-16 16:34:52 estepper Exp $
  */
 package reference.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
-import reference.*;
+import reference.Reference;
+import reference.ReferenceFactory;
+import reference.ReferencePackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class ReferenceFactoryImpl extends EFactoryImpl implements ReferenceFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static ReferenceFactory init()
@@ -49,9 +47,8 @@ public class ReferenceFactoryImpl extends EFactoryImpl implements ReferenceFacto
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ReferenceFactoryImpl()
@@ -60,8 +57,8 @@ public class ReferenceFactoryImpl extends EFactoryImpl implements ReferenceFacto
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -77,8 +74,8 @@ public class ReferenceFactoryImpl extends EFactoryImpl implements ReferenceFacto
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Reference createReference()
@@ -88,8 +85,8 @@ public class ReferenceFactoryImpl extends EFactoryImpl implements ReferenceFacto
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ReferencePackage getReferencePackage()
@@ -98,8 +95,8 @@ public class ReferenceFactoryImpl extends EFactoryImpl implements ReferenceFacto
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */
@@ -109,4 +106,4 @@ public class ReferenceFactoryImpl extends EFactoryImpl implements ReferenceFacto
     return ReferencePackage.eINSTANCE;
   }
 
-} //ReferenceFactoryImpl
+} // ReferenceFactoryImpl

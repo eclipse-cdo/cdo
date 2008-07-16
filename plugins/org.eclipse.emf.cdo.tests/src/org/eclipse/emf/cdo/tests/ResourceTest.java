@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EObject;
 public class ResourceTest extends AbstractCDOTest
 {
   /**
-   * https://bugs.eclipse.org/238963
+   * http://bugs.eclipse.org/238963
    */
   public void testEmptyContents() throws Exception
   {

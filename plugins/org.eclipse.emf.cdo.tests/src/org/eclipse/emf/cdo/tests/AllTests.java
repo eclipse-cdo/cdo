@@ -24,6 +24,7 @@ public class AllTests
 
     // $JUnit-BEGIN$
     suite.addTestSuite(InitialTest.class);
+    suite.addTestSuite(ComplexTest.class);
     suite.addTestSuite(AttributeTest.class);
     suite.addTestSuite(EnumTest.class);
     suite.addTestSuite(StateMachineTest.class);

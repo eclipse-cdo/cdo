@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.hibernate;
 
+import org.eclipse.emf.cdo.tests.ComplexTest;
 import org.eclipse.emf.cdo.tests.ContainmentTest;
 import org.eclipse.emf.cdo.tests.CrossReferenceTest;
 import org.eclipse.emf.cdo.tests.EnumTest;
@@ -40,6 +41,7 @@ public class AllTests
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
 
     TestSuite suite = new TestSuite("Tests for CDO using Hibernate");
+    suite.addTestSuite(ComplexTest.class);
     suite.addTestSuite(CDOAutomaticPackageRefTest.class);
     suite.addTestSuite(CDOPackageRefTest.class);
     suite.addTestSuite(RevisionDeltaTest.class);

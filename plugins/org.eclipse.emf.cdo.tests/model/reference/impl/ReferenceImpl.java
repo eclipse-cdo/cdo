@@ -2,37 +2,34 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ReferenceImpl.java,v 1.1.2.2 2008-07-02 14:10:02 estepper Exp $
+ * $Id: ReferenceImpl.java,v 1.1.2.3 2008-07-16 16:34:52 estepper Exp $
  */
 package reference.impl;
 
-import interface_.IInterface;
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.eclipse.emf.internal.cdo.CDOObjectImpl;
-
 import reference.Reference;
 import reference.ReferencePackage;
+import interface_.IInterface;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Reference</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Reference</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link reference.impl.ReferenceImpl#getRef <em>Ref</em>}</li>
+ * <li>{@link reference.impl.ReferenceImpl#getRef <em>Ref</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ReferenceImpl extends CDOObjectImpl implements Reference
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ReferenceImpl()
@@ -41,8 +38,8 @@ public class ReferenceImpl extends CDOObjectImpl implements Reference
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -52,8 +49,8 @@ public class ReferenceImpl extends CDOObjectImpl implements Reference
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -63,8 +60,8 @@ public class ReferenceImpl extends CDOObjectImpl implements Reference
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public IInterface getRef()
@@ -73,8 +70,8 @@ public class ReferenceImpl extends CDOObjectImpl implements Reference
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setRef(IInterface newRef)
@@ -82,4 +79,4 @@ public class ReferenceImpl extends CDOObjectImpl implements Reference
     eSet(ReferencePackage.Literals.REFERENCE__REF, newRef);
   }
 
-} //ReferenceImpl
+} // ReferenceImpl

@@ -2,32 +2,29 @@
  * <copyright>
  * </copyright>
  *
- * $Id: InterfaceFactoryImpl.java,v 1.1.2.2 2008-07-02 14:10:02 estepper Exp $
+ * $Id: InterfaceFactoryImpl.java,v 1.1.2.3 2008-07-16 16:34:52 estepper Exp $
  */
 package interface_.impl;
-
-import interface_.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
+import interface_.InterfaceFactory;
+import interface_.InterfacePackage;
+
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class InterfaceFactoryImpl extends EFactoryImpl implements InterfaceFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static InterfaceFactory init()
@@ -49,9 +46,8 @@ public class InterfaceFactoryImpl extends EFactoryImpl implements InterfaceFacto
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public InterfaceFactoryImpl()
@@ -60,8 +56,8 @@ public class InterfaceFactoryImpl extends EFactoryImpl implements InterfaceFacto
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -75,8 +71,8 @@ public class InterfaceFactoryImpl extends EFactoryImpl implements InterfaceFacto
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public InterfacePackage getInterfacePackage()
@@ -85,8 +81,8 @@ public class InterfaceFactoryImpl extends EFactoryImpl implements InterfaceFacto
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */
@@ -96,4 +92,4 @@ public class InterfaceFactoryImpl extends EFactoryImpl implements InterfaceFacto
     return InterfacePackage.eINSTANCE;
   }
 
-} //InterfaceFactoryImpl
+} // InterfaceFactoryImpl

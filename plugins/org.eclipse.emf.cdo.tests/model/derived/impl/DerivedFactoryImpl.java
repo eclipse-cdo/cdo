@@ -2,32 +2,30 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DerivedFactoryImpl.java,v 1.1.2.2 2008-07-02 14:10:02 estepper Exp $
+ * $Id: DerivedFactoryImpl.java,v 1.1.2.3 2008-07-16 16:34:52 estepper Exp $
  */
 package derived.impl;
-
-import derived.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
+import derived.DerivedClass;
+import derived.DerivedFactory;
+import derived.DerivedPackage;
+
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static DerivedFactory init()
@@ -49,9 +47,8 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public DerivedFactoryImpl()
@@ -60,8 +57,8 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -77,8 +74,8 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public DerivedClass createDerivedClass()
@@ -88,8 +85,8 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public DerivedPackage getDerivedPackage()
@@ -98,8 +95,8 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */
@@ -109,4 +106,4 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
     return DerivedPackage.eINSTANCE;
   }
 
-} //DerivedFactoryImpl
+} // DerivedFactoryImpl

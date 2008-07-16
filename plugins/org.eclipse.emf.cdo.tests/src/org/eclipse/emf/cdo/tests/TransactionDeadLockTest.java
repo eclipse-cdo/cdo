@@ -26,8 +26,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @see https://bugs.eclipse.org/213782
- * @see https://bugs.eclipse.org/201366
+ * @see http://bugs.eclipse.org/213782
+ * @see http://bugs.eclipse.org/201366
  * @author Simon McDuff
  */
 public class TransactionDeadLockTest extends AbstractCDOTest

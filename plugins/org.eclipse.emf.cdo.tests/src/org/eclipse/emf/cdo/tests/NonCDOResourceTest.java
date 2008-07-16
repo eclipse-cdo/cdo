@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import junit.framework.TestCase;
 
 /**
- * @see https://bugs.eclipse.org/201593
+ * @see http://bugs.eclipse.org/201593
  * @author Simon McDuff
  * @author Eike Stepper
  */

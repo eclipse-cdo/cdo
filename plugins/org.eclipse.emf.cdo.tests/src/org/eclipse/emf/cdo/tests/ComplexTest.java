@@ -50,6 +50,9 @@ import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
+/**
+ * @author Eike Stepper
+ */
 public class ComplexTest extends AbstractCDOTest
 {
   private static long uniqueCounter = System.currentTimeMillis();

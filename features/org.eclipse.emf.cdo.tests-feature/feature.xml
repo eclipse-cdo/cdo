@@ -16,9 +16,9 @@
 <feature
       id="org.eclipse.emf.cdo.tests"
       label="%featureName"
-      image="eclipse_update_120.jpg"
       version="1.0.0.qualifier"
-      provider-name="%providerName">
+      provider-name="%providerName"
+      image="eclipse_update_120.jpg">
 
    <description>
       %description
@@ -120,6 +120,20 @@
 
    <plugin
          id="org.eclipse.emf.cdo.tests.model3.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.tests.model4"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.tests.model4interfaces"
          download-size="0"
          install-size="0"
          version="0.0.0"

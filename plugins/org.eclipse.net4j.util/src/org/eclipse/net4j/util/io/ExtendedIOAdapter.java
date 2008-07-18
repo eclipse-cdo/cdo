@@ -14,10 +14,11 @@ import java.io.IOException;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public class IOAdapter implements IOHandler
+public class ExtendedIOAdapter implements ExtendedIOHandler
 {
-  public IOAdapter()
+  public ExtendedIOAdapter()
   {
   }
 

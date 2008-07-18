@@ -15,8 +15,8 @@ import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.http.internal.common.HTTPConnector;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.io.IOAdapter;
-import org.eclipse.net4j.util.io.IOHandler;
+import org.eclipse.net4j.util.io.ExtendedIOAdapter;
+import org.eclipse.net4j.util.io.ExtendedIOHandler;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.lifecycle.Worker;
 
@@ -147,7 +147,7 @@ public class HTTPClientConnector extends HTTPConnector
 
   private void doConnect() throws IOException
   {
-    request(new IOHandler()
+    request(new ExtendedIOHandler()
     {
       public void handleOut(ExtendedDataOutputStream out) throws IOException
       {
@@ -168,7 +168,7 @@ public class HTTPClientConnector extends HTTPConnector
 
   private void doDisconnect() throws IOException
   {
-    request(new IOAdapter()
+    request(new ExtendedIOAdapter()
     {
       @Override
       public void handleOut(ExtendedDataOutputStream out) throws IOException
@@ -179,7 +179,7 @@ public class HTTPClientConnector extends HTTPConnector
     });
   }
 
-  private void request(IOHandler handler) throws IOException, HttpException
+  private void request(ExtendedIOHandler handler) throws IOException, HttpException
   {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     ExtendedDataOutputStream out = new ExtendedDataOutputStream(baos);
@@ -222,7 +222,7 @@ public class HTTPClientConnector extends HTTPConnector
     try
     {
       final boolean moreOperations[] = { false };
-      request(new IOHandler()
+      request(new ExtendedIOHandler()
       {
         public void handleOut(ExtendedDataOutputStream out) throws IOException
         {

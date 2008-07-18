@@ -10,14 +10,11 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public interface IOHandler
+public interface ExtendedIOHandler extends ExtendedInputHandler, ExtendedOutputHandler
 {
-  public void handleIn(ExtendedDataInputStream in) throws IOException;
-
-  public void handleOut(ExtendedDataOutputStream out) throws IOException;
 }

@@ -185,15 +185,21 @@ public class HTTPClientConnector extends HTTPConnector
     ExtendedDataOutputStream out = new ExtendedDataOutputStream(baos);
     handler.handleOut(out);
     out.flush();
-    byte[] content = baos.toByteArray();
-    PostMethod method = createHTTPMethod(url);
-    method.setRequestEntity(new ByteArrayRequestEntity(content));
 
-    httpClient.executeMethod(method);
-    InputStream bodyInputStream = method.getResponseBodyAsStream();
-    ExtendedDataInputStream in = new ExtendedDataInputStream(bodyInputStream);
-    handler.handleIn(in);
-    method.releaseConnection();
+    PostMethod method = createHTTPMethod(url);
+    method.setRequestEntity(new ByteArrayRequestEntity(baos.toByteArray()));
+
+    try
+    {
+      httpClient.executeMethod(method);
+      InputStream bodyInputStream = method.getResponseBodyAsStream();
+      ExtendedDataInputStream in = new ExtendedDataInputStream(bodyInputStream);
+      handler.handleIn(in);
+    }
+    finally
+    {
+      method.releaseConnection();
+    }
   }
 
   private boolean tryOperationsRequest()

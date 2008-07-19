@@ -563,4 +563,70 @@ public class ComplexTest extends AbstractCDOTest
       transaction2.commit();
     }
   }
+
+  public void testMigrateContainmentSingle()
+  {
+    SingleContainedElement element = factory.createSingleContainedElement();
+    element.setName("MigrateContainmentSingle-Element-0");
+
+    RefSingleContained container1 = factory.createRefSingleContained();
+    container1.setElement(element);
+    resource1.getContents().add(container1);
+
+    RefSingleContained container2 = factory.createRefSingleContained();
+    resource2.getContents().add(container2);
+    commit();
+
+    container2.setElement(element);
+    commit();
+
+    assertTrue(element.getParent() == container2);
+    assertTrue(element.eContainer() == container2);
+    assertTrue(element.cdoResource() == resource2);
+
+    assertTrue(container1.getElement() == null);
+    assertTrue(container1.cdoResource() == resource1);
+
+    assertTrue(container2.getElement() == element);
+    assertTrue(container2.cdoResource() == resource2);
+  }
+
+  public void testMigrateContainmentMulti()
+  {
+    MultiContainedElement elementA = factory.createMultiContainedElement();
+    elementA.setName("MigrateContainmentMulti-Element-A");
+
+    MultiContainedElement elementB = factory.createMultiContainedElement();
+    elementB.setName("MigrateContainmentMulti-Element-B");
+
+    RefMultiContained container1 = factory.createRefMultiContained();
+    container1.getElements().add(elementA);
+    container1.getElements().add(elementB);
+
+    resource1.getContents().add(container1);
+
+    RefMultiContained container2 = factory.createRefMultiContained();
+    resource2.getContents().add(container2);
+    commit();
+
+    container2.getElements().add(container1.getElements().get(0));
+    commit();
+
+    assertTrue(elementA.getParent() == container2);
+    assertTrue(elementA.eContainer() == container2);
+    assertTrue(elementA.cdoResource() == resource2);
+
+    assertTrue(elementB.getParent() == container1);
+    assertTrue(elementB.eContainer() == container1);
+    assertTrue(elementB.cdoResource() == resource1);
+
+    assertTrue(container1.cdoResource() == resource1);
+    assertEquals(1, container1.getElements().size());
+    assertEquals(elementB, container1.getElements().get(0));
+
+    assertTrue(container2.cdoResource() == resource2);
+    assertEquals(1, container2.getElements().size());
+    assertEquals(elementA, container2.getElements().get(0));
+  }
+
 }

@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class EchoClientProtocol extends SignalProtocol implements EchoProtocol
 {

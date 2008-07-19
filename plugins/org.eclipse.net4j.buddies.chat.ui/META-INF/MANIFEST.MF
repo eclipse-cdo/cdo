@@ -11,5 +11,6 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.net4j.buddies.ui;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
  org.eclipse.net4j.buddies.chat;bundle-version="[2.0.0,3.0.0)";visibility:=reexport
-Export-Package: org.eclipse.net4j.buddies.chat.internal.ui;version="2.0.0"
+Export-Package: org.eclipse.net4j.buddies.chat.internal.ui;version="2.0.0",
+ org.eclipse.net4j.buddies.chat.internal.ui.bundle;version="2.0.0";x-internal:=true
 Bundle-ActivationPolicy: lazy

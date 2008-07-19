@@ -10,9 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.jms.server;
 
-import org.eclipse.net4j.internal.jms.MessageImpl;
-import org.eclipse.net4j.jms.internal.server.ServerConsumer;
-import org.eclipse.net4j.jms.internal.server.ServerDestination;
+import javax.jms.Message;
 
 /**
  * @author Eike Stepper
@@ -21,23 +19,50 @@ public interface IStoreTransaction
 {
   public String[] getDestinationNames();
 
-  public ServerDestination getDestination(String name);
+  /**
+   * @since 2.0
+   */
+  public IDestination getDestination(String name);
 
   public long[] getConsumerIDs();
 
-  public ServerConsumer getConsumer(long id);
+  /**
+   * @since 2.0
+   */
+  public IServerConsumer getConsumer(long id);
 
-  public void destinationAdded(ServerDestination destination);
+  /**
+   * @since 2.0
+   */
+  public void destinationAdded(IDestination destination);
 
-  public void destinationRemoved(ServerDestination destination);
+  /**
+   * @since 2.0
+   */
+  public void destinationRemoved(IDestination destination);
 
-  public void consumerAdded(ServerConsumer consumer);
+  /**
+   * @since 2.0
+   */
+  public void consumerAdded(IServerConsumer consumer);
 
-  public void consumerRemoved(ServerConsumer consumer);
+  /**
+   * @since 2.0
+   */
+  public void consumerRemoved(IServerConsumer consumer);
 
-  public void messageReceived(MessageImpl message);
+  /**
+   * @since 2.0
+   */
+  public void messageReceived(Message message);
 
-  public void messageSent(MessageImpl message, long consumerID);
+  /**
+   * @since 2.0
+   */
+  public void messageSent(Message message, long consumerID);
 
-  public void messageAcknowledged(MessageImpl message, long consumerID);
+  /**
+   * @since 2.0
+   */
+  public void messageAcknowledged(Message message, long consumerID);
 }

@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.ui;
 
-import org.eclipse.net4j.util.internal.ui.security.InteractiveCredentialsProvider;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
+import org.eclipse.net4j.util.ui.security.InteractiveCredentialsProvider;
 
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;

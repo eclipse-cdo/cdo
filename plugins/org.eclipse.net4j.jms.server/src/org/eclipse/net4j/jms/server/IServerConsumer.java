@@ -8,15 +8,27 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.examples.echo;
+package org.eclipse.net4j.jms.server;
+
+import org.eclipse.net4j.channel.IChannel;
 
 /**
  * @author Eike Stepper
  * @since 2.0
  */
-public interface EchoProtocol
+public interface IServerConsumer
 {
-  public static final String PROTOCOL_NAME = "echo";
+  public long getID();
 
-  public static final short ECHO_SIGNAL = 1;
+  public IDestination getDestination();
+
+  public String getMessageSelector();
+
+  public ISession getSession();
+
+  public IChannel getChannel();
+
+  public boolean isNoLocal();
+
+  public boolean isDurable();
 }

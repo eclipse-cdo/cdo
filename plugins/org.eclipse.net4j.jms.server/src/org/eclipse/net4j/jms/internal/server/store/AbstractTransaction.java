@@ -14,8 +14,12 @@ import org.eclipse.net4j.internal.jms.MessageImpl;
 import org.eclipse.net4j.jms.internal.server.ServerConsumer;
 import org.eclipse.net4j.jms.internal.server.ServerDestination;
 import org.eclipse.net4j.jms.internal.server.bundle.OM;
+import org.eclipse.net4j.jms.server.IDestination;
+import org.eclipse.net4j.jms.server.IServerConsumer;
 import org.eclipse.net4j.jms.server.IStoreTransaction;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import javax.jms.Message;
 
 /**
  * @author Eike Stepper
@@ -104,98 +108,98 @@ public abstract class AbstractTransaction implements IStoreTransaction
     return consumer;
   }
 
-  public void destinationAdded(ServerDestination destination)
+  public void destinationAdded(IDestination destination)
   {
     if (TRACER.isEnabled())
     {
       TRACER.trace("Adding destination " + destination);
     }
 
-    doDestinationAdded(destination);
+    doDestinationAdded((ServerDestination)destination);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Added destination " + destination);
     }
   }
 
-  public void destinationRemoved(ServerDestination destination)
+  public void destinationRemoved(IDestination destination)
   {
     if (TRACER.isEnabled())
     {
       TRACER.trace("Removing destination " + destination);
     }
 
-    doDestinationRemoved(destination);
+    doDestinationRemoved((ServerDestination)destination);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Removed destination " + destination);
     }
   }
 
-  public void consumerAdded(ServerConsumer consumer)
+  public void consumerAdded(IServerConsumer consumer)
   {
     if (TRACER.isEnabled())
     {
       TRACER.trace("Adding consumer " + consumer);
     }
 
-    doConsumerAdded(consumer);
+    doConsumerAdded((ServerConsumer)consumer);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Added consumer " + consumer);
     }
   }
 
-  public void consumerRemoved(ServerConsumer consumer)
+  public void consumerRemoved(IServerConsumer consumer)
   {
     if (TRACER.isEnabled())
     {
       TRACER.trace("Removing consumer " + consumer);
     }
 
-    doConsumerRemoved(consumer);
+    doConsumerRemoved((ServerConsumer)consumer);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Removed consumer " + consumer);
     }
   }
 
-  public void messageReceived(MessageImpl message)
+  public void messageReceived(Message message)
   {
     if (TRACER.isEnabled())
     {
       TRACER.trace("Logging received message " + message);
     }
 
-    doMessageReceived(message);
+    doMessageReceived((MessageImpl)message);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Logged received message " + message);
     }
   }
 
-  public void messageSent(MessageImpl message, long consumerID)
+  public void messageSent(Message message, long consumerID)
   {
     if (TRACER.isEnabled())
     {
       TRACER.trace("Logging sent message " + message);
     }
 
-    doMessageSent(message, consumerID);
+    doMessageSent((MessageImpl)message, consumerID);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Logged sent message " + message);
     }
   }
 
-  public void messageAcknowledged(MessageImpl message, long consumerID)
+  public void messageAcknowledged(Message message, long consumerID)
   {
     if (TRACER.isEnabled())
     {
       TRACER.trace("Logging acknowledged message " + message);
     }
 
-    doMessageAcknowledged(message, consumerID);
+    doMessageAcknowledged((MessageImpl)message, consumerID);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Logged acknowledged message " + message);

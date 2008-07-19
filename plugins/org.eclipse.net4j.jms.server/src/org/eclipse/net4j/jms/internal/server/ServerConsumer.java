@@ -14,6 +14,7 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.jms.MessageImpl;
 import org.eclipse.net4j.jms.internal.server.bundle.OM;
 import org.eclipse.net4j.jms.internal.server.protocol.JMSServerMessageRequest;
+import org.eclipse.net4j.jms.server.IServerConsumer;
 import org.eclipse.net4j.jms.server.IStoreTransaction;
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -23,7 +24,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class ServerConsumer
+public class ServerConsumer implements IServerConsumer
 {
   private ServerSession session;
 

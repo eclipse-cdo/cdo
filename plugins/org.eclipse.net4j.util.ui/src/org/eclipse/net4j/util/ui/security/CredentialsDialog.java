@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.internal.ui.security;
+package org.eclipse.net4j.util.ui.security;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class CredentialsDialog extends BaseDialog<Viewer>
 {

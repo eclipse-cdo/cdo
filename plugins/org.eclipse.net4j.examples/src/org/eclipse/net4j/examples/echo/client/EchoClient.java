@@ -24,6 +24,7 @@ import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class EchoClient
 {

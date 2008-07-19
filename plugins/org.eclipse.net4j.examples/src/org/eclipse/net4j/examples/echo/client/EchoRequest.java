@@ -20,6 +20,7 @@ import java.io.IOException;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class EchoRequest extends RequestWithConfirmation<String> implements EchoProtocol
 {

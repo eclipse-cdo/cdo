@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -562,6 +563,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID)
   {
+
     if (TRACER.isEnabled())
     {
       TRACER.format("Setting container: {0}, featureID={1}", newContainer, newContainerFeatureID);
@@ -573,8 +575,16 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
     else
     {
+      CDOResource newResource = null;
+      if (newContainer instanceof CDOObject)
+      {
+        newResource = ((CDOObject)newContainer).cdoResource();
+      }
+
       // Delegate to CDOStore
-      getStore().setContainer(this, newContainer, newContainerFeatureID);
+      getStore().setContainer(this, newResource, newContainer, newContainerFeatureID);
+
+      resource = (CDOResourceImpl)newResource;
       if (newContainer instanceof Resource.Internal)
       {
         eSetDirectResource((Resource.Internal)newContainer);

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOAddFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOClearFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOContainerFeatureDeltaImpl;
@@ -64,18 +65,28 @@ public final class CDOStore implements EStore
     return view;
   }
 
-  public void setContainer(InternalEObject eObject, InternalEObject newContainer, int newContainerFeatureID)
+  /**
+   * Expects eObject.cdoResource already set to the resource of the newContainer!
+   * 
+   * @param newResource2
+   * @since 2.0
+   */
+  public void setContainer(InternalEObject eObject, CDOResource newResource, InternalEObject newContainer,
+      int newContainerFeatureID)
   {
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("setContainer({0}, {1}, {2})", cdoObject, newContainer, newContainerFeatureID);
+      TRACER.format("setContainer({0}, {1}, {2}, {3})", cdoObject, newResource, newContainer, newContainerFeatureID);
     }
 
-    CDOID containerID = (CDOID)((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(newContainer);
+    CDOViewImpl newView = (CDOViewImpl)cdoObject.cdoView();
+    CDOID containerID = (CDOID)newView.convertObjectToID(newContainer);
+    CDOID resourceID = newResource == null ? null : newResource.cdoID();
 
     CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(containerID, newContainerFeatureID);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
+    revision.setResourceID(resourceID);
     revision.setContainerID(containerID);
     revision.setContainingFeatureID(newContainerFeatureID);
   }

@@ -3,6 +3,9 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.server.MEMStore;
+import org.eclipse.emf.cdo.internal.server.NOOPStore;
+import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.VAT;
@@ -35,7 +38,11 @@ public class ResourceTest extends AbstractCDOTest
       session.close();
     }
 
-    restartContainer();
+    IStore store = getRepository().getStore();
+    if (!(store instanceof MEMStore || store instanceof NOOPStore))
+    {
+      restartContainer();
+    }
 
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();

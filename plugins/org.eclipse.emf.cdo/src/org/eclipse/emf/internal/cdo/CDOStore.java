@@ -66,9 +66,6 @@ public final class CDOStore implements EStore
   }
 
   /**
-   * Expects eObject.cdoResource already set to the resource of the newContainer!
-   * 
-   * @param newResource2
    * @since 2.0
    */
   public void setContainer(InternalEObject eObject, CDOResource newResource, InternalEObject newContainer,

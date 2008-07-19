@@ -17,8 +17,6 @@ public class ResourceTest extends AbstractCDOTest
 {
   /**
    * http://bugs.eclipse.org/238963
-   * 
-   * @throws Exception
    */
   public void testEmptyContents() throws Exception
   {

@@ -74,11 +74,11 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
@@ -114,12 +114,12 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
-  protected ChangeSubscriptionManager changeSubscriptionManager = new ChangeSubscriptionManager();
+  private ChangeSubscriptionManager changeSubscriptionManager = new ChangeSubscriptionManager();
 
   /**
    * @since 2.0
    */
-  protected CDOChangeSubscriptionPolicy changeSubscriptionPolicy = CDOChangeSubscriptionPolicy.NONE;
+  private CDOChangeSubscriptionPolicy changeSubscriptionPolicy = CDOChangeSubscriptionPolicy.NONE;
 
   public CDOViewImpl(int id, CDOSessionImpl session)
   {
@@ -144,6 +144,14 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public void unsubscribe(EObject eObject, Adapter adapter)
   {
     changeSubscriptionManager.unsubscribe(eObject, adapter);
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected ChangeSubscriptionManager getChangeSubscriptionManager()
+  {
+    return changeSubscriptionManager;
   }
 
   protected ConcurrentMap<CDOID, InternalCDOObject> createObjectsMap()
@@ -217,11 +225,11 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
-  public void setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy notificationsEnabled)
+  public void setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy subscriptionPolicy)
   {
-    if (this.changeSubscriptionPolicy != notificationsEnabled)
+    if (this.changeSubscriptionPolicy != subscriptionPolicy)
     {
-      changeSubscriptionPolicy = notificationsEnabled;
+      changeSubscriptionPolicy = subscriptionPolicy;
 
       changeSubscriptionManager.notifyChangeSubcriptionPolicy();
     }
@@ -703,7 +711,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
-  public void handleChangeSubcription(Collection<CDORevisionDelta> deltas)
+  public void handleChangeSubscription(Collection<CDORevisionDelta> deltas)
   {
     if (deltas != null && getChangeSubscriptionPolicy() != CDOChangeSubscriptionPolicy.NONE)
     {
@@ -712,7 +720,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       for (CDORevisionDelta delta : deltas)
       {
         InternalCDOObject object = objects.get(delta.getID());
-        if (object != null && object.eNotificationRequired() && changeSubscriptionManager.isSubscribe(object))
+        if (object != null && object.eNotificationRequired() && changeSubscriptionManager.hasSubscription(object))
         {
           NotificationImpl notification = builder.buildNotification(object, delta);
           if (notification != null) notification.dispatch();
@@ -980,17 +988,15 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
-  public class ChangeSubscriptionManager
+  protected class ChangeSubscriptionManager
   {
-    // List of persisted objects
-    private Map<InternalCDOObject, Integer> persistedObjects = new ConcurrentHashMap<InternalCDOObject, Integer>();
+    private Map<InternalCDOObject, Integer> subscriptions = new HashMap<InternalCDOObject, Integer>();
 
-    // List of new objects
-    private Map<InternalCDOObject, Integer> newObjects = new ConcurrentHashMap<InternalCDOObject, Integer>();
+    private Map<InternalCDOObject, Integer> pendingSubscriptions = new HashMap<InternalCDOObject, Integer>();
 
-    private boolean valid(InternalCDOObject internalCDOObject)
+    private boolean isPending(InternalCDOObject internalCDOObject)
     {
-      return !internalCDOObject.cdoID().isTemporary();
+      return internalCDOObject.cdoID().isTemporary();
     }
 
     protected int getNumberOfValidAdapter(InternalCDOObject object)
@@ -1000,27 +1006,33 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       {
         for (Adapter adapter : object.eAdapters())
         {
-          if (changeSubscriptionPolicy.valid(object, adapter)) count++;
+          if (changeSubscriptionPolicy.shouldSubscribe(object, adapter))
+          {
+            count++;
+          }
         }
 
       }
       return count;
     }
 
-    /*
+    /**
      * Register to the server all objects from the active list
      */
     protected void notifyChangeSubcriptionPolicy()
     {
-      synchronized (persistedObjects)
+      synchronized (subscriptions)
       {
-        persistedObjects.clear();
-        newObjects.clear();
+        subscriptions.clear();
+        pendingSubscriptions.clear();
 
         List<CDOID> cdoIDs = new ArrayList<CDOID>();
 
         if (changeSubscriptionPolicy != CDOChangeSubscriptionPolicy.NONE)
         {
+          /*
+           * This is safe since we use ConcurrentHashMap
+           */
           for (InternalCDOObject cdoObject : objects.values())
           {
             int count = getNumberOfValidAdapter(cdoObject);
@@ -1028,8 +1040,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
             if (count > 0)
             {
               cdoIDs.add(cdoObject.cdoID());
-              boolean isValid = valid(cdoObject);
-              Map<InternalCDOObject, Integer> subscribersMap = isValid ? persistedObjects : newObjects;
+              boolean isPending = isPending(cdoObject);
+              Map<InternalCDOObject, Integer> subscribersMap = isPending ? pendingSubscriptions : subscriptions;
               subscribersMap.put(cdoObject, count);
             }
           }
@@ -1038,11 +1050,13 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       }
     }
 
-    protected void request(List<CDOID> cdoIDs, boolean registered, boolean clear)
+    protected void request(List<CDOID> cdoIDs, boolean clear, boolean subscribeMode)
     {
       try
       {
-        new ChangeSubscriptionRequest(getSession().getChannel(), getViewID(), cdoIDs, registered, clear).send();
+        ChangeSubscriptionRequest request = new ChangeSubscriptionRequest(getSession().getChannel(), getViewID(),
+            cdoIDs, subscribeMode, clear);
+        session.getFailOverStrategy().send(request);
       }
       catch (Exception ex)
       {
@@ -1052,40 +1066,41 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     protected void notifyDirtyObjects()
     {
-      synchronized (persistedObjects)
+      synchronized (subscriptions)
       {
-        List<InternalCDOObject> objectToRemove = new ArrayList<InternalCDOObject>();
-        for (Entry<InternalCDOObject, Integer> entry : newObjects.entrySet())
+        List<InternalCDOObject> objectsToRemove = new ArrayList<InternalCDOObject>();
+        for (Entry<InternalCDOObject, Integer> entry : pendingSubscriptions.entrySet())
         {
-          if (valid(entry.getKey()))
+          if (!isPending(entry.getKey()))
           {
             subscribe(entry.getKey(), entry.getValue());
-            objectToRemove.add(entry.getKey());
+            objectsToRemove.add(entry.getKey());
           }
         }
-        for (InternalCDOObject internalCDOObject : objectToRemove)
-          newObjects.remove(internalCDOObject);
+        for (InternalCDOObject internalCDOObject : objectsToRemove)
+          pendingSubscriptions.remove(internalCDOObject);
       }
     }
 
-    protected boolean isSubscribe(InternalCDOObject eObject)
+    protected boolean hasSubscription(InternalCDOObject eObject)
     {
-      return (persistedObjects.get(eObject) != null);
+      return (subscriptions.get(eObject) != null);
     }
 
     private void subscribe(EObject eObject, Adapter adapter, int adjust)
     {
-      synchronized (persistedObjects)
+      synchronized (subscriptions)
       {
-        if (!getChangeSubscriptionPolicy().valid(eObject, adapter)) return;
-
-        subscribe(eObject, adjust);
+        if (getChangeSubscriptionPolicy().shouldSubscribe(eObject, adapter))
+        {
+          subscribe(eObject, adjust);
+        }
       }
     }
 
     private void subscribe(EObject eObject, int adjust)
     {
-      synchronized (persistedObjects)
+      synchronized (subscriptions)
       {
 
         InternalCDOObject internalCDOObject = FSMUtil.adapt(eObject, CDOViewImpl.this);
@@ -1095,25 +1110,26 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           throw new CDOException("Object " + internalCDOObject + " doesn`t belong to this view.");
         }
 
-        boolean isValid = valid(internalCDOObject);
+        boolean isPending = isPending(internalCDOObject);
 
-        Map<InternalCDOObject, Integer> subscribersMap = isValid ? persistedObjects : newObjects;
+        Map<InternalCDOObject, Integer> subscribersMap = isPending ? pendingSubscriptions : subscriptions;
 
         Integer count = subscribersMap.get(internalCDOObject);
 
         if (count == null)
         {
           // Cannot adjust negative value
-          if (adjust < 0) throw new IllegalStateException();
+          if (adjust < 0)
+          {
+            throw new IllegalStateException("Object " + internalCDOObject.cdoID() + " cannot be unsubscribe");
+          }
 
           count = 0;
 
           // Notification need to be enable to send correct value to the server
-          if (isValid && getChangeSubscriptionPolicy() != CDOChangeSubscriptionPolicy.NONE)
+          if (!isPending && getChangeSubscriptionPolicy() != CDOChangeSubscriptionPolicy.NONE)
           {
-            List<CDOID> cdoIDs = new ArrayList<CDOID>();
-            cdoIDs.add(internalCDOObject.cdoID());
-            request(cdoIDs, true, false);
+            request(Collections.singletonList(internalCDOObject.cdoID()), false, true);
           }
         }
 
@@ -1125,11 +1141,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           subscribersMap.remove(internalCDOObject);
 
           // Notification need to be enable to send correct value to the server
-          if (isValid && getChangeSubscriptionPolicy() != CDOChangeSubscriptionPolicy.NONE)
+          if (!isPending && getChangeSubscriptionPolicy() != CDOChangeSubscriptionPolicy.NONE)
           {
-            List<CDOID> cdoIDs = new ArrayList<CDOID>();
-            cdoIDs.add(internalCDOObject.cdoID());
-            request(cdoIDs, false, false);
+            request(Collections.singletonList(internalCDOObject.cdoID()), false, false);
           }
         }
         else

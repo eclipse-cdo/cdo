@@ -19,29 +19,29 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface CDOChangeSubscriptionPolicy
 {
-  public static CDOChangeSubscriptionPolicy NONE =  new CDOChangeSubscriptionPolicy()
+  CDOChangeSubscriptionPolicy NONE = new CDOChangeSubscriptionPolicy()
   {
-    public boolean valid(EObject eObject, Adapter adapter)
+    public boolean shouldSubscribe(EObject eObject, Adapter adapter)
     {
       return false;
     }
   };
-  
-  public static CDOChangeSubscriptionPolicy ONLY_CDOADAPTER =  new CDOChangeSubscriptionPolicy()
+
+  CDOChangeSubscriptionPolicy ONLY_CDOADAPTER = new CDOChangeSubscriptionPolicy()
   {
-    public boolean valid(EObject eObject, Adapter adapter)
+    public boolean shouldSubscribe(EObject eObject, Adapter adapter)
     {
-      return (adapter instanceof CDOAdapter);
+      return adapter instanceof CDOAdapter;
     }
   };
 
-  public static CDOChangeSubscriptionPolicy ALL =  new CDOChangeSubscriptionPolicy()
+  CDOChangeSubscriptionPolicy ALL = new CDOChangeSubscriptionPolicy()
   {
-    public boolean valid(EObject eObject, Adapter adapter)
+    public boolean shouldSubscribe(EObject eObject, Adapter adapter)
     {
       return true;
     }
   };
-  
-  boolean valid(EObject eObject, Adapter adapter);
+
+  boolean shouldSubscribe(EObject eObject, Adapter adapter);
 }

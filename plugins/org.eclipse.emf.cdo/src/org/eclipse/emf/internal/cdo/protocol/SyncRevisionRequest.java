@@ -33,18 +33,19 @@ import java.util.Set;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public class SyncRevisionRequest extends CDOClientRequest<Set<CDOIDAndVersion>>
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, SyncRevisionRequest.class);
 
-  private Map<CDOID, CDORevision>  collectionRevisions;
+  private Map<CDOID, CDORevision> collectionRevisions;
 
   private CDOSessionImpl cdoSession;
 
   private int referenceChunk;
 
-  public SyncRevisionRequest(IChannel channel, CDOSessionImpl cdoSession, Map<CDOID, CDORevision>  cdoRevisions,
+  public SyncRevisionRequest(IChannel channel, CDOSessionImpl cdoSession, Map<CDOID, CDORevision> cdoRevisions,
       int referenceChunk)
   {
     super(channel);
@@ -62,7 +63,10 @@ public class SyncRevisionRequest extends CDOClientRequest<Set<CDOIDAndVersion>>
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled()) PROTOCOL.trace("Synchronization " + collectionRevisions.size() + " objects");
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.trace("Synchronization " + collectionRevisions.size() + " objects");
+    }
 
     out.writeInt(referenceChunk);
     out.writeInt(collectionRevisions.size());
@@ -76,10 +80,10 @@ public class SyncRevisionRequest extends CDOClientRequest<Set<CDOIDAndVersion>>
         out.writeInt(revision.getVersion());
       }
       else
+      {
         out.writeInt(-1);
-
+      }
     }
-
   }
 
   @Override
@@ -93,20 +97,25 @@ public class SyncRevisionRequest extends CDOClientRequest<Set<CDOIDAndVersion>>
     {
       CDORevisionImpl revision = new CDORevisionImpl(in, getSession().getRevisionManager(), getSession()
           .getPackageManager());
-      
+
       CDORevision oldRevision = collectionRevisions.get(revision.getID());
-      
+
       if (oldRevision == null)
-        throw new IllegalStateException();
-      
+      {
+        throw new IllegalStateException("Didn't expect to receive object with id '" + revision.getID() + "'");
+      }
+
       listofDirtyObjects.add(CDOIDUtil.createIDAndVersion(oldRevision.getID(), oldRevision.getVersion()));
-      
+
       getSession().getRevisionManager().addRevision(revision);
     }
 
-    if (PROTOCOL.isEnabled()) PROTOCOL.trace("Synchronization received  " + size + " dirty objects");
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.trace("Synchronization received  " + size + " dirty objects");
+    }
 
-    cdoSession.notifySync(listofDirtyObjects);
+    cdoSession.handleSync(listofDirtyObjects);
 
     return listofDirtyObjects;
   }

@@ -120,7 +120,7 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
   {
     EStructuralFeature eFeature = ModelUtil.getEFeature(delta.getFeature(), packageRegistry);
 
-    add(new CDONotificationImpl(internalObject, NotificationImpl.SET, eFeature.getFeatureID(), null, null));
+    add(new CDONotificationImpl(internalObject, NotificationImpl.REMOVE_MANY, eFeature.getFeatureID(), null, null));
   }
 
   public void visit(CDOContainerFeatureDelta delta)

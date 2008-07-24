@@ -247,7 +247,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
           ((InternalCDOPackage)newPackage).setPersistent(true);
         }
 
-        changeSubscriptionManager.notifyDirtyObjects();
+        getChangeSubscriptionManager().notifyDirtyObjects();
 
         Map<CDOID, CDOObject> dirtyObjects = this.getDirtyObjects();
 
@@ -328,7 +328,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   {
     Set<CDOID> idsOfNewObjectWithDeltas = new HashSet<CDOID>();
 
-    // TODO Add comments - what is it used for.
+    // Determine the limit where we after the rollback which savepoint will still be active.
+    // Ex: sv1, sv2, sv3, sv4. Rollback with sv3.
+    // isSavepointActive is false for sv4, sv3.
+    // isSavepointActive is true for sv2, sv1.
+
     boolean isSavepointActive = false;
 
     // Start from the last savepoint and come back up to the active

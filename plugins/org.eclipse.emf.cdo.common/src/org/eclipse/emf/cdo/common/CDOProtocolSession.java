@@ -28,5 +28,4 @@ public interface CDOProtocolSession
    * @since 2.0
    */
   public boolean isPassiveUpdateEnabled();
-
 }

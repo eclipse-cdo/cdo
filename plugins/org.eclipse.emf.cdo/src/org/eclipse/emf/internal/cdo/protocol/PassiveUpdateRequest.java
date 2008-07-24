@@ -27,14 +27,15 @@ import java.util.Map;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public class PassiveUpdateRequest extends SyncRevisionRequest
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, PassiveUpdateRequest.class);
 
   private boolean passiveUpdateEnabled;
-  
-  public PassiveUpdateRequest(IChannel channel, CDOSessionImpl session, Map<CDOID, CDORevision>  cdoRevisions,
+
+  public PassiveUpdateRequest(IChannel channel, CDOSessionImpl session, Map<CDOID, CDORevision> cdoRevisions,
       int referenceChunk, boolean passiveUpdateEnabled)
   {
     super(channel, session, cdoRevisions, referenceChunk);
@@ -50,10 +51,13 @@ public class PassiveUpdateRequest extends SyncRevisionRequest
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled()) PROTOCOL.trace("Turning " + (passiveUpdateEnabled ? "on" : "off") + " passive update");
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.trace("Turning " + (passiveUpdateEnabled ? "on" : "off") + " passive update");
+    }
 
     super.requesting(out);
     out.writeBoolean(passiveUpdateEnabled);
-    
+
   }
 }

@@ -14,8 +14,8 @@ import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.internal.server.View;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -56,7 +56,7 @@ public class ChangeSubscriptionIndication extends CDOReadIndication
       size = -size;
     }
 
-    IView view = getSession().getView(viewID);
+    View view = (View)getSession().getView(viewID);
 
     if (clear)
     {
@@ -69,9 +69,13 @@ public class ChangeSubscriptionIndication extends CDOReadIndication
     {
       CDOID id = CDOIDUtil.read(in, factory);
       if (subscribeMode)
+      {
         view.subscribe(id);
+      }
       else
+      {
         view.unsubscribe(id);
+      }
     }
   }
 

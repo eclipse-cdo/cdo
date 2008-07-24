@@ -43,7 +43,7 @@ public class AllTests
     suite.addTestSuite(AutoAttacherTest.class);
     suite.addTestSuite(SavepointTest.class);
     suite.addTestSuite(ChangeSubscriptionTest.class);
-    suite.addTestSuite(QueryTest.class);
+    // suite.addTestSuite(QueryTest.class);
 
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);
     // $JUnit-END$

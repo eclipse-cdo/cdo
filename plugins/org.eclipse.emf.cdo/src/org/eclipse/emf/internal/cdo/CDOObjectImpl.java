@@ -380,7 +380,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   @Override
-  public EList<Adapter> eAdapters()
+  public synchronized EList<Adapter> eAdapters()
   {
     if (eAdapters == null)
     {

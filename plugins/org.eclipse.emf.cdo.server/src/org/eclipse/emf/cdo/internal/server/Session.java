@@ -40,6 +40,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -57,7 +58,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   private int sessionID;
 
   private boolean legacySupportEnabled;
-  
+
   private boolean passiveUpdateEnabled = true;
 
   private ConcurrentMap<Integer, IView> views = new ConcurrentHashMap<Integer, IView>();
@@ -120,7 +121,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   {
     this.passiveUpdateEnabled = passiveUpdateEnabled;
   }
-  
+
   public View[] getElements()
   {
     return getViews();
@@ -220,16 +221,19 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
    */
   public void handleCommitNotification(long timeStamp, List<CDOIDAndVersion> dirtyIDs, List<CDORevisionDelta> deltas)
   {
-    if (!isPassiveUpdateEnabled()) dirtyIDs = new ArrayList<CDOIDAndVersion>();
+    if (!isPassiveUpdateEnabled())
+    {
+      dirtyIDs = Collections.emptyList();
+    }
 
     // Look if someone needs to know something about modified objects
     List<CDORevisionDelta> newDeltas = new ArrayList<CDORevisionDelta>();
     for (CDORevisionDelta delta : deltas)
     {
       CDOID lookupID = delta.getID();
-      for (IView view : views.values())
+      for (View view : getViews())
       {
-        if (((View)view).isSubscribe(lookupID))
+        if (view.hasSubscription(lookupID))
         {
           newDeltas.add(delta);
           break;
@@ -238,7 +242,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     }
     try
     {
-      if (dirtyIDs.size() > 0 || newDeltas.size() > 0)
+      if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty())
         new CommitNotificationRequest(protocol.getChannel(), this, timeStamp, dirtyIDs, newDeltas).send();
     }
     catch (Exception ex)

@@ -562,7 +562,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   /**
    * @since 2.0
    */
-  public void notifySync(Set<CDOIDAndVersion> dirtyOIDs)
+  public void handleSync(Set<CDOIDAndVersion> dirtyOIDs)
   {
     notifyInvalidation(CDORevision.UNSPECIFIED_DATE, dirtyOIDs, null);
   }
@@ -608,7 +608,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       {
         try
         {
-          view.handleChangeSubcription(deltas);
+          view.handleChangeSubscription(deltas);
         }
         catch (RuntimeException ex)
         {
@@ -873,8 +873,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   {
     Map<CDOID, CDORevision> uniqueObjects = new HashMap<CDOID, CDORevision>();
 
-    for (CDOViewImpl view : views.values())
+    for (CDOViewImpl view : getViews())
     {
+      // TODO Array or something else that is synchronize.
       for (InternalCDOObject internalCDOObject : view.getObjectsMap().values())
       {
         if (internalCDOObject.cdoRevision() != null && !internalCDOObject.cdoID().isTemporary()
@@ -885,8 +886,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       }
     }
 
-    // Need to add Revision from revisionManager since we do not have all objects in transaction.
-    for (CDORevision revision : this.getRevisionManager().getRevisions())
+    // Need to add Revision from revisionManager since we do not have all objects in view.
+    for (CDORevision revision : getRevisionManager().getRevisions())
     {
       if (!uniqueObjects.containsKey(revision.getID()))
       {
@@ -899,11 +900,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   /**
    * @since 2.0
    */
-  public void setPassiveUpdateEnabled(boolean aPassiveUpdateEnabled)
+  public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
   {
-    if (passiveUpdateEnabled != aPassiveUpdateEnabled)
+    if (this.passiveUpdateEnabled != passiveUpdateEnabled)
     {
-      passiveUpdateEnabled = aPassiveUpdateEnabled;
+      this.passiveUpdateEnabled = passiveUpdateEnabled;
 
       // Need to refresh if we change state
       Map<CDOID, CDORevision> allRevisions = getAllRevisions();
@@ -911,8 +912,10 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       {
         if (!allRevisions.isEmpty())
         {
-          new PassiveUpdateRequest(this.getChannel(), this, allRevisions, this.getReferenceChunkSize(),
-              passiveUpdateEnabled).send();
+          PassiveUpdateRequest request = new PassiveUpdateRequest(getChannel(), this, allRevisions,
+              getReferenceChunkSize(), this.passiveUpdateEnabled);
+
+          getFailOverStrategy().send(request);
         }
       }
       catch (Exception ex)
@@ -927,27 +930,29 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
    */
   public Set<CDOIDAndVersion> refresh()
   {
-    if (isPassiveUpdateEnabled())
+    // If passive update is turned on we don`t need to refresh.
+    // We do not throw an exception since the client could turn that feature on or off without affecting their code.
+    if (!isPassiveUpdateEnabled())
     {
-      // If passive update is turned on we don`t need to refresh.
-      // We do not throw an exception since the client could turn that feature on or off without affecting their code.
-      return new HashSet<CDOIDAndVersion>();
-    }
+      Map<CDOID, CDORevision> allRevisions = getAllRevisions();
 
-    Map<CDOID, CDORevision> allRevisions = getAllRevisions();
-
-    try
-    {
-      if (!allRevisions.isEmpty())
+      try
       {
-        return new SyncRevisionRequest(this.getChannel(), this, allRevisions, this.getReferenceChunkSize()).send();
+        if (!allRevisions.isEmpty())
+        {
+          SyncRevisionRequest request = new SyncRevisionRequest(this.getChannel(), this, allRevisions,
+              getReferenceChunkSize());
+
+          return getFailOverStrategy().send(request);
+        }
       }
-      return new HashSet<CDOIDAndVersion>();
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
     }
-    catch (Exception ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
+
+    return Collections.emptySet();
   }
 
   /**

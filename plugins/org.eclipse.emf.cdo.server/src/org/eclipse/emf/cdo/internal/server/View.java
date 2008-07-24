@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IView;
 
 import java.text.MessageFormat;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -29,7 +29,7 @@ public class View implements IView
 
   private Type viewType;
 
-  private Map<CDOID, CDOID> changeSubscriptionObjects = new ConcurrentHashMap<CDOID, CDOID>();
+  private Set<CDOID> changeSubscriptionIDs = new HashSet<CDOID>();
 
   public View(Session session, int viewID, Type viewType)
   {
@@ -53,24 +53,24 @@ public class View implements IView
     return viewType;
   }
 
-  public void subscribe(CDOID id)
+  synchronized public void subscribe(CDOID id)
   {
-    changeSubscriptionObjects.put(id, id);
+    changeSubscriptionIDs.add(id);
   }
 
-  public void unsubscribe(CDOID id)
+  synchronized public void unsubscribe(CDOID id)
   {
-    changeSubscriptionObjects.remove(id);
+    changeSubscriptionIDs.remove(id);
   }
 
-  public boolean isSubscribe(CDOID id)
+  synchronized public boolean hasSubscription(CDOID id)
   {
-    return changeSubscriptionObjects.get(id) != null;
+    return changeSubscriptionIDs.contains(id);
   }
 
-  public void clearChangeSubscription()
+  synchronized public void clearChangeSubscription()
   {
-    changeSubscriptionObjects.clear();
+    changeSubscriptionIDs.clear();
   }
 
   @Override

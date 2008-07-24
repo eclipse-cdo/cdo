@@ -71,7 +71,7 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
    * <p>
    * By default this value is enabled.
    * <p>
-   * If you disabled this property, you can still have the latest version of objects by calling refresh.
+   * If you disabled this property, you can still have the latest version of objects by calling {@link #refresh()}.
    * <p>
    * You would disabled it in the case where you need performance and/or want to control when objects will be refresh.
    * <p>
@@ -86,7 +86,8 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
    * <p>
    * Take CDOID and version of all objects in the cache, sent it to the server. It will return only dirty objects.
    * <p>
-   * In the case where <code>isPassiveUpdateEnabled<code> is true, it will return immediately without doing anything.
+   * In the case where <code>isPassiveUpdateEnabled<code> is <code>true</code>, it will return immediately without doing
+   * anything.
    * 
    * @since 2.0
    */

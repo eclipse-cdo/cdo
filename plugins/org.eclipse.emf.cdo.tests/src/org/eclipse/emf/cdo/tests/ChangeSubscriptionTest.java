@@ -352,7 +352,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
   {
     private Set<CDOID> cdoIDs = new HashSet<CDOID>();
 
-    public boolean valid(EObject eObject, Adapter object)
+    public boolean shouldSubscribe(EObject eObject, Adapter object)
     {
       return cdoIDs.contains(((InternalCDOObject)eObject).cdoID());
     }

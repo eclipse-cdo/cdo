@@ -69,7 +69,7 @@ public class AllTests
     // suite.addTestSuite(GeneratedEcoreTest.class);
 
     // Chunking is not supported by Hibernate
-    // suite.addTestSuite(ChunkingTest.class);
+    // suite.addTestSuite(Bugzilla241464_Test.class);
     // failures: /testWriteNative, testChunkWithTemporaryObject
     // suite.addTestSuite(ChunkingWithMEMTest.class);
     // failures testReadNative, testWriteNative

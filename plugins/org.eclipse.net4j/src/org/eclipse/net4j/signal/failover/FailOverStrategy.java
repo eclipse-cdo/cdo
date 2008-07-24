@@ -13,25 +13,18 @@ package org.eclipse.net4j.signal.failover;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.signal.SignalActor;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.CheckUtil;
-import org.eclipse.net4j.util.event.Notifier;
 
 import java.util.concurrent.TimeoutException;
 
 /**
  * @author Eike Stepper
  */
-public abstract class FailOverStrategy extends Notifier implements IFailOverStrategy
+public abstract class FailOverStrategy extends AbstractFailOverStrategy
 {
   public FailOverStrategy()
   {
-  }
-
-  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request) throws Exception
-  {
-    return send(request, SignalActor.NO_TIMEOUT);
   }
 
   public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request, long timeout) throws Exception

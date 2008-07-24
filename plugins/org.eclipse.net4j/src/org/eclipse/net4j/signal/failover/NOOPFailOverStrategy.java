@@ -16,17 +16,10 @@ import org.eclipse.net4j.util.event.IListener;
 /**
  * @author Eike Stepper
  */
-public class NOOPFailOverStrategy implements IFailOverStrategy
+public class NOOPFailOverStrategy extends AbstractFailOverStrategy
 {
-  public static final NOOPFailOverStrategy INSTANCE = new NOOPFailOverStrategy();
-
   public NOOPFailOverStrategy()
   {
-  }
-
-  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request) throws Exception
-  {
-    return request.send();
   }
 
   public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request, long timeout) throws Exception
@@ -34,10 +27,12 @@ public class NOOPFailOverStrategy implements IFailOverStrategy
     return request.send(timeout);
   }
 
+  @Override
   public void addListener(IListener listener)
   {
   }
 
+  @Override
   public void removeListener(IListener listener)
   {
   }

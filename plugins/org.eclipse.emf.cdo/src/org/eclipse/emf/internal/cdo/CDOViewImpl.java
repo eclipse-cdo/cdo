@@ -738,6 +738,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     catch (RuntimeException ex)
     {
       OM.LOG.error(ex);
+      throw ex;
     }
   }
 

@@ -11,24 +11,33 @@
 package org.eclipse.net4j.signal.failover;
 
 import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.signal.SignalActor;
+import org.eclipse.net4j.util.event.Notifier;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public interface IFailOverStrategy extends INotifier
+public abstract class AbstractFailOverStrategy extends Notifier implements IFailOverStrategy
 {
-  /**
-   * @since 2.0
-   */
-  public long getDefaultTimeout();
+  private long defaultTimeout = SignalActor.NO_TIMEOUT;
 
-  /**
-   * @since 2.0
-   */
-  public void setDefaultTimeout(long defaultTimeout);
+  public AbstractFailOverStrategy()
+  {
+  }
 
-  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request) throws Exception;
+  public long getDefaultTimeout()
+  {
+    return defaultTimeout;
+  }
 
-  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request, long timeout) throws Exception;
+  public void setDefaultTimeout(long defaultTimeout)
+  {
+    this.defaultTimeout = defaultTimeout;
+  }
+
+  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request) throws Exception
+  {
+    return send(request, defaultTimeout);
+  }
 }

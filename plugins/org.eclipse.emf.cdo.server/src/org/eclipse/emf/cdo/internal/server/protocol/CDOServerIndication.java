@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.server.IStore;
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * @author Eike Stepper
@@ -51,17 +52,29 @@ public abstract class CDOServerIndication extends IndicationWithResponse
 
   protected IStore getStore()
   {
-    return getRepository().getStore();
+    IStore store = getRepository().getStore();
+    if (LifecycleUtil.isActive(store))
+    {
+      throw new IllegalStateException("Store has been deactivated");
+    }
+
+    return store;
   }
 
   protected Repository getRepository()
   {
-    return getSessionManager().getRepository();
+    Repository repository = getSessionManager().getRepository();
+    if (!repository.isActive())
+    {
+      throw new IllegalStateException("Repository has been deactivated");
+    }
+
+    return repository;
   }
 
   protected Session getSession()
   {
-    return (Session)getProtocol().getSession();
+    return getProtocol().getSession();
   }
 
   @Override

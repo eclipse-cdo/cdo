@@ -53,7 +53,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
   protected IStore getStore()
   {
     IStore store = getRepository().getStore();
-    if (LifecycleUtil.isActive(store))
+    if (!LifecycleUtil.isActive(store))
     {
       throw new IllegalStateException("Store has been deactivated");
     }

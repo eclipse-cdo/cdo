@@ -12,12 +12,15 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Eike Stepper
@@ -40,15 +43,29 @@ public class Bugzilla241464_Test extends AbstractCDOTest
     }
 
     CDOSession session = openModel1Session();
-    session.getFailOverStrategy().setDefaultTimeout(5000L);
+    session.getFailOverStrategy().setDefaultTimeout(2000L);
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource("/test1");
 
     LifecycleUtil.deactivate(getRepository());
 
-    Customer customer = (Customer)resource.getContents().get(0);
-    System.out.println(customer.getName());
-    session.close();
+    try
+    {
+      Customer customer = (Customer)resource.getContents().get(0);
+      System.out.println(customer.getName());
+      fail("TransportException expected");
+    }
+    catch (TransportException success)
+    {
+      if (success.getCause().getClass() != TimeoutException.class)
+      {
+        fail("TimeoutException expected");
+      }
+    }
+    finally
+    {
+      session.close();
+    }
   }
 }

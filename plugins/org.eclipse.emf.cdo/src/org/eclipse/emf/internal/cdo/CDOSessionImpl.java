@@ -679,7 +679,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName, legacySupportEnabled);
-    OpenSessionResult result = request.send();
+    OpenSessionResult result = getFailOverStrategy().send(request);
 
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
@@ -735,7 +735,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       missingLibraries.removeAll(existingLibraries);
       if (!missingLibraries.isEmpty())
       {
-        new LoadLibrariesRequest(channel, missingLibraries, cacheFolder).send();
+        LoadLibrariesRequest request = new LoadLibrariesRequest(channel, missingLibraries, cacheFolder);
+        getFailOverStrategy().send(request);
       }
     }
 
@@ -784,7 +785,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     {
       int id = view.getViewID();
       byte kind = getKind(view);
-      new ViewsChangedRequest(channel, id, kind).send();
+      ViewsChangedRequest request = new ViewsChangedRequest(channel, id, kind);
+      getFailOverStrategy().send(request);
     }
     catch (Exception ex)
     {

@@ -128,9 +128,10 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
 
     try
     {
-      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
       IChannel channel = session.getChannel();
       LoadChunkRequest request = new LoadChunkRequest(channel, revision, feature, accessIndex, fromIndex, toIndex);
+
+      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
       return failOverStrategy.send(request);
     }
     catch (RuntimeException ex)

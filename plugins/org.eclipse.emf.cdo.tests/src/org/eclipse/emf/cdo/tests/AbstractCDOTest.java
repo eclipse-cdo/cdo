@@ -81,13 +81,18 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     startTransport();
   }
 
-  protected CDOSession openSession()
+  protected CDOSessionConfiguration createSessionConfiguration()
   {
     CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
     configuration.setConnector(getConnector());
     configuration.setRepositoryName(REPOSITORY_NAME);
     configuration.setLegacySupportEnabled(false);
-    return configuration.openSession();
+    return configuration;
+  }
+
+  protected CDOSession openSession()
+  {
+    return createSessionConfiguration().openSession();
   }
 
   protected CDOSession openModel1Session()

@@ -48,6 +48,7 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverEvent;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.Container;
@@ -197,12 +198,17 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     this.referenceChunkSize = referenceChunkSize;
   }
 
-  public IFailOverStrategy getFailOverStrategy()
+  public synchronized IFailOverStrategy getFailOverStrategy()
   {
-    return failOverStrategy == null ? IFailOverStrategy.NOOP : failOverStrategy;
+    if (failOverStrategy == null)
+    {
+      failOverStrategy = new NOOPFailOverStrategy();
+    }
+
+    return failOverStrategy;
   }
 
-  public void setFailOverStrategy(IFailOverStrategy failOverStrategy)
+  public synchronized void setFailOverStrategy(IFailOverStrategy failOverStrategy)
   {
     if (this.failOverStrategy != null)
     {
@@ -673,7 +679,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName, legacySupportEnabled);
-    OpenSessionResult result = request.send();
+    OpenSessionResult result = getFailOverStrategy().send(request);
 
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
@@ -729,7 +735,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       missingLibraries.removeAll(existingLibraries);
       if (!missingLibraries.isEmpty())
       {
-        new LoadLibrariesRequest(channel, missingLibraries, cacheFolder).send();
+        LoadLibrariesRequest request = new LoadLibrariesRequest(channel, missingLibraries, cacheFolder);
+        getFailOverStrategy().send(request);
       }
     }
 
@@ -778,7 +785,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     {
       int id = view.getViewID();
       byte kind = getKind(view);
-      new ViewsChangedRequest(channel, id, kind).send();
+      ViewsChangedRequest request = new ViewsChangedRequest(channel, id, kind);
+      getFailOverStrategy().send(request);
     }
     catch (Exception ex)
     {

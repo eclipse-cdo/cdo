@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla241464_Test;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -42,6 +44,7 @@ public class AllTests
     suite.addTestSuite(RevisionDeltaTest.class);
     suite.addTestSuite(IndexReconstructionTest.class);
     suite.addTestSuite(NoLegacyTest.class);
+    suite.addTestSuite(Bugzilla241464_Test.class);
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);
     // $JUnit-END$
 

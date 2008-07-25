@@ -1,0 +1,82 @@
+/***************************************************************************
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ **************************************************************************/
+package org.eclipse.emf.cdo.tests.bugzilla;
+
+import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.common.util.TransportException;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.Model1Factory;
+
+import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
+import java.util.concurrent.TimeoutException;
+
+/**
+ * @author Eike Stepper
+ */
+public class Bugzilla241464_Test extends AbstractCDOTest
+{
+  public void testBugzilla241464() throws Exception
+  {
+    {
+      Customer customer = Model1Factory.eINSTANCE.createCustomer();
+      customer.setName("customer");
+
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/test1");
+      resource.getContents().add(customer);
+
+      transaction.commit();
+      session.close();
+    }
+
+    CDOSessionConfiguration configuration = createSessionConfiguration();
+    configuration.setFailOverStrategy(new NOOPFailOverStrategy()
+    {
+      @Override
+      public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request) throws Exception
+      {
+        return send(request, 2000L);
+      }
+    });
+
+    CDOSession session = configuration.openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource("/test1");
+
+    LifecycleUtil.deactivate(getRepository());
+
+    try
+    {
+      Customer customer = (Customer)resource.getContents().get(0);
+      System.out.println(customer.getName());
+      fail("TransportException expected");
+    }
+    catch (TransportException success)
+    {
+      if (success.getCause().getClass() != TimeoutException.class)
+      {
+        fail("TimeoutException expected");
+      }
+    }
+    finally
+    {
+      session.close();
+    }
+  }
+}

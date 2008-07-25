@@ -231,9 +231,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       try
       {
-        IChannel channel = view.getSession().getChannel();
+        CDOSession session = view.getSession();
+        IChannel channel = session.getChannel();
         VerifyRevisionRequest request = new VerifyRevisionRequest(channel, revisions);
-        revisions = request.send();
+        revisions = session.getFailOverStrategy().send(request);
       }
       catch (Exception ex)
       {

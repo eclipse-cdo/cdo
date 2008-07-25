@@ -113,7 +113,7 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
   }
 
   @Override
-  protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol)
+  protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol, long timeoutIgnored)
       throws ConnectorException
   {
     try

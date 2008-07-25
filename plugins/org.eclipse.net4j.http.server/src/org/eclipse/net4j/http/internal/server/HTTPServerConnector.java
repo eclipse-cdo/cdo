@@ -68,7 +68,7 @@ public class HTTPServerConnector extends HTTPConnector
   }
 
   @Override
-  protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol)
+  protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol, long timeout)
       throws ConnectorException
   {
     throw new UnsupportedOperationException();

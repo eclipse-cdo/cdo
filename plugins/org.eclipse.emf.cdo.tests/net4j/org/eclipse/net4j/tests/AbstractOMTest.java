@@ -12,6 +12,7 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
@@ -116,5 +117,15 @@ public abstract class AbstractOMTest extends TestCase
   protected static void sleep(long millis)
   {
     ConcurrencyUtil.sleep(millis);
+  }
+
+  protected static void assertActive(Object object)
+  {
+    assertEquals(true, LifecycleUtil.isActive(object));
+  }
+
+  protected static void assertInactive(Object object)
+  {
+    assertEquals(false, LifecycleUtil.isActive(object));
   }
 }

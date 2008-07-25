@@ -17,6 +17,7 @@ import org.eclipse.internal.net4j.channel.Channel;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
@@ -72,11 +73,11 @@ public class HTTPChannel extends Channel
     openAck.countDown();
   }
 
-  public void waitForOpenAck()
+  public void waitForOpenAck(long timeout)
   {
     try
     {
-      openAck.await();
+      openAck.await(timeout, TimeUnit.MILLISECONDS);
     }
     catch (InterruptedException ignore)
     {

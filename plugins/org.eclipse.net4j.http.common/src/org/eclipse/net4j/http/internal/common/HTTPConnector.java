@@ -189,14 +189,14 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   }
 
   @Override
-  protected void registerChannelWithPeer(final int channelID, final short channelIndex, final IProtocol protocol)
-      throws ConnectorException
+  protected void registerChannelWithPeer(final int channelID, final short channelIndex, final IProtocol protocol,
+      long timeout) throws ConnectorException
   {
     ChannelOperation operation = new OpenChannelOperation(channelIndex, channelID, protocol.getType());
     outputOperations.add(operation);
 
     HTTPChannel channel = (HTTPChannel)getChannel(channelIndex);
-    channel.waitForOpenAck();
+    channel.waitForOpenAck(timeout);
   }
 
   @Override

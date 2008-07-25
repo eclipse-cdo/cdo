@@ -23,6 +23,7 @@ import org.eclipse.net4j.protocol.ServerProtocolFactory;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.RWLock;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerEvent;
@@ -62,6 +63,14 @@ import java.util.concurrent.TimeoutException;
  */
 public abstract class Connector extends Container<IChannel> implements InternalConnector
 {
+  public static final long NO_OPEN_CHANNEL_TIMEOUT = Long.MAX_VALUE;
+
+  /**
+   * Indicates to use the timeout that is configured via debug property <code>open.channel.timeout</code> (see .options
+   * file) which has a default of 10 seconds.
+   */
+  public static final long DEFAULT_OPEN_CHANNEL_TIMEOUT = -1L;
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONNECTOR, Connector.class);
 
   private String userID;
@@ -83,13 +92,15 @@ public abstract class Connector extends Container<IChannel> implements InternalC
    */
   private ExecutorService receiveExecutor;
 
-  private int nextChannelID;
+  private long openChannelTimeout = DEFAULT_OPEN_CHANNEL_TIMEOUT;;
 
-  private List<InternalChannel> channels = new ArrayList<InternalChannel>(0);
+  private transient int nextChannelID;
 
-  private RWLock channelsLock = new RWLock(2500);
+  private transient List<InternalChannel> channels = new ArrayList<InternalChannel>(0);
 
-  private ConnectorState connectorState = ConnectorState.DISCONNECTED;
+  private transient RWLock channelsLock = new RWLock(2500);
+
+  private transient ConnectorState connectorState = ConnectorState.DISCONNECTED;
 
   /**
    * Is registered with each {@link IChannel} of this {@link IConnector}.
@@ -164,6 +175,21 @@ public abstract class Connector extends Container<IChannel> implements InternalC
   public INegotiationContext getNegotiationContext()
   {
     return negotiationContext;
+  }
+
+  public long getOpenChannelTimeout()
+  {
+    if (openChannelTimeout == DEFAULT_OPEN_CHANNEL_TIMEOUT)
+    {
+      return OM.BUNDLE.getDebugSupport().getDebugOption("open.channel.timeout", 10000);
+    }
+
+    return openChannelTimeout;
+  }
+
+  public void setOpenChannelTimeout(long openChannelTimeout)
+  {
+    this.openChannelTimeout = openChannelTimeout;
   }
 
   public boolean isClient()
@@ -389,22 +415,34 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     return openChannel(protocol);
   }
 
-  public IChannel openChannel(IProtocol protocol) throws ConnectorException
+  public IChannel openChannel(final IProtocol protocol) throws ConnectorException
   {
-    if (!waitForConnection(Long.MAX_VALUE))
+    long openChannelTimeout = getOpenChannelTimeout();
+    long start = System.currentTimeMillis();
+    if (!waitForConnection(openChannelTimeout))
     {
       throw new ConnectorException("Connector not connected");
     }
 
+    final long elapsed = System.currentTimeMillis() - start;
     int channelID = getNextChannelID();
     InternalChannel channel = createChannel(channelID, protocol);
-    registerChannelWithPeer(channelID, channel.getChannelIndex(), protocol);
 
     try
     {
+      try
+      {
+        registerChannelWithPeer(channelID, channel.getChannelIndex(), protocol, openChannelTimeout - elapsed);
+      }
+      catch (TimeoutRuntimeException ex)
+      {
+        // Adjust the message for the complete timeout time
+        throw new TimeoutRuntimeException("Registration timeout  after " + openChannelTimeout + " milliseconds");
+      }
+
       channel.activate();
     }
-    catch (ConnectorException ex)
+    catch (RuntimeException ex)
     {
       throw ex;
     }
@@ -444,6 +482,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
         TRACER.format("Opening channel ID {0} without protocol", channelID); //$NON-NLS-1$
       }
     }
+
     channel.setReceiveHandler(protocol);
     channel.addListener(channelListener);
     return channel;
@@ -647,10 +686,15 @@ public abstract class Connector extends Container<IChannel> implements InternalC
    */
   protected IProtocol createProtocol(String type, Object infraStructure)
   {
-    IRegistry<IFactoryKey, IFactory> registry = getProtocolFactoryRegistry();
-    if (StringUtil.isEmpty(type) || registry == null)
+    if (StringUtil.isEmpty(type))
     {
       return null;
+    }
+
+    IRegistry<IFactoryKey, IFactory> registry = getProtocolFactoryRegistry();
+    if (registry == null)
+    {
+      throw new ConnectorException("No protocol registry configured");
     }
 
     // Get protocol factory
@@ -658,17 +702,17 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     IFactory factory = registry.get(key);
     if (factory == null)
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Unknown protocol " + type); //$NON-NLS-1$
-      }
-
-      return null;
+      throw new ConnectorException("Unknown protocol: " + type); //$NON-NLS-1$
     }
 
     // Create protocol
     String description = null;
     IProtocol protocol = (IProtocol)factory.create(description);
+    if (protocol == null)
+    {
+      throw new ConnectorException("Invalid protocol factory: " + type); //$NON-NLS-1$
+    }
+
     protocol.setBufferProvider(bufferProvider);
     protocol.setExecutorService(receiveExecutor);
     if (infraStructure != null)
@@ -761,7 +805,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     super.doDeactivate();
   }
 
-  protected abstract void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol)
+  protected abstract void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol, long timeout)
       throws ConnectorException;
 
   /**

@@ -276,12 +276,12 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol)
+  protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol, long timeout)
       throws ConnectorException
   {
     try
     {
-      if (!controlChannel.registerChannel(channelID, channelIndex, protocol))
+      if (!controlChannel.registerChannel(channelID, channelIndex, protocol, timeout))
       {
         throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
       }

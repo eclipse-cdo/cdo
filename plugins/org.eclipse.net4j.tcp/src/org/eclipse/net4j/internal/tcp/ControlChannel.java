@@ -31,10 +31,8 @@ import java.nio.ByteBuffer;
 /**
  * @author Eike Stepper
  */
-public final class ControlChannel extends Channel
+public class ControlChannel extends Channel
 {
-  public static final long REGISTRATION_TIMEOUT = OM.PROTOCOL_REGISTRATION_TIMEOUT;
-
   public static final short CONTROL_CHANNEL_INDEX = -1;
 
   public static final byte OPCODE_NEGOTIATION = 1;
@@ -66,7 +64,7 @@ public final class ControlChannel extends Channel
     return (TCPConnector)getChannelMultiplexer();
   }
 
-  public boolean registerChannel(int channelID, short channelIndex, IProtocol protocol)
+  public boolean registerChannel(int channelID, short channelIndex, IProtocol protocol, long timeout)
   {
     if (TRACER.isEnabled())
     {
@@ -84,10 +82,10 @@ public final class ControlChannel extends Channel
     BufferUtil.putUTF8(byteBuffer, protocol == null ? null : protocol.getType());
     handleBuffer(buffer);
 
-    Boolean acknowledged = registration.get(REGISTRATION_TIMEOUT);
+    Boolean acknowledged = registration.get(timeout);
     if (acknowledged == null)
     {
-      throw new TimeoutRuntimeException("Registration timeout after " + REGISTRATION_TIMEOUT + " milliseconds");
+      throw new TimeoutRuntimeException("Registration timeout after " + timeout + " milliseconds");
     }
 
     return acknowledged;

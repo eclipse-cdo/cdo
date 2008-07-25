@@ -180,7 +180,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
         // socketChannel.socket().setKeepAlive(true);
         socketChannel.configureBlocking(false);
 
-        TCPServerConnector connector = new TCPServerConnector(this);
+        TCPServerConnector connector = createConnector();
         prepareConnector(connector);
         connector.setSocketChannel(socketChannel);
         connector.setSelector(selector);
@@ -247,5 +247,10 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
   {
     serverSocketChannel.close();
     super.doDeactivate();
+  }
+
+  protected TCPServerConnector createConnector()
+  {
+    return new TCPServerConnector(this);
   }
 }

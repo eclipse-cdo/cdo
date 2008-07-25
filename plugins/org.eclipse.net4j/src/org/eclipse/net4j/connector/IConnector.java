@@ -55,6 +55,19 @@ import java.util.List;
  */
 public interface IConnector extends IContainer<IChannel>
 {
+  /**
+   * @since 2.0
+   */
+  public static final long NO_OPEN_CHANNEL_TIMEOUT = Long.MAX_VALUE;
+
+  /**
+   * Indicates to use the timeout that is configured via debug property <code>open.channel.timeout</code> (see .options
+   * file) which has a default of 10 seconds.
+   * 
+   * @since 2.0
+   */
+  public static final long DEFAULT_OPEN_CHANNEL_TIMEOUT = -1L;
+
   public String getURL();
 
   /**
@@ -163,4 +176,14 @@ public interface IConnector extends IContainer<IChannel>
    * @see #openChannel(String, Object)
    */
   public IChannel openChannel(IProtocol protocol) throws ConnectorException;
+
+  /**
+   * @since 2.0
+   */
+  public long getOpenChannelTimeout();
+
+  /**
+   * @since 2.0
+   */
+  public void setOpenChannelTimeout(long openChannelTimeout);
 }

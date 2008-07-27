@@ -22,6 +22,11 @@ public final class AdapterUtil
   @SuppressWarnings("unchecked")
   public static <TYPE> TYPE adapt(Object object, Class<TYPE> type)
   {
+    if (object == null)
+    {
+      return null;
+    }
+
     Object adapter = null;
     if (type.isInstance(object))
     {

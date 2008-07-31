@@ -69,6 +69,60 @@ public final class StringUtil
     return s1.compareTo(s2);
   }
 
+  /**
+   * @since 2.0
+   */
+  public static String capAll(String str)
+  {
+    if (str == null || str.length() == 0)
+    {
+      return str;
+    }
+
+    boolean inWhiteSpace = true;
+    StringBuilder builder = new StringBuilder(str);
+    for (int i = 0; i < builder.length(); i++)
+    {
+      char c = builder.charAt(i);
+      boolean isWhiteSpace = Character.isWhitespace(c);
+      if (!isWhiteSpace && inWhiteSpace)
+      {
+        builder.setCharAt(i, Character.toUpperCase(c));
+      }
+
+      inWhiteSpace = isWhiteSpace;
+    }
+
+    return builder.toString();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static String uncapAll(String str)
+  {
+    if (str == null || str.length() == 0)
+    {
+      return str;
+    }
+
+    boolean inWhiteSpace = true;
+    StringBuilder builder = new StringBuilder(str);
+    for (int i = 0; i < builder.length(); i++)
+    {
+      char c = builder.charAt(i);
+      boolean isWhiteSpace = Character.isWhitespace(c);
+      if (!isWhiteSpace && inWhiteSpace)
+      {
+        builder.setCharAt(i, Character.toLowerCase(c));
+      }
+
+      inWhiteSpace = isWhiteSpace;
+    }
+
+    return builder.toString();
+  }
+
   public static String cap(String str)
   {
     if (str == null || str.length() == 0)

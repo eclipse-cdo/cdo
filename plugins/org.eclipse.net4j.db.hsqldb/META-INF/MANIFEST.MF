@@ -15,3 +15,5 @@ Export-Package: org.eclipse.net4j.db.hsqldb;version="2.0.0",
 Eclipse-RegisterBuddy: org.eclipse.net4j.db
 Import-Package: org.hsqldb;version="[1.8.0,2.0.0)",
  org.hsqldb.jdbc;version="[1.8.0,2.0.0)"
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: org.eclipse.net4j.db.internal.hsqldb.bundle.OM$Activator

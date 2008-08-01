@@ -13,3 +13,5 @@ Import-Package: org.apache.derby.jdbc
 Export-Package: org.eclipse.net4j.db.internal.derby;version="2.0.0";x-friends:="org.eclipse.net4j.db.tests",
  org.eclipse.net4j.db.internal.derby.bundle;version="2.0.0";x-internal:=true
 Eclipse-RegisterBuddy: org.eclipse.net4j.db
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: org.eclipse.net4j.db.internal.derby.bundle.OM$Activator

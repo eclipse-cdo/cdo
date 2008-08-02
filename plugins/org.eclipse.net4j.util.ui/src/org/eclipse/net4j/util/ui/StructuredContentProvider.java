@@ -102,14 +102,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
         {
           try
           {
-            if (element != null && element != input)
-            {
-              viewer.refresh(element, updateLabels);
-            }
-            else
-            {
-              viewer.refresh(updateLabels);
-            }
+            refreshSynced(element, updateLabels);
           }
           catch (RuntimeException ignore)
           {
@@ -119,6 +112,21 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
     }
     catch (RuntimeException ignore)
     {
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void refreshSynced(final Object element, final boolean updateLabels)
+  {
+    if (element != null && element != input)
+    {
+      viewer.refresh(element, updateLabels);
+    }
+    else
+    {
+      viewer.refresh(updateLabels);
     }
   }
 

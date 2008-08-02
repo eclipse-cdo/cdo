@@ -1,0 +1,4 @@
+# Debugging and tracing options
+
+org.eclipse.net4j.db.postgresql/debug = true
+org.eclipse.net4j.db.postgresql/debug.sql = true

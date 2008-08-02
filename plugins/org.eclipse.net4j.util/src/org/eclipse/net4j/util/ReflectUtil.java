@@ -318,7 +318,13 @@ public final class ReflectUtil
       return null;
     }
 
-    return object.getClass().getSimpleName() + "@" + getID(object); //$NON-NLS-1$
+    String name = object.getClass().getSimpleName();
+    if (name.length() == 0)
+    {
+      name = "anonymous";
+    }
+
+    return name + "@" + getID(object); //$NON-NLS-1$
   }
 
   public static void dump(Object object)

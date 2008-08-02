@@ -23,6 +23,11 @@ public abstract class OSGiActivator implements BundleActivator
 {
   private OMBundle omBundle;
 
+  /**
+   * @since 2.0
+   */
+  protected BundleContext bundleContext;
+
   public OSGiActivator(OMBundle omBundle)
   {
     this.omBundle = omBundle;
@@ -33,14 +38,57 @@ public abstract class OSGiActivator implements BundleActivator
     return omBundle;
   }
 
-  public void start(BundleContext context) throws Exception
+  public final void start(BundleContext context) throws Exception
   {
-    startBundle(context, getOMBundle());
+    bundleContext = context;
+    OSGiActivator.traceStart(context);
+    if (omBundle == null)
+    {
+      throw new IllegalStateException("bundle == null");
+    }
+
+    try
+    {
+      omBundle.setBundleContext(context);
+      ((AbstractBundle)omBundle).start();
+      doStart();
+    }
+    catch (Error error)
+    {
+      omBundle.logger().error(error);
+      throw error;
+    }
+    catch (Exception ex)
+    {
+      omBundle.logger().error(ex);
+      throw ex;
+    }
   }
 
-  public void stop(BundleContext context) throws Exception
+  public final void stop(BundleContext context) throws Exception
   {
-    stopBundle(context, getOMBundle());
+    OSGiActivator.traceStop(context);
+    if (omBundle == null)
+    {
+      throw new IllegalStateException("bundle == null");
+    }
+
+    try
+    {
+      doStop();
+      ((AbstractBundle)omBundle).stop();
+      omBundle.setBundleContext(null);
+    }
+    catch (Error error)
+    {
+      omBundle.logger().error(error);
+      throw error;
+    }
+    catch (Exception ex)
+    {
+      omBundle.logger().error(ex);
+      throw ex;
+    }
   }
 
   @Override
@@ -73,53 +121,51 @@ public abstract class OSGiActivator implements BundleActivator
     super.finalize();
   }
 
-  public static void startBundle(BundleContext context, OMBundle bundle) throws Error, Exception
+  /**
+   * @since 2.0
+   */
+  protected void doStart() throws Exception
   {
-    OM.Activator.traceStart(context);
-    if (bundle == null)
-    {
-      throw new IllegalStateException("bundle == null");
-    }
+  }
 
+  /**
+   * @since 2.0
+   */
+  protected void doStop() throws Exception
+  {
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static void traceStart(BundleContext context)
+  {
     try
     {
-      bundle.setBundleContext(context);
-      ((AbstractBundle)bundle).start();
+      if (OM.TRACER.isEnabled())
+      {
+        OM.TRACER.format("Starting bundle {0}", context.getBundle().getSymbolicName());
+      }
     }
-    catch (Error error)
+    catch (RuntimeException ignore)
     {
-      bundle.logger().error(error);
-      throw error;
-    }
-    catch (Exception ex)
-    {
-      bundle.logger().error(ex);
-      throw ex;
     }
   }
 
-  public static void stopBundle(BundleContext context, OMBundle bundle) throws Error, Exception
+  /**
+   * @since 2.0
+   */
+  public static void traceStop(BundleContext context)
   {
-    OM.Activator.traceStop(context);
-    if (bundle == null)
-    {
-      throw new IllegalStateException("bundle == null");
-    }
-
     try
     {
-      ((AbstractBundle)bundle).stop();
-      bundle.setBundleContext(null);
+      if (OM.TRACER.isEnabled())
+      {
+        OM.TRACER.format("Stopping bundle {0}", context.getBundle().getSymbolicName());
+      }
     }
-    catch (Error error)
+    catch (RuntimeException ignore)
     {
-      bundle.logger().error(error);
-      throw error;
-    }
-    catch (Exception ex)
-    {
-      bundle.logger().error(ex);
-      throw ex;
     }
   }
 }

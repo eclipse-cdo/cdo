@@ -24,8 +24,6 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
-import org.osgi.framework.BundleContext;
-
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
  * 
@@ -56,9 +54,8 @@ public abstract class OM
     }
 
     @Override
-    public void start(BundleContext context) throws Exception
+    protected void doStart() throws Exception
     {
-      super.start(context);
       initDBAdapterRegistry();
     }
 

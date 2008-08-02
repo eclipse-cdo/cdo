@@ -34,27 +34,26 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  static void start() throws Exception
-  {
-    SessionManager.INSTANCE.activate();
-  }
-
-  static void stop() throws Exception
-  {
-    SessionManager.INSTANCE.deactivate();
-  }
-
   /**
    * @author Eike Stepper
    */
   public static final class Activator extends UIActivator
   {
-    public static Activator INSTANCE;
-
     public Activator()
     {
       super(BUNDLE);
-      INSTANCE = this;
+    }
+
+    @Override
+    protected void doStart() throws Exception
+    {
+      SessionManager.INSTANCE.activate();
+    }
+
+    @Override
+    protected void doStop() throws Exception
+    {
+      SessionManager.INSTANCE.deactivate();
     }
   }
 }

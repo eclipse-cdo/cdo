@@ -59,12 +59,9 @@ public abstract class OM
    */
   public static final class Activator extends UIActivator
   {
-    public static Activator INSTANCE;
-
     public Activator()
     {
       super(BUNDLE);
-      INSTANCE = this;
     }
   }
 }

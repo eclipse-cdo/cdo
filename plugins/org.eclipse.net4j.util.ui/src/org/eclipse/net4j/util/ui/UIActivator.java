@@ -24,6 +24,11 @@ public class UIActivator extends AbstractUIPlugin
 {
   private OMBundle omBundle;
 
+  /**
+   * @since 2.0
+   */
+  protected BundleContext bundleContext;
+
   public UIActivator(OMBundle omBundle)
   {
     this.omBundle = omBundle;
@@ -35,16 +40,71 @@ public class UIActivator extends AbstractUIPlugin
   }
 
   @Override
-  public void start(BundleContext context) throws Exception
+  public final void start(BundleContext context) throws Exception
   {
-    OSGiActivator.startBundle(context, getOMBundle());
-    super.start(context);
+    bundleContext = context;
+    OSGiActivator.traceStart(context);
+    if (omBundle == null)
+    {
+      throw new IllegalStateException("bundle == null");
+    }
+
+    try
+    {
+      super.start(context);
+      omBundle.setBundleContext(context);
+      doStart();
+    }
+    catch (Error error)
+    {
+      omBundle.logger().error(error);
+      throw error;
+    }
+    catch (Exception ex)
+    {
+      omBundle.logger().error(ex);
+      throw ex;
+    }
   }
 
   @Override
-  public void stop(BundleContext context) throws Exception
+  public final void stop(BundleContext context) throws Exception
   {
-    super.stop(context);
-    OSGiActivator.stopBundle(context, getOMBundle());
+    OSGiActivator.traceStop(context);
+    if (omBundle == null)
+    {
+      throw new IllegalStateException("bundle == null");
+    }
+
+    try
+    {
+      doStop();
+      omBundle.setBundleContext(null);
+      super.stop(context);
+    }
+    catch (Error error)
+    {
+      omBundle.logger().error(error);
+      throw error;
+    }
+    catch (Exception ex)
+    {
+      omBundle.logger().error(ex);
+      throw ex;
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void doStart() throws Exception
+  {
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void doStop() throws Exception
+  {
   }
 }

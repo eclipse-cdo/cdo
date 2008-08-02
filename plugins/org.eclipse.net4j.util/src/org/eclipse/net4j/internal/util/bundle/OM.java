@@ -15,6 +15,7 @@ import org.eclipse.net4j.internal.util.om.OSGiBundle;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.EclipseLoggingBridge;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
@@ -50,12 +51,7 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OM, OM.class);
-
-  static void stop() throws Exception
-  {
-    PluginContainer.dispose();
-  }
+  public static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OM, OM.class);
 
   /**
    * @author Eike Stepper
@@ -77,49 +73,25 @@ public abstract class OM
       {
         AbstractPlatform.INSTANCE.addLogHandler(EclipseLoggingBridge.INSTANCE);
       }
-      catch (Exception ignore)
+      catch (Throwable ignore)
       {
       }
 
-      traceStart(context);
+      OSGiActivator.traceStart(context);
       IPluginContainer container = IPluginContainer.INSTANCE;
-      if (TRACER.isEnabled()) TRACER.format("Plugin container created: {0}", container);
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Plugin container created: {0}", container);
+      }
     }
 
     public void stop(BundleContext context) throws Exception
     {
-      traceStop(context);
+      OSGiActivator.traceStop(context);
       ((OSGiBundle)OM.BUNDLE).stop();
+      PluginContainer.dispose();
       OM.BUNDLE.setBundleContext(null);
       AbstractPlatform.systemContext = null;
-    }
-
-    public static void traceStart(BundleContext context)
-    {
-      try
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Starting bundle {0}", context.getBundle().getSymbolicName());
-        }
-      }
-      catch (RuntimeException ignore)
-      {
-      }
-    }
-
-    public static void traceStop(BundleContext context)
-    {
-      try
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Stopping bundle {0}", context.getBundle().getSymbolicName());
-        }
-      }
-      catch (RuntimeException ignore)
-      {
-      }
     }
   }
 }

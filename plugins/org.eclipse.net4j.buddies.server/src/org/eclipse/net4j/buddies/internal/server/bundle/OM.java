@@ -46,11 +46,6 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  static void stop() throws Exception
-  {
-    BuddyAdmin.INSTANCE.deactivate();
-  }
-
   /**
    * @author Eike Stepper
    */
@@ -59,6 +54,12 @@ public abstract class OM
     public Activator()
     {
       super(BUNDLE);
+    }
+
+    @Override
+    protected void doStop() throws Exception
+    {
+      BuddyAdmin.INSTANCE.deactivate();
     }
   }
 }

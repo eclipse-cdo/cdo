@@ -56,16 +56,70 @@ public final class Activator extends EMFPlugin
     @Override
     public void start(BundleContext context) throws Exception
     {
-      super.start(context);
-      OSGiActivator.startBundle(context, OM.BUNDLE);
+      OSGiActivator.traceStart(context);
+      if (OM.BUNDLE == null)
+      {
+        throw new IllegalStateException("bundle == null");
+      }
+
+      try
+      {
+        super.start(context);
+        OM.BUNDLE.setBundleContext(context);
+        doStart();
+      }
+      catch (Error error)
+      {
+        OM.BUNDLE.logger().error(error);
+        throw error;
+      }
+      catch (Exception ex)
+      {
+        OM.BUNDLE.logger().error(ex);
+        throw ex;
+      }
     }
 
     @Override
     public void stop(BundleContext context) throws Exception
     {
       plugin = null;
-      OSGiActivator.stopBundle(context, OM.BUNDLE);
-      super.stop(context);
+      OSGiActivator.traceStop(context);
+      if (OM.BUNDLE == null)
+      {
+        throw new IllegalStateException("bundle == null");
+      }
+
+      try
+      {
+        doStop();
+        OM.BUNDLE.setBundleContext(null);
+        super.stop(context);
+      }
+      catch (Error error)
+      {
+        OM.BUNDLE.logger().error(error);
+        throw error;
+      }
+      catch (Exception ex)
+      {
+        OM.BUNDLE.logger().error(ex);
+        throw ex;
+      }
+    }
+
+    /**
+     * @since 2.0
+     */
+    protected void doStart() throws Exception
+    {
+    }
+
+    /**
+     * @since 2.0
+     */
+    protected void doStop() throws Exception
+    {
     }
   }
 }

@@ -106,15 +106,6 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     }
   }
 
-  /**
-   * @since 2.0
-   */
-  protected void handleInactiveElement(Iterator<Node> it, Node child)
-  {
-    it.remove();
-    child.dispose();
-  }
-
   public Object getParent(Object element)
   {
     try
@@ -151,6 +142,15 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     root.dispose();
     root = null;
     nodes.clear();
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void handleInactiveElement(Iterator<Node> it, Node child)
+  {
+    it.remove();
+    child.dispose();
   }
 
   protected void elementAdded(Object element, Object parent)

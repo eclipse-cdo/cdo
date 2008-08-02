@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.container;
 
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import java.util.List;
@@ -30,6 +31,11 @@ public abstract class Container<E> extends Lifecycle implements IContainer<E>
     return elements == null || elements.length == 0;
   }
 
+  public void fireContainerEvent(E element, Kind kind)
+  {
+    fireEvent(newContainerEvent(element, kind));
+  }
+
   public void fireElementAddedEvent(E element)
   {
     fireContainerEvent(element, IContainerDelta.Kind.ADDED);
@@ -40,9 +46,34 @@ public abstract class Container<E> extends Lifecycle implements IContainer<E>
     fireContainerEvent(element, IContainerDelta.Kind.REMOVED);
   }
 
-  public void fireContainerEvent(E element, Kind kind)
+  /**
+   * @since 2.0
+   */
+  public void fireContainerEvent(E[] elements, Kind kind)
   {
-    fireEvent(newContainerEvent(element, kind));
+    ContainerEvent<E> event = new ContainerEvent<E>(this);
+    for (E element : elements)
+    {
+      event.addDelta(element, kind);
+    }
+
+    fireEvent(event);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void fireElementsAddedEvent(E[] elements)
+  {
+    fireContainerEvent(elements, IContainerDelta.Kind.ADDED);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void fireElementsRemovedEvent(E[] elements)
+  {
+    fireContainerEvent(elements, IContainerDelta.Kind.REMOVED);
   }
 
   public void fireContainerEvent(List<IContainerDelta<E>> deltas)
@@ -58,5 +89,19 @@ public abstract class Container<E> extends Lifecycle implements IContainer<E>
   protected ContainerEvent<E> newContainerEvent()
   {
     return new ContainerEvent<E>(this);
+  }
+
+  @Override
+  public void fireEvent(IEvent event)
+  {
+    if (event instanceof IContainerEvent)
+    {
+      if (((IContainerEvent<?>)event).isEmpty())
+      {
+        return;
+      }
+    }
+
+    super.fireEvent(event);
   }
 }

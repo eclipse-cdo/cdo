@@ -18,6 +18,9 @@ import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
+/**
+ * @author Eike Stepper
+ */
 public class ConnectorsView extends ContainerView
 {
   public ConnectorsView()

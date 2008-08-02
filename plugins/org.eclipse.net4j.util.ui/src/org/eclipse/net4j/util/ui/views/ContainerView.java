@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.ui.views;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.internal.ui.actions.IntrospectAction;
+import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
@@ -125,15 +126,28 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
   @Override
   public final void createPartControl(Composite parent)
   {
-    shell = parent.getShell();
-    Composite composite = UIUtil.createGridComposite(parent, 1);
+    try
+    {
+      shell = parent.getShell();
+      Composite composite = UIUtil.createGridComposite(parent, 1);
 
-    Control control = createUI(composite);
-    control.setLayoutData(UIUtil.createGridData());
+      Control control = createUI(composite);
+      control.setLayoutData(UIUtil.createGridData());
 
-    hookContextMenu();
-    hookDoubleClick();
-    contributeToActionBars();
+      hookContextMenu();
+      hookDoubleClick();
+      contributeToActionBars();
+    }
+    catch (Error ex)
+    {
+      OM.LOG.error(ex);
+      throw ex;
+    }
+    catch (RuntimeException ex)
+    {
+      OM.LOG.error(ex);
+      throw ex;
+    }
   }
 
   protected Control createUI(Composite parent)

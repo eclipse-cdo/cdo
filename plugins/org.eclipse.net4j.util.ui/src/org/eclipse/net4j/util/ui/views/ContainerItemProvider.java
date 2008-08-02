@@ -87,8 +87,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
           ILifecycleState lifecycleState = LifecycleUtil.getLifecycleState(childElement);
           if (lifecycleState == ILifecycleState.INACTIVE || lifecycleState == ILifecycleState.DEACTIVATING)
           {
-            it.remove();
-            child.dispose();
+            handleInactiveElement(it, child);
           }
         }
       }
@@ -105,6 +104,15 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     {
       return NO_ELEMENTS;
     }
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void handleInactiveElement(Iterator<Node> it, Node child)
+  {
+    it.remove();
+    child.dispose();
   }
 
   public Object getParent(Object element)

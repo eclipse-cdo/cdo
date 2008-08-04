@@ -84,32 +84,19 @@ public abstract class MasterDetailsView extends MultiViewersView
     return currentDetailIndex;
   }
 
+  public String getCurrentDetailTitle()
+  {
+    if (detailTitles == null || currentDetailIndex == -1)
+    {
+      return null;
+    }
+
+    return detailTitles[currentDetailIndex];
+  }
+
   @Override
   protected Control createUI(Composite parent)
   {
-    // sash = new SashComposite(parent, SWT.NONE, 10, 50, true)
-    // {
-    // @Override
-    // protected Control createControl1(Composite parent)
-    // {
-    // return createComposite(parent);
-    // }
-    //
-    // @Override
-    // protected Control createControl2(Composite parent)
-    // {
-    // return createComposite(parent);
-    // }
-    //
-    // private Composite createComposite(Composite parent)
-    // {
-    // Composite composite = new Composite(parent, SWT.NONE);
-    // composite.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
-    // return composite;
-    // }
-    // };
-    //
-
     sash = new SashComposite(parent, SWT.NONE, 10, 50, true)
     {
       @Override
@@ -137,7 +124,12 @@ public abstract class MasterDetailsView extends MultiViewersView
               public void widgetSelected(SelectionEvent e)
               {
                 String title = detailsFolder.getSelection().getText();
-                currentDetailIndex = indexOf(detailItems, title);
+                int detailIndex = indexOf(detailItems, title);
+                if (detailIndex != currentDetailIndex)
+                {
+                  currentDetailIndex = detailIndex;
+                  updateCoolBar();
+                }
               }
             });
 
@@ -148,6 +140,7 @@ public abstract class MasterDetailsView extends MultiViewersView
           protected void fillCoolBar(IContributionManager manager)
           {
             MasterDetailsView.this.fillCoolBar(manager);
+            manager.add(new RefreshAction());
           }
         };
       }
@@ -275,7 +268,6 @@ public abstract class MasterDetailsView extends MultiViewersView
 
   protected void fillCoolBar(IContributionManager manager)
   {
-    manager.add(new RefreshAction());
   }
 
   protected abstract StructuredViewer createMaster(Composite parent);
@@ -304,7 +296,7 @@ public abstract class MasterDetailsView extends MultiViewersView
   /**
    * @author Eike Stepper
    */
-  private final class RefreshAction extends SafeAction
+  protected final class RefreshAction extends SafeAction
   {
     public RefreshAction()
     {

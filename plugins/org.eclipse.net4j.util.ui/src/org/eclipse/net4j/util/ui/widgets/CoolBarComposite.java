@@ -14,7 +14,6 @@ import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.action.CoolBarManager;
 import org.eclipse.jface.action.IContributionManager;
-import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -37,12 +36,14 @@ public abstract class CoolBarComposite extends Composite
 
   private Label separator;
 
+  private ToolBarManager toolBarManager;
+
   public CoolBarComposite(Composite parent, int style)
   {
     super(parent, style);
     setLayout(new CoolBarLayout());
 
-    ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT | SWT.RIGHT | SWT.WRAP | SWT.HORIZONTAL);
+    toolBarManager = new ToolBarManager(SWT.FLAT | SWT.RIGHT | SWT.WRAP | SWT.HORIZONTAL);
     fillCoolBar(toolBarManager);
 
     coolBarManager = new CoolBarManager(SWT.FLAT | SWT.HORIZONTAL);
@@ -68,14 +69,16 @@ public abstract class CoolBarComposite extends Composite
     super.dispose();
   }
 
-  public ICoolBarManager getCoolBarManager()
-  {
-    return coolBarManager;
-  }
-
   public Control getClientControl()
   {
     return clientControl;
+  }
+
+  public void updateCoolBar()
+  {
+    toolBarManager.removeAll();
+    fillCoolBar(toolBarManager);
+    coolBarManager.update(true);
   }
 
   protected abstract Control createUI(Composite parent);

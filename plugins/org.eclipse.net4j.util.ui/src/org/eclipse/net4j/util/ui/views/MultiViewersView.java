@@ -68,7 +68,11 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
   @Override
   public void setFocus()
   {
-    getCurrentViewer().getControl().setFocus();
+    StructuredViewer viewer = getCurrentViewer();
+    if (viewer != null)
+    {
+      viewer.getControl().setFocus();
+    }
   }
 
   public void refreshViewer(boolean updateLabels)
@@ -80,26 +84,30 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
   {
     try
     {
-      getDisplay().asyncExec(new Runnable()
+      final StructuredViewer viewer = getCurrentViewer();
+      if (viewer != null)
       {
-        public void run()
+        getDisplay().asyncExec(new Runnable()
         {
-          try
+          public void run()
           {
-            if (element != null)
+            try
             {
-              getCurrentViewer().refresh(element, updateLabels);
+              if (element != null)
+              {
+                viewer.refresh(element, updateLabels);
+              }
+              else
+              {
+                viewer.refresh(updateLabels);
+              }
             }
-            else
+            catch (RuntimeException ignore)
             {
-              getCurrentViewer().refresh(updateLabels);
             }
           }
-          catch (RuntimeException ignore)
-          {
-          }
-        }
-      });
+        });
+      }
     }
     catch (RuntimeException ignore)
     {
@@ -110,19 +118,23 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
   {
     try
     {
-      getDisplay().asyncExec(new Runnable()
+      final StructuredViewer viewer = getCurrentViewer();
+      if (viewer != null)
       {
-        public void run()
+        getDisplay().asyncExec(new Runnable()
         {
-          try
+          public void run()
           {
-            getCurrentViewer().update(element, null);
+            try
+            {
+              viewer.update(element, null);
+            }
+            catch (RuntimeException ignore)
+            {
+            }
           }
-          catch (RuntimeException ignore)
-          {
-          }
-        }
-      });
+        });
+      }
     }
     catch (RuntimeException ignore)
     {
@@ -133,19 +145,23 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
   {
     try
     {
-      getDisplay().asyncExec(new Runnable()
+      final StructuredViewer viewer = getCurrentViewer();
+      if (viewer != null)
       {
-        public void run()
+        getDisplay().asyncExec(new Runnable()
         {
-          try
+          public void run()
           {
-            getCurrentViewer().reveal(element);
+            try
+            {
+              viewer.reveal(element);
+            }
+            catch (RuntimeException ignore)
+            {
+            }
           }
-          catch (RuntimeException ignore)
-          {
-          }
-        }
-      });
+        });
+      }
     }
     catch (RuntimeException ignore)
     {
@@ -154,7 +170,11 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
 
   public void selectReveal(ISelection selection)
   {
-    getCurrentViewer().setSelection(selection, true);
+    StructuredViewer viewer = getCurrentViewer();
+    if (viewer != null)
+    {
+      viewer.setSelection(selection, true);
+    }
   }
 
   public void closeView()
@@ -261,7 +281,13 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
 
   protected final Display getDisplay()
   {
-    Display display = getCurrentViewer().getControl().getDisplay();
+    Display display = null;
+    final StructuredViewer viewer = getCurrentViewer();
+    if (viewer != null)
+    {
+      display = viewer.getControl().getDisplay();
+    }
+
     if (display == null)
     {
       display = UIUtil.getDisplay();
@@ -272,15 +298,19 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
 
   private void hookDoubleClick()
   {
-    getCurrentViewer().addDoubleClickListener(new IDoubleClickListener()
+    final StructuredViewer viewer = getCurrentViewer();
+    if (viewer != null)
     {
-      public void doubleClick(DoubleClickEvent event)
+      viewer.addDoubleClickListener(new IDoubleClickListener()
       {
-        IStructuredSelection selection = (IStructuredSelection)getCurrentViewer().getSelection();
-        Object object = selection.getFirstElement();
-        doubleClicked(object);
-      }
-    });
+        public void doubleClick(DoubleClickEvent event)
+        {
+          IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+          Object object = selection.getFirstElement();
+          doubleClicked(object);
+        }
+      });
+    }
   }
 
   private void hookContextMenu(final StructuredViewer viewer)
@@ -291,8 +321,12 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
     {
       public void menuAboutToShow(IMenuManager manager)
       {
-        IStructuredSelection selection = (IStructuredSelection)getCurrentViewer().getSelection();
-        fillContextMenu(manager, viewer, selection);
+        final StructuredViewer viewer = getCurrentViewer();
+        if (viewer != null)
+        {
+          IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+          fillContextMenu(manager, viewer, selection);
+        }
       }
     });
 

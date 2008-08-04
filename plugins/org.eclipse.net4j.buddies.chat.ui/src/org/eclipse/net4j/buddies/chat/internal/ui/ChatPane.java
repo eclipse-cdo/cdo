@@ -59,7 +59,7 @@ public class ChatPane extends FacilityPane
   @Override
   protected Control createUI(Composite parent)
   {
-    sashComposite = new SashComposite(parent, SWT.NONE, 16, 80, false)
+    sashComposite = new SashComposite(parent, SWT.NONE, 16, 80)
     {
       @Override
       protected Control createControl1(Composite parent)
@@ -90,6 +90,7 @@ public class ChatPane extends FacilityPane
       }
     };
 
+    sashComposite.setVertical(false);
     return sashComposite;
   }
 

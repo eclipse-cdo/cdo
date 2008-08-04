@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.ui.actions;
 
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
 import org.eclipse.jface.action.IAction;
@@ -18,7 +20,7 @@ import org.eclipse.jface.action.MenuManager;
 /**
  * @author Eike Stepper
  */
-public abstract class SashLayoutAction extends SafeAction
+public abstract class SashLayoutAction extends SafeAction implements IListener
 {
   private SashComposite sashComposite;
 
@@ -26,11 +28,20 @@ public abstract class SashLayoutAction extends SafeAction
   {
     super(text, IAction.AS_RADIO_BUTTON);
     this.sashComposite = sashComposite;
+    sashComposite.addListener(this);
   }
 
   public SashComposite getSashComposite()
   {
     return sashComposite;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void dispose()
+  {
+    sashComposite.removeListener(this);
   }
 
   /**
@@ -41,12 +52,21 @@ public abstract class SashLayoutAction extends SafeAction
     public Vertical(SashComposite sashComposite)
     {
       super(sashComposite, "Vertical");
+      notifyEvent(null);
     }
 
     @Override
     protected void safeRun() throws Exception
     {
       getSashComposite().setVertical(true);
+    }
+
+    /**
+     * @since 2.0
+     */
+    public void notifyEvent(IEvent event)
+    {
+      setChecked(getSashComposite().isVertical());
     }
   }
 
@@ -58,12 +78,21 @@ public abstract class SashLayoutAction extends SafeAction
     public Horizontal(SashComposite sashComposite)
     {
       super(sashComposite, "Horizontal");
+      notifyEvent(null);
     }
 
     @Override
     protected void safeRun() throws Exception
     {
       getSashComposite().setVertical(false);
+    }
+
+    /**
+     * @since 2.0
+     */
+    public void notifyEvent(IEvent event)
+    {
+      setChecked(!getSashComposite().isVertical());
     }
   }
 
@@ -78,19 +107,9 @@ public abstract class SashLayoutAction extends SafeAction
 
     public LayoutMenu(SashComposite sashComposite)
     {
-      this(sashComposite, true);
-    }
-
-    public LayoutMenu(SashComposite sashComposite, boolean defaultVertical)
-    {
       super("Layout");
-      verticalAction = new SashLayoutAction.Vertical(sashComposite);
-      verticalAction.setChecked(defaultVertical);
-      add(verticalAction);
-
-      horizontalAction = new SashLayoutAction.Horizontal(sashComposite);
-      horizontalAction.setChecked(!defaultVertical);
-      add(horizontalAction);
+      add(verticalAction = new SashLayoutAction.Vertical(sashComposite));
+      add(horizontalAction = new SashLayoutAction.Horizontal(sashComposite));
     }
 
     public SafeAction getVerticalAction()

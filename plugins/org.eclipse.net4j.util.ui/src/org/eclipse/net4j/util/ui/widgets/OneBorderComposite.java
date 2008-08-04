@@ -70,19 +70,19 @@ public abstract class OneBorderComposite extends Composite
       switch (borderPosition)
       {
       case SWT.LEFT:
-        setVertical(true);
+        setBorder(true, true);
         break;
 
       case SWT.RIGHT:
-        setVertical(false);
+        setBorder(true, false);
         break;
 
       case SWT.TOP:
-        setHorizontal(true);
+        setBorder(false, true);
         break;
 
       case SWT.BOTTOM:
-        setHorizontal(false);
+        setBorder(false, false);
         break;
 
       default:
@@ -138,43 +138,22 @@ public abstract class OneBorderComposite extends Composite
 
   protected abstract Control createUI(Composite parent);
 
-  private void setHorizontal(boolean beginning)
+  private void setBorder(boolean vertical, boolean beginning)
   {
     if (border != null)
     {
       border.dispose();
     }
 
-    layout.numColumns = 1;
+    layout.numColumns = vertical ? 2 : 1;
     borderData = UIUtil.createGridData();
-    borderData.widthHint = SWT.DEFAULT;
-    borderData.heightHint = 1;
-    borderData.grabExcessHorizontalSpace = true;
-    borderData.grabExcessVerticalSpace = false;
+    borderData.widthHint = vertical ? 1 : SWT.DEFAULT;
+    borderData.heightHint = vertical ? SWT.DEFAULT : 1;
+    borderData.grabExcessHorizontalSpace = !vertical;
+    borderData.grabExcessVerticalSpace = vertical;
 
-    border = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
-    border.setLayoutData(borderData);
-    if (beginning)
-    {
-      border.moveAbove(null);
-    }
-  }
-
-  private void setVertical(boolean beginning)
-  {
-    if (border != null)
-    {
-      border.dispose();
-    }
-
-    layout.numColumns = 2;
-    borderData = UIUtil.createGridData();
-    borderData.widthHint = 1;
-    borderData.heightHint = SWT.DEFAULT;
-    borderData.grabExcessHorizontalSpace = false;
-    borderData.grabExcessVerticalSpace = true;
-
-    border = new Label(this, SWT.SEPARATOR | SWT.VERTICAL);
+    int orientation = vertical ? SWT.VERTICAL : SWT.HORIZONTAL;
+    border = new Label(this, SWT.SEPARATOR | orientation);
     border.setLayoutData(borderData);
     if (beginning)
     {

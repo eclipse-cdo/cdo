@@ -120,13 +120,7 @@ public abstract class MasterDetailsView extends MultiViewersView
     adjustDetails(masterElement);
   }
 
-  protected abstract StructuredViewer createMaster(Composite parent);
-
-  protected abstract String[] getDetailTitles(Object masterElement);
-
-  protected abstract StructuredViewer createDetail(Composite parent, String title);
-
-  private void adjustDetails(Object masterElement)
+  protected void adjustDetails(Object masterElement)
   {
     if (ObjectUtil.equals(masterElement, currentMasterElement))
     {
@@ -176,13 +170,10 @@ public abstract class MasterDetailsView extends MultiViewersView
       }
     }
 
-    if (currentMasterElement != masterElement)
+    currentMasterElement = masterElement;
+    for (StructuredViewer viewer : details)
     {
-      currentMasterElement = masterElement;
-      for (StructuredViewer viewer : details)
-      {
-        viewer.setInput(masterElement);
-      }
+      setDetailInput(viewer, masterElement);
     }
 
     currentIndex = indexOf(detailItems, oldDetailTitle);
@@ -196,6 +187,20 @@ public abstract class MasterDetailsView extends MultiViewersView
       detailsFolder.setSelection(currentIndex);
     }
   }
+
+  protected void setDetailInput(StructuredViewer viewer, Object input)
+  {
+    if (input != viewer.getInput())
+    {
+      viewer.setInput(input);
+    }
+  }
+
+  protected abstract StructuredViewer createMaster(Composite parent);
+
+  protected abstract StructuredViewer createDetail(Composite parent, String title);
+
+  protected abstract String[] getDetailTitles(Object masterElement);
 
   public static int indexOf(CTabItem[] items, String title)
   {

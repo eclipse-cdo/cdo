@@ -29,6 +29,10 @@ public class LRURevisionList extends DLRevisionList
     return capacity;
   }
 
+  /**
+   * Sets the capacity of LRU cache revisions. A value of zero disables eviction completely such that the cache will
+   * grow indefinetely.
+   */
   public synchronized void capacity(int capacity)
   {
     this.capacity = capacity;

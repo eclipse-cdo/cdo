@@ -38,41 +38,6 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
 
   private Map<CDOID, RevisionHolder> revisions = new HashMap<CDOID, RevisionHolder>();
 
-  // {
-  // private static final long serialVersionUID = 1L;
-  //
-  // @Override
-  // public String toString()
-  // {
-  // List<Entry<CDOID, RevisionHolder>> entries = new ArrayList<Entry<CDOID, RevisionHolder>>(entrySet());
-  // Collections.sort(entries, new Comparator<Entry<CDOID, RevisionHolder>>()
-  // {
-  // public int compare(Entry<CDOID, RevisionHolder> o1, Entry<CDOID, RevisionHolder> o2)
-  // {
-  // return o1.getKey().compareTo(o2.getKey());
-  // }
-  // });
-  //
-  // StringBuilder builder = new StringBuilder();
-  // for (Entry<CDOID, RevisionHolder> entry : entries)
-  // {
-  // builder.append(entry.getKey());
-  // builder.append(" -->");
-  // RevisionHolder holder = entry.getValue();
-  // while (holder != null)
-  // {
-  // builder.append(" ");
-  // builder.append(holder.getRevision(false));
-  // holder = holder.getNext();
-  // }
-  //
-  // builder.append("\n");
-  // }
-  //
-  // return builder.toString();
-  // }
-  // };
-
   private int currentLRUCapacity;
 
   private int revisedLRUCapacity;
@@ -90,6 +55,10 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
     return currentLRUCapacity;
   }
 
+  /**
+   * Sets the capacity of LRU cache for <em>current</em> revisions. A value of zero disables eviction completely such
+   * that the cache will grow indefinetely.
+   */
   public void setCurrentLRUCapacity(int capacity)
   {
     currentLRUCapacity = capacity;
@@ -104,6 +73,10 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
     return revisedLRUCapacity;
   }
 
+  /**
+   * Sets the capacity of LRU cache for old (<em>revised</em>) revisions. A value of zero disables eviction completely
+   * such that the cache will grow indefinetely.
+   */
   public void setRevisedLRUCapacity(int capacity)
   {
     revisedLRUCapacity = capacity;

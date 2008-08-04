@@ -12,19 +12,23 @@ package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.actions.SashLayoutAction;
+import org.eclipse.net4j.util.ui.widgets.CoolBarComposite;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -82,87 +86,94 @@ public abstract class MasterDetailsView extends MultiViewersView
   @Override
   protected Control createUI(Composite parent)
   {
-    sash = new SashComposite(parent, SWT.NONE, 10, 50)
-    {
-      @Override
-      protected Control createControl1(Composite parent)
-      {
-        return new Composite(parent, SWT.NONE);
-      }
-
-      @Override
-      protected Control createControl2(Composite parent)
-      {
-        return new Composite(parent, SWT.NONE);
-      }
-    };
-
-    sash.setVertical(false);
-
-    // sash = new SashComposite(parent, SWT.NONE, 10, 50, false)
+    // sash = new SashComposite(parent, SWT.NONE, 10, 50, true)
     // {
     // @Override
     // protected Control createControl1(Composite parent)
     // {
-    // master = createMaster(parent);
-    // return master.getControl();
+    // return createComposite(parent);
     // }
     //
     // @Override
     // protected Control createControl2(Composite parent)
     // {
-    // return new CoolBarComposite(parent, SWT.NONE)
-    // {
-    // @Override
-    // protected Control createUI(Composite parent)
-    // {
-    // // Styles: CLOSE, TOP, BOTTOM, FLAT, BORDER, SINGLE, MULTI
-    // detailsFolder = new CTabFolder(parent, SWT.BOTTOM | SWT.FLAT);
-    // detailsFolder.setLayoutData(UIUtil.createGridData());
-    // adjustDetails(null);
-    // detailsFolder.addSelectionListener(new SelectionAdapter()
-    // {
-    // @Override
-    // public void widgetSelected(SelectionEvent e)
-    // {
-    // String title = detailsFolder.getSelection().getText();
-    // currentDetailIndex = indexOf(detailItems, title);
-    // }
-    // });
-    //
-    // return detailsFolder;
+    // return createComposite(parent);
     // }
     //
-    // @Override
-    // protected void fillCoolBar(IContributionManager manager)
+    // private Composite createComposite(Composite parent)
     // {
-    // MasterDetailsView.this.fillCoolBar(manager);
-    // }
-    // };
+    // Composite composite = new Composite(parent, SWT.NONE);
+    // composite.setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
+    // return composite;
     // }
     // };
     //
-    // setCurrentViewer(master);
-    // master.addSelectionChangedListener(new ISelectionChangedListener()
-    // {
-    // public void selectionChanged(SelectionChangedEvent event)
-    // {
-    // try
-    // {
-    // masterSelectionChanged(event);
-    // }
-    // catch (Error ex)
-    // {
-    // OM.LOG.error(ex);
-    // throw ex;
-    // }
-    // catch (RuntimeException ex)
-    // {
-    // OM.LOG.error(ex);
-    // throw ex;
-    // }
-    // }
-    // });
+
+    sash = new SashComposite(parent, SWT.NONE, 10, 50, true)
+    {
+      @Override
+      protected Control createControl1(Composite parent)
+      {
+        master = createMaster(parent);
+        return master.getControl();
+      }
+
+      @Override
+      protected Control createControl2(Composite parent)
+      {
+        return new CoolBarComposite(parent, SWT.NONE)
+        {
+          @Override
+          protected Control createUI(Composite parent)
+          {
+            // Styles: CLOSE, TOP, BOTTOM, FLAT, BORDER, SINGLE, MULTI
+            detailsFolder = new CTabFolder(parent, SWT.BOTTOM | SWT.FLAT);
+            detailsFolder.setLayoutData(UIUtil.createGridData());
+            adjustDetails(null);
+            detailsFolder.addSelectionListener(new SelectionAdapter()
+            {
+              @Override
+              public void widgetSelected(SelectionEvent e)
+              {
+                String title = detailsFolder.getSelection().getText();
+                currentDetailIndex = indexOf(detailItems, title);
+              }
+            });
+
+            return detailsFolder;
+          }
+
+          @Override
+          protected void fillCoolBar(IContributionManager manager)
+          {
+            MasterDetailsView.this.fillCoolBar(manager);
+          }
+        };
+      }
+    };
+
+    sash.setVertical(true);
+    setCurrentViewer(master);
+    master.addSelectionChangedListener(new ISelectionChangedListener()
+    {
+      public void selectionChanged(SelectionChangedEvent event)
+      {
+        try
+        {
+          masterSelectionChanged(event);
+        }
+        catch (Error ex)
+        {
+          OM.LOG.error(ex);
+          throw ex;
+        }
+        catch (RuntimeException ex)
+        {
+          OM.LOG.error(ex);
+          throw ex;
+        }
+      }
+    });
 
     return sash;
   }
@@ -172,14 +183,6 @@ public abstract class MasterDetailsView extends MultiViewersView
   {
     super.fillLocalPullDown(manager);
     manager.add(new SashLayoutAction.LayoutMenu(sash));
-  }
-
-  @Override
-  protected void fillLocalToolBar(IToolBarManager manager)
-  {
-    super.fillLocalToolBar(manager);
-    manager.add(new SashLayoutAction.Vertical(sash));
-    manager.add(new SashLayoutAction.Horizontal(sash));
   }
 
   protected void masterSelectionChanged(SelectionChangedEvent event)

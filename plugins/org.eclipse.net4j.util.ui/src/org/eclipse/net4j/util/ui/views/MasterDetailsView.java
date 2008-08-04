@@ -20,6 +20,7 @@ import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -182,7 +183,10 @@ public abstract class MasterDetailsView extends MultiViewersView
   protected void fillLocalPullDown(IMenuManager manager)
   {
     super.fillLocalPullDown(manager);
+    manager.add(new Separator("group1"));
     manager.add(new SashLayoutAction.LayoutMenu(sash));
+    manager.add(new Separator("group2"));
+    manager.add(new RefreshAction());
   }
 
   protected void masterSelectionChanged(SelectionChangedEvent event)
@@ -304,7 +308,7 @@ public abstract class MasterDetailsView extends MultiViewersView
   {
     public RefreshAction()
     {
-      super("Refresh", "Refresh view", OM.getImageDescriptor("icons/full/etool16/refresh.gif"));
+      super("Refresh", "Refresh", OM.getImageDescriptor("icons/full/etool16/refresh.gif"));
     }
 
     @Override

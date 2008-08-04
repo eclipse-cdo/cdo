@@ -21,6 +21,9 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Sash;
 
+/**
+ * @author Eike Stepper
+ */
 public abstract class SashComposite extends Composite
 {
   private boolean vertical;
@@ -29,9 +32,9 @@ public abstract class SashComposite extends Composite
 
   private Sash sash;
 
-  private Control control1;
+  private OneBorderComposite control1;
 
-  private Control control2;
+  private OneBorderComposite control2;
 
   private FormData sashData;
 
@@ -58,18 +61,29 @@ public abstract class SashComposite extends Composite
     form = new FormLayout();
     setLayout(form);
 
-    control1Data = new FormData();
-    control1 = createControl1(this);
-    control1.setLayoutData(control1Data);
+    control1 = new OneBorderComposite(this)
+    {
+      @Override
+      protected Control createUI(Composite parent)
+      {
+        return createControl1(parent);
+      }
+    };
 
-    sashData = new FormData();
     sash = createSash(this);
-    sash.setLayoutData(sashData);
 
-    control2Data = new FormData();
-    control2 = createControl2(this);
-    control2.setLayoutData(control2Data);
+    control2 = new OneBorderComposite(this)
+    {
+      @Override
+      protected Control createUI(Composite parent)
+      {
+        return createControl2(parent);
+      }
+    };
 
+    sash.setLayoutData(sashData = createFormData());
+    control1.setLayoutData(control1Data = createFormData());
+    control2.setLayoutData(control2Data = createFormData());
     init();
   }
 
@@ -104,30 +118,26 @@ public abstract class SashComposite extends Composite
 
   public Control getControl1()
   {
-    return control1;
+    return control1.getClientControl();
   }
 
   public Control getControl2()
   {
-    return control2;
+    return control2.getClientControl();
   }
 
   protected void init()
   {
+    control1.setBorderPosition(SWT.RIGHT);
     control1Data.left = new FormAttachment(0, 0);
     control1Data.right = new FormAttachment(sash, 0);
-    control1Data.top = new FormAttachment(0, 0);
-    control1Data.bottom = new FormAttachment(100, 0);
 
     sashData.left = new FormAttachment(percent, 0);
     sashData.right = null;
-    sashData.top = new FormAttachment(0, 0);
-    sashData.bottom = new FormAttachment(100, 0);
 
+    control2.setBorderPosition(SWT.LEFT);
     control2Data.left = new FormAttachment(sash, 0);
     control2Data.right = new FormAttachment(100, 0);
-    control2Data.top = new FormAttachment(0, 0);
-    control2Data.bottom = new FormAttachment(100, 0);
 
     if (!vertical)
     {
@@ -137,6 +147,8 @@ public abstract class SashComposite extends Composite
 
   protected void swap()
   {
+    control1.swapBorderPosition();
+    control2.swapBorderPosition();
     swap(control1Data);
     swap(sashData);
     swap(control2Data);
@@ -164,6 +176,14 @@ public abstract class SashComposite extends Composite
 
   protected abstract Control createControl2(Composite parent);
 
+  private FormData createFormData()
+  {
+    FormData formData = new FormData();
+    formData.top = new FormAttachment(0, 0);
+    formData.bottom = new FormAttachment(100, 0);
+    return formData;
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -176,7 +196,7 @@ public abstract class SashComposite extends Composite
     public void handleEvent(Event e)
     {
       Rectangle sashRect = sash.getBounds();
-      Rectangle shellRect = SashComposite.this.getClientArea();
+      Rectangle shellRect = getClientArea();
       if (vertical)
       {
         int right = shellRect.width - sashRect.width - limit;

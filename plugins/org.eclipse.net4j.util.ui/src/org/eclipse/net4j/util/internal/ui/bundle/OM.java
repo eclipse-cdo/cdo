@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
 
+import org.eclipse.jface.resource.ImageDescriptor;
+
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
  * 
@@ -33,6 +35,11 @@ public abstract class OM
   public static final OMLogger LOG = BUNDLE.logger();
 
   public static final OMPreferences PREFS = BUNDLE.preferences();
+
+  public static ImageDescriptor getImageDescriptor(String imageFilePath)
+  {
+    return Activator.imageDescriptorFromPlugin(BUNDLE_ID, imageFilePath);
+  }
 
   /**
    * @author Eike Stepper

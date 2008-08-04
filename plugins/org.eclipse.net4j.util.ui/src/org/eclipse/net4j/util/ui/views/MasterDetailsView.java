@@ -12,8 +12,12 @@ package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.actions.SafeAction;
+import org.eclipse.net4j.util.ui.widgets.CoolBarComposite;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
+import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -44,7 +48,7 @@ public abstract class MasterDetailsView extends MultiViewersView
 
   private StructuredViewer[] details;
 
-  private int currentIndex;
+  private int currentDetailIndex;
 
   public MasterDetailsView()
   {
@@ -55,12 +59,31 @@ public abstract class MasterDetailsView extends MultiViewersView
     return master;
   }
 
+  public StructuredViewer[] getDetails()
+  {
+    return details;
+  }
+
+  public String[] getDetailTitles()
+  {
+    return detailTitles;
+  }
+
+  public Object getCurrentMasterElement()
+  {
+    return currentMasterElement;
+  }
+
+  public int getCurrentDetailIndex()
+  {
+    return currentDetailIndex;
+  }
+
   @Override
   protected Control createUI(Composite parent)
   {
     SashComposite sash = new SashComposite(parent, SWT.NONE, 10, 50, false)
     {
-
       @Override
       protected Control createControl1(Composite parent)
       {
@@ -71,20 +94,34 @@ public abstract class MasterDetailsView extends MultiViewersView
       @Override
       protected Control createControl2(Composite parent)
       {
-        // Styles: CLOSE, TOP, BOTTOM, FLAT, BORDER, SINGLE, MULTI
-        detailsFolder = new CTabFolder(parent, SWT.BOTTOM | SWT.FLAT);
-        adjustDetails(null);
-        detailsFolder.addSelectionListener(new SelectionAdapter()
+        return new CoolBarComposite(parent, SWT.NONE)
         {
           @Override
-          public void widgetSelected(SelectionEvent e)
+          protected Control createUI(Composite parent)
           {
-            String title = detailsFolder.getSelection().getText();
-            currentIndex = indexOf(detailItems, title);
-          }
-        });
+            // Styles: CLOSE, TOP, BOTTOM, FLAT, BORDER, SINGLE, MULTI
+            detailsFolder = new CTabFolder(parent, SWT.BOTTOM | SWT.FLAT);
+            detailsFolder.setLayoutData(UIUtil.createGridData());
+            adjustDetails(null);
+            detailsFolder.addSelectionListener(new SelectionAdapter()
+            {
+              @Override
+              public void widgetSelected(SelectionEvent e)
+              {
+                String title = detailsFolder.getSelection().getText();
+                currentDetailIndex = indexOf(detailItems, title);
+              }
+            });
 
-        return detailsFolder;
+            return detailsFolder;
+          }
+
+          @Override
+          protected void fillCoolBar(IContributionManager manager)
+          {
+            MasterDetailsView.this.fillCoolBar(manager);
+          }
+        };
       }
     };
 
@@ -128,7 +165,8 @@ public abstract class MasterDetailsView extends MultiViewersView
     }
 
     // Temporarily remember old values
-    String oldDetailTitle = detailItems == null || currentIndex < 0 ? null : detailItems[currentIndex].getText();
+    String oldDetailTitle = detailItems == null || currentDetailIndex < 0 ? null : detailItems[currentDetailIndex]
+        .getText();
     StructuredViewer[] oldDetails = details;
     CTabItem[] oldDetailItems = detailItems;
 
@@ -176,15 +214,15 @@ public abstract class MasterDetailsView extends MultiViewersView
       setDetailInput(viewer, masterElement);
     }
 
-    currentIndex = indexOf(detailItems, oldDetailTitle);
-    if (currentIndex == -1 && details.length > 0)
+    currentDetailIndex = indexOf(detailItems, oldDetailTitle);
+    if (currentDetailIndex == -1 && details.length > 0)
     {
-      currentIndex = 0;
+      currentDetailIndex = 0;
     }
 
-    if (currentIndex != -1)
+    if (currentDetailIndex != -1)
     {
-      detailsFolder.setSelection(currentIndex);
+      detailsFolder.setSelection(currentDetailIndex);
     }
   }
 
@@ -194,6 +232,11 @@ public abstract class MasterDetailsView extends MultiViewersView
     {
       viewer.setInput(input);
     }
+  }
+
+  protected void fillCoolBar(IContributionManager manager)
+  {
+    manager.add(new RefreshAction());
   }
 
   protected abstract StructuredViewer createMaster(Composite parent);
@@ -217,5 +260,26 @@ public abstract class MasterDetailsView extends MultiViewersView
     }
 
     return -1;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class RefreshAction extends SafeAction
+  {
+    public RefreshAction()
+    {
+      super("Refresh", "Refresh view", OM.getImageDescriptor("icons/full/etool16/refresh.gif"));
+    }
+
+    @Override
+    protected void safeRun() throws Exception
+    {
+      StructuredViewer viewer = getCurrentViewer();
+      if (viewer != null)
+      {
+        viewer.refresh();
+      }
+    }
   }
 }

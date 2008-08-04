@@ -97,7 +97,7 @@ public abstract class MasterDetailsView extends MultiViewersView
       }
     };
 
-    sash.setVertical(true);
+    sash.setVertical(false);
 
     // sash = new SashComposite(parent, SWT.NONE, 10, 50, false)
     // {

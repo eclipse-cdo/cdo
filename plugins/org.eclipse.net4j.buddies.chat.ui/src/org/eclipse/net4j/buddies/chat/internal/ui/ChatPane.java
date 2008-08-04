@@ -90,7 +90,7 @@ public class ChatPane extends FacilityPane
       }
     };
 
-    sashComposite.setVertical(false);
+    sashComposite.setVertical(true);
     return sashComposite;
   }
 
@@ -103,7 +103,7 @@ public class ChatPane extends FacilityPane
       @Override
       protected void safeRun() throws Exception
       {
-        sashComposite.setVertical(false);
+        sashComposite.setVertical(true);
       }
     });
 
@@ -113,7 +113,7 @@ public class ChatPane extends FacilityPane
       @Override
       protected void safeRun() throws Exception
       {
-        sashComposite.setVertical(true);
+        sashComposite.setVertical(false);
       }
     });
   }

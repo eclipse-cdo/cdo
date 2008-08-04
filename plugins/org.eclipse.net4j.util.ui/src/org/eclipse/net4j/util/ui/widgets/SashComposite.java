@@ -140,7 +140,7 @@ public abstract class SashComposite extends Composite implements INotifier.Intro
     composite2Data.left = new FormAttachment(sash, 0);
     composite2Data.right = new FormAttachment(100, 0);
 
-    if (!vertical)
+    if (vertical)
     {
       swap();
     }
@@ -200,7 +200,7 @@ public abstract class SashComposite extends Composite implements INotifier.Intro
 
   protected Sash createSash(Composite parent)
   {
-    Sash sash = new Sash(parent, vertical ? SWT.VERTICAL : SWT.HORIZONTAL);
+    Sash sash = new Sash(parent, vertical ? SWT.HORIZONTAL : SWT.VERTICAL);
     sash.addListener(SWT.Selection, new SashListener());
     return sash;
   }
@@ -259,21 +259,21 @@ public abstract class SashComposite extends Composite implements INotifier.Intro
       Rectangle shellRect = getClientArea();
       if (vertical)
       {
-        int right = shellRect.width - sashRect.width - limit;
-        e.x = Math.max(Math.min(e.x, right), limit);
-        if (e.x != sashRect.x)
-        {
-          sashData.left = new FormAttachment(0, e.x);
-          SashComposite.this.layout();
-        }
-      }
-      else
-      {
         int bottom = shellRect.height - sashRect.height - limit;
         e.y = Math.max(Math.min(e.y, bottom), limit);
         if (e.y != sashRect.y)
         {
           sashData.top = new FormAttachment(0, e.y);
+          SashComposite.this.layout();
+        }
+      }
+      else
+      {
+        int right = shellRect.width - sashRect.width - limit;
+        e.x = Math.max(Math.min(e.x, right), limit);
+        if (e.x != sashRect.x)
+        {
+          sashData.left = new FormAttachment(0, e.x);
           SashComposite.this.layout();
         }
       }

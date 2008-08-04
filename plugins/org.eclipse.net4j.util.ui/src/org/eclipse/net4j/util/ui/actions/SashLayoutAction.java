@@ -28,6 +28,7 @@ public abstract class SashLayoutAction extends SafeAction implements IListener
   {
     super(text, IAction.AS_RADIO_BUTTON);
     this.sashComposite = sashComposite;
+    notifyEvent(null);
     sashComposite.addListener(this);
   }
 
@@ -52,7 +53,6 @@ public abstract class SashLayoutAction extends SafeAction implements IListener
     public Vertical(SashComposite sashComposite)
     {
       super(sashComposite, "Vertical");
-      notifyEvent(null);
     }
 
     @Override
@@ -78,7 +78,6 @@ public abstract class SashLayoutAction extends SafeAction implements IListener
     public Horizontal(SashComposite sashComposite)
     {
       super(sashComposite, "Horizontal");
-      notifyEvent(null);
     }
 
     @Override

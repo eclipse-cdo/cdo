@@ -52,6 +52,7 @@ public final class CDOIDUtil
     {
     case NULL:
       return 0L;
+
     case OBJECT:
     case LEGACY_OBJECT:
       if (id instanceof CDOIDLongImpl)
@@ -63,9 +64,11 @@ public final class CDOIDUtil
 
     case META:
       return ((CDOIDMeta)id).getLongValue();
+
     case TEMP_META:
     case TEMP_OBJECT:
       throw new IllegalArgumentException("id instanceof CDOIDTemp");
+
     default:
       throw new ImplementationError();
     }

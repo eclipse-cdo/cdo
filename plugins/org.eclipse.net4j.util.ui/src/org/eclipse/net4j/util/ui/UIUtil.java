@@ -25,6 +25,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -99,6 +103,64 @@ public final class UIUtil
     }
 
     return display;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static IWorkbench getWorkbench()
+  {
+    IWorkbench workbench = PlatformUI.getWorkbench();
+    if (workbench == null)
+    {
+      throw new IllegalStateException("No workbench available");
+    }
+
+    return workbench;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static IWorkbenchWindow getActiveWorkbenchWindow()
+  {
+    IWorkbench workbench = getWorkbench();
+    IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+    if (window == null)
+    {
+      throw new IllegalStateException("No active window available");
+    }
+    return window;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static IWorkbenchPage getActiveWorkbenchPage()
+  {
+    IWorkbenchWindow window = getActiveWorkbenchWindow();
+    IWorkbenchPage page = window.getActivePage();
+    if (page == null)
+    {
+      throw new IllegalStateException("No active page available");
+    }
+
+    return page;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static IWorkbenchPart getActiveWorkbenchPart()
+  {
+    IWorkbenchPage page = getActiveWorkbenchPage();
+    IWorkbenchPart part = page.getActivePart();
+    if (part == null)
+    {
+      throw new IllegalStateException("No active part available");
+    }
+
+    return part;
   }
 
   public static IPasswordCredentialsProvider createInteractiveCredentialsProvider()

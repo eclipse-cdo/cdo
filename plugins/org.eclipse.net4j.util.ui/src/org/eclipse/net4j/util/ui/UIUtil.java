@@ -15,6 +15,8 @@ import org.eclipse.net4j.util.ui.security.InteractiveCredentialsProvider;
 
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -161,6 +163,20 @@ public final class UIUtil
     }
 
     return part;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static Object getElement(ISelection selection)
+  {
+    if (selection instanceof IStructuredSelection)
+    {
+      IStructuredSelection ssel = (IStructuredSelection)selection;
+      return ssel.getFirstElement();
+    }
+
+    return null;
   }
 
   public static IPasswordCredentialsProvider createInteractiveCredentialsProvider()

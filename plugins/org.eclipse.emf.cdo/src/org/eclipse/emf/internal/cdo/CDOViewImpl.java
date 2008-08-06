@@ -341,6 +341,31 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     }
   }
 
+  /**
+   * @since 2.0
+   */
+  @SuppressWarnings("unchecked")
+  public <T extends EObject> T getObject(T objectFromDifferentView)
+  {
+    if (objectFromDifferentView instanceof CDOObject)
+    {
+      CDOObject object = (CDOObject)objectFromDifferentView;
+      CDOView view = object.cdoView();
+      if (view != this)
+      {
+        if (view.getSession() != session)
+        {
+          throw new IllegalArgumentException("Object is contaiuned in a different session: " + objectFromDifferentView);
+        }
+
+        CDOID id = object.cdoID();
+        objectFromDifferentView = (T)getObject(id, true);
+      }
+    }
+
+    return objectFromDifferentView;
+  }
+
   public boolean isObjectRegistered(CDOID id)
   {
     synchronized (objects)

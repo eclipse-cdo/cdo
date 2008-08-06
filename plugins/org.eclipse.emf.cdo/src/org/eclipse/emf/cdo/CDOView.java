@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.net4j.util.event.INotifier;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
@@ -71,9 +72,23 @@ public interface CDOView extends CDOProtocolView, INotifier
    */
   public CDOResource getResource(String path);
 
+  public CDOObject getObject(CDOID id, boolean loadOnDemand);
+
   public CDOObject getObject(CDOID id);
 
-  public CDOObject getObject(CDOID id, boolean loadOnDemand);
+  /**
+   * Takes an object from a (possibly) different view and <em>contextifies</em> it for the usage with this view.
+   * <ul>
+   * <li>If the given object is contained in this view it is returned unmodified.
+   * <li>If the given object can not be cast to {@link CDOObject} it is returned unmodified.
+   * <li>If the view of the given object is contained in a different session an <code>IllegalArgumentException</code> is
+   * thrown.
+   * <li>If <code>null</code> is passed <code>null</code> is returned.
+   * </ul>
+   * 
+   * @since 2.0
+   */
+  public <T extends EObject> T getObject(T objectFromDifferentView);
 
   public boolean isObjectRegistered(CDOID id);
 

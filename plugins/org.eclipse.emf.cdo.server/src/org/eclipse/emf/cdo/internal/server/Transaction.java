@@ -284,7 +284,7 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
   {
     for (int i = 0; i < dirtyObjectDeltas.length; i++)
     {
-      dirtyObjects[i] = computeDirtyObject(dirtyObjectDeltas[i]);
+      dirtyObjects[i] = computeDirtyObject(dirtyObjectDeltas[i], failOnNull);
       if (dirtyObjects[i] == null && failOnNull)
       {
         throw new IllegalStateException("Can not retrieve origin revision for " + dirtyObjectDeltas[i]);
@@ -292,13 +292,13 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
     }
   }
 
-  private CDORevision computeDirtyObject(CDORevisionDelta dirtyObjectDelta)
+  private CDORevision computeDirtyObject(CDORevisionDelta dirtyObjectDelta, boolean loadOnDemand)
   {
     CDOID id = dirtyObjectDelta.getID();
     int version = dirtyObjectDelta.getOriginVersion();
 
     CDORevisionResolver revisionResolver = repository.getRevisionManager();
-    CDORevision originObject = revisionResolver.getRevisionByVersion(id, CDORevision.UNCHUNKED, version, false);
+    CDORevision originObject = revisionResolver.getRevisionByVersion(id, CDORevision.UNCHUNKED, version, loadOnDemand);
     if (originObject != null)
     {
       InternalCDORevision dirtyObject = (InternalCDORevision)CDORevisionUtil.copy(originObject);

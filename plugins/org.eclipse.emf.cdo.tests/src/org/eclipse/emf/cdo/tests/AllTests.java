@@ -41,7 +41,8 @@ public class AllTests
     suite.addTestSuite(ChunkingWithMEMTest.class);
     suite.addTestSuite(TransactionDeadLockTest.class);
     suite.addTestSuite(PackageRegistryTest.class);
-    suite.addTestSuite(RevisionDeltaTest.class);
+    suite.addTestSuite(RevisionDeltaWithDeltaSupportTest.class);
+    suite.addTestSuite(RevisionDeltaWithoutDeltaSupportTest.class);
     suite.addTestSuite(IndexReconstructionTest.class);
     suite.addTestSuite(NoLegacyTest.class);
     suite.addTestSuite(Bugzilla241464_Test.class);

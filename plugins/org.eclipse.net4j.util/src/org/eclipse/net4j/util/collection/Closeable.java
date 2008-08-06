@@ -16,4 +16,9 @@ package org.eclipse.net4j.util.collection;
 public interface Closeable
 {
   public void close();
+
+  /**
+   * @since 2.0
+   */
+  public boolean isClosed();
 }

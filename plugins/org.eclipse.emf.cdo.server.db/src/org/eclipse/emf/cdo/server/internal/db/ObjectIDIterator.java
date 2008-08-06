@@ -22,6 +22,7 @@ import org.eclipse.net4j.util.collection.CloseableIterator;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.NoSuchElementException;
 
 /**
  * @author Eike Stepper
@@ -38,6 +39,8 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
 
   private CDOID nextID;
 
+  private boolean closed;
+
   /**
    * Creates an iterator over all objects in a store. It is important to {@link #dispose()} of this iterator after usage
    * to properly close internal result sets.
@@ -52,6 +55,13 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
   public void close()
   {
     DBUtil.close(currentResultSet);
+    nextID = null;
+    closed = true;
+  }
+
+  public boolean isClosed()
+  {
+    return closed;
   }
 
   public MappingStrategy getMappingStrategy()
@@ -71,6 +81,11 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
 
   public boolean hasNext()
   {
+    if (closed)
+    {
+      return false;
+    }
+
     nextID = null;
     for (;;)
     {
@@ -111,6 +126,11 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
 
   public CDOID next()
   {
+    if (nextID == null)
+    {
+      throw new NoSuchElementException();
+    }
+
     return nextID;
   }
 

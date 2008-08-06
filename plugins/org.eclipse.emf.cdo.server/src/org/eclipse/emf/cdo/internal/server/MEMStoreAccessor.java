@@ -115,7 +115,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
 
   public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
-    throw new UnsupportedOperationException();
+    return getStore().getRevisionByVersion(id, version);
   }
 
   public CDOID readResourceID(String path)

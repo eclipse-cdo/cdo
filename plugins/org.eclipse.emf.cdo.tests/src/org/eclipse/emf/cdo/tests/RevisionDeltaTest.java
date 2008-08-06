@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.server.Repository;
+import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -40,8 +42,12 @@ import junit.framework.Assert;
  * @see http://bugs.eclipse.org/201266
  * @author Simon McDuff
  */
-public class RevisionDeltaTest extends AbstractCDOTest
+public abstract class RevisionDeltaTest extends AbstractCDOTest
 {
+  protected RevisionDeltaTest()
+  {
+  }
+
   public void testBasicRevisionDelta() throws Exception
   {
     CDOSession session = openModel1Session();
@@ -172,8 +178,37 @@ public class RevisionDeltaTest extends AbstractCDOTest
     customer.getSalesOrders().add(salesOrder);
     transaction.commit();
 
-    customer.getSalesOrders().add(salesOrder);
-    customer.getSalesOrders().clear();
+    salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+    customer = Model1Factory.eINSTANCE.createCustomer();
+    resource.getContents().add(salesOrder);
+    resource.getContents().add(customer);
+    salesOrder.setCustomer(customer);
+    transaction.commit();
+    transaction.close();
+    session.close();
+  }
+
+  /**
+   * java.lang.IllegalStateException with MEMStore
+   * 
+   * @see http://bugs.eclipse.org/243282
+   */
+  public void testBugzilla243282_Exception() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    resource.getContents().add(customer);
+
+    transaction.commit();
+
+    TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
+    revisionManager.removeRevision(customer.cdoRevision());
+
+    SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+    resource.getContents().add(salesOrder);
     customer.getSalesOrders().add(salesOrder);
 
     transaction.commit();
@@ -184,5 +219,21 @@ public class RevisionDeltaTest extends AbstractCDOTest
   private InternalCDORevision getCopyCDORevision(Object object)
   {
     return (InternalCDORevision)CDORevisionUtil.copy(((CDOObject)object).cdoRevision());
+  }
+
+  /**
+   * @author Simon McDuff
+   */
+  protected static class TestRevisionManager extends RevisionManager
+  {
+    public TestRevisionManager(Repository repository)
+    {
+      super(repository);
+    }
+
+    public void removeRevision(CDORevision revision)
+    {
+      super.removeRevision(revision.getID(), revision.getVersion());
+    }
   }
 }

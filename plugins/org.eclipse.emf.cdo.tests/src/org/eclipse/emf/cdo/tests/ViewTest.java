@@ -172,4 +172,41 @@ public class ViewTest extends AbstractCDOTest
     assertEquals(false, view.hasResource("/test2"));
     session.close();
   }
+
+  public void testContextify() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    transaction.commit();
+
+    CDOView view = session.openView();
+    CDOResource resource2 = view.getObject(resource);
+    assertEquals("/test1", resource2.getPath());
+    session.close();
+  }
+
+  public void testContextifyDifferentSession() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+    transaction.commit();
+
+    CDOSession session2 = openModel1Session();
+    CDOView view = session2.openView();
+    try
+    {
+      view.getObject(resource);
+      fail("IllegalArgumentException expected");
+    }
+    catch (IllegalArgumentException success)
+    {
+    }
+    finally
+    {
+      session.close();
+      session2.close();
+    }
+  }
 }

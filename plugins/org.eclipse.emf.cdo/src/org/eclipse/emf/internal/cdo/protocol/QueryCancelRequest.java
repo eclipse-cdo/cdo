@@ -28,9 +28,9 @@ public class QueryCancelRequest extends CDOClientRequest<Object>
 {
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, QueryCancelRequest.class);
 
-  private long queryID;
+  private int queryID;
 
-  public QueryCancelRequest(long queryID, IChannel channel)
+  public QueryCancelRequest(int queryID, IChannel channel)
   {
     super(channel);
     this.queryID = queryID;
@@ -47,17 +47,17 @@ public class QueryCancelRequest extends CDOClientRequest<Object>
   {
     if (PROTOCOL.isEnabled()) PROTOCOL.trace("Cancel query " + queryID);
     // Write queryID
-    out.writeLong(queryID);
+    out.writeInt(queryID);
   }
 
   @Override
   protected Object confirming(ExtendedDataInputStream in) throws IOException
   {
-    byte result = in.readByte();
-    if (result == 1)
+    boolean exception = in.readBoolean();
+    if (exception)
     {
-      String exception = in.readString();
-      throw new RuntimeException(exception);
+      String exceptionMessage = in.readString();
+      throw new RuntimeException(exceptionMessage);
     }
     return true;
   }

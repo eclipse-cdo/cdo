@@ -11,8 +11,8 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.query.CDOQueryQueue;
 import org.eclipse.emf.cdo.common.util.CDOInstanceUtil;
+import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -71,7 +71,7 @@ public class QueryRequest extends CDOClientRequest<Object>
 
     List<Object> returnList = new ArrayList<Object>();
 
-    queryResult.setQueryID(in.readLong());
+    queryResult.setQueryID(in.readInt());
 
     CDOQueryQueue<Object> resulQueue = queryResult.getQueue();
 

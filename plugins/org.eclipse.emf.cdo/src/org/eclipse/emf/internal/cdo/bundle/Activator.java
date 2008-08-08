@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.bundle;
 
-import org.eclipse.net4j.util.om.OSGiActivator;
-
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
 
@@ -57,7 +55,7 @@ public final class Activator extends EMFPlugin
     public void start(BundleContext context) throws Exception
     {
       super.start(context);
-      // DO NOT MERGE THAT
+      // TODO **************** DO NOT MERGE THAT
       // OSGiActivator.start(context);
     }
 
@@ -65,7 +63,7 @@ public final class Activator extends EMFPlugin
     public void stop(BundleContext context) throws Exception
     {
       plugin = null;
-      // DO NOT MERGE THAT
+      // TODO **************** DO NOT MERGE THAT
       // OSGiActivator.stopBundle(context, OM.BUNDLE);
       super.stop(context);
     }

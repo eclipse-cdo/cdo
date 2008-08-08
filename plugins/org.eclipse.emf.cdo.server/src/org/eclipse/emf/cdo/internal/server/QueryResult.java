@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.server.IView;
  */
 public class QueryResult extends AbstractQueryResult<Object>
 {
-  public QueryResult(IView view, CDOQueryInfo parameter, long queryID)
+  public QueryResult(IView view, CDOQueryInfo parameter, int queryID)
   {
     super(view, parameter, queryID);
   }

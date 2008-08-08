@@ -12,9 +12,8 @@ package org.eclipse.emf.cdo.internal.common.query;
 
 import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
-import org.eclipse.emf.cdo.common.query.CDOQueryQueue;
-import org.eclipse.emf.cdo.common.util.CloseableBlockingIterator;
-import org.eclipse.emf.cdo.common.util.StateConcurrentQueue;
+import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
+import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,19 +22,19 @@ import java.util.List;
  * @author Simon McDuff
  * @since 2.0
  */
-public class AbstractQueryResult<T> implements CloseableBlockingIterator<T>
+public class AbstractQueryResult<T> implements BlockingCloseableIterator<T>
 {
-  private long queryID;
+  private int queryID;
 
   private CDOProtocolView view;
 
   private CDOQueryInfo queryInfo;
 
-  private StateConcurrentQueue<Object> linkQueue = new StateConcurrentQueue<Object>();
+  private CDOQueryQueue<Object> linkQueue = new CDOQueryQueue<Object>();
 
-  private CloseableBlockingIterator<Object> queueItr = (CloseableBlockingIterator<Object>)linkQueue.iterator();
+  private BlockingCloseableIterator<Object> queueItr = linkQueue.iterator();
 
-  public AbstractQueryResult(CDOProtocolView view, CDOQueryInfo queryInfo, long queryID)
+  public AbstractQueryResult(CDOProtocolView view, CDOQueryInfo queryInfo, int queryID)
   {
     this.queryID = queryID;
     this.view = view;
@@ -57,12 +56,12 @@ public class AbstractQueryResult<T> implements CloseableBlockingIterator<T>
     return view;
   }
 
-  public long getQueryID()
+  public int getQueryID()
   {
     return queryID;
   }
 
-  public void setQueryID(long queryID)
+  public void setQueryID(int queryID)
   {
     this.queryID = queryID;
   }

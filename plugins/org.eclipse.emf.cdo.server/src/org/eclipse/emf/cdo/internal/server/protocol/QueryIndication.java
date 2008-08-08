@@ -70,8 +70,9 @@ public class QueryIndication extends CDOReadIndication
       int numberOfResult = 0;
 
       // Return queryID immediately.
-      out.writeLong(queryResult.getQueryID());
+      out.writeInt(queryResult.getQueryID());
       out.flush();
+
       while (queryResult.hasNext())
       {
         Object object = queryResult.next();

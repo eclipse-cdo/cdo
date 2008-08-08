@@ -215,7 +215,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public IFailOverStrategy getFailOverStrategy()
   {
-    // DO NOT MERGE THAT
+    // TODO **************** DO NOT MERGE THAT
     return failOverStrategy == null ? new NOOPFailOverStrategy() : failOverStrategy;
   }
 

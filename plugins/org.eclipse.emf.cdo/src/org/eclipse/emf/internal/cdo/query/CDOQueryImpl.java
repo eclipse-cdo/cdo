@@ -12,7 +12,7 @@ package org.eclipse.emf.internal.cdo.query;
 
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.util.CloseableBlockingIterator;
+import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
 import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 import org.eclipse.emf.cdo.query.CDOQuery;
 
@@ -77,10 +77,11 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     return queryResult.getAsList();
   }
 
-  public <T> CloseableBlockingIterator<T> getResultAsync(Class<T> classObject)
+  public <T> BlockingCloseableIterator<T> getResultAsync(Class<T> classObject)
   {
     final CDOQueryInfoImpl queryInfo = createQueryInfo();
     final CDOQueryResultIteratorImpl<T> queryResult = new CDOQueryResultIteratorImpl<T>(view, queryInfo);
+
     final Exception exception[] = new Exception[1];
     Runnable runnable = new Runnable()
     {

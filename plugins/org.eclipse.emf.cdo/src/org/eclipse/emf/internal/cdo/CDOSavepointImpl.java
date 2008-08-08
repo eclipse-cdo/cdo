@@ -125,6 +125,11 @@ public class CDOSavepointImpl implements CDOSavepoint
     getTransaction().rollback(this, remote);
   }
 
+  public void rollback()
+  {
+    getTransaction().rollback(this);
+  }
+
   public boolean isValid()
   {
     CDOSavepoint lastSavepoint = getTransaction().getLastSavepoint();

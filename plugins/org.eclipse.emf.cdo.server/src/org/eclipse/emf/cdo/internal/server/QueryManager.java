@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
-import org.eclipse.emf.cdo.common.query.CDOQueryQueue;
+import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
@@ -39,37 +39,66 @@ public class QueryManager extends Lifecycle
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, QueryManager.class);
 
-  private Map<Long, QueryContext> queryContexts = new ConcurrentHashMap<Long, QueryContext>();
+  private Map<Integer, QueryContext> queryContexts = new ConcurrentHashMap<Integer, QueryContext>();
 
-  private Map<Long, Future<?>> associateThreads = new ConcurrentHashMap<Long, Future<?>>();
+  private ExecutorService executors;
 
-  private ExecutorService executors = Executors.newFixedThreadPool(10);
-
-  private long nextQuery = 0;
+  private int nextQuery = 0;
 
   public QueryManager()
   {
   }
 
-  synchronized long nextQuery()
+  synchronized int nextQuery()
   {
     return nextQuery++;
   }
 
   private Future<?> execute(QueryContext queryContext)
   {
-    Future<?> future = executors.submit(queryContext);
+    Future<?> future = getExecutors().submit(queryContext);
+    queryContext.setFuture(future);
 
-    register(queryContext, future);
+    register(queryContext);
 
     return future;
   }
 
+  public ExecutorService getExecutors()
+  {
+    if (executors == null)
+    {
+      executors = Executors.newFixedThreadPool(10);
+    }
+    return executors;
+  }
+
+  public void setExecutors(ExecutorService executors)
+  {
+  }
+
   class QueryContext implements Runnable
   {
-    QueryResult queryResult;
+    private QueryResult queryResult;
 
-    IListener listener = null;
+    private Future<?> future;
+
+    IListener listener = new IListener()
+    {
+      public void notifyEvent(IEvent event)
+      {
+        if (event instanceof SingleDeltaContainerEvent)
+        {
+          IView view = (IView)getQueryResult().getView();
+          SingleDeltaContainerEvent<?> deltaEvent = (SingleDeltaContainerEvent<?>)event;
+          if (deltaEvent.getDeltaKind() == Kind.REMOVED && deltaEvent.getDeltaElement() == view)
+          {
+            // Cancel the query when view is closing
+            cancel(getQueryResult().getQueryID());
+          }
+        }
+      }
+    };;
 
     IStoreReader reader = null;
 
@@ -82,35 +111,16 @@ public class QueryManager extends Lifecycle
     private void removeListener()
     {
       final IView view = (IView)getQueryResult().getView();
+
       view.getSession().removeListener(listener);
-      listener = null;
     }
 
     private void addListener()
     {
-      if (listener == null)
-      {
-        final IView view = (IView)getQueryResult().getView();
+      final IView view = (IView)getQueryResult().getView();
 
-        listener = new IListener()
-        {
-          public void notifyEvent(IEvent event)
-          {
-            if (event instanceof SingleDeltaContainerEvent)
-            {
-              SingleDeltaContainerEvent<?> deltaEvent = (SingleDeltaContainerEvent<?>)event;
-              if (deltaEvent.getDeltaKind() == Kind.REMOVED && deltaEvent.getDeltaElement() == view)
-              {
-                // Cancel the query when view is closing
-                cancel(getQueryResult().getQueryID());
-              }
-            }
-          }
-        };
-
-        // Add listener to the session
-        view.getSession().addListener(listener);
-      }
+      // Add listener to the session
+      view.getSession().addListener(listener);
     }
 
     public void run()
@@ -155,6 +165,16 @@ public class QueryManager extends Lifecycle
     {
       return queryResult;
     }
+
+    protected Future<?> getFuture()
+    {
+      return future;
+    }
+
+    protected void setFuture(Future<?> future)
+    {
+      this.future = future;
+    }
   }
 
   public QueryResult execute(IView view, CDOQueryInfo queryInfo)
@@ -169,36 +189,34 @@ public class QueryManager extends Lifecycle
     return queryResult;
   }
 
-  public boolean isRunning(long queryID)
+  public boolean isRunning(int queryID)
   {
     QueryContext queryContext = queryContexts.get(queryID);
 
     return queryContext != null;
   }
 
-  public void cancel(long queryID)
+  public void cancel(int queryID)
   {
-    Future<?> queryContext = associateThreads.get(queryID);
+    QueryContext queryContext = queryContexts.get(queryID);
 
-    if (queryContext == null || queryContext.isDone())
+    if (queryContext == null || queryContext.getFuture().isDone())
       throw new RuntimeException("Query " + queryID + " is not running anymore");
 
     if (TRACER.isEnabled()) TRACER.trace("Stopping QueryNative thread: " + queryContext);
 
-    queryContext.cancel(true);
+    queryContext.getFuture().cancel(true);
   }
 
-  synchronized public void register(final QueryContext queryContext, Future<?> future)
+  synchronized public void register(final QueryContext queryContext)
   {
     queryContexts.put(queryContext.getQueryResult().getQueryID(), queryContext);
-    associateThreads.put(queryContext.getQueryResult().getQueryID(), future);
     queryContext.addListener();
   }
 
   synchronized public void unregister(final QueryContext queryContext)
   {
     queryContexts.remove(queryContext.getQueryResult().getQueryID());
-    associateThreads.remove(queryContext.getQueryResult().getQueryID());
     queryContext.removeListener();
   }
 }

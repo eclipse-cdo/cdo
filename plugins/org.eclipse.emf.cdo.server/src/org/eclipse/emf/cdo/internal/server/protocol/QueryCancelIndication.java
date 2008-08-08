@@ -26,7 +26,7 @@ public class QueryCancelIndication extends CDOReadIndication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryCancelIndication.class);
 
-  private long queryID = -1;
+  private int queryID = -1;
 
   public QueryCancelIndication()
   {
@@ -43,7 +43,7 @@ public class QueryCancelIndication extends CDOReadIndication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
 
-    queryID = in.readLong();
+    queryID = in.readInt();
 
     if (TRACER.isEnabled())
     {
@@ -61,11 +61,11 @@ public class QueryCancelIndication extends CDOReadIndication
     try
     {
       getRepository().getQueryManager().cancel(queryID);
-      out.writeByte(0);
+      out.writeBoolean(false);
     }
     catch (Exception exception)
     {
-      out.writeByte(1);
+      out.writeBoolean(true);
       out.writeString(exception.getMessage());
     }
   }

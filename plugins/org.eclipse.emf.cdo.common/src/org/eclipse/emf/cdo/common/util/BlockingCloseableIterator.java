@@ -16,7 +16,7 @@ import org.eclipse.net4j.util.collection.CloseableIterator;
  * @author Simon McDuff
  * @since 2.0
  */
-public interface CloseableBlockingIterator<T> extends CloseableIterator<T>
+public interface BlockingCloseableIterator<T> extends CloseableIterator<T>
 {
   /**
    * Non-blocking call.

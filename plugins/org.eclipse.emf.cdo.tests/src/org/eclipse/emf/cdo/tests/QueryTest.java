@@ -147,6 +147,39 @@ public class QueryTest extends AbstractCDOTest
 
   }
 
+  public void testQueryAsync_UnsupportedLanguage() throws Exception
+  {
+    CDOTransaction transaction = initialize(100);
+
+    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST + "ss", "QUERYSTRING");
+    try
+    {
+      CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
+
+      queryResult.hasNext();
+      fail("Should throw an exception");
+    }
+    catch (Exception exception)
+    {
+    }
+  }
+
+  public void testQuerySync_UnsupportedLanguage() throws Exception
+  {
+    CDOTransaction transaction = initialize(100);
+
+    CDOQuery cdoQuery = transaction.createQuery(LANGUAGE_TEST + "ss", "QUERYSTRING");
+    try
+    {
+      List<Object> queryResult = cdoQuery.getResult(Object.class);
+      fail("Should throw an exception");
+    }
+    catch (Exception exception)
+    {
+
+    }
+  }
+
   CDOTransaction initialize(int number)
   {
     CDOSession session = openModel1Session();

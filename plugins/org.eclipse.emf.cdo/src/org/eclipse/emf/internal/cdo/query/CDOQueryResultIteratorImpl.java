@@ -23,17 +23,19 @@ import org.eclipse.emf.internal.cdo.protocol.QueryCancelRequest;
  */
 public class CDOQueryResultIteratorImpl<T> extends AbstractQueryResult<T>
 {
+  private static final int QUERYID_UNDEFINED = -1;
+
   protected boolean closed = false;
 
-  ConcurrentValue<Boolean> queryIDSet = new ConcurrentValue<Boolean>(false);
+  private ConcurrentValue<Boolean> queryIDSet = new ConcurrentValue<Boolean>(false);
 
   public CDOQueryResultIteratorImpl(CDOView cdoView, CDOQueryInfo queryInfo)
   {
-    super(cdoView, queryInfo, -1);
+    super(cdoView, queryInfo, QUERYID_UNDEFINED);
   }
 
   @Override
-  public void setQueryID(long queryID)
+  public void setQueryID(int queryID)
   {
     super.setQueryID(queryID);
     queryIDSet.set(true);

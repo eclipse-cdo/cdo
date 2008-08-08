@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.util;
 
-import org.eclipse.emf.cdo.common.query.CDOQueryQueue;
-
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Closeable;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Queue;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
@@ -25,17 +25,17 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Simon McDuff
  * @since 2.0
  */
-public class StateConcurrentQueue<E> implements CDOQueryQueue<E>
+public class CDOQueryQueue<E> implements Queue<E>, Closeable
 {
-  private QueueEntry<E> QUEUE_CLOSED = new QueueEntry<E>();
-
   private static final long serialVersionUID = 1L;
+
+  private QueueEntry<E> QUEUE_CLOSED = new QueueEntry<E>();
 
   private PriorityBlockingQueue<QueueEntry<E>> queue;
 
   private boolean closed = false;
 
-  static class QueueEntry<E> implements java.util.Comparator<QueueEntry<E>>
+  static class QueueEntry<E> implements Comparable<QueueEntry<E>>
   {
     static AtomicLong nextSeq = new AtomicLong(0);
 
@@ -85,26 +85,26 @@ public class StateConcurrentQueue<E> implements CDOQueryQueue<E>
       return null;
     }
 
-    public int compare(QueueEntry<E> o1, QueueEntry<E> o2)
+    public int compareTo(QueueEntry<E> o)
     {
-      if (o1.getException() != null)
+      if (getException() != null)
       {
         return -1;
       }
-      if (o2.getException() != null)
+      if (o.getException() != null)
       {
         return 1;
       }
 
-      if (o1 == o2)
+      if (this == o)
       {
         return 0;
       }
-      return (o1.seqNumber < o2.seqNumber ? -1 : 1);
+      return (seqNumber < o.seqNumber ? -1 : 1);
     }
   };
 
-  public class CloseableBlockingIteratorImpl implements CloseableBlockingIterator<E>
+  public class CloseableBlockingIteratorImpl implements BlockingCloseableIterator<E>
   {
     private boolean closed = false;
 
@@ -112,20 +112,34 @@ public class StateConcurrentQueue<E> implements CDOQueryQueue<E>
 
     public E peek()
     {
-
       if (nextElement == null)
       {
-        return StateConcurrentQueue.this.peek();
+        return CDOQueryQueue.this.peek();
       }
       return nextElement;
     }
 
     public boolean hasNext()
     {
+      privateNext(false);
+      return nextElement != null;
+    }
+
+    private void privateNext(boolean failOnNull)
+    {
       if (nextElement == null)
       {
         try
         {
+          if (CDOQueryQueue.this.isEmpty() && CDOQueryQueue.this.isClosed())
+          {
+            if (failOnNull)
+            {
+              throw new NoSuchElementException();
+            }
+            return;
+          }
+
           nextElement = take();
         }
         catch (InterruptedException ex)
@@ -133,13 +147,13 @@ public class StateConcurrentQueue<E> implements CDOQueryQueue<E>
           Thread.currentThread().interrupt();
         }
       }
-      return nextElement != null;
     }
 
     public E next()
     {
       try
       {
+        privateNext(true);
         return nextElement;
       }
       finally
@@ -165,15 +179,16 @@ public class StateConcurrentQueue<E> implements CDOQueryQueue<E>
 
   }
 
-  public StateConcurrentQueue()
+  public CDOQueryQueue()
   {
-    queue = new PriorityBlockingQueue<QueueEntry<E>>(10, new QueueEntry<E>());
+    queue = new PriorityBlockingQueue<QueueEntry<E>>(10);
 
   }
 
   public void setException(Throwable exception)
   {
     queue.add(new QueueEntry<E>(exception));
+
   }
 
   public void close()
@@ -259,7 +274,7 @@ public class StateConcurrentQueue<E> implements CDOQueryQueue<E>
     return queue.isEmpty();
   }
 
-  public Iterator<E> iterator()
+  public BlockingCloseableIterator<E> iterator()
   {
     return new CloseableBlockingIteratorImpl();
   }

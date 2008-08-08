@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
@@ -60,15 +61,53 @@ public class Notifier implements INotifier.Introspection
 
   public void fireEvent(IEvent event)
   {
-    for (IListener listener : getListeners())
+    Runnable runnable = new FireEventRunnable(getListeners(), event);
+    ExecutorService executorService = getNotificationExecutorService();
+    if (executorService == null)
     {
-      try
+      runnable.run();
+    }
+    else
+    {
+      executorService.execute(runnable);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected ExecutorService getNotificationExecutorService()
+  {
+    return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class FireEventRunnable implements Runnable
+  {
+    private IListener[] listeners;
+
+    private IEvent event;
+
+    public FireEventRunnable(IListener[] listeners, IEvent event)
+    {
+      this.listeners = listeners;
+      this.event = event;
+    }
+
+    public void run()
+    {
+      for (IListener listener : listeners)
       {
-        listener.notifyEvent(event);
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
+        try
+        {
+          listener.notifyEvent(event);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
       }
     }
   }

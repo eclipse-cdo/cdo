@@ -8,6 +8,11 @@
 package org.eclipse.emf.cdo;
 
 /**
+ * Creates a save point in the {@link CDOTransaction} that can be used to roll back a part of the transaction, and
+ * specifies the save point.
+ * <p>
+ * <b>Note:</b> Save point do not flush to disk. Everything is done on the client side.
+ * 
  * @author Simon McDuff
  * @since 2.0
  */

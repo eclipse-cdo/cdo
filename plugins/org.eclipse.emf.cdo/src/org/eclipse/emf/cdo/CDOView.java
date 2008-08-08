@@ -66,16 +66,36 @@ public interface CDOView extends CDOProtocolView, INotifier
    * @since 2.0
    */
   public CDOChangeSubscriptionPolicy getChangeSubscriptionPolicy();
-  
+
   /**
-   * Specifies the change subscription policy. By default, the value is set to {@link CDOChangeSubscriptionPolicy.NONE}.
+   * Specifies the change subscription policy. By default, the value is set to {@link CDOChangeSubscriptionPolicy#NONE}.
+   * <p>
+   * To activate the policy you need to do the following : <br>
+   * e.g.: <code>transaction.setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);</code>
+   * <p>
+   * To register an object you need to add an adapter to this object. <br>
+   * e.g.: <code>eObject.eAdapters().add(anAdapter);</code>
    * <p>
    * By activating this feature, every objects that have at least one adapter that match the current policy will be
    * registered to the server and will be notify for every changes happening on any other CDOTransaction.
    * <p>
-   * {@link CDOChangeSubscriptionPolicy.NONE} - Disabled
-   * {@link CDOChangeSubscriptionPolicy.ALL} - Enabled
-   * Any others classes that implement {@link CDOChangeSubscriptionPolicy} - Enabled   
+   * {@link CDOChangeSubscriptionPolicy#NONE} - Disabled. <br>
+   * {@link CDOChangeSubscriptionPolicy#ALL} - Enabled for all adapters used.<br>
+   * {@link CDOChangeSubscriptionPolicy#ONLY_CDOADAPTER} - Enabled only for adapters that implement {@link CDOAdapter}.<br>
+   * Any others classes that implement {@link CDOChangeSubscriptionPolicy} - Enabled for whatever rules define in that
+   * class. <br>
+   * <p>
+   * If the <code>anAdapter</code> matches the current policy, <code>eObject</code> will be registered to the server and
+   * you will receive all changes from others {@link CDOTransaction}.
+   * <p>
+   * When the policy changed it will recalculate automatically every objects in the cache.
+   * <p>
+   * You can subscribe temporary objects. Even if you cannot receive notification from other {@link CDOTransaction} for
+   * that object because it is only local to you, at commit time these objects will be registered automatically.
+   * <p>
+   * <b>Note :</b> It can be used with <code> CDOSession.setPassiveUpdate(false) </code>. In this case, it will receive
+   * changes without having the object change.
+   * 
    * @since 2.0
    */
   public void setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy changeSubscriptionPolicy);
@@ -98,7 +118,7 @@ public interface CDOView extends CDOProtocolView, INotifier
   public boolean isObjectRegistered(CDOID id);
 
   public int reload(CDOObject... objects);
-    
+
   /**
    * @since 2.0
    */

@@ -69,9 +69,13 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
   /**
    * Specifies whether object will be invalidate from others users changes.
    * <p>
+   * e.g. : session.setPassiveUpdateEnabled(false);
+   * <p>
    * By default this value is enabled.
    * <p>
    * If you disabled this property, you can still have the latest version of objects by calling {@link #refresh()}.
+   * <p>
+   * e.g. : session.refresh();
    * <p>
    * You would disabled it in the case where you need performance and/or want to control when objects will be refresh.
    * <p>

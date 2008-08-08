@@ -70,6 +70,12 @@ public interface CDOTransaction extends CDOView
   public void rollback(CDOSavepoint savepoint);
 
   /**
+   * Creates a save point in the {@link CDOTransaction} that can be used to roll back a part of the transaction, and
+   * specifies the save point.
+   * <p>
+   * Save point do not flush to disk.
+   * <p>
+   * 
    * @since 2.0
    */
   public CDOSavepoint setSavepoint();

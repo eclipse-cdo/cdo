@@ -329,6 +329,9 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   }
 
   /**
+   * <b>Note:</b> URI from temporary objects are going to changed when we commit the CDOTransaction. Objects will not be
+   * accessible from their temporary URI once CDOTransaction is committed.
+   * 
    * @ADDED
    */
   public EObject getEObject(String uriFragment)

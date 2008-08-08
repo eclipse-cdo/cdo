@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?NLS TYPE="org.eclipse.help.toc"?>
-
-<toc label="CDO Table of Contents">
-	<topic label="Java Docs" href="references/javadoc/index.html"/>
-	<topic label="Online Docs">
-		<topic label="CDO Wiki" href="http://wiki.eclipse.org/CDO" />
-	</topic>
-</toc>

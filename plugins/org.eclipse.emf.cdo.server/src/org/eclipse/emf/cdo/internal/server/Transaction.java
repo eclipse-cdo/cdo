@@ -188,7 +188,7 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
     {
       OM.LOG.error(ex);
       String storeClass = repository.getStore().getClass().getSimpleName();
-      rollbackMessage = storeClass + ": " + ex.getMessage();
+      rollbackMessage = "Rollback in " + storeClass + ": " + ex.getMessage();
       rollback();
     }
   }

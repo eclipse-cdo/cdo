@@ -24,15 +24,15 @@ import java.util.ListIterator;
 /**
  * @author Simon McDuff
  */
-public class ECDOList<T> implements EList<T>
+public class CDOEList<T> implements EList<T>
 {
-  private List<Object> listOfIDs;
+  private List<Object> listOfObjects;
 
   private CDOView cdoView;
 
-  public ECDOList(CDOView view, List<Object> list)
+  public CDOEList(CDOView view, List<Object> list)
   {
-    this.listOfIDs = list;
+    this.listOfObjects = list;
     this.cdoView = view;
   }
 
@@ -57,7 +57,7 @@ public class ECDOList<T> implements EList<T>
   @SuppressWarnings("unchecked")
   public T get(int index)
   {
-    Object object = this.listOfIDs.get(index);
+    Object object = this.listOfObjects.get(index);
     if (object instanceof CDOID)
     {
       object = adapt((CDOID)object);
@@ -67,12 +67,12 @@ public class ECDOList<T> implements EList<T>
 
   public boolean isEmpty()
   {
-    return listOfIDs.isEmpty();
+    return listOfObjects.isEmpty();
   }
 
   public Iterator<T> iterator()
   {
-    return new ECDOIDIterator(this.listOfIDs.iterator());
+    return new ECDOIDIterator(this.listOfObjects.iterator());
   }
 
   public void move(int newPosition, T object)
@@ -157,7 +157,7 @@ public class ECDOList<T> implements EList<T>
 
   public int size()
   {
-    return listOfIDs.size();
+    return listOfObjects.size();
   }
 
   public List<T> subList(int arg0, int arg1)

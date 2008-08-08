@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.INotificationManager;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,7 @@ import java.util.List;
  * @author Simon McDuff
  * @since 2.0
  */
-public class NotificationManager implements INotificationManager 
+public class NotificationManager extends Lifecycle implements INotificationManager
 {
   private Repository repository = null;
 
@@ -37,7 +39,7 @@ public class NotificationManager implements INotificationManager
     CDORevisionDelta[] dirtyID = commitContext.getDirtyObjectDeltas();
 
     int modifications = dirtyID == null ? 0 : dirtyID.length;
-    
+
     if (modifications > 0)
     {
       List<CDOIDAndVersion> dirtyIDs = new ArrayList<CDOIDAndVersion>(modifications);
@@ -52,9 +54,9 @@ public class NotificationManager implements INotificationManager
       }
 
       SessionManager sessionManager = (SessionManager)repository.getSessionManager();
-      
+
       sessionManager.handleCommitNotification(commitContext.getTimeStamp(), dirtyIDs, deltas, session);
     }
-    
+
   }
 }

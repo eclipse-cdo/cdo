@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
-import org.eclipse.emf.cdo.common.query.CDOQueryParameter;
+import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -194,14 +194,13 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   /**
    * @since 2.0
    */
-  public CloseableIterator<Object> createQueryIterator(CDOQueryParameter queryParameter)
+  public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo)
   {
-    if (queryParameter.getQueryLanguage().equals("TEST"))
+    if (queryInfo.getQueryLanguage().equals("TEST"))
     {
-      // queryParameter.getQueryString().equals("SLOW");
       MEMStoreQueryIterator queryExecution = new MEMStoreQueryIterator(this.getStore());
 
-      Object context = queryParameter.getParameters().get("context");
+      Object context = queryInfo.getParameters().get("context");
 
       if (context != null)
       {
@@ -227,7 +226,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
 
       return queryExecution;
     }
-    throw new RuntimeException("Unsupported language " + queryParameter.getQueryLanguage());
+    throw new RuntimeException("Unsupported language " + queryInfo.getQueryLanguage());
 
   }
 

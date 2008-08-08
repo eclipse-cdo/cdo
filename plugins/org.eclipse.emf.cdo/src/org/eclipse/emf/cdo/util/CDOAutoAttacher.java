@@ -26,10 +26,10 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.resource.Resource;
 
 import java.util.List;
 
@@ -44,16 +44,16 @@ public class CDOAutoAttacher implements CDOTransactionHandler
   class CDOFeatureDeltaVisitorAutoAttach implements CDOFeatureDeltaVisitor
   {
 
-    Resource resource;
+    EObject referrer;
 
-    CDOFeatureDeltaVisitorAutoAttach(Resource resource)
+    CDOFeatureDeltaVisitorAutoAttach(EObject referrer)
     {
-      this.resource = resource;
+      this.referrer = referrer;
     }
 
     public void visit(CDOAddFeatureDelta featureChange)
     {
-      persist(resource, featureChange.getValue());
+      persist(referrer, featureChange.getValue());
     }
 
     public void visit(CDOClearFeatureDelta featureChange)
@@ -77,7 +77,7 @@ public class CDOAutoAttacher implements CDOTransactionHandler
 
     public void visit(CDOSetFeatureDelta featureChange)
     {
-      persist(resource, featureChange.getValue());
+      persist(referrer, featureChange.getValue());
     }
 
     public void visit(CDOUnsetFeatureDelta featureChange)
@@ -96,41 +96,35 @@ public class CDOAutoAttacher implements CDOTransactionHandler
     transaction.addHandler(this);
   }
 
-  protected void persist(Resource res, Object object)
+  protected void persist(EObject res, Object object)
   {
-    if (object instanceof CDOResource)
+    if (!(object instanceof CDOResource) && object instanceof InternalCDOObject)
     {
-      return;
+      InternalCDOObject cdoObject = (InternalCDOObject)object;
+      if (FSMUtil.isTransient(cdoObject))
+      {
+        res.eResource().getContents().add(cdoObject);
+      }
     }
-
-    if (!(object instanceof InternalCDOObject))
-    {
-      return;
-    }
-
-    res.getContents().add((InternalCDOObject)object);
   }
 
-  private void check(Resource resource, EReference reference, EObject element)
+  private void check(EObject referrer, EReference reference, EObject element)
   {
     if (element != null && element.eResource() == null)
     {
-      if (reference.isContainment())
+      if (reference != null && reference.isContainment())
       {
-        handle(resource, element);
+        handle(referrer, element);
       }
       else
       {
-        persist(resource, element);
+        persist(referrer, element);
       }
     }
   }
 
-  /**
-   * @param eObject
-   */
   @SuppressWarnings("unchecked")
-  private void handle(Resource resource, EObject eObject)
+  private void handle(EObject referrer, EObject eObject)
   {
     for (EReference reference : eObject.eClass().getEAllReferences())
     {
@@ -139,12 +133,12 @@ public class CDOAutoAttacher implements CDOTransactionHandler
         List<EObject> list = (List<EObject>)eObject.eGet(reference);
         for (EObject element : list)
         {
-          check(resource, reference, element);
+          check(referrer, reference, element);
         }
       }
       else
       {
-        check(resource, reference, (EObject)eObject.eGet(reference));
+        check(referrer, reference, (EObject)eObject.eGet(reference));
       }
     }
 
@@ -158,7 +152,7 @@ public class CDOAutoAttacher implements CDOTransactionHandler
     }
 
     // Persist the graph as well.
-    handle(object.eResource(), object);
+    handle(object, object);
   }
 
   public void committingTransaction(CDOTransaction transaction)
@@ -175,10 +169,9 @@ public class CDOAutoAttacher implements CDOTransactionHandler
 
     if (featureChange != null)
     {
-      CDOFeatureDeltaVisitorAutoAttach featureChangeVisitor = new CDOFeatureDeltaVisitorAutoAttach(object.cdoResource());
+      CDOFeatureDeltaVisitorAutoAttach featureChangeVisitor = new CDOFeatureDeltaVisitorAutoAttach(object);
       featureChange.accept(featureChangeVisitor);
     }
-
   }
 
   public void rolledBackTransaction(CDOTransaction transaction)

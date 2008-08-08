@@ -10,10 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.query;
 
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.internal.common.query.CDOQueryParameterImpl;
+import org.eclipse.emf.cdo.common.util.CloseableBlockingIterator;
+import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 import org.eclipse.emf.cdo.query.CDOQuery;
-import org.eclipse.emf.cdo.query.CDOQueryResult;
 
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
@@ -21,96 +22,92 @@ import org.eclipse.emf.internal.cdo.protocol.QueryRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.ecore.EClass;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
 /**
  * @author Simon McDuff
  */
-public class CDOQueryImpl implements CDOQuery
+public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
 {
-  private CDOQueryParameterImpl queryParameter;
-
-  private HashMap<String, Object> parameters = new HashMap<String, Object>();
-
   private CDOViewImpl view = null;
 
-  private int maxResult = -1;
-
-  public CDOQueryImpl(CDOViewImpl cdoView, CDOQueryParameterImpl queryParameter)
+  public CDOQueryImpl(CDOViewImpl cdoView, String language, String queryString)
   {
+    super(language, queryString);
     view = cdoView;
-    this.queryParameter = queryParameter;
   }
 
-  protected CDOQueryParameterImpl createQueryParameter()
+  protected CDOQueryInfoImpl createQueryInfo()
   {
-    CDOQueryParameterImpl queryParameter = new CDOQueryParameterImpl(this.queryParameter.getQueryLanguage(),
-        this.queryParameter.getQueryString());
+    CDOQueryInfoImpl queryInfo = new CDOQueryInfoImpl(getQueryLanguage(), getQueryString());
 
-    queryParameter.setMaxResult(maxResult);
+    queryInfo.setMaxResult(getMaxResults());
 
-    for (Entry<String, Object> entry : parameters.entrySet())
+    for (Entry<String, Object> entry : getParameters().entrySet())
     {
       Object value = entry.getValue();
 
       value = adapt(value);
 
-      queryParameter.getParameters().put(entry.getKey(), value);
+      queryInfo.addParameter(entry.getKey(), value);
     }
-    return queryParameter;
+    return queryInfo;
   }
 
-  public <T> List<T> getResultList(Class<T> classObject) throws Exception
+  public <T> List<T> getResult(Class<T> classObject)
   {
-    CDOQueryParameterImpl queryParameter = createQueryParameter();
+    CDOQueryInfoImpl queryInfo = createQueryInfo();
 
-    CDOQueryResultIteratorImpl<T> queryResult = new CDOQueryResultIteratorImpl<T>(view, queryParameter);
-
-    new QueryRequest(view.getViewID(), view.getSession().getChannel(), queryResult, queryParameter).send();
+    CDOQueryResultIteratorImpl<T> queryResult = new CDOQueryResultIteratorImpl<T>(view, queryInfo);
+    try
+    {
+      QueryRequest request = new QueryRequest(view.getViewID(), view.getSession().getChannel(), queryResult, queryInfo);
+      view.getSession().getFailOverStrategy().send(request);
+    }
+    catch (Exception exception)
+    {
+      throw WrappedException.wrap(exception);
+    }
 
     return queryResult.getAsList();
   }
 
-  public <T> CDOQueryResult<T> getResultIterator(Class<T> classObject)
+  public <T> CloseableBlockingIterator<T> getResultAsync(Class<T> classObject)
   {
-    final CDOQueryParameterImpl queryParameter = createQueryParameter();
-    final CDOQueryResultIteratorImpl<T> queryResult = new CDOQueryResultIteratorImpl<T>(view, queryParameter);
-
+    final CDOQueryInfoImpl queryInfo = createQueryInfo();
+    final CDOQueryResultIteratorImpl<T> queryResult = new CDOQueryResultIteratorImpl<T>(view, queryInfo);
+    final Exception exception[] = new Exception[1];
     Runnable runnable = new Runnable()
     {
       public void run()
       {
         try
         {
-
-          new QueryRequest(view.getViewID(), view.getSession().getChannel(), queryResult, queryParameter).send();
-        }
-        catch (RuntimeException ex)
-        {
-          queryResult.getResultQueue().setException(ex);
-
-          // Be sure we activate queryResultObject
-          if (!queryResult.isActive()) LifecycleUtil.activate(queryResult);
+          QueryRequest request = new QueryRequest(view.getViewID(), view.getSession().getChannel(), queryResult,
+              queryInfo);
+          view.getSession().getFailOverStrategy().send(request);
         }
         catch (Exception ex)
         {
-          queryResult.getResultQueue().setException(new RuntimeException(ex));
-
-          // Be sure we activate queryResult
-          if (!queryResult.isActive()) LifecycleUtil.activate(queryResult);
+          queryResult.close();
+          exception[0] = ex;
         }
       }
     };
 
     new Thread(runnable).start();
 
-    queryResult.waitForActivate();
+    queryResult.waitInitialize();
+
+    if (exception[0] != null)
+    {
+      throw WrappedException.wrap(exception[0]);
+    }
 
     return queryResult;
   }
@@ -143,15 +140,14 @@ public class CDOQueryImpl implements CDOQuery
     return this;
   }
 
-  public int getMaxResults()
-  {
-    return maxResult;
-  }
-
   public CDOQuery setParameter(String name, Object value)
   {
     parameters.put(name, value);
     return this;
   }
 
+  public CDOView getView()
+  {
+    return view;
+  }
 }

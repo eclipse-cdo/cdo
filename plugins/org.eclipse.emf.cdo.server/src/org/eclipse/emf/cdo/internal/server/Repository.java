@@ -310,6 +310,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     LifecycleUtil.activate(sessionManager);
     LifecycleUtil.activate(resourceManager);
     LifecycleUtil.activate(revisionManager);
+    LifecycleUtil.activate(queryManager);
+    LifecycleUtil.activate(notificationManager);
   }
 
   protected void deactivateRepository()
@@ -318,6 +320,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     LifecycleUtil.deactivate(resourceManager);
     LifecycleUtil.deactivate(sessionManager);
     LifecycleUtil.deactivate(packageManager);
+    LifecycleUtil.deactivate(queryManager);
+    LifecycleUtil.deactivate(notificationManager);
     LifecycleUtil.deactivate(store);
   }
 }

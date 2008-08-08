@@ -12,59 +12,53 @@ package org.eclipse.emf.internal.cdo.query;
 
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.query.CDOQueryParameter;
-import org.eclipse.emf.cdo.common.util.PropertyChanged;
-import org.eclipse.emf.cdo.internal.common.query.CDOAbstractQueryResultImpl;
-import org.eclipse.emf.cdo.query.CDOQueryResult;
+import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.util.ConcurrentValue;
+import org.eclipse.emf.cdo.internal.common.query.AbstractQueryResult;
 
 import org.eclipse.emf.internal.cdo.protocol.QueryCancelRequest;
-
-import org.eclipse.net4j.util.lifecycle.ILifecycleState;
 
 /**
  * @author Simon McDuff
  */
-public class CDOQueryResultIteratorImpl<T> extends CDOAbstractQueryResultImpl<T> implements CDOQueryResult<T>
+public class CDOQueryResultIteratorImpl<T> extends AbstractQueryResult<T>
 {
-  protected CDOView cdoView;
+  protected boolean closed = false;
 
-  protected boolean cancelled = false;
+  ConcurrentValue<Boolean> queryIDSet = new ConcurrentValue<Boolean>(false);
 
-  protected PropertyChanged<ILifecycleState> state = new PropertyChanged<ILifecycleState>(getLifecycleState());
-
-  public CDOQueryResultIteratorImpl(CDOView cdoView, CDOQueryParameter cdoQueryParameter)
+  public CDOQueryResultIteratorImpl(CDOView cdoView, CDOQueryInfo queryInfo)
   {
-    super(cdoQueryParameter);
-    this.cdoView = cdoView;
-  }
-
-  public void waitForActivate()
-  {
-    state.acquire(ILifecycleState.ACTIVE, null);
+    super(cdoView, queryInfo, -1);
   }
 
   @Override
-  protected void doActivate() throws Exception
+  public void setQueryID(long queryID)
   {
-    state.set(ILifecycleState.ACTIVE);
-    super.doActivate();
+    super.setQueryID(queryID);
+    queryIDSet.set(true);
   }
 
-  @Override
-  protected void doDeactivate() throws Exception
+  public void waitInitialize()
   {
-    state.set(ILifecycleState.INACTIVE);
-    super.doDeactivate();
+    queryIDSet.acquire(new Object()
+    {
+      @Override
+      public boolean equals(Object obj)
+      {
+        return Boolean.TRUE.equals(obj) || isClosed();
+      }
+    });
   }
 
-  public boolean hasNext()
+  public CDOView getView()
   {
-    return nextObject.hasNext();
+    return (CDOView)super.getView();
   }
 
   public T next()
   {
-    return adapt(nextObject.next());
+    return adapt(super.next());
   }
 
   public void remove()
@@ -78,40 +72,29 @@ public class CDOQueryResultIteratorImpl<T> extends CDOAbstractQueryResultImpl<T>
     if (object instanceof CDOID)
     {
       if (((CDOID)object).isNull()) return null;
-      return (T)cdoView.getObject((CDOID)object, true);
+      return (T)getView().getObject((CDOID)object, true);
     }
     return (T)object;
   }
 
   public void close()
   {
-    try
+    if (!isClosed())
     {
-      cancel();
-    }
-    catch (RuntimeException ex)
-    {
-      // Hide exception
+      super.close();
+
+      queryIDSet.reevaluate();
+
+      try
+      {
+        QueryCancelRequest request = new QueryCancelRequest(this.getQueryID(), getView().getSession().getChannel());
+
+        getView().getSession().getFailOverStrategy().send(request);
+      }
+      catch (Exception exception)
+      {
+        // Catch all exception
+      }
     }
   }
-
-  public void cancel()
-  {
-    cancelled = true;
-    try
-    {
-      new QueryCancelRequest(queryID, cdoView.getSession().getChannel()).send();
-    }
-    catch (Exception ex)
-    {
-      throw new RuntimeException(ex);
-    }
-
-  }
-
-  public boolean isCancelled()
-  {
-    return cancelled;
-  }
-
 }

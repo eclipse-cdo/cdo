@@ -8,25 +8,29 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.server;
+package org.eclipse.emf.cdo.common.query;
 
-import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
-import org.eclipse.emf.cdo.internal.common.query.AbstractQueryResult;
-import org.eclipse.emf.cdo.server.IView;
+import java.util.Map;
 
 /**
  * @author Simon McDuff
  * @since 2.0
  */
-public class QueryResult extends AbstractQueryResult<Object>
+public interface CDOQueryInfo
 {
-  public QueryResult(IView view, CDOQueryInfo parameter, long queryID)
-  {
-    super(view, parameter, queryID);
-  }
+  String getQueryLanguage();
 
-  public IView getView()
-  {
-    return (IView)super.getView();
-  }
+  String getQueryString();
+
+  Map<String, Object> getParameters();
+
+  /**
+   * Get the maximum number of results to retrieve.
+   * 
+   * @param maxResult
+   * @return the same query instance
+   * @throws IllegalArgumentException
+   *           if argument is negative
+   */
+  int getMaxResults();
 }

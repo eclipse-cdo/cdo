@@ -11,9 +11,9 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.query.CDOQueryParameter;
+import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.CDOInstanceUtil;
-import org.eclipse.emf.cdo.internal.common.query.CDOQueryParameterImpl;
+import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 import org.eclipse.emf.cdo.internal.server.QueryManager;
 import org.eclipse.emf.cdo.internal.server.QueryResult;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -50,7 +50,7 @@ public class QueryIndication extends CDOReadIndication
   {
     int viewID = in.readInt();
 
-    CDOQueryParameter cdoQuery = new CDOQueryParameterImpl(in, getStore().getCDOIDObjectFactory(), getPackageManager());
+    CDOQueryInfo cdoQuery = new CDOQueryInfoImpl(in, getStore().getCDOIDObjectFactory(), getPackageManager());
 
     IView view = getSession().getView(viewID);
 
@@ -78,14 +78,12 @@ public class QueryIndication extends CDOReadIndication
 
         // Object to return
         numberOfResult++;
-        out.writeByte(0);
-        CDOInstanceUtil.writeInstance(out, object);
+        out.writeByte(CDOProtocolConstants.QUERY_MORE_OBJECT);
+        CDOInstanceUtil.writeObject(out, object);
 
-        if (!queryResult.hasNextNow())
+        if (queryResult.peek() == null)
         {
-          // Flush only if empty
           out.flush();
-
         }
       }
       if (TRACER.isEnabled())
@@ -93,8 +91,8 @@ public class QueryIndication extends CDOReadIndication
         TRACER.trace("Query had " + numberOfResult + " objects return");
       }
 
-      // DONE
-      out.writeByte(1);
+      // Query is done successfully
+      out.writeByte(CDOProtocolConstants.QUERY_DONE);
     }
     catch (Exception exception)
     {
@@ -103,8 +101,8 @@ public class QueryIndication extends CDOReadIndication
         TRACER.trace(exception);
       }
 
-      // Exception occured
-      out.writeByte(2);
+      // Exception occured during the query
+      out.writeByte(CDOProtocolConstants.QUERY_EXCEPTION);
       out.writeString(exception.getMessage());
     }
   }

@@ -57,14 +57,16 @@ public final class Activator extends EMFPlugin
     public void start(BundleContext context) throws Exception
     {
       super.start(context);
-      OSGiActivator.startBundle(context, OM.BUNDLE);
+      // DO NOT MERGE THAT
+      // OSGiActivator.start(context);
     }
 
     @Override
     public void stop(BundleContext context) throws Exception
     {
       plugin = null;
-      OSGiActivator.stopBundle(context, OM.BUNDLE);
+      // DO NOT MERGE THAT
+      // OSGiActivator.stopBundle(context, OM.BUNDLE);
       super.stop(context);
     }
   }

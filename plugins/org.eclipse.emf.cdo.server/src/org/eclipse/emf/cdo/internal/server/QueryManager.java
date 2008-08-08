@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.query.CDOQueryParameter;
-import org.eclipse.emf.cdo.common.query.ResultWriterQueue;
+import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.query.CDOQueryQueue;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
@@ -22,6 +22,7 @@ import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.Map;
@@ -34,7 +35,7 @@ import java.util.concurrent.Future;
  * @author Simon McDuff
  * @since 2.0
  */
-public class QueryManager
+public class QueryManager extends Lifecycle
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, QueryManager.class);
 
@@ -59,7 +60,7 @@ public class QueryManager
   {
     Future<?> future = executors.submit(queryContext);
 
-    registerQueryNative(queryContext, future);
+    register(queryContext, future);
 
     return future;
   }
@@ -114,38 +115,38 @@ public class QueryManager
 
     public void run()
     {
-      ResultWriterQueue<Object> resultQueue = queryResult.getResultWriterQueue();
+      CDOQueryQueue<Object> resultQueue = queryResult.getQueue();
 
       CloseableIterator<Object> itrResult = null;
 
       try
       {
-        itrResult = reader.createQueryIterator(queryResult.getQueryParameter());
+        itrResult = reader.createQueryIterator(queryResult.getQueryInfo());
 
-        int maxResult = queryResult.getQueryParameter().getMaxResult();
+        int maxResult = queryResult.getQueryInfo().getMaxResults();
 
-        if (maxResult < 0) maxResult = Integer.MAX_VALUE;
+        if (maxResult < 0)
+        {
+          maxResult = Integer.MAX_VALUE;
+        }
 
         for (int i = 0; i < maxResult && itrResult.hasNext(); i++)
         {
           resultQueue.add(itrResult.next());
         }
       }
-      catch (RuntimeException exception)
+
+      catch (Throwable exception)
       {
         resultQueue.setException(exception);
       }
-      catch (Throwable exception)
-      {
-        resultQueue.setException(new RuntimeException(exception));
-      }
       finally
       {
-        resultQueue.release();
+        resultQueue.close();
 
         if (itrResult != null) itrResult.close();
 
-        unregisterQueryNative(this);
+        unregister(this);
 
       }
     }
@@ -156,10 +157,10 @@ public class QueryManager
     }
   }
 
-  public QueryResult execute(IView view, CDOQueryParameter queryParameter)
+  public QueryResult execute(IView view, CDOQueryInfo queryInfo)
   {
 
-    QueryResult queryResult = new QueryResult(view, queryParameter, nextQuery());
+    QueryResult queryResult = new QueryResult(view, queryInfo, nextQuery());
 
     QueryContext queryContext = new QueryContext(StoreUtil.getReader(), queryResult);
 
@@ -187,14 +188,14 @@ public class QueryManager
     queryContext.cancel(true);
   }
 
-  synchronized public void registerQueryNative(final QueryContext queryContext, Future<?> future)
+  synchronized public void register(final QueryContext queryContext, Future<?> future)
   {
     queryContexts.put(queryContext.getQueryResult().getQueryID(), queryContext);
     associateThreads.put(queryContext.getQueryResult().getQueryID(), future);
     queryContext.addListener();
   }
 
-  synchronized public void unregisterQueryNative(final QueryContext queryContext)
+  synchronized public void unregister(final QueryContext queryContext)
   {
     queryContexts.remove(queryContext.getQueryResult().getQueryID());
     associateThreads.remove(queryContext.getQueryResult().getQueryID());

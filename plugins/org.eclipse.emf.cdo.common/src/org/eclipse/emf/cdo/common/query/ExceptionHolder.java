@@ -10,19 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.query;
 
-import java.util.Map;
-
 /**
  * @author Simon McDuff
  * @since 2.0
  */
-public interface CDOQueryParameter
+public interface ExceptionHolder
 {
-  String getQueryLanguage();
-
-  String getQueryString();
-
-  Map<String, Object> getParameters();
-
-  int getMaxResult();
+  void setException(Throwable exception);
 }

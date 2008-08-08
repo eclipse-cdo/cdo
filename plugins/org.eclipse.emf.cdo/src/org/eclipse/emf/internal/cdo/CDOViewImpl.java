@@ -37,7 +37,6 @@ import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.internal.common.query.CDOQueryParameterImpl;
 import org.eclipse.emf.cdo.query.CDOQuery;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -276,9 +275,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   public CDOQuery createQuery(String language, String queryString)
   {
-    CDOQueryParameterImpl parameter = new CDOQueryParameterImpl(language, queryString);
-
-    return new CDOQueryImpl(this, parameter);
+    return new CDOQueryImpl(this, language, queryString);
   }
 
   public CDOID getResourceID(String path)

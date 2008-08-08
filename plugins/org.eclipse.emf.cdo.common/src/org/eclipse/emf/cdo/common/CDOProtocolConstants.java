@@ -84,4 +84,20 @@ public interface CDOProtocolConstants
   public static final byte VIEW_READONLY = 3;
 
   public static final byte VIEW_CLOSED = 4;
+
+  /**
+   * @since 2.0
+   */
+  public static final byte QUERY_MORE_OBJECT = 0;
+
+  /**
+   * @since 2.0
+   */
+  public static final byte QUERY_DONE = 1;
+
+  /**
+   * @since 2.0
+   */
+  public static final byte QUERY_EXCEPTION = 2;
+
 }

@@ -11,9 +11,9 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.query.ResultWriterQueue;
+import org.eclipse.emf.cdo.common.query.CDOQueryQueue;
 import org.eclipse.emf.cdo.common.util.CDOInstanceUtil;
-import org.eclipse.emf.cdo.internal.common.query.CDOQueryParameterImpl;
+import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.query.CDOQueryResultIteratorImpl;
@@ -21,7 +21,6 @@ import org.eclipse.emf.internal.cdo.query.CDOQueryResultIteratorImpl;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -37,17 +36,16 @@ public class QueryRequest extends CDOClientRequest<Object>
 
   private int viewID;
 
-  private CDOQueryParameterImpl cdoQuery;
+  private CDOQueryInfoImpl queryInfo;
 
   private CDOQueryResultIteratorImpl<?> queryResult;
 
-  public QueryRequest(int viewID, IChannel channel, CDOQueryResultIteratorImpl<?> queryResult,
-      CDOQueryParameterImpl cdoQuery)
+  public QueryRequest(int viewID, IChannel channel, CDOQueryResultIteratorImpl<?> queryResult, CDOQueryInfoImpl cdoQuery)
   {
     super(channel);
 
     this.viewID = viewID;
-    this.cdoQuery = cdoQuery;
+    this.queryInfo = cdoQuery;
     this.queryResult = queryResult;
   }
 
@@ -63,7 +61,7 @@ public class QueryRequest extends CDOClientRequest<Object>
     // Write ViewID
     out.writeInt(viewID);
 
-    cdoQuery.write(out);
+    queryInfo.write(out);
 
   }
 
@@ -75,40 +73,31 @@ public class QueryRequest extends CDOClientRequest<Object>
 
     queryResult.setQueryID(in.readLong());
 
-    LifecycleUtil.activate(queryResult);
-
-    ResultWriterQueue<Object> resulQueue = queryResult.getResultQueue();
+    CDOQueryQueue<Object> resulQueue = queryResult.getQueue();
 
     try
     {
       int numberOfObjectReceived = 0;
 
-      /**
-       * state == 0 : Result
-       * <p>
-       * state == 1 : No more result
-       * <p>
-       * state == 2 : Exception
-       */
       while (true)
       {
         byte state = in.readByte();
 
-        if (state == 0)
+        if (state == CDOProtocolConstants.QUERY_MORE_OBJECT)
         {
           // result
-          Object element = CDOInstanceUtil.readInstance(in, getSession());
+          Object element = CDOInstanceUtil.readObject(in, getSession());
 
           resulQueue.add(element);
 
           numberOfObjectReceived++;
         }
-        else if (state == 1)
+        else if (state == CDOProtocolConstants.QUERY_DONE)
         {
           // End of result
           break;
         }
-        else if (state == 2)
+        else if (state == CDOProtocolConstants.QUERY_EXCEPTION)
         {
           // Exception on the server
           String exceptionString = in.readString();
@@ -134,7 +123,7 @@ public class QueryRequest extends CDOClientRequest<Object>
     }
     finally
     {
-      resulQueue.release();
+      resulQueue.close();
     }
 
     return returnList;

@@ -93,4 +93,9 @@ public class MEMStoreQueryIterator implements CloseableIterator<Object>
   {
   }
 
+  public boolean isClosed()
+  {
+    return false;
+  }
+
 }

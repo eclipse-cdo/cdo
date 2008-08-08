@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
-import org.eclipse.emf.cdo.common.query.CDOQueryParameter;
+import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
@@ -102,7 +102,7 @@ public class NOOPStoreAccessor extends StoreAccessor implements IStoreReader, IS
   /**
    * @since 2.0
    */
-  public CloseableIterator<Object> createQueryIterator(CDOQueryParameter queryParameter)
+  public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo)
   {
     throw new UnsupportedOperationException();
   }
@@ -113,5 +113,5 @@ public class NOOPStoreAccessor extends StoreAccessor implements IStoreReader, IS
   public void refreshRevisions()
   {
   }
-  
+
 }

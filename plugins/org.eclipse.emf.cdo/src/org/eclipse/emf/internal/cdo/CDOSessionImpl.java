@@ -53,6 +53,7 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverEvent;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.Container;
@@ -214,7 +215,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public IFailOverStrategy getFailOverStrategy()
   {
-    return failOverStrategy == null ? IFailOverStrategy.NOOP : failOverStrategy;
+    // DO NOT MERGE THAT
+    return failOverStrategy == null ? new NOOPFailOverStrategy() : failOverStrategy;
   }
 
   public void setFailOverStrategy(IFailOverStrategy failOverStrategy)
@@ -875,7 +877,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
     for (CDOViewImpl view : getViews())
     {
-      // TODO Array or something else that is synchronize.
       for (InternalCDOObject internalCDOObject : view.getObjectsMap().values())
       {
         if (internalCDOObject.cdoRevision() != null && !internalCDOObject.cdoID().isTemporary()

@@ -8,13 +8,18 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.common.query;
+package org.eclipse.emf.cdo.common.util;
+
+import org.eclipse.net4j.util.collection.CloseableIterator;
 
 /**
  * @author Simon McDuff
  * @since 2.0
  */
-public interface ExceptionHolder
+public interface CloseableBlockingIterator<T> extends CloseableIterator<T>
 {
-  void setException(Throwable exception);
+  /**
+   * Non-blocking call.
+   */
+  T peek();
 }

@@ -264,6 +264,12 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
 
         return null;
       }
+
+      public boolean isClosed()
+      {
+        // DO NOT MERGE THAT
+        return false;
+      }
     };
   }
 

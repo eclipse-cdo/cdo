@@ -12,13 +12,14 @@ package org.eclipse.emf.cdo.internal.common.query;
 
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
-import org.eclipse.emf.cdo.common.query.CDOQueryParameter;
+import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.CDOInstanceUtil;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -26,23 +27,23 @@ import java.util.Map.Entry;
 /**
  * @author Simon McDuff
  */
-public class CDOQueryParameterImpl implements CDOQueryParameter
+public class CDOQueryInfoImpl implements CDOQueryInfo
 {
-  private String queryLanguage;
+  protected String queryLanguage;
 
-  private String queryString;
+  protected String queryString;
 
-  private Map<String, Object> parameters = new HashMap<String, Object>();
+  protected Map<String, Object> parameters = new HashMap<String, Object>();
 
-  private int maxResult = -1;
+  protected int maxResult = -1;
 
-  public CDOQueryParameterImpl(String language, String queryString)
+  public CDOQueryInfoImpl(String language, String queryString)
   {
     this.queryLanguage = language;
     this.queryString = queryString;
   }
 
-  public CDOQueryParameterImpl(ExtendedDataInput in, CDOIDObjectFactory objectFactory, CDOPackageManager packageManager)
+  public CDOQueryInfoImpl(ExtendedDataInput in, CDOIDObjectFactory objectFactory, CDOPackageManager packageManager)
       throws IOException
   {
     queryLanguage = in.readString();
@@ -53,7 +54,7 @@ public class CDOQueryParameterImpl implements CDOQueryParameter
     for (int i = 0; i < size; i++)
     {
       String key = in.readString();
-      Object object = CDOInstanceUtil.readObject(in, objectFactory, packageManager);
+      Object object = CDOInstanceUtil.readObjectOrClass(in, objectFactory, packageManager);
       parameters.put(key, object);
     }
   }
@@ -69,7 +70,7 @@ public class CDOQueryParameterImpl implements CDOQueryParameter
     {
       out.writeString(entry.getKey());
       Object value = entry.getValue();
-      CDOInstanceUtil.writeObject(out, value);
+      CDOInstanceUtil.writeObjectOrClass(out, value);
     }
   }
 
@@ -85,10 +86,15 @@ public class CDOQueryParameterImpl implements CDOQueryParameter
 
   public Map<String, Object> getParameters()
   {
-    return parameters;
+    return Collections.unmodifiableMap(parameters);
   }
 
-  public int getMaxResult()
+  public void addParameter(String key, Object value)
+  {
+    parameters.put(key, value);
+  }
+
+  public int getMaxResults()
   {
     return maxResult;
   }

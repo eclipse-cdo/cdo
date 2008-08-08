@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class CDOInstanceUtil
 {
-  public static Map<Class<?>, CDOType> idTypes = new HashMap<Class<?>, CDOType>();
+  private static Map<Class<?>, CDOType> idTypes = new HashMap<Class<?>, CDOType>();
 
   static
   {
@@ -43,6 +43,8 @@ public class CDOInstanceUtil
     idTypes.put(Integer.class, CDOType.INT);
     idTypes.put(Double.class, CDOType.DOUBLE);
     idTypes.put(Byte.class, CDOType.BYTE);
+    idTypes.put(Character.class, CDOType.CHAR);
+    idTypes.put(Float.class, CDOType.FLOAT);
   }
 
   private CDOInstanceUtil()
@@ -51,31 +53,27 @@ public class CDOInstanceUtil
   }
 
   /**
-   * @param out
-   * @param id
-   * @throws IOException
+   * Write into a {@link ExtendedDataOutput} CDOClass, CDORevision or primitive.
    */
-  static public void writeObject(ExtendedDataOutput out, Object id) throws IOException
+  static public void writeObjectOrClass(ExtendedDataOutput out, Object id) throws IOException
   {
     if (id instanceof CDOClass)
     {
-      out.writeByte(0);
+      out.writeBoolean(true);
       CDOModelUtil.writeClassRef(out, ((CDOClass)id).createClassRef(), null);
       return;
     }
 
-    out.writeByte(1);
+    out.writeBoolean(false);
 
-    writeInstance(out, id);
+    writeObject(out, id);
 
   }
 
   /**
-   * @param out
-   * @param id
-   * @throws IOException
+   * Write into a {@link ExtendedDataOutput} CDORevision or primitive.
    */
-  static public void writeInstance(ExtendedDataOutput out, Object id) throws IOException
+  static public void writeObject(ExtendedDataOutput out, Object id) throws IOException
   {
     if (id == null)
     {
@@ -90,43 +88,47 @@ public class CDOInstanceUtil
 
     if (id instanceof CDOID)
     {
+      if (((CDOID)id).isTemporary())
+      {
+        throw new IllegalArgumentException("Do not support temporary for " + id);
+      }
+
       type = CDOType.OBJECT;
     }
     else
     {
       type = idTypes.get(id.getClass());
-    }
 
-    if (type == null) throw new IllegalStateException("No type for object " + id.getClass());
+      if (type == null)
+      {
+        throw new IllegalStateException("No type for object " + id.getClass());
+      }
+    }
 
     CDOModelUtil.writeType(out, type);
     type.writeValue(out, id);
   }
 
   /**
-   * @param out
-   * @param id
-   * @throws IOException
+   * Read from an {@link ExtendedDataInput} CDORevision or primitive.
    */
-  static public Object readInstance(ExtendedDataInput in, CDOIDObjectFactory objectFactory) throws IOException
+  static public Object readObject(ExtendedDataInput in, CDOIDObjectFactory idObjectFactory) throws IOException
   {
     CDOType type = CDOModelUtil.readType(in);
-    return type.readValue(in, objectFactory);
+    return type.readValue(in, idObjectFactory);
   }
 
-  static public Object readObject(ExtendedDataInput in, CDOIDObjectFactory objectFactory,
+  /**
+   * Read from an {@link ExtendedDataInput} CDOClass, CDORevision or primitive.
+   */
+  static public Object readObjectOrClass(ExtendedDataInput in, CDOIDObjectFactory idObjectFactory,
       CDOPackageManager packageManager) throws IOException
   {
-    byte value = in.readByte();
-
-    if (value == 0)
+    boolean isClass = in.readBoolean();
+    if (isClass)
     {
       return CDOModelUtil.readClassRef(in).resolve(packageManager);
     }
-    else if (value == 1)
-    {
-      readInstance(in, objectFactory);
-    }
-    throw new IllegalStateException();
+    return readObject(in, idObjectFactory);
   }
 }

@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
@@ -28,7 +27,7 @@ import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 public class AutoAttacherTest extends AbstractCDOTest
 {
 
-  public void testBasic() throws Exception
+  public void testSimple() throws Exception
   {
     CDOSession session = openModel1Session();
 
@@ -44,10 +43,7 @@ public class AutoAttacherTest extends AbstractCDOTest
 
       resource1.getContents().add(product);
       assertEquals(resource1, product.eResource());
-      // assertEquals(resource1, ((EObjectImpl)product).eDirectResource());
-
       assertNew(product, transaction);
-
     }
 
     OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
@@ -56,22 +52,11 @@ public class AutoAttacherTest extends AbstractCDOTest
       product.getOrderDetails().add(orderDetail);
       assertNew(orderDetail, transaction);
     }
-
-    Order order = Model1Factory.eINSTANCE.createOrder();
-    {
-      // Bidirectionnel/containment relationship
-      assertTransient(order);
-      // Fail for now. Need to be able to handle that case!
-      // order.getOrderDetails().add(orderDetail);
-
-      // assertTransient(order);
-    }
-
     transaction.close();
     session.close();
   }
 
-  public void testBasic2() throws Exception
+  public void testAddingObjectAndCrawl() throws Exception
   {
     CDOSession session = openModel1Session();
 

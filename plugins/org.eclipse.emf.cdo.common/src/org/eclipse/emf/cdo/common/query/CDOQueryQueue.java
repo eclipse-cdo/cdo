@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.util.CloseableQueue;
  * @author Simon McDuff
  * @since 2.0
  */
-public interface CDOQueryQueue<E> extends CloseableQueue<E>, ExceptionHolder
+public interface CDOQueryQueue<E> extends CloseableQueue<E>
 {
-
+  void setException(Throwable exception);
 }

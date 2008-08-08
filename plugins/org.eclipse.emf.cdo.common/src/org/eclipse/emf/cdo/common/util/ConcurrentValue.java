@@ -14,15 +14,13 @@ package org.eclipse.emf.cdo.common.util;
  * @author Simon McDuff
  * @since 2.0
  */
-public class PropertyChanged<T>
+public class ConcurrentValue<T>
 {
   Object notifier = new Object();
 
   T value;
 
-  RuntimeException exception = null;
-
-  public PropertyChanged(T value)
+  public ConcurrentValue(T value)
   {
     this.value = value;
   }
@@ -41,29 +39,23 @@ public class PropertyChanged<T>
     }
   }
 
-  public void setException(RuntimeException exception)
+  public void reevaluate()
   {
     synchronized (notifier)
     {
-      this.exception = exception;
       notifier.notifyAll();
     }
   }
 
-  public void acquire(Object accept, Object refuse)
-  {
-    acquire(accept, refuse, 0);
-  }
-
-  public void acquire(Object accept, Object refuse, long timeout)
+  public void acquire(Object accept)
   {
     synchronized (notifier)
     {
-      while (!equalToOneElement(accept, refuse))
+      while (!equalToOneElement(accept))
       {
         try
         {
-          notifier.wait(timeout);
+          notifier.wait();
         }
         catch (InterruptedException ex)
         {
@@ -73,13 +65,9 @@ public class PropertyChanged<T>
     }
   }
 
-  private boolean equalToOneElement(Object accept, Object refuse)
+  private boolean equalToOneElement(Object accept)
   {
-    if (this.exception != null) throw this.exception;
-
     if (accept != null && accept.equals(value)) return true;
-
-    if (refuse != null && refuse.equals(value)) throw new IllegalStateException();
 
     return false;
   }

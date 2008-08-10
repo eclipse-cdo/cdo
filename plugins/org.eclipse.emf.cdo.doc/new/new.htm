@@ -10,7 +10,7 @@ xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>CDO - New Features</TITLE>
       <P align=right><B>Create save point</B></P></TD>
     <TD vAlign=top width="70%">
       <P align=left>
- Creates a save point in the <i>CDOTransaction, </i> which that can be used to roll back a part of the 
+ Creates a save point in the <i>CDOTransaction, </i>that can be used to roll back a part of the 
 	transaction and
  specifies the save point.<p>
  <b>Note:</b> Save points do not involve the server side, everything is done on 
@@ -30,11 +30,12 @@ xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>CDO - New Features</TITLE>
       <P align=left>Specifies whether an object will be invalidated by others 
 		users' changes.<br>
 		e.g. : <i>session.setPassiveUpdateEnabled(false);</i></P>
-		<P align=left>If you disable this property, you can still have the 
-		latest version of objects by calling <i>{@link #refresh()}</i>.<br>
+		<P align=left>By default this property is enabled. If this property is 
+		disabled the latest versions of objects can still be obtained by calling <i>{@link #refresh()}</i>.<br>
 		e.g. :<i> session.refresh();</i></P>
-		<P align=left>You would disable it in the cases where you need 
-		performance and/or want to control when objects will be refreshed.</P>
+		<P align=left>Passive update can be disabled in cases where more 
+		performance is needed and/or more control over when objects will be 
+		refreshed.</P>
 		<P align=left>When the feature is turned on, it will automatically performs a refresh 
 		to be in sync with the server.</P></TD></TR>
   <TR>
@@ -54,7 +55,7 @@ xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>CDO - New Features</TITLE>
 		<P align=left>To activate the policy, you must to do the following: <br>
 		e.g.: <i>
 		transaction.setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);</i></P>
-		<P align=left>To register an object, you must to add an adapter to the 
+		<P align=left>To register an object, you must add an adapter to the 
 		object in which you are interested.<br>
 		e.g.: <i>eObject.eAdapters().add(anAdapter);</i></P>
 		<P align=left>If <i>anAdapter</i> matches the current policy, <i>

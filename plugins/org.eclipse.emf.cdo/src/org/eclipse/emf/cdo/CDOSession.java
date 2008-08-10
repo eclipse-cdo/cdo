@@ -81,7 +81,7 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
    * 
    * @since 2.0
    */
-  public void setPassiveUpdateEnabled(boolean enable);
+  public void setPassiveUpdateEnabled(boolean enabled);
 
   /**
    * Refreshes the objects cache.

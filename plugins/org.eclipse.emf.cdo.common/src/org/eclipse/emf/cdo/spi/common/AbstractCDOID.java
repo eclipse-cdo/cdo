@@ -87,6 +87,13 @@ public abstract class AbstractCDOID implements CDOID
     }
   }
 
+  /**
+   * CDOID.asString and AbstractCDOID.read(String) need to match
+   * 
+   * @since 2.0
+   */
+  public abstract void read(String fragmentPart);
+
   public abstract void read(ExtendedDataInput in) throws IOException;
 
   public abstract void write(ExtendedDataOutput out) throws IOException;

@@ -26,7 +26,7 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
 
   public CDOAuditImpl(int id, CDOSessionImpl session, long timeStamp)
   {
-    super(id, session);
+    super(session, id);
     this.timeStamp = timeStamp;
   }
 

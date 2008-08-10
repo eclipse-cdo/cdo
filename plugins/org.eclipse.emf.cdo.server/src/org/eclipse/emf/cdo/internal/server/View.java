@@ -7,12 +7,16 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/233490
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IView;
 
 import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -24,6 +28,8 @@ public class View implements IView
   private int viewID;
 
   private Type viewType;
+
+  private Set<CDOID> changeSubscriptionIDs = new HashSet<CDOID>();
 
   public View(Session session, int viewID, Type viewType)
   {
@@ -45,6 +51,38 @@ public class View implements IView
   public Type getViewType()
   {
     return viewType;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public synchronized void subscribe(CDOID id)
+  {
+    changeSubscriptionIDs.add(id);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public synchronized void unsubscribe(CDOID id)
+  {
+    changeSubscriptionIDs.remove(id);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public synchronized boolean hasSubscription(CDOID id)
+  {
+    return changeSubscriptionIDs.contains(id);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public synchronized void clearChangeSubscription()
+  {
+    changeSubscriptionIDs.clear();
   }
 
   @Override

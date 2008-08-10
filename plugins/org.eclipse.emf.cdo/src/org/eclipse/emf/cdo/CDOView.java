@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
  *    Simon McDuff - http://bugs.eclipse.org/201997
+ *    Simon McDuff - http://bugs.eclipse.org/233490
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -16,6 +17,7 @@ import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.query.CDOQuery;
 
 import org.eclipse.net4j.util.event.INotifier;
 
@@ -61,6 +63,45 @@ public interface CDOView extends CDOProtocolView, INotifier
 
   public void setInvalidationNotificationsEnabled(boolean invalidationNotificationsEnabled);
 
+  /**
+   * @since 2.0
+   */
+  public CDOChangeSubscriptionPolicy getChangeSubscriptionPolicy();
+
+  /**
+   * Specifies the change subscription policy. By default, the value is set to {@link CDOChangeSubscriptionPolicy#NONE}.
+   * <p>
+   * To activate a policy you the following needs to be done: <br>
+   * <code>transaction.setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);</code>
+   * <p>
+   * To register an object you need to add an adapter to the object:<br>
+   * <code>eObject.eAdapters().add(myAdapter);</code>
+   * <p>
+   * By activating this feature, each object having at least one adapter that matches the current policy will be
+   * registered with the server and will be notified for each change occurring in the scope of any other transaction.
+   * <p>
+   * {@link CDOChangeSubscriptionPolicy#NONE} - Disabled. <br>
+   * {@link CDOChangeSubscriptionPolicy#ALL} - Enabled for all adapters used.<br>
+   * {@link CDOChangeSubscriptionPolicy#ONLY_CDO_ADAPTER} - Enabled only for adapters that implement {@link CDOAdapter}.
+   * <br>
+   * Any other class that implements {@link CDOChangeSubscriptionPolicy} - Enabled for whatever rules defined in that
+   * class. <br>
+   * <p>
+   * If the <code>myAdapter</code> in the above example matches the current policy, <code>eObject</code> will be
+   * registered with the server and you will receive all changes from other transaction.
+   * <p>
+   * When the policy is changed all objects in the cache will automatically be recalculated.
+   * <p>
+   * You can subscribe to temporary objects. Even if you cannot receive notifications from other {@link CDOTransaction}
+   * for these because they are only local to you, at commit time these objects will be registered automatically.
+   * <p>
+   * <b>Note:</b> It can be used with <code>CDOSession.setPassiveUpdate(false)</code>. In this case, it will receive
+   * changes without having the objects changed.
+   * 
+   * @since 2.0
+   */
+  public void setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy changeSubscriptionPolicy);
+
   public int getLoadRevisionCollectionChunkSize();
 
   public void setLoadRevisionCollectionChunkSize(int loadRevisionCollectionChunkSize);
@@ -93,6 +134,11 @@ public interface CDOView extends CDOProtocolView, INotifier
   public boolean isObjectRegistered(CDOID id);
 
   public int reload(CDOObject... objects);
+
+  /**
+   * @since 2.0
+   */
+  public CDOQuery createQuery(String language, String queryString);
 
   public void close();
 }

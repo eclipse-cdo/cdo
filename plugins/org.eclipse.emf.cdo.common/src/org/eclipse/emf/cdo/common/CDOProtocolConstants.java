@@ -7,6 +7,8 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/230832    
+ *    Simon McDuff - http://bugs.eclipse.org/233490    
  **************************************************************************/
 package org.eclipse.emf.cdo.common;
 
@@ -46,6 +48,31 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_INVALIDATION = 14;
 
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_QUERY = 15;
+
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_QUERY_CANCEL = 16;
+
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_SYNC = 17;
+
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_PASSIVE_UPDATE = 18;
+
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_CHANGE_SUBSCRIPTION = 19;
+
   public static final int ERROR_REPOSITORY_NOT_FOUND = -1;
 
   public static final int ERROR_NO_SESSION = -2;
@@ -57,4 +84,19 @@ public interface CDOProtocolConstants
   public static final byte VIEW_READONLY = 3;
 
   public static final byte VIEW_CLOSED = 4;
+
+  /**
+   * @since 2.0
+   */
+  public static final byte QUERY_MORE_OBJECT = 1;
+
+  /**
+   * @since 2.0
+   */
+  public static final byte QUERY_DONE = 2;
+
+  /**
+   * @since 2.0
+   */
+  public static final byte QUERY_EXCEPTION = 3;
 }

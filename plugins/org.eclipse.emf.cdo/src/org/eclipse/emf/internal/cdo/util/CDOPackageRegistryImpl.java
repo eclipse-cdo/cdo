@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Eike Stepper - maintenance
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
@@ -53,9 +54,9 @@ import java.util.Set;
  */
 public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOPackageRegistry
 {
-  private final ContextTracer TRACER = new ContextTracer(OM.DEBUG_MODEL, CDOPackageRegistryImpl.class);
-
   private static final long serialVersionUID = 1L;
+
+  private final ContextTracer tracer = new ContextTracer(OM.DEBUG_MODEL, CDOPackageRegistryImpl.class);
 
   private CDOSessionImpl session;
 
@@ -78,9 +79,9 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     checkSession();
     EPackage.Descriptor descriptor = new RemotePackageDescriptor(cdoPackage);
     String uri = cdoPackage.getPackageURI();
-    if (TRACER.isEnabled())
+    if (tracer.isEnabled())
     {
-      TRACER.format("Registering package descriptor for {0}", uri);
+      tracer.format("Registering package descriptor for {0}", uri);
     }
 
     put(uri, descriptor);
@@ -118,9 +119,9 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     checkSession();
     if (value instanceof EPackage)
     {
-      if (TRACER.isEnabled())
+      if (tracer.isEnabled())
       {
-        TRACER.format("Registering package for {0}", key);
+        tracer.format("Registering package for {0}", key);
       }
 
       if (value instanceof EPackageImpl)
@@ -310,6 +311,10 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     }
 
     public void committingTransaction(CDOTransaction transaction)
+    {
+    }
+
+    public void rolledBackTransaction(CDOTransaction transaction)
     {
     }
   }

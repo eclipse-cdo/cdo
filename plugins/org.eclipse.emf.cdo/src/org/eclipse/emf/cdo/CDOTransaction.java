@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
+ *    Simon McDuff - http://bugs.eclipse.org/215688    
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -52,6 +53,36 @@ public interface CDOTransaction extends CDOView
   public void commit() throws TransactionException;
 
   public void rollback(boolean remote);
+
+  /**
+   * @since 2.0
+   */
+  public void rollback();
+
+  /**
+   * @since 2.0
+   */
+  public void rollback(CDOSavepoint savepoint, boolean remote);
+
+  /**
+   * @since 2.0
+   */
+  public void rollback(CDOSavepoint savepoint);
+
+  /**
+   * Creates a save point in the {@link CDOTransaction} that can be used to roll back a part of the transaction
+   * <p>
+   * Save points do not flush to disk.
+   * <p>
+   * 
+   * @since 2.0
+   */
+  public CDOSavepoint setSavepoint();
+
+  /**
+   * @since 2.0
+   */
+  public CDOSavepoint getLastSavepoint();
 
   public void addHandler(CDOTransactionHandler handler);
 

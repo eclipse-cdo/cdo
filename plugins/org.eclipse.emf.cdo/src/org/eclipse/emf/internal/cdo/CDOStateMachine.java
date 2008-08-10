@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
+ *    Simon McDuff - http://bugs.eclipse.org/215688    
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -91,7 +92,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.NEW, CDOEvent.ATTACH, FAIL);
     init(CDOState.NEW, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.NEW, CDOEvent.READ, IGNORE);
-    init(CDOState.NEW, CDOEvent.WRITE, IGNORE);
+    init(CDOState.NEW, CDOEvent.WRITE, new NewObjectWriteTransition());
     init(CDOState.NEW, CDOEvent.INVALIDATE, FAIL);
     init(CDOState.NEW, CDOEvent.RELOAD, FAIL);
     init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition());
@@ -492,7 +493,19 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       changeState(object, CDOState.DIRTY);
     }
   }
-
+  
+  /**
+   * @author Simon McDuff
+   */
+  private final class NewObjectWriteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  {
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
+    {
+      CDOViewImpl view = (CDOViewImpl)object.cdoView();
+      CDOTransactionImpl transaction = view.toTransaction();
+      transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
+    }
+  }
   /**
    * @author Simon McDuff
    */

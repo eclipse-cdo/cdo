@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
+ *    Simon McDuff - http://bugs.eclipse.org/233314
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -38,4 +39,12 @@ public interface CDOTransactionHandler
    * transaction.
    */
   public void committingTransaction(CDOTransaction transaction);
+
+  /**
+   * Called by a <code>CDOTransaction</code> <b>after</b> it is rolled back. If the implementor of this method throws an
+   * exception it will be logged as an error and subsequent handlers will be further called.
+   * 
+   * @since 2.0
+   */
+  public void rolledBackTransaction(CDOTransaction transaction);
 }

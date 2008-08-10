@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Simon McDuff - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/233273    
  *    Eike Stepper - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
@@ -178,5 +179,22 @@ public class MEMStore extends LongIDStore
     }
 
     return null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public List<CDORevision> getRevisions()
+  {
+    ArrayList<CDORevision> simpleRevisions = new ArrayList<CDORevision>();
+    Iterator<List<CDORevision>> itr = revisions.values().iterator();
+    while (itr.hasNext())
+    {
+      List<CDORevision> list = itr.next();
+      CDORevision revision = list.get(list.size() - 1);
+      simpleRevisions.add(revision);
+    }
+
+    return simpleRevisions;
   }
 }

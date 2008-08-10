@@ -46,6 +46,13 @@ public class AllTests
     suite.addTestSuite(IndexReconstructionTest.class);
     suite.addTestSuite(NoLegacyTest.class);
     suite.addTestSuite(Bugzilla241464_Test.class);
+    suite.addTestSuite(AutoAttacherTest.class);
+    suite.addTestSuite(SavepointTest.class);
+    suite.addTestSuite(ChangeSubscriptionTest.class);
+
+    // Specific for MEMStore
+    // suite.addTestSuite(QueryTest.class);
+
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);
     // $JUnit-END$
 

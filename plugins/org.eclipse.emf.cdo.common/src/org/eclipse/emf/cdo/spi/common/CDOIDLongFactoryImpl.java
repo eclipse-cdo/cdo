@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/226778    
  **************************************************************************/
 package org.eclipse.emf.cdo.spi.common;
 
@@ -31,6 +32,14 @@ public class CDOIDLongFactoryImpl implements CDOIDObjectFactory
   }
 
   public CDOIDObject createCDOIDObject(ExtendedDataInput in)
+  {
+    return new CDOIDLongImpl();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOIDObject createCDOIDObject(String fragmentPart)
   {
     return new CDOIDLongImpl();
   }

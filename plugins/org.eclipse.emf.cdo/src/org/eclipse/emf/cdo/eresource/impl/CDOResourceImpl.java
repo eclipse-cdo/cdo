@@ -7,17 +7,21 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/226778    
  **************************************************************************/
 package org.eclipse.emf.cdo.eresource.impl;
 
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
@@ -325,12 +329,38 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   }
 
   /**
+   * <b>Note:</b> URI from temporary objects are going to changed when we commit the CDOTransaction. Objects will not be
+   * accessible from their temporary URI once CDOTransaction is committed.
+   * 
    * @ADDED
    */
   public EObject getEObject(String uriFragment)
   {
-    // TODO Implement method CDOResourceImpl.getEObject()
-    throw new UnsupportedOperationException("Not yet implemented");
+    // Should we return CDOResource (this ?) ?
+    if (uriFragment == null)
+    {
+      return null;
+    }
+
+    CDOID cdoID = CDOIDUtil.read(uriFragment, cdoView().getSession().getPackageManager().getCDOIDObjectFactory());
+
+    if (cdoID.isNull())
+    {
+      return null;
+    }
+
+    if (cdoID.isTemporary() && !cdoView().isObjectRegistered(cdoID))
+    {
+      throw new IllegalStateException("Temporary object : " + uriFragment + " is not available anymore.");
+    }
+
+    if (cdoID.isObject())
+    {
+      return cdoView().getObject(cdoID, true);
+    }
+
+    // If it doesn`t match to anything we return null like ResourceImpl.getEObject
+    return null;
   }
 
   /**
@@ -338,8 +368,15 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public String getURIFragment(EObject object)
   {
-    // TODO Implement method CDOResourceImpl.getURIFragment()
-    throw new UnsupportedOperationException("Not yet implemented");
+    // if object == this ??? what we do. Is it wanted ? How we handle them ?
+
+    InternalCDOObject internalCDOObject = FSMUtil.adapt(object, cdoView());
+
+    StringBuilder builder = new StringBuilder();
+
+    CDOIDUtil.write(builder, internalCDOObject.cdoID());
+
+    return builder.toString();
   }
 
   /**

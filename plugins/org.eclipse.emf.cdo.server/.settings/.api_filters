@@ -8,6 +8,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/View.java" type="org.eclipse.emf.cdo.internal.server.View">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.internal.server.View"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/RevisionManager.java" type="org.eclipse.emf.cdo.internal.server.RevisionManager">
         <filter id="576720909">
             <message_arguments>
@@ -47,6 +54,14 @@
                 <message_argument value="CDOServerProtocol"/>
                 <message_argument value="ISessionManager"/>
                 <message_argument value="openSession(CDOServerProtocol, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/QueryResult.java" type="org.eclipse.emf.cdo.internal.server.QueryResult">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="AbstractQueryResult"/>
+                <message_argument value="QueryResult"/>
             </message_arguments>
         </filter>
     </resource>

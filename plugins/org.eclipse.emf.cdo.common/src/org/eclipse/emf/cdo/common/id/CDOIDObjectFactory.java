@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/226778
  **************************************************************************/
 package org.eclipse.emf.cdo.common.id;
 
@@ -24,4 +25,13 @@ public interface CDOIDObjectFactory
    * instance.
    */
   public CDOIDObject createCDOIDObject(ExtendedDataInput in);
+
+  /**
+   * Returns a new instance of CDOIDObject. This implementation is different from
+   * {@link #createCDOIDObject(ExtendedDataInput)} since the implementor of this method needs to construct a
+   * <b>complete</b> CDOIDObject from the given string.
+   * 
+   * @since 2.0
+   */
+  public CDOIDObject createCDOIDObject(String fragmentPart);
 }

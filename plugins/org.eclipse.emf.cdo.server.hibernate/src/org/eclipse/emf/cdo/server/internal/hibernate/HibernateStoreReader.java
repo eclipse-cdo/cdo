@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
+import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
@@ -61,27 +62,15 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
     return new HibernateStoreChunkReader(this, revision, feature);
   }
 
-  public CloseableIterator<CDOID> readObjectIDs(boolean withTypes)
+  public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo)
   {
+    // TODO: implement HibernateStoreReader.createQueryIterator(queryInfo)
     throw new UnsupportedOperationException();
   }
 
-  @Override
-  // this method can disappear when in transaction commit the release
-  // of the accessor is done before the StoreUtil.setReader(null),
-  // see the Transaction
-  protected void doRelease()
+  public CloseableIterator<CDOID> readObjectIDs(boolean withTypes)
   {
-    try
-    {
-      // ugly cast
-      StoreUtil.setReader(this);
-      super.doRelease();
-    }
-    finally
-    {
-      StoreUtil.setReader(null);
-    }
+    throw new UnsupportedOperationException();
   }
 
   public CDOClassRef readObjectType(CDOID id)
@@ -177,5 +166,29 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
   {
     // TODO Could be necessary to implement
     throw new UnsupportedOperationException();
+  }
+
+  public void refreshRevisions()
+  {
+    // TODO: implement HibernateStoreReader.refreshRevisions()
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  // this method can disappear when in transaction commit the release
+  // of the accessor is done before the StoreUtil.setReader(null),
+  // see the Transaction
+  protected void doRelease()
+  {
+    try
+    {
+      // ugly cast
+      StoreUtil.setReader(this);
+      super.doRelease();
+    }
+    finally
+    {
+      StoreUtil.setReader(null);
+    }
   }
 }

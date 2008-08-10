@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/226778
  **************************************************************************/
 package org.eclipse.emf.cdo.spi.common;
 
@@ -44,11 +45,30 @@ public abstract class AbstractCDOIDLong extends AbstractCDOID implements Compara
     return value;
   }
 
+  /**
+   * @since 2.0
+   */
+  public String asString()
+  {
+    return String.valueOf(value);
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  public void read(String fragmentPart)
+  {
+    value = Long.valueOf(fragmentPart);
+  }
+
+  @Override
   public void read(ExtendedDataInput in) throws IOException
   {
     value = in.readLong();
   }
 
+  @Override
   public void write(ExtendedDataOutput out) throws IOException
   {
     out.writeLong(value);

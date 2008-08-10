@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.server.ISession;
@@ -104,13 +105,16 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     }
   }
 
-  public void notifyInvalidation(long timeStamp, List<CDOIDAndVersion> dirtyIDs, Session excludedSession)
+  /**
+   * @since 2.0
+   */
+  public void handleCommitNotification(long timeStamp, List<CDOIDAndVersion> dirtyIDs,  List<CDORevisionDelta> deltas, Session excludedSession)
   {
     for (Session session : getSessions())
     {
       if (session != excludedSession)
       {
-        session.notifyInvalidation(timeStamp, dirtyIDs);
+        session.handleCommitNotification(timeStamp, dirtyIDs, deltas);
       }
     }
   }

@@ -18,6 +18,11 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/CDOViewImpl.java" type="org.eclipse.emf.internal.cdo.CDOViewImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CDOViewImpl(CDOSessionImpl, int)"/>
+            </message_arguments>
+        </filter>
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="CDOIDProvider"/>
@@ -46,6 +51,22 @@
             <message_arguments>
                 <message_argument value="CDOPackageManager"/>
                 <message_argument value="CDOSessionPackageManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDONotificationBuilder.java" type="org.eclipse.emf.internal.cdo.CDONotificationBuilder">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOFeatureDeltaVisitor"/>
+                <message_argument value="CDONotificationBuilder"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/util/CDOAutoAttacher.java" type="org.eclipse.emf.cdo.util.CDOAutoAttacher$CDOFeatureDeltaVisitorAutoAttach">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOFeatureDeltaVisitor"/>
+                <message_argument value="CDOFeatureDeltaVisitorAutoAttach"/>
             </message_arguments>
         </filter>
     </resource>

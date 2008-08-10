@@ -50,6 +50,11 @@ public interface IRepository extends IContainer<IRepositoryElement>
 
   public IRevisionManager getRevisionManager();
 
+  /**
+   * @since 2.0
+   */
+  public INotificationManager getNotificationManager();
+
   public long getLastMetaID();
 
   public CDOIDMetaRange getMetaIDRange(int count);

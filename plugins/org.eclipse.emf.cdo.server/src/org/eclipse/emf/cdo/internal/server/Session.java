@@ -8,6 +8,8 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
+ *    Simon McDuff - http://bugs.eclipse.org/230832
+ *    Simon McDuff - http://bugs.eclipse.org/233490
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
@@ -20,9 +22,10 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
-import org.eclipse.emf.cdo.internal.server.protocol.InvalidationNotification;
+import org.eclipse.emf.cdo.internal.server.protocol.CommitNotificationRequest;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
@@ -36,6 +39,8 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -53,6 +58,8 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   private int sessionID;
 
   private boolean legacySupportEnabled;
+
+  private boolean passiveUpdateEnabled = true;
 
   private ConcurrentMap<Integer, IView> views = new ConcurrentHashMap<Integer, IView>();
 
@@ -97,6 +104,22 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   public boolean isLegacySupportEnabled()
   {
     return legacySupportEnabled;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean isPassiveUpdateEnabled()
+  {
+    return passiveUpdateEnabled;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
+  {
+    this.passiveUpdateEnabled = passiveUpdateEnabled;
   }
 
   public View[] getElements()
@@ -193,11 +216,36 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     return new View(this, viewID, type);
   }
 
-  public void notifyInvalidation(long timeStamp, List<CDOIDAndVersion> dirtyIDs)
+  /**
+   * @since 2.0
+   */
+  public void handleCommitNotification(long timeStamp, List<CDOIDAndVersion> dirtyIDs, List<CDORevisionDelta> deltas)
   {
+    if (!isPassiveUpdateEnabled())
+    {
+      dirtyIDs = Collections.emptyList();
+    }
+
+    // Look if someone needs to know something about modified objects
+    List<CDORevisionDelta> newDeltas = new ArrayList<CDORevisionDelta>();
+    for (CDORevisionDelta delta : deltas)
+    {
+      CDOID lookupID = delta.getID();
+      for (View view : getViews())
+      {
+        if (view.hasSubscription(lookupID))
+        {
+          newDeltas.add(delta);
+          break;
+        }
+      }
+    }
     try
     {
-      new InvalidationNotification(protocol.getChannel(), timeStamp, dirtyIDs).send();
+      if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty())
+      {
+        new CommitNotificationRequest(protocol.getChannel(), this, timeStamp, dirtyIDs, newDeltas).send();
+      }
     }
     catch (Exception ex)
     {

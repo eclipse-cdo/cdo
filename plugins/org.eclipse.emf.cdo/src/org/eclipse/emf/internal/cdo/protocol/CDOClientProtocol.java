@@ -37,7 +37,7 @@ public class CDOClientProtocol extends CDOProtocolImpl
     switch (signalID)
     {
     case CDOProtocolConstants.SIGNAL_INVALIDATION:
-      return new InvalidationIndication();
+      return new CommitNotificationIndication();
     }
 
     return null;

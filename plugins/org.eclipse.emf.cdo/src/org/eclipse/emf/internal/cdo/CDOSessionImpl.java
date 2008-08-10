@@ -7,6 +7,9 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/226778
+ *    Simon McDuff - http://bugs.eclipse.org/230832
+ *    Simon McDuff - http://bugs.eclipse.org/233490
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -26,6 +29,7 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
@@ -36,7 +40,9 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.LoadLibrariesRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
+import org.eclipse.emf.internal.cdo.protocol.PassiveUpdateRequest;
 import org.eclipse.emf.internal.cdo.protocol.QueryObjectTypesRequest;
+import org.eclipse.emf.internal.cdo.protocol.SyncRevisionRequest;
 import org.eclipse.emf.internal.cdo.protocol.ViewsChangedRequest;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -93,6 +99,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   private int sessionID;
 
   private boolean legacySupportEnabled;
+
+  private boolean passiveUpdateEnabled = true;
 
   private int referenceChunkSize;
 
@@ -162,6 +170,14 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   }
 
   public CDOIDObject createCDOIDObject(ExtendedDataInput in)
+  {
+    return cdoidObjectFactory.createCDOIDObject(in);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOIDObject createCDOIDObject(String in)
   {
     return cdoidObjectFactory.createCDOIDObject(in);
   }
@@ -310,7 +326,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   protected CDOViewImpl createView(int id)
   {
-    return new CDOViewImpl(id, this);
+    return new CDOViewImpl(this, id);
   }
 
   public CDOViewImpl openView()
@@ -535,7 +551,29 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     types.put(id, type);
   }
 
-  public void notifyInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, CDOViewImpl excludedView)
+  /**
+   * @since 2.0
+   */
+  public void handleCommitNotification(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
+      Collection<CDORevisionDelta> deltas, CDOViewImpl excludedView)
+  {
+    if (isPassiveUpdateEnabled())
+    {
+      notifyInvalidation(timeStamp, dirtyOIDs, excludedView);
+    }
+
+    handleChangeSubcription(deltas, excludedView);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void handleSync(Set<CDOIDAndVersion> dirtyOIDs)
+  {
+    notifyInvalidation(CDORevision.UNSPECIFIED_DATE, dirtyOIDs, null);
+  }
+
+  private void notifyInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, CDOViewImpl excludedView)
   {
     for (CDOIDAndVersion dirtyOID : dirtyOIDs)
     {
@@ -554,7 +592,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       {
         try
         {
-          view.notifyInvalidation(timeStamp, dirtyOIDs);
+          view.handleInvalidation(timeStamp, dirtyOIDs);
         }
         catch (RuntimeException ex)
         {
@@ -564,6 +602,29 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     fireInvalidationEvent(timeStamp, dirtyOIDs, excludedView);
+  }
+
+  private void handleChangeSubcription(Collection<CDORevisionDelta> deltas, CDOViewImpl excludedView)
+  {
+    if (deltas == null || deltas.size() <= 0)
+    {
+      return;
+    }
+
+    for (CDOViewImpl view : getViews())
+    {
+      if (view != excludedView)
+      {
+        try
+        {
+          view.handleChangeSubscription(deltas);
+        }
+        catch (RuntimeException ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+    }
   }
 
   public void fireInvalidationEvent(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, CDOViewImpl excludedView)
@@ -678,7 +739,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       channel = connector.openChannel(CDOProtocolConstants.PROTOCOL_NAME, this);
     }
 
-    OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName, legacySupportEnabled);
+    OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName, legacySupportEnabled,
+        passiveUpdateEnabled);
     OpenSessionResult result = getFailOverStrategy().send(request);
 
     sessionID = result.getSessionID();
@@ -808,6 +870,98 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     throw new ImplementationError("Invalid view type: " + type);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean isPassiveUpdateEnabled()
+  {
+    return passiveUpdateEnabled;
+  }
+
+  private Map<CDOID, CDORevision> getAllRevisions()
+  {
+    Map<CDOID, CDORevision> uniqueObjects = new HashMap<CDOID, CDORevision>();
+    for (CDOViewImpl view : getViews())
+    {
+      for (InternalCDOObject internalCDOObject : view.getObjectsMap().values())
+      {
+        if (internalCDOObject.cdoRevision() != null && !internalCDOObject.cdoID().isTemporary()
+            && !uniqueObjects.containsKey(internalCDOObject.cdoID()))
+        {
+          uniqueObjects.put(internalCDOObject.cdoID(), internalCDOObject.cdoRevision());
+        }
+      }
+    }
+
+    // Need to add Revision from revisionManager since we do not have all objects in view.
+    for (CDORevision revision : getRevisionManager().getRevisions())
+    {
+      if (!uniqueObjects.containsKey(revision.getID()))
+      {
+        uniqueObjects.put(revision.getID(), revision);
+      }
+    }
+
+    return uniqueObjects;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
+  {
+    if (this.passiveUpdateEnabled != passiveUpdateEnabled)
+    {
+      this.passiveUpdateEnabled = passiveUpdateEnabled;
+
+      // Need to refresh if we change state
+      Map<CDOID, CDORevision> allRevisions = getAllRevisions();
+
+      try
+      {
+        if (!allRevisions.isEmpty())
+        {
+          PassiveUpdateRequest request = new PassiveUpdateRequest(getChannel(), this, allRevisions,
+              getReferenceChunkSize(), passiveUpdateEnabled);
+          getFailOverStrategy().send(request);
+        }
+      }
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Set<CDOIDAndVersion> refresh()
+  {
+    // If passive update is turned on we don`t need to refresh.
+    // We do not throw an exception since the client could turn that feature on or off without affecting their code.
+    if (!isPassiveUpdateEnabled())
+    {
+      Map<CDOID, CDORevision> allRevisions = getAllRevisions();
+
+      try
+      {
+        if (!allRevisions.isEmpty())
+        {
+          SyncRevisionRequest request = new SyncRevisionRequest(getChannel(), this, allRevisions,
+              getReferenceChunkSize());
+          return getFailOverStrategy().send(request);
+        }
+      }
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+    }
+
+    return Collections.emptySet();
   }
 
   /**

@@ -8,6 +8,8 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
+ *    Simon McDuff - http://bugs.eclipse.org/233273    
+ *    Simon McDuff - http://bugs.eclipse.org/233490    
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
@@ -29,6 +31,7 @@ import java.util.UUID;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class Repository extends Container<IRepositoryElement> implements IRepository
 {
@@ -53,6 +56,10 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   private ResourceManager resourceManager = createResourceManager();
 
   private RevisionManager revisionManager = createRevisionManager();
+
+  private QueryManager queryManager = createQueryManager();
+
+  private NotificationManager notificationManager = createNotificationManager();
 
   private IRepositoryElement[] elements;
 
@@ -162,6 +169,22 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return revisionManager;
   }
 
+  /**
+   * @since 2.0
+   */
+  public QueryManager getQueryManager()
+  {
+    return queryManager;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public NotificationManager getNotificationManager()
+  {
+    return notificationManager;
+  }
+
   public IRepositoryElement[] getElements()
   {
     return elements;
@@ -214,6 +237,22 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   protected RevisionManager createRevisionManager()
   {
     return new RevisionManager(this);
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected QueryManager createQueryManager()
+  {
+    return new QueryManager();
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected NotificationManager createNotificationManager()
+  {
+    return new NotificationManager(this);
   }
 
   @Override
@@ -271,10 +310,14 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     LifecycleUtil.activate(sessionManager);
     LifecycleUtil.activate(resourceManager);
     LifecycleUtil.activate(revisionManager);
+    LifecycleUtil.activate(queryManager);
+    LifecycleUtil.activate(notificationManager);
   }
 
   protected void deactivateRepository()
   {
+    LifecycleUtil.deactivate(notificationManager);
+    LifecycleUtil.deactivate(queryManager);
     LifecycleUtil.deactivate(revisionManager);
     LifecycleUtil.deactivate(resourceManager);
     LifecycleUtil.deactivate(sessionManager);

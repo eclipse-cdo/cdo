@@ -17,10 +17,12 @@ Export-Package: org.eclipse.emf.cdo;version="2.0.0",
  org.eclipse.emf.cdo.eresource;version="2.0.0",
  org.eclipse.emf.cdo.eresource.impl;version="2.0.0",
  org.eclipse.emf.cdo.eresource.util;version="2.0.0",
+ org.eclipse.emf.cdo.query;version="2.0.0",
  org.eclipse.emf.cdo.util;version="2.0.0",
  org.eclipse.emf.internal.cdo;version="2.0.0",
  org.eclipse.emf.internal.cdo.analyzer;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests",
  org.eclipse.emf.internal.cdo.bundle;version="2.0.0";x-friends:="org.eclipse.emf.cdo.ui",
  org.eclipse.emf.internal.cdo.protocol;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests",
+ org.eclipse.emf.internal.cdo.query;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests",
  org.eclipse.emf.internal.cdo.util;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.ui"
 Bundle-ActivationPolicy: lazy

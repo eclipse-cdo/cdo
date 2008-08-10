@@ -7,6 +7,9 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/233273    
+ *    Simon McDuff - http://bugs.eclipse.org/230832                   
+ *    Simon McDuff - http://bugs.eclipse.org/233490    
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
@@ -74,6 +77,21 @@ public class CDOServerProtocol extends CDOProtocolImpl
 
     case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION:
       return new CommitTransactionIndication();
+
+    case CDOProtocolConstants.SIGNAL_QUERY:
+      return new QueryIndication();
+
+    case CDOProtocolConstants.SIGNAL_QUERY_CANCEL:
+      return new QueryCancelIndication();
+
+    case CDOProtocolConstants.SIGNAL_SYNC:
+      return new SyncRevisionIndication();
+
+    case CDOProtocolConstants.SIGNAL_PASSIVE_UPDATE:
+      return new PassiveUpdateIndication();
+
+    case CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION:
+      return new ChangeSubscriptionIndication();
 
     default:
       return null;

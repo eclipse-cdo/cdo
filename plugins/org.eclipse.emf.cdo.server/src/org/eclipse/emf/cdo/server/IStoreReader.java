@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/230832        
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
@@ -15,6 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -30,6 +32,11 @@ public interface IStoreReader extends IStoreAccessor
   public ISession getSession();
 
   public IStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature);
+
+  /**
+   * @since 2.0
+   */
+  public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo);
 
   public Collection<CDOPackageInfo> readPackageInfos();
 
@@ -69,4 +76,9 @@ public interface IStoreReader extends IStoreAccessor
   public String readResourcePath(CDOID id);
 
   public CDORevision verifyRevision(CDORevision revision);
+
+  /**
+   * @since 2.0
+   */
+  public void refreshRevisions();
 }

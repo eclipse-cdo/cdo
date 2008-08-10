@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/226778    
  **************************************************************************/
 package org.eclipse.emf.cdo.common.id;
 
@@ -221,6 +222,120 @@ public final class CDOIDUtil
 
     // Not asLegacy
     ((AbstractCDOID)id).write(out);
+  }
+
+  /**
+   * Format of the URI fragment.
+   * <p>
+   * Non-legacy: <code>&lt;ID TYPE>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
+   * <p>
+   * Legacy: <code>&lt;ID TYPE>/&lt;PACKAGE URI>/&lt;CLASSIFIER ID>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
+   * 
+   * @since 2.0
+   */
+  public static CDOID read(String uriFragment, CDOIDObjectFactory factory)
+  {
+    byte ordinal = Byte.valueOf(uriFragment.substring(0, 1));
+    if (TRACER.isEnabled())
+    {
+      try
+      {
+        String type = Type.values()[ordinal].toString();
+        TRACER.format("Reading CDOID of type {0} ({1})", ordinal, type);
+      }
+      catch (RuntimeException ex)
+      {
+        TRACER.trace(ex);
+      }
+    }
+
+    Type type = Type.values()[ordinal];
+    String fragment = uriFragment.substring(2);
+    switch (type)
+    {
+    case NULL:
+      return CDOID.NULL;
+
+    case TEMP_OBJECT:
+      return new CDOIDTempObjectImpl(Integer.valueOf(fragment));
+
+    case TEMP_META:
+      return new CDOIDTempMetaImpl(Integer.valueOf(fragment));
+
+    case META:
+      return new CDOIDMetaImpl(Long.valueOf(fragment));
+
+    case OBJECT:
+    {
+      CDOIDObject id = factory.createCDOIDObject(fragment);
+      ((AbstractCDOID)id).read(fragment);
+      return id;
+    }
+
+    case LEGACY_OBJECT:
+    {
+      int packageIndex = fragment.indexOf("/");
+      String packageURI = fragment.substring(0, packageIndex);
+      int classifierIndex = fragment.indexOf("/", packageIndex + 1);
+
+      String strClassifier = fragment.substring(packageIndex, classifierIndex);
+      int classifierID = Integer.valueOf(strClassifier);
+
+      CDOClassRef cdoClassRef = CDOModelUtil.createClassRef(packageURI, classifierID);
+      CDOIDObject id = factory.createCDOIDObject(fragment.substring(classifierIndex + 1));
+      ((AbstractCDOID)id).read(fragment);
+      return id.asLegacy(cdoClassRef);
+    }
+
+    default:
+      throw new IllegalArgumentException("Invalid ID type : " + uriFragment);
+    }
+  }
+
+  /**
+   * Format of the uri fragment.
+   * <p>
+   * Non-legacy: <code>&lt;ID TYPE>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
+   * <p>
+   * Legacy: <code>&lt;ID TYPE>/&lt;PACKAGE URI>/&lt;CLASSIFIER ID>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
+   * 
+   * @since 2.0
+   */
+  public static void write(StringBuilder builder, CDOID id)
+  {
+    if (id == null)
+    {
+      id = CDOID.NULL;
+    }
+
+    Type type = id.getType();
+    int ordinal = type.ordinal();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing CDOID of type {0} ({1})", ordinal, type);
+    }
+
+    builder.append(ordinal);
+    switch (type)
+    {
+    case NULL:
+    case TEMP_OBJECT:
+    case TEMP_META:
+    case META:
+    case OBJECT:
+      break;
+
+    case LEGACY_OBJECT:
+      CDOIDObject legacy = (CDOIDObject)id;
+      builder.append("/" + legacy.getClassRef().getPackageURI());
+      builder.append("/" + legacy.getClassRef().getClassifierID());
+      break;
+
+    default:
+      throw new ImplementationError();
+    }
+
+    builder.append("/" + id.asString());
   }
 
   public static CDOIDMeta createMeta(long value)

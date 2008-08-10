@@ -7,15 +7,14 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/233490    
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.core.CDOCorePackage;
@@ -202,20 +201,7 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
   {
     try
     {
-      int modifications = dirtyObjectDeltas.length;
-      if (success && modifications > 0)
-      {
-        List<CDOIDAndVersion> dirtyIDs = new ArrayList<CDOIDAndVersion>(modifications);
-        for (int i = 0; i < modifications; i++)
-        {
-          CDORevisionDelta delta = dirtyObjectDeltas[i];
-          CDOIDAndVersion dirtyID = CDOIDUtil.createIDAndVersion(delta.getID(), delta.getOriginVersion());
-          dirtyIDs.add(dirtyID);
-        }
-
-        SessionManager sessionManager = (SessionManager)repository.getSessionManager();
-        sessionManager.notifyInvalidation(timeStamp, dirtyIDs, getSession());
-      }
+      repository.getNotificationManager().notifyCommit( getSession(), this);
     }
     finally
     {

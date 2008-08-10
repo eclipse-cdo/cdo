@@ -7,10 +7,12 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/230832
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.common.CDOProtocolSession;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.net4j.channel.IChannel;
@@ -19,6 +21,8 @@ import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.container.IContainer;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
+
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -61,6 +65,34 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
   public CDOAudit openAudit(ResourceSet resourceSet, long timeStamp);
 
   public CDOAudit openAudit(long timeStamp);
+
+  /**
+   * Specifies whether objects will be invalidated due to changes by other users.
+   * <p>
+   * E.g.: <code>session.setPassiveUpdateEnabled(false);</code>
+   * <p>
+   * By default this property is enabled. If this property is disabled the latest versions of objects can still be
+   * obtained by calling {@link #refresh()}.
+   * <p>
+   * Passive update can be disabled in cases where more performance is needed and/or more control over when objects will
+   * be refreshed.
+   * <p>
+   * When enabled again, a refresh will be automatically performed to be in sync with the server.
+   * 
+   * @since 2.0
+   */
+  public void setPassiveUpdateEnabled(boolean enable);
+
+  /**
+   * Refreshes the objects cache.
+   * <p>
+   * Takes CDOID and version of all objects in the cache and sends it to the server. Only dirty objects will be
+   * returned. In the case where {@link #isPassiveUpdateEnabled()} is <code>true</code>, this method will return
+   * immediately without doing anything.
+   * 
+   * @since 2.0
+   */
+  public Set<CDOIDAndVersion> refresh();
 
   public void close();
 }

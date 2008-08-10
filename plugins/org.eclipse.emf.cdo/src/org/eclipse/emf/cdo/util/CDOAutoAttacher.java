@@ -178,7 +178,7 @@ public class CDOAutoAttacher implements CDOTransactionHandler
     {
     }
 
-    public void visit(CDOContainerFeatureDelta delta)
+    public void visit(CDOContainerFeatureDelta featureChange)
     {
     }
   }

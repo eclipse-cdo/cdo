@@ -46,7 +46,7 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryResult<T>
     queryIDSet.set(true);
   }
 
-  public void waitForInitialization()
+  public void waitForInitialization() throws InterruptedException
   {
     queryIDSet.acquire(new Object()
     {

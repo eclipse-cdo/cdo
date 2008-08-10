@@ -67,7 +67,7 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
   public CDOAudit openAudit(long timeStamp);
 
   /**
-   * Specifies whether objects will be invalidated due to changes by other users.
+   * Specifies whether objects will be invalidated due by other users changes.
    * <p>
    * E.g.: <code>session.setPassiveUpdateEnabled(false);</code>
    * <p>

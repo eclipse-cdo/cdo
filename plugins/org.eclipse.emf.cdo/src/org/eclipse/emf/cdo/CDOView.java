@@ -71,10 +71,10 @@ public interface CDOView extends CDOProtocolView, INotifier
   /**
    * Specifies the change subscription policy. By default, the value is set to {@link CDOChangeSubscriptionPolicy#NONE}.
    * <p>
-   * To activate a policy you the following needs to be done: <br>
+   * To activate the policy, you must do the following: <br>
    * <code>transaction.setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);</code>
    * <p>
-   * To register an object you need to add an adapter to the object:<br>
+   * To register an object, you must add an adapter to the object in which you are interested:<br>
    * <code>eObject.eAdapters().add(myAdapter);</code>
    * <p>
    * By activating this feature, each object having at least one adapter that matches the current policy will be
@@ -84,11 +84,11 @@ public interface CDOView extends CDOProtocolView, INotifier
    * {@link CDOChangeSubscriptionPolicy#ALL} - Enabled for all adapters used.<br>
    * {@link CDOChangeSubscriptionPolicy#ONLY_CDO_ADAPTER} - Enabled only for adapters that implement {@link CDOAdapter}.
    * <br>
-   * Any other class that implements {@link CDOChangeSubscriptionPolicy} - Enabled for whatever rules defined in that
+   * Any other class that implement {@link CDOChangeSubscriptionPolicy} will enable for whatever rules defined in that
    * class. <br>
    * <p>
-   * If the <code>myAdapter</code> in the above example matches the current policy, <code>eObject</code> will be
-   * registered with the server and you will receive all changes from other transaction.
+   * If <code>myAdapter</code> in the above example matches the current policy, <code>eObject</code> will be registered
+   * with the server and you will receive all changes from other transaction.
    * <p>
    * When the policy is changed all objects in the cache will automatically be recalculated.
    * <p>
@@ -120,11 +120,10 @@ public interface CDOView extends CDOProtocolView, INotifier
   /**
    * Takes an object from a (possibly) different view and <em>contextifies</em> it for the usage with this view.
    * <ul>
-   * <li>If the given object is contained in this view it is returned unmodified.
-   * <li>If the given object can not be cast to {@link CDOObject} it is returned unmodified.
-   * <li>If the view of the given object is contained in a different session an <code>IllegalArgumentException</code> is
-   * thrown.
-   * <li>If <code>null</code> is passed <code>null</code> is returned.
+   * <li>If the given object is contained in this view it is returned unmodified. <li>If the given object can not be
+   * cast to {@link CDOObject} it is returned unmodified. <li>If the view of the given object is contained in a
+   * different session an <code>IllegalArgumentException</code> is thrown. <li>If <code>null</code> is passed <code>null
+   * </code> is returned.
    * </ul>
    * 
    * @since 2.0

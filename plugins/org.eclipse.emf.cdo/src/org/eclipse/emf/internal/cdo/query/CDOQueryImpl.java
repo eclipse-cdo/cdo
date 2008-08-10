@@ -103,7 +103,16 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     };
 
     new Thread(runnable).start();
-    queryResult.waitForInitialization();
+
+    try
+    {
+      queryResult.waitForInitialization();
+    }
+    catch (Exception ex)
+    {
+      exception[0] = ex;
+    }
+
     if (exception[0] != null)
     {
       throw WrappedException.wrap(exception[0]);
@@ -122,7 +131,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
       value = adapt(value);
       queryInfo.addParameter(entry.getKey(), value);
     }
-  
+
     return queryInfo;
   }
 
@@ -140,15 +149,15 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
       {
         throw new UnsupportedOperationException("Object not persisted");
       }
-  
+
       if (internalCDOObject.cdoID().isTemporary())
       {
         throw new UnsupportedOperationException("Object not persisted");
       }
-  
+
       return internalCDOObject.cdoID();
     }
-  
+
     return object;
   }
 }

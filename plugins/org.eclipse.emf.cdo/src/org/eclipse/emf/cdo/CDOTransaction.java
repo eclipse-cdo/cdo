@@ -72,7 +72,7 @@ public interface CDOTransaction extends CDOView
   /**
    * Creates a save point in the {@link CDOTransaction} that can be used to roll back a part of the transaction
    * <p>
-   * Save points do not flush to disk.
+   * Save points do not involve the server side, everything is done on the client side.
    * <p>
    * 
    * @since 2.0

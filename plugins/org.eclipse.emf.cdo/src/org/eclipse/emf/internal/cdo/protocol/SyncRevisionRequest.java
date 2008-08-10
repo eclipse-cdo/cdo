@@ -76,15 +76,7 @@ public class SyncRevisionRequest extends CDOClientRequest<Set<CDOIDAndVersion>>
     for (CDORevision revision : collectionRevisions.values())
     {
       CDOIDUtil.write(out, revision.getID());
-      if (revision != null)
-      {
-        out.writeInt(revision.getVersion());
-      }
-      else
-      {
-        // TODO Simon: CDOProtocolConstants
-        out.writeInt(-1);
-      }
+      out.writeInt(revision.getVersion());
     }
   }
 

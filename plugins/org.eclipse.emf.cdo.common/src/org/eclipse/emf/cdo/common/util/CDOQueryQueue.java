@@ -197,15 +197,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
   {
     QueueEntry<E> entry = null;
 
-    try
-    {
-      entry = queue.take();
-    }
-    catch (InterruptedException ex)
-    {
-      // TODO Simon: This construct is strange. Why not just propagate the IE?
-      Thread.currentThread().interrupt();
-    }
+    entry = queue.take();
 
     return checkObject(entry);
   }
@@ -316,7 +308,11 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
         return 0;
       }
 
-      // TODO Simon: What if == ?
+      if (seqNumber == o.seqNumber)
+      {
+        // Should not be possible
+        return 0;
+      }
       return seqNumber < o.seqNumber ? -1 : 1;
     }
   }

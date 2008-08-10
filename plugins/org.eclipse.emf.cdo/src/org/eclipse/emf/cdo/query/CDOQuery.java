@@ -30,6 +30,7 @@ public interface CDOQuery extends CDOQueryInfo
 
   /**
    * Sets the maximum number of results to retrieve.
+   * <p>
    * 
    * @param maxResult
    *          the maximum number of results to retrieve
@@ -41,6 +42,7 @@ public interface CDOQuery extends CDOQueryInfo
 
   /**
    * Binds an argument value to a named parameter.
+   * <p>
    * 
    * @param name
    *          the parameter name

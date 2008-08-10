@@ -1,0 +1,135 @@
+<HTML 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>CDO - New Features</TITLE>
+
+<BODY bgColor=#ffffff>
+<H2>New Features</H2>
+<TABLE id=table415 cellSpacing=0 cellPadding=10>
+  <TBODY>
+  <TR>
+    <TD vAlign=top align=left width="15%" bgColor=#e0d0e6>
+      <P align=right><B>Create save point</B></P></TD>
+    <TD vAlign=top width="70%">
+      <P align=left>
+ Creates a save point in the <i>CDOTransaction, </i> which that can be used to roll back a part of the 
+	transaction and
+ specifies the save point.<p>
+ <b>Note:</b> Save points do not involve the server side, everything is done on 
+	the client side.
+
+</P></TD></TR>
+  <TR>
+    <TD colSpan=2>
+      <HR>
+    </TD></TR></TBODY></TABLE>
+<TABLE id=table417 cellSpacing=0 cellPadding=10>
+  <TBODY>
+  <TR>
+    <TD vAlign=top align=left width="15%" bgColor=#e0d0e6>
+      <P align=right><B>Make remote invalidation configurable</B></P></TD>
+    <TD vAlign=top width="70%">
+      <P align=left>Specifies whether an object will be invalidated by others 
+		users' changes.<br>
+		e.g. : <i>session.setPassiveUpdateEnabled(false);</i></P>
+		<P align=left>If you disable this property, you can still have the 
+		latest version of objects by calling <i>{@link #refresh()}</i>.<br>
+		e.g. :<i> session.refresh();</i></P>
+		<P align=left>You would disable it in the cases where you need 
+		performance and/or want to control when objects will be refreshed.</P>
+		<P align=left>When the feature is turned on, it will automatically performs a refresh 
+		to be in sync with the server.</P></TD></TR>
+  <TR>
+    <TD colSpan=2>
+      <HR>
+    </TD></TR></TBODY></TABLE>
+<TABLE id=table403 cellSpacing=0 cellPadding=10>
+  <TBODY>
+  <TR>
+    <TD vAlign=top align=left width="15%" bgColor=#e0d0e6>
+      <P align=right><b>Change subscription</b></P></TD>
+    <TD vAlign=top width="70%">
+      <P align=left>Allows listeners to be 
+		notified when objects are modified from other <i>CDOTransaction</i> 
+		(remotely or not). It uses adapters for the notification process (see 
+		CDONotification).</P>
+		<P align=left>To activate the policy, you must to do the following: <br>
+		e.g.: <i>
+		transaction.setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);</i></P>
+		<P align=left>To register an object, you must to add an adapter to the 
+		object in which you are interested.<br>
+		e.g.: <i>eObject.eAdapters().add(anAdapter);</i></P>
+		<P align=left>If <i>anAdapter</i> matches the current policy, <i>
+		eObject</i> will be registered to the server and<br>
+		you will receive all changes from others <i>{@link CDOTransaction}.</i></P>
+		<P align=left>By default, the 
+		value is set to <i>{@link CDOChangeSubscriptionPolicy#NONE}</i>.</P>
+		<P align=left>When this feature is activated, every object that has at 
+		least one adapter matching the current policy will be registered to 
+		the server and will be notified for every change happening in any other
+		<i>CDOTransaction</i>.</P>
+		<P align=left><i>{@link CDOChangeSubscriptionPolicy#NONE}</i> - 
+		Disabled.<br>
+		<i>{@link CDOChangeSubscriptionPolicy#ALL}</i> - Enabled for all 
+		adapters used.<br>
+		<i>{@link CDOChangeSubscriptionPolicy#ONLY_CDOADAPTER} </i>- Enabled 
+		only for adapters that implement {@link CDOAdapter}.</P>
+		<P align=left>Any other classes that implement <i>{@link 
+		CDOChangeSubscriptionPolicy}</i> will enable the feature for whatever 
+		rules defined in that class. </P></TD></TR>
+  <TR>
+    <TD colSpan=2>
+      <HR>
+    </TD></TR></TBODY></TABLE>
+<TABLE id=table410 cellSpacing=0 cellPadding=10>
+  <TBODY>
+  <TR>
+    <TD vAlign=top align=left width="15%" bgColor=#e0d0e6>
+      <P align=right><b>Query</b></P></TD>
+    <TD vAlign=top width="70%">
+      <P align=left>The <i>query</i> feature allows you to retrieve objects from the 
+		repository in a native way. It could support as many languages as the <i>
+		Store&nbsp;</i>wants to support.<i><br>
+		</i>e.g.:<i> CDOQuery query = view.createQuery(&lt;LANGUAGE&gt;, &lt;QUERY 
+		STRING&gt;);</i></P>
+		<P align=left>At this point, it can set parameters that are going to be 
+		transferred to the server. (Eclass, EObject or primitive)<br>
+		e.g.: <i>query.setParameter(key, value);</i></P>
+		<P align=left>Once all your parameters are set, you can retrieve the 
+		results in a standard way.<br>
+		e.g.: <i>List&lt;SalesOrder&gt; salesOrders = query.getResult(SalesOrder.class);</i></P>
+		<P align=left>or asynchronously <br>
+		e.g.<i>:CloseableIterator</i><i>&lt;SalesOrder&gt; salesOrders = 
+		query.getResultAsync(SalesOrder.class);</i></P>
+		<P align=left>In asynchronous mode, objects are returned as soon as they 
+		are retrieved from the <i>Server</i>. The query feature does not keep any reference to 
+		the results. This means that you could possibly return millions of 
+		objects.</P>
+		<P align=left>The iterator could be closed at any time, resulting in the 
+		query being cancelled on at the server side.<br>
+		e.g.:<i> salesOrders.close();</i></P></TD></TR>
+  <TR>
+    <TD colSpan=2>
+      <HR>
+    </TD></TR></TBODY></TABLE>
+<TABLE id=table356 cellSpacing=0 cellPadding=10>
+  <TBODY>
+  <TR>
+    <TD>
+      <HR>
+<TABLE id=table418 cellSpacing=0 cellPadding=10>
+  <TBODY>
+  <TR>
+    <TD vAlign=top align=left width="15%" bgColor=#e0d0e6>
+      <P align=right><b>Support getURIFragment and getEObject</b></P></TD>
+    <TD vAlign=top width="70%">
+      <P align=left>CDOResource now supports getURIFragment and getEObject. </P>
+		<P align=left><b>Note:</b> The URIs of temporary objects will 
+		change when the <i>CDOTransaction</i> is committed . Objects will no 
+		longer be accessible using their temporary URI once <i>the CDOTransaction</i> is 
+		committed.</P></TD></TR>
+  <TR>
+    <TD colSpan=2>
+      <HR>
+    </TD></TR></TBODY></TABLE>
+    </TD></TR></TBODY></TABLE></DIV></DIV>
+</BODY>
+</HTML>

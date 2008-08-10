@@ -294,8 +294,6 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
 
   public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo)
   {
-    // DO NOT MERGE THAT
-    // TODO Simon: I think I have to ;-)
     throw new UnsupportedOperationException();
   }
 

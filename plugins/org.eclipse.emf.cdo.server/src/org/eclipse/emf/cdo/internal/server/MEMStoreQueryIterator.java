@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.collection.CloseableIterator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * @author Simon McDuff
@@ -48,8 +49,8 @@ public class MEMStoreQueryIterator implements CloseableIterator<Object>
     nextObject = nextObject();
   }
 
-  // TODO Simon: private?
-  public Object nextObject()
+
+  private Object nextObject()
   {
     nextObject = null;
     while (revisions.hasNext() && nextObject == null)
@@ -77,7 +78,9 @@ public class MEMStoreQueryIterator implements CloseableIterator<Object>
   {
     try
     {
-      // TODO Simon: throw NSEE if == null
+      if (nextObject == null)
+        throw new NoSuchElementException();
+      
       return nextObject;
     }
     finally

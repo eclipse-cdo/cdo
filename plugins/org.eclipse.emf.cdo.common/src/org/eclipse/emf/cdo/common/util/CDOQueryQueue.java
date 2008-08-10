@@ -142,8 +142,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
 
   public boolean offer(E e)
   {
-    // TODO Simon: Is this correct? (if so a comment why)
-    return true;
+    return queue.offer(new QueueEntry<E>(e));
   }
 
   public E peek()

@@ -50,21 +50,13 @@ public class ConcurrentValue<T>
     }
   }
 
-  public void acquire(Object accept)
+  public void acquire(Object accept) throws InterruptedException
   {
     synchronized (notifier)
     {
       while (!equalToOneElement(accept))
       {
-        try
-        {
-          notifier.wait();
-        }
-        catch (InterruptedException ex)
-        {
-          // TODO Simon: This construct is strange. Why not just propagate the IE?
-          Thread.currentThread().interrupt();
-        }
+        notifier.wait();
       }
     }
   }

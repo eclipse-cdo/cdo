@@ -27,8 +27,7 @@ public class QueryCancelIndication extends CDOReadIndication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryCancelIndication.class);
 
-  // TODO Simon: CDOProtocolConstants
-  private int queryID = -1;
+  private int queryID;
 
   public QueryCancelIndication()
   {

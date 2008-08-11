@@ -15,8 +15,19 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
+import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
+import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
+
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.WrappedException;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 
 import org.hibernate.Session;
 
@@ -28,6 +39,8 @@ import java.util.Properties;
  */
 public class HibernateUtil
 {
+  private static final String EXT_POINT = "mappingProviderFactories";
+
   private static HibernateUtil instance = new HibernateUtil();
 
   /**
@@ -45,6 +58,57 @@ public class HibernateUtil
   public static void setInstance(HibernateUtil instance)
   {
     HibernateUtil.instance = instance;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public IHibernateStore createStore(IHibernateMappingProvider mappingProvider)
+  {
+    HibernateStore store = new HibernateStore(mappingProvider);
+    mappingProvider.setHibernateStore(store);
+    return store;
+  }
+
+  /**
+   * Can only be used when Eclipse is running. In standalone scenarios create the mapping strategy instance by directly
+   * calling the constructor of the mapping strategy class.
+   * 
+   * @see #createFileMappingProvider(String...)
+   * @since 2.0
+   */
+  public IHibernateMappingProvider.Factory createMappingProviderFactory(String type)
+  {
+    IExtensionRegistry registry = Platform.getExtensionRegistry();
+    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT);
+    for (final IConfigurationElement element : elements)
+    {
+      if ("mappingProviderFactory".equals(element.getName()))
+      {
+        String typeAttr = element.getAttribute("type");
+        if (ObjectUtil.equals(typeAttr, type))
+        {
+          try
+          {
+            return (IHibernateMappingProvider.Factory)element.createExecutableExtension("class");
+          }
+          catch (CoreException ex)
+          {
+            throw WrappedException.wrap(ex);
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public IHibernateMappingProvider createFileMappingProvider(String... locations)
+  {
+    return new FileHibernateMappingProvider(locations);
   }
 
   /**

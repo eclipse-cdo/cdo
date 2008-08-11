@@ -9,14 +9,13 @@
  *    Martin Taal - initial API and implementation
  *    Eike Stepper - http://bugs.eclipse.org/238300
  **************************************************************************/
-package org.eclipse.emf.cdo.server.hibernate.teneo;
+package org.eclipse.emf.cdo.server.hibernate.internal.teneo;
 
 import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
-import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
+import org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateMappingProvider;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
-import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -45,11 +44,19 @@ import java.util.Properties;
  * @author Martin Taal
  * @author Eike Stepper
  */
-public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
+public class TeneoHibernateMappingProvider extends HibernateMappingProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TeneoHibernateMappingProvider.class);
 
-  private IHibernateStore hibernateStore;
+  public TeneoHibernateMappingProvider()
+  {
+  }
+
+  @Override
+  public HibernateStore getHibernateStore()
+  {
+    return (HibernateStore)super.getHibernateStore();
+  }
 
   public void addMapping(Configuration configuration)
   {
@@ -84,7 +91,7 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
     rs.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
     rs.getPackageRegistry().put(XMLTypePackage.eNS_URI, XMLTypePackage.eINSTANCE);
     rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new EcoreResourceFactoryImpl());
-    for (CDOPackage cdoPackage : ((HibernateStore)hibernateStore).getPackageHandler().getCDOPackages())
+    for (CDOPackage cdoPackage : getHibernateStore().getPackageHandler().getCDOPackages())
     {
       if (TRACER.isEnabled())
       {
@@ -148,15 +155,5 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
     {
       resolveSubPackages(subEPackage, result);
     }
-  }
-
-  public IHibernateStore getHibernateStore()
-  {
-    return hibernateStore;
-  }
-
-  public void setHibernateStore(IHibernateStore hibernateStore)
-  {
-    this.hibernateStore = hibernateStore;
   }
 }

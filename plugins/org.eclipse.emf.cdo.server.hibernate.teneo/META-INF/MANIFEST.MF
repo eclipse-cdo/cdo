@@ -10,4 +10,8 @@ Require-Bundle: org.eclipse.emf.ecore.xmi;bundle-version="[2.4.0,3.0.0)",
  org.eclipse.emf.cdo.server.hibernate;bundle-version="[2.0.0,3.0.0)";visibility:=reexport
 Import-Package: org.eclipse.emf.teneo.hibernate.cdo,
  org.hibernate.cfg
-Export-Package: org.eclipse.emf.cdo.server.hibernate.teneo;version="2.0.0"
+Export-Package: org.eclipse.emf.cdo.server.hibernate.internal.teneo;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests.hibernate,org.eclipse.emf.cdo.tests.hibernate.client",
+ org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests.hibernate,org.eclipse.emf.cdo.tests.hibernate.client",
+ org.eclipse.emf.cdo.server.hibernate.teneo;version="2.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle.OM$Activator

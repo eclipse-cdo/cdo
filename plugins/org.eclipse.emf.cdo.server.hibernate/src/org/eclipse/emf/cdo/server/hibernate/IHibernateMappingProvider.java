@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.hibernate;
 
 import org.hibernate.cfg.Configuration;
+import org.w3c.dom.Element;
 
 /**
  * A mappingprovider adds a hibernate mapping to a hibernate configuration object.
@@ -19,9 +20,31 @@ import org.hibernate.cfg.Configuration;
  */
 public interface IHibernateMappingProvider
 {
-  /** Adds a mapping to a configuration object */
+  /**
+   * Adds a mapping to a configuration object
+   */
   public void addMapping(Configuration configuration);
 
-  /** Sets the Store in the mapping provider, is called before addMapping. */
+  /**
+   * Sets the Store in the mapping provider, is called before addMapping.
+   */
   public void setHibernateStore(IHibernateStore hibernateStore);
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public interface Factory
+  {
+    /**
+     * Returns the type of the mapping providers this factory can create.
+     */
+    public String getType();
+
+    /**
+     * Creates a Hibernate mapping provider from the given element of the <code>cdo-server.xml</code> configuration
+     * file.
+     */
+    public IHibernateMappingProvider create(Element config);
+  }
 }

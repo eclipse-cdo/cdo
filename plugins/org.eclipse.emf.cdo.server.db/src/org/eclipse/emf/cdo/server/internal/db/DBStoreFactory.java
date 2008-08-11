@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
-import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -51,9 +50,7 @@ public class DBStoreFactory implements IStoreFactory
     IDBAdapter dbAdapter = getDBAdapter(storeConfig);
     DataSource dataSource = getDataSource(storeConfig);
     IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
-    IDBStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
-    mappingStrategy.setStore(store);
-    return store;
+    return CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
   }
 
   private IMappingStrategy getMappingStrategy(Element storeConfig)
@@ -61,7 +58,7 @@ public class DBStoreFactory implements IStoreFactory
     NodeList mappingStrategyConfigs = storeConfig.getElementsByTagName("mappingStrategy");
     if (mappingStrategyConfigs.getLength() != 1)
     {
-      throw new IllegalStateException("Exactly one mappingStrategy must be configured for DB store");
+      throw new IllegalStateException("Exactly one mapping strategy must be configured for DB store");
     }
 
     Element mappingStrategyConfig = (Element)mappingStrategyConfigs.item(0);

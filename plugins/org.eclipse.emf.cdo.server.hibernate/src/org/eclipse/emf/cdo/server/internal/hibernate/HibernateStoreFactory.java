@@ -10,10 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
+import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
+import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Eike Stepper
@@ -29,15 +31,35 @@ public class HibernateStoreFactory implements IStoreFactory
     return HibernateStore.TYPE;
   }
 
-  public IStore createStore(Element storeConfig)
+  public IHibernateStore createStore(Element storeConfig)
   {
-    throw new UnsupportedOperationException(); // TODO Implement me
-    // IMappingStrategy mappingStrategy = getMappingStrategy(storeConfig);
-    // IDBAdapter dbAdapter = getDBAdapter(storeConfig);
-    // DataSource dataSource = getDataSource(storeConfig);
-    // IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
-    // HibernateStore store = new HibernateStore(mappingStrategy, dbAdapter, connectionProvider);
-    // mappingStrategy.setStore(store);
-    // return store;
+    IHibernateMappingProvider mappingProvider = getMappingProvider(storeConfig);
+    return HibernateUtil.getInstance().createStore(mappingProvider);
+  }
+
+  private IHibernateMappingProvider getMappingProvider(Element storeConfig)
+  {
+    NodeList mappingProviderConfigs = storeConfig.getElementsByTagName("mappingProvider");
+    if (mappingProviderConfigs.getLength() != 1)
+    {
+      throw new IllegalStateException("Exactly one mapping provider must be configured for Hibernate store");
+    }
+
+    Element mappingProviderConfig = (Element)mappingProviderConfigs.item(0);
+    String mappingProviderType = mappingProviderConfig.getAttribute("type");
+    IHibernateMappingProvider.Factory factory = HibernateUtil.getInstance().createMappingProviderFactory(
+        mappingProviderType);
+    if (factory == null)
+    {
+      throw new IllegalArgumentException("Unknown mapping provider type: " + mappingProviderType);
+    }
+
+    IHibernateMappingProvider mappingProvider = factory.create(mappingProviderConfig);
+    if (mappingProvider == null)
+    {
+      throw new IllegalArgumentException("No mapping provider created: " + mappingProviderType);
+    }
+
+    return mappingProvider;
   }
 }

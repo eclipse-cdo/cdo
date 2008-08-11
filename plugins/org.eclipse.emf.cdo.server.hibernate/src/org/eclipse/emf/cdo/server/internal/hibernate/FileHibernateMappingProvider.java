@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
-import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.util.WrappedException;
@@ -27,32 +25,20 @@ import java.io.InputStream;
  * 
  * @author Martin Taal
  */
-public class HibernateFileMappingProvider implements IHibernateMappingProvider
+public class FileHibernateMappingProvider extends HibernateMappingProvider
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateFileMappingProvider.class);
-
-  private IHibernateStore hibernateStore;
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, FileHibernateMappingProvider.class);
 
   private final String[] mappingFileLocations;
 
-  public HibernateFileMappingProvider(String location)
+  public FileHibernateMappingProvider(String... mappingFileLocations)
   {
-    this(new String[] { location });
-  }
+    if (mappingFileLocations == null || mappingFileLocations.length == 0)
+    {
+      throw new IllegalArgumentException("mappingFileLocations");
+    }
 
-  public HibernateFileMappingProvider(String[] locations)
-  {
-    mappingFileLocations = locations;
-  }
-
-  public IHibernateStore getHibernateStore()
-  {
-    return hibernateStore;
-  }
-
-  public void setHibernateStore(IHibernateStore hibernateStore)
-  {
-    this.hibernateStore = hibernateStore;
+    this.mappingFileLocations = mappingFileLocations;
   }
 
   public void addMapping(Configuration configuration)
@@ -70,6 +56,7 @@ public class HibernateFileMappingProvider implements IHibernateMappingProvider
       }
 
       InputStream is = null;
+
       try
       {
         // MT.Question: the mapping file is in a dependent plugin but when using the OM.BUNDLE

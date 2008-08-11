@@ -42,6 +42,7 @@ public final class CDODBUtil
     store.setMappingStrategy(mappingStrategy);
     store.setDbAdapter(dbAdapter);
     store.setDbConnectionProvider(dbConnectionProvider);
+    mappingStrategy.setStore(store);
     return store;
   }
 
@@ -56,7 +57,6 @@ public final class CDODBUtil
    * 
    * @see #createHorizontalMappingStrategy()
    */
-
   public static IMappingStrategy createMappingStrategy(String type)
   {
     IExtensionRegistry registry = Platform.getExtensionRegistry();

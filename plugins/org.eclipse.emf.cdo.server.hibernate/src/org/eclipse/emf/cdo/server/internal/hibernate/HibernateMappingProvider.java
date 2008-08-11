@@ -1,0 +1,46 @@
+/***************************************************************************
+ * Copyright (c) 2004 - 2008 Springsite B.V. and others
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ **************************************************************************/
+package org.eclipse.emf.cdo.server.internal.hibernate;
+
+import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
+import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
+
+/**
+ * @author Eike Stepper
+ */
+public abstract class HibernateMappingProvider implements IHibernateMappingProvider
+{
+  private IHibernateStore hibernateStore;
+
+  public HibernateMappingProvider()
+  {
+  }
+
+  /**
+   * @return the hibernate store, never null.
+   * @throws IllegalStateException
+   *           if the hibernate store is null.
+   */
+  public IHibernateStore getHibernateStore()
+  {
+    if (hibernateStore == null)
+    {
+      throw new IllegalStateException("hibernateStore is null");
+    }
+
+    return hibernateStore;
+  }
+
+  public void setHibernateStore(IHibernateStore hibernateStore)
+  {
+    this.hibernateStore = hibernateStore;
+  }
+}

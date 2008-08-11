@@ -17,20 +17,11 @@
 
 <plugin>
 
-   <extension-point id="mappingProviderFactories" name="Hibernate Mapping Provider Factories" schema="schema/mappingProviderFactories.exsd"/>
-
-   <extension
-         point="org.eclipse.emf.cdo.server.storeFactories">
-      <storeFactory
-            class="org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreFactory"
-            storeType="hibernate"/>
-   </extension>
-
    <extension
          point="org.eclipse.emf.cdo.server.hibernate.mappingProviderFactories">
       <mappingProviderFactory
-            class="org.eclipse.emf.cdo.server.internal.hibernate.FileHibernateMappingProviderFactory"
-            type="file"/>
+            class="org.eclipse.emf.cdo.server.hibernate.internal.teneo.TeneoHibernateMappingProviderFactory"
+            type="teneo"/>
    </extension>
 
 </plugin>

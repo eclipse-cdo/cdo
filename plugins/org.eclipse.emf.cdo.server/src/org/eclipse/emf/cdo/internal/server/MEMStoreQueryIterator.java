@@ -49,7 +49,6 @@ public class MEMStoreQueryIterator implements CloseableIterator<Object>
     nextObject = nextObject();
   }
 
-
   private Object nextObject()
   {
     nextObject = null;

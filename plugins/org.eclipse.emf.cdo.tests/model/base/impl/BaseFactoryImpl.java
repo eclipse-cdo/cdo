@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: BaseFactoryImpl.java,v 1.1 2008-07-02 14:09:49 estepper Exp $
+ * $Id: BaseFactoryImpl.java,v 1.2 2008-08-11 05:10:46 estepper Exp $
  */
 package base.impl;
 
@@ -67,7 +67,7 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
     switch (eClass.getClassifierID())
     {
     case BasePackage.BASE_CLASS:
-      return (EObject)createBaseClass();
+      return createBaseClass();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

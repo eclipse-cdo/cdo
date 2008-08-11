@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: BaseSwitch.java,v 1.1 2008-07-02 14:09:48 estepper Exp $
+ * $Id: BaseSwitch.java,v 1.2 2008-08-11 05:10:46 estepper Exp $
  */
 package base.util;
 
@@ -92,7 +92,10 @@ public class BaseSwitch<T>
     {
       BaseClass baseClass = (BaseClass)theEObject;
       T result = caseBaseClass(baseClass);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

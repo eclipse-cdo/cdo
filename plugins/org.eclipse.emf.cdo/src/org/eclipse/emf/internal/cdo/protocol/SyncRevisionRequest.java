@@ -52,7 +52,7 @@ public class SyncRevisionRequest extends CDOClientRequest<Set<CDOIDAndVersion>>
       int referenceChunk)
   {
     super(channel);
-    this.collectionRevisions = cdoRevisions;
+    collectionRevisions = cdoRevisions;
     this.referenceChunk = referenceChunk;
     this.cdoSession = cdoSession;
   }

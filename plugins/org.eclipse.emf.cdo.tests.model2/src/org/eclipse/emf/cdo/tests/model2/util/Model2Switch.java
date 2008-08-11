@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2Switch.java,v 1.3 2008-06-03 06:41:28 estepper Exp $
+ * $Id: Model2Switch.java,v 1.4 2008-08-11 05:11:49 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.util;
 
@@ -94,9 +94,18 @@ public class Model2Switch<T>
     {
       SpecialPurchaseOrder specialPurchaseOrder = (SpecialPurchaseOrder)theEObject;
       T result = caseSpecialPurchaseOrder(specialPurchaseOrder);
-      if (result == null) result = casePurchaseOrder(specialPurchaseOrder);
-      if (result == null) result = caseOrder(specialPurchaseOrder);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = casePurchaseOrder(specialPurchaseOrder);
+      }
+      if (result == null)
+      {
+        result = caseOrder(specialPurchaseOrder);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

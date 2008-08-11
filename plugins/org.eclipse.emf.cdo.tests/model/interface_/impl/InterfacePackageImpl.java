@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: InterfacePackageImpl.java,v 1.1 2008-07-02 14:09:49 estepper Exp $
+ * $Id: InterfacePackageImpl.java,v 1.2 2008-08-11 05:10:46 estepper Exp $
  */
 package interface_.impl;
 
@@ -74,7 +74,10 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
    */
   public static InterfacePackage init()
   {
-    if (isInited) return (InterfacePackage)EPackage.Registry.INSTANCE.getEPackage(InterfacePackage.eNS_URI);
+    if (isInited)
+    {
+      return (InterfacePackage)EPackage.Registry.INSTANCE.getEPackage(InterfacePackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     InterfacePackageImpl theInterfacePackage = (InterfacePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof InterfacePackageImpl ? EPackage.Registry.INSTANCE
@@ -140,7 +143,10 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
    */
   public void createPackageContents()
   {
-    if (isCreated) return;
+    if (isCreated)
+    {
+      return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -163,7 +169,10 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
    */
   public void initializePackageContents()
   {
-    if (isInitialized) return;
+    if (isInitialized)
+    {
+      return;
+    }
     isInitialized = true;
 
     // Initialize package

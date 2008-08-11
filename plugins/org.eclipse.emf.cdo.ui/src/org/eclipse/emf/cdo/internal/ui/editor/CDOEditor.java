@@ -1708,7 +1708,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected void doSaveAs(URI uri, IEditorInput editorInput)
   {
-    (editingDomain.getResourceSet().getResources().get(0)).setURI(uri);
+    editingDomain.getResourceSet().getResources().get(0).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()

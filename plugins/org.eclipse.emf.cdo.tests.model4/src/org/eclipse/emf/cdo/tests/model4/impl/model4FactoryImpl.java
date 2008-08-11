@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: model4FactoryImpl.java,v 1.2 2008-07-10 15:57:40 estepper Exp $
+ * $Id: model4FactoryImpl.java,v 1.3 2008-08-11 05:11:45 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.impl;
 
@@ -96,65 +96,65 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
     switch (eClass.getClassifierID())
     {
     case model4Package.REF_SINGLE_CONTAINED:
-      return (EObject)createRefSingleContained();
+      return createRefSingleContained();
     case model4Package.SINGLE_CONTAINED_ELEMENT:
-      return (EObject)createSingleContainedElement();
+      return createSingleContainedElement();
     case model4Package.REF_SINGLE_NON_CONTAINED:
-      return (EObject)createRefSingleNonContained();
+      return createRefSingleNonContained();
     case model4Package.SINGLE_NON_CONTAINED_ELEMENT:
-      return (EObject)createSingleNonContainedElement();
+      return createSingleNonContainedElement();
     case model4Package.REF_MULTI_CONTAINED:
-      return (EObject)createRefMultiContained();
+      return createRefMultiContained();
     case model4Package.MULTI_CONTAINED_ELEMENT:
-      return (EObject)createMultiContainedElement();
+      return createMultiContainedElement();
     case model4Package.REF_MULTI_NON_CONTAINED:
-      return (EObject)createRefMultiNonContained();
+      return createRefMultiNonContained();
     case model4Package.MULTI_NON_CONTAINED_ELEMENT:
-      return (EObject)createMultiNonContainedElement();
+      return createMultiNonContainedElement();
     case model4Package.REF_SINGLE_CONTAINED_NPL:
-      return (EObject)createRefSingleContainedNPL();
+      return createRefSingleContainedNPL();
     case model4Package.REF_SINGLE_NON_CONTAINED_NPL:
-      return (EObject)createRefSingleNonContainedNPL();
+      return createRefSingleNonContainedNPL();
     case model4Package.REF_MULTI_CONTAINED_NPL:
-      return (EObject)createRefMultiContainedNPL();
+      return createRefMultiContainedNPL();
     case model4Package.REF_MULTI_NON_CONTAINED_NPL:
-      return (EObject)createRefMultiNonContainedNPL();
+      return createRefMultiNonContainedNPL();
     case model4Package.CONTAINED_ELEMENT_NO_OPPOSITE:
-      return (EObject)createContainedElementNoOpposite();
+      return createContainedElementNoOpposite();
     case model4Package.GEN_REF_SINGLE_CONTAINED:
-      return (EObject)createGenRefSingleContained();
+      return createGenRefSingleContained();
     case model4Package.GEN_REF_SINGLE_NON_CONTAINED:
-      return (EObject)createGenRefSingleNonContained();
+      return createGenRefSingleNonContained();
     case model4Package.GEN_REF_MULTI_CONTAINED:
-      return (EObject)createGenRefMultiContained();
+      return createGenRefMultiContained();
     case model4Package.GEN_REF_MULTI_NON_CONTAINED:
-      return (EObject)createGenRefMultiNonContained();
+      return createGenRefMultiNonContained();
     case model4Package.IMPL_SINGLE_REF_CONTAINER:
-      return (EObject)createImplSingleRefContainer();
+      return createImplSingleRefContainer();
     case model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT:
-      return (EObject)createImplSingleRefContainedElement();
+      return createImplSingleRefContainedElement();
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINER:
-      return (EObject)createImplSingleRefNonContainer();
+      return createImplSingleRefNonContainer();
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT:
-      return (EObject)createImplSingleRefNonContainedElement();
+      return createImplSingleRefNonContainedElement();
     case model4Package.IMPL_MULTI_REF_NON_CONTAINER:
-      return (EObject)createImplMultiRefNonContainer();
+      return createImplMultiRefNonContainer();
     case model4Package.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT:
-      return (EObject)createImplMultiRefNonContainedElement();
+      return createImplMultiRefNonContainedElement();
     case model4Package.IMPL_MULTI_REF_CONTAINER:
-      return (EObject)createImplMultiRefContainer();
+      return createImplMultiRefContainer();
     case model4Package.IMPL_MULTI_REF_CONTAINED_ELEMENT:
-      return (EObject)createImplMultiRefContainedElement();
+      return createImplMultiRefContainedElement();
     case model4Package.IMPL_SINGLE_REF_CONTAINER_NPL:
-      return (EObject)createImplSingleRefContainerNPL();
+      return createImplSingleRefContainerNPL();
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINER_NPL:
-      return (EObject)createImplSingleRefNonContainerNPL();
+      return createImplSingleRefNonContainerNPL();
     case model4Package.IMPL_MULTI_REF_CONTAINER_NPL:
-      return (EObject)createImplMultiRefContainerNPL();
+      return createImplMultiRefContainerNPL();
     case model4Package.IMPL_MULTI_REF_NON_CONTAINER_NPL:
-      return (EObject)createImplMultiRefNonContainerNPL();
+      return createImplMultiRefNonContainerNPL();
     case model4Package.IMPL_CONTAINED_ELEMENT_NPL:
-      return (EObject)createImplContainedElementNPL();
+      return createImplContainedElementNPL();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

@@ -92,19 +92,33 @@ public final class NIOUtil
       throw new IllegalArgumentException("Source file '" + src.getAbsolutePath() + "' not found!");
     }
 
-    if (dst.exists()) if (dst.isDirectory()) // Directory? -> use source file
+    if (dst.exists())
+    {
+      if (dst.isDirectory())
+      {
         // name
         dst = new File(dst, src.getName());
+      }
       else if (dst.isFile())
       {
         if (!overwrite)
+        {
           throw new IllegalArgumentException("Destination file '" + dst.getAbsolutePath() + "' already exists!");
+        }
       }
       else
+      {
         throw new IllegalArgumentException("Invalid destination object '" + dst.getAbsolutePath() + "'!");
+      }
+    }
     File dstParent = dst.getParentFile();
     if (!dstParent.exists())
-      if (!dstParent.mkdirs()) throw new IOException("Failed to create directory " + dstParent.getAbsolutePath());
+    {
+      if (!dstParent.mkdirs())
+      {
+        throw new IOException("Failed to create directory " + dstParent.getAbsolutePath());
+      }
+    }
     long fileSize = src.length();
     if (fileSize > 20971520l)
     { // for larger files (20Mb) use streams
@@ -115,10 +129,16 @@ public final class NIOUtil
         int doneCnt = -1, bufSize = 32768;
         byte buf[] = new byte[bufSize];
         while ((doneCnt = in.read(buf, 0, bufSize)) >= 0)
+        {
           if (doneCnt == 0)
+          {
             Thread.yield();
+          }
           else
+          {
             out.write(buf, 0, doneCnt);
+          }
+        }
         out.flush();
       }
       finally

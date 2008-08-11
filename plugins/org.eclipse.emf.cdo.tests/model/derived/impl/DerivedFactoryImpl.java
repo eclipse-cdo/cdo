@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DerivedFactoryImpl.java,v 1.1 2008-07-02 14:09:49 estepper Exp $
+ * $Id: DerivedFactoryImpl.java,v 1.2 2008-08-11 05:10:46 estepper Exp $
  */
 package derived.impl;
 
@@ -67,7 +67,7 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
     switch (eClass.getClassifierID())
     {
     case DerivedPackage.DERIVED_CLASS:
-      return (EObject)createDerivedClass();
+      return createDerivedClass();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

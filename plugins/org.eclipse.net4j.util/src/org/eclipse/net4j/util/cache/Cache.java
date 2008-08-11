@@ -100,6 +100,9 @@ public abstract class Cache<E> extends Worker implements ICache
 
   protected void unreachableElement(E element)
   {
-    if (TRACER.isEnabled()) TRACER.trace("Unreachable: " + element);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Unreachable: " + element);
+    }
   }
 }

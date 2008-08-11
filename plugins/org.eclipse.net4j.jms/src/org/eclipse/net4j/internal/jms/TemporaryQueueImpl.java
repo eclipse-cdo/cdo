@@ -20,7 +20,7 @@ public class TemporaryQueueImpl extends QueueImpl implements TemporaryQueue
 
   public TemporaryQueueImpl()
   {
-    super("TempQueue" + (++counter));
+    super("TempQueue" + ++counter);
   }
 
   public void delete()

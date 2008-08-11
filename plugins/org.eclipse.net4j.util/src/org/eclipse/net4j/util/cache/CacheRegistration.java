@@ -92,7 +92,7 @@ public class CacheRegistration implements ICacheRegistration
   {
     checkDisposal();
     float decayFactor = getReconstructionCostDecayFactor();
-    this.reconstructionCost = (long)(decayFactor * this.reconstructionCost + (1 - decayFactor) * reconstructionTime);
+    reconstructionCost = (long)(decayFactor * reconstructionCost + (1 - decayFactor) * reconstructionTime);
   }
 
   protected float getReconstructionCostDecayFactor()

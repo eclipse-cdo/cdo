@@ -37,11 +37,26 @@ public abstract class Negotiator<STATE extends Enum<?>, EVENT extends Enum<?>> e
   {
     super(stateEnum, eventEnum);
 
-    if (initialState == null) throw new IllegalStateException("initialState == null");
-    if (successState == null) throw new IllegalStateException("successState == null");
-    if (failureState == null) throw new IllegalStateException("failureState == null");
-    if (startEvent == null) throw new IllegalStateException("startEvent == null");
-    if (bufferEvent == null) throw new IllegalStateException("bufferEvent == null");
+    if (initialState == null)
+    {
+      throw new IllegalStateException("initialState == null");
+    }
+    if (successState == null)
+    {
+      throw new IllegalStateException("successState == null");
+    }
+    if (failureState == null)
+    {
+      throw new IllegalStateException("failureState == null");
+    }
+    if (startEvent == null)
+    {
+      throw new IllegalStateException("startEvent == null");
+    }
+    if (bufferEvent == null)
+    {
+      throw new IllegalStateException("bufferEvent == null");
+    }
 
     this.initialState = initialState;
     this.successState = successState;

@@ -41,6 +41,7 @@ public class ChannelInputStream extends BufferInputStream
     return channel;
   }
 
+  @Override
   public long getMillisBeforeTimeout()
   {
     return millisBeforeTimeout;
@@ -51,6 +52,7 @@ public class ChannelInputStream extends BufferInputStream
     this.millisBeforeTimeout = millisBeforeTimeout;
   }
 
+  @Override
   public long getMillisInterruptCheck()
   {
     return millisInterruptCheck;

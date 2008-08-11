@@ -80,13 +80,13 @@ public class CommitNotificationIndication extends Indication
     {
       PROTOCOL.format("Reading {0} Deltas", size);
     }
-    
+
     List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();
     for (int i = 0; i < size; i++)
     {
       deltas.add(new CDORevisionDeltaImpl(in, getSession().getPackageManager()));
     }
-    
+
     session.handleCommitNotification(timeStamp, dirtyOIDs, deltas, null);
   }
 

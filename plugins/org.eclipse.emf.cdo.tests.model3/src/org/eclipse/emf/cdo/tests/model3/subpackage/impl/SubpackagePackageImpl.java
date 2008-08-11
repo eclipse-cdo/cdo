@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SubpackagePackageImpl.java,v 1.2 2008-06-03 06:41:22 estepper Exp $
+ * $Id: SubpackagePackageImpl.java,v 1.3 2008-08-11 05:11:48 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage.impl;
 
@@ -76,7 +76,10 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
    */
   public static SubpackagePackage init()
   {
-    if (isInited) return (SubpackagePackage)EPackage.Registry.INSTANCE.getEPackage(SubpackagePackage.eNS_URI);
+    if (isInited)
+    {
+      return (SubpackagePackage)EPackage.Registry.INSTANCE.getEPackage(SubpackagePackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     SubpackagePackageImpl theSubpackagePackage = (SubpackagePackageImpl)(EPackage.Registry.INSTANCE
@@ -149,7 +152,10 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
    */
   public void createPackageContents()
   {
-    if (isCreated) return;
+    if (isCreated)
+    {
+      return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -172,7 +178,10 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
    */
   public void initializePackageContents()
   {
-    if (isInitialized) return;
+    if (isInitialized)
+    {
+      return;
+    }
     isInitialized = true;
 
     // Initialize package

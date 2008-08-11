@@ -24,6 +24,7 @@ public class Event extends EventObject implements IEvent
     super(notifier);
   }
 
+  @Override
   public INotifier getSource()
   {
     return (INotifier)source;

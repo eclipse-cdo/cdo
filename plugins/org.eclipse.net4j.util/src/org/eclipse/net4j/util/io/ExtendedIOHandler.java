@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util.io;
 
-
 /**
  * @author Eike Stepper
  * @since 2.0

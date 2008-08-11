@@ -68,7 +68,7 @@ public class DBStatement implements IDBStatement
     Object tail = sequence.get(tailPos);
     if (tail instanceof String)
     {
-      sequence.set(tailPos, ((String)tail) + literal);
+      sequence.set(tailPos, (String)tail + literal);
     }
     else
     {

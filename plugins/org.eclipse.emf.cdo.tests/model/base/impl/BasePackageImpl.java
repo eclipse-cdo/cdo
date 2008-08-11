@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: BasePackageImpl.java,v 1.1 2008-07-02 14:09:49 estepper Exp $
+ * $Id: BasePackageImpl.java,v 1.2 2008-08-11 05:10:46 estepper Exp $
  */
 package base.impl;
 
@@ -74,7 +74,10 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
    */
   public static BasePackage init()
   {
-    if (isInited) return (BasePackage)EPackage.Registry.INSTANCE.getEPackage(BasePackage.eNS_URI);
+    if (isInited)
+    {
+      return (BasePackage)EPackage.Registry.INSTANCE.getEPackage(BasePackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     BasePackageImpl theBasePackage = (BasePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof BasePackageImpl ? EPackage.Registry.INSTANCE
@@ -140,7 +143,10 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
    */
   public void createPackageContents()
   {
-    if (isCreated) return;
+    if (isCreated)
+    {
+      return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -163,7 +169,10 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
    */
   public void initializePackageContents()
   {
-    if (isInitialized) return;
+    if (isInitialized)
+    {
+      return;
+    }
     isInitialized = true;
 
     // Initialize package

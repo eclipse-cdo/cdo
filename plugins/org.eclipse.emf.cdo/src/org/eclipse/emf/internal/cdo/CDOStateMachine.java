@@ -493,7 +493,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       changeState(object, CDOState.DIRTY);
     }
   }
-  
+
   /**
    * @author Simon McDuff
    */
@@ -506,6 +506,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
   }
+
   /**
    * @author Simon McDuff
    */

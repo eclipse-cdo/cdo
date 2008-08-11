@@ -106,7 +106,10 @@ public class CacheMonitor extends Worker implements ICacheMonitor
 
   public ICacheRegistration registerCache(ICache cache)
   {
-    if (TRACER.isEnabled()) TRACER.trace("Registering cache " + cache);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Registering cache " + cache);
+    }
     ICacheRegistration registration = new CacheRegistration(this, cache);
     ICacheRegistration oldRegistration;
     synchronized (registrations)
@@ -133,7 +136,10 @@ public class CacheMonitor extends Worker implements ICacheMonitor
     if (registration != null)
     {
       registration.dispose();
-      if (TRACER.isEnabled()) TRACER.trace("Deregistered cache " + cache);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Deregistered cache " + cache);
+      }
     }
   }
 

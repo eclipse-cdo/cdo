@@ -101,7 +101,8 @@ public class MigrateAction implements IObjectActionDelegate
         }
         catch (Exception ex)
         {
-          return new Status(IStatus.ERROR, "org.eclipse.emf.cdo.internal.migrator", "Problem while migrating EMF model", ex);
+          return new Status(IStatus.ERROR, "org.eclipse.emf.cdo.internal.migrator",
+              "Problem while migrating EMF model", ex);
         }
 
         return Status.OK_STATUS;

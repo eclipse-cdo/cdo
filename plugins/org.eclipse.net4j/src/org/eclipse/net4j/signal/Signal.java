@@ -177,11 +177,11 @@ public abstract class Signal implements Runnable
 
   void setBufferInputStream(BufferInputStream inputStream)
   {
-    this.bufferInputStream = inputStream;
+    bufferInputStream = inputStream;
   }
 
   void setBufferOutputStream(BufferOutputStream outputStream)
   {
-    this.bufferOutputStream = outputStream;
+    bufferOutputStream = outputStream;
   }
 }

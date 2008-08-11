@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ReferenceSwitch.java,v 1.1 2008-07-02 14:09:48 estepper Exp $
+ * $Id: ReferenceSwitch.java,v 1.2 2008-08-11 05:10:46 estepper Exp $
  */
 package reference.util;
 
@@ -92,7 +92,10 @@ public class ReferenceSwitch<T>
     {
       Reference reference = (Reference)theEObject;
       T result = caseReference(reference);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

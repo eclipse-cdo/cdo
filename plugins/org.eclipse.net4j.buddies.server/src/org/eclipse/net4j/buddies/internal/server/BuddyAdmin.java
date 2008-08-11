@@ -137,7 +137,10 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
     buddy.setSession(session);
     LifecycleUtil.activate(session);
 
-    if (TRACER.isEnabled()) TRACER.trace("Opened session: " + userID);
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Opened session: " + userID);
+    }
     sessions.put(userID, session);
     return session;
   }

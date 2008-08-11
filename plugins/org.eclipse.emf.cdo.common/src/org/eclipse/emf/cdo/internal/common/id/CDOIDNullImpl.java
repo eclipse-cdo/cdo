@@ -66,16 +66,19 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDMeta, CDO
     return "NULL";
   }
 
+  @Override
   public void read(String fragmentPart)
   {
     // Do nothing
   }
 
+  @Override
   public void read(ExtendedDataInput in) throws IOException
   {
     // Do nothing
   }
 
+  @Override
   public void write(ExtendedDataOutput out) throws IOException
   {
     // Do nothing

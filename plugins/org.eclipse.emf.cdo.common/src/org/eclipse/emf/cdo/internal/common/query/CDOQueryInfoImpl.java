@@ -39,7 +39,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
 
   public CDOQueryInfoImpl(String language, String queryString)
   {
-    this.queryLanguage = language;
+    queryLanguage = language;
     this.queryString = queryString;
   }
 
@@ -81,7 +81,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
 
   public String getQueryLanguage()
   {
-    return this.queryLanguage;
+    return queryLanguage;
   }
 
   public Map<String, Object> getParameters()

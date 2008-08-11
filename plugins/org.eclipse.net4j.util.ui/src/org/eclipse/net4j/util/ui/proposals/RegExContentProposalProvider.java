@@ -119,9 +119,13 @@ public class RegExContentProposalProvider implements IContentProposalProvider
       esc: for (int i = position - 1; i >= 0; i--)
       {
         if (fExpression.charAt(i) == '\\')
+        {
           isEscape = !isEscape;
+        }
         else
+        {
           break esc;
+        }
       }
 
       fIsEscape = isEscape;
@@ -147,7 +151,10 @@ public class RegExContentProposalProvider implements IContentProposalProvider
       addBsProposal("\\e", RegExMessages.displayString_bs_e, RegExMessages.additionalInfo_bs_e); //$NON-NLS-1$
       addBsProposal("\\c", RegExMessages.displayString_bs_c, RegExMessages.additionalInfo_bs_c); //$NON-NLS-1$
 
-      if (!fIsEscape) addBracketProposal(".", 1, RegExMessages.displayString_dot, RegExMessages.additionalInfo_dot); //$NON-NLS-1$
+      if (!fIsEscape)
+      {
+        addBracketProposal(".", 1, RegExMessages.displayString_dot, RegExMessages.additionalInfo_dot); //$NON-NLS-1$
+      }
       addBsProposal("\\d", RegExMessages.displayString_bs_d, RegExMessages.additionalInfo_bs_d); //$NON-NLS-1$
       addBsProposal("\\D", RegExMessages.displayString_bs_D, RegExMessages.additionalInfo_bs_D); //$NON-NLS-1$
       addBsProposal("\\s", RegExMessages.displayString_bs_s, RegExMessages.additionalInfo_bs_s); //$NON-NLS-1$
@@ -421,7 +428,10 @@ public class RegExContentProposalProvider implements IContentProposalProvider
    */
   public IContentProposal[] getProposals(String contents, int position)
   {
-    if (fIsFind) return new ProposalComputer(contents, position).computeFindProposals();
+    if (fIsFind)
+    {
+      return new ProposalComputer(contents, position).computeFindProposals();
+    }
     return new ProposalComputer(contents, position).computeReplaceProposals();
   }
 }

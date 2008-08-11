@@ -78,8 +78,10 @@ public class MEMStoreQueryIterator implements CloseableIterator<Object>
     try
     {
       if (nextObject == null)
+      {
         throw new NoSuchElementException();
-      
+      }
+
       return nextObject;
     }
     finally

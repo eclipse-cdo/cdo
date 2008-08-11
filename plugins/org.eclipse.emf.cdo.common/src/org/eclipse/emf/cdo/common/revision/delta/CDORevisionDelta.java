@@ -32,7 +32,7 @@ public interface CDORevisionDelta
    * Specify the version of the object BEFORE it was modified.
    */
   public int getOriginVersion();
-  
+
   /**
    * Specify the version of the object AFTER it was modified.
    */

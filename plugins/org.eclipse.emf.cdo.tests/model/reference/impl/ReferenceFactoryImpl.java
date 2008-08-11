@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ReferenceFactoryImpl.java,v 1.1 2008-07-02 14:09:49 estepper Exp $
+ * $Id: ReferenceFactoryImpl.java,v 1.2 2008-08-11 05:10:46 estepper Exp $
  */
 package reference.impl;
 
@@ -67,7 +67,7 @@ public class ReferenceFactoryImpl extends EFactoryImpl implements ReferenceFacto
     switch (eClass.getClassifierID())
     {
     case ReferencePackage.REFERENCE:
-      return (EObject)createReference();
+      return createReference();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

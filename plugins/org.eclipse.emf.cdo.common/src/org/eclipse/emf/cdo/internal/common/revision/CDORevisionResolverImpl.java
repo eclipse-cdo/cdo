@@ -90,18 +90,21 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
   public List<CDORevision> getRevisions()
   {
     ArrayList<CDORevision> currentRevisions = new ArrayList<CDORevision>();
-    
+
     for (RevisionHolder holder : revisions.values())
     {
       CDORevision revision = holder.getRevision(false);
-      if (revision != null && revision.isCurrent());
+      if (revision != null && revision.isCurrent())
+      {
+        ;
+      }
       {
         currentRevisions.add(revision);
       }
     }
     return currentRevisions;
   }
-  
+
   public CDOClass getObjectType(CDOID id)
   {
     RevisionHolder holder = revisions.get(id);

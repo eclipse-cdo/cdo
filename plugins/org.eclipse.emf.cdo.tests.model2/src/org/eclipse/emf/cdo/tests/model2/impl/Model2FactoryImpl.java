@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2FactoryImpl.java,v 1.2 2008-04-07 08:28:21 estepper Exp $
+ * $Id: Model2FactoryImpl.java,v 1.3 2008-08-11 05:11:49 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
@@ -67,7 +67,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
     switch (eClass.getClassifierID())
     {
     case Model2Package.SPECIAL_PURCHASE_ORDER:
-      return (EObject)createSpecialPurchaseOrder();
+      return createSpecialPurchaseOrder();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

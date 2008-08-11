@@ -120,11 +120,13 @@ public class UnmodifiableRegistry<K, V> implements IRegistry<K, V>
     return delegate.values();
   }
 
+  @Override
   public boolean equals(Object o)
   {
     return delegate.equals(o);
   }
 
+  @Override
   public int hashCode()
   {
     return delegate.hashCode();

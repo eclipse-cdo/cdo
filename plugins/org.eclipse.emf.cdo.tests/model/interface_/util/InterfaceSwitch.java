@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: InterfaceSwitch.java,v 1.1 2008-07-02 14:09:48 estepper Exp $
+ * $Id: InterfaceSwitch.java,v 1.2 2008-08-11 05:10:46 estepper Exp $
  */
 package interface_.util;
 
@@ -92,7 +92,10 @@ public class InterfaceSwitch<T>
     {
       IInterface iInterface = (IInterface)theEObject;
       T result = caseIInterface(iInterface);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

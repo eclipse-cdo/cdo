@@ -79,27 +79,27 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
     switch (eClass.getClassifierID())
     {
     case Model1Package.ADDRESS:
-      return (EObject)createAddress();
+      return createAddress();
     case Model1Package.COMPANY:
-      return (EObject)createCompany();
+      return createCompany();
     case Model1Package.SUPPLIER:
-      return (EObject)createSupplier();
+      return createSupplier();
     case Model1Package.CUSTOMER:
-      return (EObject)createCustomer();
+      return createCustomer();
     case Model1Package.ORDER:
-      return (EObject)createOrder();
+      return createOrder();
     case Model1Package.ORDER_DETAIL:
-      return (EObject)createOrderDetail();
+      return createOrderDetail();
     case Model1Package.PURCHASE_ORDER:
-      return (EObject)createPurchaseOrder();
+      return createPurchaseOrder();
     case Model1Package.SALES_ORDER:
-      return (EObject)createSalesOrder();
+      return createSalesOrder();
     case Model1Package.CATEGORY:
-      return (EObject)createCategory();
+      return createCategory();
     case Model1Package.PRODUCT:
-      return (EObject)createProduct();
+      return createProduct();
     case Model1Package.ORDER_ADDRESS:
-      return (EObject)createOrderAddress();
+      return createOrderAddress();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -214,8 +214,10 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   {
     VAT result = VAT.get(initialValue);
     if (result == null)
+    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
           + eDataType.getName() + "'");
+    }
     return result;
   }
 

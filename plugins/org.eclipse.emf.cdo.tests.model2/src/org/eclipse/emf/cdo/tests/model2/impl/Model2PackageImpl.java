@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2PackageImpl.java,v 1.4 2008-06-03 06:41:28 estepper Exp $
+ * $Id: Model2PackageImpl.java,v 1.5 2008-08-11 05:11:49 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
@@ -76,7 +76,10 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    */
   public static Model2Package init()
   {
-    if (isInited) return (Model2Package)EPackage.Registry.INSTANCE.getEPackage(Model2Package.eNS_URI);
+    if (isInited)
+    {
+      return (Model2Package)EPackage.Registry.INSTANCE.getEPackage(Model2Package.eNS_URI);
+    }
 
     // Obtain or create and register package
     Model2PackageImpl theModel2Package = (Model2PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof Model2PackageImpl ? EPackage.Registry.INSTANCE
@@ -155,7 +158,10 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    */
   public void createPackageContents()
   {
-    if (isCreated) return;
+    if (isCreated)
+    {
+      return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -179,7 +185,10 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    */
   public void initializePackageContents()
   {
-    if (isInitialized) return;
+    if (isInitialized)
+    {
+      return;
+    }
     isInitialized = true;
 
     // Initialize package

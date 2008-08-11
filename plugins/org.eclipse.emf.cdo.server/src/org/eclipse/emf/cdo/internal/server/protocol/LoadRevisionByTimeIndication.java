@@ -44,7 +44,10 @@ public class LoadRevisionByTimeIndication extends LoadRevisionIndication
   {
     super.indicating(in);
     timeStamp = in.readLong();
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Read timeStamp: {0}", timeStamp);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Read timeStamp: {0}", timeStamp);
+    }
   }
 
   @Override

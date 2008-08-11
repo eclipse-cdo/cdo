@@ -132,11 +132,13 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     return decorateText(super.getColumnText(object, columnIndex), object);
   }
 
+  @Override
   public Color getBackground(Object object)
   {
     return null;
   }
 
+  @Override
   public Color getForeground(Object object)
   {
     try
@@ -158,6 +160,7 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     return null;
   }
 
+  @Override
   public Font getFont(Object object)
   {
     try

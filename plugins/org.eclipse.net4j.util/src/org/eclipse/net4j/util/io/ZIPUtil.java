@@ -244,8 +244,14 @@ public final class ZIPUtil
         {
           String path1 = getPath(f1, baseLength);
           String path2 = getPath(f2, baseLength);
-          if (path1.length() == 0) return ORDER_KEEP;
-          if (path2.length() == 0) return ORDER_SWAP;
+          if (path1.length() == 0)
+          {
+            return ORDER_KEEP;
+          }
+          if (path2.length() == 0)
+          {
+            return ORDER_SWAP;
+          }
 
           if (f1.isDirectory())
           {

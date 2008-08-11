@@ -37,6 +37,7 @@ public class JVMClientConnector extends JVMConnector
   {
   }
 
+  @Override
   public ConnectorLocation getLocation()
   {
     return ConnectorLocation.CLIENT;

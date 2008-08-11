@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DerivedSwitch.java,v 1.1 2008-07-02 14:09:49 estepper Exp $
+ * $Id: DerivedSwitch.java,v 1.2 2008-08-11 05:10:46 estepper Exp $
  */
 package derived.util;
 
@@ -93,8 +93,14 @@ public class DerivedSwitch<T>
     {
       DerivedClass derivedClass = (DerivedClass)theEObject;
       T result = caseDerivedClass(derivedClass);
-      if (result == null) result = caseBaseClass(derivedClass);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseBaseClass(derivedClass);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

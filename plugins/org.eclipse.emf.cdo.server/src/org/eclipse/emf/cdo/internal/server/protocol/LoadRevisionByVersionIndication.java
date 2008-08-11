@@ -45,7 +45,10 @@ public class LoadRevisionByVersionIndication extends LoadRevisionIndication
   {
     super.indicating(in);
     version = in.readInt();
-    if (PROTOCOL.isEnabled()) PROTOCOL.format("Read version: {0}", version);
+    if (PROTOCOL.isEnabled())
+    {
+      PROTOCOL.format("Read version: {0}", version);
+    }
   }
 
   @Override

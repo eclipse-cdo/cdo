@@ -120,9 +120,11 @@ public interface CDOView extends CDOProtocolView, INotifier
   /**
    * Takes an object from a (possibly) different view and <em>contextifies</em> it for the usage with this view.
    * <ul>
-   * <li>If the given object is contained in this view it is returned unmodified. <li>If the given object can not be
-   * cast to {@link CDOObject} it is returned unmodified. <li>If the view of the given object is contained in a
-   * different session an <code>IllegalArgumentException</code> is thrown. <li>If <code>null</code> is passed <code>null
+   * <li>If the given object is contained in this view it is returned unmodified.
+   * <li>If the given object can not be cast to {@link CDOObject} it is returned unmodified.
+   * <li>If the view of the given object is contained in a different session an <code>IllegalArgumentException</code> is
+   * thrown.
+   * <li>If <code>null</code> is passed <code>null
    * </code> is returned.
    * </ul>
    * 

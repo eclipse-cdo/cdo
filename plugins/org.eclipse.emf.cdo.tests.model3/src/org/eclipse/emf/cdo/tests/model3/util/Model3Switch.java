@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model3Switch.java,v 1.2 2008-06-03 06:41:22 estepper Exp $
+ * $Id: Model3Switch.java,v 1.3 2008-08-11 05:11:48 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.util;
 
@@ -92,7 +92,10 @@ public class Model3Switch<T>
     {
       Class1 class1 = (Class1)theEObject;
       T result = caseClass1(class1);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

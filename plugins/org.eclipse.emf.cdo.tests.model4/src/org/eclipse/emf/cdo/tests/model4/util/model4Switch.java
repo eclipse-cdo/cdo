@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: model4Switch.java,v 1.2 2008-07-10 15:57:41 estepper Exp $
+ * $Id: model4Switch.java,v 1.3 2008-08-11 05:11:44 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.util;
 
@@ -135,224 +135,356 @@ public class model4Switch<T>
     {
       RefSingleContained refSingleContained = (RefSingleContained)theEObject;
       T result = caseRefSingleContained(refSingleContained);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.SINGLE_CONTAINED_ELEMENT:
     {
       SingleContainedElement singleContainedElement = (SingleContainedElement)theEObject;
       T result = caseSingleContainedElement(singleContainedElement);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_SINGLE_NON_CONTAINED:
     {
       RefSingleNonContained refSingleNonContained = (RefSingleNonContained)theEObject;
       T result = caseRefSingleNonContained(refSingleNonContained);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.SINGLE_NON_CONTAINED_ELEMENT:
     {
       SingleNonContainedElement singleNonContainedElement = (SingleNonContainedElement)theEObject;
       T result = caseSingleNonContainedElement(singleNonContainedElement);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_MULTI_CONTAINED:
     {
       RefMultiContained refMultiContained = (RefMultiContained)theEObject;
       T result = caseRefMultiContained(refMultiContained);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.MULTI_CONTAINED_ELEMENT:
     {
       MultiContainedElement multiContainedElement = (MultiContainedElement)theEObject;
       T result = caseMultiContainedElement(multiContainedElement);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_MULTI_NON_CONTAINED:
     {
       RefMultiNonContained refMultiNonContained = (RefMultiNonContained)theEObject;
       T result = caseRefMultiNonContained(refMultiNonContained);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.MULTI_NON_CONTAINED_ELEMENT:
     {
       MultiNonContainedElement multiNonContainedElement = (MultiNonContainedElement)theEObject;
       T result = caseMultiNonContainedElement(multiNonContainedElement);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_SINGLE_CONTAINED_NPL:
     {
       RefSingleContainedNPL refSingleContainedNPL = (RefSingleContainedNPL)theEObject;
       T result = caseRefSingleContainedNPL(refSingleContainedNPL);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_SINGLE_NON_CONTAINED_NPL:
     {
       RefSingleNonContainedNPL refSingleNonContainedNPL = (RefSingleNonContainedNPL)theEObject;
       T result = caseRefSingleNonContainedNPL(refSingleNonContainedNPL);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_MULTI_CONTAINED_NPL:
     {
       RefMultiContainedNPL refMultiContainedNPL = (RefMultiContainedNPL)theEObject;
       T result = caseRefMultiContainedNPL(refMultiContainedNPL);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_MULTI_NON_CONTAINED_NPL:
     {
       RefMultiNonContainedNPL refMultiNonContainedNPL = (RefMultiNonContainedNPL)theEObject;
       T result = caseRefMultiNonContainedNPL(refMultiNonContainedNPL);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.CONTAINED_ELEMENT_NO_OPPOSITE:
     {
       ContainedElementNoOpposite containedElementNoOpposite = (ContainedElementNoOpposite)theEObject;
       T result = caseContainedElementNoOpposite(containedElementNoOpposite);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.GEN_REF_SINGLE_CONTAINED:
     {
       GenRefSingleContained genRefSingleContained = (GenRefSingleContained)theEObject;
       T result = caseGenRefSingleContained(genRefSingleContained);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.GEN_REF_SINGLE_NON_CONTAINED:
     {
       GenRefSingleNonContained genRefSingleNonContained = (GenRefSingleNonContained)theEObject;
       T result = caseGenRefSingleNonContained(genRefSingleNonContained);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.GEN_REF_MULTI_CONTAINED:
     {
       GenRefMultiContained genRefMultiContained = (GenRefMultiContained)theEObject;
       T result = caseGenRefMultiContained(genRefMultiContained);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.GEN_REF_MULTI_NON_CONTAINED:
     {
       GenRefMultiNonContained genRefMultiNonContained = (GenRefMultiNonContained)theEObject;
       T result = caseGenRefMultiNonContained(genRefMultiNonContained);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_SINGLE_REF_CONTAINER:
     {
       ImplSingleRefContainer implSingleRefContainer = (ImplSingleRefContainer)theEObject;
       T result = caseImplSingleRefContainer(implSingleRefContainer);
-      if (result == null) result = caseISingleRefContainer(implSingleRefContainer);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseISingleRefContainer(implSingleRefContainer);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT:
     {
       ImplSingleRefContainedElement implSingleRefContainedElement = (ImplSingleRefContainedElement)theEObject;
       T result = caseImplSingleRefContainedElement(implSingleRefContainedElement);
-      if (result == null) result = caseISingleRefContainedElement(implSingleRefContainedElement);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseISingleRefContainedElement(implSingleRefContainedElement);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINER:
     {
       ImplSingleRefNonContainer implSingleRefNonContainer = (ImplSingleRefNonContainer)theEObject;
       T result = caseImplSingleRefNonContainer(implSingleRefNonContainer);
-      if (result == null) result = caseISingleRefNonContainer(implSingleRefNonContainer);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseISingleRefNonContainer(implSingleRefNonContainer);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT:
     {
       ImplSingleRefNonContainedElement implSingleRefNonContainedElement = (ImplSingleRefNonContainedElement)theEObject;
       T result = caseImplSingleRefNonContainedElement(implSingleRefNonContainedElement);
-      if (result == null) result = caseISingleRefNonContainedElement(implSingleRefNonContainedElement);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseISingleRefNonContainedElement(implSingleRefNonContainedElement);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_MULTI_REF_NON_CONTAINER:
     {
       ImplMultiRefNonContainer implMultiRefNonContainer = (ImplMultiRefNonContainer)theEObject;
       T result = caseImplMultiRefNonContainer(implMultiRefNonContainer);
-      if (result == null) result = caseIMultiRefNonContainer(implMultiRefNonContainer);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseIMultiRefNonContainer(implMultiRefNonContainer);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT:
     {
       ImplMultiRefNonContainedElement implMultiRefNonContainedElement = (ImplMultiRefNonContainedElement)theEObject;
       T result = caseImplMultiRefNonContainedElement(implMultiRefNonContainedElement);
-      if (result == null) result = caseIMultiRefNonContainedElement(implMultiRefNonContainedElement);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseIMultiRefNonContainedElement(implMultiRefNonContainedElement);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_MULTI_REF_CONTAINER:
     {
       ImplMultiRefContainer implMultiRefContainer = (ImplMultiRefContainer)theEObject;
       T result = caseImplMultiRefContainer(implMultiRefContainer);
-      if (result == null) result = caseIMultiRefContainer(implMultiRefContainer);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseIMultiRefContainer(implMultiRefContainer);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_MULTI_REF_CONTAINED_ELEMENT:
     {
       ImplMultiRefContainedElement implMultiRefContainedElement = (ImplMultiRefContainedElement)theEObject;
       T result = caseImplMultiRefContainedElement(implMultiRefContainedElement);
-      if (result == null) result = caseIMultiRefContainedElement(implMultiRefContainedElement);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseIMultiRefContainedElement(implMultiRefContainedElement);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_SINGLE_REF_CONTAINER_NPL:
     {
       ImplSingleRefContainerNPL implSingleRefContainerNPL = (ImplSingleRefContainerNPL)theEObject;
       T result = caseImplSingleRefContainerNPL(implSingleRefContainerNPL);
-      if (result == null) result = caseISingleRefContainerNPL(implSingleRefContainerNPL);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseISingleRefContainerNPL(implSingleRefContainerNPL);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINER_NPL:
     {
       ImplSingleRefNonContainerNPL implSingleRefNonContainerNPL = (ImplSingleRefNonContainerNPL)theEObject;
       T result = caseImplSingleRefNonContainerNPL(implSingleRefNonContainerNPL);
-      if (result == null) result = caseISingleRefNonContainerNPL(implSingleRefNonContainerNPL);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseISingleRefNonContainerNPL(implSingleRefNonContainerNPL);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_MULTI_REF_CONTAINER_NPL:
     {
       ImplMultiRefContainerNPL implMultiRefContainerNPL = (ImplMultiRefContainerNPL)theEObject;
       T result = caseImplMultiRefContainerNPL(implMultiRefContainerNPL);
-      if (result == null) result = caseIMultiRefContainerNPL(implMultiRefContainerNPL);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseIMultiRefContainerNPL(implMultiRefContainerNPL);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_MULTI_REF_NON_CONTAINER_NPL:
     {
       ImplMultiRefNonContainerNPL implMultiRefNonContainerNPL = (ImplMultiRefNonContainerNPL)theEObject;
       T result = caseImplMultiRefNonContainerNPL(implMultiRefNonContainerNPL);
-      if (result == null) result = caseIMultiRefNonContainerNPL(implMultiRefNonContainerNPL);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseIMultiRefNonContainerNPL(implMultiRefNonContainerNPL);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_CONTAINED_ELEMENT_NPL:
     {
       ImplContainedElementNPL implContainedElementNPL = (ImplContainedElementNPL)theEObject;
       T result = caseImplContainedElementNPL(implContainedElementNPL);
-      if (result == null) result = caseIContainedElementNoParentLink(implContainedElementNPL);
-      if (result == null) result = caseINamedElement(implContainedElementNPL);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = caseIContainedElementNoParentLink(implContainedElementNPL);
+      }
+      if (result == null)
+      {
+        result = caseINamedElement(implContainedElementNPL);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

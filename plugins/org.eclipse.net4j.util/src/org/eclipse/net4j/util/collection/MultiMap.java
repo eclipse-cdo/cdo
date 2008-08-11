@@ -289,6 +289,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean add(Entry<K, V> o)
     {
       throw new UnsupportedOperationException();
@@ -297,6 +298,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean addAll(Collection<? extends Entry<K, V>> c)
     {
       throw new UnsupportedOperationException();
@@ -305,6 +307,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public void clear()
     {
       throw new UnsupportedOperationException();
@@ -313,6 +316,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean remove(Object o)
     {
       throw new UnsupportedOperationException();
@@ -321,6 +325,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean removeAll(Collection<?> c)
     {
       throw new UnsupportedOperationException();
@@ -329,6 +334,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean retainAll(Collection<?> c)
     {
       throw new UnsupportedOperationException();
@@ -337,6 +343,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category READ
      */
+    @Override
     @SuppressWarnings("unchecked")
     public boolean contains(Object o)
     {
@@ -366,6 +373,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category READ
      */
+    @Override
     public boolean isEmpty()
     {
       return MultiMap.this.isEmpty();
@@ -374,11 +382,13 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category READ
      */
+    @Override
     public int size()
     {
       return MultiMap.this.size();
     }
 
+    @Override
     public Iterator<Entry<K, V>> iterator()
     {
       return new Iterator<Entry<K, V>>()
@@ -472,6 +482,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean add(K o)
     {
       throw new UnsupportedOperationException();
@@ -480,6 +491,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean addAll(Collection<? extends K> c)
     {
       throw new UnsupportedOperationException();
@@ -488,6 +500,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public void clear()
     {
       throw new UnsupportedOperationException();
@@ -496,6 +509,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean remove(Object o)
     {
       throw new UnsupportedOperationException();
@@ -504,6 +518,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean removeAll(Collection<?> c)
     {
       throw new UnsupportedOperationException();
@@ -512,6 +527,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean retainAll(Collection<?> c)
     {
       throw new UnsupportedOperationException();
@@ -520,6 +536,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category READ
      */
+    @Override
     public boolean contains(Object o)
     {
       return MultiMap.this.containsKey(o);
@@ -528,6 +545,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category READ
      */
+    @Override
     public boolean isEmpty()
     {
       return MultiMap.this.isEmpty();
@@ -536,6 +554,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category READ
      */
+    @Override
     public int size()
     {
       return MultiMap.this.size();
@@ -544,6 +563,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category READ
      */
+    @Override
     public Iterator<K> iterator()
     {
       return new Iterator<K>()
@@ -637,6 +657,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean add(V o)
     {
       throw new UnsupportedOperationException();
@@ -645,6 +666,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean addAll(Collection<? extends V> c)
     {
       throw new UnsupportedOperationException();
@@ -653,6 +675,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public void clear()
     {
       throw new UnsupportedOperationException();
@@ -661,6 +684,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean remove(Object o)
     {
       throw new UnsupportedOperationException();
@@ -669,6 +693,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean removeAll(Collection<?> c)
     {
       throw new UnsupportedOperationException();
@@ -677,6 +702,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category WRITE
      */
+    @Override
     public boolean retainAll(Collection<?> c)
     {
       throw new UnsupportedOperationException();
@@ -685,6 +711,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category READ
      */
+    @Override
     public boolean contains(Object o)
     {
       return MultiMap.this.containsValue(o);
@@ -693,6 +720,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category READ
      */
+    @Override
     public boolean isEmpty()
     {
       return MultiMap.this.isEmpty();
@@ -701,6 +729,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category READ
      */
+    @Override
     public int size()
     {
       return MultiMap.this.size();
@@ -709,6 +738,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     /**
      * @category READ
      */
+    @Override
     public Iterator<V> iterator()
     {
       return new Iterator<V>()

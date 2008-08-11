@@ -20,7 +20,7 @@ public class TemporaryTopicImpl extends TopicImpl implements TemporaryTopic
 
   public TemporaryTopicImpl()
   {
-    super("TempTopic" + (++counter));
+    super("TempTopic" + ++counter);
   }
 
   public void delete()

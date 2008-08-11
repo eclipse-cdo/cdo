@@ -100,7 +100,7 @@ public class RemoteTraceServer
 
   protected ServerSocket bind() throws IOException
   {
-    InetAddress addr = InetAddress.getByName(this.address);
+    InetAddress addr = InetAddress.getByName(address);
     return new ServerSocket(port, 5, addr);
   }
 
@@ -374,13 +374,16 @@ public class RemoteTraceServer
       }
 
       StackTraceElement[] stackTrace = event.getStackTrace();
-      if (stackTrace != null) for (StackTraceElement element : stackTrace)
+      if (stackTrace != null)
       {
-        stream.print(element.getClassName());
-        stream.print("." + element.getMethodName());
-        stream.print("(" + element.getFileName());
-        stream.print(":" + element.getLineNumber());
-        stream.println(")");
+        for (StackTraceElement element : stackTrace)
+        {
+          stream.print(element.getClassName());
+          stream.print("." + element.getMethodName());
+          stream.print("(" + element.getFileName());
+          stream.print(":" + element.getLineNumber());
+          stream.println(")");
+        }
       }
 
       stream.println();

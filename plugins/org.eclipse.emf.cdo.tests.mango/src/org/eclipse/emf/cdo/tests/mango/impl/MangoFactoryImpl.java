@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoFactoryImpl.java,v 1.4 2008-06-12 17:22:17 estepper Exp $
+ * $Id: MangoFactoryImpl.java,v 1.5 2008-08-11 05:11:36 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 
@@ -71,11 +71,11 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
     switch (eClass.getClassifierID())
     {
     case MangoPackage.VALUE_LIST:
-      return (EObject)createValueList();
+      return createValueList();
     case MangoPackage.VALUE:
-      return (EObject)createValue();
+      return createValue();
     case MangoPackage.PARAMETER:
-      return (EObject)createParameter();
+      return createParameter();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -157,8 +157,10 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   {
     ParameterPassing result = ParameterPassing.get(initialValue);
     if (result == null)
+    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
           + eDataType.getName() + "'");
+    }
     return result;
   }
 

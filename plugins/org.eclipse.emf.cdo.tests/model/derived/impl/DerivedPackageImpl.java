@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DerivedPackageImpl.java,v 1.1 2008-07-02 14:09:49 estepper Exp $
+ * $Id: DerivedPackageImpl.java,v 1.2 2008-08-11 05:10:46 estepper Exp $
  */
 package derived.impl;
 
@@ -74,7 +74,10 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
    */
   public static DerivedPackage init()
   {
-    if (isInited) return (DerivedPackage)EPackage.Registry.INSTANCE.getEPackage(DerivedPackage.eNS_URI);
+    if (isInited)
+    {
+      return (DerivedPackage)EPackage.Registry.INSTANCE.getEPackage(DerivedPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     DerivedPackageImpl theDerivedPackage = (DerivedPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof DerivedPackageImpl ? EPackage.Registry.INSTANCE
@@ -133,7 +136,10 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
    */
   public void createPackageContents()
   {
-    if (isCreated) return;
+    if (isCreated)
+    {
+      return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -155,7 +161,10 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
    */
   public void initializePackageContents()
   {
-    if (isInitialized) return;
+    if (isInitialized)
+    {
+      return;
+    }
     isInitialized = true;
 
     // Initialize package

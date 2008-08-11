@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoSwitch.java,v 1.4 2008-06-12 17:22:17 estepper Exp $
+ * $Id: MangoSwitch.java,v 1.5 2008-08-11 05:11:36 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.util;
 
@@ -94,21 +94,30 @@ public class MangoSwitch<T>
     {
       ValueList valueList = (ValueList)theEObject;
       T result = caseValueList(valueList);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case MangoPackage.VALUE:
     {
       Value value = (Value)theEObject;
       T result = caseValue(value);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case MangoPackage.PARAMETER:
     {
       Parameter parameter = (Parameter)theEObject;
       T result = caseParameter(parameter);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

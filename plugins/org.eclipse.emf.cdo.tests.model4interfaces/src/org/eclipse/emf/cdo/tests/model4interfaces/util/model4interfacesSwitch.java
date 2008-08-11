@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: model4interfacesSwitch.java,v 1.2 2008-07-10 15:57:45 estepper Exp $
+ * $Id: model4interfacesSwitch.java,v 1.3 2008-08-11 05:11:27 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4interfaces.util;
 
@@ -105,98 +105,140 @@ public class model4interfacesSwitch<T>
     {
       ISingleRefContainer iSingleRefContainer = (ISingleRefContainer)theEObject;
       T result = caseISingleRefContainer(iSingleRefContainer);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4interfacesPackage.ISINGLE_REF_CONTAINED_ELEMENT:
     {
       ISingleRefContainedElement iSingleRefContainedElement = (ISingleRefContainedElement)theEObject;
       T result = caseISingleRefContainedElement(iSingleRefContainedElement);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4interfacesPackage.ISINGLE_REF_NON_CONTAINER:
     {
       ISingleRefNonContainer iSingleRefNonContainer = (ISingleRefNonContainer)theEObject;
       T result = caseISingleRefNonContainer(iSingleRefNonContainer);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT:
     {
       ISingleRefNonContainedElement iSingleRefNonContainedElement = (ISingleRefNonContainedElement)theEObject;
       T result = caseISingleRefNonContainedElement(iSingleRefNonContainedElement);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4interfacesPackage.IMULTI_REF_CONTAINER:
     {
       IMultiRefContainer iMultiRefContainer = (IMultiRefContainer)theEObject;
       T result = caseIMultiRefContainer(iMultiRefContainer);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4interfacesPackage.IMULTI_REF_CONTAINED_ELEMENT:
     {
       IMultiRefContainedElement iMultiRefContainedElement = (IMultiRefContainedElement)theEObject;
       T result = caseIMultiRefContainedElement(iMultiRefContainedElement);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4interfacesPackage.IMULTI_REF_NON_CONTAINER:
     {
       IMultiRefNonContainer iMultiRefNonContainer = (IMultiRefNonContainer)theEObject;
       T result = caseIMultiRefNonContainer(iMultiRefNonContainer);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4interfacesPackage.IMULTI_REF_NON_CONTAINED_ELEMENT:
     {
       IMultiRefNonContainedElement iMultiRefNonContainedElement = (IMultiRefNonContainedElement)theEObject;
       T result = caseIMultiRefNonContainedElement(iMultiRefNonContainedElement);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4interfacesPackage.INAMED_ELEMENT:
     {
       INamedElement iNamedElement = (INamedElement)theEObject;
       T result = caseINamedElement(iNamedElement);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4interfacesPackage.ICONTAINED_ELEMENT_NO_PARENT_LINK:
     {
       IContainedElementNoParentLink iContainedElementNoParentLink = (IContainedElementNoParentLink)theEObject;
       T result = caseIContainedElementNoParentLink(iContainedElementNoParentLink);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4interfacesPackage.ISINGLE_REF_CONTAINER_NPL:
     {
       ISingleRefContainerNPL iSingleRefContainerNPL = (ISingleRefContainerNPL)theEObject;
       T result = caseISingleRefContainerNPL(iSingleRefContainerNPL);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4interfacesPackage.ISINGLE_REF_NON_CONTAINER_NPL:
     {
       ISingleRefNonContainerNPL iSingleRefNonContainerNPL = (ISingleRefNonContainerNPL)theEObject;
       T result = caseISingleRefNonContainerNPL(iSingleRefNonContainerNPL);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4interfacesPackage.IMULTI_REF_CONTAINER_NPL:
     {
       IMultiRefContainerNPL iMultiRefContainerNPL = (IMultiRefContainerNPL)theEObject;
       T result = caseIMultiRefContainerNPL(iMultiRefContainerNPL);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4interfacesPackage.IMULTI_REF_NON_CONTAINER_NPL:
     {
       IMultiRefNonContainerNPL iMultiRefNonContainerNPL = (IMultiRefNonContainerNPL)theEObject;
       T result = caseIMultiRefNonContainerNPL(iMultiRefNonContainerNPL);
-      if (result == null) result = defaultCase(theEObject);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

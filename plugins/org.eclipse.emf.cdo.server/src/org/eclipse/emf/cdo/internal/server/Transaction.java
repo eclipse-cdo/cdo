@@ -201,7 +201,7 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
   {
     try
     {
-      repository.getNotificationManager().notifyCommit( getSession(), this);
+      repository.getNotificationManager().notifyCommit(getSession(), this);
     }
     finally
     {

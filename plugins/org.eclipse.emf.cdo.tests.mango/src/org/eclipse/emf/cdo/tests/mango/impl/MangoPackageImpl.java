@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoPackageImpl.java,v 1.4 2008-06-12 17:22:17 estepper Exp $
+ * $Id: MangoPackageImpl.java,v 1.5 2008-08-11 05:11:36 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 
@@ -100,7 +100,10 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    */
   public static MangoPackage init()
   {
-    if (isInited) return (MangoPackage)EPackage.Registry.INSTANCE.getEPackage(MangoPackage.eNS_URI);
+    if (isInited)
+    {
+      return (MangoPackage)EPackage.Registry.INSTANCE.getEPackage(MangoPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     MangoPackageImpl theMangoPackage = (MangoPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof MangoPackageImpl ? EPackage.Registry.INSTANCE
@@ -236,7 +239,10 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    */
   public void createPackageContents()
   {
-    if (isCreated) return;
+    if (isCreated)
+    {
+      return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -270,7 +276,10 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    */
   public void initializePackageContents()
   {
-    if (isInitialized) return;
+    if (isInitialized)
+    {
+      return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -288,7 +297,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
     initEClass(valueListEClass, ValueList.class, "ValueList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getValueList_Name(), ecorePackage.getEString(), "name", null, 0, 1, ValueList.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getValueList_Values(), this.getValue(), null, "values", null, 0, -1, ValueList.class, !IS_TRANSIENT,
+    initEReference(getValueList_Values(), getValue(), null, "values", null, 0, -1, ValueList.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
@@ -299,7 +308,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
     initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getParameter_Name(), ecorePackage.getEString(), "name", null, 0, 1, Parameter.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getParameter_Passing(), this.getParameterPassing(), "passing", null, 0, 1, Parameter.class,
+    initEAttribute(getParameter_Passing(), getParameterPassing(), "passing", null, 0, 1, Parameter.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ReferencePackageImpl.java,v 1.1 2008-07-02 14:09:49 estepper Exp $
+ * $Id: ReferencePackageImpl.java,v 1.2 2008-08-11 05:10:46 estepper Exp $
  */
 package reference.impl;
 
@@ -75,7 +75,10 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
    */
   public static ReferencePackage init()
   {
-    if (isInited) return (ReferencePackage)EPackage.Registry.INSTANCE.getEPackage(ReferencePackage.eNS_URI);
+    if (isInited)
+    {
+      return (ReferencePackage)EPackage.Registry.INSTANCE.getEPackage(ReferencePackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     ReferencePackageImpl theReferencePackage = (ReferencePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof ReferencePackageImpl ? EPackage.Registry.INSTANCE
@@ -144,7 +147,10 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
    */
   public void createPackageContents()
   {
-    if (isCreated) return;
+    if (isCreated)
+    {
+      return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -167,7 +173,10 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
    */
   public void initializePackageContents()
   {
-    if (isInitialized) return;
+    if (isInitialized)
+    {
+      return;
+    }
     isInitialized = true;
 
     // Initialize package

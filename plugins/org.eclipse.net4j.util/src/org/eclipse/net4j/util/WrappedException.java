@@ -10,10 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util;
 
-/* 
- *TODO Handle IORuntimeException
- */
-
 /**
  * @author Eike Stepper
  */

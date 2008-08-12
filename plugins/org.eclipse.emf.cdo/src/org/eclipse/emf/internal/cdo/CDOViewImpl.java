@@ -120,6 +120,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   private CDOChangeSubscriptionPolicy changeSubscriptionPolicy = CDOChangeSubscriptionPolicy.NONE;
 
+  /**
+   * @since 2.0
+   */
   public CDOViewImpl(CDOSessionImpl session, int viewID)
   {
     this.session = session;

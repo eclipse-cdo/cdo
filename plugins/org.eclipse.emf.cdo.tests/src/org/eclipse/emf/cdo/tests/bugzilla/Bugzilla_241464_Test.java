@@ -28,9 +28,9 @@ import java.util.concurrent.TimeoutException;
 /**
  * @author Eike Stepper
  */
-public class Bugzilla241464_Test extends AbstractCDOTest
+public class Bugzilla_241464_Test extends AbstractCDOTest
 {
-  public void testBugzilla241464() throws Exception
+  public void testBugzilla_241464() throws Exception
   {
     {
       Customer customer = Model1Factory.eINSTANCE.createCustomer();

@@ -165,12 +165,13 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public void cdoInternalSetView(CDOView view)
   {
+    CDOViewImpl impl = (CDOViewImpl)view;
     if (this instanceof CDOResourceImpl)
     {
-      ((CDOResourceImpl)this).cdoSetView((CDOViewImpl)view);
+      ((CDOResourceImpl)this).cdoSetView(impl);
     }
 
-    eSetStore(cdoView().getStore());
+    eSetStore(impl.getStore());
   }
 
   public void cdoInternalSetResource(CDOResource resource)

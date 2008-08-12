@@ -290,7 +290,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       throw new IllegalArgumentException("resourceID == null || resourceID == CDOID.NULL");
     }
 
-    // TODO What about somply looking in the objects cache of this view as well?
+    // TODO What about simply looking in the objects cache of this view as well?
     ResourceSet resourceSet = getResourceSet();
     EList<Resource> resources = resourceSet.getResources();
     for (Resource resource : resources)

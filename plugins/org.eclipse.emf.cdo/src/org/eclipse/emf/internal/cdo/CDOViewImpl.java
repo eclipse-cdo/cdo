@@ -1063,6 +1063,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
         if (changeSubscriptionPolicy != CDOChangeSubscriptionPolicy.NONE)
         {
           // This is safe since we use ConcurrentHashMap
+          // TODO Simon: Is iterating really safe here?
           for (InternalCDOObject cdoObject : objects.values())
           {
             int count = getNumberOfValidAdapter(cdoObject);

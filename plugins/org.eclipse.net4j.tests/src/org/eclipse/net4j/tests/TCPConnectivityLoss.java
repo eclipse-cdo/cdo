@@ -27,7 +27,7 @@ import java.util.Date;
  */
 public class TCPConnectivityLoss
 {
-  private static boolean stopped;
+  private static boolean stop;
 
   public static ManagedContainer createContainer()
   {
@@ -44,15 +44,21 @@ public class TCPConnectivityLoss
 
   public static void sleep() throws Exception
   {
-    stopped = false;
+    System.out.println("Started: " + new Date());
+    stop = false;
     int count = 0;
-    while (System.in.available() == 0 && !stopped)
+    while (System.in.available() == 0)
     {
       Thread.sleep(1000L);
       System.out.print(".");
       if (++count % 80 == 0)
       {
         System.out.println();
+      }
+
+      if (stop)
+      {
+        System.out.println("Loss of connectivity: " + new Date());
       }
     }
   }
@@ -85,12 +91,10 @@ public class TCPConnectivityLoss
         @Override
         protected void onDeactivated(ILifecycle lifecycle)
         {
-          System.out.println("Loss of connectivity: " + new Date());
-          stopped = true;
+          stop = true;
         }
       });
 
-      System.out.println("Started: " + new Date());
       sleep();
       container.deactivate();
     }

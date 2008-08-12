@@ -316,7 +316,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
         return null;
       }
 
-      if (whereValue instanceof CDOID)
+      if (whereValue instanceof Long)
       {
         String path = resultSet.getString(1);
         return path;

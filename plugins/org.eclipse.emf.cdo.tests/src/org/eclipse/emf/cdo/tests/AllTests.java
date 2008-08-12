@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla241464_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_241464_Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -45,7 +45,7 @@ public class AllTests
     suite.addTestSuite(RevisionDeltaWithoutDeltaSupportTest.class);
     suite.addTestSuite(IndexReconstructionTest.class);
     suite.addTestSuite(NoLegacyTest.class);
-    suite.addTestSuite(Bugzilla241464_Test.class);
+    suite.addTestSuite(Bugzilla_241464_Test.class);
     suite.addTestSuite(AutoAttacherTest.class);
     suite.addTestSuite(SavepointTest.class);
     suite.addTestSuite(ChangeSubscriptionTest.class);

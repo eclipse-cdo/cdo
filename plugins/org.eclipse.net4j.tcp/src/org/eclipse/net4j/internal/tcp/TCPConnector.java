@@ -120,7 +120,6 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     {
       int interest = isClient() ? SelectionKey.OP_CONNECT : SelectionKey.OP_READ;
       selectionKey = socketChannel.register(selector.getSocketSelector(), interest, this);
-
       if (isServer())
       {
         leaveConnecting();

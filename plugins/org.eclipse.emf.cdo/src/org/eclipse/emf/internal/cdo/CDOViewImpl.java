@@ -762,6 +762,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public int reload(CDOObject... objects)
   {
     Collection<InternalCDOObject> internalObjects;
+    // TODO Should objects.length == 0 reload *all* objects, too?
     if (objects != null && objects.length != 0)
     {
       internalObjects = new ArrayList<InternalCDOObject>(objects.length);
@@ -775,7 +776,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     }
     else
     {
-      synchronized (objects)
+      synchronized (this.objects)
       {
         internalObjects = new ArrayList<InternalCDOObject>(this.objects.values());
       }

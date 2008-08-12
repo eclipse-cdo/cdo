@@ -11,17 +11,24 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.ManagedContainer;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
+
+import java.util.Date;
 
 /**
  * @author Eike Stepper
  */
 public class TCPConnectivityLoss
 {
+  private static boolean stopped;
+
   public static ManagedContainer createContainer()
   {
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
@@ -37,8 +44,9 @@ public class TCPConnectivityLoss
 
   public static void sleep() throws Exception
   {
+    stopped = false;
     int count = 0;
-    while (System.in.available() == 0)
+    while (System.in.available() == 0 && !stopped)
     {
       Thread.sleep(1000L);
       System.out.print(".");
@@ -71,7 +79,18 @@ public class TCPConnectivityLoss
     public static void main(String[] args) throws Exception
     {
       ManagedContainer container = createContainer();
-      TCPUtil.getConnector(container, "192.168.1.35");
+      ITCPConnector connector = TCPUtil.getConnector(container, "192.168.1.35");
+      connector.addListener(new LifecycleEventAdapter()
+      {
+        @Override
+        protected void onDeactivated(ILifecycle lifecycle)
+        {
+          System.out.println("Loss of connectivity: " + new Date());
+          stopped = true;
+        }
+      });
+
+      System.out.println("Started: " + new Date());
       sleep();
       container.deactivate();
     }

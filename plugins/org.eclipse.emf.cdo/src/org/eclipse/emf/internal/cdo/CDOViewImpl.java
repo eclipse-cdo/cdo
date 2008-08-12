@@ -269,9 +269,12 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
-  public Map<CDOID, InternalCDOObject> getObjectsMap()
+  public InternalCDOObject[] getObjectsArray()
   {
-    return Collections.unmodifiableMap(objects);
+    synchronized (objects)
+    {
+      return objects.values().toArray(new InternalCDOObject[objects.size()]);
+    }
   }
 
   public CDOResource getResource(String path)
@@ -1062,9 +1065,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
         List<CDOID> cdoIDs = new ArrayList<CDOID>();
         if (changeSubscriptionPolicy != CDOChangeSubscriptionPolicy.NONE)
         {
-          // This is safe since we use ConcurrentHashMap
-          // TODO Simon: Is iterating really safe here?
-          for (InternalCDOObject cdoObject : objects.values())
+          for (InternalCDOObject cdoObject : getObjectsArray())
           {
             int count = getNumberOfValidAdapter(cdoObject);
             if (count > 0)

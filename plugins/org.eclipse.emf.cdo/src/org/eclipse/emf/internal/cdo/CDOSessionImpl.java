@@ -885,7 +885,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     Map<CDOID, CDORevision> uniqueObjects = new HashMap<CDOID, CDORevision>();
     for (CDOViewImpl view : getViews())
     {
-      for (InternalCDOObject internalCDOObject : view.getObjectsMap().values())
+      for (InternalCDOObject internalCDOObject : view.getObjectsArray())
       {
         if (internalCDOObject.cdoRevision() != null && !internalCDOObject.cdoID().isTemporary()
             && !uniqueObjects.containsKey(internalCDOObject.cdoID()))

@@ -11,7 +11,6 @@
 package org.eclipse.net4j.internal.buddies.protocol;
 
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -27,9 +26,9 @@ public class InstallFacilityRequest extends RequestWithConfirmation<Boolean>
 
   private String facilityType;
 
-  public InstallFacilityRequest(IChannel channel, long collaborationID, String facilityType)
+  public InstallFacilityRequest(BuddiesClientProtocol protocol, long collaborationID, String facilityType)
   {
-    super(channel);
+    super(protocol);
     this.collaborationID = collaborationID;
     this.facilityType = facilityType;
   }

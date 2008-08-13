@@ -18,6 +18,7 @@ import org.eclipse.net4j.buddies.common.IMembership;
 import org.eclipse.net4j.buddies.common.IMessage;
 import org.eclipse.net4j.buddies.internal.common.bundle.OM;
 import org.eclipse.net4j.buddies.internal.common.protocol.MessageNotification;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
@@ -166,7 +167,8 @@ public class Collaboration extends MembershipContainer implements ICollaboration
       {
         try
         {
-          new MessageNotification(receiver.getSession().getChannel(), collaborationID, facilityType, message).send();
+          SignalProtocol protocol = receiver.getSession().getProtocol();
+          new MessageNotification(protocol, collaborationID, facilityType, message).send();
         }
         catch (Exception ex)
         {

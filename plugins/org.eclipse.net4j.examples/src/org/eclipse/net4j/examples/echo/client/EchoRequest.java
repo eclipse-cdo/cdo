@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.examples.echo.client;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.examples.echo.EchoProtocol;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -22,20 +21,20 @@ import java.io.IOException;
  * @author Eike Stepper
  * @since 2.0
  */
-public class EchoRequest extends RequestWithConfirmation<String> implements EchoProtocol
+public class EchoRequest extends RequestWithConfirmation<String>
 {
   private String message;
 
-  public EchoRequest(IChannel channel, String message)
+  public EchoRequest(EchoClientProtocol protocol, String message)
   {
-    super(channel);
+    super(protocol);
     this.message = message;
   }
 
   @Override
   protected short getSignalID()
   {
-    return ECHO_SIGNAL;
+    return EchoProtocol.ECHO_SIGNAL;
   }
 
   @Override

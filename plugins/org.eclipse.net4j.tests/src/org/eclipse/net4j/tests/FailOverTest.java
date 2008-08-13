@@ -10,13 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.signal.failover.RetryFailOverStrategy;
 import org.eclipse.net4j.tests.signal.IntFailRequest;
 import org.eclipse.net4j.tests.signal.IntRequest;
-import org.eclipse.net4j.tests.signal.TestSignalClientProtocolFactory;
-import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
+import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -25,19 +24,22 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
  */
 public class FailOverTest extends AbstractTransportTest
 {
+  public FailOverTest()
+  {
+  }
+
   @Override
   protected IManagedContainer createContainer()
   {
     IManagedContainer container = super.createContainer();
-    container.registerFactory(new TestSignalServerProtocolFactory());
-    container.registerFactory(new TestSignalClientProtocolFactory());
+    container.registerFactory(new TestSignalProtocol.Factory());
     return container;
   }
 
   public void testFailingBefore() throws Exception
   {
-    startTransport();
-    IChannel channel = getConnector().openChannel(TestSignalClientProtocolFactory.TYPE, null);
+    IConnector connector = startTransport();
+    TestSignalProtocol protocol = new TestSignalProtocol(connector);
 
     // Simulate a disconnect from the server.
     LifecycleUtil.deactivate(getAcceptor());
@@ -46,7 +48,7 @@ public class FailOverTest extends AbstractTransportTest
     IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(getConnector());
 
     // Exception HERE
-    IntRequest request = new IntRequest(channel, data);
+    IntRequest request = new IntRequest(protocol, data);
 
     int result = failOverStrategy.send(request);
     assertEquals(data, result);
@@ -54,14 +56,14 @@ public class FailOverTest extends AbstractTransportTest
 
   public void testFailingDuring() throws Exception
   {
-    startTransport();
-    IChannel channel = getConnector().openChannel(TestSignalClientProtocolFactory.TYPE, null);
+    IConnector connector = startTransport();
+    TestSignalProtocol protocol = new TestSignalProtocol(connector);
 
     int data = 0x0a;
     IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(getConnector());
 
     // Exception HERE
-    IntRequest request = new IntRequest(channel, data);
+    IntRequest request = new IntRequest(protocol, data);
 
     // Simulate a disconnect from the server.
     LifecycleUtil.deactivate(getAcceptor());
@@ -72,14 +74,14 @@ public class FailOverTest extends AbstractTransportTest
 
   public void testFailingDuring2() throws Exception
   {
-    startTransport();
-    IChannel channel = getConnector().openChannel(TestSignalClientProtocolFactory.TYPE, null);
+    IConnector connector = startTransport();
+    TestSignalProtocol protocol = new TestSignalProtocol(connector);
 
     int data = 0x0a;
     IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(getConnector());
 
     // Exception HERE
-    IntFailRequest request = new IntFailRequest(channel, data);
+    IntFailRequest request = new IntFailRequest(protocol, data);
 
     int result = failOverStrategy.send(request, 1000);
     assertEquals(data, result);

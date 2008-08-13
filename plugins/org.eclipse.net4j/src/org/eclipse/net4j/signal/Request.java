@@ -12,7 +12,6 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -29,9 +28,12 @@ public abstract class Request extends SignalActor<Object>
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Request.class);
 
-  protected Request(IChannel channel)
+  /**
+   * @since 2.0
+   */
+  protected Request(SignalProtocol protocol)
   {
-    super(channel);
+    super(protocol);
   }
 
   @Override

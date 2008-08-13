@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jms.protocol;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.jms.DestinationImpl;
 import org.eclipse.net4j.internal.jms.util.DestinationUtil;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
@@ -35,10 +34,13 @@ public class JMSRegisterConsumerRequest extends RequestWithConfirmation<Long>
 
   private boolean durable;
 
-  public JMSRegisterConsumerRequest(IChannel channel, int sessionID, DestinationImpl destination,
+  /**
+   * @since 2.0
+   */
+  public JMSRegisterConsumerRequest(JMSClientProtocol protocol, int sessionID, DestinationImpl destination,
       String messageSelector, boolean noLocal, boolean durable)
   {
-    super(channel);
+    super(protocol);
     this.sessionID = sessionID;
     this.destination = destination;
     this.messageSelector = messageSelector;

@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jms.protocol;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -25,9 +24,12 @@ public class JMSCloseSessionRequest extends RequestWithConfirmation<Boolean>
 {
   private int sessionID;
 
-  public JMSCloseSessionRequest(IChannel channel, int sessionID)
+  /**
+   * @since 2.0
+   */
+  public JMSCloseSessionRequest(JMSClientProtocol protocol, int sessionID)
   {
-    super(channel);
+    super(protocol);
     this.sessionID = sessionID;
   }
 

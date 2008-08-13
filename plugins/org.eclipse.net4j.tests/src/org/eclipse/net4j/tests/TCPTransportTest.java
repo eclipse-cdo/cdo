@@ -17,11 +17,10 @@ import org.eclipse.net4j.channel.ChannelInputStream;
 import org.eclipse.net4j.channel.ChannelOutputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
+import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.ManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
@@ -45,8 +44,8 @@ public class TCPTransportTest extends AbstractTransportTest
   @Override
   protected IManagedContainer createContainer()
   {
-    IManagedContainer container = new ManagedContainer();
-    container.registerFactory(new TestSignalServerProtocolFactory());
+    IManagedContainer container = super.createContainer();
+    container.registerFactory(new TestSignalProtocol.Factory());
     return container;
   }
 

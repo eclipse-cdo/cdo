@@ -36,7 +36,7 @@ public class BuddyAddedIndication extends Indication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     String buddy = in.readString();
-    ClientSession session = ((ClientProtocol)getProtocol()).getSession();
+    ClientSession session = ((BuddiesClientProtocol)getProtocol()).getSession();
     session.buddyAdded(buddy);
   }
 }

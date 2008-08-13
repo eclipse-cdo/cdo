@@ -22,6 +22,7 @@ import org.eclipse.net4j.buddies.internal.common.CollaborationContainer;
 import org.eclipse.net4j.buddies.internal.common.Membership;
 import org.eclipse.net4j.buddies.internal.common.protocol.BuddyStateNotification;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
+import org.eclipse.net4j.buddies.internal.server.protocol.BuddiesServerProtocol;
 import org.eclipse.net4j.buddies.internal.server.protocol.BuddyRemovedNotification;
 import org.eclipse.net4j.buddies.internal.server.protocol.CollaborationInitiatedNotification;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
@@ -131,7 +132,8 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
     buddy.activate();
     buddy.addListener(this);
 
-    ServerSession session = new ServerSession(channel, buddy);
+    BuddiesServerProtocol protocol = (BuddiesServerProtocol)channel.getReceiveHandler();
+    ServerSession session = new ServerSession(protocol, buddy);
     ((IProtocol)channel.getReceiveHandler()).setInfraStructure(session);
     session.addListener(this);
     buddy.setSession(session);
@@ -179,8 +181,8 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
         try
         {
           invitations.remove(buddy);
-          IChannel channel = buddy.getSession().getChannel();
-          new CollaborationInitiatedNotification(channel, collaborationID, invitations, null).send();
+          BuddiesServerProtocol protocol = (BuddiesServerProtocol)buddy.getSession().getProtocol();
+          new CollaborationInitiatedNotification(protocol, collaborationID, invitations, null).send();
         }
         catch (Exception ex)
         {
@@ -217,7 +219,8 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
               {
                 try
                 {
-                  new BuddyRemovedNotification(session.getChannel(), userID).send();
+                  BuddiesServerProtocol protocol = (BuddiesServerProtocol)session.getProtocol();
+                  new BuddyRemovedNotification(protocol, userID).send();
                 }
                 catch (Exception ex)
                 {
@@ -242,7 +245,8 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
             {
               if (!ObjectUtil.equals(session.getSelf(), e.getBuddy()))
               {
-                new BuddyStateNotification(session.getChannel(), e.getBuddy().getUserID(), e.getNewState()).send();
+                BuddiesServerProtocol protocol = (BuddiesServerProtocol)session.getProtocol();
+                new BuddyStateNotification(protocol, e.getBuddy().getUserID(), e.getNewState()).send();
               }
             }
             catch (Exception ex)

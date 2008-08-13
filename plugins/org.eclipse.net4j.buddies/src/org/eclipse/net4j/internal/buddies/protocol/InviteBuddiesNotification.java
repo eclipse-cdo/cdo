@@ -13,7 +13,6 @@ package org.eclipse.net4j.internal.buddies.protocol;
 import org.eclipse.net4j.buddies.common.IBuddy;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolUtil;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -29,9 +28,9 @@ public class InviteBuddiesNotification extends Request
 
   private Collection<IBuddy> buddies;
 
-  public InviteBuddiesNotification(IChannel channel, long collaborationID, Collection<IBuddy> buddies)
+  public InviteBuddiesNotification(BuddiesClientProtocol protocol, long collaborationID, Collection<IBuddy> buddies)
   {
-    super(channel);
+    super(protocol);
     this.buddies = buddies;
     this.collaborationID = collaborationID;
   }

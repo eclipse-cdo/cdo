@@ -17,7 +17,6 @@ import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolUtil;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -78,7 +77,7 @@ public class OpenSessionIndication extends IndicationWithResponse
     ProtocolUtil.writeAccount(out, account);
     if (account != null)
     {
-      List<IChannel> channels = new ArrayList<IChannel>();
+      List<BuddiesServerProtocol> protocols = new ArrayList<BuddiesServerProtocol>();
       out.writeInt(buddies.length);
       for (IBuddy buddy : buddies)
       {
@@ -86,15 +85,15 @@ public class OpenSessionIndication extends IndicationWithResponse
         ISession buddySession = IBuddyAdmin.INSTANCE.getSession(buddy);
         if (buddySession != null)
         {
-          channels.add(buddySession.getChannel());
+          protocols.add((BuddiesServerProtocol)buddySession.getProtocol());
         }
       }
 
-      for (IChannel channel : channels)
+      for (BuddiesServerProtocol protocol : protocols)
       {
         try
         {
-          new BuddyAddedNotification(channel, account.getUserID()).send();
+          new BuddyAddedNotification(protocol, account.getUserID()).send();
         }
         catch (Exception ex)
         {

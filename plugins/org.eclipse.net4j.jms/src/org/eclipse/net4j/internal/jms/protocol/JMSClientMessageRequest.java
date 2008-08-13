@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jms.protocol;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.jms.MessageImpl;
 import org.eclipse.net4j.internal.jms.util.MessageUtil;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
@@ -27,9 +26,12 @@ public class JMSClientMessageRequest extends RequestWithConfirmation<String>
 {
   private MessageImpl message;
 
-  public JMSClientMessageRequest(IChannel channel, MessageImpl message)
+  /**
+   * @since 2.0
+   */
+  public JMSClientMessageRequest(JMSClientProtocol protocol, MessageImpl message)
   {
-    super(channel);
+    super(protocol);
     this.message = message;
   }
 

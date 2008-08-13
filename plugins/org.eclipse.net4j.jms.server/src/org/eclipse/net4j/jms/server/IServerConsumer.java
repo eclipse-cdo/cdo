@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.jms.server;
 
-import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.protocol.IProtocol;
 
 /**
  * @author Eike Stepper
@@ -26,7 +26,7 @@ public interface IServerConsumer
 
   public ISession getSession();
 
-  public IChannel getChannel();
+  public IProtocol getProtocol();
 
   public boolean isNoLocal();
 

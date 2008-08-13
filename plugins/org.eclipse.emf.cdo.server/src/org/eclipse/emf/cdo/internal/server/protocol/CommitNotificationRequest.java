@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -45,7 +46,7 @@ public class CommitNotificationRequest extends Request
   public CommitNotificationRequest(IChannel channel, CDOIDProvider provider, long timeStamp,
       List<CDOIDAndVersion> dirtyIDs, List<CDORevisionDelta> deltas)
   {
-    super(channel);
+    super((SignalProtocol)channel.getReceiveHandler());
     this.provider = provider;
     this.timeStamp = timeStamp;
     this.dirtyIDs = dirtyIDs;

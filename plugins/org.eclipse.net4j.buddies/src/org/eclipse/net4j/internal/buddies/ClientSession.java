@@ -18,8 +18,8 @@ import org.eclipse.net4j.buddies.common.IMembership;
 import org.eclipse.net4j.buddies.internal.common.BuddyContainer;
 import org.eclipse.net4j.buddies.internal.common.Collaboration;
 import org.eclipse.net4j.buddies.internal.common.protocol.BuddyStateNotification;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.buddies.bundle.OM;
+import org.eclipse.net4j.internal.buddies.protocol.BuddiesClientProtocol;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
@@ -35,18 +35,18 @@ import java.util.Set;
  */
 public class ClientSession extends BuddyContainer implements IBuddySession, IListener
 {
-  private IChannel channel;
+  private BuddiesClientProtocol protocol;
 
   private Self self;
 
-  public ClientSession(IChannel channel)
+  public ClientSession(BuddiesClientProtocol protocol)
   {
-    this.channel = channel;
+    this.protocol = protocol;
   }
 
-  public IChannel getChannel()
+  public BuddiesClientProtocol getProtocol()
   {
-    return channel;
+    return protocol;
   }
 
   public Self getSelf()
@@ -63,7 +63,8 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
 
   public void close()
   {
-    channel.close();
+    protocol.close();
+    protocol = null;
     deactivate();
   }
 
@@ -79,7 +80,7 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
   @Override
   public void notifyEvent(IEvent event)
   {
-    if (event.getSource() == channel)
+    if (event.getSource() == protocol)
     {
       if (event instanceof ILifecycleEvent)
       {
@@ -95,7 +96,7 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
       {
         try
         {
-          new BuddyStateNotification(channel, self.getUserID(), ((IBuddyStateEvent)event).getNewState()).send();
+          new BuddyStateNotification(protocol, self.getUserID(), ((IBuddyStateEvent)event).getNewState()).send();
         }
         catch (Exception ex)
         {
@@ -131,13 +132,13 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    channel.addListener(this);
+    protocol.addListener(this);
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    channel.removeListener(this);
+    protocol.removeListener(this);
     LifecycleUtil.deactivate(self);
     super.doDeactivate();
   }

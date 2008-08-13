@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.jms.internal.admin.protocol;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.jms.JMSAdminProtocolConstants;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -27,9 +26,9 @@ public class JMSCreateDestinationRequest extends RequestWithConfirmation<Boolean
 
   private String name;
 
-  public JMSCreateDestinationRequest(IChannel channel, byte type, String name)
+  public JMSCreateDestinationRequest(JMSAdminProtocol protocol, byte type, String name)
   {
-    super(channel);
+    super(protocol);
     this.type = type;
     this.name = name;
   }

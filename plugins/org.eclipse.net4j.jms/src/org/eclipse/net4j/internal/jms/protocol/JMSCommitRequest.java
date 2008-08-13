@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jms.protocol;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.jms.MessageImpl;
 import org.eclipse.net4j.internal.jms.util.MessageUtil;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
@@ -30,9 +29,12 @@ public class JMSCommitRequest extends RequestWithConfirmation<String[]>
 
   private List<MessageImpl> messages;
 
-  public JMSCommitRequest(IChannel channel, int sessionID, List<MessageImpl> messages)
+  /**
+   * @since 2.0
+   */
+  public JMSCommitRequest(JMSClientProtocol protocol, int sessionID, List<MessageImpl> messages)
   {
-    super(channel);
+    super(protocol);
     this.sessionID = sessionID;
     this.messages = messages;
   }

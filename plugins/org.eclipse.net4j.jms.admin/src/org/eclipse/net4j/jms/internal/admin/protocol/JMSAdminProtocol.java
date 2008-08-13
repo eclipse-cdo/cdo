@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.jms.internal.admin.protocol;
 
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jms.JMSAdminProtocolConstants;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
@@ -19,8 +20,9 @@ import org.eclipse.net4j.signal.SignalReactor;
  */
 public class JMSAdminProtocol extends SignalProtocol
 {
-  public JMSAdminProtocol()
+  public JMSAdminProtocol(IConnector connector)
   {
+    super(connector);
   }
 
   public String getType()

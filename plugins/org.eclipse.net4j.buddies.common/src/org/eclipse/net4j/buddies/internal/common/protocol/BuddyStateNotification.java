@@ -11,8 +11,8 @@
 package org.eclipse.net4j.buddies.internal.common.protocol;
 
 import org.eclipse.net4j.buddies.common.IBuddy.State;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
@@ -26,9 +26,9 @@ public class BuddyStateNotification extends Request
 
   private State state;
 
-  public BuddyStateNotification(IChannel channel, String userID, State state)
+  public BuddyStateNotification(SignalProtocol protocol, String userID, State state)
   {
-    super(channel);
+    super(protocol);
     this.userID = userID;
     this.state = state;
   }

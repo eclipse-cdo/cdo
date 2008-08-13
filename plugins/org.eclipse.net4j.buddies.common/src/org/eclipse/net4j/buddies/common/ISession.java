@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.common;
 
-import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.event.INotifier;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -20,7 +20,10 @@ import org.eclipse.core.runtime.IAdaptable;
  */
 public interface ISession extends INotifier, IAdaptable
 {
-  public IChannel getChannel();
+  /**
+   * @since 2.0
+   */
+  public SignalProtocol getProtocol();
 
   public IBuddy getSelf();
 

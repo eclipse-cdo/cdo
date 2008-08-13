@@ -13,7 +13,6 @@ package org.eclipse.net4j.internal.buddies.protocol;
 import org.eclipse.net4j.buddies.common.IBuddy;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolUtil;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -28,9 +27,9 @@ public class InitiateCollaborationRequest extends RequestWithConfirmation<Long>
 {
   private Collection<IBuddy> buddies;
 
-  public InitiateCollaborationRequest(IChannel channel, Collection<IBuddy> buddies)
+  public InitiateCollaborationRequest(BuddiesClientProtocol protocol, Collection<IBuddy> buddies)
   {
-    super(channel);
+    super(protocol);
     this.buddies = buddies;
   }
 

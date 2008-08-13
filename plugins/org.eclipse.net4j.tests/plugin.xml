@@ -20,11 +20,7 @@
    <extension
          point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.net4j.tests.signal.TestSignalClientProtocolFactory"
-            productGroup="org.eclipse.net4j.clientProtocols"
-            type="signal.protocol"/>
-      <factory
-            class="org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory"
+            class="org.eclipse.net4j.tests.signal.TestSignalProtocol$Factory"
             productGroup="org.eclipse.net4j.serverProtocols"
             type="signal.protocol"/>
    </extension>

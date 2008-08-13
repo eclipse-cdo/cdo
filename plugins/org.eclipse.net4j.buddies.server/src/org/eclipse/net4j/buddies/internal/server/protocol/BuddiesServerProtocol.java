@@ -15,13 +15,15 @@ import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public class ServerProtocol extends SignalProtocol
+public class BuddiesServerProtocol extends SignalProtocol
 {
-  public ServerProtocol()
+  public BuddiesServerProtocol()
   {
   }
 
@@ -58,5 +60,26 @@ public class ServerProtocol extends SignalProtocol
     }
 
     return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Factory extends org.eclipse.net4j.protocol.ServerProtocolFactory
+  {
+    public Factory()
+    {
+      super(ProtocolConstants.PROTOCOL_NAME);
+    }
+
+    public BuddiesServerProtocol create(String description)
+    {
+      return new BuddiesServerProtocol();
+    }
+
+    public static BuddiesServerProtocol get(IManagedContainer container, String description)
+    {
+      return (BuddiesServerProtocol)container.getElement(PRODUCT_GROUP, ProtocolConstants.PROTOCOL_NAME, description);
+    }
   }
 }

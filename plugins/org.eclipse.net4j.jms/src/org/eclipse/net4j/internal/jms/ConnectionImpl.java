@@ -63,7 +63,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
 
   private IManagedContainer transportContainer;
 
-  private IChannel channel;
+  private JMSClientProtocol protocol;
 
   private List<SessionImpl> sessions = new ArrayList<SessionImpl>(0);
 
@@ -110,14 +110,13 @@ public class ConnectionImpl extends Container<Session> implements Connection
     this.password = password;
 
     IConnector connector = Net4jUtil.getConnector(transportContainer, connectorType, connectorDescription);
-    JMSClientProtocol protocol = new JMSClientProtocol();
-    protocol.setInfraStructure(this);
-    channel = connector.openChannel(protocol);
+    JMSClientProtocol protocol = new JMSClientProtocol(this);
+    IChannel channel = connector.openChannel(protocol);
     channel.addListener(channelListener);
 
     try
     {
-      if (!new JMSLogonRequest(channel, userName, password).send())
+      if (!new JMSLogonRequest(protocol, userName, password).send())
       {
         throw new JMSException("Server rejected logon request");
       }
@@ -154,7 +153,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
 
     try
     {
-      if (!new JMSOpenSessionRequest(channel, sessionID).send())
+      if (!new JMSOpenSessionRequest(protocol, sessionID).send())
       {
         throw new JMSException("Server rejected open session request");
       }
@@ -290,7 +289,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
 
   public synchronized void close()
   {
-    if (channel != null)
+    if (protocol != null)
     {
       stop();
       for (SessionImpl session : getSessions())
@@ -298,15 +297,18 @@ public class ConnectionImpl extends Container<Session> implements Connection
         session.close();
       }
 
-      channel.removeListener(channelListener);
-      channel.close();
-      channel = null;
+      protocol.getChannel().removeListener(channelListener);
+      protocol.close();
+      protocol = null;
     }
   }
 
-  public IChannel getChannel()
+  /**
+   * @since 2.0
+   */
+  public JMSClientProtocol getProtocol()
   {
-    return channel;
+    return protocol;
   }
 
   public void handleMessageFromSignal(int sessionID, long consumerID, MessageImpl message)
@@ -397,9 +399,9 @@ public class ConnectionImpl extends Container<Session> implements Connection
 
   private void ensureOpen() throws IllegalStateException
   {
-    if (channel == null)
+    if (protocol == null)
     {
-      throw new IllegalStateException("channel == null");
+      throw new IllegalStateException("protocol == null");
     }
   }
 }

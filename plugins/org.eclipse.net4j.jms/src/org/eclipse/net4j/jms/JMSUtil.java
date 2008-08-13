@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.jms;
 
-import org.eclipse.net4j.internal.jms.protocol.JMSClientProtocolFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import javax.naming.Context;
@@ -25,11 +24,6 @@ public final class JMSUtil
 
   private JMSUtil()
   {
-  }
-
-  public static void prepareContainer(IManagedContainer container)
-  {
-    container.registerFactory(new JMSClientProtocolFactory());
   }
 
   public static Context createInitialContext() throws NamingException

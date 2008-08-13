@@ -10,11 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.examples.echo.client;
 
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.examples.echo.EchoProtocol;
-import org.eclipse.net4j.protocol.ClientProtocolFactory;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
-import org.eclipse.net4j.util.factory.ProductCreationException;
 
 /**
  * @author Eike Stepper
@@ -22,8 +21,9 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
  */
 public class EchoClientProtocol extends SignalProtocol implements EchoProtocol
 {
-  public EchoClientProtocol()
+  public EchoClientProtocol(IConnector connector)
   {
+    super(connector);
   }
 
   public String getType()
@@ -36,21 +36,5 @@ public class EchoClientProtocol extends SignalProtocol implements EchoProtocol
   {
     // On client side only needed for server initiated requests
     return null;
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class Factory extends ClientProtocolFactory
-  {
-    public Factory()
-    {
-      super(PROTOCOL_NAME);
-    }
-
-    public Object create(String description) throws ProductCreationException
-    {
-      return new EchoClientProtocol();
-    }
   }
 }

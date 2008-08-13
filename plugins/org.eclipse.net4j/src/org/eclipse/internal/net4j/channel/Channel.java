@@ -176,6 +176,21 @@ public class Channel extends Lifecycle implements InternalChannel
     }
   }
 
+  public short getBufferCapacity()
+  {
+    return channelMultiplexer.getBufferCapacity();
+  }
+
+  public IBuffer provideBuffer()
+  {
+    return channelMultiplexer.provideBuffer();
+  }
+
+  public void retainBuffer(IBuffer buffer)
+  {
+    channelMultiplexer.retainBuffer(buffer);
+  }
+
   @Override
   public String toString()
   {

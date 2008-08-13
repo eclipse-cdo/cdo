@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.jms.internal.server.protocol;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.jms.MessageImpl;
 import org.eclipse.net4j.internal.jms.util.MessageUtil;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
@@ -30,9 +29,9 @@ public class JMSServerMessageRequest extends Request
 
   private MessageImpl message;
 
-  public JMSServerMessageRequest(IChannel channel, int sessionID, long consumerID, MessageImpl message)
+  public JMSServerMessageRequest(JMSServerProtocol protocol, int sessionID, long consumerID, MessageImpl message)
   {
-    super(channel);
+    super(protocol);
     this.sessionID = sessionID;
     this.consumerID = consumerID;
     this.message = message;

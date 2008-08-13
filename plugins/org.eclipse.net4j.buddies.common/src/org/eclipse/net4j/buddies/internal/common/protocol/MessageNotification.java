@@ -11,8 +11,8 @@
 package org.eclipse.net4j.buddies.internal.common.protocol;
 
 import org.eclipse.net4j.buddies.common.IMessage;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
@@ -28,9 +28,9 @@ public class MessageNotification extends Request
 
   private IMessage message;
 
-  public MessageNotification(IChannel channel, long collaborationID, String facilityType, IMessage message)
+  public MessageNotification(SignalProtocol protocol, long collaborationID, String facilityType, IMessage message)
   {
-    super(channel);
+    super(protocol);
     this.collaborationID = collaborationID;
     this.facilityType = facilityType;
     this.message = message;

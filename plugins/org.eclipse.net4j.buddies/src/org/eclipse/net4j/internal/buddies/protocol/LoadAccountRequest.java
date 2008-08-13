@@ -13,7 +13,6 @@ package org.eclipse.net4j.internal.buddies.protocol;
 import org.eclipse.net4j.buddies.common.IAccount;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolUtil;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -27,9 +26,9 @@ public class LoadAccountRequest extends RequestWithConfirmation<IAccount>
 {
   private String userID;
 
-  public LoadAccountRequest(IChannel channel, String userID)
+  public LoadAccountRequest(BuddiesClientProtocol protocol, String userID)
   {
-    super(channel);
+    super(protocol);
     this.userID = userID;
   }
 

@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.internal.common.protocol;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
@@ -25,9 +25,9 @@ public class CollaborationLeftNotification extends Request
 
   private String userID;
 
-  public CollaborationLeftNotification(IChannel channel, long collaborationID, String userID)
+  public CollaborationLeftNotification(SignalProtocol protocol, long collaborationID, String userID)
   {
-    super(channel);
+    super(protocol);
     this.collaborationID = collaborationID;
     this.userID = userID;
   }

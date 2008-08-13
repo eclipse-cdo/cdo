@@ -220,11 +220,6 @@ public class ControlChannel extends Channel
     handleBuffer(buffer);
   }
 
-  private IBuffer provideBuffer()
-  {
-    return getConnector().getBufferProvider().provideBuffer();
-  }
-
   private void assertNegotiating()
   {
     if (!getConnector().isNegotiating())

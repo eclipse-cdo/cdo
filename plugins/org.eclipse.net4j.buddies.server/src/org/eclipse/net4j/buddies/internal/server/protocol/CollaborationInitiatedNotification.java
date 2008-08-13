@@ -13,7 +13,6 @@ package org.eclipse.net4j.buddies.internal.server.protocol;
 import org.eclipse.net4j.buddies.common.IBuddy;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolUtil;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -31,10 +30,13 @@ public class CollaborationInitiatedNotification extends Request
 
   private String[] facilityTypes;
 
-  public CollaborationInitiatedNotification(IChannel channel, long collaborationID, Collection<IBuddy> buddies,
-      String[] facilityTypes)
+  /**
+   * @since 2.0
+   */
+  public CollaborationInitiatedNotification(BuddiesServerProtocol protocol, long collaborationID,
+      Collection<IBuddy> buddies, String[] facilityTypes)
   {
-    super(channel);
+    super(protocol);
     this.collaborationID = collaborationID;
     this.buddies = buddies;
     this.facilityTypes = facilityTypes;

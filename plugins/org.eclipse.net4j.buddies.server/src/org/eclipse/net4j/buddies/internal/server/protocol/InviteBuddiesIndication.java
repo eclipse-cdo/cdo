@@ -16,7 +16,6 @@ import org.eclipse.net4j.buddies.internal.common.Membership;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolUtil;
 import org.eclipse.net4j.buddies.internal.server.BuddyAdmin;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -65,7 +64,6 @@ public class InviteBuddiesIndication extends Indication
       List<IBuddy> buddies = Arrays.asList(collaboration.getBuddies());
       for (IBuddy buddy : buddies)
       {
-        IChannel channel = buddy.getSession().getChannel();
         String[] facilityTypes = null;
         Set<IBuddy> set = new HashSet<IBuddy>();
         if (added.contains(buddy))
@@ -83,7 +81,8 @@ public class InviteBuddiesIndication extends Indication
         {
           try
           {
-            new CollaborationInitiatedNotification(channel, collaborationID, set, facilityTypes).send();
+            BuddiesServerProtocol protocol = (BuddiesServerProtocol)buddy.getSession().getProtocol();
+            new CollaborationInitiatedNotification(protocol, collaborationID, set, facilityTypes).send();
           }
           catch (Exception ex)
           {

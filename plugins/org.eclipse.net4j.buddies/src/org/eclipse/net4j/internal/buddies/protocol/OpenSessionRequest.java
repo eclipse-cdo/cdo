@@ -14,7 +14,6 @@ import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.common.IAccount;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolUtil;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.buddies.ClientSession;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -34,9 +33,9 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
 
   private Set<String> facilityTypes;
 
-  public OpenSessionRequest(IChannel channel, String userID, String password, Set<String> facilityTypes)
+  public OpenSessionRequest(BuddiesClientProtocol protocol, String userID, String password, Set<String> facilityTypes)
   {
-    super(channel);
+    super(protocol);
     this.userID = userID;
     this.password = password;
     this.facilityTypes = facilityTypes;
@@ -69,7 +68,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
       return null;
     }
 
-    ClientSession session = new ClientSession(getProtocol().getChannel());
+    ClientSession session = new ClientSession((BuddiesClientProtocol)getProtocol());
     getProtocol().setInfraStructure(session);
     session.setSelf(account, facilityTypes);
 

@@ -18,7 +18,6 @@ import org.eclipse.net4j.buddies.internal.common.protocol.CollaborationLeftIndic
 import org.eclipse.net4j.buddies.internal.common.protocol.CollaborationLeftNotification;
 import org.eclipse.net4j.buddies.internal.server.BuddyAdmin;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.WrappedException;
 
 /**
@@ -41,8 +40,8 @@ public class ServerCollaborationLeftIndication extends CollaborationLeftIndicati
       {
         try
         {
-          IChannel channel = member.getSession().getChannel();
-          new CollaborationLeftNotification(channel, collaboration.getID(), buddy.getUserID()).send();
+          BuddiesServerProtocol protocol = (BuddiesServerProtocol)buddy.getSession().getProtocol();
+          new CollaborationLeftNotification(protocol, collaboration.getID(), buddy.getUserID()).send();
         }
         catch (Exception ex)
         {

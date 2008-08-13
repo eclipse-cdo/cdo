@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jms.protocol;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -27,9 +26,12 @@ public class JMSLogonRequest extends RequestWithConfirmation<Boolean>
 
   private String password;
 
-  public JMSLogonRequest(IChannel channel, String userName, String password)
+  /**
+   * @since 2.0
+   */
+  public JMSLogonRequest(JMSClientProtocol protocol, String userName, String password)
   {
-    super(channel);
+    super(protocol);
     this.userName = userName;
     this.password = password;
   }

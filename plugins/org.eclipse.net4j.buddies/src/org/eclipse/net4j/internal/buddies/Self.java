@@ -16,7 +16,6 @@ import org.eclipse.net4j.buddies.common.IMembership;
 import org.eclipse.net4j.buddies.internal.common.Buddy;
 import org.eclipse.net4j.buddies.internal.common.Membership;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.internal.buddies.protocol.InitiateCollaborationRequest;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -60,8 +59,7 @@ public class Self extends Buddy
     try
     {
       ClientSession session = getSession();
-      IChannel channel = session.getChannel();
-      long id = new InitiateCollaborationRequest(channel, buddies).send(ProtocolConstants.TIMEOUT);
+      long id = new InitiateCollaborationRequest(session.getProtocol(), buddies).send(ProtocolConstants.TIMEOUT);
 
       BuddyCollaboration collaboration = new BuddyCollaboration(session, id);
       collaboration.activate();

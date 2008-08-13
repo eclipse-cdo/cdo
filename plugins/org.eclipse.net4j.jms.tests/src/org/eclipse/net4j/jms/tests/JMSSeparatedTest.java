@@ -15,7 +15,6 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter;
 import org.eclipse.net4j.jms.JMSInitialContext;
-import org.eclipse.net4j.jms.JMSUtil;
 import org.eclipse.net4j.jms.admin.IJMSAdmin;
 import org.eclipse.net4j.jms.admin.JMSAdminUtil;
 import org.eclipse.net4j.jms.internal.server.Server;
@@ -109,8 +108,6 @@ public class JMSSeparatedTest
     IManagedContainer clientContainer = new ManagedContainer();
     Net4jUtil.prepareContainer(clientContainer);
     TCPUtil.prepareContainer(clientContainer);
-    JMSUtil.prepareContainer(clientContainer);
-    JMSAdminUtil.prepareContainer(clientContainer);
 
     IConnector connector = TCPUtil.getConnector(clientContainer, "localhost");
 

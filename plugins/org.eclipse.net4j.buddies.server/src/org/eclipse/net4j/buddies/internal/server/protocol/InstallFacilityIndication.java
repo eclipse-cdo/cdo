@@ -18,7 +18,6 @@ import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.server.BuddyAdmin;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
 import org.eclipse.net4j.buddies.spi.common.ServerFacilityFactory;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -71,8 +70,8 @@ public class InstallFacilityIndication extends IndicationWithResponse
           {
             try
             {
-              IChannel channel = buddy.getSession().getChannel();
-              new FacilityInstalledNotification(channel, collaborationID, facilityType).send();
+              BuddiesServerProtocol protocol = (BuddiesServerProtocol)buddy.getSession().getProtocol();
+              new FacilityInstalledNotification(protocol, collaborationID, facilityType).send();
             }
             catch (Exception ex)
             {

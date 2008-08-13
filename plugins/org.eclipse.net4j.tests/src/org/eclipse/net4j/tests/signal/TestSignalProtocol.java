@@ -10,8 +10,11 @@
  **************************************************************************/
 package org.eclipse.net4j.tests.signal;
 
+import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.protocol.ServerProtocolFactory;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 
 /**
  * @author Eike Stepper
@@ -30,7 +33,12 @@ public class TestSignalProtocol extends SignalProtocol
 
   public static final short SIGNAL_ASYNC = 5;
 
-  public TestSignalProtocol()
+  public TestSignalProtocol(IConnector connector)
+  {
+    super(connector);
+  }
+
+  private TestSignalProtocol()
   {
   }
 
@@ -56,5 +64,21 @@ public class TestSignalProtocol extends SignalProtocol
       return new AsyncIndication();
     }
     return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Factory extends ServerProtocolFactory
+  {
+    public Factory()
+    {
+      super(PROTOCOL_NAME);
+    }
+
+    public TestSignalProtocol create(String description) throws ProductCreationException
+    {
+      return new TestSignalProtocol();
+    }
   }
 }

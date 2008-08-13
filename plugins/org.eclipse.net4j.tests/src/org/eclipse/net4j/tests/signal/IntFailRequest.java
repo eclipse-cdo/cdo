@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.tests.signal;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -24,9 +23,9 @@ public class IntFailRequest extends RequestWithConfirmation<Integer>
 {
   private int data;
 
-  public IntFailRequest(IChannel channel, int data)
+  public IntFailRequest(TestSignalProtocol protocol, int data)
   {
-    super(channel);
+    super(protocol);
     this.data = data;
   }
 

@@ -10,11 +10,11 @@
  **************************************************************************/
 package org.eclipse.net4j.jms.internal.admin;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jms.JMSAdminProtocolConstants;
 import org.eclipse.net4j.jms.admin.IJMSAdmin;
 import org.eclipse.net4j.jms.internal.admin.bundle.OM;
+import org.eclipse.net4j.jms.internal.admin.protocol.JMSAdminProtocol;
 import org.eclipse.net4j.jms.internal.admin.protocol.JMSCreateDestinationRequest;
 
 /**
@@ -22,17 +22,17 @@ import org.eclipse.net4j.jms.internal.admin.protocol.JMSCreateDestinationRequest
  */
 public class JMSAdmin implements IJMSAdmin
 {
-  private IChannel channel;
+  private JMSAdminProtocol protocol;
 
   public JMSAdmin(IConnector connector)
   {
-    channel = connector.openChannel(JMSAdminProtocolConstants.PROTOCOL_NAME, this);
+    protocol = new JMSAdminProtocol(connector);
   }
 
   public void close()
   {
-    channel.close();
-    channel = null;
+    protocol.close();
+    protocol = null;
   }
 
   public boolean createQueue(String name)
@@ -49,7 +49,7 @@ public class JMSAdmin implements IJMSAdmin
   {
     try
     {
-      return new JMSCreateDestinationRequest(channel, type, name).send();
+      return new JMSCreateDestinationRequest(protocol, type, name).send();
     }
     catch (Exception ex)
     {

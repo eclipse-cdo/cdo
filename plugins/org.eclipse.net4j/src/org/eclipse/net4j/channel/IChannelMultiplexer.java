@@ -10,10 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.channel;
 
+import org.eclipse.net4j.buffer.IBufferProvider;
+
 /**
  * @author Eike Stepper
  */
-public interface IChannelMultiplexer
+public interface IChannelMultiplexer extends IBufferProvider
 {
   /**
    * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be

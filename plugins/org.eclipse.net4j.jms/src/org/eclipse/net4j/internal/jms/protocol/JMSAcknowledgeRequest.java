@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jms.protocol;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -24,9 +23,12 @@ public class JMSAcknowledgeRequest extends Request
 {
   private int sessionID;
 
-  public JMSAcknowledgeRequest(IChannel channel, int sessionID)
+  /**
+   * @since 2.0
+   */
+  public JMSAcknowledgeRequest(JMSClientProtocol protocol, int sessionID)
   {
-    super(channel);
+    super(protocol);
     this.sessionID = sessionID;
   }
 

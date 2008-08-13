@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jms.protocol;
 
+import org.eclipse.net4j.internal.jms.ConnectionImpl;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
@@ -19,8 +20,12 @@ import org.eclipse.net4j.signal.SignalReactor;
  */
 public class JMSClientProtocol extends SignalProtocol
 {
-  public JMSClientProtocol()
+  /**
+   * @since 2.0
+   */
+  public JMSClientProtocol(ConnectionImpl connection)
   {
+    setInfraStructure(connection);
   }
 
   public String getType()

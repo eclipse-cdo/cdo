@@ -16,6 +16,7 @@ import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.signal.SignalProtocol;
 
 /**
  * @author Eike Stepper
@@ -24,7 +25,7 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
 {
   public CDOClientRequest(IChannel channel)
   {
-    super(channel);
+    super((SignalProtocol)channel.getReceiveHandler());
   }
 
   protected CDORevisionResolverImpl getRevisionManager()

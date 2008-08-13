@@ -11,6 +11,7 @@
 package org.eclipse.spi.net4j;
 
 import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -21,7 +22,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public interface InternalChannel extends IChannel, ILifecycle.Introspection
+public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle.Introspection
 {
   public void setChannelID(int channelID);
 

@@ -39,6 +39,8 @@ public class AllTests
     suite.addTestSuite(BufferPoolTest.class);
     suite.addTestSuite(ExtendedIOTest.class);
     suite.addTestSuite(Bugzilla241463_Test.class);
+    suite.addTestSuite(TCPTransportTest.class);
+    suite.addTestSuite(SignalTest.class);
     // suite.addTestSuite(SecurityTest.class);
     // TODO suite.addTestSuite(ConnectorTest.class);
     // $JUnit-END$

@@ -11,9 +11,7 @@
 package org.eclipse.net4j.examples.echo.client;
 
 import org.eclipse.net4j.Net4jUtil;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.examples.echo.EchoProtocol;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -42,17 +40,16 @@ public class EchoClient
     {
       Net4jUtil.prepareContainer(container);
       TCPUtil.prepareContainer(container);
-      container.registerFactory(new EchoClientProtocol.Factory());
       LifecycleUtil.activate(container);
 
       // Start a connector that represents the client side of a physical connection
       IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "tcp", "localhost:2036");
 
       // Open a virtual channel with the ECHO protocol, send an ECHO request and close the channel
-      IChannel channel = connector.openChannel(EchoProtocol.PROTOCOL_NAME, null);
-      EchoRequest request = new EchoRequest(channel, "My cool message");
+      EchoClientProtocol protocol = new EchoClientProtocol(connector);
+      EchoRequest request = new EchoRequest(protocol, "My cool message");
       String echo = request.send();
-      channel.close();
+      protocol.close();
 
       System.out.println();
       System.out.println("ECHO: " + echo);

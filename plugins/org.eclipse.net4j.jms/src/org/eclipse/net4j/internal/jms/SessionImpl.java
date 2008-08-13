@@ -240,7 +240,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     try
     {
       stop();
-      new JMSRecoverRequest(connection.getChannel(), id).send();
+      new JMSRecoverRequest(connection.getProtocol(), id).send();
       start();
     }
     catch (Exception ex)
@@ -257,7 +257,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     {
       try
       {
-        String[] messageIDs = new JMSCommitRequest(connection.getChannel(), id, messages).send();
+        String[] messageIDs = new JMSCommitRequest(connection.getProtocol(), id, messages).send();
         if (messageIDs == null)
         {
           throw new TransactionRolledbackException("Transaction rolled back by JMS server");
@@ -292,7 +292,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     {
       try
       {
-        if (!new JMSRollbackRequest(connection.getChannel(), id).send())
+        if (!new JMSRollbackRequest(connection.getProtocol(), id).send())
         {
           throw new JMSException("JMS server failed to rolled back transaction");
         }
@@ -329,8 +329,8 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
   {
     try
     {
-      return new JMSRegisterConsumerRequest(connection.getChannel(), id, destination, messageSelector, noLocal, durable)
-          .send();
+      return new JMSRegisterConsumerRequest(connection.getProtocol(), id, destination, messageSelector, noLocal,
+          durable).send();
     }
     catch (Exception ex)
     {
@@ -359,7 +359,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
       try
       {
         MessageImpl impl = MessageUtil.convert(message);
-        JMSClientMessageRequest request = new JMSClientMessageRequest(connection.getChannel(), impl);
+        JMSClientMessageRequest request = new JMSClientMessageRequest(connection.getProtocol(), impl);
         String messageID = request.send(connection.getSendTimeout());
         if (messageID == null)
         {
@@ -387,7 +387,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
   {
     try
     {
-      new JMSAcknowledgeRequest(connection.getChannel(), id).send();
+      new JMSAcknowledgeRequest(connection.getProtocol(), id).send();
       return true;
     }
     catch (Exception ex)

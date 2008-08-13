@@ -11,7 +11,6 @@
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -24,9 +23,12 @@ public class BuddyRemovedNotification extends Request
 {
   private String buddy;
 
-  public BuddyRemovedNotification(IChannel channel, String buddy)
+  /**
+   * @since 2.0
+   */
+  public BuddyRemovedNotification(BuddiesServerProtocol protocol, String buddy)
   {
-    super(channel);
+    super(protocol);
     this.buddy = buddy;
   }
 

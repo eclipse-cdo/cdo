@@ -12,7 +12,6 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -31,9 +30,12 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, RequestWithConfirmation.class);
 
-  protected RequestWithConfirmation(IChannel channel)
+  /**
+   * @since 2.0
+   */
+  protected RequestWithConfirmation(SignalProtocol protocol)
   {
-    super(channel);
+    super(protocol);
   }
 
   @Override

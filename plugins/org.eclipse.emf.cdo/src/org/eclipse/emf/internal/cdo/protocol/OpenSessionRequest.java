@@ -21,6 +21,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -44,7 +45,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
   public OpenSessionRequest(IChannel channel, String repositoryName, boolean legacySupportEnabled,
       boolean passiveUpdateEnabled)
   {
-    super(channel);
+    super((SignalProtocol)channel.getReceiveHandler());
     this.repositoryName = repositoryName;
     this.legacySupportEnabled = legacySupportEnabled;
     this.passiveUpdateEnabled = passiveUpdateEnabled;

@@ -20,8 +20,7 @@ import org.eclipse.net4j.internal.tcp.TCPSelectorInjector;
 import org.eclipse.net4j.internal.tcp.TCPServerConnector;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tests.AbstractTransportTest;
-import org.eclipse.net4j.tests.signal.TestSignalClientProtocolFactory;
-import org.eclipse.net4j.tests.signal.TestSignalServerProtocolFactory;
+import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -56,21 +55,18 @@ public class Bugzilla241463_Test extends AbstractTransportTest
     container.addPostProcessor(new TCPSelectorInjector());
 
     // Test
-    container.registerFactory(new TestSignalServerProtocolFactory());
-    container.registerFactory(new TestSignalClientProtocolFactory());
+    container.registerFactory(new TestSignalProtocol.Factory());
     return container;
   }
 
   public void testBugzilla241463() throws Exception
   {
-    startTransport();
-
-    IConnector connector = getConnector();
+    IConnector connector = startTransport();
     connector.setOpenChannelTimeout(2000L);
 
     try
     {
-      connector.openChannel(TestSignalClientProtocolFactory.TYPE, null);
+      new TestSignalProtocol(connector);
       fail("TimeoutRuntimeException expected");
     }
     catch (TimeoutRuntimeException success)

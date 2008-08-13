@@ -27,7 +27,7 @@ public class ClientBuddyStateIndication extends BuddyStateIndication
   @Override
   protected void stateChanged(final String userID, final State state)
   {
-    ClientSession session = ((ClientProtocol)getProtocol()).getSession();
+    ClientSession session = ((BuddiesClientProtocol)getProtocol()).getSession();
     ClientBuddy buddy = (ClientBuddy)session.getBuddy(userID);
     if (buddy != null)
     {

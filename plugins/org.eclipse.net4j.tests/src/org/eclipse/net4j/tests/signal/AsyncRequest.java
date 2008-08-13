@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.tests.signal;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -23,9 +22,9 @@ public class AsyncRequest extends Request
 {
   private String data;
 
-  public AsyncRequest(IChannel channel, String data)
+  public AsyncRequest(TestSignalProtocol protocol, String data)
   {
-    super(channel);
+    super(protocol);
     this.data = data;
   }
 

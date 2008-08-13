@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.connector;
 
+import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
@@ -655,6 +656,21 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     {
       OM.LOG.warn(ex);
     }
+  }
+
+  public short getBufferCapacity()
+  {
+    return bufferProvider.getBufferCapacity();
+  }
+
+  public IBuffer provideBuffer()
+  {
+    return bufferProvider.provideBuffer();
+  }
+
+  public void retainBuffer(IBuffer buffer)
+  {
+    bufferProvider.retainBuffer(buffer);
   }
 
   protected void leaveConnecting()

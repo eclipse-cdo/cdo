@@ -14,12 +14,16 @@ import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.ChannelOutputStream;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.protocol.Protocol;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.net4j.util.io.StreamWrapperChain;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
+
+import org.eclipse.spi.net4j.InternalConnector;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,6 +56,34 @@ public abstract class SignalProtocol extends Protocol
 
   protected SignalProtocol()
   {
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected SignalProtocol(IConnector connector)
+  {
+    open(connector);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public IChannel open(IConnector connector)
+  {
+    InternalConnector internal = (InternalConnector)connector;
+    setBufferProvider(internal.getBufferProvider());
+    setExecutorService(internal.getReceiveExecutor());
+    return connector.openChannel(this);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void close()
+  {
+    getChannel().close();
+    setChannel(null);
   }
 
   public IStreamWrapper getStreamWrapper()

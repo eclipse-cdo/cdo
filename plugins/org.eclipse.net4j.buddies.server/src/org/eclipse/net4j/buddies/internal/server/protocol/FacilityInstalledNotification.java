@@ -11,7 +11,6 @@
 package org.eclipse.net4j.buddies.internal.server.protocol;
 
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -26,9 +25,12 @@ public class FacilityInstalledNotification extends Request
 
   private String facilityType;
 
-  public FacilityInstalledNotification(IChannel channel, long collaborationID, String facilityType)
+  /**
+   * @since 2.0
+   */
+  public FacilityInstalledNotification(BuddiesServerProtocol protocol, long collaborationID, String facilityType)
   {
-    super(channel);
+    super(protocol);
     this.collaborationID = collaborationID;
     this.facilityType = facilityType;
   }

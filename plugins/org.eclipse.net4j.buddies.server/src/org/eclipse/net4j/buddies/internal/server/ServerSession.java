@@ -12,7 +12,7 @@ package org.eclipse.net4j.buddies.internal.server;
 
 import org.eclipse.net4j.buddies.common.IBuddy;
 import org.eclipse.net4j.buddies.common.ISession;
-import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.buddies.internal.server.protocol.BuddiesServerProtocol;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
@@ -26,19 +26,25 @@ import org.eclipse.core.runtime.PlatformObject;
  */
 public class ServerSession extends Lifecycle implements ISession, IListener
 {
-  private IChannel channel;
+  private BuddiesServerProtocol protocol;
 
   private IBuddy self;
 
-  public ServerSession(IChannel channel, IBuddy self)
+  /**
+   * @since 2.0
+   */
+  public ServerSession(BuddiesServerProtocol protocol, IBuddy self)
   {
-    this.channel = channel;
+    this.protocol = protocol;
     this.self = self;
   }
 
-  public IChannel getChannel()
+  /**
+   * @since 2.0
+   */
+  public BuddiesServerProtocol getProtocol()
   {
-    return channel;
+    return protocol;
   }
 
   public IBuddy getSelf()
@@ -48,7 +54,8 @@ public class ServerSession extends Lifecycle implements ISession, IListener
 
   public void close()
   {
-    channel.close();
+    protocol.close();
+    protocol = null;
     deactivate();
   }
 
@@ -63,7 +70,7 @@ public class ServerSession extends Lifecycle implements ISession, IListener
 
   public void notifyEvent(IEvent event)
   {
-    if (event.getSource() == channel)
+    if (event.getSource() == protocol)
     {
       if (event instanceof ILifecycleEvent)
       {
@@ -79,7 +86,7 @@ public class ServerSession extends Lifecycle implements ISession, IListener
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    channel.addListener(this);
+    protocol.addListener(this);
     self.getAccount().touch();
   }
 
@@ -87,7 +94,7 @@ public class ServerSession extends Lifecycle implements ISession, IListener
   protected void doDeactivate() throws Exception
   {
     self.getAccount().touch();
-    channel.removeListener(this);
+    protocol.removeListener(this);
     super.doDeactivate();
   }
 }

@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jms.protocol;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -25,9 +24,12 @@ public class JMSSyncRequest extends RequestWithConfirmation<Long>
 {
   private long clientTime0;
 
-  public JMSSyncRequest(IChannel channel)
+  /**
+   * @since 2.0
+   */
+  public JMSSyncRequest(JMSClientProtocol protocol)
   {
-    super(channel);
+    super(protocol);
   }
 
   @Override

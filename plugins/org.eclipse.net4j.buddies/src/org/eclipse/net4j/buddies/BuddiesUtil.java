@@ -10,10 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies;
 
-import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.spi.common.ClientFacilityFactory;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.internal.buddies.protocol.BuddiesClientProtocol;
 import org.eclipse.net4j.internal.buddies.protocol.OpenSessionRequest;
 import org.eclipse.net4j.signal.SignalActor;
 import org.eclipse.net4j.util.WrappedException;
@@ -39,8 +38,8 @@ public final class BuddiesUtil
   {
     try
     {
-      IChannel channel = connector.openChannel(ProtocolConstants.PROTOCOL_NAME, null);
-      OpenSessionRequest request = new OpenSessionRequest(channel, userID, password, getFacilityTypes());
+      BuddiesClientProtocol protocol = new BuddiesClientProtocol(connector);
+      OpenSessionRequest request = new OpenSessionRequest(protocol, userID, password, getFacilityTypes());
       return request.send(timeout);
     }
     catch (Exception ex)

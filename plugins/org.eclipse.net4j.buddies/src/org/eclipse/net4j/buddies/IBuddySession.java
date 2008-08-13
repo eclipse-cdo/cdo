@@ -13,15 +13,12 @@ package org.eclipse.net4j.buddies;
 import org.eclipse.net4j.buddies.common.IBuddy;
 import org.eclipse.net4j.buddies.common.IBuddyContainer;
 import org.eclipse.net4j.buddies.common.ISession;
-import org.eclipse.net4j.channel.IChannel;
 
 /**
  * @author Eike Stepper
  */
 public interface IBuddySession extends ISession, IBuddyContainer
 {
-  public IChannel getChannel();
-
   public IBuddy getSelf();
 
   public void close();

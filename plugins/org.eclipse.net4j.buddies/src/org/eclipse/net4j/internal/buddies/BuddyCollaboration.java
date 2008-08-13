@@ -21,7 +21,7 @@ import org.eclipse.net4j.buddies.internal.common.protocol.MessageNotification;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.spi.common.ClientFacilityFactory;
 import org.eclipse.net4j.buddies.spi.common.Message;
-import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.internal.buddies.protocol.BuddiesClientProtocol;
 import org.eclipse.net4j.internal.buddies.protocol.InstallFacilityRequest;
 import org.eclipse.net4j.internal.buddies.protocol.InviteBuddiesNotification;
 import org.eclipse.net4j.util.WrappedException;
@@ -62,8 +62,8 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
     {
       try
       {
-        IChannel channel = session.getChannel();
-        boolean success = new InstallFacilityRequest(channel, getID(), type).send(ProtocolConstants.TIMEOUT);
+        BuddiesClientProtocol protocol = (BuddiesClientProtocol)session.getProtocol();
+        boolean success = new InstallFacilityRequest(protocol, getID(), type).send(ProtocolConstants.TIMEOUT);
         if (!success)
         {
           return null;
@@ -96,8 +96,8 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
 
     try
     {
-      IChannel channel = session.getChannel();
-      new MessageNotification(channel, collaborationID, facilityType, message).send();
+      BuddiesClientProtocol protocol = (BuddiesClientProtocol)session.getProtocol();
+      new MessageNotification(protocol, collaborationID, facilityType, message).send();
     }
     catch (Exception ex)
     {
@@ -134,8 +134,8 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
     {
       try
       {
-        IChannel channel = session.getChannel();
-        new InviteBuddiesNotification(channel, getID(), invitations).send();
+        BuddiesClientProtocol protocol = (BuddiesClientProtocol)session.getProtocol();
+        new InviteBuddiesNotification(protocol, getID(), invitations).send();
       }
       catch (Exception ex)
       {
@@ -148,8 +148,8 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
   {
     try
     {
-      IChannel channel = session.getChannel();
-      new CollaborationLeftNotification(channel, getID(), session.getSelf().getUserID()).send();
+      BuddiesClientProtocol protocol = (BuddiesClientProtocol)session.getProtocol();
+      new CollaborationLeftNotification(protocol, getID(), session.getSelf().getUserID()).send();
     }
     catch (Exception ex)
     {

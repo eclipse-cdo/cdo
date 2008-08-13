@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jms.protocol;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -27,9 +26,12 @@ public class JMSDeregisterConsumerRequest extends RequestWithConfirmation<Boolea
 
   private long consumerID;
 
-  public JMSDeregisterConsumerRequest(IChannel channel, int sessionID, long consumerID)
+  /**
+   * @since 2.0
+   */
+  public JMSDeregisterConsumerRequest(JMSClientProtocol protocol, int sessionID, long consumerID)
   {
-    super(channel);
+    super(protocol);
     this.sessionID = sessionID;
     this.consumerID = consumerID;
   }

@@ -113,7 +113,7 @@ public abstract class AbstractTransportTest extends AbstractOMTest
     return connector;
   }
 
-  protected void startTransport() throws Exception
+  protected IConnector startTransport() throws Exception
   {
     if (container != null)
     {
@@ -122,7 +122,10 @@ public abstract class AbstractTransportTest extends AbstractOMTest
 
       IConnector connector = getConnector();
       LifecycleUtil.activate(connector);
+      return connector;
     }
+
+    return null;
   }
 
   protected void stopTransport() throws Exception

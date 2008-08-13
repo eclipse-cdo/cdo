@@ -39,7 +39,7 @@ import java.util.List;
  */
 public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevision>>
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionRequest.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionRequest.class);
 
   private Collection<CDOID> ids;
 
@@ -61,23 +61,23 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing referenceChunk: {0}", referenceChunk);
+      PROTOCOL_TRACER.format("Writing referenceChunk: {0}", referenceChunk);
     }
     out.writeInt(referenceChunk);
 
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing {0} IDs", ids.size());
+      PROTOCOL_TRACER.format("Writing {0} IDs", ids.size());
     }
     out.writeInt(ids.size());
 
     for (CDOID id : ids)
     {
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Writing ID: {0}", id);
+        PROTOCOL_TRACER.format("Writing ID: {0}", id);
       }
       CDOIDUtil.write(out, id);
     }
@@ -113,9 +113,9 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
     CDOSessionPackageManagerImpl packageManager = session.getPackageManager();
     ArrayList<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>(ids.size());
 
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Reading {0} revisions", ids.size());
+      PROTOCOL_TRACER.format("Reading {0} revisions", ids.size());
     }
     for (int i = 0; i < ids.size(); i++)
     {
@@ -126,9 +126,9 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
     int size = in.readInt();
     if (size != 0)
     {
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Reading {0} additional revisions", size);
+        PROTOCOL_TRACER.format("Reading {0} additional revisions", size);
       }
       for (int i = 0; i < size; i++)
       {

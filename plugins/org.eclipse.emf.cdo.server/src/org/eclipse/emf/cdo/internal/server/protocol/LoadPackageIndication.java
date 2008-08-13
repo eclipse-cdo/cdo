@@ -27,7 +27,7 @@ import java.io.IOException;
  */
 public class LoadPackageIndication extends CDOReadIndication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadPackageIndication.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadPackageIndication.class);
 
   private CDOPackage cdoPackage;
 
@@ -45,9 +45,9 @@ public class LoadPackageIndication extends CDOReadIndication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     String packageURI = in.readString();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read packageURI: {0}", packageURI);
+      PROTOCOL_TRACER.format("Read packageURI: {0}", packageURI);
     }
 
     cdoPackage = getPackageManager().lookupPackage(packageURI);
@@ -60,9 +60,9 @@ public class LoadPackageIndication extends CDOReadIndication
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing package: {0}", cdoPackage);
+      PROTOCOL_TRACER.format("Writing package: {0}", cdoPackage);
     }
 
     CDOModelUtil.writePackage(out, cdoPackage);

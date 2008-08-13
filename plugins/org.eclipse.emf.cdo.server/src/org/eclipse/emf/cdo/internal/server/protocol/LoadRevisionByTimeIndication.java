@@ -25,7 +25,8 @@ import java.io.IOException;
  */
 public class LoadRevisionByTimeIndication extends LoadRevisionIndication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionByTimeIndication.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
+      LoadRevisionByTimeIndication.class);
 
   private long timeStamp;
 
@@ -44,9 +45,9 @@ public class LoadRevisionByTimeIndication extends LoadRevisionIndication
   {
     super.indicating(in);
     timeStamp = in.readLong();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read timeStamp: {0}", timeStamp);
+      PROTOCOL_TRACER.format("Read timeStamp: {0}", timeStamp);
     }
   }
 

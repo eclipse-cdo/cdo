@@ -28,7 +28,7 @@ import java.io.IOException;
  */
 public class ResourcePathRequest extends CDOClientRequest<String>
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, ResourcePathRequest.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ResourcePathRequest.class);
 
   private CDOID id;
 
@@ -47,9 +47,9 @@ public class ResourcePathRequest extends CDOClientRequest<String>
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing ID: {0}", id);
+      PROTOCOL_TRACER.format("Writing ID: {0}", id);
     }
 
     CDOIDUtil.write(out, id);
@@ -60,9 +60,9 @@ public class ResourcePathRequest extends CDOClientRequest<String>
   {
     // TODO Optimize transfer of URIs/paths
     String path = in.readString();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read path: {0}", path);
+      PROTOCOL_TRACER.format("Read path: {0}", path);
     }
 
     return path;

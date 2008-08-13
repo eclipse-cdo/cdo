@@ -29,7 +29,8 @@ import java.io.IOException;
  */
 public class QueryObjectTypesIndication extends CDOReadIndication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, QueryObjectTypesIndication.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
+      QueryObjectTypesIndication.class);
 
   private CDOID[] ids;
 
@@ -47,9 +48,9 @@ public class QueryObjectTypesIndication extends CDOReadIndication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     int size = in.readInt();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Reading {0} IDs", size);
+      PROTOCOL_TRACER.format("Reading {0} IDs", size);
     }
 
     CDOIDObjectFactory factory = getStore().getCDOIDObjectFactory();
@@ -57,9 +58,9 @@ public class QueryObjectTypesIndication extends CDOReadIndication
     for (int i = 0; i < ids.length; i++)
     {
       ids[i] = CDOIDUtil.read(in, factory);
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Read ID: {0}", ids[i]);
+        PROTOCOL_TRACER.format("Read ID: {0}", ids[i]);
       }
     }
   }
@@ -70,9 +71,9 @@ public class QueryObjectTypesIndication extends CDOReadIndication
     for (CDOID id : ids)
     {
       CDOClassRef classRef = getSession().getClassRef(id);
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Wrinting type: {0}", classRef);
+        PROTOCOL_TRACER.format("Wrinting type: {0}", classRef);
       }
 
       CDOModelUtil.writeClassRef(out, classRef);

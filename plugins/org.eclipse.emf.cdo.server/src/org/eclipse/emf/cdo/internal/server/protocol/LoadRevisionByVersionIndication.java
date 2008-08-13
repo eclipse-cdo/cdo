@@ -25,7 +25,7 @@ import java.io.IOException;
  */
 public class LoadRevisionByVersionIndication extends LoadRevisionIndication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL,
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
       LoadRevisionByVersionIndication.class);
 
   private int version;
@@ -45,9 +45,9 @@ public class LoadRevisionByVersionIndication extends LoadRevisionIndication
   {
     super.indicating(in);
     version = in.readInt();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read version: {0}", version);
+      PROTOCOL_TRACER.format("Read version: {0}", version);
     }
   }
 

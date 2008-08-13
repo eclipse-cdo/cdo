@@ -34,7 +34,7 @@ import java.io.IOException;
  */
 public class LoadChunkIndication extends CDOReadIndication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkIndication.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkIndication.class);
 
   private CDOID id;
 
@@ -60,36 +60,36 @@ public class LoadChunkIndication extends CDOReadIndication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     id = CDOIDUtil.read(in, getStore().getCDOIDObjectFactory());
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read revision ID: {0}", id);
+      PROTOCOL_TRACER.format("Read revision ID: {0}", id);
     }
 
     version = in.readInt();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read revision version: {0}", version);
+      PROTOCOL_TRACER.format("Read revision version: {0}", version);
     }
 
     CDOClassRef classRef = CDOModelUtil.readClassRef(in);
     int featureID = in.readInt();
     CDOClass cdoClass = classRef.resolve(getPackageManager());
     feature = cdoClass.getAllFeatures()[featureID];
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read feature: {0}", feature);
+      PROTOCOL_TRACER.format("Read feature: {0}", feature);
     }
 
     fromIndex = in.readInt();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read fromIndex: {0}", fromIndex);
+      PROTOCOL_TRACER.format("Read fromIndex: {0}", fromIndex);
     }
 
     toIndex = in.readInt();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read toIndex: {0}", toIndex);
+      PROTOCOL_TRACER.format("Read toIndex: {0}", toIndex);
     }
   }
 

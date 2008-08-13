@@ -35,9 +35,9 @@ import java.util.List;
  */
 public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPackage
 {
-  private static final ContextTracer MODEL = new ContextTracer(OM.DEBUG_MODEL, CDOPackageImpl.class);
+  private static final ContextTracer MODEL_TRACER = new ContextTracer(OM.DEBUG_MODEL, CDOPackageImpl.class);
 
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, CDOPackageImpl.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CDOPackageImpl.class);
 
   private CDOPackageManager packageManager;
 
@@ -74,9 +74,9 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
     this.dynamic = dynamic;
     this.metaIDRange = metaIDRange;
     this.parentURI = parentURI;
-    if (MODEL.isEnabled())
+    if (MODEL_TRACER.isEnabled())
     {
-      MODEL.format("Created {0}", this);
+      MODEL_TRACER.format("Created {0}", this);
     }
 
     createLists();
@@ -100,10 +100,10 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
     this.dynamic = dynamic;
     this.metaIDRange = metaIDRange;
     this.parentURI = parentURI;
-    if (MODEL.isEnabled())
+    if (MODEL_TRACER.isEnabled())
     {
-      MODEL.format("Created proxy package {0}, dynamic={1}, metaIDRange={2}, parentURI={3}", packageURI, dynamic,
-          metaIDRange, packageURI);
+      MODEL_TRACER.format("Created proxy package {0}, dynamic={1}, metaIDRange={2}, parentURI={3}", packageURI,
+          dynamic, metaIDRange, packageURI);
     }
   }
 
@@ -116,16 +116,16 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
     ecore = in.readString();
     metaIDRange = CDOIDUtil.readMetaRange(in);
     parentURI = in.readString();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read package: URI={0}, name={1}, dynamic={2}, metaIDRange={3}, parentURI={4}", packageURI,
-          getName(), dynamic, metaIDRange, parentURI);
+      PROTOCOL_TRACER.format("Read package: URI={0}, name={1}, dynamic={2}, metaIDRange={3}, parentURI={4}",
+          packageURI, getName(), dynamic, metaIDRange, parentURI);
     }
 
     int size = in.readInt();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Reading {0} classes", size);
+      PROTOCOL_TRACER.format("Reading {0} classes", size);
     }
 
     for (int i = 0; i < size; i++)
@@ -139,10 +139,10 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
   public void write(ExtendedDataOutput out) throws IOException
   {
     resolve();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing package: URI={0}, name={1}, dynamic={2}, metaIDRange={3}, parentURI={4}", packageURI,
-          getName(), dynamic, metaIDRange, parentURI);
+      PROTOCOL_TRACER.format("Writing package: URI={0}, name={1}, dynamic={2}, metaIDRange={3}, parentURI={4}",
+          packageURI, getName(), dynamic, metaIDRange, parentURI);
     }
 
     super.write(out);
@@ -153,9 +153,9 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
     out.writeString(parentURI);
 
     int size = classes.size();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing {0} classes", size);
+      PROTOCOL_TRACER.format("Writing {0} classes", size);
     }
 
     out.writeInt(size);
@@ -338,9 +338,9 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
   public void addClass(CDOClass cdoClass)
   {
     int classifierID = cdoClass.getClassifierID();
-    if (MODEL.isEnabled())
+    if (MODEL_TRACER.isEnabled())
     {
-      MODEL.format("Adding class: {0}", cdoClass);
+      MODEL_TRACER.format("Adding class: {0}", cdoClass);
     }
 
     setIndex(classifierID, cdoClass);

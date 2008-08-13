@@ -35,7 +35,8 @@ import java.util.Set;
  */
 public class CommitNotificationIndication extends Indication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, CommitNotificationIndication.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
+      CommitNotificationIndication.class);
 
   public CommitNotificationIndication()
   {
@@ -51,15 +52,15 @@ public class CommitNotificationIndication extends Indication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     long timeStamp = in.readLong();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read timeStamp: {0,date} {0,time}", timeStamp);
+      PROTOCOL_TRACER.format("Read timeStamp: {0,date} {0,time}", timeStamp);
     }
 
     int size = in.readInt();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Reading {0} dirty IDs", size);
+      PROTOCOL_TRACER.format("Reading {0} dirty IDs", size);
     }
 
     CDOSessionImpl session = getSession();
@@ -67,18 +68,18 @@ public class CommitNotificationIndication extends Indication
     for (int i = 0; i < size; i++)
     {
       CDOIDAndVersion dirtyOID = CDOIDUtil.readIDAndVersion(in, session);
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Read dirty ID: {0}", dirtyOID);
+        PROTOCOL_TRACER.format("Read dirty ID: {0}", dirtyOID);
       }
 
       dirtyOIDs.add(dirtyOID);
     }
 
     size = in.readInt();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Reading {0} Deltas", size);
+      PROTOCOL_TRACER.format("Reading {0} Deltas", size);
     }
 
     List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();

@@ -25,7 +25,7 @@ import java.io.IOException;
  */
 public abstract class CDOModelElementImpl implements InternalCDOModelElement
 {
-  private static final ContextTracer MODEL = new ContextTracer(OM.DEBUG_MODEL, CDOModelElementImpl.class);
+  private static final ContextTracer MODEL_TRACER = new ContextTracer(OM.DEBUG_MODEL, CDOModelElementImpl.class);
 
   private String name;
 
@@ -71,9 +71,9 @@ public abstract class CDOModelElementImpl implements InternalCDOModelElement
 
   public void setClientInfo(Object clientInfo)
   {
-    if (MODEL.isEnabled())
+    if (MODEL_TRACER.isEnabled())
     {
-      MODEL.format("Setting client info: {0} --> {1}", this, clientInfo);
+      MODEL_TRACER.format("Setting client info: {0} --> {1}", this, clientInfo);
     }
 
     this.clientInfo = clientInfo;
@@ -86,9 +86,9 @@ public abstract class CDOModelElementImpl implements InternalCDOModelElement
 
   public void setServerInfo(Object serverInfo)
   {
-    if (MODEL.isEnabled())
+    if (MODEL_TRACER.isEnabled())
     {
-      MODEL.format("Setting server info: {0} --> {1}", this, serverInfo);
+      MODEL_TRACER.format("Setting server info: {0} --> {1}", this, serverInfo);
     }
 
     this.serverInfo = serverInfo;

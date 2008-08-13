@@ -32,7 +32,6 @@ public abstract class SignalActor<RESULT> extends Signal
   {
     SignalProtocol protocol = extractSignalProtocol(channel);
     setProtocol(protocol);
-    setCorrelationID(protocol.getNextCorrelationID());
   }
 
   public RESULT send() throws Exception

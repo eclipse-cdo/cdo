@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevision>>
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, VerifyRevisionRequest.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, VerifyRevisionRequest.class);
 
   private Collection<InternalCDORevision> revisions;
 
@@ -58,9 +58,9 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing {0} IDs and versions", revisions.size());
+      PROTOCOL_TRACER.format("Writing {0} IDs and versions", revisions.size());
     }
 
     out.writeInt(revisions.size());
@@ -68,9 +68,9 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
     {
       CDOID id = revision.getID();
       int version = revision.getVersion();
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Writing ID and version: {0}v{1}", id, version);
+        PROTOCOL_TRACER.format("Writing ID and version: {0}v{1}", id, version);
       }
 
       CDOIDUtil.write(out, id);
@@ -82,17 +82,17 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
   protected List<InternalCDORevision> confirming(ExtendedDataInputStream in) throws IOException
   {
     ArrayList<InternalCDORevision> result = new ArrayList<InternalCDORevision>();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Reading {0} timeStamps", revisions.size());
+      PROTOCOL_TRACER.format("Reading {0} timeStamps", revisions.size());
     }
 
     for (InternalCDORevision revision : revisions)
     {
       long revised = in.readLong();
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Reading timeStamp: {0}", revised);
+        PROTOCOL_TRACER.format("Reading timeStamp: {0}", revised);
       }
 
       if (revised != CDORevision.UNSPECIFIED_DATE)

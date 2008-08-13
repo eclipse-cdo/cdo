@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class PassiveUpdateRequest extends SyncRevisionRequest
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, PassiveUpdateRequest.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, PassiveUpdateRequest.class);
 
   private boolean passiveUpdateEnabled;
 
@@ -51,9 +51,9 @@ public class PassiveUpdateRequest extends SyncRevisionRequest
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.trace("Turning " + (passiveUpdateEnabled ? "on" : "off") + " passive update");
+      PROTOCOL_TRACER.trace("Turning " + (passiveUpdateEnabled ? "on" : "off") + " passive update");
     }
 
     super.requesting(out);

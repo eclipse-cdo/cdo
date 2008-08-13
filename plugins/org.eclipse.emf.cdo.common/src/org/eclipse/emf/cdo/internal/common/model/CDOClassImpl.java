@@ -37,9 +37,9 @@ import java.util.List;
  */
 public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClass
 {
-  private static final ContextTracer MODEL = new ContextTracer(OM.DEBUG_MODEL, CDOClassImpl.class);
+  private static final ContextTracer MODEL_TRACER = new ContextTracer(OM.DEBUG_MODEL, CDOClassImpl.class);
 
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, CDOClassImpl.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CDOClassImpl.class);
 
   private CDOPackage containingPackage;
 
@@ -67,9 +67,9 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
     this.containingPackage = containingPackage;
     this.classifierID = classifierID;
     this.isAbstract = isAbstract;
-    if (MODEL.isEnabled())
+    if (MODEL_TRACER.isEnabled())
     {
-      MODEL.format("Created {0}", this);
+      MODEL_TRACER.format("Created {0}", this);
     }
   }
 
@@ -88,18 +88,18 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
     readSuperTypes(in);
     readFeatures(in);
 
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read class: ID={0}, name={1}, abstract={2}", classifierID, getName(), isAbstract);
+      PROTOCOL_TRACER.format("Read class: ID={0}, name={1}, abstract={2}", classifierID, getName(), isAbstract);
     }
   }
 
   @Override
   public void write(ExtendedDataOutput out) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing class: ID={0}, name={1}, abstract={2}", classifierID, getName(), isAbstract);
+      PROTOCOL_TRACER.format("Writing class: ID={0}, name={1}, abstract={2}", classifierID, getName(), isAbstract);
     }
 
     super.write(out);
@@ -317,9 +317,9 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
 
   public void addSuperType(CDOClassRef classRef)
   {
-    if (MODEL.isEnabled())
+    if (MODEL_TRACER.isEnabled())
     {
-      MODEL.format("Adding super type: {0}", classRef);
+      MODEL_TRACER.format("Adding super type: {0}", classRef);
     }
 
     superTypes.add(new CDOClassProxy(classRef, containingPackage.getPackageManager()));
@@ -327,9 +327,9 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
 
   public void addFeature(CDOFeature cdoFeature)
   {
-    if (MODEL.isEnabled())
+    if (MODEL_TRACER.isEnabled())
     {
-      MODEL.format("Adding feature: {0}", cdoFeature);
+      MODEL_TRACER.format("Adding feature: {0}", cdoFeature);
     }
 
     features.add(cdoFeature);
@@ -368,17 +368,17 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
   private void readSuperTypes(ExtendedDataInput in) throws IOException
   {
     int size = in.readInt();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Reading {0} super types", size);
+      PROTOCOL_TRACER.format("Reading {0} super types", size);
     }
 
     for (int i = 0; i < size; i++)
     {
       CDOClassRef classRef = CDOModelUtil.readClassRef(in, containingPackage.getPackageURI());
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Read super type: classRef={0}", classRef, classifierID);
+        PROTOCOL_TRACER.format("Read super type: classRef={0}", classRef, classifierID);
       }
 
       superTypes.add(new CDOClassProxy(classRef, containingPackage.getPackageManager()));
@@ -388,9 +388,9 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
   private void readFeatures(ExtendedDataInput in) throws IOException
   {
     int size = in.readInt();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Reading {0} features", size);
+      PROTOCOL_TRACER.format("Reading {0} features", size);
     }
 
     for (int i = 0; i < size; i++)
@@ -403,18 +403,18 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
   private void writeSuperTypes(ExtendedDataOutput out) throws IOException
   {
     int size = superTypes.size();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing {0} super types", size);
+      PROTOCOL_TRACER.format("Writing {0} super types", size);
     }
 
     out.writeInt(size);
     for (CDOClassProxy proxy : superTypes)
     {
       CDOClassRef classRef = proxy.getClassRef();
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Writing super type: classRef={0}", classRef);
+        PROTOCOL_TRACER.format("Writing super type: classRef={0}", classRef);
       }
 
       CDOModelUtil.writeClassRef(out, classRef, containingPackage.getPackageURI());
@@ -424,9 +424,9 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
   private void writeFeatures(ExtendedDataOutput out) throws IOException
   {
     int size = features.size();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing {0} features", size);
+      PROTOCOL_TRACER.format("Writing {0} features", size);
     }
 
     out.writeInt(size);

@@ -27,7 +27,8 @@ import java.io.InputStream;
  */
 public class LoadLibrariesIndication extends CDOServerIndication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadLibrariesIndication.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
+      LoadLibrariesIndication.class);
 
   private String[] libraryNames;
 
@@ -45,18 +46,18 @@ public class LoadLibrariesIndication extends CDOServerIndication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     int size = in.readInt();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Reading {0} library names", size);
+      PROTOCOL_TRACER.format("Reading {0} library names", size);
     }
 
     libraryNames = new String[size];
     for (int i = 0; i < size; i++)
     {
       libraryNames[i] = in.readString();
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Read library name: {0}", libraryNames[i]);
+        PROTOCOL_TRACER.format("Read library name: {0}", libraryNames[i]);
       }
     }
   }
@@ -69,9 +70,9 @@ public class LoadLibrariesIndication extends CDOServerIndication
     for (String libraryName : libraryNames)
     {
       int size = libraryProvider.getSize(libraryName);
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Writing library {0}: {1} bytes", libraryName, size);
+        PROTOCOL_TRACER.format("Writing library {0}: {1} bytes", libraryName, size);
       }
 
       out.writeInt(size);

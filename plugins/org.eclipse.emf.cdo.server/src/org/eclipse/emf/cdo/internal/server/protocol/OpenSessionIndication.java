@@ -36,7 +36,7 @@ import java.io.IOException;
  */
 public class OpenSessionIndication extends IndicationWithResponse
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionIndication.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionIndication.class);
 
   private String repositoryName;
 
@@ -58,21 +58,21 @@ public class OpenSessionIndication extends IndicationWithResponse
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     repositoryName = in.readString();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read repositoryName: {0}", repositoryName);
+      PROTOCOL_TRACER.format("Read repositoryName: {0}", repositoryName);
     }
 
     legacySupportEnabled = in.readBoolean();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read legacySupportEnabled: {0}", legacySupportEnabled);
+      PROTOCOL_TRACER.format("Read legacySupportEnabled: {0}", legacySupportEnabled);
     }
 
     passiveUpdateEnabled = in.readBoolean();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read passiveUpdateEnabled: {0}", passiveUpdateEnabled);
+      PROTOCOL_TRACER.format("Read passiveUpdateEnabled: {0}", passiveUpdateEnabled);
     }
   }
 
@@ -97,18 +97,18 @@ public class OpenSessionIndication extends IndicationWithResponse
     }
     catch (RepositoryNotFoundException ex)
     {
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Repository {0} not found", repositoryName);
+        PROTOCOL_TRACER.format("Repository {0} not found", repositoryName);
       }
 
       out.writeInt(CDOProtocolConstants.ERROR_REPOSITORY_NOT_FOUND);
     }
     catch (SessionCreationException ex)
     {
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Failed to open session for repository {0}", repositoryName);
+        PROTOCOL_TRACER.format("Failed to open session for repository {0}", repositoryName);
       }
 
       out.writeInt(CDOProtocolConstants.ERROR_NO_SESSION);
@@ -132,9 +132,9 @@ public class OpenSessionIndication extends IndicationWithResponse
 
   private void writeSessionID(ExtendedDataOutputStream out, ISession session) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing sessionID: {0}", session.getSessionID());
+      PROTOCOL_TRACER.format("Writing sessionID: {0}", session.getSessionID());
     }
 
     out.writeInt(session.getSessionID());
@@ -142,9 +142,9 @@ public class OpenSessionIndication extends IndicationWithResponse
 
   private void writeRepositoryUUID(ExtendedDataOutputStream out, IRepository repository) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing repositoryUUID: {0}", repository.getUUID());
+      PROTOCOL_TRACER.format("Writing repositoryUUID: {0}", repository.getUUID());
     }
 
     out.writeString(repository.getUUID());
@@ -157,9 +157,9 @@ public class OpenSessionIndication extends IndicationWithResponse
     {
       if (!p.isSystem())
       {
-        if (PROTOCOL.isEnabled())
+        if (PROTOCOL_TRACER.isEnabled())
         {
-          PROTOCOL.format("Writing package info: uri={0}, dynamic={1}, metaIDRange={2}, parentURI={3}", p
+          PROTOCOL_TRACER.format("Writing package info: uri={0}, dynamic={1}, metaIDRange={2}, parentURI={3}", p
               .getPackageURI(), p.isDynamic(), p.getMetaIDRange(), p.getParentURI());
         }
 

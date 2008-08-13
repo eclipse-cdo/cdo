@@ -43,7 +43,8 @@ import java.util.Map.Entry;
  */
 public class CommitTransactionIndication extends CDOServerIndication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, CommitTransactionIndication.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
+      CommitTransactionIndication.class);
 
   private Transaction transaction;
 
@@ -73,9 +74,9 @@ public class CommitTransactionIndication extends CDOServerIndication
     CDORevisionDelta[] dirtyObjectDeltas = new CDORevisionDelta[in.readInt()];
 
     // New packages
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Reading {0} new packages", newPackages.length);
+      PROTOCOL_TRACER.format("Reading {0} new packages", newPackages.length);
     }
 
     for (int i = 0; i < newPackages.length; i++)
@@ -85,9 +86,9 @@ public class CommitTransactionIndication extends CDOServerIndication
     }
 
     // New objects
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Reading {0} new objects", newObjects.length);
+      PROTOCOL_TRACER.format("Reading {0} new objects", newObjects.length);
     }
 
     for (int i = 0; i < newObjects.length; i++)
@@ -96,9 +97,9 @@ public class CommitTransactionIndication extends CDOServerIndication
     }
 
     // Dirty objects
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Reading {0} dirty object deltas", dirtyObjectDeltas.length);
+      PROTOCOL_TRACER.format("Reading {0} dirty object deltas", dirtyObjectDeltas.length);
     }
 
     for (int i = 0; i < dirtyObjectDeltas.length; i++)

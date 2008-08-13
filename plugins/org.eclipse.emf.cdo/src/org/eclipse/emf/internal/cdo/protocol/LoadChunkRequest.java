@@ -34,7 +34,7 @@ import java.io.IOException;
  */
 public class LoadChunkRequest extends CDOClientRequest<CDOID>
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkRequest.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkRequest.class);
 
   private InternalCDORevision revision;
 
@@ -67,9 +67,9 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
     CDOID id = revision.getID();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing revision ID: {0}", id);
+      PROTOCOL_TRACER.format("Writing revision ID: {0}", id);
     }
 
     CDOIDUtil.write(out, id);
@@ -79,28 +79,28 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
       --version;
     }
 
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing revision version: {0}", version);
+      PROTOCOL_TRACER.format("Writing revision version: {0}", version);
     }
 
     out.writeInt(version);
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing feature: {0}", feature);
+      PROTOCOL_TRACER.format("Writing feature: {0}", feature);
     }
     CDOClassRef classRef = feature.getContainingClass().createClassRef();
     CDOModelUtil.writeClassRef(out, classRef);
     out.writeInt(feature.getFeatureIndex());
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing fromIndex: {0}", fromIndex);
+      PROTOCOL_TRACER.format("Writing fromIndex: {0}", fromIndex);
     }
 
     out.writeInt(fromIndex);
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing toIndex: {0}", toIndex);
+      PROTOCOL_TRACER.format("Writing toIndex: {0}", toIndex);
     }
 
     out.writeInt(toIndex);

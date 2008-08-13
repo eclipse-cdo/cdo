@@ -29,7 +29,8 @@ import java.io.IOException;
  */
 public class VerifyRevisionIndication extends CDOReadIndication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, VerifyRevisionIndication.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
+      VerifyRevisionIndication.class);
 
   protected long[] timeStamps;
 
@@ -47,9 +48,9 @@ public class VerifyRevisionIndication extends CDOReadIndication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     int size = in.readInt();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Reading {0} IDs and versions", size);
+      PROTOCOL_TRACER.format("Reading {0} IDs and versions", size);
     }
 
     RevisionManager revisionManager = getRevisionManager();
@@ -59,9 +60,9 @@ public class VerifyRevisionIndication extends CDOReadIndication
     {
       CDOID id = CDOIDUtil.read(in, factory);
       int version = in.readInt();
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Read ID and version: {0}v{1}", id, version);
+        PROTOCOL_TRACER.format("Read ID and version: {0}v{1}", id, version);
       }
 
       InternalCDORevision revision = revisionManager.getRevisionByVersion(id, 0, version);

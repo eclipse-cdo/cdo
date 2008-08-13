@@ -47,7 +47,8 @@ import java.util.Map;
  */
 public class CommitTransactionRequest extends CDOClientRequest<CommitTransactionResult>
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, CommitTransactionRequest.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
+      CommitTransactionRequest.class);
 
   private CDOTransactionImpl transaction;
 
@@ -76,32 +77,32 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     out.writeInt(newResources.size() + newObjects.size());
     out.writeInt(revisionDeltas.size());
 
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing {0} new packages", newPackages.size());
+      PROTOCOL_TRACER.format("Writing {0} new packages", newPackages.size());
     }
 
     for (CDOPackage newPackage : newPackages)
     {
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Writing package {0}", newPackage);
+        PROTOCOL_TRACER.format("Writing package {0}", newPackage);
       }
 
       CDOModelUtil.writePackage(out, newPackage);
     }
 
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing {0} new objects", newResources.size() + newObjects.size());
+      PROTOCOL_TRACER.format("Writing {0} new objects", newResources.size() + newObjects.size());
     }
 
     writeRevisions(out, newResources);
     writeRevisions(out, newObjects);
 
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing {0} dirty objects", revisionDeltas.size());
+      PROTOCOL_TRACER.format("Writing {0} dirty objects", revisionDeltas.size());
     }
 
     Map<CDOID, CDOObject> dirtyObjects = transaction.getDirtyObjects();
@@ -167,9 +168,9 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
   private void writeDirtyObjects(ExtendedDataOutputStream out) throws IOException
   {
     Collection<CDOObject> dirtyObjects = transaction.getDirtyObjects().values();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing {0} dirty objects", dirtyObjects.size());
+      PROTOCOL_TRACER.format("Writing {0} dirty objects", dirtyObjects.size());
     }
 
     writeRevisions(out, dirtyObjects);

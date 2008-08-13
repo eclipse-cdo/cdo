@@ -40,7 +40,7 @@ import java.util.Set;
  */
 public class SyncRevisionRequest extends CDOClientRequest<Set<CDOIDAndVersion>>
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, SyncRevisionRequest.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, SyncRevisionRequest.class);
 
   private Map<CDOID, CDORevision> collectionRevisions;
 
@@ -66,9 +66,9 @@ public class SyncRevisionRequest extends CDOClientRequest<Set<CDOIDAndVersion>>
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.trace("Synchronization " + collectionRevisions.size() + " objects");
+      PROTOCOL_TRACER.trace("Synchronization " + collectionRevisions.size() + " objects");
     }
 
     out.writeInt(referenceChunk);
@@ -100,9 +100,9 @@ public class SyncRevisionRequest extends CDOClientRequest<Set<CDOIDAndVersion>>
       revisionManager.addRevision(revision);
     }
 
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.trace("Synchronization received  " + size + " dirty objects");
+      PROTOCOL_TRACER.trace("Synchronization received  " + size + " dirty objects");
     }
 
     cdoSession.handleSync(dirtyObjects);

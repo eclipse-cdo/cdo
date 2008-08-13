@@ -35,9 +35,9 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
 {
   private static final int UNKNOWN_FEATURE_INDEX = Integer.MIN_VALUE;
 
-  private static final ContextTracer MODEL = new ContextTracer(OM.DEBUG_MODEL, CDOFeatureImpl.class);
+  private static final ContextTracer MODEL_TRACER = new ContextTracer(OM.DEBUG_MODEL, CDOFeatureImpl.class);
 
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, CDOFeatureImpl.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CDOFeatureImpl.class);
 
   private CDOClass containingClass;
 
@@ -69,9 +69,9 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     this.featureID = featureID;
     this.type = type;
     this.many = many;
-    if (MODEL.isEnabled())
+    if (MODEL_TRACER.isEnabled())
     {
-      MODEL.format("Created {0}", this);
+      MODEL_TRACER.format("Created {0}", this);
     }
   }
 
@@ -90,9 +90,9 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     this.many = many;
     this.containment = containment;
     this.referenceTypeProxy = referenceTypeProxy;
-    if (MODEL.isEnabled())
+    if (MODEL_TRACER.isEnabled())
     {
-      MODEL.format("Created {0}", this);
+      MODEL_TRACER.format("Created {0}", this);
     }
   }
 
@@ -110,19 +110,19 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     type = CDOModelUtil.readType(in);
     many = in.readBoolean();
     containment = in.readBoolean();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read feature: ID={0}, name={1}, type={2}, many={3}, containment={4}", featureID, getName(),
-          type, many, containment);
+      PROTOCOL_TRACER.format("Read feature: ID={0}, name={1}, type={2}, many={3}, containment={4}", featureID,
+          getName(), type, many, containment);
     }
 
     if (isReference())
     {
       String defaultURI = containingClass.getContainingPackage().getPackageURI();
       CDOClassRef classRef = CDOModelUtil.readClassRef(in, defaultURI);
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Read reference type: classRef={0}", classRef);
+        PROTOCOL_TRACER.format("Read reference type: classRef={0}", classRef);
       }
 
       referenceTypeProxy = new CDOClassProxy(classRef, containingClass.getContainingPackage().getPackageManager());
@@ -132,10 +132,10 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
   @Override
   public void write(ExtendedDataOutput out) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing feature: ID={0}, name={1}, type={2}, many={3}, containment={4}", featureID, getName(),
-          type, many, containment);
+      PROTOCOL_TRACER.format("Writing feature: ID={0}, name={1}, type={2}, many={3}, containment={4}", featureID,
+          getName(), type, many, containment);
     }
 
     super.write(out);
@@ -147,9 +147,9 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     if (isReference())
     {
       CDOClassRef classRef = referenceTypeProxy.getClassRef();
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Writing reference type: classRef={0}", classRef);
+        PROTOCOL_TRACER.format("Writing reference type: classRef={0}", classRef);
       }
 
       CDOModelUtil.writeClassRef(out, classRef, getContainingPackage().getPackageURI());

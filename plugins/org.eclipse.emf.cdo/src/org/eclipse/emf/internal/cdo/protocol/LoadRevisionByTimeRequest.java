@@ -28,7 +28,8 @@ import java.util.Collection;
  */
 public class LoadRevisionByTimeRequest extends LoadRevisionRequest
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionByTimeRequest.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
+      LoadRevisionByTimeRequest.class);
 
   private long timeStamp;
 
@@ -48,9 +49,9 @@ public class LoadRevisionByTimeRequest extends LoadRevisionRequest
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
     super.requesting(out);
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing timeStamp: {0}", timeStamp);
+      PROTOCOL_TRACER.format("Writing timeStamp: {0}", timeStamp);
     }
     out.writeLong(timeStamp);
   }

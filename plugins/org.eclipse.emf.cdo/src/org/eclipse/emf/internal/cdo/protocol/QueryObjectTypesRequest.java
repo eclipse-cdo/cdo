@@ -31,7 +31,8 @@ import java.util.List;
  */
 public class QueryObjectTypesRequest extends CDOClientRequest<CDOClassRef[]>
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, QueryObjectTypesRequest.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
+      QueryObjectTypesRequest.class);
 
   private List<CDOID> ids;
 
@@ -50,17 +51,17 @@ public class QueryObjectTypesRequest extends CDOClientRequest<CDOClassRef[]>
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing {0} IDs", ids.size());
+      PROTOCOL_TRACER.format("Writing {0} IDs", ids.size());
     }
 
     out.writeInt(ids.size());
     for (CDOID id : ids)
     {
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Writing ID: {0}", id);
+        PROTOCOL_TRACER.format("Writing ID: {0}", id);
       }
 
       CDOIDUtil.write(out, id);
@@ -74,9 +75,9 @@ public class QueryObjectTypesRequest extends CDOClientRequest<CDOClassRef[]>
     for (int i = 0; i < types.length; i++)
     {
       types[i] = CDOModelUtil.readClassRef(in);
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Read type: {0}", types[i]);
+        PROTOCOL_TRACER.format("Read type: {0}", types[i]);
       }
     }
 

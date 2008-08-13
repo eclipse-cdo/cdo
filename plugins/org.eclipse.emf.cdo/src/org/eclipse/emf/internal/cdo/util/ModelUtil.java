@@ -52,7 +52,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  */
 public final class ModelUtil
 {
-  private static final ContextTracer MODEL = new ContextTracer(OM.DEBUG_MODEL, ModelUtil.class);
+  private static final ContextTracer MODEL_TRACER = new ContextTracer(OM.DEBUG_MODEL, ModelUtil.class);
 
   private ModelUtil()
   {
@@ -249,10 +249,10 @@ public final class ModelUtil
         packageManager), many, containment);
 
     EReference opposite = eFeature.getEOpposite();
-    if (MODEL.isEnabled() && opposite != null)
+    if (MODEL_TRACER.isEnabled() && opposite != null)
     {
-      MODEL.format("Opposite info: package={0}, class={1}, feature={2}", opposite.getEContainingClass().getEPackage()
-          .getNsURI(), opposite.getEContainingClass().getName(), opposite.getName());
+      MODEL_TRACER.format("Opposite info: package={0}, class={1}, feature={2}", opposite.getEContainingClass()
+          .getEPackage().getNsURI(), opposite.getEContainingClass().getName(), opposite.getName());
     }
 
     return cdoFeature;

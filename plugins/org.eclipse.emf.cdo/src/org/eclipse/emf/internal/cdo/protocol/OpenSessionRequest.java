@@ -33,7 +33,7 @@ import java.text.MessageFormat;
  */
 public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResult>
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionRequest.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionRequest.class);
 
   private String repositoryName;
 
@@ -59,23 +59,23 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing repositoryName: {0}", repositoryName);
+      PROTOCOL_TRACER.format("Writing repositoryName: {0}", repositoryName);
     }
 
     out.writeString(repositoryName);
 
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing legacySupportEnabled: {0}", legacySupportEnabled);
+      PROTOCOL_TRACER.format("Writing legacySupportEnabled: {0}", legacySupportEnabled);
     }
 
     out.writeBoolean(legacySupportEnabled);
 
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Writing passiveUpdateEnabled: {0}", passiveUpdateEnabled);
+      PROTOCOL_TRACER.format("Writing passiveUpdateEnabled: {0}", passiveUpdateEnabled);
     }
 
     out.writeBoolean(passiveUpdateEnabled);
@@ -97,21 +97,21 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
       throw new ServerException(msg);
     }
 
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read sessionID: {0}", sessionID);
+      PROTOCOL_TRACER.format("Read sessionID: {0}", sessionID);
     }
 
     String repositoryUUID = in.readString();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read repositoryUUID: {0}", repositoryUUID);
+      PROTOCOL_TRACER.format("Read repositoryUUID: {0}", repositoryUUID);
     }
 
     CDOIDLibraryDescriptor libraryDescriptor = CDOIDUtil.readLibraryDescriptor(in);
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Read libraryDescriptor: {0}", libraryDescriptor);
+      PROTOCOL_TRACER.format("Read libraryDescriptor: {0}", libraryDescriptor);
     }
 
     OpenSessionResult result = new OpenSessionResult(sessionID, repositoryUUID, libraryDescriptor);
@@ -127,10 +127,10 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
       boolean dynamic = in.readBoolean();
       CDOIDMetaRange metaIDRange = CDOIDUtil.readMetaRange(in);
       String parentURI = in.readString();
-      if (PROTOCOL.isEnabled())
+      if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL.format("Read package info: uri={0}, dynamic={1}, metaIDRange={2}, parentURI={3}", packageURI, dynamic,
-            metaIDRange, parentURI);
+        PROTOCOL_TRACER.format("Read package info: uri={0}, dynamic={1}, metaIDRange={2}, parentURI={3}", packageURI,
+            dynamic, metaIDRange, parentURI);
       }
 
       result.addPackageInfo(packageURI, dynamic, metaIDRange, parentURI);

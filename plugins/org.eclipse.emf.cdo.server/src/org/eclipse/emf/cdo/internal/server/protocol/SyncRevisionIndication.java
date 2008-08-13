@@ -34,7 +34,8 @@ import java.util.List;
  */
 public class SyncRevisionIndication extends CDOReadIndication
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, SyncRevisionIndication.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
+      SyncRevisionIndication.class);
 
   private List<InternalCDORevision> dirtyObjects = new ArrayList<InternalCDORevision>();
 
@@ -54,9 +55,9 @@ public class SyncRevisionIndication extends CDOReadIndication
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
     IStoreReader reader = StoreUtil.getReader();
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Refreshing reader : " + reader);
+      PROTOCOL_TRACER.format("Refreshing reader : " + reader);
     }
 
     reader.refreshRevisions();
@@ -81,9 +82,9 @@ public class SyncRevisionIndication extends CDOReadIndication
   @Override
   protected void responding(ExtendedDataOutputStream out) throws IOException
   {
-    if (PROTOCOL.isEnabled())
+    if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL.format("Sync found " + dirtyObjects.size() + " dirty objects");
+      PROTOCOL_TRACER.format("Sync found " + dirtyObjects.size() + " dirty objects");
     }
 
     out.writeInt(dirtyObjects.size());

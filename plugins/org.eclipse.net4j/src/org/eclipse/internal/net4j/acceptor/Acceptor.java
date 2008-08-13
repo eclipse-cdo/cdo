@@ -10,29 +10,23 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.acceptor;
 
-import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.Container;
-import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.factory.IFactory;
-import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.registry.IRegistry;
-import org.eclipse.net4j.util.security.INegotiator;
 
+import org.eclipse.internal.net4j.TransportConfig;
 import org.eclipse.internal.net4j.bundle.OM;
 
 import org.eclipse.spi.net4j.InternalAcceptor;
 import org.eclipse.spi.net4j.InternalConnector;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
@@ -41,15 +35,7 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_ACCEPTOR, Acceptor.class);
 
-  private INegotiator negotiator;
-
-  private IBufferProvider bufferProvider;
-
-  private IRegistry<IFactoryKey, IFactory> protocolFactoryRegistry;
-
-  private List<IElementProcessor> protocolPostProcessors;
-
-  private ExecutorService receiveExecutor;
+  private ITransportConfig config;
 
   private transient IListener connectorListener = new LifecycleEventAdapter()
   {
@@ -66,54 +52,19 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   {
   }
 
-  public INegotiator getNegotiator()
+  public ITransportConfig getConfig()
   {
-    return negotiator;
+    if (config == null)
+    {
+      config = new TransportConfig();
+    }
+
+    return config;
   }
 
-  public void setNegotiator(INegotiator negotiator)
+  public void setConfig(ITransportConfig config)
   {
-    this.negotiator = negotiator;
-  }
-
-  public IBufferProvider getBufferProvider()
-  {
-    return bufferProvider;
-  }
-
-  public void setBufferProvider(IBufferProvider bufferProvider)
-  {
-    this.bufferProvider = bufferProvider;
-  }
-
-  public ExecutorService getReceiveExecutor()
-  {
-    return receiveExecutor;
-  }
-
-  public void setReceiveExecutor(ExecutorService receiveExecutor)
-  {
-    this.receiveExecutor = receiveExecutor;
-  }
-
-  public IRegistry<IFactoryKey, IFactory> getProtocolFactoryRegistry()
-  {
-    return protocolFactoryRegistry;
-  }
-
-  public void setProtocolFactoryRegistry(IRegistry<IFactoryKey, IFactory> protocolFactoryRegistry)
-  {
-    this.protocolFactoryRegistry = protocolFactoryRegistry;
-  }
-
-  public List<IElementProcessor> getProtocolPostProcessors()
-  {
-    return protocolPostProcessors;
-  }
-
-  public void setProtocolPostProcessors(List<IElementProcessor> protocolPostProcessors)
-  {
-    this.protocolPostProcessors = protocolPostProcessors;
+    this.config = config;
   }
 
   public IConnector[] getAcceptedConnectors()
@@ -137,11 +88,7 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
 
   public void prepareConnector(InternalConnector connector)
   {
-    connector.setNegotiator(negotiator);
-    connector.setBufferProvider(bufferProvider);
-    connector.setReceiveExecutor(receiveExecutor);
-    connector.setProtocolFactoryRegistry(protocolFactoryRegistry);
-    connector.setProtocolPostProcessors(protocolPostProcessors);
+    connector.setConfig(getConfig());
   }
 
   public void addConnector(InternalConnector connector)
@@ -180,27 +127,9 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (bufferProvider == null)
+    if (getConfig().getBufferProvider() == null)
     {
-      throw new IllegalStateException("bufferProvider == null"); //$NON-NLS-1$
-    }
-
-    if (protocolFactoryRegistry == null && TRACER.isEnabled())
-    {
-      // Just a reminder during development
-      TRACER.trace("factoryRegistry == null"); //$NON-NLS-1$
-    }
-
-    if (protocolPostProcessors == null && TRACER.isEnabled())
-    {
-      // Just a reminder during development
-      TRACER.trace("protocolPostProcessors == null"); //$NON-NLS-1$
-    }
-
-    if (receiveExecutor == null && TRACER.isEnabled())
-    {
-      // Just a reminder during development
-      TRACER.trace("receiveExecutor == null"); //$NON-NLS-1$
+      throw new IllegalStateException("getConfig().getBufferProvider() == null"); //$NON-NLS-1$
     }
   }
 

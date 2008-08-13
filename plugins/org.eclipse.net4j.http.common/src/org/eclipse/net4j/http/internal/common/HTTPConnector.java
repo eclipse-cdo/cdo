@@ -492,7 +492,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
         TRACER.format("Receiving Buffer operation: operationID={0}, length={1}", getOperationCount(), length);
       }
 
-      buffer = getBufferProvider().provideBuffer();
+      buffer = getConfig().getBufferProvider().provideBuffer();
       ByteBuffer byteBuffer = buffer.startPutting(getChannelIndex());
       for (int i = 0; i < length; i++)
       {

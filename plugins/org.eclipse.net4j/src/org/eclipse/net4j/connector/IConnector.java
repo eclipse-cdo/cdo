@@ -15,14 +15,9 @@ import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
-import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.registry.IRegistry;
-
-import java.util.List;
 
 /**
  * One endpoint of a physical connection of arbitrary nature between two communicating parties. A {@link IConnector}
@@ -89,19 +84,6 @@ public interface IConnector extends IContainer<IChannel>
    * Returns the userID of this connector.
    */
   public String getUserID();
-
-  /**
-   * Returns the factory registry used by this connector to lookup factories that can create {@link IProtocol}s for
-   * newly opened {@link IChannel}s.
-   * <p>
-   * Automatic protocol creation only happens if {@link #isServer()} returns <code>true</code>.
-   */
-  public IRegistry<IFactoryKey, IFactory> getProtocolFactoryRegistry();
-
-  /**
-   * Returns the post processors used by this connector to modify protocols created for new channels.
-   */
-  public List<IElementProcessor> getProtocolPostProcessors();
 
   /**
    * Returns the current state of this onnector.

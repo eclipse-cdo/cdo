@@ -45,7 +45,7 @@ public class FailOverTest extends AbstractTransportTest
     LifecycleUtil.deactivate(getAcceptor());
 
     int data = 0x0a;
-    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(getConnector());
+    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(connector);
 
     // Exception HERE
     IntRequest request = new IntRequest(protocol, data);
@@ -60,7 +60,7 @@ public class FailOverTest extends AbstractTransportTest
     TestSignalProtocol protocol = new TestSignalProtocol(connector);
 
     int data = 0x0a;
-    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(getConnector());
+    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(connector);
 
     // Exception HERE
     IntRequest request = new IntRequest(protocol, data);
@@ -78,7 +78,7 @@ public class FailOverTest extends AbstractTransportTest
     TestSignalProtocol protocol = new TestSignalProtocol(connector);
 
     int data = 0x0a;
-    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(getConnector());
+    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(connector);
 
     // Exception HERE
     IntFailRequest request = new IntFailRequest(protocol, data);

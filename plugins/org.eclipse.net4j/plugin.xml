@@ -32,7 +32,7 @@
    <extension
          point="org.eclipse.net4j.util.elementProcessors">
       <elementProcessor
-            class="org.eclipse.net4j.Net4jTransportInjector">
+            class="org.eclipse.net4j.TransportInjector">
       </elementProcessor>
    </extension>
 

@@ -13,14 +13,8 @@ package org.eclipse.net4j.acceptor;
 import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IElementProcessor;
-import org.eclipse.net4j.util.factory.IFactory;
-import org.eclipse.net4j.util.factory.IFactoryKey;
-import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.internal.net4j.acceptor.Acceptor;
-
-import java.util.List;
 
 /**
  * Accepts incoming connection requests from {@link ConnectorLocation#CLIENT client} {@link IConnector connectors} and
@@ -51,16 +45,6 @@ import java.util.List;
  */
 public interface IAcceptor extends IContainer<IConnector>
 {
-  /**
-   * Returns the factory registry used by this acceptor to prepare newly accepted connectors.
-   */
-  public IRegistry<IFactoryKey, IFactory> getProtocolFactoryRegistry();
-
-  /**
-   * Returns the post processors used by this acceptor to prepare newly accepted connectors.
-   */
-  public List<IElementProcessor> getProtocolPostProcessors();
-
   /**
    * Returns an array of the connectors that have been accepted by this acceptor and not been closed since.
    */

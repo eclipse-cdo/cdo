@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.tests.bugzilla;
 
-import org.eclipse.net4j.Net4jTransportInjector;
+import org.eclipse.net4j.TransportInjector;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.tcp.TCPAcceptor;
 import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory;
@@ -46,7 +46,7 @@ public class Bugzilla241463_Test extends AbstractTransportTest
     container.registerFactory(new ExecutorServiceFactory());
     container.registerFactory(new BufferProviderFactory());
     container.registerFactory(new RandomizerFactory());
-    container.addPostProcessor(new Net4jTransportInjector());
+    container.addPostProcessor(new TransportInjector());
 
     // TCP
     container.registerFactory(new TCPSelectorFactory());

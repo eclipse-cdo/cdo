@@ -41,14 +41,15 @@ import java.util.Map;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public class Net4jConfigurator
+public class TransportConfigurator
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, Net4jConfigurator.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TransportConfigurator.class);
 
   private IManagedContainer container;
 
-  public Net4jConfigurator(IManagedContainer container)
+  public TransportConfigurator(IManagedContainer container)
   {
     this.container = container;
   }
@@ -98,7 +99,7 @@ public class Net4jConfigurator
     {
       Element negotiatorConfig = (Element)negotiatorConfigs.item(0);
       INegotiator negotiator = configureNegotiator(negotiatorConfig);
-      acceptor.setNegotiator(negotiator);
+      acceptor.getConfig().setNegotiator(negotiator);
     }
 
     return acceptor;

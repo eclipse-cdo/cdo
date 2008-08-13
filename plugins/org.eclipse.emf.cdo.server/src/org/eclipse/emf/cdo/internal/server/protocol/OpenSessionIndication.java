@@ -88,6 +88,7 @@ public class OpenSessionIndication extends IndicationWithResponse
       Session session = sessionManager.openSession(serverProtocol, legacySupportEnabled);
       session.setPassiveUpdateEnabled(passiveUpdateEnabled);
 
+      // Adjust the infra structure (was IRepositoryProvider)
       serverProtocol.setInfraStructure(session);
 
       writeSessionID(out, session);
@@ -118,16 +119,17 @@ public class OpenSessionIndication extends IndicationWithResponse
 
   private Repository getRepository()
   {
-    try
-    {
-      CDOServerProtocol protocol = (CDOServerProtocol)getProtocol();
-      IRepositoryProvider repositoryProvider = (IRepositoryProvider)protocol.getInfraStructure();
-      return (Repository)repositoryProvider.getRepository(repositoryName);
-    }
-    catch (RuntimeException ex)
+    CDOServerProtocol protocol = (CDOServerProtocol)getProtocol();
+    Object infraStructure = protocol.getInfraStructure();
+
+    IRepositoryProvider repositoryProvider = (IRepositoryProvider)infraStructure;
+    IRepository repository = repositoryProvider.getRepository(repositoryName);
+    if (repository == null)
     {
       throw new RepositoryNotFoundException(repositoryName);
     }
+
+    return (Repository)repository;
   }
 
   private void writeSessionID(ExtendedDataOutputStream out, ISession session) throws IOException

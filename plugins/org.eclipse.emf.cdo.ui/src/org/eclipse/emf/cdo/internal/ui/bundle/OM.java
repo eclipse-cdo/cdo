@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.ui.bundle;
 
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
 
-import org.eclipse.net4j.Net4jTransportInjector;
+import org.eclipse.net4j.TransportInjector;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -72,7 +72,7 @@ public abstract class OM
         responseNegotiator.setCredentialsProvider(new InteractiveCredentialsProvider());
         responseNegotiator.activate();
 
-        Net4jTransportInjector.clientNegotiator = responseNegotiator;
+        TransportInjector.clientNegotiator = responseNegotiator;
       }
       catch (Exception ex)
       {

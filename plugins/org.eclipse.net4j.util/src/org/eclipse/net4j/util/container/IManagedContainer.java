@@ -53,6 +53,11 @@ public interface IManagedContainer extends IContainer<Object>
 
   public Object getElement(String productGroup, String factoryType, String description);
 
+  /**
+   * @since 2.0
+   */
+  public Object getElement(String productGroup, String factoryType, String description, boolean activate);
+
   public Object removeElement(String productGroup, String factoryType, String description);
 
   public void clearElements();

@@ -10,14 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j.protocol;
 
-import org.eclipse.net4j.channel.IChannel;
-
 /**
  * @author Eike Stepper
  */
 public interface IProtocolProvider
 {
-  public IProtocol getClientProtocol(String type, IChannel channel);
-
-  public IProtocol getServerProtocol(String type, IChannel channel);
+  /**
+   * @since 2.0
+   */
+  public IProtocol getProtocol(String type);
 }

@@ -18,16 +18,14 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.net4j.FactoriesProtocolProvider;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBufferProvider;
-import org.eclipse.net4j.util.factory.IFactory;
-import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.protocol.IProtocolProvider;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
-import org.eclipse.net4j.util.registry.HashMapRegistry;
-import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -64,11 +62,8 @@ public class StandaloneManualExample
     IBufferProvider bufferProvider = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferProvider);
 
-    // Prepare protocolFactoryRegistry
-    IFactory protocolFactory = new org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory();
-    IRegistry<IFactoryKey, IFactory> protocolFactoryRegistry = new HashMapRegistry<IFactoryKey, IFactory>();
-    protocolFactoryRegistry.put(protocolFactory.getKey(), protocolFactory);
-    LifecycleUtil.activate(protocolFactoryRegistry);
+    IProtocolProvider protocolProvider = new FactoriesProtocolProvider(
+        new org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory());
 
     // Prepare selector
     org.eclipse.net4j.internal.tcp.TCPSelector selector = new org.eclipse.net4j.internal.tcp.TCPSelector();
@@ -76,11 +71,11 @@ public class StandaloneManualExample
 
     // Prepare connector
     org.eclipse.net4j.internal.tcp.TCPClientConnector connector = new org.eclipse.net4j.internal.tcp.TCPClientConnector();
-    connector.setReceiveExecutor(receiveExecutor);
-    connector.setBufferProvider(bufferProvider);
-    connector.setProtocolFactoryRegistry(protocolFactoryRegistry);
+    connector.getConfig().setBufferProvider(bufferProvider);
+    connector.getConfig().setReceiveExecutor(receiveExecutor);
+    connector.getConfig().setProtocolProvider(protocolProvider);
+    connector.getConfig().setNegotiator(null);
     connector.setSelector(selector);
-    connector.setNegotiator(null);
     connector.setHost("localhost");
     connector.setPort(2036);
     connector.activate();

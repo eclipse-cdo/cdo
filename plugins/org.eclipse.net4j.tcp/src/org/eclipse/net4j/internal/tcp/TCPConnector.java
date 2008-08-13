@@ -164,7 +164,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     {
       if (inputBuffer == null)
       {
-        inputBuffer = getBufferProvider().provideBuffer();
+        inputBuffer = getConfig().getBufferProvider().provideBuffer();
       }
 
       ByteBuffer byteBuffer = inputBuffer.startGetting(socketChannel);
@@ -406,7 +406,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
 
     public ByteBuffer getBuffer()
     {
-      buffer = getBufferProvider().provideBuffer();
+      buffer = getConfig().getBufferProvider().provideBuffer();
       ByteBuffer byteBuffer = buffer.startPutting(ControlChannel.CONTROL_CHANNEL_INDEX);
       byteBuffer.put(ControlChannel.OPCODE_NEGOTIATION);
       return byteBuffer;

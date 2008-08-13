@@ -25,14 +25,15 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public class Net4jTransportInjector implements IElementProcessor
+public class TransportInjector implements IElementProcessor
 {
   public static INegotiator serverNegotiator;
 
   public static INegotiator clientNegotiator;
 
-  public Net4jTransportInjector()
+  public TransportInjector()
   {
   }
 
@@ -56,58 +57,50 @@ public class Net4jTransportInjector implements IElementProcessor
   protected void processAcceptor(IManagedContainer container, String factoryType, String description,
       InternalAcceptor acceptor)
   {
-    if (acceptor.getBufferProvider() == null)
+    ITransportConfig config = acceptor.getConfig();
+    if (config.getBufferProvider() == null)
     {
-      acceptor.setBufferProvider(getBufferProvider(container));
+      config.setBufferProvider(getBufferProvider(container));
     }
 
-    if (acceptor.getReceiveExecutor() == null)
+    if (config.getReceiveExecutor() == null)
     {
-      acceptor.setReceiveExecutor(getExecutorService(container));
+      config.setReceiveExecutor(getExecutorService(container));
     }
 
-    if (acceptor.getProtocolFactoryRegistry() == null)
+    if (config.getProtocolProvider() == null)
     {
-      acceptor.setProtocolFactoryRegistry(container.getFactoryRegistry());
+      config.setProtocolProvider(new ContainerProtocolProvider.Server(container));
     }
 
-    if (acceptor.getProtocolPostProcessors() == null)
+    if (config.getNegotiator() == null && serverNegotiator != null)
     {
-      acceptor.setProtocolPostProcessors(container.getPostProcessors());
-    }
-
-    if (serverNegotiator != null && acceptor.getNegotiator() == null)
-    {
-      acceptor.setNegotiator(serverNegotiator);
+      config.setNegotiator(serverNegotiator);
     }
   }
 
   protected void processConnector(IManagedContainer container, String factoryType, String description,
       InternalConnector connector)
   {
-    if (connector.getBufferProvider() == null)
+    ITransportConfig config = connector.getConfig();
+    if (config.getBufferProvider() == null)
     {
-      connector.setBufferProvider(getBufferProvider(container));
+      config.setBufferProvider(getBufferProvider(container));
     }
 
-    if (connector.getReceiveExecutor() == null)
+    if (config.getReceiveExecutor() == null)
     {
-      connector.setReceiveExecutor(getExecutorService(container));
+      config.setReceiveExecutor(getExecutorService(container));
     }
 
-    if (connector.getProtocolFactoryRegistry() == null)
+    if (config.getProtocolProvider() == null)
     {
-      connector.setProtocolFactoryRegistry(container.getFactoryRegistry());
+      config.setProtocolProvider(new ContainerProtocolProvider.Client(container));
     }
 
-    if (connector.getProtocolPostProcessors() == null)
+    if (config.getNegotiator() == null && clientNegotiator != null && connector.isClient())
     {
-      connector.setProtocolPostProcessors(container.getPostProcessors());
-    }
-
-    if (clientNegotiator != null && connector.isClient() && connector.getNegotiator() == null)
-    {
-      connector.setNegotiator(clientNegotiator);
+      config.setNegotiator(clientNegotiator);
     }
   }
 

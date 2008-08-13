@@ -246,13 +246,25 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Object getElement(String productGroup, String factoryType, String description)
   {
+    return getElement(productGroup, factoryType, description, true);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Object getElement(String productGroup, String factoryType, String description, boolean activate)
+  {
     ElementKey key = new ElementKey(productGroup, factoryType, description);
     Object element = elementRegistry.get(key);
     if (element == null)
     {
       element = createElement(productGroup, factoryType, description);
       element = postProcessElement(productGroup, factoryType, description, element);
-      LifecycleUtil.activate(element);
+      if (activate)
+      {
+        LifecycleUtil.activate(element);
+      }
+
       putElement(key, element);
     }
 

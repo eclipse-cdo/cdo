@@ -46,7 +46,7 @@ public final class Net4jUtil
     container.registerFactory(new ExecutorServiceFactory());
     container.registerFactory(new BufferProviderFactory());
     container.registerFactory(new RandomizerFactory());
-    container.addPostProcessor(new Net4jTransportInjector());
+    container.addPostProcessor(new TransportInjector());
   }
 
   public static ExecutorService getExecutorService(IManagedContainer container)

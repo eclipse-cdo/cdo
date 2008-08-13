@@ -124,16 +124,16 @@ public class ConnectorTest extends AbstractOMTest
 
     acceptor.setStartSynchronously(true);
     acceptor.setSynchronousStartTimeout(TIMEOUT);
-    acceptor.setBufferProvider(bufferPool);
-    acceptor.setReceiveExecutor(threadPool);
+    acceptor.getConfig().setBufferProvider(bufferPool);
+    acceptor.getConfig().setReceiveExecutor(threadPool);
     acceptor.setSelector(selector);
     acceptor.setAddress("0.0.0.0");
     acceptor.setPort(2036);
     acceptor.activate();
 
     connector = new TCPClientConnector();
-    connector.setBufferProvider(bufferPool);
-    connector.setReceiveExecutor(threadPool);
+    connector.getConfig().setBufferProvider(bufferPool);
+    connector.getConfig().setReceiveExecutor(threadPool);
     connector.setSelector(selector);
     connector.setHost("localhost");
     connector.setPort(2036);
@@ -189,8 +189,8 @@ public class ConnectorTest extends AbstractOMTest
     acceptor = new TCPAcceptor();
     acceptor.setStartSynchronously(true);
     acceptor.setSynchronousStartTimeout(TIMEOUT);
-    acceptor.setBufferProvider(bufferPool);
-    acceptor.setReceiveExecutor(threadPool);
+    acceptor.getConfig().setBufferProvider(bufferPool);
+    acceptor.getConfig().setReceiveExecutor(threadPool);
     // acceptor.setNegotiator(challengeNegotiator);
     acceptor.setSelector(selector);
     acceptor.setAddress("0.0.0.0");
@@ -205,8 +205,8 @@ public class ConnectorTest extends AbstractOMTest
     responseNegotiator.activate();
 
     connector = new TCPClientConnector();
-    connector.setBufferProvider(bufferPool);
-    connector.setReceiveExecutor(threadPool);
+    connector.getConfig().setBufferProvider(bufferPool);
+    connector.getConfig().setReceiveExecutor(threadPool);
     // connector.setNegotiator(responseNegotiator);
     connector.setSelector(selector);
     connector.setHost("localhost");
@@ -261,9 +261,9 @@ public class ConnectorTest extends AbstractOMTest
     acceptor = new TCPAcceptor();
     acceptor.setStartSynchronously(true);
     acceptor.setSynchronousStartTimeout(TIMEOUT);
-    acceptor.setBufferProvider(bufferPool);
-    acceptor.setReceiveExecutor(threadPool);
-    acceptor.setNegotiator(challengeNegotiator);
+    acceptor.getConfig().setBufferProvider(bufferPool);
+    acceptor.getConfig().setReceiveExecutor(threadPool);
+    acceptor.getConfig().setNegotiator(challengeNegotiator);
     acceptor.setSelector(selector);
     acceptor.setAddress("0.0.0.0");
     acceptor.setPort(2036);
@@ -277,9 +277,9 @@ public class ConnectorTest extends AbstractOMTest
     responseNegotiator.activate();
 
     TCPClientConnector connector = new TCPClientConnector();
-    connector.setBufferProvider(bufferPool);
-    connector.setReceiveExecutor(threadPool);
-    connector.setNegotiator(responseNegotiator);
+    connector.getConfig().setBufferProvider(bufferPool);
+    connector.getConfig().setReceiveExecutor(threadPool);
+    connector.getConfig().setNegotiator(responseNegotiator);
     connector.setSelector(selector);
     connector.setHost("localhost");
     connector.setPort(2036);

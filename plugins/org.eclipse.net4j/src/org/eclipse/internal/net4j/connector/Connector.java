@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.internal.net4j.connector;
 
+import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.buffer.IBuffer;
-import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorLocation;
@@ -20,6 +20,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.connector.IConnectorStateEvent;
 import org.eclipse.net4j.protocol.ClientProtocolFactory;
 import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.protocol.IProtocolProvider;
 import org.eclipse.net4j.protocol.ServerProtocolFactory;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -28,22 +29,19 @@ import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerEvent;
-import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.LifecycleEventConverter;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.factory.FactoryKey;
-import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.MonitorUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.INegotiationContext;
-import org.eclipse.net4j.util.security.INegotiator;
 
+import org.eclipse.internal.net4j.TransportConfig;
 import org.eclipse.internal.net4j.bundle.OM;
 import org.eclipse.internal.net4j.channel.Channel;
 
@@ -55,7 +53,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -68,22 +65,9 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   private String userID;
 
-  private IRegistry<IFactoryKey, IFactory> protocolFactoryRegistry;
-
-  private List<IElementProcessor> protocolPostProcessors;
-
-  private INegotiator negotiator;
+  private ITransportConfig config;
 
   private INegotiationContext negotiationContext;
-
-  private IBufferProvider bufferProvider;
-
-  /**
-   * An optional executor to be used by the {@link IChannel}s to process their receive queues instead of the current
-   * thread. If not <code>null</code> the sender and the receiver peers become decoupled.
-   * <p>
-   */
-  private ExecutorService receiveExecutor;
 
   private long openChannelTimeout = DEFAULT_OPEN_CHANNEL_TIMEOUT;;
 
@@ -115,54 +99,19 @@ public abstract class Connector extends Container<IChannel> implements InternalC
   {
   }
 
-  public ExecutorService getReceiveExecutor()
+  public ITransportConfig getConfig()
   {
-    return receiveExecutor;
+    if (config == null)
+    {
+      config = new TransportConfig();
+    }
+
+    return config;
   }
 
-  public void setReceiveExecutor(ExecutorService receiveExecutor)
+  public void setConfig(ITransportConfig config)
   {
-    this.receiveExecutor = receiveExecutor;
-  }
-
-  public IRegistry<IFactoryKey, IFactory> getProtocolFactoryRegistry()
-  {
-    return protocolFactoryRegistry;
-  }
-
-  public void setProtocolFactoryRegistry(IRegistry<IFactoryKey, IFactory> protocolFactoryRegistry)
-  {
-    this.protocolFactoryRegistry = protocolFactoryRegistry;
-  }
-
-  public List<IElementProcessor> getProtocolPostProcessors()
-  {
-    return protocolPostProcessors;
-  }
-
-  public void setProtocolPostProcessors(List<IElementProcessor> protocolPostProcessors)
-  {
-    this.protocolPostProcessors = protocolPostProcessors;
-  }
-
-  public IBufferProvider getBufferProvider()
-  {
-    return bufferProvider;
-  }
-
-  public void setBufferProvider(IBufferProvider bufferProvider)
-  {
-    this.bufferProvider = bufferProvider;
-  }
-
-  public INegotiator getNegotiator()
-  {
-    return negotiator;
-  }
-
-  public void setNegotiator(INegotiator negotiator)
-  {
-    this.negotiator = negotiator;
+    this.config = config;
   }
 
   public INegotiationContext getNegotiationContext()
@@ -251,7 +200,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
       case NEGOTIATING:
         finishedConnecting.countDown();
         negotiationContext = createNegotiationContext();
-        negotiator.negotiate(negotiationContext);
+        getConfig().getNegotiator().negotiate(negotiationContext);
         break;
 
       case CONNECTED:
@@ -500,7 +449,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
   {
     InternalChannel channel = createChannelInstance();
     channel.setChannelMultiplexer(this);
-    channel.setReceiveExecutor(receiveExecutor);
+    channel.setReceiveExecutor(getConfig().getReceiveExecutor());
     return channel;
   }
 
@@ -660,22 +609,22 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   public short getBufferCapacity()
   {
-    return bufferProvider.getBufferCapacity();
+    return getConfig().getBufferProvider().getBufferCapacity();
   }
 
   public IBuffer provideBuffer()
   {
-    return bufferProvider.provideBuffer();
+    return getConfig().getBufferProvider().provideBuffer();
   }
 
   public void retainBuffer(IBuffer buffer)
   {
-    bufferProvider.retainBuffer(buffer);
+    getConfig().getBufferProvider().retainBuffer(buffer);
   }
 
   protected void leaveConnecting()
   {
-    if (getNegotiator() == null)
+    if (getConfig().getNegotiator() == null)
     {
       setState(ConnectorState.CONNECTED);
     }
@@ -687,11 +636,6 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   protected abstract INegotiationContext createNegotiationContext();
 
-  /**
-   * TODO Use IProtocolProvider and make the protocols real container elements, so that the post processors can reach
-   * them. The protocol description can be used to store unique protocol IDs so that always new protocols are created in
-   * the container.
-   */
   protected IProtocol createProtocol(String type, Object infraStructure)
   {
     if (StringUtil.isEmpty(type))
@@ -699,43 +643,23 @@ public abstract class Connector extends Container<IChannel> implements InternalC
       return null;
     }
 
-    IRegistry<IFactoryKey, IFactory> registry = getProtocolFactoryRegistry();
-    if (registry == null)
+    IProtocolProvider protocolProvider = getConfig().getProtocolProvider();
+    if (protocolProvider == null)
     {
-      throw new ConnectorException("No protocol registry configured");
+      throw new ConnectorException("No protocol provider configured");
     }
 
-    // Get protocol factory
-    IFactoryKey key = createProtocolFactoryKey(type);
-    IFactory factory = registry.get(key);
-    if (factory == null)
-    {
-      throw new ConnectorException("Unknown protocol: " + type); //$NON-NLS-1$
-    }
-
-    // Create protocol
-    String description = null;
-    IProtocol protocol = (IProtocol)factory.create(description);
+    IProtocol protocol = protocolProvider.getProtocol(type);
     if (protocol == null)
     {
       throw new ConnectorException("Invalid protocol factory: " + type); //$NON-NLS-1$
     }
 
-    protocol.setBufferProvider(bufferProvider);
-    protocol.setExecutorService(receiveExecutor);
+    protocol.setBufferProvider(getConfig().getBufferProvider());
+    protocol.setExecutorService(getConfig().getReceiveExecutor());
     if (infraStructure != null)
     {
       protocol.setInfraStructure(infraStructure);
-    }
-
-    // Post process protocol
-    List<IElementProcessor> processors = getProtocolPostProcessors();
-    if (processors != null)
-    {
-      for (IElementProcessor processor : processors)
-      {
-        protocol = (IProtocol)processor.process(null, key.getProductGroup(), key.getType(), description, protocol);
-      }
     }
 
     return protocol;
@@ -764,21 +688,9 @@ public abstract class Connector extends Container<IChannel> implements InternalC
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (bufferProvider == null)
+    if (getConfig().getBufferProvider() == null)
     {
-      throw new IllegalStateException("bufferProvider == null"); //$NON-NLS-1$
-    }
-
-    if (protocolFactoryRegistry == null && TRACER.isEnabled())
-    {
-      // Just a reminder during development
-      TRACER.trace("No factoryRegistry!"); //$NON-NLS-1$
-    }
-
-    if (receiveExecutor == null && TRACER.isEnabled())
-    {
-      // Just a reminder during development
-      TRACER.trace("No receiveExecutor!"); //$NON-NLS-1$
+      throw new IllegalStateException("getConfig().getBufferProvider() == null"); //$NON-NLS-1$
     }
   }
 

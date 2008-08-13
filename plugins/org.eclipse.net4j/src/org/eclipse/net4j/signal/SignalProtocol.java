@@ -72,9 +72,11 @@ public abstract class SignalProtocol extends Protocol
   public IChannel open(IConnector connector)
   {
     InternalConnector internal = (InternalConnector)connector;
-    setBufferProvider(internal.getBufferProvider());
-    setExecutorService(internal.getReceiveExecutor());
-    return connector.openChannel(this);
+    setBufferProvider(internal.getConfig().getBufferProvider());
+    setExecutorService(internal.getConfig().getReceiveExecutor());
+    IChannel channel = connector.openChannel(this);
+    setChannel(channel);
+    return channel;
   }
 
   /**

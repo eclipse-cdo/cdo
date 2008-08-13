@@ -56,7 +56,7 @@ public class ControlChannel extends Channel
     setChannelID(channelID);
     setChannelIndex(CONTROL_CHANNEL_INDEX);
     setChannelMultiplexer(connector);
-    setReceiveExecutor(connector.getReceiveExecutor());
+    setReceiveExecutor(connector.getConfig().getReceiveExecutor());
   }
 
   public TCPConnector getConnector()

@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.internal.server.bundle;
 import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.server.IRepository;
 
-import org.eclipse.net4j.Net4jConfigurator;
+import org.eclipse.net4j.TransportConfigurator;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -53,7 +53,7 @@ public class CDOServerApplication extends OSGiApplication
         OM.LOG.warn("No repositories configured");
       }
 
-      Net4jConfigurator net4jConfigurator = new Net4jConfigurator(IPluginContainer.INSTANCE);
+      TransportConfigurator net4jConfigurator = new TransportConfigurator(IPluginContainer.INSTANCE);
       acceptors = net4jConfigurator.configure(configFile);
       if (acceptors == null || acceptors.length == 0)
       {

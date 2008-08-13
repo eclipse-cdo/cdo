@@ -42,10 +42,7 @@ public class JVMAcceptor extends Acceptor implements IJVMAcceptor
   {
     JVMServerConnector connector = new JVMServerConnector(client);
     connector.setName(client.getName());
-    connector.setBufferProvider(client.getBufferProvider());
-    connector.setReceiveExecutor(client.getReceiveExecutor());
-    connector.setProtocolFactoryRegistry(client.getProtocolFactoryRegistry());
-    connector.setProtocolPostProcessors(client.getProtocolPostProcessors());
+    connector.setConfig(getConfig());
     connector.activate();
     addConnector(connector);
     return connector;

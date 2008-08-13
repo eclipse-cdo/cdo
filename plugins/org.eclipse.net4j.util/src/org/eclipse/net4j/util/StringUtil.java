@@ -195,4 +195,167 @@ public final class StringUtil
   {
     return str == null || str.length() == 0;
   }
+
+  /**
+   * Matches a string against a pattern.
+   * <p>
+   * Pattern description:
+   * <ul>
+   * <li><code>*</code> matches 0 or more characters
+   * <li><code>?</code> matches a single character
+   * <li><code>[...]</code> matches a set and/or range of characters
+   * <li><code>\</code> escapes the following character
+   * </ul>
+   * 
+   * @since 2.0
+   */
+  public static boolean glob(String pattern, String string)
+  {
+    return glob(pattern, string, null);
+  }
+
+  /**
+   * Matches a string against a pattern and fills an array with the sub-matches.
+   * <p>
+   * Pattern description:
+   * <ul>
+   * <li><code>*</code> matches 0 or more characters
+   * <li><code>?</code> matches a single character
+   * <li><code>[...]</code> matches a set and/or range of characters
+   * <li><code>\</code> escapes the following character
+   * </ul>
+   * 
+   * @since 2.0
+   */
+  public static boolean glob(String pattern, String string, String[] subStrings)
+  {
+    return globRecurse(pattern, 0, string, 0, subStrings, 0);
+  }
+
+  private static boolean globRecurse(String pattern, int patternIndex, String string, int stringIndex,
+      String[] subStrings, int subStringsIndex)
+  {
+    int patternLength = pattern.length();
+    int stringLength = string.length();
+
+    for (;;)
+    {
+      char patternChar = pattern.charAt(patternIndex);
+      boolean endReached = stringIndex == stringLength;
+      if (patternIndex == patternLength)
+      {
+        return endReached;
+      }
+      else if (endReached && patternChar != '*')
+      {
+        return false;
+      }
+
+      switch (patternChar)
+      {
+      case '*':
+      {
+        int startIndex = stringIndex;
+        if (++patternIndex >= patternLength)
+        {
+          globRemember(string, startIndex, stringLength, subStrings, subStringsIndex);
+          return true;
+        }
+
+        for (;;)
+        {
+          if (globRecurse(pattern, patternIndex, string, stringIndex, subStrings, subStringsIndex + 1))
+          {
+            globRemember(string, startIndex, stringIndex, subStrings, subStringsIndex);
+            return true;
+          }
+
+          if (endReached)
+          {
+            return false;
+          }
+
+          ++stringIndex;
+        }
+      }
+
+      case '?':
+        ++patternIndex;
+        globRemember(string, stringIndex, ++stringIndex, subStrings, subStringsIndex++);
+        break;
+
+      case '[':
+        try
+        {
+          ++patternIndex;
+          char stringChar = string.charAt(stringIndex);
+          char rangeStartChar = patternChar;
+
+          while (true)
+          {
+            if (rangeStartChar == ']')
+            {
+              return false;
+            }
+
+            if (rangeStartChar == stringChar)
+            {
+              break;
+            }
+
+            ++patternIndex;
+            char nextPatternChar = patternChar;
+            if (nextPatternChar == '-')
+            {
+              ++patternIndex;
+              char rangeEndChar = patternChar;
+              if (rangeStartChar <= stringChar && stringChar <= rangeEndChar)
+              {
+                break;
+              }
+
+              ++patternIndex;
+              nextPatternChar = patternChar;
+            }
+
+            rangeStartChar = nextPatternChar;
+          }
+
+          patternIndex = pattern.indexOf(']', patternIndex) + 1;
+          if (patternIndex <= 0)
+          {
+            return false;
+          }
+
+          globRemember(string, stringIndex, ++stringIndex, subStrings, subStringsIndex++);
+        }
+        catch (StringIndexOutOfBoundsException ex)
+        {
+          return false;
+        }
+
+        break;
+
+      case '\\':
+        if (++patternIndex >= patternLength)
+        {
+          return false;
+        }
+
+      default: // fall through
+        if (patternChar++ != string.charAt(stringIndex++))
+        {
+          return false;
+        }
+      }
+    }
+  }
+
+  private static void globRemember(String string, int start, int end, String[] subStrings, int subStringsIndex)
+  {
+    if (subStrings != null && subStringsIndex < subStrings.length)
+    {
+      subStrings[subStringsIndex] = string.substring(start, end);
+    }
+  }
 }

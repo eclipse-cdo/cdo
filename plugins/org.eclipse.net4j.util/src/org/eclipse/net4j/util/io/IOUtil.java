@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.io;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.StringUtil;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -36,6 +37,27 @@ import java.util.List;
 public final class IOUtil
 {
   public static final int DEFAULT_BUFFER_SIZE = 8192;
+
+  /**
+   * @since 2.0
+   */
+  public static final String WILDCARD_SINGLE_CHAR = "?";
+
+  /**
+   * @since 2.0
+   */
+  public static final String WILDCARD_MULTI_CHARS = "*";
+
+  /**
+   * @since 2.0
+   */
+  public static final String WILDCARD_MULTI_DIRS = "**";
+
+  private static final char SEP = File.separatorChar;
+
+  private static final char SEP_UNIX = '/';
+
+  private static final char SEP_WINDOWS = '\\';
 
   private IOUtil()
   {
@@ -191,6 +213,44 @@ public final class IOUtil
     {
       closeable.close();
     }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static String makeRelative(File file, File toFolder)
+  {
+    String fileName = normalizeSeparator(file.getAbsolutePath());
+    String folderName = normalizeSeparator(toFolder.getAbsolutePath());
+    if (fileName.startsWith(folderName))
+    {
+      String relative = fileName.substring(folderName.length());
+      if (relative.startsWith(File.separator))
+      {
+        relative = relative.substring(1);
+      }
+
+      return relative;
+    }
+
+    throw new IllegalArgumentException("Different prefixes: " + fileName + " != " + folderName);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static String normalizeSeparator(String string)
+  {
+    if (SEP == SEP_UNIX)
+    {
+      return string.replace(SEP_WINDOWS, SEP_UNIX);
+    }
+    else if (SEP == SEP_WINDOWS)
+    {
+      return string.replace(SEP_UNIX, SEP_WINDOWS);
+    }
+
+    return string;
   }
 
   public static void mkdirs(File folder)
@@ -563,6 +623,73 @@ public final class IOUtil
     {
       closeSilent(stream1);
       closeSilent(stream2);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static List<File> glob(String pattern, File folder)
+  {
+    List<File> result = new ArrayList<File>();
+    pattern = normalizeSeparator(pattern);
+    if (pattern.endsWith(File.separator))
+    {
+      pattern += WILDCARD_MULTI_DIRS;
+    }
+
+    globRecurse(pattern, folder, result);
+    return result;
+  }
+
+  private static void globRecurse(String pattern, File folder, List<File> result)
+  {
+    int sep = pattern.indexOf(SEP);
+    if (sep != -1)
+    {
+      globSegment(pattern.substring(0, sep), pattern.substring(sep + 1), folder, result);
+    }
+    else
+    {
+      globSegment(pattern, null, folder, result);
+    }
+  }
+
+  private static void globSegment(String segment, String pattern, File folder, List<File> result)
+  {
+    boolean multiDirs = false;
+    if (segment.contains(WILDCARD_MULTI_DIRS))
+    {
+      if (!segment.equals(WILDCARD_MULTI_DIRS))
+      {
+        throw new IllegalArgumentException("Invalid pattern segment: " + segment);
+      }
+
+      multiDirs = true;
+    }
+
+    for (File file : folder.listFiles())
+    {
+      String tmp = segment;
+      if (multiDirs && file.isDirectory())
+      {
+        globRecurse(WILDCARD_MULTI_DIRS + File.separator + pattern, file, result);
+        tmp = WILDCARD_MULTI_CHARS;
+      }
+
+      if (StringUtil.glob(tmp, file.getName()))
+      {
+        if (pattern == null)
+        {
+          // Match
+          result.add(file);
+        }
+        else if (file.isDirectory())
+        {
+          // Recurse
+          globRecurse(pattern, file, result);
+        }
+      }
     }
   }
 

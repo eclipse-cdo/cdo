@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.tests.ExtendedIOTest;
 import org.eclipse.net4j.util.tests.MonitorTest;
 import org.eclipse.net4j.util.tests.MultiMapTest;
 import org.eclipse.net4j.util.tests.ReferenceValueMapTest;
+import org.eclipse.net4j.util.tests.SecurityTest;
 import org.eclipse.net4j.util.tests.SortedFileMapTest;
 import org.eclipse.net4j.util.tests.SynchronizingCorrelatorTest;
 
@@ -39,10 +40,10 @@ public class AllTests
     suite.addTestSuite(BufferPoolTest.class);
     suite.addTestSuite(ExtendedIOTest.class);
     suite.addTestSuite(Bugzilla241463_Test.class);
+    suite.addTestSuite(ConnectorTest.class);
     suite.addTestSuite(TCPTransportTest.class);
     suite.addTestSuite(SignalTest.class);
-    // suite.addTestSuite(SecurityTest.class);
-    // TODO suite.addTestSuite(ConnectorTest.class);
+    suite.addTestSuite(SecurityTest.class);
     // $JUnit-END$
 
     return suite;

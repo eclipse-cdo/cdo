@@ -10,38 +10,30 @@
  **************************************************************************/
 package org.eclipse.net4j.util.security;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public interface INegotiationContext
+public class NegotiationException extends SecurityException
 {
-  public ByteBuffer getBuffer();
+  private static final long serialVersionUID = 1L;
 
-  public void transmitBuffer(ByteBuffer buffer);
-
-  public Receiver getReceiver();
-
-  public void setReceiver(Receiver receiver);
-
-  public Enum<?> getState();
-
-  public void setState(Enum<?> state);
-
-  public void setUserID(String userID);
-
-  public void setFinished(boolean success);
-
-  public Object getInfo();
-
-  public void setInfo(Object info);
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface Receiver
+  public NegotiationException()
   {
-    public void receiveBuffer(INegotiationContext context, ByteBuffer buffer);
+  }
+
+  public NegotiationException(String s)
+  {
+    super(s);
+  }
+
+  public NegotiationException(Throwable cause)
+  {
+    super(cause);
+  }
+
+  public NegotiationException(String message, Throwable cause)
+  {
+    super(message, cause);
   }
 }

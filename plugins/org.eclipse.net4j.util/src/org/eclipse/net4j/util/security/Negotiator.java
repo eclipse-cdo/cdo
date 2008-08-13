@@ -36,23 +36,26 @@ public abstract class Negotiator<STATE extends Enum<?>, EVENT extends Enum<?>> e
       STATE failureState, EVENT startEvent, EVENT bufferEvent, boolean initiator)
   {
     super(stateEnum, eventEnum);
-
     if (initialState == null)
     {
       throw new IllegalStateException("initialState == null");
     }
+
     if (successState == null)
     {
       throw new IllegalStateException("successState == null");
     }
+
     if (failureState == null)
     {
       throw new IllegalStateException("failureState == null");
     }
+
     if (startEvent == null)
     {
       throw new IllegalStateException("startEvent == null");
     }
+
     if (bufferEvent == null)
     {
       throw new IllegalStateException("bufferEvent == null");
@@ -64,7 +67,6 @@ public abstract class Negotiator<STATE extends Enum<?>, EVENT extends Enum<?>> e
     this.startEvent = startEvent;
     this.bufferEvent = bufferEvent;
     this.initiator = initiator;
-
   }
 
   public STATE getInitialState()
@@ -119,11 +121,27 @@ public abstract class Negotiator<STATE extends Enum<?>, EVENT extends Enum<?>> e
     Enum<?> state = context.getState();
     if (state == successState)
     {
-      context.setFinished(true);
+      handleSuccess(context);
     }
     else if (state == failureState)
     {
-      context.setFinished(false);
+      handleFailure(context);
     }
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void handleSuccess(INegotiationContext context)
+  {
+    context.setFinished(true);
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void handleFailure(INegotiationContext context)
+  {
+    context.setFinished(false);
   }
 }

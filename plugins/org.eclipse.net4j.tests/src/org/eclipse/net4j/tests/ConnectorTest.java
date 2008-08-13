@@ -12,6 +12,7 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBufferPool;
+import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.internal.tcp.TCPAcceptor;
 import org.eclipse.net4j.internal.tcp.TCPClientConnector;
 import org.eclipse.net4j.internal.tcp.TCPSelector;
@@ -20,6 +21,7 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.ChallengeNegotiator;
+import org.eclipse.net4j.util.security.NegotiationException;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.Randomizer;
@@ -145,9 +147,9 @@ public class ConnectorTest extends AbstractOMTest
     assertEquals(true, connector.isActive());
   }
 
-  public void testDeferredActivation100() throws Exception
+  public void testDeferredActivation10() throws Exception
   {
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 10; i++)
     {
       IOUtil.OUT().println();
       IOUtil.OUT().println();
@@ -191,7 +193,7 @@ public class ConnectorTest extends AbstractOMTest
     acceptor.setSynchronousStartTimeout(TIMEOUT);
     acceptor.getConfig().setBufferProvider(bufferPool);
     acceptor.getConfig().setReceiveExecutor(threadPool);
-    // acceptor.setNegotiator(challengeNegotiator);
+    acceptor.getConfig().setNegotiator(challengeNegotiator);
     acceptor.setSelector(selector);
     acceptor.setAddress("0.0.0.0");
     acceptor.setPort(2036);
@@ -207,7 +209,7 @@ public class ConnectorTest extends AbstractOMTest
     connector = new TCPClientConnector();
     connector.getConfig().setBufferProvider(bufferPool);
     connector.getConfig().setReceiveExecutor(threadPool);
-    // connector.setNegotiator(responseNegotiator);
+    connector.getConfig().setNegotiator(responseNegotiator);
     connector.setSelector(selector);
     connector.setHost("localhost");
     connector.setPort(2036);
@@ -217,9 +219,9 @@ public class ConnectorTest extends AbstractOMTest
     assertEquals(true, connected);
   }
 
-  public void testNegotiationSuccess100() throws Exception
+  public void testNegotiationSuccess10() throws Exception
   {
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 10; i++)
     {
       IOUtil.OUT().println();
       IOUtil.OUT().println();
@@ -273,6 +275,7 @@ public class ConnectorTest extends AbstractOMTest
     LifecycleUtil.activate(credentialsProvider);
 
     ResponseNegotiator responseNegotiator = new ResponseNegotiator();
+
     responseNegotiator.setCredentialsProvider(credentialsProvider);
     responseNegotiator.activate();
 
@@ -283,9 +286,16 @@ public class ConnectorTest extends AbstractOMTest
     connector.setSelector(selector);
     connector.setHost("localhost");
     connector.setPort(2036);
-    connector.activate();
 
-    boolean connected = connector.waitForConnection(TIMEOUT);
-    assertEquals(false, connected);
+    try
+    {
+      connector.connectAsync();
+      connector.waitForConnection(TIMEOUT);
+      fail("ConnectorException expected");
+    }
+    catch (ConnectorException ex)
+    {
+      assertTrue(ex.getCause() instanceof NegotiationException);
+    }
   }
 }

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.security;
 
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.fsm.ITransition;
 
 import java.nio.ByteBuffer;
@@ -70,6 +71,7 @@ public abstract class ChallengeResponseNegotiator extends
         ByteBuffer acknowledgement = context.getBuffer();
         acknowledgement.put(success ? ACKNOWLEDGE_SUCCESS : ACKNOWLEDGE_FAILURE);
         context.transmitBuffer(acknowledgement);
+        ConcurrencyUtil.sleep(500);
 
         // Set context state
         changeState(context, success ? State.SUCCESS : State.FAILURE);
@@ -81,11 +83,9 @@ public abstract class ChallengeResponseNegotiator extends
       @Override
       protected void execute(INegotiationContext context, ByteBuffer acknowledgement)
       {
-        // Handle acknowledgement
         boolean success = acknowledgement.get() == ACKNOWLEDGE_SUCCESS;
-
-        // Set context state
         changeState(context, success ? State.SUCCESS : State.FAILURE);
+        handleAcknowledgement(context, success);
       }
     });
   }
@@ -122,11 +122,28 @@ public abstract class ChallengeResponseNegotiator extends
     subject.setState(state);
   }
 
-  protected abstract void createChallenge(INegotiationContext context, ByteBuffer challenge);
+  protected void createChallenge(INegotiationContext context, ByteBuffer challenge)
+  {
+    throw new UnsupportedOperationException();
+  }
 
-  protected abstract void handleChallenge(INegotiationContext context, ByteBuffer challenge, ByteBuffer response);
+  protected void handleChallenge(INegotiationContext context, ByteBuffer challenge, ByteBuffer response)
+  {
+    throw new UnsupportedOperationException();
+  }
 
-  protected abstract boolean handleResponse(INegotiationContext context, ByteBuffer response);
+  protected boolean handleResponse(INegotiationContext context, ByteBuffer response)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void handleAcknowledgement(INegotiationContext context, boolean success)
+  {
+    throw new UnsupportedOperationException();
+  }
 
   /**
    * @author Eike Stepper

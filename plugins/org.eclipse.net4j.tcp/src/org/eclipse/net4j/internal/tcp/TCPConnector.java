@@ -25,6 +25,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.NegotiationContext;
+import org.eclipse.net4j.util.security.NegotiationException;
 
 import org.eclipse.internal.net4j.connector.Connector;
 
@@ -189,6 +190,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
 
         inputBuffer = null;
       }
+    }
+    catch (NegotiationException ex)
+    {
+      setNegotiationException(ex);
+      deactivate();
     }
     catch (IOException ex)
     {
@@ -395,6 +401,8 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   {
     private IBuffer buffer;
 
+    private boolean failed;
+
     public TCPNegotiationContext()
     {
     }
@@ -420,6 +428,10 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       }
 
       controlChannel.sendBuffer(buffer);
+      if (failed)
+      {
+        deactivate();
+      }
     }
 
     @Override
@@ -432,7 +444,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       else
       {
         OM.LOG.error("Connector negotiation failed: " + TCPConnector.this);
-        deactivate();
+        failed = true;
       }
 
       super.setFinished(success);

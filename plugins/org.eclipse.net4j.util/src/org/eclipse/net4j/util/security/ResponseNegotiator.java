@@ -74,10 +74,16 @@ public class ResponseNegotiator extends ChallengeResponseNegotiator
     response.put(cryptedToken);
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
-  protected boolean handleResponse(INegotiationContext context, ByteBuffer response)
+  protected void handleAcknowledgement(INegotiationContext context, boolean success)
   {
-    throw new UnsupportedOperationException();
+    if (!success)
+    {
+      throw new NegotiationException("Negotiation failed");
+    }
   }
 
   protected byte[] encryptToken(char[] password, byte[] token)

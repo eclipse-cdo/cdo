@@ -40,6 +40,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.MonitorUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiationContext;
+import org.eclipse.net4j.util.security.NegotiationException;
 
 import org.eclipse.internal.net4j.TransportConfig;
 import org.eclipse.internal.net4j.bundle.OM;
@@ -94,6 +95,8 @@ public abstract class Connector extends Container<IChannel> implements InternalC
   private transient CountDownLatch finishedConnecting;
 
   private transient CountDownLatch finishedNegotiating;
+
+  private NegotiationException negotiationException;
 
   public Connector()
   {
@@ -232,6 +235,11 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   public boolean isConnected()
   {
+    if (negotiationException != null)
+    {
+      throw new ConnectorException("Connector negotiation failed", negotiationException);
+    }
+
     return connectorState == ConnectorState.CONNECTED;
   }
 
@@ -635,6 +643,16 @@ public abstract class Connector extends Container<IChannel> implements InternalC
   }
 
   protected abstract INegotiationContext createNegotiationContext();
+
+  protected NegotiationException getNegotiationException()
+  {
+    return negotiationException;
+  }
+
+  protected void setNegotiationException(NegotiationException negotiationException)
+  {
+    this.negotiationException = negotiationException;
+  }
 
   protected IProtocol createProtocol(String type, Object infraStructure)
   {

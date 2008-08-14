@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.util.security;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
+
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
@@ -88,9 +90,17 @@ public class ChallengeNegotiator extends ChallengeResponseNegotiator
     return token;
   }
 
-  protected byte[] encryptToken(String userID, byte[] token) throws SecurityException
+  protected byte[] encryptToken(String userID, byte[] token) throws NegotiationException
   {
-    return userManager.encrypt(userID, token, getAlgorithmName());
+    try
+    {
+      return userManager.encrypt(userID, token, getAlgorithmName());
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error("Token encryption failed", ex);
+      return null;
+    }
   }
 
   @Override

@@ -193,6 +193,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
     catch (NegotiationException ex)
     {
+      OM.LOG.error(ex);
       setNegotiationException(ex);
       deactivate();
     }

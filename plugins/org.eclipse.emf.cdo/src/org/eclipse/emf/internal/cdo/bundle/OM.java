@@ -50,6 +50,8 @@ public abstract class OM
 
   public static final OMTracer DEBUG_OBJECT = DEBUG.tracer("object"); //$NON-NLS-1$
 
+  public static final OMTracer DEBUG_OBJECT_FSM = DEBUG_OBJECT.tracer("fsm"); //$NON-NLS-1$
+
   public static final OMTracer DEBUG_RESOURCE = DEBUG.tracer("resource"); //$NON-NLS-1$
 
   public static final OMTracer DEBUG_REVISION = DEBUG.tracer("revision"); //$NON-NLS-1$

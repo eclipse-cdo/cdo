@@ -15,6 +15,7 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDORevisionManager;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
@@ -40,6 +41,8 @@ import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,7 +58,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   // @Singleton
   public static final CDOStateMachine INSTANCE = new CDOStateMachine();
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOStateMachine.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT_FSM, CDOStateMachine.class);
 
   private InternalCDOObject lastTracedObject;
 
@@ -92,7 +95,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.NEW, CDOEvent.ATTACH, FAIL);
     init(CDOState.NEW, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.NEW, CDOEvent.READ, IGNORE);
-    init(CDOState.NEW, CDOEvent.WRITE, new NewObjectWriteTransition());
+    init(CDOState.NEW, CDOEvent.WRITE, new WriteNewTransition());
     init(CDOState.NEW, CDOEvent.INVALIDATE, FAIL);
     init(CDOState.NEW, CDOEvent.RELOAD, FAIL);
     init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition());
@@ -343,6 +346,18 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   }
 
   /**
+   * Prepares a tree of transient objects to be subsequently {@link AttachTransition attached} to a CDOView.
+   * <p>
+   * Execution is recursive and includes:
+   * <ol>
+   * <li>Assignment of a new {@link CDOIDTemp}
+   * <li>Assignment of a new {@link CDORevision}
+   * <li>Bidirectional association with the {@link CDOView}
+   * <li>Registration with the {@link CDOTransaction}
+   * <li>Changing state to {@link CDOState#PREPARED PREPARED}
+   * </ol>
+   * 
+   * @see AttachTransition
    * @author Eike Stepper
    */
   private final class PrepareTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, ResourceAndView>
@@ -380,6 +395,21 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   }
 
   /**
+   * Attaches a tree of {@link PrepareTransition prepared} objects to a CDOView.
+   * <p>
+   * Execution is recursive and includes:
+   * <ol>
+   * <li>Calling {@link InternalCDOObject#cdoInternalPostAttach()},<br>
+   * which includes for {@link CDOObjectImpl}:
+   * <ol>
+   * <li>Population of the CDORevision with the current values in
+   * {@link EStoreEObjectImpl#eSetting(org.eclipse.emf.ecore.EStructuralFeature) eSettings}
+   * <li>Unsetting {@link EStoreEObjectImpl#eSetting(org.eclipse.emf.ecore.EStructuralFeature) eSettings}
+   * </ol>
+   * <li>Changing state to {@link CDOState#NEW NEW}
+   * </ol>
+   * 
+   * @see PrepareTransition
    * @author Eike Stepper
    */
   private final class AttachTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
@@ -497,7 +527,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Simon McDuff
    */
-  private final class NewObjectWriteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  private final class WriteNewTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {

@@ -53,7 +53,7 @@ import java.util.Set;
  */
 public final class CDOStore implements EStore
 {
-  private final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOStore.class);
+  private final ContextTracer TRACER = new ContextTracer(OM.DEBUG_STORE, CDOStore.class);
 
   private CDOViewImpl view;
 

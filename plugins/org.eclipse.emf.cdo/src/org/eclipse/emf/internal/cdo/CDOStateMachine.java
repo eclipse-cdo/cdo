@@ -58,7 +58,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   // @Singleton
   public static final CDOStateMachine INSTANCE = new CDOStateMachine();
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT_FSM, CDOStateMachine.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_STATEMACHINE, CDOStateMachine.class);
 
   private InternalCDOObject lastTracedObject;
 

@@ -609,7 +609,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID)
   {
-
     if (TRACER.isEnabled())
     {
       TRACER.format("Setting container: {0}, featureID={1}", newContainer, newContainerFeatureID);

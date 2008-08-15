@@ -11,6 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOType;
@@ -148,59 +150,6 @@ public final class CDOStore implements EStore
 
     view.getFeatureAnalyzer().postTraverseFeature(cdoObject, cdoFeature, index, value);
     return value;
-  }
-
-  private void loadAhead(InternalCDORevision revision, CDOFeature cdoFeature, CDOID id, int index)
-  {
-    CDOSessionImpl session = view.getSession();
-    CDORevisionManagerImpl revisionManager = session.getRevisionManager();
-
-    int chunkSize = view.getLoadRevisionCollectionChunkSize();
-    if (chunkSize > 1 && !revisionManager.containsRevision(id))
-    {
-      MoveableList<Object> list = revision.getList(cdoFeature);
-      int fromIndex = index;
-      int toIndex = Math.min(index + chunkSize, list.size()) - 1;
-
-      Set<CDOID> notRegistered = new HashSet<CDOID>();
-      for (int i = fromIndex; i <= toIndex; i++)
-      {
-        Object element = list.get(i);
-        if (element instanceof CDOID)
-        {
-          CDOID idElement = (CDOID)element;
-          if (!idElement.isTemporary())
-          {
-            if (!revisionManager.containsRevision(idElement))
-            {
-              if (!notRegistered.contains(idElement))
-              {
-                notRegistered.add(idElement);
-              }
-            }
-          }
-        }
-      }
-
-      if (!notRegistered.isEmpty())
-      {
-        int referenceChunk = session.getReferenceChunkSize();
-        revisionManager.getRevisions(notRegistered, referenceChunk);
-      }
-    }
-  }
-
-  private Object get(InternalCDORevision revision, CDOFeature cdoFeature, int index)
-  {
-    Object result = revision.get(cdoFeature, index);
-    if (cdoFeature.isReference())
-    {
-      if (result instanceof CDOReferenceProxy)
-      {
-        result = ((CDOReferenceProxy)result).resolve();
-      }
-    }
-    return result;
   }
 
   public boolean isSet(InternalEObject eObject, EStructuralFeature eFeature)
@@ -390,18 +339,18 @@ public final class CDOStore implements EStore
       }
     }
 
-    Object result = revision.set(cdoFeature, index, value);
+    Object oldValue = revision.set(cdoFeature, index, value);
 
     if (cdoFeature.isReference())
     {
-      result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
-      if (cdoFeature.isContainment() && result != null)
+      oldValue = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(oldValue);
+      if (cdoFeature.isContainment() && oldValue != null)
       {
         handleContainmentRemove(cdoObject, value);
       }
     }
 
-    return result;
+    return oldValue;
   }
 
   public void unset(InternalEObject eObject, EStructuralFeature eFeature)
@@ -540,27 +489,54 @@ public final class CDOStore implements EStore
     return ModelUtil.getCDOFeature(eFeature, packageManager);
   }
 
-  private static InternalCDORevision getRevisionForReading(InternalCDOObject cdoObject)
+  private void handleContainment(InternalCDOObject object, InternalCDOObject oldContainer,
+      InternalCDOObject newContainer)
   {
-    CDOStateMachine.INSTANCE.read(cdoObject);
-    return getRevision(cdoObject);
-  }
-
-  private static InternalCDORevision getRevisionForWriting(InternalCDOObject cdoObject, CDOFeatureDelta delta)
-  {
-    CDOStateMachine.INSTANCE.write(cdoObject, delta);
-    return getRevision(cdoObject);
-  }
-
-  private static InternalCDORevision getRevision(InternalCDOObject cdoObject)
-  {
-    InternalCDORevision revision = (InternalCDORevision)cdoObject.cdoRevision();
-    if (revision == null)
+    if (oldContainer != null)
     {
-      throw new IllegalStateException("revision == null");
+      if (newContainer != null)
+      {
+        if (oldContainer.cdoView() == newContainer.cdoView())
+        {
+          handleContainmentMove(object, oldContainer, newContainer);
+        }
+        else
+        {
+          handleContainmentDetach(object, oldContainer);
+          handleContainmentAttach(object, newContainer);
+        }
+      }
+      else
+      {
+        handleContainmentDetach(object, oldContainer);
+      }
     }
+    else
+    {
+      if (newContainer != null)
+      {
+        handleContainmentAttach(object, newContainer);
+      }
+    }
+  }
 
-    return revision;
+  private void handleContainmentAttach(InternalCDOObject object, InternalCDOObject newContainer)
+  {
+    CDOResource containerResource = newContainer.cdoResource();
+    CDOView containerView = newContainer.cdoView();
+    CDOSession containerSession = containerView.getSession();
+    FSMUtil.checkLegacySystemAvailability(containerSession, object);
+    CDOStateMachine.INSTANCE.attach(object, containerResource, containerView);
+  }
+
+  private void handleContainmentDetach(InternalCDOObject object, InternalCDOObject oldContainer)
+  {
+    CDOStateMachine.INSTANCE.detach(object);
+  }
+
+  private void handleContainmentMove(InternalCDOObject object, InternalCDOObject oldContainer,
+      InternalCDOObject newContainer)
+  {
   }
 
   private void handleContainmentAdd(InternalCDOObject container, Object value)
@@ -585,5 +561,81 @@ public final class CDOStore implements EStore
   {
     // InternalCDOObject contained = getCDOObject(value);
     // CDOStateMachine.INSTANCE.detach(contained);
+  }
+
+  private void loadAhead(InternalCDORevision revision, CDOFeature cdoFeature, CDOID id, int index)
+  {
+    CDOSessionImpl session = view.getSession();
+    CDORevisionManagerImpl revisionManager = session.getRevisionManager();
+
+    int chunkSize = view.getLoadRevisionCollectionChunkSize();
+    if (chunkSize > 1 && !revisionManager.containsRevision(id))
+    {
+      MoveableList<Object> list = revision.getList(cdoFeature);
+      int fromIndex = index;
+      int toIndex = Math.min(index + chunkSize, list.size()) - 1;
+
+      Set<CDOID> notRegistered = new HashSet<CDOID>();
+      for (int i = fromIndex; i <= toIndex; i++)
+      {
+        Object element = list.get(i);
+        if (element instanceof CDOID)
+        {
+          CDOID idElement = (CDOID)element;
+          if (!idElement.isTemporary())
+          {
+            if (!revisionManager.containsRevision(idElement))
+            {
+              if (!notRegistered.contains(idElement))
+              {
+                notRegistered.add(idElement);
+              }
+            }
+          }
+        }
+      }
+
+      if (!notRegistered.isEmpty())
+      {
+        int referenceChunk = session.getReferenceChunkSize();
+        revisionManager.getRevisions(notRegistered, referenceChunk);
+      }
+    }
+  }
+
+  private Object get(InternalCDORevision revision, CDOFeature cdoFeature, int index)
+  {
+    Object result = revision.get(cdoFeature, index);
+    if (cdoFeature.isReference())
+    {
+      if (result instanceof CDOReferenceProxy)
+      {
+        result = ((CDOReferenceProxy)result).resolve();
+      }
+    }
+    return result;
+  }
+
+  private static InternalCDORevision getRevisionForReading(InternalCDOObject cdoObject)
+  {
+    CDOStateMachine.INSTANCE.read(cdoObject);
+    return getRevision(cdoObject);
+  }
+
+  private static InternalCDORevision getRevisionForWriting(InternalCDOObject cdoObject, CDOFeatureDelta delta)
+  {
+    CDOStateMachine.INSTANCE.write(cdoObject, delta);
+    return getRevision(cdoObject);
+  }
+
+  private static InternalCDORevision getRevision(InternalCDOObject cdoObject)
+  {
+    InternalCDORevision revision = (InternalCDORevision)cdoObject.cdoRevision();
+    if (revision == null)
+    {
+      throw new IllegalStateException("revision == null");
+    }
+
+    return revision;
   }
 }

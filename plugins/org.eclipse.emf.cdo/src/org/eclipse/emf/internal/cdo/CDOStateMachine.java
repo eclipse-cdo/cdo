@@ -142,11 +142,12 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.CONFLICT, CDOEvent.ROLLBACK, new RollbackTransition());
   }
 
-  public void attach(InternalCDOObject object, CDOResource resource, CDOViewImpl view)
+  /**
+   * @since 2.0
+   */
+  public void attach(InternalCDOObject object, CDOResource resource, CDOView view)
   {
-    ResourceAndView data = new ResourceAndView();
-    data.resource = resource;
-    data.view = view;
+    ResourceAndView data = new ResourceAndView(resource, (CDOViewImpl)view);
 
     // Phase 1: TRANSIENT --> PREPARED
     if (TRACER.isEnabled())
@@ -337,6 +338,12 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public CDOResource resource;
 
     public CDOViewImpl view;
+
+    public ResourceAndView(CDOResource resource, CDOViewImpl view)
+    {
+      this.resource = resource;
+      this.view = view;
+    }
 
     @Override
     public String toString()

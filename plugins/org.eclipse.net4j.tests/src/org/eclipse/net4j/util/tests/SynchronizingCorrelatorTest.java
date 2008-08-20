@@ -37,13 +37,13 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     sleep(50);
 
     correlator.put("eike", true);
-    consumer.join(100);
+    consumer.join(1000);
     assertEquals(Boolean.TRUE, result[0]);
   }
 
-  public void testPutConsumerFirst100() throws Exception
+  public void testPutConsumerFirst10() throws Exception
   {
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 10; i++)
     {
       testPutConsumerFirst();
     }
@@ -71,13 +71,13 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     msg("Consumed: " + consumed);
     assertTrue(consumed);
 
-    consumer.join(100);
+    consumer.join(1000);
     assertEquals(Boolean.TRUE, result[0]);
   }
 
-  public void testBlockingPutConsumerFirst100() throws Exception
+  public void testBlockingPutConsumerFirst10() throws Exception
   {
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 10; i++)
     {
       testBlockingPutConsumerFirst();
     }
@@ -107,9 +107,9 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     assertEquals(Boolean.TRUE, result[0]);
   }
 
-  public void testPutProducerFirst100() throws Exception
+  public void testPutProducerFirst10() throws Exception
   {
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 10; i++)
     {
       testPutProducerFirst();
     }
@@ -137,13 +137,13 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     consumer.start();
     Thread.sleep(10);
 
-    consumer.join(50);
+    consumer.join(1000);
     assertEquals(Boolean.TRUE, result[0]);
   }
 
-  public void testBlockingPutProducerFirst50() throws Exception
+  public void testBlockingPutProducerFirst10() throws Exception
   {
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < 10; i++)
     {
       testBlockingPutProducerFirst();
     }

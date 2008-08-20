@@ -139,13 +139,20 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
     }
 
     Serializable idValue;
-    if (id instanceof CDOIDLongImpl) {
+    if (id instanceof CDOIDLongImpl)
+    {
       idValue = ((CDOIDLongImpl)id).getLongValue();
-    } else if (id instanceof CDOIDTemp) {
+    }
+    else if (id instanceof CDOIDTemp)
+    {
       idValue = new Long(((CDOIDTemp)id).getIntValue());
-    } else if (id instanceof CDOIDHibernate) {
+    }
+    else if (id instanceof CDOIDHibernate)
+    {
       idValue = ((CDOIDHibernate)id).getId();
-    } else {
+    }
+    else
+    {
       throw new IllegalArgumentException("ID type " + id.getClass().getName() + " not supported by hibernate reader");
     }
 
@@ -156,7 +163,7 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
 
     Session session = getHibernateSession();
     Query qry = session.createQuery("select path from " + CDOResourceClass.NAME + " where id=:id");
-    CDOIDHibernate idHibernate = (CDOIDHibernate)id;
+    // Hidden by Eike: CDOIDHibernate idHibernate = (CDOIDHibernate)id;
     qry.setParameter("id", idValue);
     final List<?> result = qry.list();
     if (result.size() == 0)

@@ -48,18 +48,18 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/tuplizer/CDOVersionPropertyGetter.java" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOVersionPropertyGetter">
-        <filter id="305365105">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOVersionPropertyGetter"/>
-                <message_argument value="org.eclipse.emf.cdo.server.hibernate_1.0.1"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/info/FeatureServerInfo.java" type="org.eclipse.emf.cdo.server.internal.hibernate.info.FeatureServerInfo">
         <filter id="305365105">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.info.FeatureServerInfo"/>
+                <message_argument value="org.eclipse.emf.cdo.server.hibernate_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/tuplizer/CDOVersionPropertyGetter.java" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOVersionPropertyGetter">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOVersionPropertyGetter"/>
                 <message_argument value="org.eclipse.emf.cdo.server.hibernate_1.0.1"/>
             </message_arguments>
         </filter>
@@ -80,18 +80,18 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/tuplizer/CDOIDPropertyGetter.java" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDPropertyGetter">
-        <filter id="305365105">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDPropertyGetter"/>
-                <message_argument value="org.eclipse.emf.cdo.server.hibernate_1.0.1"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/HibernateStoreChunkReader.java" type="org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreChunkReader">
         <filter id="305365105">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreChunkReader"/>
+                <message_argument value="org.eclipse.emf.cdo.server.hibernate_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/tuplizer/CDOIDPropertyGetter.java" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDPropertyGetter">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDPropertyGetter"/>
                 <message_argument value="org.eclipse.emf.cdo.server.hibernate_1.0.1"/>
             </message_arguments>
         </filter>
@@ -144,6 +144,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/hibernate/IHibernateStore.java" type="org.eclipse.emf.cdo.server.hibernate.IHibernateStore">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="HibernatePackageHandler"/>
+                <message_argument value="IHibernateStore"/>
+                <message_argument value="getPackageHandler()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/tuplizer/CDOManyReferenceGetter.java" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOManyReferenceGetter">
         <filter id="305365105">
             <message_arguments>
@@ -184,6 +193,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/HibernateStore.java" type="org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore"/>
+                <message_argument value="org.eclipse.emf.cdo.server.hibernate_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/HibernateUtil.java" type="org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil">
         <filter id="305365105">
             <message_arguments>
@@ -202,14 +219,6 @@
         <filter id="305365105">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext"/>
-                <message_argument value="org.eclipse.emf.cdo.server.hibernate_1.0.1"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/HibernateStore.java" type="org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore">
-        <filter id="305365105">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore"/>
                 <message_argument value="org.eclipse.emf.cdo.server.hibernate_1.0.1"/>
             </message_arguments>
         </filter>
@@ -286,14 +295,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/tuplizer/CDOPropertyGetter.java" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOPropertyGetter">
-        <filter id="305365105">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOPropertyGetter"/>
-                <message_argument value="org.eclipse.emf.cdo.server.hibernate_1.0.1"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/HibernateStoreAccessor.java" type="org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreAccessor">
         <filter id="305365105">
             <message_arguments>
@@ -302,10 +303,10 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/tuplizer/CDOIDUserType.java" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
+    <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/tuplizer/CDOPropertyGetter.java" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOPropertyGetter">
         <filter id="305365105">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType"/>
+                <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOPropertyGetter"/>
                 <message_argument value="org.eclipse.emf.cdo.server.hibernate_1.0.1"/>
             </message_arguments>
         </filter>
@@ -314,6 +315,14 @@
         <filter id="305365105">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOPropertySetter"/>
+                <message_argument value="org.eclipse.emf.cdo.server.hibernate_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/tuplizer/CDOIDUserType.java" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType"/>
                 <message_argument value="org.eclipse.emf.cdo.server.hibernate_1.0.1"/>
             </message_arguments>
         </filter>

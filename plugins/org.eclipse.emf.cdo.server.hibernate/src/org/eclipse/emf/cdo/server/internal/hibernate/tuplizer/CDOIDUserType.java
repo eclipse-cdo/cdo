@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
-import org.eclipse.emf.cdo.server.internal.hibernate.HibernateCommitContext;
-import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 import org.eclipse.net4j.util.WrappedException;

@@ -10,10 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.server.internal.hibernate.HibernateCommitContext;
-import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.collection.MoveableArrayList;

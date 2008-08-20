@@ -15,12 +15,9 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionFactoryImplementor;
-import org.hibernate.engine.SessionImplementor;
-import org.hibernate.property.Getter;
 import org.hibernate.property.Setter;
 
 import java.lang.reflect.Method;
-import java.util.Map;
 
 /**
  * Gets resourceId, containedId and containingFeatureId

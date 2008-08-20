@@ -13,10 +13,10 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.cdo.server;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.server.hibernate.id;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
 Export-Package: org.eclipse.emf.cdo.server.hibernate;version="1.0.0",
- org.eclipse.emf.cdo.server.internal.hibernate;version="1.0.0";x-internal:=true,
+ org.eclipse.emf.cdo.server.internal.hibernate;version="1.0.0";x-friends:="org.eclipse.emf.cdo.tests.hibernate,org.eclipse.emf.cdo.tests.hibernate.client",
  org.eclipse.emf.cdo.server.internal.hibernate.bundle;version="1.0.0";x-internal:=true,
- org.eclipse.emf.cdo.server.internal.hibernate.info;version="1.0.0";x-internal:=true,
- org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;version="1.0.0";x-internal:=true
+ org.eclipse.emf.cdo.server.internal.hibernate.info;version="1.0.0";x-friends:="org.eclipse.emf.cdo.tests.hibernate,org.eclipse.emf.cdo.tests.hibernate.client",
+ org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;version="1.0.0";x-friends:="org.eclipse.emf.cdo.tests.hibernate,org.eclipse.emf.cdo.tests.hibernate.client"
 Import-Package: org.hibernate;version="[3.2.0,4.0.0)",
  org.hibernate.cfg;version="[3.2.0,4.0.0)",
  org.hibernate.collection;version="[3.2.0,4.0.0)",

@@ -29,6 +29,7 @@ public class CDOManyReferenceSetter extends CDOPropertySetter
     super(tuplizer, propertyName);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
@@ -37,9 +38,9 @@ public class CDOManyReferenceSetter extends CDOPropertySetter
     {
       throw new IllegalArgumentException("Value is not a persistentlist but a " + value.getClass().getName());
     }
-    
+
     super.set(target, new MoveableListWrapper((List)value), factory);
-    
+
     // Only set it in the listholder
     PersistableListHolder.getInstance().putListMapping(target, getCDOFeature(), (PersistentCollection)value);
   }

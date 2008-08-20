@@ -7,10 +7,6 @@
             class="org.eclipse.net4j.examples.echo.server.EchoServerProtocol$Factory"
             productGroup="org.eclipse.net4j.serverProtocols"
             type="echo"/>
-      <factory
-            class="org.eclipse.net4j.examples.echo.client.EchoClientProtocol$Factory"
-            productGroup="org.eclipse.net4j.clientProtocols"
-            type="echo"/>
    </extension>
 
 </plugin>

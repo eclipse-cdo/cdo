@@ -11,8 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOType;
@@ -487,56 +485,6 @@ public final class CDOStore implements EStore
 
     CDOSessionPackageManagerImpl packageManager = view.getSession().getPackageManager();
     return ModelUtil.getCDOFeature(eFeature, packageManager);
-  }
-
-  private void handleContainment(InternalCDOObject object, InternalCDOObject oldContainer,
-      InternalCDOObject newContainer)
-  {
-    if (oldContainer != null)
-    {
-      if (newContainer != null)
-      {
-        if (oldContainer.cdoView() == newContainer.cdoView())
-        {
-          handleContainmentMove(object, oldContainer, newContainer);
-        }
-        else
-        {
-          handleContainmentDetach(object, oldContainer);
-          handleContainmentAttach(object, newContainer);
-        }
-      }
-      else
-      {
-        handleContainmentDetach(object, oldContainer);
-      }
-    }
-    else
-    {
-      if (newContainer != null)
-      {
-        handleContainmentAttach(object, newContainer);
-      }
-    }
-  }
-
-  private void handleContainmentAttach(InternalCDOObject object, InternalCDOObject newContainer)
-  {
-    CDOResource containerResource = newContainer.cdoResource();
-    CDOView containerView = newContainer.cdoView();
-    CDOSession containerSession = containerView.getSession();
-    FSMUtil.checkLegacySystemAvailability(containerSession, object);
-    CDOStateMachine.INSTANCE.attach(object, containerResource, containerView);
-  }
-
-  private void handleContainmentDetach(InternalCDOObject object, InternalCDOObject oldContainer)
-  {
-    CDOStateMachine.INSTANCE.detach(object);
-  }
-
-  private void handleContainmentMove(InternalCDOObject object, InternalCDOObject oldContainer,
-      InternalCDOObject newContainer)
-  {
   }
 
   private void handleContainmentAdd(InternalCDOObject container, Object value)

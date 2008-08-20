@@ -110,7 +110,6 @@ public class CDOCallbackImpl extends CDOLegacyImpl implements CDOCallback
     }
   }
 
-  @SuppressWarnings("deprecation")
   private void notifyAdd(Object instance)
   {
     if (instance instanceof InternalEObject)

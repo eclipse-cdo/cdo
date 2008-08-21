@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.LegacySystemNotAvailableException;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.ecore.xml.type.ProcessingInstruction;
 import org.eclipse.emf.ecore.xml.type.XMLTypeFactory;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
@@ -41,6 +43,7 @@ public class NoLegacyTest extends AbstractCDOTest
     }
     catch (LegacySystemNotAvailableException ex)
     {
+      IOUtil.print(ex);
     }
     finally
     {
@@ -70,6 +73,7 @@ public class NoLegacyTest extends AbstractCDOTest
     }
     catch (LegacySystemNotAvailableException ex)
     {
+      IOUtil.print(ex);
     }
     finally
     {

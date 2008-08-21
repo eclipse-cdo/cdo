@@ -190,7 +190,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   public void setLegacySupportEnabled(boolean legacySupportEnabled)
   {
     checkInactive();
-    if (legacySupportEnabled && !FSMUtil.isLegacySystemAvailable())
+    // TODO Adjust this when legacy system is working again:
+    // if (legacySupportEnabled && !FSMUtil.isLegacySystemAvailable())
+    if (legacySupportEnabled)
     {
       throw new LegacySystemNotAvailableException();
     }

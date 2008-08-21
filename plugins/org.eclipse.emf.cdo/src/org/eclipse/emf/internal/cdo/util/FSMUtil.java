@@ -63,6 +63,8 @@ public final class FSMUtil
     }
     catch (Throwable ignore)
     {
+      // Only for testing:
+      // ignore.printStackTrace();
     }
 
     OM.LOG.info(LegacySystemNotAvailableException.LEGACY_SYSTEM_NOT_AVAILABLE);

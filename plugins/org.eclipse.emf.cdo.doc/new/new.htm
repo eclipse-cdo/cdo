@@ -2,31 +2,28 @@
 xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>CDO - New Features</TITLE>
 
 <BODY bgColor=#ffffff>
-<H2>New Features</H2>
+<H2>New &amp; Noteworthy</H2>
 <TABLE id=table415 cellSpacing=0 cellPadding=10>
   <TBODY>
   <TR>
-    <TD vAlign=top align=left width="15%" bgColor=#e0d0e6>
+    <TD vAlign=top align=left width="200" bgColor=#e0d0e6>
       <P align=right><B>Create save point</B></P></TD>
-    <TD vAlign=top width="70%">
+    <TD vAlign=top>
       <P align=left>
  Creates a save point in the <i>CDOTransaction, </i>that can be used to roll back a part of the 
 	transaction and
  specifies the save point.<p>
  <b>Note:</b> Save points do not involve the server side, everything is done on 
-	the client side.
-
-</P></TD></TR>
-  <TR>
-    <TD colSpan=2>
-      <HR>
-    </TD></TR></TBODY></TABLE>
+	the client side.</P></TD></TR>
+  </TBODY></TABLE>
+<HR>
+	
 <TABLE id=table417 cellSpacing=0 cellPadding=10>
   <TBODY>
   <TR>
-    <TD vAlign=top align=left width="300" bgColor=#e0d0e6>
+    <TD vAlign=top align=left width="200" bgColor=#e0d0e6>
       <P align=right><B>Make remote invalidation configurable</B></P></TD>
-    <TD vAlign=top width="70%">
+    <TD vAlign=top>
       <P align=left>Specifies whether an object will be invalidated by others 
 		users' changes.<br>
 		e.g. : <i>session.setPassiveUpdateEnabled(false);</i></P>
@@ -38,16 +35,15 @@ xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>CDO - New Features</TITLE>
 		refreshed.</P>
 		<P align=left>When the feature is turned on, it will automatically performs a refresh 
 		to be in sync with the server.</P></TD></TR>
-  <TR>
-    <TD colSpan=2>
-      <HR>
-    </TD></TR></TBODY></TABLE>
+  </TBODY></TABLE>
+<HR>
+	
 <TABLE id=table403 cellSpacing=0 cellPadding=10>
   <TBODY>
   <TR>
-    <TD vAlign=top align=left width="15%" bgColor=#e0d0e6>
+    <TD vAlign=top align=left width="200" bgColor=#e0d0e6>
       <P align=right><b>Change subscription</b></P></TD>
-    <TD vAlign=top width="70%">
+    <TD vAlign=top>
       <P align=left>Allows listeners to be 
 		notified when objects are modified from other <i>CDOTransaction</i> 
 		(remotely or not). It uses adapters for the notification process (see 
@@ -76,16 +72,15 @@ xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>CDO - New Features</TITLE>
 		<P align=left>Any other classes that implement <i>{@link 
 		CDOChangeSubscriptionPolicy}</i> will enable the feature for whatever 
 		rules defined in that class. </P></TD></TR>
-  <TR>
-    <TD colSpan=2>
-      <HR>
-    </TD></TR></TBODY></TABLE>
+  </TBODY></TABLE>
+<HR>
+	
 <TABLE id=table410 cellSpacing=0 cellPadding=10>
   <TBODY>
   <TR>
-    <TD vAlign=top align=left width="15%" bgColor=#e0d0e6>
+    <TD vAlign=top align=left width="200" bgColor=#e0d0e6>
       <P align=right><b>Query</b></P></TD>
-    <TD vAlign=top width="70%">
+    <TD vAlign=top>
       <P align=left>The <i>query</i> feature allows you to retrieve objects from the 
 		repository in a native way. It could support as many languages as the <i>
 		Store&nbsp;</i>wants to support.<i><br>
@@ -107,30 +102,20 @@ xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>CDO - New Features</TITLE>
 		<P align=left>The iterator could be closed at any time, resulting in the 
 		query being cancelled on at the server side.<br>
 		e.g.:<i> salesOrders.close();</i></P></TD></TR>
-  <TR>
-    <TD colSpan=2>
-      <HR>
-    </TD></TR></TBODY></TABLE>
-<TABLE id=table356 cellSpacing=0 cellPadding=10>
-  <TBODY>
-  <TR>
-    <TD>
-      <HR>
+  </TBODY></TABLE>
+<HR>
+	
 <TABLE id=table418 cellSpacing=0 cellPadding=10>
   <TBODY>
   <TR>
-    <TD vAlign=top align=left width="15%" bgColor=#e0d0e6>
+    <TD vAlign=top align=left width="200" bgColor=#e0d0e6>
       <P align=right><b>Support getURIFragment and getEObject</b></P></TD>
-    <TD vAlign=top width="70%">
+    <TD vAlign=top>
       <P align=left>CDOResource now supports getURIFragment and getEObject. </P>
 		<P align=left><b>Note:</b> The URIs of temporary objects will 
 		change when the <i>CDOTransaction</i> is committed . Objects will no 
 		longer be accessible using their temporary URI once <i>the CDOTransaction</i> is 
 		committed.</P></TD></TR>
-  <TR>
-    <TD colSpan=2>
-      <HR>
-    </TD></TR></TBODY></TABLE>
-    </TD></TR></TBODY></TABLE></DIV></DIV>
+  </TBODY></TABLE>
 </BODY>
 </HTML>

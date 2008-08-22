@@ -243,25 +243,25 @@ public class ConnectorTest extends AbstractOMTest
   {
     ExecutorService threadPool = Executors.newCachedThreadPool();
     LifecycleUtil.activate(threadPool);
-  
+
     IBufferPool bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);
-  
+
     Randomizer randomizer = new Randomizer();
     randomizer.activate();
-  
+
     UserManager userManager = new UserManager();
     userManager.activate();
     userManager.addUser(INVALID_USER_ID, PASSWORD);
-  
+
     ChallengeNegotiator challengeNegotiator = new ChallengeNegotiator();
     challengeNegotiator.setRandomizer(randomizer);
     challengeNegotiator.setUserManager(userManager);
     challengeNegotiator.activate();
-  
+
     TCPSelector selector = new TCPSelector();
     selector.activate();
-  
+
     acceptor = new TCPAcceptor();
     acceptor.setStartSynchronously(true);
     acceptor.setSynchronousStartTimeout(TIMEOUT);
@@ -272,15 +272,15 @@ public class ConnectorTest extends AbstractOMTest
     acceptor.setAddress("0.0.0.0");
     acceptor.setPort(2036);
     acceptor.activate();
-  
+
     PasswordCredentialsProvider credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
     LifecycleUtil.activate(credentialsProvider);
-  
+
     ResponseNegotiator responseNegotiator = new ResponseNegotiator();
-  
+
     responseNegotiator.setCredentialsProvider(credentialsProvider);
     responseNegotiator.activate();
-  
+
     TCPClientConnector connector = new TCPClientConnector();
     connector.getConfig().setBufferProvider(bufferPool);
     connector.getConfig().setReceiveExecutor(threadPool);
@@ -288,7 +288,7 @@ public class ConnectorTest extends AbstractOMTest
     connector.setSelector(selector);
     connector.setHost("localhost");
     connector.setPort(2036);
-  
+
     try
     {
       connector.connectAsync();
@@ -298,6 +298,10 @@ public class ConnectorTest extends AbstractOMTest
     catch (ConnectorException ex)
     {
       assertTrue(ex.getCause() instanceof NegotiationException);
+    }
+    finally
+    {
+      cleanup();
     }
   }
 
@@ -360,6 +364,10 @@ public class ConnectorTest extends AbstractOMTest
     catch (ConnectorException ex)
     {
       assertTrue(ex.getCause() instanceof NegotiationException);
+    }
+    finally
+    {
+      cleanup();
     }
   }
 }

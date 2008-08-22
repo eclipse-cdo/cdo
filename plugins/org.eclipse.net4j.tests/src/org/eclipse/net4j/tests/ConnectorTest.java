@@ -359,7 +359,6 @@ public class ConnectorTest extends AbstractOMTest
     }
     catch (ConnectorException ex)
     {
-      ex.printStackTrace();
       assertTrue(ex.getCause() instanceof NegotiationException);
     }
   }

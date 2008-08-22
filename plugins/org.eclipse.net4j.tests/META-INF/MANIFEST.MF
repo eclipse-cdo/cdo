@@ -6,7 +6,7 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.eclipse.net4j.tests.bundle.Activator
+Bundle-Activator: org.eclipse.net4j.tests.bundle.OM$Activator
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",

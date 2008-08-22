@@ -17,6 +17,7 @@ import org.eclipse.net4j.internal.tcp.TCPAcceptor;
 import org.eclipse.net4j.internal.tcp.TCPClientConnector;
 import org.eclipse.net4j.internal.tcp.TCPSelector;
 import org.eclipse.net4j.tcp.ITCPSelector;
+import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -241,25 +242,25 @@ public class ConnectorTest extends AbstractOMTest
 
   public void testInvalidUser() throws Exception
   {
-    ExecutorService threadPool = Executors.newCachedThreadPool();
+    threadPool = Executors.newCachedThreadPool();
     LifecycleUtil.activate(threadPool);
 
-    IBufferPool bufferPool = Net4jUtil.createBufferPool();
+    bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);
 
-    Randomizer randomizer = new Randomizer();
+    randomizer = new Randomizer();
     randomizer.activate();
 
-    UserManager userManager = new UserManager();
+    userManager = new UserManager();
     userManager.activate();
     userManager.addUser(INVALID_USER_ID, PASSWORD);
 
-    ChallengeNegotiator challengeNegotiator = new ChallengeNegotiator();
+    challengeNegotiator = new ChallengeNegotiator();
     challengeNegotiator.setRandomizer(randomizer);
     challengeNegotiator.setUserManager(userManager);
     challengeNegotiator.activate();
 
-    TCPSelector selector = new TCPSelector();
+    selector = new TCPSelector();
     selector.activate();
 
     acceptor = new TCPAcceptor();
@@ -273,15 +274,14 @@ public class ConnectorTest extends AbstractOMTest
     acceptor.setPort(2036);
     acceptor.activate();
 
-    PasswordCredentialsProvider credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
+    credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
     LifecycleUtil.activate(credentialsProvider);
 
-    ResponseNegotiator responseNegotiator = new ResponseNegotiator();
-
+    responseNegotiator = new ResponseNegotiator();
     responseNegotiator.setCredentialsProvider(credentialsProvider);
     responseNegotiator.activate();
 
-    TCPClientConnector connector = new TCPClientConnector();
+    connector = new TCPClientConnector();
     connector.getConfig().setBufferProvider(bufferPool);
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.getConfig().setNegotiator(responseNegotiator);
@@ -297,35 +297,32 @@ public class ConnectorTest extends AbstractOMTest
     }
     catch (ConnectorException ex)
     {
+      OM.LOG.info("Expected ConnectorException:", ex);
       assertTrue(ex.getCause() instanceof NegotiationException);
-    }
-    finally
-    {
-      cleanup();
     }
   }
 
   public void testInvalidPassword() throws Exception
   {
-    ExecutorService threadPool = Executors.newCachedThreadPool();
+    threadPool = Executors.newCachedThreadPool();
     LifecycleUtil.activate(threadPool);
 
-    IBufferPool bufferPool = Net4jUtil.createBufferPool();
+    bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);
 
-    Randomizer randomizer = new Randomizer();
+    randomizer = new Randomizer();
     randomizer.activate();
 
-    UserManager userManager = new UserManager();
+    userManager = new UserManager();
     userManager.activate();
     userManager.addUser(USER_ID, INVALID_PASSWORD);
 
-    ChallengeNegotiator challengeNegotiator = new ChallengeNegotiator();
+    challengeNegotiator = new ChallengeNegotiator();
     challengeNegotiator.setRandomizer(randomizer);
     challengeNegotiator.setUserManager(userManager);
     challengeNegotiator.activate();
 
-    TCPSelector selector = new TCPSelector();
+    selector = new TCPSelector();
     selector.activate();
 
     acceptor = new TCPAcceptor();
@@ -339,15 +336,14 @@ public class ConnectorTest extends AbstractOMTest
     acceptor.setPort(2036);
     acceptor.activate();
 
-    PasswordCredentialsProvider credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
+    credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
     LifecycleUtil.activate(credentialsProvider);
 
-    ResponseNegotiator responseNegotiator = new ResponseNegotiator();
-
+    responseNegotiator = new ResponseNegotiator();
     responseNegotiator.setCredentialsProvider(credentialsProvider);
     responseNegotiator.activate();
 
-    TCPClientConnector connector = new TCPClientConnector();
+    connector = new TCPClientConnector();
     connector.getConfig().setBufferProvider(bufferPool);
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.getConfig().setNegotiator(responseNegotiator);
@@ -363,11 +359,8 @@ public class ConnectorTest extends AbstractOMTest
     }
     catch (ConnectorException ex)
     {
+      OM.LOG.info("Expected ConnectorException:", ex);
       assertTrue(ex.getCause() instanceof NegotiationException);
-    }
-    finally
-    {
-      cleanup();
     }
   }
 }

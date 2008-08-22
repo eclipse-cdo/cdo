@@ -354,7 +354,7 @@ public class ConnectorTest extends AbstractOMTest
     try
     {
       connector.connectAsync();
-      connector.waitForConnection(1000 * TIMEOUT);
+      connector.waitForConnection(TIMEOUT);
       fail("ConnectorException expected");
     }
     catch (ConnectorException ex)

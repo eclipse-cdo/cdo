@@ -71,4 +71,27 @@ public class EMFTest extends AbstractOMTest
     IOUtil.OUT().println(label + ": " + eObject.eIsProxy());
     IOUtil.OUT().println(label + ": " + eObject.eProxyURI());
   }
+
+  public static void main(String[] args)
+  {
+    dump(URI.createURI("cdo:///a/b/c"));
+    dump(URI.createURI("cdo://a/b/c"));
+    dump(URI.createURI("cdo:/a/b/c"));
+    dump(URI.createURI("cdo:a/b/c"));
+  }
+
+  private static void dump(URI uri)
+  {
+    System.out.println(uri);
+    System.out.println();
+    System.out.println("    isHierarchical: " + uri.isHierarchical());
+    System.out.println("    isPrefix:       " + uri.isPrefix());
+    System.out.println("    isRelative:     " + uri.isRelative());
+    System.out.println("    authority:      " + uri.authority());
+    System.out.println("    path:           " + uri.path());
+    System.out.println("    devicePath:     " + uri.devicePath());
+    System.out.println("    segmentsList:   " + uri.segmentsList());
+    System.out.println("    opaquePart:     " + uri.opaquePart());
+    System.out.println();
+  }
 }

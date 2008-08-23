@@ -10,24 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.hibernate;
 
-import org.eclipse.emf.cdo.tests.ComplexTest;
-import org.eclipse.emf.cdo.tests.ContainmentTest;
-import org.eclipse.emf.cdo.tests.CrossReferenceTest;
-import org.eclipse.emf.cdo.tests.EnumTest;
-import org.eclipse.emf.cdo.tests.IndexReconstructionTest;
-import org.eclipse.emf.cdo.tests.InitialTest;
-import org.eclipse.emf.cdo.tests.InvalidationTest;
-import org.eclipse.emf.cdo.tests.MangoTest;
-import org.eclipse.emf.cdo.tests.NoLegacyTest;
-import org.eclipse.emf.cdo.tests.NonCDOResourceTest;
-import org.eclipse.emf.cdo.tests.ResourceTest;
-import org.eclipse.emf.cdo.tests.RevisionDeltaWithDeltaSupportTest;
-import org.eclipse.emf.cdo.tests.RevisionDeltaWithoutDeltaSupportTest;
-import org.eclipse.emf.cdo.tests.RevisionHolderTest;
-import org.eclipse.emf.cdo.tests.RollbackTest;
-import org.eclipse.emf.cdo.tests.StateMachineTest;
 import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
-import org.eclipse.emf.cdo.tests.ViewTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -42,27 +25,31 @@ public class AllTests
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
 
     TestSuite suite = new TestSuite("Tests for CDO using Hibernate");
-    suite.addTestSuite(ComplexTest.class);
-    suite.addTestSuite(CDOAutomaticPackageRefTest.class);
-    suite.addTestSuite(CDOPackageRefTest.class);
-    suite.addTestSuite(RevisionDeltaWithDeltaSupportTest.class);
-    suite.addTestSuite(RevisionDeltaWithoutDeltaSupportTest.class);
+    suite.addTestSuite(HbRevisionDeltaTest.class);
+    if (false)
+    {
+      return suite;
+    }
+
+    suite.addTestSuite(HbCDOAutomaticPackageRefTest.class);
+    suite.addTestSuite(HbCDOPackageRefTest.class);
+    suite.addTestSuite(HbPackageRegistryTest.class);
+    suite.addTestSuite(HbContainmentTest.class);
+    suite.addTestSuite(HbResourceTest.class);
+    suite.addTestSuite(HbComplexTest.class);
     suite.addTestSuite(HbTransactionDeadLockTest.class);
-    suite.addTestSuite(HibernatePackageRegistryTest.class);
-    suite.addTestSuite(ContainmentTest.class);
-    suite.addTestSuite(RollbackTest.class);
-    suite.addTestSuite(StateMachineTest.class);
-    suite.addTestSuite(RevisionHolderTest.class);
-    suite.addTestSuite(CrossReferenceTest.class);
-    suite.addTestSuite(MangoTest.class);
-    suite.addTestSuite(EnumTest.class);
-    suite.addTestSuite(NoLegacyTest.class);
-    suite.addTestSuite(ResourceTest.class);
-    suite.addTestSuite(NonCDOResourceTest.class);
-    suite.addTestSuite(InvalidationTest.class);
-    suite.addTestSuite(InitialTest.class);
-    suite.addTestSuite(ViewTest.class);
-    suite.addTestSuite(IndexReconstructionTest.class);
+    suite.addTestSuite(HbRollbackTest.class);
+    suite.addTestSuite(HbStateMachineTest.class);
+    suite.addTestSuite(HbRevisionHolderTest.class);
+    suite.addTestSuite(HbCrossReferenceTest.class);
+    suite.addTestSuite(HbMangoTest.class);
+    suite.addTestSuite(HbEnumTest.class);
+    suite.addTestSuite(HbNoLegacyTest.class);
+    suite.addTestSuite(HbNonCDOResourceTest.class);
+    suite.addTestSuite(HbInvalidationTest.class);
+    suite.addTestSuite(HbViewTest.class);
+    suite.addTestSuite(HbIndexReconstructionTest.class);
+    suite.addTestSuite(HbInitialTest.class);
 
     // These fail for standard cdo >>>
     // suite.addTestSuite(DymamicEcoreTest.class);

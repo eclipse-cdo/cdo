@@ -11,8 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.hibernate;
 
+import org.eclipse.emf.cdo.tests.ResourceTest;
 import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
-import org.eclipse.emf.cdo.tests.TransactionDeadLockTest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +20,9 @@ import java.util.Map;
 /**
  * @author Martin Taal
  */
-public class HbTransactionDeadLockTest extends TransactionDeadLockTest
+public class HbResourceTest extends ResourceTest
 {
-  public HbTransactionDeadLockTest()
+  public HbResourceTest()
   {
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
   }

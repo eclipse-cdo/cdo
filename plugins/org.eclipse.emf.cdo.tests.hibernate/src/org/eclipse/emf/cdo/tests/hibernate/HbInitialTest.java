@@ -11,28 +11,16 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.hibernate;
 
+import org.eclipse.emf.cdo.tests.InitialTest;
 import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
-import org.eclipse.emf.cdo.tests.TransactionDeadLockTest;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Martin Taal
  */
-public class HbTransactionDeadLockTest extends TransactionDeadLockTest
+public class HbInitialTest extends InitialTest
 {
-  public HbTransactionDeadLockTest()
+  public HbInitialTest()
   {
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
-  }
-
-  // allows a testcase to pass specific properties
-  @Override
-  protected Map<String, String> getTestProperties()
-  {
-    final Map<String, String> testProperties = new HashMap<String, String>();
-    testProperties.put("hibernate.hbm2ddl.auto", "update");
-    return testProperties;
   }
 }

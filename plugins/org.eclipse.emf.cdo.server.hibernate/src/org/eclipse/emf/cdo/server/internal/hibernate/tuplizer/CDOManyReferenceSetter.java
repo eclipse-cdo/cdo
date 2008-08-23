@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
+
 import org.hibernate.HibernateException;
 import org.hibernate.collection.PersistentCollection;
 import org.hibernate.collection.PersistentList;
@@ -38,5 +40,18 @@ public class CDOManyReferenceSetter extends CDOPropertySetter
 
     // Only set it in the listholder
     PersistableListHolder.getInstance().putListMapping(target, getCDOFeature(), (PersistentCollection)value);
+
+    // check if deep inside the persistentlist there is not already a delegate which is a hibernatemoveable list
+    // which contains the list which should really be set in the cdorevision
+    // persistentlist, hibernatemoveablelistwrapper, real list, if so then the real list should be set
+    final InternalCDORevision revision = (InternalCDORevision)target;
+    final Object currentValue = revision.getValue(getCDOFeature());
+    final PersistentList pl = (PersistentList)value;
+    if (currentValue == null)
+    {
+      final WrappedHibernateList whl = new WrappedHibernateList();
+      whl.setDelegate(pl);
+      super.set(target, whl, factory);
+    }
   }
 }

@@ -11,6 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClassProxy;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
@@ -18,6 +20,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreWriter;
+import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
@@ -26,7 +29,12 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.hibernate.FlushMode;
+import org.hibernate.Query;
 import org.hibernate.Session;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -51,64 +59,109 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
     HibernateThreadContext.setCommitContext(context);
     writePackages(context.getNewPackages());
 
+    boolean err = true;
     try
     {
       // start with fresh hibernate session
       final Session session = getHibernateSession();
-      session.setFlushMode(FlushMode.COMMIT);
-      for (Object o : context.getNewObjects())
+      session.setFlushMode(FlushMode.MANUAL);
+
+      final List<CDORevision> cdoRevisions = Arrays.asList(context.getNewObjects());
+
+      // keep track for which cdoRevisions the container id needs to be repaired afterwards
+      final List<InternalCDORevision> repairContainerIDs = new ArrayList<InternalCDORevision>();
+
+      // first save the non-cdoresources
+      for (CDORevision cdoRevision : cdoRevisions)
       {
-        final CDORevision cdoRevision = (CDORevision)o;
-        session.save(HibernateUtil.getInstance().getEntityName(cdoRevision), o);
+        if (cdoRevision instanceof InternalCDORevision)
+        {
+          final CDOID containerID = ((InternalCDORevision)cdoRevision).getContainerID();
+          if (!containerID.isNull() && containerID instanceof CDOIDTemp)
+          {
+            repairContainerIDs.add((InternalCDORevision)cdoRevision);
+          }
+        }
+        session.save(HibernateUtil.getInstance().getEntityName(cdoRevision), cdoRevision);
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Persisted new Object " + ((CDORevision)o).getCDOClass().getName() + " id: "
-              + cdoRevision.getID());
+          TRACER.trace("Persisted new Object " + cdoRevision.getCDOClass().getName() + " id: " + cdoRevision.getID());
         }
       }
 
-      for (Object o : context.getDirtyObjects())
+      // first repair the version for all dirty objects
+      for (CDORevision cdoRevision : context.getDirtyObjects())
       {
-        try
+        if (cdoRevision instanceof InternalCDORevision)
         {
-          final CDORevision cdoRevision = (CDORevision)o;
-          if (cdoRevision instanceof InternalCDORevision)
-          {
-            ((InternalCDORevision)cdoRevision).setVersion(cdoRevision.getVersion() - 1);
-          }
-
-          session.update(HibernateUtil.getInstance().getEntityName(cdoRevision), o);
-          if (TRACER.isEnabled())
-          {
-            TRACER.trace("Updated Object " + ((CDORevision)o).getCDOClass().getName() + " id: " + cdoRevision.getID());
-          }
-        }
-        catch (Exception e)
-        {
-          OM.LOG.error(e);
-          throw WrappedException.wrap(e);
+          ((InternalCDORevision)cdoRevision).setVersion(cdoRevision.getVersion() - 1);
         }
       }
+
+      for (CDORevision cdoRevision : context.getDirtyObjects())
+      {
+        session.update(HibernateUtil.getInstance().getEntityName(cdoRevision), cdoRevision);
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Updated Object " + cdoRevision.getCDOClass().getName() + " id: " + cdoRevision.getID());
+        }
+      }
+
+      session.flush();
+
+      // now do an update of the container without incrementing the version
+      for (InternalCDORevision cdoRevision : repairContainerIDs)
+      {
+        final CDORevision container = HibernateUtil.getInstance().getCDORevision(cdoRevision.getContainerID());
+        final String entityName = HibernateUtil.getInstance().getEntityName(cdoRevision);
+        final CDOIDHibernate id = (CDOIDHibernate)cdoRevision.getID();
+        final CDOIDHibernate containerID = (CDOIDHibernate)container.getID();
+        final String hqlUpdate = "update " + entityName
+            + " set _contID_Entity = :contEntity, _contID_ID=:contID, _contID_class=:contClass where e_id = :id";
+        final Query qry = session.createQuery(hqlUpdate);
+        qry.setParameter("contEntity", containerID.getEntityName());
+        qry.setParameter("contID", containerID.getId().toString());
+        qry.setParameter("contClass", containerID.getId().getClass().getName());
+        qry.setParameter("id", id.getId());
+        if (qry.executeUpdate() != 1)
+        {
+          throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id);
+        }
+      }
+
+      session.flush();
 
       // does the commit
       endHibernateSession();
+      err = false;
+    }
+    catch (Exception e)
+    {
+      OM.LOG.error(e);
+      throw WrappedException.wrap(e);
     }
     finally
     {
+      if (err)
+      {
+        setErrorOccured(true);
+      }
       if (TRACER.isEnabled())
       {
         TRACER.trace("Clearing used hibernate session");
       }
 
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Applying id mappings");
+      }
+      // for (CDOIDTemp key : context.getIDMappings().keySet())
+      // {
+      // System.err.println(key.getIntValue());
+      // }
+      context.applyIDMappings();
       HibernateThreadContext.setCommitContext(null);
     }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Applying id mappings");
-    }
-
-    context.applyIDMappings();
   }
 
   @Override

@@ -277,6 +277,12 @@ public class HibernatePackageHandler extends Lifecycle
                 hibernateStore.getRepository().getPackageManager());
           }
         }
+
+        // // force indices to be set
+        // if (cdoClass.getAllFeatures().length > 0)
+        // {
+        // ((InternalCDOClass)cdoClass).getFeatureIndex(0);
+        // }
       }
 
       ((InternalCDOPackage)cdoPackage).setClasses(cdoClasses);

@@ -152,7 +152,10 @@ public class HibernateUtil
     }
 
     final Session session = getHibernateSession();
-    session.saveOrUpdate(cdoRevision);
+    if (!(cdoRevision.getID() instanceof CDOIDHibernate))
+    {
+      session.saveOrUpdate(cdoRevision);
+    }
     if (!(cdoRevision.getID() instanceof CDOIDHibernate))
     {
       throw new IllegalStateException("CDORevision " + cdoRevision.getCDOClass().getName() + " " + cdoRevision.getID()
@@ -213,6 +216,47 @@ public class HibernateUtil
     {
       throw new IllegalArgumentException("Passed cdoid is not an instance of CDOIDHibernate but a "
           + id.getClass().getName() + ": " + id);
+    }
+
+    final CDOIDHibernate cdoIDHibernate = (CDOIDHibernate)id;
+    final Session session = getHibernateSession();
+    return (CDORevision)session.get(cdoIDHibernate.getEntityName(), cdoIDHibernate.getId());
+  }
+
+  public CDORevision getCDORevisionNullable(CDOID id)
+  {
+    if (id.isNull())
+    {
+      return null;
+    }
+
+    if (HibernateThreadContext.isHibernateCommitContextSet())
+    {
+      final HibernateCommitContext hcc = HibernateThreadContext.getHibernateCommitContext();
+      CDORevision revision;
+      if ((revision = hcc.getDirtyObject(id)) != null)
+      {
+        return revision;
+      }
+      if ((revision = hcc.getNewObject(id)) != null)
+      {
+        return revision;
+      }
+
+      // maybe the temp was already translated
+      if (id instanceof CDOIDTemp)
+      {
+        final CDOID newID = hcc.getCommitContext().getIDMappings().get(id);
+        if (newID != null)
+        {
+          return getCDORevision(newID);
+        }
+      }
+    }
+
+    if (!(id instanceof CDOIDHibernate))
+    {
+      return null;
     }
 
     final CDOIDHibernate cdoIDHibernate = (CDOIDHibernate)id;

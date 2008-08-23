@@ -108,21 +108,43 @@ public class CDOIDUserType implements UserType
 
   public void nullSafeSet(PreparedStatement statement, Object value, int index) throws SQLException
   {
-    if (value == null)
+    if (value == null || (value instanceof CDOID && ((CDOID)value).isNull()))
     {
       statement.setNull(index, Types.VARCHAR);
-      statement.setNull(index, Types.VARCHAR);
-      statement.setNull(index, Types.VARCHAR);
+      statement.setNull(index + 1, Types.VARCHAR);
+      statement.setNull(index + 2, Types.VARCHAR);
     }
-
-    if (value != null)
+    // try to resolve the temp id
+    else if (value instanceof CDOIDTemp)
     {
-      CDOIDHibernate cdoID;
+      final CDORevision cdoRevision = HibernateUtil.getInstance().getCDORevisionNullable((CDOID)value);
+      if (cdoRevision != null)
+      {
+        value = cdoRevision.getID();
+      }
+      // still a temp one, don't do anything for now
       if (value instanceof CDOIDTemp)
       {
-        cdoID = HibernateUtil.getInstance().getCDOIDHibernate((CDOID)value);
+        statement.setNull(index, Types.VARCHAR);
+        statement.setNull(index + 1, Types.VARCHAR);
+        statement.setNull(index + 2, Types.VARCHAR);
       }
-      else if (value instanceof CDORevision)
+      else
+      {
+        final CDOIDHibernate cdoID = (CDOIDHibernate)value;
+        statement.setString(index, cdoID.getEntityName());
+        statement.setString(index + 1, cdoID.getId().toString());
+        statement.setString(index + 2, cdoID.getId().getClass().getName());
+      }
+    }
+    else
+    {
+      CDOIDHibernate cdoID;
+      // if (value instanceof CDOIDTemp)
+      // {
+      // cdoID = HibernateUtil.getInstance().getCDOIDHibernate((CDOID)value);
+      // }
+      if (value instanceof CDORevision)
       {
         cdoID = (CDOIDHibernate)((CDORevision)value).getID();
       }

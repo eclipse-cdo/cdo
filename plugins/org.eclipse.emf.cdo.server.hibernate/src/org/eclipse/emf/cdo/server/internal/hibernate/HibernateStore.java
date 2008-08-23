@@ -31,6 +31,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 import java.io.InputStream;
 
@@ -63,6 +65,8 @@ public class HibernateStore extends Store implements IHibernateStore
   private HibernatePackageHandler packageHandler;
 
   private IHibernateMappingProvider mappingProvider;
+
+  private boolean doDropSchema = false;
 
   public HibernateStore(IHibernateMappingProvider mappingProvider)
   {
@@ -210,9 +214,17 @@ public class HibernateStore extends Store implements IHibernateStore
 
       hibernateSessionFactory.close();
       hibernateSessionFactory = null;
+
+      // and now do the drop action
+      if (doDropSchema)
+      {
+        final SchemaExport se = new SchemaExport(getHibernateConfiguration());
+        se.drop(false, false);
+      }
     }
 
     packageHandler.deactivate();
+
     super.doDeactivate();
   }
 
@@ -235,7 +247,6 @@ public class HibernateStore extends Store implements IHibernateStore
         {
           TRACER.trace("Closing SessionFactory");
         }
-
         hibernateSessionFactory.close();
       }
 
@@ -270,6 +281,20 @@ public class HibernateStore extends Store implements IHibernateStore
       hibernateConfiguration.addInputStream(in);
       hibernateConfiguration.setInterceptor(new CDOInterceptor());
       hibernateConfiguration.setProperties(HibernateUtil.getInstance().getPropertiesFromStore(this));
+
+      // prevent the drop on close because the sessionfactory is also closed when
+      // new packages are written to the db, so only do a real drop at deactivate
+      if (hibernateConfiguration.getProperty(Environment.HBM2DDL_AUTO) != null
+          && hibernateConfiguration.getProperty(Environment.HBM2DDL_AUTO).startsWith("create"))
+      {
+        doDropSchema = true;
+        // note that the value create also re-creates the db and drops the old one
+        hibernateConfiguration.setProperty(Environment.HBM2DDL_AUTO, "update");
+      }
+      else
+      {
+        doDropSchema = false;
+      }
     }
     catch (Exception ex)
     {

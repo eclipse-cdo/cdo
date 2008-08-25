@@ -29,6 +29,7 @@ public class CDOManyReferenceSetter extends CDOPropertySetter
     super(tuplizer, propertyName);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {

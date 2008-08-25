@@ -25,7 +25,6 @@ import org.hibernate.EntityMode;
 import org.hibernate.HibernateException;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
-import org.hibernate.property.DirectPropertyAccessor;
 import org.hibernate.property.Getter;
 import org.hibernate.property.Setter;
 import org.hibernate.proxy.ProxyFactory;

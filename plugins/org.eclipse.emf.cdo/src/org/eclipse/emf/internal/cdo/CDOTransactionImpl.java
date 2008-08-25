@@ -35,6 +35,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionRequest;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
+import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
+import org.eclipse.emf.internal.cdo.util.IPackageClosure;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.channel.IChannel;
@@ -433,7 +435,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   private static List<CDOPackage> analyzeNewPackages(Collection<EClass> eClasses,
       CDOSessionPackageManagerImpl packageManager)
   {
-    // Calculate the top level packages of the used classes
+    // Calculate the top level EPackages of the used classes
     Set<EPackage> usedPackages = new HashSet<EPackage>();
     for (EClass eClass : eClasses)
     {
@@ -441,7 +443,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       usedPackages.add(topLevelPackage);
     }
 
-    // Determine which of the used packages are new
+    IPackageClosure closure = new CompletePackageClosure();
+    usedPackages = closure.calculate(usedPackages);
+
+    // Determine which of the corresdonding CDOPackages are new
     List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
     for (EPackage usedPackage : usedPackages)
     {
@@ -454,11 +459,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       if (!cdoPackage.isPersistent() && !cdoPackage.isSystem())
       {
         newPackages.add(cdoPackage);
-        CDOPackage[] subPackages = cdoPackage.getSubPackages(true);
-        for (CDOPackage subPackage : subPackages)
-        {
-          newPackages.add(subPackage);
-        }
       }
     }
 

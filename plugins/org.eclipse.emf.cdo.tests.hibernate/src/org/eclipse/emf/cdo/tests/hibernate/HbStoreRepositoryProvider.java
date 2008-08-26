@@ -62,6 +62,10 @@ public class HbStoreRepositoryProvider extends StoreRepositoryProvider
     // override with the test properties
     props.putAll(testProperties);
 
+    return createRepository(name, createStore(), props);
+  }
+
+  protected IRepository createRepository(String name, IStore store, Map<String, String> props) {
     return CDOServerUtil.createRepository(name, createStore(), props);
   }
 

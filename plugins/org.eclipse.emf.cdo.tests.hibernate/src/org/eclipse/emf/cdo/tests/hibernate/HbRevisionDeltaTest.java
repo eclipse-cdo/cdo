@@ -11,16 +11,48 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.hibernate;
 
-import org.eclipse.emf.cdo.tests.RevisionDeltaTest;
+import org.eclipse.emf.cdo.internal.server.Repository;
+import org.eclipse.emf.cdo.internal.server.RevisionManager;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.tests.RevisionDeltaWithoutDeltaSupportTest;
 import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
 
+import java.util.Map;
+
 /**
+ * THIS TEST DOES NOT WORK, HIBERNATE DOES NOT SUPPORT REVISIONDELTAS
+ * 
  * @author Martin Taal
  */
-public class HbRevisionDeltaTest extends RevisionDeltaTest
+public class HbRevisionDeltaTest extends RevisionDeltaWithoutDeltaSupportTest
 {
   public HbRevisionDeltaTest()
   {
-    StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
+    StoreRepositoryProvider.setInstance(LocalHbStoreRepositoryProvider.getInstance());
+  }
+  
+  protected Repository createRepository()
+  {
+    LocalHbStoreRepositoryProvider provider = new LocalHbStoreRepositoryProvider();
+    return (Repository)provider.createRepository(REPOSITORY_NAME, getTestProperties());
+  }
+
+  private class LocalHbStoreRepositoryProvider extends HbStoreRepositoryProvider {
+    protected IRepository createRepository(String name, IStore store, Map<String, String> props) {
+      Repository repository = new Repository()
+      {
+        @Override
+        protected RevisionManager createRevisionManager()
+        {
+          return new TestRevisionManager(this);
+        }
+      };
+
+      repository.setName(name);
+      repository.setProperties(props);
+      repository.setStore(store);
+      return repository;
+    }
   }
 }

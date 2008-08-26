@@ -25,12 +25,7 @@ public class AllTests
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
 
     TestSuite suite = new TestSuite("Tests for CDO using Hibernate");
-    suite.addTestSuite(HbRevisionDeltaTest.class);
-    if (false)
-    {
-      return suite;
-    }
-
+    suite.addTestSuite(HbViewTest.class);
     suite.addTestSuite(HbCDOAutomaticPackageRefTest.class);
     suite.addTestSuite(HbCDOPackageRefTest.class);
     suite.addTestSuite(HbPackageRegistryTest.class);
@@ -47,7 +42,6 @@ public class AllTests
     suite.addTestSuite(HbNoLegacyTest.class);
     suite.addTestSuite(HbNonCDOResourceTest.class);
     suite.addTestSuite(HbInvalidationTest.class);
-    suite.addTestSuite(HbViewTest.class);
     suite.addTestSuite(HbIndexReconstructionTest.class);
     suite.addTestSuite(HbInitialTest.class);
 
@@ -61,7 +55,8 @@ public class AllTests
     // suite.addTestSuite(Bugzilla241464_Test.class);
     // failures: /testWriteNative, testChunkWithTemporaryObject
     // suite.addTestSuite(ChunkingWithMEMTest.class);
-    // failures testReadNative, testWriteNative
+     // failures testReadNative, testWriteNative
+//    suite.addTestSuite(HbRevisionDeltaTest.class);
 
     // $JUnit-BEGIN$
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);

@@ -76,14 +76,12 @@ public class HbPackageRegistryTest extends PackageRegistryTest
   @Override
   protected void doSetUp() throws Exception
   {
-    System.err.println("Called dosetup");
     super.doSetUp();
   }
 
   @Override
   protected void doTearDown() throws Exception
   {
-    System.err.println("Called doteardown");
     super.doTearDown();
   }
 

@@ -155,10 +155,6 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
       {
         TRACER.trace("Applying id mappings");
       }
-      // for (CDOIDTemp key : context.getIDMappings().keySet())
-      // {
-      // System.err.println(key.getIntValue());
-      // }
       context.applyIDMappings();
       HibernateThreadContext.setCommitContext(null);
     }

@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.internal.server.Session;
 
+import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -40,7 +42,28 @@ public class ViewsChangedIndication extends CDOServerIndication // Indication
     byte kind = in.readByte();
     CDOServerProtocol protocol = getProtocol();
     Session session = protocol.getSession();
-    session.changeView(viewID, kind);
+
+    switch (kind)
+    {
+    case CDOProtocolConstants.VIEW_CLOSED:
+      session.closeView(viewID);
+      break;
+
+    case CDOProtocolConstants.VIEW_TRANSACTION:
+      session.openView(viewID, CDOProtocolView.Type.TRANSACTION);
+      break;
+
+    case CDOProtocolConstants.VIEW_READONLY:
+      session.openView(viewID, CDOProtocolView.Type.READONLY);
+      break;
+
+    case CDOProtocolConstants.VIEW_AUDIT:
+      session.openView(viewID, CDOProtocolView.Type.AUDIT);
+      break;
+
+    default:
+      throw new ImplementationError("Invalid kind: " + kind);
+    }
   }
 
   @Override

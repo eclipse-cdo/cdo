@@ -13,7 +13,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
@@ -32,7 +31,6 @@ import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -141,31 +139,6 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   public IView getView(int viewID)
   {
     return views.get(viewID);
-  }
-
-  public void changeView(int viewID, byte kind)
-  {
-    switch (kind)
-    {
-    case CDOProtocolConstants.VIEW_CLOSED:
-      closeView(viewID);
-      break;
-
-    case CDOProtocolConstants.VIEW_TRANSACTION:
-      openView(viewID, CDOProtocolView.Type.TRANSACTION);
-      break;
-
-    case CDOProtocolConstants.VIEW_READONLY:
-      openView(viewID, CDOProtocolView.Type.READONLY);
-      break;
-
-    case CDOProtocolConstants.VIEW_AUDIT:
-      openView(viewID, CDOProtocolView.Type.AUDIT);
-      break;
-
-    default:
-      throw new ImplementationError("Invalid kind: " + kind);
-    }
   }
 
   public IView closeView(int viewID)

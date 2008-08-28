@@ -24,7 +24,7 @@ import org.eclipse.net4j.util.collection.CloseableIterator;
 import java.util.Collection;
 
 /**
- * @see StoreUtil#getReader()
+ * @see StoreThreadLocal#getStoreReader()
  * @author Eike Stepper
  */
 public interface IStoreReader extends IStoreAccessor

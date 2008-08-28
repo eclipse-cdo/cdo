@@ -18,8 +18,6 @@ import org.eclipse.emf.cdo.internal.server.NOOPStore;
  */
 public final class StoreUtil
 {
-  private static final ThreadLocal<IStoreReader> THREAD_LOCAL = new InheritableThreadLocal<IStoreReader>();
-
   private StoreUtil()
   {
   }
@@ -32,21 +30,5 @@ public final class StoreUtil
   public static IStore createMEMStore()
   {
     return new MEMStore();
-  }
-
-  public static void setReader(IStoreReader reader)
-  {
-    THREAD_LOCAL.set(reader);
-  }
-
-  public static IStoreReader getReader()
-  {
-    IStoreReader reader = THREAD_LOCAL.get();
-    if (reader == null)
-    {
-      throw new IllegalStateException("reader == null");
-    }
-
-    return reader;
   }
 }

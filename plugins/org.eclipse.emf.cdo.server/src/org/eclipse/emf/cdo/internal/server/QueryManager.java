@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
@@ -68,7 +68,7 @@ public class QueryManager extends Lifecycle
   public QueryResult execute(IView view, CDOQueryInfo queryInfo)
   {
     QueryResult queryResult = new QueryResult(view, queryInfo, nextQuery());
-    QueryContext queryContext = new QueryContext(StoreUtil.getReader(), queryResult);
+    QueryContext queryContext = new QueryContext(StoreThreadLocal.getStoreReader(), queryResult);
     execute(queryContext);
     return queryResult;
   }

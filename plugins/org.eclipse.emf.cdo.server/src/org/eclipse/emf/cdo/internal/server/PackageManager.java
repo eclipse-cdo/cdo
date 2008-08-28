@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IStoreReader;
-import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import java.util.Collection;
 
@@ -48,7 +48,7 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
   {
     if (!cdoPackage.isSystem())
     {
-      IStoreReader storeReader = StoreUtil.getReader();
+      IStoreReader storeReader = StoreThreadLocal.getStoreReader();
       storeReader.readPackage(cdoPackage);
     }
   }

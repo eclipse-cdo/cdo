@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.internal.server.StoreAccessor;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
@@ -68,13 +68,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     try
     {
       // ugly cast
-      StoreUtil.setReader((IStoreReader)this);
+      StoreThreadLocal.setReader((IStoreReader)this);
       endHibernateSession();
       PersistableListHolder.getInstance().clearListMapping();
     }
     finally
     {
-      StoreUtil.setReader(null);
+      StoreThreadLocal.setReader(null);
     }
   }
 

@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IResourceManager;
 import org.eclipse.emf.cdo.server.IStoreReader;
-import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -88,13 +88,13 @@ public class ResourceManager extends Lifecycle implements IResourceManager
 
   private CDOID loadID(String path)
   {
-    IStoreReader storeReader = StoreUtil.getReader();
+    IStoreReader storeReader = StoreThreadLocal.getStoreReader();
     return storeReader.readResourceID(path);
   }
 
   private String loadPath(CDOID id)
   {
-    IStoreReader storeReader = StoreUtil.getReader();
+    IStoreReader storeReader = StoreThreadLocal.getStoreReader();
     return storeReader.readResourcePath(id);
   }
 }

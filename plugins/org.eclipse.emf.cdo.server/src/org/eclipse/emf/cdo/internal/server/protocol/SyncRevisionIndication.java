@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IStoreReader;
-import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -54,7 +54,7 @@ public class SyncRevisionIndication extends CDOReadIndication
   @Override
   protected void indicating(ExtendedDataInputStream in) throws IOException
   {
-    IStoreReader reader = StoreUtil.getReader();
+    IStoreReader reader = StoreThreadLocal.getStoreReader();
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Refreshing reader : " + reader);

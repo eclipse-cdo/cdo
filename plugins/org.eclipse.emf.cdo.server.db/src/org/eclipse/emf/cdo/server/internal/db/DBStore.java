@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.internal.server.LongIDStore;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
@@ -312,11 +311,11 @@ public class DBStore extends LongIDStore implements IDBStore
   @Override
   public void repairAfterCrash()
   {
-    DBStoreReader storeReader = getReader(null);
-    StoreUtil.setReader(storeReader);
+    DBStoreReader storeReader = null;
 
     try
     {
+      storeReader = getReader(null);
       Connection connection = storeReader.getConnection();
       long maxObjectID = mappingStrategy.repairAfterCrash(connection);
       setLastMetaID(DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGES_RANGE_UB));
@@ -327,8 +326,10 @@ public class DBStore extends LongIDStore implements IDBStore
     }
     finally
     {
-      storeReader.release();
-      StoreUtil.setReader(null);
+      if (storeReader != null)
+      {
+        storeReader.release();
+      }
     }
   }
 

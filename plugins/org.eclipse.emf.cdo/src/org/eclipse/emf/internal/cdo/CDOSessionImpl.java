@@ -56,6 +56,7 @@ import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -106,6 +107,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   private IFailOverStrategy failOverStrategy;
 
+  @ExcludeFromDump
   private IListener failOverStrategyListener = new IListener()
   {
     public void notifyEvent(IEvent event)
@@ -122,6 +124,16 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   private IChannel channel;
 
+  @ExcludeFromDump
+  private IListener channelListener = new LifecycleEventAdapter()
+  {
+    @Override
+    protected void onDeactivated(ILifecycle lifecycle)
+    {
+      close();
+    }
+  };
+
   private String repositoryName;
 
   private String repositoryUUID;
@@ -132,27 +144,23 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   private CDORevisionManagerImpl revisionManager;
 
-  private Map<CDOID, InternalEObject> idToMetaInstanceMap = new HashMap<CDOID, InternalEObject>();
-
-  private Map<InternalEObject, CDOID> metaInstanceToIDMap = new HashMap<InternalEObject, CDOID>();
-
   private ConcurrentMap<CDOID, CDOClass> types = new ConcurrentHashMap<CDOID, CDOClass>();
 
   private Map<ResourceSet, CDOViewImpl> views = new HashMap<ResourceSet, CDOViewImpl>();
 
+  @ExcludeFromDump
+  private transient Map<CDOID, InternalEObject> idToMetaInstanceMap = new HashMap<CDOID, InternalEObject>();
+
+  @ExcludeFromDump
+  private transient Map<InternalEObject, CDOID> metaInstanceToIDMap = new HashMap<InternalEObject, CDOID>();
+
+  @ExcludeFromDump
   private transient int lastViewID;
 
+  @ExcludeFromDump
   private transient int lastTempMetaID;
 
-  private IListener channelListener = new LifecycleEventAdapter()
-  {
-    @Override
-    protected void onDeactivated(ILifecycle lifecycle)
-    {
-      close();
-    }
-  };
-
+  @ExcludeFromDump
   private CDOIDObjectFactory cdoidObjectFactory;
 
   public CDOSessionImpl()

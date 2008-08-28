@@ -10,9 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IStoreReader;
-import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.internal.server.Session;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
@@ -29,21 +28,15 @@ public abstract class CDOReadIndication extends CDOServerIndication
   @Override
   protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    IStore store = getStore();
-    IStoreReader storeReader = store.getReader(getSession());
-
     try
     {
-      // Make the store reader available in a ThreadLocal variable
-      StoreUtil.setReader(storeReader);
-
-      // Execute indicating() and responding()
+      Session session = getSession();
+      StoreThreadLocal.setSession(session);
       super.execute(in, out);
     }
     finally
     {
-      storeReader.release();
-      StoreUtil.setReader(null);
+      StoreThreadLocal.release();
     }
   }
 }

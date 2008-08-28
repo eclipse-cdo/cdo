@@ -28,7 +28,7 @@ import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
@@ -163,7 +163,7 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
     storeWriter = repository.getStore().getWriter(this);
 
     // Make the store writer available in a ThreadLocal variable
-    StoreUtil.setReader(storeWriter);
+    StoreThreadLocal.setStoreWriter(storeWriter);
   }
 
   public void commit(CDOPackage[] newPackages, CDORevision[] newObjects, CDORevisionDelta[] dirtyObjectDeltas)
@@ -205,14 +205,8 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
     }
     finally
     {
-      // TODO Do this while indcating instead of responding
-      if (storeWriter != null)
-      {
-        StoreUtil.setReader(null);
-        storeWriter.release();
-        storeWriter = null;
-      }
-
+      StoreThreadLocal.release();
+      storeWriter = null;
       timeStamp = 0L;
       packageManager.clear();
       metaIDRanges.clear();

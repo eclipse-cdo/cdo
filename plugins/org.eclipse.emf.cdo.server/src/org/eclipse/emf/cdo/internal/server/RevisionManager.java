@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreReader;
-import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
@@ -88,7 +88,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     revision = super.verifyRevision(revision, referenceChunk);
     if (repository.isVerifyingRevisions())
     {
-      storeReader = StoreUtil.getReader();
+      storeReader = StoreThreadLocal.getStoreReader();
       revision = (InternalCDORevision)storeReader.verifyRevision(revision);
     }
 
@@ -116,7 +116,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   {
     MoveableList<Object> list = revision.getList(feature);
     chunkEnd = Math.min(chunkEnd, list.size());
-    return ensureChunk(revision, feature, StoreUtil.getReader(), list, chunkStart, chunkEnd);
+    return ensureChunk(revision, feature, StoreThreadLocal.getStoreReader(), list, chunkStart, chunkEnd);
   }
 
   protected IStoreReader ensureChunk(InternalCDORevision revision, CDOFeature feature, IStoreReader storeReader,
@@ -141,7 +141,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
           {
             if (storeReader == null)
             {
-              storeReader = StoreUtil.getReader();
+              storeReader = StoreThreadLocal.getStoreReader();
             }
 
             chunkReader = storeReader.createChunkReader(revision, feature);
@@ -169,7 +169,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       {
         if (storeReader == null)
         {
-          storeReader = StoreUtil.getReader();
+          storeReader = StoreThreadLocal.getStoreReader();
         }
 
         chunkReader = storeReader.createChunkReader(revision, feature);
@@ -206,28 +206,28 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   @Override
   protected InternalCDORevision loadRevision(CDOID id, int referenceChunk)
   {
-    IStoreReader storeReader = StoreUtil.getReader();
+    IStoreReader storeReader = StoreThreadLocal.getStoreReader();
     return (InternalCDORevision)storeReader.readRevision(id, referenceChunk);
   }
 
   @Override
   protected InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
-    IStoreReader storeReader = StoreUtil.getReader();
+    IStoreReader storeReader = StoreThreadLocal.getStoreReader();
     return (InternalCDORevision)storeReader.readRevisionByTime(id, referenceChunk, timeStamp);
   }
 
   @Override
   protected InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
-    IStoreReader storeReader = StoreUtil.getReader();
+    IStoreReader storeReader = StoreThreadLocal.getStoreReader();
     return (InternalCDORevision)storeReader.readRevisionByVersion(id, referenceChunk, version);
   }
 
   @Override
   protected List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
   {
-    IStoreReader storeReader = StoreUtil.getReader();
+    IStoreReader storeReader = StoreThreadLocal.getStoreReader();
     List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
     for (CDOID id : ids)
     {
@@ -241,7 +241,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   @Override
   protected List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
-    IStoreReader storeReader = StoreUtil.getReader();
+    IStoreReader storeReader = StoreThreadLocal.getStoreReader();
     List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
     for (CDOID id : ids)
     {

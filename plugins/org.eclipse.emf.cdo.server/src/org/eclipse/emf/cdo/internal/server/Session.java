@@ -29,7 +29,7 @@ import org.eclipse.emf.cdo.internal.server.protocol.CommitNotificationRequest;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
-import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.ImplementationError;
@@ -275,7 +275,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   {
     RevisionManager revisionManager = sessionManager.getRepository().getRevisionManager();
     CDOClass cdoClass = revisionManager.getObjectType(id);
-    return cdoClass != null ? cdoClass.createClassRef() : StoreUtil.getReader().readObjectType(id);
+    return cdoClass != null ? cdoClass.createClassRef() : StoreThreadLocal.getStoreReader().readObjectType(id);
   }
 
   /**

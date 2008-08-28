@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
@@ -116,7 +116,7 @@ public class HibernateUtil
    */
   public Session getHibernateSession()
   {
-    final HibernateStoreReader storeReader = (HibernateStoreReader)StoreUtil.getReader();
+    final HibernateStoreReader storeReader = (HibernateStoreReader)StoreThreadLocal.getStoreReader();
     return storeReader.getHibernateSession();
   }
 

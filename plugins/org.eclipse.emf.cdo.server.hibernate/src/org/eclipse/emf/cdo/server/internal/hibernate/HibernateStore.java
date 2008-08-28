@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.internal.server.Store;
+import org.eclipse.emf.cdo.internal.server.StoreAccessorPool;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
@@ -141,21 +142,9 @@ public class HibernateStore extends Store implements IHibernateStore
   }
 
   @Override
-  public HibernateStoreReader getReader(ISession session)
-  {
-    return (HibernateStoreReader)super.getReader(session);
-  }
-
-  @Override
   public HibernateStoreReader createReader(ISession session)
   {
     return new HibernateStoreReader(this, session);
-  }
-
-  @Override
-  public HibernateStoreWriter getWriter(IView view)
-  {
-    return (HibernateStoreWriter)super.getWriter(view);
   }
 
   @Override
@@ -224,8 +213,21 @@ public class HibernateStore extends Store implements IHibernateStore
     }
 
     packageHandler.deactivate();
-
     super.doDeactivate();
+  }
+
+  @Override
+  protected StoreAccessorPool getReaderPool(ISession session, boolean forReleasing)
+  {
+    // TODO Consider usings multiple pools for readers (e.g. bound to the session context)
+    return null;
+  }
+
+  @Override
+  protected StoreAccessorPool getWriterPool(IView view, boolean forReleasing)
+  {
+    // TODO Consider usings multiple pools for writers (e.g. bound to the session context)
+    return null;
   }
 
   // is called after a new package has been added

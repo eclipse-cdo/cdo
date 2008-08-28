@@ -108,9 +108,36 @@ public class NOOPStoreAccessor extends StoreAccessor implements IStoreReader, IS
   }
 
   /**
+   * TODO Clarify the meaning of {@link IStoreReader#refreshRevisions()}
+   * 
    * @since 2.0
    */
   public void refreshRevisions()
   {
+    // Do nothing
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    // Do nothing
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    // Do nothing
+  }
+
+  @Override
+  protected void doPassivate() throws Exception
+  {
+    // Pooling of store accessors not supported
+  }
+
+  @Override
+  protected void doUnpassivate() throws Exception
+  {
+    // Pooling of store accessors not supported
   }
 }

@@ -10,9 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.hibernate;
 
-import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IView;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -25,8 +23,4 @@ public interface IHibernateStore extends IStore
   public Configuration getHibernateConfiguration();
 
   public SessionFactory getHibernateSessionFactory();
-
-  public IHibernateStoreReader getReader(ISession session);
-
-  public IHibernateStoreWriter getWriter(IView view);
 }

@@ -41,7 +41,7 @@ import java.util.List;
  */
 public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, IStoreWriter
 {
-  List<CDORevision> newRevisions = new ArrayList<CDORevision>();
+  private List<CDORevision> newRevisions = new ArrayList<CDORevision>();
 
   public MEMStoreAccessor(MEMStore store, ISession session)
   {
@@ -159,34 +159,6 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     }
   }
 
-  @Override
-  protected void writePackages(CDOPackage... cdoPackages)
-  {
-    // Do nothing
-  }
-
-  @Override
-  protected void writeRevision(CDORevision revision)
-  {
-    newRevisions.add(revision);
-    getStore().addRevision(revision);
-  }
-
-  @Override
-  protected void writeRevisionDelta(CDORevisionDelta revisionDelta)
-  {
-    CDORevision revision = getStore().getRevision(revisionDelta.getID());
-    CDORevision newRevision = CDORevisionUtil.copy(revision);
-    revisionDelta.apply(newRevision);
-    writeRevision(newRevision);
-  }
-
-  @Override
-  protected void doRelease()
-  {
-    newRevisions.clear();
-  }
-
   /**
    * @since 2.0
    */
@@ -212,11 +184,11 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
           });
         }
       }
-
+  
       queryExecution.activate();
       return queryExecution;
     }
-
+  
     throw new RuntimeException("Unsupported language " + queryInfo.getQueryLanguage());
   }
 
@@ -225,5 +197,51 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
    */
   public void refreshRevisions()
   {
+  }
+
+  @Override
+  protected void writePackages(CDOPackage... cdoPackages)
+  {
+    // Do nothing
+  }
+
+  @Override
+  protected void writeRevision(CDORevision revision)
+  {
+    newRevisions.add(revision);
+    getStore().addRevision(revision);
+  }
+
+  @Override
+  protected void writeRevisionDelta(CDORevisionDelta revisionDelta)
+  {
+    CDORevision revision = getStore().getRevision(revisionDelta.getID());
+    CDORevision newRevision = CDORevisionUtil.copy(revision);
+    revisionDelta.apply(newRevision);
+    writeRevision(newRevision);
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    // Do nothing
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    newRevisions.clear();
+  }
+
+  @Override
+  protected void doPassivate() throws Exception
+  {
+    // Pooling of store accessors not supported
+  }
+
+  @Override
+  protected void doUnpassivate() throws Exception
+  {
+    // Pooling of store accessors not supported
   }
 }

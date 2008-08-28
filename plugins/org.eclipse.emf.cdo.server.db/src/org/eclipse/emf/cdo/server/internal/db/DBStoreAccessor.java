@@ -65,10 +65,28 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   }
 
   @Override
-  protected void doRelease() throws DBException
+  protected void doActivate() throws Exception
+  {
+    // Do nothing
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
   {
     DBUtil.close(statement);
     DBUtil.close(connection);
+  }
+
+  @Override
+  protected void doPassivate() throws Exception
+  {
+    // Do nothing
+  }
+
+  @Override
+  protected void doUnpassivate() throws Exception
+  {
+    // Do nothing
   }
 
   @Override

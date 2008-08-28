@@ -78,6 +78,8 @@ public interface IStoreReader extends IStoreAccessor
   public CDORevision verifyRevision(CDORevision revision);
 
   /**
+   * TODO Clarify the meaning of {@link IStoreReader#refreshRevisions()}
+   * 
    * @since 2.0
    */
   public void refreshRevisions();

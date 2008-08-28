@@ -59,4 +59,18 @@ public class NOOPStore extends LongIDStore
   {
     return new NOOPStoreAccessor(this, view);
   }
+
+  @Override
+  protected StoreAccessorPool getReaderPool(ISession session, boolean forReleasing)
+  {
+    // Pooling of store accessors not supported
+    return null;
+  }
+
+  @Override
+  protected StoreAccessorPool getWriterPool(IView view, boolean forReleasing)
+  {
+    // Pooling of store accessors not supported
+    return null;
+  }
 }

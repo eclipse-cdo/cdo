@@ -27,12 +27,13 @@ import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 /**
  * @author Eike Stepper
  */
-public class StoreAccessor implements IStoreAccessor
+public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, StoreAccessor.class);
 
@@ -57,15 +58,6 @@ public class StoreAccessor implements IStoreAccessor
   protected StoreAccessor(Store store, IView view)
   {
     this(store, view, false);
-  }
-
-  public final void release()
-  {
-    store.releaseAccessor(this);
-  }
-
-  protected void doRelease()
-  {
   }
 
   public Store getStore()
@@ -130,6 +122,11 @@ public class StoreAccessor implements IStoreAccessor
     {
       TRACER.format("Rolling back transaction: {0}", getView());
     }
+  }
+
+  public final void release()
+  {
+    store.releaseAccessor(this);
   }
 
   protected void addIDMappings(CommitContext context)
@@ -215,4 +212,14 @@ public class StoreAccessor implements IStoreAccessor
   {
     throw new UnsupportedOperationException();
   }
+
+  @Override
+  protected abstract void doActivate() throws Exception;
+
+  @Override
+  protected abstract void doDeactivate() throws Exception;
+
+  protected abstract void doPassivate() throws Exception;
+
+  protected abstract void doUnpassivate() throws Exception;
 }

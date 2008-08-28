@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreReader;
@@ -168,21 +169,27 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * TODO Clarify the meaning of {@link IStoreReader#refreshRevisions()}
+   * 
+   * @since 2.0
+   */
   public void refreshRevisions()
   {
+    // Do nothing
   }
 
   @Override
   // this method can disappear when in transaction commit the release
   // of the accessor is done before the StoreUtil.setReader(null),
   // see the Transaction
-  protected void doRelease()
+  protected void doDeactivate() throws Exception
   {
     try
     {
       // ugly cast
       StoreThreadLocal.setReader(this);
-      super.doRelease();
+      super.doDeactivate();
     }
     finally
     {

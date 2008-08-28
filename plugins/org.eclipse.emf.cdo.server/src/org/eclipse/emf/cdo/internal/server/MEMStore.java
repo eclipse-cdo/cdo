@@ -40,6 +40,23 @@ public class MEMStore extends LongIDStore
     super(TYPE);
   }
 
+  /**
+   * @since 2.0
+   */
+  public synchronized List<CDORevision> getRevisions()
+  {
+    ArrayList<CDORevision> simpleRevisions = new ArrayList<CDORevision>();
+    Iterator<List<CDORevision>> itr = revisions.values().iterator();
+    while (itr.hasNext())
+    {
+      List<CDORevision> list = itr.next();
+      CDORevision revision = list.get(list.size() - 1);
+      simpleRevisions.add(revision);
+    }
+
+    return simpleRevisions;
+  }
+
   public synchronized CDORevision getRevision(CDOID id)
   {
     List<CDORevision> list = revisions.get(id);
@@ -168,6 +185,20 @@ public class MEMStore extends LongIDStore
     super.doDeactivate();
   }
 
+  @Override
+  protected StoreAccessorPool getReaderPool(ISession session, boolean forReleasing)
+  {
+    // Pooling of store accessors not supported
+    return null;
+  }
+
+  @Override
+  protected StoreAccessorPool getWriterPool(IView view, boolean forReleasing)
+  {
+    // Pooling of store accessors not supported
+    return null;
+  }
+
   private CDORevision getRevisionByVersion(List<CDORevision> list, int version)
   {
     for (CDORevision revision : list)
@@ -179,22 +210,5 @@ public class MEMStore extends LongIDStore
     }
 
     return null;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public List<CDORevision> getRevisions()
-  {
-    ArrayList<CDORevision> simpleRevisions = new ArrayList<CDORevision>();
-    Iterator<List<CDORevision>> itr = revisions.values().iterator();
-    while (itr.hasNext())
-    {
-      List<CDORevision> list = itr.next();
-      CDORevision revision = list.get(list.size() - 1);
-      simpleRevisions.add(revision);
-    }
-
-    return simpleRevisions;
   }
 }

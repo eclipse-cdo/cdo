@@ -56,8 +56,15 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
-  protected void doRelease()
+  protected void doActivate() throws Exception
   {
+    // TODO This method is called right after this accessor is created initially
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    // TODO This method is called when this accessor is not needed anymore
     if (TRACER.isEnabled())
     {
       TRACER.trace("Committing/rollback and closing hibernate session");
@@ -76,6 +83,19 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       StoreThreadLocal.setReader(null);
     }
+
+  }
+
+  @Override
+  protected void doPassivate() throws Exception
+  {
+    // TODO This method is called right before this accessor is added to a pool
+  }
+
+  @Override
+  protected void doUnpassivate() throws Exception
+  {
+    // TODO This method is called right after this accessor is removed from a pool
   }
 
   /** Clears the current hibernate session and sets a new one in the thread context */

@@ -10,15 +10,19 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -83,22 +87,130 @@ public abstract class Store extends Lifecycle implements IStore
     this.lastMetaID = lastMetaID;
   }
 
-  public IStoreReader getReader(ISession session)
+  public final IStoreReader getReader(ISession session)
   {
-    return createReader(session);
+    IStoreReader reader = null;
+    StoreAccessorPool pool = getReaderPool(session, false);
+    if (pool != null)
+    {
+      reader = (IStoreReader)pool.removeStoreAccessor();
+    }
+
+    if (reader == null && session != null)
+    {
+      CDOProtocolView[] views = session.getViews();
+      for (CDOProtocolView view : views)
+      {
+        pool = getWriterPool((IView)view, false);
+        if (pool != null)
+        {
+          reader = (IStoreReader)pool.removeStoreAccessor();
+          if (reader != null)
+          {
+            break;
+          }
+        }
+      }
+    }
+
+    if (reader == null)
+    {
+      reader = createReader(session);
+      LifecycleUtil.activate(reader);
+    }
+
+    return reader;
   }
 
-  protected abstract IStoreReader createReader(ISession session);
-
-  public IStoreWriter getWriter(IView view)
+  public final IStoreWriter getWriter(IView view)
   {
-    return createWriter(view);
-  }
+    IStoreWriter writer = null;
+    StoreAccessorPool pool = getWriterPool(view, false);
+    if (pool != null)
+    {
+      writer = (IStoreWriter)pool.removeStoreAccessor();
+    }
 
-  protected abstract IStoreWriter createWriter(IView view);
+    if (writer == null)
+    {
+      writer = createWriter(view);
+      LifecycleUtil.activate(writer);
+    }
+
+    return writer;
+  }
 
   protected void releaseAccessor(StoreAccessor accessor)
   {
-    accessor.doRelease();
+    StoreAccessorPool pool = null;
+    if (accessor instanceof IStoreWriter)
+    {
+      pool = getWriterPool(accessor.getView(), true);
+    }
+    else
+    {
+      pool = getReaderPool(accessor.getSession(), true);
+    }
+
+    if (pool != null)
+    {
+      pool.addStoreAccessor(accessor);
+    }
+    else
+    {
+      accessor.deactivate();
+    }
   }
+
+  /**
+   * Returns a {@link StoreAccessorPool pool} that may contain {@link IStoreReader} instances that are compatible with
+   * the given session. The implementor may return <code>null</code> to indicate that no pooling occurs. It's also left
+   * to the implementors choice how to determine the appropriate pool instance to be used for the given session, for
+   * example it could always return the same pool instance, regardless of the given session.
+   * <p>
+   * If the implementor of this method decides to create pools that are only compatible with certain sessions or views,
+   * then it is his responsibility to listen to {@link IContainerDelta.Kind#REMOVED REMOVED} events sent by either the
+   * {@link ISessionManager} (indicating that a session is closed) or any of its sessions (indicating that a view is
+   * closed). <b>Note:</b> Closing a session <em>implies</em> that all contained views are closed sliently without
+   * firing respective events!
+   * 
+   * @param session
+   *          The context which the pool must be compatible with. Must not be <code>null</code>.
+   * @param forReleasing
+   *          Enables lazy pool creation. The implementor is not supposed to create a new pool if <code>false</code> is
+   *          passed. If <code>true</code> is passed it's up to the implementor whether to create a new pool or not.
+   */
+  protected abstract StoreAccessorPool getReaderPool(ISession session, boolean forReleasing);
+
+  /**
+   * Returns a {@link StoreAccessorPool pool} that may contain {@link IStoreWriter} instances that are compatible with
+   * the given session. The implementor may return <code>null</code> to indicate that no pooling occurs. It's also left
+   * to the implementors choice how to determine the appropriate pool instance to be used for the given session, for
+   * example it could always return the same pool instance, regardless of the given session.
+   * <p>
+   * If the implementor of this method decides to create pools that are only compatible with certain sessions or views,
+   * then it is his responsibility to listen to {@link IContainerDelta.Kind#REMOVED REMOVED} events sent by either the
+   * {@link ISessionManager} (indicating that a session is closed) or any of its sessions (indicating that a view is
+   * closed). <b>Note:</b> Closing a session <em>implies</em> that all contained views are closed sliently without
+   * firing respective events!
+   * 
+   * @param view
+   *          The context which the pool must be compatible with. Must not be <code>null</code>.
+   * @param forReleasing
+   *          Enables lazy pool creation. The implementor is not supposed to create a new pool if <code>false</code> is
+   *          passed. If <code>true</code> is passed it's up to the implementor whether to create a new pool or not.
+   */
+  protected abstract StoreAccessorPool getWriterPool(IView view, boolean forReleasing);
+
+  /**
+   * Creates and returns a <b>new</b> {@link IStoreReader} instance. The caller of this method is responsible for
+   * {@link Lifecycle#activate() activating} the new instance.
+   */
+  protected abstract IStoreReader createReader(ISession session);
+
+  /**
+   * Creates and returns a <b>new</b> {@link IStoreWriter} instance. The caller of this method is responsible for
+   * {@link Lifecycle#activate() activating} the new instance.
+   */
+  protected abstract IStoreWriter createWriter(IView view);
 }

@@ -170,9 +170,6 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
 
   public void refreshRevisions()
   {
-    // the dbstorereader does not implement this method either
-    // TODO: implement HibernateStoreReader.refreshRevisions()
-//    throw new UnsupportedOperationException();
   }
 
   @Override

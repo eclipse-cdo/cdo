@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreReader;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
@@ -49,13 +48,13 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
   public HibernateStoreReader(HibernateStore store, ISession session)
   {
     super(store, session);
-    StoreThreadLocal.setReader(this);
+    HibernateThreadContext.setCurrentHibernateStoreAccessor(this);
   }
 
   protected HibernateStoreReader(HibernateStore store, IView view)
   {
     super(store, view);
-    StoreThreadLocal.setReader(this);
+    HibernateThreadContext.setCurrentHibernateStoreAccessor(this);
   }
 
   public HibernateStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature)
@@ -188,12 +187,11 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
     try
     {
       // ugly cast
-      StoreThreadLocal.setReader(this);
       super.doDeactivate();
     }
     finally
     {
-      StoreThreadLocal.setReader(null);
+      HibernateThreadContext.setCurrentHibernateStoreAccessor(this);
     }
   }
 }

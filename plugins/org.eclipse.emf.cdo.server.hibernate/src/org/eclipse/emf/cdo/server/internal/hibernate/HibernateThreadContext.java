@@ -23,7 +23,16 @@ public class HibernateThreadContext
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateThreadContext.class);
 
   private static ThreadLocal<HibernateCommitContext> commitContext = new ThreadLocal<HibernateCommitContext>();
-
+  private static ThreadLocal<HibernateStoreAccessor> accessor = new ThreadLocal<HibernateStoreAccessor>();
+  
+  public static HibernateStoreAccessor getCurrentHibernateStoreAccessor() {
+    return accessor.get();
+  }
+  
+  public static void setCurrentHibernateStoreAccessor(HibernateStoreAccessor hbStoreAccessor) {
+    accessor.set(hbStoreAccessor);
+  }
+  
   public static HibernateCommitContext getHibernateCommitContext()
   {
     HibernateCommitContext result = commitContext.get();

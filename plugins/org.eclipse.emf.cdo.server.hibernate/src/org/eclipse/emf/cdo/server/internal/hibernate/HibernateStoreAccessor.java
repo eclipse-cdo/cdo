@@ -13,9 +13,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.internal.server.StoreAccessor;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
@@ -70,20 +68,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       TRACER.trace("Committing/rollback and closing hibernate session");
     }
 
-    // this try/catch can disappear when in transaction commit the release
-    // of the accessor is done after the
-    try
-    {
-      // ugly cast
-      StoreThreadLocal.setReader((IStoreReader)this);
-      endHibernateSession();
-      PersistableListHolder.getInstance().clearListMapping();
-    }
-    finally
-    {
-      StoreThreadLocal.setReader(null);
-    }
-
+    endHibernateSession();
+    PersistableListHolder.getInstance().clearListMapping();
   }
 
   @Override

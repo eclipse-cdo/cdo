@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.lifecycle;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 import java.util.concurrent.CountDownLatch;
@@ -30,8 +31,10 @@ public abstract class Worker extends Lifecycle
 
   private long deactivationTimeout = DEFAULT_TIMEOUT;
 
+  @ExcludeFromDump
   private transient CountDownLatch activationLatch;
 
+  @ExcludeFromDump
   private transient WorkerThread workerThread;
 
   public Worker()

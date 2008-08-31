@@ -21,14 +21,6 @@ import java.text.MessageFormat;
  */
 public class RevisionHolder
 {
-  // private CDOID id;
-  //
-  // private int version;
-  //
-  // private long created;
-  //
-  // private long revised;
-
   private RevisionHolder prev;
 
   private RevisionHolder next;

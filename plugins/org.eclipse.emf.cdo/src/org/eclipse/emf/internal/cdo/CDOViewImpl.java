@@ -797,6 +797,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public void close()
   {
     session.viewDetached(this);
+    objects.clear();
+    objects = null;
+    store = null;
   }
 
   @Override

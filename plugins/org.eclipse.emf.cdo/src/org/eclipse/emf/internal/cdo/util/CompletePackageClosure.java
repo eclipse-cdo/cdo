@@ -128,7 +128,6 @@ public class CompletePackageClosure extends PackageClosure
 
         handleEStructuralFeatures(eClass.getEStructuralFeatures(), visited);
         handleEOperations(eClass.getEOperations(), visited);
-        handleEClasses(eClass.getESuperTypes(), visited);
         handleEGenericTypes(eClass.getEGenericSuperTypes(), visited);
         handleETypeParameters(eClass.getETypeParameters(), visited);
       }
@@ -141,7 +140,6 @@ public class CompletePackageClosure extends PackageClosure
     {
       for (EStructuralFeature structuralFeature : structuralFeatures)
       {
-        handleEClassifier(structuralFeature.getEType(), visited);
         handleEGenericType(structuralFeature.getEGenericType(), visited);
       }
     }
@@ -153,11 +151,9 @@ public class CompletePackageClosure extends PackageClosure
     {
       for (EOperation operation : operations)
       {
-        handleEClassifier(operation.getEType(), visited);
         handleEGenericType(operation.getEGenericType(), visited);
         handleETypeParameters(operation.getETypeParameters(), visited);
         handleEParameters(operation.getEParameters(), visited);
-        handleEClassifiers(operation.getEExceptions(), visited);
         handleEGenericTypes(operation.getEGenericExceptions(), visited);
       }
     }

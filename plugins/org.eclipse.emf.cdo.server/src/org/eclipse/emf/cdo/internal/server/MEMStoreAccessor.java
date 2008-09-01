@@ -81,7 +81,8 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
 
   public CDOClassRef readObjectType(CDOID id)
   {
-    throw new UnsupportedOperationException();
+    InternalCDORevision storeRevision = (InternalCDORevision)getStore().getRevision(id);
+    return storeRevision.getCDOClass().createClassRef();
   }
 
   public CDORevision readRevision(CDOID id, int referenceChunk)
@@ -184,11 +185,11 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
           });
         }
       }
-  
+
       queryExecution.activate();
       return queryExecution;
     }
-  
+
     throw new RuntimeException("Unsupported language " + queryInfo.getQueryLanguage());
   }
 

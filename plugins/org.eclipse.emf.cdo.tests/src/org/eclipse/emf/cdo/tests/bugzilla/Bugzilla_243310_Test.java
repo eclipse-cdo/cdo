@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 
 /**
  * @author Eike Stepper
+ * @see NPE during Transaction.getObject(id, false) https://bugs.eclipse.org/243310
  */
 public class Bugzilla_243310_Test extends AbstractCDOTest
 {

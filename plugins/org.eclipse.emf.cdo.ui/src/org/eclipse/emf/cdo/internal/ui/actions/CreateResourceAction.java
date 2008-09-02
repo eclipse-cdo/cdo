@@ -51,7 +51,7 @@ public final class CreateResourceAction extends ViewAction
   @Override
   protected void doRun() throws Exception
   {
-    getTransaction().createResource(resourcePath);
+    getTransaction().getOrCreateResource(resourcePath);
     CDOEditor.open(getPage(), getView(), resourcePath);
   }
 }

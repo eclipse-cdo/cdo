@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - http://bugs.eclipse.org/244801
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
@@ -40,6 +41,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -119,9 +121,18 @@ public final class EMFUtil
 
   public static void save(String fileName, EObject root, ResourceSet resourceSet)
   {
-    Resource resource = resourceSet.createResource(URI.createFileURI(fileName));
-    EObject copy = EcoreUtil.copy(root);
-    resource.getContents().add(copy);
+    save(fileName, Collections.singletonList(root), resourceSet);
+  }
+
+  public static void save(String fileName, List<EObject> roots, ResourceSet resourceSet)
+  {
+    URI uri = URI.createURI(fileName);
+    Resource resource = resourceSet.createResource(uri);
+    for (EObject root : roots)
+    {
+      EObject copy = EcoreUtil.copy(root);
+      resource.getContents().add(copy);
+    }
 
     try
     {
@@ -136,6 +147,11 @@ public final class EMFUtil
   public static void saveXMI(String fileName, EObject root)
   {
     save(fileName, root, newXMIResourceSet());
+  }
+
+  public static void saveXMI(String fileName, List<EObject> roots)
+  {
+    save(fileName, roots, newXMIResourceSet());
   }
 
   public static void saveEcore(String fileName, EObject root)

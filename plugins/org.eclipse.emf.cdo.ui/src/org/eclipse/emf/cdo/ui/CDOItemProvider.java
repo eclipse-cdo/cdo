@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - http://bugs.eclipse.org/244801
  **************************************************************************/
 package org.eclipse.emf.cdo.ui;
 
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CommitTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CreateResourceAction;
+import org.eclipse.emf.cdo.internal.ui.actions.ExportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.LoadResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ManagePackagesAction;
@@ -345,6 +347,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   {
     manager.add(new OpenViewEditorAction(page, view));
     manager.add(new LoadResourceAction(page, view));
+    manager.add(new ExportResourceAction(page, view));
     manager.add(new Separator());
     if (view.getViewType() == CDOView.Type.TRANSACTION)
     {

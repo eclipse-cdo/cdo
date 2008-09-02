@@ -27,7 +27,7 @@ public final class StoreUtil
     return new NOOPStore();
   }
 
-  public static IStore createMEMStore()
+  public static IMEMStore createMEMStore()
   {
     return new MEMStore();
   }

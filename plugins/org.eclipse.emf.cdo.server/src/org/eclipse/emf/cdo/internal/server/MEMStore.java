@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 
@@ -29,15 +30,52 @@ import java.util.Map;
 /**
  * @author Simon McDuff
  */
-public class MEMStore extends LongIDStore
+public class MEMStore extends LongIDStore implements IMEMStore
 {
   public static final String TYPE = "mem";
 
   private Map<CDOID, List<CDORevision>> revisions = new HashMap<CDOID, List<CDORevision>>();
 
-  public MEMStore()
+  private int listLimit;
+
+  /**
+   * @param listLimit
+   *          See {@link #setListLimit(int)}.
+   * @since 2.0
+   */
+  public MEMStore(int listLimit)
   {
     super(TYPE);
+    this.listLimit = listLimit;
+  }
+
+  public MEMStore()
+  {
+    this(UNLIMITED);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public int getListLimit()
+  {
+    return listLimit;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public synchronized void setListLimit(int listLimit)
+  {
+    if (listLimit != UNLIMITED && this.listLimit != listLimit)
+    {
+      for (List<CDORevision> list : revisions.values())
+      {
+        enforceListLimit(list);
+      }
+    }
+
+    this.listLimit = listLimit;
   }
 
   /**
@@ -96,6 +134,18 @@ public class MEMStore extends LongIDStore
     }
 
     list.add(revision);
+    if (listLimit != UNLIMITED)
+    {
+      enforceListLimit(list);
+    }
+  }
+
+  private void enforceListLimit(List<CDORevision> list)
+  {
+    while (list.size() > listLimit)
+    {
+      list.remove(0);
+    }
   }
 
   public synchronized boolean removeRevision(CDORevision revision)

@@ -173,6 +173,7 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
       session.setFailOverStrategy(failOverStrategy);
       session.setPackageRegistry(packageRegistry);
       session.getRevisionManager().setCache(revisionCache);
+      session.setPassiveUpdateEnabled(passiveUpdateEnabled);
 
       if (activateOnOpen)
       {

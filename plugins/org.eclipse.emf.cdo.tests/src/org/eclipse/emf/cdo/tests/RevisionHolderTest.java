@@ -12,22 +12,27 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.internal.common.revision.DLRevisionHolder;
-import org.eclipse.emf.cdo.internal.common.revision.LRURevisionHolder;
-import org.eclipse.emf.cdo.internal.common.revision.LRURevisionList;
+import org.eclipse.emf.cdo.internal.common.revision.cache.lru.DLRevisionHolder;
+import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionHolder;
+import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionList;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.tests.AbstractOMTest;
+import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -186,7 +191,7 @@ public class RevisionHolderTest extends AbstractOMTest
   /**
    * @author Eike Stepper
    */
-  private static final class RevisionStub implements CDORevision
+  private static final class RevisionStub implements InternalCDORevision
   {
     private CDOID id;
 
@@ -261,6 +266,181 @@ public class RevisionHolderTest extends AbstractOMTest
     }
 
     public void write(ExtendedDataOutput out, CDOIDProvider idProvider, int referenceChunk) throws IOException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void add(CDOFeature feature, int index, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void adjustReferences(Map<CDOIDTemp, CDOID> idMappings)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void clear(CDOFeature feature)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean contains(CDOFeature feature, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public Object get(CDOFeature feature, int index)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOID getContainerID()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public int getContainingFeatureID()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public MoveableList<Object> getList(CDOFeature feature, int size)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public MoveableList<Object> getList(CDOFeature feature)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOID getResourceID()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDORevision getRevision()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public Object getValue(CDOFeature feature)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public int hashCode(CDOFeature feature)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public int indexOf(CDOFeature feature, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isEmpty(CDOFeature feature)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isSet(CDOFeature feature)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public int lastIndexOf(CDOFeature feature, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public Object move(CDOFeature feature, int targetIndex, int sourceIndex)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public Object remove(CDOFeature feature, int index)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public Object set(CDOFeature feature, int index, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setContainerID(CDOID containerID)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setContainingFeatureID(int containingFeatureID)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setCreated(long created)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setID(CDOID id)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setListSize(CDOFeature feature, int size)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setResourceID(CDOID resourceID)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setRevised(long revised)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public int setTransactional()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setUntransactional()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public Object setValue(CDOFeature feature, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setVersion(int version)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public int size(CDOFeature feature)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public <T> T[] toArray(CDOFeature feature, T[] array)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public Object[] toArray(CDOFeature feature)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void unset(CDOFeature feature)
     {
       throw new UnsupportedOperationException();
     }

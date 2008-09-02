@@ -17,18 +17,17 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
+import org.eclipse.emf.cdo.internal.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -37,104 +36,133 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CDORevisionResolverImpl.class);
 
-  private Map<CDOID, RevisionHolder> revisions = new HashMap<CDOID, RevisionHolder>();
-
-  private int currentLRUCapacity;
-
-  private int revisedLRUCapacity;
-
-  private LRU currentLRU;
-
-  private LRU revisedLRU;
+  private CDORevisionCache cache;
 
   public CDORevisionResolverImpl()
   {
   }
 
-  public int getCurrentLRUCapacity()
+  public CDORevisionCache getCache()
   {
-    return currentLRUCapacity;
+    return cache;
   }
 
-  /**
-   * Sets the capacity of LRU cache for <em>current</em> revisions. A value of zero disables eviction completely such
-   * that the cache will grow indefinetely.
-   */
-  public void setCurrentLRUCapacity(int capacity)
+  public void setCache(CDORevisionCache cache)
   {
-    currentLRUCapacity = capacity;
-    if (currentLRU != null)
-    {
-      currentLRU.capacity(capacity);
-    }
-  }
-
-  public int getRevisedLRUCapacity()
-  {
-    return revisedLRUCapacity;
-  }
-
-  /**
-   * Sets the capacity of LRU cache for old (<em>revised</em>) revisions. A value of zero disables eviction completely
-   * such that the cache will grow indefinetely.
-   */
-  public void setRevisedLRUCapacity(int capacity)
-  {
-    revisedLRUCapacity = capacity;
-    if (revisedLRU != null)
-    {
-      revisedLRU.capacity(capacity);
-    }
-  }
-
-  public List<CDORevision> getRevisions()
-  {
-    ArrayList<CDORevision> currentRevisions = new ArrayList<CDORevision>();
-
-    for (RevisionHolder holder : revisions.values())
-    {
-      CDORevision revision = holder.getRevision(false);
-      if (revision != null && revision.isCurrent())
-      {
-        ;
-      }
-      {
-        currentRevisions.add(revision);
-      }
-    }
-    return currentRevisions;
-  }
-
-  public CDOClass getObjectType(CDOID id)
-  {
-    RevisionHolder holder = revisions.get(id);
-    if (holder == null)
-    {
-      return null;
-    }
-
-    InternalCDORevision revision = (InternalCDORevision)holder.getRevision(true);
-    return revision.getCDOClass();
+    this.cache = cache;
   }
 
   public boolean containsRevision(CDOID id)
   {
-    return revisions.containsKey(id);
+    return cache.getRevision(id) != null;
   }
 
   public boolean containsRevisionByTime(CDOID id, long timeStamp)
   {
-    return getRevisionByTime(id, 0, timeStamp, false) != null;
+    return cache.getRevisionByTime(id, timeStamp) != null;
   }
 
   public boolean containsRevisionByVersion(CDOID id, int version)
   {
-    return getRevisionByVersion(id, 0, version, false) != null;
+    return cache.getRevisionByVersion(id, version) != null;
+  }
+
+  public CDOClass getObjectType(CDOID id)
+  {
+    return cache.getObjectType(id);
   }
 
   public InternalCDORevision getRevision(CDOID id, int referenceChunk)
   {
     return getRevision(id, referenceChunk, true);
+  }
+
+  public InternalCDORevision getRevision(CDOID id, int referenceChunk, boolean loadOnDemand)
+  {
+    InternalCDORevision revision = cache.getRevision(id);
+    if (revision == null)
+    {
+      if (loadOnDemand)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Loading revision {0}", id);
+        }
+
+        revision = loadRevision(id, referenceChunk);
+        addCachedRevision(revision);
+      }
+    }
+    else
+    {
+      InternalCDORevision oldRevision = revision;
+      revision = verifyRevision(oldRevision, referenceChunk);
+      if (revision != oldRevision)
+      {
+        addCachedRevision(revision);
+      }
+    }
+
+    return revision;
+  }
+
+  public InternalCDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  {
+    return getRevisionByTime(id, referenceChunk, timeStamp, true);
+  }
+
+  public InternalCDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp, boolean loadOnDemand)
+  {
+    InternalCDORevision revision = cache.getRevisionByTime(id, timeStamp);
+    if (revision == null)
+    {
+      if (loadOnDemand)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Loading revision {0} by time {1,date} {1,time}", id, timeStamp);
+        }
+
+        revision = loadRevisionByTime(id, referenceChunk, timeStamp);
+        addCachedRevision(revision);
+      }
+    }
+    else
+    {
+      InternalCDORevision verified = verifyRevision(revision, referenceChunk);
+      if (revision != verified)
+      {
+        addCachedRevision(verified);
+        revision = verified;
+      }
+    }
+
+    return revision;
+  }
+
+  public synchronized InternalCDORevision getRevisionByVersion(CDOID id, int referenceChunk, int version)
+  {
+    return getRevisionByVersion(id, referenceChunk, version, true);
+  }
+
+  public InternalCDORevision getRevisionByVersion(CDOID id, int referenceChunk, int version, boolean loadOnDemand)
+  {
+    InternalCDORevision revision = cache.getRevisionByVersion(id, version);
+    if (revision == null)
+    {
+      if (loadOnDemand)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Loading revision {0} by version {1}", id, version);
+        }
+
+        revision = loadRevisionByVersion(id, referenceChunk, version);
+        addCachedRevision(revision);
+      }
+    }
+
+    return revision;
   }
 
   public List<CDORevision> getRevisions(Collection<CDOID> ids, int referenceChunk)
@@ -160,11 +188,6 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
     return revisions;
   }
 
-  public InternalCDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
-  {
-    return getRevisionByTime(id, referenceChunk, timeStamp, true);
-  }
-
   public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
     List<CDOID> missingIDs = new ArrayList<CDOID>(0);
@@ -188,158 +211,34 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
     return revisions;
   }
 
-  public synchronized InternalCDORevision getRevisionByVersion(CDOID id, int referenceChunk, int version)
+  public List<CDORevision> getCachedRevisions()
   {
-    return getRevisionByVersion(id, referenceChunk, version, true);
+    return cache.getRevisions();
   }
 
-  public synchronized InternalCDORevision getRevisionByVersion(CDOID id, int referenceChunk, int version,
-      boolean loadOnDemand)
+  public boolean addCachedRevision(InternalCDORevision revision)
   {
-    RevisionHolder holder = revisions.get(id);
-    while (holder != null)
+    if (revision == null)
     {
-      int holderVersion = holder.getVersion();
-      if (holderVersion > version)
-      {
-        holder = holder.getNext();
-      }
-      else if (holderVersion == version)
-      {
-        return (InternalCDORevision)holder.getRevision(true);
-      }
-      else
-      {
-        break;
-      }
+      throw new IllegalArgumentException("revision == null");
     }
 
-    if (loadOnDemand)
-    {
-      InternalCDORevision revision = loadRevisionByVersion(id, referenceChunk, version);
-      if (revision != null)
-      {
-        addRevision(revision);
-        return revision;
-      }
-    }
-
-    return null;
+    return cache.addRevision(revision);
   }
 
-  public boolean addRevision(InternalCDORevision revision)
+  public void removeCachedRevision(CDOID id, int version)
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Adding revision: {0}, created={1,date} {1,time}, revised={2,date} {2,time}, current={3}",
-          revision, revision.getCreated(), revision.getRevised(), revision.isCurrent());
-    }
-
-    RevisionHolder newHolder = createHolder(revision);
-    LRU list = revision.isCurrent() ? currentLRU : revisedLRU;
-    list.add((DLRevisionHolder)newHolder);
-
-    int version = revision.getVersion();
-    RevisionHolder lastHolder = null;
-    RevisionHolder holder = revisions.get(revision.getID());
-    while (holder != null)
-    {
-      int holderVersion = holder.getVersion();
-      if (holderVersion > version)
-      {
-        lastHolder = holder;
-        holder = holder.getNext();
-      }
-      else if (holderVersion == version)
-      {
-        return false;
-      }
-      else
-      {
-        break;
-      }
-    }
-
-    adjustHolder(revision, newHolder, lastHolder, holder);
-    return true;
+    cache.removeRevision(id, version);
   }
 
-  public InternalCDORevision getRevision(CDOID id, int referenceChunk, boolean loadOnDemand)
+  public void finalizeRevision(InternalCDORevision revision)
   {
-    RevisionHolder holder = revisions.get(id);
-    InternalCDORevision revision = holder == null ? null : (InternalCDORevision)holder.getRevision(true);
-    if (revision == null || !revision.isCurrent())
-    {
-      if (loadOnDemand)
-      {
-        revision = loadRevision(id, referenceChunk);
-        if (revision == null)
-        {
-          throw new IllegalStateException("Could not load revision for " + id);
-        }
+    getCache().finalizeRevision(revision);
+  }
 
-        addRevision(revision);
-      }
-      else
-      {
-        revision = null;
-      }
-    }
-    else
-    {
-      InternalCDORevision oldRevision = revision;
-      revision = verifyRevision(oldRevision, referenceChunk);
-      if (revision != oldRevision)
-      {
-        addRevision(revision);
-      }
-    }
-
+  protected InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
+  {
     return revision;
-  }
-
-  public synchronized InternalCDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp,
-      boolean loadOnDemand)
-  {
-    RevisionHolder holder = revisions.get(id);
-    while (holder != null)
-    {
-      int indicator = holder.compareTo(timeStamp);
-      if (indicator == 1)
-      {
-        // timeStamp is after holder timeSpan
-        holder = holder.getNext();
-      }
-      else if (indicator == 0)
-      {
-        // timeStamp is within holder timeSpan
-        InternalCDORevision oldRevision = (InternalCDORevision)holder.getRevision(true);
-        InternalCDORevision revision = verifyRevision(oldRevision, referenceChunk);
-        if (revision != oldRevision)
-        {
-          addRevision(revision);
-        }
-
-        return revision;
-      }
-      else
-      {
-        // timeStamp is before holder timeSpan
-        break;
-      }
-    }
-
-    if (loadOnDemand)
-    {
-      InternalCDORevision revision = loadRevisionByTime(id, referenceChunk, timeStamp);
-      if (revision != null)
-      {
-        addRevision(revision);
-        return revision;
-      }
-    }
-
-    return null;
   }
 
   protected abstract InternalCDORevision loadRevision(CDOID id, int referenceChunk);
@@ -353,7 +252,28 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
   protected abstract List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk,
       long timeStamp);
 
-  protected void handleMissingRevisions(List<CDORevision> revisions, List<InternalCDORevision> missingRevisions)
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    checkState(cache, "cache");
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    LifecycleUtil.activate(cache);
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    LifecycleUtil.deactivate(cache);
+    super.doDeactivate();
+  }
+
+  private void handleMissingRevisions(List<CDORevision> revisions, List<InternalCDORevision> missingRevisions)
   {
     Iterator<InternalCDORevision> it = missingRevisions.iterator();
     for (int i = 0; i < revisions.size(); i++)
@@ -363,158 +283,8 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
       {
         InternalCDORevision missingRevision = it.next();
         revisions.set(i, missingRevision);
-        addRevision(missingRevision);
+        addCachedRevision(missingRevision);
       }
-    }
-  }
-
-  protected synchronized void removeRevision(CDOID id, int version)
-  {
-    RevisionHolder holder = revisions.get(id);
-    while (holder != null)
-    {
-      int holderVersion = holder.getVersion();
-      if (holderVersion > version)
-      {
-        holder = holder.getNext();
-      }
-      else
-      {
-        if (holderVersion == version)
-        {
-          removeHolder(holder);
-        }
-
-        holder = null;
-      }
-    }
-  }
-
-  protected InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
-  {
-    return revision;
-  }
-
-  @Override
-  protected void doActivate() throws Exception
-  {
-    super.doActivate();
-    currentLRU = new LRU(currentLRUCapacity);
-    revisedLRU = new LRU(revisedLRUCapacity);
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    currentLRU = null;
-    revisedLRU = null;
-    super.doDeactivate();
-  }
-
-  private void adjustHolder(InternalCDORevision revision, RevisionHolder holder, RevisionHolder prevHolder,
-      RevisionHolder nextHolder)
-  {
-    if (prevHolder != null)
-    {
-      if (nextHolder == null)
-      {
-        nextHolder = prevHolder.getNext();
-      }
-
-      holder.setPrev(prevHolder);
-      holder.setNext(nextHolder);
-      prevHolder.setNext(holder);
-    }
-    else
-    {
-      holder.setNext(nextHolder);
-      revisions.put(revision.getID(), holder);
-    }
-
-    reviseHolder(holder, nextHolder);
-  }
-
-  private void reviseHolder(RevisionHolder holder, RevisionHolder nextHolder)
-  {
-    if (nextHolder != null)
-    {
-      nextHolder.setPrev(holder);
-      if (holder.isCurrent() && nextHolder.isCurrent())
-      {
-        currentLRU.remove((DLRevisionHolder)nextHolder);
-        revisedLRU.add((DLRevisionHolder)nextHolder);
-
-        InternalCDORevision oldRevision = (InternalCDORevision)nextHolder.getRevision(false);
-        if (oldRevision != null)
-        {
-          oldRevision.setRevised(holder.getCreated() - 1);
-        }
-      }
-    }
-  }
-
-  private synchronized void removeHolder(RevisionHolder holder)
-  {
-    CDOID id = holder.getID();
-    RevisionHolder prev = holder.getPrev();
-    RevisionHolder next = holder.getNext();
-    if (next != null)
-    {
-      next.setPrev(prev);
-    }
-
-    if (prev != null)
-    {
-      prev.setNext(next);
-    }
-    else
-    {
-      if (next != null)
-      {
-        revisions.put(id, next);
-      }
-      else
-      {
-        revisions.remove(id);
-      }
-    }
-
-    holder.setPrev(null);
-    holder.setNext(null);
-  }
-
-  private RevisionHolder createHolder(InternalCDORevision revision)
-  {
-    LRURevisionList list = revision.isCurrent() ? currentLRU : revisedLRU;
-    return new LRURevisionHolder(list, revision);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class LRU extends LRURevisionList
-  {
-    public LRU(int capacity)
-    {
-      super(capacity);
-    }
-
-    @Override
-    public String toString()
-    {
-      return MessageFormat.format("LRU[size={0}, capacity={1}]", size(), capacity());
-    }
-
-    @Override
-    protected void evict(LRURevisionHolder holder)
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Evicting revision {0}v{1}", holder.getID(), holder.getVersion());
-      }
-
-      super.evict(holder);
-      removeHolder(holder);
     }
   }
 }

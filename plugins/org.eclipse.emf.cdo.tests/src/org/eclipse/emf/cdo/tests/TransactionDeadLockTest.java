@@ -19,8 +19,6 @@ import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 
 import org.eclipse.net4j.util.om.OMPlatform;
 
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -39,17 +37,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
     return false;
   }
 
-  public void _testHundredTimes() throws Exception
-  {
-    for (int i = 0; i < 100; i++)
-    {
-      testCreateManySession();
-      testCreateManyTransaction();
-      testCreateManySessionTransactionMultiThread();
-    }
-  }
-
-  public void testCreateManySession() throws Exception
+  public void _testCreateManySession() throws Exception
   {
     {
       msg("Opening session");
@@ -80,25 +68,29 @@ public class TransactionDeadLockTest extends AbstractCDOTest
     msg("Opening session");
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
-    transaction.createResource("/test2");
+    CDOResource resource = transaction.createResource("/test2");
     transaction.commit();
     transaction.close();
 
+    long lastDuration = 0;
     for (int i = 0; i < 1000; i++)
     {
-      msg("Transaction " + i);
+      msg("Transaction " + i + "    (" + lastDuration + ")");
+      lastDuration = System.currentTimeMillis();
       transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test2");
+      transaction.setUniqueResourceContents(false);
+      resource = transaction.getResource("/test2");
       Category category = Model1Factory.eINSTANCE.createCategory();
       resource.getContents().add(category);
       transaction.commit();
       transaction.close();
+      lastDuration = System.currentTimeMillis() - lastDuration;
     }
 
     session.close();
   }
 
-  public void testCreateManySessionTransactionMultiThread() throws Exception
+  public void _testCreateManySessionTransactionMultiThread() throws Exception
   {
     final List<Exception> exceptions = new ArrayList<Exception>();
     List<Thread> threadList = new ArrayList<Thread>();
@@ -115,7 +107,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
             for (int i = 0; i < 100; i++)
             {
               CDOSession session = openModel1Session();
-              CDOTransaction transaction = session.openTransaction(new ResourceSetImpl());
+              CDOTransaction transaction = session.openTransaction();
 
               msg("Thread " + id + ": Session + Transaction " + i);
               transaction.close();

@@ -97,7 +97,7 @@ public class SyncRevisionRequest extends CDOClientRequest<Set<CDOIDAndVersion>>
       }
 
       dirtyObjects.add(CDOIDUtil.createIDAndVersion(oldRevision.getID(), oldRevision.getVersion()));
-      revisionManager.addRevision(revision);
+      revisionManager.addCachedRevision(revision);
     }
 
     if (PROTOCOL_TRACER.isEnabled())

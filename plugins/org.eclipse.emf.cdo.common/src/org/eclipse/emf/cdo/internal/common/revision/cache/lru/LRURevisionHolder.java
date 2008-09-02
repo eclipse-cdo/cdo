@@ -8,9 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.common.revision;
+package org.eclipse.emf.cdo.internal.common.revision.cache.lru;
 
-import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 /**
  * @author Eike Stepper
@@ -19,7 +19,7 @@ public class LRURevisionHolder extends DLRevisionHolder
 {
   private long usedStamp;
 
-  public LRURevisionHolder(LRURevisionList list, CDORevision revision)
+  public LRURevisionHolder(LRURevisionList list, InternalCDORevision revision)
   {
     super(list, revision);
     usedStamp = System.currentTimeMillis();
@@ -37,14 +37,10 @@ public class LRURevisionHolder extends DLRevisionHolder
   }
 
   @Override
-  public CDORevision getRevision(boolean loadOnDemand)
+  public InternalCDORevision getRevision()
   {
-    if (loadOnDemand)
-    {
-      stamp();
-    }
-
-    return super.getRevision(loadOnDemand);
+    stamp();
+    return super.getRevision();
   }
 
   protected void stamp()

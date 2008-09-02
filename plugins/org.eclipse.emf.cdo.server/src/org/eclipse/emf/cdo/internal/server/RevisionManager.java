@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
+import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreReader;
@@ -46,6 +47,13 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   {
     this.repository = repository;
     cdoPathFeature = repository.getPackageManager().getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
+
+    // setCache(new MEMRevisionCache());
+
+    LRURevisionCache cache = new LRURevisionCache();
+    cache.setCapacityCurrent(getLRUCapacity(Props.PROP_CURRENT_LRU_CAPACITY));
+    cache.setCapacityRevised(getLRUCapacity(Props.PROP_REVISED_LRU_CAPACITY));
+    setCache(cache);
   }
 
   public Repository getRepository()
@@ -70,7 +78,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   }
 
   @Override
-  public boolean addRevision(InternalCDORevision revision)
+  public boolean addCachedRevision(InternalCDORevision revision)
   {
     if (revision.isResource())
     {
@@ -78,7 +86,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       repository.getResourceManager().registerResource(revision.getID(), path);
     }
 
-    return super.addRevision(revision);
+    return super.addCachedRevision(revision);
   }
 
   @Override
@@ -250,14 +258,6 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     }
 
     return revisions;
-  }
-
-  @Override
-  protected void doBeforeActivate() throws Exception
-  {
-    super.doBeforeActivate();
-    setCurrentLRUCapacity(getLRUCapacity(Props.PROP_CURRENT_LRU_CAPACITY));
-    setRevisedLRUCapacity(getLRUCapacity(Props.PROP_REVISED_LRU_CAPACITY));
   }
 
   protected int getLRUCapacity(String prop)

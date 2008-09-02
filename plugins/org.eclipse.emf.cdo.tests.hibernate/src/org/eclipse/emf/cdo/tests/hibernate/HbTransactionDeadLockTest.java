@@ -22,6 +22,14 @@ import java.util.Map;
  */
 public class HbTransactionDeadLockTest extends TransactionDeadLockTest
 {
+  public static void main(String[] args) throws Exception
+  {
+    HbTransactionDeadLockTest test = new HbTransactionDeadLockTest();
+    test.setUp();
+    test.testCreateManyTransaction();
+    test.tearDown();
+  }
+
   public HbTransactionDeadLockTest()
   {
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());

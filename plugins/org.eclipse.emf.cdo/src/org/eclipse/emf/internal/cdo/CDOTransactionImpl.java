@@ -259,7 +259,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
           for (CDOObject dirtyObject : dirtyObjects.values())
           {
             CDORevision revision = dirtyObject.cdoRevision();
-            CDOIDAndVersion dirtyID = CDOIDUtil.createIDAndVersion(revision.getID(), revision.getVersion());
+            CDOIDAndVersion dirtyID = CDOIDUtil.createIDAndVersion(revision.getID(), revision.getVersion() - 1);
             dirtyIDs.add(dirtyID);
           }
 

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.common.revision;
+package org.eclipse.emf.cdo.internal.common.revision.cache.lru;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -25,9 +25,9 @@ public class RevisionHolder
 
   private RevisionHolder next;
 
-  private CDORevision revision;
+  private InternalCDORevision revision;
 
-  public RevisionHolder(CDORevision revision)
+  public RevisionHolder(InternalCDORevision revision)
   {
     setRevision(revision);
   }
@@ -102,33 +102,19 @@ public class RevisionHolder
     return revision != null;
   }
 
-  public CDORevision getRevision(boolean loadOnDemand)
+  public InternalCDORevision getRevision()
   {
-    if (revision == null && loadOnDemand)
-    {
-      revision = loadRevision();
-    }
-
     return revision;
   }
 
-  public void setRevision(CDORevision revision)
+  public void setRevision(InternalCDORevision revision)
   {
     this.revision = revision;
-    // id = revision.getID();
-    // version = revision.getVersion();
-    // created = revision.getCreated();
-    // revised = revision.getRevised();
   }
 
   @Override
   public String toString()
   {
     return MessageFormat.format("RevisionHolder[{0}]", revision);
-  }
-
-  protected InternalCDORevision loadRevision()
-  {
-    throw new UnsupportedOperationException();
   }
 }

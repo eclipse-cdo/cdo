@@ -31,6 +31,9 @@ import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.TransportException;
+import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
+import org.eclipse.emf.cdo.internal.common.revision.cache.mem.MEMRevisionCache;
+import org.eclipse.emf.cdo.internal.common.revision.cache.two.TwoLevelRevisionCache;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -663,7 +666,19 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   protected CDORevisionManagerImpl createRevisionManager()
   {
-    return new CDORevisionManagerImpl(this);
+    LRURevisionCache lruCache = new LRURevisionCache();
+    lruCache.setCapacityCurrent(1000);
+    lruCache.setCapacityRevised(1000);
+
+    MEMRevisionCache memCache = new MEMRevisionCache();
+
+    TwoLevelRevisionCache cache = new TwoLevelRevisionCache();
+    cache.setLevel1(lruCache);
+    cache.setLevel2(memCache);
+
+    CDORevisionManagerImpl revisionManager = new CDORevisionManagerImpl(this);
+    revisionManager.setCache(cache);
+    return revisionManager;
   }
 
   protected ResourceSet createResourceSet()
@@ -906,7 +921,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     // Need to add Revision from revisionManager since we do not have all objects in view.
-    for (CDORevision revision : getRevisionManager().getRevisions())
+    for (CDORevision revision : getRevisionManager().getCachedRevisions())
     {
       if (!uniqueObjects.containsKey(revision.getID()))
       {

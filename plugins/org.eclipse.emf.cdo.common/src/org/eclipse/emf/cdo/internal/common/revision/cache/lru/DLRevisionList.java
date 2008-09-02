@@ -8,10 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.common.revision;
+package org.eclipse.emf.cdo.internal.common.revision.cache.lru;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import java.text.MessageFormat;
@@ -167,12 +166,6 @@ public class DLRevisionList extends DLRevisionHolder
   }
 
   @Override
-  public CDORevision getRevision(boolean loadOnDemand)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public int getVersion()
   {
     throw new UnsupportedOperationException();
@@ -197,12 +190,6 @@ public class DLRevisionList extends DLRevisionHolder
   }
 
   @Override
-  protected InternalCDORevision loadRevision()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public void setNext(RevisionHolder next)
   {
     throw new UnsupportedOperationException();
@@ -215,7 +202,13 @@ public class DLRevisionList extends DLRevisionHolder
   }
 
   @Override
-  public void setRevision(CDORevision revision)
+  public InternalCDORevision getRevision()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void setRevision(InternalCDORevision revision)
   {
     // Ignore
   }

@@ -21,20 +21,20 @@ import java.lang.ref.ReferenceQueue;
  */
 public abstract class ReferenceQueueWorker<T> extends Worker
 {
-  private static final int DEFAULT_POLL_MILLIS = 1000 * 60;
+  private static final int DEFAULT_POLL_MILLIS = 1000 * 60; // One minute
 
-  private static final int DEFAULT_MAX_WORK = 100;
+  private static final int DEFAULT_MAX_WORK_PER_POLL = 100;
 
   private ReferenceQueue<T> queue = new ReferenceQueue<T>();
 
   private long pollMillis;
 
-  private int maxWork;
+  private int maxWorkPerPoll;
 
   public ReferenceQueueWorker()
   {
     setPollMillis(DEFAULT_POLL_MILLIS);
-    setMaxWork(DEFAULT_MAX_WORK);
+    setMaxWorkPerPoll(DEFAULT_MAX_WORK_PER_POLL);
   }
 
   public long getPollMillis()
@@ -47,14 +47,14 @@ public abstract class ReferenceQueueWorker<T> extends Worker
     this.pollMillis = pollMillis;
   }
 
-  public int getMaxWork()
+  public int getMaxWorkPerPoll()
   {
-    return maxWork;
+    return maxWorkPerPoll;
   }
 
-  public void setMaxWork(int maxWork)
+  public void setMaxWorkPerPoll(int maxWorkPerPoll)
   {
-    this.maxWork = maxWork;
+    this.maxWorkPerPoll = maxWorkPerPoll;
   }
 
   protected ReferenceQueue<T> getQueue()
@@ -65,7 +65,7 @@ public abstract class ReferenceQueueWorker<T> extends Worker
   @Override
   protected final void work(WorkContext context) throws Exception
   {
-    for (int i = 0; i < maxWork; i++)
+    for (int i = 0; i < maxWorkPerPoll; i++)
     {
       Reference<? extends T> reference = queue.poll();
       if (reference == null)

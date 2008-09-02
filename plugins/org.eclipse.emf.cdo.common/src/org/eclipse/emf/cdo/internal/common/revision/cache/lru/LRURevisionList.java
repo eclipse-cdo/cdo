@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.common.revision;
+package org.eclipse.emf.cdo.internal.common.revision.cache.lru;
 
 import java.text.MessageFormat;
 

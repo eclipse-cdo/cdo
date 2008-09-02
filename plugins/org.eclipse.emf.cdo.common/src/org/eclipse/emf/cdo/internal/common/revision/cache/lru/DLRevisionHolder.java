@@ -8,9 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.common.revision;
+package org.eclipse.emf.cdo.internal.common.revision.cache.lru;
 
-import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 /**
  * @author Eike Stepper
@@ -23,7 +23,7 @@ public class DLRevisionHolder extends RevisionHolder
 
   private DLRevisionHolder dlNext;
 
-  public DLRevisionHolder(DLRevisionList list, CDORevision revision)
+  public DLRevisionHolder(DLRevisionList list, InternalCDORevision revision)
   {
     super(revision);
     dlList = list;

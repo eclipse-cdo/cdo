@@ -117,6 +117,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
     {
       PROTOCOL_TRACER.format("Reading {0} revisions", ids.size());
     }
+
     for (int i = 0; i < ids.size(); i++)
     {
       InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.read(in, revisionManager, packageManager);
@@ -130,10 +131,11 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
       {
         PROTOCOL_TRACER.format("Reading {0} additional revisions", size);
       }
+
       for (int i = 0; i < size; i++)
       {
         InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.read(in, revisionManager, packageManager);
-        revisionManager.addRevision(revision);
+        revisionManager.addCachedRevision(revision);
       }
     }
 

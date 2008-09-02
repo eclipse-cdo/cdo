@@ -205,7 +205,7 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
     transaction.commit();
 
     TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
-    revisionManager.removeRevision(customer.cdoRevision());
+    revisionManager.removeCachedRevision(customer.cdoRevision());
 
     SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
     resource.getContents().add(salesOrder);
@@ -231,9 +231,9 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
       super(repository);
     }
 
-    public void removeRevision(CDORevision revision)
+    public void removeCachedRevision(CDORevision revision)
     {
-      super.removeRevision(revision.getID(), revision.getVersion());
+      super.removeCachedRevision(revision.getID(), revision.getVersion());
     }
   }
 }

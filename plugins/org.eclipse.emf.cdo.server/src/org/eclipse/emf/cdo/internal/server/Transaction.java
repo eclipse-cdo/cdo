@@ -360,7 +360,7 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
     {
       if (revision != null)
       {
-        revisionManager.addRevision((InternalCDORevision)revision);
+        revisionManager.addCachedRevision((InternalCDORevision)revision);
       }
     }
   }

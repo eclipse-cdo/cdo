@@ -17,8 +17,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
-import org.eclipse.emf.cdo.internal.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.cache.EvictionEventImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 

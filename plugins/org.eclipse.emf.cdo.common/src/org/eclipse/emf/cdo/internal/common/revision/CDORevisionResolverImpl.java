@@ -16,8 +16,9 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
-import org.eclipse.emf.cdo.internal.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -256,7 +257,10 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(cache, "cache");
+    if (cache == null)
+    {
+      cache = CDORevisionCacheUtil.createDefaultCache();
+    }
   }
 
   @Override

@@ -19,12 +19,10 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
-import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
@@ -47,13 +45,6 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   {
     this.repository = repository;
     cdoPathFeature = repository.getPackageManager().getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
-
-    // setCache(new MEMRevisionCache());
-
-    LRURevisionCache cache = new LRURevisionCache();
-    cache.setCapacityCurrent(getLRUCapacity(Props.PROP_CURRENT_LRU_CAPACITY));
-    cache.setCapacityRevised(getLRUCapacity(Props.PROP_REVISED_LRU_CAPACITY));
-    setCache(cache);
   }
 
   public Repository getRepository()
@@ -260,6 +251,9 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     return revisions;
   }
 
+  /**
+   * TODO Move this to the cache(s)
+   */
   protected int getLRUCapacity(String prop)
   {
     String capacity = repository.getProperties().get(prop);

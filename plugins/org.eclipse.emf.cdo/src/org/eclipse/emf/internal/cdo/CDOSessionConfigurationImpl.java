@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -34,6 +35,10 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
   private IFailOverStrategy failOverStrategy;
 
   private CDOPackageRegistry packageRegistry;
+
+  private CDORevisionCache revisionCache;
+
+  private boolean passiveUpdateEnabled;
 
   private boolean activateOnOpen = true;
 
@@ -68,10 +73,10 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
     return legacySupportEnabled;
   }
 
-  public void setLegacySupportEnabled(boolean legacySupportEnabled)
+  public void setLegacySupportEnabled(boolean enabled)
   {
     checkNotOpen();
-    this.legacySupportEnabled = legacySupportEnabled;
+    legacySupportEnabled = enabled;
   }
 
   public IFailOverStrategy getFailOverStrategy()
@@ -112,6 +117,40 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
     setPackageRegistry(CDOUtil.createDemandPopulatingPackageRegistry());
   }
 
+  /**
+   * @since 2.0
+   */
+  public CDORevisionCache getRevisionCache()
+  {
+    return revisionCache;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setRevisionCache(CDORevisionCache revisionCache)
+  {
+    checkNotOpen();
+    this.revisionCache = revisionCache;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean isPassiveUpdateEnabled()
+  {
+    return passiveUpdateEnabled;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setPassiveUpdateEnabled(boolean enabled)
+  {
+    checkNotOpen();
+    passiveUpdateEnabled = enabled;
+  }
+
   public boolean isActivateOnOpen()
   {
     return activateOnOpen;
@@ -133,6 +172,7 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
       session.setLegacySupportEnabled(legacySupportEnabled);
       session.setFailOverStrategy(failOverStrategy);
       session.setPackageRegistry(packageRegistry);
+      session.getRevisionManager().setCache(revisionCache);
 
       if (activateOnOpen)
       {

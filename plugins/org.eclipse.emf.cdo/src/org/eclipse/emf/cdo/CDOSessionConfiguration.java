@@ -10,7 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
+
+import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
@@ -21,37 +24,113 @@ import org.eclipse.net4j.signal.failover.IFailOverStrategy;
  */
 public interface CDOSessionConfiguration
 {
+  /**
+   * @see CDOSession#getConnector()
+   */
   public IConnector getConnector();
 
+  /**
+   * @see CDOSession#getConnector()
+   */
   public void setConnector(IConnector connector);
 
+  /**
+   * @see CDOSession#getRepositoryName()
+   */
   public String getRepositoryName();
 
+  /**
+   * @see CDOSession#getRepositoryName()
+   */
   public void setRepositoryName(String repositoryName);
 
+  /**
+   * @see CDOSession#isLegacySupportEnabled()
+   */
   public boolean isLegacySupportEnabled();
 
+  /**
+   * The choice whether to enable legacy support for a {@link CDOSession session} or not must be met <b>before</b> the
+   * session is opened and can not be changed thereafter.
+   * 
+   * @see CDOSession#isLegacySupportEnabled()
+   */
   public void setLegacySupportEnabled(boolean enabled);
 
+  /**
+   * @see CDOSession#getFailOverStrategy()
+   */
   public IFailOverStrategy getFailOverStrategy();
 
+  /**
+   * The fail-over strategy must be set <b>before</b> the session is opened and can not be changed thereafter.
+   * 
+   * @see CDOSession#getFailOverStrategy()
+   */
   public void setFailOverStrategy(IFailOverStrategy failOverStrategy);
 
   /**
+   * @see CDOSession#getPackageRegistry()
    * @since 2.0
    */
   public CDOPackageRegistry getPackageRegistry();
 
   /**
+   * The package registry must be set <b>before</b> the session is opened and can not be changed thereafter.
+   * 
+   * @see CDOSession#getPackageRegistry()
    * @since 2.0
    */
   public void setPackageRegistry(CDOPackageRegistry packageRegistry);
 
+  /**
+   * The package registry must be set <b>before</b> the session is opened and can not be changed thereafter.
+   * 
+   * @see CDOSession#getPackageRegistry()
+   * @since 2.0
+   */
   public void setSelfPopulatingPackageRegistry();
 
+  /**
+   * The package registry must be set <b>before</b> the session is opened and can not be changed thereafter.
+   * 
+   * @see CDOSession#getPackageRegistry()
+   * @since 2.0
+   */
   public void setDemandPopulatingPackageRegistry();
 
+  /**
+   * @see CDORevisionManagerImpl#getCache()
+   * @since 2.0
+   */
+  public CDORevisionCache getRevisionCache();
+
+  /**
+   * The revision cache must be set <b>before</b> the session is opened and can not be changed thereafter.
+   * 
+   * @see CDORevisionManagerImpl#setCache(CDORevisionCache)
+   * @since 2.0
+   */
+  public void setRevisionCache(CDORevisionCache revisionCache);
+
+  /**
+   * @since 2.0
+   */
+  public boolean isPassiveUpdateEnabled();
+
+  /**
+   * @since 2.0
+   */
+  public void setPassiveUpdateEnabled(boolean enabled);
+
+  /**
+   * Opens the session for this configuration. Once the session is openend this method always returns the same session
+   * instance. Therefore it is impossible to change this configuration while the session is open.
+   */
   public CDOSession openSession();
 
+  /**
+   * Returns <code>true</code> if the session for this configuration is currently open, <code>false</code> otherwise.
+   */
   public boolean isSessionOpen();
 }

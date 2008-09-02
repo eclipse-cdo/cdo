@@ -176,11 +176,6 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
     return null;
   }
 
-  public void finalizeRevision(InternalCDORevision revision)
-  {
-    // Do nothing
-  }
-
   @Override
   @SuppressWarnings("unchecked")
   protected void work(Reference<? extends InternalCDORevision> reference)

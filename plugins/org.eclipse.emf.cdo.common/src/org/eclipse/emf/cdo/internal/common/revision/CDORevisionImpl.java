@@ -76,12 +76,6 @@ public class CDORevisionImpl implements InternalCDORevision
 
   private Object[] values;
 
-  @Override
-  protected void finalize() throws Throwable
-  {
-    ((CDORevisionResolverImpl)revisionResolver).finalizeRevision(this);
-  }
-
   public CDORevisionImpl(CDORevisionResolver revisionResolver, CDOClass cdoClass, CDOID id)
   {
     this.revisionResolver = revisionResolver;

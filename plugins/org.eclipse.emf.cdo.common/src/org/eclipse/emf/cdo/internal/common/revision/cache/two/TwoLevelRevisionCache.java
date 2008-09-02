@@ -125,12 +125,6 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     return revision;
   }
 
-  public void finalizeRevision(InternalCDORevision revision)
-  {
-    level1.finalizeRevision(revision);
-    level2.finalizeRevision(revision);
-  }
-
   public void notifyEvent(IEvent event)
   {
     if (event instanceof EvictionEvent)

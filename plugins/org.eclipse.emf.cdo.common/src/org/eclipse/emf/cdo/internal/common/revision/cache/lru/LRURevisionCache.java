@@ -239,11 +239,6 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     return revision;
   }
 
-  public void finalizeRevision(InternalCDORevision revision)
-  {
-    // Do nothing
-  }
-
   @Override
   protected void doActivate() throws Exception
   {

@@ -114,16 +114,6 @@ public interface CDOSessionConfiguration
   public void setRevisionCache(CDORevisionCache revisionCache);
 
   /**
-   * @since 2.0
-   */
-  public boolean isPassiveUpdateEnabled();
-
-  /**
-   * @since 2.0
-   */
-  public void setPassiveUpdateEnabled(boolean enabled);
-
-  /**
    * Opens the session for this configuration. Once the session is openend this method always returns the same session
    * instance. Therefore it is impossible to change this configuration while the session is open.
    */

@@ -38,8 +38,6 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
 
   private CDORevisionCache revisionCache;
 
-  private boolean passiveUpdateEnabled;
-
   private boolean activateOnOpen = true;
 
   public CDOSessionConfigurationImpl()
@@ -134,23 +132,6 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
     this.revisionCache = revisionCache;
   }
 
-  /**
-   * @since 2.0
-   */
-  public boolean isPassiveUpdateEnabled()
-  {
-    return passiveUpdateEnabled;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void setPassiveUpdateEnabled(boolean enabled)
-  {
-    checkNotOpen();
-    passiveUpdateEnabled = enabled;
-  }
-
   public boolean isActivateOnOpen()
   {
     return activateOnOpen;
@@ -173,7 +154,6 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
       session.setFailOverStrategy(failOverStrategy);
       session.setPackageRegistry(packageRegistry);
       session.getRevisionManager().setCache(revisionCache);
-      session.setPassiveUpdateEnabled(passiveUpdateEnabled);
 
       if (activateOnOpen)
       {

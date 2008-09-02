@@ -41,8 +41,6 @@ public interface CDORevisionCache extends INotifier.Introspection
 
   public boolean addRevision(InternalCDORevision revision);
 
-  public void finalizeRevision(InternalCDORevision revision);
-
   /**
    * @author Eike Stepper
    */

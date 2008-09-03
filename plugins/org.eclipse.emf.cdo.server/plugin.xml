@@ -27,6 +27,10 @@
             type="cdo"
             class="org.eclipse.emf.cdo.internal.server.protocol.CDOPluginProtocolFactory"/>
       	<factory
+            type="resources"
+            productGroup="org.eclipse.emf.cdo.server.queryIteratorFactories"
+            class="org.eclipse.net4j.util.security.ChallengeNegotiatorFactory"/>
+      	<factory
             type="challenge"
             productGroup="org.eclipse.net4j.Negotiators"
             class="org.eclipse.net4j.util.security.ChallengeNegotiatorFactory"/>

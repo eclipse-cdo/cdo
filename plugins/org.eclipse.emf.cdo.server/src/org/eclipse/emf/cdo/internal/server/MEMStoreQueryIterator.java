@@ -49,25 +49,6 @@ public class MEMStoreQueryIterator implements CloseableIterator<Object>
     nextObject = nextObject();
   }
 
-  private Object nextObject()
-  {
-    nextObject = null;
-    while (revisions.hasNext() && nextObject == null)
-    {
-      nextObject = revisions.next();
-      for (Object filter : filters)
-      {
-        if (!filter.equals(nextObject))
-        {
-          nextObject = null;
-          break;
-        }
-      }
-    }
-
-    return nextObject;
-  }
-
   public boolean hasNext()
   {
     return nextObject != null;
@@ -102,5 +83,24 @@ public class MEMStoreQueryIterator implements CloseableIterator<Object>
   public boolean isClosed()
   {
     return false;
+  }
+
+  private Object nextObject()
+  {
+    nextObject = null;
+    while (revisions.hasNext() && nextObject == null)
+    {
+      nextObject = revisions.next();
+      for (Object filter : filters)
+      {
+        if (!filter.equals(nextObject))
+        {
+          nextObject = null;
+          break;
+        }
+      }
+    }
+  
+    return nextObject;
   }
 }

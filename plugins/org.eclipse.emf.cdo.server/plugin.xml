@@ -29,7 +29,7 @@
       	<factory
             type="resources"
             productGroup="org.eclipse.emf.cdo.server.queryIteratorFactories"
-            class="org.eclipse.net4j.util.security.ChallengeNegotiatorFactory"/>
+            class="org.eclipse.emf.cdo.internal.server.ResourcesQueryIterator$Factory"/>
       	<factory
             type="challenge"
             productGroup="org.eclipse.net4j.Negotiators"

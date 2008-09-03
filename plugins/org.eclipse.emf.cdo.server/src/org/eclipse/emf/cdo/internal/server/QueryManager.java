@@ -14,9 +14,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
@@ -40,14 +38,22 @@ public class QueryManager extends Lifecycle
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, QueryManager.class);
 
+  private Repository repository;
+
   private Map<Integer, QueryContext> queryContexts = new ConcurrentHashMap<Integer, QueryContext>();
 
   private ExecutorService executors;
 
   private int nextQuery;
 
-  public QueryManager()
+  public QueryManager(Repository repository)
   {
+    this.repository = repository;
+  }
+
+  public Repository getRepository()
+  {
+    return repository;
   }
 
   public synchronized ExecutorService getExecutors()
@@ -68,7 +74,7 @@ public class QueryManager extends Lifecycle
   public QueryResult execute(IView view, CDOQueryInfo queryInfo)
   {
     QueryResult queryResult = new QueryResult(view, queryInfo, nextQuery());
-    QueryContext queryContext = new QueryContext(StoreThreadLocal.getStoreReader(), queryResult);
+    QueryContext queryContext = new QueryContext(queryResult);
     execute(queryContext);
     return queryResult;
   }
@@ -130,8 +136,6 @@ public class QueryManager extends Lifecycle
 
     private Future<?> future;
 
-    private IStoreReader reader;
-
     private IListener listener = new IListener()
     {
       public void notifyEvent(IEvent event)
@@ -149,10 +153,9 @@ public class QueryManager extends Lifecycle
       }
     };
 
-    public QueryContext(IStoreReader reader, QueryResult queryResult)
+    public QueryContext(QueryResult queryResult)
     {
       this.queryResult = queryResult;
-      this.reader = reader;
     }
 
     public void run()
@@ -162,7 +165,7 @@ public class QueryManager extends Lifecycle
 
       try
       {
-        itrResult = reader.createQueryIterator(queryResult.getQueryInfo());
+        itrResult = repository.createQueryIterator(queryResult.getQueryInfo());
         int maxResult = queryResult.getQueryInfo().getMaxResults();
         if (maxResult < 0)
         {

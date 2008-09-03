@@ -16,12 +16,17 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.text.MessageFormat;
@@ -219,6 +224,26 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return MessageFormat.format("Repository[{0}]", name);
   }
 
+  public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo)
+  {
+    CloseableIterator<Object> queryIterator = createRepositoryQueryIterator(queryInfo);
+    if (queryIterator == null)
+    {
+      IStoreReader reader = StoreThreadLocal.getStoreReader();
+      queryIterator = reader.createQueryIterator(queryInfo);
+    }
+
+    return queryIterator;
+  }
+
+  protected CloseableIterator<Object> createRepositoryQueryIterator(CDOQueryInfo queryInfo)
+  {
+    IPluginContainer container = IPluginContainer.INSTANCE;
+    String queryLanguage = queryInfo.getQueryLanguage();
+    String queryString = queryInfo.getQueryString();
+    return ResourcesQueryIterator.Factory.get(container, queryLanguage, queryString);
+  }
+
   protected PackageManager createPackageManager()
   {
     return new PackageManager(this);
@@ -244,7 +269,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
    */
   protected QueryManager createQueryManager()
   {
-    return new QueryManager();
+    return new QueryManager(this);
   }
 
   /**

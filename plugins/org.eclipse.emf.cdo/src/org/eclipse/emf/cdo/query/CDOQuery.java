@@ -24,6 +24,8 @@ import java.util.List;
  */
 public interface CDOQuery extends CDOQueryInfo
 {
+  public CDOView getView();
+
   public <T> CloseableIterator<T> getResultAsync(Class<T> classObject);
 
   public <T> List<T> getResult(Class<T> classObject);
@@ -54,6 +56,4 @@ public interface CDOQuery extends CDOQueryInfo
    *           of incorrect type
    */
   public CDOQuery setParameter(String name, Object value);
-
-  public CDOView getView();
 }

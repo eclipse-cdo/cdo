@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
-import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -29,6 +28,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
@@ -251,7 +251,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     }
 
     IQueryHandlerProvider provider = queryHandlerProvider;
-    if (provider == null)
+    if (provider == null && OMPlatform.INSTANCE.isOSGiRunning())
     {
       // If not running in Eclipse this can lead to an exception later. Catch it.
       provider = new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE);
@@ -263,7 +263,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     }
     catch (Throwable t)
     {
-      OM.LOG.warn(t);
       return StoreThreadLocal.getStoreReader();
     }
   }

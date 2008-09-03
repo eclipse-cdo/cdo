@@ -94,9 +94,6 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
       InternalCDORevision revision = holder.getRevision();
       if (revision != null && revision.isCurrent())
       {
-        ;
-      }
-      {
         currentRevisions.add(revision);
       }
     }

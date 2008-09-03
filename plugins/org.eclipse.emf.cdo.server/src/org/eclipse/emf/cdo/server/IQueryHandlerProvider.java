@@ -8,19 +8,15 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.server;
+package org.eclipse.emf.cdo.server;
 
-import org.eclipse.net4j.util.factory.Factory;
+import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public abstract class QueryIteratorFactory extends Factory
+public interface IQueryHandlerProvider
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.queryIteratorFactories";
-
-  public QueryIteratorFactory(String type)
-  {
-    super(PRODUCT_GROUP, type);
-  }
+  public IQueryHandler getQueryHandler(CDOQueryInfo info);
 }

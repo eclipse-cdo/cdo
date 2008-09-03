@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
-import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -27,16 +26,11 @@ import java.util.Collection;
  * @see StoreThreadLocal#getStoreReader()
  * @author Eike Stepper
  */
-public interface IStoreReader extends IStoreAccessor
+public interface IStoreReader extends IStoreAccessor, IQueryHandler
 {
   public ISession getSession();
 
   public IStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature);
-
-  /**
-   * @since 2.0
-   */
-  public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo);
 
   public Collection<CDOPackageInfo> readPackageInfos();
 
@@ -83,4 +77,18 @@ public interface IStoreReader extends IStoreAccessor
    * @since 2.0
    */
   public void refreshRevisions();
+
+  /**
+   * @since 2.0
+   */
+  public void queryResources(String pathPrefix, int maxResults, QueryResourcesContext context);
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public interface QueryResourcesContext
+  {
+    public boolean addResource(CDORevision resource);
+  }
 }

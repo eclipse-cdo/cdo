@@ -12,11 +12,11 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
-import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.IQueryContext;
+import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IView;
 
-import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IEvent;
@@ -95,10 +95,10 @@ public class QueryManager extends Lifecycle
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Stopping QueryNative thread: " + queryContext);
+      TRACER.trace("Cancelling query for context: " + queryContext);
     }
 
-    queryContext.getFuture().cancel(true);
+    queryContext.cancel();
   }
 
   public synchronized void register(final QueryContext queryContext)
@@ -130,13 +130,17 @@ public class QueryManager extends Lifecycle
    * @author Simon McDuff
    * @since 2.0
    */
-  private class QueryContext implements Runnable
+  private class QueryContext implements IQueryContext, Runnable
   {
     private QueryResult queryResult;
 
+    private boolean cancelled;
+
+    private int resultCount;
+
     private Future<?> future;
 
-    private IListener listener = new IListener()
+    private IListener sessionListener = new IListener()
     {
       public void notifyEvent(IEvent event)
       {
@@ -147,7 +151,7 @@ public class QueryManager extends Lifecycle
           if (deltaEvent.getDeltaKind() == Kind.REMOVED && deltaEvent.getDeltaElement() == view)
           {
             // Cancel the query when view is closing
-            cancel(getQueryResult().getQueryID());
+            cancel();
           }
         }
       }
@@ -158,66 +162,76 @@ public class QueryManager extends Lifecycle
       this.queryResult = queryResult;
     }
 
-    public void run()
-    {
-      CDOQueryQueue<Object> resultQueue = queryResult.getQueue();
-      CloseableIterator<Object> itrResult = null;
-
-      try
-      {
-        itrResult = repository.createQueryIterator(queryResult.getQueryInfo());
-        int maxResult = queryResult.getQueryInfo().getMaxResults();
-        if (maxResult < 0)
-        {
-          maxResult = Integer.MAX_VALUE;
-        }
-
-        for (int i = 0; i < maxResult && itrResult.hasNext(); i++)
-        {
-          resultQueue.add(itrResult.next());
-        }
-      }
-      catch (Throwable exception)
-      {
-        resultQueue.setException(exception);
-      }
-      finally
-      {
-        resultQueue.close();
-        if (itrResult != null)
-        {
-          itrResult.close();
-        }
-
-        unregister(this);
-      }
-    }
-
     public QueryResult getQueryResult()
     {
       return queryResult;
     }
 
-    protected Future<?> getFuture()
+    public IView getView()
+    {
+      return queryResult.getView();
+    }
+
+    public Future<?> getFuture()
     {
       return future;
     }
 
-    protected void setFuture(Future<?> future)
+    public void setFuture(Future<?> future)
     {
       this.future = future;
     }
 
-    private void removeListener()
+    public void cancel()
     {
-      IView view = getQueryResult().getView();
-      view.getSession().removeListener(listener);
+      cancelled = true;
+      if (future != null)
+      {
+        future.cancel(true);
+      }
     }
 
-    private void addListener()
+    public boolean addResult(Object object)
     {
-      final IView view = getQueryResult().getView();
-      view.getSession().addListener(listener);
+      if (resultCount == 0)
+      {
+        throw new IllegalStateException("Maximum number of results exceeded");
+      }
+
+      queryResult.getQueue().add(object);
+      return !cancelled && --resultCount > 0;
+    }
+
+    public void run()
+    {
+      try
+      {
+        CDOQueryInfo info = queryResult.getQueryInfo();
+        resultCount = info.getMaxResults() < 0 ? Integer.MAX_VALUE : info.getMaxResults();
+        IQueryHandler handler = repository.getQueryHandler(info);
+        handler.executeQuery(info, this);
+      }
+      catch (Throwable exception)
+      {
+        queryResult.getQueue().setException(exception);
+      }
+      finally
+      {
+        queryResult.getQueue().close();
+        unregister(this);
+      }
+    }
+
+    public void addListener()
+    {
+      IView view = getQueryResult().getView();
+      view.getSession().addListener(sessionListener);
+    }
+
+    public void removeListener()
+    {
+      IView view = getQueryResult().getView();
+      view.getSession().removeListener(sessionListener);
     }
   }
 }

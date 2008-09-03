@@ -253,6 +253,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     IQueryHandlerProvider provider = queryHandlerProvider;
     if (provider == null)
     {
+      // If not running in Eclipse this can lead to an exception later. Catch it.
       provider = new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE);
     }
 

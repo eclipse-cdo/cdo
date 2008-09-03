@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IPackageManager;
+import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.ISession;
@@ -282,6 +283,24 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     return mappingStrategy.readResourcePath(this, id);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void queryResources(String pathPrefix, int maxResults, QueryResourcesContext context)
+  {
+    // TODO: implement HibernateStoreReader.queryResources(pathPrefix, maxResults, context)
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void executeQuery(CDOQueryInfo info, IQueryContext context)
+  {
+    // TODO: implement HibernateStoreReader.executeQuery(info, context)
+    throw new UnsupportedOperationException();
   }
 
   protected CDOClass getObjectType(CDOID id)

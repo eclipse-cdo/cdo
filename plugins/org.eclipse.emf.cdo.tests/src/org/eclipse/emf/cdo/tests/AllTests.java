@@ -53,7 +53,7 @@ public class AllTests
     suite.addTestSuite(ChangeSubscriptionTest.class);
 
     // Specific for MEMStore
-    // suite.addTestSuite(QueryTest.class);
+    suite.addTestSuite(QueryTest.class);
 
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);
     // $JUnit-END$

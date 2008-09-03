@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
@@ -176,6 +177,24 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
   public void refreshRevisions()
   {
     // Do nothing
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void queryResources(String pathPrefix, int maxResults, QueryResourcesContext context)
+  {
+    // TODO: implement HibernateStoreReader.queryResources(pathPrefix, maxResults, context)
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void executeQuery(CDOQueryInfo info, IQueryContext context)
+  {
+    // TODO: implement HibernateStoreReader.executeQuery(info, context)
+    throw new UnsupportedOperationException();
   }
 
   @Override

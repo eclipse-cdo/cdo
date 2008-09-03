@@ -20,7 +20,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IRepository extends IContainer<IRepositoryElement>
+public interface IRepository extends IContainer<IRepositoryElement>, IQueryHandlerProvider
 {
   public String getName();
 
@@ -54,6 +54,11 @@ public interface IRepository extends IContainer<IRepositoryElement>
    * @since 2.0
    */
   public INotificationManager getNotificationManager();
+
+  /**
+   * @since 2.0
+   */
+  public IQueryHandlerProvider getQueryHandlerProvider();
 
   public long getLastMetaID();
 

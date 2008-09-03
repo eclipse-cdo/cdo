@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.server" version="2">
-    <resource path="src/org/eclipse/emf/cdo/internal/server/Transaction.java" type="org.eclipse.emf.cdo.internal.server.Transaction$TransactionPackageManager">
+    <resource path="src/org/eclipse/emf/cdo/server/IPackageManager.java" type="org.eclipse.emf.cdo.server.IPackageManager">
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="CDOPackageManager"/>
-                <message_argument value="TransactionPackageManager"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/server/View.java" type="org.eclipse.emf.cdo.internal.server.View">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.internal.server.View"/>
+                <message_argument value="IPackageManager"/>
             </message_arguments>
         </filter>
     </resource>
@@ -23,19 +16,18 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/server/IPackageManager.java" type="org.eclipse.emf.cdo.server.IPackageManager">
-        <filter id="574619656">
+    <resource path="src/org/eclipse/emf/cdo/internal/server/StoreAccessor.java" type="org.eclipse.emf.cdo.internal.server.StoreAccessor">
+        <filter id="1143996420">
             <message_arguments>
-                <message_argument value="CDOPackageManager"/>
-                <message_argument value="IPackageManager"/>
+                <message_argument value="org.eclipse.emf.cdo.internal.server.StoreAccessor"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/server/SessionManager.java" type="org.eclipse.emf.cdo.internal.server.SessionManager">
+    <resource path="src/org/eclipse/emf/cdo/server/ISessionManager.java" type="org.eclipse.emf.cdo.server.ISessionManager">
         <filter id="643846161">
             <message_arguments>
                 <message_argument value="CDOServerProtocol"/>
-                <message_argument value="SessionManager"/>
+                <message_argument value="ISessionManager"/>
                 <message_argument value="openSession(CDOServerProtocol, boolean)"/>
             </message_arguments>
         </filter>
@@ -48,12 +40,42 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/server/ISessionManager.java" type="org.eclipse.emf.cdo.server.ISessionManager">
+    <resource path="src/org/eclipse/emf/cdo/internal/server/SessionManager.java" type="org.eclipse.emf.cdo.internal.server.SessionManager">
         <filter id="643846161">
             <message_arguments>
                 <message_argument value="CDOServerProtocol"/>
-                <message_argument value="ISessionManager"/>
+                <message_argument value="SessionManager"/>
                 <message_argument value="openSession(CDOServerProtocol, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/Repository.java" type="org.eclipse.emf.cdo.internal.server.Repository">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.internal.server.Repository"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/PackageManager.java" type="org.eclipse.emf.cdo.internal.server.PackageManager">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="CDOPackageManagerImpl"/>
+                <message_argument value="PackageManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/Transaction.java" type="org.eclipse.emf.cdo.internal.server.Transaction$TransactionPackageManager">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOPackageManager"/>
+                <message_argument value="TransactionPackageManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/View.java" type="org.eclipse.emf.cdo.internal.server.View">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.internal.server.View"/>
             </message_arguments>
         </filter>
     </resource>
@@ -88,11 +110,10 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/server/PackageManager.java" type="org.eclipse.emf.cdo.internal.server.PackageManager">
-        <filter id="576720909">
+    <resource path="src/org/eclipse/emf/cdo/internal/server/ResourcesQueryIterator.java" type="org.eclipse.emf.cdo.internal.server.ResourcesQueryIterator">
+        <filter id="1110441988">
             <message_arguments>
-                <message_argument value="CDOPackageManagerImpl"/>
-                <message_argument value="PackageManager"/>
+                <message_argument value="org.eclipse.emf.cdo.internal.server.ResourcesQueryIterator"/>
             </message_arguments>
         </filter>
     </resource>

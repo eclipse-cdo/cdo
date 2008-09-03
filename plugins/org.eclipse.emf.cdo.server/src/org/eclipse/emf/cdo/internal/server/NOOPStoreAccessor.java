@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreReader;
@@ -99,10 +100,18 @@ public class NOOPStoreAccessor extends StoreAccessor implements IStoreReader, IS
     throw new UnsupportedOperationException();
   }
 
+  public void queryResources(String pathPrefix, int maxResults, QueryResourcesContext context)
+  {
+    /**
+     * @since 2.0
+     */
+    throw new UnsupportedOperationException();
+  }
+
   /**
    * @since 2.0
    */
-  public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo)
+  public void executeQuery(CDOQueryInfo info, IQueryContext context)
   {
     throw new UnsupportedOperationException();
   }
@@ -140,4 +149,5 @@ public class NOOPStoreAccessor extends StoreAccessor implements IStoreReader, IS
   {
     // Pooling of store accessors not supported
   }
+
 }

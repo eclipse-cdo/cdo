@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreReader;
@@ -163,12 +164,21 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   /**
    * @since 2.0
    */
-  public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo)
+  public void queryResources(String pathPrefix, int maxResults, QueryResourcesContext context)
   {
-    if (queryInfo.getQueryLanguage().equals("TEST"))
+    // TODO: implement MEMStoreAccessor.queryResources(pathPrefix, maxResults, context)
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void executeQuery(CDOQueryInfo info, IQueryContext queryContext)
+  {
+    if (info.getQueryLanguage().equals("TEST"))
     {
       MEMStoreQueryIterator queryExecution = new MEMStoreQueryIterator(getStore());
-      Object context = queryInfo.getParameters().get("context");
+      Object context = info.getParameters().get("context");
       if (context != null)
       {
         if (context instanceof CDOClass)
@@ -187,10 +197,16 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
       }
 
       queryExecution.activate();
-      return queryExecution;
+      boolean moreResults = true;
+      while (moreResults && queryExecution.hasNext())
+      {
+        moreResults = queryContext.addResult(queryExecution.next());
+      }
     }
-
-    throw new RuntimeException("Unsupported language " + queryInfo.getQueryLanguage());
+    else
+    {
+      throw new RuntimeException("Unsupported language " + info.getQueryLanguage());
+    }
   }
 
   /**
@@ -245,4 +261,5 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   {
     // Pooling of store accessors not supported
   }
+
 }

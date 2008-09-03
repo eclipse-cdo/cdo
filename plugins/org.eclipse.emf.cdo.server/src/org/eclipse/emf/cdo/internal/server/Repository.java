@@ -17,14 +17,15 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.IQueryHandler;
+import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -65,6 +66,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   private QueryManager queryManager = createQueryManager();
 
   private NotificationManager notificationManager = createNotificationManager();
+
+  private IQueryHandlerProvider queryHandlerProvider;
 
   private IRepositoryElement[] elements;
 
@@ -190,6 +193,22 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return notificationManager;
   }
 
+  /**
+   * @since 2.0
+   */
+  public IQueryHandlerProvider getQueryHandlerProvider()
+  {
+    return queryHandlerProvider;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setQueryHandlerProvider(IQueryHandlerProvider queryHandlerProvider)
+  {
+    this.queryHandlerProvider = queryHandlerProvider;
+  }
+
   public IRepositoryElement[] getElements()
   {
     return elements;
@@ -224,24 +243,28 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return MessageFormat.format("Repository[{0}]", name);
   }
 
-  public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo)
+  public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
-    CloseableIterator<Object> queryIterator = createRepositoryQueryIterator(queryInfo);
-    if (queryIterator == null)
+    if (ResourcesQueryHandler.Factory.LANGUAGE.equals(info.getQueryLanguage()))
     {
-      IStoreReader reader = StoreThreadLocal.getStoreReader();
-      queryIterator = reader.createQueryIterator(queryInfo);
+      return new ResourcesQueryHandler();
     }
 
-    return queryIterator;
-  }
+    IQueryHandlerProvider provider = queryHandlerProvider;
+    if (provider == null)
+    {
+      provider = new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE);
+    }
 
-  protected CloseableIterator<Object> createRepositoryQueryIterator(CDOQueryInfo queryInfo)
-  {
-    IPluginContainer container = IPluginContainer.INSTANCE;
-    String queryLanguage = queryInfo.getQueryLanguage();
-    String queryString = queryInfo.getQueryString();
-    return ResourcesQueryIterator.Factory.get(container, queryLanguage, queryString);
+    try
+    {
+      return provider.getQueryHandler(info);
+    }
+    catch (Throwable t)
+    {
+      OM.LOG.warn(t);
+      return StoreThreadLocal.getStoreReader();
+    }
   }
 
   protected PackageManager createPackageManager()
@@ -337,10 +360,12 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     LifecycleUtil.activate(revisionManager);
     LifecycleUtil.activate(queryManager);
     LifecycleUtil.activate(notificationManager);
+    LifecycleUtil.activate(queryHandlerProvider);
   }
 
   protected void deactivateRepository()
   {
+    LifecycleUtil.deactivate(queryHandlerProvider);
     LifecycleUtil.deactivate(notificationManager);
     LifecycleUtil.deactivate(queryManager);
     LifecycleUtil.deactivate(revisionManager);

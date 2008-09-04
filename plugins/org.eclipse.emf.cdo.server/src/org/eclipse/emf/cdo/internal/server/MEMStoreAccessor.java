@@ -166,8 +166,14 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
    */
   public void queryResources(String pathPrefix, int maxResults, QueryResourcesContext context)
   {
-    // TODO: implement MEMStoreAccessor.queryResources(pathPrefix, maxResults, context)
-    throw new UnsupportedOperationException();
+    IView view = getView();
+    for (CDORevision revision : getStore().getRevisions())
+    {
+      if (revision.isResource())
+      {
+
+      }
+    }
   }
 
   /**

@@ -251,23 +251,21 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
       return new ResourcesQueryHandler();
     }
 
-    if (queryHandlerProvider == null)
-    {
-      if (OMPlatform.INSTANCE.isOSGiRunning())
-      {
-        try
-        {
-          return new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE).getQueryHandler(info);
-        }
-        catch (Throwable t)
-        {
-          OM.LOG.error(t);
-        }
-      }
-    }
-    else
+    if (queryHandlerProvider != null)
     {
       return queryHandlerProvider.getQueryHandler(info);
+    }
+
+    if (OMPlatform.INSTANCE.isOSGiRunning())
+    {
+      try
+      {
+        return new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE).getQueryHandler(info);
+      }
+      catch (Throwable t)
+      {
+        OM.LOG.error(t);
+      }
     }
 
     return StoreThreadLocal.getStoreReader();

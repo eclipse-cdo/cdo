@@ -167,6 +167,9 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   public void queryResources(String pathPrefix, int maxResults, QueryResourcesContext context)
   {
     IView view = getView();
+    // First iterate newRevisions
+
+    // Then iterate all revisions
     for (CDORevision revision : getStore().getRevisions())
     {
       if (revision.isResource())

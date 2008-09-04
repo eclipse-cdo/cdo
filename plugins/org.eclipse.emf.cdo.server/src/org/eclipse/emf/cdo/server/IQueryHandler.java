@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 
 /**
- * @author Simon McDuff
+ * @author Eike Stepper
  * @since 2.0
  */
 public interface IQueryHandler

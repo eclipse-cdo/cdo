@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -250,21 +251,26 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
       return new ResourcesQueryHandler();
     }
 
-    IQueryHandlerProvider provider = queryHandlerProvider;
-    if (provider == null && OMPlatform.INSTANCE.isOSGiRunning())
+    if (queryHandlerProvider == null)
     {
-      // If not running in Eclipse this can lead to an exception later. Catch it.
-      provider = new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE);
+      if (OMPlatform.INSTANCE.isOSGiRunning())
+      {
+        try
+        {
+          return new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE).getQueryHandler(info);
+        }
+        catch (Throwable t)
+        {
+          OM.LOG.error(t);
+        }
+      }
+    }
+    else
+    {
+      return queryHandlerProvider.getQueryHandler(info);
     }
 
-    try
-    {
-      return provider.getQueryHandler(info);
-    }
-    catch (Throwable t)
-    {
-      return StoreThreadLocal.getStoreReader();
-    }
+    return StoreThreadLocal.getStoreReader();
   }
 
   protected PackageManager createPackageManager()

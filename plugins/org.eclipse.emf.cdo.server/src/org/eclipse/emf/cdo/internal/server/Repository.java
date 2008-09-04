@@ -246,29 +246,38 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
+    IQueryHandler handler = null;
     if (ResourcesQueryHandler.Factory.LANGUAGE.equals(info.getQueryLanguage()))
     {
-      return new ResourcesQueryHandler();
+      handler = new ResourcesQueryHandler();
     }
 
-    if (queryHandlerProvider != null)
+    if (handler == null)
     {
-      return queryHandlerProvider.getQueryHandler(info);
+      if (queryHandlerProvider != null)
+      {
+        handler = queryHandlerProvider.getQueryHandler(info);
+      }
+      else if (OMPlatform.INSTANCE.isOSGiRunning())
+      {
+        try
+        {
+          IQueryHandlerProvider provider = new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE);
+          handler = provider.getQueryHandler(info);
+        }
+        catch (Throwable t)
+        {
+          OM.LOG.warn("Problem with ContainerQueryHandlerProvider: " + t.getMessage());
+        }
+      }
     }
 
-    if (OMPlatform.INSTANCE.isOSGiRunning())
+    if (handler == null)
     {
-      try
-      {
-        return new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE).getQueryHandler(info);
-      }
-      catch (Throwable t)
-      {
-        OM.LOG.error(t);
-      }
+      handler = StoreThreadLocal.getStoreReader();
     }
 
-    return StoreThreadLocal.getStoreReader();
+    return handler;
   }
 
   protected PackageManager createPackageManager()

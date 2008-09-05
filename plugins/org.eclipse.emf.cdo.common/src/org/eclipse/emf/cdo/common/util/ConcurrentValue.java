@@ -12,7 +12,16 @@
 package org.eclipse.emf.cdo.common.util;
 
 /**
- * TODO Simon: A bit of a documentation what this is good for. Then we can move it to util.concurrent
+ * Allow synchronization between many threads for specific value.
+ * <p>
+ * e.g.: MainThread cv.set(1);<br>
+ * Thread1 cv.acquire(3);<br>
+ * Thread2 cv.acquire(4);<br>
+ * Thread3 cv.acquire(100);<br>
+ * Thread4 cv.acquire(new Object(){ boolean equals(Object other){other.equals(1) || other.equals(3) }});<br>
+ * ...<br>
+ * MainThread cv.set(3);// Thread 1 and 4 will unblock. Thread 2 and 3 will still be blocking. <br>
+ * TODO Simon - Then we can move it to util.concurrent
  * 
  * @author Simon McDuff
  * @since 2.0
@@ -33,6 +42,9 @@ public class ConcurrentValue<T>
     return value;
   }
 
+  /**
+   * Specify the new value.
+   */
   public void set(T newValue)
   {
     synchronized (notifier)
@@ -42,6 +54,10 @@ public class ConcurrentValue<T>
     }
   }
 
+  /**
+   * Reevaluate the condition. It is only useful if a thread is blocked at {@link ConcurrentValue#acquire()} and the
+   * parameter passed changed. {@link ConcurrentValue#acquire()} generates a reevaluation automatically.
+   */
   public void reevaluate()
   {
     synchronized (notifier)
@@ -50,6 +66,11 @@ public class ConcurrentValue<T>
     }
   }
 
+  /**
+   * Blocking call.
+   * <p>
+   * Return when value accept is equal to {@link ConcurrentValue#get()}.
+   */
   public void acquire(Object accept) throws InterruptedException
   {
     synchronized (notifier)

@@ -38,7 +38,10 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
 
   private List<CDOID> cdoIDs;
 
-  // TODO Simon: Better indicate the semantics for a boolean value (in contrast to an enum)
+  /**
+   * true - it will subscribe id's. <br>
+   * false - it will unsubscribe id's.
+   */
   private boolean subscribeMode;
 
   private boolean clear;

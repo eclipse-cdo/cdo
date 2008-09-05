@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo" version="2">
     <resource path="src/org/eclipse/emf/cdo/CDOView.java" type="org.eclipse.emf.cdo.CDOView">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getResource(String, boolean)"/>
+            </message_arguments>
+        </filter>
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="CDOProtocolView"/>
@@ -8,25 +13,16 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/internal/cdo/CDOStateMachine.java" type="org.eclipse.emf.internal.cdo.CDOStateMachine">
-        <filter id="643846161">
-            <message_arguments>
-                <message_argument value="CommitTransactionResult"/>
-                <message_argument value="CDOStateMachine"/>
-                <message_argument value="commit(InternalCDOObject, CommitTransactionResult)"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/CDOViewImpl.java" type="org.eclipse.emf.internal.cdo.CDOViewImpl">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="CDOViewImpl(CDOSessionImpl, int)"/>
-            </message_arguments>
-        </filter>
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="CDOIDProvider"/>
                 <message_argument value="CDOViewImpl"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CDOViewImpl(CDOSessionImpl, int)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -46,11 +42,10 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/CDOSessionPackageManager.java" type="org.eclipse.emf.cdo.CDOSessionPackageManager">
-        <filter id="574619656">
+    <resource path="src/org/eclipse/emf/cdo/eresource/impl/CDOResourceFactoryImpl.java" type="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl">
+        <filter id="1143996420">
             <message_arguments>
-                <message_argument value="CDOPackageManager"/>
-                <message_argument value="CDOSessionPackageManager"/>
+                <message_argument value="CDOResourceFactoryImpl(CDOViewSet)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -70,14 +65,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/CDORevisionManager.java" type="org.eclipse.emf.cdo.CDORevisionManager">
-        <filter id="574619656">
-            <message_arguments>
-                <message_argument value="CDORevisionResolver"/>
-                <message_argument value="CDORevisionManager"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/CDORevisionManagerImpl.java" type="org.eclipse.emf.internal.cdo.CDORevisionManagerImpl">
         <filter id="576720909">
             <message_arguments>
@@ -91,6 +78,38 @@
             <message_arguments>
                 <message_argument value="CDORevisionMerger"/>
                 <message_argument value="CDOObjectMerger"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOStateMachine.java" type="org.eclipse.emf.internal.cdo.CDOStateMachine">
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CommitTransactionResult"/>
+                <message_argument value="CDOStateMachine"/>
+                <message_argument value="commit(InternalCDOObject, CommitTransactionResult)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/CDOSessionPackageManager.java" type="org.eclipse.emf.cdo.CDOSessionPackageManager">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOPackageManager"/>
+                <message_argument value="CDOSessionPackageManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/CDORevisionManager.java" type="org.eclipse.emf.cdo.CDORevisionManager">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDORevisionResolver"/>
+                <message_argument value="CDORevisionManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/util/CDOUtil.java" type="org.eclipse.emf.cdo.util.CDOUtil">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="prepareResourceSet(ResourceSet)"/>
             </message_arguments>
         </filter>
     </resource>

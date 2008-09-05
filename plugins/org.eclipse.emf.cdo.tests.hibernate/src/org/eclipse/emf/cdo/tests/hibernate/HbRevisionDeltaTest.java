@@ -31,15 +31,17 @@ public class HbRevisionDeltaTest extends RevisionDeltaWithoutDeltaSupportTest
   {
     StoreRepositoryProvider.setInstance(LocalHbStoreRepositoryProvider.getInstance());
   }
-  
+
   protected Repository createRepository()
   {
     LocalHbStoreRepositoryProvider provider = new LocalHbStoreRepositoryProvider();
     return (Repository)provider.createRepository(REPOSITORY_NAME, getTestProperties());
   }
 
-  private class LocalHbStoreRepositoryProvider extends HbStoreRepositoryProvider {
-    protected IRepository createRepository(String name, IStore store, Map<String, String> props) {
+  private class LocalHbStoreRepositoryProvider extends HbStoreRepositoryProvider
+  {
+    protected IRepository createRepository(String name, IStore store, Map<String, String> props)
+    {
       Repository repository = new Repository()
       {
         @Override

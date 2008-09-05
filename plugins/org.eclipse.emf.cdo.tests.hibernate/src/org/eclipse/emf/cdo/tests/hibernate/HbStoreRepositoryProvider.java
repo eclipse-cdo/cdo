@@ -65,7 +65,8 @@ public class HbStoreRepositoryProvider extends StoreRepositoryProvider
     return createRepository(name, createStore(), props);
   }
 
-  protected IRepository createRepository(String name, IStore store, Map<String, String> props) {
+  protected IRepository createRepository(String name, IStore store, Map<String, String> props)
+  {
     return CDOServerUtil.createRepository(name, createStore(), props);
   }
 

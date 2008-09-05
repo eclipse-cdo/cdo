@@ -55,8 +55,8 @@ public class AllTests
     // suite.addTestSuite(Bugzilla241464_Test.class);
     // failures: /testWriteNative, testChunkWithTemporaryObject
     // suite.addTestSuite(ChunkingWithMEMTest.class);
-     // failures testReadNative, testWriteNative
-//    suite.addTestSuite(HbRevisionDeltaTest.class);
+    // failures testReadNative, testWriteNative
+    // suite.addTestSuite(HbRevisionDeltaTest.class);
 
     // $JUnit-BEGIN$
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);

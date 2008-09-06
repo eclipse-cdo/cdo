@@ -363,6 +363,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     LifecycleUtil.activate(packageManager);
     if (store.wasCrashed())
     {
+      OM.LOG.info("Crash of repository " + name + " detected");
       store.repairAfterCrash();
     }
 

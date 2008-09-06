@@ -188,21 +188,26 @@ public class DBStore extends LongIDStore implements IDBStore
   @Override
   public void repairAfterCrash()
   {
-    Connection connection = null;
+    DBStoreReader storeReader = null;
 
     try
     {
-      connection = getConnection();
-      long maxObjectID = mappingStrategy.repairAfterCrash(connection);
-      setLastMetaID(DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGES_RANGE_UB));
+      storeReader = (DBStoreReader)getReader(null);
+      Connection connection = storeReader.getConnection();
 
-      OM.LOG.info(MessageFormat.format("Repaired after crash: maxObjectID={0}, maxMetaID={1}", maxObjectID,
-          getLastMetaID()));
+      long maxObjectID = mappingStrategy.repairAfterCrash(connection);
+      long maxMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGES_RANGE_UB);
+      OM.LOG.info(MessageFormat.format("Repaired after crash: maxObjectID={0}, maxMetaID={1}", maxObjectID, maxMetaID));
+
       setLastObjectID(maxObjectID);
+      setLastMetaID(maxMetaID);
     }
     finally
     {
-      DBUtil.close(connection);
+      if (storeReader != null)
+      {
+        storeReader.release();
+      }
     }
   }
 

@@ -497,9 +497,17 @@ public class CDORevisionImpl implements InternalCDORevision
   public Object setValue(CDOFeature feature, Object value)
   {
     int i = cdoClass.getFeatureID(feature);
-    Object old = values[i];
-    values[i] = value;
-    return old;
+
+    try
+    {
+      Object old = values[i];
+      values[i] = value;
+      return old;
+    }
+    catch (ArrayIndexOutOfBoundsException ex)
+    {
+      throw new IllegalArgumentException("Could not find feature " + feature + " in class " + cdoClass, ex);
+    }
   }
 
   public MoveableList<Object> getList(CDOFeature feature)

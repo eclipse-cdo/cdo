@@ -15,12 +15,12 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
-import org.eclipse.emf.cdo.common.util.ConcurrentValue;
 import org.eclipse.emf.cdo.internal.common.query.AbstractQueryResult;
 
 import org.eclipse.emf.internal.cdo.protocol.QueryCancelRequest;
 
 import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.util.concurrent.ConcurrentValue;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -9,7 +9,7 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  **************************************************************************/
-package org.eclipse.emf.cdo.common.util;
+package org.eclipse.net4j.util.concurrent;
 
 /**
  * Allow synchronization between many threads for a specific value, e.g.:
@@ -35,11 +35,9 @@ package org.eclipse.emf.cdo.common.util;
  * 
  * // Thread 1 and 4 are unblocked.
  * // Thread 2 and 3 are still blocked.
- * 
  * </pre>
  * 
- * TODO Simon - Then we can move it to util.concurrent &#064;author Simon McDuff
- * 
+ * @author Simon McDuff
  * @since 2.0
  */
 public final class ConcurrentValue<T>

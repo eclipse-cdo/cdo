@@ -19,8 +19,11 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 
 /**
+ * NPE during Transaction.getObject(id, false)
+ * <p>
+ * See https://bugs.eclipse.org/243310
+ * 
  * @author Eike Stepper
- * @see NPE during Transaction.getObject(id, false) https://bugs.eclipse.org/243310
  */
 public class Bugzilla_243310_Test extends AbstractCDOTest
 {

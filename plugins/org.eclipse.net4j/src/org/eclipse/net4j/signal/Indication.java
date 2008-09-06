@@ -13,6 +13,7 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -33,7 +34,7 @@ public abstract class Indication extends SignalReactor
   }
 
   @Override
-  protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
+  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
     if (TRACER.isEnabled())
     {
@@ -41,9 +42,47 @@ public abstract class Indication extends SignalReactor
     }
 
     InputStream wrappedInputStream = wrapInputStream(in);
-    indicating(ExtendedDataInputStream.wrap(wrappedInputStream));
-    finishInputStream(wrappedInputStream);
+
+    try
+    {
+      indicating(ExtendedDataInputStream.wrap(wrappedInputStream));
+    }
+    catch (IOException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      sendExceptionMessage(ex);
+      throw ex;
+    }
+    finally
+    {
+      finishInputStream(wrappedInputStream);
+    }
   }
 
   protected abstract void indicating(ExtendedDataInputStream in) throws IOException;
+
+  /**
+   * @since 2.0
+   */
+  protected String getMessage(Exception ex)
+  {
+    String msg = ex.getLocalizedMessage();
+    if (StringUtil.isEmpty(msg))
+    {
+      msg = ex.getClass().getName();
+    }
+
+    return msg;
+  }
+
+  void sendExceptionMessage(Exception ex) throws Exception
+  {
+    SignalProtocol protocol = getProtocol();
+    int correlationID = -getCorrelationID();
+    String message = getMessage(ex);
+    new ExceptionMessageRequest(protocol, correlationID, message).send();
+  }
 }

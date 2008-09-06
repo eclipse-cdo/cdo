@@ -43,6 +43,7 @@ public class AllTests
     suite.addTestSuite(ConnectorTest.class);
     suite.addTestSuite(TCPTransportTest.class);
     suite.addTestSuite(SignalTest.class);
+    suite.addTestSuite(ExceptionTest.class);
     suite.addTestSuite(SecurityTest.class);
     // $JUnit-END$
 

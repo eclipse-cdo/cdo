@@ -16,24 +16,15 @@ import org.eclipse.net4j.signal.failover.RetryFailOverStrategy;
 import org.eclipse.net4j.tests.signal.IntFailRequest;
 import org.eclipse.net4j.tests.signal.IntRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
-import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * @author Eike Stepper
  */
-public class FailOverTest extends AbstractTransportTest
+public class FailOverTest extends AbstractProtocolTest
 {
   public FailOverTest()
   {
-  }
-
-  @Override
-  protected IManagedContainer createContainer()
-  {
-    IManagedContainer container = super.createContainer();
-    container.registerFactory(new TestSignalProtocol.Factory());
-    return container;
   }
 
   public void testFailingBefore() throws Exception

@@ -18,13 +18,13 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public abstract class SignalActor<RESULT> extends Signal
+public abstract class SignalActor extends Signal
 {
   public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
 
   private boolean terminated;
 
-  private RESULT result;
+  private Object result;
 
   /**
    * @since 2.0
@@ -35,12 +35,12 @@ public abstract class SignalActor<RESULT> extends Signal
     setCorrelationID(protocol.getNextCorrelationID());
   }
 
-  public RESULT send() throws Exception
+  public Object send() throws Exception
   {
     return send(NO_TIMEOUT);
   }
 
-  public RESULT send(long timeout) throws Exception
+  public Object send(long timeout) throws Exception
   {
     if (terminated)
     {
@@ -59,7 +59,7 @@ public abstract class SignalActor<RESULT> extends Signal
         getSignalID(), getProtocol(), getCorrelationID(), terminated ? "SENT" : "UNSENT");
   }
 
-  protected void setResult(RESULT result)
+  protected void setResult(Object result)
   {
     this.result = result;
   }

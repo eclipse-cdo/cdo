@@ -40,6 +40,11 @@ public abstract class SignalProtocol extends Protocol
 {
   public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
 
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_EXCEPTION_MESSAGE = -1;
+
   private static final int MIN_CORRELATION_ID = 1;
 
   private static final int MAX_CORRELATION_ID = Integer.MAX_VALUE;
@@ -236,6 +241,11 @@ public abstract class SignalProtocol extends Protocol
   protected final SignalReactor provideSignalReactor(short signalID)
   {
     checkActive();
+    if (signalID == SIGNAL_EXCEPTION_MESSAGE)
+    {
+      return new ExceptionMessageIndication();
+    }
+
     SignalReactor signal = createSignalReactor(signalID);
     if (signal == null)
     {
@@ -251,7 +261,27 @@ public abstract class SignalProtocol extends Protocol
    */
   protected abstract SignalReactor createSignalReactor(short signalID);
 
-  void startSignal(SignalActor<?> signalActor, long timeout) throws Exception
+  synchronized int getNextCorrelationID()
+  {
+    int correlationID = nextCorrelationID;
+    if (nextCorrelationID == MAX_CORRELATION_ID)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Correlation wrap around"); //$NON-NLS-1$
+      }
+
+      nextCorrelationID = MIN_CORRELATION_ID;
+    }
+    else
+    {
+      ++nextCorrelationID;
+    }
+
+    return correlationID;
+  }
+
+  void startSignal(SignalActor signalActor, long timeout) throws Exception
   {
     if (signalActor.getProtocol() != this)
     {
@@ -280,24 +310,19 @@ public abstract class SignalProtocol extends Protocol
     }
   }
 
-  synchronized int getNextCorrelationID()
+  void stopSignal(int correlationID, String message)
   {
-    int correlationID = nextCorrelationID;
-    if (nextCorrelationID == MAX_CORRELATION_ID)
+    synchronized (signals)
     {
-      if (TRACER.isEnabled())
+      Signal signal = signals.remove(correlationID);
+      if (signal instanceof RequestWithConfirmation)
       {
-        TRACER.trace("Correlation wrap around"); //$NON-NLS-1$
+        RequestWithConfirmation<?> request = (RequestWithConfirmation<?>)signal;
+        request.setExceptionMessage(message);
       }
 
-      nextCorrelationID = MIN_CORRELATION_ID;
+      signals.notifyAll();
     }
-    else
-    {
-      ++nextCorrelationID;
-    }
-
-    return correlationID;
   }
 
   /**

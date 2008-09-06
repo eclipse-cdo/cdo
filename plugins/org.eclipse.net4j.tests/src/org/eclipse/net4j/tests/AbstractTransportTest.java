@@ -33,6 +33,10 @@ public abstract class AbstractTransportTest extends AbstractOMTest
 
   private IConnector connector;
 
+  protected AbstractTransportTest()
+  {
+  }
+
   @Override
   protected void doSetUp() throws Exception
   {

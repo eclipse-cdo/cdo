@@ -40,8 +40,36 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
   private boolean eos;
 
+  private RuntimeException exception;
+
   public BufferInputStream()
   {
+  }
+
+  public long getMillisBeforeTimeout()
+  {
+    return DEFAULT_MILLIS_BEFORE_TIMEOUT;
+  }
+
+  public long getMillisInterruptCheck()
+  {
+    return DEFAULT_MILLIS_INTERRUPT_CHECK;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public RuntimeException getException()
+  {
+    return exception;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setException(RuntimeException exception)
+  {
+    this.exception = exception;
   }
 
   public void handleBuffer(IBuffer buffer)
@@ -109,6 +137,11 @@ public class BufferInputStream extends InputStream implements IBufferHandler
       {
         while (currentBuffer == null)
         {
+          if (exception != null)
+          {
+            throw exception;
+          }
+
           if (buffers == null)
           {
             // Stream has been closed - shutting down
@@ -124,6 +157,11 @@ public class BufferInputStream extends InputStream implements IBufferHandler
         final long stop = System.currentTimeMillis() + timeout;
         while (currentBuffer == null)
         {
+          if (exception != null)
+          {
+            throw exception;
+          }
+
           if (buffers == null)
           {
             // Stream has been closed - shutting down
@@ -147,15 +185,5 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
     eos = currentBuffer.isEOS();
     return true;
-  }
-
-  public long getMillisBeforeTimeout()
-  {
-    return DEFAULT_MILLIS_BEFORE_TIMEOUT;
-  }
-
-  public long getMillisInterruptCheck()
-  {
-    return DEFAULT_MILLIS_INTERRUPT_CHECK;
   }
 }

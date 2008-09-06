@@ -16,7 +16,6 @@ import org.eclipse.net4j.tests.signal.AsyncRequest;
 import org.eclipse.net4j.tests.signal.IntRequest;
 import org.eclipse.net4j.tests.signal.StringRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
-import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.util.Arrays;
@@ -24,18 +23,10 @@ import java.util.Arrays;
 /**
  * @author Eike Stepper
  */
-public class SignalTest extends AbstractTransportTest
+public class SignalTest extends AbstractProtocolTest
 {
   public SignalTest()
   {
-  }
-
-  @Override
-  protected IManagedContainer createContainer()
-  {
-    IManagedContainer container = super.createContainer();
-    container.registerFactory(new TestSignalProtocol.Factory());
-    return container;
   }
 
   public void testInteger() throws Exception

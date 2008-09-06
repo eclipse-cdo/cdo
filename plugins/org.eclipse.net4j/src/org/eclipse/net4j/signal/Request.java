@@ -24,7 +24,7 @@ import java.io.OutputStream;
 /**
  * @author Eike Stepper
  */
-public abstract class Request extends SignalActor<Object>
+public abstract class Request extends SignalActor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Request.class);
 
@@ -37,7 +37,7 @@ public abstract class Request extends SignalActor<Object>
   }
 
   @Override
-  protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
+  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
     if (TRACER.isEnabled())
     {

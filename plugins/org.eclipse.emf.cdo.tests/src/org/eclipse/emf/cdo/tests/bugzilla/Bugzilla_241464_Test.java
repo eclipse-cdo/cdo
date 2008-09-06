@@ -12,17 +12,19 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 
+import org.eclipse.net4j.signal.SignalRemoteException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import java.util.concurrent.TimeoutException;
-
 /**
+ * Make timeouts in read-access requests configurable
+ * <p>
+ * See https://bugs.eclipse.org/241464
+ * 
  * @author Eike Stepper
  */
 public class Bugzilla_241464_Test extends AbstractCDOTest
@@ -54,14 +56,10 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
     {
       Customer customer = (Customer)resource.getContents().get(0);
       System.out.println(customer.getName());
-      fail("TransportException expected");
+      fail("SignalRemoteException expected");
     }
-    catch (TransportException success)
+    catch (SignalRemoteException success)
     {
-      if (success.getCause().getClass() != TimeoutException.class)
-      {
-        fail("TimeoutException expected");
-      }
     }
     finally
     {

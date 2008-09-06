@@ -14,19 +14,17 @@ import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * @author Eike Stepper
  */
-public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT>
+public abstract class RequestWithConfirmation<RESULT> extends Request
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, RequestWithConfirmation.class);
 
@@ -39,17 +37,29 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT
   }
 
   @Override
+  protected short getSignalID()
+  {
+    return 0;
+  }
+
+  @Override
+  @SuppressWarnings("unchecked")
+  public RESULT send() throws Exception
+  {
+    return (RESULT)super.send();
+  }
+
+  @Override
+  @SuppressWarnings("unchecked")
+  public RESULT send(long timeout) throws Exception
+  {
+    return (RESULT)super.send(timeout);
+  }
+
+  @Override
   protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("================ Requesting " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
-    }
-
-    OutputStream wrappedOutputStream = wrapOutputStream(out);
-    requesting(ExtendedDataOutputStream.wrap(wrappedOutputStream));
-    finishOutputStream(wrappedOutputStream);
-    out.flushWithEOS();
+    super.execute(in, out);
     if (TRACER.isEnabled())
     {
       TRACER.trace("================ Confirming " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
@@ -61,11 +71,14 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor<RESULT
     setResult(result);
   }
 
-  protected abstract void requesting(ExtendedDataOutputStream out) throws IOException;
-
   /**
    * <b>Important Note:</b> The confirmation must not be empty, i.e. the stream must be used at least to read a
    * <code>boolean</code>. Otherwise synchronization problems will result!
    */
   protected abstract RESULT confirming(ExtendedDataInputStream in) throws IOException;
+
+  void setExceptionMessage(String message)
+  {
+    getBufferInputStream().setException(new SignalRemoteException(message));
+  }
 }

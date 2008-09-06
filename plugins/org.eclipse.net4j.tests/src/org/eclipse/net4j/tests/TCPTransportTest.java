@@ -17,10 +17,8 @@ import org.eclipse.net4j.channel.ChannelInputStream;
 import org.eclipse.net4j.channel.ChannelOutputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
-import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
@@ -39,14 +37,10 @@ import java.util.concurrent.TimeUnit;
  * @author Eike Stepper
  */
 @SuppressWarnings("unchecked")
-public class TCPTransportTest extends AbstractTransportTest
+public class TCPTransportTest extends AbstractProtocolTest
 {
-  @Override
-  protected IManagedContainer createContainer()
+  public TCPTransportTest()
   {
-    IManagedContainer container = super.createContainer();
-    container.registerFactory(new TestSignalProtocol.Factory());
-    return container;
   }
 
   protected IBuffer provideBuffer()
@@ -93,62 +87,6 @@ public class TCPTransportTest extends AbstractTransportTest
 
     assertTrue(counter.await(2, TimeUnit.SECONDS));
   }
-
-  // public void testLocalRegistry() throws Exception
-  // {
-  // final int COUNT = 3;
-  // final CountDownLatch counter = new CountDownLatch(COUNT);
-  //
-  // IRegistry<String, ProtocolFactory> global = new HashMapRegistry();
-  // IRegistry<String, ProtocolFactory> local = new HashCacheRegistry(global);
-  // local.register(new TestProtocolFactory(counter));
-  // assertEquals(0, global.size());
-  // assertEquals(1, local.size());
-  //
-  // acceptor.setProtocolFactoryRegistry(local);
-  // acceptor.activate();
-  // assertTrue(acceptor.isActive());
-  // assertTrue(connector.connect(5000));
-  //
-  // Channel channel = connector.openChannel(TestProtocolFactory.PROTOCOL_ID);
-  // for (int i = 0; i < COUNT; i++)
-  // {
-  // Buffer buffer = provideBuffer();
-  // ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
-  // byteBuffer.putInt(1970);
-  // channel.handleBuffer(buffer);
-  // }
-  //
-  // assertTrue(counter.await(2, TimeUnit.SECONDS));
-  // }
-
-  // public void testGlobalRegistry() throws Exception
-  // {
-  // final int COUNT = 3;
-  // final CountDownLatch counter = new CountDownLatch(COUNT);
-  //
-  // IRegistry<String, ProtocolFactory> global = new HashMapRegistry();
-  // IRegistry<String, ProtocolFactory> local = new HashCacheRegistry(global);
-  // global.register(new TestProtocolFactory(counter));
-  // assertEquals(1, global.size());
-  // assertEquals(1, local.size());
-  //
-  // acceptor.setProtocolFactoryRegistry(local);
-  // acceptor.activate();
-  // assertTrue(acceptor.isActive());
-  // assertTrue(connector.connect(5000));
-  //
-  // Channel channel = connector.openChannel(TestProtocolFactory.PROTOCOL_ID);
-  // for (int i = 0; i < COUNT; i++)
-  // {
-  // Buffer buffer = provideBuffer();
-  // ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
-  // byteBuffer.putInt(1970);
-  // channel.handleBuffer(buffer);
-  // }
-  //
-  // assertTrue(counter.await(2, TimeUnit.SECONDS));
-  // }
 
   public void testStreaming() throws Exception
   {

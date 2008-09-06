@@ -33,6 +33,8 @@ public class TestSignalProtocol extends SignalProtocol
 
   public static final short SIGNAL_ASYNC = 5;
 
+  public static final short SIGNAL_EXCEPTION = 6;
+
   public TestSignalProtocol(IConnector connector)
   {
     super(connector);
@@ -62,6 +64,8 @@ public class TestSignalProtocol extends SignalProtocol
       return new StringIndication();
     case SIGNAL_ASYNC:
       return new AsyncIndication();
+    case SIGNAL_EXCEPTION:
+      return new ExceptionIndication();
     }
     return null;
   }

@@ -26,7 +26,7 @@ package org.eclipse.emf.cdo.common.util;
  * @author Simon McDuff
  * @since 2.0
  */
-public class ConcurrentValue<T>
+public final class ConcurrentValue<T>
 {
   private Object notifier = new Object();
 
@@ -91,5 +91,4 @@ public class ConcurrentValue<T>
 
     return false;
   }
-
 }

@@ -23,12 +23,19 @@ package org.eclipse.emf.cdo.common.util;
  *   {
  *     public boolean equals(Object other)
  *     {
- *       return other.equals(1) || other.equals(3);
+ *       return other.equals(2) || other.equals(3);
  *     }
  *   });
+ * Thread5 cv.acquire(1);
  * ...
- * MainThread cv.set(3); // Thread 1 and 4 will unblock.
- *                       // Thread 2 and 3 will still be blocking.
+ * // Thread 1,2,3 and 4 are blocked
+ * // Thread 5 isn't blocked.
+ * 
+ * MainThread cv.set(3); 
+ * 
+ * // Thread 1 and 4 are unblocked.
+ * // Thread 2 and 3 are still blocked.
+ * 
  * </pre>
  * 
  * TODO Simon - Then we can move it to util.concurrent &#064;author Simon McDuff

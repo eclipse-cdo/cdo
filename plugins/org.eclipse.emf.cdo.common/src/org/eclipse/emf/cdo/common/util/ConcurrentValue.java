@@ -12,18 +12,27 @@
 package org.eclipse.emf.cdo.common.util;
 
 /**
- * Allow synchronization between many threads for specific value.
- * <p>
- * e.g.: MainThread cv.set(1);<br>
- * Thread1 cv.acquire(3);<br>
- * Thread2 cv.acquire(4);<br>
- * Thread3 cv.acquire(100);<br>
- * Thread4 cv.acquire(new Object(){ boolean equals(Object other){other.equals(1) || other.equals(3) }});<br>
- * ...<br>
- * MainThread cv.set(3);// Thread 1 and 4 will unblock. Thread 2 and 3 will still be blocking. <br>
- * TODO Simon - Then we can move it to util.concurrent
+ * Allow synchronization between many threads for a specific value, e.g.:
  * 
- * @author Simon McDuff
+ * <pre>
+ * MainThread cv.set(1);
+ * Thread1 cv.acquire(3);
+ * Thread2 cv.acquire(4);
+ * Thread3 cv.acquire(100);
+ * Thread4 cv.acquire(new Object()
+ *   {
+ *     public boolean equals(Object other)
+ *     {
+ *       return other.equals(1) || other.equals(3);
+ *     }
+ *   });
+ * ...
+ * MainThread cv.set(3); // Thread 1 and 4 will unblock.
+ *                       // Thread 2 and 3 will still be blocking.
+ * </pre>
+ * 
+ * TODO Simon - Then we can move it to util.concurrent &#064;author Simon McDuff
+ * 
  * @since 2.0
  */
 public final class ConcurrentValue<T>
@@ -73,22 +82,17 @@ public final class ConcurrentValue<T>
    */
   public void acquire(Object accept) throws InterruptedException
   {
+    if (accept == null)
+    {
+      throw new IllegalArgumentException("accept == null");
+    }
+
     synchronized (notifier)
     {
-      while (!equalToOneElement(accept))
+      while (!accept.equals(value))
       {
         notifier.wait();
       }
     }
-  }
-
-  private boolean equalToOneElement(Object accept)
-  {
-    if (accept != null && accept.equals(value))
-    {
-      return true;
-    }
-
-    return false;
   }
 }

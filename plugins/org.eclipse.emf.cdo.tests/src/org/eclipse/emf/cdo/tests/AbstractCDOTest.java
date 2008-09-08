@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -81,6 +82,30 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     startTransport();
   }
 
+  protected IManagedContainer createRepository(String repoName)
+  {
+    IRepository repo2 = createRepository();
+    repo2.setName(repoName);
+    CDOServerUtil.addRepository(container, repo2);
+    return container;
+  }
+
+  protected CDOSession openSession(String repoName)
+  {
+    CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+    configuration.setConnector(getConnector());
+    configuration.setRepositoryName(repoName);
+    configuration.setLegacySupportEnabled(false);
+    return configuration.openSession();
+  }
+
+  protected CDOSession openModel1Session(String repoName)
+  {
+    CDOSession session = openSession(repoName);
+    session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+    return session;
+  }
+
   protected CDOSession openSession()
   {
     CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
@@ -101,6 +126,13 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   {
     CDOSession session = openModel1Session();
     session.getPackageRegistry().putEPackage(Model2Package.eINSTANCE);
+    return session;
+  }
+
+  protected CDOSession openModel3Session()
+  {
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
     return session;
   }
 

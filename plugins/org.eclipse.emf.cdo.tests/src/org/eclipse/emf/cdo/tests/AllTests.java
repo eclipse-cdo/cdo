@@ -42,6 +42,7 @@ public class AllTests
     suite.addTestSuite(ChunkingWithMEMTest.class);
     suite.addTestSuite(TransactionDeadLockTest.class);
     suite.addTestSuite(PackageRegistryTest.class);
+    suite.addTestSuite(MetaTest.class);
     suite.addTestSuite(RevisionDeltaWithDeltaSupportTest.class);
     suite.addTestSuite(RevisionDeltaWithoutDeltaSupportTest.class);
     suite.addTestSuite(IndexReconstructionTest.class);

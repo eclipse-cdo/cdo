@@ -13,8 +13,9 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
+import org.eclipse.emf.cdo.tests.model3.MetaRef;
+import org.eclipse.emf.cdo.tests.model3.Model3Factory;
+import org.eclipse.emf.cdo.tests.model3.Model3Package;
 
 /**
  * @author Eike Stepper
@@ -24,25 +25,24 @@ public class MetaTest extends AbstractCDOTest
   public void testMetaReference() throws Exception
   {
     {
-      // Create resource in session 1
-      CDOSession session = openModel1Session();
+      CDOSession session = openModel3Session();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
-      Company company = Model1Factory.eINSTANCE.createCompany();
-      company.setName("Eike");
-      res.getContents().add(company);
+      MetaRef metaRef = Model3Factory.eINSTANCE.createMetaRef();
+      metaRef.setEPackageRef(Model3Package.eINSTANCE);
+      res.getContents().add(metaRef);
       transaction.commit();
+      session.close();
     }
 
     {
-      // Load resource in session 2
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.getResource("/res");
 
-      Company company = (Company)res.getContents().get(0);
-      assertEquals("Eike", company.getName());
+      MetaRef metaRef = (MetaRef)res.getContents().get(0);
+      assertEquals(Model3Package.eINSTANCE, metaRef.getEPackageRef());
     }
   }
 }

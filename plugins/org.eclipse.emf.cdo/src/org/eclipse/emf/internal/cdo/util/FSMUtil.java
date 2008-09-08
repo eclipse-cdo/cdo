@@ -48,26 +48,27 @@ public final class FSMUtil
 
   private static Method initAdaptLegacyMethod()
   {
-    try
-    {
-      Class<?> c = Class.forName("org.eclipse.emf.internal.cdo.CDOCallbackImpl");
-      if (c != null)
-      {
-        final Class<?>[] params = { Object.class, CDOView.class };
-        Method method = c.getDeclaredMethod("adapt", params);
-        if (method != null)
-        {
-          return method;
-        }
-      }
-    }
-    catch (Throwable ignore)
-    {
-      // Only for testing:
-      // ignore.printStackTrace();
-    }
-
-    OM.LOG.info(LegacySystemNotAvailableException.LEGACY_SYSTEM_NOT_AVAILABLE);
+    // TODO Fix when legacy mode is supported again...
+    // try
+    // {
+    // Class<?> c = Class.forName("org.eclipse.emf.internal.cdo.CDOCallbackImpl");
+    // if (c != null)
+    // {
+    // final Class<?>[] params = { Object.class, CDOView.class };
+    // Method method = c.getDeclaredMethod("adapt", params);
+    // if (method != null)
+    // {
+    // return method;
+    // }
+    // }
+    // }
+    // catch (Throwable ignore)
+    // {
+    // // Only for testing:
+    // // ignore.printStackTrace();
+    // }
+    //
+    // OM.LOG.info(LegacySystemNotAvailableException.LEGACY_SYSTEM_NOT_AVAILABLE);
     return null;
   }
 

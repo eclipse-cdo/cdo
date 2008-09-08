@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model3Factory.java,v 1.1 2008-04-20 09:58:05 estepper Exp $
+ * $Id: Model3Factory.java,v 1.2 2008-09-08 06:55:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3;
 
@@ -31,6 +31,14 @@ public interface Model3Factory extends EFactory
    * @generated
    */
   Class1 createClass1();
+
+  /**
+   * Returns a new object of class '<em>Meta Ref</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Meta Ref</em>'.
+   * @generated
+   */
+  MetaRef createMetaRef();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

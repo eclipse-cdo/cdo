@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SubpackagePackageImpl.java,v 1.3 2008-08-11 05:11:48 estepper Exp $
+ * $Id: SubpackagePackageImpl.java,v 1.4 2008-09-08 06:55:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage.impl;
 
@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -77,9 +78,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
   public static SubpackagePackage init()
   {
     if (isInited)
-    {
       return (SubpackagePackage)EPackage.Registry.INSTANCE.getEPackage(SubpackagePackage.eNS_URI);
-    }
 
     // Obtain or create and register package
     SubpackagePackageImpl theSubpackagePackage = (SubpackagePackageImpl)(EPackage.Registry.INSTANCE
@@ -87,6 +86,9 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
         : new SubpackagePackageImpl());
 
     isInited = true;
+
+    // Initialize simple dependencies
+    EcorePackage.eINSTANCE.eClass();
 
     // Obtain or create and register interdependencies
     Model3PackageImpl theModel3Package = (Model3PackageImpl)(EPackage.Registry.INSTANCE
@@ -153,9 +155,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
@@ -179,9 +179,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package

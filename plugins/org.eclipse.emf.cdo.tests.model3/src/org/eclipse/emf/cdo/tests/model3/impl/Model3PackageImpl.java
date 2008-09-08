@@ -2,11 +2,12 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model3PackageImpl.java,v 1.3 2008-08-11 05:11:48 estepper Exp $
+ * $Id: Model3PackageImpl.java,v 1.4 2008-09-08 06:55:56 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.impl;
 
 import org.eclipse.emf.cdo.tests.model3.Class1;
+import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage;
@@ -15,6 +16,7 @@ import org.eclipse.emf.cdo.tests.model3.subpackage.impl.SubpackagePackageImpl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -30,6 +32,13 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * @generated
    */
   private EClass class1EClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass metaRefEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -77,9 +86,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public static Model3Package init()
   {
     if (isInited)
-    {
       return (Model3Package)EPackage.Registry.INSTANCE.getEPackage(Model3Package.eNS_URI);
-    }
 
     // Obtain or create and register package
     Model3PackageImpl theModel3Package = (Model3PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof Model3PackageImpl ? EPackage.Registry.INSTANCE
@@ -87,6 +94,9 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
         : new Model3PackageImpl());
 
     isInited = true;
+
+    // Initialize simple dependencies
+    EcorePackage.eINSTANCE.eClass();
 
     // Obtain or create and register interdependencies
     SubpackagePackageImpl theSubpackagePackage = (SubpackagePackageImpl)(EPackage.Registry.INSTANCE
@@ -132,6 +142,26 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * 
    * @generated
    */
+  public EClass getMetaRef()
+  {
+    return metaRefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getMetaRef_EPackageRef()
+  {
+    return (EReference)metaRefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public Model3Factory getModel3Factory()
   {
     return (Model3Factory)getEFactoryInstance();
@@ -153,14 +183,15 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
     class1EClass = createEClass(CLASS1);
     createEReference(class1EClass, CLASS1__CLASS2);
+
+    metaRefEClass = createEClass(META_REF);
+    createEReference(metaRefEClass, META_REF__EPACKAGE_REF);
   }
 
   /**
@@ -179,9 +210,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package
@@ -192,6 +221,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     // Obtain other dependent packages
     SubpackagePackage theSubpackagePackage = (SubpackagePackage)EPackage.Registry.INSTANCE
         .getEPackage(SubpackagePackage.eNS_URI);
+    EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
     // Add subpackages
     getESubpackages().add(theSubpackagePackage);
@@ -207,6 +237,11 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     initEReference(getClass1_Class2(), theSubpackagePackage.getClass2(), theSubpackagePackage.getClass2_Class1(),
         "class2", null, 0, -1, Class1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(metaRefEClass, MetaRef.class, "MetaRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMetaRef_EPackageRef(), theEcorePackage.getEPackage(), null, "ePackageRef", null, 0, 1,
+        MetaRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

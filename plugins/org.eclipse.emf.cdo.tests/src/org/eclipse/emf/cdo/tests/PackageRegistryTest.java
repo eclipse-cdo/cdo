@@ -165,7 +165,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     transaction.commit();
 
     CDOPackage model3Package = session.getPackageManager().lookupPackage(Model3Package.eINSTANCE.getNsURI());
-    assertEquals(8, model3Package.getMetaIDRange().size());
+    assertEquals(11, model3Package.getMetaIDRange().size());
     assertNotNull(model3Package.getEcore());
 
     CDOPackage subPackage = session.getPackageManager().lookupPackage(SubpackagePackage.eINSTANCE.getNsURI());
@@ -192,7 +192,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOPackage model3Package = session.getPackageManager().lookupPackage(Model3Package.eINSTANCE.getNsURI());
-      assertEquals(8, model3Package.getMetaIDRange().size());
+      assertEquals(11, model3Package.getMetaIDRange().size());
       assertNotNull(model3Package.getEcore());
 
       CDOPackage subPackage = session.getPackageManager().lookupPackage(SubpackagePackage.eINSTANCE.getNsURI());

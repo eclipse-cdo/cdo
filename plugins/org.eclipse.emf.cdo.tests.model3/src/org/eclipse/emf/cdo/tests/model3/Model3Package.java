@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model3Package.java,v 1.2 2008-06-03 06:41:22 estepper Exp $
+ * $Id: Model3Package.java,v 1.3 2008-09-08 06:55:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3;
 
@@ -81,6 +81,32 @@ public interface Model3Package extends EPackage
   int CLASS1_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.MetaRefImpl <em>Meta Ref</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model3.impl.MetaRefImpl
+   * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getMetaRef()
+   * @generated
+   */
+  int META_REF = 1;
+
+  /**
+   * The feature id for the '<em><b>EPackage Ref</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int META_REF__EPACKAGE_REF = 0;
+
+  /**
+   * The number of structural features of the '<em>Meta Ref</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int META_REF_FEATURE_COUNT = 1;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.Class1 <em>Class1</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -100,6 +126,27 @@ public interface Model3Package extends EPackage
    * @generated
    */
   EReference getClass1_Class2();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.MetaRef <em>Meta Ref</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Meta Ref</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.MetaRef
+   * @generated
+   */
+  EClass getMetaRef();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model3.MetaRef#getEPackageRef
+   * <em>EPackage Ref</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference '<em>EPackage Ref</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.MetaRef#getEPackageRef()
+   * @see #getMetaRef()
+   * @generated
+   */
+  EReference getMetaRef_EPackageRef();
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -140,6 +187,24 @@ public interface Model3Package extends EPackage
      * @generated
      */
     EReference CLASS1__CLASS2 = eINSTANCE.getClass1_Class2();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model3.impl.MetaRefImpl <em>Meta Ref</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model3.impl.MetaRefImpl
+     * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getMetaRef()
+     * @generated
+     */
+    EClass META_REF = eINSTANCE.getMetaRef();
+
+    /**
+     * The meta object literal for the '<em><b>EPackage Ref</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference META_REF__EPACKAGE_REF = eINSTANCE.getMetaRef_EPackageRef();
 
   }
 

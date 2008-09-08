@@ -7,6 +7,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="class2" upperBound="-1"
         eType="#//subpackage/Class2" eOpposite="#//subpackage/Class2/class1"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MetaRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ePackageRef" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
+  </eClassifiers>
   <eSubpackages name="subpackage" nsURI="http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0"
       nsPrefix="subpackage">
     <eClassifiers xsi:type="ecore:EClass" name="Class2">

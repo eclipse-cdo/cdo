@@ -2,11 +2,12 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model3AdapterFactory.java,v 1.1 2008-04-20 09:58:05 estepper Exp $
+ * $Id: Model3AdapterFactory.java,v 1.2 2008-09-08 06:55:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.util;
 
 import org.eclipse.emf.cdo.tests.model3.Class1;
+import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -79,6 +80,12 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseMetaRef(MetaRef object)
+    {
+      return createMetaRefAdapter();
+    }
+
+    @Override
     public Adapter defaultCase(EObject object)
     {
       return createEObjectAdapter();
@@ -109,6 +116,20 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createClass1Adapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.MetaRef <em>Meta Ref</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model3.MetaRef
+   * @generated
+   */
+  public Adapter createMetaRefAdapter()
   {
     return null;
   }

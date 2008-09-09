@@ -12,13 +12,8 @@
 package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
-
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -55,6 +50,4 @@ public interface CDORevision
   public CDORevisionDelta compare(CDORevision origin);
 
   public void merge(CDORevisionDelta delta);
-
-  public void write(ExtendedDataOutput out, CDOIDProvider idProvider, int referenceChunk) throws IOException;
 }

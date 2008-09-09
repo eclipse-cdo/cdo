@@ -11,10 +11,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassProxy;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -26,9 +26,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
 import java.util.Map;
@@ -54,11 +51,19 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
     this.newContainerFeatureID = newContainerFeatureID;
   }
 
-  public CDOContainerFeatureDeltaImpl(ExtendedDataInput in, CDOClass cdoClass) throws IOException
+  public CDOContainerFeatureDeltaImpl(CDODataInput in, CDOClass cdoClass) throws IOException
   {
     super(CONTAINER_FEATURE);
     newContainerFeatureID = in.readInt();
-    newContainerID = CDOIDUtil.read(in, cdoClass.getPackageManager().getCDOIDObjectFactory());
+    newContainerID = in.readCDOID();
+  }
+
+  @Override
+  public void write(CDODataOutput out, CDOClass cdoClass) throws IOException
+  {
+    out.writeInt(getType().ordinal());
+    out.writeInt(newContainerFeatureID);
+    out.writeCDOID(newContainerID);
   }
 
   public int getContainerFeatureID()
@@ -86,14 +91,6 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   public void adjustReferences(Map<CDOIDTemp, CDOID> idMappings)
   {
     newContainerID = (CDOID)CDORevisionUtil.remapID(newContainerID, idMappings);
-  }
-
-  @Override
-  public void write(ExtendedDataOutput out, CDOClass cdoClass, CDOIDProvider idProvider) throws IOException
-  {
-    out.writeInt(getType().ordinal());
-    out.writeInt(newContainerFeatureID);
-    CDOIDUtil.write(out, newContainerID);
   }
 
   public void accept(CDOFeatureDeltaVisitor visitor)

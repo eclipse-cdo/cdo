@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.model;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassProxy;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
@@ -22,8 +24,6 @@ import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
 
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -73,14 +73,14 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
     }
   }
 
-  public CDOClassImpl(CDOPackage containingPackage, ExtendedDataInput in) throws IOException
+  public CDOClassImpl(CDOPackage containingPackage, CDODataInput in) throws IOException
   {
     this.containingPackage = containingPackage;
     read(in);
   }
 
   @Override
-  public void read(ExtendedDataInput in) throws IOException
+  public void read(CDODataInput in) throws IOException
   {
     super.read(in);
     classifierID = in.readInt();
@@ -95,7 +95,7 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
   }
 
   @Override
-  public void write(ExtendedDataOutput out) throws IOException
+  public void write(CDODataOutput out) throws IOException
   {
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -365,7 +365,7 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
     indices.set(featureID, index);
   }
 
-  private void readSuperTypes(ExtendedDataInput in) throws IOException
+  private void readSuperTypes(CDODataInput in) throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL_TRACER.isEnabled())
@@ -375,7 +375,7 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
 
     for (int i = 0; i < size; i++)
     {
-      CDOClassRef classRef = CDOModelUtil.readClassRef(in, containingPackage.getPackageURI());
+      CDOClassRef classRef = in.readCDOClassRef();
       if (PROTOCOL_TRACER.isEnabled())
       {
         PROTOCOL_TRACER.format("Read super type: classRef={0}", classRef, classifierID);
@@ -385,7 +385,7 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
     }
   }
 
-  private void readFeatures(ExtendedDataInput in) throws IOException
+  private void readFeatures(CDODataInput in) throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL_TRACER.isEnabled())
@@ -395,12 +395,12 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
 
     for (int i = 0; i < size; i++)
     {
-      CDOFeature cdoFeature = CDOModelUtil.readFeature(this, in);
+      CDOFeature cdoFeature = in.readCDOFeature(this);
       addFeature(cdoFeature);
     }
   }
 
-  private void writeSuperTypes(ExtendedDataOutput out) throws IOException
+  private void writeSuperTypes(CDODataOutput out) throws IOException
   {
     int size = superTypes.size();
     if (PROTOCOL_TRACER.isEnabled())
@@ -417,11 +417,11 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
         PROTOCOL_TRACER.format("Writing super type: classRef={0}", classRef);
       }
 
-      CDOModelUtil.writeClassRef(out, classRef, containingPackage.getPackageURI());
+      out.writeCDOClassRef(classRef);
     }
   }
 
-  private void writeFeatures(ExtendedDataOutput out) throws IOException
+  private void writeFeatures(CDODataOutput out) throws IOException
   {
     int size = features.size();
     if (PROTOCOL_TRACER.isEnabled())
@@ -432,7 +432,7 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
     out.writeInt(size);
     for (CDOFeature cdoFeature : features)
     {
-      CDOModelUtil.writeFeature(out, cdoFeature);
+      out.writeCDOFeature(cdoFeature);
     }
   }
 

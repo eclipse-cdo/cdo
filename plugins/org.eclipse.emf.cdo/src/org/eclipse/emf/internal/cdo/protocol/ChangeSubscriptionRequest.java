@@ -12,15 +12,14 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -63,7 +62,7 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(CDODataOutput out) throws IOException
   {
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -75,12 +74,12 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
     out.writeInt(subscribeMode ? cdoIDs.size() : -cdoIDs.size());
     for (CDOID id : cdoIDs)
     {
-      CDOIDUtil.write(out, id);
+      out.writeCDOID(id);
     }
   }
 
   @Override
-  protected Boolean confirming(ExtendedDataInputStream in) throws IOException
+  protected Boolean confirming(CDODataInput in) throws IOException
   {
     return in.readBoolean();
   }

@@ -13,12 +13,8 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -40,12 +36,6 @@ public final class CDORevisionUtil
   public static CDORevision copy(CDORevision source)
   {
     return new CDORevisionImpl((CDORevisionImpl)source);
-  }
-
-  public static CDORevision read(ExtendedDataInput in, CDORevisionResolver revisionResolver,
-      CDOPackageManager packageManager) throws IOException
-  {
-    return new CDORevisionImpl(in, revisionResolver, packageManager);
   }
 
   public static Object remapID(Object value, Map<CDOIDTemp, CDOID> idMappings)

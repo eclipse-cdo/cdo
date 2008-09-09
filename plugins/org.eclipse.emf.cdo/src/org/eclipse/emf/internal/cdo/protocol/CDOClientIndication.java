@@ -7,39 +7,33 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/233490    
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.common.CDODataInput;
-import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.CDODataInputImpl;
-import org.eclipse.emf.cdo.internal.common.CDODataOutputImpl;
 
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 
-import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.signal.SignalProtocol;
+import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<RESULT>
+public abstract class CDOClientIndication extends Indication
 {
-  public CDOClientRequest(IChannel channel)
+  public CDOClientIndication()
   {
-    super((SignalProtocol)channel.getReceiveHandler());
   }
 
   @Override
@@ -68,66 +62,41 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
     return getSession();
   }
 
-  protected CDOIDProvider getIDProvider()
-  {
-    throw new UnsupportedOperationException();
-  }
-
   protected CDOIDObjectFactory getIDFactory()
   {
     return getSession();
   }
 
   @Override
-  protected final void requesting(ExtendedDataOutputStream out) throws IOException
+  protected final void indicating(ExtendedDataInputStream in) throws IOException
   {
-    requesting(new CDODataOutputImpl(out)
-    {
-      @Override
-      protected CDOPackageURICompressor getPackageURICompressor()
-      {
-        return CDOClientRequest.this.getPackageURICompressor();
-      }
-
-      public CDOIDProvider getIDProvider()
-      {
-        return CDOClientRequest.this.getIDProvider();
-      }
-    });
-  }
-
-  @Override
-  protected final RESULT confirming(ExtendedDataInputStream in) throws IOException
-  {
-    return confirming(new CDODataInputImpl(in)
+    indicating(new CDODataInputImpl(in)
     {
       @Override
       protected CDORevisionResolver getRevisionResolver()
       {
-        return CDOClientRequest.this.getRevisionManager();
+        return CDOClientIndication.this.getRevisionManager();
       }
 
       @Override
       protected CDOPackageManager getPackageManager()
       {
-        return CDOClientRequest.this.getPackageManager();
+        return CDOClientIndication.this.getPackageManager();
       }
 
       @Override
       protected CDOPackageURICompressor getPackageURICompressor()
       {
-        return CDOClientRequest.this.getPackageURICompressor();
+        return CDOClientIndication.this.getPackageURICompressor();
       }
 
       @Override
       protected CDOIDObjectFactory getIDFactory()
       {
-        return CDOClientRequest.this.getIDFactory();
+        return CDOClientIndication.this.getIDFactory();
       }
     });
   }
 
-  protected abstract void requesting(CDODataOutput out) throws IOException;
-
-  protected abstract RESULT confirming(CDODataInput in) throws IOException;
+  protected abstract void indicating(CDODataInput in) throws IOException;
 }

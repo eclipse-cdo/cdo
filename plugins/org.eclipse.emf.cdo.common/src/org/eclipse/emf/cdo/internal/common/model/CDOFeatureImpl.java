@@ -10,10 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.model;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassProxy;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.CDOType;
@@ -21,8 +22,6 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
 
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -96,18 +95,18 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     }
   }
 
-  public CDOFeatureImpl(CDOClass containingClass, ExtendedDataInput in) throws IOException
+  public CDOFeatureImpl(CDOClass containingClass, CDODataInput in) throws IOException
   {
     this.containingClass = containingClass;
     read(in);
   }
 
   @Override
-  public void read(ExtendedDataInput in) throws IOException
+  public void read(CDODataInput in) throws IOException
   {
     super.read(in);
     featureID = in.readInt();
-    type = CDOModelUtil.readType(in);
+    type = in.readCDOType();
     many = in.readBoolean();
     containment = in.readBoolean();
     if (PROTOCOL_TRACER.isEnabled())
@@ -118,8 +117,7 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
 
     if (isReference())
     {
-      String defaultURI = containingClass.getContainingPackage().getPackageURI();
-      CDOClassRef classRef = CDOModelUtil.readClassRef(in, defaultURI);
+      CDOClassRef classRef = in.readCDOClassRef();
       if (PROTOCOL_TRACER.isEnabled())
       {
         PROTOCOL_TRACER.format("Read reference type: classRef={0}", classRef);
@@ -130,7 +128,7 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
   }
 
   @Override
-  public void write(ExtendedDataOutput out) throws IOException
+  public void write(CDODataOutput out) throws IOException
   {
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -140,7 +138,7 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
 
     super.write(out);
     out.writeInt(featureID);
-    CDOModelUtil.writeType(out, type);
+    out.writeCDOType(type);
     out.writeBoolean(many);
     out.writeBoolean(containment);
 
@@ -152,7 +150,7 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
         PROTOCOL_TRACER.format("Writing reference type: classRef={0}", classRef);
       }
 
-      CDOModelUtil.writeClassRef(out, classRef, getContainingPackage().getPackageURI());
+      out.writeCDOClassRef(classRef);
     }
   }
 

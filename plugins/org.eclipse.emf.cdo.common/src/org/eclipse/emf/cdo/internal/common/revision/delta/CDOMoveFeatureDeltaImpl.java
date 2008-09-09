@@ -11,8 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -20,9 +21,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
 import java.util.Map;
@@ -43,11 +41,19 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     this.oldPosition = oldPosition;
   }
 
-  public CDOMoveFeatureDeltaImpl(ExtendedDataInput in, CDOClass cdoClass) throws IOException
+  public CDOMoveFeatureDeltaImpl(CDODataInput in, CDOClass cdoClass) throws IOException
   {
     super(in, cdoClass);
     newPosition = in.readInt();
     oldPosition = in.readInt();
+  }
+
+  @Override
+  public void write(CDODataOutput out, CDOClass cdoClass) throws IOException
+  {
+    super.write(out, cdoClass);
+    out.writeInt(newPosition);
+    out.writeInt(oldPosition);
   }
 
   public int getNewPosition()
@@ -68,14 +74,6 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
   public void apply(CDORevision revision)
   {
     ((InternalCDORevision)revision).getList(getFeature()).move(newPosition, oldPosition);
-  }
-
-  @Override
-  public void write(ExtendedDataOutput out, CDOClass cdoClass, CDOIDProvider idProvider) throws IOException
-  {
-    super.write(out, cdoClass, idProvider);
-    out.writeInt(newPosition);
-    out.writeInt(oldPosition);
   }
 
   public void affectIndices(int[] indices)

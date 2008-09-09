@@ -12,10 +12,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class PassiveUpdateIndication extends SyncRevisionIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(CDODataInput in) throws IOException
   {
     super.indicating(in);
     boolean passiveUpdateEnabled = in.readBoolean();

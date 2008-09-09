@@ -11,16 +11,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
 import java.util.Map;
@@ -41,11 +39,24 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     newValue = value;
   }
 
-  public CDOSingleValueFeatureDeltaImpl(ExtendedDataInput in, CDOClass cdoClass) throws IOException
+  public CDOSingleValueFeatureDeltaImpl(CDODataInput in, CDOClass cdoClass) throws IOException
   {
     super(in, cdoClass);
     index = in.readInt();
-    newValue = getFeature().getType().readValue(in, cdoClass.getPackageManager().getCDOIDObjectFactory());
+    newValue = getFeature().getType().readValue(in);
+  }
+
+  @Override
+  public void write(CDODataOutput out, CDOClass cdoClass) throws IOException
+  {
+    super.write(out, cdoClass);
+    out.writeInt(index);
+    if (newValue != null && getFeature().isReference())
+    {
+      newValue = out.getIDProvider().provideCDOID(newValue);
+    }
+
+    getFeature().getType().writeValue(out, newValue);
   }
 
   public int getIndex()
@@ -56,19 +67,6 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   public Object getValue()
   {
     return newValue;
-  }
-
-  @Override
-  public void write(ExtendedDataOutput out, CDOClass cdoClass, CDOIDProvider idProvider) throws IOException
-  {
-    super.write(out, cdoClass, idProvider);
-    out.writeInt(index);
-    if (newValue != null && getFeature().isReference())
-    {
-      newValue = idProvider.provideCDOID(newValue);
-    }
-
-    getFeature().getType().writeValue(out, newValue);
   }
 
   @Override

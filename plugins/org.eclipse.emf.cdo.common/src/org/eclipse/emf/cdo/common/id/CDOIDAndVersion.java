@@ -10,9 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.id;
 
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
-
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -23,6 +20,4 @@ public interface CDOIDAndVersion
   public CDOID getID();
 
   public int getVersion();
-
-  public void write(ExtendedDataOutput out, boolean asLegacy) throws IOException;
 }

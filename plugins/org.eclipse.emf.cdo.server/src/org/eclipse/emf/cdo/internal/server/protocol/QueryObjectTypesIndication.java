@@ -10,16 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -45,7 +42,7 @@ public class QueryObjectTypesIndication extends CDOReadIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(CDODataInput in) throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL_TRACER.isEnabled())
@@ -53,11 +50,10 @@ public class QueryObjectTypesIndication extends CDOReadIndication
       PROTOCOL_TRACER.format("Reading {0} IDs", size);
     }
 
-    CDOIDObjectFactory factory = getStore().getCDOIDObjectFactory();
     ids = new CDOID[size];
     for (int i = 0; i < ids.length; i++)
     {
-      ids[i] = CDOIDUtil.read(in, factory);
+      ids[i] = in.readCDOID();
       if (PROTOCOL_TRACER.isEnabled())
       {
         PROTOCOL_TRACER.format("Read ID: {0}", ids[i]);
@@ -66,17 +62,17 @@ public class QueryObjectTypesIndication extends CDOReadIndication
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(CDODataOutput out) throws IOException
   {
     for (CDOID id : ids)
     {
       CDOClassRef classRef = getSession().getClassRef(id);
       if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Wrinting type: {0}", classRef);
+        PROTOCOL_TRACER.format("Writing type: {0}", classRef);
       }
 
-      CDOModelUtil.writeClassRef(out, classRef);
+      out.writeCDOClassRef(classRef);
     }
   }
 }

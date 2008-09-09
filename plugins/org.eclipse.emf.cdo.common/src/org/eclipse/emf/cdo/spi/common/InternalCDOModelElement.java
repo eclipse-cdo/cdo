@@ -10,10 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.spi.common;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOModelElement;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
 
@@ -31,7 +30,7 @@ public interface InternalCDOModelElement extends CDOModelElement
 
   public void initialize();
 
-  public void read(ExtendedDataInput in) throws IOException;
+  public void read(CDODataInput in) throws IOException;
 
-  public void write(ExtendedDataOutput out) throws IOException;
+  public void write(CDODataOutput out) throws IOException;
 }

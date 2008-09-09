@@ -38,6 +38,8 @@ public abstract class Signal implements Runnable
 
   private BufferOutputStream bufferOutputStream;
 
+  private Object currentStream;
+
   protected Signal()
   {
   }
@@ -62,11 +64,49 @@ public abstract class Signal implements Runnable
     return bufferOutputStream;
   }
 
+  /**
+   * @since 2.0
+   */
+  protected final void flush() throws IOException
+  {
+    if (currentStream instanceof OutputStream)
+    {
+      ((OutputStream)currentStream).flush();
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected InputStream getCurrentInputStream()
+  {
+    if (currentStream instanceof InputStream)
+    {
+      return (InputStream)currentStream;
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected OutputStream getCurrentOutputStream()
+  {
+    if (currentStream instanceof OutputStream)
+    {
+      return (OutputStream)currentStream;
+    }
+
+    return null;
+  }
+
   protected InputStream wrapInputStream(InputStream in)
   {
     try
     {
-      return protocol.wrapInputStream(in);
+      currentStream = protocol.wrapInputStream(in);
+      return (InputStream)currentStream;
     }
     catch (IOException ex)
     {
@@ -78,7 +118,8 @@ public abstract class Signal implements Runnable
   {
     try
     {
-      return protocol.wrapOutputStream(out);
+      currentStream = protocol.wrapOutputStream(out);
+      return (OutputStream)currentStream;
     }
     catch (IOException ex)
     {
@@ -90,6 +131,7 @@ public abstract class Signal implements Runnable
   {
     try
     {
+      currentStream = null;
       protocol.finishInputStream(in);
     }
     catch (IOException ex)
@@ -102,6 +144,7 @@ public abstract class Signal implements Runnable
   {
     try
     {
+      currentStream = null;
       protocol.finishOutputStream(out);
     }
     catch (IOException ex)
@@ -161,6 +204,12 @@ public abstract class Signal implements Runnable
     }
   }
 
+  /**
+   * Returns the short integer ID of this signal.
+   * <p>
+   * Both implementation classes of a logical signal must return the same ID. The ID of user signals must be different
+   * from -1 (the ID of the system signal for exception feedback).
+   */
   protected abstract short getSignalID();
 
   protected abstract void execute(BufferInputStream in, BufferOutputStream out) throws Exception;

@@ -10,10 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.model;
 
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 
 import java.io.IOException;
 
@@ -75,7 +73,7 @@ public interface CDOType
 
   public Object copyValue(Object value);
 
-  public Object readValue(ExtendedDataInput in, CDOIDObjectFactory factory) throws IOException;
+  public Object readValue(CDODataInput in) throws IOException;
 
-  public void writeValue(ExtendedDataOutput out, Object value) throws IOException;
+  public void writeValue(CDODataOutput out, Object value) throws IOException;
 }

@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -46,13 +46,14 @@ public class LoadRevisionByTimeRequest extends LoadRevisionRequest
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(CDODataOutput out) throws IOException
   {
     super.requesting(out);
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Writing timeStamp: {0}", timeStamp);
     }
+
     out.writeLong(timeStamp);
   }
 

@@ -10,13 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.id;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -36,15 +33,15 @@ public final class CDOIDAndVersionImpl implements CDOIDAndVersion
     this.version = version;
   }
 
-  public CDOIDAndVersionImpl(ExtendedDataInput in, CDOIDObjectFactory factory, boolean asLegacy) throws IOException
+  public CDOIDAndVersionImpl(CDODataInput in, boolean asLegacy) throws IOException
   {
-    id = CDOIDUtil.read(in, factory, asLegacy);
+    id = in.readCDOID(asLegacy);
     version = in.readInt();
   }
 
-  public void write(ExtendedDataOutput out, boolean asLegacy) throws IOException
+  public void write(CDODataOutput out, boolean asLegacy) throws IOException
   {
-    CDOIDUtil.write(out, id, asLegacy);
+    out.writeCDOID(id, asLegacy);
     out.writeInt(version);
   }
 

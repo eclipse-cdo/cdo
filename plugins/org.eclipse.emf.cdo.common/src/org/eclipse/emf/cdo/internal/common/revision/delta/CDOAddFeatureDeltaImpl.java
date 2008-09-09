@@ -11,14 +11,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
 
 import java.io.IOException;
 
@@ -33,7 +32,7 @@ public class CDOAddFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
     super(feature, index, value);
   }
 
-  public CDOAddFeatureDeltaImpl(ExtendedDataInput in, CDOClass cdoClass) throws IOException
+  public CDOAddFeatureDeltaImpl(CDODataInput in, CDOClass cdoClass) throws IOException
   {
     super(in, cdoClass);
   }

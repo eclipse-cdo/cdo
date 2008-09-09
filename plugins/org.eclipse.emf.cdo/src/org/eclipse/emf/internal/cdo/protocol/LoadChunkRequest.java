@@ -10,21 +10,17 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.collection.MoveableList;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -64,7 +60,7 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(CDODataOutput out) throws IOException
   {
     CDOID id = revision.getID();
     if (PROTOCOL_TRACER.isEnabled())
@@ -72,7 +68,7 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
       PROTOCOL_TRACER.format("Writing revision ID: {0}", id);
     }
 
-    CDOIDUtil.write(out, id);
+    out.writeCDOID(id);
     int version = revision.getVersion();
     if (revision.isTransactional())
     {
@@ -89,8 +85,8 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
     {
       PROTOCOL_TRACER.format("Writing feature: {0}", feature);
     }
-    CDOClassRef classRef = feature.getContainingClass().createClassRef();
-    CDOModelUtil.writeClassRef(out, classRef);
+
+    out.writeCDOClassRef(feature.getContainingClass());
     out.writeInt(feature.getFeatureIndex());
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -107,14 +103,13 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
   }
 
   @Override
-  protected CDOID confirming(ExtendedDataInputStream in) throws IOException
+  protected CDOID confirming(CDODataInput in) throws IOException
   {
-    CDOSessionImpl session = getSession();
     CDOID accessID = null;
     MoveableList<Object> list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
-      CDOID id = CDOIDUtil.read(in, session);
+      CDOID id = in.readCDOID();
       list.set(i, id);
       if (i == accessIndex)
       {

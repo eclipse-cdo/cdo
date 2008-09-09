@@ -11,19 +11,22 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
 import org.eclipse.emf.cdo.util.ServerException;
 
+import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
+import org.eclipse.emf.internal.cdo.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.signal.SignalProtocol;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -32,7 +35,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResult>
+public class OpenSessionRequest extends CDOClientRequest<OpenSessionResult>
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionRequest.class);
 
@@ -42,10 +45,12 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
 
   private boolean passiveUpdateEnabled;
 
+  private OpenSessionResult result;
+
   public OpenSessionRequest(IChannel channel, String repositoryName, boolean legacySupportEnabled,
       boolean passiveUpdateEnabled)
   {
-    super((SignalProtocol)channel.getReceiveHandler());
+    super(channel);
     this.repositoryName = repositoryName;
     this.legacySupportEnabled = legacySupportEnabled;
     this.passiveUpdateEnabled = passiveUpdateEnabled;
@@ -58,7 +63,42 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected CDOSessionImpl getSession()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected CDORevisionManagerImpl getRevisionManager()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected CDOSessionPackageManagerImpl getPackageManager()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected CDOPackageURICompressor getPackageURICompressor()
+  {
+    if (result == null)
+    {
+      throw new IllegalStateException("result == null");
+    }
+
+    return result;
+  }
+
+  @Override
+  protected CDOIDObjectFactory getIDFactory()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected void requesting(CDODataOutput out) throws IOException
   {
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -83,7 +123,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
   }
 
   @Override
-  protected OpenSessionResult confirming(ExtendedDataInputStream in) throws IOException
+  protected OpenSessionResult confirming(CDODataInput in) throws IOException
   {
     int sessionID = in.readInt();
     if (sessionID == CDOProtocolConstants.ERROR_REPOSITORY_NOT_FOUND)
@@ -115,19 +155,18 @@ public class OpenSessionRequest extends RequestWithConfirmation<OpenSessionResul
       PROTOCOL_TRACER.format("Read libraryDescriptor: {0}", libraryDescriptor);
     }
 
-    OpenSessionResult result = new OpenSessionResult(sessionID, repositoryUUID, libraryDescriptor);
-
+    result = new OpenSessionResult(sessionID, repositoryUUID, libraryDescriptor);
     for (;;)
     {
-      String packageURI = in.readString();
+      String packageURI = in.readCDOPackageURI();
       if (packageURI == null)
       {
         break;
       }
 
       boolean dynamic = in.readBoolean();
-      CDOIDMetaRange metaIDRange = CDOIDUtil.readMetaRange(in);
-      String parentURI = in.readString();
+      CDOIDMetaRange metaIDRange = in.readCDOIDMetaRange();
+      String parentURI = in.readCDOPackageURI();
       if (PROTOCOL_TRACER.isEnabled())
       {
         PROTOCOL_TRACER.format("Read package info: uri={0}, dynamic={1}, metaIDRange={2}, parentURI={3}", packageURI,

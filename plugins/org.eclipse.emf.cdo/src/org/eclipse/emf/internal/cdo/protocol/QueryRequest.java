@@ -11,8 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.util.CDOInstanceUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 
@@ -20,8 +21,6 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.query.CDOQueryResultIteratorImpl;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -57,14 +56,14 @@ public class QueryRequest extends CDOClientRequest<Object>
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(CDODataOutput out) throws IOException
   {
     out.writeInt(viewID);
     queryInfo.write(out);
   }
 
   @Override
-  protected List<Object> confirming(ExtendedDataInputStream in) throws IOException
+  protected Object confirming(CDODataInput in) throws IOException
   {
     int queryID = in.readInt();
     queryResult.setQueryID(queryID);
@@ -81,7 +80,7 @@ public class QueryRequest extends CDOClientRequest<Object>
         if (state == CDOProtocolConstants.QUERY_MORE_OBJECT)
         {
           // result
-          Object element = CDOInstanceUtil.readObject(in, getSession());
+          Object element = in.readCDORevisionOrPrimitive();
           resultQueue.add(element);
           numberOfObjectsReceived++;
         }

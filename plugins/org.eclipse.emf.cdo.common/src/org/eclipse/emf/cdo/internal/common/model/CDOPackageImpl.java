@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.model;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -21,8 +21,6 @@ import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -82,7 +80,7 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
     createLists();
   }
 
-  public CDOPackageImpl(CDOPackageManager packageManager, ExtendedDataInput in) throws IOException
+  public CDOPackageImpl(CDOPackageManager packageManager, CDODataInput in) throws IOException
   {
     this.packageManager = packageManager;
     createLists();
@@ -108,13 +106,13 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
   }
 
   @Override
-  public void read(ExtendedDataInput in) throws IOException
+  public void read(CDODataInput in) throws IOException
   {
     super.read(in);
-    packageURI = in.readString();
+    packageURI = in.readCDOPackageURI();
     dynamic = in.readBoolean();
     ecore = in.readString();
-    metaIDRange = CDOIDUtil.readMetaRange(in);
+    metaIDRange = in.readCDOIDMetaRange();
     parentURI = in.readString();
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -130,13 +128,13 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
 
     for (int i = 0; i < size; i++)
     {
-      CDOClass cdoClass = CDOModelUtil.readClass(this, in);
+      CDOClass cdoClass = in.readCDOClass(this);
       addClass(cdoClass);
     }
   }
 
   @Override
-  public void write(ExtendedDataOutput out) throws IOException
+  public void write(CDODataOutput out) throws IOException
   {
     resolve();
     if (PROTOCOL_TRACER.isEnabled())
@@ -146,10 +144,10 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
     }
 
     super.write(out);
-    out.writeString(packageURI);
+    out.writeCDOPackageURI(packageURI);
     out.writeBoolean(dynamic);
     out.writeString(ecore);
-    CDOIDUtil.writeMetaRange(out, metaIDRange);
+    out.writeCDOIDMetaRange(metaIDRange);
     out.writeString(parentURI);
 
     int size = classes.size();
@@ -161,7 +159,7 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
     out.writeInt(size);
     for (CDOClass cdoClass : classes)
     {
-      CDOModelUtil.writeClass(out, cdoClass);
+      out.writeCDOClass(cdoClass);
     }
   }
 

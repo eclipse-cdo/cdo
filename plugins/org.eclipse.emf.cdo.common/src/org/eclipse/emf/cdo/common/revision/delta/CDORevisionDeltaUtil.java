@@ -10,13 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.revision.delta;
 
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -35,10 +30,5 @@ public final class CDORevisionDeltaUtil
   public static CDORevisionDelta create(CDORevision originRevision, CDORevision dirtyRevision)
   {
     return new CDORevisionDeltaImpl(originRevision, dirtyRevision);
-  }
-
-  public static CDORevisionDelta read(ExtendedDataInput in, CDOPackageManager packageManager) throws IOException
-  {
-    return new CDORevisionDeltaImpl(in, packageManager);
   }
 }

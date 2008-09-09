@@ -11,20 +11,17 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.collection.MoveableList;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -57,9 +54,9 @@ public class LoadChunkIndication extends CDOReadIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(CDODataInput in) throws IOException
   {
-    id = CDOIDUtil.read(in, getStore().getCDOIDObjectFactory());
+    id = in.readCDOID();
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Read revision ID: {0}", id);
@@ -71,9 +68,8 @@ public class LoadChunkIndication extends CDOReadIndication
       PROTOCOL_TRACER.format("Read revision version: {0}", version);
     }
 
-    CDOClassRef classRef = CDOModelUtil.readClassRef(in);
+    CDOClass cdoClass = in.readCDOClassRefAndResolve();
     int featureID = in.readInt();
-    CDOClass cdoClass = classRef.resolve(getPackageManager());
     feature = cdoClass.getAllFeatures()[featureID];
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -94,7 +90,7 @@ public class LoadChunkIndication extends CDOReadIndication
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(CDODataOutput out) throws IOException
   {
     InternalCDORevision revision = getRevisionManager().getRevisionByVersion(id, 0, version);
     getRevisionManager().ensureChunk(revision, feature, fromIndex, toIndex + 1);
@@ -103,7 +99,8 @@ public class LoadChunkIndication extends CDOReadIndication
     MoveableList<Object> list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
-      CDOIDUtil.write(out, session.provideCDOID(list.get(i)));
+      CDOID elementID = session.provideCDOID(list.get(i));
+      out.writeCDOID(elementID);
     }
   }
 }

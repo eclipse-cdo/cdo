@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
@@ -19,8 +20,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
 
 import java.io.IOException;
 import java.util.Map;
@@ -35,7 +34,7 @@ public class CDOClearFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDO
     super(feature);
   }
 
-  public CDOClearFeatureDeltaImpl(ExtendedDataInput in, CDOClass cdoClass) throws IOException
+  public CDOClearFeatureDeltaImpl(CDODataInput in, CDOClass cdoClass) throws IOException
   {
     super(in, cdoClass);
   }

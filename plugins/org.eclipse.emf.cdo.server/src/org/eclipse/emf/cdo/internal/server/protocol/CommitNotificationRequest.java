@@ -12,16 +12,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.signal.Request;
-import org.eclipse.net4j.signal.SignalProtocol;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -30,24 +27,21 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CommitNotificationRequest extends Request
+public class CommitNotificationRequest extends CDOServerRequest
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
       CommitNotificationRequest.class);
 
   private long timeStamp;
 
-  private CDOIDProvider provider;
-
   private List<CDOIDAndVersion> dirtyIDs;
 
   private List<CDORevisionDelta> deltas;
 
-  public CommitNotificationRequest(IChannel channel, CDOIDProvider provider, long timeStamp,
-      List<CDOIDAndVersion> dirtyIDs, List<CDORevisionDelta> deltas)
+  public CommitNotificationRequest(IChannel channel, long timeStamp, List<CDOIDAndVersion> dirtyIDs,
+      List<CDORevisionDelta> deltas)
   {
-    super((SignalProtocol)channel.getReceiveHandler());
-    this.provider = provider;
+    super(channel);
     this.timeStamp = timeStamp;
     this.dirtyIDs = dirtyIDs;
     this.deltas = deltas;
@@ -60,7 +54,7 @@ public class CommitNotificationRequest extends Request
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(CDODataOutput out) throws IOException
   {
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -81,13 +75,13 @@ public class CommitNotificationRequest extends Request
         PROTOCOL_TRACER.format("Writing dirty ID: {0}", dirtyID);
       }
 
-      dirtyID.write(out, false);
+      out.writeCDOIDAndVersion(dirtyID);
     }
 
     out.writeInt(deltas == null ? 0 : deltas.size());
     for (CDORevisionDelta delta : deltas)
     {
-      delta.write(out, provider);
+      out.writeCDORevisionDelta(delta);
     }
   }
 }

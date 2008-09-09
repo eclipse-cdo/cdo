@@ -11,15 +11,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
@@ -27,9 +24,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,32 +78,30 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
   }
 
-  public CDORevisionDeltaImpl(ExtendedDataInput in, CDOPackageManager packageManager) throws IOException
+  public CDORevisionDeltaImpl(CDODataInput in) throws IOException
   {
-    CDOClassRef classRef = CDOModelUtil.readClassRef(in);
-    cdoClass = classRef.resolve(packageManager);
-    cdoID = CDOIDUtil.read(in, packageManager.getCDOIDObjectFactory());
+    cdoClass = in.readCDOClassRefAndResolve();
+    cdoID = in.readCDOID();
     originVersion = in.readInt();
     dirtyVersion = in.readInt();
     int size = in.readInt();
     for (int i = 0; i < size; i++)
     {
-      CDOFeatureDelta featureDelta = CDOFeatureDeltaImpl.read(in, cdoClass);
+      CDOFeatureDelta featureDelta = in.readCDOFeatureDelta(cdoClass);
       featureDeltas.put(featureDelta.getFeature(), featureDelta);
     }
   }
 
-  public void write(ExtendedDataOutput out, CDOIDProvider idProvider) throws IOException
+  public void write(CDODataOutput out) throws IOException
   {
-    CDOClassRef classRef = cdoClass.createClassRef();
-    CDOModelUtil.writeClassRef(out, classRef);
-    CDOIDUtil.write(out, cdoID);
+    out.writeCDOClassRef(cdoClass);
+    out.writeCDOID(cdoID);
     out.writeInt(originVersion);
     out.writeInt(dirtyVersion);
     out.writeInt(featureDeltas.size());
     for (CDOFeatureDelta featureDelta : featureDeltas.values())
     {
-      ((CDOFeatureDeltaImpl)featureDelta).write(out, cdoClass, idProvider);
+      out.writeCDOFeatureDelta(featureDelta, cdoClass);
     }
   }
 

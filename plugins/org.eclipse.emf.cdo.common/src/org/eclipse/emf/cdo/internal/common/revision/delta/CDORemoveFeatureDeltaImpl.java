@@ -11,8 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -20,9 +21,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
 import java.util.Map;
@@ -41,10 +39,17 @@ public class CDORemoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CD
     this.index = index;
   }
 
-  public CDORemoveFeatureDeltaImpl(ExtendedDataInput in, CDOClass cdoClass) throws IOException
+  public CDORemoveFeatureDeltaImpl(CDODataInput in, CDOClass cdoClass) throws IOException
   {
     super(in, cdoClass);
     index = in.readInt();
+  }
+
+  @Override
+  public void write(CDODataOutput out, CDOClass cdoClass) throws IOException
+  {
+    super.write(out, cdoClass);
+    out.writeInt(index);
   }
 
   public int getIndex()
@@ -65,13 +70,6 @@ public class CDORemoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CD
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     visitor.visit(this);
-  }
-
-  @Override
-  public void write(ExtendedDataOutput out, CDOClass cdoClass, CDOIDProvider idProvider) throws IOException
-  {
-    super.write(out, cdoClass, idProvider);
-    out.writeInt(index);
   }
 
   public void affectIndices(int[] indices)

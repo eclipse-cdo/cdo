@@ -10,17 +10,16 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -56,7 +55,7 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(CDODataOutput out) throws IOException
   {
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -73,13 +72,13 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
         PROTOCOL_TRACER.format("Writing ID and version: {0}v{1}", id, version);
       }
 
-      CDOIDUtil.write(out, id);
+      out.writeCDOID(id);
       out.writeInt(version);
     }
   }
 
   @Override
-  protected List<InternalCDORevision> confirming(ExtendedDataInputStream in) throws IOException
+  protected List<InternalCDORevision> confirming(CDODataInput in) throws IOException
   {
     ArrayList<InternalCDORevision> result = new ArrayList<InternalCDORevision>();
     if (PROTOCOL_TRACER.isEnabled())

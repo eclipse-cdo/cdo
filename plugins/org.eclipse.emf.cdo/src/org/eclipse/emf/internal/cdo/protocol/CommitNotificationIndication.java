@@ -11,17 +11,14 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.signal.Indication;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -33,7 +30,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CommitNotificationIndication extends Indication
+public class CommitNotificationIndication extends CDOClientIndication
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
       CommitNotificationIndication.class);
@@ -49,7 +46,7 @@ public class CommitNotificationIndication extends Indication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(CDODataInput in) throws IOException
   {
     long timeStamp = in.readLong();
     if (PROTOCOL_TRACER.isEnabled())
@@ -67,7 +64,7 @@ public class CommitNotificationIndication extends Indication
     Set<CDOIDAndVersion> dirtyOIDs = new HashSet<CDOIDAndVersion>();
     for (int i = 0; i < size; i++)
     {
-      CDOIDAndVersion dirtyOID = CDOIDUtil.readIDAndVersion(in, session);
+      CDOIDAndVersion dirtyOID = in.readCDOIDAndVersion();
       if (PROTOCOL_TRACER.isEnabled())
       {
         PROTOCOL_TRACER.format("Read dirty ID: {0}", dirtyOID);
@@ -85,20 +82,10 @@ public class CommitNotificationIndication extends Indication
     List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();
     for (int i = 0; i < size; i++)
     {
-      deltas.add(new CDORevisionDeltaImpl(in, getSession().getPackageManager()));
+      CDORevisionDelta revisionDelta = in.readCDORevisionDelta();
+      deltas.add(revisionDelta);
     }
 
     session.handleCommitNotification(timeStamp, dirtyOIDs, deltas, null);
-  }
-
-  protected CDOSessionImpl getSession()
-  {
-    return (CDOSessionImpl)getProtocol().getInfraStructure();
-  }
-
-  @Override
-  public CDOClientProtocol getProtocol()
-  {
-    return (CDOClientProtocol)super.getProtocol();
   }
 }

@@ -10,17 +10,15 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -49,7 +47,7 @@ public class QueryObjectTypesRequest extends CDOClientRequest<CDOClassRef[]>
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(CDODataOutput out) throws IOException
   {
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -64,17 +62,17 @@ public class QueryObjectTypesRequest extends CDOClientRequest<CDOClassRef[]>
         PROTOCOL_TRACER.format("Writing ID: {0}", id);
       }
 
-      CDOIDUtil.write(out, id);
+      out.writeCDOID(id);
     }
   }
 
   @Override
-  protected CDOClassRef[] confirming(ExtendedDataInputStream in) throws IOException
+  protected CDOClassRef[] confirming(CDODataInput in) throws IOException
   {
     CDOClassRef[] types = new CDOClassRef[ids.size()];
     for (int i = 0; i < types.length; i++)
     {
-      types[i] = CDOModelUtil.readClassRef(in);
+      types[i] = in.readCDOClassRef();
       if (PROTOCOL_TRACER.isEnabled())
       {
         PROTOCOL_TRACER.format("Read type: {0}", types[i]);

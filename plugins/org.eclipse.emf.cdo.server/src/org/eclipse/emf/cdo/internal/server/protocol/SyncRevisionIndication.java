@@ -12,17 +12,15 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -52,7 +50,7 @@ public class SyncRevisionIndication extends CDOReadIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(CDODataInput in) throws IOException
   {
     IStoreReader reader = StoreThreadLocal.getStoreReader();
     if (PROTOCOL_TRACER.isEnabled())
@@ -63,10 +61,9 @@ public class SyncRevisionIndication extends CDOReadIndication
     reader.refreshRevisions();
     referenceChunk = in.readInt();
     int size = in.readInt();
-    CDOIDObjectFactory factory = getStore().getCDOIDObjectFactory();
     for (int i = 0; i < size; i++)
     {
-      CDOID cdoID = CDOIDUtil.read(in, factory);
+      CDOID cdoID = in.readCDOID();
       int version = in.readInt();
       if (version > 0)
       {
@@ -80,7 +77,7 @@ public class SyncRevisionIndication extends CDOReadIndication
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(CDODataOutput out) throws IOException
   {
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -90,7 +87,7 @@ public class SyncRevisionIndication extends CDOReadIndication
     out.writeInt(dirtyObjects.size());
     for (InternalCDORevision revision : dirtyObjects)
     {
-      revision.write(out, getSession(), referenceChunk);
+      out.writeCDORevision(revision, referenceChunk);
     }
   }
 }

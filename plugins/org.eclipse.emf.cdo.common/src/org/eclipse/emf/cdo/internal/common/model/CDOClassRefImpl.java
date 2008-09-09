@@ -10,13 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.model;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -42,22 +41,15 @@ public final class CDOClassRefImpl implements CDOClassRef
     this.classifierID = classifierID;
   }
 
-  public CDOClassRefImpl(ExtendedDataInput in, String defaultURI) throws IOException
+  public CDOClassRefImpl(CDODataInput in) throws IOException
   {
-    // TODO Optimize transfer of URIs
-    packageURI = in.readString();
-    if (packageURI == null)
-    {
-      packageURI = defaultURI;
-    }
-
+    packageURI = in.readCDOPackageURI();
     classifierID = in.readInt();
   }
 
-  public void write(ExtendedDataOutput out, String defaultURI) throws IOException
+  public void write(CDODataOutput out) throws IOException
   {
-    // TODO Optimize transfer of URIs
-    out.writeString(packageURI.equals(defaultURI) ? null : packageURI);
+    out.writeCDOPackageURI(packageURI);
     out.writeInt(classifierID);
   }
 

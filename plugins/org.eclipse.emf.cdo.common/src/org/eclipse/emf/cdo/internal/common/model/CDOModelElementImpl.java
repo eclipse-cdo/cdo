@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.model;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDOModelElement;
 
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -44,12 +44,12 @@ public abstract class CDOModelElementImpl implements InternalCDOModelElement
   {
   }
 
-  public void read(ExtendedDataInput in) throws IOException
+  public void read(CDODataInput in) throws IOException
   {
     name = in.readString();
   }
 
-  public void write(ExtendedDataOutput out) throws IOException
+  public void write(CDODataOutput out) throws IOException
   {
     out.writeString(name);
   }

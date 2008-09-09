@@ -11,21 +11,17 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -59,30 +55,31 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(CDODataOutput out) throws IOException
   {
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Writing referenceChunk: {0}", referenceChunk);
     }
-    out.writeInt(referenceChunk);
 
+    out.writeInt(referenceChunk);
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Writing {0} IDs", ids.size());
     }
-    out.writeInt(ids.size());
 
+    out.writeInt(ids.size());
     for (CDOID id : ids)
     {
       if (PROTOCOL_TRACER.isEnabled())
       {
         PROTOCOL_TRACER.format("Writing ID: {0}", id);
       }
-      CDOIDUtil.write(out, id);
+
+      out.writeCDOID(id);
     }
 
-    CDOFetchRuleManager ruleManager = getSession().getRevisionManager().getRuleManager();
+    CDOFetchRuleManager ruleManager = getRevisionManager().getRuleManager();
     List<CDOFetchRule> fetchRules = ruleManager.getFetchRules(ids);
     if (fetchRules == null || fetchRules.size() <= 0)
     {
@@ -96,7 +93,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
 
       out.writeInt(fetchSize);
       out.writeInt(ruleManager.getLoadRevisionCollectionChunkSize());
-      CDOIDUtil.write(out, contextID);
+      out.writeCDOID(contextID);
 
       for (CDOFetchRule fetchRule : fetchRules)
       {
@@ -106,35 +103,33 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
   }
 
   @Override
-  protected List<InternalCDORevision> confirming(ExtendedDataInputStream in) throws IOException
+  protected List<InternalCDORevision> confirming(CDODataInput in) throws IOException
   {
-    CDOSessionImpl session = getSession();
-    CDORevisionManagerImpl revisionManager = session.getRevisionManager();
-    CDOSessionPackageManagerImpl packageManager = session.getPackageManager();
-    ArrayList<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>(ids.size());
-
+    int idSize = ids.size();
+    ArrayList<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>(idSize);
     if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Reading {0} revisions", ids.size());
+      PROTOCOL_TRACER.format("Reading {0} revisions", idSize);
     }
 
-    for (int i = 0; i < ids.size(); i++)
+    for (int i = 0; i < idSize; i++)
     {
-      InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.read(in, revisionManager, packageManager);
+      InternalCDORevision revision = (InternalCDORevision)in.readCDORevision();
       revisions.add(revision);
     }
 
-    int size = in.readInt();
-    if (size != 0)
+    int additionalSize = in.readInt();
+    if (additionalSize != 0)
     {
       if (PROTOCOL_TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Reading {0} additional revisions", size);
+        PROTOCOL_TRACER.format("Reading {0} additional revisions", additionalSize);
       }
 
-      for (int i = 0; i < size; i++)
+      CDORevisionManagerImpl revisionManager = getRevisionManager();
+      for (int i = 0; i < additionalSize; i++)
       {
-        InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.read(in, revisionManager, packageManager);
+        InternalCDORevision revision = (InternalCDORevision)in.readCDORevision();
         revisionManager.addCachedRevision(revision);
       }
     }

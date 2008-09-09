@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.TransportException;
@@ -63,7 +64,9 @@ import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
+import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -78,6 +81,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.text.MessageFormat;
@@ -93,7 +97,8 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CDOIDObjectFactory
+public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CDOIDObjectFactory,
+    CDOPackageURICompressor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
@@ -159,6 +164,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   @ExcludeFromDump
   private transient int lastTempMetaID;
+
+  @ExcludeFromDump
+  private transient StringCompressor packageURICompressor;
 
   @ExcludeFromDump
   private CDOIDObjectFactory cdoidObjectFactory;
@@ -642,6 +650,22 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     fireEvent(new InvalidationEvent(excludedView, timeStamp, dirtyOIDs));
   }
 
+  /**
+   * @since 2.0
+   */
+  public void writePackageURI(ExtendedDataOutput out, String uri) throws IOException
+  {
+    packageURICompressor.write(out, uri);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public String readPackageURI(ExtendedDataInput in) throws IOException
+  {
+    return packageURICompressor.read(in);
+  }
+
   @Override
   public String toString()
   {
@@ -756,6 +780,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
     handleLibraryDescriptor(result.getLibraryDescriptor());
+    packageURICompressor = result.getCompressor();
     packageManager.addPackageProxies(result.getPackageInfos());
     packageManager.activate();
     revisionManager.activate();

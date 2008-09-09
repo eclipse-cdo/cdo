@@ -12,15 +12,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -36,8 +34,6 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.collection.MoveableArrayList;
 import org.eclipse.net4j.util.collection.MoveableList;
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
 
@@ -104,39 +100,33 @@ public class CDORevisionImpl implements InternalCDORevision
     copyValues(source.values);
   }
 
-  public CDORevisionImpl(ExtendedDataInput in, CDORevisionResolver revisionResolver, CDOPackageManager packageManager)
-      throws IOException
+  public CDORevisionImpl(CDODataInput in, CDORevisionResolver revisionResolver) throws IOException
   {
     this.revisionResolver = revisionResolver;
 
     READING.start(this);
-    CDOClassRef classRef = CDOModelUtil.readClassRef(in);
-    cdoClass = classRef.resolve(packageManager);
-    if (cdoClass == null)
-    {
-      throw new IllegalStateException("ClassRef unresolveable: " + classRef);
-    }
+    cdoClass = in.readCDOClassRefAndResolve();
 
-    id = CDOIDUtil.read(in, revisionResolver.getCDOIDObjectFactory());
+    id = in.readCDOID();
     version = in.readInt();
     created = in.readLong();
     revised = in.readLong();
-    resourceID = CDOIDUtil.read(in, revisionResolver.getCDOIDObjectFactory());
-    containerID = CDOIDUtil.read(in, revisionResolver.getCDOIDObjectFactory());
+    resourceID = in.readCDOID();
+    containerID = in.readCDOID();
     containingFeatureID = in.readInt();
     if (TRACER.isEnabled())
     {
       TRACER
           .format(
-              "Reading revision: ID={0}, classRef={1}, className={2}, version={3}, created={4}, revised={5}, resource={6}, container={7}, feature={8}",
-              id, classRef, cdoClass.getName(), version, created, revised, resourceID, containerID, containingFeatureID);
+              "Reading revision: ID={0}, className={1}, version={2}, created={3}, revised={4}, resource={5}, container={6}, feature={7}",
+              id, cdoClass.getName(), version, created, revised, resourceID, containerID, containingFeatureID);
     }
 
     readValues(in);
     READING.stop(this);
   }
 
-  public void write(ExtendedDataOutput out, CDOIDProvider idProvider, int referenceChunk) throws IOException
+  public void write(CDODataOutput out, int referenceChunk) throws IOException
   {
     CDOClassRef classRef = cdoClass.createClassRef();
     if (TRACER.isEnabled())
@@ -149,15 +139,15 @@ public class CDORevisionImpl implements InternalCDORevision
     }
 
     WRITING.start(this);
-    CDOModelUtil.writeClassRef(out, classRef);
-    CDOIDUtil.write(out, id);
+    out.writeCDOClassRef(classRef);
+    out.writeCDOID(id);
     out.writeInt(getVersion());
     out.writeLong(created);
     out.writeLong(revised);
-    CDOIDUtil.write(out, resourceID);
-    CDOIDUtil.write(out, containerID);
+    out.writeCDOID(resourceID);
+    out.writeCDOID(containerID);
     out.writeInt(containingFeatureID);
-    writeValues(out, idProvider, referenceChunk);
+    writeValues(out, referenceChunk);
     WRITING.stop(this);
   }
 
@@ -577,7 +567,7 @@ public class CDORevisionImpl implements InternalCDORevision
     }
   }
 
-  private void readValues(ExtendedDataInput in) throws IOException
+  private void readValues(CDODataInput in) throws IOException
   {
     CDOFeature[] features = cdoClass.getAllFeatures();
     values = new Object[features.length];
@@ -623,7 +613,7 @@ public class CDORevisionImpl implements InternalCDORevision
               {
                 while (range-- > 0)
                 {
-                  Object value = type.readValue(in, revisionResolver.getCDOIDObjectFactory());
+                  Object value = type.readValue(in);
                   list.add(value);
                   if (TRACER.isEnabled())
                   {
@@ -657,7 +647,7 @@ public class CDORevisionImpl implements InternalCDORevision
           {
             for (int j = 0; j < referenceChunk; j++)
             {
-              Object value = type.readValue(in, revisionResolver.getCDOIDObjectFactory());
+              Object value = type.readValue(in);
               list.add(value);
               if (TRACER.isEnabled())
               {
@@ -674,7 +664,7 @@ public class CDORevisionImpl implements InternalCDORevision
       }
       else
       {
-        values[i] = type.readValue(in, revisionResolver.getCDOIDObjectFactory());
+        values[i] = type.readValue(in);
         if (TRACER.isEnabled())
         {
           TRACER.format("Read feature {0}: {1}", feature, values[i]);
@@ -683,7 +673,7 @@ public class CDORevisionImpl implements InternalCDORevision
     }
   }
 
-  private void writeValues(ExtendedDataOutput out, CDOIDProvider idProvider, int referenceChunk) throws IOException
+  private void writeValues(CDODataOutput out, int referenceChunk) throws IOException
   {
     CDOFeature[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
@@ -734,7 +724,7 @@ public class CDORevisionImpl implements InternalCDORevision
                   Object value = list.get(j);
                   if (value != null && feature.isReference())
                   {
-                    value = idProvider.provideCDOID(value);
+                    value = out.getIDProvider().provideCDOID(value);
                     list.set(j, value);
                   }
 
@@ -764,7 +754,7 @@ public class CDORevisionImpl implements InternalCDORevision
               Object value = list.get(j);
               if (value != null && feature.isReference())
               {
-                value = idProvider.provideCDOID(value);
+                value = out.getIDProvider().provideCDOID(value);
                 list.set(j, value);
               }
 
@@ -782,7 +772,7 @@ public class CDORevisionImpl implements InternalCDORevision
       {
         if (values[i] != null && feature.isReference())
         {
-          values[i] = idProvider.provideCDOID(values[i]);
+          values[i] = out.getIDProvider().provideCDOID(values[i]);
         }
 
         if (TRACER.isEnabled())

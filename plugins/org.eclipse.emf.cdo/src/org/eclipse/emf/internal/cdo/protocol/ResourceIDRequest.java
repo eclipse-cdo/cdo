@@ -10,15 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -45,21 +44,20 @@ public class ResourceIDRequest extends CDOClientRequest<CDOID>
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(CDODataOutput out) throws IOException
   {
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Writing path: {0}", path);
     }
 
-    // TODO Optimize transfer of URIs/paths
     out.writeString(path);
   }
 
   @Override
-  protected CDOID confirming(ExtendedDataInputStream in) throws IOException
+  protected CDOID confirming(CDODataInput in) throws IOException
   {
-    CDOID id = CDOIDUtil.read(in, getSession());
+    CDOID id = in.readCDOID();
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Read ID: {0}", id);

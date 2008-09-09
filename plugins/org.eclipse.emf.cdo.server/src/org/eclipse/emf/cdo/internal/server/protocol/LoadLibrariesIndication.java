@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -43,7 +43,7 @@ public class LoadLibrariesIndication extends CDOServerIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(CDODataInput in) throws IOException
   {
     int size = in.readInt();
     if (PROTOCOL_TRACER.isEnabled())
@@ -63,7 +63,7 @@ public class LoadLibrariesIndication extends CDOServerIndication
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(CDODataOutput out) throws IOException
   {
     byte[] buffer = new byte[IOUtil.DEFAULT_BUFFER_SIZE];
     CDOIDLibraryProvider libraryProvider = getStore().getCDOIDLibraryProvider();
@@ -81,7 +81,7 @@ public class LoadLibrariesIndication extends CDOServerIndication
       try
       {
         in = libraryProvider.getContents(libraryName);
-        IOUtil.copy(in, out, size, buffer);
+        IOUtil.copy(in, getCurrentOutputStream(), size, buffer);
       }
       finally
       {

@@ -11,11 +11,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class QueryCancelIndication extends CDOReadIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(CDODataInput in) throws IOException
   {
     queryID = in.readInt();
     if (TRACER.isEnabled())
@@ -49,11 +49,8 @@ public class QueryCancelIndication extends CDOReadIndication
     }
   }
 
-  /**
-   * @see org.eclipse.net4j.signal.IndicationWithResponse#responding(org.eclipse.net4j.util.io.ExtendedDataOutputStream)
-   */
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(CDODataOutput out) throws IOException
   {
     try
     {

@@ -11,15 +11,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.internal.server.View;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -43,9 +41,8 @@ public class ChangeSubscriptionIndication extends CDOReadIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(CDODataInput in) throws IOException
   {
-    CDOIDObjectFactory factory = getStore().getCDOIDObjectFactory();
     boolean subscribeMode = true;
 
     int viewID = in.readInt();
@@ -70,7 +67,7 @@ public class ChangeSubscriptionIndication extends CDOReadIndication
 
     for (int i = 0; i < size; i++)
     {
-      CDOID id = CDOIDUtil.read(in, factory);
+      CDOID id = in.readCDOID();
       if (subscribeMode)
       {
         view.subscribe(id);
@@ -83,7 +80,7 @@ public class ChangeSubscriptionIndication extends CDOReadIndication
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(CDODataOutput out) throws IOException
   {
     out.writeBoolean(true);
   }

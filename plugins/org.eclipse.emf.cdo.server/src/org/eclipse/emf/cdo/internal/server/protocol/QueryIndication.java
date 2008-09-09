@@ -11,17 +11,16 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
-import org.eclipse.emf.cdo.common.util.CDOInstanceUtil;
 import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 import org.eclipse.emf.cdo.internal.server.QueryManager;
 import org.eclipse.emf.cdo.internal.server.QueryResult;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IView;
 
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -46,20 +45,17 @@ public class QueryIndication extends CDOReadIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(CDODataInput in) throws IOException
   {
     int viewID = in.readInt();
-    CDOQueryInfo cdoQuery = new CDOQueryInfoImpl(in, getStore().getCDOIDObjectFactory(), getPackageManager());
+    CDOQueryInfo cdoQuery = new CDOQueryInfoImpl(in); // TODO Add CDODataInput.readCDOQueryInfo()
     IView view = getSession().getView(viewID);
     QueryManager queryManager = getRepository().getQueryManager();
     queryResult = queryManager.execute(view, cdoQuery);
   }
 
-  /**
-   * @see org.eclipse.net4j.signal.IndicationWithResponse#responding(org.eclipse.net4j.util.io.ExtendedDataOutputStream)
-   */
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(CDODataOutput out) throws IOException
   {
     try
     {
@@ -67,7 +63,7 @@ public class QueryIndication extends CDOReadIndication
 
       // Return queryID immediately.
       out.writeInt(queryResult.getQueryID());
-      out.flush();
+      flush();
 
       while (queryResult.hasNext())
       {
@@ -76,10 +72,10 @@ public class QueryIndication extends CDOReadIndication
         // Object to return
         numberOfResults++;
         out.writeByte(CDOProtocolConstants.QUERY_MORE_OBJECT);
-        CDOInstanceUtil.writeObject(out, object);
+        out.writeCDORevisionOrPrimitive(object);
         if (queryResult.peek() == null)
         {
-          out.flush();
+          flush();
         }
       }
 

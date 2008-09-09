@@ -10,15 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -45,20 +44,19 @@ public class ResourcePathRequest extends CDOClientRequest<String>
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(CDODataOutput out) throws IOException
   {
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Writing ID: {0}", id);
     }
 
-    CDOIDUtil.write(out, id);
+    out.writeCDOID(id);
   }
 
   @Override
-  protected String confirming(ExtendedDataInputStream in) throws IOException
+  protected String confirming(CDODataInput in) throws IOException
   {
-    // TODO Optimize transfer of URIs/paths
     String path = in.readString();
     if (PROTOCOL_TRACER.isEnabled())
     {

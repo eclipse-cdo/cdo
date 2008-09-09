@@ -11,26 +11,20 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.server.Transaction;
 import org.eclipse.emf.cdo.internal.server.Transaction.TransactionPackageManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IView;
 
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -59,16 +53,18 @@ public class CommitTransactionIndication extends CDOServerIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected TransactionPackageManager getPackageManager()
   {
-    IRepository repository = getRepository();
-    CDORevisionResolver revisionResolver = repository.getRevisionManager();
+    return transaction.getPackageManager();
+  }
 
+  @Override
+  protected void indicating(CDODataInput in) throws IOException
+  {
     int viewID = in.readInt();
     transaction = getTransaction(viewID);
     transaction.preCommit();
 
-    TransactionPackageManager packageManager = transaction.getPackageManager();
     CDOPackage[] newPackages = new CDOPackage[in.readInt()];
     CDORevision[] newObjects = new CDORevision[in.readInt()];
     CDORevisionDelta[] dirtyObjectDeltas = new CDORevisionDelta[in.readInt()];
@@ -79,9 +75,10 @@ public class CommitTransactionIndication extends CDOServerIndication
       PROTOCOL_TRACER.format("Reading {0} new packages", newPackages.length);
     }
 
+    TransactionPackageManager packageManager = transaction.getPackageManager();
     for (int i = 0; i < newPackages.length; i++)
     {
-      newPackages[i] = CDOModelUtil.readPackage(packageManager, in);
+      newPackages[i] = in.readCDOPackage();
       packageManager.addPackage(newPackages[i]);
     }
 
@@ -93,7 +90,7 @@ public class CommitTransactionIndication extends CDOServerIndication
 
     for (int i = 0; i < newObjects.length; i++)
     {
-      newObjects[i] = CDORevisionUtil.read(in, revisionResolver, packageManager);
+      newObjects[i] = in.readCDORevision();
     }
 
     // Dirty objects
@@ -104,14 +101,14 @@ public class CommitTransactionIndication extends CDOServerIndication
 
     for (int i = 0; i < dirtyObjectDeltas.length; i++)
     {
-      dirtyObjectDeltas[i] = new CDORevisionDeltaImpl(in, packageManager);
+      dirtyObjectDeltas[i] = in.readCDORevisionDelta();
     }
 
     transaction.commit(newPackages, newObjects, dirtyObjectDeltas);
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(CDODataOutput out) throws IOException
   {
     boolean success = false;
 
@@ -128,7 +125,7 @@ public class CommitTransactionIndication extends CDOServerIndication
         List<CDOIDMetaRange> metaRanges = transaction.getMetaIDRanges();
         for (CDOIDMetaRange metaRange : metaRanges)
         {
-          CDOIDUtil.writeMetaRange(out, metaRange);
+          out.writeCDOIDMetaRange(metaRange);
         }
 
         // ID mappings
@@ -139,12 +136,12 @@ public class CommitTransactionIndication extends CDOServerIndication
           if (!oldID.isMeta())
           {
             CDOID newID = entry.getValue();
-            CDOIDUtil.write(out, oldID);
-            CDOIDUtil.write(out, newID);
+            out.writeCDOID(oldID);
+            out.writeCDOID(newID);
           }
         }
 
-        CDOIDUtil.write(out, CDOID.NULL);
+        out.writeCDOID(CDOID.NULL);
       }
       else
       {

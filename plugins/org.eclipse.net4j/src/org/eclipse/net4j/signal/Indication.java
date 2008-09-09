@@ -70,12 +70,12 @@ public abstract class Indication extends SignalReactor
   protected String getMessage(Exception ex)
   {
     String msg = ex.getLocalizedMessage();
-    if (StringUtil.isEmpty(msg))
+    if (!StringUtil.isEmpty(msg))
     {
-      msg = ex.getClass().getName();
+      return ex.getClass().getName() + ": " + msg;
     }
 
-    return msg;
+    return ex.getClass().getName();
   }
 
   void sendExceptionMessage(Exception ex) throws Exception

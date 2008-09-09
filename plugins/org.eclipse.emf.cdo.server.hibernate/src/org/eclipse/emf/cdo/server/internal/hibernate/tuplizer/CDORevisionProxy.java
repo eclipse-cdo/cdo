@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.collection.MoveableList;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.LazyInitializer;
@@ -295,8 +294,8 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     li.getRevision().unset(feature);
   }
 
-  public void write(ExtendedDataOutput out, CDOIDProvider idProvider, int referenceChunk) throws IOException
+  public void write(CDODataOutput out, int referenceChunk) throws IOException
   {
-    li.getRevision().write(out, idProvider, referenceChunk);
+    out.writeCDORevision(li.getRevision(), referenceChunk);
   }
 }

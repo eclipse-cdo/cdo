@@ -10,23 +10,18 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
-import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 
-import org.eclipse.net4j.signal.IndicationWithResponse;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -34,7 +29,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class OpenSessionIndication extends IndicationWithResponse
+public class OpenSessionIndication extends CDOServerIndication
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionIndication.class);
 
@@ -43,6 +38,10 @@ public class OpenSessionIndication extends IndicationWithResponse
   private boolean legacySupportEnabled;
 
   private boolean passiveUpdateEnabled;
+
+  private Repository repository;
+
+  private Session session;
 
   public OpenSessionIndication()
   {
@@ -55,7 +54,19 @@ public class OpenSessionIndication extends IndicationWithResponse
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected Repository getRepository()
+  {
+    return repository;
+  }
+
+  @Override
+  protected Session getSession()
+  {
+    return session;
+  }
+
+  @Override
+  protected void indicating(CDODataInput in) throws IOException
   {
     repositoryName = in.readString();
     if (PROTOCOL_TRACER.isEnabled())
@@ -77,24 +88,39 @@ public class OpenSessionIndication extends IndicationWithResponse
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(CDODataOutput out) throws IOException
   {
     try
     {
-      Repository repository = getRepository();
+      CDOServerProtocol protocol = getProtocol();
+      IRepositoryProvider repositoryProvider = (IRepositoryProvider)protocol.getInfraStructure();
+      repository = (Repository)repositoryProvider.getRepository(repositoryName);
+      if (repository == null)
+      {
+        throw new RepositoryNotFoundException(repositoryName);
+      }
+
       SessionManager sessionManager = repository.getSessionManager();
 
-      CDOServerProtocol serverProtocol = (CDOServerProtocol)getProtocol();
-      Session session = sessionManager.openSession(serverProtocol, legacySupportEnabled);
+      session = sessionManager.openSession(protocol, legacySupportEnabled);
       session.setPassiveUpdateEnabled(passiveUpdateEnabled);
 
       // Adjust the infra structure (was IRepositoryProvider)
-      serverProtocol.setInfraStructure(session);
+      protocol.setInfraStructure(session);
+      if (PROTOCOL_TRACER.isEnabled())
+      {
+        PROTOCOL_TRACER.format("Writing sessionID: {0}", session.getSessionID());
+      }
 
-      writeSessionID(out, session);
-      writeRepositoryUUID(out, repository);
+      out.writeInt(session.getSessionID());
+      if (PROTOCOL_TRACER.isEnabled())
+      {
+        PROTOCOL_TRACER.format("Writing repositoryUUID: {0}", repository.getUUID());
+      }
+
+      out.writeString(repository.getUUID());
       repository.getStore().getCDOIDLibraryDescriptor().write(out);
-      writePackages(out, repository.getPackageManager());
+      writePackages(out);
     }
     catch (RepositoryNotFoundException ex)
     {
@@ -117,44 +143,9 @@ public class OpenSessionIndication extends IndicationWithResponse
     }
   }
 
-  private Repository getRepository()
+  private void writePackages(CDODataOutput out) throws IOException
   {
-    CDOServerProtocol protocol = (CDOServerProtocol)getProtocol();
-    Object infraStructure = protocol.getInfraStructure();
-
-    IRepositoryProvider repositoryProvider = (IRepositoryProvider)infraStructure;
-    IRepository repository = repositoryProvider.getRepository(repositoryName);
-    if (repository == null)
-    {
-      throw new RepositoryNotFoundException(repositoryName);
-    }
-
-    return (Repository)repository;
-  }
-
-  private void writeSessionID(ExtendedDataOutputStream out, ISession session) throws IOException
-  {
-    if (PROTOCOL_TRACER.isEnabled())
-    {
-      PROTOCOL_TRACER.format("Writing sessionID: {0}", session.getSessionID());
-    }
-
-    out.writeInt(session.getSessionID());
-  }
-
-  private void writeRepositoryUUID(ExtendedDataOutputStream out, IRepository repository) throws IOException
-  {
-    if (PROTOCOL_TRACER.isEnabled())
-    {
-      PROTOCOL_TRACER.format("Writing repositoryUUID: {0}", repository.getUUID());
-    }
-
-    out.writeString(repository.getUUID());
-  }
-
-  private void writePackages(ExtendedDataOutputStream out, PackageManager packageManager) throws IOException
-  {
-    CDOPackage[] packages = packageManager.getPackages();
+    CDOPackage[] packages = getPackageManager().getPackages();
     for (CDOPackage p : packages)
     {
       if (!p.isSystem())
@@ -165,10 +156,10 @@ public class OpenSessionIndication extends IndicationWithResponse
               .getPackageURI(), p.isDynamic(), p.getMetaIDRange(), p.getParentURI());
         }
 
-        out.writeString(p.getPackageURI());
+        out.writeCDOPackageURI(p.getPackageURI());
         out.writeBoolean(p.isDynamic());
-        CDOIDUtil.writeMetaRange(out, p.getMetaIDRange());
-        out.writeString(p.getParentURI());
+        out.writeCDOIDMetaRange(p.getMetaIDRange());
+        out.writeCDOPackageURI(p.getParentURI());
       }
     }
 

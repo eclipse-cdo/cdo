@@ -11,8 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -20,9 +21,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,13 +39,24 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     super(feature);
   }
 
-  public CDOListFeatureDeltaImpl(ExtendedDataInput in, CDOClass cdoClass) throws IOException
+  public CDOListFeatureDeltaImpl(CDODataInput in, CDOClass cdoClass) throws IOException
   {
     super(in, cdoClass);
     int size = in.readInt();
     for (int i = 0; i < size; i++)
     {
-      featureDeltas.add(CDOFeatureDeltaImpl.read(in, cdoClass));
+      featureDeltas.add(in.readCDOFeatureDelta(cdoClass));
+    }
+  }
+
+  @Override
+  public void write(CDODataOutput out, CDOClass cdoClass) throws IOException
+  {
+    super.write(out, cdoClass);
+    out.writeInt(featureDeltas.size());
+    for (CDOFeatureDelta featureDelta : featureDeltas)
+    {
+      out.writeCDOFeatureDelta(featureDelta, cdoClass);
     }
   }
 
@@ -59,17 +68,6 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   public List<CDOFeatureDelta> getListChanges()
   {
     return featureDeltas;
-  }
-
-  @Override
-  public void write(final ExtendedDataOutput out, CDOClass cdoClass, final CDOIDProvider idProvider) throws IOException
-  {
-    super.write(out, cdoClass, idProvider);
-    out.writeInt(featureDeltas.size());
-    for (CDOFeatureDelta featureDelta : featureDeltas)
-    {
-      ((CDOFeatureDeltaImpl)featureDelta).write(out, cdoClass, idProvider);
-    }
   }
 
   /**

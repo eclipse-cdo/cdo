@@ -10,21 +10,18 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
-import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.collection.MoveableList;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -64,7 +61,7 @@ public class LoadRevisionIndication extends CDOReadIndication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(CDODataInput in) throws IOException
   {
     referenceChunk = in.readInt();
     if (PROTOCOL_TRACER.isEnabled())
@@ -78,11 +75,10 @@ public class LoadRevisionIndication extends CDOReadIndication
       PROTOCOL_TRACER.format("Reading {0} IDs", size);
     }
 
-    CDOIDObjectFactory factory = getStore().getCDOIDObjectFactory();
     ids = new CDOID[size];
     for (int i = 0; i < size; i++)
     {
-      CDOID id = CDOIDUtil.read(in, factory);
+      CDOID id = in.readCDOID();
       if (PROTOCOL_TRACER.isEnabled())
       {
         PROTOCOL_TRACER.format("Read ID: {0}", id);
@@ -100,7 +96,7 @@ public class LoadRevisionIndication extends CDOReadIndication
         loadRevisionCollectionChunkSize = 1;
       }
 
-      contextID = CDOIDUtil.read(in, factory);
+      contextID = in.readCDOID();
       if (PROTOCOL_TRACER.isEnabled())
       {
         PROTOCOL_TRACER.format("Reading fetch rules for context {0}", contextID);
@@ -115,9 +111,8 @@ public class LoadRevisionIndication extends CDOReadIndication
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(CDODataOutput out) throws IOException
   {
-    Session session = getSession();
     List<InternalCDORevision> additionalRevisions = new ArrayList<InternalCDORevision>();
     Set<CDOID> revisionIDs = new HashSet<CDOID>();
     if (PROTOCOL_TRACER.isEnabled())
@@ -146,7 +141,7 @@ public class LoadRevisionIndication extends CDOReadIndication
     for (CDOID id : ids)
     {
       InternalCDORevision revision = getRevision(id);
-      revision.write(out, session, referenceChunk);
+      out.writeCDORevision(revision, referenceChunk);
       if (loadRevisionCollectionChunkSize > 0)
       {
         collectRevisions(revision, revisionIDs, additionalRevisions, visitedFetchRules);
@@ -162,7 +157,7 @@ public class LoadRevisionIndication extends CDOReadIndication
     out.writeInt(additionalSize);
     for (InternalCDORevision revision : additionalRevisions)
     {
-      revision.write(out, session, referenceChunk);
+      out.writeCDORevision(revision, referenceChunk);
     }
   }
 

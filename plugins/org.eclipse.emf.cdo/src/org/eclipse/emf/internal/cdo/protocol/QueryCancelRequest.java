@@ -11,13 +11,13 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class QueryCancelRequest extends CDOClientRequest<Object>
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(CDODataOutput out) throws IOException
   {
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -55,7 +55,7 @@ public class QueryCancelRequest extends CDOClientRequest<Object>
   }
 
   @Override
-  protected Object confirming(ExtendedDataInputStream in) throws IOException
+  protected Object confirming(CDODataInput in) throws IOException
   {
     boolean exception = in.readBoolean();
     if (exception)

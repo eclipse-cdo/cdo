@@ -10,15 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
-import org.eclipse.emf.cdo.internal.common.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.CDODataOutputImpl;
+import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.ResourceManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
@@ -26,8 +23,9 @@ import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.server.IStore;
 
-import org.eclipse.net4j.signal.IndicationWithResponse;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -36,10 +34,11 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public abstract class CDOServerIndication extends IndicationWithResponse
+public abstract class CDOServerRequest extends Request
 {
-  public CDOServerIndication()
+  public CDOServerRequest(IChannel channel)
   {
+    super((SignalProtocol)channel.getReceiveHandler());
   }
 
   @Override
@@ -89,7 +88,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     return getRepository().getRevisionManager();
   }
 
-  protected CDOPackageManager getPackageManager()
+  protected PackageManager getPackageManager()
   {
     return getRepository().getPackageManager();
   }
@@ -111,55 +110,22 @@ public abstract class CDOServerIndication extends IndicationWithResponse
   }
 
   @Override
-  protected final void indicating(ExtendedDataInputStream in) throws IOException
+  protected final void requesting(ExtendedDataOutputStream out) throws IOException
   {
-    indicating(new CDODataInputImpl(in)
-    {
-      @Override
-      protected CDORevisionResolver getRevisionResolver()
-      {
-        return CDOServerIndication.this.getRevisionManager();
-      }
-
-      @Override
-      protected CDOPackageManager getPackageManager()
-      {
-        return CDOServerIndication.this.getPackageManager();
-      }
-
-      @Override
-      protected CDOPackageURICompressor getPackageURICompressor()
-      {
-        return CDOServerIndication.this.getPackageURICompressor();
-      }
-
-      @Override
-      protected CDOIDObjectFactory getIDFactory()
-      {
-        return CDOServerIndication.this.getIDFactory();
-      }
-    });
-  }
-
-  @Override
-  protected final void responding(ExtendedDataOutputStream out) throws IOException
-  {
-    responding(new CDODataOutputImpl(out)
+    requesting(new CDODataOutputImpl(out)
     {
       @Override
       protected CDOPackageURICompressor getPackageURICompressor()
       {
-        return CDOServerIndication.this.getPackageURICompressor();
+        return CDOServerRequest.this.getPackageURICompressor();
       }
 
       public CDOIDProvider getIDProvider()
       {
-        return CDOServerIndication.this.getIDProvider();
+        return CDOServerRequest.this.getIDProvider();
       }
     });
   }
 
-  protected abstract void indicating(CDODataInput in) throws IOException;
-
-  protected abstract void responding(CDODataOutput out) throws IOException;
+  protected abstract void requesting(CDODataOutput out) throws IOException;
 }

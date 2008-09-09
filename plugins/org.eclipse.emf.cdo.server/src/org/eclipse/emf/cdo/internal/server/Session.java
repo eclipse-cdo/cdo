@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
@@ -31,11 +32,16 @@ import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.io.ExtendedDataInput;
+import org.eclipse.net4j.util.io.ExtendedDataOutput;
+import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,7 +53,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class Session extends Container<IView> implements ISession, CDOIDProvider
+public class Session extends Container<IView> implements ISession, CDOIDProvider, CDOPackageURICompressor
 {
   private SessionManager sessionManager;
 
@@ -61,6 +67,10 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
   private ConcurrentMap<Integer, IView> views = new ConcurrentHashMap<Integer, IView>();
 
+  @ExcludeFromDump
+  private transient StringCompressor packageURICompressor = new StringCompressor(false);
+
+  @ExcludeFromDump
   private IListener protocolListener = new LifecycleEventAdapter()
   {
     @Override
@@ -217,7 +227,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     {
       if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty())
       {
-        new CommitNotificationRequest(protocol.getChannel(), this, timeStamp, dirtyIDs, newDeltas).send();
+        new CommitNotificationRequest(protocol.getChannel(), timeStamp, dirtyIDs, newDeltas).send();
       }
     }
     catch (Exception ex)
@@ -280,6 +290,22 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
         }
       }
     }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void writePackageURI(ExtendedDataOutput out, String uri) throws IOException
+  {
+    packageURICompressor.write(out, uri);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public String readPackageURI(ExtendedDataInput in) throws IOException
+  {
+    return packageURICompressor.read(in);
   }
 
   @Override

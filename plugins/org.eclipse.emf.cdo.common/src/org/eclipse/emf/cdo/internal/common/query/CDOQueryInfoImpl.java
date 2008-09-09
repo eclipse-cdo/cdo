@@ -10,13 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.query;
 
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
-import org.eclipse.emf.cdo.common.util.CDOInstanceUtil;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -43,8 +39,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     this.queryString = queryString;
   }
 
-  public CDOQueryInfoImpl(ExtendedDataInput in, CDOIDObjectFactory objectFactory, CDOPackageManager packageManager)
-      throws IOException
+  public CDOQueryInfoImpl(CDODataInput in) throws IOException
   {
     queryLanguage = in.readString();
     queryString = in.readString();
@@ -54,12 +49,12 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     for (int i = 0; i < size; i++)
     {
       String key = in.readString();
-      Object object = CDOInstanceUtil.readObjectOrClass(in, objectFactory, packageManager);
+      Object object = in.readCDORevisionOrPrimitiveOrClass();
       parameters.put(key, object);
     }
   }
 
-  public void write(ExtendedDataOutput out) throws IOException
+  public void write(CDODataOutput out) throws IOException
   {
     out.writeString(queryLanguage);
     out.writeString(queryString);
@@ -69,8 +64,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     for (Entry<String, Object> entry : parameters.entrySet())
     {
       out.writeString(entry.getKey());
-      Object value = entry.getValue();
-      CDOInstanceUtil.writeObjectOrClass(out, value);
+      out.writeCDORevisionOrPrimitiveOrClass(entry.getValue());
     }
   }
 

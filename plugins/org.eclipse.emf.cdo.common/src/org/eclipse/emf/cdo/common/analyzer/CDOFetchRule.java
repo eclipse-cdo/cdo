@@ -11,14 +11,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.analyzer;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
-
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,10 +35,9 @@ public final class CDOFetchRule
     this.cdoClass = cdoClass;
   }
 
-  public CDOFetchRule(ExtendedDataInput in, CDOPackageManager packageManager) throws IOException
+  public CDOFetchRule(CDODataInput in, CDOPackageManager packageManager) throws IOException
   {
-    CDOClassRef classRef = CDOModelUtil.readClassRef(in);
-    cdoClass = classRef.resolve(packageManager);
+    cdoClass = in.readCDOClassRefAndResolve();
     int size = in.readInt();
     for (int i = 0; i < size; i++)
     {
@@ -51,9 +47,9 @@ public final class CDOFetchRule
     }
   }
 
-  public void write(ExtendedDataOutput out) throws IOException
+  public void write(CDODataOutput out) throws IOException
   {
-    CDOModelUtil.writeClassRef(out, cdoClass.createClassRef());
+    out.writeCDOClassRef(cdoClass);
     out.writeInt(features.size());
     for (CDOFeature feature : features)
     {

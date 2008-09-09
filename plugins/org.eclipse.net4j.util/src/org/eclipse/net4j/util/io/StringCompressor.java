@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * TODO Detect possible race condition and let the client win.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */
@@ -46,67 +48,63 @@ public class StringCompressor
 
   public void write(ExtendedDataOutput out, String string) throws IOException
   {
-    out.writeString(string);
-    // TODO Switch on comnpression
-    // if (string == null)
-    // {
-    // out.writeInt(0);
-    // return;
-    // }
-    //
-    // int idToWrite;
-    // String stringToWrite;
-    // synchronized (stringToID)
-    // {
-    // Integer id = stringToID.get(string);
-    // if (id == null)
-    // {
-    // lastID += increment;
-    // stringToID.put(string, lastID);
-    // idToString.put(lastID, string);
-    // idToWrite = lastID;
-    // stringToWrite = string;
-    // }
-    // else
-    // {
-    // idToWrite = id;
-    // stringToWrite = null;
-    // }
-    // }
-    //
-    // out.writeInt(idToWrite);
-    // if (stringToWrite != null)
-    // {
-    // out.writeString(stringToWrite);
-    // }
+    if (string == null)
+    {
+      out.writeInt(0);
+      return;
+    }
+
+    int idToWrite;
+    String stringToWrite;
+    synchronized (stringToID)
+    {
+      Integer id = stringToID.get(string);
+      if (id == null)
+      {
+        lastID += increment;
+        stringToID.put(string, lastID);
+        idToString.put(lastID, string);
+        idToWrite = lastID;
+        stringToWrite = string;
+      }
+      else
+      {
+        idToWrite = id;
+        stringToWrite = null;
+      }
+    }
+
+    out.writeInt(idToWrite);
+    if (stringToWrite != null)
+    {
+      out.writeString(stringToWrite);
+    }
   }
 
   public String read(ExtendedDataInput in) throws IOException
   {
-    return in.readString();
-    // TODO Switch on comnpression
-    // int id = in.readInt();
-    // if (id == 0)
-    // {
-    // return null;
-    // }
-    //
-    // String string;
-    // synchronized (stringToID)
-    // {
-    // string = idToString.get(id);
-    // }
-    //
-    // if (string == null)
-    // {
-    // string = in.readString();
-    // synchronized (stringToID)
-    // {
-    // stringToID.put(string, id);
-    // idToString.put(id, string);
-    // }
-    // }
-    //
-    // return string;
+    int id = in.readInt();
+    if (id == 0)
+    {
+      return null;
+    }
+
+    String string;
+    synchronized (stringToID)
+    {
+      string = idToString.get(id);
+    }
+
+    if (string == null)
+    {
+      string = in.readString();
+      synchronized (stringToID)
+      {
+        stringToID.put(string, id);
+        idToString.put(id, string);
+      }
+    }
+
+    return string;
   }
 }

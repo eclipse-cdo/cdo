@@ -156,6 +156,7 @@ public class OpenSessionIndication extends CDOServerIndication
               .getPackageURI(), p.isDynamic(), p.getMetaIDRange(), p.getParentURI());
         }
 
+        out.writeBoolean(true);
         out.writeCDOPackageURI(p.getPackageURI());
         out.writeBoolean(p.isDynamic());
         out.writeCDOIDMetaRange(p.getMetaIDRange());
@@ -163,6 +164,6 @@ public class OpenSessionIndication extends CDOServerIndication
       }
     }
 
-    out.writeString(null);
+    out.writeBoolean(false);
   }
 }

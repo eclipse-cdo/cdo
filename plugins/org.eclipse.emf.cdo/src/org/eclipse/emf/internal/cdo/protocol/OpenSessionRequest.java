@@ -158,12 +158,13 @@ public class OpenSessionRequest extends CDOClientRequest<OpenSessionResult>
     result = new OpenSessionResult(sessionID, repositoryUUID, libraryDescriptor);
     for (;;)
     {
-      String packageURI = in.readCDOPackageURI();
-      if (packageURI == null)
+      boolean readInfo = in.readBoolean();
+      if (!readInfo)
       {
         break;
       }
 
+      String packageURI = in.readCDOPackageURI();
       boolean dynamic = in.readBoolean();
       CDOIDMetaRange metaIDRange = in.readCDOIDMetaRange();
       String parentURI = in.readCDOPackageURI();

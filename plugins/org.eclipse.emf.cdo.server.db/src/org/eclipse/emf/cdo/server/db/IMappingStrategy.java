@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.db;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
+import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 
@@ -47,23 +48,10 @@ public interface IMappingStrategy
   /**
    * @since 2.0
    */
-  public void queryResourceIDs(IDBStoreReader storeReader, QueryResourceIDsContext context);
+  public void queryResources(IDBStoreReader storeReader, QueryResourcesContext context);
 
   /**
    * Must return the maximum CDOID value .
    */
   public long repairAfterCrash(Connection connection);
-
-  /**
-   * @author Eike Stepper
-   * @since 2.0
-   */
-  public interface QueryResourceIDsContext
-  {
-    public String getPathPrefix();
-
-    public int getMaxResults();
-
-    public boolean addResourceID(CDOID resourceID);
-  }
 }

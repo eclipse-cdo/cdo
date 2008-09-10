@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.server.IPackageManager;
+import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -268,7 +269,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     };
   }
 
-  public void queryResourceIDs(IDBStoreReader storeReader, QueryResourceIDsContext context)
+  public void queryResources(IDBStoreReader storeReader, QueryResourcesContext context)
   {
     IClassMapping mapping = getResourceClassMapping();
     IDBTable resourceTable = mapping.getTable();
@@ -300,7 +301,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
       {
         long longID = resultSet.getLong(1);
         CDOID id = CDOIDUtil.createLong(longID);
-        if (!context.addResourceID(id))
+        if (!context.addResource(id))
         {
           break;
         }

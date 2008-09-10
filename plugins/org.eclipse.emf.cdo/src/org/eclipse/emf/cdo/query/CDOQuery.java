@@ -34,13 +34,11 @@ public interface CDOQuery extends CDOQueryInfo
    * Sets the maximum number of results to retrieve.
    * <p>
    * 
-   * @param maxResult
-   *          the maximum number of results to retrieve
-   * @return the same query instance
-   * @throws IllegalArgumentException
-   *           if argument is negative
+   * @param maxResults
+   *          the maximum number of results to retrieve or {@link #UNLIMITED_RESULTS} for no limitation.
+   * @return the same query instance.
    */
-  public CDOQuery setMaxResults(int maxResult);
+  public CDOQuery setMaxResults(int maxResults);
 
   /**
    * Binds an argument value to a named parameter.

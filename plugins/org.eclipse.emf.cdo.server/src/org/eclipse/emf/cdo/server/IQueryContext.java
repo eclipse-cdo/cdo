@@ -19,8 +19,12 @@ public interface IQueryContext
   public IView getView();
 
   /**
-   * Adds the given object to the results of the associated query and returns <code>true</code> if more results are
-   * allowed, <code>false</code> otherwise.
+   * Adds the given object to the results of the associated query.
+   * 
+   * @param object
+   *          TODO Simon: Describe the allowed types/values!
+   * @return <code>true</code> to indicate that more results can be passed subsequently, <code>false</code> otherwise
+   *         (i.e. maxResults has been reached or an asynchronous query has been canceled).
    */
   public boolean addResult(Object object);
 }

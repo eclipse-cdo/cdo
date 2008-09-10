@@ -19,6 +19,8 @@ import java.util.Map;
  */
 public interface CDOQueryInfo
 {
+  public static final int UNLIMITED_RESULTS = -1;
+
   public String getQueryLanguage();
 
   public String getQueryString();
@@ -26,7 +28,7 @@ public interface CDOQueryInfo
   public Map<String, Object> getParameters();
 
   /**
-   * Return the maximum number of results to retrieve.
+   * Returns the maximum number of results to retrieve or {@link #UNLIMITED_RESULTS} for no limitation.
    */
   public int getMaxResults();
 }

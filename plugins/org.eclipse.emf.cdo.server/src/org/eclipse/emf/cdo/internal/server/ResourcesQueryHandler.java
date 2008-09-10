@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IStoreReader;
@@ -45,9 +45,9 @@ public class ResourcesQueryHandler implements IQueryHandler
         return info.getMaxResults();
       }
 
-      public boolean addResource(CDORevision resource)
+      public boolean addResource(CDOID resourceID)
       {
-        return context.addResult(resource);
+        return context.addResult(resourceID);
       }
     });
   }

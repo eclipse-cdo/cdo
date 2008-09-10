@@ -292,24 +292,7 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
   public void queryResources(final QueryResourcesContext context)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    mappingStrategy.queryResourceIDs(this, new IMappingStrategy.QueryResourceIDsContext()
-    {
-      public String getPathPrefix()
-      {
-        return context.getPathPrefix();
-      }
-
-      public int getMaxResults()
-      {
-        return context.getMaxResults();
-      }
-
-      public boolean addResourceID(CDOID resourceID)
-      {
-        CDORevision revision = readRevision(resourceID, CDORevision.UNCHUNKED);
-        return context.addResource(revision);
-      }
-    });
+    mappingStrategy.queryResources(this, context);
   }
 
   /**

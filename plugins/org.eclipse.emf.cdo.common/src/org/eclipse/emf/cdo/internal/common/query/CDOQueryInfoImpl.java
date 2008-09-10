@@ -31,7 +31,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
 
   protected Map<String, Object> parameters = new HashMap<String, Object>();
 
-  protected int maxResult = -1;
+  protected int maxResults = UNLIMITED_RESULTS;
 
   public CDOQueryInfoImpl(String language, String queryString)
   {
@@ -43,7 +43,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
   {
     queryLanguage = in.readString();
     queryString = in.readString();
-    maxResult = in.readInt();
+    maxResults = in.readInt();
 
     int size = in.readInt();
     for (int i = 0; i < size; i++)
@@ -58,7 +58,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
   {
     out.writeString(queryLanguage);
     out.writeString(queryString);
-    out.writeInt(maxResult);
+    out.writeInt(maxResults);
 
     out.writeInt(parameters.size());
     for (Entry<String, Object> entry : parameters.entrySet())
@@ -90,11 +90,12 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
 
   public int getMaxResults()
   {
-    return maxResult;
+    return maxResults;
   }
 
-  public void setMaxResult(int maxResult)
+  public CDOQueryInfoImpl setMaxResults(int maxResults)
   {
-    this.maxResult = maxResult;
+    this.maxResults = maxResults;
+    return this;
   }
 }

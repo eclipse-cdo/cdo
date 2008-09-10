@@ -48,9 +48,10 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     return view;
   }
 
-  public CDOQuery setMaxResults(int maxResult)
+  @Override
+  public CDOQueryImpl setMaxResults(int maxResults)
   {
-    this.maxResult = maxResult;
+    this.maxResults = maxResults;
     return this;
   }
 
@@ -124,7 +125,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
   protected CDOQueryInfoImpl createQueryInfo()
   {
     CDOQueryInfoImpl queryInfo = new CDOQueryInfoImpl(getQueryLanguage(), getQueryString());
-    queryInfo.setMaxResult(getMaxResults());
+    queryInfo.setMaxResults(getMaxResults());
     for (Entry<String, Object> entry : getParameters().entrySet())
     {
       Object value = entry.getValue();

@@ -173,7 +173,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
         String path = getResourcePath(revision);
         if (path != null && path.startsWith(context.getPathPrefix()))
         {
-          if (!context.addResource(revision))
+          if (!context.addResource(revision.getID()))
           {
             break;
           }

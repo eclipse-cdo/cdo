@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -91,8 +92,18 @@ public interface IStoreReader extends IStoreAccessor, IQueryHandler
   {
     public String getPathPrefix();
 
+    /**
+     * Returns the maximum number of results expected by the client or {@link CDOQueryInfo#UNLIMITED_RESULTS} for no
+     * limitation.
+     */
     public int getMaxResults();
 
-    public boolean addResource(CDORevision resource);
+    /**
+     * Adds the CDOID of one resource to the results of the underlying query.
+     * 
+     * @return <code>true</code> to indicate that more results can be passed subsequently, <code>false</code> otherwise
+     *         (i.e. maxResults has been reached or an asynchronous query has been canceled).
+     */
+    public boolean addResource(CDOID resourceID);
   }
 }

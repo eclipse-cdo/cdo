@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - http://bugs.eclipse.org/208689
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -116,6 +117,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
 
         DBUtil.close(currentResultSet);
         currentResultSet = null;
+        return false;
       }
       catch (SQLException ex)
       {

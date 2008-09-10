@@ -45,7 +45,25 @@ public interface IMappingStrategy
   public String readResourcePath(IDBStoreReader storeReader, CDOID id);
 
   /**
+   * @since 2.0
+   */
+  public void queryResourceIDs(IDBStoreReader storeReader, QueryResourceIDsContext context);
+
+  /**
    * Must return the maximum CDOID value .
    */
   public long repairAfterCrash(Connection connection);
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public interface QueryResourceIDsContext
+  {
+    public String getPathPrefix();
+
+    public int getMaxResults();
+
+    public boolean addResourceID(CDOID resourceID);
+  }
 }

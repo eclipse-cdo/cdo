@@ -10,6 +10,7 @@
  *    Simon McDuff - http://bugs.eclipse.org/201266
  *    Simon McDuff - http://bugs.eclipse.org/201997
  *    Simon McDuff - http://bugs.eclipse.org/233490
+ *    Victor Roldan Betancort - http://bugs.eclipse.org/208689
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -24,6 +25,8 @@ import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -140,6 +143,15 @@ public interface CDOView extends CDOProtocolView, INotifier
    * @since 2.0
    */
   public CDOQuery createQuery(String language, String queryString);
+
+  /**
+   * Returns a list of those resources whose path starts with the value of the pathPrefix parameter.
+   * 
+   * @param pathPrefix
+   *          the prefix of the resource's path
+   * @since 2.0
+   */
+  public List<CDOResource> queryResources(String pathPrefix);
 
   public void close();
 }

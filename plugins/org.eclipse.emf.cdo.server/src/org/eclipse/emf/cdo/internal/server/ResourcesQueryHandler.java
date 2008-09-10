@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IQueryContext;
@@ -29,18 +30,26 @@ public class ResourcesQueryHandler implements IQueryHandler
   {
   }
 
-  public void executeQuery(CDOQueryInfo info, final IQueryContext context)
+  public void executeQuery(final CDOQueryInfo info, final IQueryContext context)
   {
     IStoreReader storeReader = StoreThreadLocal.getStoreReader();
-    IStoreReader.QueryResourcesContext contextWrapper = new IStoreReader.QueryResourcesContext()
+    storeReader.queryResources(new IStoreReader.QueryResourcesContext()
     {
+      public String getPathPrefix()
+      {
+        return info.getQueryString();
+      }
+
+      public int getMaxResults()
+      {
+        return info.getMaxResults();
+      }
+
       public boolean addResource(CDORevision resource)
       {
         return context.addResult(resource);
       }
-    };
-
-    storeReader.queryResources(info.getQueryString(), info.getMaxResults(), contextWrapper);
+    });
   }
 
   /**
@@ -48,11 +57,9 @@ public class ResourcesQueryHandler implements IQueryHandler
    */
   public static class Factory extends QueryHandlerFactory
   {
-    public static final String LANGUAGE = "resources";
-
     public Factory()
     {
-      super(LANGUAGE);
+      super(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES);
     }
 
     public IQueryHandler create(String description) throws ProductCreationException
@@ -62,7 +69,7 @@ public class ResourcesQueryHandler implements IQueryHandler
 
     public static IQueryHandler get(IManagedContainer container, String queryLanguage)
     {
-      return (IQueryHandler)container.getElement(PRODUCT_GROUP, LANGUAGE, null);
+      return (IQueryHandler)container.getElement(PRODUCT_GROUP, CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES, null);
     }
   }
 }

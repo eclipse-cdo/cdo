@@ -81,7 +81,7 @@ public interface IStoreReader extends IStoreAccessor, IQueryHandler
   /**
    * @since 2.0
    */
-  public void queryResources(String pathPrefix, int maxResults, QueryResourcesContext context);
+  public void queryResources(QueryResourcesContext context);
 
   /**
    * @author Eike Stepper
@@ -89,6 +89,10 @@ public interface IStoreReader extends IStoreAccessor, IQueryHandler
    */
   public interface QueryResourcesContext
   {
+    public String getPathPrefix();
+
+    public int getMaxResults();
+
     public boolean addResource(CDORevision resource);
   }
 }

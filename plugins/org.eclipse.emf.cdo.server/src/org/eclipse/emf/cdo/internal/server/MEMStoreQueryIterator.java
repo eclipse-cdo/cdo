@@ -22,7 +22,9 @@ import java.util.NoSuchElementException;
 /**
  * @author Simon McDuff
  * @since 2.0
+ * @deprecated Use a callback-based approach
  */
+@Deprecated
 public class MEMStoreQueryIterator implements CloseableIterator<Object>
 {
   private MEMStore store;
@@ -36,7 +38,7 @@ public class MEMStoreQueryIterator implements CloseableIterator<Object>
   public MEMStoreQueryIterator(MEMStore memStore)
   {
     store = memStore;
-    revisions = store.getRevisions().iterator();
+    revisions = store.getCurrentRevisions().iterator();
   }
 
   public void addFilter(Object filter)
@@ -100,7 +102,7 @@ public class MEMStoreQueryIterator implements CloseableIterator<Object>
         }
       }
     }
-  
+
     return nextObject;
   }
 }

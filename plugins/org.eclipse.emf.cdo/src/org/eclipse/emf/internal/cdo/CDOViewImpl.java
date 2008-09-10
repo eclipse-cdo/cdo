@@ -13,6 +13,7 @@
  *    Simon McDuff - http://bugs.eclipse.org/202064
  *    Simon McDuff - http://bugs.eclipse.org/230832
  *    Simon McDuff - http://bugs.eclipse.org/233490
+ *    Victor Roldan Betancort - http://bugs.eclipse.org/208689
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -23,6 +24,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.CDOViewResourcesEvent;
 import org.eclipse.emf.cdo.analyzer.CDOFeatureAnalyzer;
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
@@ -281,6 +283,15 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     URI uri = CDOUtil.createResourceURI(path);
     return (CDOResource)getResourceSet().getResource(uri, true);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public List<CDOResource> queryResources(String pathPrefix)
+  {
+    CDOQuery resourceQuery = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES, pathPrefix);
+    return resourceQuery.getResult(CDOResource.class);
   }
 
   public CDOResourceImpl getResource(CDOID resourceID)

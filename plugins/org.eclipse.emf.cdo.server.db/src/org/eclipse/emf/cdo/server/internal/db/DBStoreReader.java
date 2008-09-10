@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - http://bugs.eclipse.org/208689    
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -288,10 +289,27 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
   /**
    * @since 2.0
    */
-  public void queryResources(String pathPrefix, int maxResults, QueryResourcesContext context)
+  public void queryResources(final QueryResourcesContext context)
   {
-    // TODO: implement HibernateStoreReader.queryResources(pathPrefix, maxResults, context)
-    throw new UnsupportedOperationException();
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    mappingStrategy.queryResourceIDs(this, new IMappingStrategy.QueryResourceIDsContext()
+    {
+      public String getPathPrefix()
+      {
+        return context.getPathPrefix();
+      }
+
+      public int getMaxResults()
+      {
+        return context.getMaxResults();
+      }
+
+      public boolean addResourceID(CDOID resourceID)
+      {
+        CDORevision revision = readRevision(resourceID, CDORevision.UNCHUNKED);
+        return context.addResource(revision);
+      }
+    });
   }
 
   /**

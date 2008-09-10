@@ -211,6 +211,42 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     this.queryHandlerProvider = queryHandlerProvider;
   }
 
+  public IQueryHandler getQueryHandler(CDOQueryInfo info)
+  {
+    IQueryHandler handler = null;
+    if (CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES.equals(info.getQueryLanguage()))
+    {
+      handler = new ResourcesQueryHandler();
+    }
+  
+    if (handler == null)
+    {
+      if (queryHandlerProvider != null)
+      {
+        handler = queryHandlerProvider.getQueryHandler(info);
+      }
+      else if (OMPlatform.INSTANCE.isOSGiRunning())
+      {
+        try
+        {
+          IQueryHandlerProvider provider = new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE);
+          handler = provider.getQueryHandler(info);
+        }
+        catch (Throwable t)
+        {
+          OM.LOG.warn("Problem with ContainerQueryHandlerProvider: " + t.getMessage());
+        }
+      }
+    }
+  
+    if (handler == null)
+    {
+      handler = StoreThreadLocal.getStoreReader();
+    }
+  
+    return handler;
+  }
+
   public IRepositoryElement[] getElements()
   {
     return elements;
@@ -243,42 +279,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   public String toString()
   {
     return MessageFormat.format("Repository[{0}]", name);
-  }
-
-  public IQueryHandler getQueryHandler(CDOQueryInfo info)
-  {
-    IQueryHandler handler = null;
-    if (CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES.equals(info.getQueryLanguage()))
-    {
-      handler = new ResourcesQueryHandler();
-    }
-
-    if (handler == null)
-    {
-      if (queryHandlerProvider != null)
-      {
-        handler = queryHandlerProvider.getQueryHandler(info);
-      }
-      else if (OMPlatform.INSTANCE.isOSGiRunning())
-      {
-        try
-        {
-          IQueryHandlerProvider provider = new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE);
-          handler = provider.getQueryHandler(info);
-        }
-        catch (Throwable t)
-        {
-          OM.LOG.warn("Problem with ContainerQueryHandlerProvider: " + t.getMessage());
-        }
-      }
-    }
-
-    if (handler == null)
-    {
-      handler = StoreThreadLocal.getStoreReader();
-    }
-
-    return handler;
   }
 
   protected PackageManager createPackageManager()

@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - http://bugs.eclipse.org/208689    
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -265,6 +266,54 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
         return null;
       }
     };
+  }
+
+  public void queryResourceIDs(IDBStoreReader storeReader, QueryResourceIDsContext context)
+  {
+    IClassMapping mapping = getResourceClassMapping();
+    IDBTable resourceTable = mapping.getTable();
+    IDBField pathField = getResourcePathField();
+    String pathPrefix = context.getPathPrefix();
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT ");
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(" FROM ");
+    builder.append(resourceTable);
+    builder.append(" WHERE ");
+    builder.append(pathField);
+    builder.append(" LIKE \'");
+    builder.append(pathPrefix);
+    builder.append("%\'");
+    String sql = builder.toString();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
+
+    ResultSet resultSet = null;
+
+    try
+    {
+      resultSet = storeReader.getStatement().executeQuery(sql);
+      while (resultSet.next())
+      {
+        long longID = resultSet.getLong(1);
+        CDOID id = CDOIDUtil.createLong(longID);
+        if (!context.addResourceID(id))
+        {
+          break;
+        }
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+    }
   }
 
   public CDOID readResourceID(IDBStoreReader storeReader, String path)

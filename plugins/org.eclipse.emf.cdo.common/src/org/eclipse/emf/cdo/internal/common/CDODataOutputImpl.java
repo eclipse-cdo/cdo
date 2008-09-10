@@ -180,14 +180,14 @@ public abstract class CDODataOutputImpl implements CDODataOutput
     ((CDOClassRefImpl)cdoClassRef).write(this);
   }
 
-  public void writeCDOPackage(CDOPackage cdoPackage) throws IOException
-  {
-    ((InternalCDOPackage)cdoPackage).write(this);
-  }
-
   public void writeCDOClassRef(CDOClass cdoClass) throws IOException
   {
     writeCDOClassRef(cdoClass.createClassRef());
+  }
+
+  public void writeCDOPackage(CDOPackage cdoPackage) throws IOException
+  {
+    ((InternalCDOPackage)cdoPackage).write(this);
   }
 
   public void writeCDOClass(CDOClass cdoClass) throws IOException

@@ -120,7 +120,7 @@ public class OpenSessionIndication extends CDOServerIndication
 
       out.writeString(repository.getUUID());
       repository.getStore().getCDOIDLibraryDescriptor().write(out);
-      writePackages(out);
+      writePackageInfos(out);
     }
     catch (RepositoryNotFoundException ex)
     {
@@ -143,7 +143,7 @@ public class OpenSessionIndication extends CDOServerIndication
     }
   }
 
-  private void writePackages(CDODataOutput out) throws IOException
+  private void writePackageInfos(CDODataOutput out) throws IOException
   {
     CDOPackage[] packages = getPackageManager().getPackages();
     for (CDOPackage p : packages)

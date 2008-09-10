@@ -211,9 +211,9 @@ public class MEMStore extends LongIDStore implements IMEMStore
     return true;
   }
 
-  @Override
   public void repairAfterCrash()
   {
+    // Do nothing
   }
 
   @Override

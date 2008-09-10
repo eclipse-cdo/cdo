@@ -163,7 +163,7 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
     storeWriter = repository.getStore().getWriter(this);
 
     // Make the store writer available in a ThreadLocal variable
-    StoreThreadLocal.setStoreWriter(storeWriter);
+    StoreThreadLocal.setStoreReader(storeWriter);
   }
 
   public void commit(CDOPackage[] newPackages, CDORevision[] newObjects, CDORevisionDelta[] dirtyObjectDeltas)

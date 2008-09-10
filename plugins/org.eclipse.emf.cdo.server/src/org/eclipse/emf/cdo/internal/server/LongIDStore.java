@@ -82,8 +82,4 @@ public abstract class LongIDStore extends Store
   {
     return false;
   }
-
-  public void repairAfterCrash()
-  {
-  }
 }

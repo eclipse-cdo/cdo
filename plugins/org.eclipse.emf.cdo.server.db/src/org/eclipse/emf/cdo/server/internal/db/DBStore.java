@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.server.LongIDStore;
 import org.eclipse.emf.cdo.internal.server.StoreAccessorPool;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
@@ -185,29 +186,24 @@ public class DBStore extends LongIDStore implements IDBStore
     return connection;
   }
 
-  @Override
   public void repairAfterCrash()
   {
-    DBStoreReader storeReader = null;
-
     try
     {
-      storeReader = (DBStoreReader)getReader(null);
-      Connection connection = storeReader.getConnection();
+      DBStoreWriter storeWriter = (DBStoreWriter)getWriter(null);
+      StoreThreadLocal.setStoreReader(storeWriter);
 
+      Connection connection = storeWriter.getConnection();
       long maxObjectID = mappingStrategy.repairAfterCrash(connection);
       long maxMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGES_RANGE_UB);
-      OM.LOG.info(MessageFormat.format("Repaired after crash: maxObjectID={0}, maxMetaID={1}", maxObjectID, maxMetaID));
 
+      OM.LOG.info(MessageFormat.format("Repaired after crash: maxObjectID={0}, maxMetaID={1}", maxObjectID, maxMetaID));
       setLastObjectID(maxObjectID);
       setLastMetaID(maxMetaID);
     }
     finally
     {
-      if (storeReader != null)
-      {
-        storeReader.release();
-      }
+      StoreThreadLocal.release();
     }
   }
 

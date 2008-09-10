@@ -47,6 +47,12 @@ public final class StoreThreadLocal
     return session;
   }
 
+  public static void setStoreReader(IStoreReader storeReader)
+  {
+    SESSION.set(storeReader.getSession());
+    STORE_READER.set(storeReader);
+  }
+
   public static IStoreReader getStoreReader()
   {
     IStoreReader storeReader = STORE_READER.get();
@@ -61,12 +67,6 @@ public final class StoreThreadLocal
     return storeReader;
   }
 
-  public static void setStoreWriter(IStoreWriter storeWriter)
-  {
-    SESSION.set(storeWriter.getSession());
-    STORE_READER.set(storeWriter);
-  }
-
   public static void release()
   {
     IStoreReader storeReader = STORE_READER.get();
@@ -77,15 +77,5 @@ public final class StoreThreadLocal
     }
 
     SESSION.set(null);
-  }
-
-  /**
-   * @deprecated Store readers should be created lazily. Use {@link #setSession(ISession)} instead.
-   */
-  @Deprecated
-  public static void setReader(IStoreReader reader)
-  {
-    SESSION.set(reader.getSession());
-    STORE_READER.set(reader);
   }
 }

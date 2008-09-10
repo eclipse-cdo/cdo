@@ -43,9 +43,9 @@ public class NOOPStore extends LongIDStore
     return true;
   }
 
-  @Override
   public void repairAfterCrash()
   {
+    // Do nothing
   }
 
   @Override

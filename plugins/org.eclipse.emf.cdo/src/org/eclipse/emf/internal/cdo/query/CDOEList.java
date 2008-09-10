@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
+ * TODO Simon: Do we really need this list?
+ * 
  * @author Simon McDuff
  */
 public class CDOEList<T> implements EList<T>

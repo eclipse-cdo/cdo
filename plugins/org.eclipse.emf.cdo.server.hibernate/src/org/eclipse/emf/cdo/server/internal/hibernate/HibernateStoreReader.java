@@ -182,9 +182,9 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
   /**
    * @since 2.0
    */
-  public void queryResources(String pathPrefix, int maxResults, QueryResourcesContext context)
+  public void queryResources(QueryResourcesContext context)
   {
-    // TODO: implement HibernateStoreReader.queryResources(pathPrefix, maxResults, context)
+    // TODO: implement HibernateStoreReader.queryResources(context)
     throw new UnsupportedOperationException();
   }
 

@@ -13,6 +13,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -247,7 +248,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
     IQueryHandler handler = null;
-    if (ResourcesQueryHandler.Factory.LANGUAGE.equals(info.getQueryLanguage()))
+    if (CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES.equals(info.getQueryLanguage()))
     {
       handler = new ResourcesQueryHandler();
     }

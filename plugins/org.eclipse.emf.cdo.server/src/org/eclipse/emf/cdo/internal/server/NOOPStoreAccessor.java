@@ -100,11 +100,11 @@ public class NOOPStoreAccessor extends StoreAccessor implements IStoreReader, IS
     throw new UnsupportedOperationException();
   }
 
-  public void queryResources(String pathPrefix, int maxResults, QueryResourcesContext context)
+  /**
+   * @since 2.0
+   */
+  public void queryResources(QueryResourcesContext context)
   {
-    /**
-     * @since 2.0
-     */
     throw new UnsupportedOperationException();
   }
 

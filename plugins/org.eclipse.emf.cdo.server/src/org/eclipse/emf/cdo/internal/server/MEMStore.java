@@ -81,7 +81,7 @@ public class MEMStore extends LongIDStore implements IMEMStore
   /**
    * @since 2.0
    */
-  public synchronized List<CDORevision> getRevisions()
+  public synchronized List<CDORevision> getCurrentRevisions()
   {
     ArrayList<CDORevision> simpleRevisions = new ArrayList<CDORevision>();
     Iterator<List<CDORevision>> itr = revisions.values().iterator();

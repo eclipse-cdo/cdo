@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
@@ -132,9 +133,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   public String readResourcePath(CDOID id)
   {
     CDORevision revision = getStore().getRevision(id);
-    CDOPathFeature pathFeature = getStore().getRepository().getPackageManager().getCDOResourcePackage()
-        .getCDOResourceClass().getCDOPathFeature();
-    return (String)revision.getData().get(pathFeature, 0);
+    return getResourcePath(revision);
   }
 
   @Override
@@ -164,17 +163,21 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   /**
    * @since 2.0
    */
-  public void queryResources(String pathPrefix, int maxResults, QueryResourcesContext context)
+  public void queryResources(QueryResourcesContext context)
   {
     IView view = getView();
-    // First iterate newRevisions
-
-    // Then iterate all revisions
-    for (CDORevision revision : getStore().getRevisions())
+    for (CDORevision revision : getStore().getCurrentRevisions())
     {
       if (revision.isResource())
       {
-
+        String path = getResourcePath(revision);
+        if (path != null && path.startsWith(context.getPathPrefix()))
+        {
+          if (!context.addResource(revision))
+          {
+            break;
+          }
+        }
       }
     }
   }
@@ -271,4 +274,15 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     // Pooling of store accessors not supported
   }
 
+  private CDOPathFeature getResourcePathFeature()
+  {
+    IPackageManager packageManager = getStore().getRepository().getPackageManager();
+    return packageManager.getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
+  }
+
+  private String getResourcePath(CDORevision revision)
+  {
+    CDOPathFeature pathFeature = getResourcePathFeature();
+    return (String)revision.getData().get(pathFeature, 0);
+  }
 }
